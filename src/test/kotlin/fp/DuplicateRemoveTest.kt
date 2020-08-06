@@ -3,28 +3,16 @@ package fp
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-fun sumAll(numbers: List<Int>): Int {
-    var total = 0
-    for (number in numbers) {
-        total += number
-    }
-    return total
-}
+fun sumAll(numbers: List<Int>): Int = sum(numbers) { true }
 
-fun sumAllEven(numbers: List<Int>): Int {
-    var total = 0
-    for (number in numbers) {
-        if (number % 2 == 0) {
-            total += number
-        }
-    }
-    return total
-}
+fun sumAllEven(numbers: List<Int>): Int = sum(numbers) { it % 2 == 0 }
 
-fun sumAllOverThree(numbers: List<Int>): Int {
+fun sumAllOverThree(numbers: List<Int>): Int = sum(numbers) { it > 3 }
+
+fun sum(numbers: List<Int>, condition: (Int) -> Boolean): Int {
     var total = 0
     for (number in numbers) {
-        if (number > 3) {
+        if (condition(number)) {
             total += number
         }
     }
