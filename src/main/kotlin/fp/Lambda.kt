@@ -1,33 +1,12 @@
 package fp
 
-class Lambda {
-    val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+object Lambda {
 
-    fun sumAll(numbers: List<Int>): Int {
-        var total = 0
-        for (number in numbers) {
-            total += number
-        }
-        return total
+    private fun sumByCondition(numbers: List<Int>, plusStrategy: (number: Int) -> Boolean): Int {
+        return numbers.filter { plusStrategy(it) }.sum()
     }
 
-    fun sumAllEven(numbers: List<Int>): Int {
-        var total = 0
-        for (number in numbers) {
-            if (number % 2 == 0) {
-                total += number
-            }
-        }
-        return total
-    }
-
-    fun sumAllOverThree(numbers: List<Int>): Int {
-        var total = 0
-        for (number in numbers) {
-            if (number > 3) {
-                total += number
-            }
-        }
-        return total
-    }
+    fun sumAll(numbers: List<Int>): Int = sumByCondition(numbers) { true }
+    fun sumAllEven(numbers: List<Int>): Int = sumByCondition(numbers) { it % 2 == 0 }
+    fun sumAllOverThree(numbers: List<Int>): Int = sumByCondition(numbers) { it > 3 }
 }
