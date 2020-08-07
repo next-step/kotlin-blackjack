@@ -13,7 +13,12 @@ enum class Denomination(
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
+    TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K")
+    KING(10, "K");
+
+    companion object {
+        const val MAX_SCORE = 10
+    }
 }
