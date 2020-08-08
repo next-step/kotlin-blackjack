@@ -8,12 +8,6 @@ class Lambda {
     fun sumAllOverThree(numbers: List<Int>): Int = sum(numbers) { it > 3 }
 
     private fun sum(numbers: List<Int>, needToAdd: (number: Int) -> Boolean): Int {
-        var total = 0
-        for (number in numbers) {
-            if (needToAdd(number)) {
-                total += number
-            }
-        }
-        return total
+        return numbers.filter(needToAdd).sum()
     }
 }
