@@ -1,12 +1,12 @@
 package blackJack.domain
 
 class Deck() {
-    private val shape = listOf("♠", "♣", "♥", "♦")
     private val _cards = mutableListOf<Card>()
-    val cards = makeDeck()
+    var cards = makeDeck()
+        private set
 
     private fun makeDeck(): List<Card> {
-        shape.forEach { makeCard(it) }
+        SHAPE.forEach { makeCard(it) }
         return _cards
     }
 
@@ -30,8 +30,13 @@ class Deck() {
         }
     }
 
+    fun shuffle() {
+        cards = _cards.shuffled()
+    }
+
     companion object {
         private const val FIRST = 1
         private const val LAST = 13
+        private val SHAPE = listOf("♠", "♣", "♥", "♦")
     }
 }

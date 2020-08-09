@@ -10,5 +10,15 @@ class DeckTest {
 
         assertThat(deck.cards.size).isEqualTo(52)
     }
+
+    @Test
+    fun shuffle_deck() {
+        val deck = Deck()
+        val deck2 = Deck()
+
+        deck2.shuffle()
+
+        assertThat(deck.cards).isNotEqualTo(deck2.cards)
+    }
 }
 
