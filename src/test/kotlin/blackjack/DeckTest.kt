@@ -1,12 +1,17 @@
 package blackjack
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class DeckTest {
 
     @Test
-    fun `모든 카드 출력하기`() {
-        println(Deck.generate().joinToString())
+    fun `모든 카드 뽑기`() {
+        val deck = mutableListOf<Deck>()
+        repeat(Deck.TOTAL_DECK_SIZE) {
+            deck.add(Deck.pop())
+        }
+        assertThat(deck.size).isEqualTo(Deck.TOTAL_DECK_SIZE)
     }
 }
 
@@ -15,15 +20,19 @@ class Deck(private val type: Type, private val shape: Shape) {
     override fun toString(): String = "${type.nickName}${shape.nickName}"
 
     companion object {
-        fun generate(): List<Deck> {
-            val decks = mutableListOf<Deck>()
+        const val TOTAL_DECK_SIZE = 56
+        private val all = mutableListOf<Deck>().apply {
             for (type in Type.values()) {
                 for (shape in Shape.values()) {
-                    decks.add(Deck(type, shape))
+                    add(Deck(type, shape))
                 }
             }
-            return decks
         }
+
+        fun pop(): Deck = all
+            .shuffled()
+            .first()
+            .also { all.remove(it) }
     }
 }
 
