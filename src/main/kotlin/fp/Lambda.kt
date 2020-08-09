@@ -1,31 +1,16 @@
 package fp
 
-val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+typealias Numbers = List<Int>
 
-fun sumAll(numbers: List<Int>): Int {
-    var total = 0
-    for (number in numbers) {
-        total += number
-    }
-    return total
-}
+val numbers: Numbers = listOf(1, 2, 3, 4, 5, 6)
 
-fun sumAllEven(numbers: List<Int>): Int {
-    var total = 0
-    for (number in numbers) {
-        if (number % 2 == 0) {
-            total += number
-        }
-    }
-    return total
-}
+fun sumAll(numbers: Numbers): Int = sum(numbers) { true }
 
-fun sumAllOverThree(numbers: List<Int>): Int {
-    var total = 0
-    for (number in numbers) {
-        if (number > 3) {
-            total += number
-        }
-    }
-    return total
+fun sumAllEven(numbers: Numbers): Int =
+    sum(numbers) { it % 2 == 0 }
+
+fun sumAllOverThree(numbers: Numbers): Int = sum(numbers) { it > 3 }
+
+fun sum(numbers: Numbers, predicate: (Int) -> (Boolean)): Int {
+    return numbers.filter { predicate(it) }.sum()
 }
