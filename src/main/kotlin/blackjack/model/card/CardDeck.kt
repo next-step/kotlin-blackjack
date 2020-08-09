@@ -1,5 +1,7 @@
 package blackjack.model.card
 
+const val BOTTOM_CARD_NUMBER = 0
+
 class CardDeck {
     var cards: MutableList<Card> = generate()
 
@@ -12,5 +14,12 @@ class CardDeck {
             }
         }
         return cards.shuffled() as MutableList<Card>
+    }
+
+    fun pick(): Card {
+        val card = cards[BOTTOM_CARD_NUMBER]
+
+        cards.removeAt(BOTTOM_CARD_NUMBER)
+        return card
     }
 }
