@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 const val VALUE_ACE = "A"
 const val AlPHABET_DEFAULT_POINT = 10
