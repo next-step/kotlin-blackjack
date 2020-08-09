@@ -29,8 +29,8 @@ class CardDeckTest {
     @Test
     fun checkDuplicationCardPool() {
         val cards = CardDeck().cards
-        val cards2 = cards.distinct()
-        Assertions.assertThat(cards2).containsAll(cards)
+        val distinctCards = cards.distinct()
+        Assertions.assertThat(distinctCards).containsAll(cards)
     }
 
     @DisplayName(value = "한세트의 CarPool은 pop된 카드는 포함하고 있으면 안된다. ")
