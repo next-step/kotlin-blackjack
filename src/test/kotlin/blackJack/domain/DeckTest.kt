@@ -20,5 +20,14 @@ class DeckTest {
 
         assertThat(deck.cards).isNotEqualTo(deck2.cards)
     }
+
+    @Test
+    fun get_card() {
+        val deck = Deck()
+
+        deck.getCard()
+
+        assertThat(deck.cards.size).isEqualTo(51)
+    }
 }
 

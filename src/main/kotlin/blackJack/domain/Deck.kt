@@ -34,6 +34,16 @@ class Deck() {
         cards = _cards.shuffled()
     }
 
+    fun getCard(): Card {
+        val card = cards[0]
+        deleteCard()
+        return card
+    }
+
+    private fun deleteCard() {
+        cards = cards.drop(1)
+    }
+
     companion object {
         private const val FIRST = 1
         private const val LAST = 13
