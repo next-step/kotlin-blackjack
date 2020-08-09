@@ -2,11 +2,11 @@ package blackjack.domain
 
 import java.util.regex.Pattern
 
-private const val SPLIT_CHARACTER = "."
+private const val SPLIT_CHARACTER = ","
 private const val REGULAR_EXPRESSION = "^[a-z|A-Z][a-z|A-Z,]*[a-z|A-Z]$"
 
 class BlackjackGame(playerNames: String) {
-    private var players: List<Player> = emptyList()
+    var players: List<Player> = emptyList()
 
     init {
         players = parsingPlayers(playerNames)
