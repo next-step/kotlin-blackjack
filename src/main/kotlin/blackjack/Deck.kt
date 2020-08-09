@@ -4,6 +4,8 @@ class Deck(private val type: Card.Type, private val shape: Card.Shape) {
 
     override fun toString(): String = "${type.nickName}${shape.nickName}"
 
+    fun getDeckType(): Card.Type = Card.Type.findByNickname(type.nickName)
+
     companion object {
         const val TOTAL_DECK_SIZE = 56
         private val all = mutableListOf<Deck>().apply {
