@@ -4,12 +4,22 @@ class Player(
     val name: String,
     private val cards: Cards = Cards.empty()
 ) {
+    var isStand = false
+        private set
 
     fun getCards(): List<Card> {
         return cards.get()
     }
 
-    fun isBusted(): Boolean {
+    fun stand() {
+        isStand = true
+    }
+
+    fun isFinished(): Boolean {
+        return isStand || isBusted()
+    }
+
+    private fun isBusted(): Boolean {
         return cards.sumScores() > Cards.BLACK_JACK_SCORE
     }
 

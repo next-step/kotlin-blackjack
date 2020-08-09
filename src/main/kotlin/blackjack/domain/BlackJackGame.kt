@@ -12,8 +12,16 @@ class BlackJackGame(
         players.values.forEach { it.deal(deck) }
     }
 
+    fun isPlayerFinished(playerName: String): Boolean {
+        return getPlayer(playerName).isFinished()
+    }
+
     fun hit(playerName: String) {
         getPlayer(playerName).hit(deck)
+    }
+
+    fun stand(playerName: String) {
+        getPlayer(playerName).stand()
     }
 
     fun playerCardsOf(playerName: String): List<Card> {
