@@ -72,6 +72,13 @@ class BlackjackGameTest {
             .isEqualTo(2)
     }
 
+    @DisplayName("사용자 포인트 합 계산하기")
+    @Test
+    fun checkPointCalculation() {
+        val blackjackGame = BlackjackGame("ace,con", CardDeck())
+        assertThat(blackjackGame.currentPlayer.calculatePoint()).isGreaterThan(0)
+    }
+
     @DisplayName("사용자가 현재 가지고 있는 카드 포인트의 합이 21이 넘는지 안넘는지 확인")
     @Test
     fun checkBust() {
