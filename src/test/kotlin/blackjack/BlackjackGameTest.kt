@@ -1,7 +1,10 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
+import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.Player
+import blackjack.domain.SuitType
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -72,11 +75,32 @@ class BlackjackGameTest {
             .isEqualTo(2)
     }
 
-    @DisplayName("사용자 포인트 합 계산하기")
+    @DisplayName("게임 중 사용자 포인트 합 계산하기")
     @Test
     fun checkPointCalculation() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         assertThat(blackjackGame.currentPlayer.calculatePoint()).isGreaterThan(0)
+    }
+
+    @DisplayName("사용자 포인트 합 계산하기")
+    @Test
+    fun checkPointCalculationFromPlayer() {
+        val player = Player("ace")
+        player.addCard(Card(SuitType.CLOVER, "4"))
+        player.addCard(Card(SuitType.CLOVER, "5"))
+        player.addCard(Card(SuitType.CLOVER, "K"))
+        assertThat(player.calculatePoint()).isEqualTo(19)
+    }
+
+    @DisplayName("사용자 포인트 합 계산하기")
+    @Test
+    fun checkPointCalculationFromPlayerWithAce() {
+        val player = Player("ace")
+        player.addCard(Card(SuitType.CLOVER, "4"))
+        player.addCard(Card(SuitType.CLOVER, "5"))
+        player.addCard(Card(SuitType.CLOVER, "A"))
+        assertThat(player.calculatePoint()).isEqualTo(20)
+        assertThat(player.calculatePoint(false)).isEqualTo(10)
     }
 
     @DisplayName("사용자가 현재 가지고 있는 카드 포인트의 합이 21이 넘는지 안넘는지 확인")
@@ -84,6 +108,6 @@ class BlackjackGameTest {
     fun checkBust() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         repeat(10) { blackjackGame.hitOrStay("y") }
-        assertThat(blackjackGame.checkBust()).isEqualTo(true)
+        assertThat(blackjackGame.currentPlayer.isBusted()).isEqualTo(true)
     }
 }

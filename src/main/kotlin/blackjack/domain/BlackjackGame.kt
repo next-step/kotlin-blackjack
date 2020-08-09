@@ -4,7 +4,6 @@ import java.util.regex.Pattern
 
 private const val SPLIT_CHARACTER = ","
 private const val FIRST_PICK_COUNT = 2
-private const val BUST_POINT = 21
 private const val PLAYER_REGULAR_EXPRESSION = "^[a-z|A-Z][a-z|A-Z,]*[a-z|A-Z]$"
 private const val HIT_OR_STAY_REGULAR_EXPRESSION = "[y|n]"
 private const val HIT = "y"
@@ -42,10 +41,5 @@ class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
     }
 
     private fun nextTurn() {
-    }
-
-    fun checkBust(): Boolean {
-        val value = currentPlayer.calculatePoint()
-        return value > BUST_POINT
     }
 }
