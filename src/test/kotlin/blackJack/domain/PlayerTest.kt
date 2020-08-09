@@ -21,4 +21,13 @@ class PlayerTest {
         assertThat(player.hands.size).isEqualTo(1)
         assertThat(player.hands[0]).isEqualTo(Card("♠10", 10))
     }
+
+    @Test
+    fun get_score() {
+        val player = Player("joohan")
+        player.giveCard(Card("♠10", 10))
+        player.giveCard(Card("♠10", 10))
+
+        assertThat(player.totalScore).isEqualTo(20)
+    }
 }
