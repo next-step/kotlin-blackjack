@@ -2,9 +2,11 @@ package blackjack.domain
 
 class Player(val name: String) {
     var cards: List<Card> = emptyList()
-    fun calculatePoint(): Int = 0
+    var isHit: Boolean = true
 
-    fun getCard(card: Card) {
+    fun calculatePoint(): Int = cards.sumBy { it.getPoint() }
+
+    fun addCard(card: Card) {
         val currentCards = cards.toMutableList()
         currentCards.add(card)
         cards = currentCards.toList()

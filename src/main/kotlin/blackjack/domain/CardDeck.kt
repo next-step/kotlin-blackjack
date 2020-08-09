@@ -1,7 +1,8 @@
 package blackjack.domain
 
 class CardDeck {
-    val cards: List<Card>
+    var cards: List<Card>
+        private set
     var currentPosition: Int = -1
         private set
 
