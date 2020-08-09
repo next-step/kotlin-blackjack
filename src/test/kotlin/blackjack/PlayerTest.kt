@@ -11,6 +11,15 @@ class PlayerTest {
 
         assertThat(player.myReceivedCard.size).isEqualTo(2)
     }
+
+    @Test
+    fun `덱을 한 장 더 받았을 경우`() {
+        val player = Player("moshi")
+
+        player.requestDeck()
+
+        assertThat(player.myReceivedCard.size).isEqualTo(3)
+    }
 }
 
 class Player(name: String) {
@@ -20,6 +29,10 @@ class Player(name: String) {
 
     init {
         _myReceivedCard.add(Deck.pop())
+        _myReceivedCard.add(Deck.pop())
+    }
+
+    fun requestDeck() {
         _myReceivedCard.add(Deck.pop())
     }
 }
