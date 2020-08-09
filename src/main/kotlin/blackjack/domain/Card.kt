@@ -24,5 +24,9 @@ class Card private constructor(
                 .find { it.denomination == denomination }
                 ?: throw IllegalArgumentException("해당 카드를 찾을 수 없습니다.")
         }
+
+        fun denominationOf(value: String): Card {
+            return of(Symbol.SPADE, Denomination.findBy(value))
+        }
     }
 }

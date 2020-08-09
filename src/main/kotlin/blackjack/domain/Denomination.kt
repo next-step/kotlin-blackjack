@@ -20,5 +20,7 @@ enum class Denomination(
 
     companion object {
         const val MAX_SCORE = 10
+
+        fun findBy(value: String) = values().first { it.value == value }
     }
 }
