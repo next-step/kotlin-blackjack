@@ -14,13 +14,4 @@ class PlayerTest {
 
         assertThat(player.myReceivedDeck.size).isEqualTo(2)
     }
-
-    @Test
-    fun `덱을 한 장 더 받았을 경우`() {
-        val player = Player("moshi")
-
-        player.requestDeck(Deck.pop())
-
-        assertThat(player.myReceivedDeck.size).isEqualTo(3)
-    }
 }
