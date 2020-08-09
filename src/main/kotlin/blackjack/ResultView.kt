@@ -10,4 +10,8 @@ object ResultView {
     fun printPlayerHaveDeck(player: Player) {
         println("${player.name}카드: ${player.myReceivedDeck.joinToString()}")
     }
+
+    fun printResult(player: Player, rank: Int) {
+        println("${player.name}카드: ${player.myReceivedDeck.joinToString()} - 결과: $rank")
+    }
 }
