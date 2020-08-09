@@ -8,4 +8,5 @@ fun main() {
     val blackJackGame = BlackJackGame(players)
 
     blackJackGame.firstTurn()
+    blackJackGame.progressTurn()
 }
