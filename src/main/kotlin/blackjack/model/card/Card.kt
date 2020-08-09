@@ -25,6 +25,3 @@ class Card(val suit: Suit, val denomination: Denomination) {
         KING("K", 10, 10)
     }
 }
-
-
-

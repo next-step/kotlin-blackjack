@@ -16,6 +16,15 @@ object OutputView {
         println("${player.name}카드: $cards")
     }
 
+    fun printResult(players: List<Player>) {
+        for (player in players) {
+            val cards = displayCards(player.cards)
+            val result = player.getTotalPointForBlackJack()
+
+            println("${player.name}카드: $cards - 결과: $result")
+        }
+    }
+
     private fun displayCards(cards: List<Card>): String {
         return cards.joinToString(separator = ",") { "${it.denomination.title}${it.suit.title}" }
     }
