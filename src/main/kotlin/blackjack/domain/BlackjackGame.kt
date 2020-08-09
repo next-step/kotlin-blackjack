@@ -37,9 +37,13 @@ class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
         if (currentPlayer.isHit) {
             currentPlayer.addCard(cardDeck.pickCard())
         }
-        nextTurn()
     }
 
     private fun nextTurn() {
+        val player = players.subList(players.indexOf(currentPlayer), players.lastIndex).plus(players).find { it.isHit }
+        if (player == null) finishedGame() else currentPlayer = player
+    }
+
+    private fun finishedGame() {
     }
 }
