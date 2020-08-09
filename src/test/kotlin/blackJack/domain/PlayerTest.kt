@@ -30,4 +30,14 @@ class PlayerTest {
 
         assertThat(player.totalScore).isEqualTo(20)
     }
+
+    @Test
+    fun player_is_over_21() {
+        val player = Player("joohan")
+        player.giveCard(Card("♠10", 10))
+        player.giveCard(Card("♠10", 10))
+        player.giveCard(Card("♠10", 10))
+
+        assertThat(player.isBust()).isTrue()
+    }
 }

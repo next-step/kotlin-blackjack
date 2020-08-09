@@ -10,4 +10,6 @@ class Player(val name: String) {
     fun giveCard(card: Card) {
         _hands.add(card)
     }
+
+    fun isBust(): Boolean = totalScore > 21
 }
