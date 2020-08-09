@@ -1,7 +1,11 @@
 package blackjack.domain
 
 class Deck : DrawStrategy {
-    private val cards = Card.ALL.toMutableList()
+    private val cards = mutableListOf<Card>()
+
+    init {
+        cards.addAll(Card.ALL.shuffled())
+    }
 
     @ExperimentalStdlibApi
     override fun fetchCard(): Card {
@@ -11,7 +15,7 @@ class Deck : DrawStrategy {
 
     @ExperimentalStdlibApi
     private fun reloadAndFetch(): Card {
-        this.cards.addAll(Card.ALL)
+        this.cards.addAll(Card.ALL.shuffled())
         return fetchCard()
     }
 }

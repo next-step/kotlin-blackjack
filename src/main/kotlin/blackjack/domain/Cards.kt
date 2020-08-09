@@ -1,15 +1,15 @@
 package blackjack.domain
 
-class Cards private constructor() {
+class Cards(vararg values: String) {
 
-    private val cards = mutableListOf<Card>()
-
-    constructor(vararg values: String) : this() {
-        this.cards.addAll(values.map { Card.denominationOf(it) })
-    }
+    private val cards = values.map { Card.denominationOf(it) }.toMutableList()
 
     fun add(card: Card) {
         cards.add(card)
+    }
+
+    fun get(): List<Card> {
+        return cards.toList()
     }
 
     fun sumScores(): Int {
@@ -25,7 +25,7 @@ class Cards private constructor() {
 
     private fun sumScoresWithAce(totalScore: Int): Int {
         val totalScoreWithAceBonus = totalScore + Denomination.MAX_SCORE
-        return if (totalScoreWithAceBonus > 21) totalScore
+        return if (totalScoreWithAceBonus > BLACK_JACK_SCORE) totalScore
         else totalScoreWithAceBonus
     }
 
@@ -34,6 +34,8 @@ class Cards private constructor() {
     }
 
     companion object {
+        const val BLACK_JACK_SCORE = 21
+
         fun empty() = Cards()
     }
 }

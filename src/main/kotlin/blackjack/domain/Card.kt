@@ -9,6 +9,24 @@ class Card private constructor(
         return "$symbol ${denomination.value}"
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Card
+
+        if (symbol != other.symbol) return false
+        if (denomination != other.denomination) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = symbol.hashCode()
+        result = 31 * result + denomination.hashCode()
+        return result
+    }
+
     companion object {
         val ALL = createAllCards()
 
