@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.model.card
 
 enum class CardNumber(val score: Int) {
     ONE(1),
@@ -13,5 +13,7 @@ enum class CardNumber(val score: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10)
+    KING(10);
+
+    fun isAce() = this == ONE
 }

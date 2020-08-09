@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.model.card
 
 enum class CardType(val typeName: String) {
     HEARTS("하트"),
