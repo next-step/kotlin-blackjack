@@ -9,7 +9,7 @@ class PlayerTest {
     fun `게임 참가 시 2장의 카드 받기`() {
         val player = Player("moshi")
 
-        assertThat(player.myReceivedCard.size).isEqualTo(2)
+        assertThat(player.myReceivedDeck.size).isEqualTo(2)
     }
 
     @Test
@@ -18,21 +18,26 @@ class PlayerTest {
 
         player.requestDeck()
 
-        assertThat(player.myReceivedCard.size).isEqualTo(3)
+        assertThat(player.myReceivedDeck.size).isEqualTo(3)
     }
 }
 
 class Player(name: String) {
 
-    private val _myReceivedCard = mutableListOf<Deck>()
-    val myReceivedCard: List<Deck> get() = _myReceivedCard
+    private val _myReceivedDeck = mutableListOf<Deck>()
+    val myReceivedDeck: List<Deck> get() = _myReceivedDeck
 
     init {
-        _myReceivedCard.add(Deck.pop())
-        _myReceivedCard.add(Deck.pop())
+        repeat(INIT_DECK_SIZE) {
+            requestDeck()
+        }
     }
 
     fun requestDeck() {
-        _myReceivedCard.add(Deck.pop())
+        _myReceivedDeck.add(Deck.pop())
+    }
+
+    companion object {
+        private const val INIT_DECK_SIZE = 2
     }
 }
