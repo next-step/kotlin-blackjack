@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Card {
     enum class Type(val nickName: String, val points: List<Int>) {

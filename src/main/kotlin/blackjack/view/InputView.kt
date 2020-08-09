@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.view
+
+import blackjack.model.Player
 
 object InputView {
 

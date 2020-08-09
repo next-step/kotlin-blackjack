@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Deck(private val type: Card.Type, private val shape: Card.Shape) {
 

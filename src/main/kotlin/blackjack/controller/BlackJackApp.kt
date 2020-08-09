@@ -1,4 +1,10 @@
-package blackjack
+package blackjack.controller
+
+import blackjack.model.Deck
+import blackjack.model.Player
+import blackjack.model.Winner
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
 fun main() {
     val players = registerPlayers()
@@ -9,7 +15,10 @@ fun main() {
 
 private fun showResult(players: List<Player>) {
     players.map {
-        ResultView.printResult(it, Winner.calculateRank(it.myReceivedDeck))
+        ResultView.printResult(
+            it,
+            Winner.calculateRank(it.myReceivedDeck)
+        )
     }
 }
 
@@ -23,7 +32,9 @@ private fun drawDeck(players: List<Player>) {
 }
 
 private fun isContinueDraw(it: Player) =
-    Winner.calculateRank(it.myReceivedDeck) < Winner.WINNING_RANK && InputView.requestOneOfDeck(it) == "y"
+    Winner.calculateRank(it.myReceivedDeck) < Winner.WINNING_RANK && InputView.requestOneOfDeck(
+        it
+    ) == "y"
 
 private fun registerPlayers(): List<Player> {
     val playerName = InputView.requestPlayerNames()

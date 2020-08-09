@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 object Winner {
     const val WINNING_RANK = 21
