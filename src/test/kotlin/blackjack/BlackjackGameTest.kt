@@ -31,22 +31,6 @@ class BlackjackGameTest {
             .isEqualTo(2)
     }
 
-    @DisplayName("게임에 사용될 카드 체크")
-    @Test
-    fun checkCards() {
-        val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThat(blackjackGame.getCardCount())
-            .isEqualTo(52)
-    }
-
-    @DisplayName("첫번째 텀에 플레이어들에게 카드 두개씩 분배하기")
-    @Test
-    fun startGame() {
-        val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThat(blackjackGame.getCurrentPosition())
-            .isEqualTo(3)
-    }
-
     @DisplayName("게임 진행여부 입력값 확인하기")
     @ParameterizedTest
     @EmptySource
@@ -109,5 +93,13 @@ class BlackjackGameTest {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         repeat(10) { blackjackGame.hitOrStay("y") }
         assertThat(blackjackGame.currentPlayer.isBusted()).isEqualTo(true)
+    }
+
+    @DisplayName("다음턴 사용자 확인")
+    @Test
+    fun checkNextTurn() {
+        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        repeat(4) { blackjackGame.hitOrStay("y") }
+        assertThat(blackjackGame.currentPlayer.name).isEqualTo("ace")
     }
 }

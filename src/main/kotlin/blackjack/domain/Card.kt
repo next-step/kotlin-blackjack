@@ -1,8 +1,8 @@
 package blackjack.domain
 
-const val VALUE_ACE = "A"
-const val AlPHABET_DEFAULT_POINT = 10
-const val ACE_POINT = 1
+private const val VALUE_ACE = "A"
+private const val AlPHABET_DEFAULT_POINT = 10
+private const val ACE_POINT = 1
 
 data class Card(val suit: SuitType, val value: String) {
     fun getPoint(aceToBig: Boolean = true): Int {
