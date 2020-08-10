@@ -12,9 +12,7 @@ object CardSet {
     }
 
     fun pickCard(cardSet: List<Card>): Pair<Card, List<Card>> {
-        val copy = cardSet.toMutableList()
-        val pickCard = copy.shuffled().take(1).last()
-        copy.remove(pickCard)
-        return Pair(pickCard, copy.toList())
+        val pickCard = cardSet.shuffled().take(1).last()
+        return Pair(pickCard, cardSet.filter { it != pickCard })
     }
 }
