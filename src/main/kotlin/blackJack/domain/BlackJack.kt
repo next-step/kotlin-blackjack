@@ -19,7 +19,7 @@ class BlackJack(names: List<String>) {
         players.forEach { giveCardPlayer(it) }
     }
 
-    private fun giveCardPlayer(player: Player) {
+    fun giveCardPlayer(player: Player) {
         player.giveCard(deck.getCard())
     }
 }
