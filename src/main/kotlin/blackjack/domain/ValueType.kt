@@ -10,7 +10,7 @@ enum class ValueType(val point: Int) {
     J(10), Q(10), K(10);
 
     fun getPoint(aceToBig: Boolean = false): Int {
-        return if (aceToBig) MAX_NUMBER_VALUE else 0 + this.point
+        return (if (this == A && aceToBig) MAX_NUMBER_VALUE else 0) + this.point
     }
 
     companion object {

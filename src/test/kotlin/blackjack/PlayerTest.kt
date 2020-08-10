@@ -48,7 +48,7 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.A))
-        Assertions.assertThat(player.calculatePoint()).isEqualTo(20)
-        Assertions.assertThat(player.calculatePoint(false)).isEqualTo(10)
+        Assertions.assertThat(player.calculatePoint()).isEqualTo(10)
+        Assertions.assertThat(player.calculatePoint(true)).isEqualTo(20)
     }
 }
