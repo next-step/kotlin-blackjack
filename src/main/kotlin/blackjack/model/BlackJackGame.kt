@@ -13,9 +13,9 @@ class BlackJackGame(private val players: List<Player>) {
         for (player in players) {
             player.drawCard(cardDeck.pick())
             player.drawCard(cardDeck.pick())
-
-            OutputView.drawCard(player)
         }
+
+        OutputView.drawCard(players)
     }
 
     fun progressTurn() {

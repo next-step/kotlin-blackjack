@@ -10,6 +10,12 @@ object OutputView {
         println("${name}에게 2장의 카드를 나누었습니다.")
     }
 
+    fun drawCard(players: List<Player>) {
+        for (player in players) {
+            drawCard(player)
+        }
+    }
+
     fun drawCard(player: Player) {
         val cards = displayCards(player.cards)
 
