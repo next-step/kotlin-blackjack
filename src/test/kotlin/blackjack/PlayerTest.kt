@@ -7,6 +7,7 @@ import blackjack.domain.Player
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,7 +28,7 @@ class PlayerTest {
     @DisplayName("플레이어 수 확인")
     @Test
     fun checkPlayers() {
-        Assertions.assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
+        assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
             .isEqualTo(2)
     }
 
@@ -38,7 +39,7 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.K))
-        Assertions.assertThat(player.calculatePoint()).isEqualTo(19)
+        assertThat(player.calculatePoint()).isEqualTo(19)
     }
 
     @DisplayName("사용자 포인트 합 계산하기")
@@ -48,7 +49,32 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.A))
-        Assertions.assertThat(player.calculatePoint()).isEqualTo(10)
-        Assertions.assertThat(player.calculatePoint(true)).isEqualTo(20)
+        assertThat(player.calculatePoint()).isEqualTo(10)
+        assertThat(player.calculatePoint(true)).isEqualTo(20)
+    }
+
+    @DisplayName("다음턴 사용자 확인")
+    @Test
+    fun checkNextTurn() {
+        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        repeat(4) { blackjackGame.hitOrStay("y") }
+        assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
+    }
+
+    @DisplayName("다음턴 사용자 확인")
+    @Test
+    fun checkNextPlayer() {
+        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        assertThat(blackjackGame.players.getNextPlayer()?.name).isEqualTo("hi")
+    }
+
+    @DisplayName("사용자가 카드 뽑고 나서 카드수")
+    @Test
+    fun checkPlayerCard() {
+        val cardDeck = CardDeck()
+        val blackjackGame = BlackjackGame("ace,hi,con,race", cardDeck)
+        blackjackGame.players.currentPlayerPickCard(true, cardDeck)
+        assertThat(blackjackGame.players.currentPlayer.cards.size)
+            .isEqualTo(3)
     }
 }
