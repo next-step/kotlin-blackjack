@@ -27,7 +27,7 @@ class PlayerTest {
     @DisplayName("플레이어 수 확인")
     @Test
     fun checkPlayers() {
-        Assertions.assertThat(BlackjackGame("ace,con", CardDeck()).players.size)
+        Assertions.assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
             .isEqualTo(2)
     }
 
