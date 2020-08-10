@@ -15,11 +15,11 @@ class Dealer {
     }
 
     fun giveCardTo(player: Player): HandStatus {
-        return player.giveCard(cardDeck.pop())
+        return player.receiveCard(cardDeck.pop())
     }
 
     private fun giveCardToAll(players: Players) {
-        players.list.forEach { it.giveCard(cardDeck.pop()) }
+        players.list.forEach { it.receiveCard(cardDeck.pop()) }
     }
 
     companion object {

@@ -17,7 +17,7 @@ data class Player(
 
     override fun toString(): String = "$name : ${getCards().joinToString()}"
 
-    override fun giveCard(card: Card): HandStatus {
+    override fun receiveCard(card: Card): HandStatus {
         return hand.addNew(card)
     }
 

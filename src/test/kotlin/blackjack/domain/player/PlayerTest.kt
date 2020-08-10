@@ -13,7 +13,7 @@ internal class PlayerTest {
     @Test
     fun giveCardToPlayer() {
         val player = Player(0, "yunji")
-        val handStatus = player.giveCard(Card(Pip.TWO, Suit.HEART))
+        val handStatus = player.receiveCard(Card(Pip.TWO, Suit.HEART))
         assertThat(player.getCards()).contains(Card(Pip.TWO, Suit.HEART))
         assertThat(handStatus).isEqualTo(HandStatus.GENERAL)
     }
@@ -22,9 +22,9 @@ internal class PlayerTest {
     @Test
     fun hasFreeSpace() {
         val player = Player(0, "yunji").apply {
-            giveCard(Card(Pip.TEN, Suit.HEART))
-            giveCard(Card(Pip.TEN, Suit.HEART))
-            giveCard(Card(Pip.THREE, Suit.HEART))
+            receiveCard(Card(Pip.TEN, Suit.HEART))
+            receiveCard(Card(Pip.TEN, Suit.HEART))
+            receiveCard(Card(Pip.THREE, Suit.HEART))
         }
         assertThat(player.hasFreeSpace()).isFalse()
     }

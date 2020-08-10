@@ -29,9 +29,9 @@ internal class PlayersTest {
     @Test
     fun findWinner() {
         val players = Players("a, b, c")
-        players(0).giveCard(Card(Pip.TEN, Suit.HEART))
-        players(1).giveCard(Card(Pip.NINE, Suit.HEART))
-        players(2).giveCard(Card(Pip.ACE, Suit.HEART))
+        players(0).receiveCard(Card(Pip.TEN, Suit.HEART))
+        players(1).receiveCard(Card(Pip.NINE, Suit.HEART))
+        players(2).receiveCard(Card(Pip.ACE, Suit.HEART))
         assertThat(players.findWinners()).contains(players(2))
     }
 
@@ -39,9 +39,9 @@ internal class PlayersTest {
     @Test
     fun findWinners() {
         val players = Players("a, b, c")
-        players(0).giveCard(Card(Pip.TEN, Suit.HEART))
-        players(1).giveCard(Card(Pip.NINE, Suit.HEART))
-        players(2).giveCard(Card(Pip.TEN, Suit.HEART))
+        players(0).receiveCard(Card(Pip.TEN, Suit.HEART))
+        players(1).receiveCard(Card(Pip.NINE, Suit.HEART))
+        players(2).receiveCard(Card(Pip.TEN, Suit.HEART))
         assertThat(players.findWinners()).contains(players(0), players(2))
     }
 }
