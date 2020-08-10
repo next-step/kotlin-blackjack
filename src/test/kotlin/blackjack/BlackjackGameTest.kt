@@ -70,9 +70,9 @@ class BlackjackGameTest {
     @Test
     fun checkPointCalculationFromPlayer() {
         val player = Player("ace")
-        player.addCard(Card(SuitType.CLOVER, "4"))
-        player.addCard(Card(SuitType.CLOVER, "5"))
-        player.addCard(Card(SuitType.CLOVER, "K"))
+        player.addCard(Card(SuitType.CLUB, "4"))
+        player.addCard(Card(SuitType.CLUB, "5"))
+        player.addCard(Card(SuitType.CLUB, "K"))
         assertThat(player.calculatePoint()).isEqualTo(19)
     }
 
@@ -80,9 +80,9 @@ class BlackjackGameTest {
     @Test
     fun checkPointCalculationFromPlayerWithAce() {
         val player = Player("ace")
-        player.addCard(Card(SuitType.CLOVER, "4"))
-        player.addCard(Card(SuitType.CLOVER, "5"))
-        player.addCard(Card(SuitType.CLOVER, "A"))
+        player.addCard(Card(SuitType.CLUB, "4"))
+        player.addCard(Card(SuitType.CLUB, "5"))
+        player.addCard(Card(SuitType.CLUB, "A"))
         assertThat(player.calculatePoint()).isEqualTo(20)
         assertThat(player.calculatePoint(false)).isEqualTo(10)
     }
