@@ -9,6 +9,10 @@ enum class ValueType(val point: Int) {
     SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
     J(10), Q(10), K(10);
 
+    fun getPoint(aceToBig: Boolean = false): Int {
+        return if (aceToBig) MAX_NUMBER_VALUE else 0 + this.point
+    }
+
     companion object {
         fun getValueType(value: Int): ValueType {
             require(value in MIN_NUMBER_VALUE..MAX_NUMBER_VALUE)
