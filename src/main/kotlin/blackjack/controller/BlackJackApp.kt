@@ -27,7 +27,7 @@ private fun drawCard(game: BlackJackGame) {
 }
 
 private fun isContinueDraw(player: Player) =
-    player.calculateRank() < Player.MAX_RANK && InputView.requestOneOfCard(player) == "y"
+    !player.isReachMaxRank() && InputView.requestOneOfCard(player) == "y"
 
 private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()

@@ -17,10 +17,12 @@ class Player(val name: String) {
         return rank
     }
 
+    fun isReachMaxRank() = calculateRank() < MAX_RANK
+
     private fun calculateAceCase(rank: Int, it: List<Point>) =
         if (rank + it.last().points <= MAX_RANK) it.last().points else it.first().points
 
     companion object {
-        const val MAX_RANK = 21
+        private const val MAX_RANK = 21
     }
 }
