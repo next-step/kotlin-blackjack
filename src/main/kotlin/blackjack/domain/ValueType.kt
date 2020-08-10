@@ -1,8 +1,23 @@
 package blackjack.domain
 
-enum class ValueType {
-    J,
-    Q,
-    K,
-    A
+private const val MIN_NUMBER_VALUE = 2
+private const val MAX_NUMBER_VALUE = 10
+
+enum class ValueType(val point: Int) {
+    A(1),
+    TWO(2), THREE(3), FOUR(4), FIVE(5),
+    SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
+    J(10), Q(10), K(10);
+
+    companion object {
+        fun getValueType(value: Int): ValueType {
+            require(value in MIN_NUMBER_VALUE..MAX_NUMBER_VALUE)
+            return values().find { it.point == value }!!
+        }
+
+        fun getValueType(value: String): ValueType {
+            require(value.length == 1 && values().map { it.name }.contains(value))
+            return values().find { it.name == value }!!
+        }
+    }
 }

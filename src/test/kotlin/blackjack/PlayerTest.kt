@@ -5,6 +5,7 @@ import blackjack.domain.Card
 import blackjack.domain.CardDeck
 import blackjack.domain.Player
 import blackjack.domain.SuitType
+import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,9 +35,9 @@ class PlayerTest {
     @Test
     fun checkPointCalculationFromPlayer() {
         val player = Player("ace")
-        player.addCard(Card(SuitType.CLUB, "4"))
-        player.addCard(Card(SuitType.CLUB, "5"))
-        player.addCard(Card(SuitType.CLUB, "K"))
+        player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
+        player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
+        player.addCard(Card(SuitType.CLUB, ValueType.K))
         Assertions.assertThat(player.calculatePoint()).isEqualTo(19)
     }
 
@@ -44,9 +45,9 @@ class PlayerTest {
     @Test
     fun checkPointCalculationFromPlayerWithAce() {
         val player = Player("ace")
-        player.addCard(Card(SuitType.CLUB, "4"))
-        player.addCard(Card(SuitType.CLUB, "5"))
-        player.addCard(Card(SuitType.CLUB, "A"))
+        player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
+        player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
+        player.addCard(Card(SuitType.CLUB, ValueType.A))
         Assertions.assertThat(player.calculatePoint()).isEqualTo(20)
         Assertions.assertThat(player.calculatePoint(false)).isEqualTo(10)
     }
