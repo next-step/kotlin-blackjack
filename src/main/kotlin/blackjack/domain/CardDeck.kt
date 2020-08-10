@@ -1,10 +1,8 @@
 package blackjack.domain
 
 class CardDeck {
-    var cards: List<Card>
-        private set
-    var currentPosition: Int = -1
-        private set
+    private var cards: List<Card>
+    private var currentPosition: Int = -1
 
     init {
         val initCards: MutableList<Card> = mutableListOf()
