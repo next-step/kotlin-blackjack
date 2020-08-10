@@ -1,10 +1,7 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
 import blackjack.domain.CardDeck
-import blackjack.domain.Player
-import blackjack.domain.SuitType
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
@@ -14,22 +11,6 @@ import org.junit.jupiter.params.provider.EmptySource
 import org.junit.jupiter.params.provider.ValueSource
 
 class BlackjackGameTest {
-
-    @DisplayName("플레이 입력값 확인")
-    @ParameterizedTest
-    @EmptySource
-    @ValueSource(strings = ["ace:con", "$", "ace,"])
-    fun checkPlayersInput(playerNames: String) {
-        assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
-            .isInstanceOf(IllegalArgumentException::class.java)
-    }
-
-    @DisplayName("플레이어 수 확인")
-    @Test
-    fun checkPlayers() {
-        assertThat(BlackjackGame("ace,con", CardDeck()).players.size)
-            .isEqualTo(2)
-    }
 
     @DisplayName("게임 진행여부 입력값 확인하기")
     @ParameterizedTest
@@ -64,27 +45,6 @@ class BlackjackGameTest {
     fun checkPointCalculation() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         assertThat(blackjackGame.currentPlayer.calculatePoint()).isGreaterThan(0)
-    }
-
-    @DisplayName("사용자 포인트 합 계산하기")
-    @Test
-    fun checkPointCalculationFromPlayer() {
-        val player = Player("ace")
-        player.addCard(Card(SuitType.CLUB, "4"))
-        player.addCard(Card(SuitType.CLUB, "5"))
-        player.addCard(Card(SuitType.CLUB, "K"))
-        assertThat(player.calculatePoint()).isEqualTo(19)
-    }
-
-    @DisplayName("사용자 포인트 합 계산하기")
-    @Test
-    fun checkPointCalculationFromPlayerWithAce() {
-        val player = Player("ace")
-        player.addCard(Card(SuitType.CLUB, "4"))
-        player.addCard(Card(SuitType.CLUB, "5"))
-        player.addCard(Card(SuitType.CLUB, "A"))
-        assertThat(player.calculatePoint()).isEqualTo(20)
-        assertThat(player.calculatePoint(false)).isEqualTo(10)
     }
 
     @DisplayName("사용자가 현재 가지고 있는 카드 포인트의 합이 21이 넘는지 안넘는지 확인")
