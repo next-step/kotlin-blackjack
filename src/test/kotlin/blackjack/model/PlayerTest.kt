@@ -8,19 +8,19 @@ class PlayerTest {
     @Test
     fun `게임 참가 시 2장의 카드 받기`() {
         val player = Player("moshi").apply {
-            requestDeck(Deck.pop())
-            requestDeck(Deck.pop())
+            requestCard(Card.pop())
+            requestCard(Card.pop())
         }
 
-        assertThat(player.myReceivedDeck.size).isEqualTo(2)
+        assertThat(player.myReceivedCard.size).isEqualTo(2)
     }
 
     @Test
     fun `점수 계산하기`() {
         val player = Player("moshi").apply {
-            requestDeck(Deck(Card.Kinds.TWO, Card.Shape.HEART))
-            requestDeck(Deck(Card.Kinds.EIGHT, Card.Shape.SPADE))
-            requestDeck(Deck(Card.Kinds.ACE, Card.Shape.CLOVER))
+            requestCard(Card(Kinds.TWO, Shape.HEART))
+            requestCard(Card(Kinds.EIGHT, Shape.SPADE))
+            requestCard(Card(Kinds.ACE, Shape.CLOVER))
         }
 
         assertThat(player.calculateRank()).isEqualTo(21)

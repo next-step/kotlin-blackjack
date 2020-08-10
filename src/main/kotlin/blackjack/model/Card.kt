@@ -1,45 +1,30 @@
 package blackjack.model
 
-class Card {
-    enum class Kinds(val kindsName: String) {
-        ACE("A"),
-        ONE("1"),
-        TWO("2"),
-        THREE("3"),
-        FOUR("4"),
-        FIVE("5"),
-        SIX("6"),
-        SEVEN("7"),
-        EIGHT("8"),
-        NINE("9"),
-        TEN("10"),
-        KING("K"),
-        QUEEN("Q"),
-        JACK("J");
-    }
+import java.util.LinkedList
+import java.util.Queue
 
-    enum class Shape(val shapeName: String) {
-        DIAMOND("다이아"),
-        CLOVER("클로버"),
-        HEART("하트"),
-        SPADE("스페이드");
-    }
+class Card(private val kinds: Kinds, private val shape: Shape) {
 
-    enum class Point(val points: Int, val kinds: Array<Kinds>) {
-        ONE(1, arrayOf(Kinds.ACE, Kinds.ONE)),
-        TWO(2, arrayOf(Kinds.TWO)),
-        THREE(3, arrayOf(Kinds.THREE)),
-        FOUR(4, arrayOf(Kinds.FOUR)),
-        FIVE(5, arrayOf(Kinds.FIVE)),
-        SIX(6, arrayOf(Kinds.SIX)),
-        SEVEN(7, arrayOf(Kinds.SEVEN)),
-        EIGHT(8, arrayOf(Kinds.EIGHT)),
-        NINE(9, arrayOf(Kinds.NINE)),
-        TEN(10, arrayOf(Kinds.TEN, Kinds.KING, Kinds.QUEEN, Kinds.JACK)),
-        ELEVEN(11, arrayOf(Kinds.ACE));
+    override fun toString(): String = "${kinds.kindsName}${shape.shapeName}"
 
-        companion object {
-            fun findByKinds(kinds: Kinds): List<Point> = values().filter { it.kinds.contains(kinds) }
+    fun getCardPoints(): List<Point> = Point.findByKinds(kinds)
+
+    companion object {
+        const val TOTAL_CARD_AMOUNT = 56
+        private val deck: Queue<Card> = getShuffledAllCard()
+
+        private fun getShuffledAllCard(): Queue<Card> {
+            val totalCards = mutableListOf<Card>().apply {
+                for (type in Kinds.values()) {
+                    for (shape in Shape.values()) {
+                        add(Card(type, shape))
+                    }
+                }
+            }.shuffled()
+
+            return LinkedList<Card>(totalCards)
         }
+
+        fun pop(): Card = deck.poll()
     }
 }
