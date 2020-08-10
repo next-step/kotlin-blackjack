@@ -14,4 +14,15 @@ class PlayerTest {
 
         assertThat(player.myReceivedDeck.size).isEqualTo(2)
     }
+
+    @Test
+    fun `점수 계산하기`() {
+        val player = Player("moshi").apply {
+            requestDeck(Deck(Card.Kinds.TWO, Card.Shape.HEART))
+            requestDeck(Deck(Card.Kinds.EIGHT, Card.Shape.SPADE))
+            requestDeck(Deck(Card.Kinds.ACE, Card.Shape.CLOVER))
+        }
+
+        assertThat(player.calculateRank()).isEqualTo(21)
+    }
 }
