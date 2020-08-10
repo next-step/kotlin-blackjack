@@ -1,11 +1,12 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.Players
 
 object ResultView {
-    fun showCardDistribution(players: List<Player>) {
+    fun showCardDistribution(players: Players) {
         val cardsDistributionStringBuilder = StringBuilder()
-        players.forEach { cardsDistributionStringBuilder.append(it.name).append(", ") }
+        players.players.forEach { cardsDistributionStringBuilder.append(it.name).append(", ") }
         cardsDistributionStringBuilder.delete(
             cardsDistributionStringBuilder.lastIndex - 1,
             cardsDistributionStringBuilder.lastIndex
@@ -13,7 +14,7 @@ object ResultView {
         cardsDistributionStringBuilder.append("에게 2장의 카드를 나누었습니다.")
         println(cardsDistributionStringBuilder.toString())
 
-        players.forEach { showPlayerCard(it) }
+        players.players.forEach { showPlayerCard(it) }
     }
 
     fun showPlayerCard(player: Player, withResult: Boolean = false) {
@@ -24,9 +25,9 @@ object ResultView {
         if (withResult) print(playerCardsStringBuilder) else println(playerCardsStringBuilder)
     }
 
-    fun showResult(players: List<Player>) {
+    fun showResult(players: Players) {
         println("")
-        players.forEach {
+        players.players.forEach {
             showPlayerCard(it, true)
             println(" - 결과 ${it.calculatePoint()}")
         }

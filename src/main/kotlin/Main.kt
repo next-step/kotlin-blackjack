@@ -10,7 +10,7 @@ fun main() {
 
         ResultView.showCardDistribution(blackjackGame.players)
         while (!blackjackGame.isEnd) {
-            val isHit = InputView.getHitOrStay(blackjackGame.currentPlayer)
+            val isHit = InputView.getHitOrStay(blackjackGame.players.currentPlayer)
             ResultView.showPlayerCard(blackjackGame.hitOrStay(isHit))
             blackjackGame.nextTurn()
         }

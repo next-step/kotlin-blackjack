@@ -27,7 +27,7 @@ class BlackjackGameTest {
     fun checkHit() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         blackjackGame.hitOrStay("y")
-        assertThat(blackjackGame.currentPlayer.cards.size)
+        assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
     }
 
@@ -36,7 +36,7 @@ class BlackjackGameTest {
     fun checkStay() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         blackjackGame.hitOrStay("n")
-        assertThat(blackjackGame.currentPlayer.cards.size)
+        assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(2)
     }
 
@@ -44,7 +44,7 @@ class BlackjackGameTest {
     @Test
     fun checkPointCalculation() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThat(blackjackGame.currentPlayer.calculatePoint()).isGreaterThan(0)
+        assertThat(blackjackGame.players.currentPlayer.calculatePoint()).isGreaterThan(0)
     }
 
     @DisplayName("사용자가 현재 가지고 있는 카드 포인트의 합이 21이 넘는지 안넘는지 확인")
@@ -52,7 +52,7 @@ class BlackjackGameTest {
     fun checkBust() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         repeat(10) { blackjackGame.hitOrStay("y") }
-        assertThat(blackjackGame.currentPlayer.isBusted()).isEqualTo(true)
+        assertThat(blackjackGame.players.currentPlayer.isBusted()).isEqualTo(true)
     }
 
     @DisplayName("다음턴 사용자 확인")
@@ -60,6 +60,6 @@ class BlackjackGameTest {
     fun checkNextTurn() {
         val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
         repeat(4) { blackjackGame.hitOrStay("y") }
-        assertThat(blackjackGame.currentPlayer.name).isEqualTo("ace")
+        assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
 }
