@@ -12,6 +12,6 @@ class Lambda {
     }
 
     fun sumAllOverThree(numbers: List<Int>): Int {
-        return numbers.sumBy {if (it > 3) it else 0}.toInt()
+        return numbers.sumBy { if (it > 3) it else 0 }.toInt()
     }
 }
