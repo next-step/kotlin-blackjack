@@ -23,8 +23,8 @@ internal class DealerTest {
 
     @DisplayName("한명의 플레이어에게 카드를 지급한다.")
     @Test
-    fun divideCardToOne() {
-        dealer.divideCardTo(players(0))
+    fun giveCardToOne() {
+        dealer.giveCardTo(players(0))
         assertThat(players(0).getCards().size).isEqualTo(3)
     }
 }

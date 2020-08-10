@@ -10,15 +10,15 @@ class Dealer {
 
     fun initPlayersHand(players: Players) {
         for (i in 0 until INITIAL_DIVIDE_COUNT) {
-            divideCardToAll(players)
+            giveCardToAll(players)
         }
     }
 
-    fun divideCardTo(player: Player): HandStatus {
+    fun giveCardTo(player: Player): HandStatus {
         return player.giveCard(cardDeck.pop())
     }
 
-    private fun divideCardToAll(players: Players) {
+    private fun giveCardToAll(players: Players) {
         players.list.forEach { it.giveCard(cardDeck.pop()) }
     }
 

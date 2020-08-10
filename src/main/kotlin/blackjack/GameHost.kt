@@ -29,7 +29,7 @@ class GameHost(private val players: Players) {
 
     private fun requestMoreAction(player: Player, dealer: Dealer) {
         while (player.hasFreeSpace() && requestModeCard(player)) {
-            val handStatus = dealer.divideCardTo(player)
+            val handStatus = dealer.giveCardTo(player)
             ResultView.printPlayer(player, handStatus)
         }
     }
