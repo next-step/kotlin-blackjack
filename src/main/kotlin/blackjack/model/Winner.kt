@@ -22,12 +22,12 @@ object Winner {
         val deckTypesExceptAceType = decks
             .asSequence()
             .map { it.getDeckType() }
-            .filterNot { it.nickName == Card.Type.ACE.nickName }
+            .filterNot { it.type == Card.Type.ACE.type }
             .toList()
         val aceCountInDeck = decks
             .asSequence()
             .map { it.getDeckType() }
-            .filter { it.nickName == Card.Type.ACE.nickName }
+            .filter { it.type == Card.Type.ACE.type }
             .toList()
         return Pair(deckTypesExceptAceType, aceCountInDeck)
     }

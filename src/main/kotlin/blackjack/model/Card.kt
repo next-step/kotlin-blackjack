@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Card {
-    enum class Type(val nickName: String, val points: List<Int>) {
+    enum class Type(val type: String, val points: List<Int>) {
         ACE("A", listOf(1, 11)),
         ONE("1", listOf(1)),
         TWO("2", listOf(2)),
@@ -18,11 +18,11 @@ class Card {
         JACK("J", listOf(10));
 
         companion object {
-            fun findByNickname(nickName: String): Type = values().first { it.nickName == nickName }
+            fun findByType(type: String): Type = values().first { it.type == type }
         }
     }
 
-    enum class Shape(val nickName: String) {
+    enum class Shape(val shape: String) {
         DIAMOND("다이아"),
         CLOVER("클로버"),
         HEART("하트"),
