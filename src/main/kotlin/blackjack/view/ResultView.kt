@@ -22,6 +22,10 @@ object ResultView {
         println("---------------------")
     }
 
+    fun printWinners(winners: List<Player>) {
+        println("$winners")
+    }
+
     fun printPlayer(player: Player, handStatus: HandStatus) {
         println("$player\n${handStatus.message}!")
     }

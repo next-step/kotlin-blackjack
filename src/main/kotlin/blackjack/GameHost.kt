@@ -10,11 +10,13 @@ class GameHost(private val players: Players) {
     private val dealer = Dealer()
 
     fun start() {
+        initPlayers()
         for (player in players.list) {
             requestMoreAction(player, dealer)
         }
-        initPlayers()
+
         ResultView.printPlayers(players)
+        ResultView.printWinners(players.findWinners())
     }
 
     private fun initPlayers() {

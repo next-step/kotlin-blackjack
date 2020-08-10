@@ -4,8 +4,10 @@ import blackjack.domain.deck.Card
 import blackjack.domain.game.ScoreCalculator
 
 class Hand {
+    var status: HandStatus = HandStatus.GENERAL
+        private set
+
     private val cards = arrayListOf<Card>()
-    private var status: HandStatus = HandStatus.GENERAL
 
     fun getCards(): List<Card> = cards.toList()
 
