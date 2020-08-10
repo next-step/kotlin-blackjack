@@ -11,5 +11,5 @@ fun main() {
     blackJackGame.firstTurn()
     blackJackGame.progressTurn()
 
-    OutputView.printResult(players)
+    OutputView.printPoint(players)
 }

@@ -1,7 +1,7 @@
 package blackjack.model
 
 import blackjack.model.card.CardDeck
-import blackjack.view.InputView
+import blackjack.model.player.Player
 import blackjack.view.OutputView
 
 class BlackJackGame(private val players: List<Player>) {
@@ -15,17 +15,19 @@ class BlackJackGame(private val players: List<Player>) {
             player.drawCard(cardDeck.pick())
         }
 
-        OutputView.drawCard(players)
+        for (player in players) {
+            OutputView.drawCard(player)
+        }
     }
 
     fun progressTurn() {
         for (player in players) {
-            turnForPlayer(player)
+            progressTurnForPlayer(player)
         }
     }
 
-    private fun turnForPlayer(player: Player) {
-        while (player.continueToTurn() && InputView.askToDraw(player)) {
+    private fun progressTurnForPlayer(player: Player) {
+        if (player.call()) {
             player.drawCard(cardDeck.pick())
             OutputView.drawCard(player)
         }
