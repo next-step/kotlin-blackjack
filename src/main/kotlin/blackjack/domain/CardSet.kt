@@ -8,6 +8,13 @@ object CardSet {
                 cardSet.add(Card(cardType = cardType, cardValue = it))
             }
         }
-        return cardSet
+        return cardSet.toList()
+    }
+
+    fun pickCard(cardSet: List<Card>): Pair<Card, List<Card>> {
+        val copy = cardSet.toMutableList()
+        val pickCard = copy.shuffled().take(1).last()
+        copy.remove(pickCard)
+        return Pair(pickCard, copy.toList())
     }
 }
