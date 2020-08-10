@@ -1,3 +1,3 @@
 package blackjack.domain
 
-data class Card(val cardType: CardType, private val cardValue: Any)
+data class Card(val cardType: CardType, val cardValue: CardValue)

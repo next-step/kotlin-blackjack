@@ -6,9 +6,9 @@ class CardDeck {
         get() = _cards.deepCopy()
 
     fun pickCard(): Card {
-        val pickCard = _cards.shuffled().take(1).last()
-        _cards.remove(pickCard)
-        return pickCard
+        return _cards.shuffled().take(1).last().apply {
+            _cards.remove(this)
+        }
     }
 
     private fun create(): MutableList<Card> {

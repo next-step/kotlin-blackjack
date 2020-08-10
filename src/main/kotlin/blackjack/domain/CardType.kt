@@ -7,8 +7,8 @@ enum class CardType {
     DIAMOND;
 }
 
-enum class CardValue(val value: Any) {
-    A(Pair(1, 10)),
+enum class CardValue(value: Int) {
+    A(100),
     TWO(2),
     THREE(3),
     FOUR(4),
