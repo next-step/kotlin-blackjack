@@ -7,6 +7,7 @@ import blackjack.domain.player.Players
 object ResultView {
     private const val GIVE_CARD = "에게 2장의 카드를 나누었습니다."
     private const val ERR_INVALID_NAME = "1명 이상의 이름을 입력해주세요."
+    private const val WINNER = "우승자 :"
 
     fun printInvalidName() {
         println(ERR_INVALID_NAME)
@@ -23,7 +24,7 @@ object ResultView {
     }
 
     fun printWinners(winners: List<Player>) {
-        println("$winners")
+        println("$WINNER $winners")
     }
 
     fun printPlayer(player: Player, handStatus: HandStatus) {
