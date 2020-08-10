@@ -1,6 +1,8 @@
 package blackjack.domain.deck
 
-enum class Pip(name: String) {
+import blackjack.BLACKJACK_COUNT
+
+enum class Pip(val displayName: String) {
     TWO("2"),
     THREE("3"),
     FOUR("4"),
@@ -16,11 +18,15 @@ enum class Pip(name: String) {
     ACE("A");
 
     companion object {
+        private const val ACE_MIN = 1
+        private const val ACE_MAX = 11
 
-        fun scoreOf(pip: Pip) = when {
-            pip == ACE -> 11
-            pip.name.toIntOrNull() == null -> 10
-            else -> pip.name.toInt()
+        fun scoreOf(pip: Pip, totalScore: Int = 0) = when (pip) {
+            ACE -> getAceScore(totalScore)
+            JACK, QUEEN, KING -> 10
+            else -> pip.displayName.toInt()
         }
+
+        private fun getAceScore(totalScore: Int) = if (totalScore <= BLACKJACK_COUNT - ACE_MAX) ACE_MAX else ACE_MIN
     }
 }

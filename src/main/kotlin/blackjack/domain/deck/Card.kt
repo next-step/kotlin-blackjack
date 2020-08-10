@@ -2,7 +2,7 @@ package blackjack.domain.deck
 
 data class Card(val pip: Pip, val suit: Suit) {
 
-    val score = Pip.scoreOf(pip)
+    fun getScore(totalScore: Int = 0) = Pip.scoreOf(pip, totalScore)
 
-    override fun toString(): String = "$pip ${suit.name}"
+    override fun toString(): String = "${pip.displayName} ${suit.koName}"
 }
