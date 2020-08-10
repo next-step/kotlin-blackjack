@@ -12,4 +12,14 @@ class BlackJackTest {
 
         assertThat(blackJack.players.size).isEqualTo(2)
     }
+
+    @Test
+    fun ready_game() {
+        val nameList = listOf("joohan", "pikachu")
+
+        val blackJack = BlackJack(nameList)
+
+        assertThat(blackJack.players[0].hands.size).isEqualTo(2)
+        assertThat(blackJack.players[1].hands.size).isEqualTo(2)
+    }
 }
