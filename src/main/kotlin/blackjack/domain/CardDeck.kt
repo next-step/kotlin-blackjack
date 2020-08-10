@@ -2,7 +2,7 @@ package blackjack.domain
 
 class CardDeck {
     private var cards: List<Card>
-    private var currentPosition: Int = -1
+    private var currentPosition: Int = 0
 
     init {
         val initCards: MutableList<Card> = mutableListOf()
@@ -22,7 +22,6 @@ class CardDeck {
     }
 
     fun pickCard(): Card {
-        currentPosition++
-        return cards[currentPosition]
+        return cards[currentPosition++]
     }
 }
