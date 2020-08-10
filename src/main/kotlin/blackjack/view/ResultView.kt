@@ -1,12 +1,13 @@
 package blackjack.view
 
+import blackjack.model.BlackJackGame
 import blackjack.model.Player
 
 object ResultView {
 
-    fun printPreGame(players: List<Player>) {
-        println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
-        players.map { printPlayerHaveCard(it) }
+    fun printPreGame(game: BlackJackGame) {
+        println("${game.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+        game.players.map { printPlayerHaveCard(it) }
     }
 
     fun printPlayerHaveCard(player: Player) {

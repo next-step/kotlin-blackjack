@@ -1,23 +1,24 @@
 package blackjack.controller
 
+import blackjack.model.BlackJackGame
 import blackjack.model.Card
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val players = registerPlayers()
-
-    drawCard(players)
-    showResult(players)
+    registerGame().let {
+        drawCard(it)
+        showResult(it)
+    }
 }
 
-private fun showResult(players: List<Player>) {
-    players.map { ResultView.printResult(it, it.calculateRank()) }
+private fun showResult(game: BlackJackGame) {
+    game.players.map { ResultView.printResult(it, it.calculateRank()) }
 }
 
-private fun drawCard(players: List<Player>) {
-    players.map {
+private fun drawCard(game: BlackJackGame) {
+    game.players.map {
         while (isContinueDraw(it)) {
             it.requestCard(Card.pop())
             ResultView.printPlayerHaveCard(it)
@@ -28,14 +29,9 @@ private fun drawCard(players: List<Player>) {
 private fun isContinueDraw(player: Player) =
     player.calculateRank() < Player.MAX_RANK && InputView.requestOneOfCard(player) == "y"
 
-private fun registerPlayers(): List<Player> {
+private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()
-    val players = playerName.map(::Player).also { player ->
-        player.map {
-            it.requestCard(Card.pop())
-            it.requestCard(Card.pop())
-        }
-    }
-    ResultView.printPreGame(players)
-    return players
+    val blackJackGame = BlackJackGame(playerName.map(::Player))
+    ResultView.printPreGame(blackJackGame)
+    return blackJackGame
 }
