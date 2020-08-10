@@ -2,18 +2,19 @@ package blackjack.domain.player
 
 import blackjack.domain.deck.Card
 
-data class Player(private val id: Int, private val name: String) {
-    private val hand = Hand()
-    private var status: HandStatus = HandStatus.GENERAL
+data class Player(
+    private val id: Int,
+    val name: String
+) : Participant {
+    override val hand = Hand()
+
+    fun hasFreeSpace() = hand.hasFreeSpace()
 
     override fun toString(): String = "$name : ${getCards().joinToString()}"
 
-    fun giveCards(card: Card) {
-        if (status != HandStatus.GENERAL) {
-            return
-        }
-        hand.addNew(card)
+    override fun giveCard(card: Card): HandStatus {
+        return hand.addNew(card)
     }
 
-    fun getCards() = hand.getCards()
+    override fun getCards() = hand.getCards()
 }
