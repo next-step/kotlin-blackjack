@@ -1,11 +1,9 @@
 package blackjack.model.card
 
-const val BOTTOM_CARD_NUMBER = 0
-
 class CardDeck {
-    var cards: MutableList<Card> = generate()
+    val cards: Cards = generate()
 
-    fun generate(): MutableList<Card> {
+    fun generate(): Cards {
         val cards = mutableListOf<Card>()
 
         for (suit in Card.Suit.values()) {
@@ -13,13 +11,8 @@ class CardDeck {
                 cards.add(Card(suit, denomination))
             }
         }
-        return cards.shuffled() as MutableList<Card>
+        return Cards(cards.shuffled() as MutableList<Card>)
     }
 
-    fun pick(): Card {
-        val card = cards[BOTTOM_CARD_NUMBER]
-
-        cards.removeAt(BOTTOM_CARD_NUMBER)
-        return card
-    }
+    fun pick(): Card = cards.getCard()
 }
