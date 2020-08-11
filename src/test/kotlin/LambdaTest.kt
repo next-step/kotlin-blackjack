@@ -1,20 +1,23 @@
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class Lambda {
-    val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+class LambdaTest {
+    private val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6)
+    val conditionAll: (item: Int) -> Boolean = { true }
     val conditionOdd: (item: Int) -> Boolean = { item -> item % 2 == 0 }
     val conditionOverThree: (item: Int) -> Boolean = { item -> item > 3 }
+    private fun List<Int>.sumBy(condition: (item: Int) -> Boolean) = this.filter(condition).sum()
+
     fun sumAll(numbers: List<Int>): Int {
-        return numbers.sum()
+        return numbers.sumBy { conditionAll(it) }
     }
 
     fun sumAllEven(numbers: List<Int>): Int {
-        return numbers.filter { conditionOdd(it) }.sum()
+        return numbers.sumBy { conditionOdd(it) }
     }
 
     fun sumAllOverThree(numbers: List<Int>): Int {
-        return numbers.filter { conditionOverThree(it) }.sum()
+        return numbers.sumBy { conditionOverThree(it) }
     }
 
     @Test
