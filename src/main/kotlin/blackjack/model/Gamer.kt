@@ -1,6 +1,6 @@
 package blackjack.model
 
-abstract class Gamer {
+abstract class Gamer(val name: String) {
 
     private val _myReceivedCard = mutableListOf<Card>()
     val myReceivedCard: List<Card> get() = _myReceivedCard
