@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.BlackJackGame
 import blackjack.model.Card
+import blackjack.model.Dealer
 import blackjack.model.Gamer
 import blackjack.model.Player
 import blackjack.view.InputView
@@ -32,7 +33,7 @@ private fun isContinueDraw(player: Gamer) =
 
 private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()
-    val blackJackGame = BlackJackGame(playerName.map(::Player))
+    val blackJackGame = BlackJackGame(dealer = Dealer(), players = playerName.map(::Player))
     ResultView.printPreGame(blackJackGame)
     return blackJackGame
 }

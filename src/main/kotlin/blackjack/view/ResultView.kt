@@ -6,7 +6,7 @@ import blackjack.model.Gamer
 object ResultView {
 
     fun printPreGame(game: BlackJackGame) {
-        println("${game.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+        println("${game.dealer.name}와 ${game.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
         game.players.map { printPlayerHaveCard(it) }
     }
 
