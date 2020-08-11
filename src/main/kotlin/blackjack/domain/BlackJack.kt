@@ -8,6 +8,18 @@ class BlackJack(players: List<String>) {
     private val players = players.map { Player(it) }
     private val cardDeck = CardDeck()
 
+    fun raceInit(name: String) {
+        players.onEach {
+            repeat(2) {
+                players.first { it.name == name }.addScore(cardDeck.pickCard())
+            }
+        }
+    }
+
+    fun raceAvailable(name: String): Boolean {
+        return players.first { it.name == name }.canRace
+    }
+
     fun race(name: String, race: Boolean) {
         val pickCard = cardDeck.pickCard()
         if (race) {
@@ -15,6 +27,10 @@ class BlackJack(players: List<String>) {
                 checkState()
             }
         }
+    }
+
+    fun winner(): List<Player> {
+        return players.filter { it.winner }
     }
 
     private fun checkState() {
