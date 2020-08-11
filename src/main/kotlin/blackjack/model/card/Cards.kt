@@ -14,6 +14,10 @@ data class Cards(val cards: MutableList<Card>) {
         cards.add(card)
     }
 
+    fun getCount(): Int {
+        return cards.size
+    }
+
     fun sumByPoint(): Int {
         return cards.sumBy { it.denomination.point }
     }
