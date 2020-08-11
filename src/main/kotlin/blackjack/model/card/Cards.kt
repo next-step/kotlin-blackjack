@@ -30,7 +30,7 @@ data class Cards(val cards: MutableList<Card>) {
         return cards.joinToString(separator = ",") { "${it.denomination.title}${it.suit.title}" }
     }
 
-    fun getTotalPointForBlackJack(): Int {
+    fun getBlackjackPoint(): Int {
         val pointSum = sumByPoint()
         val pointSumOptional = sumByOptionalPoint()
 

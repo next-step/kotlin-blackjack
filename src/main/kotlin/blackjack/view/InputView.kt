@@ -3,13 +3,14 @@ package blackjack.view
 import blackjack.model.player.Dealer
 import blackjack.model.player.Gamer
 import blackjack.model.player.Player
+import blackjack.model.player.Players
 
 object InputView {
     private const val PLAYER_NAME_DELIMITER = ","
     private const val PLAYER_ANSWER_YES = "y"
     private const val PLAYER_ANSWER_NO = "n"
 
-    fun getPlayer(): List<Player> {
+    fun getPlayer(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         val names = readLine().toString().split(PLAYER_NAME_DELIMITER)
@@ -20,7 +21,7 @@ object InputView {
         players.add(Dealer())
         players.addAll(gamers)
 
-        return players
+        return Players(players)
     }
 
     fun askToDraw(player: Gamer): Boolean {

@@ -10,6 +10,8 @@ fun main() {
 
     blackJackGame.firstTurn()
     blackJackGame.progressTurn()
+    blackJackGame.checkWinOrLose()
 
     OutputView.printPoint(players)
+    OutputView.printWinOrLost(players)
 }

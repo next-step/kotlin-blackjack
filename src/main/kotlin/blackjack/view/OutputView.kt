@@ -1,26 +1,28 @@
 package blackjack.view
 
-import blackjack.model.player.Player
+import blackjack.model.player.Players
 
 object OutputView {
-    fun firstTurn(players: List<Player>) {
-        val name = players.joinToString(separator = ",") { it.name }
-
+    fun firstTurn(players: Players) {
+        val name = players.getNames()
         println("${name}에게 2장의 카드를 나누었습니다.")
     }
 
-    fun drawCard(player: Player) {
-        val cards = player.getDisplayCards()
-
-        println("${player.name}카드: $cards")
+    fun printCardForPlayers(players: Players) {
+        printPlayers(players.getDrawCardResults())
     }
 
-    fun printPoint(players: List<Player>) {
-        for (player in players) {
-            val cards = player.getDisplayCards()
-            val point = player.getTotalPointForBlackJack()
+    fun printPoint(players: Players) {
+        printPlayers(players.getPointResults())
+    }
 
-            println("${player.name}카드: $cards - 결과: $point")
+    fun printWinOrLost(players: Players) {
+        printPlayers(players.getWinnerResults())
+    }
+
+    private fun printPlayers(results: List<String>) {
+        for (result in results) {
+            println(result)
         }
     }
 }
