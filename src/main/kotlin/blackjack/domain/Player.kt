@@ -1,31 +1,22 @@
 package blackjack.domain
 
-class Player(
+data class Player(
     val name: String,
-    cards: Cards = Cards.empty()
+    val cards: Cards = Cards.empty(),
+    val state: State = getStateFrom(cards)
 ) {
-    var cards: Cards = cards
-        private set
-
-    var state: State = State.Playing
-        private set
-
-    init {
-        checkPlayerBusted()
+    fun deal(deck: DrawStrategy): Player {
+        return this.copy(cards = this.cards + deck.getDealCards())
     }
 
-    fun deal(deck: DrawStrategy) {
-        repeat(DEAL_DRAW_COUNT) { cards = cards.add(deck.fetchCard()) }
+    fun stand(): Player {
+        return this.copy(state = State.Stand)
     }
 
-    fun stand() {
-        this.state = State.Stand
-    }
-
-    fun hit(deck: DrawStrategy) {
+    fun hit(deck: DrawStrategy): Player {
         validatePlayerCanHit()
-        cards = cards.add(deck.fetchCard())
-        checkPlayerBusted()
+        val newCards = this.cards + deck.fetchCard()
+        return this.copy(cards = newCards, state = getStateFrom(newCards))
     }
 
     private fun validatePlayerCanHit() {
@@ -33,17 +24,16 @@ class Player(
         require(this.state !is State.Stand) { "Stand 상태에서는 카드를 더 뽑을 수 없습니다." }
     }
 
-    private fun checkPlayerBusted() {
-        if (cards.sumScores() > Cards.BLACK_JACK_SCORE) {
-            state = State.Busted
-        }
-    }
-
     fun getScore(): Int {
         return cards.sumScores()
     }
 
     companion object {
-        private const val DEAL_DRAW_COUNT = 2
+        private fun getStateFrom(cards: Cards): State {
+            if (cards.sumScores() > Cards.BLACK_JACK_SCORE) {
+                return State.Busted
+            }
+            return State.Playing
+        }
     }
 }

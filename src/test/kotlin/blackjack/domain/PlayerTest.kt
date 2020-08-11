@@ -14,11 +14,14 @@ internal class PlayerTest {
             override fun fetchCard(): Card {
                 return expectedCard
             }
+
+            override fun getDealCards(): List<Card> {
+                return listOf(expectedCard, expectedCard)
+            }
         }
-        val player = Player("Malibin")
 
         // when
-        player.deal(deck)
+        val player = Player("Malibin").deal(deck)
 
         // then
         assertThat(player.cards.values).isEqualTo(listOf(expectedCard, expectedCard))
@@ -31,6 +34,10 @@ internal class PlayerTest {
         val deck = object : DrawStrategy {
             override fun fetchCard(): Card {
                 return expectedCard
+            }
+
+            override fun getDealCards(): List<Card> {
+                return emptyList()
             }
         }
         val player = Player("Malibin", Cards.denominationsOf("8", "9", "10"))

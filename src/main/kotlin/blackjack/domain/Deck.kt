@@ -20,4 +20,8 @@ class Deck : DrawStrategy {
             cards.addAll(Card.ALL.shuffled())
         }
     }
+
+    override fun getDealCards(): List<Card> {
+        return (1..DrawStrategy.DEAL_DRAW_COUNT).map { fetchCard() }
+    }
 }

@@ -9,16 +9,21 @@ internal class BlackJackGameTest {
     @Test
     fun `플레이어들이 초기 두장씩 카드 갖고있는지 확인`() {
         // given
+        val card = Card.denominationOf("A")
         val deck = object : DrawStrategy {
             override fun fetchCard(): Card {
-                return Card.denominationOf("A")
+                return card
+            }
+
+            override fun getDealCards(): List<Card> {
+                return listOf(card, card)
             }
         }
         val game = BlackJackGame(deck)
-        val players = listOf(Player("Malibin"))
+        val playerNames = listOf("Malibin")
 
         // when
-        game.deal(players)
+        val players = game.dealWith(playerNames)
 
         // then
         assertThat(players[0].cards.values).hasSize(2)
@@ -31,12 +36,15 @@ internal class BlackJackGameTest {
             override fun fetchCard(): Card {
                 return Card.denominationOf("A")
             }
+
+            override fun getDealCards(): List<Card> {
+                return emptyList()
+            }
         }
         val game = BlackJackGame(deck)
-        val player = Player("Malibin")
 
         // when
-        game.askHit(player, true)
+        val player = game.askHit(Player("Malibin"), true)
 
         // then
         assertThat(player.cards.values).hasSize(1)
@@ -49,12 +57,15 @@ internal class BlackJackGameTest {
             override fun fetchCard(): Card {
                 return Card.denominationOf("A")
             }
+
+            override fun getDealCards(): List<Card> {
+                return emptyList()
+            }
         }
         val game = BlackJackGame(deck)
-        val player = Player("Malibin")
 
         // when
-        game.askHit(player, false)
+        val player = game.askHit(Player("Malibin"), false)
 
         // then
         assertAll(

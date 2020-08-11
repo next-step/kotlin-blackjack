@@ -3,9 +3,11 @@ package blackjack.domain
 data class Cards(
     val values: List<Card>
 ) {
-    fun add(card: Card): Cards {
-        return Cards(this.values + card)
-    }
+    operator fun plus(card: Card): Cards = Cards(this.values + card)
+
+    operator fun plus(cards: List<Card>): Cards = Cards(this.values + cards)
+
+    operator fun plus(cards: Cards): Cards = Cards(this.values + cards.values)
 
     fun sumScores(): Int {
         val totalScore = values.sumBy { it.denomination.score }
