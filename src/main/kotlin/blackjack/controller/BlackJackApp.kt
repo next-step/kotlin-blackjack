@@ -16,7 +16,8 @@ fun main() {
 }
 
 private fun showResult(game: BlackJackGame) {
-    game.players.map { ResultView.printResult(it, it.totalPoints) }
+    (game.dealer as Dealer).requestCardIfAvailableExtraCard()
+    ResultView.printResult(game)
 }
 
 private fun drawCard(game: BlackJackGame) {

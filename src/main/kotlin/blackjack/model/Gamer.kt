@@ -8,6 +8,8 @@ abstract class Gamer(val name: String) {
     var totalPoints = 0
         private set
 
+    fun isReachMaxPoint() = totalPoints >= MAX_POINT
+
     open fun requestCard(card: Card) {
         _myReceivedCard.add(card)
         calculatePoint(card)
@@ -20,8 +22,6 @@ abstract class Gamer(val name: String) {
         val cardPoint = card.getCardKinds().point
         totalPoints += if (isAvailableExtraPoint(cardPoint)) cardPoint + ACE_EXTRA_POINT else cardPoint
     }
-
-    fun isReachMaxPoint() = totalPoints >= MAX_POINT
 
     companion object {
         const val MAX_POINT = 21
