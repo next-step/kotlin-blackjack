@@ -7,7 +7,7 @@ class Card(private val kinds: Kinds, private val shape: Shape) {
 
     override fun toString(): String = "${kinds.kindsName}${shape.shapeName}"
 
-    fun getCardPoints(): List<Point> = Point.findByKinds(kinds)
+    fun getCardKinds() = Kinds.findByKinds(kinds)
 
     companion object {
         const val TOTAL_CARD_AMOUNT = 52
