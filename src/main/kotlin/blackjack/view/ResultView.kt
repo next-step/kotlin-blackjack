@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.model.BlackJackGame
 import blackjack.model.Dealer
 import blackjack.model.Gamer
+import blackjack.model.Winner
 
 object ResultView {
 
@@ -22,6 +23,18 @@ object ResultView {
         println()
         println("${game.dealer.name} 카드: ${game.dealer.myReceivedCard.joinToString()} - 결과: ${game.dealer.totalPoints}")
         game.players.map { println("${it.name}카드: ${it.myReceivedCard.joinToString()} - 결과: ${it.totalPoints}") }
+        println()
+    }
+
+    fun printFinalScore(game: BlackJackGame) {
+        println("## 최종 승패")
+        Winner.getTotalScore(game).mapIndexed { index, score ->
+            if (index == 0) {
+                println("${game.dealer.name}: ${score.win}승 ${score.lose}패")
+                return@mapIndexed
+            }
+            println("${game.players[index - 1].name}: ${if (score.win == 1) "승" else "패"}")
+        }
     }
 
     private fun printDealerHaveCard(dealer: Gamer) {

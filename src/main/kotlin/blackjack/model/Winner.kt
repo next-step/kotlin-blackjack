@@ -2,13 +2,13 @@ package blackjack.model
 
 object Winner {
 
-    fun getTotalScore(dealer: Gamer, players: List<Gamer>): List<Score> {
-        val playersWinOrNot = players
+    fun getTotalScore(game: BlackJackGame): List<Score> {
+        val playersWinOrNot = game.players
             .map { it.totalPoints }
             .map {
                 if (it > Gamer.MAX_POINT) return@map false
-                if (dealer.totalPoints > Gamer.MAX_POINT) return@map true
-                return@map dealer.totalPoints < it
+                if (game.dealer.totalPoints > Gamer.MAX_POINT) return@map true
+                return@map game.dealer.totalPoints < it
             }
         val dealerScore = Score(win = playersWinOrNot.count { !it }, lose = playersWinOrNot.count { it })
         val playersScore = playersWinOrNot.map {

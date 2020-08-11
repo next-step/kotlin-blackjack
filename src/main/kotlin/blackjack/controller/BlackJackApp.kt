@@ -12,7 +12,12 @@ fun main() {
     registerGame().let {
         drawCard(it)
         showResult(it)
+        showScore(it)
     }
+}
+
+private fun showScore(game: BlackJackGame) {
+    ResultView.printFinalScore(game)
 }
 
 private fun showResult(game: BlackJackGame) {
