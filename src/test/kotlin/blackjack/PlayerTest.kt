@@ -91,4 +91,31 @@ class PlayerTest {
 
         assertThat(isHit).isEqualTo(true)
     }
+
+    @DisplayName("A가 포함되어 있을 경우 딜러의 계산방식, A =11 일경우 21 미만")
+    @Test
+    fun checkDealerPointWithAce() {
+        val dealer = Dealer()
+        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.FIVE))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
+
+        val point = dealer.calculatePoint()
+
+        assertThat(point).isEqualTo(20)
+    }
+
+    @DisplayName("A가 포함되어 있을 경우 딜러의 계산방식, A =11 일경우 21 초과")
+    @Test
+    fun checkDealerPointWithAceMoreThanBlackjackPoint() {
+        val dealer = Dealer()
+        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.SIX))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.K))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
+
+        val point = dealer.calculatePoint()
+
+        assertThat(point).isEqualTo(21)
+    }
 }
