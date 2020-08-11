@@ -15,7 +15,12 @@ data class Players(val players: List<Player>) {
     }
 
     fun getNextPlayer(): Player? {
-        currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players).find { it.isHit }!!
-        return currentPlayer
+        return try {
+            currentPlayer =
+                players.asSequence().drop(players.indexOf(currentPlayer) + 1).plus(players).find { it.isHit }!!
+            currentPlayer
+        } catch (e: NullPointerException) {
+            null
+        }
     }
 }

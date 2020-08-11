@@ -83,13 +83,12 @@ class PlayerTest {
     @Test
     fun checkHitForDealer() {
         val dealer = Dealer()
-        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.FIVE))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.J))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.K))
 
         val isHit = dealer.isHit
 
-        assertThat(isHit).isEqualTo(true)
+        assertThat(isHit).isEqualTo(false)
     }
 
     @DisplayName("A가 포함되어 있을 경우 딜러의 계산방식, A =11 일경우 21 미만")

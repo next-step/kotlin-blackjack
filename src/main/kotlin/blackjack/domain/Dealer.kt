@@ -1,12 +1,13 @@
 package blackjack.domain
 
-private const val LIMIT_HIT_NUMBER = 17
-private const val DEALER_NAME = "딜러"
+const val LIMIT_HIT_NUMBER = 16
+const val DEALER_NAME = "딜러"
 
 class Dealer(name: String = DEALER_NAME) : Player(name) {
-    override var isHit: Boolean = calculatePoint() < LIMIT_HIT_NUMBER
+    override var isHit: Boolean = true
+        get() = calculatePoint() <= LIMIT_HIT_NUMBER
 
     fun calculatePoint(): Int {
-        return calculatePoint(calculatePoint(true) < BLACKJACK_POINT)
+        return super.calculatePoint(super.calculatePoint(true) < BLACKJACK_POINT)
     }
 }
