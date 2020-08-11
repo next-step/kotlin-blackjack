@@ -14,7 +14,7 @@ fun main() {
 }
 
 private fun showResult(game: BlackJackGame) {
-    game.players.map { ResultView.printResult(it, it.calculatePoint()) }
+    game.players.map { ResultView.printResult(it, it.totalPoints) }
 }
 
 private fun drawCard(game: BlackJackGame) {

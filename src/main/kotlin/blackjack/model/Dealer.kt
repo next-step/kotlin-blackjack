@@ -12,7 +12,7 @@ class Dealer : Gamer() {
     }
 
     private fun checkIfGetExtraCardOrNot(): Boolean =
-        myReceivedCard.size == 2 && calculatePoint() <= EXTRA_CARD_AVAILABLE_LIMIT_POINT
+        myReceivedCard.size == 2 && totalPoints <= EXTRA_CARD_AVAILABLE_LIMIT_POINT
 
     companion object {
         private const val EXTRA_CARD_AVAILABLE_LIMIT_POINT = 16
