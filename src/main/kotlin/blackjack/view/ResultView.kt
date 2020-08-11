@@ -14,7 +14,7 @@ object ResultView {
         println("${player.name}카드: ${player.myReceivedCard.joinToString()}")
     }
 
-    fun printResult(player: Player, rank: Int) {
-        println("${player.name}카드: ${player.myReceivedCard.joinToString()} - 결과: $rank")
+    fun printResult(player: Player, point: Int) {
+        println("${player.name}카드: ${player.myReceivedCard.joinToString()} - 결과: $point")
     }
 }

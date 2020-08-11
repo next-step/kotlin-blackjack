@@ -14,7 +14,7 @@ fun main() {
 }
 
 private fun showResult(game: BlackJackGame) {
-    game.players.map { ResultView.printResult(it, it.calculateRank()) }
+    game.players.map { ResultView.printResult(it, it.calculatePoint()) }
 }
 
 private fun drawCard(game: BlackJackGame) {
@@ -27,7 +27,7 @@ private fun drawCard(game: BlackJackGame) {
 }
 
 private fun isContinueDraw(player: Player) =
-    !player.isReachMaxRank() && InputView.requestOneOfCard(player) == "y"
+    !player.isReachMaxPoint() && InputView.requestOneOfCard(player) == "y"
 
 private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()

@@ -23,6 +23,6 @@ class PlayerTest {
             requestCard(Card(Kinds.ACE, Shape.CLOVER))
         }
 
-        assertThat(player.calculateRank()).isEqualTo(21)
+        assertThat(player.calculatePoint()).isEqualTo(21)
     }
 }

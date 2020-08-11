@@ -9,20 +9,20 @@ class Player(val name: String) {
         _myReceivedCard.add(card)
     }
 
-    fun calculateRank(): Int {
-        var rank = 0
+    fun calculatePoint(): Int {
+        var point = 0
         _myReceivedCard
             .map { it.getCardPoints() }
-            .map { rank += if (it.size == 1) it.first().points else calculateAceCase(rank, it) }
-        return rank
+            .map { point += if (it.size == 1) it.first().points else calculateAceCase(point, it) }
+        return point
     }
 
-    fun isReachMaxRank() = calculateRank() < MAX_RANK
+    fun isReachMaxPoint() = calculatePoint() < MAX_POINT
 
-    private fun calculateAceCase(rank: Int, it: List<Point>) =
-        if (rank + it.last().points <= MAX_RANK) it.last().points else it.first().points
+    private fun calculateAceCase(point: Int, it: List<Point>) =
+        if (point + it.last().points <= MAX_POINT) it.last().points else it.first().points
 
     companion object {
-        private const val MAX_RANK = 21
+        private const val MAX_POINT = 21
     }
 }
