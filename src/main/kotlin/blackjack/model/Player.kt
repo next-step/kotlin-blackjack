@@ -19,7 +19,7 @@ class Player(val name: String) {
     fun isReachMaxPoint() = calculatePoint() >= MAX_POINT
 
     private fun isAvailableExtraPoint(acc: Int, point: Int): Boolean {
-        return point == Kinds.ACE.point && acc + point + ACE_EXTRA_POINT < MAX_POINT
+        return point == Kinds.ACE.point && acc + point + ACE_EXTRA_POINT <= MAX_POINT
     }
 
     companion object {
