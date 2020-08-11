@@ -11,7 +11,7 @@ class GameHost(private val players: Players) {
 
     fun start() {
         initPlayers()
-        for (player in players.list) {
+        for (player in players.participants) {
             requestMoreAction(player, dealer)
         }
 

@@ -14,7 +14,7 @@ object ResultView {
     }
 
     fun printGiveCard(players: Players) {
-        println("${players.list.joinToString { it.name }}$GIVE_CARD")
+        println("${players.participants.joinToString { it.name }}$GIVE_CARD")
     }
 
     fun printPlayers(players: Players) {

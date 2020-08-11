@@ -16,7 +16,7 @@ internal class PlayersTest {
     @ParameterizedTest
     @ValueSource(strings = ["aa, bb"])
     fun createPlayers(input: String) {
-        assertThat(Players(input).list).contains(Player(0, "aa"), Player(1, "bb"))
+        assertThat(Players(input).participants).contains(Player(0, "aa"), Player(1, "bb"))
     }
 
     @DisplayName("하나 이상의 이름이 필요하다.")

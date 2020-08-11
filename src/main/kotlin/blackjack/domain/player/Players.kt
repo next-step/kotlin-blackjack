@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
 data class Players(private val input: String) {
-    val list = parseNames(input)
+    val participants = parseNames(input)
 
     init {
         require(input.isNotBlank()) { "1명 이상의 참가자가 필요합니다." }
@@ -11,11 +11,11 @@ data class Players(private val input: String) {
 
     private fun findMaxPosition() = findWinnerCandidates().max()?.getScore() ?: 0
 
-    operator fun invoke(index: Int) = list[index]
+    operator fun invoke(index: Int) = participants[index]
 
-    override fun toString() = list.joinToString("\n")
+    override fun toString() = participants.joinToString("\n")
 
-    private fun findWinnerCandidates(): List<Player> = list.filter { it.isWinnerCandidate() }
+    private fun findWinnerCandidates(): List<Player> = participants.filter { it.isWinnerCandidate() }
 
     companion object {
         private const val DELIMITER = ","

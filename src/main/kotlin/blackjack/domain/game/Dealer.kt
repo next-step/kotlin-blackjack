@@ -19,7 +19,7 @@ class Dealer {
     }
 
     private fun giveCardToAll(players: Players) {
-        players.list.forEach { it.receiveCard(cardDeck.pop()) }
+        players.participants.forEach { it.receiveCard(cardDeck.pop()) }
     }
 
     companion object {
