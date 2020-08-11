@@ -10,7 +10,7 @@ class Card(private val kinds: Kinds, private val shape: Shape) {
     fun getCardPoints(): List<Point> = Point.findByKinds(kinds)
 
     companion object {
-        const val TOTAL_CARD_AMOUNT = 56
+        const val TOTAL_CARD_AMOUNT = 52
         private val deck: Queue<Card> = getShuffledAllCard()
 
         private fun getShuffledAllCard(): Queue<Card> {

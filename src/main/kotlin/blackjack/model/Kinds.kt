@@ -2,7 +2,6 @@ package blackjack.model
 
 enum class Kinds(val kindsName: String) {
     ACE("A"),
-    ONE("1"),
     TWO("2"),
     THREE("3"),
     FOUR("4"),
