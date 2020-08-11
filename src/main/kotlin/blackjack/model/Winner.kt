@@ -12,7 +12,7 @@ object Winner {
             }
         val dealerScore = Score(win = playersWinOrNot.count { !it }, lose = playersWinOrNot.count { it })
         val playersScore = playersWinOrNot.map {
-            if (it) Score(win = 1, lose = 0) else Score(win = 0, lose = 1)
+            if (it) Score(win = 1) else Score()
         }
         return listOf(listOf(dealerScore), playersScore).flatten()
     }
