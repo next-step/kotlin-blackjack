@@ -25,4 +25,14 @@ class PlayerTest {
 
         assertThat(player.calculatePoint()).isEqualTo(21)
     }
+
+    @Test
+    fun `ACE가 2장인 경우`() {
+        val player = Player("moshi").apply {
+            requestCard(Card(Kinds.ACE, Shape.HEART))
+            requestCard(Card(Kinds.ACE, Shape.SPADE))
+        }
+
+        assertThat(player.calculatePoint()).isEqualTo(12)
+    }
 }
