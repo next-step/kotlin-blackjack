@@ -1,20 +1,15 @@
 package blackjack.domain
 
-class Cards(vararg values: String) {
-
-    private val cards = values.map { Card.denominationOf(it) }.toMutableList()
-
-    fun add(card: Card) {
-        cards.add(card)
-    }
-
-    fun get(): List<Card> {
-        return cards.toList()
+data class Cards(
+    val values: List<Card>
+) {
+    fun add(card: Card): Cards {
+        return Cards(this.values + card)
     }
 
     fun sumScores(): Int {
-        val totalScore = cards.sumBy { it.denomination.score }
-        return if (cards.hasAce()) sumScoresWithAce(totalScore)
+        val totalScore = values.sumBy { it.denomination.score }
+        return if (values.hasAce()) sumScoresWithAce(totalScore)
         else totalScore
     }
 
@@ -30,12 +25,15 @@ class Cards(vararg values: String) {
     }
 
     override fun toString(): String {
-        return cards.joinToString(", ")
+        return values.joinToString(", ")
     }
 
     companion object {
         const val BLACK_JACK_SCORE = 21
 
-        fun empty() = Cards()
+        fun empty() = Cards(emptyList())
+
+        fun denominationsOf(vararg values: String) =
+            Cards(values.map { Card.denominationOf(it) })
     }
 }

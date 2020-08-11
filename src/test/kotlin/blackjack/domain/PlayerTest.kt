@@ -21,7 +21,7 @@ internal class PlayerTest {
         player.deal(deck)
 
         // then
-        assertThat(player.getCards()).isEqualTo(listOf(expectedCard, expectedCard))
+        assertThat(player.cards.values).isEqualTo(listOf(expectedCard, expectedCard))
     }
 
     @Test
@@ -33,18 +33,18 @@ internal class PlayerTest {
                 return expectedCard
             }
         }
-        val player = Player("Malibin", Cards("8", "9", "10"))
+        val player = Player("Malibin", Cards.denominationsOf("8", "9", "10"))
 
         // then
         assertThatThrownBy { player.hit(deck) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("21점을 초과해 카드를 더 가져올 수 없습니다.")
+            .hasMessage("총점(27)이 21점을 초과해 카드를 더 가져올 수 없습니다. 카드목록 : ${player.cards}")
     }
 
     @Test
     fun `플레이어의 현재 점수 계산`() {
         // given
-        val player = Player("Malibin", Cards("A", "J"))
+        val player = Player("Malibin", Cards.denominationsOf("A", "J"))
 
         // then
         assertThat(player.getScore()).isEqualTo(21)

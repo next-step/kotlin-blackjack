@@ -1,21 +1,23 @@
 package blackjack.domain
 
+import java.util.LinkedList
+import java.util.Queue
+
 class Deck : DrawStrategy {
-    private val cards = mutableListOf<Card>()
+    private val cards: Queue<Card> = LinkedList<Card>()
 
     init {
         cards.addAll(Card.ALL.shuffled())
     }
 
-    @ExperimentalStdlibApi
     override fun fetchCard(): Card {
-        return cards.removeFirstOrNull()
-            ?: run { reloadAndFetch() }
+        checkCardsAreEmpty()
+        return cards.poll()
     }
 
-    @ExperimentalStdlibApi
-    private fun reloadAndFetch(): Card {
-        this.cards.addAll(Card.ALL.shuffled())
-        return fetchCard()
+    private fun checkCardsAreEmpty() {
+        if (this.cards.isEmpty()) {
+            cards.addAll(Card.ALL.shuffled())
+        }
     }
 }

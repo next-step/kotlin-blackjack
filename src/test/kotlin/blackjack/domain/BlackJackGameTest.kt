@@ -2,48 +2,64 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class BlackJackGameTest {
+
     @Test
-    fun `플레이어 이름 리스트 반환 확인`() {
+    fun `플레이어들이 초기 두장씩 카드 갖고있는지 확인`() {
         // given
-        val expectedNames = listOf("malibin", "jwaeng")
-        val game = BlackJackGame(expectedNames, Deck())
+        val deck = object : DrawStrategy {
+            override fun fetchCard(): Card {
+                return Card.denominationOf("A")
+            }
+        }
+        val game = BlackJackGame(deck)
+        val players = listOf(Player("Malibin"))
+
+        // when
+        game.deal(players)
 
         // then
-        assertThat(game.playerNames).isEqualTo(expectedNames)
+        assertThat(players[0].cards.values).hasSize(2)
     }
 
     @Test
-    fun `특정 플레이어의 카드들 가져오기`() {
+    fun `플레이어가 hit했을 때 카드 수가 증가하는 지 확인`() {
         // given
-        val playerName = "Malibin"
-        val expectedCard = Card.denominationOf("5")
         val deck = object : DrawStrategy {
             override fun fetchCard(): Card {
-                return expectedCard
+                return Card.denominationOf("A")
             }
         }
-        val game = BlackJackGame(listOf(playerName), deck)
+        val game = BlackJackGame(deck)
+        val player = Player("Malibin")
+
+        // when
+        game.askHit(player, true)
 
         // then
-        assertThat(game.playerCardsOf(playerName)).isEqualTo(listOf(expectedCard, expectedCard))
+        assertThat(player.cards.values).hasSize(1)
     }
 
     @Test
-    fun `특정 플레이어의 점수 가져오기`() {
+    fun `플레이어가 stand했을 때 상태 확인`() {
         // given
-        val playerName = "Malibin"
-        val expectedCard = Card.denominationOf("5")
         val deck = object : DrawStrategy {
             override fun fetchCard(): Card {
-                return expectedCard
+                return Card.denominationOf("A")
             }
         }
-        val game = BlackJackGame(listOf(playerName), deck)
+        val game = BlackJackGame(deck)
+        val player = Player("Malibin")
+
+        // when
+        game.askHit(player, false)
 
         // then
-        assertThat(game.playerScoreOf(playerName)).isEqualTo(10)
+        assertAll(
+            { assertThat(player.cards.values).hasSize(0) },
+            { assertThat(player.state).isInstanceOf(State.Stand::class.java) }
+        )
     }
 }
-

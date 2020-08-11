@@ -1,15 +1,17 @@
 package blackjack.view
 
-import blackjack.domain.Card
+import blackjack.domain.Player
 
-fun notifyStartGame(playerNames: List<String>) {
-    println("${playerNames.joinToString(", ")}에게 2장의 카드를 나누어 주었습니다.")
+fun notifyStartGame(players: List<Player>) {
+    println("${players.joinToString(", ") { it.name }}에게 2장의 카드를 나누어 주었습니다.")
+    players.forEach { printPlayerCards(it) }
+    println()
 }
 
-fun printPlayerCards(playerName: String, cards: List<Card>) {
-    println("${playerName}카드: ${cards.joinToString(", ")}")
+fun printPlayerCards(player: Player) {
+    println("${player.name}카드: ${player.cards}")
 }
 
-fun printResult(playerName: String, cards: List<Card>, score: Int) {
-    println("${playerName}카드: ${cards.joinToString(", ")} - 결과: $score")
+fun printResult(player: Player) {
+    println("${player.name}카드: ${player.cards} - 결과: ${player.getScore()}")
 }

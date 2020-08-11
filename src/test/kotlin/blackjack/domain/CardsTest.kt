@@ -12,7 +12,7 @@ internal class CardsTest {
     @Test
     fun `카드들의 총점 계산`() {
         // given
-        val cards = Cards("7", "10")
+        val cards = Cards.denominationsOf("7", "10")
 
         // then
         assertThat(cards.sumScores()).isEqualTo(17)
@@ -29,15 +29,15 @@ internal class CardsTest {
         @JvmStatic
         fun cardsWithAceAndTotalScore(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(Cards("A", "A", "A", "A", "9"), 13),
-                Arguments.of(Cards("A", "A", "A", "A"), 14),
-                Arguments.of(Cards("A", "A", "A", "8"), 21),
-                Arguments.of(Cards("A", "A", "9", "10"), 21),
-                Arguments.of(Cards("A", "10", "10"), 21),
-                Arguments.of(Cards("A", "10"), 21),
-                Arguments.of(Cards("A", "A", "10"), 12),
-                Arguments.of(Cards("A", "A", "10", "10"), 22),
-                Arguments.of(Cards("A", "10", "10", "10"), 31)
+                Arguments.of(Cards.denominationsOf("A", "A", "A", "A", "9"), 13),
+                Arguments.of(Cards.denominationsOf("A", "A", "A", "A"), 14),
+                Arguments.of(Cards.denominationsOf("A", "A", "A", "8"), 21),
+                Arguments.of(Cards.denominationsOf("A", "A", "9", "10"), 21),
+                Arguments.of(Cards.denominationsOf("A", "10", "10"), 21),
+                Arguments.of(Cards.denominationsOf("A", "10"), 21),
+                Arguments.of(Cards.denominationsOf("A", "A", "10"), 12),
+                Arguments.of(Cards.denominationsOf("A", "A", "10", "10"), 22),
+                Arguments.of(Cards.denominationsOf("A", "10", "10", "10"), 31)
             )
         }
     }
