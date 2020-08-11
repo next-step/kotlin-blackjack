@@ -5,17 +5,23 @@ const val BLACKJACK_POINT = 21
 open class Player(val name: String) {
     var cards: List<Card> = emptyList()
         private set
-    open var isHit: Boolean = true
+    var isHit: Boolean = true
+    var isBusted: Boolean = false
+        private set
+    var point: Int = 0
+        private set
+    var playResult: PlayResultType = PlayResultType.DRAW
 
-    open fun calculatePoint(aceToBig: Boolean = false): Int = cards.sumBy { it.getPoint(aceToBig) }
+    open fun calculatePoint(aceToBig: Boolean = false): Int {
+        return cards.sumBy { it.getPoint(aceToBig) }
+    }
 
-    fun addCard(card: Card) {
+    open fun addCard(card: Card) {
         val currentCards = cards.toMutableList()
         currentCards.add(card)
         cards = currentCards.toList()
-    }
-
-    fun isBusted(): Boolean {
-        return calculatePoint() > BLACKJACK_POINT
+        point = calculatePoint()
+        isBusted = point > BLACKJACK_POINT
+        if (isBusted) playResult = PlayResultType.LOSE
     }
 }

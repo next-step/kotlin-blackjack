@@ -4,6 +4,7 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
+import blackjack.domain.HIT
 import blackjack.domain.Player
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
@@ -50,7 +51,7 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.A))
-        assertThat(player.calculatePoint()).isEqualTo(10)
+        assertThat(player.point).isEqualTo(10)
         assertThat(player.calculatePoint(true)).isEqualTo(20)
     }
 
@@ -58,7 +59,7 @@ class PlayerTest {
     @Test
     fun checkNextTurn() {
         val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
-        repeat(4) { blackjackGame.hitOrStay("y") }
+        repeat(4) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
 
@@ -99,7 +100,7 @@ class PlayerTest {
         dealer.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         dealer.addCard(Card(SuitType.CLUB, ValueType.A))
 
-        val point = dealer.calculatePoint()
+        val point = dealer.point
 
         assertThat(point).isEqualTo(20)
     }
@@ -113,7 +114,7 @@ class PlayerTest {
         dealer.addCard(Card(SuitType.CLUB, ValueType.K))
         dealer.addCard(Card(SuitType.CLUB, ValueType.A))
 
-        val point = dealer.calculatePoint()
+        val point = dealer.point
 
         assertThat(point).isEqualTo(21)
     }

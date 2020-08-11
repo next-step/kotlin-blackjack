@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.DEALER_NAME
 import blackjack.domain.Dealer
 import blackjack.domain.HIT
 import blackjack.domain.LIMIT_HIT_NUMBER
@@ -16,7 +15,7 @@ object InputView {
     }
 
     fun getHitOrStay(player: Player): String {
-        if (player.name == DEALER_NAME) return getHitOrStayDealer(player as Dealer)
+        if (player is Dealer) return getHitOrStayDealer(player)
         println("\n${player.name}은 한장의 카드를 더 받겠습니까?(예는 $HIT, 아니오는 $STAY)")
         val hitOrStay = readLine()!!
         require(hitOrStay.isNotEmpty())

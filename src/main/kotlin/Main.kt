@@ -14,8 +14,8 @@ fun main() {
             ResultView.showPlayerCard(blackjackGame.hitOrStay(isHit))
             blackjackGame.nextTurn()
         }
-
-        ResultView.showResult(blackjackGame.players)
+        blackjackGame.players.calculateResult()
+        ResultView.showGameResult(blackjackGame.players)
     } catch (e: Exception) {
         println(e.message)
     }
