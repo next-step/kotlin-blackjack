@@ -24,7 +24,7 @@ abstract class Gamer {
     fun isReachMaxPoint() = totalPoints >= MAX_POINT
 
     companion object {
-        protected const val MAX_POINT = 21
+        const val MAX_POINT = 21
         protected const val ACE_EXTRA_POINT = 10
     }
 }

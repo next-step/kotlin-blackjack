@@ -12,7 +12,7 @@ class DealerTest {
             requestCard(Card(Kinds.SIX, Shape.CLOVER))
         }
 
-        assertThat(dealer.myReceivedCard.size).isEqualTo(3)
+        assertThat(dealer.checkIfGetExtraCardOrNot()).isEqualTo(true)
     }
 
     @Test
@@ -22,6 +22,6 @@ class DealerTest {
             requestCard(Card(Kinds.SEVEN, Shape.CLOVER))
         }
 
-        assertThat(dealer.myReceivedCard.size).isEqualTo(2)
+        assertThat(dealer.checkIfGetExtraCardOrNot()).isEqualTo(false)
     }
 }
