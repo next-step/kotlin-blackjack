@@ -29,7 +29,7 @@ class PlayerTest {
     @Test
     fun checkPlayers() {
         assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
-            .isEqualTo(2)
+            .isEqualTo(3)
     }
 
     @DisplayName("사용자 포인트 합 계산하기")
