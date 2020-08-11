@@ -4,7 +4,7 @@ import java.util.LinkedList
 import java.util.Queue
 
 class CardDeck {
-    val cards: Queue<Card> = LinkedList()
+    private val cards: Queue<Card> = LinkedList()
 
     init {
         reset()
