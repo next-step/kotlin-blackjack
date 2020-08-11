@@ -9,20 +9,21 @@ class Player(val name: String) {
         _myReceivedCard.add(card)
     }
 
-    fun calculatePoint(): Int {
-        var point = 0
+    fun calculatePoint(): Int =
         _myReceivedCard
-            .map { it.getCardPoints() }
-            .map { point += if (it.size == 1) it.first().points else calculateAceCase(point, it) }
-        return point
+            .map { it.getCardKinds().point }
+            .reduce { acc, point ->
+                acc + point + if (isAvailableExtraPoint(acc, point)) ACE_EXTRA_POINT else 0
+            }
+
+    fun isReachMaxPoint() = calculatePoint() >= MAX_POINT
+
+    private fun isAvailableExtraPoint(acc: Int, point: Int): Boolean {
+        return point == Kinds.ACE.point && acc + point + ACE_EXTRA_POINT < MAX_POINT
     }
-
-    fun isReachMaxPoint() = calculatePoint() < MAX_POINT
-
-    private fun calculateAceCase(point: Int, it: List<Point>) =
-        if (point + it.last().points <= MAX_POINT) it.last().points else it.first().points
 
     companion object {
         private const val MAX_POINT = 21
+        private const val ACE_EXTRA_POINT = 10
     }
 }
