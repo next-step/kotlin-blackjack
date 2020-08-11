@@ -1,0 +1,5 @@
+package blackjack
+
+fun main() {
+    val players = InputView.inputPlayers()
+}
