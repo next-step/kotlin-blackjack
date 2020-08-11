@@ -1,7 +1,7 @@
 package fp
 
 class Lambda {
-    private fun sumIf(numbers: List<Int>, predicate : (Int)->Boolean) : Int {
+    private fun sumIf(numbers: List<Int>, predicate: (Int) -> Boolean): Int {
         return numbers.filter { predicate(it) }.sum()
     }
 
