@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.model.BlackJackGame
 import blackjack.model.Card
+import blackjack.model.Gamer
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -26,7 +27,7 @@ private fun drawCard(game: BlackJackGame) {
     }
 }
 
-private fun isContinueDraw(player: Player) =
+private fun isContinueDraw(player: Gamer) =
     !player.isReachMaxPoint() && InputView.requestOneOfCard(player) == "y"
 
 private fun registerGame(): BlackJackGame {

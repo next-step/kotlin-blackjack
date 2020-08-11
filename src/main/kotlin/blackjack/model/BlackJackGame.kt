@@ -1,6 +1,6 @@
 package blackjack.model
 
-class BlackJackGame(val players: List<Player>) {
+class BlackJackGame(val players: List<Gamer>) {
 
     init {
         players.map {

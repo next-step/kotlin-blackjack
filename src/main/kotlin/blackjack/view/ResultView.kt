@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.model.BlackJackGame
-import blackjack.model.Player
+import blackjack.model.Gamer
 
 object ResultView {
 
@@ -10,11 +10,11 @@ object ResultView {
         game.players.map { printPlayerHaveCard(it) }
     }
 
-    fun printPlayerHaveCard(player: Player) {
+    fun printPlayerHaveCard(player: Gamer) {
         println("${player.name}카드: ${player.myReceivedCard.joinToString()}")
     }
 
-    fun printResult(player: Player, point: Int) {
+    fun printResult(player: Gamer, point: Int) {
         println("${player.name}카드: ${player.myReceivedCard.joinToString()} - 결과: $point")
     }
 }
