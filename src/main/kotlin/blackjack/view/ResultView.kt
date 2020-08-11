@@ -6,8 +6,14 @@ import blackjack.model.Gamer
 object ResultView {
 
     fun printPreGame(game: BlackJackGame) {
+        println()
         println("${game.dealer.name}와 ${game.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+        printDealerHaveCard(game.dealer)
         game.players.map { printPlayerHaveCard(it) }
+    }
+
+    private fun printDealerHaveCard(dealer: Gamer) {
+        println("${dealer.name}: ${dealer.myReceivedCard.first()}")
     }
 
     fun printPlayerHaveCard(player: Gamer) {
