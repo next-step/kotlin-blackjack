@@ -1,6 +1,8 @@
 package blackjack.domain
 
 class Player(val name: String) {
+    var cards: MutableList<Card> = mutableListOf()
+        private set
     var score: Int = 0
         private set
     var canRace = true
@@ -8,8 +10,13 @@ class Player(val name: String) {
     var winner = false
         private set
 
+    fun addCard(card: Card) {
+        cards.add(card)
+        addScore(card)
+    }
+
     fun addScore(card: Card) {
-        score += card.cardValue.ordinal
+        score += card.cardValue.value
     }
 
     fun cantRace() {
@@ -18,5 +25,11 @@ class Player(val name: String) {
 
     fun isWinner() {
         winner = true
+    }
+
+    fun cardsName(): List<String> {
+        return cards.map {
+            it.name()
+        }
     }
 }
