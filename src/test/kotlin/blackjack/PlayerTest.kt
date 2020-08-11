@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
@@ -76,5 +77,18 @@ class PlayerTest {
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
+    }
+
+    @DisplayName("딜러의 hit 여부")
+    @Test
+    fun checkHitForDealer() {
+        val dealer = Dealer()
+        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.FIVE))
+        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
+
+        val isHit = dealer.isHit
+
+        assertThat(isHit).isEqualTo(true)
     }
 }
