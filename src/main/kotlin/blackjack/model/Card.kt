@@ -14,15 +14,23 @@ class Card(private val kinds: Kinds, private val shape: Shape) {
         private val deck: Queue<Card> = getShuffledAllCard()
 
         private fun getShuffledAllCard(): Queue<Card> {
-            val totalCards = mutableListOf<Card>().apply {
-                for (type in Kinds.values()) {
-                    for (shape in Shape.values()) {
-                        add(Card(type, shape))
-                    }
-                }
-            }.shuffled()
+            val totalCards = mutableListOf<Card>()
+                .apply { setupKinds() }
+                .shuffled()
 
             return LinkedList<Card>(totalCards)
+        }
+
+        private fun MutableList<Card>.setupKinds() {
+            for (type in Kinds.values()) {
+                setupShape(type)
+            }
+        }
+
+        private fun MutableList<Card>.setupShape(type: Kinds) {
+            for (shape in Shape.values()) {
+                add(Card(type, shape))
+            }
         }
 
         fun pop(): Card = deck.poll()
