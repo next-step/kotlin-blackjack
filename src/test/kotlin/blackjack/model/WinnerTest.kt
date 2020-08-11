@@ -24,8 +24,9 @@ class WinnerTest {
                 it.requestCard(Card(Kinds.EIGHT, Shape.HEART))
             }
         }
+        val blackJackGame = BlackJackGame(dealer, listOf(moshi, gson))
 
-        val totalScore = Winner.getTotalScore(dealer, listOf(moshi, gson))
+        val totalScore = Winner.getTotalScore(blackJackGame)
 
         assertThat(totalScore.first().win).isEqualTo(1)
         assertThat(totalScore.first().lose).isEqualTo(1)

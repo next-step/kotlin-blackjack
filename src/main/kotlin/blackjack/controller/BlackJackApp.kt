@@ -39,7 +39,10 @@ private fun isContinueDraw(player: Gamer) =
 
 private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()
-    val blackJackGame = BlackJackGame(dealer = Dealer(), players = playerName.map(::Player))
+    val blackJackGame = BlackJackGame(dealer = Dealer(), players = playerName.map(::Player)).apply {
+        initDealer()
+        initPlayers()
+    }
     ResultView.printPreGame(blackJackGame)
     return blackJackGame
 }
