@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
+import blackjack.domain.PlayResultType
 import blackjack.domain.Player
 import blackjack.domain.Players
 
@@ -21,7 +22,7 @@ object ResultView {
     fun showPlayerCard(player: Player, withResult: Boolean = false) {
         val playerCardsStringBuilder = StringBuilder()
         playerCardsStringBuilder.append("${player.name} 카드:")
-        if (player is Dealer && ! withResult) {
+        if (player is Dealer && !withResult) {
             player.cards.drop(player.cards.size - 1)
                 .forEach { playerCardsStringBuilder.append(" ${it.value}${it.suit.suitName}, ") }
         } else {
@@ -37,11 +38,17 @@ object ResultView {
             showPlayerCard(it, true)
             println(" - 결과 ${it.point}")
         }
+        val showGameResult = StringBuilder("\n##최종승패\n")
+        val dealer = players.dealer
+        showGameResult.append(
+            "${dealer.name}:" +
+                PlayResultType.values().forEach {
+                    " ${it.typeName} ${dealer.dealerResult.getStatic()[it]} "
+                } + "\n"
+        )
 
-        val showGameResult = StringBuilder("##최종승패\n")
-        players.players.forEach {
-            showGameResult.append("${it.name}: ${it.playResult.typeName}\n")
-        }
+        players.players.filterNot { it is Dealer }
+            .forEach { showGameResult.append("${it.name}: ${it.playResult.typeName}\n") }
         println(showGameResult)
     }
 }

@@ -56,4 +56,11 @@ class BlackjackGameTest {
         repeat(10) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.isBusted).isEqualTo(true)
     }
+
+    @DisplayName("승무패 확인하기")
+    @Test
+    fun checkResult() {
+        val blackjackGame = BlackjackGame("ace,con", CardDeck())
+        assertThat(blackjackGame.players.calculateResult()).isEqualTo(true)
+    }
 }

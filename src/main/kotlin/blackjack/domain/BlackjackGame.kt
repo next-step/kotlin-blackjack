@@ -20,7 +20,7 @@ class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
     private fun parsingPlayers(playerNames: String): Players {
         require(PLAYER_REGULAR_EXPRESSION.matches(playerNames)) { "플레이어의 이름은 영문 또는 한글이며, 구분자는 ','만 입력이 가능합니다." }
         val players = playerNames.split(SPLIT_CHARACTER).map { Player(it) }.toMutableList()
-        players.add(0, Dealer())
+        players.add(0, Dealer(playerCount = players.size))
         return Players(players)
     }
 

@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
 import blackjack.domain.HIT
 import blackjack.domain.Player
 import blackjack.domain.SuitType
@@ -78,44 +77,5 @@ class PlayerTest {
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
-    }
-
-    @DisplayName("딜러의 hit 여부")
-    @Test
-    fun checkHitForDealer() {
-        val dealer = Dealer()
-        dealer.addCard(Card(SuitType.CLUB, ValueType.J))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.K))
-
-        val isHit = dealer.isHit
-
-        assertThat(isHit).isEqualTo(false)
-    }
-
-    @DisplayName("A가 포함되어 있을 경우 딜러의 계산방식, A =11 일경우 21 미만")
-    @Test
-    fun checkDealerPointWithAce() {
-        val dealer = Dealer()
-        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.FIVE))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
-
-        val point = dealer.point
-
-        assertThat(point).isEqualTo(20)
-    }
-
-    @DisplayName("A가 포함되어 있을 경우 딜러의 계산방식, A =11 일경우 21 초과")
-    @Test
-    fun checkDealerPointWithAceMoreThanBlackjackPoint() {
-        val dealer = Dealer()
-        dealer.addCard(Card(SuitType.CLUB, ValueType.FOUR))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.SIX))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.K))
-        dealer.addCard(Card(SuitType.CLUB, ValueType.A))
-
-        val point = dealer.point
-
-        assertThat(point).isEqualTo(21)
     }
 }

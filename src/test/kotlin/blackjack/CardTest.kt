@@ -3,8 +3,10 @@ package blackjack
 import blackjack.domain.Card
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -23,5 +25,12 @@ class CardTest {
     fun validateCard(value: Int) {
         assertThatThrownBy { Card(SuitType.SPADE, ValueType.getValueType(value)) }
             .isInstanceOf(IllegalArgumentException::class.java)
+    }
+
+    @DisplayName("카드 포인트 확인")
+    @Test
+    fun checkGetPoint() {
+        assertThat(Card(SuitType.SPADE, ValueType.J).getPoint())
+            .isEqualTo(5)
     }
 }

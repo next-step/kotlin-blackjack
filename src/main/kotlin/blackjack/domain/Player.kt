@@ -24,4 +24,8 @@ open class Player(val name: String) {
         isBusted = point > BLACKJACK_POINT
         if (isBusted) playResult = PlayResultType.LOSE
     }
+
+    fun checkResult(dealerPoint: Int) {
+        if (!isBusted && point > dealerPoint) playResult = PlayResultType.WIN
+    }
 }
