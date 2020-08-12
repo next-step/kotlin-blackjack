@@ -18,7 +18,7 @@ abstract class Gamer(val name: String) {
                     if (isAvailableExtraPoint(firstAceCaseConsideredAcc, point)) ACE_EXTRA_POINT else 0
             }
 
-    open fun requestCard(card: Card) {
+    fun requestCard(card: Card) {
         _myReceivedCard.add(card)
     }
 
