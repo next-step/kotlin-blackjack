@@ -3,10 +3,10 @@ package blackjack.model
 object Winner {
 
     fun getTotalScore(game: BlackJackGame): List<Score> {
-        val playersWinOrNot = game.players
-            .map { it.calculatePoint() }
-            .map { point -> setupWinner(playerPoint = point, dealerPoint = game.dealer.calculatePoint()) }
+        val playersWinOrNot = game.getPlayersPoint()
+            .map { point -> setupWinner(playerPoint = point, dealerPoint = game.getDealerPoint()) }
         val (dealerScore, playersScore) = getScores(playersWinOrNot)
+
         return listOf(listOf(dealerScore), playersScore).flatten()
     }
 
@@ -18,9 +18,7 @@ object Winner {
 
     private fun getScores(playersWinOrNot: List<Boolean>): Pair<Score, List<Score>> {
         val dealerScore = Score(win = playersWinOrNot.count { !it }, lose = playersWinOrNot.count { it })
-        val playersScore = playersWinOrNot.map {
-            if (it) Score(win = 1) else Score()
-        }
+        val playersScore = playersWinOrNot.map { if (it) Score(win = 1) else Score() }
         return Pair(dealerScore, playersScore)
     }
 }
