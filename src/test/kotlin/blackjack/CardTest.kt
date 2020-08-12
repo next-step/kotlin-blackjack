@@ -30,7 +30,10 @@ class CardTest {
     @DisplayName("카드 포인트 확인")
     @Test
     fun checkGetPoint() {
-        assertThat(Card(SuitType.SPADE, ValueType.J).getPoint())
-            .isEqualTo(5)
+        val card = Card(SuitType.SPADE, ValueType.J)
+
+        val point = card.getPoint()
+
+        assertThat(point).isEqualTo(10)
     }
 }

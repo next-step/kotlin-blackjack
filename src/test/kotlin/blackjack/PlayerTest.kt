@@ -62,13 +62,6 @@ class PlayerTest {
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
 
-    @DisplayName("다음턴 사용자 확인")
-    @Test
-    fun checkNextPlayer() {
-        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
-        assertThat(blackjackGame.players.getNextPlayer()?.name).isEqualTo("hi")
-    }
-
     @DisplayName("사용자가 카드 뽑고 나서 카드수")
     @Test
     fun checkPlayerCard() {
