@@ -1,16 +1,16 @@
 package blackjack.view
 
 import blackjack.model.Player
+import blackjack.model.Players
 
 object ResultView {
 
     fun showPlayer(player: Player) {
-        println("${player.name}의 카드 : ${player.cards}")
+        println("$player")
     }
 
-    fun showResult(players: List<Player>) {
-        players.forEach {
-            println("${it.name}의 카드 : ${it.cards}  - ${it.getScore()}")
-        }
+    fun showResult(players: Players) {
+        println("-- 게임 결과 -- ")
+        println("$players")
     }
 }

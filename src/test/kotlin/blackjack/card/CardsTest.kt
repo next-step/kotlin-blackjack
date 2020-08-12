@@ -14,8 +14,8 @@ class CardsTest {
     @Test
     fun checkBlackJackCase() {
         val cards = Cards()
-        cards.addCard(Card.newInstance(CardType.CLUBS, CardNumber.ONE))
-        cards.addCard(Card.newInstance(CardType.DIAMONDS, CardNumber.KING))
+        cards.addCard(Card(CardType.CLUBS, CardNumber.ONE))
+        cards.addCard(Card(CardType.DIAMONDS, CardNumber.KING))
 
         Assertions.assertThat(cards.getScore())
             .isEqualTo(Cards.BLACKJACK_SCORE)
@@ -25,8 +25,8 @@ class CardsTest {
     @Test
     fun checkAceCaseCards1() {
         val cards = Cards()
-        cards.addCard(Card.newInstance(CardType.CLUBS, CardNumber.ONE))
-        cards.addCard(Card.newInstance(CardType.DIAMONDS, CardNumber.ONE))
+        cards.addCard(Card(CardType.CLUBS, CardNumber.ONE))
+        cards.addCard(Card(CardType.DIAMONDS, CardNumber.ONE))
 
         Assertions.assertThat(cards.getScore())
             .isEqualTo(CardNumber.ONE.score + CardNumber.ONE.score + Cards.ACE_GAP)
@@ -36,9 +36,9 @@ class CardsTest {
     @Test
     fun checkAceCaseCards2() {
         val cards = Cards()
-        cards.addCard(Card.newInstance(CardType.CLUBS, CardNumber.ONE))
-        cards.addCard(Card.newInstance(CardType.DIAMONDS, CardNumber.FIVE))
-        cards.addCard(Card.newInstance(CardType.DIAMONDS, CardNumber.SEVEN))
+        cards.addCard(Card(CardType.CLUBS, CardNumber.ONE))
+        cards.addCard(Card(CardType.DIAMONDS, CardNumber.FIVE))
+        cards.addCard(Card(CardType.DIAMONDS, CardNumber.SEVEN))
 
         Assertions.assertThat(cards.getScore())
             .isEqualTo(CardNumber.FIVE.score + CardNumber.SEVEN.score + CardNumber.ONE.score)

@@ -12,9 +12,4 @@ class Card(
     override fun toString(): String {
         return "${cardNumber.score}${cardType.typeName}"
     }
-
-    companion object {
-        fun newInstance(cardType: CardType, cardNumber: CardNumber) =
-            Card(cardType, cardNumber)
-    }
 }
