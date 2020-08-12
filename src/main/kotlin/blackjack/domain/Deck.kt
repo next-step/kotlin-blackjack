@@ -5,6 +5,7 @@ object Deck {
         CardScore.values().flatMap { makeCardPair(it) }.toMutableSet()
 
     fun provideCard(): Card {
+        require(deck.isNotEmpty()) { "Deck has no card" }
         val card = deck.random()
         deck.remove(card)
         return card
