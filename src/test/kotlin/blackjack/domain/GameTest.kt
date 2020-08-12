@@ -23,8 +23,8 @@ class GameTest {
         val players = game.setUp()
 
         // then
-        assertThat(players[0].cards.size()).isEqualTo(2)
-        assertThat(players[1].cards.size()).isEqualTo(2)
+        assertThat(players[0].amountOfCards()).isEqualTo(2)
+        assertThat(players[1].amountOfCards()).isEqualTo(2)
     }
 
     @Test
@@ -33,6 +33,6 @@ class GameTest {
         val player = game.giveChanceToDraw(game.players[0])
 
         // then
-        assertThat(player.cards.size()).isEqualTo(1)
+        assertThat(player.amountOfCards()).isEqualTo(1)
     }
 }

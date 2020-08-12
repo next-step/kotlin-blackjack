@@ -2,19 +2,23 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest() {
+    private lateinit var player: Player
+    private lateinit var newCard: Card
+    private lateinit var cards: List<Card>
 
-    private val player = Player(name = "mark")
-    private val newCard = Card(Pair(CardScore.SEVEN, Suit.SPADE))
+    @BeforeEach
+    fun `set up`() {
+        player = Player(name = "mark")
+        newCard = Card(Pair(CardScore.SEVEN, Suit.SPADE))
+        cards = player.draw(newCard).toList()
+    }
 
     @Test
     fun `draw a card`() {
-        // when
-        val cards = player.draw(newCard).toList()
-
-        // then
         assertThat(cards[0]).isEqualTo(newCard)
     }
 
@@ -25,5 +29,23 @@ class PlayerTest() {
 
         // then
         assertFalse(isMoreThanMax)
+    }
+
+    @Test
+    fun `amount of cards`() {
+        // when
+        val amount = player.amountOfCards()
+
+        // then
+        assertThat(amount).isEqualTo(1)
+    }
+
+    @Test
+    fun `sum of scores`() {
+        // when
+        val sum = player.sumOfScores()
+
+        // then
+        assertThat(sum).isEqualTo(7)
     }
 }

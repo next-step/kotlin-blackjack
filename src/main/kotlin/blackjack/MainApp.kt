@@ -21,8 +21,8 @@ fun main() {
             ResultView.showStateOfCards(player)
             reply = InputView.readReplyToDrawing(player)
         }
-        val currentCards = player.cards.size()
-        if (currentCards == DEFAULT_CARD_AMOUNT) {
+        val currentCardAmount = player.amountOfCards()
+        if (currentCardAmount == DEFAULT_CARD_AMOUNT) {
             ResultView.showStateOfCards(player)
         }
     }

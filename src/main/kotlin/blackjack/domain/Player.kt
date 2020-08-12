@@ -1,17 +1,19 @@
 package blackjack.domain
 
 data class Player(private val name: String) {
-    private var _cards: Cards = Cards(emptySet())
-    val cards: Cards
-        get() = _cards
+    private val cards: Cards = Cards(emptySet())
 
     fun draw(newCard: Card): Set<Card> {
-        return _cards.add(newCard)
+        return cards.add(newCard)
     }
 
     fun hasScoreMoreThanMax() = cards.isMoreThanMaxScore(cards)
 
-    override fun toString(): String {
-        return name
-    }
+    fun displayCards(): String = cards.toString()
+
+    fun amountOfCards(): Int = cards.size()
+
+    fun sumOfScores(): Int = cards.sumOfScores()
+
+    override fun toString(): String = name
 }
