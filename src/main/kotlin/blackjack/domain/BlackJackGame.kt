@@ -9,7 +9,7 @@ class BlackJackGame(
     }
 
     fun askHit(player: Player, agreed: Boolean): Player {
-        return if (agreed) player.hit(deck)
-        else player.stand()
+        if (agreed) return player.hit(deck)
+        return player.stand()
     }
 }
