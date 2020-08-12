@@ -18,8 +18,9 @@ class CardDeck : Deck {
 interface Deck {
     fun popCard(): Card
 
-    fun popTwoCard() = Cards().apply {
-        addCard(popCard())
-        addCard(popCard())
-    }
+    fun popTwoCard() =
+        Cards().apply {
+            addCard(popCard())
+            addCard(popCard())
+        }
 }

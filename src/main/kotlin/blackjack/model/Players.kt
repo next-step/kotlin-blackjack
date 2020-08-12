@@ -29,7 +29,7 @@ class Players(
             }
         }
 
-    override fun toString() = players.map(Player::toString).joinToString("\n")
+    override fun toString() = players.joinToString("\n", transform = Player::toString)
 
     private fun runPlayers(action: (Player) -> Unit) {
         players.forEach(action)
