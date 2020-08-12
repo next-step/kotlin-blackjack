@@ -5,4 +5,7 @@ class Cards {
         private set
 
     fun getCards() = userCards
+    override fun toString(): String {
+        return "$userCards"
+    }
 }
