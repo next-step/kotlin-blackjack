@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.view.REPLY_RECEIVE
+
 data class Player(private val name: String) {
     private val cards: Cards = Cards(emptySet())
 
@@ -7,13 +9,20 @@ data class Player(private val name: String) {
         return cards.add(newCard)
     }
 
-    fun hasScoreMoreThanMax() = cards.isMoreThanMaxScore(cards)
+    fun getChanceToDraw(reply: String): Player {
+        if (reply == REPLY_RECEIVE && !hasScoreMoreThanMax()) {
+            draw(Dealer.giveCard())
+        }
+        return this
+    }
 
-    fun displayCards(): String = cards.toString()
+    fun hasScoreMoreThanMax() = cards.isMoreThanMaxScore(cards)
 
     fun amountOfCards(): Int = cards.size()
 
     fun sumOfScores(): Int = cards.sumOfScores()
+
+    fun displayCards(): String = cards.toString()
 
     override fun toString(): String = name
 }

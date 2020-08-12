@@ -1,26 +1,39 @@
 package blackjack.domain
 
+import blackjack.view.REPLY_REJECT
+
 class Game(players: List<Player>) {
-    private val _players = players
-    val players: List<Player>
-        get() = _players.toList()
+    private var turn = 0
+    private val _players = Players(players)
+    val players: Players
+        get() = _players
 
     constructor(PlayerNames: String) : this(
         PlayerNames.split(PLAYER_NAMES_DELIMITER)
-            .filterNot { it.isNullOrBlank() }
+            .filterNot { it.isBlank() }
             .map { Player(it.trim()) }
     )
 
-    fun setUp(): List<Player> {
-        _players.forEach { player -> repeat(DEFAULT_CARD_AMOUNT) { player.draw(Dealer.giveCard()) } }
-        return players.toList()
+    fun setUp(): Players {
+        _players.setUpWithCards()
+        return _players
     }
 
-    fun giveChanceToDraw(player: Player): Player {
-        if (!player.hasScoreMoreThanMax()) {
-            player.draw(Dealer.giveCard())
+    fun giveChanceToDraw(currentPlayer: Player, reply: String): Player {
+        val player = currentPlayer.getChanceToDraw(reply)
+        if (REPLY_REJECT == reply || player.hasScoreMoreThanMax()) {
+            turn++
         }
         return player
+    }
+
+    fun currentPlayer() = _players.findPlayer(turn)
+
+    fun isOver() = turn == _players.size()
+
+    fun result(): String {
+        return (0 until _players.size()).map { _players.findPlayer(it) }
+            .joinToString("\n") { "${it}카드: ${it.displayCards()} - 결과: ${it.sumOfScores()}" }
     }
 
     companion object {
