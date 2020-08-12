@@ -27,7 +27,5 @@ class Game(players: List<Player>) {
         private const val PLAYER_NAMES_DELIMITER = ","
         const val MAXIMUM_GAME_SCORE = 21
         const val DEFAULT_CARD_AMOUNT = 2
-        const val REPLY_YES = "y"
-        const val REPLY_NO = "n"
     }
 }
