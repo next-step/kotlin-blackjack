@@ -13,18 +13,18 @@ class PlayerTest {
 
     class FakeCardDeck : Deck {
         override fun popCard(): Card {
-            return Card.newInstance(CardType.CLUBS, CardNumber.TWO)
+            return Card(CardType.CLUBS, CardNumber.TWO)
         }
     }
 
     @DisplayName(value = "게임 배팅 후, hit 진행 하면, 전체 score가 계산되어야한다.  ")
     @Test
     fun checkCardPoolSize() {
-        val player = Player.newInstance("조남재").apply {
-            gameBatting(FakeCardDeck())
-            hit(FakeCardDeck())
+        val player = Player("조남재").apply {
+            gameBatting(FakeCardDeck().popTwoCard())
+            hit(FakeCardDeck().popCard())
         }
-        val expect = CardNumber.TWO.score + CardNumber.TWO.score + CardNumber.TWO.score
+        val expect = CardNumber.TWO.score * 3
         assertThat(player.getScore()).isEqualTo(expect)
     }
 }

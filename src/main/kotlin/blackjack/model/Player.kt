@@ -1,31 +1,24 @@
 package blackjack.model
 
+import blackjack.model.card.Card
 import blackjack.model.card.Cards
-import blackjack.model.card.Deck
 
 class Player(
     val name: String
 ) {
-    private val _cards = Cards()
-    val cards: Cards
-        get() = _cards
+    private val cards = Cards()
 
-    fun gameBatting(cardDeck: Deck) {
-        _cards.addCard(cardDeck.popCard())
-        _cards.addCard(cardDeck.popCard())
+    fun gameBatting(cardsDummy: Cards) {
+        cards.addCards(cardsDummy)
     }
 
-    fun hit(cardDeck: Deck) {
-        _cards.addCard(cardDeck.popCard())
+    fun hit(card: Card) {
+        cards.addCard(card)
     }
 
-    fun getScore() = _cards.getScore()
+    fun getScore() = cards.getScore()
 
-    companion object {
-        fun newInstance(name: String) = Player(name)
+    override fun toString() = "${name}의 카드 : ${getCardsString()}"
 
-        fun newInstances(names: List<String>) = names.map {
-            newInstance(it)
-        }
-    }
+    private fun getCardsString() = "$cards"
 }
