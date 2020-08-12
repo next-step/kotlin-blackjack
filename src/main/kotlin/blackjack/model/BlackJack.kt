@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class BlackJack(private val players: List<Player>) {
     private val cardDeck = CardDeck()

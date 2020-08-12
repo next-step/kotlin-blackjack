@@ -1,6 +1,10 @@
-package blackjack
+package blackjack.model
 
-data class Card(val type: Type, val value: Value)
+data class Card(val type: Type, val value: Value) {
+    fun cardName(): String {
+        return "${type.typeName} ${value.printValue}"
+    }
+}
 
 enum class Type(val typeName: String) {
     SPACE("스페이스"),
