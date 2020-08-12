@@ -16,7 +16,7 @@ class Game(players: List<Player>) {
         return players.toList()
     }
 
-    fun drawOnce(player: Player): Player {
+    fun giveChanceToDraw(player: Player): Player {
         if (!player.hasScoreMoreThanMax()) {
             player.draw(Dealer.giveCard())
         }

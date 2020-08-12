@@ -17,7 +17,7 @@ fun main() {
     players.forEach { player ->
         var reply = InputView.readReplyToDrawing(player)
         while (reply != REPLY_NO && reply.startsWith(REPLY_YES)) {
-            game.drawOnce(player)
+            game.giveChanceToDraw(player)
             ResultView.showStateOfCards(player)
             reply = InputView.readReplyToDrawing(player)
         }

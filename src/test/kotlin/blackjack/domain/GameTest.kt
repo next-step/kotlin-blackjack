@@ -30,7 +30,7 @@ class GameTest {
     @Test
     fun `draw a card`() {
         // when
-        val player = game.drawOnce(game.players[0])
+        val player = game.giveChanceToDraw(game.players[0])
 
         // then
         assertThat(player.cards.size()).isEqualTo(1)
