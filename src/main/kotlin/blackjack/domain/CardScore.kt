@@ -19,10 +19,7 @@ enum class CardScore(val score: Int) {
 
         fun initialOfCard(cardScore: CardScore): String {
             return when (cardScore) {
-                ACE -> "A"
-                JACK -> "J"
-                QUEEN -> "Q"
-                KING -> "K"
+                ACE, JACK, QUEEN, KING -> cardScore.name[0].toString()
                 else -> cardScore.score.toString()
             }
         }
