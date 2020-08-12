@@ -5,15 +5,22 @@ object Winner {
     fun getTotalScore(game: BlackJackGame): List<Score> {
         val playersWinOrNot = game.players
             .map { it.calculatePoint() }
-            .map {
-                if (it > Gamer.MAX_POINT) return@map false
-                if (game.dealer.calculatePoint() > Gamer.MAX_POINT) return@map true
-                return@map game.dealer.calculatePoint() < it
-            }
+            .map { point -> setupWinner(playerPoint = point, dealerPoint = game.dealer.calculatePoint()) }
+        val (dealerScore, playersScore) = getScores(playersWinOrNot)
+        return listOf(listOf(dealerScore), playersScore).flatten()
+    }
+
+    private fun setupWinner(playerPoint: Int, dealerPoint: Int): Boolean {
+        if (playerPoint > Gamer.MAX_POINT) return false
+        if (dealerPoint > Gamer.MAX_POINT) return true
+        return dealerPoint < playerPoint
+    }
+
+    private fun getScores(playersWinOrNot: List<Boolean>): Pair<Score, List<Score>> {
         val dealerScore = Score(win = playersWinOrNot.count { !it }, lose = playersWinOrNot.count { it })
         val playersScore = playersWinOrNot.map {
             if (it) Score(win = 1) else Score()
         }
-        return listOf(listOf(dealerScore), playersScore).flatten()
+        return Pair(dealerScore, playersScore)
     }
 }
