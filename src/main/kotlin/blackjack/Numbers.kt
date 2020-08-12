@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardNumbers(val score: Int, val shape: String) {
+enum class Numbers(val score: Int, val shape: String) {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
