@@ -18,7 +18,7 @@ class Deck() {
         return when (number) {
             1 -> (Card("${shape}A", number))
 
-            in 2..10 -> (Card("${shape}${number}", number))
+            in 2..10 -> (Card(shape + "$number", number))
 
             11 -> (Card("${shape}J", 10))
 

@@ -23,7 +23,7 @@ fun startGame() {
     ResultView.resultGame(blackJack.players)
 }
 
-fun playerCheckBust(player: Player, blackJack: BlackJack){
+fun playerCheckBust(player: Player, blackJack: BlackJack) {
     isGetCard = true
     while (!player.isBust() && isGetCard) {
         playerWhetherGet(player, blackJack)

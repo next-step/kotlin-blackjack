@@ -41,7 +41,7 @@ class PlayerTest {
 
         assertThat(player.isBust()).isTrue()
     }
-    
+
     @Test
     fun player_name_is_null() {
         assertThatThrownBy {

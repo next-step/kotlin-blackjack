@@ -24,7 +24,7 @@ class TotalScoreTest {
 
     @Test
     fun has_ace_but_do_not_plus_10() {
-        val testList = listOf(10,3,1)
+        val testList = listOf(10, 3, 1)
 
         val totalScore = TotalScore.getScore(testList)
 

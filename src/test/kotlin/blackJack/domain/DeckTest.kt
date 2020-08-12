@@ -30,4 +30,3 @@ class DeckTest {
         assertThat(deck.cards.size).isEqualTo(51)
     }
 }
-
