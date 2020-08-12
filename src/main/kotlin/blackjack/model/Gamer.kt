@@ -9,21 +9,17 @@ abstract class Gamer(val name: String) {
         _myReceivedCard
             .map { it.getCardKinds().point }
             .map { Point(it) }
-            .reduce { acc, point ->
-                val firstAceCaseConsideredAcc = Point.calculateAccIfAceFirst(acc)
-                firstAceCaseConsideredAcc +
-                    point +
-                    if (Point.isAvailableExtraPoint(firstAceCaseConsideredAcc, point)) Point.ACE_EXTRA_POINT else Point(
-                        0
-                    )
-            }
+            .reduce { acc, point -> reducePoint(acc, point) }
 
     fun requestCard(card: Card) {
         _myReceivedCard.add(card)
     }
 
-    companion object {
-        const val MAX_POINT = 21
-        protected const val ACE_EXTRA_POINT = 10
+    private fun reducePoint(acc: Point, point: Point): Point {
+        val firstAceCaseConsideredAcc = Point.calculateAccIfAceFirst(acc)
+        return firstAceCaseConsideredAcc + point + calculateExtraPoint(firstAceCaseConsideredAcc, point)
     }
+
+    private fun calculateExtraPoint(acc: Point, point: Point): Point =
+        if (Point.isAvailableExtraPoint(acc, point)) Point.ACE_EXTRA_POINT else Point(0)
 }
