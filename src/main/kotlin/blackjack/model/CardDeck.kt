@@ -19,6 +19,4 @@ class CardDeck {
         cards.shuffle()
         return cards
     }
-
-    private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 }
