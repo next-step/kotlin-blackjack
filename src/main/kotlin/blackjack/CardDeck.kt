@@ -1,13 +1,11 @@
 package blackjack
 
 class CardDeck {
-    private val _cards: MutableList<Card> = init()
-    val cards: List<Card>
-        get() = _cards.deepCopy().shuffled()
+    private val cards: MutableList<Card> = init()
 
     fun pickCard(): Card {
-        return _cards.take(1).first().apply {
-            _cards.remove(this)
+        return cards.take(1).first().apply {
+            cards.remove(this)
         }
     }
 
