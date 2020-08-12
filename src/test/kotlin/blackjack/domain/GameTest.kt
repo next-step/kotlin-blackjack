@@ -39,12 +39,12 @@ class GameTest {
     @Test
     fun `give chance to draw`() {
         // when
-        val firstPlayer = game.giveChanceToDraw(firstPlayer, REPLY_RECEIVE)
-        val secondPlayer = game.giveChanceToDraw(secondPlayer, REPLY_REJECT)
+        val firstPlayer = game.giveChanceToDraw(REPLY_REJECT)
+        val secondPlayer = game.giveChanceToDraw(REPLY_RECEIVE)
 
         // then
-        assertThat(firstPlayer.amountOfCards()).isEqualTo(3)
-        assertThat(secondPlayer.amountOfCards()).isEqualTo(2)
+        assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
+        assertThat(secondPlayer.amountOfCards()).isEqualTo(3)
     }
 
     @Test
@@ -55,8 +55,8 @@ class GameTest {
     @Test
     fun `game over when the turn is over`() {
         // when
-        game.giveChanceToDraw(firstPlayer, REPLY_REJECT)
-        game.giveChanceToDraw(secondPlayer, REPLY_REJECT)
+        game.giveChanceToDraw(REPLY_REJECT)
+        game.giveChanceToDraw(REPLY_REJECT)
 
         // then
         assertTrue(game.isOver())
