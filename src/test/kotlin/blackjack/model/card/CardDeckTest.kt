@@ -16,14 +16,14 @@ internal class CardDeckTest {
     @DisplayName(value = "게임의 초기화(카드 덱 생성)를 확인한다.")
     @Test
     fun generateCardDeck() {
-        assertThat(cardDeck.generate().size).isEqualTo(52)
+        assertThat(cardDeck.generate().cards.size).isEqualTo(52)
     }
 
     @Test
     fun drawCard() {
         cardDeck.pick()
-        assertThat(cardDeck.cards.size).isEqualTo(51)
+        assertThat(cardDeck.cards.cards.size).isEqualTo(51)
         cardDeck.pick()
-        assertThat(cardDeck.cards.size).isEqualTo(50)
+        assertThat(cardDeck.cards.cards.size).isEqualTo(50)
     }
 }

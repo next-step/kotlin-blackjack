@@ -1,33 +1,26 @@
 package blackjack.model
 
 import blackjack.model.card.CardDeck
-import blackjack.view.InputView
+import blackjack.model.player.Players
 import blackjack.view.OutputView
 
-class BlackJackGame(private val players: List<Player>) {
+class BlackJackGame(private val players: Players) {
     private val cardDeck = CardDeck()
 
     fun firstTurn() {
         OutputView.firstTurn(players)
 
-        for (player in players) {
-            player.drawCard(cardDeck.pick())
-            player.drawCard(cardDeck.pick())
+        players.drawCard(cardDeck)
+        players.drawCard(cardDeck)
 
-            OutputView.drawCard(player)
-        }
+        OutputView.printCardForPlayers(players)
     }
 
     fun progressTurn() {
-        for (player in players) {
-            turnForPlayer(player)
-        }
+        players.progressTurn(cardDeck)
     }
 
-    private fun turnForPlayer(player: Player) {
-        while (player.continueToTurn() && InputView.askToDraw(player)) {
-            player.drawCard(cardDeck.pick())
-            OutputView.drawCard(player)
-        }
+    fun checkWinOrLose() {
+        players.checkWinOrLose()
     }
 }
