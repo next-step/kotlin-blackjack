@@ -10,30 +10,29 @@ class CardsTest {
     private lateinit var card: Card
     private lateinit var newCard: Card
     private lateinit var cards: Cards
-    private lateinit var shouldBeThisCards: Set<Card>
+    private lateinit var shouldBeThis: Set<Card>
 
     @BeforeEach
     fun `set up`() {
         card = Card(Pair(CardScore.ACE, Suit.HEART))
-        cards = Cards(setOf(card))
         newCard = Card(Pair(CardScore.KING, Suit.DIAMOND))
-        shouldBeThisCards = setOf(card, newCard)
+
+        cards = Cards(setOf(card))
+        shouldBeThis = setOf(card, newCard)
     }
 
     @Test
     fun `add a new card to set of cards`() {
         // when
         val newCards = cards.add(newCard)
-
         // then
-        assertThat(newCards).isEqualTo(shouldBeThisCards)
+        assertThat(newCards).isEqualTo(shouldBeThis)
     }
 
     @Test
     fun `size of cards`() {
         // when
         val size = cards.size()
-
         // then
         assertThat(size).isEqualTo(1)
     }
