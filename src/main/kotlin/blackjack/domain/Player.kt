@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.view.REPLY_RECEIVE
+import blackjack.view.REPLY_HIT
 
 data class Player(private val name: String) {
     private val cards: Cards = Cards(emptySet())
@@ -10,7 +10,7 @@ data class Player(private val name: String) {
     }
 
     fun getChanceToDraw(reply: String): Player {
-        if (reply == REPLY_RECEIVE && !hasScoreMoreThanMax()) {
+        if (reply == REPLY_HIT && !hasScoreMoreThanMax()) {
             draw(Dealer.giveCard())
         }
         return this

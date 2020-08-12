@@ -12,10 +12,10 @@ object ResultView {
     }
 
     fun showStateOfCards(player: Player, reply: String) {
-        if (REPLY_RECEIVE == reply) {
+        if (REPLY_HIT == reply) {
             println("${player}카드: ${player.displayCards()}")
         }
-        if (REPLY_REJECT == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
+        if (REPLY_STAY == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
             println("${player}카드: ${player.displayCards()}")
         }
     }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.view.REPLY_REJECT
+import blackjack.view.REPLY_STAY
 
 class Game(players: List<Player>) {
     private var turn = 0
@@ -22,7 +22,7 @@ class Game(players: List<Player>) {
     fun giveChanceToDraw(reply: String): Player {
         val currentPlayer = _players.findPlayer(turn)
         val player = currentPlayer.getChanceToDraw(reply)
-        if (REPLY_REJECT == reply || player.hasScoreMoreThanMax()) {
+        if (REPLY_STAY == reply || player.hasScoreMoreThanMax()) {
             turn++
         }
         return player
