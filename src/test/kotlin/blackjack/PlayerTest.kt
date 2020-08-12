@@ -9,6 +9,14 @@ class PlayerTest {
     @Test
     fun `when created player than have two cards`() {
         val players = Player("harry")
-        assertThat(players.getCards().size).isEqualTo(2)
+        assertThat(players.getCards().getCards().size).isEqualTo(2)
+    }
+
+    @DisplayName("y를 선택하면 카드가 추가된다.")
+    @Test
+    fun `when select y than card is added`() {
+        val player = Player("harry")
+        player.selectValue("y")
+        assertThat(player.getCards().getCards().size).isEqualTo(3)
     }
 }
