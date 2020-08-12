@@ -1,17 +1,15 @@
 package blackjack.domain
 
 object Deck {
-    private val deck: MutableSet<Card> =
-        CardScore.values().flatMap { makeCardPair(it) }.toMutableSet()
 
-    fun provideCard(): Card {
-        require(deck.isNotEmpty()) { "Deck has no card" }
+    fun provideCard(deck: MutableSet<Card>): Card {
+        check(deck.isNotEmpty()) { "Deck has no card" }
         val card = deck.random()
         deck.remove(card)
         return card
     }
 
-    private fun makeCardPair(cardScore: CardScore): Set<Card> {
-        return Suit.values().map { suit -> Card(Pair(cardScore, suit)) }.toSet()
+    fun cardPackOfSuit(suit: Suit): Set<Card> {
+        return CardScore.values().map { cardScore -> Card(Pair(cardScore, suit)) }.toSet()
     }
 }
