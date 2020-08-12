@@ -8,9 +8,10 @@ object Input {
         return readLine()?.split(",") ?: exitProcess(0)
     }
 
-    fun ask(name: String): String {
+    fun ask(name: String): Boolean {
         println("${name}는 한장의 카드를 더 받겠습니까?")
         val ask = readLine().toString()
-        return if (ask == "y" || ask == "n") ask else null ?: exitProcess(0)
+        if (ask == "y" || ask == "n") ask else null ?: exitProcess(0)
+        return ask == "y"
     }
 }

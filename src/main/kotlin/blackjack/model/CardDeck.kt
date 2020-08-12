@@ -16,7 +16,8 @@ class CardDeck {
                 cards.add(Card(type, value))
             }
         }
-        return cards.shuffle() as MutableList<Card>
+        cards.shuffle()
+        return cards
     }
 
     private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }

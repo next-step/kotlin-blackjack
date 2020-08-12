@@ -16,4 +16,8 @@ object Output {
             println("${it.name}의 카드: ${it.cards.joinToString { it.cardName() }} - 결과 : ${it.countingPoint()}")
         }
     }
+
+    fun winner(players: List<Player>) {
+        println("우승자 : ${players.joinToString { "${it.name}" }}")
+    }
 }
