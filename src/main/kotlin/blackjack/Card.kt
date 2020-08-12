@@ -1,6 +1,6 @@
 package blackjack
 
-class Card(val type: Type, val value: Value)
+data class Card(val type: Type, val value: Value)
 
 enum class Type(val typeName: String) {
     SPACE("스페이스"),
