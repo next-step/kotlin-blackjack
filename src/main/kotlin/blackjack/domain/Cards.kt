@@ -16,7 +16,7 @@ class Cards(cards: Set<Card>) {
 
     fun sumOfScores(): Int {
         var score = cards.map { it.score() }.sumBy { it }
-        while (score <= EVELVEN_ACE_AVAILABLE_SCORE && hasAce()) {
+        if (score <= ACE_ELEVEN_AVAILABLE_SCORE && hasAce()) {
             score += ADDED_SCORE_WHEN_USING_ELEVEN_ACE
         }
         return score
@@ -29,7 +29,7 @@ class Cards(cards: Set<Card>) {
     }
 
     companion object {
-        const val EVELVEN_ACE_AVAILABLE_SCORE = 11
+        const val ACE_ELEVEN_AVAILABLE_SCORE = 11
         const val ADDED_SCORE_WHEN_USING_ELEVEN_ACE = 10
     }
 }

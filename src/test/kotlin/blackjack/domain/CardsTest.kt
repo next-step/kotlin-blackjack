@@ -41,8 +41,11 @@ class CardsTest {
     @DisplayName("카드 점수 합계가 21 이상일 때 true를 반환한다 (테스트시 점수 합계 : 21)")
     @Test
     fun `true only when score is more than maximum score`() {
+        // given
+        val newCards = cards.add(newCard)
+
         // when
-        val isMoreThanMax = cards.isMoreThanMaxScore(cards)
+        val isMoreThanMax = Cards(newCards).isMoreThanMaxScore(cards)
 
         // then
         assertTrue(isMoreThanMax)
@@ -50,8 +53,11 @@ class CardsTest {
 
     @Test
     fun `sum of scores`() {
+        // given
+        val newCards = cards.add(newCard)
+
         // when
-        val score = cards.sumOfScores()
+        val score = Cards(newCards).sumOfScores()
 
         // then
         assertThat(score).isEqualTo(21)
