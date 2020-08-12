@@ -19,7 +19,7 @@ object ResultView {
     }
 
     fun printResult(game: BlackJackGame) {
-        if ((game.dealer as Dealer).isReceivedExtraCard) println("딜러는 16이하라 한장의 카드를 더 받았습니다")
+        if ((game.dealer as Dealer).isReceivedExtraCard()) println("딜러는 16이하라 한장의 카드를 더 받았습니다")
         println()
         println("${game.dealer.name} 카드: ${game.dealer.myReceivedCard.joinToString()} - 결과: ${game.dealer.totalPoints}")
         game.players.map { println("${it.name}카드: ${it.myReceivedCard.joinToString()} - 결과: ${it.totalPoints}") }
