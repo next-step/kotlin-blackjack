@@ -10,7 +10,7 @@ object InputView {
         return readText(message = ENTER_PLAYER_NAMES)
     }
 
-    fun readReplyToQuestionOfDrawingOrNot(player: Player): String {
+    fun readReplyToDrawing(player: Player): String {
         return readText(message = "${player}는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 

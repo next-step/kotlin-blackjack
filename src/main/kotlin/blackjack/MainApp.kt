@@ -15,11 +15,11 @@ fun main() {
 
     val players = game.players
     players.forEach { player ->
-        var reply = InputView.readReplyToQuestionOfDrawingOrNot(player)
+        var reply = InputView.readReplyToDrawing(player)
         while (reply != REPLY_NO && reply.startsWith(REPLY_YES)) {
             game.drawOnce(player)
             ResultView.showStateOfCards(player)
-            reply = InputView.readReplyToQuestionOfDrawingOrNot(player)
+            reply = InputView.readReplyToDrawing(player)
         }
         val currentCards = player.cards.size()
         if (currentCards == DEFAULT_CARD_AMOUNT) {
