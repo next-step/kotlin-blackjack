@@ -23,7 +23,7 @@ class PlayerTest {
             requestCard(Card(Kinds.ACE, Shape.CLOVER))
         }
 
-        assertThat(player.totalPoints).isEqualTo(21)
+        assertThat(player.calculatePoint()).isEqualTo(21)
     }
 
     @Test
@@ -33,7 +33,7 @@ class PlayerTest {
             requestCard(Card(Kinds.ACE, Shape.SPADE))
         }
 
-        assertThat(player.totalPoints).isEqualTo(12)
+        assertThat(player.calculatePoint()).isEqualTo(12)
     }
 
     @Test
@@ -44,6 +44,6 @@ class PlayerTest {
             requestCard(Card(Kinds.ACE, Shape.HEART))
         }
 
-        assertThat(player.totalPoints).isEqualTo(17)
+        assertThat(player.calculatePoint()).isEqualTo(17)
     }
 }

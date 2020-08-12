@@ -9,7 +9,7 @@ class Dealer(name: String = "딜러") : Gamer(name) {
     }
 
     fun checkIfGetExtraCardOrNot(): Boolean =
-        myReceivedCard.size == INIT_CARD_SIZE && totalPoints <= EXTRA_CARD_AVAILABLE_LIMIT_POINT
+        myReceivedCard.size == INIT_CARD_SIZE && calculatePoint() <= EXTRA_CARD_AVAILABLE_LIMIT_POINT
 
     fun isReceivedExtraCard() = myReceivedCard.size > INIT_CARD_SIZE
 
