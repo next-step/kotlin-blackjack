@@ -46,4 +46,15 @@ class PlayerTest {
 
         assertThat(player.calculatePoint()).isEqualTo(17)
     }
+
+    @Test
+    fun `첫 카드에 ACE 가 오는 경우`() {
+        val player = Player("moshi").apply {
+            requestCard(Card(Kinds.ACE, Shape.SPADE))
+            requestCard(Card(Kinds.FIVE, Shape.SPADE))
+            requestCard(Card(Kinds.FIVE, Shape.CLOVER))
+        }
+
+        assertThat(player.calculatePoint()).isEqualTo(21)
+    }
 }
