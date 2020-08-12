@@ -17,5 +17,7 @@ enum class Kinds(val kindsName: String, val point: Int) {
 
     companion object {
         fun findByKinds(kinds: Kinds): Kinds = values().first { it.kindsName == kinds.kindsName }
+
+        fun isAce(point: Int) = ACE.point == point
     }
 }

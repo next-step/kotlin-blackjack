@@ -11,7 +11,7 @@ abstract class Gamer(val name: String) {
         _myReceivedCard
             .map { it.getCardKinds().point }
             .reduce { acc, point ->
-                val firstAceCaseConsideredAcc = if (acc == Kinds.ACE.point) acc + ACE_EXTRA_POINT else acc
+                val firstAceCaseConsideredAcc = if (Kinds.isAce(acc)) acc + ACE_EXTRA_POINT else acc
 
                 firstAceCaseConsideredAcc +
                     point +
@@ -23,7 +23,7 @@ abstract class Gamer(val name: String) {
     }
 
     private fun isAvailableExtraPoint(acc: Int, cardPoint: Int) =
-        cardPoint == Kinds.ACE.point && acc + cardPoint + ACE_EXTRA_POINT <= MAX_POINT
+        Kinds.isAce(cardPoint) && acc + cardPoint + ACE_EXTRA_POINT <= MAX_POINT
 
     companion object {
         const val MAX_POINT = 21
