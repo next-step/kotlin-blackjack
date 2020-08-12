@@ -14,7 +14,7 @@ fun main() {
         val currentPlayer = game.currentPlayer()
         val reply = InputView.readReplyToDrawing(currentPlayer)
 
-        val playerAfterReply = game.giveChanceToDraw(currentPlayer, reply)
+        val playerAfterReply = game.giveChanceToDraw(reply)
         ResultView.showStateOfCards(playerAfterReply, reply)
     }
     ResultView.showGameResult(game.result())

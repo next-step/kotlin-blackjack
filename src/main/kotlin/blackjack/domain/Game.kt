@@ -19,7 +19,8 @@ class Game(players: List<Player>) {
         return _players
     }
 
-    fun giveChanceToDraw(currentPlayer: Player, reply: String): Player {
+    fun giveChanceToDraw(reply: String): Player {
+        val currentPlayer = _players.findPlayer(turn)
         val player = currentPlayer.getChanceToDraw(reply)
         if (REPLY_REJECT == reply || player.hasScoreMoreThanMax()) {
             turn++
