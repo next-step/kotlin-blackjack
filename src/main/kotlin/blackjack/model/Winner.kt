@@ -10,9 +10,9 @@ object Winner {
         return listOf(listOf(dealerScore), playersScore).flatten()
     }
 
-    private fun setupWinner(playerPoint: Int, dealerPoint: Int): Boolean {
-        if (playerPoint > Gamer.MAX_POINT) return false
-        if (dealerPoint > Gamer.MAX_POINT) return true
+    private fun setupWinner(playerPoint: Point, dealerPoint: Point): Boolean {
+        if (playerPoint > Point.MAX_POINT) return false
+        if (dealerPoint > Point.MAX_POINT) return true
         return dealerPoint < playerPoint
     }
 

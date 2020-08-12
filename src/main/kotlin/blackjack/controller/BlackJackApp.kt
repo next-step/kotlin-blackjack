@@ -5,6 +5,7 @@ import blackjack.model.Card
 import blackjack.model.Dealer
 import blackjack.model.Gamer
 import blackjack.model.Player
+import blackjack.model.Point
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -35,7 +36,7 @@ private fun drawCard(game: BlackJackGame) {
 }
 
 private fun isContinueDraw(player: Gamer) =
-    !player.isReachMaxPoint() && InputView.requestOneOfCard(player) == "y"
+    !Point.isReachMaxPoint(player.calculatePoint()) && InputView.requestOneOfCard(player) == "y"
 
 private fun registerGame(): BlackJackGame {
     val playerName = InputView.requestPlayerNames()
