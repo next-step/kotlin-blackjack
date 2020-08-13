@@ -1,7 +1,7 @@
 package blackJack.domain
 
 class BlackJack(names: List<String>) {
-    val players = makePlayer(names)
+    val players = Players(makePlayer(names))
     val dealer = Dealer()
 
     init {
@@ -16,7 +16,7 @@ class BlackJack(names: List<String>) {
     }
 
     private fun giveCardAllPeople() {
-        players.forEach { giveCard(it) }
+        players.giveCardAll(dealer)
         giveCard(dealer)
     }
 

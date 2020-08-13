@@ -19,7 +19,7 @@ fun startGame() {
     val names = InputView.inputPlayer()
     val blackJack = BlackJack(names)
     ResultView.resultReady(blackJack)
-    blackJack.players.forEach { playerCheckBust(it, blackJack) }
+    blackJack.players.players.forEach { playerCheckBust(it, blackJack) }
     ResultView.resultOpenDealerCard(blackJack.dealer)
     dealerGetCard(blackJack)
     ResultView.resultGame(blackJack)
