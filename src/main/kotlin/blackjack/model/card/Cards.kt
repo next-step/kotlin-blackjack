@@ -5,7 +5,7 @@ import blackjack.model.player.BLACKJACK_MAX_NUMBER
 const val BOTTOM_CARD_NUMBER = 0
 
 data class Cards(val cards: MutableList<Card>) {
-    fun getCard(): Card {
+    fun draw(): Card {
         cards.removeAt(BOTTOM_CARD_NUMBER)
         return cards[BOTTOM_CARD_NUMBER]
     }

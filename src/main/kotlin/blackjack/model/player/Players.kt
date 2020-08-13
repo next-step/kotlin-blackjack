@@ -8,7 +8,7 @@ class Players(private val players: List<Player>) {
     }
 
     fun drawCard(cardDeck: CardDeck) {
-        players.forEach { it.drawCard(cardDeck.draw()) }
+        players.forEach { it.drawCard(cardDeck.pick()) }
     }
 
     fun progressTurn(cardDeck: CardDeck) {

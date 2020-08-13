@@ -14,5 +14,5 @@ class CardDeck {
         return Cards(cards.shuffled() as MutableList<Card>)
     }
 
-    fun pick(): Card = cards.getCard()
+    fun pick(): Card = cards.draw()
 }
