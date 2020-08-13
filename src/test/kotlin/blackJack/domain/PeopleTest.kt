@@ -10,7 +10,7 @@ class PeopleTest {
 
         people.addCard(Card("♠10", 10))
 
-        Assertions.assertThat(people.hands.size).isEqualTo(1)
+        Assertions.assertThat(people.hands).hasSize(1)
         Assertions.assertThat(people.hands[0]).isEqualTo(Card("♠10", 10))
     }
 

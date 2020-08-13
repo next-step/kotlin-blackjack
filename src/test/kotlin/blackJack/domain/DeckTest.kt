@@ -8,7 +8,7 @@ class DeckTest {
     fun make_deck() {
         val deck = Deck()
 
-        assertThat(deck.cards.size).isEqualTo(52)
+        assertThat(deck.cards).hasSize(52)
     }
 
     @Test
@@ -27,6 +27,6 @@ class DeckTest {
 
         deck.getCard()
 
-        assertThat(deck.cards.size).isEqualTo(51)
+        assertThat(deck.cards).hasSize(51)
     }
 }

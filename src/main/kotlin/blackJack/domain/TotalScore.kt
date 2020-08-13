@@ -2,18 +2,21 @@ package blackJack.domain
 
 object TotalScore {
     fun getScore(cards: List<Int>): Int {
-        if (isAce(cards)) {
-            return hasAce(cards.sum())
+        if (hasAce(cards)) {
+            return getHasAceScore(cards.sum())
         }
         return cards.sum()
     }
 
-    private fun isAce(cards: List<Int>): Boolean = cards.contains(1)
+    private fun hasAce(cards: List<Int>): Boolean = cards.contains(1)
 
-    private fun hasAce(totalScore: Int): Int {
-        if (totalScore <= 11) {
-            return totalScore + 10
+    private fun getHasAceScore(totalScore: Int): Int {
+        if (totalScore <= BUST_SCORE) {
+            return totalScore + ACE_SCORE
         }
         return totalScore
     }
+
+    private const val BUST_SCORE = 11
+    private const val ACE_SCORE = 10
 }

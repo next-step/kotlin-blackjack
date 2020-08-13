@@ -10,7 +10,7 @@ class BlackJackTest {
 
         val blackJack = BlackJack(nameList)
 
-        assertThat(blackJack.players.size).isEqualTo(2)
+        assertThat(blackJack.players).hasSize(2)
     }
 
     @Test
@@ -19,8 +19,8 @@ class BlackJackTest {
 
         val blackJack = BlackJack(nameList)
 
-        assertThat(blackJack.players[0].hands.size).isEqualTo(2)
-        assertThat(blackJack.players[1].hands.size).isEqualTo(2)
-        assertThat(blackJack.dealer.hands.size).isEqualTo(2)
+        assertThat(blackJack.players[0].hands).hasSize(2)
+        assertThat(blackJack.players[1].hands).hasSize(2)
+        assertThat(blackJack.dealer.hands).hasSize(2)
     }
 }

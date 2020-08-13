@@ -11,7 +11,7 @@ fun main() {
     try {
         startGame()
     } catch (e: Exception) {
-        println(e.message)
+        ResultView.resultError(e.message)
     }
 }
 
@@ -40,7 +40,7 @@ fun playerWhetherGet(player: Player, blackJack: BlackJack) {
     }
     if (inputValue == "n") {
         ResultView.resultPeopleHands(player)
-        println()
+        ResultView.blank()
         isGetCard = false
     }
 }

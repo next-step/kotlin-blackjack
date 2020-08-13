@@ -12,7 +12,7 @@ class BlackJack(names: List<String>) {
     private fun makePlayer(names: List<String>): List<Player> = names.map { Player(it) }
 
     private fun readyGame() {
-        repeat(2) { giveCardAllPeople() }
+        repeat(START_HANDS) { giveCardAllPeople() }
     }
 
     private fun giveCardAllPeople() {
@@ -25,4 +25,8 @@ class BlackJack(names: List<String>) {
     }
 
     fun getResult(): Result = Result(dealer)
+
+    companion object {
+        private const val START_HANDS = 2
+    }
 }

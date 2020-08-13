@@ -5,12 +5,20 @@ import blackJack.domain.Dealer
 import blackJack.domain.People
 
 object ResultView {
+    fun blank() {
+        println()
+    }
+
+    fun resultError(error: String?) {
+        println(error)
+    }
+
     fun resultReady(blackJack: BlackJack) {
         val players = blackJack.players
-        println("딜러가 딜러와 ${players.joinToString { it.name!! }}에게 2장의 카드를 주었습니다.")
+        println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
         println("딜러 카드: ${blackJack.dealer.hands[0].name}")
         players.forEach { resultPeopleHands(it) }
-        println()
+        blank()
     }
 
     fun resultPeopleHands(people: People, result: String = "") {
@@ -21,7 +29,7 @@ object ResultView {
         if (people.isBust()) {
             resultPeopleHands(people)
             println("${people.name}는 버스트 했습니다")
-            println()
+            blank()
         } else {
             resultPeopleHands(people)
             println("${people.name}는 버스트 하지 않았습니다.")
@@ -42,7 +50,7 @@ object ResultView {
         println("----------------")
         blackJack.players.forEach { resultPeopleHands(it, "- 결과: ${it.getTotalScore()}") }
         resultPeopleHands(blackJack.dealer, "- 결과: ${blackJack.dealer.getTotalScore()}")
-        println()
+        blank()
         println("최종 승패")
         val result = blackJack.getResult()
         blackJack.players.forEach { println("${it.name}: ${result.get(it)}") }

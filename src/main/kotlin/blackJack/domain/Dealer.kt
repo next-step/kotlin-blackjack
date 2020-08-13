@@ -11,5 +11,9 @@ class Dealer : People("딜러") {
         people.addCard(deck.getCard())
     }
 
-    fun isOver16(): Boolean = getTotalScore() > 16
+    fun isOver16(): Boolean = getTotalScore() >= MINIMUM
+
+    companion object {
+        private const val MINIMUM = 17
+    }
 }

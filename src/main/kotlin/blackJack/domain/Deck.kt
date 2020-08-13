@@ -11,20 +11,20 @@ class Deck() {
     }
 
     private fun makeCard(shape: String) {
-        (FIRST..LAST).map { _cards.add(makeCard(shape, it)) }
+        (ACE..KING).map { _cards.add(makeCard(shape, it)) }
     }
 
     private fun makeCard(shape: String, number: Int): Card {
         return when (number) {
-            1 -> (Card("${shape}A", number))
+            ACE -> (Card("${shape}A", number))
 
-            in 2..10 -> (Card(shape + "$number", number))
+            in NUMBER_TWO..NUMBER_TEN -> (Card(shape + "$number", number))
 
-            11 -> (Card("${shape}J", 10))
+            JACK -> (Card("${shape}J", NUMBER_TEN))
 
-            12 -> (Card("${shape}Q", 10))
+            QUEEN -> (Card("${shape}Q", NUMBER_TEN))
 
-            13 -> (Card("${shape}K", 10))
+            KING -> (Card("${shape}K", NUMBER_TEN))
 
             else -> throw IllegalArgumentException("해당 번호의 카드는 존재하지 않습니다.")
         }
@@ -45,8 +45,12 @@ class Deck() {
     }
 
     companion object {
-        private const val FIRST = 1
-        private const val LAST = 13
+        private const val ACE = 1
+        private const val NUMBER_TWO = 2
+        private const val NUMBER_TEN = 10
+        private const val JACK = 11
+        private const val QUEEN = 12
+        private const val KING = 13
         private val SHAPE = listOf("♠", "♣", "♥", "♦")
     }
 }

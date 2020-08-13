@@ -12,4 +12,14 @@ class DealerTest {
 
         assertThat(dealer.isOver16()).isTrue()
     }
+
+    @Test
+    fun give_card() {
+        val player = Player("test")
+        val dealer = Dealer()
+
+        dealer.giveCard(player)
+
+        assertThat(player.hands).hasSize(1)
+    }
 }

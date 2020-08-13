@@ -10,20 +10,13 @@ class PlayerTest {
         val player = Player("joohan")
 
         assertThat(player.name).isEqualTo("joohan")
-        assertThat(player.hands.size).isEqualTo(0)
-    }
-
-    @Test
-    fun player_name_is_null() {
-        assertThatThrownBy {
-            Player(null)
-        }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("이름은 공백값과 null값을 받을수 없습니다.")
+        assertThat(player.hands).hasSize(0)
     }
 
     @Test
     fun player_name_is_blank() {
         assertThatThrownBy {
             Player("")
-        }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("이름은 공백값과 null값을 받을수 없습니다.")
+        }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("이름은 없을수 받을수 없습니다.")
     }
 }
