@@ -64,6 +64,6 @@ enum class Card(val value: Int, val cardName: String) {
     }
 
     companion object {
-        val DECK = values().toList()
+        val PACK = values().toList()
     }
 }

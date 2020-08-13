@@ -34,6 +34,32 @@ class HandsTest {
         ).isEqualTo(32)
     }
 
+    @Test
+    fun `isBusted() 패의 합계가 21을 초과하면 true`() {
+        assertThat(
+            Hands(
+                listOf(
+                    Card.CLUB_10,
+                    Card.CLUB_10,
+                    Card.CLUB_2
+                )
+            ).isBusted()
+        ).isTrue()
+    }
+
+    @Test
+    fun `isBusted() 패의 합계가 21 미만이면 false`() {
+        assertThat(
+            Hands(
+                listOf(
+                    Card.CLUB_10,
+                    Card.CLUB_10,
+                    Card.CLUB_ACE
+                )
+            ).isBusted()
+        ).isFalse()
+    }
+
     companion object {
         @JvmStatic
         private fun provideHands(): Stream<Arguments> {

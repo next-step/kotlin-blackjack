@@ -9,10 +9,10 @@ data class Hands(val cards: List<Card> = listOf()) {
         return Hands(cards + card)
     }
 
-    val sum
-        get() = cards.sumBy {
-            it.value
-        }.cutOffWithAces()
+    val size = cards.size
+    val sum = cards.sumBy {
+        it.value
+    }.cutOffWithAces()
 
     private fun Int.cutOffWithAces(): Int {
         return this - (deducibleAces() * 10)
@@ -31,5 +31,9 @@ data class Hands(val cards: List<Card> = listOf()) {
 
     private fun aces(): Int {
         return cards.count { it.isAce() }
+    }
+
+    fun isBusted(): Boolean {
+        return sum > BLACK_JACK
     }
 }
