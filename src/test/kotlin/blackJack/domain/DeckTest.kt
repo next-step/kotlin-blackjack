@@ -25,8 +25,9 @@ class DeckTest {
     fun get_card() {
         val deck = Deck()
 
-        deck.getCard()
+        val card = deck.getCard()
 
+        assertThat(card).isEqualTo(Card(Shape.SPADE, Denomination.ACE))
         assertThat(deck.cards).hasSize(51)
     }
 }
