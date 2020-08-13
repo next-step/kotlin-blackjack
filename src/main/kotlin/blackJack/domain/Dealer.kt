@@ -4,7 +4,7 @@ class Dealer : People("딜러") {
     private val deck = Deck()
 
     fun shuffleDeck() {
-        deck.shuffle()
+        deck.shuffle { it.shuffled() }
     }
 
     fun giveCard(people: People) {

@@ -11,11 +11,11 @@ class Deck() {
     }
 
     private fun makeCard(shape: Shape) {
-        (ACE..KING).map { _cards.add(shape.makeCard(it)) }
+        Denomination.values().forEach { _cards.add(Card(shape, it)) }
     }
 
-    fun shuffle() {
-        cards = _cards.shuffled()
+    fun shuffle(shuffleDeck: (cards: List<Card>) -> List<Card>) {
+        cards = shuffleDeck(_cards)
     }
 
     fun getCard(): Card {
@@ -26,10 +26,5 @@ class Deck() {
 
     private fun deleteCard() {
         cards = cards.drop(1)
-    }
-
-    companion object {
-        private const val ACE = 1
-        private const val KING = 13
     }
 }

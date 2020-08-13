@@ -8,8 +8,8 @@ class ResultTest {
     fun player_win() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠9", 9))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.NINE))
 
         val result = Result(dealer)
 
@@ -21,8 +21,8 @@ class ResultTest {
     fun player_lose() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 9))
-        dealer.addCard(Card("♠10", 10))
+        player.addCard(Card(Shape.SPADE, Denomination.NINE))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         val result = Result(dealer)
 
@@ -34,10 +34,10 @@ class ResultTest {
     fun player_is_bust() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 10))
-        player.addCard(Card("♠10", 10))
-        player.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         val result = Result(dealer)
 
@@ -49,10 +49,10 @@ class ResultTest {
     fun dealer_is_bust() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         val result = Result(dealer)
 
@@ -64,12 +64,12 @@ class ResultTest {
     fun player_dealer_is_bust_draw() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 10))
-        player.addCard(Card("♠10", 10))
-        player.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         val result = Result(dealer)
 
@@ -81,8 +81,8 @@ class ResultTest {
     fun draw() {
         val player = Player("joohan")
         val dealer = Dealer()
-        player.addCard(Card("♠10", 10))
-        dealer.addCard(Card("♠10", 10))
+        player.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         val result = Result(dealer)
 

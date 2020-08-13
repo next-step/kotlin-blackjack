@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test
 
 class ShapeTest {
     @Test
-    fun make_card() {
-        val spadeAce = Shape.SPADE.makeCard(1)
-
-        assertThat(spadeAce).isEqualTo(Card("♠A", 1))
+    fun get_four_shape() {
+        assertThat(Shape.values()).hasSize(4)
     }
 }

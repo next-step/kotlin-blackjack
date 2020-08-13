@@ -9,7 +9,7 @@ open class People(val name: String) {
         _hands.add(card)
     }
 
-    fun getTotalScore(): Int = TotalScore.getScore(_hands.map { it.number })
+    fun getTotalScore(): Int = TotalScore.getScore(_hands.map { it.denomination.number })
 
     fun isBust(): Boolean = getTotalScore() > BUST_SCORE
 

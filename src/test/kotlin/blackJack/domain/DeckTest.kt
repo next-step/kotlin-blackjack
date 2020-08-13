@@ -14,11 +14,11 @@ class DeckTest {
     @Test
     fun shuffle_deck() {
         val deck = Deck()
-        val deck2 = Deck()
+        val cards = listOf(Card(Shape.SPADE, Denomination.TEN), Card(Shape.SPADE, Denomination.TEN))
 
-        deck2.shuffle()
+        deck.shuffle { cards }
 
-        assertThat(deck.cards).isNotEqualTo(deck2.cards)
+        assertThat(deck.cards).hasSize(2)
     }
 
     @Test

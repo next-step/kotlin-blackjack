@@ -8,17 +8,17 @@ class PeopleTest {
     fun give_card() {
         val people = People("test")
 
-        people.addCard(Card("♠10", 10))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         Assertions.assertThat(people.hands).hasSize(1)
-        Assertions.assertThat(people.hands[0]).isEqualTo(Card("♠10", 10))
+        Assertions.assertThat(people.hands[0]).isEqualTo(Card(Shape.SPADE, Denomination.TEN))
     }
 
     @Test
     fun get_score() {
         val people = People("test")
-        people.addCard(Card("♠10", 10))
-        people.addCard(Card("♠10", 10))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         Assertions.assertThat(people.getTotalScore()).isEqualTo(20)
     }
@@ -26,9 +26,9 @@ class PeopleTest {
     @Test
     fun player_is_over_21() {
         val people = People("test")
-        people.addCard(Card("♠10", 10))
-        people.addCard(Card("♠10", 10))
-        people.addCard(Card("♠10", 10))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
+        people.addCard(Card(Shape.SPADE, Denomination.TEN))
 
         Assertions.assertThat(people.isBust()).isTrue()
     }

@@ -16,13 +16,13 @@ object ResultView {
     fun resultReady(blackJack: BlackJack) {
         val players = blackJack.players
         println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
-        println("딜러 카드: ${blackJack.dealer.hands[0].name}")
+        println("딜러 카드: ${blackJack.dealer.hands[0].getName()}")
         players.forEach { resultPeopleHands(it) }
         blank()
     }
 
     fun resultPeopleHands(people: People, result: String = "") {
-        println("${people.name} 카드: ${people.hands.joinToString { it.name }} $result")
+        println("${people.name} 카드: ${people.hands.joinToString { it.getName() }} $result")
     }
 
     fun resultWhetherBust(people: People) {
