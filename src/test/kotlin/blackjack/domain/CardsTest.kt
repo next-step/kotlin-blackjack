@@ -50,6 +50,7 @@ class CardsTest {
         assertTrue(isMoreThanMax)
     }
 
+    @DisplayName("카드점수 합계가 21을 초과하지 않는 한 ACE는 11로 계산할 수 있다")
     @Test
     fun `sum of scores`() {
         // given

@@ -15,21 +15,13 @@ class Cards(cards: Set<Card>) {
     fun isMoreThanMaxScore(cards: Cards) = cards.sumOfScores() >= MAXIMUM_GAME_SCORE
 
     fun sumOfScores(): Int {
-        var score = cards.map { it.score() }.sumBy { it }
-        if (score <= ACE_ELEVEN_AVAILABLE_SCORE && hasAce()) {
-            score += ADDED_SCORE_WHEN_USING_ELEVEN_ACE
-        }
-        return score
+        var sum = cards.map { it.score() }.sumBy { it }
+        return CardScore.sumWithAce(sum, hasAce())
     }
 
     private fun hasAce() = cards.any { it.score() == 1 }
 
     override fun toString(): String {
         return cards.joinToString { it.toString() }
-    }
-
-    companion object {
-        const val ACE_ELEVEN_AVAILABLE_SCORE = 11
-        const val ADDED_SCORE_WHEN_USING_ELEVEN_ACE = 10
     }
 }
