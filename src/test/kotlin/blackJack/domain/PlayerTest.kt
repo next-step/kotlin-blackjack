@@ -14,35 +14,6 @@ class PlayerTest {
     }
 
     @Test
-    fun give_card() {
-        val player = Player("joohan")
-
-        player.giveCard(Card("♠10", 10))
-
-        assertThat(player.hands.size).isEqualTo(1)
-        assertThat(player.hands[0]).isEqualTo(Card("♠10", 10))
-    }
-
-    @Test
-    fun get_score() {
-        val player = Player("joohan")
-        player.giveCard(Card("♠10", 10))
-        player.giveCard(Card("♠10", 10))
-
-        assertThat(player.totalScore).isEqualTo(20)
-    }
-
-    @Test
-    fun player_is_over_21() {
-        val player = Player("joohan")
-        player.giveCard(Card("♠10", 10))
-        player.giveCard(Card("♠10", 10))
-        player.giveCard(Card("♠10", 10))
-
-        assertThat(player.isBust()).isTrue()
-    }
-
-    @Test
     fun player_name_is_null() {
         assertThatThrownBy {
             Player(null)

@@ -18,9 +18,11 @@ fun main() {
 fun startGame() {
     val names = InputView.inputPlayer()
     val blackJack = BlackJack(names)
-    ResultView.resultReady(blackJack.players)
+    ResultView.resultReady(blackJack)
     blackJack.players.forEach { playerCheckBust(it, blackJack) }
-    ResultView.resultGame(blackJack.players)
+    ResultView.resultOpenDealerCard(blackJack.dealer)
+    dealerGetCard(blackJack)
+    ResultView.resultGame(blackJack)
 }
 
 fun playerCheckBust(player: Player, blackJack: BlackJack) {
@@ -33,11 +35,19 @@ fun playerCheckBust(player: Player, blackJack: BlackJack) {
 fun playerWhetherGet(player: Player, blackJack: BlackJack) {
     val inputValue = InputView.inputWhether(player)
     if (inputValue == "y") {
-        blackJack.giveCardPlayer(player)
+        blackJack.giveCard(player)
         ResultView.resultWhetherBust(player)
     }
     if (inputValue == "n") {
-        ResultView.resultPlayerHands(player)
+        ResultView.resultPeopleHands(player)
+        println()
         isGetCard = false
+    }
+}
+
+fun dealerGetCard(blackJack: BlackJack) {
+    while (!blackJack.dealer.isOver16()) {
+        blackJack.giveCard(blackJack.dealer)
+        ResultView.resultDealerGetCard(blackJack.dealer)
     }
 }
