@@ -1,8 +1,10 @@
 package blackjack.domain
 
-class Deck {
-    private var deck: Set<Card> =
-        Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
+class Deck(private var deck: Set<Card>) {
+
+    constructor() : this(
+        DEFAULT_DECK
+    )
 
     fun shuffled(): Set<Card> {
         return deck.shuffled().toSet()
@@ -17,7 +19,11 @@ class Deck {
         return card
     }
 
-    fun cardPackOfSuit(suit: Suit): Set<Card> {
-        return CardScore.values().map { cardScore -> Card(Pair(cardScore, suit)) }.toSet()
+    companion object {
+        val DEFAULT_DECK = Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
+
+        private fun cardPackOfSuit(suit: Suit): Set<Card> {
+            return CardScore.values().map { cardScore -> Card(Pair(cardScore, suit)) }.toSet()
+        }
     }
 }

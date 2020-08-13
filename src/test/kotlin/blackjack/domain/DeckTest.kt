@@ -1,8 +1,6 @@
 package blackjack
 
 import blackjack.domain.Deck
-import blackjack.domain.Suit
-import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -39,15 +37,5 @@ class DeckTest {
             // then
         }.isInstanceOf(IllegalStateException::class.java)
             .hasMessage("Deck has no card")
-    }
-
-    @DisplayName("주어진 모양의 카드 팩을 반환한다")
-    @Test
-    fun `make card pack of given suit`() {
-        // when
-        val cards = deck.cardPackOfSuit(Suit.CLUB)
-
-        // then
-        assertThat(cards.size).isEqualTo(13)
     }
 }
