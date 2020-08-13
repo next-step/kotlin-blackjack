@@ -5,6 +5,7 @@ import blackjack.view.REPLY_STAND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class GameTest {
@@ -22,20 +23,12 @@ class GameTest {
     }
 
     @Test
-    fun `players size`() {
-        // when
-        val size = game.players.size()
-
-        // then
-        assertTrue(size == 2)
-    }
-
-    @Test
     fun `set up with two cards`() {
         assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
         assertThat(secondPlayer.amountOfCards()).isEqualTo(2)
     }
 
+    @DisplayName("STAND = 카드 안 받음, HIT = 카드 받되, 기존 점수가 최고점수(21) 이상이면 안 받음")
     @Test
     fun `give chance to draw`() {
         // when
@@ -43,8 +36,13 @@ class GameTest {
         val secondPlayer = game.giveChanceToDraw(REPLY_HIT)
 
         // then
-        assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
-        assertThat(secondPlayer.amountOfCards()).isEqualTo(3)
+        assertThat(firstPlayer?.amountOfCards()).isEqualTo(2)
+
+        secondPlayer?.let {
+            if (!it.hasScoreMoreThanMax()) {
+                assertThat(secondPlayer.amountOfCards()).isEqualTo(3)
+            }
+        }
     }
 
     @Test

@@ -1,12 +1,10 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.Deck
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import java.lang.IllegalStateException
 
 class DeckTest {
     private lateinit var deck: Deck
@@ -26,16 +24,16 @@ class DeckTest {
         assertTrue(deck.shuffled().size == 51)
     }
 
-    @DisplayName("Deck이 비어있으면 IllegalStateException을 발생시킨다")
+    @DisplayName("Deck이 비어있을 때(53번째 카드를 꺼낼 때) null을 반환한다")
     @Test
-    fun `empty deck exception`() {
+    fun `empty deck returns null`() {
+        // given
+        repeat(52) { deck.provideCard(deck.shuffled()) }
 
-        assertThatThrownBy {
-            // when
-            repeat(53) { deck.provideCard(deck.shuffled()) }
+        // when
+        val card53th = deck.provideCard(deck.shuffled())
 
-            // then
-        }.isInstanceOf(IllegalStateException::class.java)
-            .hasMessage("Deck has no card")
+        // then
+        assertThat(card53th).isEqualTo(null)
     }
 }

@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Game.Companion.MAXIMUM_GAME_SCORE
 
 class Cards(cards: Set<Card>) {
-    private val cards = cards.toMutableSet()
+    private val cards: MutableSet<Card> = cards.toMutableSet()
 
     fun add(newCard: Card): Set<Card> {
         cards.add(newCard)

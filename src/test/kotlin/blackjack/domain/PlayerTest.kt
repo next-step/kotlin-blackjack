@@ -5,23 +5,28 @@ import blackjack.view.REPLY_STAND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class PlayerTest() {
+class PlayerTest {
     private lateinit var player: Player
-    private lateinit var newCard: Card
-    private lateinit var cards: Cards
 
     @BeforeEach
     fun `set up`() {
         player = Player(name = "mark")
-        newCard = Card(Pair(CardScore.SEVEN, Suit.SPADE))
-        cards = player.draw(newCard)
     }
 
+    @DisplayName("덱에서 카드를 뽑을 때마다 1장씩 반환되고, 덱이 비어있을 땐 null이 반환된다")
     @Test
     fun `draw a card`() {
-        assertThat(cards.size()).isEqualTo(1)
+        // when
+        val cardFromDeck: Card? = Card(Pair(CardScore.SEVEN, Suit.SPADE))
+        val cards = player.draw(cardFromDeck)
+        val nullCards = player.draw(null)
+
+        // then
+        assertThat(cards?.size()).isEqualTo(1)
+        assertThat(nullCards).isEqualTo(null)
     }
 
     @Test
@@ -31,7 +36,7 @@ class PlayerTest() {
         player.getChanceToDraw(REPLY_STAND)
 
         // then
-        assertThat(player.amountOfCards()).isEqualTo(2)
+        assertThat(player.amountOfCards()).isEqualTo(1)
     }
 
     @Test
@@ -45,6 +50,9 @@ class PlayerTest() {
 
     @Test
     fun `amount of cards`() {
+        // given
+        player.draw(Card(Pair(CardScore.SEVEN, Suit.SPADE)))
+
         // when
         val amount = player.amountOfCards()
 
@@ -54,6 +62,9 @@ class PlayerTest() {
 
     @Test
     fun `sum of scores`() {
+        // given
+        player.draw(Card(Pair(CardScore.SEVEN, Suit.SPADE)))
+
         // when
         val sum = player.sumOfScores()
 

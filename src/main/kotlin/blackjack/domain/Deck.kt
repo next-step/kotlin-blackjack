@@ -10,13 +10,14 @@ class Deck(private var deck: Set<Card>) {
         return deck.shuffled().toSet()
     }
 
-    fun provideCard(deck: Set<Card>): Card {
-        check(deck.isNotEmpty()) { "Deck has no card" }
+    fun provideCard(deck: Set<Card>): Card? {
+        if (deck.isEmpty()) return null
+
         val shuffledDeck = deck.toMutableSet()
-        val card = shuffledDeck.take(1)[0]
-        shuffledDeck.remove(card)
+        val cardPicked = shuffledDeck.take(1)[0]
+        shuffledDeck.remove(cardPicked)
         this.deck = shuffledDeck.toSet()
-        return card
+        return cardPicked
     }
 
     companion object {
