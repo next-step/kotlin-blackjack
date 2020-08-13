@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import blackjack.view.REPLY_HIT
-import blackjack.view.REPLY_STAY
+import blackjack.view.REPLY_STAND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
@@ -28,7 +28,7 @@ class PlayerTest() {
     fun `get a chance to draw`() {
         // when
         player.getChanceToDraw(REPLY_HIT)
-        player.getChanceToDraw(REPLY_STAY)
+        player.getChanceToDraw(REPLY_STAND)
 
         // then
         assertThat(player.amountOfCards()).isEqualTo(2)

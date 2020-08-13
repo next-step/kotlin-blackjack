@@ -15,7 +15,7 @@ object ResultView {
         if (REPLY_HIT == reply) {
             println("${player}카드: ${player.displayCards()}")
         }
-        if (REPLY_STAY == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
+        if (REPLY_STAND == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
             println("${player}카드: ${player.displayCards()}")
         }
     }

@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import blackjack.view.REPLY_HIT
-import blackjack.view.REPLY_STAY
+import blackjack.view.REPLY_STAND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -39,7 +39,7 @@ class GameTest {
     @Test
     fun `give chance to draw`() {
         // when
-        val firstPlayer = game.giveChanceToDraw(REPLY_STAY)
+        val firstPlayer = game.giveChanceToDraw(REPLY_STAND)
         val secondPlayer = game.giveChanceToDraw(REPLY_HIT)
 
         // then
@@ -55,8 +55,8 @@ class GameTest {
     @Test
     fun `game over when the turn is over`() {
         // when
-        game.giveChanceToDraw(REPLY_STAY)
-        game.giveChanceToDraw(REPLY_STAY)
+        game.giveChanceToDraw(REPLY_STAND)
+        game.giveChanceToDraw(REPLY_STAND)
 
         // then
         assertTrue(game.isOver())
