@@ -30,7 +30,14 @@ class CardTest {
         val aceCardScore = aceCard.score()
         val kingCardScore = kingCard.score()
 
+        // then
         assertThat(aceCardScore).isEqualTo(1)
         assertThat(kingCardScore).isEqualTo(10)
+    }
+
+    @Test
+    fun isAce() {
+        assertTrue(aceCard.isAce())
+        assertFalse(kingCard.isAce())
     }
 }

@@ -19,7 +19,7 @@ class Cards(cards: Set<Card>) {
         return CardScore.sumWithAce(sum, hasAce())
     }
 
-    private fun hasAce() = cards.any { it.score() == 1 }
+    private fun hasAce() = cards.any { it.isAce() }
 
     override fun toString(): String {
         return cards.joinToString { it.toString() }
