@@ -34,7 +34,7 @@ class Game(players: List<Player>) {
 
     fun result(): String {
         return (0 until _players.size()).map { _players.findPlayer(it) }
-            .joinToString("\n") { "${it}카드: ${it.displayCards()} - 결과: ${it.sumOfScores()}" }
+            .joinToString("\n") { "${it}카드: ${it.stateOfCards()} - 결과: ${it.sumOfScores()}" }
     }
 
     companion object {

@@ -10,18 +10,18 @@ import org.junit.jupiter.api.Test
 class PlayerTest() {
     private lateinit var player: Player
     private lateinit var newCard: Card
-    private lateinit var cards: List<Card>
+    private lateinit var cards: Cards
 
     @BeforeEach
     fun `set up`() {
         player = Player(name = "mark")
         newCard = Card(Pair(CardScore.SEVEN, Suit.SPADE))
-        cards = player.draw(newCard).toList()
+        cards = player.draw(newCard)
     }
 
     @Test
     fun `draw a card`() {
-        assertThat(cards[0]).isEqualTo(newCard)
+        assertThat(cards.size()).isEqualTo(1)
     }
 
     @Test

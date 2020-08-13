@@ -13,10 +13,10 @@ object ResultView {
 
     fun showStateOfCards(player: Player, reply: String) {
         if (REPLY_HIT == reply) {
-            println("${player}카드: ${player.displayCards()}")
+            println("${player}카드: ${player.stateOfCards()}")
         }
         if (REPLY_STAND == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
-            println("${player}카드: ${player.displayCards()}")
+            println("${player}카드: ${player.stateOfCards()}")
         }
     }
 
