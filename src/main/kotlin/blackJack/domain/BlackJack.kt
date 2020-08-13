@@ -12,7 +12,7 @@ class BlackJack(names: List<String>) {
     private fun makePlayer(names: List<String>): List<Player> = names.map { Player(it) }
 
     private fun readyGame() {
-        (0..1).map { giveCardAllPeople() }
+        repeat(2) { giveCardAllPeople() }
     }
 
     private fun giveCardAllPeople() {
