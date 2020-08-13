@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.Player
+import blackjack.model.Gamer
 
 object InputView {
 
@@ -9,7 +9,7 @@ object InputView {
         return readLine()?.split(",") ?: emptyList()
     }
 
-    fun requestOneOfCard(player: Player): String {
+    fun requestOneOfCard(player: Gamer): String {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readLine() ?: "n"
     }
