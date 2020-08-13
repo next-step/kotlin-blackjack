@@ -4,46 +4,50 @@ import blackjack.domain.Deck
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.lang.IllegalStateException
 
 class DeckTest {
+    private lateinit var deck: Deck
 
-    private val deck = Suit.values().flatMap { Deck.cardPackOfSuit(it) }.toMutableSet()
+    @BeforeEach
+    fun `set up`() {
+        deck = Deck()
+    }
 
-    @DisplayName("카드 한 장을 반환하고, 덱에서 해당 카드를 제거한다")
+    @DisplayName("카드 한 장을 뽑고 덱에서 제거한다")
     @Test
     fun `provide a card`() {
         // when
-        val cards = listOf(Deck.provideCard(deck))
+        deck.provideCard(deck.shuffled())
 
         // then
-        assertThat(cards.size).isEqualTo(1)
-        assertFalse(deck.contains(cards[0]))
-    }
-
-    @DisplayName("해당 카드 모양의 카드 팩을 반환한다")
-    @Test
-    fun `make card pack of suit`() {
-        // when
-        val cards = Deck.cardPackOfSuit(Suit.CLUB)
-
-        // then
-        assertThat(cards.size).isEqualTo(13)
+        assertTrue(deck.shuffled().size == 51)
     }
 
     @DisplayName("Deck이 비어있으면 IllegalStateException을 발생시킨다")
     @Test
-    fun `maximum of deck`() {
+    fun `empty deck exception`() {
 
         assertThatThrownBy {
             // when
-            repeat(500) { Deck.provideCard(deck) }
+            repeat(53) { deck.provideCard(deck.shuffled()) }
 
             // then
         }.isInstanceOf(IllegalStateException::class.java)
             .hasMessage("Deck has no card")
+    }
+
+    @DisplayName("주어진 모양의 카드 팩을 반환한다")
+    @Test
+    fun `make card pack of given suit`() {
+        // when
+        val cards = deck.cardPackOfSuit(Suit.CLUB)
+
+        // then
+        assertThat(cards.size).isEqualTo(13)
     }
 }

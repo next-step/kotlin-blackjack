@@ -1,11 +1,21 @@
 package blackjack.domain
 
-object Deck {
+class Deck {
+    private var deck: Set<Card> =
+        Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
 
-    fun provideCard(deck: MutableSet<Card>): Card {
+    fun shuffled(): Set<Card> {
+        return deck.shuffled().toSet()
+    }
+
+    fun provideCard(deck: Set<Card>): Card {
         check(deck.isNotEmpty()) { "Deck has no card" }
-        val card = deck.random()
-        deck.remove(card)
+        val shuffledDeck = deck.toMutableSet()
+
+        val card = shuffledDeck.random()
+        shuffledDeck.remove(card)
+
+        this.deck = shuffledDeck.toSet()
         return card
     }
 

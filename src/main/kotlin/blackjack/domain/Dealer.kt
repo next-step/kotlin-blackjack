@@ -1,8 +1,7 @@
 package blackjack.domain
 
 object Dealer {
-    private val deck: MutableSet<Card> =
-        Suit.values().flatMap { Deck.cardPackOfSuit(it) }.toMutableSet()
+    private val deck = Deck()
 
-    fun giveCard(): Card = Deck.provideCard(deck)
+    fun giveCard(): Card = deck.provideCard(deck.shuffled())
 }
