@@ -11,10 +11,8 @@ class Deck {
     fun provideCard(deck: Set<Card>): Card {
         check(deck.isNotEmpty()) { "Deck has no card" }
         val shuffledDeck = deck.toMutableSet()
-
-        val card = shuffledDeck.random()
+        val card = shuffledDeck.take(1)[0]
         shuffledDeck.remove(card)
-
         this.deck = shuffledDeck.toSet()
         return card
     }
