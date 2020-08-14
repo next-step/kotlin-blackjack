@@ -1,6 +1,8 @@
 package blackjack
 
-class Point(val value: Int) {
+data class Point(val value: Int) {
+
+    override fun toString(): String = "$value"
 
     operator fun plus(point: Point): Point = Point(value + point.value)
 
@@ -20,5 +22,8 @@ class Point(val value: Int) {
             val notExceedMaxPoint = acc + point + EXTRA_ACE_POINT <= MAX_POINT
             return isAccAce && notExceedMaxPoint
         }
+
+        fun calculateIfAceFirst(acc: Point): Point =
+            if (Denomination.isAce(acc.value)) acc + EXTRA_ACE_POINT else acc
     }
 }

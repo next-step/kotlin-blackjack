@@ -12,4 +12,11 @@ class PointTest {
 
         assertThat(isAvailableExtraPoint).isTrue()
     }
+
+    @Test
+    fun `첫 장이 ACE 일 때 ACE 추가 점수 획득`() {
+        val pointIfAceFirst = Point.calculateIfAceFirst(Point(Denomination.ACE.point))
+
+        assertThat(pointIfAceFirst).isEqualTo(Point(11))
+    }
 }
