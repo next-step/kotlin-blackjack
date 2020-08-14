@@ -2,8 +2,8 @@ package blackjack.domain
 
 abstract class Player(
     val name: String,
-    val cards: Cards = Cards.empty(),
-    val state: State = getStateFrom(cards)
+    val cards: Cards,
+    val state: State
 ) {
     init {
         validateStateWithScore()
@@ -27,7 +27,16 @@ abstract class Player(
         return this.copy(cards = this.cards + deck.getDealCards())
     }
 
-    abstract fun hit(deck: DrawStrategy): Player
+    fun hit(deck: DrawStrategy): Player {
+        validatePlayerCanHit()
+        val newCards = this.cards + deck.fetchCard()
+        return this.copy(cards = newCards, state = getStateFrom(cards))
+    }
+
+    private fun validatePlayerCanHit() {
+        require(this.state !is State.Busted) { "총점(${cards.sumScores()})이 21점을 초과해 카드를 더 가져올 수 없습니다. 카드목록 : $cards" }
+        require(this.state !is State.Stand) { "Stand 상태에서는 카드를 더 뽑을 수 없습니다." }
+    }
 
     abstract fun copy(
         name: String = this.name,
@@ -35,9 +44,11 @@ abstract class Player(
         state: State = this.state
     ): Player
 
+    abstract fun getStateFrom(cards: Cards): State
+
     companion object {
         @JvmStatic
-        protected fun getStateFrom(cards: Cards): State {
+        protected fun getPlayerStateFrom(cards: Cards): State {
             if (cards.sumScores() > Cards.BLACK_JACK_SCORE) {
                 return State.Busted
             }
@@ -48,3 +59,4 @@ abstract class Player(
 
 // getStateFrom 을 class 내부로 옮겨서  abstract로 하려니 nonFinal Method Calling 경고가 뜨네..
 // 이놈을 오버라이드 하는게 맞다고생각하는데 어렵네...
+// 스태틱을 한 이유는 생성자에서 바로 state를 계산하기위해서.
