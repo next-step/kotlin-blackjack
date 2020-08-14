@@ -19,4 +19,9 @@ class PointTest {
 
         assertThat(pointIfAceFirst).isEqualTo(Point(11))
     }
+
+    @Test
+    fun `21점 이상 여부 확인`() {
+        assertThat(Point.isReachMaxPoint(Point(21))).isTrue()
+    }
 }

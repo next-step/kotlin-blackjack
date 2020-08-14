@@ -28,5 +28,7 @@ data class Point(val value: Int) {
             val notExceedMaxPoint = acc + point + EXTRA_ACE_POINT <= MAX_POINT
             return isAccAce && notExceedMaxPoint
         }
+
+        fun isReachMaxPoint(point: Point) = point >= MAX_POINT
     }
 }
