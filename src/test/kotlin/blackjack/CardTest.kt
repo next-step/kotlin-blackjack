@@ -7,15 +7,15 @@ class CardTest {
 
     @Test
     fun `카드 만들기`() {
-        val card = Card(Denomination.ACE, Shape.CLUB)
+        val card = Card(Denomination.ACE to Shape.CLUB)
 
         assertThat(card.toString()).isEqualTo("A클로버")
     }
 }
 
-class Card(private val denomination: Denomination, private val shape: Shape) {
+class Card(private val denominationToShape: Pair<Denomination, Shape>) {
 
-    override fun toString(): String = "${denomination.symbol}${shape.symbol}"
+    override fun toString(): String = "${denominationToShape.first.symbol}${denominationToShape.second.symbol}"
 }
 
 enum class Denomination(val symbol: String, val point: Int) {
