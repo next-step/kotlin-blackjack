@@ -17,6 +17,10 @@ abstract class Player(
 
     operator fun plus(players: List<Player>): List<Player> = players.toMutableList().apply { add(0, this@Player) }
 
+    fun isBiggerScoreThan(other: Player): Boolean {
+        return this.getScore() > other.getScore()
+    }
+
     fun getScore(): Int {
         return cards.sumScores()
     }
@@ -53,6 +57,9 @@ abstract class Player(
         protected fun getPlayerStateFrom(cards: Cards): State {
             if (cards.sumScores() > Cards.BLACK_JACK_SCORE) {
                 return State.Busted
+            }
+            if (cards.isBlackJack()) {
+                return State.BlackJack
             }
             return State.Playing
         }

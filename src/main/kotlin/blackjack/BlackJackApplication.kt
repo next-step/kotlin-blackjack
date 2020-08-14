@@ -2,10 +2,12 @@ package blackjack
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Deck
+import blackjack.domain.PlayerResult
 import blackjack.view.askHitFromPlayer
 import blackjack.view.getPlayerNames
 import blackjack.view.notifyDealerHit
 import blackjack.view.notifyStartGame
+import blackjack.view.printPlayerResults
 import blackjack.view.printResult
 
 fun main() {
@@ -19,4 +21,6 @@ fun main() {
 
     printResult(dealer)
     resultPlayers.forEach { printResult(it) }
+
+    printPlayerResults(PlayerResult.ofDealer(dealer, resultPlayers), PlayerResult.ofChallengers(dealer, resultPlayers))
 }

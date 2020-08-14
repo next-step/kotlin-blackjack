@@ -22,6 +22,9 @@ class Dealer(
             if (score > Cards.BLACK_JACK_SCORE) {
                 return State.Busted
             }
+            if (cards.isBlackJack()) {
+                return State.BlackJack
+            }
             if (score >= DEALER_STOP_HIT_BOUNDARY_SCORE) {
                 return State.Stand
             }
