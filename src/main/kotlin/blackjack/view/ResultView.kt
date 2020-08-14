@@ -10,7 +10,7 @@ object ResultView {
 
     fun showResultOfSetUp(players: Players) {
         println("\n${players}에게 2장의 카드를 나누었습니다")
-        println(players.displayCurrentStates() + "\n")
+        println(players.statesOfCards() + "\n")
     }
 
     fun showStateOfCards(player: Player?, reply: String): Boolean {
