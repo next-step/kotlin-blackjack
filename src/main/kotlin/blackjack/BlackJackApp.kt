@@ -11,4 +11,11 @@ fun main() {
     val gambleMoneyPerPlayer = InputView.requestGambleMoney(playerNames)
 
     ResultView.printPreview(game)
+
+    players.map {
+        while (!Point.isReachMaxPoint(it.calculatePoint()) && InputView.requestOneOfCard(it) == "y") {
+            it.requestCard(Deck.pop())
+            ResultView.printCard(it)
+        }
+    }
 }
