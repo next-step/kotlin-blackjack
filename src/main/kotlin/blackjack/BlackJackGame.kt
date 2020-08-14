@@ -1,6 +1,6 @@
 package blackjack
 
-class BlackJackGame(private val dealer: Gamer, private val players: List<Gamer>) {
+class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
 
     fun initCardForDealer() {
         repeat(FIRST_HAVE_NUMBER_OF_CARD) {
