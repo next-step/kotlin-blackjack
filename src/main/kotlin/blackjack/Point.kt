@@ -14,7 +14,7 @@ data class Point(val value: Int) {
         }
 
     companion object {
-        private val MAX_POINT = Point(21)
+        val MAX_POINT = Point(21)
         private val EXTRA_ACE_POINT = Point(10)
 
         fun calculateIfAceFirst(acc: Point): Point =

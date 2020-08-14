@@ -14,4 +14,14 @@ class GamerTest {
 
         assertThat(player.calculatePoint()).isEqualTo(Point(12))
     }
+
+    @Test
+    fun `두 장의 합이 블랙잭인 경우`() {
+        val player = Player("moshi").apply {
+            requestCard(Card(Denomination.TEN to Shape.CLUB))
+            requestCard(Card(Denomination.ACE to Shape.DIAMOND))
+        }
+
+        assertThat(player.isFirstBlackJack()).isTrue()
+    }
 }
