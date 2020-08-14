@@ -11,7 +11,7 @@ data class Player(private val name: String) {
     }
 
     fun chooseToDraw(reply: String, deck: Deck): Player? {
-        if (reply == REPLY_HIT && !hasScoreMoreThanMax()) {
+        if (REPLY_HIT == reply && !hasScoreMoreThanMax()) {
             draw(deck) ?: return null
         }
         return this
