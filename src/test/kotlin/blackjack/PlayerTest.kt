@@ -12,8 +12,3 @@ class PlayerTest {
         assertThat(player.toString()).isEqualTo("moshi")
     }
 }
-
-class Player(private val name: String) {
-
-    override fun toString(): String = name
-}
