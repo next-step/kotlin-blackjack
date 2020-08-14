@@ -18,7 +18,18 @@ class PlayerTest {
         deck = Deck(setOf(Card(Pair(CardScore.SEVEN, Suit.SPADE))))
     }
 
-    @DisplayName("덱에서 카드를 뽑을 때마다 1장씩 반환되고, 덱이 비어있을 땐 null이 반환된다")
+    @DisplayName("카드를 뽑을지 말지는 reply에 따라 다르다 (reply : HIT = 1장 받음, STAND = 안 받음)")
+    @Test
+    fun `choose to draw or not`() {
+        // when
+        player.chooseToDraw(REPLY_HIT, deck)
+        player.chooseToDraw(REPLY_STAND, deck)
+
+        // then
+        assertThat(player.amountOfCards()).isEqualTo(1)
+    }
+
+    @DisplayName("카드를 뽑을 때 1장씩 반환되고, 덱이 비어있으면 null이 반환된다")
     @Test
     fun `draw a card`() {
         // when
@@ -28,16 +39,6 @@ class PlayerTest {
         // then
         assertThat(cards?.size()).isEqualTo(1)
         assertThat(nullCards).isEqualTo(null)
-    }
-
-    @Test
-    fun `get a chance to draw`() {
-        // when
-        player.chooseToDraw(REPLY_HIT, deck)
-        player.chooseToDraw(REPLY_STAND, deck)
-
-        // then
-        assertThat(player.amountOfCards()).isEqualTo(1)
     }
 
     @Test

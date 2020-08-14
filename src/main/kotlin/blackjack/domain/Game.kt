@@ -2,14 +2,15 @@ package blackjack.domain
 
 import blackjack.view.REPLY_STAND
 
-class Game(players: List<Player>, private val deck: Deck = Deck()) {
+class Game(players: List<Player>, private val deck: Deck) {
     private val players = Players(players)
     private var turn = 0
 
-    constructor(PlayerNames: String) : this(
+    constructor(PlayerNames: String, deck: Deck = Deck()) : this(
         PlayerNames.split(PLAYER_NAMES_DELIMITER)
             .filterNot { it.isBlank() }
-            .map { Player(it.trim()) }
+            .map { Player(it.trim()) },
+        deck
     )
 
     fun setUp(): Players {

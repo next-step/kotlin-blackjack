@@ -10,48 +10,59 @@ import org.junit.jupiter.api.Test
 
 class GameTest {
     private lateinit var game: Game
-    private lateinit var players: Players
-    private lateinit var firstPlayer: Player
-    private lateinit var secondPlayer: Player
+    private lateinit var gameWithEmptyDeck: Game
+    private lateinit var cardsForDeck: Set<Card>
+    private lateinit var player: Player
 
     @BeforeEach
     fun `set up`() {
+        cardsForDeck = setOf(
+            Pair(CardScore.THREE, Suit.HEART),
+            Pair(CardScore.FOUR, Suit.HEART)
+        ).map { Card(it) }.toSet()
+
         game = Game("mark, harry")
-        players = game.setUp()
-        firstPlayer = players.findPlayer(0)
-        secondPlayer = players.findPlayer(1)
+        gameWithEmptyDeck = Game("mark, harry", Deck(setOf()))
+        player = game.currentPlayer()
     }
 
     @Test
-    fun `set up with two cards`() {
-        assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
-        assertThat(secondPlayer.amountOfCards()).isEqualTo(2)
-    }
-
-    @DisplayName("STAND = 카드 안 받음, HIT = 카드 받되, 기존 점수가 최고점수(21) 이상이면 안 받음")
-    @Test
-    fun `give chance to draw`() {
+    fun `set up with two cards for each player`() {
         // when
-        val firstPlayer = game.giveChanceToDraw(REPLY_STAND)
-        val secondPlayer = game.giveChanceToDraw(REPLY_HIT)
+        game.setUp()
+
+        assertThat(player.amountOfCards()).isEqualTo(2)
+    }
+
+    @DisplayName("STAND이면 카드를 받지 않고, HIT이면 카드 한 장을 받은 player를 반환한다")
+    @Test
+    fun `give a chance to draw to a player`() {
+        // when
+        val playerToStand = game.giveChanceToDraw(REPLY_STAND)
+        val playerToHit = game.giveChanceToDraw(REPLY_HIT)
 
         // then
-        assertThat(firstPlayer?.amountOfCards()).isEqualTo(2)
+        assertThat(playerToStand?.amountOfCards()).isEqualTo(0)
+        assertThat(playerToHit?.amountOfCards()).isEqualTo(1)
+    }
 
-        secondPlayer?.let {
-            if (!it.hasScoreMoreThanMax()) {
-                assertThat(secondPlayer.amountOfCards()).isEqualTo(3)
-            }
-        }
+    @DisplayName("덱이 비어있으면 player가 카드를 뽑는다해도 null이 반환된다")
+    @Test
+    fun `return null when deck is empty`() {
+        // when
+        val nullPlayer = gameWithEmptyDeck.giveChanceToDraw(REPLY_HIT)
+
+        // then
+        assertThat(nullPlayer).isEqualTo(null)
     }
 
     @Test
     fun `get current player`() {
-        assertTrue(game.currentPlayer() == firstPlayer)
+        assertTrue(game.currentPlayer() == player)
     }
 
     @Test
-    fun `game over when the turn is over`() {
+    fun `game goes over when the turn is over`() {
         // when
         game.giveChanceToDraw(REPLY_STAND)
         game.giveChanceToDraw(REPLY_STAND)
