@@ -12,11 +12,12 @@ abstract class Gamer(val name: String) {
     }
 
     fun calculatePoint(): Point =
-        _myCards
-            .map { it.getDenomination().point }
-            .map { Point(it) }
-            .reduce { acc, point ->
-                val calculatedAccIfAceFirst = Point.calculateIfAceFirst(acc)
-                calculatedAccIfAceFirst + point + Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
-            }
+        _myCards.map { it.getDenomination().point }
+            .map(::Point)
+            .reduce(::reducePoint)
+
+    private fun reducePoint(acc: Point, point: Point): Point {
+        val calculatedAccIfAceFirst = Point.calculateIfAceFirst(acc)
+        return calculatedAccIfAceFirst + point + Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
+    }
 }
