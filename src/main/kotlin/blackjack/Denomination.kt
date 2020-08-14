@@ -13,5 +13,12 @@ enum class Denomination(val symbol: String, val point: Int) {
     TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
-    KING("K", 10)
+    KING("K", 10);
+
+    companion object {
+
+        fun findBySymbol(symbol: String) = values().first { it.symbol == symbol }
+
+        fun isAce(point: Int) = ACE.point == point
+    }
 }
