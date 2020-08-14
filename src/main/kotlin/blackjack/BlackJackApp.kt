@@ -18,4 +18,7 @@ fun main() {
             ResultView.printCard(it)
         }
     }
+
+    dealer.requestCardIfPossibleExtraCard(Deck.pop())
+    ResultView.printResult(game)
 }
