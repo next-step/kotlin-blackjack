@@ -3,9 +3,19 @@ package blackjack.domain
 class BlackJackGame(
     private val deck: DrawStrategy
 ) {
+    fun getDealer() = Dealer().deal(deck)
+
     fun dealWith(players: List<String>): List<Player> {
         return players.map { Challenger(it) }
             .map { it.deal(deck) }
+    }
+
+    tailrec fun playDealer(dealer: Player, hitNotice: () -> Unit = {}): Player {
+        if (dealer.state == State.Playing) {
+            hitNotice()
+            return playDealer(dealer.hit(deck), hitNotice)
+        }
+        return dealer
     }
 
     tailrec fun play(
