@@ -15,6 +15,8 @@ abstract class Player(
         }
     }
 
+    operator fun plus(players: List<Player>): List<Player> = players.toMutableList().apply { add(0, this@Player) }
+
     fun getScore(): Int {
         return cards.sumScores()
     }
@@ -30,7 +32,7 @@ abstract class Player(
     fun hit(deck: DrawStrategy): Player {
         validatePlayerCanHit()
         val newCards = this.cards + deck.fetchCard()
-        return this.copy(cards = newCards, state = getStateFrom(cards))
+        return this.copy(cards = newCards, state = getStateFrom(newCards))
     }
 
     private fun validatePlayerCanHit() {
