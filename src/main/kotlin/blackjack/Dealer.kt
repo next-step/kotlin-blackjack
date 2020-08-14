@@ -8,6 +8,11 @@ class Dealer(name: String = "딜러") : Gamer(name) {
         return isTwoCard && isAvailableAnotherCard
     }
 
+    fun requestCardIfPossibleExtraCard(card: Card) {
+        if (!checkIfExtraCardOrNot()) return
+        requestCard(card)
+    }
+
     companion object {
         private val EXTRA_CARD_AVAILABLE_LIMIT_POINT = Point(16)
     }

@@ -14,4 +14,16 @@ class DealerTest {
 
         assertThat(dealer.checkIfExtraCardOrNot()).isTrue()
     }
+
+    @Test
+    fun `한 장 더 받기`() {
+        val dealer = Dealer().apply {
+            requestCard(Card(Denomination.ACE to Shape.DIAMOND))
+            requestCard(Card(Denomination.FIVE to Shape.DIAMOND))
+        }
+
+        dealer.requestCardIfPossibleExtraCard(Card(Denomination.TWO to Shape.CLUB))
+
+        assertThat(dealer.myCards.size).isEqualTo(3)
+    }
 }
