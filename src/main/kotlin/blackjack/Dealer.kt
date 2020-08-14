@@ -1,6 +1,3 @@
 package blackjack
 
-class Dealer(private val name: String) {
-
-    override fun toString(): String = name
-}
+class Dealer(name: String) : Gamer(name)
