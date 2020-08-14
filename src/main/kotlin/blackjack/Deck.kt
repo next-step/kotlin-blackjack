@@ -12,6 +12,8 @@ object Deck {
             .shuffled()
     )
 
+    fun pop(): Card = cards.poll()
+
     private fun accumulateCards(): List<List<Card>> =
         Denomination.values()
             .map(::setupCard)
