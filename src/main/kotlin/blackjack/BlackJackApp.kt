@@ -2,6 +2,7 @@ package blackjack
 
 fun main() {
 
-    val players = InputView.requestPlayerNames().map(::Player)
-    val gambleMoneyPerPlayer = InputView.requestGambleMoney(players)
+    val playerNames = InputView.requestPlayerNames()
+    val (dealer, players) = Dealer() to playerNames.map(::Player)
+    val gambleMoneyPerPlayer = InputView.requestGambleMoney(playerNames)
 }

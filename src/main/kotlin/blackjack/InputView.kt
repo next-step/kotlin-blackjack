@@ -7,9 +7,9 @@ object InputView {
         return readLine()?.split(",") ?: emptyList()
     }
 
-    fun requestGambleMoney(players: List<Player>): List<Int> {
+    fun requestGambleMoney(playerNames: List<String>): List<Int> {
         val gambleMoneyPerPlayer = mutableListOf<Int>()
-        players.map {
+        playerNames.map {
             println("${it}의 배팅 금액은?")
             gambleMoneyPerPlayer.add(readLine()?.toInt() ?: 0)
         }
