@@ -10,19 +10,20 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var player: Player
+    private lateinit var deck: Deck
 
     @BeforeEach
     fun `set up`() {
         player = Player(name = "mark")
+        deck = Deck(setOf(Card(Pair(CardScore.SEVEN, Suit.SPADE))))
     }
 
     @DisplayName("덱에서 카드를 뽑을 때마다 1장씩 반환되고, 덱이 비어있을 땐 null이 반환된다")
     @Test
     fun `draw a card`() {
         // when
-        val cardFromDeck: Card? = Card(Pair(CardScore.SEVEN, Suit.SPADE))
-        val cards = player.draw(cardFromDeck)
-        val nullCards = player.draw(null)
+        val cards = player.draw(deck)
+        val nullCards = player.draw(deck)
 
         // then
         assertThat(cards?.size()).isEqualTo(1)
@@ -32,8 +33,8 @@ class PlayerTest {
     @Test
     fun `get a chance to draw`() {
         // when
-        player.getChanceToDraw(REPLY_HIT)
-        player.getChanceToDraw(REPLY_STAND)
+        player.chooseToDraw(REPLY_HIT, deck)
+        player.chooseToDraw(REPLY_STAND, deck)
 
         // then
         assertThat(player.amountOfCards()).isEqualTo(1)
@@ -51,7 +52,7 @@ class PlayerTest {
     @Test
     fun `amount of cards`() {
         // given
-        player.draw(Card(Pair(CardScore.SEVEN, Suit.SPADE)))
+        player.draw(deck)
 
         // when
         val amount = player.amountOfCards()
@@ -63,7 +64,7 @@ class PlayerTest {
     @Test
     fun `sum of scores`() {
         // given
-        player.draw(Card(Pair(CardScore.SEVEN, Suit.SPADE)))
+        player.draw(deck)
 
         // when
         val sum = player.sumOfScores()

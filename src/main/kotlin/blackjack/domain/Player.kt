@@ -5,14 +5,14 @@ import blackjack.view.REPLY_HIT
 data class Player(private val name: String) {
     private val cards: Cards = Cards(emptySet())
 
-    fun draw(newCard: Card?): Cards? {
-        if (newCard == null) return null
+    fun draw(deck: Deck): Cards? {
+        val newCard = deck.provideCard(deck.shuffled()) ?: return null
         return Cards(cards.add(newCard))
     }
 
-    fun getChanceToDraw(reply: String): Player? {
+    fun chooseToDraw(reply: String, deck: Deck): Player? {
         if (reply == REPLY_HIT && !hasScoreMoreThanMax()) {
-            draw(Dealer.giveCard()) ?: return null
+            draw(deck) ?: return null
         }
         return this
     }

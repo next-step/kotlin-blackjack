@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.view.REPLY_STAND
 
-class Game(players: List<Player>) {
+class Game(players: List<Player>, private val deck: Deck = Deck()) {
     private val players = Players(players)
     private var turn = 0
 
@@ -13,13 +13,13 @@ class Game(players: List<Player>) {
     )
 
     fun setUp(): Players {
-        players.setUpWithCards()
+        players.setUpWithCards(deck)
         return players
     }
 
     fun giveChanceToDraw(reply: String): Player? {
         val currentPlayer = players.findPlayer(turn)
-        val player = currentPlayer.getChanceToDraw(reply) ?: return null
+        val player = currentPlayer.chooseToDraw(reply, deck) ?: return null
         if (REPLY_STAND == reply || player.hasScoreMoreThanMax()) {
             turn++
         }
