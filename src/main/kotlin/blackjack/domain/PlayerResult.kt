@@ -9,6 +9,26 @@ class PlayerResult(
 
     constructor(name: String, value: GameResult) : this(name, listOf(value))
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PlayerResult
+
+        if (name != other.name) return false
+        if (winCount != other.winCount) return false
+        if (loseCount != other.loseCount) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + winCount
+        result = 31 * result + loseCount
+        return result
+    }
+
     companion object {
         fun ofChallengers(dealer: Player, challengers: List<Player>): List<PlayerResult> {
             return challengers.map { ofChallenger(dealer, it) }

@@ -66,6 +66,7 @@ abstract class Player(
     }
 }
 
-// getStateFrom 을 class 내부로 옮겨서  abstract로 하려니 nonFinal Method Calling 경고가 뜨네..
-// 이놈을 오버라이드 하는게 맞다고생각하는데 어렵네...
-// 스태틱을 한 이유는 생성자에서 바로 state를 계산하기위해서.
+// getStateFrom 을 class 내부로 옮겨서  abstract로 하려니 nonFinal Method Calling 경고가 뜨네요..
+// 이 점수에 따른 상태값을 뱉는 메서드를 오버라이드 하는게 맞다고 생각하는데 어렵네요..
+// 클래스 내부로 선언하면 생성자에서 사용하지 못해서 static에 올렸습니다.
+// 생성자에서 바로 state를 계산하고싶은데 더 좋은 방법을 못찾겠습니다 ㅠㅠ
