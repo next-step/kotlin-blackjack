@@ -21,14 +21,14 @@ data class Point(val value: Int) {
             if (Denomination.isAce(acc.value)) acc + EXTRA_ACE_POINT else acc
 
         fun calculateIfExtraPointExist(acc: Point, point: Point): Point =
-            if (isAvailableExtraPoint(acc, point)) acc + EXTRA_ACE_POINT else Point(0)
-
-        fun isAvailableExtraPoint(acc: Point, point: Point): Boolean {
-            val isAccAce = Denomination.isAce(acc.value)
-            val notExceedMaxPoint = acc + point + EXTRA_ACE_POINT <= MAX_POINT
-            return isAccAce && notExceedMaxPoint
-        }
+            if (isAvailableExtraPoint(acc, point)) EXTRA_ACE_POINT else Point(0)
 
         fun isReachMaxPoint(point: Point) = point >= MAX_POINT
+
+        private fun isAvailableExtraPoint(acc: Point, point: Point): Boolean {
+            val isAcePoint = Denomination.isAce(point.value)
+            val notExceedMaxPoint = acc + point + EXTRA_ACE_POINT <= MAX_POINT
+            return isAcePoint && notExceedMaxPoint
+        }
     }
 }
