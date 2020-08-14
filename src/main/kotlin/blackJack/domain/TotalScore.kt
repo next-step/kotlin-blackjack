@@ -8,7 +8,7 @@ object TotalScore {
         return cards.sum()
     }
 
-    private fun hasAce(cards: List<Int>): Boolean = cards.contains(1)
+    private fun hasAce(cards: List<Int>): Boolean = cards.contains(ACE)
 
     private fun getHasAceScore(totalScore: Int): Int {
         if (totalScore <= BUST_SCORE) {
@@ -19,4 +19,5 @@ object TotalScore {
 
     private const val BUST_SCORE = 11
     private const val ACE_SCORE = 10
+    private const val ACE = 1
 }

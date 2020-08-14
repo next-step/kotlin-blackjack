@@ -1,6 +1,7 @@
 package blackJack
 
 import blackJack.domain.BlackJack
+import blackJack.domain.Dealer
 import blackJack.domain.Player
 import blackJack.view.InputView
 import blackJack.view.ResultView
@@ -19,23 +20,24 @@ fun startGame() {
     val names = InputView.inputPlayer()
     val blackJack = BlackJack(names)
     ResultView.resultReady(blackJack)
-    blackJack.players.players.forEach { playerCheckBust(it, blackJack) }
-    ResultView.resultOpenDealerCard(blackJack.dealer)
-    dealerGetCard(blackJack)
+    val dealer = blackJack.dealer
+    blackJack.players.forEach { playerCheckBust(it, dealer) }
+    ResultView.resultOpenDealerCard(dealer)
+    dealerGetCard(dealer)
     ResultView.resultGame(blackJack)
 }
 
-fun playerCheckBust(player: Player, blackJack: BlackJack) {
+fun playerCheckBust(player: Player, dealer: Dealer) {
     isGetCard = true
     while (!player.isBust() && isGetCard) {
-        playerWhetherGet(player, blackJack)
+        playerWhetherGet(player, dealer)
     }
 }
 
-fun playerWhetherGet(player: Player, blackJack: BlackJack) {
+fun playerWhetherGet(player: Player, dealer: Dealer) {
     val inputValue = InputView.inputWhether(player)
     if (inputValue == "y") {
-        blackJack.giveCard(player)
+        dealer.giveCard(player)
         ResultView.resultWhetherBust(player)
     }
     if (inputValue == "n") {
@@ -45,9 +47,9 @@ fun playerWhetherGet(player: Player, blackJack: BlackJack) {
     }
 }
 
-fun dealerGetCard(blackJack: BlackJack) {
-    while (!blackJack.dealer.isOver16()) {
-        blackJack.giveCard(blackJack.dealer)
-        ResultView.resultDealerGetCard(blackJack.dealer)
+fun dealerGetCard(dealer: Dealer) {
+    while (!dealer.isOver16()) {
+        dealer.giveCard(dealer)
+        ResultView.resultDealerGetCard(dealer)
     }
 }

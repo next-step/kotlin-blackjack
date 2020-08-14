@@ -17,11 +17,7 @@ class BlackJack(names: List<String>) {
 
     private fun giveCardAllPeople() {
         players.giveCardAll(dealer)
-        giveCard(dealer)
-    }
-
-    fun giveCard(people: People) {
-        dealer.giveCard(people)
+        dealer.giveCard(dealer)
     }
 
     fun getResult(): Result = Result(dealer)

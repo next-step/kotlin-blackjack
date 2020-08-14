@@ -15,9 +15,10 @@ object ResultView {
 
     fun resultReady(blackJack: BlackJack) {
         val players = blackJack.players
-        println("딜러가 딜러와 ${players.players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
-        println("딜러 카드: ${blackJack.dealer.hands[0].getName()}")
-        players.players.forEach { resultPeopleHands(it) }
+        val dealer = blackJack.dealer
+        println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
+        println("딜러 카드: ${dealer.hands[0].getName()}")
+        players.forEach { resultPeopleHands(it) }
         blank()
     }
 
@@ -47,13 +48,15 @@ object ResultView {
     }
 
     fun resultGame(blackJack: BlackJack) {
+        val players = blackJack.players
+        val dealer = blackJack.dealer
         println("----------------")
-        blackJack.players.players.forEach { resultPeopleHands(it, "- 결과: ${it.getTotalScore()}") }
-        resultPeopleHands(blackJack.dealer, "- 결과: ${blackJack.dealer.getTotalScore()}")
+        players.forEach { resultPeopleHands(it, "- 결과: ${it.getTotalScore()}") }
+        resultPeopleHands(dealer, "- 결과: ${dealer.getTotalScore()}")
         blank()
         println("최종 승패")
         val result = blackJack.getResult()
-        blackJack.players.players.forEach { println("${it.name}: ${result.get(it)}") }
+        players.forEach { println("${it.name}: ${result.get(it)}") }
         println("딜러: ${result.dealerResult["승"]}승 ${result.dealerResult["무"]}무 ${result.dealerResult["패"]}패")
     }
 }
