@@ -15,6 +15,6 @@ class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
     }
 
     companion object {
-        private const val FIRST_HAVE_NUMBER_OF_CARD = 2
+        const val FIRST_HAVE_NUMBER_OF_CARD = 2
     }
 }
