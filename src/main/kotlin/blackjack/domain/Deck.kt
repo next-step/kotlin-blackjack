@@ -6,15 +6,13 @@ class Deck(private var deck: Set<Card>) {
         DEFAULT_DECK
     )
 
-    fun shuffled(): Set<Card> {
-        return deck.shuffled().toSet()
-    }
+    fun shuffled(): Set<Card> = deck.shuffled().toSet()
 
     fun provideCard(deck: Set<Card>): Card? {
         if (deck.isEmpty()) return null
 
         val shuffledDeck = deck.toMutableSet()
-        val cardPicked = shuffledDeck.take(1)[0]
+        val cardPicked = shuffledDeck.first()
         shuffledDeck.remove(cardPicked)
         this.deck = shuffledDeck.toSet()
         return cardPicked
