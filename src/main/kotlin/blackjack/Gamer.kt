@@ -11,16 +11,12 @@ abstract class Gamer(val name: String) {
         _myCards.add(card)
     }
 
-    fun calculatePoint(): Int =
+    fun calculatePoint(): Point =
         _myCards
             .map { it.getDenomination().point }
+            .map { Point(it) }
             .reduce { acc, point ->
-                val accIfAce = if (Denomination.isAce(acc)) acc + EXTRA_ACE_POINT else acc
-                accIfAce + point + if (Denomination.isAce(point) && accIfAce + point + EXTRA_ACE_POINT <= MAX_POINT) EXTRA_ACE_POINT else 0
+                val calculatedAccIfAceFirst = Point.calculateIfAceFirst(acc)
+                calculatedAccIfAceFirst + point + Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
             }
-
-    companion object {
-        private const val EXTRA_ACE_POINT = 10
-        private const val MAX_POINT = 21
-    }
 }

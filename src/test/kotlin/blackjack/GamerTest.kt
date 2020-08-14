@@ -12,6 +12,6 @@ class GamerTest {
             requestCard(Card(Denomination.ACE to Shape.DIAMOND))
         }
 
-        assertThat(player.calculatePoint()).isEqualTo(12)
+        assertThat(player.calculatePoint()).isEqualTo(Point(12))
     }
 }
