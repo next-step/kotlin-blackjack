@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.Player
-import blackjack.model.Players
 
 object ResultView {
 
@@ -9,12 +8,12 @@ object ResultView {
         println("$player")
     }
 
-    fun showPlayers(players: Players) {
-        println("$players")
+    fun showPlayers(players: String) {
+        println(players)
     }
 
-    fun showResult(players: Players) {
+    fun showResult(players: String) {
         println("-- 게임 결과 -- ")
-        println("$players")
+        println(players)
     }
 }

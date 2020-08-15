@@ -1,16 +1,17 @@
 package blackjack.model
 
-import blackjack.model.card.CardDeck
+import blackjack.model.card.Cards
 
 class Players(
     names: List<String>
 ) {
-    val players = names.map(::Player)
+    private val players = names.map { Player(it) }
 
-    fun gameBatting(cardDeck: CardDeck) =
-        players.forEach { player ->
-            player.gameBatting(cardDeck.popTwoCard())
-        }
+    fun gameBatting(popTwoCard: () -> Cards) =
+        players.forEach { it.gameBatting(popTwoCard()) }
+
+    fun runTurns(playerAction: (Player) -> Unit) =
+        players.forEach { playerAction(it) }
 
     override fun toString() = players.joinToString("\n", transform = Player::toString)
 }

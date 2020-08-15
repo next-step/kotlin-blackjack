@@ -23,11 +23,11 @@ class BlackJackGameController(
 
     private fun gameBatting() {
         blackJackGame.gameBatting()
-        resultView.showPlayers(blackJackGame.getPlayersStatus())
+        resultView.showPlayers(blackJackGame.getPlayerStatus())
     }
 
     private fun playsTurn() {
-        blackJackGame.playsTurn().forEach { player ->
+        blackJackGame.playsTurn { player ->
             playerOneMore(player)
         }
     }
@@ -40,7 +40,7 @@ class BlackJackGameController(
     }
 
     private fun showResult() {
-        resultView.showResult(blackJackGame.getPlayersStatus())
+        resultView.showResult(blackJackGame.getPlayerStatus())
     }
 }
 

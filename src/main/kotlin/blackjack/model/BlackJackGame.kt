@@ -3,16 +3,18 @@ package blackjack.model
 import blackjack.model.card.CardDeck
 
 class BlackJackGame(
-    private val _players: Players,
+    private val players: Players,
     private val cardDeck: CardDeck
 ) {
-    fun gameBatting() {
-        _players.gameBatting(cardDeck)
-    }
+    fun gameBatting() =
+        players.gameBatting {
+            cardDeck.popTwoCard()
+        }
 
-    fun getPlayersStatus() = _players
+    fun getPlayerStatus() = players.toString()
 
-    fun playsTurn() = _players.players
+    fun playsTurn(action: (Player) -> Unit) =
+        players.runTurns(action)
 
     fun playHit(player: Player) {
         player.hit(cardDeck.popCard())

@@ -4,10 +4,9 @@ import blackjack.model.card.Card
 import blackjack.model.card.Cards
 
 class Player(
-    val name: String
+    val name: String,
+    private val cards: Cards = Cards()
 ) {
-    private val cards = Cards()
-
     fun gameBatting(cardsDummy: Cards) {
         cards.addCards(cardsDummy)
     }
