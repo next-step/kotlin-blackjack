@@ -1,3 +1,3 @@
 package model
 
-class PlayerName(val name: String)
+class PlayerName(val value: String)
