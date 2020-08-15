@@ -41,9 +41,9 @@ object ResultView {
         val showGameResult = StringBuilder("\n##최종승패\n")
         val dealer = players.dealer
         showGameResult.append(
-            "${dealer.name}:" +
-                PlayResultType.values().forEach {
-                    " ${it.typeName} ${dealer.dealerResult.getStatic()[it]} "
+            "${dealer.name}: " +
+                PlayResultType.values().joinToString {
+                    "${it.typeName} ${dealer.dealerResult.getStatic()[it]}"
                 } + "\n"
         )
 
