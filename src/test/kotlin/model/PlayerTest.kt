@@ -25,6 +25,12 @@ class PlayerTest {
 
     @Test
     @DisplayName("가지고 있는 카드의 스코어를 합산 할 수 있다")
-    fun `sumScoreOfCard`() {
+    fun `scoreOfCard`() {
+        val name = PlayerName("hello")
+        val player = Player(name)
+        player.receive(Card(Suit.CLUBS, Denomination.ACE))
+        player.receive(Card(Suit.CLUBS, Denomination.QUEEN))
+        assertThat(player.score()).isGreaterThan(0)
+
     }
 }
