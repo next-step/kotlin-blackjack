@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.model
+
+import blackjack.constant.Constant
 
 class Dealer(name: String = "딜러") : Gamer(name) {
 

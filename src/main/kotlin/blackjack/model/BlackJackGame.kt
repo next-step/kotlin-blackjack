@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.model
+
+import blackjack.constant.Constant
 
 class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
 

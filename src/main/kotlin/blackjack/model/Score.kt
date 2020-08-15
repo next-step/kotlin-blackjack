@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 data class Score(
     val isWin: Boolean = false,

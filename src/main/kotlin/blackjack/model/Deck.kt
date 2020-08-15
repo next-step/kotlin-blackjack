@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 import java.util.LinkedList
 import java.util.Queue
@@ -16,7 +16,7 @@ object Deck {
 
     private fun accumulateCards(): List<List<Card>> =
         Denomination.values()
-            .map(::setupCard)
+            .map(Deck::setupCard)
 
     private fun setupCard(denomination: Denomination): List<Card> =
         Shape.values().map { shape ->

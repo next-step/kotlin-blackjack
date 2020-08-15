@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.constant
 
 object Constant {
 

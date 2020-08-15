@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 object Revenue {
 
@@ -16,7 +16,7 @@ object Revenue {
     private fun getPlayersRevenue(playersWinOrNot: List<Score>, playersBettingMoney: List<Int>): List<Int> =
         playersWinOrNot
             .zip(playersBettingMoney)
-            .map(::mapPlayerRevenue)
+            .map(Revenue::mapPlayerRevenue)
 
     private fun mapPlayerRevenue(scoreToMoney: Pair<Score, Int>): Int {
         val (score, money) = scoreToMoney.first to scoreToMoney.second

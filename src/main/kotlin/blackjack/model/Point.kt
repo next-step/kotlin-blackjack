@@ -1,10 +1,11 @@
-package blackjack
+package blackjack.model
 
 data class Point(val value: Int) {
 
     override fun toString(): String = "$value"
 
-    operator fun plus(point: Point): Point = Point(value + point.value)
+    operator fun plus(point: Point): Point =
+        Point(value + point.value)
 
     operator fun compareTo(point: Point) =
         when {

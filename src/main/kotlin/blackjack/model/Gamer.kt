@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 abstract class Gamer(val name: String) {
 
@@ -24,6 +24,7 @@ abstract class Gamer(val name: String) {
 
     private fun reducePoint(acc: Point, point: Point): Point {
         val calculatedAccIfAceFirst = Point.calculateIfAceFirst(acc)
-        return calculatedAccIfAceFirst + point + Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
+        return calculatedAccIfAceFirst + point +
+            Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
     }
 }

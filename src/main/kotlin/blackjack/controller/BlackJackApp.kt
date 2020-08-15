@@ -1,4 +1,13 @@
-package blackjack
+package blackjack.controller
+
+import blackjack.model.BlackJackGame
+import blackjack.model.Dealer
+import blackjack.model.Deck
+import blackjack.model.Gamer
+import blackjack.model.Player
+import blackjack.model.Point
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
 fun main() {
     val playerNames = InputView.requestPlayerNames()

@@ -1,4 +1,10 @@
-package blackjack
+package blackjack.view
+
+import blackjack.constant.Constant
+import blackjack.model.BlackJackGame
+import blackjack.model.Dealer
+import blackjack.model.Gamer
+import blackjack.model.Revenue
 
 object ResultView {
 
@@ -6,7 +12,7 @@ object ResultView {
         println()
         println("${game.dealer.name}와 ${game.players.joinToString { it.name }}에게 ${Constant.FIRST_HAVE_NUMBER_OF_CARD}장의 카드를 나누었습니다.")
         println("${game.dealer.name}: ${game.dealer.myCards.first()}")
-        game.players.map(::printCard)
+        game.players.map(ResultView::printCard)
     }
 
     fun printCard(player: Gamer) {
