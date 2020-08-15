@@ -45,20 +45,11 @@ class PlayerResult(
                 .let { PlayerResult(dealer.name, it) }
         }
 
-        private fun getChallengerResultWith(dealer: Player, challenger: Player): GameResult {
-            if (dealer.state == State.Busted) {
-                return GameResult.WIN
-            }
-            if (challenger.state == State.Busted) {
-                return GameResult.LOSE
-            }
-            if (challenger.isBiggerScoreThan(dealer)) {
-                return GameResult.WIN
-            }
-            return GameResult.LOSE
+        private fun getChallengerResultWith(dealer: Player, challenger: Player): GameResult = when {
+            dealer.state == State.Busted -> GameResult.WIN
+            challenger.state == State.Busted -> GameResult.LOSE
+            challenger.isBiggerScoreThan(dealer) -> GameResult.WIN
+            else -> GameResult.LOSE
         }
     }
-    // 이쪽이 너무 지저분하네요.. 플레이어의 승패결과는 플레이이어 안에 넣는게 맞을까요?
-    // 플레이어가 하는 일이 너무 많아져서 넣지 못했습니다. 플레이어 안에 넣는다면 어떤식으로
-    // 분리해야할까요..? 더 좋은 방법이 잘 떠오르지 않습니다..
 }
