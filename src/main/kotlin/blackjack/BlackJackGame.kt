@@ -13,4 +13,8 @@ class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
             players.map { it.requestCard(Deck.pop()) }
         }
     }
+
+    fun getDealerPoint(): Point = dealer.calculatePoint()
+
+    fun getPlayersPoint(): List<Point> = players.map { it.calculatePoint() }
 }
