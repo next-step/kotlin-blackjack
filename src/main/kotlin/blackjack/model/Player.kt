@@ -16,8 +16,8 @@ class Player(val name: String) {
     }
 
     fun countingPoint(): Int {
-        val value1 = _cards.sumBy { it.value.value1 }
-        val value2 = _cards.sumBy { it.value.value2 }
+        val value1 = _cards.sumBy { it.denomination.value1 }
+        val value2 = _cards.sumBy { it.denomination.value2 }
         return when {
             value1 == WIN_SCORE -> value1
             value2 == WIN_SCORE -> value2

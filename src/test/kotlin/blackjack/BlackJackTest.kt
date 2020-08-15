@@ -39,7 +39,7 @@ class BlackJackTest {
         val score = a.countingPoint()
         blackJack.race(a)
         val lastCard = a.cards.last()
-        val sum = score + lastCard.value.value1
+        val sum = score + lastCard.denomination.value1
         assertThat(sum == WIN_SCORE || sum == a.countingPoint()).isEqualTo(true)
     }
 }

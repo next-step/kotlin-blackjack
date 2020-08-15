@@ -11,8 +11,8 @@ class CardDeck {
 
     private fun init(): MutableList<Card> {
         val cards = mutableListOf<Card>()
-        Type.values().forEach { type ->
-            Value.values().forEach { value ->
+        Suit.values().forEach { type ->
+            Denomination.values().forEach { value ->
                 cards.add(Card(type, value))
             }
         }
