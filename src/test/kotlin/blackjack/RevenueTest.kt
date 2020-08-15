@@ -77,6 +77,31 @@ class RevenueTest {
 
         assertThat(revenue).isEqualTo(listOf(5_000, 15_000, -20_000))
     }
+
+    @Test
+    fun `딜러가 21을 초과할 경우 배팅금 돌려 받기`() {
+        val dealer = Dealer().apply {
+            requestCard(Card(Denomination.THREE to Shape.DIAMOND))
+            requestCard(Card(Denomination.NINE to Shape.CLUB))
+            requestCard(Card(Denomination.TEN to Shape.DIAMOND))
+        }
+        val players = listOf("moshi", "gson").map(::Player)
+        players[0].run {
+            requestCard(Card(Denomination.JACK to Shape.SPADE))
+            requestCard(Card(Denomination.JACK to Shape.CLUB))
+        }
+        players[1].run {
+            requestCard(Card(Denomination.SEVEN to Shape.CLUB))
+            requestCard(Card(Denomination.KING to Shape.SPADE))
+        }
+
+        val game = BlackJackGame(dealer, players)
+        val playersBettingMoney = listOf(10_000, 20_000)
+
+        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+
+        assertThat(revenue).isEqualTo(listOf(-30_000, 10_000, 20_000))
+    }
 }
 
 object Revenue {
