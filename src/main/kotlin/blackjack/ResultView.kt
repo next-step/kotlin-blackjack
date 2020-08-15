@@ -20,4 +20,16 @@ object ResultView {
         println("${game.dealer.name} 카드: ${game.dealer.myCards.joinToString()} - 결과: ${game.dealer.calculatePoint()}")
         game.players.map { println("${it.name}카드: ${it.myCards.joinToString()} - 결과: ${it.calculatePoint()}") }
     }
+
+    fun printRevenue(game: BlackJackGame, gambleMoney: List<Int>) {
+        println()
+        println("## 최종 승패")
+        Revenue.get(game, gambleMoney).mapIndexed { index, money ->
+            if (index == 0) {
+                println("${game.dealer.name}: $money")
+                return@mapIndexed
+            }
+            println("${game.players[index - 1].name}: $money")
+        }
+    }
 }

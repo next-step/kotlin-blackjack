@@ -21,4 +21,6 @@ fun main() {
 
     dealer.requestCardIfPossibleExtraCard(Deck.pop())
     ResultView.printResult(game)
+
+    ResultView.printRevenue(game, gambleMoneyPerPlayer)
 }
