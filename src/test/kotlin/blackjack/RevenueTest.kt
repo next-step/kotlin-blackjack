@@ -25,7 +25,7 @@ class RevenueTest {
         val game = BlackJackGame(dealer, players)
         val playersBettingMoney = listOf(10_000, 20_000)
 
-        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+        val revenue = Revenue.get(game, playersBettingMoney)
 
         assertThat(revenue).isEqualTo(listOf(10_000, 10_000, -20_000))
     }
@@ -48,7 +48,7 @@ class RevenueTest {
         val game = BlackJackGame(dealer, players)
         val playersBettingMoney = listOf(10_000, 10_000)
 
-        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+        val revenue = Revenue.get(game, playersBettingMoney)
 
         assertThat(revenue).isEqualTo(listOf(0, 0, 0))
     }
@@ -73,7 +73,7 @@ class RevenueTest {
         val game = BlackJackGame(dealer, players)
         val playersBettingMoney = listOf(10_000, 20_000)
 
-        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+        val revenue = Revenue.get(game, playersBettingMoney)
 
         assertThat(revenue).isEqualTo(listOf(5_000, 15_000, -20_000))
     }
@@ -98,7 +98,7 @@ class RevenueTest {
         val game = BlackJackGame(dealer, players)
         val playersBettingMoney = listOf(10_000, 20_000)
 
-        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+        val revenue = Revenue.get(game, playersBettingMoney)
 
         assertThat(revenue).isEqualTo(listOf(-30_000, 10_000, 20_000))
     }
