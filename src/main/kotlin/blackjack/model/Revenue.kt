@@ -5,9 +5,10 @@ object Revenue {
     private const val BLACK_JACK_REVENUE = 1.5
 
     fun get(game: BlackJackGame, playersBettingMoney: List<Int>): List<Int> {
-        val (dealerPoint, playersPoint) = game.getDealerPoint() to game.getPlayersPoint()
-        val playersIsBlackJackState = game.getPlayersBlackJackState()
-        val playersWinOrNot = getPlayersWinOrNot(playersPoint, playersIsBlackJackState, dealerPoint)
+        val playersWinOrNot = getPlayersWinOrNot(
+            playersPointToBlackJackState = game.getPlayersPoint() to game.getPlayersBlackJackState(),
+            dealerPoint = game.getDealerPoint()
+        )
         val playersRevenue = getPlayersRevenue(playersWinOrNot, playersBettingMoney)
         val dealerRevenue = -playersRevenue.reduce { acc, money -> acc + money }
         return listOf(listOf(dealerRevenue), playersRevenue).flatten()
@@ -30,11 +31,10 @@ object Revenue {
     }
 
     private fun getPlayersWinOrNot(
-        playersPoint: List<Point>,
-        playersIsBlackJackState: List<Boolean>,
+        playersPointToBlackJackState: Pair<List<Point>, List<Boolean>>,
         dealerPoint: Point
     ): List<Score> =
-        playersPoint.zip(playersIsBlackJackState).map {
+        playersPointToBlackJackState.first.zip(playersPointToBlackJackState.second).map {
             val (playerPoint, isBlackJack) = it.first to it.second
             when {
                 dealerPoint > Point.MAX_POINT -> Score(isWin = true, isBlackJack = isBlackJack)
