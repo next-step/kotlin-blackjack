@@ -1,7 +1,10 @@
 package blackjack.model.card
 
-class Cards {
-    private val _cards = mutableSetOf<Card>()
+import blackjack.model.status.Score
+
+class Cards(
+    private val _cards: MutableSet<Card> = mutableSetOf()
+) {
     val dummy: Set<Card> = _cards
 
     fun addCard(card: Card) {
@@ -12,17 +15,18 @@ class Cards {
         this._cards.addAll(cardsDummy.dummy)
     }
 
-    fun getScore(): Int {
-        val sum = getSumScore()
-        return if (isContainAce()) {
-            getAceSum(sum)
-        } else {
-            sum
+    fun getScore(): Score {
+        var sum = getSumScore()
+        if (isContainAce()) {
+            sum = getAceSum(sum)
         }
+        return Score(sum)
     }
 
+    fun canMoreCard() = Score(getSumScore()).isBurst().not()
+
     private fun getAceSum(sum: Int) =
-        if (sum + ACE_GAP > BLACKJACK_SCORE) {
+        if (sum + ACE_GAP > Score.BLACKJACK) {
             sum
         } else {
             sum + ACE_GAP
@@ -35,7 +39,6 @@ class Cards {
     override fun toString() = dummy.joinToString { it.toString() }
 
     companion object {
-        const val BLACKJACK_SCORE = 21
         const val ACE_GAP = 10
     }
 }

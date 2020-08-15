@@ -16,6 +16,8 @@ class Player(
         cards.addCard(card)
     }
 
+    fun canHit() = cards.canMoreCard()
+
     fun getScore() = cards.getScore()
 
     override fun toString() = "${name}의 카드 : ${getCardsString()}"

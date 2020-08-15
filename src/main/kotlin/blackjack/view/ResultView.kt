@@ -9,6 +9,10 @@ object ResultView {
         println("$player")
     }
 
+    fun showPlayers(players: Players) {
+        println("$players")
+    }
+
     fun showResult(players: Players) {
         println("-- 게임 결과 -- ")
         println("$players")
