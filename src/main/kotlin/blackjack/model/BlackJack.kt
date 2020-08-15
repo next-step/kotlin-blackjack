@@ -1,22 +1,17 @@
 package blackjack.model
 
-class BlackJack(val players: List<Player>) {
+class BlackJack(val players: Players) {
     private val cardDeck = CardDeck()
 
     fun firstTurn() {
-        players.forEach {
-            it.pickCard(cardDeck.pickCard())
-            it.pickCard(cardDeck.pickCard())
-        }
+        players.firstTurn(cardDeck)
     }
 
     fun race(player: Player) {
-        if (player.isAvailable) {
-            player.pickCard(cardDeck.pickCard())
-        }
+        players.race(player, cardDeck)
     }
 
-    fun winner(): List<Player> {
-        return players.filter { it.isWinner }
+    fun winner(): Players {
+        return players.winner()
     }
 }
