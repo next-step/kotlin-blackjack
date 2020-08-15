@@ -28,7 +28,7 @@ data class Players(val players: List<Player>) {
     fun calculateResult() {
         val dealerPoint: Int = dealer.point
         val onlyPlayers = players.filterNot { it == dealer }.asSequence()
-        if (dealer.isBusted) {
+        if (dealer.isBusted()) {
             onlyPlayers.forEach { it.playResult = PlayResultType.WIN }
         } else {
             onlyPlayers.forEach { it.checkResult(dealerPoint) }

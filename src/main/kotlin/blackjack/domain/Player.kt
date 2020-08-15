@@ -7,8 +7,6 @@ open class Player(val name: String) {
     val cards: List<Card>
         get() = _card.toList()
     var isHit: Boolean = true
-    var isBusted: Boolean = false
-        private set
     var point: Int = 0
         private set
     var playResult: PlayResultType = PlayResultType.DRAW
@@ -20,12 +18,13 @@ open class Player(val name: String) {
     open fun addCard(card: Card) {
         _card.add(card)
         point = calculatePoint()
-        isBusted = point > BLACKJACK_POINT
-        if (isBusted) playResult = PlayResultType.LOSE
     }
 
     fun checkResult(dealerPoint: Int) {
-        if (!isBusted && point > dealerPoint) playResult = PlayResultType.WIN
-        else if (!isBusted && point < dealerPoint) playResult = PlayResultType.LOSE
+        if (isBusted()) playResult = PlayResultType.LOSE
+        if (point > dealerPoint) playResult = PlayResultType.WIN
+        else if (point < dealerPoint) playResult = PlayResultType.LOSE
     }
+
+    fun isBusted(): Boolean = point > BLACKJACK_POINT
 }

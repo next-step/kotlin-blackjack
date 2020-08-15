@@ -54,7 +54,7 @@ class BlackjackGameTest {
     fun checkBust() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
         repeat(10) { blackjackGame.hitOrStay(HIT) }
-        assertThat(blackjackGame.players.currentPlayer.isBusted).isEqualTo(true)
+        assertThat(blackjackGame.players.currentPlayer.isBusted()).isEqualTo(true)
     }
 
     @DisplayName("다음턴 사용자 확인")
