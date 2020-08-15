@@ -1,19 +1,19 @@
 package blackjack.domain.player
 
 import blackjack.domain.deck.Card
-import blackjack.domain.game.ScoreCalculator
 
 class Hand {
     var status: HandStatus = HandStatus.GENERAL
         private set
 
-    private val cards = arrayListOf<Card>()
+    private val _cards: ArrayList<Card> = arrayListOf()
 
-    fun getCards(): List<Card> = cards.toList()
+    val cards: List<Card>
+        get() = _cards
 
     fun addNew(card: Card): HandStatus {
         if (hasFreeSpace()) {
-            cards.add(card)
+            _cards.add(card)
             changeStatus()
         }
         return status
@@ -21,7 +21,12 @@ class Hand {
 
     fun hasFreeSpace() = status == HandStatus.GENERAL
 
+    fun calculate(): Int {
+        val sortedCards = _cards.sortedBy { it.getScore() }
+        return sortedCards.fold(0) { acc, card -> acc + card.getScore(acc) }
+    }
+
     private fun changeStatus() {
-        status = HandStatus.of(ScoreCalculator.calculate(this))
+        status = HandStatus.of(calculate())
     }
 }

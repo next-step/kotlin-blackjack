@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.deck.Card
-import blackjack.domain.game.ScoreCalculator
 
 data class Player(
     private val id: Int,
@@ -13,15 +12,13 @@ data class Player(
 
     fun isWinnerCandidate() = hand.status != HandStatus.BUST
 
-    fun getScore() = ScoreCalculator.calculate(hand)
+    fun getScore() = hand.calculate()
 
     override fun toString(): String = "$name : ${getCards().joinToString()}"
 
     override fun receiveCard(card: Card): HandStatus {
         return hand.addNew(card)
     }
-
-    override fun getCards() = hand.getCards()
 
     override fun compareTo(other: Player) = getScore().compareTo(other.getScore())
 }

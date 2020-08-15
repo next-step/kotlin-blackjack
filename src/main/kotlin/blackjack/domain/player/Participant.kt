@@ -7,5 +7,5 @@ interface Participant {
 
     fun receiveCard(card: Card): HandStatus
 
-    fun getCards() = hand.getCards()
+    fun getCards() = hand.cards
 }

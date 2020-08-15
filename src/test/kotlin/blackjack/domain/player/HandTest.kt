@@ -16,7 +16,7 @@ internal class HandTest {
             addNew(Card(Pip.TWO, Suit.CLUB))
             addNew(Card(Pip.TWO, Suit.HEART))
         }
-        assertThat(hand.getCards()).contains(
+        assertThat(hand.cards).contains(
             Card(Pip.TWO, Suit.CLUB),
             Card(Pip.TWO, Suit.HEART)
         )
@@ -30,5 +30,36 @@ internal class HandTest {
             addNew(Card(Pip.TEN, Suit.HEART))
         }
         assertThat(hand.hasFreeSpace()).isTrue()
+    }
+
+    @DisplayName("카드의 총 합계 점수를 계산한다.")
+    @Test
+    fun calculateScore() {
+        val hand = Hand().apply {
+            addNew(Card(Pip.TWO, Suit.HEART))
+            addNew(Card(Pip.KING, Suit.HEART))
+        }
+        assertThat(hand.calculate()).isEqualTo(12)
+    }
+
+    @DisplayName("총 합이 21 이하면 Ace는 11로 계산한다")
+    @Test
+    fun calculateMaxAce() {
+        val hand = Hand().apply {
+            addNew(Card(Pip.ACE, Suit.HEART))
+            addNew(Card(Pip.KING, Suit.HEART))
+        }
+        assertThat(hand.calculate()).isEqualTo(21)
+    }
+
+    @DisplayName("총 합이 21을 초과하면 Ace는 1로 계산한다")
+    @Test
+    fun calculateMinAce() {
+        val hand = Hand().apply {
+            addNew(Card(Pip.KING, Suit.HEART))
+            addNew(Card(Pip.KING, Suit.HEART))
+            addNew(Card(Pip.ACE, Suit.HEART))
+        }
+        assertThat(hand.calculate()).isEqualTo(21)
     }
 }

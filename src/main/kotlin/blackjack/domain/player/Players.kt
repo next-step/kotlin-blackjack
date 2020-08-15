@@ -9,11 +9,11 @@ data class Players(private val input: String) {
 
     fun findWinners() = findWinnerCandidates().filter { it.getScore() == findMaxPosition() }
 
-    private fun findMaxPosition() = findWinnerCandidates().max()?.getScore() ?: 0
-
     operator fun invoke(index: Int) = participants[index]
 
     override fun toString() = participants.joinToString("\n")
+
+    private fun findMaxPosition() = findWinnerCandidates().max()?.getScore() ?: 0
 
     private fun findWinnerCandidates(): List<Player> = participants.filter { it.isWinnerCandidate() }
 
@@ -25,3 +25,4 @@ data class Players(private val input: String) {
             .mapIndexed { index, name -> Player(index, name.trim()) }
     }
 }
+
