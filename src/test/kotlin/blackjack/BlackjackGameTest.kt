@@ -5,7 +5,6 @@ import blackjack.domain.CardDeck
 import blackjack.domain.HIT
 import blackjack.domain.STAY
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -20,8 +19,8 @@ class BlackjackGameTest {
     @ValueSource(strings = ["a", "$"])
     fun checkInputHitOrStay(isHit: String) {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThatThrownBy { blackjackGame.hitOrStay(isHit) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThat(blackjackGame.hitOrStay(isHit))
+            .isNull()
     }
 
     @DisplayName("카드를 추가로 받기")

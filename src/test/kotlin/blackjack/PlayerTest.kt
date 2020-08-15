@@ -7,8 +7,8 @@ import blackjack.domain.HIT
 import blackjack.domain.Player
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -22,7 +22,7 @@ class PlayerTest {
     @EmptySource
     @ValueSource(strings = ["ace:con", "$", "ace,"])
     fun checkPlayersInput(playerNames: String) {
-        Assertions.assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
+        assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
             .isInstanceOf(IllegalArgumentException::class.java)
     }
 
@@ -50,7 +50,6 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.A))
-        assertThat(player.point).isEqualTo(10)
         assertThat(player.calculatePoint(true)).isEqualTo(20)
     }
 

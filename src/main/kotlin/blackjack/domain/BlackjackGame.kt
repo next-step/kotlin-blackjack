@@ -1,10 +1,10 @@
 package blackjack.domain
 
 private const val SPLIT_CHARACTER = ","
-private val PLAYER_REGULAR_EXPRESSION = "^[a-z|A-Z|가-힣][a-z|A-Z|가-힣,]*[a-z|A-Z|가-힣]$".toRegex()
 const val HIT = "y"
 const val STAY = "n"
-private val HIT_OR_STAY_REGULAR_EXPRESSION = "[{$HIT|$STAY}]".toRegex()
+val HIT_OR_STAY_REGULAR_EXPRESSION = "[{$HIT|$STAY}]".toRegex()
+val PLAYER_REGULAR_EXPRESSION = "^[a-z|A-Z가-힣][a-z|A-Z가-힣,]*[a-z|A-Z가-힣]$".toRegex()
 
 class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
     var players: Players
@@ -28,8 +28,8 @@ class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
         players.allPlayersReceivedCards(cardDeck)
     }
 
-    fun hitOrStay(isHit: String): Player {
-        require(HIT_OR_STAY_REGULAR_EXPRESSION.matches(isHit)) { "$HIT, $STAY 만 입력해주세요." }
+    fun hitOrStay(isHit: String): Player? {
+        if (!HIT_OR_STAY_REGULAR_EXPRESSION.matches(isHit)) return null
         players.currentPlayerPickCard(isHit == HIT, cardDeck)
         return players.currentPlayer
     }

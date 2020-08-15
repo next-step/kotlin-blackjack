@@ -9,17 +9,13 @@ import blackjack.domain.STAY
 object InputView {
     fun getPlayers(): String {
         println("플레이어명을 입력해주세요.")
-        val playerNames = readLine()!!
-        require(playerNames.isNotEmpty())
-        return playerNames
+        return readLine()!!
     }
 
     fun getHitOrStay(player: Player): String {
         if (player is Dealer) return getHitOrStayDealer(player)
-        println("\n${player.name}은 한장의 카드를 더 받겠습니까?(예는 $HIT, 아니오는 $STAY)")
-        val hitOrStay = readLine()!!
-        require(hitOrStay.isNotEmpty())
-        return hitOrStay
+        println("\n${player.name}은 한장의 카드를 더 받겠습니까?(예는 $HIT, 아니오는 $STAY, $HIT,$STAY 으로만 입력해주세요. )")
+        return readLine()!!
     }
 
     private fun getHitOrStayDealer(dealer: Dealer): String {

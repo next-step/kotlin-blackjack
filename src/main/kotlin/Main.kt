@@ -5,13 +5,13 @@ import blackjack.view.ResultView
 
 fun main() {
     try {
-        val playerNames = InputView.getPlayers()
-        val blackjackGame = BlackjackGame(playerNames, CardDeck())
+        val blackjackGame = BlackjackGame(InputView.getPlayers(), CardDeck())
 
         ResultView.showCardDistribution(blackjackGame.players)
         while (!blackjackGame.isEnd) {
-            val isHit = InputView.getHitOrStay(blackjackGame.players.currentPlayer)
-            ResultView.showPlayerCard(blackjackGame.hitOrStay(isHit))
+            val currentPlayer = blackjackGame.players.currentPlayer
+            if (blackjackGame.hitOrStay(InputView.getHitOrStay(currentPlayer)) == null) continue
+            ResultView.showPlayerCard(currentPlayer)
             blackjackGame.nextTurn()
         }
         blackjackGame.players.calculateResult()

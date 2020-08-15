@@ -12,7 +12,9 @@ open class Player(val name: String) {
     var playResult: PlayResultType = PlayResultType.DRAW
 
     open fun calculatePoint(aceToBig: Boolean = false): Int {
-        return cards.sumBy { it.getPoint(aceToBig) }
+        var point = cards.sumBy { it.getPoint(true) }
+        point = cards.sumBy { it.getPoint(point < BLACKJACK_POINT) }
+        return point
     }
 
     open fun addCard(card: Card) {
@@ -21,9 +23,11 @@ open class Player(val name: String) {
     }
 
     fun checkResult(dealerPoint: Int) {
-        if (isBusted()) playResult = PlayResultType.LOSE
-        if (point > dealerPoint) playResult = PlayResultType.WIN
-        else if (point < dealerPoint) playResult = PlayResultType.LOSE
+        when {
+            isBusted() -> playResult = PlayResultType.LOSE
+            point > dealerPoint -> playResult = PlayResultType.WIN
+            point < dealerPoint -> playResult = PlayResultType.LOSE
+        }
     }
 
     fun isBusted(): Boolean = point > BLACKJACK_POINT
