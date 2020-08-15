@@ -8,7 +8,7 @@ fun main() {
 
     val playerNames = InputView.readPlayerNames()
     val game = Game(playerNames)
-    ResultView.showResultOfSetUp(game.setUp())
+    ResultView.showResultOfSetUp(game.players)
 
     while (!game.isOver()) {
         val currentPlayer = game.currentPlayer()

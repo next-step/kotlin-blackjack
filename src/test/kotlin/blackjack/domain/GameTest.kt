@@ -18,7 +18,8 @@ class GameTest {
     fun `set up`() {
         cardsForDeck = setOf(
             Pair(CardScore.THREE, Suit.HEART),
-            Pair(CardScore.FOUR, Suit.HEART)
+            Pair(CardScore.FOUR, Suit.HEART),
+            Pair(CardScore.FIVE, Suit.HEART)
         ).map { Card(it) }.toSet()
 
         game = Game("mark, harry")
@@ -29,21 +30,21 @@ class GameTest {
     @Test
     fun `set up with two cards for each player`() {
         // when
-        game.setUp()
+        // game.setUp()
 
         assertThat(player.amountOfCards()).isEqualTo(2)
     }
 
-    @DisplayName("STAND이면 카드를 받지 않고, HIT이면 카드 한 장을 받은 player를 반환한다")
+    @DisplayName("HIT이면 카드 한 장을 받고, STAND이면 카드를 받지 않은 player를 반환한다")
     @Test
     fun `give a chance to draw to a player`() {
         // when
-        val playerToStand = game.giveChanceToDraw(REPLY_STAND)
         val playerToHit = game.giveChanceToDraw(REPLY_HIT)
+        val playerToStand = game.giveChanceToDraw(REPLY_STAND)
 
         // then
-        assertThat(playerToStand?.amountOfCards()).isEqualTo(0)
-        assertThat(playerToHit?.amountOfCards()).isEqualTo(1)
+        assertThat(playerToHit?.amountOfCards()).isEqualTo(3)
+        assertThat(playerToStand?.amountOfCards()).isEqualTo(3)
     }
 
     @DisplayName("덱이 비어있으면 player가 카드를 뽑는다해도 null이 반환된다")

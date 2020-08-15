@@ -3,8 +3,14 @@ package blackjack.domain
 import blackjack.view.REPLY_STAND
 
 class Game(players: List<Player>, private val deck: Deck) {
-    private val players = Players(players)
+    private val _players = Players(players)
+    val players: Players
+        get() = _players
     private var turn = 0
+
+    init {
+        this._players.setUpWithCards(deck)
+    }
 
     constructor(PlayerNames: String, deck: Deck = Deck()) : this(
         PlayerNames.split(PLAYER_NAMES_DELIMITER)
@@ -13,13 +19,8 @@ class Game(players: List<Player>, private val deck: Deck) {
         deck
     )
 
-    fun setUp(): Players {
-        players.setUpWithCards(deck)
-        return players
-    }
-
     fun giveChanceToDraw(reply: String): Player? {
-        val currentPlayer = players.findPlayer(turn)
+        val currentPlayer = _players.findPlayer(turn)
         val player = currentPlayer.chooseToDraw(reply, deck) ?: return null
         if (REPLY_STAND == reply || player.hasScoreMoreThanMax()) {
             turn++
@@ -27,12 +28,12 @@ class Game(players: List<Player>, private val deck: Deck) {
         return player
     }
 
-    fun currentPlayer() = players.findPlayer(turn)
+    fun currentPlayer() = _players.findPlayer(turn)
 
-    fun isOver() = turn == players.size()
+    fun isOver() = turn == _players.size()
 
     fun result(): String {
-        return (0 until players.size()).map { players.findPlayer(it) }
+        return (0 until _players.size()).map { _players.findPlayer(it) }
             .joinToString("\n") { "${it}카드: ${it.stateOfCards()} - 결과: ${it.sumOfScores()}" }
     }
 
