@@ -21,6 +21,7 @@ object Revenue {
     private fun mapPlayerRevenue(scoreToMoney: Pair<Score, Int>): Int {
         val (score, money) = scoreToMoney.first to scoreToMoney.second
         return when {
+            score.isDraw && score.isBlackJack -> 0
             score.isBlackJack -> (money * BLACK_JACK_REVENUE).toInt()
             score.isWin -> money
             score.isDraw -> 0
