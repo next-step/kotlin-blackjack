@@ -3,8 +3,9 @@ package blackjack.domain
 const val BLACKJACK_POINT = 21
 
 open class Player(val name: String) {
-    var cards: List<Card> = emptyList()
-        private set
+    private val _card = mutableListOf<Card>()
+    val cards: List<Card>
+        get() = _card.toList()
     var isHit: Boolean = true
     var isBusted: Boolean = false
         private set
@@ -17,9 +18,7 @@ open class Player(val name: String) {
     }
 
     open fun addCard(card: Card) {
-        val currentCards = cards.toMutableList()
-        currentCards.add(card)
-        cards = currentCards.toList()
+        _card.add(card)
         point = calculatePoint()
         isBusted = point > BLACKJACK_POINT
         if (isBusted) playResult = PlayResultType.LOSE
@@ -27,5 +26,6 @@ open class Player(val name: String) {
 
     fun checkResult(dealerPoint: Int) {
         if (!isBusted && point > dealerPoint) playResult = PlayResultType.WIN
+        else if (!isBusted && point < dealerPoint) playResult = PlayResultType.LOSE
     }
 }
