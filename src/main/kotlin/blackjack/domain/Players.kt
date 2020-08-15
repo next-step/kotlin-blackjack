@@ -4,8 +4,8 @@ import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 
 data class Players(private val players: List<Player>) {
 
-    fun setUpWithCards(deck: Deck) {
-        players.forEach { player -> (1..DEFAULT_CARD_AMOUNT).map { player.draw(deck) } }
+    fun setUpWithCards(dealer: Dealer) {
+        players.forEach { player -> (1..DEFAULT_CARD_AMOUNT).map { player.draw(dealer.giveCard()) } }
     }
 
     fun findPlayer(nth: Int): Player {
