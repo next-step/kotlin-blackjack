@@ -15,7 +15,7 @@ class CardsTest {
     @BeforeEach
     fun `set up`() {
         card = Card(Pair(CardScore.ACE, Suit.HEART))
-        newCard = Card(Pair(CardScore.KING, Suit.DIAMOND))
+        newCard = Card(Pair(CardScore.TWO, Suit.DIAMOND))
 
         cards = Cards(setOf(card))
         shouldBeThis = setOf(card, newCard)
@@ -37,17 +37,17 @@ class CardsTest {
         assertThat(size).isEqualTo(1)
     }
 
-    @DisplayName("카드 점수 합계가 21 이상일 때 true를 반환한다 (테스트시 점수 합계 : 21)")
+    @DisplayName("점수 합계가 17 미만일 때 true를 반환한다 (테스트시 점수 합계 : 13)")
     @Test
-    fun `true only when score is more than maximum score`() {
+    fun `return true when score is less than 17`() {
         // given
         val newCards = cards.add(newCard)
 
         // when
-        val isMoreThanMax = Cards(newCards).isMoreThanMaxScore(cards)
+        val isLessThan17 = Cards(newCards).isLessThan17()
 
         // then
-        assertTrue(isMoreThanMax)
+        assertTrue(isLessThan17)
     }
 
     @DisplayName("카드점수 합계가 21을 초과하지 않는 한 ACE는 11로 계산할 수 있다")
@@ -60,6 +60,6 @@ class CardsTest {
         val score = Cards(newCards).sumOfScores()
 
         // then
-        assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(13)
     }
 }

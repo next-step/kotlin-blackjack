@@ -35,8 +35,8 @@ class PlayerTest {
     @Test
     fun `draw a card`() {
         // when
-        val cards = player.draw(dealer.giveCard())
-        val nullCards = player.draw(dealer.giveCard())
+        val cards = player.draw(dealer.pickCard())
+        val nullCards = player.draw(dealer.pickCard())
 
         // then
         assertThat(cards?.size()).isEqualTo(1)
@@ -46,7 +46,7 @@ class PlayerTest {
     @Test
     fun `has score more than maximum score`() {
         // when
-        val isMoreThanMax = player.hasScoreMoreThanMax()
+        val isMoreThanMax = player.hasMoreScoreThanMax(player.totalScore())
 
         // then
         assertFalse(isMoreThanMax)
@@ -55,7 +55,7 @@ class PlayerTest {
     @Test
     fun `amount of cards`() {
         // given
-        player.draw(dealer.giveCard())
+        player.draw(dealer.pickCard())
 
         // when
         val amount = player.amountOfCards()
@@ -67,10 +67,10 @@ class PlayerTest {
     @Test
     fun `sum of scores`() {
         // given
-        player.draw(dealer.giveCard())
+        player.draw(dealer.pickCard())
 
         // when
-        val sum = player.sumOfScores()
+        val sum = player.totalScore()
 
         // then
         assertThat(sum).isEqualTo(7)

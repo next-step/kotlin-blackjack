@@ -2,14 +2,15 @@ package blackjack.domain
 
 import blackjack.view.REPLY_STAND
 
-class Game(players: List<Player>, private val dealer: Dealer) {
+class Game(players: List<Player>, val dealer: Dealer) {
     private val _players = Players(players)
     val players: Players
         get() = _players
     private var turn = 0
 
     init {
-        this._players.setUpWithCards(dealer)
+        dealer.setUpWithCards(dealer)
+        _players.setUpWithCards(dealer)
     }
 
     constructor(PlayerNames: String, dealer: Dealer = Dealer()) : this(
@@ -22,24 +23,37 @@ class Game(players: List<Player>, private val dealer: Dealer) {
     fun giveChanceToDraw(reply: String): Player? {
         val currentPlayer = _players.findPlayer(turn)
         val player = currentPlayer.chooseToDraw(reply, dealer) ?: return null
-        if (REPLY_STAND == reply || player.hasScoreMoreThanMax()) {
+
+        canGoToNextTurn(reply, player)
+        return player
+    }
+
+    private fun canGoToNextTurn(reply: String, player: Player) {
+        if (REPLY_STAND == reply ||
+            player.hasMoreScoreThanMax(player.totalScore())
+        ) {
             turn++
         }
-        return player
+    }
+
+    fun playOfDealer(): Dealer? {
+        return dealer.drawIf(dealer) { dealer.hasLessScoreThan17() } as Dealer?
+    }
+
+    fun getResult(): Pair<Dealer, Players> {
+        val winCountOfPlayers = players.compareWith(dealer)
+        dealer.checkWin(players.size(), winCountOfPlayers)
+        return Pair(dealer, players)
     }
 
     fun currentPlayer() = _players.findPlayer(turn)
 
     fun isOver() = turn == _players.size()
 
-    fun result(): String {
-        return (0 until _players.size()).map { _players.findPlayer(it) }
-            .joinToString("\n") { "${it}카드: ${it.stateOfCards()} - 결과: ${it.sumOfScores()}" }
-    }
-
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","
         const val MAXIMUM_GAME_SCORE = 21
+        const val SCORE_DEALER_SHOULD_TAKE_A_CARD = 17
         const val DEFAULT_CARD_AMOUNT = 2
     }
 }

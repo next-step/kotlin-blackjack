@@ -21,7 +21,9 @@ class GameTest {
             Pair(CardScore.FOUR, Suit.HEART),
             Pair(CardScore.FIVE, Suit.HEART),
             Pair(CardScore.SIX, Suit.HEART),
-            Pair(CardScore.SEVEN, Suit.HEART)
+            Pair(CardScore.SEVEN, Suit.HEART),
+            Pair(CardScore.EIGHT, Suit.HEART),
+            Pair(CardScore.NINE, Suit.HEART)
         ).map { Card(it) }.toSet()
 
         normalGame = Game("first, second", Dealer(Deck(cardsForDeck)))
@@ -34,19 +36,19 @@ class GameTest {
         assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
     }
 
-    @DisplayName("대답이 STAND면 카드 추가 없이 턴이 넘어가며, HIT면 카드 한 장을 받은 player가 반환된다 (디폴트 카드 개수: 2)")
+    @DisplayName("대답이 STAND면 변화없이 턴이 넘어가며, HIT면 player에게 카드 한 장을 추가한다(디폴트 카드 개수: 2)")
     @Test
     fun `give a chance to draw to a player`() {
         // when
-        val firstPlayerToStand = normalGame.giveChanceToDraw(REPLY_STAND)
-        val secondPlayerToHit = normalGame.giveChanceToDraw(REPLY_HIT)
+        val playerToStand = normalGame.giveChanceToDraw(REPLY_STAND)
+        val playerToHit = normalGame.giveChanceToDraw(REPLY_HIT)
 
         // then
-        assertThat(firstPlayerToStand?.amountOfCards()).isEqualTo(2)
-        assertThat(secondPlayerToHit?.amountOfCards()).isEqualTo(3)
+        assertThat(playerToStand?.amountOfCards()).isEqualTo(2)
+        assertThat(playerToHit?.amountOfCards()).isEqualTo(3)
     }
 
-    @DisplayName("덱이 비어있으면 player가 카드를 뽑는다해도 null이 반환된다")
+    @DisplayName("덱이 비었으면 player가 카드를 뽑을 때 null이 반환된다")
     @Test
     fun `return null when deck is empty`() {
         // when

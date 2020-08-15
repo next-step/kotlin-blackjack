@@ -2,28 +2,42 @@ package blackjack.domain
 
 import blackjack.view.REPLY_HIT
 
-data class Player(private val name: String) {
+data class Player(
+    private val name: String,
     private val cards: Cards = Cards(emptySet())
+) : Participant {
+
+    var matchResult: String = TEXT_LOSE
+        private set
 
     fun chooseToDraw(reply: String, dealer: Dealer): Player? {
-        if (REPLY_HIT == reply && !hasScoreMoreThanMax()) {
-            draw(dealer.giveCard()) ?: return null
-        }
-        return this
+        return drawIf(dealer) {
+            REPLY_HIT == reply &&
+                !hasMoreScoreThanMax(totalScore())
+        } as Player?
     }
 
-    fun draw(newCard: Card?): Cards? {
+    override fun draw(newCard: Card?): Cards? {
         newCard ?: return null
         return Cards(cards.add(newCard))
     }
 
-    fun hasScoreMoreThanMax(): Boolean = cards.isMoreThanMaxScore(cards)
+    override fun amountOfCards(): Int = cards.size()
 
-    fun amountOfCards(): Int = cards.size()
+    override fun totalScore(): Int = cards.sumOfScores()
 
-    fun sumOfScores(): Int = cards.sumOfScores()
+    override fun stateOfCards(): String = cards.toString()
 
-    fun stateOfCards(): String = cards.toString()
+    fun win() {
+        matchResult = TEXT_WIN
+    }
+
+    fun isWin() = matchResult == TEXT_WIN
 
     override fun toString(): String = name
+
+    companion object {
+        private const val TEXT_WIN = "승"
+        private const val TEXT_LOSE = "패"
+    }
 }

@@ -8,7 +8,7 @@ fun main() {
 
     val playerNames = InputView.readPlayerNames()
     val game = Game(playerNames)
-    ResultView.showResultOfSetUp(game.players)
+    ResultView.showResultOfSetUp(game.dealer, game.players)
 
     while (!game.isOver()) {
         val currentPlayer = game.currentPlayer()
@@ -19,6 +19,8 @@ fun main() {
 
         if (isEmptyDeck) break
     }
+    ResultView.showPlayOfDealer(game.playOfDealer())
 
-    ResultView.showGameResult(game.result())
+    ResultView.showScoreResult(game.dealer, game.players)
+    ResultView.showMatchResult(game.getResult())
 }
