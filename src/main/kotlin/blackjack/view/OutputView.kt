@@ -16,7 +16,9 @@ private fun printDealerStartCard(dealer: Player) {
 }
 
 fun notifyDealerHit() {
+    println()
     println("딜러는 16이하라 한 장의 카드를 더 받았습니다.")
+    println()
 }
 
 fun printPlayerCards(player: Player) {
@@ -28,6 +30,7 @@ fun printResult(player: Player) {
 }
 
 fun printPlayerResults(dealerResult: PlayerResult, results: List<PlayerResult>) {
+    println()
     println("## 최종 승패")
     printPlayerResult(dealerResult)
     results.forEach { printPlayerResult(it) }

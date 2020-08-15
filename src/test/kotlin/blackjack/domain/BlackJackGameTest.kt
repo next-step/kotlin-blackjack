@@ -67,7 +67,11 @@ internal class BlackJackGameTest {
         val player: Player = Challenger("Malibin", Cards.denominationsOf("3", "4"))
 
         // when 카드가 4장이면 멈추기
-        val resultPlayer = game.play(listOf(player)) { it.cards.values.size != 4 }[0]
+        val resultPlayer = game.play(
+            listOf(player),
+            isAgreedHit = { it.cards.values.size != 4 },
+            printPlayerCards = {}
+        )[0]
 
         // then
         assertAll(
