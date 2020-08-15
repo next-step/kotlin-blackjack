@@ -1,19 +1,29 @@
 package blackjack.domain
 
-data class Player(
-    val name: String,
-    val cards: Cards = Cards.empty(),
-    val state: State = getStateFrom(cards)
-) {
-    fun deal(deck: DrawStrategy): Player {
-        return this.copy(cards = this.cards + deck.getDealCards())
+interface Player {
+    val name: String
+    val cards: Cards
+    val state: State
+
+    operator fun plus(players: List<Player>): List<Player> = listOf(this) + players
+
+    fun isBiggerScoreThan(other: Player): Boolean {
+        return this.getScore() > other.getScore()
+    }
+
+    fun getScore(): Int {
+        return cards.sumScores()
     }
 
     fun stand(): Player {
-        return this.copy(state = State.Stand)
+        return copy(state = State.Stand)
     }
 
-    fun hit(deck: DrawStrategy): Player {
+    fun deal(deck: Deck): Player {
+        return this.copy(cards = this.cards + deck.getDealCards())
+    }
+
+    fun hit(deck: Deck): Player {
         validatePlayerCanHit()
         val newCards = this.cards + deck.fetchCard()
         return this.copy(cards = newCards, state = getStateFrom(newCards))
@@ -24,16 +34,11 @@ data class Player(
         require(this.state !is State.Stand) { "Stand 상태에서는 카드를 더 뽑을 수 없습니다." }
     }
 
-    fun getScore(): Int {
-        return cards.sumScores()
-    }
+    fun getStateFrom(cards: Cards): State
 
-    companion object {
-        private fun getStateFrom(cards: Cards): State {
-            if (cards.sumScores() > Cards.BLACK_JACK_SCORE) {
-                return State.Busted
-            }
-            return State.Playing
-        }
-    }
+    fun copy(
+        name: String = this.name,
+        cards: Cards = this.cards,
+        state: State = this.state
+    ): Player
 }

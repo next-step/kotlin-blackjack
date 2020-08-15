@@ -9,6 +9,10 @@ data class Cards(
 
     operator fun plus(cards: Cards): Cards = Cards(this.values + cards.values)
 
+    fun isBlackJack(): Boolean {
+        return sumScores() == BLACK_JACK_SCORE && values.size == BLACK_JACK_CARD_COUNT
+    }
+
     fun sumScores(): Int {
         val totalScore = values.sumBy { it.denomination.score }
         return if (values.hasAce()) sumScoresWithAce(totalScore)
@@ -32,6 +36,7 @@ data class Cards(
 
     companion object {
         const val BLACK_JACK_SCORE = 21
+        private const val BLACK_JACK_CARD_COUNT = 2
 
         fun empty() = Cards(emptyList())
 
