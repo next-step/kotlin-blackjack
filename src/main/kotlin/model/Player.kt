@@ -4,6 +4,8 @@ import kotlin.math.abs
 
 class Player(val name: PlayerName) {
     private val cardMutableList: MutableList<Card> = mutableListOf()
+
+    constructor(name: String): this(PlayerName(name))
     val cards: List<Card>
         get() = cardMutableList.toList()
 
