@@ -22,6 +22,6 @@ class GamerTest {
             requestCard(Card(Denomination.ACE to Shape.DIAMOND))
         }
 
-        assertThat(player.isFirstBlackJack()).isTrue()
+        assertThat(player.isBlackJack()).isTrue()
     }
 }

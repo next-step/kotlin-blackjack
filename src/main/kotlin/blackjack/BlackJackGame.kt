@@ -17,4 +17,6 @@ class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
     fun getDealerPoint(): Point = dealer.calculatePoint()
 
     fun getPlayersPoint(): List<Point> = players.map { it.calculatePoint() }
+
+    fun getPlayersBlackJackState(): List<Boolean> = players.map { it.isBlackJack() }
 }

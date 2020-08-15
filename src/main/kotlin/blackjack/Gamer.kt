@@ -16,7 +16,7 @@ abstract class Gamer(val name: String) {
             .map(::Point)
             .reduce(::reducePoint)
 
-    fun isFirstBlackJack(): Boolean {
+    fun isBlackJack(): Boolean {
         val isTwoCard = _myCards.size == 2
         val isBlackJack = calculatePoint() == Point.MAX_POINT
         return isTwoCard && isBlackJack
