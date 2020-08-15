@@ -29,6 +29,29 @@ class RevenueTest {
 
         assertThat(revenue).isEqualTo(listOf(10_000, 10_000, -20_000))
     }
+
+    @Test
+    fun `모두 블랙잭인 경우`() {
+        val dealer = Dealer().apply {
+            requestCard(Card(Denomination.ACE to Shape.DIAMOND))
+            requestCard(Card(Denomination.KING to Shape.CLUB))
+        }
+        val players = listOf("moshi", "gson").map(::Player)
+        players[0].run {
+            requestCard(Card(Denomination.ACE to Shape.HEART))
+            requestCard(Card(Denomination.QUEEN to Shape.SPADE))
+        }
+        players[1].run {
+            requestCard(Card(Denomination.ACE to Shape.CLUB))
+            requestCard(Card(Denomination.JACK to Shape.SPADE))
+        }
+        val game = BlackJackGame(dealer, players)
+        val playersBettingMoney = listOf(10_000, 10_000)
+
+        val revenue = Revenue.getRevenue(game, playersBettingMoney)
+
+        assertThat(revenue).isEqualTo(listOf(0, 0, 0))
+    }
 }
 
 object Revenue {
@@ -37,18 +60,27 @@ object Revenue {
         val (dealerPoint, playersPoint) = game.getDealerPoint() to game.getPlayersPoint()
         val playersWinOrNot = playersPoint.map { playerPoint ->
             when {
-                dealerPoint > Point.MAX_POINT -> true
-                playerPoint > Point.MAX_POINT -> false
-                else -> dealerPoint < playerPoint
+                dealerPoint > Point.MAX_POINT -> Score(isWin = true)
+                playerPoint > Point.MAX_POINT -> Score()
+                dealerPoint == Point.MAX_POINT && playerPoint == Point.MAX_POINT -> Score(isDraw = true)
+                else -> Score(isWin = dealerPoint < playerPoint)
             }
         }
         val playersRevenue = playersWinOrNot
             .zip(playersBettingMoney)
             .map {
-                if (it.first) it.second
-                else -it.second
+                when {
+                    it.first.isWin -> it.second
+                    it.first.isDraw -> 0
+                    else -> -it.second
+                }
             }
         val dealerRevenue = -playersRevenue.reduce { acc, money -> acc + money }
         return listOf(listOf(dealerRevenue), playersRevenue).flatten()
     }
 }
+
+data class Score(
+    val isWin: Boolean = false,
+    val isDraw: Boolean = false
+)
