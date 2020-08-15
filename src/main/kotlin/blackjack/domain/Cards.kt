@@ -15,7 +15,7 @@ class Cards(cards: Set<Card>) {
     fun isMoreThanMaxScore(cards: Cards) = cards.sumOfScores() >= MAXIMUM_GAME_SCORE
 
     fun sumOfScores(): Int {
-        var sum = cards.map { it.score() }.sumBy { it }
+        val sum = cards.map { it.score() }.sumBy { it }
         return CardScore.sumWithAce(sum, hasAce())
     }
 
