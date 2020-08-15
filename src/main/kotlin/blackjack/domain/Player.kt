@@ -15,7 +15,7 @@ abstract class Player(
         }
     }
 
-    operator fun plus(players: List<Player>): List<Player> = players.toMutableList().apply { add(0, this@Player) }
+    operator fun plus(players: List<Player>): List<Player> = listOf(this) + players
 
     fun isBiggerScoreThan(other: Player): Boolean {
         return this.getScore() > other.getScore()
@@ -29,11 +29,11 @@ abstract class Player(
         return this.copy(state = State.Stand)
     }
 
-    fun deal(deck: DrawStrategy): Player {
+    fun deal(deck: Deck): Player {
         return this.copy(cards = this.cards + deck.getDealCards())
     }
 
-    fun hit(deck: DrawStrategy): Player {
+    fun hit(deck: Deck): Player {
         validatePlayerCanHit()
         val newCards = this.cards + deck.fetchCard()
         return this.copy(cards = newCards, state = getStateFrom(newCards))

@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class BlackJackGame(
-    private val deck: DrawStrategy
+    private val deck: Deck
 ) {
     fun getDealer() = Dealer().deal(deck)
 

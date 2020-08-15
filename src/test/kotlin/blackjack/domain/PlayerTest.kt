@@ -11,15 +11,11 @@ internal class PlayerTest {
     fun `초기 카드 2장 받고 해당 카드가 있는지 확인`() {
         // given
         val expectedCard = Card.denominationOf("A")
-        val deck = object : DrawStrategy {
+        val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
                 return expectedCard
             }
-
-            override fun getDealCards(): List<Card> {
-                return listOf(expectedCard, expectedCard)
-            }
-        }
+        })
 
         // when
         val player = Challenger("Malibin").deal(deck)
@@ -32,15 +28,11 @@ internal class PlayerTest {
     fun `21점 초과후 hit시 exception`() {
         // given
         val expectedCard = Card.denominationOf("K")
-        val deck = object : DrawStrategy {
+        val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
                 return expectedCard
             }
-
-            override fun getDealCards(): List<Card> {
-                return emptyList()
-            }
-        }
+        })
         val player = Challenger("Malibin", Cards.denominationsOf("8", "9", "10"))
 
         // then

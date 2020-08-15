@@ -13,10 +13,6 @@ internal class DrawStrategyTest {
             override fun fetchCard(): Card {
                 return expectedCard
             }
-
-            override fun getDealCards(): List<Card> {
-                return emptyList()
-            }
         }
 
         // then

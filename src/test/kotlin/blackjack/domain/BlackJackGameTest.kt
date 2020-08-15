@@ -12,15 +12,11 @@ internal class BlackJackGameTest {
     fun `플레이어들이 초기 두장씩 카드 갖고있는지 확인`() {
         // given
         val card = Card.denominationOf("A")
-        val deck = object : DrawStrategy {
+        val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
                 return card
             }
-
-            override fun getDealCards(): List<Card> {
-                return listOf(card, card)
-            }
-        }
+        })
         val game = BlackJackGame(deck)
         val playerNames = listOf("Malibin")
 
@@ -34,15 +30,11 @@ internal class BlackJackGameTest {
     @Test
     fun `딜러가 17점 이상이면 더이상 카드를 뽑지 않는지 확인`() {
         // given
-        val deck = object : DrawStrategy {
+        val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
                 return Card.denominationOf("7")
             }
-
-            override fun getDealCards(): List<Card> {
-                return emptyList()
-            }
-        }
+        })
         val game = BlackJackGame(deck)
         val dealer: Player = Dealer(Cards.denominationsOf("5", "6"))
 
@@ -59,7 +51,7 @@ internal class BlackJackGameTest {
     @Test
     fun `플레이어가 원할 때 플레이를 멈출 수 있는지 확인`() {
         // given
-        val deck = object : DrawStrategy {
+        val deck = Deck(object : DrawStrategy {
             val cards: Queue<Card> = LinkedList<Card>(
                 listOf(
                     Card.denominationOf("5"),
@@ -70,11 +62,7 @@ internal class BlackJackGameTest {
             override fun fetchCard(): Card {
                 return cards.poll()
             }
-
-            override fun getDealCards(): List<Card> {
-                return emptyList()
-            }
-        }
+        })
         val game = BlackJackGame(deck)
         val player: Player = Challenger("Malibin", Cards.denominationsOf("3", "4"))
 
