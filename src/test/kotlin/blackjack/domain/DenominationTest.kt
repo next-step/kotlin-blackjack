@@ -33,12 +33,12 @@ internal class DenominationTest {
     }
 
     @Test
-    fun `ace를 제외한 total이 11일때 Ace는 1로 계산된다`() {
+    fun `Ace를 포함한 카드의 합이 21을 초과하는 경우 Ace는 1로 계산한다`() {
         assertThat(Denomination.ACE.calculate(11)).isEqualTo(1)
     }
 
     @Test
-    fun `ace를 제외한 total이 10일때 Ace는 11로 계산된다`() {
+    fun `Ace를 포함한 카드의 합이 21을 초과하지 않는 경우 Ace는 11로 계산한다`() {
         assertThat(Denomination.ACE.calculate(10)).isEqualTo(11)
     }
 }
