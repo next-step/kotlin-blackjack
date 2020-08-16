@@ -23,7 +23,7 @@ object InputView {
         return if (dealer.isHit) HIT else STAY
     }
 
-    fun getBetMoneyFromPlayer(player: Player): String {
+    fun getBetMoney(player: Player): String {
         println("${player.name}의 배팅 금액은?")
         return readLine()!!
     }

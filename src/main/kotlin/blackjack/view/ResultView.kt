@@ -51,4 +51,17 @@ object ResultView {
             .forEach { showGameResult.append("${it.name}: ${it.playResult.typeName}\n") }
         println(showGameResult)
     }
+
+    fun showGameResultWithBetMoney(players: Players) {
+        println("")
+        players.players.forEach {
+            showPlayerCard(it, true)
+            println(" - 결과 ${it.point}")
+        }
+        val showGameResult = StringBuilder("\n##최종 수익\n")
+
+        players.players
+            .forEach { showGameResult.append("${it.name}: ${it.getResultOfMoney()}\n") }
+        println(showGameResult)
+    }
 }

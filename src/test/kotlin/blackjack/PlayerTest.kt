@@ -1,13 +1,14 @@
 package blackjack
 
+import blackjack.domain.BetMoney
 import blackjack.domain.BlackjackGame
-import blackjack.domain.CardDeck
 import blackjack.domain.Card
+import blackjack.domain.CardDeck
+import blackjack.domain.HIT
+import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
-import blackjack.domain.Player
-import blackjack.domain.HIT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -73,5 +74,18 @@ class PlayerTest {
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
+    }
+
+    @DisplayName("사용자가 베팅머니 확인")
+    @Test
+    fun checkBetMoney() {
+        val players = Players.newInstance("ace,hi,con,race")
+
+        players!!.players.forEach {
+            it.betMoney = BetMoney.newInstance("1000")
+        }
+
+        assertThat(players.players[0].betMoney!!.money)
+            .isEqualTo(1000)
     }
 }

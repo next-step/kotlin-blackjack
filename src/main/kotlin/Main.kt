@@ -1,5 +1,7 @@
+import blackjack.domain.BetMoney
 import blackjack.domain.BlackjackGame
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -12,6 +14,9 @@ fun main() {
             players = Players.newInstance(InputView.getPlayers())
         }
 
+        players.players.filterNot { it is Dealer }
+            .forEach { it.betMoney = BetMoney.newInstance(InputView.getBetMoney(it)) }
+
         val blackjackGame = BlackjackGame(players, CardDeck())
 
         ResultView.showCardDistribution(blackjackGame.players)
@@ -23,7 +28,7 @@ fun main() {
         }
         blackjackGame.players.calculateResult()
 
-        ResultView.showGameResult(blackjackGame.players)
+        ResultView.showGameResultWithBetMoney(blackjackGame.players)
     } catch (e: Exception) {
         println(e.message)
     }
