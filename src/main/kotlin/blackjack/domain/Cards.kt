@@ -13,10 +13,6 @@ data class Cards(
 
     fun isEmpty() = values.isEmpty()
 
-    fun canDealerPlay(): Boolean {
-        return canPlay() && totalScore < Score.DEALER_STOP
-    }
-
     fun canPlay() = isNotBlackJack() && isNotBusted()
 
     private fun isNotBlackJack() = !isBlackJack()
@@ -40,7 +36,6 @@ data class Cards(
 
         fun empty() = Cards(emptyList())
 
-        fun denominationsOf(vararg values: String) =
-            Cards(values.map { Card.denominationOf(it) })
+        fun denominationsOf(vararg values: String) = Cards(values.map { Card.denominationOf(it) })
     }
 }

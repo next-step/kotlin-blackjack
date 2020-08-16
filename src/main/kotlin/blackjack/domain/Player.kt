@@ -10,9 +10,7 @@ interface Player {
         return this.getScore() > other.getScore()
     }
 
-    fun getScore(): Int {
-        return cards.totalScore
-    }
+    fun getScore(): Int = cards.totalScore
 
     fun deal(deck: Deck): Player
 

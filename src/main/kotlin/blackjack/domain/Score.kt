@@ -2,7 +2,6 @@ package blackjack.domain
 
 object Score {
     const val BLACK_JACK = 21
-    const val DEALER_STOP = 17
 
     fun from(cards: List<Card>): Int {
         val totalScore = cards.sumBy { it.getScore() }

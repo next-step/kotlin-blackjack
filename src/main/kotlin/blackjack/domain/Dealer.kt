@@ -15,9 +15,10 @@ data class Dealer(
         return copy(cards = this.cards + deck.fetchCard())
     }
 
-    override fun canPlay() = cards.canDealerPlay()
+    override fun canPlay() = cards.canPlay() && cards.totalScore < DEALER_STOP_SCORE
 
     companion object {
         private const val NAME = "딜러"
+        private const val DEALER_STOP_SCORE = 17
     }
 }
