@@ -13,14 +13,16 @@ class BlackJackGame(private val players: List<Player>, private val deck: Deck) {
         player hit deck.draw()
     }
 
-    fun startGame(asker: (Player) -> Boolean): BlackJackResult {
+    fun startGame(eachStep: (Player) -> Unit, asker: (Player) -> Boolean): BlackJackResult {
         players.forEach { player ->
             while (askPlayerHit(player, asker)) {
                 player hit deck.draw()
                 if (player.hands.isBusted()) {
                     break
                 }
+                eachStep(player)
             }
+            eachStep(player)
         }
         return BlackJackResult(players)
     }

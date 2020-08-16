@@ -47,7 +47,7 @@ class BlackJackGameTest {
     @Test
     fun `startGame() 플레이어에게 번갈아 가며 카드를 받을 것인지 물어보고 카드를 받겠다고 하면 플레이어는 카드를 받는다`() {
         var switch = false
-        BlackJackGame(DEFAULT_PLAYERS, DEFAULT_DECK).startGame {
+        BlackJackGame(DEFAULT_PLAYERS, DEFAULT_DECK).startGame({}) {
             switch = switch.not()
             switch
         }
@@ -59,7 +59,7 @@ class BlackJackGameTest {
 
     @Test
     fun `startGame() 만약 플레이어가 카드를 받았는데 패가 Busted되면 더 이상 카드를 주지 않는다`() {
-        BlackJackGame(DEFAULT_PLAYERS, BUSTED_DECK).startGame { true }
+        BlackJackGame(DEFAULT_PLAYERS, BUSTED_DECK).startGame({}) { true }
 
         assertThat(DEFAULT_PLAYERS).allSatisfy {
             assertThat(it.hands.isBusted()).isTrue()
@@ -68,7 +68,7 @@ class BlackJackGameTest {
 
     @Test
     fun `startGame() 최종결과를 BlackJackResult으로 반환한다`() {
-        val result = BlackJackGame(DEFAULT_PLAYERS, DEFAULT_DECK).startGame { false }
+        val result = BlackJackGame(DEFAULT_PLAYERS, DEFAULT_DECK).startGame({}) { false }
 
         assertThat(result).isInstanceOf(BlackJackResult::class.java)
     }
