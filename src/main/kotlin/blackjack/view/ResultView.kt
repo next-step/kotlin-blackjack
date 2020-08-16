@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.constant.Constant
 import blackjack.model.BlackJackGame
-import blackjack.model.Dealer
 import blackjack.model.Gamer
 import blackjack.model.Revenue
 
@@ -21,7 +20,7 @@ object ResultView {
 
     fun printResult(game: BlackJackGame) {
         println()
-        if ((game.dealer as Dealer).isReceivedExtraCard()) println("딜러는 16이하라 한장의 카드를 더 받았습니다")
+        if (game.dealer.isReceivedExtraCard()) println("딜러는 16이하라 한장의 카드를 더 받았습니다")
         println()
         println("${game.dealer.name} 카드: ${game.dealer.myCards.joinToString()} - 결과: ${game.dealer.calculatePoint()}")
         game.players.map { println("${it.name}카드: ${it.myCards.joinToString()} - 결과: ${it.calculatePoint()}") }

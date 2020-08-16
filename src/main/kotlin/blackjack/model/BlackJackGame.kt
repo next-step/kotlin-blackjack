@@ -2,7 +2,7 @@ package blackjack.model
 
 import blackjack.constant.Constant
 
-class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
+class BlackJackGame(val dealer: Dealer, val players: List<Player>) {
 
     fun initCardForDealer() {
         repeat(Constant.FIRST_HAVE_NUMBER_OF_CARD) {

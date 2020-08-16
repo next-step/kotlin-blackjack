@@ -26,7 +26,7 @@ private fun showRevenue(game: BlackJackGame, gambleMoneyPerPlayer: List<Int>) {
 }
 
 private fun showSummary(game: BlackJackGame) {
-    (game.dealer as Dealer).requestCardIfPossibleExtraCard(Deck.pop())
+    game.dealer.requestCardIfPossibleExtraCard(Deck.pop())
     ResultView.printResult(game)
 }
 
