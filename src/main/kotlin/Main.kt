@@ -7,9 +7,9 @@ import blackjack.view.ResultView
 fun main() {
     try {
 
-        var players : Players? = Players.newInstance(InputView.getPlayers())
-        while(players == null){
-            players= Players.newInstance(InputView.getPlayers())
+        var players: Players? = Players.newInstance(InputView.getPlayers())
+        while (players == null) {
+            players = Players.newInstance(InputView.getPlayers())
         }
 
         val blackjackGame = BlackjackGame(players, CardDeck())

@@ -42,7 +42,7 @@ data class Players(val players: List<Player>) {
 
     companion object {
         fun newInstance(playerNames: String): Players? {
-            if(!PLAYER_REGULAR_EXPRESSION.matches(playerNames)) return null
+            if (!PLAYER_REGULAR_EXPRESSION.matches(playerNames)) return null
             val players = playerNames.split(SPLIT_CHARACTER).map { Player(it) }.toMutableList()
             players.add(0, Dealer(playerCount = players.size))
             return Players(players)
