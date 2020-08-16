@@ -5,17 +5,18 @@ import blackjack.domain.Deck
 import blackjack.domain.PlayerResult
 import blackjack.domain.RandomDrawStrategy
 import blackjack.view.askHitFromPlayer
+import blackjack.view.getBettingMoney
 import blackjack.view.getPlayerNames
 import blackjack.view.notifyDealerHit
 import blackjack.view.notifyStartGame
 import blackjack.view.printPlayerCards
 import blackjack.view.printPlayerResults
-import blackjack.view.printResult
+import blackjack.view.printCardResults
 
 fun main() {
     val game = BlackJackGame(Deck(RandomDrawStrategy()))
     var dealer = game.getDealer()
-    val players = game.dealWith(getPlayerNames())
+    val players = game.dealWith(getPlayerNames()) { getBettingMoney(it) }
     notifyStartGame(dealer, players)
 
     val resultPlayers = game.play(
@@ -25,8 +26,6 @@ fun main() {
     )
     dealer = game.playDealer(dealer) { notifyDealerHit() }
 
-    printResult(dealer)
-    resultPlayers.forEach { printResult(it) }
-
+    printCardResults(dealer, resultPlayers)
     printPlayerResults(PlayerResult.ofDealer(dealer, resultPlayers), PlayerResult.ofChallengers(dealer, resultPlayers))
 }

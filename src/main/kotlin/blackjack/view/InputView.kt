@@ -7,6 +7,11 @@ fun getPlayerNames(): List<String> {
     return getConsoleLine().split(",")
 }
 
+fun getBettingMoney(name: String): Int {
+    println("${name}의 배팅 금액은?")
+    return getConsoleLine().toInt()
+}
+
 fun askHitFromPlayer(player: Player): Boolean {
     println("${player.info.name}은(는) 한 장의 카드를 더 받겠습니까? (y or n)")
     return when (getConsoleLine()) {

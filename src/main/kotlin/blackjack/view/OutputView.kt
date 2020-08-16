@@ -25,12 +25,17 @@ fun printPlayerCards(player: Player) {
     println("${player.info.name}카드: ${player.cards}")
 }
 
-fun printResult(player: Player) {
+fun printCardResults(dealer: Player, players: List<Player>) {
+    printCardResult(dealer)
+    players.forEach { printCardResult(it) }
+    println()
+}
+
+private fun printCardResult(player: Player) {
     println("${player.info.name}카드: ${player.cards} - 결과: ${player.getScore()}")
 }
 
 fun printPlayerResults(dealerResult: PlayerResult, results: List<PlayerResult>) {
-    println()
     println("## 최종 승패")
     printPlayerResult(dealerResult)
     results.forEach { printPlayerResult(it) }

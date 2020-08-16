@@ -5,9 +5,12 @@ class BlackJackGame(
 ) {
     fun getDealer() = Dealer().deal(deck)
 
-    fun dealWith(players: List<String>): List<Player> {
-        return players.map { Challenger(PlayerInfo(it, 0)) }
+    fun dealWith(players: List<String>, getBettingMoney: (name: String) -> Int): List<Player> {
+        return players.asSequence()
+            .map { PlayerInfo(it, getBettingMoney(it)) }
+            .map { Challenger(it) }
             .map { it.deal(deck) }
+            .toList()
     }
 
     tailrec fun playDealer(dealer: Player, hitNotice: () -> Unit = {}): Player {
