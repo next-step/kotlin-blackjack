@@ -2,24 +2,29 @@ package blackjack.model
 
 abstract class Gamer(val name: String) {
 
-    private val _myReceivedCard = mutableListOf<Card>()
-    val myReceivedCard: List<Card> get() = _myReceivedCard
+    private val _myCards = mutableListOf<Card>()
+    val myCards: List<Card> get() = _myCards
 
-    fun calculatePoint(): Point =
-        _myReceivedCard
-            .map { it.getCardKinds().point }
-            .map { Point(it) }
-            .reduce { acc, point -> reducePoint(acc, point) }
+    override fun toString(): String = name
 
     fun requestCard(card: Card) {
-        _myReceivedCard.add(card)
+        _myCards.add(card)
+    }
+
+    fun calculatePoint(): Point =
+        _myCards.map { it.getDenomination().point }
+            .map(::Point)
+            .reduce(::reducePoint)
+
+    fun isBlackJack(): Boolean {
+        val isTwoCard = _myCards.size == 2
+        val isBlackJack = calculatePoint() == Point.MAX_POINT
+        return isTwoCard && isBlackJack
     }
 
     private fun reducePoint(acc: Point, point: Point): Point {
-        val firstAceCaseConsideredAcc = Point.calculateAccIfAceFirst(acc)
-        return firstAceCaseConsideredAcc + point + calculateExtraPoint(firstAceCaseConsideredAcc, point)
+        val calculatedAccIfAceFirst = Point.calculateIfAceFirst(acc)
+        return calculatedAccIfAceFirst + point +
+            Point.calculateIfExtraPointExist(calculatedAccIfAceFirst, point)
     }
-
-    private fun calculateExtraPoint(acc: Point, point: Point): Point =
-        if (Point.isAvailableExtraPoint(acc, point)) Point.ACE_EXTRA_POINT else Point(0)
 }

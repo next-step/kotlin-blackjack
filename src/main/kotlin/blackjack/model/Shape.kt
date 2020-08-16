@@ -1,8 +1,8 @@
 package blackjack.model
 
-enum class Shape(val shapeName: String) {
-    DIAMOND("다이아"),
-    CLOVER("클로버"),
+enum class Shape(val symbol: String) {
+    SPADE("스페이드"),
     HEART("하트"),
-    SPADE("스페이드");
+    DIAMOND("다이아"),
+    CLUB("클로버")
 }

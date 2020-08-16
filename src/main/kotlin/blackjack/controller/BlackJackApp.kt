@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.model.BlackJackGame
-import blackjack.model.Card
 import blackjack.model.Dealer
+import blackjack.model.Deck
 import blackjack.model.Gamer
 import blackjack.model.Player
 import blackjack.model.Point
@@ -10,40 +10,40 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    registerGame().let {
-        drawCard(it)
-        showResult(it)
-        showScore(it)
-    }
+    val playerNames = InputView.requestPlayerNames()
+    val game = registerGame(playerNames)
+    val gambleMoneyPerPlayer = InputView.requestGambleMoney(playerNames)
+    ResultView.printPreview(game)
+
+    drawCard(game)
+
+    showSummary(game)
+    showRevenue(game, gambleMoneyPerPlayer)
 }
 
-private fun showScore(game: BlackJackGame) {
-    ResultView.printFinalScore(game)
+private fun showRevenue(game: BlackJackGame, gambleMoneyPerPlayer: List<Int>) {
+    ResultView.printRevenue(game, gambleMoneyPerPlayer)
 }
 
-private fun showResult(game: BlackJackGame) {
-    (game.dealer as Dealer).requestCardIfAvailableExtraCard()
+private fun showSummary(game: BlackJackGame) {
+    game.dealer.requestCardIfPossibleExtraCard(Deck.pop())
     ResultView.printResult(game)
 }
 
 private fun drawCard(game: BlackJackGame) {
     game.players.map {
         while (isContinueDraw(it)) {
-            it.requestCard(Card.pop())
-            ResultView.printPlayerHaveCard(it)
+            it.requestCard(Deck.pop())
+            ResultView.printCard(it)
         }
     }
 }
 
-private fun isContinueDraw(player: Gamer) =
-    !Point.isReachMaxPoint(player.calculatePoint()) && InputView.requestOneOfCard(player) == "y"
+private fun isContinueDraw(gamer: Gamer) =
+    !Point.isReachMaxPoint(gamer.calculatePoint()) && InputView.requestOneOfCard(gamer) == "y"
 
-private fun registerGame(): BlackJackGame {
-    val playerName = InputView.requestPlayerNames()
-    val blackJackGame = BlackJackGame(dealer = Dealer(), players = playerName.map(::Player)).apply {
-        initDealer()
-        initPlayers()
+private fun registerGame(playerNames: List<String>): BlackJackGame =
+    BlackJackGame(dealer = Dealer(), players = playerNames.map(::Player)).apply {
+        initCardForDealer()
+        initCardForPlayers()
     }
-    ResultView.printPreGame(blackJackGame)
-    return blackJackGame
-}

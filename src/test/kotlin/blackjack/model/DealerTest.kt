@@ -6,22 +6,24 @@ import org.junit.jupiter.api.Test
 class DealerTest {
 
     @Test
-    fun `딜러가 처음 받은 2장의 합이 16이하일 경우`() {
+    fun `한 장 더 받기 가능 여부`() {
         val dealer = Dealer().apply {
-            requestCard(Card(Kinds.TEN, Shape.CLOVER))
-            requestCard(Card(Kinds.SIX, Shape.CLOVER))
+            requestCard(Card(Denomination.ACE, Shape.DIAMOND))
+            requestCard(Card(Denomination.FIVE, Shape.DIAMOND))
         }
 
-        assertThat(dealer.checkIfGetExtraCardOrNot()).isEqualTo(true)
+        assertThat(dealer.checkIfExtraCardOrNot()).isTrue()
     }
 
     @Test
-    fun `딜러가 처음 받은 2장의 합이 17이상일 경우`() {
+    fun `한 장 더 받기`() {
         val dealer = Dealer().apply {
-            requestCard(Card(Kinds.TEN, Shape.CLOVER))
-            requestCard(Card(Kinds.SEVEN, Shape.CLOVER))
+            requestCard(Card(Denomination.ACE, Shape.DIAMOND))
+            requestCard(Card(Denomination.FIVE, Shape.DIAMOND))
         }
 
-        assertThat(dealer.checkIfGetExtraCardOrNot()).isEqualTo(false)
+        dealer.requestCardIfPossibleExtraCard(Card(Denomination.TWO, Shape.CLUB))
+
+        assertThat(dealer.myCards.size).isEqualTo(3)
     }
 }

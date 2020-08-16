@@ -1,6 +1,6 @@
 package blackjack.model
 
-enum class Kinds(val kindsName: String, val point: Int) {
+enum class Denomination(val symbol: String, val point: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -11,12 +11,13 @@ enum class Kinds(val kindsName: String, val point: Int) {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    KING("K", 10),
+    JACK("J", 10),
     QUEEN("Q", 10),
-    JACK("J", 10);
+    KING("K", 10);
 
     companion object {
-        fun findByKinds(kinds: Kinds): Kinds = values().first { it.kindsName == kinds.kindsName }
+
+        fun findBySymbol(symbol: String) = values().first { it.symbol == symbol }
 
         fun isAce(point: Int) = ACE.point == point
     }

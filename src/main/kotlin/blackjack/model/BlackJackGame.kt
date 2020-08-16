@@ -1,22 +1,24 @@
 package blackjack.model
 
-class BlackJackGame(val dealer: Gamer, val players: List<Gamer>) {
+import blackjack.constant.Constant
 
-    fun initDealer() {
-        dealer.run {
-            requestCard(Card.pop())
-            requestCard(Card.pop())
+class BlackJackGame(val dealer: Dealer, val players: List<Player>) {
+
+    fun initCardForDealer() {
+        repeat(Constant.FIRST_HAVE_NUMBER_OF_CARD) {
+            dealer.requestCard(Deck.pop())
         }
     }
 
-    fun initPlayers() {
-        players.map {
-            it.requestCard(Card.pop())
-            it.requestCard(Card.pop())
+    fun initCardForPlayers() {
+        repeat(Constant.FIRST_HAVE_NUMBER_OF_CARD) {
+            players.map { it.requestCard(Deck.pop()) }
         }
     }
 
     fun getDealerPoint(): Point = dealer.calculatePoint()
 
     fun getPlayersPoint(): List<Point> = players.map { it.calculatePoint() }
+
+    fun getPlayersBlackJackState(): List<Boolean> = players.map { it.isBlackJack() }
 }

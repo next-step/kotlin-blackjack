@@ -1,29 +1,35 @@
 package blackjack.model
 
-data class Point(val value: Int) {
+data class Point(val value: Int = 0) {
 
     override fun toString(): String = "$value"
 
-    operator fun plus(item: Point): Point = Point(value + item.value)
+    operator fun plus(point: Point): Point =
+        Point(value + point.value)
 
-    operator fun compareTo(item: Point): Int =
+    operator fun compareTo(point: Point) =
         when {
-            value > item.value -> 1
-            value == item.value -> 0
+            value > point.value -> 1
+            value == point.value -> 0
             else -> -1
         }
 
     companion object {
         val MAX_POINT = Point(21)
-        val ACE_EXTRA_POINT = Point(10)
-        val EXTRA_CARD_AVAILABLE_LIMIT_POINT = Point(16)
+        private val EXTRA_ACE_POINT = Point(10)
 
-        fun calculateAccIfAceFirst(acc: Point): Point =
-            if (Kinds.isAce(acc.value)) acc + ACE_EXTRA_POINT else acc
+        fun calculateIfAceFirst(acc: Point): Point =
+            if (Denomination.isAce(acc.value)) acc + EXTRA_ACE_POINT else acc
 
-        fun isAvailableExtraPoint(acc: Point, cardPoint: Point) =
-            Kinds.isAce(cardPoint.value) && (acc + cardPoint + ACE_EXTRA_POINT) <= MAX_POINT
+        fun calculateIfExtraPointExist(acc: Point, point: Point): Point =
+            if (isAvailableExtraPoint(acc, point)) EXTRA_ACE_POINT else Point()
 
         fun isReachMaxPoint(point: Point) = point >= MAX_POINT
+
+        private fun isAvailableExtraPoint(acc: Point, point: Point): Boolean {
+            val isAcePoint = Denomination.isAce(point.value)
+            val notExceedMaxPoint = acc + point + EXTRA_ACE_POINT <= MAX_POINT
+            return isAcePoint && notExceedMaxPoint
+        }
     }
 }
