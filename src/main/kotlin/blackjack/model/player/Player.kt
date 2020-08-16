@@ -9,12 +9,13 @@ const val WIN_TEXT = "승"
 const val LOSE_TEXT = "패"
 const val BLACKJACK_MAX_NUMBER = 21
 
-abstract class Player(open val name: String) {
-    var cards = Cards()
-    lateinit var winLoseResult: String
+interface Player {
+    val name: String
+    var cards: Cards
+    var winLoseResult: String
 
-    abstract fun call(): Boolean
-    abstract fun checkWinOrLose(players: List<Player>)
+    fun call(): Boolean
+    fun checkWinOrLose(players: List<Player>)
 
     fun drawCard(card: Card) {
         cards = cards.plus(card)

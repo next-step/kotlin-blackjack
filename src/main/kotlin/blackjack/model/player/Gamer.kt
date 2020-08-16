@@ -4,7 +4,9 @@ import blackjack.model.Money
 import blackjack.model.card.Cards
 import blackjack.view.InputView
 
-class Gamer(override val name: String) : Player(name) {
+class Gamer(override val name: String) : Player {
+    override var cards = Cards(listOf())
+    override lateinit var winLoseResult: String
     lateinit var betMoney: Money
 
     override fun call(): Boolean {

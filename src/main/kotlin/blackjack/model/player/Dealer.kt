@@ -1,14 +1,15 @@
 package blackjack.model.player
 
 import blackjack.model.card.Cards
-import blackjack.model.player.LOSE_TEXT as LOSE_TEXT
-import blackjack.model.player.WIN_TEXT as WIN_TEXT
 
 const val DEALER_NAME = "딜러"
 const val DEALER_CALL_MAX_POINT = 16
 const val DEALER_CALL_MAX_CARD = 3
 
-class Dealer : Player(name = DEALER_NAME) {
+class Dealer(override val name: String = DEALER_NAME) : Player {
+    override var cards = Cards(listOf())
+    override lateinit var winLoseResult: String
+
     override fun call(): Boolean {
         return cards.sumByPoint() <= DEALER_CALL_MAX_POINT && cards.getCount() < DEALER_CALL_MAX_CARD
     }
