@@ -9,7 +9,7 @@ object Output {
     }
 
     fun pickResult(player: Player) {
-        println("${player.name}의 카드 : $player")
+        println("${player.name}의 카드 : ${player.cardToString()}")
     }
 
     fun gameResult(players: Players) {

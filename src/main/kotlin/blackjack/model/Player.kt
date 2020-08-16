@@ -20,4 +20,8 @@ class Player(val name: String) {
     fun winner(): Boolean {
         return score() == WIN_SCORE
     }
+
+    fun cardToString(): String {
+        return cards.toString()
+    }
 }
