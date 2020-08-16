@@ -14,7 +14,7 @@ enum class Suit {
 }
 
 enum class Denomination(private val initial: String, private val score: Int) {
-    ACE("A", 1),
+    ACE("A", 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -30,12 +30,6 @@ enum class Denomination(private val initial: String, private val score: Int) {
 
     fun initial() = initial
     fun score() = score
-    fun aceScore(score: Int): Int {
-        if (score > WIN_SCORE - ACE_VALUE_11) {
-            return ACE_VALUE_1
-        }
-        return ACE_VALUE_11
-    }
-
     fun isAce() = initial == ACE.initial
+    fun scoreWithAce(score: Int): Int = if (score > WIN_SCORE) score - 10 else score
 }

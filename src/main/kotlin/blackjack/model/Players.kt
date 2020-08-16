@@ -5,13 +5,6 @@ class Players(players: List<Player>) {
 
     fun size() = players.size
 
-    fun firstTurn(cardDeck: CardDeck) {
-        players.forEach {
-            it.draw(cardDeck.drawCard())
-            it.draw(cardDeck.drawCard())
-        }
-    }
-
     fun race(player: Player, cardDeck: CardDeck) {
         if (player.available()) {
             player.draw(cardDeck.drawCard())
