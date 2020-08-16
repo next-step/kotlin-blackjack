@@ -37,7 +37,7 @@ class Game(players: List<Player>, val dealer: Dealer) {
     }
 
     fun playOfDealer(): Dealer? {
-        return dealer.drawIf(dealer) { dealer.hasLessScoreThan17() } as Dealer?
+        return dealer.drawCardIf(dealer) { dealer.hasLessScoreThan17() } as Dealer?
     }
 
     fun getResult(): Pair<Dealer, Players> {
@@ -53,7 +53,7 @@ class Game(players: List<Player>, val dealer: Dealer) {
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","
         const val MAXIMUM_GAME_SCORE = 21
-        const val SCORE_DEALER_SHOULD_TAKE_A_CARD = 17
+        const val MAXIMUM_SCORE_FOR_DEALER_DRAWING = 17
         const val DEFAULT_CARD_AMOUNT = 2
     }
 }

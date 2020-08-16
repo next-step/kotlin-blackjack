@@ -17,13 +17,13 @@ class GameTest {
     @BeforeEach
     fun `set up`() {
         cardsForDeck = setOf(
+            Pair(CardScore.TWO, Suit.HEART),
             Pair(CardScore.THREE, Suit.HEART),
             Pair(CardScore.FOUR, Suit.HEART),
             Pair(CardScore.FIVE, Suit.HEART),
             Pair(CardScore.SIX, Suit.HEART),
             Pair(CardScore.SEVEN, Suit.HEART),
-            Pair(CardScore.EIGHT, Suit.HEART),
-            Pair(CardScore.NINE, Suit.HEART)
+            Pair(CardScore.EIGHT, Suit.HEART)
         ).map { Card(it) }.toSet()
 
         normalGame = Game("first, second", Dealer(Deck(cardsForDeck)))
@@ -36,7 +36,7 @@ class GameTest {
         assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
     }
 
-    @DisplayName("대답이 STAND면 변화없이 턴이 넘어가며, HIT면 player에게 카드 한 장을 추가한다(디폴트 카드 개수: 2)")
+    @DisplayName("대답이 STAND면 그대로 턴이 넘어가며, HIT면 player에게 카드 한 장을 추가한다(디폴트 카드 개수: 2)")
     @Test
     fun `give a chance to draw to a player`() {
         // when
@@ -56,6 +56,15 @@ class GameTest {
 
         // then
         assertThat(nullPlayer).isEqualTo(null)
+    }
+
+    @DisplayName("딜러의 점수가 16이하면 카드를 한 장 더 뽑는다")
+    @Test
+    fun `play of dealer`() {
+        // when
+        val dealer = normalGame.playOfDealer()
+
+        assertThat(dealer?.amountOfCards()).isEqualTo(3)
     }
 
     @Test

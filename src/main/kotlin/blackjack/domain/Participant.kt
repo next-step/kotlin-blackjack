@@ -8,7 +8,7 @@ interface Participant {
     fun setUpWithCards(dealer: Dealer) =
         (1..DEFAULT_CARD_AMOUNT).map { this.draw(dealer.pickCard()) }
 
-    fun drawIf(dealer: Dealer, fitsCondition: () -> Boolean): Participant? {
+    fun drawCardIf(dealer: Dealer, fitsCondition: () -> Boolean): Participant? {
         if (fitsCondition()) {
             draw(dealer.pickCard()) ?: return null
         }

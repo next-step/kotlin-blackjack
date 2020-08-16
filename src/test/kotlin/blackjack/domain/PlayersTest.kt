@@ -17,7 +17,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `find player`() {
+    fun `find a player`() {
         // when
         val mark = players.findPlayer(0)
         val harry = players.findPlayer(1)

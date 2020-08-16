@@ -12,21 +12,21 @@ data class Players(private val players: List<Player>) {
 
     fun size() = players.size
 
-    fun statesOfCards(): String {
-        return players.joinToString("\n") { "${it}카드: ${it.stateOfCards()}" }
-    }
-
     fun compareWith(dealer: Dealer): Int {
         if (dealer.totalScore() > MAXIMUM_GAME_SCORE) {
-            players.forEach { it.win() }
+            players.forEach { it.winMatch() }
         }
 
         players.filter { player ->
             MAXIMUM_GAME_SCORE >= player.totalScore() &&
                 player.totalScore() >= dealer.totalScore()
-        }.forEach { it.win() }
+        }.forEach { it.winMatch() }
 
-        return players.count { it.isWin() }
+        return players.count { it.isWon() }
+    }
+
+    fun statesOfCards(): String {
+        return players.joinToString("\n") { "${it}카드: ${it.stateOfCards()}" }
     }
 
     override fun toString(): String {

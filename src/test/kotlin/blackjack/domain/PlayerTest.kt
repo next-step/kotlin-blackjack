@@ -20,7 +20,7 @@ class PlayerTest {
         dealer = Dealer(deck)
     }
 
-    @DisplayName("카드를 뽑을지 말지는 reply에 따라 다르다 (reply : HIT = 1장 받음, STAND = 안 받음)")
+    @DisplayName("카드를 뽑을지 말지는 대답(reply)에 따라 다르다 (reply : HIT = 1장 받음, STAND = 안 받음)")
     @Test
     fun `choose to draw or not`() {
         // when

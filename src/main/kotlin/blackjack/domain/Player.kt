@@ -11,7 +11,7 @@ data class Player(
         private set
 
     fun chooseToDraw(reply: String, dealer: Dealer): Player? {
-        return drawIf(dealer) {
+        return drawCardIf(dealer) {
             REPLY_HIT == reply &&
                 !hasMoreScoreThanMax(totalScore())
         } as Player?
@@ -28,11 +28,11 @@ data class Player(
 
     override fun stateOfCards(): String = cards.toString()
 
-    fun win() {
+    fun winMatch() {
         matchResult = TEXT_WIN
     }
 
-    fun isWin() = matchResult == TEXT_WIN
+    fun isWon() = matchResult == TEXT_WIN
 
     override fun toString(): String = name
 
