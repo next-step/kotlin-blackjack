@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.model.BlackJackGame
 import blackjack.model.Players
-import blackjack.model.card.CardDeck
 import blackjack.model.player.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -11,8 +10,7 @@ class BlackJackGameController(
     private val inputView: InputView = InputView,
     private val resultView: ResultView = ResultView,
     private val players: Players = Players(inputView.getNames()),
-    private val cardDeck: CardDeck = CardDeck(),
-    private val blackJackGame: BlackJackGame = BlackJackGame(players, cardDeck)
+    private val blackJackGame: BlackJackGame = BlackJackGame(players)
 ) {
 
     fun startGame() {
@@ -22,7 +20,7 @@ class BlackJackGameController(
     }
 
     private fun gameBatting() {
-        blackJackGame.gameBatting()
+        blackJackGame.battingGame()
         resultView.showPlayers(blackJackGame.getPlayerStatus())
     }
 

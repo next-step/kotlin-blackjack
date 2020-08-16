@@ -7,7 +7,10 @@ abstract class Player(
     val name: String,
     protected val cards: Cards = Cards()
 ) {
-    abstract fun gameBatting(cards: Cards)
+
+    fun gameBatting(cards: Cards) {
+        this.cards.addCards(cards)
+    }
 
     fun canMoreCard() = cards.isBurst().not()
 

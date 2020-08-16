@@ -1,15 +1,27 @@
 package blackjack.model
 
 import blackjack.model.card.CardDeck
+import blackjack.model.player.Dealer
 import blackjack.model.player.Player
 
 class BlackJackGame(
     private val players: Players,
-    private val cardDeck: CardDeck
+    private val dealer: Dealer = Dealer(),
+    private val cardDeck: CardDeck = CardDeck()
 ) {
-    fun gameBatting() =
+
+    fun battingGame() {
+        battingDealer()
+        battingPlayers()
+    }
+
+    private fun battingDealer() {
+        dealer.gameBatting(cardDeck.popDealerCardDummy())
+    }
+
+    private fun battingPlayers() =
         players.gameBatting {
-            cardDeck.popTwoCard()
+            cardDeck.popPlayerCardDummy()
         }
 
     fun getPlayerStatus() = players.toString()

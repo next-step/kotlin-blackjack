@@ -20,7 +20,7 @@ class GamePlayerTest {
         val cardDeck = CardDeck(cardList.toMutableSet())
 
         val player = GamePlayer("조남재").apply {
-            gameBatting(cardDeck.popTwoCard())
+            gameBatting(cardDeck.popPlayerCardDummy())
         }
 
         val expect = cardList.sumBy { it.getScore() }

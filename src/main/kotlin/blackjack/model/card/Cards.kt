@@ -44,3 +44,5 @@ class Cards(
         const val ACE_GAP = 10
     }
 }
+
+fun List<Card>.toCards() = Cards(this.toMutableSet())

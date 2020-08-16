@@ -8,10 +8,6 @@ class Dealer(
     name = NAME,
     cards = cards
 ) {
-    override fun gameBatting(cards: Cards) {
-        TODO("Not yet implemented")
-    }
-
     companion object {
         const val NAME = "Dealer"
     }
