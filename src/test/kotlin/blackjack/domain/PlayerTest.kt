@@ -60,4 +60,16 @@ internal class PlayerTest {
 
         assertThat(player.hit()).isFalse()
     }
+
+    @Test
+    fun `stay할 수 있다`() {
+        val card1 = Card(Suits.SPADES, Denomination.ACE)
+        val card2 = Card(Suits.DIAMONDS, Denomination.KING)
+        val card3 = Card(Suits.DIAMONDS, Denomination.FIVE)
+        player.addCards(listOf(card1, card2, card3))
+
+        player.stay()
+
+        assertThat(player.isStay).isTrue()
+    }
 }
