@@ -1,12 +1,14 @@
 package model
 
 class Dealer {
+    val cards: Cards
+        get() = CARD_LIST
+
+    fun draw(): Card {
+        return cards.pick()
+    }
+
     companion object {
-        val CARD_LIST: List<Card>
-            get() {
-                val cardList = mutableListOf<Card>()
-                Suit.values().map { suit -> { Denomination.values().map { denomination -> { Card(suit, denomination) } } } }
-                return cardList.toList()
-            }
+        val CARD_LIST = Cards(Suit.values().flatMap { suit -> Denomination.values().map { denomination -> Card(suit, denomination) } })
     }
 }
