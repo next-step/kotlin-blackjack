@@ -8,7 +8,7 @@ class CardTest {
     @Test
     fun `카드 만들기`() {
         val card =
-            Card(Denomination.ACE to Shape.CLUB)
+            Card(Denomination.ACE, Shape.CLUB)
 
         assertThat(card.toString()).isEqualTo("A클로버")
     }

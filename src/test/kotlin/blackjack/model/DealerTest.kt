@@ -8,8 +8,8 @@ class DealerTest {
     @Test
     fun `한 장 더 받기 가능 여부`() {
         val dealer = Dealer().apply {
-            requestCard(Card(Denomination.ACE to Shape.DIAMOND))
-            requestCard(Card(Denomination.FIVE to Shape.DIAMOND))
+            requestCard(Card(Denomination.ACE, Shape.DIAMOND))
+            requestCard(Card(Denomination.FIVE, Shape.DIAMOND))
         }
 
         assertThat(dealer.checkIfExtraCardOrNot()).isTrue()
@@ -18,11 +18,11 @@ class DealerTest {
     @Test
     fun `한 장 더 받기`() {
         val dealer = Dealer().apply {
-            requestCard(Card(Denomination.ACE to Shape.DIAMOND))
-            requestCard(Card(Denomination.FIVE to Shape.DIAMOND))
+            requestCard(Card(Denomination.ACE, Shape.DIAMOND))
+            requestCard(Card(Denomination.FIVE, Shape.DIAMOND))
         }
 
-        dealer.requestCardIfPossibleExtraCard(Card(Denomination.TWO to Shape.CLUB))
+        dealer.requestCardIfPossibleExtraCard(Card(Denomination.TWO, Shape.CLUB))
 
         assertThat(dealer.myCards.size).isEqualTo(3)
     }

@@ -1,9 +1,9 @@
 package blackjack.model
 
-class Card(private val denominationToShape: Pair<Denomination, Shape>) {
+class Card(private val denomination: Denomination, private val shape: Shape) {
 
-    override fun toString(): String = "${denominationToShape.first.symbol}${denominationToShape.second.symbol}"
+    override fun toString(): String = "${denomination.symbol}${shape.symbol}"
 
     fun getDenomination(): Denomination =
-        Denomination.findBySymbol(denominationToShape.first.symbol)
+        Denomination.findBySymbol(denomination.symbol)
 }

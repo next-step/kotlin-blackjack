@@ -20,6 +20,6 @@ object Deck {
 
     private fun setupCard(denomination: Denomination): List<Card> =
         Shape.values().map { shape ->
-            Card(denomination to shape)
+            Card(denomination, shape)
         }
 }
