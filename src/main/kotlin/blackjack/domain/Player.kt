@@ -22,7 +22,7 @@ open class Player(val name: String) {
         point = calculatePoint()
     }
 
-    fun checkResult(dealerPoint: Int) {
+    fun getResult(dealerPoint: Int) {
         when {
             isBusted() -> playResult = PlayResultType.LOSE
             point > dealerPoint -> playResult = PlayResultType.WIN

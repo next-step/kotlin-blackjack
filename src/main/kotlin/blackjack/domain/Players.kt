@@ -31,7 +31,7 @@ data class Players(val players: List<Player>) {
         if (dealer.isBusted()) {
             onlyPlayers.forEach { it.playResult = PlayResultType.WIN }
         } else {
-            onlyPlayers.forEach { it.checkResult(dealerPoint) }
+            onlyPlayers.forEach { it.getResult(dealerPoint) }
         }
 
         dealer.dealerResult.setStatic(
