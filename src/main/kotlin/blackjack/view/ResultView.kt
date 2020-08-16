@@ -29,7 +29,8 @@ object ResultView {
             player.cards.forEach { playerCardsStringBuilder.append(" ${it.value}${it.suit.suitName}, ") }
         }
         playerCardsStringBuilder.delete(playerCardsStringBuilder.lastIndex - 1, playerCardsStringBuilder.lastIndex)
-        if (withResult) print(playerCardsStringBuilder) else println(playerCardsStringBuilder)
+        if (!withResult) playerCardsStringBuilder.append("\n")
+        print(playerCardsStringBuilder)
     }
 
     fun showGameResult(players: Players) {
@@ -61,7 +62,7 @@ object ResultView {
         val showGameResult = StringBuilder("\n##최종 수익\n")
 
         players.players
-            .forEach { showGameResult.append("${it.name}: ${it.getResultOfMoney()}\n") }
+            .forEach { showGameResult.append("${it.name}: ${it.getProfitMoney()}\n") }
         println(showGameResult)
     }
 }

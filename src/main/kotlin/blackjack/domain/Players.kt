@@ -18,9 +18,12 @@ data class Players(val players: List<Player>) {
     fun getNextPlayer(): Player? {
         if (players.isEmpty()) return null
         return try {
-            currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players).find { it.isHit }!!
+            currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players.filterNot { it is Dealer })
+                .find { it.isHit }!!
+            if (currentPlayer.isBusted()) getNextPlayer()
             currentPlayer
         } catch (e: Exception) {
+            if (dealer.isHit) return dealer
             null
         }
     }
@@ -36,7 +39,8 @@ data class Players(val players: List<Player>) {
 
         dealer.dealerResult.setStatic(
             onlyPlayers.filter { it.playResult == PlayResultType.LOSE }.count(),
-            onlyPlayers.filter { it.playResult == PlayResultType.WIN }.count()
+            onlyPlayers.filter { it.playResult == PlayResultType.WIN }.count(),
+            onlyPlayers
         )
     }
 

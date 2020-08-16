@@ -14,6 +14,7 @@ open class Player(val name: String) {
 
     open fun calculatePoint(aceToBig: Boolean = false): Int {
         var point = cards.sumBy { it.getPoint(true) }
+        if (point == BLACKJACK_POINT) return point
         point = cards.sumBy { it.getPoint(point < BLACKJACK_POINT) }
         return point
     }
@@ -34,7 +35,7 @@ open class Player(val name: String) {
     fun isBusted(): Boolean = point > BLACKJACK_POINT
 
     private fun getRateOfReturn(): Double {
-        if (point == BLACKJACK_POINT) return 1.5
+        if (playResult != PlayResultType.DRAW && point == BLACKJACK_POINT) return 1.5
         return when (playResult) {
             PlayResultType.LOSE -> -1.0
             PlayResultType.WIN -> 1.0
@@ -42,9 +43,8 @@ open class Player(val name: String) {
         }
     }
 
-    fun getResultOfMoney(): String {
-        if (betMoney == null) return ""
-        return betMoney!!.money.times(getRateOfReturn()).toBigDecimal()
-            .stripTrailingZeros().toPlainString()
+    open fun getProfitMoney(): Int {
+        if (betMoney == null) return 0
+        return betMoney!!.money.times(getRateOfReturn()).toInt()
     }
 }

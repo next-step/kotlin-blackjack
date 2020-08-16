@@ -10,4 +10,6 @@ class Dealer(name: String = DEALER_NAME, playerCount: Int = 0) : Player(name) {
         super.addCard(card)
         isHit = calculatePoint() <= LIMIT_HIT_NUMBER
     }
+
+    override fun getProfitMoney(): Int = dealerResult.profitMoney
 }

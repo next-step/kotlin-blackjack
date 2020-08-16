@@ -1,10 +1,13 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Players
+import blackjack.domain.Card
 import blackjack.domain.CardDeck
 import blackjack.domain.HIT
+import blackjack.domain.Players
 import blackjack.domain.STAY
+import blackjack.domain.SuitType
+import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -68,5 +71,23 @@ class BlackjackGameTest {
         val players = Players.newInstance("ace,hi,con,race")
         val blackjackGame = BlackjackGame(players!!, CardDeck())
         assertThat(blackjackGame.players.getNextPlayer()?.name).isEqualTo("hi")
+    }
+
+    @DisplayName("다음턴 사용자 중 버스트된 사용자 있으면 턴에 포함되지 않게 하는지 확인")
+    @Test
+    fun checkNextPlayerWithBusted() {
+        val players = Players.newInstance("ace,hi")
+        val blackjackGame = BlackjackGame(players!!, CardDeck())
+        repeat(3) { players.players[1].addCard(Card(SuitType.CLUB, ValueType.NINE)) }
+
+        blackjackGame.nextTurn()
+        assertThat(players.currentPlayer)
+            .isNotEqualTo(players.players[1])
+        blackjackGame.nextTurn()
+        assertThat(players.currentPlayer)
+            .isNotEqualTo(players.players[1])
+        blackjackGame.nextTurn()
+        assertThat(players.currentPlayer)
+            .isNotEqualTo(players.players[1])
     }
 }

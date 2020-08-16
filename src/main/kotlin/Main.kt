@@ -8,14 +8,16 @@ import blackjack.view.ResultView
 
 fun main() {
     try {
-
         var players: Players? = Players.newInstance(InputView.getPlayers())
         while (players == null) {
             players = Players.newInstance(InputView.getPlayers())
         }
 
-        players.players.filterNot { it is Dealer }
-            .forEach { it.betMoney = BetMoney.newInstance(InputView.getBetMoney(it)) }
+        players.players.filterNot { it is Dealer }.forEach {
+            run {
+                while (it.betMoney == null) it.betMoney = BetMoney.newInstance(InputView.getBetMoney(it))
+            }
+        }
 
         val blackjackGame = BlackjackGame(players, CardDeck())
 
