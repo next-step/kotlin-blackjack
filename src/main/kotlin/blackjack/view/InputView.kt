@@ -1,27 +1,28 @@
 package blackjack.view
 
-import blackjack.model.player.Dealer
+import blackjack.model.Money
 import blackjack.model.player.Gamer
-import blackjack.model.player.Player
-import blackjack.model.player.Players
 
 object InputView {
     private const val PLAYER_NAME_DELIMITER = ","
     private const val PLAYER_ANSWER_YES = "y"
     private const val PLAYER_ANSWER_NO = "n"
 
-    fun getPlayer(): Players {
+    fun getGamersName(): List<Gamer> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         val names = readLine().toString().split(PLAYER_NAME_DELIMITER)
-        val gamers = names.map { Gamer(it) }
 
-        val players = mutableListOf<Player>()
+        return names.map { Gamer(it) }
+    }
 
-        players.add(Dealer())
-        players.addAll(gamers)
+    fun getBetAmount(gamers: List<Gamer>): List<Gamer> {
+        gamers.forEach {
+            println("${it.name}의 배팅 금액은?")
 
-        return Players(players)
+            it.betMoney = Money(readLine()!!.toInt())
+        }
+        return gamers
     }
 
     fun askToDraw(player: Gamer): Boolean {

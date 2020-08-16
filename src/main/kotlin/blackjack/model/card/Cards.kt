@@ -41,7 +41,7 @@ class Cards(cards: List<Card> = listOf()) {
         val pointSum = sumByPoint()
         val pointSumOptional = sumByOptionalPoint()
 
-        if (pointSumOptional < BLACKJACK_MAX_NUMBER) return pointSumOptional
+        if (pointSumOptional <= BLACKJACK_MAX_NUMBER) return pointSumOptional
 
         return pointSum
     }

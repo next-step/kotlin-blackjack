@@ -1,9 +1,12 @@
 package blackjack.model.player
 
+import blackjack.model.Money
 import blackjack.model.card.Cards
 import blackjack.view.InputView
 
 class Gamer(override val name: String) : Player(name) {
+    lateinit var betMoney: Money
+
     override fun call(): Boolean {
         while (continueToTurn() && InputView.askToDraw(this)) {
             return true
