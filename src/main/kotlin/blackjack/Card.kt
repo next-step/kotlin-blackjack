@@ -4,8 +4,8 @@ data class Card(
     private val shape: Symbol,
     private val number: Numbers
 ) {
-    fun getCardScore(): Int {
-        return number.score
+    fun getCardScore(totalScore: Int = 0): Int {
+        return Numbers.ofScore(totalScore, number)
     }
 
     override fun toString(): String {
