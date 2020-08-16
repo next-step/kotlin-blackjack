@@ -15,14 +15,14 @@ internal class CardsTest {
         val cards = Cards.denominationsOf("7", "10")
 
         // then
-        assertThat(cards.sumScores()).isEqualTo(17)
+        assertThat(cards.totalScore()).isEqualTo(17)
     }
 
     @MethodSource("cardsWithAceAndTotalScore")
     @ParameterizedTest
     fun `ACE 를 포함한 총점계산`(cards: Cards, expectedScore: Int) {
         // then
-        assertThat(cards.sumScores()).isEqualTo(expectedScore)
+        assertThat(cards.totalScore()).isEqualTo(expectedScore)
     }
 
     companion object {

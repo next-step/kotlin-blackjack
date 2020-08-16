@@ -4,7 +4,7 @@ import blackjack.domain.Player
 import blackjack.domain.PlayerResult
 
 fun notifyStartGame(dealer: Player, players: List<Player>) {
-    println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 카드를 나누어 주었습니다.")
+    println("딜러와 ${players.joinToString(", ") { it.info.name }}에게 2장의 카드를 나누어 주었습니다.")
     printDealerStartCard(dealer)
     players.forEach { printPlayerCards(it) }
     println()
@@ -22,11 +22,11 @@ fun notifyDealerHit() {
 }
 
 fun printPlayerCards(player: Player) {
-    println("${player.name}카드: ${player.cards}")
+    println("${player.info.name}카드: ${player.cards}")
 }
 
 fun printResult(player: Player) {
-    println("${player.name}카드: ${player.cards} - 결과: ${player.getScore()}")
+    println("${player.info.name}카드: ${player.cards} - 결과: ${player.getScore()}")
 }
 
 fun printPlayerResults(dealerResult: PlayerResult, results: List<PlayerResult>) {

@@ -12,7 +12,7 @@ fun getPlayerNames(): List<String> {
 // 근데 busted 되면 무슨카드를 뽑아서 죽엇는지 알길이 없다...
 
 fun askHitFromPlayer(player: Player): Boolean {
-    println("${player.name}은(는) 한 장의 카드를 더 받겠습니까? (y or n)")
+    println("${player.info.name}은(는) 한 장의 카드를 더 받겠습니까? (y or n)")
     return when (getConsoleLine()) {
         "y" -> true
         "n" -> false

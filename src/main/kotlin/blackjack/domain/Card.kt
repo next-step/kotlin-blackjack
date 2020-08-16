@@ -4,6 +4,9 @@ class Card private constructor(
     val symbol: Symbol,
     val denomination: Denomination
 ) {
+    fun isAce() = denomination.isAce()
+
+    fun getScore() = denomination.score
 
     override fun toString(): String {
         return "$symbol ${denomination.value}"

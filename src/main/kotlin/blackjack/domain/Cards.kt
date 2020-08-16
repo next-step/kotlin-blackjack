@@ -3,31 +3,32 @@ package blackjack.domain
 data class Cards(
     val values: List<Card>
 ) {
+    val totalScore: Int = Score.from(values)
+
     operator fun plus(card: Card): Cards = Cards(this.values + card)
 
     operator fun plus(cards: List<Card>): Cards = Cards(this.values + cards)
 
     operator fun plus(cards: Cards): Cards = Cards(this.values + cards.values)
 
-    fun isBlackJack(): Boolean {
-        return sumScores() == BLACK_JACK_SCORE && values.size == BLACK_JACK_CARD_COUNT
+    fun isEmpty() = values.isEmpty()
+
+    fun canDealerPlay(): Boolean {
+        return canPlay() && totalScore < Score.DEALER_STOP
     }
 
-    fun sumScores(): Int {
-        val totalScore = values.sumBy { it.denomination.score }
-        return if (values.hasAce()) sumScoresWithAce(totalScore)
-        else totalScore
+    fun canPlay() = isNotBlackJack() && isNotBusted()
+
+    private fun isNotBlackJack() = !isBlackJack()
+
+    private fun isBlackJack(): Boolean {
+        return totalScore == Score.BLACK_JACK && values.size == BLACK_JACK_CARD_COUNT
     }
 
-    private fun List<Card>.hasAce(): Boolean {
-        val aceCard = this.find { it.denomination == Denomination.ACE }
-        return aceCard != null
-    }
+    fun isNotBusted() = !isBusted()
 
-    private fun sumScoresWithAce(totalScore: Int): Int {
-        val totalScoreWithAceBonus = totalScore + Denomination.MAX_SCORE
-        return if (totalScoreWithAceBonus > BLACK_JACK_SCORE) totalScore
-        else totalScoreWithAceBonus
+    private fun isBusted(): Boolean {
+        return totalScore > Score.BLACK_JACK
     }
 
     override fun toString(): String {
@@ -35,7 +36,6 @@ data class Cards(
     }
 
     companion object {
-        const val BLACK_JACK_SCORE = 21
         private const val BLACK_JACK_CARD_COUNT = 2
 
         fun empty() = Cards(emptyList())
