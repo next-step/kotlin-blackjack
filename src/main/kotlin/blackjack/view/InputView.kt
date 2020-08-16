@@ -27,9 +27,13 @@ object InputView {
     fun askToDraw(player: Gamer): Boolean {
         println("${player.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
-        val answer = readLine().toString()
+        var answer = readLine().toString()
 
-        require(answer == PLAYER_ANSWER_YES || answer == PLAYER_ANSWER_NO) { "올바른 입력이 아닙니다." }
+        while (answer != PLAYER_ANSWER_YES && answer != PLAYER_ANSWER_NO) {
+            println("올바른 답변이 아닙니다.")
+
+            answer = readLine().toString()
+        }
 
         return answer == PLAYER_ANSWER_YES
     }
