@@ -22,8 +22,8 @@ internal class CardDeckTest {
     @Test
     fun drawCard() {
         cardDeck.pick()
-        assertThat(cardDeck.cards.cards.size).isEqualTo(51)
+        assertThat(cardDeck.cards.getCount()).isEqualTo(51)
         cardDeck.pick()
-        assertThat(cardDeck.cards.cards.size).isEqualTo(50)
+        assertThat(cardDeck.cards.getCount()).isEqualTo(50)
     }
 }

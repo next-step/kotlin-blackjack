@@ -10,14 +10,14 @@ const val LOSE_TEXT = "패"
 const val BLACKJACK_MAX_NUMBER = 21
 
 abstract class Player(open val name: String) {
-    var cards = Cards(mutableListOf())
+    var cards = Cards()
     lateinit var winLoseResult: String
 
     abstract fun call(): Boolean
     abstract fun checkWinOrLose(players: List<Player>)
 
     fun drawCard(card: Card) {
-        cards.add(card)
+        cards = cards.plus(card)
     }
 
     fun getDisplayCards(): String {

@@ -4,30 +4,37 @@ import blackjack.model.player.BLACKJACK_MAX_NUMBER
 
 const val BOTTOM_CARD_NUMBER = 0
 
-data class Cards(val cards: MutableList<Card>) {
+class Cards(cards: List<Card> = listOf()) {
+    private val _cards: MutableList<Card> = cards.deepCopy() as MutableList<Card>
+    val cards: List<Card>
+        get() = _cards.deepCopy()
+
+    private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
+
     fun draw(): Card {
-        cards.removeAt(BOTTOM_CARD_NUMBER)
-        return cards[BOTTOM_CARD_NUMBER]
+        _cards.removeAt(BOTTOM_CARD_NUMBER)
+        return _cards[BOTTOM_CARD_NUMBER]
     }
 
-    fun add(card: Card) {
-        cards.add(card)
+    operator fun plus(card: Card): Cards {
+        _cards.add(card)
+        return Cards(_cards)
     }
 
     fun getCount(): Int {
-        return cards.size
+        return _cards.size
     }
 
     fun sumByPoint(): Int {
-        return cards.sumBy { it.denomination.point }
+        return _cards.sumBy { it.denomination.point }
     }
 
     private fun sumByOptionalPoint(): Int {
-        return cards.sumBy { it.denomination.pointOptional }
+        return _cards.sumBy { it.denomination.pointOptional }
     }
 
     fun getDisplayCards(): String {
-        return cards.joinToString(separator = ",") { "${it.denomination.title}${it.suit.title}" }
+        return _cards.joinToString(separator = ",") { "${it.denomination.title}${it.suit.title}" }
     }
 
     fun getBlackjackPoint(): Int {
