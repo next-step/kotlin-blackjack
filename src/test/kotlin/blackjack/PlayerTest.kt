@@ -1,14 +1,14 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
 import blackjack.domain.CardDeck
-import blackjack.domain.HIT
-import blackjack.domain.Player
+import blackjack.domain.Card
+import blackjack.domain.Players
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
+import blackjack.domain.Player
+import blackjack.domain.HIT
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -22,14 +22,16 @@ class PlayerTest {
     @EmptySource
     @ValueSource(strings = ["ace:con", "$", "ace,"])
     fun checkPlayersInput(playerNames: String) {
-        assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        val players = Players.newInstance(playerNames)
+        assertThat(players)
+            .isNull()
     }
 
     @DisplayName("플레이어 수 확인")
     @Test
     fun checkPlayers() {
-        assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
+        val players = Players.newInstance("ace,con")
+        assertThat(BlackjackGame(players!!, CardDeck()).players.players.size)
             .isEqualTo(3)
     }
 
@@ -56,7 +58,8 @@ class PlayerTest {
     @DisplayName("다음턴 사용자 확인")
     @Test
     fun checkNextTurn() {
-        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        val players = Players.newInstance("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players!!, CardDeck())
         repeat(4) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
@@ -65,7 +68,8 @@ class PlayerTest {
     @Test
     fun checkPlayerCard() {
         val cardDeck = CardDeck()
-        val blackjackGame = BlackjackGame("ace,hi,con,race", cardDeck)
+        val players = Players.newInstance("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players!!, cardDeck)
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
