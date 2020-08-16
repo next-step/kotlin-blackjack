@@ -15,7 +15,7 @@ enum class Denomination(private val number: Int, val value: String) {
     QUEEN(10, "Q"),
     KING(10, "K");
 
-    fun calculate(value: Int): Int {
+    fun calculate(value: Int = 0): Int {
         return if (this == ACE) {
             if (11 + value > 21) 1
             else 11
