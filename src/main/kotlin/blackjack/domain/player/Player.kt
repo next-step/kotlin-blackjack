@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
 
 interface Player {
     val info: PlayerInfo
@@ -9,6 +12,10 @@ interface Player {
     fun isBiggerScoreThan(other: Player): Boolean {
         return this.getScore() > other.getScore()
     }
+
+    fun isBusted(): Boolean = cards.isBusted()
+
+    fun isBlackJack(): Boolean = cards.isBlackJack()
 
     fun getScore(): Int = cards.totalScore
 

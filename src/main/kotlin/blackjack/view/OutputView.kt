@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.PlayerResult
+import blackjack.domain.player.Player
+import blackjack.domain.result.PlayerResult
 
 fun notifyStartGame(dealer: Player, players: List<Player>) {
     println("딜러와 ${players.joinToString(", ") { it.info.name }}에게 2장의 카드를 나누어 주었습니다.")

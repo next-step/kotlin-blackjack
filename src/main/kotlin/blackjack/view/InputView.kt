@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.player.Player
 
 fun getPlayerNames(): List<String> {
     println("게임에 참여할 사람의 이름을 입력하세요.")

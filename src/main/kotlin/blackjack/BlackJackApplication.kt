@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
-import blackjack.domain.PlayerResult
-import blackjack.domain.RandomDrawStrategy
+import blackjack.domain.card.Deck
+import blackjack.domain.result.PlayerResult
+import blackjack.domain.card.RandomDrawStrategy
 import blackjack.view.askHitFromPlayer
 import blackjack.view.getBettingMoney
 import blackjack.view.getPlayerNames

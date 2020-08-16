@@ -1,15 +1,18 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Cards(
     val values: List<Card>
 ) {
     val totalScore: Int = Score.from(values)
 
-    operator fun plus(card: Card): Cards = Cards(this.values + card)
+    operator fun plus(card: Card): Cards =
+        Cards(this.values + card)
 
-    operator fun plus(cards: List<Card>): Cards = Cards(this.values + cards)
+    operator fun plus(cards: List<Card>): Cards =
+        Cards(this.values + cards)
 
-    operator fun plus(cards: Cards): Cards = Cards(this.values + cards.values)
+    operator fun plus(cards: Cards): Cards =
+        Cards(this.values + cards.values)
 
     fun isEmpty() = values.isEmpty()
 
@@ -17,13 +20,13 @@ data class Cards(
 
     private fun isNotBlackJack() = !isBlackJack()
 
-    private fun isBlackJack(): Boolean {
+    fun isBlackJack(): Boolean {
         return totalScore == Score.BLACK_JACK && values.size == BLACK_JACK_CARD_COUNT
     }
 
     fun isNotBusted() = !isBusted()
 
-    private fun isBusted(): Boolean {
+    fun isBusted(): Boolean {
         return totalScore > Score.BLACK_JACK
     }
 
@@ -36,6 +39,7 @@ data class Cards(
 
         fun empty() = Cards(emptyList())
 
-        fun denominationsOf(vararg values: String) = Cards(values.map { Card.denominationOf(it) })
+        fun denominationsOf(vararg values: String) =
+            Cards(values.map { Card.denominationOf(it) })
     }
 }

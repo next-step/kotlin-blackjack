@@ -1,7 +1,13 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
 
 data class Dealer(
-    override val info: PlayerInfo = PlayerInfo(NAME, 0),
+    override val info: PlayerInfo = PlayerInfo(
+        NAME,
+        0
+    ),
     override val cards: Cards = Cards.empty()
 ) : Player {
 

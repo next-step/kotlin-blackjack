@@ -1,5 +1,12 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
+import blackjack.domain.card.DrawStrategy
+import blackjack.domain.player.Challenger
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -33,7 +40,8 @@ internal class PlayerTest {
                 return expectedCard
             }
         })
-        val player = Challenger("Malibin", Cards.denominationsOf("8", "9", "10"))
+        val player =
+            Challenger("Malibin", Cards.denominationsOf("8", "9", "10"))
 
         // then
         assertThatThrownBy { player.hit(deck) }
@@ -45,7 +53,10 @@ internal class PlayerTest {
     fun `(플레이어 + 기존 리스트) 하면 플레이어가 맨 앞인 합쳐진 리스트가 나온다`() {
         // given
         val player: Player = Challenger("player1")
-        val players: List<Player> = listOf(Challenger("player2"), Challenger("player3"))
+        val players: List<Player> = listOf(
+            Challenger("player2"),
+            Challenger("player3")
+        )
 
         // when
         val newPlayers = player + players
