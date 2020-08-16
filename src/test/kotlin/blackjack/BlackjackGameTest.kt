@@ -2,8 +2,9 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.CardDeck
+import blackjack.domain.HIT
+import blackjack.domain.STAY
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -18,15 +19,15 @@ class BlackjackGameTest {
     @ValueSource(strings = ["a", "$"])
     fun checkInputHitOrStay(isHit: String) {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThatThrownBy { blackjackGame.hitOrStay(isHit) }
-            .isInstanceOf(IllegalArgumentException::class.java)
+        assertThat(blackjackGame.hitOrStay(isHit))
+            .isNull()
     }
 
     @DisplayName("카드를 추가로 받기")
     @Test
     fun checkHit() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        blackjackGame.hitOrStay("y")
+        blackjackGame.hitOrStay(HIT)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
     }
@@ -35,7 +36,7 @@ class BlackjackGameTest {
     @Test
     fun checkStay() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        blackjackGame.hitOrStay("n")
+        blackjackGame.hitOrStay(STAY)
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(2)
     }
@@ -44,14 +45,21 @@ class BlackjackGameTest {
     @Test
     fun checkPointCalculation() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        assertThat(blackjackGame.players.currentPlayer.calculatePoint()).isGreaterThan(0)
+        assertThat(blackjackGame.players.currentPlayer.point).isGreaterThan(0)
     }
 
     @DisplayName("사용자가 현재 가지고 있는 카드 포인트의 합이 21이 넘는지 안넘는지 확인")
     @Test
     fun checkBust() {
         val blackjackGame = BlackjackGame("ace,con", CardDeck())
-        repeat(10) { blackjackGame.hitOrStay("y") }
+        repeat(10) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.isBusted()).isEqualTo(true)
+    }
+
+    @DisplayName("다음턴 사용자 확인")
+    @Test
+    fun checkNextPlayer() {
+        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        assertThat(blackjackGame.players.getNextPlayer()?.name).isEqualTo("hi")
     }
 }

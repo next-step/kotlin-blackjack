@@ -3,11 +3,12 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.HIT
 import blackjack.domain.Player
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,7 +22,7 @@ class PlayerTest {
     @EmptySource
     @ValueSource(strings = ["ace:con", "$", "ace,"])
     fun checkPlayersInput(playerNames: String) {
-        Assertions.assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
+        assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
             .isInstanceOf(IllegalArgumentException::class.java)
     }
 
@@ -29,7 +30,7 @@ class PlayerTest {
     @Test
     fun checkPlayers() {
         assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
-            .isEqualTo(2)
+            .isEqualTo(3)
     }
 
     @DisplayName("사용자 포인트 합 계산하기")
@@ -49,7 +50,6 @@ class PlayerTest {
         player.addCard(Card(SuitType.CLUB, ValueType.FOUR))
         player.addCard(Card(SuitType.CLUB, ValueType.FIVE))
         player.addCard(Card(SuitType.CLUB, ValueType.A))
-        assertThat(player.calculatePoint()).isEqualTo(10)
         assertThat(player.calculatePoint(true)).isEqualTo(20)
     }
 
@@ -57,15 +57,8 @@ class PlayerTest {
     @Test
     fun checkNextTurn() {
         val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
-        repeat(4) { blackjackGame.hitOrStay("y") }
+        repeat(4) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
-    }
-
-    @DisplayName("다음턴 사용자 확인")
-    @Test
-    fun checkNextPlayer() {
-        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
-        assertThat(blackjackGame.players.getNextPlayer()?.name).isEqualTo("hi")
     }
 
     @DisplayName("사용자가 카드 뽑고 나서 카드수")

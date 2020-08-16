@@ -3,7 +3,8 @@ package blackjack.domain
 private const val FIRST_PICK_COUNT = 2
 
 data class Players(val players: List<Player>) {
-    var currentPlayer = players[0]
+    val dealer: Dealer = players[0] as Dealer
+    var currentPlayer = players[1]
         private set
 
     fun allPlayersReceivedCards(cardDeck: CardDeck) {
@@ -15,7 +16,27 @@ data class Players(val players: List<Player>) {
     }
 
     fun getNextPlayer(): Player? {
-        currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players).find { it.isHit }!!
-        return currentPlayer
+        if (players.isEmpty()) return null
+        return try {
+            currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players).find { it.isHit }!!
+            currentPlayer
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    fun calculateResult() {
+        val dealerPoint: Int = dealer.point
+        val onlyPlayers = players.filterNot { it == dealer }.asSequence()
+        if (dealer.isBusted()) {
+            onlyPlayers.forEach { it.playResult = PlayResultType.WIN }
+        } else {
+            onlyPlayers.forEach { it.checkResult(dealerPoint) }
+        }
+
+        dealer.dealerResult.setStatic(
+            onlyPlayers.filter { it.playResult == PlayResultType.LOSE }.count(),
+            onlyPlayers.filter { it.playResult == PlayResultType.WIN }.count()
+        )
     }
 }
