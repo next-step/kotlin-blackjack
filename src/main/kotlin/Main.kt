@@ -1,11 +1,18 @@
 import blackjack.domain.BlackjackGame
 import blackjack.domain.CardDeck
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     try {
-        val blackjackGame = BlackjackGame(InputView.getPlayers(), CardDeck())
+
+        var players : Players? = Players.newInstance(InputView.getPlayers())
+        while(players == null){
+            players= Players.newInstance(InputView.getPlayers())
+        }
+
+        val blackjackGame = BlackjackGame(players, CardDeck())
 
         ResultView.showCardDistribution(blackjackGame.players)
         while (!blackjackGame.isEnd) {
@@ -15,6 +22,7 @@ fun main() {
             blackjackGame.nextTurn()
         }
         blackjackGame.players.calculateResult()
+
         ResultView.showGameResult(blackjackGame.players)
     } catch (e: Exception) {
         println(e.message)

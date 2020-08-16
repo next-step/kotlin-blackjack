@@ -1,19 +1,16 @@
 package blackjack.domain
 
-private const val SPLIT_CHARACTER = ","
+const val SPLIT_CHARACTER = ","
 const val HIT = "y"
 const val STAY = "n"
 val HIT_OR_STAY_REGULAR_EXPRESSION = "[{$HIT|$STAY}]".toRegex()
 val PLAYER_REGULAR_EXPRESSION = "^[a-z|A-Z가-힣][a-z|A-Z가-힣,]*[a-z|A-Z가-힣]$".toRegex()
 
-class BlackjackGame(playerNames: String, private val cardDeck: CardDeck) {
-    var players: Players
-        private set
+class BlackjackGame(val players: Players, private val cardDeck: CardDeck) {
     var isEnd: Boolean = false
         private set
 
     init {
-        players = initPlayers(playerNames)
         startGame()
     }
 
