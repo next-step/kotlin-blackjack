@@ -10,6 +10,7 @@ class CardDeckTest {
 
     @Test
     fun `카드 뽑기 테스트`() {
-        assertThat(cardDeck.pickCard() is Card).isEqualTo(true)
+        assertThat(cardDeck.drawCard() is Card).isEqualTo(true)
+        assertThat(cardDeck.drawCard()).isEqualTo(true)
     }
 }

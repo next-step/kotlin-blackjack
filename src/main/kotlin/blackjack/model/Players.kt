@@ -5,25 +5,25 @@ class Players(players: List<Player>) {
 
     fun size() = players.size
 
-    fun findPlayer(index: Int): Player {
-        return players[index]
-    }
-
     fun firstTurn(cardDeck: CardDeck) {
         players.forEach {
-            it.draw(cardDeck.pickCard())
-            it.draw(cardDeck.pickCard())
+            it.draw(cardDeck.drawCard())
+            it.draw(cardDeck.drawCard())
         }
     }
 
     fun race(player: Player, cardDeck: CardDeck) {
-        if (player.isAvailable) {
-            player.draw(cardDeck.pickCard())
+        if (player.available()) {
+            player.draw(cardDeck.drawCard())
         }
     }
 
     fun winner(): Players {
-        return Players(players.filter { it.isWinner })
+        return Players(players.filter { it.winner() })
+    }
+
+    operator fun get(index: Int): Player {
+        return players[index]
     }
 
     override fun toString(): String {

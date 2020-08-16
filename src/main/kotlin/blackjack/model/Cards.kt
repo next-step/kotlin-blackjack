@@ -1,19 +1,37 @@
 package blackjack.model
 
 class Cards(cards: List<Card>) {
-    private val cards = cards
+    private val cards = cards.toMutableList()
+
+    fun add(card: Card) {
+        if (!cards.contains(card)) {
+            cards.add(card)
+        }
+    }
+
+    fun remove(card: Card) {
+        cards.remove(card)
+    }
+
+    fun draw(): Card {
+        return cards.first()
+    }
+
+    fun shuffle() {
+        cards.shuffle()
+    }
 
     fun score(): Int {
-        var sum = 0
-        cards.forEach {
-            sum = Denomination.sum(sum, it.denomination)
-        }
+        var sum = cards.filterNot { !it.denomination.isAce() }.sumBy { it.denomination.score() }
+        cards.filter { it.denomination.isAce() }.forEach { sum += it.denomination.aceScore(sum) }
         return sum
+    }
+
+    operator fun get(index: Int): Card {
+        return cards[index]
     }
 
     override fun toString(): String {
         return "${cards.joinToString { it.toString() }}"
     }
-
-    private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 }

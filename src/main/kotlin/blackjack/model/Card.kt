@@ -1,8 +1,11 @@
 package blackjack.model
 
+const val ACE_VALUE_1 = 1
+const val ACE_VALUE_11 = 11
+
 data class Card(val suit: Suit, val denomination: Denomination) {
     override fun toString(): String {
-        return "${suit.name} ${Denomination.initial(denomination)}"
+        return "${suit.name} ${denomination.initial()}"
     }
 }
 
@@ -25,24 +28,14 @@ enum class Denomination(private val initial: String, private val score: Int) {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    companion object {
-        private const val ACE_VALUE_1 = 1
-        private const val ACE_VALUE_11 = 11
-
-        fun initial(denomination: Denomination) = denomination.initial
-        fun score(denomination: Denomination) = denomination.score
-        fun sum(totalScore: Int, denomination: Denomination): Int {
-            if (score(denomination) == ACE_VALUE_1) {
-                return sumWithAce(totalScore)
-            }
-            return totalScore + score(denomination)
+    fun initial() = initial
+    fun score() = score
+    fun aceScore(score: Int): Int {
+        if (score > WIN_SCORE - ACE_VALUE_11) {
+            return ACE_VALUE_1
         }
-
-        private fun sumWithAce(totalScore: Int): Int {
-            if (totalScore + ACE_VALUE_11 < 21) {
-                return totalScore + ACE_VALUE_11
-            }
-            return totalScore + ACE_VALUE_1
-        }
+        return ACE_VALUE_11
     }
+
+    fun isAce() = initial == ACE.initial
 }
