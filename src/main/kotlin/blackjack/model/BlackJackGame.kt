@@ -24,12 +24,23 @@ class BlackJackGame(
             cardDeck.popPlayerCardDummy()
         }
 
-    fun getPlayerStatus() = players.toString()
-
     fun playsTurn(action: (Player) -> Unit) =
         players.runTurns(action)
 
     fun playHit(player: Player) {
         player.hit(cardDeck.popCard())
+    }
+
+    fun dealerTurn(showDealerTurn: () -> Unit) {
+        while (dealer.canMoreCard()) {
+            dealer.hit(cardDeck.popCard())
+            showDealerTurn()
+        }
+        dealer.done()
+    }
+
+    fun getPlayerStatus() = mutableListOf<String>().apply {
+        add(dealer.toString())
+        addAll(players.toStringList())
     }
 }

@@ -23,9 +23,15 @@ class Cards(
         return Score(sum)
     }
 
+    fun canMoreCard(): Boolean = getScore().let {
+        it.isBurst().not() && it.isBlackJack().not()
+    }
+
     fun isBurst() = Score(getSumScore()).isBurst()
 
-    fun isBlackJack() = Score(getSumScore()).isBlackJack()
+    fun isSmallThanDealerScore() = getSumScore() <= DEALER_MIN_SCORE
+
+    fun isBlackJack() = getScore().isBlackJack()
 
     private fun getAceSum(sum: Int) =
         if (sum + ACE_GAP > Score.BLACKJACK) {
@@ -42,6 +48,7 @@ class Cards(
 
     companion object {
         const val ACE_GAP = 10
+        const val DEALER_MIN_SCORE = 16
     }
 }
 

@@ -8,6 +8,9 @@ class Dealer(
     name = NAME,
     cards = cards
 ) {
+    override fun canMoreCard() =
+        cards.canMoreCard() and cards.isSmallThanDealerScore()
+
     companion object {
         const val NAME = "Dealer"
     }

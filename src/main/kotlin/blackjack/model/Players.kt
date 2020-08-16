@@ -17,7 +17,12 @@ class Players(
         players.forEach { it.gameBatting(popTwoCard()) }
 
     fun runTurns(playerAction: (Player) -> Unit) =
-        players.forEach { playerAction(it) }
+        players.forEach { player ->
+            playerAction(player)
+            player.done()
+        }
+
+    fun toStringList() = players.map(Player::toString)
 
     override fun toString() = players.joinToString("\n", transform = Player::toString)
 }

@@ -7,6 +7,8 @@ data class Score(
 
     fun isBlackJack() = score == BLACKJACK
 
+    override fun toString() = score.toString()
+
     companion object {
         const val BLACKJACK = 21
     }

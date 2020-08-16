@@ -52,9 +52,9 @@ class CardsTest {
         val cards = Cards().apply {
             addCard(Card(CardType.CLUBS, CardNumber.ONE))
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
-            addCard(Card(CardType.DIAMONDS, CardNumber.KING))
+            addCard(Card(CardType.DIAMONDS, CardNumber.NINE))
         }
-        Assertions.assertThat(cards.isBurst()).isFalse()
+        Assertions.assertThat(cards.canMoreCard()).isTrue()
     }
 
     @DisplayName(value = "21를 넘은 경우, 카드를 받을 수 없다..")
@@ -65,6 +65,16 @@ class CardsTest {
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
         }
-        Assertions.assertThat(cards.isBurst()).isTrue()
+        Assertions.assertThat(cards.canMoreCard()).isFalse()
+    }
+
+    @DisplayName(value = "21일 경우, 카드를 받을 수 없다..")
+    @Test
+    fun checkCanMoreCardBlackJack() {
+        val cards = Cards().apply {
+            addCard(Card(CardType.CLUBS, CardNumber.ONE))
+            addCard(Card(CardType.DIAMONDS, CardNumber.KING))
+        }
+        Assertions.assertThat(cards.canMoreCard()).isFalse()
     }
 }

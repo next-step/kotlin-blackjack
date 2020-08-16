@@ -16,6 +16,7 @@ class BlackJackGameController(
     fun startGame() {
         gameBatting()
         playsTurn()
+        dealerTurn()
         showResult()
     }
 
@@ -27,6 +28,12 @@ class BlackJackGameController(
     private fun playsTurn() {
         blackJackGame.playsTurn { player ->
             playerOneMore(player)
+        }
+    }
+
+    private fun dealerTurn() {
+        blackJackGame.dealerTurn {
+            resultView.showDealerMoreCard()
         }
     }
 

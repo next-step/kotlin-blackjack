@@ -4,7 +4,7 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardType
-import blackjack.model.card.Cards
+import blackjack.model.card.toCards
 import blackjack.model.player.GamePlayer
 import blackjack.model.status.Score
 import org.assertj.core.api.Assertions.assertThat
@@ -27,11 +27,26 @@ class GamePlayerTest {
         assertThat(player.getScore()).isEqualTo(Score(expect))
     }
 
-    @DisplayName(value = "Player가 21이 넘지 않으경우,hit 을 할수 있다.")
+    @DisplayName(value = "Player가 21이상일 경우, hit 을 할 수 없다.")
     @Test
-    fun checkPlayerCanHit() {
-        val cardList = listOf(Card(CardType.DIAMONDS, CardNumber.ONE), Card(CardType.HEARTS, CardNumber.KING))
-        val player = GamePlayer("조남재", Cards(cardList.toMutableSet()))
+    fun checkPlayerCanNotMoreHit() {
+        val cards = listOf(
+            Card(CardType.DIAMONDS, CardNumber.ONE),
+            Card(CardType.HEARTS, CardNumber.KING)
+        ).toCards()
+        val player = GamePlayer("조남재", cards)
+
+        assertThat(player.canMoreCard()).isFalse()
+    }
+
+    @DisplayName(value = "Player가 21 미일 경우, hit 을 할 수 없다.")
+    @Test
+    fun checkPlayerCanMoreHit() {
+        val cards = listOf(
+            Card(CardType.DIAMONDS, CardNumber.QUEEN),
+            Card(CardType.HEARTS, CardNumber.KING)
+        ).toCards()
+        val player = GamePlayer("조남재", cards)
 
         assertThat(player.canMoreCard()).isTrue()
     }
