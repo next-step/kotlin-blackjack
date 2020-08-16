@@ -1,15 +1,13 @@
 package blackJack.domain
 
 class BlackJack(names: List<String>) {
-    val players = Players(makePlayer(names))
+    val players = Players(names)
     val dealer = Dealer()
 
     init {
         dealer.shuffleDeck()
         readyGame()
     }
-
-    private fun makePlayer(names: List<String>): List<Player> = names.map { Player(it) }
 
     private fun readyGame() {
         repeat(START_HANDS) { giveCardAllPeople() }
@@ -20,7 +18,7 @@ class BlackJack(names: List<String>) {
         dealer.giveCard(dealer)
     }
 
-    fun getResult(): Result = Result(dealer)
+    fun getResult(): Result = Result(dealer, players)
 
     companion object {
         private const val START_HANDS = 2

@@ -1,6 +1,6 @@
 package blackJack.domain
 
-open class People(val name: String) {
+abstract class Person(val name: String) {
     private val _hands = mutableListOf<Card>()
     val hands: List<Card>
         get() = _hands.toList()

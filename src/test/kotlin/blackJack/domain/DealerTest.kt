@@ -5,12 +5,10 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun is_over_16() {
+    fun total_score_over_16() {
         val dealer = Dealer()
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.SEVEN))
 
-        assertThat(dealer.isOver16()).isTrue()
+        assertThat(dealer.overTotalScore16(17)).isTrue()
     }
 
     @Test
@@ -21,5 +19,16 @@ class DealerTest {
         dealer.giveCard(player)
 
         assertThat(player.hands).hasSize(1)
+    }
+
+    @Test
+    fun dealer_can_not_get_card_over_16() {
+        val dealer = Dealer()
+
+        if (!dealer.overTotalScore16(17)) {
+            dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        }
+
+        assertThat(dealer.hands).hasSize(0)
     }
 }

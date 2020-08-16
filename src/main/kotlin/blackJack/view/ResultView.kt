@@ -2,7 +2,8 @@ package blackJack.view
 
 import blackJack.domain.BlackJack
 import blackJack.domain.Dealer
-import blackJack.domain.People
+import blackJack.domain.DealerResult
+import blackJack.domain.Person
 
 object ResultView {
     fun blank() {
@@ -17,23 +18,23 @@ object ResultView {
         val players = blackJack.players
         val dealer = blackJack.dealer
         println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
-        println("딜러 카드: ${dealer.hands[0].getName()}")
+        println("딜러 카드: ${dealer.hands[0]}")
         players.forEach { resultPeopleHands(it) }
         blank()
     }
 
-    fun resultPeopleHands(people: People, result: String = "") {
-        println("${people.name} 카드: ${people.hands.joinToString { it.getName() }} $result")
+    fun resultPeopleHands(person: Person, result: String = "") {
+        println("${person.name} 카드: ${person.hands.joinToString { it.toString() }} $result")
     }
 
-    fun resultWhetherBust(people: People) {
-        if (people.isBust()) {
-            resultPeopleHands(people)
-            println("${people.name}는 버스트 했습니다")
+    fun resultWhetherBust(person: Person) {
+        if (person.isBust()) {
+            resultPeopleHands(person)
+            println("${person.name}는 버스트 했습니다")
             blank()
         } else {
-            resultPeopleHands(people)
-            println("${people.name}는 버스트 하지 않았습니다.")
+            resultPeopleHands(person)
+            println("${person.name}는 버스트 하지 않았습니다.")
         }
     }
 
@@ -56,7 +57,7 @@ object ResultView {
         blank()
         println("최종 승패")
         val result = blackJack.getResult()
-        players.forEach { println("${it.name}: ${result.get(it)}") }
-        println("딜러: ${result.dealerResult["승"]}승 ${result.dealerResult["무"]}무 ${result.dealerResult["패"]}패")
+        players.forEach { println("${it.name}: ${result.playersResult[it]}") }
+        println("딜러: ${DealerResult.WIN.getCount()}승 ${DealerResult.DRAW.getCount()}무 ${DealerResult.LOSE.getCount()}패")
     }
 }

@@ -1,17 +1,17 @@
 package blackJack.domain
 
-class Dealer : People("딜러") {
+class Dealer : Person("딜러") {
     private val deck = Deck()
 
     fun shuffleDeck() {
         deck.shuffle { it.shuffled() }
     }
 
-    fun giveCard(people: People) {
-        people.addCard(deck.getCard())
+    fun giveCard(person: Person) {
+        person.addCard(deck.getCard())
     }
 
-    fun isOver16(): Boolean = getTotalScore() >= MINIMUM
+    fun overTotalScore16(totalScore: Int = getTotalScore()): Boolean = totalScore >= MINIMUM
 
     companion object {
         private const val MINIMUM = 17

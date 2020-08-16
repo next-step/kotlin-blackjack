@@ -6,7 +6,7 @@ import blackJack.domain.Player
 import blackJack.view.InputView
 import blackJack.view.ResultView
 
-var isGetCard = true
+var canGetCard = true
 
 fun main() {
     try {
@@ -28,8 +28,8 @@ fun startGame() {
 }
 
 fun playerCheckBust(player: Player, dealer: Dealer) {
-    isGetCard = true
-    while (!player.isBust() && isGetCard) {
+    canGetCard = true
+    while (!player.isBust() && canGetCard) {
         playerWhetherGet(player, dealer)
     }
 }
@@ -43,12 +43,12 @@ fun playerWhetherGet(player: Player, dealer: Dealer) {
     if (inputValue == "n") {
         ResultView.resultPeopleHands(player)
         ResultView.blank()
-        isGetCard = false
+        canGetCard = false
     }
 }
 
 fun dealerGetCard(dealer: Dealer) {
-    while (!dealer.isOver16()) {
+    while (!dealer.overTotalScore16()) {
         dealer.giveCard(dealer)
         ResultView.resultDealerGetCard(dealer)
     }

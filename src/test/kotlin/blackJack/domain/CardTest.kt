@@ -16,7 +16,7 @@ class CardTest {
     fun get_card_name() {
         val ace = Card(Shape.SPADE, Denomination.ACE)
 
-        val name = ace.getName()
+        val name = ace.toString()
 
         assertThat(name).isEqualTo("♠A")
     }

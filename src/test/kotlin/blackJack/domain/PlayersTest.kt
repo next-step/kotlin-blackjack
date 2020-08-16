@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test
 class PlayersTest {
     @Test
     fun makePlayers() {
-        val players = Players(listOf(Player("name"), Player("second")))
+        val players = Players(listOf("name", "second"))
 
         assertThat(players.players).hasSize(2)
     }
 
     @Test
     fun give_card_all_player() {
-        val players = Players(listOf(Player("name"), Player("second")))
+        val players = Players(listOf("name", "second"))
 
         players.giveCardAll(Dealer())
 

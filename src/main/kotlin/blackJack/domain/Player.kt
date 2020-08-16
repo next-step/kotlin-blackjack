@@ -1,7 +1,7 @@
 package blackJack.domain
 
-class Player(name: String) : People(name) {
+class Player(name: String) : Person(name) {
     init {
-        require(!name.isBlank()) { "이름은 없을수 받을수 없습니다." }
+        require(name.isNotBlank()) { "이름은 없을수 받을수 없습니다." }
     }
 }
