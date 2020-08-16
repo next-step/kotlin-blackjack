@@ -23,7 +23,9 @@ class Cards(
         return Score(sum)
     }
 
-    fun canMoreCard() = Score(getSumScore()).isBurst().not()
+    fun isBurst() = Score(getSumScore()).isBurst()
+
+    fun isBlackJack() = Score(getSumScore()).isBlackJack()
 
     private fun getAceSum(sum: Int) =
         if (sum + ACE_GAP > Score.BLACKJACK) {

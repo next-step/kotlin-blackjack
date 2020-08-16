@@ -54,7 +54,7 @@ class CardsTest {
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
         }
-        Assertions.assertThat(cards.canMoreCard()).isTrue()
+        Assertions.assertThat(cards.isBurst()).isFalse()
     }
 
     @DisplayName(value = "21를 넘은 경우, 카드를 받을 수 없다..")
@@ -65,6 +65,6 @@ class CardsTest {
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
             addCard(Card(CardType.DIAMONDS, CardNumber.KING))
         }
-        Assertions.assertThat(cards.canMoreCard()).isFalse()
+        Assertions.assertThat(cards.isBurst()).isTrue()
     }
 }

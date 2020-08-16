@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.Player
+import blackjack.model.player.Player
 
 object ResultView {
 

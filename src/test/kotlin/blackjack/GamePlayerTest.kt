@@ -1,17 +1,17 @@
 package blackjack
 
-import blackjack.model.Player
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardType
 import blackjack.model.card.Cards
+import blackjack.model.player.GamePlayer
 import blackjack.model.status.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class PlayerTest {
+class GamePlayerTest {
 
     @DisplayName(value = "게임 배팅 후,hit 진행 하면,전체 score가 계산되어야한다.")
     @Test
@@ -19,7 +19,7 @@ class PlayerTest {
         val cardList = listOf(Card(CardType.DIAMONDS, CardNumber.TWO), Card(CardType.HEARTS, CardNumber.TWO))
         val cardDeck = CardDeck(cardList.toMutableSet())
 
-        val player = Player("조남재").apply {
+        val player = GamePlayer("조남재").apply {
             gameBatting(cardDeck.popTwoCard())
         }
 
@@ -31,8 +31,8 @@ class PlayerTest {
     @Test
     fun checkPlayerCanHit() {
         val cardList = listOf(Card(CardType.DIAMONDS, CardNumber.ONE), Card(CardType.HEARTS, CardNumber.KING))
-        val player = Player("조남재", Cards(cardList.toMutableSet()))
+        val player = GamePlayer("조남재", Cards(cardList.toMutableSet()))
 
-        assertThat(player.canHit()).isTrue()
+        assertThat(player.canMoreCard()).isTrue()
     }
 }

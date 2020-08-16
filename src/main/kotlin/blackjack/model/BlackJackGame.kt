@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.card.CardDeck
+import blackjack.model.player.Player
 
 class BlackJackGame(
     private val players: Players,

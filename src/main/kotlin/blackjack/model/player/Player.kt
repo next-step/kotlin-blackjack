@@ -1,21 +1,19 @@
-package blackjack.model
+package blackjack.model.player
 
 import blackjack.model.card.Card
 import blackjack.model.card.Cards
 
-class Player(
+abstract class Player(
     val name: String,
-    private val cards: Cards = Cards()
+    protected val cards: Cards = Cards()
 ) {
-    fun gameBatting(cardsDummy: Cards) {
-        cards.addCards(cardsDummy)
-    }
+    abstract fun gameBatting(cards: Cards)
+
+    fun canMoreCard() = cards.isBurst().not()
 
     fun hit(card: Card) {
         cards.addCard(card)
     }
-
-    fun canHit() = cards.canMoreCard()
 
     fun getScore() = cards.getScore()
 
