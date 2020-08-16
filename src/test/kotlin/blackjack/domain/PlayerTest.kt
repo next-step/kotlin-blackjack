@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `drawCard() 패가 한장 늘어난다`() {
+    fun `hitCard() 패가 한장 늘어난다`() {
         val player = Player("robin")
-        player.drawCard(Deck(Card.PACK))
+        player hit Card.CLUB_ACE
 
-        assertThat(player.hands.size).isEqualTo(1)
+        assertThat(player.hands).isEqualTo(Hands(listOf(Card.CLUB_ACE)))
     }
 }
