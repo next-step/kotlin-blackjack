@@ -43,4 +43,6 @@ class BlackJackGame(
         add(dealer.toString())
         addAll(players.toStringList())
     }
+
+    fun getGameResult() = players.getGameResults(dealer)
 }

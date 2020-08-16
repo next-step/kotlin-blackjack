@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.model.status.GameResult
+import blackjack.model.status.Finish
 import blackjack.model.status.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -31,7 +31,7 @@ class ScoreTest {
     fun checkGameResultDefeatBurstCase() {
         val dealerScore = Score(23)
         assertThat(Score(23).getGameResult(dealerScore))
-            .isSameAs(GameResult.DEFEAT)
+            .isSameAs(Finish.DEFEAT)
     }
 
     @DisplayName(value = "Dealer보다 점수가 낮을 경우, 패배")
@@ -39,7 +39,7 @@ class ScoreTest {
     fun checkGameResultDefeatSmallerThanDealer() {
         val dealerScore = Score(20)
         assertThat(Score(1).getGameResult(dealerScore))
-            .isSameAs(GameResult.DEFEAT)
+            .isSameAs(Finish.DEFEAT)
     }
 
     @DisplayName(value = "Dealer보다 점수가 클 경우 승리")
@@ -47,7 +47,7 @@ class ScoreTest {
     fun checkGameResultWinBiggerThanDealer() {
         val dealerScore = Score(1)
         assertThat(Score(20).getGameResult(dealerScore))
-            .isSameAs(GameResult.WIN)
+            .isSameAs(Finish.WIN)
     }
 
     @DisplayName(value = "Dealer가 burst인 경우, 승리")
@@ -55,7 +55,7 @@ class ScoreTest {
     fun checkGameResultWinDealerBurst() {
         val dealerScore = Score(23)
         assertThat(Score(1).getGameResult(dealerScore))
-            .isSameAs(GameResult.WIN)
+            .isSameAs(Finish.WIN)
     }
 
     @DisplayName(value = "Dealer와 점수가 같다면, 무승부")
@@ -63,6 +63,6 @@ class ScoreTest {
     fun checkGameResultDrawSameScore() {
         val dealerScore = Score(21)
         assertThat(Score(21).getGameResult(dealerScore))
-            .isSameAs(GameResult.DRAW)
+            .isSameAs(Finish.DRAW)
     }
 }

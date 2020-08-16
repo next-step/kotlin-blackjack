@@ -9,11 +9,11 @@ data class Score(
 
     fun getGameResult(dealer: Score) =
         when {
-            isBurst() -> GameResult.DEFEAT
-            dealer.isBurst() -> GameResult.WIN
-            isSmallScoreThan(dealer.score) -> GameResult.DEFEAT
-            isBigScoreThan(dealer.score) -> GameResult.WIN
-            else -> GameResult.DRAW
+            isBurst() -> Finish.DEFEAT
+            dealer.isBurst() -> Finish.WIN
+            isSmallScoreThan(dealer.score) -> Finish.DEFEAT
+            isBigScoreThan(dealer.score) -> Finish.WIN
+            else -> Finish.DRAW
         }
 
     private fun isBigScoreThan(number: Int) = number < score

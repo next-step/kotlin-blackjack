@@ -46,6 +46,7 @@ class BlackJackGameController(
 
     private fun showResult() {
         resultView.showResult(blackJackGame.getPlayerStatus())
+        resultView.showGameResult(blackJackGame.getGameResult())
     }
 }
 
