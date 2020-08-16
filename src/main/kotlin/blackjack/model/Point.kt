@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class Point(val value: Int) {
+data class Point(val value: Int = 0) {
 
     override fun toString(): String = "$value"
 
@@ -22,7 +22,7 @@ data class Point(val value: Int) {
             if (Denomination.isAce(acc.value)) acc + EXTRA_ACE_POINT else acc
 
         fun calculateIfExtraPointExist(acc: Point, point: Point): Point =
-            if (isAvailableExtraPoint(acc, point)) EXTRA_ACE_POINT else Point(0)
+            if (isAvailableExtraPoint(acc, point)) EXTRA_ACE_POINT else Point()
 
         fun isReachMaxPoint(point: Point) = point >= MAX_POINT
 
