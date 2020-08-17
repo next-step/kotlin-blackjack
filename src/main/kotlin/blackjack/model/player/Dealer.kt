@@ -25,7 +25,7 @@ class Dealer(override val name: String = DEALER_NAME) : Player {
     fun checkPrize(players: List<Player>) {
         val gamers = players.filterIsInstance<Gamer>()
         gamers.forEach {
-            val prizeRate = it.getPrizeRate(this) // TODO : 테스트코드 필요
+            val prizeRate = it.getPrizeRate(this)
             val earnMoney = it.money.calculate(prizeRate)
 
             it.money.plus(earnMoney)
