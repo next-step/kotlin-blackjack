@@ -35,6 +35,6 @@ class DrawResultStrategy : GameResultStrategy {
     }
 
     private fun isEitherBusted(dealer: Player, challenger: Player): Boolean {
-        return !dealer.isBusted() && !challenger.isBusted()
+        return dealer.isBusted() || challenger.isBusted()
     }
 }
