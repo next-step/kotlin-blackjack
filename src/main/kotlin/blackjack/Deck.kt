@@ -1,5 +1,3 @@
 package blackjack
 
-class Deck{
-
-}
+class Deck
