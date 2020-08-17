@@ -39,10 +39,7 @@ class BlackJackGame(
         dealer.done()
     }
 
-    fun getPlayerStatus() = mutableListOf<String>().apply {
-        add(dealer.toString())
-        addAll(players.toStringList())
-    }
+    fun getPlayerStatus() = listOf(dealer.toString(), *players.toStringList().toTypedArray())
 
     fun getGameResult() = players.getGameResults(dealer)
 }

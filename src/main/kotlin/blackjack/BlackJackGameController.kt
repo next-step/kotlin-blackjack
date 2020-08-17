@@ -27,7 +27,7 @@ class BlackJackGameController(
 
     private fun playsTurn() {
         blackJackGame.playsTurn { player ->
-            playerOneMore(player)
+            repeatIsPlayHit(player)
         }
     }
 
@@ -37,7 +37,7 @@ class BlackJackGameController(
         }
     }
 
-    private fun playerOneMore(player: Player) {
+    private fun repeatIsPlayHit(player: Player) {
         while (player.canMoreCard() && inputView.getIsOneMore(player)) {
             blackJackGame.playHit(player)
             resultView.showPlayer(player)
