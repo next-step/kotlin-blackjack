@@ -1,6 +1,7 @@
 package blackjack.model.player
 
 import blackjack.model.card.CardDeck
+import blackjack.model.status.PlayerStatus
 
 class Players(private val players: List<Player>) {
     fun getNames(): String {
@@ -8,40 +9,33 @@ class Players(private val players: List<Player>) {
     }
 
     fun drawCard(cardDeck: CardDeck) {
-        doAction { it.drawCard(cardDeck.pick()) }
+        players.forEach {
+            it.drawCard(cardDeck.pick())
+        }
     }
 
     fun progressTurn(cardDeck: CardDeck) {
-        doAction { it.progressTurnForEach(cardDeck) }
+        players.forEach { it.progressTurnForEach(cardDeck) }
     }
 
-    fun checkWinOrLose() {
-        doAction { it.checkWinOrLose(players) }
+    fun checkGameDone(): Boolean {
+        return players.none { it.status == PlayerStatus.PLAYING }
+    }
+
+    fun checkPrize() {
+        val dealer = players.filterIsInstance<Dealer>()[0]
+        dealer.checkPrize(players)
     }
 
     fun getDrawCardResults(): List<String> {
-        return getResult { "${it.name}카드:${it.getDisplayCards()}" }
+        return players.map { "${it.name}카드:${it.getDisplayCards()}" }
     }
 
     fun getPointResults(): List<String> {
-        return getResult { "${it.name}카드: ${it.getDisplayCards()} - 결과: ${it.getTotalPointForBlackJack()}" }
+        return players.map { "${it.name}카드: ${it.getDisplayCards()} - 결과: ${it.getBlackJackPoint()}" }
     }
 
-    fun getWinnerResults(): List<String> {
-        return getResult { "${it.name}:${it.winLoseResult}" }
-    }
-
-    private fun doAction(getAction: (Player) -> Unit) {
-        for (player in players) {
-            getAction(player)
-        }
-    }
-
-    private fun getResult(getDetails: (Player) -> String): List<String> {
-        val results = mutableListOf<String>()
-        for (player in players) {
-            results.add(getDetails(player))
-        }
-        return results
+    fun getPrize(): List<String> {
+        return players.map { "${it.name}:${it.money.money}" }
     }
 }

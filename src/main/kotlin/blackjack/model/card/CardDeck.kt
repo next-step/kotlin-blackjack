@@ -1,18 +1,29 @@
 package blackjack.model.card
 
 class CardDeck {
-    val cards: Cards = generate()
+    private val _cards: MutableList<Card> = generate()
 
-    fun generate(): Cards {
-        val cards = mutableListOf<Card>()
+    fun pick(): Card = draw()
 
-        for (suit in Card.Suit.values()) {
-            for (denomination in Card.Denomination.values()) {
-                cards.add(Card(suit, denomination))
-            }
-        }
-        return Cards(cards.shuffled() as MutableList<Card>)
+    private fun draw(): Card {
+        val drawCard = _cards[BOTTOM_CARD_NUMBER]
+        _cards.remove(drawCard)
+
+        return drawCard.copy()
     }
 
-    fun pick(): Card = cards.getCard()
+    companion object {
+        private const val BOTTOM_CARD_NUMBER = 0
+
+        fun generate(): MutableList<Card> {
+            val cards = mutableListOf<Card>()
+
+            for (suit in Card.Suit.values()) {
+                for (denomination in Card.Denomination.values()) {
+                    cards.add(Card(suit, denomination))
+                }
+            }
+            return cards.shuffled() as MutableList<Card>
+        }
+    }
 }
