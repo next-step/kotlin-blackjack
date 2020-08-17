@@ -4,17 +4,15 @@ import blackjack.domain.card.Deck
 import blackjack.domain.player.Challenger
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerInfo
 
 class BlackJackGame(
     private val deck: Deck
 ) {
     fun getDealer() = Dealer().deal(deck)
 
-    fun dealWith(players: List<String>, getBettingMoney: (name: String) -> Int): List<Player> {
-        return players.asSequence()
-            .map { PlayerInfo(it, getBettingMoney(it)) }
-            .map { Challenger(it) }
+    fun dealWith(playerNames: List<String>, getBettingMoney: (name: String) -> Int): List<Player> {
+        return playerNames.asSequence()
+            .map { Challenger(it, getBettingMoney(it)) }
             .map { it.deal(deck) }
             .toList()
     }
