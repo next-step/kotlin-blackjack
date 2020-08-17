@@ -2,34 +2,27 @@ package blackjack
 
 import blackjack.model.BlackJackGame
 import blackjack.model.player.Dealer
-import blackjack.model.player.Gamer
-import blackjack.model.player.Player
-import blackjack.model.player.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
+    val dealer = Dealer()
     val gamers = InputView.getGamersName()
-    val gamersWithBet = InputView.getBetAmount(gamers)
-    val players = getPlayers(gamersWithBet)
+    val gamersWithBet = InputView.getBetAmount(dealer, gamers)
+
+    val players = getPlayers(dealer, gamersWithBet)
     val blackJackGame = BlackJackGame(players)
 
     OutputView.firstTurn(players)
     blackJackGame.firstTurn()
     OutputView.printCardForPlayers(players)
 
-    blackJackGame.progressTurn()
-    blackJackGame.checkWinOrLose()
+    if (!isGameDone(players)) {
+        blackJackGame.progressTurn()
+    }
 
-    OutputView.printPoint(players)
-    OutputView.printWinOrLost(players)
-}
+    blackJackGame.checkPrize()
 
-fun getPlayers(gamers: List<Gamer>): Players {
-    val players = mutableListOf<Player>()
-
-    players.add(Dealer())
-    players.addAll(gamers)
-
-    return Players(players)
+    OutputView.printPointResult(players)
+    OutputView.printPrize(players)
 }

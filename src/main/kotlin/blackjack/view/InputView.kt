@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Money
+import blackjack.model.player.Dealer
 import blackjack.model.player.Gamer
 
 object InputView {
@@ -16,11 +17,14 @@ object InputView {
         return names.map { Gamer(it) }
     }
 
-    fun getBetAmount(gamers: List<Gamer>): List<Gamer> {
+    fun getBetAmount(dealer: Dealer, gamers: List<Gamer>): List<Gamer> {
         gamers.forEach {
             println("${it.name}의 배팅 금액은?")
 
-            it.betMoney = Money(readLine()!!.toInt())
+            val betMoney = Money(readLine()!!.toInt())
+
+            dealer.plus(betMoney)
+            it.minus(betMoney)
         }
         return gamers
     }

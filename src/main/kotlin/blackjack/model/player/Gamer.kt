@@ -1,13 +1,14 @@
 package blackjack.model.player
 
 import blackjack.model.Money
-import blackjack.model.card.Cards
+import blackjack.model.card.PlayerCards
+import blackjack.model.status.PlayerStatus
 import blackjack.view.InputView
 
 class Gamer(override val name: String) : Player {
-    override var cards = Cards(listOf())
-    override lateinit var winLoseResult: String
-    lateinit var betMoney: Money
+    override var cards = PlayerCards()
+    override var status = PlayerStatus.PLAYING
+    override var money = Money()
 
     override fun call(): Boolean {
         while (continueToTurn() && InputView.askToDraw(this)) {
@@ -16,20 +17,29 @@ class Gamer(override val name: String) : Player {
         return false
     }
 
-    override fun checkWinOrLose(players: List<Player>) {
-        val dealer = players.filterIsInstance<Dealer>()[0]
-        val isWin = isWin(dealer.cards)
+    fun getPrizeRate(dealer: Dealer): Double {
+        if (dealer.cards.isBust()) {
+            return DOUBLE
+        }
 
-        winLoseResult = if (isWin) WIN_TEXT else LOSE_TEXT
+        if (cards.isBlackJack()) {
+            return if (dealer.cards.isBlackJack()) {
+                RESTORE
+            } else {
+                DOUBLE_HALF
+            }
+        }
+
+        if (isGamerWin(dealer.cards)) {
+            return DOUBLE
+        }
+        return ZERO
     }
 
-    private fun isWin(dealerCards: Cards): Boolean {
-        val dealerPoint = dealerCards.getBlackjackPoint()
-        val gamerPoint = cards.getBlackjackPoint()
+    private fun isGamerWin(dealerCards: PlayerCards): Boolean {
+        val dealerPoint = dealerCards.getPoint()
+        val gamerPoint = cards.getPoint()
 
-        if (dealerPoint > BLACKJACK_MAX_NUMBER) {
-            return true
-        }
         if (gamerPoint > BLACKJACK_MAX_NUMBER) {
             return false
         }
@@ -37,6 +47,13 @@ class Gamer(override val name: String) : Player {
     }
 
     private fun continueToTurn(): Boolean {
-        return cards.sumByPoint() < BLACKJACK_MAX_NUMBER
+        return cards.getPoint() < BLACKJACK_MAX_NUMBER
+    }
+
+    companion object {
+        const val DOUBLE = 2.0
+        const val DOUBLE_HALF = 1.5
+        const val RESTORE = 1.0
+        const val ZERO = 0.0
     }
 }

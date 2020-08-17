@@ -15,7 +15,7 @@ class BlackJackGame(private val players: Players) {
         players.progressTurn(cardDeck)
     }
 
-    fun checkWinOrLose() {
-        players.checkWinOrLose()
+    fun checkPrize() {
+        players.checkPrize()
     }
 }
