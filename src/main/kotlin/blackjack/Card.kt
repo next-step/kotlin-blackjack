@@ -1,7 +1,5 @@
 package blackjack
 
-
-
 class Card(var rank: Rank, var suit: Suit) {
 
     public enum class Rank(var value: Int) {
@@ -19,15 +17,6 @@ class Card(var rank: Rank, var suit: Suit) {
         QUEEN(10),
         KING(10);
     }
-
-    enum class Suit {
-        CLUBS, DIAMONDS, HEARTS, SPADES
-    }
-    /*
-    companion object{
-        fun from(findValue:Int): Rank{
-            when (findValue){}
-        }
-    }
-     */
 }
+
+
