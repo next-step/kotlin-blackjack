@@ -23,7 +23,7 @@ class Player(val name: String) {
     fun hit(): Boolean {
         return if (isBust) false
         else {
-            addCard(Deck().take(1).first())
+            addCard(Deck.take())
             true
         }
     }
@@ -31,5 +31,15 @@ class Player(val name: String) {
     fun stay(): Boolean {
         isStay = true
         return isStay
+    }
+
+    fun isGaming(): Boolean {
+        return !isBust && !isStay
+    }
+
+    fun choose(yOrN: String): Boolean {
+        return if (yOrN == "y") {
+            hit()
+        } else false
     }
 }
