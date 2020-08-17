@@ -1,10 +1,15 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 import blackjack.domain.Game.Companion.MAXIMUM_GAME_SCORE
 
 data class Players(private val players: List<Player>) {
 
-    fun setUpWithCards(dealer: Dealer = Dealer(Deck())) = players.forEach { it.setUpWithCards(dealer) }
+    fun setUpWithCards(dealer: Dealer) {
+        (1..DEFAULT_CARD_AMOUNT).forEach {
+            players.forEach { it.draw(dealer.pickCard()) }
+        }
+    }
 
     fun findPlayer(nth: Int): Player {
         return players[nth]

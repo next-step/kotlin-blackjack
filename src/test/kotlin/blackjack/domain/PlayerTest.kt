@@ -24,8 +24,8 @@ class PlayerTest {
     @Test
     fun `choose to draw or not`() {
         // when
-        player.chooseToDraw(REPLY_HIT, dealer)
-        player.chooseToDraw(REPLY_STAND, dealer)
+        player.chooseToDraw(REPLY_HIT, dealer.pickCard())
+        player.chooseToDraw(REPLY_STAND, dealer.pickCard())
 
         // then
         assertThat(player.amountOfCards()).isEqualTo(1)
@@ -46,7 +46,7 @@ class PlayerTest {
     @Test
     fun `has score more than maximum score`() {
         // when
-        val isMoreThanMax = player.hasMoreScoreThanMax(player.totalScore())
+        val isMoreThanMax = player.hasScoreMoreThanMax(player.totalScore())
 
         // then
         assertFalse(isMoreThanMax)

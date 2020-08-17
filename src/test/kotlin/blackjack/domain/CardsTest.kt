@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -35,19 +34,6 @@ class CardsTest {
         val size = cards.size()
         // then
         assertThat(size).isEqualTo(1)
-    }
-
-    @DisplayName("점수 합계가 17 미만일 때 true를 반환한다 (테스트시 점수 합계 : 13)")
-    @Test
-    fun `return true when score is less than 17`() {
-        // given
-        val newCards = cards.add(newCard)
-
-        // when
-        val isLessThan17 = Cards(newCards).isLessThan17()
-
-        // then
-        assertTrue(isLessThan17)
     }
 
     @DisplayName("카드점수 합계가 21을 초과하지 않는 한 ACE는 11로 계산할 수 있다")

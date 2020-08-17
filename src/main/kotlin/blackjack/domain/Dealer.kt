@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
+import blackjack.domain.Game.Companion.MAXIMUM_SCORE_FOR_DEALER_DRAWING
+
 class Dealer(
     private val deck: Deck = Deck(),
     private val cards: Cards = Cards(emptySet())
@@ -15,7 +18,17 @@ class Dealer(
         return Cards(cards.add(newCard))
     }
 
-    fun hasLessScoreThan17(): Boolean = cards.isLessThan17()
+    fun setUpWithPlayers(players: Players) {
+        repeat(DEFAULT_CARD_AMOUNT) {
+            draw(pickCard())
+
+            (0 until players.size()).forEach { nth ->
+                players.findPlayer(nth).draw(pickCard())
+            }
+        }
+    }
+
+    fun hasLessScoreThan17(score: Int): Boolean = score < MAXIMUM_SCORE_FOR_DEALER_DRAWING
 
     fun faceUpCard(): Card = cards.firstCard()
 

@@ -2,27 +2,25 @@ package blackjack.domain
 
 import blackjack.view.REPLY_STAND
 
-class Game(players: List<Player>, val dealer: Dealer) {
-    private val _players = Players(players)
-    val players: Players
-        get() = _players
+class Game(val players: Players, val dealer: Dealer) {
     private var turn = 0
 
     init {
-        dealer.setUpWithCards(dealer)
-        _players.setUpWithCards(dealer)
+        dealer.setUpWithPlayers(players)
     }
 
     constructor(PlayerNames: String, dealer: Dealer = Dealer()) : this(
-        PlayerNames.split(PLAYER_NAMES_DELIMITER)
-            .filterNot { it.isBlank() }
-            .map { Player(it.trim()) },
+        Players(
+            PlayerNames.split(PLAYER_NAMES_DELIMITER)
+                .filterNot { it.isBlank() }
+                .map { Player(it.trim()) }
+        ),
         dealer
     )
 
     fun giveChanceToDraw(reply: String): Player? {
-        val currentPlayer = _players.findPlayer(turn)
-        val player = currentPlayer.chooseToDraw(reply, dealer) ?: return null
+        val currentPlayer = players.findPlayer(turn)
+        val player = currentPlayer.chooseToDraw(reply, dealer.pickCard()) ?: return null
 
         canGoToNextTurn(reply, player)
         return player
@@ -30,14 +28,14 @@ class Game(players: List<Player>, val dealer: Dealer) {
 
     private fun canGoToNextTurn(reply: String, player: Player) {
         if (REPLY_STAND == reply ||
-            player.hasMoreScoreThanMax(player.totalScore())
+            player.hasScoreMoreThanMax(player.totalScore())
         ) {
             turn++
         }
     }
 
     fun playOfDealer(): Dealer? {
-        return dealer.drawCardIf(dealer) { dealer.hasLessScoreThan17() } as Dealer?
+        return dealer.drawCardIf(dealer.pickCard()) { dealer.hasLessScoreThan17(dealer.totalScore()) } as Dealer?
     }
 
     fun getResult(): Pair<Dealer, Players> {
@@ -46,9 +44,9 @@ class Game(players: List<Player>, val dealer: Dealer) {
         return Pair(dealer, players)
     }
 
-    fun currentPlayer() = _players.findPlayer(turn)
+    fun currentPlayer() = players.findPlayer(turn)
 
-    fun isOver() = turn == _players.size()
+    fun isOver() = turn == players.size()
 
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","

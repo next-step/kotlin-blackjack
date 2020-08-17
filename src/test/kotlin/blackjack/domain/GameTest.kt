@@ -33,6 +33,7 @@ class GameTest {
 
     @Test
     fun `set up with two cards for each player`() {
+        assertThat(normalGame.dealer.amountOfCards()).isEqualTo(2)
         assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
     }
 

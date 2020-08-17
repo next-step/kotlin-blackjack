@@ -33,10 +33,10 @@ class DealerTest {
     @Test
     fun `카드 점수 합계가 17 미만인지 확인하는 기능이 있다`() {
         // when
-        val isLessThan17 = dealer.hasLessScoreThan17()
+        val hasLessThan17 = dealer.hasLessScoreThan17(dealer.totalScore())
 
         // then
-        assertTrue(isLessThan17)
+        assertTrue(hasLessThan17)
     }
 
     @Test

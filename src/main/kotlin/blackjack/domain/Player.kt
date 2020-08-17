@@ -10,10 +10,10 @@ data class Player(
     var matchResult: String = TEXT_LOSE
         private set
 
-    fun chooseToDraw(reply: String, dealer: Dealer): Player? {
-        return drawCardIf(dealer) {
+    fun chooseToDraw(reply: String, newCard: Card?): Player? {
+        return drawCardIf(newCard) {
             REPLY_HIT == reply &&
-                !hasMoreScoreThanMax(totalScore())
+                !hasScoreMoreThanMax(totalScore())
         } as Player?
     }
 
