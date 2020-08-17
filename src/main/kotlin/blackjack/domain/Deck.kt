@@ -19,7 +19,7 @@ class Deck(private var deck: Set<Card>) {
     }
 
     companion object {
-        val DEFAULT_DECK = Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
+        private val DEFAULT_DECK = Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
 
         private fun cardPackOfSuit(suit: Suit): Set<Card> {
             return CardScore.values().map { cardScore -> Card(Pair(cardScore, suit)) }.toSet()

@@ -1,48 +1,36 @@
 package blackjack.domain
 
-import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 import blackjack.domain.Game.Companion.MAXIMUM_SCORE_FOR_DEALER_DRAWING
 
-class Dealer(
-    private val deck: Deck = Deck(),
-    private val cards: Cards = Cards(emptySet())
-) : Participant {
-    private val _matchResult = mutableListOf(0, 0)
-    val matchResult: List<Int>
-        get() = _matchResult.toList()
+data class Dealer(val deck: Deck = Deck()) : Player() {
+    override val cards: Cards = Cards(setOf())
+
+    var result = listOf(0, 0)
+        private set
 
     fun pickCard(): Card? = deck.provideCard(deck.shuffled())
 
-    override fun draw(newCard: Card?): Cards? {
-        newCard ?: return null
-        return Cards(cards.add(newCard))
-    }
-
-    fun setUpWithPlayers(players: Players) {
-        repeat(DEFAULT_CARD_AMOUNT) {
+    fun setUpWithCards(players: Players): Cards {
+        repeat(Game.DEFAULT_CARD_AMOUNT) {
             draw(pickCard())
 
             (0 until players.size()).forEach { nth ->
                 players.findPlayer(nth).draw(pickCard())
             }
         }
+        return cards
     }
 
-    fun hasLessScoreThan17(score: Int): Boolean = score < MAXIMUM_SCORE_FOR_DEALER_DRAWING
+    fun hasScoreBelow17(score: Int): Boolean = score < MAXIMUM_SCORE_FOR_DEALER_DRAWING
 
     fun faceUpCard(): Card = cards.firstCard()
 
-    fun checkWin(playersSize: Int, winCountOfPlayers: Int): List<Int> {
-        _matchResult[0] = playersSize - winCountOfPlayers
-        _matchResult[1] = winCountOfPlayers
-        return matchResult
+    fun checkWin(players: Players): List<Int> {
+        val loseCount = players.compareWith(this)
+        val winCount = players.size() - loseCount
+        result = listOf(winCount, loseCount)
+        return result.toList()
     }
-
-    override fun amountOfCards(): Int = cards.size()
-
-    override fun totalScore(): Int = cards.sumOfScores()
-
-    override fun stateOfCards(): String = cards.toString()
 
     override fun toString(): String = DEALER_NAME
 

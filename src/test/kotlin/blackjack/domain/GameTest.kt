@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.view.REPLY_HIT
-import blackjack.view.REPLY_STAND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -13,6 +11,7 @@ class GameTest {
     private lateinit var gameWithEmptyDeck: Game
     private lateinit var cardsForDeck: Set<Card>
     private lateinit var firstPlayer: Player
+    private lateinit var secondPlayer: Player
 
     @BeforeEach
     fun `set up`() {
@@ -23,37 +22,43 @@ class GameTest {
             Pair(CardScore.FIVE, Suit.HEART),
             Pair(CardScore.SIX, Suit.HEART),
             Pair(CardScore.SEVEN, Suit.HEART),
-            Pair(CardScore.EIGHT, Suit.HEART)
+            Pair(CardScore.EIGHT, Suit.HEART),
+            Pair(CardScore.TWO, Suit.DIAMOND)
         ).map { Card(it) }.toSet()
 
         normalGame = Game("first, second", Dealer(Deck(cardsForDeck)))
         gameWithEmptyDeck = Game("first, second", Dealer(Deck(emptySet())))
-        firstPlayer = normalGame.currentPlayer()
+
+        firstPlayer = normalGame.players.findPlayer(0)
+        secondPlayer = normalGame.players.findPlayer(1)
     }
 
+    @DisplayName("게임 시작시 딜러와 플레이어에게 카드 2장씩 지급한다")
     @Test
-    fun `set up with two cards for each player`() {
-        assertThat(normalGame.dealer.amountOfCards()).isEqualTo(2)
-        assertThat(firstPlayer.amountOfCards()).isEqualTo(2)
+    fun `set up with dealer and players`() {
+        assertThat(normalGame.dealer.countOfCards()).isEqualTo(2)
+        assertThat(firstPlayer.countOfCards()).isEqualTo(2)
+        assertThat(secondPlayer.countOfCards()).isEqualTo(2)
     }
 
-    @DisplayName("대답이 STAND면 그대로 턴이 넘어가며, HIT면 player에게 카드 한 장을 추가한다(디폴트 카드 개수: 2)")
+    @DisplayName("대답이 STAND면 그 다음 턴으로 넘어가며, HIT면 해당 player에게 카드 1장을 준다 (디폴트 카드: 2장)")
     @Test
-    fun `give a chance to draw to a player`() {
+    fun `play of players`() {
         // when
-        val playerToStand = normalGame.giveChanceToDraw(REPLY_STAND)
-        val playerToHit = normalGame.giveChanceToDraw(REPLY_HIT)
+        normalGame.giveChanceToDrawing(REPLY_YES)
+        normalGame.giveChanceToDrawing(REPLY_NO)
+        normalGame.giveChanceToDrawing(REPLY_YES)
 
         // then
-        assertThat(playerToStand?.amountOfCards()).isEqualTo(2)
-        assertThat(playerToHit?.amountOfCards()).isEqualTo(3)
+        assertThat(firstPlayer.countOfCards()).isEqualTo(3)
+        assertThat(secondPlayer.countOfCards()).isEqualTo(3)
     }
 
     @DisplayName("덱이 비었으면 player가 카드를 뽑을 때 null이 반환된다")
     @Test
     fun `return null when deck is empty`() {
         // when
-        val nullPlayer = gameWithEmptyDeck.giveChanceToDraw(REPLY_HIT)
+        val nullPlayer = gameWithEmptyDeck.giveChanceToDrawing(REPLY_YES)
 
         // then
         assertThat(nullPlayer).isEqualTo(null)
@@ -65,7 +70,7 @@ class GameTest {
         // when
         val dealer = normalGame.playOfDealer()
 
-        assertThat(dealer?.amountOfCards()).isEqualTo(3)
+        assertThat(dealer?.countOfCards()).isEqualTo(3)
     }
 
     @Test
@@ -76,8 +81,8 @@ class GameTest {
     @Test
     fun `game goes over when the turn is over`() {
         // when
-        normalGame.giveChanceToDraw(REPLY_STAND)
-        normalGame.giveChanceToDraw(REPLY_STAND)
+        normalGame.giveChanceToDrawing(REPLY_NO)
+        normalGame.giveChanceToDrawing(REPLY_NO)
 
         // then
         assertTrue(normalGame.isOver())

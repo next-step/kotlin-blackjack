@@ -1,23 +1,20 @@
 package blackjack.domain
 
-import blackjack.domain.Game.Companion.MAXIMUM_GAME_SCORE
-
 interface Participant {
-
-    fun drawCardIf(newCard: Card?, fitsCondition: () -> Boolean): Participant? {
-        if (fitsCondition()) {
-            draw(newCard) ?: return null
-        }
-        return this
-    }
+    val cards: Cards
 
     fun draw(newCard: Card?): Cards?
 
-    fun hasScoreMoreThanMax(score: Int) = score >= MAXIMUM_GAME_SCORE
+    fun getState(wantToDraw: String, score: Int, count: Int): PlayerState =
+        PlayerState.valueOfState(wantToDraw, totalScore(), countOfCards())
 
-    fun amountOfCards(): Int
+    fun isHit(state: PlayerState) = state == PlayerState.HIT
 
-    fun totalScore(): Int
+    fun isBust(state: PlayerState): Boolean = state == PlayerState.BUST
 
-    fun stateOfCards(): String
+    fun countOfCards(): Int = cards.size()
+
+    fun totalScore(): Int = cards.sumOfScores()
+
+    fun stateOfCards(): String = cards.toString()
 }

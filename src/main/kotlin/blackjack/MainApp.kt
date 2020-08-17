@@ -14,10 +14,10 @@ fun main() {
         val currentPlayer = game.currentPlayer()
         val reply = InputView.readReplyToDrawing(currentPlayer)
 
-        val playerAfterDrawing = game.giveChanceToDraw(reply)
-        val isEmptyDeck = ResultView.showStateOfCards(playerAfterDrawing, reply)
+        val playerAfterDrawing = game.giveChanceToDrawing(reply)
+        val isFailedPlayer = ResultView.showStateOfCards(playerAfterDrawing, reply)
 
-        if (isEmptyDeck) break
+        if (isFailedPlayer) break
     }
     ResultView.showPlayOfDealer(game.playOfDealer())
 

@@ -7,16 +7,20 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     private lateinit var deck: Deck
-    private lateinit var card: Card
     private lateinit var cards: Cards
+    private lateinit var dealerCards: Cards
     private lateinit var dealer: Dealer
+    private lateinit var players: Players
 
     @BeforeEach
     fun `set up`() {
-        deck = Deck(setOf(Card(Pair(CardScore.SEVEN, Suit.SPADE))))
-        card = Card(Pair(CardScore.ACE, Suit.HEART))
-        cards = Cards(setOf(card))
-        dealer = Dealer(deck, cards)
+        cards = Cards(setOf(Card(Pair(CardScore.TWO, Suit.HEART))))
+        players = Players(listOf(Player("mark", cards)))
+
+        deck = Deck(setOf(Card(Pair(CardScore.ACE, Suit.SPADE))))
+
+        dealerCards = Cards(setOf(Card(Pair(CardScore.THREE, Suit.HEART))))
+        dealer = Dealer(deck)
     }
 
     @Test
@@ -33,7 +37,7 @@ class DealerTest {
     @Test
     fun `카드 점수 합계가 17 미만인지 확인하는 기능이 있다`() {
         // when
-        val hasLessThan17 = dealer.hasLessScoreThan17(dealer.totalScore())
+        val hasLessThan17 = dealer.hasScoreBelow17(dealer.totalScore())
 
         // then
         assertTrue(hasLessThan17)
@@ -45,18 +49,18 @@ class DealerTest {
         val firstCard = dealer.faceUpCard()
 
         // then
-        assertThat(firstCard).isEqualTo(card)
+        assertThat(firstCard).isEqualTo(Card(Pair(CardScore.THREE, Suit.HEART)))
     }
 
     @Test
-    fun `승리와 패배를 기록하는 기능이 있다 (3명의 참가자 중 1명만 승리)`() {
+    fun `승리와 패배를 기록하는 기능이 있다 (예상 결과 = 1승 0패)`() {
         // when
-        val matchResult = dealer.checkWin(3, 1)
+        val matchResult = dealer.checkWin(players)
         val winCount = matchResult[0]
         val loseCount = matchResult[1]
 
         // then
-        assertThat(winCount).isEqualTo(2)
-        assertThat(loseCount).isEqualTo(1)
+        assertThat(winCount).isEqualTo(1)
+        assertThat(loseCount).isEqualTo(0)
     }
 }

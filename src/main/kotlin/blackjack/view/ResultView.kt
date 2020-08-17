@@ -4,6 +4,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.REPLY_NO
+import blackjack.domain.REPLY_YES
 
 const val NOTIFY_EMPTY_DECK = "-- 더 이상 남아있는 카드가 없습니다 --"
 const val DEALER_GETS_ONE_MORE_CARD = "딜러는 합계가 16이하라 한장의 카드를 더 받았습니다."
@@ -21,10 +23,10 @@ object ResultView {
     fun showStateOfCards(player: Player?, reply: String): Boolean {
         if (player == null) return true
 
-        if (REPLY_HIT == reply) {
+        if (REPLY_YES == reply) {
             println("${player}카드: ${player.stateOfCards()}")
         }
-        if (REPLY_STAND == reply && player.amountOfCards() == DEFAULT_CARD_AMOUNT) {
+        if (REPLY_NO == reply && player.countOfCards() == DEFAULT_CARD_AMOUNT) {
             println("${player}카드: ${player.stateOfCards()}")
         }
         return false
@@ -36,7 +38,7 @@ object ResultView {
             return
         }
 
-        if (dealer.amountOfCards() != DEFAULT_CARD_AMOUNT) {
+        if (dealer.countOfCards() != DEFAULT_CARD_AMOUNT) {
             println("\n$DEALER_GETS_ONE_MORE_CARD")
             return
         }
@@ -46,11 +48,11 @@ object ResultView {
 
     fun showScoreResult(dealer: Dealer, players: Players) {
         println("\n$dealer 카드: ${dealer.stateOfCards()} - 결과: ${dealer.totalScore()}")
-        val resultOfPlayers =
+        val scoreResult =
             (0 until players.size()).map { players.findPlayer(it) }
                 .joinToString("\n") { "${it}카드: ${it.stateOfCards()} - 결과: ${it.totalScore()}" }
 
-        println(resultOfPlayers)
+        println(scoreResult)
     }
 
     fun showMatchResult(result: Pair<Dealer, Players>) {
@@ -58,7 +60,7 @@ object ResultView {
         val dealer = result.first
         val players = result.second
 
-        println("$dealer: ${dealer.matchResult[0]}승 ${dealer.matchResult[1]}패")
+        println("$dealer: ${dealer.result[0]}승 ${dealer.result[1]}패")
 
         val resultOfPlayers =
             (0 until players.size()).map { players.findPlayer(it) }

@@ -1,46 +1,52 @@
 package blackjack.domain
 
-import blackjack.view.REPLY_STAND
-
-class Game(val players: Players, val dealer: Dealer) {
+class Game(_players: List<Player>, val dealer: Dealer) {
+    val players = Players(_players)
     private var turn = 0
 
     init {
-        dealer.setUpWithPlayers(players)
+        dealer.setUpWithCards(players)
     }
 
-    constructor(PlayerNames: String, dealer: Dealer = Dealer()) : this(
-        Players(
-            PlayerNames.split(PLAYER_NAMES_DELIMITER)
-                .filterNot { it.isBlank() }
-                .map { Player(it.trim()) }
-        ),
+    constructor(PlayerNames: String, dealer: Dealer = Dealer(Deck())) : this(
+        PlayerNames.split(PLAYER_NAMES_DELIMITER)
+            .filterNot { it.isBlank() }
+            .map { Player(it.trim()) },
         dealer
     )
 
-    fun giveChanceToDraw(reply: String): Player? {
-        val currentPlayer = players.findPlayer(turn)
-        val player = currentPlayer.chooseToDraw(reply, dealer.pickCard()) ?: return null
+    fun giveChanceToDrawing(reply: String): Player? {
+        currentPlayer().apply {
+            val state: PlayerState =
+                getState(wantToDraw = reply, score = totalScore(), count = countOfCards())
 
-        canGoToNextTurn(reply, player)
-        return player
-    }
+            if (!isHit(state)) {
+                goToNextTurn()
+                return this
+            }
 
-    private fun canGoToNextTurn(reply: String, player: Player) {
-        if (REPLY_STAND == reply ||
-            player.hasScoreMoreThanMax(player.totalScore())
-        ) {
-            turn++
+            if (isHit(state)) {
+                draw(dealer.pickCard()) ?: return null
+            }
+            return this
         }
     }
 
+    private fun goToNextTurn() {
+        turn++
+    }
+
     fun playOfDealer(): Dealer? {
-        return dealer.drawCardIf(dealer.pickCard()) { dealer.hasLessScoreThan17(dealer.totalScore()) } as Dealer?
+        dealer.apply {
+            if (hasScoreBelow17(totalScore())) {
+                draw(pickCard()) ?: return null
+            }
+            return this
+        }
     }
 
     fun getResult(): Pair<Dealer, Players> {
-        val winCountOfPlayers = players.compareWith(dealer)
-        dealer.checkWin(players.size(), winCountOfPlayers)
+        dealer.checkWin(players)
         return Pair(dealer, players)
     }
 
