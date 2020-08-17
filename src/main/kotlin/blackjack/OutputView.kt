@@ -16,7 +16,7 @@ object OutputView {
 
     fun getWinner(players: List<Player>) {
         players.forEach {
-            println("${it.getName()}카드: ${it.getCards()} - 결과: ${it.getCards().getScore()}")
+            println("${it.getName()}카드: ${it.getCards()} - 결과: ${it.getCards().sumCardNumbers()}")
         }
     }
 }

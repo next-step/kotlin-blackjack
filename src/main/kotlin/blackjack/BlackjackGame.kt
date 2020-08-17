@@ -3,7 +3,8 @@ package blackjack
 object BlackjackGame {
     fun playGame(players: List<Player>) {
         players.forEach {
-            if (it.getCards().getScore() > Cards.WIN_SCORE) return
+            val score = it.getCards().sumCardNumbers()
+            if (score > Cards.WIN_SCORE) return
             addUserCards(it)
         }
     }
