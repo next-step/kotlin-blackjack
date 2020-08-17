@@ -53,7 +53,7 @@ class Card private constructor(
                 ?: throw IllegalArgumentException("Symbol : $symbol, Denomination:  ${denomination}에 해당하는 카드를 찾을 수 없습니다.")
         }
 
-        fun denominationOf(value: String): Card {
+        fun spadeOf(value: String): Card {
             return of(Symbol.SPADE, Denomination.findBy(value))
         }
     }

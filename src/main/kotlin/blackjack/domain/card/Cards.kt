@@ -5,6 +5,8 @@ data class Cards(
 ) {
     val totalScore: Int = Score.from(values)
 
+    constructor(vararg values: String) : this(values.map { Card.spadeOf(it) })
+
     operator fun plus(card: Card) = Cards(this.values + card)
 
     operator fun plus(cards: List<Card>) = Cards(this.values + cards)
@@ -35,7 +37,5 @@ data class Cards(
         private const val BLACK_JACK_CARD_COUNT = 2
 
         fun empty() = Cards(emptyList())
-
-        fun denominationsOf(vararg values: String) = Cards(values.map { Card.denominationOf(it) })
     }
 }
