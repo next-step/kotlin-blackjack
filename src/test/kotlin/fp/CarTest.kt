@@ -18,4 +18,3 @@ class CarTest {
         assertThat(actual).isEqualTo(Car("jason", 0))
     }
 }
-
