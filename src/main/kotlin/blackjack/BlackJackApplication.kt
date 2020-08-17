@@ -2,16 +2,16 @@ package blackjack
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.card.Deck
-import blackjack.domain.result.PlayerResult
 import blackjack.domain.card.RandomDrawStrategy
+import blackjack.domain.player.Dealer
 import blackjack.view.askHitFromPlayer
 import blackjack.view.getBettingMoney
 import blackjack.view.getPlayerNames
 import blackjack.view.notifyDealerHit
 import blackjack.view.notifyStartGame
+import blackjack.view.printCardResults
 import blackjack.view.printPlayerCards
 import blackjack.view.printPlayerResults
-import blackjack.view.printCardResults
 
 fun main() {
     val game = BlackJackGame(Deck(RandomDrawStrategy()))
@@ -27,5 +27,6 @@ fun main() {
     dealer = game.playDealer(dealer) { notifyDealerHit() }
 
     printCardResults(dealer, resultPlayers)
-    printPlayerResults(PlayerResult.ofDealer(dealer, resultPlayers), PlayerResult.ofChallengers(dealer, resultPlayers))
+    dealer as Dealer
+    printPlayerResults(dealer.createPlayerResults(resultPlayers))
 }

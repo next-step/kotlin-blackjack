@@ -42,12 +42,7 @@ class Card private constructor(
 
         private fun createAllCards(): List<Card> {
             return Symbol.values().flatMap { symbol ->
-                Denomination.values().map { denomination ->
-                    Card(
-                        symbol,
-                        denomination
-                    )
-                }
+                Denomination.values().map { denomination -> Card(symbol, denomination) }
             }
         }
 
@@ -59,10 +54,7 @@ class Card private constructor(
         }
 
         fun denominationOf(value: String): Card {
-            return of(
-                Symbol.SPADE,
-                Denomination.findBy(value)
-            )
+            return of(Symbol.SPADE, Denomination.findBy(value))
         }
     }
 }

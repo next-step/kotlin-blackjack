@@ -19,6 +19,10 @@ interface Player {
 
     fun getScore(): Int = cards.totalScore
 
+    fun getName(): String = info.name
+
+    fun getBettingMoney(): Int = info.bettingMoney
+
     fun deal(deck: Deck): Player
 
     fun validateDealCallOnce() {

@@ -5,14 +5,11 @@ data class Cards(
 ) {
     val totalScore: Int = Score.from(values)
 
-    operator fun plus(card: Card): Cards =
-        Cards(this.values + card)
+    operator fun plus(card: Card) = Cards(this.values + card)
 
-    operator fun plus(cards: List<Card>): Cards =
-        Cards(this.values + cards)
+    operator fun plus(cards: List<Card>) = Cards(this.values + cards)
 
-    operator fun plus(cards: Cards): Cards =
-        Cards(this.values + cards.values)
+    operator fun plus(cards: Cards) = Cards(this.values + cards.values)
 
     fun isEmpty() = values.isEmpty()
 
@@ -39,7 +36,6 @@ data class Cards(
 
         fun empty() = Cards(emptyList())
 
-        fun denominationsOf(vararg values: String) =
-            Cards(values.map { Card.denominationOf(it) })
+        fun denominationsOf(vararg values: String) = Cards(values.map { Card.denominationOf(it) })
     }
 }

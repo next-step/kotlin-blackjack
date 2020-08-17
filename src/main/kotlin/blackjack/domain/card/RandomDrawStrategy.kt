@@ -5,8 +5,7 @@ import java.util.Queue
 
 class RandomDrawStrategy : DrawStrategy {
 
-    private val cards: Queue<Card> = LinkedList<Card>(
-        Card.ALL.shuffled())
+    private val cards: Queue<Card> = LinkedList<Card>(Card.ALL.shuffled())
 
     override fun fetchCard(): Card {
         checkCardsAreEmpty()

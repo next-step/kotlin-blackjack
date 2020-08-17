@@ -13,7 +13,7 @@ fun getBettingMoney(name: String): Int {
 }
 
 fun askHitFromPlayer(player: Player): Boolean {
-    println("${player.info.name}은(는) 한 장의 카드를 더 받겠습니까? (y or n)")
+    println("${player.getName()}은(는) 한 장의 카드를 더 받겠습니까? (y or n)")
     return when (getConsoleLine()) {
         "y" -> true
         "n" -> false
