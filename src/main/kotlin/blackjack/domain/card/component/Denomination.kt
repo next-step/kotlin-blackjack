@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card.component
 
 enum class Denomination(
     val score: Int,
@@ -17,6 +17,8 @@ enum class Denomination(
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
+
+    fun isAce(): Boolean = this == ACE
 
     companion object {
         const val MAX_SCORE = 10

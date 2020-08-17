@@ -1,9 +1,19 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.card.component.Denomination
+import blackjack.domain.card.component.Symbol
 
 class Card private constructor(
-    val symbol: Symbol,
-    val denomination: Denomination
+    private val symbol: Symbol,
+    private val denomination: Denomination
 ) {
+    fun isAce() = denomination.isAce()
+
+    fun getScore() = denomination.score
+
+    private fun has(symbol: Symbol): Boolean = this.symbol == symbol
+
+    private fun has(denomination: Denomination): Boolean = this.denomination == denomination
 
     override fun toString(): String {
         return "$symbol ${denomination.value}"
@@ -38,12 +48,12 @@ class Card private constructor(
 
         fun of(symbol: Symbol, denomination: Denomination): Card {
             return ALL.asSequence()
-                .filter { it.symbol == symbol }
-                .find { it.denomination == denomination }
+                .filter { it.has(symbol) }
+                .find { it.has(denomination) }
                 ?: throw IllegalArgumentException("Symbol : $symbol, Denomination:  ${denomination}에 해당하는 카드를 찾을 수 없습니다.")
         }
 
-        fun denominationOf(value: String): Card {
+        fun spadeOf(value: String): Card {
             return of(Symbol.SPADE, Denomination.findBy(value))
         }
     }

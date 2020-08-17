@@ -1,5 +1,13 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
+import blackjack.domain.card.DrawStrategy
+import blackjack.domain.player.Challenger
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -11,7 +19,7 @@ internal class BlackJackGameTest {
     @Test
     fun `플레이어들이 초기 두장씩 카드 갖고있는지 확인`() {
         // given
-        val card = Card.denominationOf("A")
+        val card = Card.spadeOf("A")
         val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
                 return card
@@ -21,7 +29,7 @@ internal class BlackJackGameTest {
         val playerNames = listOf("Malibin")
 
         // when
-        val players = game.dealWith(playerNames)
+        val players = game.dealWith(playerNames) { 0 }
 
         // then
         assertThat(players[0].cards.values).hasSize(2)
@@ -32,18 +40,18 @@ internal class BlackJackGameTest {
         // given
         val deck = Deck(object : DrawStrategy {
             override fun fetchCard(): Card {
-                return Card.denominationOf("7")
+                return Card.spadeOf("7")
             }
         })
         val game = BlackJackGame(deck)
-        val dealer: Player = Dealer(Cards.denominationsOf("5", "6"))
+        val dealer: Player = Dealer(cards = Cards("5", "6"))
 
         // when
         val resultDealer = game.playDealer(dealer)
 
         // then
         assertAll(
-            { assertThat(resultDealer.state).isEqualTo(State.Stand) },
+            { assertThat(resultDealer.canPlay()).isFalse() },
             { assertThat(resultDealer.getScore()).isEqualTo(18) }
         )
     }
@@ -54,8 +62,8 @@ internal class BlackJackGameTest {
         val deck = Deck(object : DrawStrategy {
             val cards: Queue<Card> = LinkedList<Card>(
                 listOf(
-                    Card.denominationOf("5"),
-                    Card.denominationOf("6")
+                    Card.spadeOf("5"),
+                    Card.spadeOf("6")
                 )
             )
 
@@ -64,7 +72,7 @@ internal class BlackJackGameTest {
             }
         })
         val game = BlackJackGame(deck)
-        val player: Player = Challenger("Malibin", Cards.denominationsOf("3", "4"))
+        val player: Player = Challenger(PlayerInfo("Malibin", 0), Cards("3", "4"))
 
         // when 카드가 4장이면 멈추기
         val resultPlayer = game.play(
@@ -77,7 +85,7 @@ internal class BlackJackGameTest {
         assertAll(
             { assertThat(resultPlayer.getScore()).isEqualTo(18) },
             { assertThat(resultPlayer.cards.values).hasSize(4) },
-            { assertThat(resultPlayer.state).isEqualTo(State.Stand) }
+            { assertThat(resultPlayer.canPlay()).isTrue() }
         )
     }
 }

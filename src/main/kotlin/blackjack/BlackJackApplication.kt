@@ -1,21 +1,22 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Deck
-import blackjack.domain.PlayerResult
-import blackjack.domain.RandomDrawStrategy
+import blackjack.domain.card.Deck
+import blackjack.domain.card.RandomDrawStrategy
+import blackjack.domain.player.Dealer
 import blackjack.view.askHitFromPlayer
+import blackjack.view.getBettingMoney
 import blackjack.view.getPlayerNames
 import blackjack.view.notifyDealerHit
 import blackjack.view.notifyStartGame
+import blackjack.view.printCardResults
 import blackjack.view.printPlayerCards
 import blackjack.view.printPlayerResults
-import blackjack.view.printResult
 
 fun main() {
     val game = BlackJackGame(Deck(RandomDrawStrategy()))
     var dealer = game.getDealer()
-    val players = game.dealWith(getPlayerNames())
+    val players = game.dealWith(getPlayerNames()) { getBettingMoney(it) }
     notifyStartGame(dealer, players)
 
     val resultPlayers = game.play(
@@ -25,8 +26,7 @@ fun main() {
     )
     dealer = game.playDealer(dealer) { notifyDealerHit() }
 
-    printResult(dealer)
-    resultPlayers.forEach { printResult(it) }
-
-    printPlayerResults(PlayerResult.ofDealer(dealer, resultPlayers), PlayerResult.ofChallengers(dealer, resultPlayers))
+    printCardResults(dealer, resultPlayers)
+    dealer as Dealer
+    printPlayerResults(dealer.createPlayerResults(resultPlayers))
 }

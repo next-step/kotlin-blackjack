@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card.component
 
 enum class Symbol {
     SPADE,

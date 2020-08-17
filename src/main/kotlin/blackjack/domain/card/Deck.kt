@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Deck(
     private val drawStrategy: DrawStrategy
@@ -8,6 +8,10 @@ class Deck(
     }
 
     fun getDealCards(): List<Card> {
-        return (1..DrawStrategy.DEAL_DRAW_COUNT).map { drawStrategy.fetchCard() }
+        return (1..DEAL_DRAW_COUNT).map { drawStrategy.fetchCard() }
+    }
+
+    companion object {
+        const val DEAL_DRAW_COUNT = 2
     }
 }
