@@ -2,8 +2,7 @@ package blackjack.model
 
 const val WIN_SCORE = 21
 
-class Player(val name: String) {
-    private val cards: Cards = Cards(emptyList())
+class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
 
     fun draw(vararg cards: Card) {
         repeat(cards.size) {

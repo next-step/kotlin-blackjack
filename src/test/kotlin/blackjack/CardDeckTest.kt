@@ -12,7 +12,8 @@ class CardDeckTest {
 
     @Test
     fun `카드 뽑기 테스트`() {
-        assertThat(notShuffledDeck.drawCard() is Card).isEqualTo(true)
-        assertThat(notShuffledDeck.drawCard()).isEqualTo(Card(Suit.CLUBS, Denomination.TWO))
+        val drawCard = notShuffledDeck.drawCard()
+        assertThat(drawCard is Card).isEqualTo(true)
+        assertThat(drawCard).isEqualTo(Card(Suit.CLUBS, Denomination.A))
     }
 }

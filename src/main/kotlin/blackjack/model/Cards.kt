@@ -14,7 +14,7 @@ class Cards(cards: List<Card>) {
     }
 
     fun draw(): Card {
-        return cards.first()
+        return cards[0]
     }
 
     fun shuffle() {
