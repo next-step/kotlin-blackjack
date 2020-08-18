@@ -26,12 +26,22 @@ class CardDeckTest {
         Assertions.assertThat(card.getScore()).isIn(CardNumber.values().map { it.score })
     }
 
-    @DisplayName(value = "TwoPop된 카드더미의 카드수는 2장이여야한다.")
+    @DisplayName(value = "Player의 Pop하는 카드더미의 카드수는 2장이여야한다.")
     @Test
-    fun checkTwoPopTest() {
+    fun checkPopPlayerTest() {
         val cardDeck = CardDeck()
-        val cardDummy = cardDeck.popTwoCard()
-        Assertions.assertThat(cardDummy.dummy.size).isEqualTo(2)
+        val cardDummy = cardDeck.popPlayerCardDummy()
+        Assertions.assertThat(cardDummy.dummy.size)
+            .isEqualTo(CardDeck.PLAYER_INIT_CARD_COUNT)
+    }
+
+    @DisplayName(value = "Dealer의 Pop하는 카드더미의 카드수는 1장이여야한다.")
+    @Test
+    fun checkPopDealerTest() {
+        val cardDeck = CardDeck()
+        val cardDummy = cardDeck.popDealerCardDummy()
+        Assertions.assertThat(cardDummy.dummy.size)
+            .isEqualTo(CardDeck.DEALER_INIT_CARD_COUNT)
     }
 
     @DisplayName(value = "한세트의 CarPool은 52번 이상의 popCard는 진행할 수 없다. ,Exception")

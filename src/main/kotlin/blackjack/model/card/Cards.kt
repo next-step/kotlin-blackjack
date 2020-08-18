@@ -23,7 +23,11 @@ class Cards(
         return Score(sum)
     }
 
-    fun canMoreCard() = Score(getSumScore()).isBurst().not()
+    fun canMoreCard(): Boolean = getScore().let {
+        it.isBurst().not() && it.isBlackJack().not()
+    }
+
+    fun isSmallThan(score: Int) = getSumScore() <= score
 
     private fun getAceSum(sum: Int) =
         if (sum + ACE_GAP > Score.BLACKJACK) {
@@ -42,3 +46,5 @@ class Cards(
         const val ACE_GAP = 10
     }
 }
+
+fun List<Card>.toCards() = Cards(this.toMutableSet())
