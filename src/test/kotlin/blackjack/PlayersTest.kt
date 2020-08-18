@@ -19,8 +19,8 @@ class PlayersTest {
     @Test
     fun `플레이어 승자 테스트`() {
         val player = players[0]
-        player.draw(Card(Suit.CLUBS, Denomination.ACE))
-        player.draw(Card(Suit.SPADES, Denomination.ACE))
+        player.draw(Card(Suit.CLUBS, Denomination.A))
+        player.draw(Card(Suit.SPADES, Denomination.A))
         player.draw(Card(Suit.SPADES, Denomination.TEN))
         player.draw(Card(Suit.SPADES, Denomination.NINE))
         assertThat(players.winner()[0]).isEqualTo(player)

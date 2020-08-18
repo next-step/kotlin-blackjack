@@ -5,8 +5,10 @@ const val WIN_SCORE = 21
 class Player(val name: String) {
     private val cards: Cards = Cards(emptyList())
 
-    fun draw(card: Card) {
-        cards.add(card)
+    fun draw(vararg cards: Card) {
+        repeat(cards.size) {
+            this.cards.add(cards[it])
+        }
     }
 
     fun score(): Int {

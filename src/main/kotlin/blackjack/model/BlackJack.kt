@@ -5,8 +5,7 @@ class BlackJack(val players: Players, cardDeck: CardDeck) {
 
     fun firstTurn() {
         repeat(players.size()) {
-            players[it].draw(cardDeck.drawCard())
-            players[it].draw(cardDeck.drawCard())
+            players[it].draw(cardDeck.drawCard(), cardDeck.drawCard())
         }
     }
 
