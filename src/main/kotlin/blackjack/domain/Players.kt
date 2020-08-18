@@ -9,9 +9,12 @@ data class Players(private val players: List<Player>) {
     fun size() = players.size
 
     fun compareWith(dealer: Dealer): Int {
-        val dealerState = dealer.getState(REPLY_NO, dealer.totalScore(), dealer.countOfCards())
-        if (dealer.isBust(dealerState)) {
-            players.forEach { it.winMatch() }
+        dealer.apply {
+            val dealerState = stateOfPlayer(NO, totalScore(), countOfCards())
+
+            if (isBust(dealerState)) {
+                players.forEach { it.winMatch() }
+            }
         }
 
         players.filter {

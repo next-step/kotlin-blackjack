@@ -4,8 +4,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.REPLY_NO
-import blackjack.domain.REPLY_YES
+import blackjack.domain.NO
+import blackjack.domain.YES
 
 const val NOTIFY_EMPTY_DECK = "-- 더 이상 남아있는 카드가 없습니다 --"
 const val DEALER_GETS_ONE_MORE_CARD = "딜러는 합계가 16이하라 한장의 카드를 더 받았습니다."
@@ -23,10 +23,10 @@ object ResultView {
     fun showStateOfCards(player: Player?, reply: String): Boolean {
         if (player == null) return true
 
-        if (REPLY_YES == reply) {
+        if (YES == reply) {
             println("${player}카드: ${player.stateOfCards()}")
         }
-        if (REPLY_NO == reply && player.countOfCards() == DEFAULT_CARD_AMOUNT) {
+        if (NO == reply && player.countOfCards() == DEFAULT_CARD_AMOUNT) {
             println("${player}카드: ${player.stateOfCards()}")
         }
         return false

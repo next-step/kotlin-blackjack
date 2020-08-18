@@ -5,7 +5,7 @@ interface Participant {
 
     fun draw(newCard: Card?): Cards?
 
-    fun getState(wantToDraw: String, score: Int, count: Int): PlayerState =
+    fun stateOfPlayer(wantToDraw: String, score: Int, count: Int): PlayerState =
         PlayerState.valueOfState(wantToDraw, totalScore(), countOfCards())
 
     fun isHit(state: PlayerState) = state == PlayerState.HIT

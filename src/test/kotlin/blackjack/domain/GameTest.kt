@@ -45,9 +45,9 @@ class GameTest {
     @Test
     fun `play of players`() {
         // when
-        normalGame.giveChanceToDrawing(REPLY_YES)
-        normalGame.giveChanceToDrawing(REPLY_NO)
-        normalGame.giveChanceToDrawing(REPLY_YES)
+        normalGame.giveChanceToDrawing(YES)
+        normalGame.giveChanceToDrawing(NO)
+        normalGame.giveChanceToDrawing(YES)
 
         // then
         assertThat(firstPlayer.countOfCards()).isEqualTo(3)
@@ -58,7 +58,7 @@ class GameTest {
     @Test
     fun `return null when deck is empty`() {
         // when
-        val nullPlayer = gameWithEmptyDeck.giveChanceToDrawing(REPLY_YES)
+        val nullPlayer = gameWithEmptyDeck.giveChanceToDrawing(YES)
 
         // then
         assertThat(nullPlayer).isEqualTo(null)
@@ -81,8 +81,8 @@ class GameTest {
     @Test
     fun `game goes over when the turn is over`() {
         // when
-        normalGame.giveChanceToDrawing(REPLY_NO)
-        normalGame.giveChanceToDrawing(REPLY_NO)
+        normalGame.giveChanceToDrawing(NO)
+        normalGame.giveChanceToDrawing(NO)
 
         // then
         assertTrue(normalGame.isOver())

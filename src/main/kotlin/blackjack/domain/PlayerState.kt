@@ -1,13 +1,13 @@
 package blackjack.domain
 
-const val REPLY_YES = "y"
-const val REPLY_NO = "n"
+const val YES = "y"
+const val NO = "n"
 
 enum class PlayerState(private val wantToDraw: String, private val score: Int = 0) {
-    HIT(REPLY_YES),
-    STAND(REPLY_NO),
-    BLACKJACK(REPLY_NO, 21),
-    BUST(REPLY_NO, 22);
+    HIT(YES),
+    STAND(NO),
+    BLACKJACK(NO, 21),
+    BUST(NO, 22);
 
     companion object {
 

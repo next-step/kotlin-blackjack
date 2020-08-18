@@ -18,7 +18,7 @@ class Game(_players: List<Player>, val dealer: Dealer) {
     fun giveChanceToDrawing(reply: String): Player? {
         currentPlayer().apply {
             val state: PlayerState =
-                getState(wantToDraw = reply, score = totalScore(), count = countOfCards())
+                stateOfPlayer(wantToDraw = reply, score = totalScore(), count = countOfCards())
 
             if (!isHit(state)) {
                 goToNextTurn()

@@ -1,17 +1,17 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
 import blackjack.domain.Game.Companion.MAXIMUM_SCORE_FOR_DEALER_DRAWING
 
 data class Dealer(val deck: Deck = Deck()) : Player() {
     override val cards: Cards = Cards(setOf())
-
     var result = listOf(0, 0)
         private set
 
     fun pickCard(): Card? = deck.provideCard(deck.shuffled())
 
     fun setUpWithCards(players: Players): Cards {
-        repeat(Game.DEFAULT_CARD_AMOUNT) {
+        repeat(DEFAULT_CARD_AMOUNT) {
             draw(pickCard())
 
             (0 until players.size()).forEach { nth ->
