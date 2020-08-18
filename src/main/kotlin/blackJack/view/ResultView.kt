@@ -2,8 +2,8 @@ package blackJack.view
 
 import blackJack.domain.BlackJack
 import blackJack.domain.Dealer
-import blackJack.domain.DealerResult
 import blackJack.domain.Person
+import blackJack.domain.WinOrLose
 
 object ResultView {
     fun blank() {
@@ -19,23 +19,24 @@ object ResultView {
         val dealer = blackJack.dealer
         println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
         println("딜러 카드: ${dealer.hands[0]}")
-        players.forEach { resultPeopleHands(it) }
         blank()
+        players.forEach { resultPeopleHands(it) }
     }
 
     fun resultPeopleHands(person: Person, result: String = "") {
-        println("${person.name} 카드: ${person.hands.joinToString { it.toString() }} $result")
+        println("$person 카드: ${person.hands.joinToString { it.toString() }} $result")
+        blank()
     }
 
     fun resultWhetherBust(person: Person) {
         if (person.isBust()) {
             resultPeopleHands(person)
-            println("${person.name}는 버스트 했습니다")
-            blank()
+            println("${person}는 버스트 했습니다")
         } else {
             resultPeopleHands(person)
-            println("${person.name}는 버스트 하지 않았습니다.")
+            println("${person}는 버스트 하지 않았습니다.")
         }
+        blank()
     }
 
     fun resultOpenDealerCard(dealer: Dealer) {
@@ -44,7 +45,7 @@ object ResultView {
     }
 
     fun resultDealerGetCard(dealer: Dealer) {
-        println("딜러의 카드 총합이 16이하라 카드를 하나 더 받았습니다.")
+        println("딜러의 카드 총합이 16이하라 카드를 더 받았습니다.")
         resultWhetherBust(dealer)
     }
 
@@ -57,7 +58,7 @@ object ResultView {
         blank()
         println("최종 승패")
         val result = blackJack.getResult()
-        players.forEach { println("${it.name}: ${result.playersResult[it]}") }
-        println("딜러: ${DealerResult.WIN.getCount()}승 ${DealerResult.DRAW.getCount()}무 ${DealerResult.LOSE.getCount()}패")
+        players.forEach { println("$it: ${result.playersResult.getValue(it).string}") }
+        println("딜러: ${result.dealerResult[WinOrLose.WIN]}승 ${result.dealerResult[WinOrLose.DRAW]}무 ${result.dealerResult[WinOrLose.LOSE]}패")
     }
 }

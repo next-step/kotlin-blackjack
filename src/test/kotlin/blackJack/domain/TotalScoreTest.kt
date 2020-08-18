@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class TotalScoreTest {
     @Test
     fun no_ace() {
-        val testList = listOf(5, 10)
+        val testList = listOf(Card(Shape.HEART, Denomination.FIVE), Card(Shape.HEART, Denomination.TEN))
 
         val totalScore = TotalScore.getScore(testList)
 
@@ -15,7 +15,7 @@ class TotalScoreTest {
 
     @Test
     fun has_ace() {
-        val testList = listOf(1, 10)
+        val testList = listOf(Card(Shape.HEART, Denomination.ACE), Card(Shape.HEART, Denomination.TEN))
 
         val totalScore = TotalScore.getScore(testList)
 
@@ -24,7 +24,11 @@ class TotalScoreTest {
 
     @Test
     fun has_ace_but_do_not_plus_10() {
-        val testList = listOf(10, 3, 1)
+        val testList = listOf(
+            Card(Shape.HEART, Denomination.ACE),
+            Card(Shape.HEART, Denomination.TEN),
+            Card(Shape.HEART, Denomination.THREE)
+        )
 
         val totalScore = TotalScore.getScore(testList)
 

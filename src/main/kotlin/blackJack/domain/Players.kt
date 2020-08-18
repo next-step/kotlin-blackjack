@@ -13,7 +13,7 @@ class Players(names: List<String>) {
         players.forEach { forEach(it) }
     }
 
-    fun joinToString(getString: (player: Player) -> String) {
-        players.joinToString { getString(it) }
+    fun joinToString(getString: (player: Player) -> String): String {
+        return players.joinToString { getString(it) }
     }
 }

@@ -1,14 +1,15 @@
 package blackJack.domain
 
 object TotalScore {
-    fun getScore(cards: List<Int>): Int {
-        if (hasAce(cards)) {
-            return getHasAceScore(cards.sum())
+    fun getScore(cards: List<Card>): Int {
+        val cardScores = cards.map { it.denomination.number }
+        if (hasAce(cardScores)) {
+            return getHasAceScore(cardScores.sum())
         }
-        return cards.sum()
+        return cardScores.sum()
     }
 
-    private fun hasAce(cards: List<Int>): Boolean = cards.contains(ACE)
+    private fun hasAce(cardScores: List<Int>): Boolean = cardScores.contains(ACE)
 
     private fun getHasAceScore(totalScore: Int): Int {
         if (totalScore <= BUST_SCORE) {

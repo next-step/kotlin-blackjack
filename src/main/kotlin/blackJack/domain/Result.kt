@@ -1,21 +1,24 @@
 package blackJack.domain
 
 class Result(private val dealer: Dealer, players: Players) {
+    private val _dealerResult = WinOrLose.values().map { it to 0 }.toMap().toMutableMap()
+    val dealerResult
+        get() = _dealerResult.toMap()
     val playersResult = players.players.map { it to getWinOrLose(it) }.toMap()
 
-    private fun getWinOrLose(player: Player): String {
+    private fun getWinOrLose(player: Player): WinOrLose {
         return when {
             checkWinner(player) -> {
-                DealerResult.LOSE.addCount()
-                "승"
+                _dealerResult[WinOrLose.LOSE] = _dealerResult.getValue(WinOrLose.LOSE) + 1
+                WinOrLose.WIN
             }
             checkDrawPlayer(player) && checkBust(player) ?: true -> {
-                DealerResult.DRAW.addCount()
-                "무"
+                _dealerResult[WinOrLose.DRAW] = _dealerResult.getValue(WinOrLose.DRAW) + 1
+                WinOrLose.DRAW
             }
             else -> {
-                DealerResult.WIN.addCount()
-                "패"
+                _dealerResult[WinOrLose.WIN] = _dealerResult.getValue(WinOrLose.WIN) + 1
+                WinOrLose.LOSE
             }
         }
     }

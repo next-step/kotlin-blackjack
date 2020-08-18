@@ -21,7 +21,7 @@ fun startGame() {
     val blackJack = BlackJack(names)
     ResultView.resultReady(blackJack)
     val dealer = blackJack.dealer
-    blackJack.players.forEach { playerCheckBust(it, dealer) }
+    blackJack.playersForEach { playerCheckBust(it, dealer) }
     ResultView.resultOpenDealerCard(dealer)
     dealerGetCard(dealer)
     ResultView.resultGame(blackJack)
@@ -42,14 +42,13 @@ fun playerWhetherGet(player: Player, dealer: Dealer) {
     }
     if (inputValue == "n") {
         ResultView.resultPeopleHands(player)
-        ResultView.blank()
         canGetCard = false
     }
 }
 
 fun dealerGetCard(dealer: Dealer) {
-    while (!dealer.overTotalScore16()) {
-        dealer.giveCard(dealer)
+    dealer.takeCard()
+    if (dealer.getHandsSize() > 2) {
         ResultView.resultDealerGetCard(dealer)
     }
 }

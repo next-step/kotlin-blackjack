@@ -11,12 +11,11 @@ class ResultTest {
         val dealer = Dealer()
         player.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.NINE))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("승")
-        assertThat(DealerResult.LOSE.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.WIN)
+        assertThat(result.dealerResult[WinOrLose.LOSE]).isEqualTo(1)
     }
 
     @Test
@@ -26,12 +25,11 @@ class ResultTest {
         val dealer = Dealer()
         player.addCard(Card(Shape.SPADE, Denomination.NINE))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("패")
-        assertThat(DealerResult.WIN.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
+        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
     }
 
     @Test
@@ -43,12 +41,11 @@ class ResultTest {
         player.addCard(Card(Shape.SPADE, Denomination.TEN))
         player.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("패")
-        assertThat(DealerResult.WIN.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
+        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
     }
 
     @Test
@@ -60,12 +57,11 @@ class ResultTest {
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("승")
-        assertThat(DealerResult.LOSE.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.WIN)
+        assertThat(result.dealerResult[WinOrLose.LOSE]).isEqualTo(1)
     }
 
     @Test
@@ -79,12 +75,11 @@ class ResultTest {
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("패")
-        assertThat(DealerResult.WIN.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
+        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
     }
 
     @Test
@@ -94,11 +89,10 @@ class ResultTest {
         val dealer = Dealer()
         player.addCard(Card(Shape.SPADE, Denomination.TEN))
         dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        DealerResult.resetResult()
 
         val result = Result(dealer, players)
 
-        assertThat(result.playersResult[player]).isEqualTo("무")
-        assertThat(DealerResult.DRAW.getCount()).isEqualTo(1)
+        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.DRAW)
+        assertThat(result.dealerResult[WinOrLose.DRAW]).isEqualTo(1)
     }
 }

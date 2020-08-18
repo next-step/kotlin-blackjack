@@ -1,6 +1,7 @@
 package blackJack.domain
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class PersonTest {
@@ -10,8 +11,8 @@ class PersonTest {
 
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
 
-        Assertions.assertThat(person.hands).hasSize(1)
-        Assertions.assertThat(person.hands[0]).isEqualTo(Card(Shape.SPADE, Denomination.TEN))
+        assertThat(person.hands).hasSize(1)
+        assertThat(person.hands[0]).isEqualTo(Card(Shape.SPADE, Denomination.TEN))
     }
 
     @Test
@@ -20,7 +21,7 @@ class PersonTest {
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
 
-        Assertions.assertThat(person.getTotalScore()).isEqualTo(20)
+        assertThat(person.getTotalScore()).isEqualTo(20)
     }
 
     @Test
@@ -30,6 +31,24 @@ class PersonTest {
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
 
-        Assertions.assertThat(person.isBust()).isTrue()
+        assertThat(person.isBust()).isTrue()
+    }
+
+    @Test
+    fun player_name_is_blank() {
+        assertThatThrownBy {
+            Player("")
+        }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("이름은 없을수 없습니다.")
+    }
+
+    @Test
+    fun person_get_hands_size() {
+        val person = Player("Test")
+        person.addCard(Card(Shape.SPADE, Denomination.TEN))
+        person.addCard(Card(Shape.SPADE, Denomination.TEN))
+
+        val size = person.getHandsSize()
+
+        assertThat(size).isEqualTo(2)
     }
 }
