@@ -12,14 +12,14 @@ class PlayerTest {
     @Test
     fun `플레이어 생성 테스트`() {
         val player = Player("a")
-        assertThat(player.score() == 0 && player.name == "a").isEqualTo(true)
+        assertThat(player.score()).isEqualTo(0)
+        assertThat(player.name).isEqualTo("a")
     }
 
     @Test
     fun `플레이어 카드 드로우 테스트`() {
         val player = Player("a")
         assertThat(player.score()).isEqualTo(0)
-        assertThat(player.name).isEqualTo("a")
         player.draw(Card(Suit.CLUBS, Denomination.A))
         assertThat(player.score()).isEqualTo(11)
     }
