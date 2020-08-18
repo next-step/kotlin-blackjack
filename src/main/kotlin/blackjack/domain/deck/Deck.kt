@@ -1,26 +1,37 @@
 package blackjack.domain.deck
 
-object Deck {
-    val cards: MutableList<Card> = mutableListOf()
+import java.util.LinkedList
+import java.util.Queue
+
+class Deck {
+    val cards: Queue<Card> = LinkedList()
 
     init {
-        Suits.values().forEach { suits ->
-            Denomination.values().forEach { denomination ->
-                cards.add(Card(suits, denomination))
-            }
+        cards.run {
+            addAll(INITIAL_DECK)
         }
-        cards.shuffle()
     }
 
-    fun shuffle() = cards.shuffled()
-    fun take(number: Int): List<Card> {
-        val card = cards.take(number)
-        cards.removeAt(number)
-        return card
+    fun pop(): Card {
+        if (cards.isEmpty()) {
+            reset()
+        }
+        return cards.poll()
     }
-    fun take(): Card {
-        val card = cards.first()
-        cards.removeAt(0)
-        return card
+
+    fun reset() {
+        cards.run {
+            clear()
+            addAll(INITIAL_DECK.shuffled())
+        }
+    }
+
+    companion object {
+        private val INITIAL_DECK =
+            Suits.values().flatMap { suits ->
+                Denomination.values().map { denomination ->
+                    Card(suits, denomination)
+                }
+            }
     }
 }

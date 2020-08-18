@@ -1,33 +1,29 @@
 package blackjack.domain
 
+import blackjack.domain.deck.Card
+import blackjack.domain.deck.Deck
+import blackjack.domain.deck.Denomination
+import blackjack.domain.deck.Suits
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DeckTest {
-    private val deck = Deck
+    private val deck = Deck()
 
     @Test
-    fun `A Spades 부터 King Clubs까지 52개의 카드 묶음이다`() {
+    fun `52개의 카드를 가지고 있다`() {
         assertThat(deck.cards.size).isEqualTo(52)
-        assertThat(deck.cards.first()).isEqualTo(Card(Suits.SPADES, Denomination.ACE))
-        assertThat(deck.cards.last()).isEqualTo(Card(Suits.CLUBS, Denomination.KING))
     }
 
     @Test
-    fun `섞을 수 있다`() {
-        val shuffledDeck = deck.shuffle()
-
-        assertThat(deck.cards.first()).isNotEqualTo(shuffledDeck.first())
+    fun `앞에서부터 카드를 뽑을 수 있다`() {
+        val actual = deck.pop()
+        assertThat(actual).isEqualTo(Card(Suits.SPADES, Denomination.ACE))
     }
 
     @Test
-    fun `원하는 숫자 만큼 앞에서부터 뽑을 수 있다`() {
-        val takedDeck = deck.take(1)
-
-        assertThat(takedDeck.size).isEqualTo(1)
-        assertThat(takedDeck.first()).isEqualTo(Card(Suits.SPADES, Denomination.ACE))
-
-        val takedDeck2 = deck.take(2)
-        assertThat(takedDeck2.size).isEqualTo(2)
+    fun `리셋할 수 있다`() {
+        deck.reset()
+        assertThat(deck).isNotEqualTo(Card(Suits.SPADES, Denomination.ACE))
     }
 }
