@@ -14,15 +14,11 @@ data class Card(
 
     companion object {
         fun getInstances(): Card {
-            return Card(getShape(), getNumber())
-        }
-
-        private fun getShape(): Symbol {
-            return Symbol.values().map { it }.shuffled()[0]
-        }
-
-        private fun getNumber(): Numbers {
-            return Numbers.values().map { it }.shuffled()[0]
+            return Symbol.values().flatMap { symbol ->
+                Numbers.values().map { numbers ->
+                    Card(symbol, numbers)
+                }
+            }.shuffled()[0]
         }
     }
 }
