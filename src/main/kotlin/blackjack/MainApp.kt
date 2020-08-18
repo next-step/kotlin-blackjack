@@ -8,17 +8,19 @@ fun main() {
 
     val playerNames = InputView.readPlayerNames()
     val game = Game(playerNames)
-    ResultView.showResultOfSetUp(game.setUp())
+    ResultView.showResultOfSetUp(game.dealer, game.players)
 
     while (!game.isOver()) {
         val currentPlayer = game.currentPlayer()
         val reply = InputView.readReplyToDrawing(currentPlayer)
 
-        val playerAfterDrawing = game.giveChanceToDraw(reply)
-        val isEmptyDeck = ResultView.showStateOfCards(playerAfterDrawing, reply)
+        val playerAfterDrawing = game.giveChanceToDrawing(reply)
+        val isPlayerWithLastCard = ResultView.showStateOfCards(playerAfterDrawing, reply)
 
-        if (isEmptyDeck) break
+        if (isPlayerWithLastCard) break
     }
+    ResultView.showPlayOfDealer(game.playOfDealer())
 
-    ResultView.showGameResult(game.result())
+    ResultView.showScoreResult(game.dealer, game.players)
+    ResultView.showMatchResult(game.getResult())
 }

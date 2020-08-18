@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Game.Companion.MAXIMUM_GAME_SCORE
-
 class Cards(cards: Set<Card>) {
     private val cards: MutableSet<Card> = cards.toMutableSet()
 
@@ -12,14 +10,14 @@ class Cards(cards: Set<Card>) {
 
     fun size() = cards.size
 
-    fun isMoreThanMaxScore(cards: Cards) = cards.sumOfScores() >= MAXIMUM_GAME_SCORE
-
     fun sumOfScores(): Int {
-        var sum = cards.map { it.score() }.sumBy { it }
+        val sum = cards.map { it.score() }.sumBy { it }
         return CardScore.sumWithAce(sum, hasAce())
     }
 
     private fun hasAce() = cards.any { it.isAce() }
+
+    fun firstCard(): Card = cards.first()
 
     override fun toString(): String {
         return cards.joinToString { it.toString() }
