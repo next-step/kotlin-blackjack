@@ -2,9 +2,7 @@ package blackjack.domain
 
 class Deck(private var deck: Set<Card>) {
 
-    constructor() : this(
-        DEFAULT_DECK
-    )
+    constructor() : this(DEFAULT_DECK)
 
     fun shuffled(): Set<Card> = deck.shuffled().toSet()
 

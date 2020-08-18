@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
-import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
+import blackjack.domain.Game.Companion.DEFAULT_CARD_COUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.NO
@@ -26,7 +26,7 @@ object ResultView {
         if (YES == reply) {
             println("${player}카드: ${player.stateOfCards()}")
         }
-        if (NO == reply && player.countOfCards() == DEFAULT_CARD_AMOUNT) {
+        if (NO == reply && player.countOfCards() == DEFAULT_CARD_COUNT) {
             println("${player}카드: ${player.stateOfCards()}")
         }
         return false
@@ -38,7 +38,7 @@ object ResultView {
             return
         }
 
-        if (dealer.countOfCards() != DEFAULT_CARD_AMOUNT) {
+        if (dealer.countOfCards() != DEFAULT_CARD_COUNT) {
             println("\n$DEALER_GETS_ONE_MORE_CARD")
             return
         }

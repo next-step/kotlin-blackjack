@@ -18,22 +18,15 @@ class Game(_players: List<Player>, val dealer: Dealer) {
     fun giveChanceToDrawing(reply: String): Player? {
         currentPlayer().apply {
             val state: PlayerState =
-                stateOfPlayer(wantToDraw = reply, score = totalScore(), count = countOfCards())
-
-            if (!isHit(state)) {
-                goToNextTurn()
-                return this
-            }
+                stateOfPlayer(needDrawing = reply, score = totalScore(), cardCount = countOfCards())
 
             if (isHit(state)) {
                 draw(dealer.pickCard()) ?: return null
             }
+
+            if (!isHit(state)) turn++
             return this
         }
-    }
-
-    private fun goToNextTurn() {
-        turn++
     }
 
     fun playOfDealer(): Dealer? {
@@ -58,6 +51,6 @@ class Game(_players: List<Player>, val dealer: Dealer) {
         private const val PLAYER_NAMES_DELIMITER = ","
         const val MAXIMUM_GAME_SCORE = 21
         const val MAXIMUM_SCORE_FOR_DEALER_DRAWING = 17
-        const val DEFAULT_CARD_AMOUNT = 2
+        const val DEFAULT_CARD_COUNT = 2
     }
 }
