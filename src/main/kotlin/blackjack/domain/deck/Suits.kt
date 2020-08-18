@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.deck
 
 enum class Suits(val value: String) {
     SPADES("스페이드"),
