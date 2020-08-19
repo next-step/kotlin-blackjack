@@ -28,8 +28,8 @@ class Dealer(override val name: String = DEALER_NAME) : Player {
             val prizeRate = it.getPrizeRate(this)
             val earnMoney = it.money.calculate(prizeRate)
 
-            it.money.plus(earnMoney)
-            this.money.minus(earnMoney)
+            it.money.add(earnMoney)
+            this.money.subtract(earnMoney)
         }
     }
 }

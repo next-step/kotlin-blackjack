@@ -8,7 +8,7 @@ class PlayerCards {
     private val _cards = mutableListOf<Card>()
     var cardStatus: CardStatus = CardStatus.UNDER
 
-    operator fun plus(card: Card) {
+    fun add(card: Card) {
         _cards.add(card)
     }
 

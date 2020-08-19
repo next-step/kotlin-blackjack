@@ -18,18 +18,18 @@ interface Player {
 
     fun call(): Boolean
 
-    fun plus(plusMoney: Money) {
-        money.plus(plusMoney)
+    fun add(addMoney: Money) {
+        money.add(addMoney)
     }
 
-    fun minus(minusMoney: Money) {
-        money.minus(minusMoney)
+    fun subtract(subtractMoney: Money) {
+        money.subtract(subtractMoney)
     }
 
     fun drawCard(card: Card) {
-        cards.plus(card)
         cards.setCardStatus()
         status = PlayerStatus.getStatus(cards)
+        cards.add(card)
     }
 
     fun getDisplayCards(): String {
