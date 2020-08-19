@@ -23,7 +23,7 @@ class Player(val name: String) {
     fun hit(): Boolean {
         return if (isBust) false
         else {
-            addCard(Deck.pop())
+            addCard(Deck.poll())
             true
         }
     }

@@ -8,7 +8,7 @@ class Participants(val players: List<Player>) {
     fun addCards(count: Int) {
         players.forEach {
             for (i in 1..count) {
-                it.addCard(Deck.pop())
+                it.addCard(Deck.poll())
             }
         }
     }
