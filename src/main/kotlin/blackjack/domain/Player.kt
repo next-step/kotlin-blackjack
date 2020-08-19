@@ -1,14 +1,14 @@
 package blackjack.domain
 
+import blackjack.domain.deck.Card
+import blackjack.domain.deck.Deck
+import blackjack.domain.deck.Denomination
+
 class Player(val name: String) {
-    val cards: MutableList<Card> = mutableListOf()
-    private val totalWithoutAce
-        get() = cards.filter { it.denomination != Denomination.ACE }.sumBy { it.denomination.calculate() }
-    val total
-        get() = cards.filter { it.denomination == Denomination.ACE }
-            .fold(totalWithoutAce) { total, ace -> total + ace.denomination.calculate(total) }
-    val isBust get() = total > 21
-    var isStay: Boolean = false
+    val cards = mutableListOf<Card>()
+    val total get() = cards.sortedBy { it.denomination }.fold(0) { total, card -> total + Denomination.scoreOf(card.denomination, total) }
+    private val isBust get() = total > 21
+    var isStay = false
 
     fun addCard(card: Card): List<Card> {
         cards.add(card)
@@ -23,7 +23,7 @@ class Player(val name: String) {
     fun hit(): Boolean {
         return if (isBust) false
         else {
-            addCard(Deck.take())
+            addCard(Deck.pop())
             true
         }
     }
@@ -40,6 +40,9 @@ class Player(val name: String) {
     fun choose(yOrN: String): Boolean {
         return if (yOrN == "y") {
             hit()
-        } else false
+        } else {
+            isStay = true
+            false
+        }
     }
 }
