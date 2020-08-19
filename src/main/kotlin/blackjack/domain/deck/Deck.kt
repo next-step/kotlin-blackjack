@@ -18,15 +18,15 @@ object Deck {
         }
     }
 
-    fun pop(): Card {
+    fun poll(): Card {
         if (cards.isEmpty()) {
             reset()
         }
         return cards.poll()
     }
 
-    fun reset() {
-        cards.run {
+    fun reset(): Queue<Card> {
+        return cards.apply {
             clear()
             addAll(INITIAL_DECK.shuffled())
         }

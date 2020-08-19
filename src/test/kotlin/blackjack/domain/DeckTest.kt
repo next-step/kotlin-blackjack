@@ -11,21 +11,19 @@ internal class DeckTest {
 
     @Test
     fun `52개의 카드를 가지고 있다`() {
-        val deck = Deck
-        assertThat(deck.cards.size).isEqualTo(52)
+        assertThat(Deck.cards.size).isEqualTo(52)
     }
 
     @Test
     fun `앞에서부터 카드를 뽑을 수 있다`() {
-        val deck = Deck
-        val actual = deck.pop()
+        val actual = Deck.poll()
         assertThat(actual).isInstanceOf(Card::class.java)
     }
 
     @Test
     fun `리셋할 수 있다`() {
-        val deck = Deck
-        deck.reset()
-        assertThat(deck).isNotEqualTo(Card(Suits.SPADES, Denomination.ACE))
+        val resetDeck = Deck.reset()
+        val actual = resetDeck.poll()
+        assertThat(actual).isNotEqualTo(Card(Suits.SPADES, Denomination.ACE))
     }
 }
