@@ -1,10 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.Participants
 
 object ResultView {
-    fun printPlayersCard(players: Players) {
+    fun printPlayersCard(players: Participants) {
         println("${players}에게 2장의 카드를 나누었습니다.")
         players.players.forEach {
             printPlayerCard(it)
@@ -15,7 +15,7 @@ object ResultView {
         println("${player.name}카드: ${player.cards.joinToString()}")
     }
 
-    fun printResult(players: Players) {
+    fun printResult(players: Participants) {
         players.players.forEach {
             println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.total}")
         }
