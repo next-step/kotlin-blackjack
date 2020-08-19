@@ -21,9 +21,8 @@ class PlayersTest {
     fun `플레이어 승자 테스트`() {
         val cards = Cards(
             listOf(
-                Card(Suit.CLUBS, Denomination.A),
-                Card(Suit.SPADES, Denomination.A),
-                Card(Suit.SPADES, Denomination.TEN),
+                Card(Suit.CLUBS, Denomination.ACE),
+                Card(Suit.SPADES, Denomination.ACE),
                 Card(Suit.SPADES, Denomination.NINE)
             )
         )

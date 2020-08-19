@@ -22,9 +22,9 @@ class Cards(cards: List<Card>) {
     }
 
     fun score(): Int {
-        var sum = cards.sumBy { it.denomination.score() }
+        var sum = cards.sumBy { it.denomination.score }
         cards.filter { it.denomination.isAce() }.forEach {
-            sum = it.denomination.scoreWithAce(sum)
+            sum = it.denomination.calculate(sum)
         }
         return sum
     }
