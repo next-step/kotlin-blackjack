@@ -26,7 +26,7 @@ private fun playGame(participants: Participants) {
     ResultView.printResult(participants)
 }
 
-fun playBlackjack(participants: Participants) {
+private fun playBlackjack(participants: Participants) {
     participants.players.forEach {
         while (it.isGaming()) {
             val yesOrNo = InputView.getMoreCard(it)
