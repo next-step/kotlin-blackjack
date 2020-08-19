@@ -1,36 +1,49 @@
 package blackjack.model.player
 
+import blackjack.model.Money
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
-import blackjack.model.card.Cards
+import blackjack.model.card.PlayerCards
+import blackjack.model.status.PlayerStatus
 import blackjack.view.OutputView
 
-const val WIN_TEXT = "승"
-const val LOSE_TEXT = "패"
 const val BLACKJACK_MAX_NUMBER = 21
+const val FIRST_TURN_CARD_COUNT = 2
 
-abstract class Player(open val name: String) {
-    var cards = Cards(mutableListOf())
-    lateinit var winLoseResult: String
+interface Player {
+    val name: String
+    var cards: PlayerCards
+    var money: Money
 
-    abstract fun call(): Boolean
-    abstract fun checkWinOrLose(players: List<Player>)
+    fun call(): Boolean
+
+    fun add(addMoney: Money) {
+        money.add(addMoney)
+    }
+
+    fun subtract(subtractMoney: Money) {
+        money.subtract(subtractMoney)
+    }
 
     fun drawCard(card: Card) {
         cards.add(card)
+    }
+
+    fun getStatus(): PlayerStatus {
+        return PlayerStatus.getStatus(cards)
     }
 
     fun getDisplayCards(): String {
         return cards.getDisplayCards()
     }
 
-    fun getTotalPointForBlackJack(): Int {
-        return cards.getBlackjackPoint()
+    fun getBlackJackPoint(): Int {
+        return cards.getPoint()
     }
 
     fun progressTurnForEach(cardDeck: CardDeck) {
         while (call()) {
-            drawCard(cardDeck.pick())
+            drawCard(cardDeck.draw())
             OutputView.printCardForPlayers(Players(listOf(this)))
         }
     }

@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-class Card(val suit: Suit, val denomination: Denomination) {
+data class Card(val suit: Suit, val denomination: Denomination) {
 
     enum class Suit(val title: String) {
         CLUBS("클로버"),
