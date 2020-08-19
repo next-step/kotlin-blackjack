@@ -8,16 +8,16 @@ class SumTest {
 
     @Test
     fun sumAll() {
-        assertThat(sumAll(numbers)).isEqualTo(21)
+        assertThat(numbers.sumAll()).isEqualTo(21)
     }
 
     @Test
     fun sumAllEven() {
-        assertThat(sumAllEven(numbers)).isEqualTo(12)
+        assertThat(numbers.sumAllEven()).isEqualTo(12)
     }
 
     @Test
     fun sumAllOverThree() {
-        assertThat(sumAllOverThree(numbers)).isEqualTo(15)
+        assertThat(numbers.sumAllOverThree()).isEqualTo(15)
     }
 }
