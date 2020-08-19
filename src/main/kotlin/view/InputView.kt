@@ -20,6 +20,12 @@ class InputView {
         return list.toList()
     }
 
+    fun receiveCard(player: Player): Boolean {
+        println("${player.name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val inputString = readLine()
+        return inputString.equals("y")
+    }
+
     private fun removeWhiteSpace(inputString: String): String {
         return if (inputString.contains(" ")) {
             inputString.replace(" ", "")

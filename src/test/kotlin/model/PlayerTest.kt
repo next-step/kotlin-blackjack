@@ -31,6 +31,14 @@ class PlayerTest {
         player.receive(Card(Suit.CLUBS, Denomination.ACE))
         player.receive(Card(Suit.CLUBS, Denomination.QUEEN))
         assertThat(player.score()).isGreaterThan(0)
+    }
 
+    @Test
+    @DisplayName("가지고 있는 카드에 ACE 가 있으면 11점이 된다")
+    fun `scoreOfCardAce`() {
+        val name = PlayerName("hello")
+        val player = Player(name)
+        player.receive(Card(Suit.CLUBS, Denomination.ACE))
+        assertThat(player.score()).isGreaterThanOrEqualTo(11)
     }
 }

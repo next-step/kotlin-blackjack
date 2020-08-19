@@ -14,4 +14,8 @@ enum class Denomination(val score: Int) {
     JACK(10),
     QUEEN(10),
     KING(10);
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 }
