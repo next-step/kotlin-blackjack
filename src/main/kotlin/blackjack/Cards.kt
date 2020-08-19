@@ -19,5 +19,9 @@ data class Cards(private var userCards: MutableList<Card>) {
 
     companion object {
         const val WIN_SCORE = 21
+
+        fun newInstance(): Cards {
+            return Cards((0..1).map { Card.getInstances() }.toMutableList())
+        }
     }
 }
