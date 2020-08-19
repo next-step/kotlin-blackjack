@@ -11,7 +11,7 @@ internal class DeckTest {
 
     @Test
     fun `52개의 카드를 가지고 있다`() {
-        assertThat(Deck.cards.size).isEqualTo(52)
+        assertThat(Deck.reset().size).isEqualTo(52)
     }
 
     @Test
