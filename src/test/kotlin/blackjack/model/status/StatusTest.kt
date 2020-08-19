@@ -33,8 +33,8 @@ class StatusTest {
         gamer.drawCard(card10)
         gamer.drawCard(card9)
 
-        Assertions.assertThat(dealer.status).isEqualTo(PlayerStatus.DONE)
-        Assertions.assertThat(gamer.status).isEqualTo(PlayerStatus.PLAYING)
+        Assertions.assertThat(dealer.getStatus()).isEqualTo(PlayerStatus.DONE)
+        Assertions.assertThat(gamer.getStatus()).isEqualTo(PlayerStatus.PLAYING)
     }
 
     @DisplayName(value = "카드 draw 이후 GameStatus is continue")

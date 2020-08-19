@@ -2,12 +2,10 @@ package blackjack.model.player
 
 import blackjack.model.Money
 import blackjack.model.card.PlayerCards
-import blackjack.model.status.PlayerStatus
 import blackjack.view.InputView
 
 class Gamer(override val name: String) : Player {
     override var cards = PlayerCards()
-    override var status = PlayerStatus.PLAYING
     override var money = Money()
 
     override fun call(): Boolean {

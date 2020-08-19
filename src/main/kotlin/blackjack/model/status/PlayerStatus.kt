@@ -7,7 +7,7 @@ enum class PlayerStatus {
 
     companion object {
         fun getStatus(cards: PlayerCards): PlayerStatus {
-            if (cards.cardStatus == CardStatus.UNDER) {
+            if (cards.getCardStatus() == CardStatus.UNDER) {
                 return PLAYING
             }
             return DONE

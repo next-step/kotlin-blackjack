@@ -13,7 +13,6 @@ const val FIRST_TURN_CARD_COUNT = 2
 interface Player {
     val name: String
     var cards: PlayerCards
-    var status: PlayerStatus
     var money: Money
 
     fun call(): Boolean
@@ -27,9 +26,11 @@ interface Player {
     }
 
     fun drawCard(card: Card) {
-        cards.setCardStatus()
-        status = PlayerStatus.getStatus(cards)
         cards.add(card)
+    }
+
+    fun getStatus(): PlayerStatus {
+        return PlayerStatus.getStatus(cards)
     }
 
     fun getDisplayCards(): String {
@@ -42,9 +43,8 @@ interface Player {
 
     fun progressTurnForEach(cardDeck: CardDeck) {
         while (call()) {
-            drawCard(cardDeck.pick())
+            drawCard(cardDeck.draw())
             OutputView.printCardForPlayers(Players(listOf(this)))
         }
-        status = PlayerStatus.DONE
     }
 }

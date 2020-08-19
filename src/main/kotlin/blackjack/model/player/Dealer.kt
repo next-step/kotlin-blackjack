@@ -2,7 +2,6 @@ package blackjack.model.player
 
 import blackjack.model.Money
 import blackjack.model.card.PlayerCards
-import blackjack.model.status.PlayerStatus
 import blackjack.view.OutputView
 
 const val DEALER_NAME = "딜러"
@@ -11,7 +10,6 @@ const val DEALER_CALL_MAX_CARD = 3
 
 class Dealer(override val name: String = DEALER_NAME) : Player {
     override var cards = PlayerCards()
-    override var status = PlayerStatus.PLAYING
     override var money = Money()
 
     override fun call(): Boolean {

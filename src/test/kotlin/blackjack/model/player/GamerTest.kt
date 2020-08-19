@@ -24,11 +24,8 @@ class GamerTest {
     @DisplayName(value = "21 이하, 딜러 승리")
     @Test
     fun dealerWin() {
-        dealer.cards.plus(card10)
-        dealer.cards.setCardStatus()
-
-        gamer.cards.plus(card9)
-        gamer.cards.setCardStatus()
+        dealer.cards.add(card10)
+        gamer.cards.add(card9)
 
         Assertions.assertThat(gamer.getPrizeRate(dealer)).isEqualTo(Gamer.ZERO)
     }
@@ -36,11 +33,8 @@ class GamerTest {
     @DisplayName(value = "21 이하, 게이머 승리")
     @Test
     fun gamerWin() {
-        dealer.cards.plus(card9)
-        dealer.cards.setCardStatus()
-
-        gamer.cards.plus(cardA)
-        gamer.cards.setCardStatus()
+        dealer.cards.add(card9)
+        gamer.cards.add(cardA)
 
         Assertions.assertThat(gamer.getPrizeRate(dealer)).isEqualTo(Gamer.DOUBLE)
     }
@@ -49,15 +43,13 @@ class GamerTest {
     @Test
     fun gamerWinOverBlackJackNumber() {
 
-        dealer.cards.plus(card8)
-        dealer.cards.plus(card8)
-        dealer.cards.plus(card8)
-        dealer.cards.setCardStatus()
+        dealer.cards.add(card8)
+        dealer.cards.add(card8)
+        dealer.cards.add(card8)
 
-        gamer.cards.plus(card8)
-        gamer.cards.plus(card8)
-        gamer.cards.plus(card9)
-        gamer.cards.setCardStatus()
+        gamer.cards.add(card8)
+        gamer.cards.add(card8)
+        gamer.cards.add(card9)
 
         Assertions.assertThat(gamer.getPrizeRate(dealer)).isEqualTo(Gamer.DOUBLE)
     }
@@ -66,13 +58,13 @@ class GamerTest {
     @Test
     fun gamerBlackJack() {
 
-        dealer.cards.plus(cardA)
-        dealer.cards.plus(card9)
-        dealer.cards.setCardStatus()
+        dealer.cards.add(cardA)
+        dealer.cards.add(card9)
+        dealer.cards.getCardStatus()
 
-        gamer.cards.plus(cardA)
-        gamer.cards.plus(card10)
-        gamer.cards.setCardStatus()
+        gamer.cards.add(cardA)
+        gamer.cards.add(card10)
+        gamer.cards.getCardStatus()
 
         Assertions.assertThat(gamer.getPrizeRate(dealer)).isEqualTo(Gamer.DOUBLE_HALF)
     }
@@ -81,13 +73,13 @@ class GamerTest {
     @Test
     fun gamerBlackJackAndDealerBlackJack() {
 
-        dealer.cards.plus(cardA)
-        dealer.cards.plus(card10)
-        dealer.cards.setCardStatus()
+        dealer.cards.add(cardA)
+        dealer.cards.add(card10)
+        dealer.cards.getCardStatus()
 
-        gamer.cards.plus(cardA)
-        gamer.cards.plus(card10)
-        gamer.cards.setCardStatus()
+        gamer.cards.add(cardA)
+        gamer.cards.add(card10)
+        gamer.cards.getCardStatus()
 
         Assertions.assertThat(gamer.getPrizeRate(dealer)).isEqualTo(Gamer.RESTORE)
     }

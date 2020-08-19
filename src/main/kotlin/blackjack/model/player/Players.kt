@@ -10,7 +10,7 @@ class Players(private val players: List<Player>) {
 
     fun drawCard(cardDeck: CardDeck) {
         players.forEach {
-            it.drawCard(cardDeck.pick())
+            it.drawCard(cardDeck.draw())
         }
     }
 
@@ -19,7 +19,7 @@ class Players(private val players: List<Player>) {
     }
 
     fun checkGameDone(): Boolean {
-        return players.none { it.status == PlayerStatus.PLAYING }
+        return players.none { it.getStatus() == PlayerStatus.PLAYING }
     }
 
     fun checkPrize() {

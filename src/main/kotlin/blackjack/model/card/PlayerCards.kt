@@ -6,14 +6,13 @@ import blackjack.model.status.CardStatus
 
 class PlayerCards {
     private val _cards = mutableListOf<Card>()
-    var cardStatus: CardStatus = CardStatus.UNDER
 
     fun add(card: Card) {
         _cards.add(card)
     }
 
-    fun setCardStatus() {
-        cardStatus = CardStatus.getStatus(getPoint())
+    fun getCardStatus(): CardStatus {
+        return CardStatus.getStatus(getPoint())
     }
 
     fun getCount(): Int {
@@ -34,10 +33,10 @@ class PlayerCards {
     }
 
     fun isBlackJack(): Boolean {
-        return _cards.size == FIRST_TURN_CARD_COUNT && cardStatus == CardStatus.BLACKJACK
+        return _cards.size == FIRST_TURN_CARD_COUNT && getCardStatus() == CardStatus.BLACKJACK
     }
 
     fun isBust(): Boolean {
-        return cardStatus == CardStatus.BUST
+        return getCardStatus() == CardStatus.BUST
     }
 }

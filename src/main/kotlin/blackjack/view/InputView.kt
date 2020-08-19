@@ -23,8 +23,8 @@ object InputView {
 
             val betMoney = Money(readLine()!!.toInt())
 
-            dealer.plus(betMoney)
-            it.minus(betMoney)
+            dealer.add(betMoney)
+            it.subtract(betMoney)
         }
         return gamers
     }

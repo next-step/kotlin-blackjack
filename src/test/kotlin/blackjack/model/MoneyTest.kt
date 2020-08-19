@@ -22,8 +22,8 @@ class MoneyTest {
     fun betMoney() {
         val betMoney = Money(500)
 
-        dealer.plus(betMoney)
-        gamer.minus(betMoney)
+        dealer.add(betMoney)
+        gamer.subtract(betMoney)
 
         Assertions.assertThat(dealer.money).isEqualTo(Money(500))
         Assertions.assertThat(gamer.money).isEqualTo(Money(-500))

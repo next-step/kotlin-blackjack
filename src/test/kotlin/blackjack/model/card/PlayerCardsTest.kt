@@ -19,8 +19,8 @@ class PlayerCardsTest {
     @DisplayName(value = "카드 점수 확인 - 블랙잭 with ACE1")
     @Test
     fun `playerCard_BlackJack_Point1`() {
-        cards.plus(cardA)
-        cards.plus(card10)
+        cards.add(cardA)
+        cards.add(card10)
 
         Assertions.assertThat(cards.getPoint()).isEqualTo(21)
     }
@@ -28,9 +28,9 @@ class PlayerCardsTest {
     @DisplayName(value = "카드 점수 확인 - 블랙잭 with ACE2")
     @Test
     fun `playerCard_BlackJack_Point2`() {
-        cards.plus(cardA)
-        cards.plus(card5)
-        cards.plus(card5)
+        cards.add(cardA)
+        cards.add(card5)
+        cards.add(card5)
 
         Assertions.assertThat(cards.getPoint()).isEqualTo(21)
     }
@@ -38,8 +38,8 @@ class PlayerCardsTest {
     @DisplayName(value = "카드 점수 확인 - 블랙잭 without ACE")
     @Test
     fun playerCardPoint() {
-        cards.plus(card10)
-        cards.plus(card5)
+        cards.add(card10)
+        cards.add(card5)
 
         Assertions.assertThat(cards.getPoint()).isEqualTo(15)
     }
