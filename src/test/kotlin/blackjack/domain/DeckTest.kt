@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DeckTest {
-    private val deck = Deck()
+    private val deck = Deck
 
     @Test
     fun `52개의 카드를 가지고 있다`() {
