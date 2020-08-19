@@ -1,26 +1,43 @@
 package blackjack
 
+import blackjack.Dealer.Companion.DEALER_STANDARD_SCORE
+
 fun main() {
     val players = Players(InputView.inputPlayers())
     OutputView.showPlayersCard(players.getPlayers())
     playGame(players.getPlayers())
-    OutputView.getWinner(players.getPlayers())
+    OutputView.showWinners(players.getPlayers())
 }
 
-fun playGame(players: List<Player>) {
+fun playGame(players: List<Gamer>) {
+    val dealerScore = players.filterIsInstance<Dealer>()[0].getDealerScore()
     players.forEach {
-        val score = it.getCards().sumCardNumbers()
+        val score = it.cards.sumCardNumbers()
         if (score > Cards.WIN_SCORE) return
-        addUserCards(it)
+        addGamer(it)
     }
+    if (dealerScore <= DEALER_STANDARD_SCORE) {
+        OutputView.showDealerStatus()
+    }
+}
+
+private fun addGamer(player: Gamer) {
+    when (player) {
+        is Player -> addUserCards(player)
+        is Dealer -> selectMoreDealerCard(player)
+    }
+}
+
+private fun selectMoreDealerCard(player: Dealer) {
+    player.addCards(Card.getInstances())
 }
 
 private fun addUserCards(player: Player) {
     loop@ while (true) {
         try {
-            val selectedValue = InputView.selectMoreCard(player.getName())
+            val selectedValue = InputView.selectMoreCard(player.name)
             if (player.addMoreCards(selectedValue, Card.getInstances())) break@loop
-            OutputView.getUserCard(player)
+            OutputView.showUserCards(player)
         } catch (e: IllegalArgumentException) {
             println(e.message)
             break@loop
