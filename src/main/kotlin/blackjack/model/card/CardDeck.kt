@@ -3,9 +3,7 @@ package blackjack.model.card
 class CardDeck {
     private val _cards: MutableList<Card> = generate()
 
-    fun pick(): Card = draw()
-
-    private fun draw(): Card {
+    fun draw(): Card {
         val drawCard = _cards[BOTTOM_CARD_NUMBER]
         _cards.remove(drawCard)
 
@@ -23,7 +21,7 @@ class CardDeck {
                     cards.add(Card(suit, denomination))
                 }
             }
-            return cards.shuffled() as MutableList<Card>
+            return cards.shuffled().toMutableList()
         }
     }
 }

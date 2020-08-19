@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.model.BlackJackGame
 import blackjack.model.player.Dealer
+import blackjack.model.player.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -10,14 +11,14 @@ fun main() {
     val gamers = InputView.getGamersName()
     val gamersWithBet = InputView.getBetAmount(dealer, gamers)
 
-    val players = getPlayers(dealer, gamersWithBet)
+    val players = Players(listOf(dealer) + gamersWithBet)
     val blackJackGame = BlackJackGame(players)
 
     OutputView.firstTurn(players)
     blackJackGame.firstTurn()
     OutputView.printCardForPlayers(players)
 
-    if (!isGameDone(players)) {
+    if (!players.checkGameDone()) {
         blackJackGame.progressTurn()
     }
 
