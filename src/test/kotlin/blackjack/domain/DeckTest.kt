@@ -8,21 +8,23 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DeckTest {
-    private val deck = Deck
 
     @Test
     fun `52개의 카드를 가지고 있다`() {
+        val deck = Deck
         assertThat(deck.cards.size).isEqualTo(52)
     }
 
     @Test
     fun `앞에서부터 카드를 뽑을 수 있다`() {
+        val deck = Deck
         val actual = deck.pop()
-        assertThat(actual).isEqualTo(Card(Suits.SPADES, Denomination.ACE))
+        assertThat(actual).isInstanceOf(Card::class.java)
     }
 
     @Test
     fun `리셋할 수 있다`() {
+        val deck = Deck
         deck.reset()
         assertThat(deck).isNotEqualTo(Card(Suits.SPADES, Denomination.ACE))
     }
