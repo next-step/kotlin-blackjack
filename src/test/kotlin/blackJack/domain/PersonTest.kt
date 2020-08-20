@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class PersonTest {
     @Test
-    fun give_card() {
+    fun add_card() {
         val person = Player("test")
 
         person.addCard(Card(Shape.SPADE, Denomination.TEN))
@@ -18,20 +18,16 @@ class PersonTest {
     @Test
     fun get_score() {
         val person = Player("test")
-        person.addCard(Card(Shape.SPADE, Denomination.TEN))
-        person.addCard(Card(Shape.SPADE, Denomination.TEN))
+        val cards = listOf(Card(Shape.SPADE, Denomination.TEN), Card(Shape.SPADE, Denomination.TEN))
 
-        assertThat(person.getTotalScore()).isEqualTo(20)
+        assertThat(person.getTotalScore(cards)).isEqualTo(20)
     }
 
     @Test
     fun player_is_over_21() {
         val person = Player("test")
-        person.addCard(Card(Shape.SPADE, Denomination.TEN))
-        person.addCard(Card(Shape.SPADE, Denomination.TEN))
-        person.addCard(Card(Shape.SPADE, Denomination.TEN))
 
-        assertThat(person.isBust()).isTrue()
+        assertThat(person.isBust(22)).isTrue()
     }
 
     @Test

@@ -13,9 +13,9 @@ abstract class Person(val name: String) {
         _hands.add(card)
     }
 
-    fun getTotalScore(): Int = TotalScore.getScore(_hands)
+    fun getTotalScore(cards: List<Card> = _hands): Int = TotalScore.getScore(cards)
 
-    fun isBust(): Boolean = getTotalScore() > BUST_SCORE
+    fun isBust(totalScore: Int = getTotalScore()): Boolean = totalScore > BUST_SCORE
 
     fun getHandsSize(): Int = _hands.size
 

@@ -24,6 +24,17 @@ class BlackJack(names: List<String>) {
         players.forEach { function(it) }
     }
 
+    fun playerGetCard(player: Player, inputValue: String): Boolean? {
+        if (inputValue == "y") {
+            dealer.giveCard(player)
+            return true
+        }
+        if (inputValue == "n") {
+            return false
+        }
+        return null
+    }
+
     companion object {
         private const val START_HANDS = 2
     }

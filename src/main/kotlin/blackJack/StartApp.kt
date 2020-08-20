@@ -21,29 +21,24 @@ fun startGame() {
     val blackJack = BlackJack(names)
     ResultView.resultReady(blackJack)
     val dealer = blackJack.dealer
-    blackJack.playersForEach { playerCheckBust(it, dealer) }
+    blackJack.playersForEach { playerCheckBust(it, blackJack) }
     ResultView.resultOpenDealerCard(dealer)
     dealerGetCard(dealer)
     ResultView.resultGame(blackJack)
 }
 
-fun playerCheckBust(player: Player, dealer: Dealer) {
+fun playerCheckBust(player: Player, blackJack: BlackJack) {
     canGetCard = true
     while (!player.isBust() && canGetCard) {
-        playerWhetherGet(player, dealer)
+        playerWhetherGet(player, blackJack)
     }
 }
 
-fun playerWhetherGet(player: Player, dealer: Dealer) {
+fun playerWhetherGet(player: Player, blackJack: BlackJack) {
     val inputValue = InputView.inputWhether(player)
-    if (inputValue == "y") {
-        dealer.giveCard(player)
-        ResultView.resultWhetherBust(player)
-    }
-    if (inputValue == "n") {
-        ResultView.resultPeopleHands(player)
-        canGetCard = false
-    }
+    canGetCard = blackJack.playerGetCard(player, inputValue)
+        ?: throw IllegalArgumentException("$inputValue 에 대한 요청은 없습니다. y 또는 n 으로 답해주세요")
+    ResultView.resultWhetherBust(player)
 }
 
 fun dealerGetCard(dealer: Dealer) {

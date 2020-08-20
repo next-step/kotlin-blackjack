@@ -1,7 +1,7 @@
 package blackJack.domain
 
 class Result(private val dealer: Dealer, players: Players) {
-    private val _dealerResult = WinOrLose.values().map { it to 0 }.toMap().toMutableMap()
+    private val _dealerResult = WinOrLose.values().map { it to DEFAULT }.toMap().toMutableMap()
     val dealerResult
         get() = _dealerResult.toMap()
     val playersResult = players.players.map { it to getWinOrLose(it) }.toMap()
@@ -40,4 +40,8 @@ class Result(private val dealer: Dealer, players: Players) {
     private fun checkTotalScore(player: Player): Boolean = player.getTotalScore() > dealer.getTotalScore()
 
     private fun checkDrawPlayer(player: Player): Boolean = player.getTotalScore() == dealer.getTotalScore()
+
+    companion object {
+        const val DEFAULT = 0
+    }
 }

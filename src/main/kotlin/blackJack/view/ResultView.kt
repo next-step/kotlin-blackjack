@@ -23,7 +23,7 @@ object ResultView {
         players.forEach { resultPeopleHands(it) }
     }
 
-    fun resultPeopleHands(person: Person, result: String = "") {
+    private fun resultPeopleHands(person: Person, result: String = "") {
         println("$person 카드: ${person.hands.joinToString { it.toString() }} $result")
         blank()
     }
