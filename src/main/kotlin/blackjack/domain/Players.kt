@@ -1,6 +1,6 @@
 package blackjack.domain
 
-private const val FIRST_PICK_COUNT = 2
+const val FIRST_PICK_COUNT = 2
 
 data class Players(val players: List<Player>) {
     val dealer: Dealer = players[0] as Dealer
@@ -16,39 +16,27 @@ data class Players(val players: List<Player>) {
     }
 
     fun getNextPlayer(): Player? {
-        if (players.isEmpty()) return null
-        return try {
-            currentPlayer = players.drop(players.indexOf(currentPlayer) + 1).plus(players.filterNot { it is Dealer })
-                .find { it.isHit }!!
-            if (currentPlayer.isBusted()) getNextPlayer()
-            currentPlayer
-        } catch (e: Exception) {
-            if (dealer.isHit) return dealer
-            null
+        val list = players.drop(players.indexOf(currentPlayer) + 1)
+            .plus(players.filterNot { it is Dealer }).filterNot { it.isFinished() }
+        if (list.isEmpty() && dealer.isHit) {
+            currentPlayer = dealer
+            return currentPlayer
         }
+        val player = list.firstOrNull()
+        if (player != null) currentPlayer = player
+        return player
     }
 
-    fun calculateResult() {
-        val dealerPoint: Int = dealer.point
-        val onlyPlayers = players.filterNot { it == dealer }.asSequence()
-        if (dealer.isBusted()) {
-            onlyPlayers.forEach { it.playResult = PlayResultType.WIN }
-        } else {
-            onlyPlayers.forEach { it.getResult(dealerPoint) }
-        }
-
-        dealer.dealerResult.setStatic(
-            onlyPlayers.filter { it.playResult == PlayResultType.LOSE }.count(),
-            onlyPlayers.filter { it.playResult == PlayResultType.WIN }.count(),
-            onlyPlayers
-        )
+    fun calculateResult(dealerPoint: Int = dealer.point) {
+        val onlyPlayers = players.filterNot { it == dealer }
+        onlyPlayers.forEach { it.calculateResult(dealerPoint) }
     }
 
     companion object {
-        fun newInstance(playerNames: String): Players? {
-            if (!PLAYER_REGULAR_EXPRESSION.matches(playerNames)) return null
+        fun from(playerNames: String): Players {
+            require(PLAYER_REGULAR_EXPRESSION.matches(playerNames)) { "플레이어명은 영문과 구분자 ',' 로만 입력해주세요." }
             val players = playerNames.split(SPLIT_CHARACTER).map { Player(it) }.toMutableList()
-            players.add(0, Dealer(playerCount = players.size))
+            players.add(0, Dealer())
             return Players(players)
         }
     }

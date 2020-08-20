@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.domain.BetMoney
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
@@ -12,6 +11,7 @@ import blackjack.domain.Players
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -25,16 +25,15 @@ class PlayerTest {
     @EmptySource
     @ValueSource(strings = ["ace:con", "$", "ace,"])
     fun checkPlayersInput(playerNames: String) {
-        val players = Players.newInstance(playerNames)
-        assertThat(players)
-            .isNull()
+        assertThatThrownBy { Players.from(playerNames) }
+            .isInstanceOf(IllegalArgumentException::class.java)
     }
 
     @DisplayName("플레이어 수 확인")
     @Test
     fun checkPlayers() {
-        val players = Players.newInstance("ace,con")
-        assertThat(BlackjackGame(players!!, CardDeck()).players.players.size)
+        val players = Players.from("ace,con")
+        assertThat(BlackjackGame(players).players.players.size)
             .isEqualTo(3)
     }
 
@@ -61,8 +60,8 @@ class PlayerTest {
     @DisplayName("다음턴 사용자 확인")
     @Test
     fun checkNextTurn() {
-        val players = Players.newInstance("ace,hi,con,race")
-        val blackjackGame = BlackjackGame(players!!, CardDeck())
+        val players = Players.from("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players)
         repeat(4) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
@@ -71,106 +70,70 @@ class PlayerTest {
     @Test
     fun checkPlayerCard() {
         val cardDeck = CardDeck()
-        val players = Players.newInstance("ace,hi,con,race")
-        val blackjackGame = BlackjackGame(players!!, cardDeck)
+        val players = Players.from("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players, cardDeck)
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
+        blackjackGame.startGame()
+
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
     }
 
-    @DisplayName("사용자가 베팅머니 확인")
+    @DisplayName("플레이어의 승리 확인")
     @Test
-    fun checkBetMoney() {
-        val players = Players.newInstance("ace,hi,con,race")
-
-        players!!.players.forEach {
-            it.betMoney = BetMoney.newInstance("1000")
-        }
-
-        assertThat(players.players[0].betMoney!!.money)
-            .isEqualTo(1000)
-    }
-
-    @DisplayName("플레이어의 승무패 확인")
-    @Test
-    fun checkPlayerResult() {
-        val players = Players.newInstance("ace,hi,con")
-        val onlyPlayers = players!!.players.filterNot { it is Dealer }.asSequence()
-
+    fun checkPlayerWin() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
         repeat(3) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.EIGHT)) }
         repeat(2) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.K)) } }
         players.calculateResult()
+
         val winCount = onlyPlayers.count { it.playResult == PlayResultType.WIN }
 
         assertThat(winCount).isEqualTo(onlyPlayers.count())
     }
 
-    @DisplayName("플레이어가 승리했을 경우 수익금 확인")
+    @DisplayName("플레이어의 블랙잭 확인")
     @Test
-    fun checkProfitMoneyWin() {
-        val players = Players.newInstance("ace,hi,con")
-        val onlyPlayers = players!!.players.filterNot { it is Dealer }.asSequence()
-        onlyPlayers.forEach { it.betMoney = BetMoney(1000) }
+    fun checkPlayerBlackjack() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
+        onlyPlayers.forEach {
+            it.addCard(Card(SuitType.CLUB, ValueType.Q))
+            it.addCard(Card(SuitType.CLUB, ValueType.A))
+        }
+        players.calculateResult(18)
 
-        repeat(3) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.EIGHT)) }
-        repeat(2) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.K)) } }
-        players.calculateResult()
-        val totalProfitMoney = onlyPlayers.filter { it.playResult == PlayResultType.WIN }.sumBy { it.getProfitMoney() }
+        val blackJackCount = onlyPlayers.count { it.playResult == PlayResultType.BLACKJACK }
 
-        assertThat(totalProfitMoney).isEqualTo(3000)
+        assertThat(blackJackCount).isEqualTo(onlyPlayers.count())
     }
 
-    @DisplayName("플레이어가 패배했을 경우 수익금 확인")
+    @DisplayName("플레이어의 패배 확인")
     @Test
-    fun checkProfitMoneyLose() {
-        val players = Players.newInstance("ace,hi,con")
-        val onlyPlayers = players!!.players.filterNot { it is Dealer }.asSequence()
-        onlyPlayers.forEach { it.betMoney = BetMoney(1000) }
-
+    fun checkPlayerLose() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
         repeat(2) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.NINE)) }
         repeat(3) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.K)) } }
         players.calculateResult()
-        val totalProfitMoney = onlyPlayers.sumBy { it.getProfitMoney() }
 
-        assertThat(totalProfitMoney).isEqualTo(-3000)
+        val loseCount = onlyPlayers.count { it.playResult == PlayResultType.LOSE }
+
+        assertThat(loseCount).isEqualTo(onlyPlayers.count())
     }
 
-    @DisplayName("플레이어와 딜러가 무승부일 경우 수익금 확인")
+    @DisplayName("플레이어의 무 확인")
     @Test
-    fun checkProfitMoneyDraw() {
-        val players = Players.newInstance("ace,hi,con")
-        val onlyPlayers = players!!.players.filterNot { it is Dealer }.asSequence()
-        onlyPlayers.forEach { it.betMoney = BetMoney(1000) }
-
-        players.players.forEach {
-            run {
-                it.addCard(Card(SuitType.CLUB, ValueType.Q))
-                it.addCard(Card(SuitType.CLUB, ValueType.A))
-            }
-        }
-        players.calculateResult()
-        val totalProfitMoney = onlyPlayers.sumBy { it.getProfitMoney() }
-
-        assertThat(totalProfitMoney).isEqualTo(0)
-    }
-
-    @DisplayName("플레이어가 블랙잭으로 승리했을 경우 수익금 확인")
-    @Test
-    fun checkProfitMoneyWithBlackJack() {
-        val players = Players.newInstance("ace,hi,con")
-        val onlyPlayers = players!!.players.filterNot { it is Dealer }.asSequence()
-        onlyPlayers.forEach { it.betMoney = BetMoney(1000) }
-
+    fun checkPlayerDraw() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
         repeat(2) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.NINE)) }
-        onlyPlayers.forEach {
-            run {
-                it.addCard(Card(SuitType.CLUB, ValueType.Q))
-                it.addCard(Card(SuitType.CLUB, ValueType.A))
-            }
-        }
+        repeat(2) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.NINE)) } }
         players.calculateResult()
-        val totalProfitMoney = onlyPlayers.sumBy { it.getProfitMoney() }
 
-        assertThat(totalProfitMoney).isEqualTo(4500)
+        val drawCount = onlyPlayers.count { it.playResult == PlayResultType.DRAW }
+
+        assertThat(drawCount).isEqualTo(onlyPlayers.count())
     }
 }
