@@ -22,7 +22,7 @@ object InputView {
         return text
     }
 
-    fun readStake(player: Player): Int {
+    fun readBetMoney(player: Player): Int {
         return readNumber("\n${player}의 배팅 금액은?")
     }
 

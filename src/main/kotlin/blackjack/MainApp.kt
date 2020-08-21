@@ -10,7 +10,7 @@ fun main() {
     val game = Game(playerNames)
 
     while (!game.canTurnOver()) {
-        game.getStake(InputView.readStake(game.currentPlayer()))
+        game.getBetMoney(InputView.readBetMoney(game.currentPlayer()))
     }
 
     game.resetTurn()

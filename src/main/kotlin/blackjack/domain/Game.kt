@@ -18,7 +18,7 @@ class Game(val players: Players, val dealer: Dealer) {
         dealer
     )
 
-    fun getStake(amount: Int) {
+    fun getBetMoney(amount: Int) {
         players.setStake(amount)
     }
 
