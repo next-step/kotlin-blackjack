@@ -17,7 +17,7 @@ enum class CardScore(private val score: Int, private val initial: String) {
 
     companion object {
         private const val ACE_ELEVEN_AVAILABLE_SCORE = 11
-        private const val ADDED_SCORE_WHEN_USING_ELEVEN_ACE = 10
+        private const val SCORE_ADDED_WHEN_USING_ACE_ELEVEN = 10
 
         fun scoreOfCard(cardScore: CardScore): Int = cardScore.score
 
@@ -26,7 +26,7 @@ enum class CardScore(private val score: Int, private val initial: String) {
         fun sumWithAce(sum: Int, hasAce: Boolean): Int {
             var sumWithAce = sum
             if (sumWithAce <= ACE_ELEVEN_AVAILABLE_SCORE && hasAce) {
-                sumWithAce += ADDED_SCORE_WHEN_USING_ELEVEN_ACE
+                sumWithAce += SCORE_ADDED_WHEN_USING_ACE_ELEVEN
             }
             return sumWithAce
         }

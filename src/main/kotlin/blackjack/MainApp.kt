@@ -8,19 +8,26 @@ fun main() {
 
     val playerNames = InputView.readPlayerNames()
     val game = Game(playerNames)
+
+    while (!game.canTurnOver()) {
+        game.getStake(InputView.readStake(game.currentPlayer()))
+    }
+
+    game.resetTurn()
+
     ResultView.showResultOfSetUp(game.dealer, game.players)
 
-    while (!game.isOver()) {
-        val currentPlayer = game.currentPlayer()
-        val reply = InputView.readReplyToDrawing(currentPlayer)
+    while (!game.isOver) {
+        val player = game.currentPlayer()
+        val replyOfPlayer: String =
+            InputView.readReplyToDrawing(player)
 
-        val playerAfterDrawing = game.giveChanceToDrawing(reply)
-        val isPlayerWithLastCard = ResultView.showStateOfCards(playerAfterDrawing, reply)
-
-        if (isPlayerWithLastCard) break
+        game.giveChanceToDraw(replyOfPlayer)
+        ResultView.showCardsDetail(player, replyOfPlayer)
     }
     ResultView.showPlayOfDealer(game.playOfDealer())
 
+    game.checkWin()
     ResultView.showScoreResult(game.dealer, game.players)
-    ResultView.showMatchResult(game.getResult())
+    ResultView.showMatchResult(game.dealer, game.players)
 }

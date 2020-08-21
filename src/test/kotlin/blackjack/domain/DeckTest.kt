@@ -1,39 +1,35 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class DeckTest {
     private lateinit var deck: Deck
 
     @BeforeEach
-    fun `set up`() {
+    fun setUp() {
         deck = Deck()
     }
 
-    @DisplayName("카드 한 장을 뽑고 덱에서 제거한다")
     @Test
-    fun `provide a card`() {
+    fun `카드 한 장을 주고 덱에서 한 장 제거한다`() {
         // when
-        deck.provideCard(deck.shuffled())
+        deck.provideCard()
 
         // then
-        assertTrue(deck.shuffled().size == 51)
+        assertThat(deck.size).isEqualTo(51)
     }
 
-    @DisplayName("Deck이 비어있을 때(53번째 카드를 꺼낼 때) null을 반환한다")
     @Test
-    fun `empty deck returns null`() {
+    fun `덱이 비었을 때 새로운 덱을 사용한다`() {
         // given
-        repeat(52) { deck.provideCard(deck.shuffled()) }
+        repeat(52) { deck.provideCard() }
 
         // when
-        val card53th = deck.provideCard(deck.shuffled())
+        val card53th = deck.provideCard()
 
         // then
-        assertThat(card53th).isEqualTo(null)
+        assertThat(card53th).isNotNull
     }
 }

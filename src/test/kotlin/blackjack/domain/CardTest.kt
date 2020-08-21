@@ -12,20 +12,20 @@ class CardTest {
     private lateinit var kingCard: Card
 
     @BeforeEach
-    fun `set up`() {
-        aceCard = Card(Pair(CardScore.ACE, Suit.HEART))
-        aceCardCopy = Card(Pair(CardScore.ACE, Suit.HEART))
-        kingCard = Card(Pair(CardScore.KING, Suit.DIAMOND))
+    fun setUp() {
+        aceCard = Card(CardScore.ACE, Suit.HEART)
+        aceCardCopy = Card(CardScore.ACE, Suit.HEART)
+        kingCard = Card(CardScore.KING, Suit.DIAMOND)
     }
 
     @Test
-    fun `same object`() {
-        assertTrue(aceCard == aceCardCopy)
-        assertFalse(aceCard == kingCard)
+    fun `같은 객체`() {
+        assertThat(aceCard).isEqualTo(aceCardCopy)
+        assertThat(aceCard).isNotEqualTo(kingCard)
     }
 
     @Test
-    fun score() {
+    fun `점수 확인`() {
         // when
         val aceCardScore = aceCard.score()
         val kingCardScore = kingCard.score()
@@ -36,7 +36,7 @@ class CardTest {
     }
 
     @Test
-    fun isAce() {
+    fun `is Ace`() {
         assertTrue(aceCard.isAce())
         assertFalse(kingCard.isAce())
     }

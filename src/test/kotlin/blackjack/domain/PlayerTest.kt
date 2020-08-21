@@ -6,50 +6,38 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    private lateinit var firstCard: Card
+    private lateinit var secondCard: Card
     private lateinit var player: Player
-    private lateinit var deck: Deck
-    private lateinit var dealer: Dealer
 
     @BeforeEach
-    fun `set up`() {
+    fun setUp() {
         player = Player(name = "mark")
-        deck = Deck(setOf(Card(Pair(CardScore.SEVEN, Suit.SPADE))))
-        dealer = Dealer(deck)
+        firstCard = Card(CardScore.SEVEN, Suit.SPADE)
+        secondCard = Card(CardScore.TEN, Suit.HEART)
     }
 
-    @DisplayName("카드를 뽑을 때 1장씩 반환되고, 덱이 비어있으면 null이 반환된다")
+    @DisplayName("카드를 뽑을 때 1장씩 반환되고, 덱이 비어있으면 새로운 덱에서 카드를 뽑는다")
     @Test
-    fun `draw a card`() {
+    fun `카드 한 장 뽑기`() {
         // when
-        val cards = player.draw(dealer.pickCard())
-        val nullCards = player.draw(dealer.pickCard())
+        player.draw(firstCard)
 
         // then
-        assertThat(cards?.size()).isEqualTo(1)
-        assertThat(nullCards).isEqualTo(null)
+        assertThat(player.stateOfCards()).isEqualTo("7스페이드")
+        assertThat(player.cardCount()).isEqualTo(1)
     }
 
     @Test
-    fun `amount of cards`() {
+    fun `카드 점수 합계`() {
         // given
-        player.draw(dealer.pickCard())
+        player.draw(firstCard)
+        player.draw(secondCard)
 
         // when
-        val amount = player.countOfCards()
+        val sum = player.score()
 
         // then
-        assertThat(amount).isEqualTo(1)
-    }
-
-    @Test
-    fun `sum of scores`() {
-        // given
-        player.draw(dealer.pickCard())
-
-        // when
-        val sum = player.totalScore()
-
-        // then
-        assertThat(sum).isEqualTo(7)
+        assertThat(sum).isEqualTo(17)
     }
 }

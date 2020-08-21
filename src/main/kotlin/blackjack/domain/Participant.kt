@@ -1,20 +1,22 @@
 package blackjack.domain
 
 interface Participant {
-    val cards: Cards
 
-    fun draw(newCard: Card?): Cards?
+    fun setBetMoney(amount: Int)
 
-    fun stateOfPlayer(needDrawing: String, score: Int, cardCount: Int): PlayerState =
-        PlayerState.valueOfState(needDrawing, totalScore(), countOfCards())
+    fun draw(newCard: Card)
 
-    fun isHit(state: PlayerState) = state == PlayerState.HIT
+    fun getStateBy(reply: String = NO): State
 
-    fun isBust(state: PlayerState): Boolean = state == PlayerState.BUST
+    fun isHit(state: State) = state == State.HIT
 
-    fun countOfCards(): Int = cards.size()
+    fun isBust(state: State): Boolean = state == State.BUST
 
-    fun totalScore(): Int = cards.sumOfScores()
+    fun isBlackJack(state: State) = state == State.BLACKJACK
 
-    fun stateOfCards(): String = cards.toString()
+    fun score(): Int
+
+    fun cardCount(): Int
+
+    fun stateOfCards(): String
 }

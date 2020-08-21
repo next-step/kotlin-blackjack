@@ -3,17 +3,15 @@ package blackjack.domain
 import blackjack.domain.CardScore.Companion.scoreOfCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 
 class CardScoreTest {
 
-    @DisplayName("각 카드 숫자만큼 점수를 반환하되, 마지막 3가지 JACK, QUEEN, KING은 10을 반환한다")
     @ParameterizedTest
     @EnumSource(value = CardScore::class)
-    fun `card score`(cardScore: CardScore) {
+    fun `각 카드숫자만큼 점수를 반환하되, 마지막 JACK, QUEEN, KING은 10을 반환한다`(cardScore: CardScore) {
         // given
         var expectedScores = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10)
         val index = CardScore.values().indexOf(cardScore)
@@ -26,7 +24,7 @@ class CardScoreTest {
     }
 
     @Test
-    fun `initial of card`() {
+    fun `카드의 이니셜`() {
         // when
         val initialOfAce = CardScore.initialOfCard(CardScore.ACE)
         val initialOfTen = CardScore.initialOfCard(CardScore.TEN)
@@ -37,13 +35,15 @@ class CardScoreTest {
     }
 
     @Test
-    fun `sum with ace`() {
+    fun `ACE 계산 방식이 다르다 (점수가 11 이하면 Ace 11 사용)`() {
         // when
-        val sumWithAce = CardScore.sumWithAce(10, hasAce = true)
-        val sumWithoutAce = CardScore.sumWithAce(10, hasAce = false)
+        val sumOf13 = CardScore.sumWithAce(13, hasAce = true)
+        val sumOf11 = CardScore.sumWithAce(11, hasAce = true)
+        val sumWithoutAce = CardScore.sumWithAce(11, hasAce = false)
 
         // then
-        assertThat(sumWithAce).isEqualTo(20)
-        assertThat(sumWithoutAce).isEqualTo(10)
+        assertThat(sumOf13).isEqualTo(13)
+        assertThat(sumOf11).isEqualTo(21)
+        assertThat(sumWithoutAce).isEqualTo(11)
     }
 }

@@ -2,50 +2,47 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class CardsTest {
-    private lateinit var card: Card
-    private lateinit var newCard: Card
-    private lateinit var cards: Cards
-    private lateinit var shouldBeThis: Set<Card>
+    private lateinit var cardsWithAce1: Cards
+    private lateinit var cardsWithAce11: Cards
+    private lateinit var expectedCards: Cards
 
     @BeforeEach
-    fun `set up`() {
-        card = Card(Pair(CardScore.ACE, Suit.HEART))
-        newCard = Card(Pair(CardScore.TWO, Suit.DIAMOND))
-
-        cards = Cards(setOf(card))
-        shouldBeThis = setOf(card, newCard)
+    fun setUp() {
+        cardsWithAce1 = Cards(
+            Card(CardScore.ACE, Suit.HEART),
+            Card(CardScore.TWO, Suit.DIAMOND),
+            Card(CardScore.TEN, Suit.CLUB)
+        )
+        cardsWithAce11 = Cards(Card(CardScore.ACE, Suit.HEART), Card(CardScore.TEN, Suit.DIAMOND))
+        expectedCards = Cards(Card(CardScore.ACE, Suit.HEART), Card(CardScore.TWO, Suit.DIAMOND))
     }
 
     @Test
-    fun `add a new card to set of cards`() {
+    fun `카드 크기`() {
         // when
-        val newCards = cards.add(newCard)
+        val size = cardsWithAce11.size
         // then
-        assertThat(newCards).isEqualTo(shouldBeThis)
+        assertThat(size).isEqualTo(2)
     }
 
     @Test
-    fun `size of cards`() {
+    fun `점수가 10보다 크면 ACE는 1로 계산한다`() {
         // when
-        val size = cards.size()
-        // then
-        assertThat(size).isEqualTo(1)
-    }
-
-    @DisplayName("카드점수 합계가 21을 초과하지 않는 한 ACE는 11로 계산할 수 있다")
-    @Test
-    fun `sum of scores`() {
-        // given
-        val newCards = cards.add(newCard)
-
-        // when
-        val score = Cards(newCards).sumOfScores()
+        val score = cardsWithAce1.sumOfScores()
 
         // then
         assertThat(score).isEqualTo(13)
+    }
+
+    @Test
+    fun `점수가 10 이하면 ACE는 11로 계산할 수 있다`() {
+        // when
+        val score = cardsWithAce11.sumOfScores()
+
+        // then
+        assertThat(score).isEqualTo(21)
     }
 }

@@ -1,40 +1,38 @@
 package blackjack.domain
 
 import blackjack.domain.Game.Companion.DEFAULT_CARD_COUNT
-import blackjack.domain.Game.Companion.MAXIMUM_SCORE_FOR_DEALER_DRAWING
+import blackjack.domain.Profit.Companion.ZERO_PROFIT
 
 data class Dealer(val deck: Deck = Deck()) : Player() {
-    override val cards: Cards = Cards(setOf())
-    var result = listOf(0, 0)
+    var result: Profit = ZERO_PROFIT
         private set
 
-    fun pickCard(): Card? = deck.provideCard(deck.shuffled())
+    fun pickCard(): Card = deck.provideCard()
 
-    fun setUpWithCards(players: Players): Cards {
-        repeat(DEFAULT_CARD_COUNT) {
-            draw(pickCard())
-
-            (0 until players.size()).forEach { nth ->
-                players.findPlayer(nth).draw(pickCard())
-            }
-        }
-        return cards
+    fun setUpWithCards() {
+        repeat(DEFAULT_CARD_COUNT) { draw(pickCard()) }
     }
 
-    fun hasScoreBelow17(score: Int): Boolean = score < MAXIMUM_SCORE_FOR_DEALER_DRAWING
+    fun pickCardsForPlayers(playerSize: Int): List<Card> =
+        (0 until playerSize * DEFAULT_CARD_COUNT).map { pickCard() }
 
-    fun faceUpCard(): Card = cards.firstCard()
+    fun hasScoreBelow17(score: Int): Boolean = score < DEALER_HIT_CRITERIA_SCORE
 
-    fun checkWin(players: Players): List<Int> {
-        val loseCount = players.compareWith(dealer = this)
-        val winCount = players.size() - loseCount
-        result = listOf(winCount, loseCount)
-        return result.toList()
+    fun checkWin(state: State, players: Players): Profit {
+        when (state) {
+            State.BUST -> players.winIfStillAlive()
+            State.BLACKJACK -> players.calculateProfitWhenDealerIsBlackJack()
+            else -> players.compareWith(this.score())
+        }
+
+        result = Profit(-players.sumOfAllProfits())
+        return result
     }
 
     override fun toString(): String = DEALER_NAME
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_HIT_CRITERIA_SCORE = 17
     }
 }

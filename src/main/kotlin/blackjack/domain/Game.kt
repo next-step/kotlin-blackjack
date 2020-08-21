@@ -1,56 +1,55 @@
 package blackjack.domain
 
-class Game(_players: List<Player>, val dealer: Dealer) {
-    val players = Players(_players)
-    private var turn = 0
+class Game(val players: Players, val dealer: Dealer) {
+    var isOver = false
+        private set
 
     init {
-        dealer.setUpWithCards(players)
+        dealer.setUpWithCards()
+        players.setUpWithCards(dealer.pickCardsForPlayers(players.size()))
     }
 
     constructor(PlayerNames: String, dealer: Dealer = Dealer(Deck())) : this(
-        PlayerNames.split(PLAYER_NAMES_DELIMITER)
-            .filterNot { it.isBlank() }
-            .map { Player(it.trim()) },
+        Players(
+            PlayerNames.split(PLAYER_NAMES_DELIMITER)
+                .filterNot { it.isBlank() }
+                .map { Player(it.trim()) }
+        ),
         dealer
     )
 
-    fun giveChanceToDrawing(reply: String): Player? {
-        currentPlayer().apply {
-            val state: PlayerState =
-                stateOfPlayer(needDrawing = reply, score = totalScore(), cardCount = countOfCards())
-
-            if (isHit(state)) {
-                draw(dealer.pickCard()) ?: return null
-            }
-
-            if (!isHit(state)) turn++
-            return this
-        }
+    fun getStake(amount: Int) {
+        players.setStake(amount)
     }
 
-    fun playOfDealer(): Dealer? {
+    fun giveChanceToDraw(reply: String) {
+        isOver = players.chooseToDraw(reply, dealer.deck)
+    }
+
+    fun playOfDealer(): Dealer {
         dealer.apply {
-            if (hasScoreBelow17(totalScore())) {
-                draw(pickCard()) ?: return null
-            }
+            if (hasScoreBelow17(score()))
+                draw(pickCard())
+
             return this
         }
     }
 
-    fun getResult(): Pair<Dealer, Players> {
-        dealer.checkWin(players)
-        return Pair(dealer, players)
+    fun checkWin() {
+        dealer.checkWin(dealer.getStateBy(), players)
     }
 
-    fun currentPlayer() = players.findPlayer(turn)
+    fun currentPlayer() = players.currentPlayer()
 
-    fun isOver() = turn == players.size()
+    fun resetTurn() {
+        players.resetTurn()
+    }
+
+    fun canTurnOver() = players.turn == players.size()
 
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","
-        const val MAXIMUM_GAME_SCORE = 21
-        const val MAXIMUM_SCORE_FOR_DEALER_DRAWING = 17
+        const val BLACKJACK_SCORE = 21
         const val DEFAULT_CARD_COUNT = 2
     }
 }

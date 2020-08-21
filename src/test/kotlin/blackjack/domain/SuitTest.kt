@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class SuitTest {
 
     @Test
-    fun `shape name`() {
+    fun `모양의 이름`() {
         assertThat(Suit.HEART.shapeName).isEqualTo("하트")
         assertThat(Suit.CLUB.shapeName).isEqualTo("클로버")
         assertThat(Suit.SPADE.shapeName).isEqualTo("스페이드")

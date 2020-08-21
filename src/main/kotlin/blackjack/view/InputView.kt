@@ -22,6 +22,10 @@ object InputView {
         return text
     }
 
+    fun readStake(player: Player): Int {
+        return readNumber("\n${player}의 배팅 금액은?")
+    }
+
     private fun readText(message: String = ""): String {
         println(message)
         var text = readLine()
@@ -30,5 +34,15 @@ object InputView {
             text = readLine()
         }
         return text
+    }
+
+    private fun readNumber(message: String = ""): Int {
+        println(message)
+        var number = readLine()?.toIntOrNull()
+        while (number == null) {
+            println(message)
+            number = readLine()?.toIntOrNull()
+        }
+        return number
     }
 }
