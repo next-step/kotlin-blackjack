@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.BetMoney.Companion.ZERO_BET_MONEY
 import blackjack.domain.Profit.Companion.ZERO_PROFIT
 
-open class Player(
+data class Player(
     private val name: String = "",
     private var cards: Cards = Cards(setOf())
 ) : Participant {
@@ -14,6 +14,7 @@ open class Player(
         private set
 
     override fun setBetMoney(amount: Int) {
+        betMoney = BetMoney(amount)
         profit = Profit(amount)
     }
 
@@ -57,26 +58,6 @@ open class Player(
 
     fun getPrincipal() {
         profit = profit.gainNothing()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Player) return false
-
-        if (this.name != other.name) return false
-        if (this.cards != other.cards) return false
-        if (this.state != other.state) return false
-        if (this.betMoney != other.betMoney) return false
-        if (this.profit != other.profit) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result += cards.hashCode()
-        result += state.hashCode()
-        result += betMoney.hashCode()
-        return 31 * result + profit.hashCode()
     }
 
     override fun toString(): String = name

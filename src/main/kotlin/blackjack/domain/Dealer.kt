@@ -3,7 +3,11 @@ package blackjack.domain
 import blackjack.domain.Game.Companion.DEFAULT_CARD_COUNT
 import blackjack.domain.Profit.Companion.ZERO_PROFIT
 
-data class Dealer(val deck: Deck = Deck()) : Player() {
+data class Dealer(
+    val deck: Deck = Deck(),
+    private val basePlayer: Participant = Player()
+) : Participant by basePlayer {
+
     var result: Profit = ZERO_PROFIT
         private set
 
