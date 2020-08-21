@@ -3,8 +3,11 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.HIT
+import blackjack.domain.PlayResultType
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions.assertThat
@@ -22,14 +25,15 @@ class PlayerTest {
     @EmptySource
     @ValueSource(strings = ["ace:con", "$", "ace,"])
     fun checkPlayersInput(playerNames: String) {
-        assertThatThrownBy { BlackjackGame(playerNames, CardDeck()) }
+        assertThatThrownBy { Players.from(playerNames) }
             .isInstanceOf(IllegalArgumentException::class.java)
     }
 
     @DisplayName("플레이어 수 확인")
     @Test
     fun checkPlayers() {
-        assertThat(BlackjackGame("ace,con", CardDeck()).players.players.size)
+        val players = Players.from("ace,con")
+        assertThat(BlackjackGame(players).players.players.size)
             .isEqualTo(3)
     }
 
@@ -56,7 +60,8 @@ class PlayerTest {
     @DisplayName("다음턴 사용자 확인")
     @Test
     fun checkNextTurn() {
-        val blackjackGame = BlackjackGame("ace,hi,con,race", CardDeck())
+        val players = Players.from("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players)
         repeat(4) { blackjackGame.hitOrStay(HIT) }
         assertThat(blackjackGame.players.currentPlayer.name).isEqualTo("ace")
     }
@@ -65,9 +70,70 @@ class PlayerTest {
     @Test
     fun checkPlayerCard() {
         val cardDeck = CardDeck()
-        val blackjackGame = BlackjackGame("ace,hi,con,race", cardDeck)
+        val players = Players.from("ace,hi,con,race")
+        val blackjackGame = BlackjackGame(players, cardDeck)
         blackjackGame.players.currentPlayerPickCard(true, cardDeck)
+        blackjackGame.startGame()
+
         assertThat(blackjackGame.players.currentPlayer.cards.size)
             .isEqualTo(3)
+    }
+
+    @DisplayName("플레이어의 승리 확인")
+    @Test
+    fun checkPlayerWin() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
+        repeat(3) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.EIGHT)) }
+        repeat(2) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.K)) } }
+        players.calculateResult()
+
+        val winCount = onlyPlayers.count { it.playResult == PlayResultType.WIN }
+
+        assertThat(winCount).isEqualTo(onlyPlayers.count())
+    }
+
+    @DisplayName("플레이어의 블랙잭 확인")
+    @Test
+    fun checkPlayerBlackjack() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
+        onlyPlayers.forEach {
+            it.addCard(Card(SuitType.CLUB, ValueType.Q))
+            it.addCard(Card(SuitType.CLUB, ValueType.A))
+        }
+        players.calculateResult(18)
+
+        val blackJackCount = onlyPlayers.count { it.playResult == PlayResultType.BLACKJACK }
+
+        assertThat(blackJackCount).isEqualTo(onlyPlayers.count())
+    }
+
+    @DisplayName("플레이어의 패배 확인")
+    @Test
+    fun checkPlayerLose() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
+        repeat(2) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.NINE)) }
+        repeat(3) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.K)) } }
+        players.calculateResult()
+
+        val loseCount = onlyPlayers.count { it.playResult == PlayResultType.LOSE }
+
+        assertThat(loseCount).isEqualTo(onlyPlayers.count())
+    }
+
+    @DisplayName("플레이어의 무 확인")
+    @Test
+    fun checkPlayerDraw() {
+        val players = Players.from("ace,hi,con")
+        val onlyPlayers = players.players.filterNot { it is Dealer }
+        repeat(2) { players.players[0].addCard(Card(SuitType.CLUB, ValueType.NINE)) }
+        repeat(2) { onlyPlayers.forEach { it.addCard(Card(SuitType.CLUB, ValueType.NINE)) } }
+        players.calculateResult()
+
+        val drawCount = onlyPlayers.count { it.playResult == PlayResultType.DRAW }
+
+        assertThat(drawCount).isEqualTo(onlyPlayers.count())
     }
 }

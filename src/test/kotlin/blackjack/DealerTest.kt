@@ -2,14 +2,11 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.Dealer
-import blackjack.domain.DealerResult
-import blackjack.domain.PlayResultType
 import blackjack.domain.SuitType
 import blackjack.domain.ValueType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class DealerTest {
 
@@ -50,19 +47,5 @@ class DealerTest {
         val point = dealer.point
 
         assertThat(point).isEqualTo(21)
-    }
-
-    @DisplayName("딜러의 승무패 확인")
-    @Test
-    fun checkDealerResult() {
-        val dealerResult = DealerResult(6)
-
-        dealerResult.setStatic(3, 2)
-
-        assertAll(
-            { assertThat(dealerResult.getStatic()[PlayResultType.WIN]).isEqualTo(3) },
-            { assertThat(dealerResult.getStatic()[PlayResultType.LOSE]).isEqualTo(2) },
-            { assertThat(dealerResult.getStatic()[PlayResultType.DRAW]).isEqualTo(1) }
-        )
     }
 }
