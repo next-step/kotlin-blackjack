@@ -22,10 +22,24 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
         return score() < WIN_SCORE
     }
 
-    fun gameResult(dealerPoint: Int, targetGap: Int) {
-        if (gapWinScore() == targetGap) gameResult = GameResult.WIN
-        if (dealerPoint > WIN_SCORE) gameResult = GameResult.LOSE
-        if (dealerPoint > WIN_SCORE && gapWinScore() == targetGap) gameResult = GameResult.WIN
+    fun gameResult(dealer: Dealer, targetGap: Int) {
+        if (this is Dealer) {
+            dealerResult()
+            return
+        }
+        playerResult(dealer, targetGap)
+    }
+
+    private fun dealerResult() {
+        if (score() >= WIN_SCORE) gameResult = GameResult.WIN
+    }
+
+    private fun playerResult(dealer: Dealer, targetGap: Int) {
+        if (dealer.gameResult == GameResult.WIN) {
+            gameResult = GameResult.LOSE
+            return
+        }
+        if ((gapWinScore() == targetGap) || (score() == WIN_SCORE)) gameResult = GameResult.WIN
     }
 
     fun gapWinScore(): Int {
