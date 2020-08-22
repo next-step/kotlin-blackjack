@@ -23,8 +23,9 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
     }
 
     fun gameResult(dealerPoint: Int, targetGap: Int) {
-        if (dealerPoint > WIN_SCORE) gameResult = GameResult.LOSE
         if (gapWinScore() == targetGap) gameResult = GameResult.WIN
+        if (dealerPoint > WIN_SCORE) gameResult = GameResult.LOSE
+        if (dealerPoint > WIN_SCORE && gapWinScore() == targetGap) gameResult = GameResult.WIN
     }
 
     fun gapWinScore(): Int {

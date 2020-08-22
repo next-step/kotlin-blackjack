@@ -12,12 +12,12 @@ class Players(players: List<Player>) {
         }
     }
 
-    fun gameResult(dealerPoint: Int) {
+    fun calculateResult(dealerPoint: Int) {
         players.forEach { it.gameResult(dealerPoint, playerMinGap()) }
     }
 
     private fun playerMinGap(): Int {
-        return players.minBy { it.score() }!!.score()
+        return players.minBy { it.gapWinScore() }!!.score()
     }
 
     operator fun get(index: Int): Player {

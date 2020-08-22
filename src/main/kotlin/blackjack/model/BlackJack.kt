@@ -13,7 +13,15 @@ class BlackJack(val players: Players) {
         players.race(player, cardDeck)
     }
 
+    fun dealerAddDraw(): Boolean {
+        if (DRAW_CONDITION > players.dealer.score()) {
+            players.dealer.draw(cardDeck.drawCard())
+            return true
+        }
+        return false
+    }
+
     fun gameResult(dealerPoint: Int) {
-        return players.gameResult(dealerPoint)
+        return players.calculateResult(dealerPoint)
     }
 }

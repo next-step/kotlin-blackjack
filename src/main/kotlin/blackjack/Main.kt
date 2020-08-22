@@ -16,7 +16,7 @@ fun main() {
         playerRace(blackJack, players[it])
     }
     blackJack.gameResult(players.dealer.score())
-    Output.gameResult(blackJack.players)
+    Output.gameResult(players)
 }
 
 fun firstTurn(blackJack: BlackJack, players: Players) {

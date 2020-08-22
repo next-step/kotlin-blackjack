@@ -28,6 +28,6 @@ class PlayersTest {
         )
         val players = Players(listOf(Player("a", cards)))
         val player = players[0]
-        assertThat(players.gameResult()[0]).isEqualTo(player)
+        assertThat(players.calculateResult()[0]).isEqualTo(player)
     }
 }
