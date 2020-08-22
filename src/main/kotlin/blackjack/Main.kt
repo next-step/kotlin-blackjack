@@ -30,6 +30,6 @@ fun firstTurn(blackJack: BlackJack, players: Players) {
 fun playerRace(blackJack: BlackJack, player: Player) {
     while (player.available() && Input.ask(player.name)) {
         blackJack.race(player)
+        Output.pickResult(player)
     }
-    Output.pickResult(player)
 }
