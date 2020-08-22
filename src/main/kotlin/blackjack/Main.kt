@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.model.BlackJack
-import blackjack.model.CardDeck
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.Input
@@ -10,7 +9,7 @@ import blackjack.view.Output
 fun main() {
     val names = Input.names()
     val players = Players(names.map { Player(it) })
-    val blackJack = BlackJack(players, CardDeck().apply { this.shuffle() })
+    val blackJack = BlackJack(players)
     Output.players(players)
     firstTurn(blackJack, players)
     repeat(players.size()) {
