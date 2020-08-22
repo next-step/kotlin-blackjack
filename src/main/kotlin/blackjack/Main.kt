@@ -8,14 +8,14 @@ import blackjack.view.Output
 
 fun main() {
     val names = Input.names()
-    val players = Players(names.map { Player(it) })
-    val blackJack = BlackJack(players)
+    val blackJack = BlackJack(Players(names.map { Player(it) }))
+    val players = blackJack.players
     Output.players(players)
     firstTurn(blackJack, players)
     repeat(players.size()) {
         playerRace(blackJack, players[it])
     }
-    Output.winner(blackJack.winner())
+    blackJack.gameResult(players.dealer.score())
     Output.gameResult(blackJack.players)
 }
 

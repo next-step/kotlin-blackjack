@@ -13,7 +13,7 @@ class BlackJack(val players: Players) {
         players.race(player, cardDeck)
     }
 
-    fun winner(): Players {
-        return players.winner()
+    fun gameResult(dealerPoint: Int) {
+        return players.gameResult(dealerPoint)
     }
 }

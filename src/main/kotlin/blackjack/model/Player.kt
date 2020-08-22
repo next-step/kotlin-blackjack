@@ -1,8 +1,12 @@
 package blackjack.model
 
+import kotlin.math.abs
+
 const val WIN_SCORE = 21
 
 open class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
+    var gameResult: GameResult = GameResult.LOSE
+        private set
 
     fun draw(vararg cards: Card) {
         repeat(cards.size) {
@@ -18,8 +22,13 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
         return score() < WIN_SCORE
     }
 
-    fun winner(): Boolean {
-        return score() == WIN_SCORE
+    fun gameResult(dealerPoint: Int, targetGap: Int) {
+        if (dealerPoint > WIN_SCORE) gameResult = GameResult.LOSE
+        if (gapWinScore() == targetGap) gameResult = GameResult.WIN
+    }
+
+    fun gapWinScore(): Int {
+        return abs(WIN_SCORE - score())
     }
 
     fun cardToString(): String {
