@@ -10,7 +10,7 @@ class BlackJackTest {
 
         val blackJack = BlackJack(nameList)
 
-        assertThat(blackJack.players.size).isEqualTo(2)
+        assertThat(blackJack.players.players).hasSize(2)
     }
 
     @Test
@@ -19,7 +19,43 @@ class BlackJackTest {
 
         val blackJack = BlackJack(nameList)
 
-        assertThat(blackJack.players[0].hands.size).isEqualTo(2)
-        assertThat(blackJack.players[1].hands.size).isEqualTo(2)
+        assertThat(blackJack.players.players[0].hands).hasSize(2)
+        assertThat(blackJack.players.players[1].hands).hasSize(2)
+        assertThat(blackJack.dealer.hands).hasSize(2)
+    }
+
+    @Test
+    fun player_get_card() {
+        val inputValue = "y"
+        val blackJack = BlackJack(listOf())
+        val player = Player("test")
+
+        val result = blackJack.playerGetCard(player, inputValue)
+
+        assertThat(result).isTrue()
+        assertThat(player.getHandsSize()).isEqualTo(1)
+    }
+
+    @Test
+    fun player_does_not_get_card() {
+        val inputValue = "n"
+        val blackJack = BlackJack(listOf())
+        val player = Player("test")
+
+        val result = blackJack.playerGetCard(player, inputValue)
+
+        assertThat(result).isFalse()
+        assertThat(player.getHandsSize()).isEqualTo(0)
+    }
+
+    @Test
+    fun input_value_is_not_y_or_n() {
+        val inputValue = "error"
+        val blackJack = BlackJack(listOf())
+        val player = Player("test")
+
+        val result = blackJack.playerGetCard(player, inputValue)
+
+        assertThat(result).isNull()
     }
 }

@@ -8,25 +8,26 @@ class DeckTest {
     fun make_deck() {
         val deck = Deck()
 
-        assertThat(deck.cards.size).isEqualTo(52)
+        assertThat(deck.cards).hasSize(52)
     }
 
     @Test
     fun shuffle_deck() {
         val deck = Deck()
-        val deck2 = Deck()
+        val cards = listOf(Card(Shape.SPADE, Denomination.TEN), Card(Shape.SPADE, Denomination.TEN))
 
-        deck2.shuffle()
+        deck.shuffle { cards }
 
-        assertThat(deck.cards).isNotEqualTo(deck2.cards)
+        assertThat(deck.cards).hasSize(2)
     }
 
     @Test
     fun get_card() {
         val deck = Deck()
 
-        deck.getCard()
+        val card = deck.getCard()
 
-        assertThat(deck.cards.size).isEqualTo(51)
+        assertThat(card).isEqualTo(Card(Shape.SPADE, Denomination.ACE))
+        assertThat(deck.cards).hasSize(51)
     }
 }

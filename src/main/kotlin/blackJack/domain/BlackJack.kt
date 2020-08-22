@@ -1,25 +1,41 @@
 package blackJack.domain
 
 class BlackJack(names: List<String>) {
-    val players = makePlayer(names)
-    private val deck = Deck()
+    val players = Players(names)
+    val dealer = Dealer()
 
     init {
+        dealer.shuffleDeck(Deck.DEFAULT_DECK)
         readyGame()
-        deck.shuffle()
     }
-
-    private fun makePlayer(names: List<String>): List<Player> = names.map { Player(it) }
 
     private fun readyGame() {
-        (0..1).map { giveCardAllPlayer() }
+        repeat(START_HANDS) { giveCardAllPeople() }
     }
 
-    private fun giveCardAllPlayer() {
-        players.forEach { giveCardPlayer(it) }
+    private fun giveCardAllPeople() {
+        players.giveCardAll(dealer)
+        dealer.giveCard(dealer)
     }
 
-    fun giveCardPlayer(player: Player) {
-        player.giveCard(deck.getCard())
+    fun getResult(): Result = Result(dealer, players)
+
+    fun playersForEach(function: (player: Player) -> Unit) {
+        players.forEach { function(it) }
+    }
+
+    fun playerGetCard(player: Player, inputValue: String): Boolean? {
+        if (inputValue == "y") {
+            dealer.giveCard(player)
+            return true
+        }
+        if (inputValue == "n") {
+            return false
+        }
+        return null
+    }
+
+    companion object {
+        private const val START_HANDS = 2
     }
 }
