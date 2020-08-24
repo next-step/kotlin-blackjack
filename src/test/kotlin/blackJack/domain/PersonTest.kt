@@ -45,4 +45,27 @@ class PersonTest {
 
         assertThat(totalScore).isEqualTo(20)
     }
+
+    @Test
+    fun get_total_score_has_ace() {
+        val person = Person("joohan")
+        person.addCard(SPADE_ACE)
+        person.addCard(SPADE_KING)
+
+        val totalScore = person.getTotalScore()
+
+        assertThat(totalScore).isEqualTo(21)
+    }
+
+    @Test
+    fun get_total_score_has_ace_but_ace_calculate_1() {
+        val person = Person("joohan")
+        person.addCard(SPADE_ACE)
+        person.addCard(SPADE_KING)
+        person.addCard(SPADE_KING)
+
+        val totalScore = person.getTotalScore()
+
+        assertThat(totalScore).isEqualTo(21)
+    }
 }
