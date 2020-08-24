@@ -46,7 +46,7 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
 
     private fun playerResult(dealer: Dealer, gapPoint: Int) {
         this.gameResult = when {
-            dealer.isOverWinScore() -> GameResult.LOSE
+            dealer.isOverWinScore() -> GameResult.WIN
             dealer.isWinner(gapPoint) && isWinner(gapPoint) -> GameResult.DRAW
             !dealer.isWinner(gapPoint) && isWinner(gapPoint) -> GameResult.WIN
             else -> GameResult.LOSE
