@@ -9,14 +9,13 @@ class Player(name: String) : Person(name) {
     }
 
     fun getProfit(winOrLose: WinOrLose): Int {
-        return betMoney * getPercent(winOrLose).toInt()
+        return (betMoney * getPercent(winOrLose)).toInt()
     }
 
     private fun getPercent(winOrLose: WinOrLose): Double {
         return when (winOrLose) {
             WinOrLose.WIN -> {
-                if (isBlackJack()) return BLACK_JACK_MONEY
-                WIN_MONEY
+                test()
             }
             WinOrLose.DRAW -> {
                 DRAW_MONEY
@@ -25,6 +24,13 @@ class Player(name: String) : Person(name) {
                 LOSE_MONEY
             }
         }
+    }
+
+    fun test(): Double {
+        if (isBlackJack()) {
+            return BLACK_JACK_MONEY
+        }
+        return WIN_MONEY
     }
 
     private fun isBlackJack(): Boolean = hands.size == 2 && getTotalScore() == 21

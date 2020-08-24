@@ -37,6 +37,18 @@ class PlayerTest {
     }
 
     @Test
+    fun get_profit_blackJack() {
+        val player = Player("joohan")
+        player.bettingMoney(1000)
+        player.addCard(SPADE_JACK)
+        player.addCard(SPADE_ACE)
+
+        val blackJackResult = player.getProfit(WinOrLose.WIN)
+
+        assertThat(blackJackResult).isEqualTo(1500)
+    }
+
+    @Test
     fun is_bust() {
         val player = Player("joohan")
         player.addCard(SPADE_NINE)
