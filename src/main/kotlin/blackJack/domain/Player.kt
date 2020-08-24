@@ -4,6 +4,13 @@ class Player(name: String) : Person(name) {
     var betMoney = DEFAULT_MONEY
         private set
 
+    override fun addCard(card: Card) {
+        if (isBust()) {
+            throw IllegalArgumentException("카드의 총합이 21점을 넘겼기 때문에 카드를 더 받을수 없습니다.")
+        }
+        super.addCard(card)
+    }
+
     fun bettingMoney(money: Int) {
         betMoney = money
     }
@@ -33,7 +40,7 @@ class Player(name: String) : Person(name) {
         return WIN_MONEY
     }
 
-    private fun isBlackJack(): Boolean = hands.size == 2 && getTotalScore() == 21
+    private fun isBlackJack(): Boolean = hands.size == BLACK_JACK_HANDS && getTotalScore() == BLACK_JACK_SCORE
 
     companion object {
         const val DEFAULT_MONEY = 0
@@ -41,5 +48,7 @@ class Player(name: String) : Person(name) {
         const val WIN_MONEY = 1.0
         const val DRAW_MONEY = 0.0
         const val LOSE_MONEY = -1.0
+        const val BLACK_JACK_HANDS = 2
+        const val BLACK_JACK_SCORE = 21
     }
 }

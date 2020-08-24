@@ -1,6 +1,7 @@
 package blackJack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -56,5 +57,18 @@ class PlayerTest {
         player.addCard(SPADE_JACK)
 
         assertThat(player.isBust()).isTrue()
+    }
+
+    @Test
+    fun player_can_not_add_card_over21() {
+        val player = Player("joo")
+        player.addCard(SPADE_NINE)
+        player.addCard(SPADE_KING)
+        player.addCard(SPADE_JACK)
+
+        assertThatThrownBy {
+            player.addCard(SPADE_JACK)
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessageContaining("카드의 총합이 21점을 넘겼기 때문에 카드를 더 받을수 없습니다.")
     }
 }

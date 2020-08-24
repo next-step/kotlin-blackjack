@@ -19,7 +19,7 @@ class Dealer : Person("딜러") {
         }
     }
 
-    private fun canAddCard(): Boolean = getTotalScore() < MINIMUM
+    fun canAddCard(): Boolean = getTotalScore() < MINIMUM
 
     companion object {
         private const val MINIMUM = 17
