@@ -20,4 +20,14 @@ class DeckTest {
         assertThat(card.toString()).isEqualTo("♠A")
         assertThat(deck.cards).hasSize(51)
     }
+
+    @Test
+    fun shuffle_deck() {
+        val deck = Deck()
+        val cards = listOf(Card(Shape.SPADE, Denomination.ACE), Card(Shape.SPADE, Denomination.FIVE))
+
+        deck.shuffle(cards)
+
+        assertThat(deck.cards).hasSize(2)
+    }
 }
