@@ -9,7 +9,7 @@ abstract class Person(val name: String) {
     val hands
         get() = _hands.toList()
 
-    fun addCard(card: Card) {
+    open fun addCard(card: Card) {
         _hands.add(card)
     }
 
