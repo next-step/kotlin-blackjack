@@ -22,4 +22,16 @@ class DealerTest {
 
         assertThat(dealer.deck.cards).hasSize(2)
     }
+
+    @Test
+    fun give_card() {
+        val dealer = Dealer()
+        val player = Player("joohan")
+        assertThat(dealer.deck.cards).hasSize(52)
+
+        dealer.giveCard(player)
+
+        assertThat(player.hands).hasSize(1)
+        assertThat(dealer.deck.cards).hasSize(51)
+    }
 }
