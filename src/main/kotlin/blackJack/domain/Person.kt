@@ -5,5 +5,11 @@ class Person(val name: String) {
         require(name.isNotBlank()) { "이름은 없을수 없습니다." }
     }
 
-    val hands: List<Card> = listOf()
+    private val _hands: MutableList<Card> = mutableListOf()
+    val hands
+        get() = _hands.toList()
+
+    fun addCard(card: Card) {
+        _hands.add(card)
+    }
 }
