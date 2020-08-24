@@ -10,5 +10,15 @@ class PlayerTest {
 
         assertThat(player.name).isEqualTo("joohan")
         assertThat(player.hands).hasSize(0)
+        assertThat(player.betMoney).isEqualTo(0)
+    }
+
+    @Test
+    fun betting_money() {
+        val player = Player("joohan")
+
+        player.bettingMoney(1000)
+
+        assertThat(player.betMoney).isEqualTo(1000)
     }
 }
