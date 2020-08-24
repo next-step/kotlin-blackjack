@@ -12,7 +12,7 @@ val SPADE_JACK = Card(Shape.SPADE, Denomination.JACK)
 class PersonTest {
     @Test
     fun makePerson() {
-        val person = Person("joohan")
+        val person = Player("joohan")
 
         assertThat(person.hands).hasSize(0)
         assertThat(person.name).isEqualTo("joohan")
@@ -21,13 +21,13 @@ class PersonTest {
     @Test
     fun if_name_is_blank() {
         assertThatThrownBy {
-            Person("")
+            Player("")
         }.isInstanceOf(IllegalArgumentException::class.java).hasMessageContaining("이름은 없을수 없습니다.")
     }
 
     @Test
     fun add_card() {
-        val person = Person("joohan")
+        val person = Player("joohan")
 
         person.addCard(SPADE_ACE)
 
@@ -37,7 +37,7 @@ class PersonTest {
 
     @Test
     fun get_total_score() {
-        val person = Person("joohan")
+        val person = Player("joohan")
         person.addCard(SPADE_JACK)
         person.addCard(SPADE_KING)
 
@@ -48,7 +48,7 @@ class PersonTest {
 
     @Test
     fun get_total_score_has_ace() {
-        val person = Person("joohan")
+        val person = Player("joohan")
         person.addCard(SPADE_ACE)
         person.addCard(SPADE_KING)
 
@@ -59,9 +59,9 @@ class PersonTest {
 
     @Test
     fun get_total_score_has_ace_but_ace_calculate_1() {
-        val person = Person("joohan")
+        val person = Player("joohan")
         person.addCard(SPADE_ACE)
-        person.addCard(SPADE_KING)
+        person.addCard(SPADE_QUEEN)
         person.addCard(SPADE_KING)
 
         val totalScore = person.getTotalScore()
