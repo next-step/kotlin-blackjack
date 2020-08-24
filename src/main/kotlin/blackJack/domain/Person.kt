@@ -14,4 +14,10 @@ abstract class Person(val name: String) {
     }
 
     fun getTotalScore(): Int = TotalScore.get(_hands)
+
+    fun isBust(): Boolean = getTotalScore() > BUST_SCORE
+
+    companion object {
+        const val BUST_SCORE = 21
+    }
 }

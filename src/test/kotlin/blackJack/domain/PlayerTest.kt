@@ -35,4 +35,14 @@ class PlayerTest {
         assertThat(drawResult).isEqualTo(0)
         assertThat(loseResult).isEqualTo(-1000)
     }
+
+    @Test
+    fun is_bust() {
+        val player = Player("joohan")
+        player.addCard(SPADE_NINE)
+        player.addCard(SPADE_KING)
+        player.addCard(SPADE_JACK)
+
+        assertThat(player.isBust()).isTrue()
+    }
 }
