@@ -9,7 +9,7 @@ fun main() {
     val playerNames = InputView.readPlayerNames()
     val game = Game(playerNames)
 
-    while (!game.canTurnOver()) {
+    while (!game.isBetOver()) {
         game.getBetMoney(InputView.readBetMoney(game.currentPlayer()))
     }
 

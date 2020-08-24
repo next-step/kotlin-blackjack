@@ -45,7 +45,7 @@ class Game(val players: Players, val dealer: Dealer) {
         players.resetTurn()
     }
 
-    fun canTurnOver() = players.turn == players.size()
+    fun isBetOver() = players.turn == players.size()
 
     companion object {
         private const val PLAYER_NAMES_DELIMITER = ","
