@@ -35,7 +35,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `딜러와 플레이어 동점 상황 승자 테스트`() {
+    fun `딜러와 플레이어 동점 상황 무승부 테스트`() {
         val cards = Cards(
             listOf(
                 Card(Suit.CLUBS, Denomination.ACE),
@@ -47,6 +47,6 @@ class PlayersTest {
         players.calculateResult(players.dealer)
         val player = players[1]
         assertThat(player.score()).isEqualTo(21)
-        assertThat(player.gameResult).isEqualTo(GameResult.LOSE)
+        assertThat(player.gameResult).isEqualTo(GameResult.DRAW)
     }
 }

@@ -26,16 +26,24 @@ object Output {
     }
 
     fun gameResult(players: Players) {
-        var dealerWinCount = players.dealerExceptionSize()
+        var dealerWinCount = 0
+        var dealerDrawCount = 0
         repeat(players.size()) {
             val player = players[it]
             if (player is Dealer) return@repeat
-            if (player.gameResult == GameResult.WIN) dealerWinCount -= 1
+            if (player.gameResult == GameResult.LOSE) {
+                dealerWinCount += 1
+                return@repeat
+            }
+            if (player.gameResult == GameResult.DRAW) {
+                dealerDrawCount += 1
+                return@repeat
+            }
         }
 
         repeat(players.size()) {
             val player = players[it]
-            if (player is Dealer) println("${player.name} : ${dealerWinCount}승 ${players.dealerExceptionSize() - dealerWinCount}패")
+            if (player is Dealer) println("${player.name} : ${dealerWinCount}승 ${players.dealerExceptionSize() - dealerWinCount - dealerDrawCount}패")
             if (player !is Dealer) println("${player.name} : ${player.gameResult}")
         }
     }

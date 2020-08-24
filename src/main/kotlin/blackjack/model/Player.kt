@@ -5,7 +5,7 @@ import kotlin.math.abs
 const val WIN_SCORE = 21
 
 open class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
-    var gameResult: GameResult = GameResult.LOSE
+    var gameResult: GameResult = GameResult.DRAW
         private set
 
     fun draw(vararg cards: Card) {
@@ -22,31 +22,34 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
         return score() < WIN_SCORE
     }
 
-    fun gameResult(dealer: Dealer, targetGap: Int) {
-        if (this is Dealer) {
-            dealerResult()
-            return
-        }
-        playerResult(dealer, targetGap)
-    }
-
-    private fun dealerResult() {
-        if (score() >= WIN_SCORE) gameResult = GameResult.WIN
-    }
-
-    private fun playerResult(dealer: Dealer, targetGap: Int) {
-        if (dealer.gameResult == GameResult.WIN) {
-            gameResult = GameResult.LOSE
-            return
-        }
-        if ((gapWinScore() == targetGap) || (score() == WIN_SCORE)) gameResult = GameResult.WIN
-    }
-
     fun gapWinScore(): Int {
         return abs(WIN_SCORE - score())
     }
 
     fun cardToString(): String {
         return cards.toString()
+    }
+
+    fun gameResult(dealer: Dealer, targetGap: Int) {
+        if (this !is Dealer) {
+            playerResult(dealer, targetGap)
+        }
+    }
+
+    fun isWinner(gapScore: Int): Boolean {
+        return gapScore == gapWinScore()
+    }
+
+    fun isOverWinScore(): Boolean {
+        return score() > WIN_SCORE
+    }
+
+    private fun playerResult(dealer: Dealer, gapPoint: Int) {
+        this.gameResult = when {
+            dealer.isOverWinScore() -> GameResult.LOSE
+            dealer.isWinner(gapPoint) && isWinner(gapPoint) -> GameResult.DRAW
+            !dealer.isWinner(gapPoint) && isWinner(gapPoint) -> GameResult.WIN
+            else -> GameResult.LOSE
+        }
     }
 }
