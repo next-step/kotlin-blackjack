@@ -10,4 +10,14 @@ class DeckTest {
 
         assertThat(deck.cards).hasSize(52)
     }
+
+    @Test
+    fun give_card() {
+        val deck = Deck()
+
+        val card = deck.getFirstCard()
+
+        assertThat(card.toString()).isEqualTo("♠A")
+        assertThat(deck.cards).hasSize(51)
+    }
 }
