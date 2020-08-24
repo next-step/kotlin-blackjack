@@ -10,4 +10,11 @@ class CardTest {
 
         assertThat(spadeAce.toString()).isEqualTo("♠A")
     }
+
+    @Test
+    fun get_card_number() {
+        val spadeAce = Card(Shape.SPADE, Denomination.ACE)
+
+        assertThat(spadeAce.getNumber()).isEqualTo(1)
+    }
 }

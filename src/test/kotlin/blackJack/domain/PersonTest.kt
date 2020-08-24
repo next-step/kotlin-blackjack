@@ -4,6 +4,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
+val SPADE_ACE = Card(Shape.SPADE, Denomination.ACE)
+val SPADE_KING = Card(Shape.SPADE, Denomination.KING)
+val SPADE_QUEEN = Card(Shape.SPADE, Denomination.QUEEN)
+val SPADE_JACK = Card(Shape.SPADE, Denomination.JACK)
+
 class PersonTest {
     @Test
     fun makePerson() {
@@ -23,11 +28,21 @@ class PersonTest {
     @Test
     fun add_card() {
         val person = Person("joohan")
-        val card = Card(Shape.SPADE, Denomination.ACE)
 
-        person.addCard(card)
+        person.addCard(SPADE_ACE)
 
         assertThat(person.hands).hasSize(1)
-        assertThat(person.hands[0]).isEqualTo(card)
+        assertThat(person.hands[0]).isEqualTo(SPADE_ACE)
+    }
+
+    @Test
+    fun get_total_score() {
+        val person = Person("joohan")
+        person.addCard(SPADE_JACK)
+        person.addCard(SPADE_KING)
+
+        val totalScore = person.getTotalScore()
+
+        assertThat(totalScore).isEqualTo(20)
     }
 }

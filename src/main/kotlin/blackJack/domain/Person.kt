@@ -12,4 +12,6 @@ class Person(val name: String) {
     fun addCard(card: Card) {
         _hands.add(card)
     }
+
+    fun getTotalScore(): Int = TotalScore.get(_hands)
 }
