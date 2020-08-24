@@ -21,4 +21,18 @@ class PlayerTest {
 
         assertThat(player.betMoney).isEqualTo(1000)
     }
+
+    @Test
+    fun get_profit() {
+        val player = Player("joohan")
+        player.bettingMoney(1000)
+
+        val winResult = player.getProfit(WinOrLose.WIN)
+        val drawResult = player.getProfit(WinOrLose.DRAW)
+        val loseResult = player.getProfit(WinOrLose.LOSE)
+
+        assertThat(winResult).isEqualTo(1000)
+        assertThat(drawResult).isEqualTo(0)
+        assertThat(loseResult).isEqualTo(-1000)
+    }
 }
