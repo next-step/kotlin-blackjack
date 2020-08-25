@@ -22,9 +22,7 @@ internal class PlayerTest {
     @Test
     fun hasFreeSpace() {
         val player = Player(0, "yunji").apply {
-            receiveCard(Card(Pip.TEN, Suit.HEART))
-            receiveCard(Card(Pip.TEN, Suit.HEART))
-            receiveCard(Card(Pip.THREE, Suit.HEART))
+            receiveCards(Card(Pip.TEN, Suit.HEART), Card(Pip.TEN, Suit.HEART), Card(Pip.THREE, Suit.HEART))
         }
         assertThat(player.hasFreeSpace()).isFalse()
     }

@@ -17,7 +17,7 @@ class GameHost(private val players: Players) {
 
         ResultView.printDealerResult(dealer, dealer.fillHand())
         ResultView.printPlayers(players)
-        ResultView.printWinners(players.findWinners())
+        ResultView.printWinners(players.findWinners(dealer))
     }
 
     private fun initPlayers() {

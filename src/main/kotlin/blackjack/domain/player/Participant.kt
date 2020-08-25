@@ -15,6 +15,11 @@ abstract class Participant : Comparable<Participant> {
 
     fun receiveCard(card: Card) = hand.addNew(card)
 
+    fun receiveCards(vararg cards: Card): HandStatus {
+        cards.forEach { receiveCard(it) }
+        return hand.status
+    }
+
     override fun toString() = "${getCards().joinToString()} (${getScore()})"
 
     override fun compareTo(other: Participant) = getScore().compareTo(other.getScore())

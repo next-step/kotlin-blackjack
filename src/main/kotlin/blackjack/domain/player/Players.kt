@@ -1,17 +1,22 @@
 package blackjack.domain.player
 
+import blackjack.domain.game.Dealer
+
 class Players private constructor(input: String) {
     val participants = parseNames(input)
 
-    fun findWinners() = findWinnerCandidates().filter { it.getScore() == findMaxPosition() }
+    fun findWinners(dealer: Dealer): List<Player> {
+        if (!dealer.isWinnerCandidate()) {
+            return findWinnerCandidates()
+        }
+        return findWinnerCandidates().filter { it.getScore() > dealer.getScore() }
+    }
 
     operator fun invoke(index: Int) = participants[index]
 
     override fun toString() = participants.joinToString("\n")
 
-    private fun findMaxPosition() = findWinnerCandidates().max()?.getScore() ?: 0
-
-    private fun findWinnerCandidates(): List<Player> = participants.filter { it.isWinnerCandidate() }
+    private fun findWinnerCandidates() = participants.filter { it.isWinnerCandidate() }
 
     companion object {
         private const val DELIMITER = ","

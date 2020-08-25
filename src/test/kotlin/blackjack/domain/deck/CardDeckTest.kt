@@ -10,7 +10,7 @@ class CardDeckTest {
 
     @DisplayName("카드덱이 비면 덱을 자동으로 초기화한다")
     @ParameterizedTest
-    @ValueSource(ints = [100])
+    @ValueSource(ints = [52])
     fun initCardDeck(count: Int) {
         var card = cardDeck.pop()
         for (i in 0 until count) {
