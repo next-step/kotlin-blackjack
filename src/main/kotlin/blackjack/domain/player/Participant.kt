@@ -2,10 +2,16 @@ package blackjack.domain.player
 
 import blackjack.domain.deck.Card
 
-interface Participant {
-    val hand: Hand
+abstract class Participant : Comparable<Participant> {
+    protected val hand: Hand = Hand()
 
-    fun receiveCard(card: Card): HandStatus
+    fun getCards() = hand.cards.toList()
 
-    fun getCards() = hand.cards
+    fun hasFreeSpace() = hand.hasFreeSpace()
+
+    fun getScore() = hand.calculate()
+
+    fun receiveCard(card: Card) = hand.addNew(card)
+
+    override fun compareTo(other: Participant) = getScore().compareTo(other.getScore())
 }

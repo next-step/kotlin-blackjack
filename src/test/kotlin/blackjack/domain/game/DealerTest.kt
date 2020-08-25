@@ -27,4 +27,15 @@ internal class DealerTest {
         dealer.giveCardTo(players(0))
         assertThat(players(0).getCards().size).isEqualTo(3)
     }
+
+    @DisplayName("딜러는 초기에 2장의 카드를 받는다.")
+    @Test
+    fun receiveOneCard() {
+        assertThat(dealer.getCards().size).isEqualTo(2)
+    }
+
+    @DisplayName("딜러의 패가 16 이하면 카드를 지급받는다.")
+    @Test
+    fun receiveMoreCard() {
+    }
 }

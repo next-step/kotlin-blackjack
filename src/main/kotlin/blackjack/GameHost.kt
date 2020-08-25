@@ -22,6 +22,7 @@ class GameHost(private val players: Players) {
     private fun initPlayers() {
         dealer.initPlayersHand(players)
         ResultView.printGiveCard(players)
+        ResultView.printDealerInitialCard(dealer)
         ResultView.printPlayers(players)
     }
 
