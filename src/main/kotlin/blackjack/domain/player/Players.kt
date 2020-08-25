@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-data class Players private constructor(private val input: String) {
+class Players private constructor(input: String) {
     val participants = parseNames(input)
 
     fun findWinners() = findWinnerCandidates().filter { it.getScore() == findMaxPosition() }
