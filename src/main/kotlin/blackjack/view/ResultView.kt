@@ -8,7 +8,7 @@ import blackjack.domain.player.Players
 object ResultView {
     private const val GIVE_CARD = "에게 2장의 카드를 나누었습니다."
     private const val DEALER = "딜러"
-    private const val DEALER_MORE_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val DEALER_MORE_CARD = "딜러는 16이하라 %s장의 카드를 더 받았습니다."
     private const val WINNER = "우승자 :"
     private const val WINNER_IS_DEALER = "아쉽지만 딜러가 이겼어요...!"
 
@@ -17,11 +17,14 @@ object ResultView {
     }
 
     fun printDealerInitialCard(dealer: Dealer) {
-        println("$DEALER : ${dealer.getCards().first()}")
+        println("$DEALER : ${dealer.getCards().first()} (${dealer.getScore()})")
     }
 
-    fun printDealer(dealer: Dealer) {
-        println("$DEALER : ${dealer.getCards().joinToString()}}")
+    fun printDealerResult(dealer: Dealer, count: Int) {
+        if (count > 0) {
+            println(DEALER_MORE_CARD.format(count))
+        }
+        println("$DEALER : $dealer")
     }
 
     fun printPlayers(players: Players) {

@@ -5,7 +5,5 @@ data class Player(
     val name: String
 ) : Participant() {
 
-    fun isWinnerCandidate() = hand.status != HandStatus.BUST
-
-    override fun toString(): String = "$name : ${getCards().joinToString()}"
+    override fun toString(): String = "$name : ${super.toString()}"
 }

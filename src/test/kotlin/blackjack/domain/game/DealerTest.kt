@@ -37,5 +37,7 @@ internal class DealerTest {
     @DisplayName("딜러의 패가 16 이하면 카드를 지급받는다.")
     @Test
     fun receiveMoreCard() {
+        dealer.fillHand()
+        assertThat(dealer.getScore()).isGreaterThan(16)
     }
 }

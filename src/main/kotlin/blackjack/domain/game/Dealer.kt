@@ -19,11 +19,21 @@ class Dealer : Participant() {
         return participant.receiveCard(cardDeck.pop())
     }
 
+    fun fillHand(): Int {
+        var count = 0
+        while (getScore() <= DEALER_MORE_CARD_STANDARD) {
+            giveCardTo(this)
+            count++
+        }
+        return count
+    }
+
     private fun giveCardToAll(players: Players) {
         players.participants.forEach { it.receiveCard(cardDeck.pop()) }
     }
 
     companion object {
         private const val INITIAL_DIVIDE_COUNT = 2
+        private const val DEALER_MORE_CARD_STANDARD = 16
     }
 }
