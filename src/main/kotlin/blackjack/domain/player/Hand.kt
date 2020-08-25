@@ -9,7 +9,7 @@ class Hand {
     private val _cards: ArrayList<Card> = arrayListOf()
 
     val cards: List<Card>
-        get() = _cards
+        get() = _cards.toList()
 
     fun addNew(card: Card): HandStatus {
         if (hasFreeSpace()) {

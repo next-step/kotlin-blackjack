@@ -18,4 +18,3 @@ internal class CarTest {
         assertThat(actual).isEqualTo(Car("car", 0))
     }
 }
-
