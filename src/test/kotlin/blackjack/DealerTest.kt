@@ -24,13 +24,13 @@ class DealerTest {
         val cards = Cards(
             listOf(
                 Card(Suit.CLUBS, Denomination.ACE),
-                Card(Suit.SPADES, Denomination.NINE)
+                Card(Suit.SPADES, Denomination.TEN)
             )
         )
-        val players = Players(listOf(Player("a", cards)), Dealer(cards))
+        val players = Players(listOf(Player("a")), Dealer(cards))
         players.calculateResult(players.dealer)
         val player = players[0]
-        assertThat(player.score()).isEqualTo(20)
+        assertThat(player.score()).isEqualTo(21)
         assertThat(player.gameResult).isEqualTo(GameResult.WIN)
     }
 }

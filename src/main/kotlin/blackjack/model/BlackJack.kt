@@ -1,7 +1,6 @@
 package blackjack.model
 
-class BlackJack(val players: Players) {
-    private val cardDeck = CardDeck().apply { this.shuffle() }
+class BlackJack(val players: Players, private val cardDeck: CardDeck = CardDeck().apply { this.shuffle() }) {
 
     fun firstTurn() {
         repeat(players.size()) {

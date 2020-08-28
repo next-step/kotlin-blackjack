@@ -19,7 +19,6 @@ class PlayerTest {
     @Test
     fun `플레이어 카드 드로우 테스트`() {
         val player = Player("a")
-        assertThat(player.score()).isEqualTo(0)
         player.draw(Card(Suit.CLUBS, Denomination.ACE))
         assertThat(player.score()).isEqualTo(11)
     }

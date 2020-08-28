@@ -40,7 +40,10 @@ object Output {
                 return@repeat
             }
         }
+        printResult(players, dealerWinCount, dealerDrawCount)
+    }
 
+    private fun printResult(players: Players, dealerWinCount: Int, dealerDrawCount: Int) {
         repeat(players.size()) {
             val player = players[it]
             if (player is Dealer) println("${player.name} : ${dealerWinCount}승 ${players.dealerExceptionSize() - dealerWinCount - dealerDrawCount}패")
