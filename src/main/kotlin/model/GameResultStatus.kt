@@ -8,13 +8,12 @@ class GameResultStatus(player: AbstractPlayer, list: List<AbstractPlayer>) {
 
     init {
         list.filter { player != it }.forEach {
-            player.compareResult(it)
-            if(player.compareResult(it) == BlackJackWinner.WIN) {
-                win++
-            } else if (player.compareResult(it) == BlackJackWinner.DRAW) {
-                draw++
-            } else {
-                lose++
+            when(player.compareResult(it)) {
+                BlackJackWinner.WIN -> win++
+                BlackJackWinner.DRAW -> draw++
+                else -> {
+                    lose++
+                }
             }
         }
     }
