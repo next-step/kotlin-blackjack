@@ -12,13 +12,11 @@ fun main() {
     ResultView.printPlayerInfo(BlackJackGameStatusInfo(players))
     ResultView.printCardInfo(players)
 
-    players.forEach {
-        receiveCard(it, blackJackGame)
-    }
+    players.forEach { receiveCard(it, blackJackGame) }
 
-    val gameResultStatuList = players.map { GameResultStatus(it, players) }
+    val gameResultStatusList = players.map { GameResultStatus(it, players) }
     ResultView.printResult(players)
-    ResultView.printWinner(gameResultStatuList)
+    ResultView.printWinner(gameResultStatusList)
 }
 
 private fun receiveCard(it: AbstractPlayer, blackJackGame: BlackJackGame) {
@@ -40,6 +38,6 @@ private fun receiveCardDealer(it: DealerPlayer, blackJackGame: BlackJackGame) {
     if (!it.isAbleReceiveCard()) {
         return
     }
-    print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+    ResultView.printReceiveCardDealer()
     blackJackGame.receiveCard(it)
 }

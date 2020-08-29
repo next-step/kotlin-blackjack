@@ -35,6 +35,10 @@ object ResultView {
         }
     }
 
+    fun printReceiveCardDealer() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
     fun printWinner(gameResultStatusList: List<GameResultStatus>) {
         println()
         println("## 최종 승패")
