@@ -14,7 +14,7 @@ object InputView {
             list.addAll(removeWhiteSpace(inputString).split(DELIMITER).map { Player(it) })
         } catch (ex: IllegalArgumentException) {
             println("잘못된 값을 입력하였습니다")
-            exitProcess(0)
+            exitProcess(128)
         }
 
         return list.toList()
