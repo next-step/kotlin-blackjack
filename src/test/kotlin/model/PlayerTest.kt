@@ -24,13 +24,13 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("가지고 있는 카드의 스코어를 합산 할 수 있다")
+    @DisplayName("가지고 있는 카드의 스코어를 합산 된다")
     fun `scoreOfCard`() {
         val name = PlayerName("hello")
-        val player = Player(name)
-        player.receive(Card(Suit.CLUBS, Denomination.ACE))
-        player.receive(Card(Suit.CLUBS, Denomination.QUEEN))
-        assertThat(player.score()).isGreaterThan(0)
+        var player = Player(name)
+        val cards = listOf<Card>(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
+        receiveCard(player, cards)
+        assertThat(player.score()).isEqualTo(21)
     }
 
     @Test
@@ -40,5 +40,11 @@ class PlayerTest {
         val player = Player(name)
         player.receive(Card(Suit.CLUBS, Denomination.ACE))
         assertThat(player.score()).isGreaterThanOrEqualTo(11)
+    }
+
+    private fun receiveCard(player: Player, list:List<Card>) {
+        for(card in list) {
+            player.receive(card)
+        }
     }
 }
