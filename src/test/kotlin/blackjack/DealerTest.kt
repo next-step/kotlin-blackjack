@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.Cards
 import blackjack.model.Dealer
 import blackjack.model.Denomination
-import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.Suit
@@ -20,7 +19,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 승리 테스트`() {
+    fun `딜러 점수 테스트`() {
         val cards = Cards(
             listOf(
                 Card(Suit.CLUBS, Denomination.ACE),
@@ -31,6 +30,5 @@ class DealerTest {
         players.calculateResult(players.dealer)
         val player = players[0]
         assertThat(player.score()).isEqualTo(21)
-        assertThat(player.gameResult).isEqualTo(GameResult.WIN)
     }
 }

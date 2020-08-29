@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.model.BlackJack
-import blackjack.model.CardDeck
 import blackjack.model.Dealer
 import blackjack.model.Player
 import blackjack.model.Players
@@ -9,10 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackJackTest {
-    private val shuffledDeck = CardDeck().apply {
-        this.shuffle()
-    }
-
     @Test
     fun `블랙잭 첫번째 턴 카드 뽑기`() {
         val blackJack = BlackJack(Players(listOf(Player("a"), Player("b")), Dealer()))
