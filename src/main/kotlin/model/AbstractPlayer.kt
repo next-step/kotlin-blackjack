@@ -1,8 +1,6 @@
 package model
 
-import kotlin.math.abs
-
-abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) {
+abstract class AbstractPlayer(open val name: PlayerName, val playerType: PlayerType) {
     private val cardMutableList: MutableList<Card> = mutableListOf()
 
     constructor(name: String) : this(PlayerName(name), PlayerType.PLAYER)
@@ -29,14 +27,16 @@ abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) 
 
     fun isOver(): Boolean = score() >= WINNING_POINT
 
-    fun scoreGap(): Int = abs(WINNING_POINT - score())
-
     fun isReceiveCard(isReceive: Boolean): Boolean {
         return isReceive && !isOver()
     }
 
     fun cardCount(): Int {
         return cardMutableList.size
+    }
+
+    fun isDealer() :Boolean {
+        return this.playerType == PlayerType.DEALER
     }
 
     companion object {

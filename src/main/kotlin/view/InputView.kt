@@ -1,12 +1,14 @@
 package view
 
+import model.AbstractPlayer
+import model.DealerPlayer
 import model.Player
 import kotlin.system.exitProcess
 
 object InputView {
-    fun inputPlayers(): List<Player> {
+    fun inputPlayers(): List<AbstractPlayer> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val list = mutableListOf<Player>()
+        val list = mutableListOf<AbstractPlayer>()
         val inputString = readLine()
         checkNotNull(inputString)
         try {
@@ -16,11 +18,11 @@ object InputView {
             println("잘못된 값을 입력하였습니다")
             exitProcess(128)
         }
-
+        list.add(DealerPlayer());
         return list.toList()
     }
 
-    fun receiveCard(player: Player): Boolean {
+    fun receiveCard(player: AbstractPlayer): Boolean {
         println("${player.name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val inputString = readLine()
         return inputString.equals("y")

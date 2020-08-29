@@ -1,13 +1,13 @@
 package blackjack
+import model.AbstractPlayer
 import model.Dealer
-import model.Player
 
-class BlackJackGame(val players: List<Player>, val dealer: Dealer) {
+class BlackJackGame(val players: List<AbstractPlayer>, val dealer: Dealer) {
     fun start() {
         repeat(START_PICK_COUNT) { players.forEach { players -> players.receive(dealer.draw()) } }
     }
 
-    fun receiveCard(player: Player) {
+    fun receiveCard(player: AbstractPlayer) {
         player.receive(dealer.draw())
     }
 

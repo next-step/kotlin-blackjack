@@ -1,8 +1,6 @@
 
 import blackjack.BlackJackGame
-import model.BlackJackGameStatusInfo
-import model.Cards
-import model.Dealer
+import model.*
 import view.InputView
 import view.ResultView
 
@@ -15,10 +13,31 @@ fun main() {
     ResultView.printCardInfo(players)
 
     players.forEach {
-        while (it.isReceiveCard(InputView.receiveCard(it))) {
-            blackJackGame.receiveCard(it)
-            ResultView.printCardCardReceive(it)
-        }
+        receiveCard(it, blackJackGame)
     }
     ResultView.printResult(players)
+    ResultView.printWinner(players)
+}
+
+private fun receiveCard(it: AbstractPlayer, blackJackGame: BlackJackGame) {
+    if (it is DealerPlayer) {
+        receiveCardDealer(it, blackJackGame)
+    } else if(it is Player) {
+        receiveCardPlayer(it, blackJackGame)
+    }
+}
+
+private fun receiveCardPlayer(it: Player, blackJackGame: BlackJackGame) {
+    while (it.isReceiveCard(InputView.receiveCard(it))) {
+        blackJackGame.receiveCard(it)
+        ResultView.printCardCardReceive(it)
+    }
+}
+
+private fun receiveCardDealer(it: DealerPlayer, blackJackGame: BlackJackGame) {
+    if (!it.isAbleReceiveCard()) {
+        return
+    }
+    print("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+    blackJackGame.receiveCard(it)
 }
