@@ -3,13 +3,13 @@ package model
 import kotlin.math.abs
 
 class Player(val name: PlayerName) {
-    private val cardMutableList: MutableList<Card> = mutableListOf()
+    private val mutableCards: MutableList<Card> = mutableListOf()
 
     constructor(name: String) : this(PlayerName(name))
     val cards: List<Card>
-        get() = cardMutableList.toList()
+        get() = mutableCards.toList()
 
-    fun receive(card: Card) = cardMutableList.add(card)
+    fun receive(card: Card) = mutableCards.add(card)
 
     fun score(): Int {
         val sum = cards.sumBy { it.denomination.score }
@@ -35,7 +35,7 @@ class Player(val name: PlayerName) {
     }
 
     fun cardCount(): Int {
-        return cardMutableList.size
+        return mutableCards.size
     }
 
     companion object {
