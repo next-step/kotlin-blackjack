@@ -1,6 +1,6 @@
 package model
 
-class PlayInfo(private val players: List<Player>) {
+class BlackJackGameStatusInfo(private val players: List<Player>) {
 
     fun playerNames(): List<PlayerName> {
         return players.map { it.name }

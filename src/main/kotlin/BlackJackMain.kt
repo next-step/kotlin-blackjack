@@ -1,8 +1,8 @@
 
 import blackjack.BlackJackGame
+import model.BlackJackGameStatusInfo
 import model.Cards
 import model.Dealer
-import model.PlayInfo
 import view.InputView
 import view.ResultView
 
@@ -12,7 +12,7 @@ fun main() {
     val dealer = Dealer(Cards())
     val blackJackGame = BlackJackGame(players, dealer)
     blackJackGame.start()
-    ResultView.printPlayerInfo(PlayInfo(players))
+    ResultView.printPlayerInfo(BlackJackGameStatusInfo(players))
     ResultView.printCardInfo(players)
 
     players.forEach {
