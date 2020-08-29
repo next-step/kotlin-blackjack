@@ -5,7 +5,7 @@ import model.PlayInfo
 import view.InputView
 import view.ResultView
 
-fun main(args: Array<String>) {
+fun main() {
     val inputView = InputView()
     val players = inputView.inputPlayers()
     val dealer = Dealer()
