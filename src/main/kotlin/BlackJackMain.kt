@@ -15,8 +15,10 @@ fun main() {
     players.forEach {
         receiveCard(it, blackJackGame)
     }
+
+    val gameResultStatuList = players.map { GameResultStatus(it, players) }
     ResultView.printResult(players)
-    ResultView.printWinner(players)
+    ResultView.printWinner(gameResultStatuList)
 }
 
 private fun receiveCard(it: AbstractPlayer, blackJackGame: BlackJackGame) {

@@ -2,6 +2,7 @@ package view
 
 import model.AbstractPlayer
 import model.BlackJackGameStatusInfo
+import model.GameResultStatus
 
 object ResultView {
     fun printPlayerInfo(blackJackGameStatusInfo: BlackJackGameStatusInfo) {
@@ -34,11 +35,11 @@ object ResultView {
         }
     }
 
-    fun printWinner(players: List<AbstractPlayer>) {
+    fun printWinner(gameResultStatusList: List<GameResultStatus>) {
         println()
         println("## 최종 승패")
-        players.forEach { player ->
-            print("${player.name.value}: ")
+        gameResultStatusList.forEach { gameResultStatus ->
+            print("${gameResultStatus.playerName.value}: ${gameResultStatus.win} 승 ${gameResultStatus.lose} 패 ${gameResultStatus.draw} 무")
             println()
         }
     }

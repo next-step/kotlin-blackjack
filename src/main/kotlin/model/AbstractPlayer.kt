@@ -25,7 +25,7 @@ abstract class AbstractPlayer(open val name: PlayerName, val playerType: PlayerT
         return cards.any { it.denomination.isAce() }
     }
 
-    fun isOver(): Boolean = score() >= WINNING_POINT
+    fun isOver(): Boolean = score() > WINNING_POINT
 
     fun isReceiveCard(isReceive: Boolean): Boolean {
         return isReceive && !isOver()
@@ -38,6 +38,8 @@ abstract class AbstractPlayer(open val name: PlayerName, val playerType: PlayerT
     fun isDealer() :Boolean {
         return this.playerType == PlayerType.DEALER
     }
+
+    abstract fun compareResult(player: AbstractPlayer): BlackJackWinner
 
     companion object {
         const val WINNING_POINT = 21

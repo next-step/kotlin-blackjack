@@ -9,4 +9,16 @@ class DealerPlayer(name: PlayerName = PlayerName("딜러")): AbstractPlayer(name
     companion object {
         const val DEALER_RECEIVE_CARD_SCORE = 16
     }
+
+    override fun compareResult(player: AbstractPlayer): BlackJackWinner {
+        if(this.score() == WINNING_POINT) {
+            return BlackJackWinner.WIN
+        } else if(!this.isOver() && this.score() > player.score()) {
+            return BlackJackWinner.WIN
+        } else if(!this.isOver() && this.score() == player.score()) {
+            return BlackJackWinner.DRAW
+        } else {
+            return BlackJackWinner.LOSE
+        }
+    }
 }
