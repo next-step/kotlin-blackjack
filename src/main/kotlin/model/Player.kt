@@ -1,13 +1,12 @@
 package model
 
-import kotlin.math.abs
-
 class Player(val name: PlayerName) {
     private val mutableCards: MutableList<Card> = mutableListOf()
 
-    constructor(name: String) : this(PlayerName(name))
     val cards: List<Card>
         get() = mutableCards.toList()
+
+    constructor(name: String) : this(PlayerName(name))
 
     fun receive(card: Card) = mutableCards.add(card)
 
@@ -20,16 +19,6 @@ class Player(val name: PlayerName) {
         }
     }
 
-    private fun isAceBonus(sum: Int) = hasAce() && sum <= ACE_BONUS_CONDITION
-
-    private fun hasAce(): Boolean {
-        return cards.any { it.denomination.isAce() }
-    }
-
-    fun isOver(): Boolean = score() >= WINNING_POINT
-
-    fun scoreGap(): Int = abs(WINNING_POINT - score())
-
     fun isReceiveCard(isReceive: Boolean): Boolean {
         return isReceive && !isOver()
     }
@@ -37,6 +26,14 @@ class Player(val name: PlayerName) {
     fun cardCount(): Int {
         return mutableCards.size
     }
+
+    private fun isAceBonus(sum: Int) = hasAce() && sum <= ACE_BONUS_CONDITION
+
+    private fun hasAce(): Boolean {
+        return cards.any { it.denomination.isAce() }
+    }
+
+    private fun isOver(): Boolean = score() >= WINNING_POINT
 
     companion object {
         const val WINNING_POINT = 21
