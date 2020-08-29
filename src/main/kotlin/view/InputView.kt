@@ -11,7 +11,7 @@ object InputView {
         checkNotNull(inputString)
         try {
             require(NAME_REGEX.matches(inputString))
-            list.addAll(removeWhiteSpace(inputString).split(DELIMITER).map { Player(it) })
+            list.addAll(inputString.removeWhitespace().split(DELIMITER).map { Player(it) })
         } catch (ex: IllegalArgumentException) {
             println("잘못된 값을 입력하였습니다")
             exitProcess(128)
@@ -26,12 +26,8 @@ object InputView {
         return inputString.equals("y")
     }
 
-    private fun removeWhiteSpace(inputString: String): String {
-        return if (inputString.contains(" ")) {
-            inputString.replace(" ", "")
-        } else {
-            inputString
-        }
+    private fun String.removeWhitespace(): String {
+        return replace(" ", "")
     }
 
     private const val DELIMITER = ","
