@@ -7,8 +7,7 @@ import view.InputView
 import view.ResultView
 
 fun main() {
-    val inputView = InputView()
-    val players = inputView.inputPlayers()
+    val players = InputView.inputPlayers()
     val dealer = Dealer(Cards())
     val blackJackGame = BlackJackGame(players, dealer)
     blackJackGame.start()
@@ -16,7 +15,7 @@ fun main() {
     ResultView.printCardInfo(players)
 
     players.forEach {
-        while (it.isReceiveCard(inputView.receiveCard(it))) {
+        while (it.isReceiveCard(InputView.receiveCard(it))) {
             blackJackGame.receiveCard(it)
             ResultView.printCardCardReceive(it)
         }

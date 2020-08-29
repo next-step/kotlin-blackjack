@@ -3,7 +3,7 @@ package view
 import model.Player
 import kotlin.system.exitProcess
 
-class InputView {
+object InputView {
     fun inputPlayers(): List<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val list = mutableListOf<Player>()
@@ -34,8 +34,6 @@ class InputView {
         }
     }
 
-    companion object {
-        const val DELIMITER = ","
-        val NAME_REGEX = Regex(pattern = "^[A-Za-z0-9,\\s]+\$")
-    }
+    private const val DELIMITER = ","
+    private val NAME_REGEX = Regex(pattern = "^[A-Za-z0-9,\\s]+\$")
 }
