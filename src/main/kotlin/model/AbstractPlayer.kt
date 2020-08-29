@@ -35,7 +35,7 @@ abstract class AbstractPlayer(open val name: PlayerName, val playerType: PlayerT
         return cardMutableList.size
     }
 
-    fun isDealer() :Boolean {
+    fun isDealer(): Boolean {
         return this.playerType == PlayerType.DEALER
     }
 

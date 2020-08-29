@@ -18,7 +18,7 @@ object InputView {
             println("잘못된 값을 입력하였습니다")
             exitProcess(128)
         }
-        list.add(DealerPlayer());
+        list.add(DealerPlayer())
         return list.toList()
     }
 

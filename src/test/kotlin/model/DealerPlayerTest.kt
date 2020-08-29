@@ -17,8 +17,8 @@ class DealerPlayerTest {
         Assertions.assertThat(dealer.compareResult(player)).isEqualTo(BlackJackWinner.LOSE)
     }
 
-    private fun receiveCard(player: AbstractPlayer, list:List<Card>) {
-        for(card in list) {
+    private fun receiveCard(player: AbstractPlayer, list: List<Card>) {
+        for (card in list) {
             player.receive(card)
         }
     }

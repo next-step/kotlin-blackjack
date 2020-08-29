@@ -1,6 +1,6 @@
 package model
 
-class DealerPlayer(name: PlayerName = PlayerName("딜러")): AbstractPlayer(name, PlayerType.DEALER) {
+class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(name, PlayerType.DEALER) {
 
     fun isAbleReceiveCard(): Boolean {
         return this.score() <= DEALER_RECEIVE_CARD_SCORE

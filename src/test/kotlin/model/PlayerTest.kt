@@ -90,8 +90,8 @@ class PlayerTest {
         assertThat(player.compareResult(dealer)).isEqualTo(BlackJackWinner.WIN)
     }
 
-    private fun receiveCard(player: AbstractPlayer, list:List<Card>) {
-        for(card in list) {
+    private fun receiveCard(player: AbstractPlayer, list: List<Card>) {
+        for (card in list) {
             player.receive(card)
         }
     }

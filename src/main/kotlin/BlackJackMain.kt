@@ -23,7 +23,7 @@ fun main() {
 private fun receiveCard(it: AbstractPlayer, blackJackGame: BlackJackGame) {
     if (it is DealerPlayer) {
         receiveCardDealer(it, blackJackGame)
-    } else if(it is Player) {
+    } else if (it is Player) {
         receiveCardPlayer(it, blackJackGame)
     }
 }
