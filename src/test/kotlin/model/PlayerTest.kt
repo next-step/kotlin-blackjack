@@ -12,7 +12,7 @@ class PlayerTest {
         val player = Player(name)
         val card = Card(Suit.CLUBS, Denomination.ACE)
         player.receive(card)
-        assertThat(player.cards.size).isGreaterThan(0)
+        assertThat(player.cards).hasSize(1)
     }
 
     @Test
