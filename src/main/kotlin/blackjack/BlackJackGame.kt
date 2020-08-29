@@ -1,4 +1,4 @@
-
+package blackjack
 import model.Dealer
 import model.Player
 
@@ -12,6 +12,6 @@ class BlackJackGame(val players: List<Player>, val dealer: Dealer) {
     }
 
     companion object {
-        const val START_PICK_COUNT = 2
+        private const val START_PICK_COUNT = 2
     }
 }
