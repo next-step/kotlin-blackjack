@@ -7,6 +7,7 @@ import view.ResultView
 fun main() {
     val players = InputView.inputPlayers()
     val dealer = Dealer(Cards())
+    dealer.shuffle()
     val blackJackGame = BlackJackGame(players, dealer)
     blackJackGame.start()
     ResultView.printPlayerInfo(BlackJackGameStatusInfo(players))
