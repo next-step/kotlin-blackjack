@@ -39,7 +39,16 @@ object ResultView {
         println()
         println("## 최종 승패")
         gameResultStatusList.forEach { gameResultStatus ->
-            print("${gameResultStatus.playerName.value}: ${gameResultStatus.win} 승 ${gameResultStatus.lose} 패 ${gameResultStatus.draw} 무")
+            print("${gameResultStatus.playerName.value}: ")
+            if(gameResultStatus.win > 0) {
+                print("${gameResultStatus.win} 승 ")
+            }
+            if(gameResultStatus.draw > 0) {
+                print("${gameResultStatus.draw} 무 ")
+            }
+            if(gameResultStatus.lose > 0) {
+                print("${gameResultStatus.lose} 패 ")
+            }
             println()
         }
     }
