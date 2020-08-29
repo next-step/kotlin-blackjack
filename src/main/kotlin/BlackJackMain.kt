@@ -1,5 +1,6 @@
 
 import blackjack.BlackJackGame
+import model.Cards
 import model.Dealer
 import model.PlayInfo
 import view.InputView
@@ -8,7 +9,7 @@ import view.ResultView
 fun main() {
     val inputView = InputView()
     val players = inputView.inputPlayers()
-    val dealer = Dealer()
+    val dealer = Dealer(Cards())
     val blackJackGame = BlackJackGame(players, dealer)
     blackJackGame.start()
     ResultView.printPlayerInfo(PlayInfo(players))

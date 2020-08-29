@@ -1,13 +1,7 @@
 package model
 
-class Dealer {
-    private lateinit var cards: Cards
-
-    init {
-        shuffle(Cards())
-    }
-
-    fun shuffle(cards: Cards) {
+class Dealer(private var cards: Cards) {
+    fun shuffle() {
         this.cards = cards.shuffle()
     }
     fun draw(): Card {
