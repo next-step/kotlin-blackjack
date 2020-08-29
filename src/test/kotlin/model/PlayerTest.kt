@@ -78,7 +78,19 @@ class PlayerTest {
         assertThat(player.compareResult(playerLoser)).isEqualTo(BlackJackWinner.LOSE)
     }
 
-    private fun receiveCard(player: Player, list:List<Card>) {
+    @Test
+    @DisplayName("dealer 가 21점 이상이면 player 는 win 이다")
+    fun `dealerScoreOver21`() {
+        val player = Player("hello")
+        val dealer = DealerPlayer()
+        val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.SIX))
+        val cardDealer = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN))
+        receiveCard(player, cards)
+        receiveCard(dealer, cardDealer)
+        assertThat(player.compareResult(dealer)).isEqualTo(BlackJackWinner.WIN)
+    }
+
+    private fun receiveCard(player: AbstractPlayer, list:List<Card>) {
         for(card in list) {
             player.receive(card)
         }

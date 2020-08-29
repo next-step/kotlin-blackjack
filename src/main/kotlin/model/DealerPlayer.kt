@@ -11,11 +11,15 @@ class DealerPlayer(name: PlayerName = PlayerName("딜러")): AbstractPlayer(name
     }
 
     override fun compareResult(player: AbstractPlayer): BlackJackWinner {
-        if(this.score() == WINNING_POINT) {
+        if (this.isOver()) {
+            return BlackJackWinner.LOSE
+        } else if (player.isOver()) {
             return BlackJackWinner.WIN
-        } else if(!this.isOver() && this.score() > player.score()) {
+        } else if (this.score() == WINNING_POINT) {
             return BlackJackWinner.WIN
-        } else if(!this.isOver() && this.score() == player.score()) {
+        } else if (this.score() > player.score()) {
+            return BlackJackWinner.WIN
+        } else if (this.score() == player.score()) {
             return BlackJackWinner.DRAW
         } else {
             return BlackJackWinner.LOSE
