@@ -1,6 +1,8 @@
 package blackjack.domain.game
 
 import blackjack.domain.deck.CardDeck
+import blackjack.domain.player.DetailResult
+import blackjack.domain.player.GameResult
 import blackjack.domain.player.HandStatus
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Players
@@ -26,6 +28,13 @@ class Dealer : Participant() {
             count++
         }
         return count
+    }
+
+    fun findGameResult(players: Players): DetailResult {
+        val win = players.participants.count { this.findResult(it) == GameResult.WIN }
+        val lose = players.participants.count { this.findResult(it) == GameResult.LOSE }
+        val push = players.size - win - lose
+        return DetailResult(win, lose, push)
     }
 
     private fun giveCardToAll(players: Players) {

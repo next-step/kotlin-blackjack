@@ -37,7 +37,8 @@ internal class PlayersTest {
         players(0).receiveCards(Card(Pip.TEN, Suit.HEART), Card(Pip.TEN, Suit.HEART), Card(Pip.TWO, Suit.HEART))
         players(1).receiveCards(Card(Pip.NINE, Suit.HEART), Card(Pip.TEN, Suit.HEART))
 
-        assertThat(players.findWinners(dealer)).contains(players(1))
+        assertThat(players(0).findResult(dealer)).isEqualTo(GameResult.LOSE)
+        assertThat(players(1).findResult(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @DisplayName("딜러가 버스트일 경우 남은 플레이어 모두가 우승자가 된다.")
@@ -46,6 +47,9 @@ internal class PlayersTest {
         val players = Players("a, b, c")
         val dealer = Dealer()
         dealer.receiveCards(Card(Pip.TEN, Suit.HEART), Card(Pip.TEN, Suit.HEART), Card(Pip.TWO, Suit.HEART))
-        assertThat(players.findWinners(dealer)).contains(players(0), players(1), players(2))
+
+        assertThat(players(0).findResult(dealer)).isEqualTo(GameResult.WIN)
+        assertThat(players(1).findResult(dealer)).isEqualTo(GameResult.WIN)
+        assertThat(players(2).findResult(dealer)).isEqualTo(GameResult.WIN)
     }
 }

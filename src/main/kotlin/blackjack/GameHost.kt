@@ -15,9 +15,11 @@ class GameHost(private val players: Players) {
             requestMoreAction(player, dealer)
         }
 
-        ResultView.printDealerResult(dealer, dealer.fillHand())
+        ResultView.printDealerStatus(dealer, dealer.fillHand())
         ResultView.printPlayers(players)
-        ResultView.printWinners(players.findWinners(dealer))
+
+        ResultView.printDealerResult(dealer.findGameResult(players))
+        ResultView.printPlayersResult(dealer, players)
     }
 
     private fun initPlayers() {

@@ -7,7 +7,7 @@ abstract class Participant : Comparable<Participant> {
 
     fun getCards() = hand.cards.toList()
 
-    fun isWinnerCandidate() = hand.status != HandStatus.BUST
+    private fun isWinnerCandidate() = hand.status != HandStatus.BUST
 
     fun hasFreeSpace() = hand.hasFreeSpace()
 
@@ -18,6 +18,14 @@ abstract class Participant : Comparable<Participant> {
     fun receiveCards(vararg cards: Card): HandStatus {
         cards.forEach { receiveCard(it) }
         return hand.status
+    }
+
+    fun findResult(participant: Participant) = when {
+        !isWinnerCandidate() -> GameResult.LOSE
+        !participant.isWinnerCandidate() -> GameResult.WIN
+        participant > this -> GameResult.LOSE
+        participant < this -> GameResult.WIN
+        else -> GameResult.PUSH
     }
 
     override fun toString() = "${getCards().joinToString()} (${getScore()})"
