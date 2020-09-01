@@ -9,7 +9,7 @@ class Players private constructor(input: String) {
         if (!dealer.isWinnerCandidate()) {
             return findWinnerCandidates()
         }
-        return findWinnerCandidates().filter { it.getScore() > dealer.getScore() }
+        return findWinnerCandidates().filter { it > dealer }
     }
 
     operator fun invoke(index: Int) = participants[index]
