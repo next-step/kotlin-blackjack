@@ -2,8 +2,12 @@ package blackjack.domain.player
 
 import blackjack.domain.game.Dealer
 
-class Players private constructor(input: String) {
+class Players(input: String) {
     val participants = parseNames(input)
+
+    init {
+        require(input.isNotBlank())
+    }
 
     fun findWinners(dealer: Dealer): List<Player> {
         if (!dealer.isWinnerCandidate()) {
@@ -20,13 +24,6 @@ class Players private constructor(input: String) {
 
     companion object {
         private const val DELIMITER = ","
-
-        fun getOrNull(input: String): Players? {
-            if (input.isNotBlank()) {
-                return Players(input)
-            }
-            return null
-        }
 
         private fun parseNames(input: String) = input.split(DELIMITER)
             .filter { it.isNotBlank() }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class DealerTest {
     private val dealer = Dealer()
-    private val players = Players.getOrNull("a, b, c")!!
+    private val players = Players("a, b, c")
 
     @BeforeEach
     fun setUp() {

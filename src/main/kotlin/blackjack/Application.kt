@@ -8,8 +8,7 @@ object Application {
     @JvmStatic
     fun main(args: Array<String>) {
         val playersName = InputView.readPlayers()
-        Players.getOrNull(playersName)?.run {
-            GameHost(this).start()
-        }
+        val players = Players(playersName)
+        GameHost(players).start()
     }
 }
