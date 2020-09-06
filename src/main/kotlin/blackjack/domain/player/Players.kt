@@ -1,29 +1,22 @@
 package blackjack.domain.player
 
-data class Players private constructor(private val input: String) {
-    val participants = parseNames(input)
+class Players(input: String) {
+    val participants: List<Player> = parseNames(input)
+    val size: Int
+        get() = participants.size
 
-    fun findWinners() = findWinnerCandidates().filter { it.getScore() == findMaxPosition() }
+    init {
+        require(input.isNotBlank())
+    }
 
     operator fun invoke(index: Int) = participants[index]
 
     override fun toString() = participants.joinToString("\n")
 
-    private fun findMaxPosition() = findWinnerCandidates().max()?.getScore() ?: 0
-
-    private fun findWinnerCandidates(): List<Player> = participants.filter { it.isWinnerCandidate() }
-
     companion object {
         private const val DELIMITER = ","
 
-        fun getOrNull(input: String): Players? {
-            if (input.isNotBlank()) {
-                return Players(input)
-            }
-            return null
-        }
-
-        private fun parseNames(input: String) = input.split(DELIMITER)
+        private fun parseNames(input: String): List<Player> = input.split(DELIMITER)
             .filter { it.isNotBlank() }
             .mapIndexed { index, name -> Player(index, name.trim()) }
     }

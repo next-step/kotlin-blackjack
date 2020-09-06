@@ -3,11 +3,14 @@ package blackjack.domain.deck
 import java.util.LinkedList
 import java.util.Queue
 
-class CardDeck {
+class CardDeck(
     private val cards: Queue<Card> = LinkedList()
+) {
 
     init {
-        reset()
+        if (cards.isEmpty()) {
+            reset()
+        }
     }
 
     fun pop(): Card {
@@ -16,6 +19,8 @@ class CardDeck {
         }
         return cards.poll()
     }
+
+    fun size() = cards.size
 
     private fun reset() {
         cards.run {
