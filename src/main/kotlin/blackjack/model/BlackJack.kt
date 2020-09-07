@@ -17,7 +17,7 @@ class BlackJack(
     }
 
     fun dealerDrawCheck(): Boolean {
-        if (DRAW_CONDITION > dealer.score()) {
+        if (!dealer.isOver17()) {
             dealer.draw(cardDeck.drawCard())
             return true
         }
