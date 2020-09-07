@@ -1,6 +1,10 @@
 package blackjack.model
 
-class BlackJack(val players: Players, private val cardDeck: CardDeck = CardDeck().apply { this.shuffle() }) {
+class BlackJack(
+    val players: Players,
+    val dealer: Dealer,
+    private val cardDeck: CardDeck = CardDeck().apply { this.shuffle() }
+) {
 
     fun firstTurn() {
         repeat(players.size()) {
@@ -13,8 +17,8 @@ class BlackJack(val players: Players, private val cardDeck: CardDeck = CardDeck(
     }
 
     fun dealerDrawCheck(): Boolean {
-        if (DRAW_CONDITION > players.dealer.score()) {
-            players.dealer.draw(cardDeck.drawCard())
+        if (DRAW_CONDITION > dealer.score()) {
+            dealer.draw(cardDeck.drawCard())
             return true
         }
         return false

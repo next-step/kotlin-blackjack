@@ -1,14 +1,7 @@
 package blackjack.model
 
-class Players(players: List<Player>, dealer: Dealer) {
-    private val players: MutableList<Player> = players.toMutableList()
-    val dealer: Dealer = dealer.apply {
-        this@Players.players.add(0, this)
-    }
-
+class Players(private val players: List<Player>) {
     fun size() = players.size
-
-    fun dealerExceptionSize() = players.filter { it.name != DEALER_NAME }.size
 
     fun race(player: Player, cardDeck: CardDeck) {
         if (player.available()) {
@@ -18,6 +11,10 @@ class Players(players: List<Player>, dealer: Dealer) {
 
     fun calculateResult(dealer: Dealer) {
         players.forEach { it.gameResult(dealer.score()) }
+    }
+
+    fun isPlayer(player: Player): Boolean {
+        return players.contains(player)
     }
 
     operator fun get(index: Int): Player {
