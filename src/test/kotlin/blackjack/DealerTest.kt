@@ -5,7 +5,6 @@ import blackjack.model.Cards
 import blackjack.model.Dealer
 import blackjack.model.Denomination
 import blackjack.model.Player
-import blackjack.model.Players
 import blackjack.model.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -26,9 +25,7 @@ class DealerTest {
                 Card(Suit.SPADES, Denomination.TEN)
             )
         )
-        val players = Players(listOf(Player("a")), Dealer(cards))
-        players.calculateResult(players.dealer)
-        val player = players[0]
-        assertThat(player.score()).isEqualTo(21)
+        val dealer = Dealer(cards)
+        assertThat(dealer.score()).isEqualTo(21)
     }
 }

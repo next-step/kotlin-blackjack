@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class BlackJackTest {
     @Test
     fun `블랙잭 첫번째 턴 카드 뽑기`() {
-        val blackJack = BlackJack(Players(listOf(Player("a"), Player("b")), Dealer()))
+        val blackJack = BlackJack(Players(listOf(Player("a"), Player("b"))), Dealer())
         val a = blackJack.players[1]
         assertThat(a.score()).isEqualTo(0)
         blackJack.firstTurn()
@@ -19,7 +19,7 @@ class BlackJackTest {
 
     @Test
     fun `블랙잭 레이스`() {
-        val blackJack = BlackJack(Players(listOf(Player("a")), Dealer()))
+        val blackJack = BlackJack(Players(listOf(Player("a"))), Dealer())
         val a = blackJack.players[0]
         assertThat(a.score()).isEqualTo(0)
         blackJack.race(a)

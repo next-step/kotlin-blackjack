@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test
 class PlayersTest {
     @Test
     fun `플레이어 생성 테스트`() {
-        val players = Players(listOf("a", "b").map { Player(it) }, Dealer())
-        assertThat(players.size()).isEqualTo(3)
+        val players = Players(listOf("a", "b").map { Player(it) })
+        assertThat(players.size()).isEqualTo(2)
     }
 
     @Test
@@ -27,9 +27,9 @@ class PlayersTest {
                 Card(Suit.SPADES, Denomination.NINE)
             )
         )
-        val players = Players(listOf(Player("a", cards)), Dealer())
-        players.calculateResult(players.dealer)
-        val player = players[1]
+        val players = Players(listOf(Player("a", cards)))
+        players.calculateResult(Dealer())
+        val player = players[0]
         assertThat(player.score()).isEqualTo(21)
         assertThat(player.gameResult).isEqualTo(GameResult.WIN)
     }
@@ -43,9 +43,10 @@ class PlayersTest {
                 Card(Suit.SPADES, Denomination.NINE)
             )
         )
-        val players = Players(listOf(Player("a", cards)), Dealer(cards))
-        players.calculateResult(players.dealer)
-        val player = players[1]
+        val players = Players(listOf(Player("a", cards)))
+        val dealer = Dealer(cards)
+        players.calculateResult(dealer)
+        val player = players[0]
         assertThat(player.score()).isEqualTo(21)
         assertThat(player.gameResult).isEqualTo(GameResult.DRAW)
     }

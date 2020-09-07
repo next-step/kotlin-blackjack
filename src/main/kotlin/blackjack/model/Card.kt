@@ -25,10 +25,8 @@ enum class Denomination(val initial: String, val score: Int) {
     QUEEN("Q", 10),
     KING("K", 10);
 
-    fun isAce() = this == ACE
-    fun calculate(score: Int): Int = if (score > WIN_SCORE) score - ACE_VALUE_GAP else score
-
     companion object {
-        const val ACE_VALUE_GAP = 10
+        private const val ACE_VALUE_GAP = 10
+        fun calculate(score: Int): Int = if (score > WIN_SCORE) score - ACE_VALUE_GAP else score
     }
 }
