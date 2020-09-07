@@ -1,8 +1,6 @@
 package blackjack.model
 
-class Players(players: List<Player>) {
-    private val players = players
-
+class Players(private val players: List<Player>) {
     fun size() = players.size
 
     fun race(player: Player, cardDeck: CardDeck) {
@@ -11,8 +9,12 @@ class Players(players: List<Player>) {
         }
     }
 
-    fun winner(): Players {
-        return Players(players.filter { it.winner() })
+    fun calculateResult(dealer: Dealer) {
+        players.forEach { it.gameResult(dealer.score()) }
+    }
+
+    fun isPlayer(player: Player): Boolean {
+        return players.contains(player)
     }
 
     operator fun get(index: Int): Player {

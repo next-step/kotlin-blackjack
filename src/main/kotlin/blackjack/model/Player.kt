@@ -2,7 +2,9 @@ package blackjack.model
 
 const val WIN_SCORE = 21
 
-class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
+open class Player(val name: String, val cards: Cards = Cards(emptyList())) {
+    var gameResult: GameResult = GameResult.DRAW
+        private set
 
     fun draw(vararg cards: Card) {
         repeat(cards.size) {
@@ -18,11 +20,17 @@ class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
         return score() < WIN_SCORE
     }
 
-    fun winner(): Boolean {
-        return score() == WIN_SCORE
+    fun gameResult(dealerPoint: Int) {
+        when {
+            isOverWinScore() -> this.gameResult = GameResult.LOSE
+            dealerPoint > WIN_SCORE -> this.gameResult = GameResult.WIN
+            this.score() > dealerPoint -> this.gameResult = GameResult.WIN
+            this.score() == dealerPoint -> this.gameResult = GameResult.DRAW
+            this.score() < dealerPoint -> this.gameResult = GameResult.LOSE
+        }
     }
 
-    fun cardToString(): String {
-        return cards.toString()
+    private fun isOverWinScore(): Boolean {
+        return score() > WIN_SCORE
     }
 }

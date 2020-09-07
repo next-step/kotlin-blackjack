@@ -23,10 +23,14 @@ class Cards(cards: List<Card>) {
 
     fun score(): Int {
         var sum = cards.sumBy { it.denomination.score }
-        cards.filter { it.denomination.isAce() }.forEach {
-            sum = it.denomination.calculate(sum)
+        if (this.containsAce()) {
+            sum = Denomination.calculate(sum)
         }
         return sum
+    }
+
+    private fun containsAce(): Boolean {
+        return cards.count { it.denomination == Denomination.ACE } > 0
     }
 
     operator fun get(index: Int): Card {

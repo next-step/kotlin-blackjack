@@ -1,9 +1,13 @@
 package blackjack.model
 
-class BlackJack(val players: Players, cardDeck: CardDeck) {
-    private val cardDeck = cardDeck
+class BlackJack(
+    val players: Players,
+    val dealer: Dealer,
+    private val cardDeck: CardDeck = CardDeck().apply { this.shuffle() }
+) {
 
     fun firstTurn() {
+        dealer.draw(cardDeck.drawCard(), cardDeck.drawCard())
         repeat(players.size()) {
             players[it].draw(cardDeck.drawCard(), cardDeck.drawCard())
         }
@@ -13,7 +17,15 @@ class BlackJack(val players: Players, cardDeck: CardDeck) {
         players.race(player, cardDeck)
     }
 
-    fun winner(): Players {
-        return players.winner()
+    fun dealerDrawCheck(): Boolean {
+        if (!dealer.isOver17()) {
+            dealer.draw(cardDeck.drawCard())
+            return true
+        }
+        return false
+    }
+
+    fun gameResult(dealer: Dealer) {
+        return players.calculateResult(dealer)
     }
 }

@@ -11,7 +11,7 @@ object Input {
     fun ask(name: String): Boolean {
         println("${name}는 한장의 카드를 더 받겠습니까?(y/n)")
         val ask = readLine().toString()
-        if (ask == "y" || ask == "n") ask else null ?: exitProcess(-1)
+        if (!(ask == "y" || ask == "n")) exitProcess(-1)
         return ask == "y"
     }
 }
