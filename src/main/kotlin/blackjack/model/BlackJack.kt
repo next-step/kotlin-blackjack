@@ -7,6 +7,7 @@ class BlackJack(
 ) {
 
     fun firstTurn() {
+        dealer.draw(cardDeck.drawCard(), cardDeck.drawCard())
         repeat(players.size()) {
             players[it].draw(cardDeck.drawCard(), cardDeck.drawCard())
         }

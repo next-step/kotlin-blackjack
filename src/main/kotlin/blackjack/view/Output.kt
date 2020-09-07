@@ -10,8 +10,12 @@ object Output {
         println("${players}에게 2장의 나누었습니다.")
     }
 
-    fun pickResult(player: Player) {
+    fun playerPickResult(player: Player) {
         println("${player.name}의 카드 : ${player.cards}")
+    }
+
+    fun dealerPickResult(dealer: Dealer) {
+        println("${dealer.name}의 카드 : ${dealer.cards[0]}")
     }
 
     fun dealerAddCard(isDraw: Boolean) {

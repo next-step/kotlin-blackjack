@@ -12,7 +12,7 @@ fun main() {
     val names = Input.names()
     val blackJack = BlackJack(Players(names.map { Player(it) }), Dealer())
     Output.players(blackJack.players)
-    firstTurn(blackJack, blackJack.players)
+    firstTurn(blackJack)
     repeat(blackJack.players.size()) {
         playerRace(blackJack, blackJack.players[it])
     }
@@ -24,10 +24,11 @@ fun main() {
     Output.gameResult(blackJack.players, blackJack.dealer)
 }
 
-fun firstTurn(blackJack: BlackJack, players: Players) {
+fun firstTurn(blackJack: BlackJack) {
     blackJack.firstTurn()
-    repeat(players.size()) {
-        Output.pickResult(players[it])
+    Output.dealerPickResult(blackJack.dealer)
+    repeat(blackJack.players.size()) {
+        Output.playerPickResult(blackJack.players[it])
     }
 }
 
@@ -35,6 +36,6 @@ fun playerRace(blackJack: BlackJack, player: Player) {
     var dealerWin: Boolean = player is Dealer && player.score() >= WIN_SCORE
     while (blackJack.players.isPlayer(player) && !dealerWin && player.available() && Input.ask(player.name)) {
         blackJack.race(player)
-        Output.pickResult(player)
+        Output.playerPickResult(player)
     }
 }
