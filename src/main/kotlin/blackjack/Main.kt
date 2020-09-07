@@ -17,7 +17,9 @@ fun main() {
     repeat(blackJack.players.size()) {
         playerRace(blackJack, blackJack.players[it])
     }
-    Output.dealerAddCard(blackJack.dealerDrawCheck())
+    while (blackJack.dealerDrawCheck()) {
+        Output.dealerAddCard(blackJack.dealerDrawCheck())
+    }
     blackJack.gameResult(blackJack.players.dealer)
     Output.scoreCalculate(blackJack.players)
     Output.gameResult(blackJack.players)
