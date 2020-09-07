@@ -11,7 +11,7 @@ object Output {
     }
 
     fun pickResult(player: Player) {
-        println("${player.name}의 카드 : ${player.cardToString()}")
+        println("${player.name}의 카드 : ${player.cards}")
     }
 
     fun dealerAddCard(isDraw: Boolean) {
@@ -19,10 +19,10 @@ object Output {
     }
 
     fun scoreCalculate(players: Players, dealer: Dealer) {
-        println("${dealer.name}의 카드 : ${dealer.cardToString()} / 점수 : ${dealer.score()}")
+        println("${dealer.name}의 카드 : ${dealer.cards} / 점수 : ${dealer.score()}")
         repeat(players.size()) {
             val player = players[it]
-            println("${player.name}의 카드 : ${player.cardToString()} / 점수 : ${player.score()}")
+            println("${player.name}의 카드 : ${player.cards} / 점수 : ${player.score()}")
         }
     }
 

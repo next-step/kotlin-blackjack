@@ -2,7 +2,7 @@ package blackjack.model
 
 const val WIN_SCORE = 21
 
-open class Player(val name: String, private val cards: Cards = Cards(emptyList())) {
+open class Player(val name: String, val cards: Cards = Cards(emptyList())) {
     var gameResult: GameResult = GameResult.DRAW
         private set
 
@@ -18,10 +18,6 @@ open class Player(val name: String, private val cards: Cards = Cards(emptyList()
 
     fun available(): Boolean {
         return score() < WIN_SCORE
-    }
-
-    fun cardToString(): String {
-        return cards.toString()
     }
 
     fun gameResult(dealerPoint: Int) {
