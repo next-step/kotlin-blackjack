@@ -41,6 +41,6 @@ class Result(players: Players, private val dealer: Dealer) {
     private fun checkDrawPlayer(player: Player): Boolean = player.getTotalScore() == dealer.getTotalScore()
 
     companion object {
-        const val DEFAULT_PROFIT = 0
+        private const val DEFAULT_PROFIT = 0
     }
 }

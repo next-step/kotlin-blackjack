@@ -18,6 +18,6 @@ abstract class Person(val name: String) {
     fun isBust(): Boolean = getTotalScore() > BUST_SCORE
 
     companion object {
-        const val BUST_SCORE = 21
+        private const val BUST_SCORE = 21
     }
 }

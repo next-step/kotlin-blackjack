@@ -20,7 +20,7 @@ class Deck() {
 
     companion object {
         val DEFAULT_DECK = Shape.values().flatMap { shape -> Denomination.values().map { Card(shape, it) } }
-        const val FIRST_CARD = 0
-        const val DELETE_CARD = 1
+        private const val FIRST_CARD = 0
+        private const val DELETE_CARD = 1
     }
 }
