@@ -19,10 +19,10 @@ object ResultView {
         println("딜러가 딜러와 ${players.players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
         println("딜러 카드: ${dealer.hands.getFirstCard()}")
         blank()
-        players.players.forEach { resultPeopleHands(it) }
+        players.forEach { resultPeopleHands(it) }
     }
 
-    private fun resultPeopleHands(person: Person, result: String = "") {
+    fun resultPeopleHands(person: Person, result: String = "") {
         println("${person.name} 카드: ${person.hands.cards.joinToString { it.toString() }} $result")
         blank()
     }

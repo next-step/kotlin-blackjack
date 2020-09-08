@@ -3,7 +3,11 @@ package blackJack.domain
 class BlackJack(val players: Players) {
     val dealer = Dealer()
 
-    fun readyGame() {
+    init {
+        readyGame()
+    }
+
+    private fun readyGame() {
         repeat(2) { giveCardAllPerson() }
     }
 
@@ -12,22 +16,17 @@ class BlackJack(val players: Players) {
         dealer.giveCard(dealer)
     }
 
-    fun bettingMoney(getBetMoney: (player: Player) -> Int) {
-        players.players.forEach { it.bettingMoney(getBetMoney(it)) }
+    fun bettingPlayers(bettingMoney: (player: Player) -> Unit) {
+        players.forEach { bettingMoney(it) }
     }
 
-    fun getDealerCard(resultViewDealer: (dealer: Dealer) -> Unit) {
-        while (!dealer.isBust() && dealer.canAddCard()) {
-            dealer.giveCard(dealer)
-            resultViewDealer(dealer)
+    fun giveCard(isHit: Boolean, player: Player) {
+        if (isHit) {
+            dealer.giveCard(player)
         }
     }
 
     fun getResult(): Result {
         return Result(players, dealer)
-    }
-
-    fun hitOrStay(whileNotBust: (player: Player) -> Unit) {
-        players.players.forEach { whileNotBust(it) }
     }
 }

@@ -17,29 +17,34 @@ fun main() {
 fun startApp() {
     val players = InputView.playerNames()
     val blackJack = BlackJack(players)
-    val dealer = blackJack.dealer
-    blackJack.bettingMoney { InputView.bettingMoney(it) }
-    blackJack.readyGame()
+    blackJack.bettingPlayers { it.bettingMoney(InputView.bettingMoney(it)) }
     ResultView.resultReady(blackJack)
-    blackJack.hitOrStay { whileNotBust(it, dealer) }
-    ResultView.resultOpenDealerCard(dealer)
-    blackJack.getDealerCard { ResultView.resultDealerGetCard(it) }
+    blackJack.players.forEach { playerWhetherGet(it, blackJack) }
+    openDealerCard(blackJack.dealer)
     ResultView.resultGame(blackJack)
 }
 
-fun whileNotBust(player: Player, dealer: Dealer) {
-    var isHit = true
-    while (isHit && !player.isBust()) {
-        isHit = hitOrStay(player, dealer)
+fun playerWhetherGet(player: Player, blackJack: BlackJack) {
+    do {
+        val inputValue = InputView.hitOrStay(player)
+        val isHit = inputValue == "y"
+        blackJack.giveCard(isHit, player)
+        viewResultBust(isHit, player)
+    } while (!player.isBust() && isHit)
+}
+
+fun viewResultBust(isHit: Boolean, player: Player) {
+    if (isHit) {
         ResultView.resultWhetherBust(player)
+    } else {
+        ResultView.resultPeopleHands(player)
     }
 }
 
-fun hitOrStay(player: Player, dealer: Dealer): Boolean {
-    val inputValue = InputView.hitOrStay(player)
-    if (inputValue == "y") {
-        dealer.giveCard(player)
-        return true
+fun openDealerCard(dealer: Dealer) {
+    ResultView.resultOpenDealerCard(dealer)
+    while (dealer.canAddCard()) {
+        dealer.giveCard(dealer)
+        ResultView.resultDealerGetCard(dealer)
     }
-    return false
 }
