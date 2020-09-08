@@ -1,22 +1,22 @@
 package blackJack.domain
 
 class Result(players: Players, private val dealer: Dealer) {
-    private var _dealerProfit: Int = DEFAULT_PROFIT
-    val dealerProfit
-        get() = _dealerProfit
+    var dealerProfit: Int = DEFAULT_PROFIT
+        private set
+
     val playersProfit = players.makeMap { getWinOrLose(it) }
 
     private fun getWinOrLose(player: Player): WinOrLose {
         return when {
             checkWinner(player) -> {
-                _dealerProfit -= player.betMoney
+                dealerProfit -= player.betMoney
                 WinOrLose.WIN
             }
             checkDrawPlayer(player) && checkBust(player) ?: true -> {
                 WinOrLose.DRAW
             }
             else -> {
-                _dealerProfit += player.betMoney
+                dealerProfit += player.betMoney
                 WinOrLose.LOSE
             }
         }
