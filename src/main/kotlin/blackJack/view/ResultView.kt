@@ -3,10 +3,9 @@ package blackJack.view
 import blackJack.domain.BlackJack
 import blackJack.domain.Dealer
 import blackJack.domain.Person
-import blackJack.domain.WinOrLose
 
 object ResultView {
-    fun blank() {
+    private fun blank() {
         println()
     }
 
@@ -17,24 +16,24 @@ object ResultView {
     fun resultReady(blackJack: BlackJack) {
         val players = blackJack.players
         val dealer = blackJack.dealer
-        println("딜러가 딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
-        println("딜러 카드: ${dealer.hands[0]}")
+        println("딜러가 딜러와 ${players.players.joinToString { it.name }}에게 2장의 카드를 주었습니다.")
+        println("딜러 카드: ${dealer.hands.getFirstCard()}")
         blank()
         players.forEach { resultPeopleHands(it) }
     }
 
-    private fun resultPeopleHands(person: Person, result: String = "") {
-        println("$person 카드: ${person.hands.joinToString { it.toString() }} $result")
+    fun resultPeopleHands(person: Person, result: String = "") {
+        println("${person.name} 카드: ${person.hands.cards.joinToString { it.toString() }} $result")
         blank()
     }
 
     fun resultWhetherBust(person: Person) {
         if (person.isBust()) {
             resultPeopleHands(person)
-            println("${person}는 버스트 했습니다")
+            println("${person.name}는 버스트 했습니다")
         } else {
             resultPeopleHands(person)
-            println("${person}는 버스트 하지 않았습니다.")
+            println("${person.name}는 버스트 하지 않았습니다.")
         }
         blank()
     }
@@ -53,12 +52,12 @@ object ResultView {
         val players = blackJack.players
         val dealer = blackJack.dealer
         println("----------------")
-        players.forEach { resultPeopleHands(it, "- 결과: ${it.getTotalScore()}") }
+        players.players.forEach { resultPeopleHands(it, "- 결과: ${it.getTotalScore()}") }
         resultPeopleHands(dealer, "- 결과: ${dealer.getTotalScore()}")
         blank()
-        println("최종 승패")
+        println("최종 수익")
         val result = blackJack.getResult()
-        players.forEach { println("$it: ${result.playersResult.getValue(it).string}") }
-        println("딜러: ${result.dealerResult[WinOrLose.WIN]}승 ${result.dealerResult[WinOrLose.DRAW]}무 ${result.dealerResult[WinOrLose.LOSE]}패")
+        players.players.forEach { println("${it.name}: ${result.playersProfit.getValue(it)}") }
+        println("딜러: ${result.dealerProfit}")
     }
 }

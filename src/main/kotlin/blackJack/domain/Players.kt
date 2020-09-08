@@ -1,19 +1,13 @@
 package blackJack.domain
 
-class Players(names: List<String>) {
-    val players = makePlayer(names)
+class Players(playerNames: List<String>) {
+    val players = playerNames.map { Player(it) }
 
-    private fun makePlayer(names: List<String>): List<Player> = names.map { Player(it) }
-
-    fun giveCardAll(dealer: Dealer) {
-        forEach { dealer.giveCard(it) }
+    fun makeMap(getWinOrLose: (player: Player) -> WinOrLose): Map<Player, Int> {
+        return players.associateWith { it.getProfit(getWinOrLose(it)) }
     }
 
-    fun forEach(forEach: (player: Player) -> Unit) {
-        players.forEach { forEach(it) }
-    }
-
-    fun joinToString(getString: (player: Player) -> String): String {
-        return players.joinToString { getString(it) }
+    fun forEach(function: (player: Player) -> Unit) {
+        players.forEach { function(it) }
     }
 }

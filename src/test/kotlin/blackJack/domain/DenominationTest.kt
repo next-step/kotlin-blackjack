@@ -5,12 +5,9 @@ import org.junit.jupiter.api.Test
 
 class DenominationTest {
     @Test
-    fun get_13_denomination() {
+    fun has_13denomination() {
         assertThat(Denomination.values()).hasSize(13)
-    }
-
-    @Test
-    fun get_number() {
-        assertThat(Denomination.TWO.number).isEqualTo(2)
+        assertThat(Denomination.ACE.symbol).isEqualTo("A")
+        assertThat(Denomination.ACE.number).isEqualTo(1)
     }
 }

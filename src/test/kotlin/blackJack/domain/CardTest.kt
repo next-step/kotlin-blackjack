@@ -5,19 +5,16 @@ import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun make_ace_card() {
-        val ace = Card(Shape.SPADE, Denomination.ACE)
+    fun make_spade_ace() {
+        val spadeAce = Card(Shape.SPADE, Denomination.ACE)
 
-        assertThat(ace.shape).isEqualTo(Shape.SPADE)
-        assertThat(ace.denomination).isEqualTo(Denomination.ACE)
+        assertThat(spadeAce.toString()).isEqualTo("♠A")
     }
 
     @Test
-    fun get_card_name() {
-        val ace = Card(Shape.SPADE, Denomination.ACE)
+    fun get_card_number() {
+        val spadeAce = Card(Shape.SPADE, Denomination.ACE)
 
-        val name = ace.toString()
-
-        assertThat(name).isEqualTo("♠A")
+        assertThat(spadeAce.number).isEqualTo(1)
     }
 }

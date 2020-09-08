@@ -1,5 +1,7 @@
 package blackJack.domain
 
-data class Card(val shape: Shape, val denomination: Denomination) {
-    override fun toString() = "${shape.shape}${denomination.symbol}"
+data class Card(private val shape: Shape, private val denomination: Denomination) {
+    override fun toString(): String = "${shape.shape}${denomination.symbol}"
+
+    val number: Int = denomination.number
 }

@@ -6,44 +6,45 @@ import blackJack.domain.Player
 import blackJack.view.InputView
 import blackJack.view.ResultView
 
-var canGetCard = true
-
 fun main() {
     try {
-        startGame()
+        startApp()
     } catch (e: Exception) {
         ResultView.resultError(e.message)
     }
 }
 
-fun startGame() {
-    val names = InputView.inputPlayer()
-    val blackJack = BlackJack(names)
+fun startApp() {
+    val players = InputView.playerNames()
+    val blackJack = BlackJack(players)
+    blackJack.bettingPlayers { it.bettingMoney(InputView.bettingMoney(it)) }
     ResultView.resultReady(blackJack)
-    val dealer = blackJack.dealer
-    blackJack.playersForEach { playerCheckBust(it, blackJack) }
-    ResultView.resultOpenDealerCard(dealer)
-    dealerGetCard(dealer)
+    blackJack.players.forEach { playerWhetherGet(it, blackJack) }
+    openDealerCard(blackJack.dealer)
     ResultView.resultGame(blackJack)
 }
 
-fun playerCheckBust(player: Player, blackJack: BlackJack) {
-    canGetCard = true
-    while (!player.isBust() && canGetCard) {
-        playerWhetherGet(player, blackJack)
+fun playerWhetherGet(player: Player, blackJack: BlackJack) {
+    do {
+        val inputValue = InputView.hitOrStay(player)
+        val isHit = inputValue == "y"
+        blackJack.giveCard(isHit, player)
+        viewResultBust(isHit, player)
+    } while (!player.isBust() && isHit)
+}
+
+fun viewResultBust(isHit: Boolean, player: Player) {
+    if (isHit) {
+        ResultView.resultWhetherBust(player)
+    } else {
+        ResultView.resultPeopleHands(player)
     }
 }
 
-fun playerWhetherGet(player: Player, blackJack: BlackJack) {
-    val inputValue = InputView.inputWhether(player)
-    canGetCard = blackJack.playerGetCard(player, inputValue)
-        ?: throw IllegalArgumentException("$inputValue 에 대한 요청은 없습니다. y 또는 n 으로 답해주세요")
-    ResultView.resultWhetherBust(player)
-}
-
-fun dealerGetCard(dealer: Dealer) {
-    dealer.takeCard()
-    if (dealer.getHandsSize() > 2) {
+fun openDealerCard(dealer: Dealer) {
+    ResultView.resultOpenDealerCard(dealer)
+    while (dealer.canAddCard()) {
+        dealer.giveCard(dealer)
         ResultView.resultDealerGetCard(dealer)
     }
 }

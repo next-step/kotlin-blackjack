@@ -1,37 +1,44 @@
 package blackJack.domain
 
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class TotalScoreTest {
-    @Test
-    fun no_ace() {
-        val testList = listOf(Card(Shape.HEART, Denomination.FIVE), Card(Shape.HEART, Denomination.TEN))
+    private val total20Hands = Hands()
+    private val hasAceHands = Hands()
 
-        val totalScore = TotalScore.getScore(testList)
-
-        assertThat(totalScore).isEqualTo(15)
+    init {
+        total20Hands.add(SPADE_JACK)
+        total20Hands.add(SPADE_JACK)
+        hasAceHands.add(SPADE_KING)
+        hasAceHands.add(SPADE_KING)
+        hasAceHands.add(SPADE_ACE)
     }
 
     @Test
-    fun has_ace() {
-        val testList = listOf(Card(Shape.HEART, Denomination.ACE), Card(Shape.HEART, Denomination.TEN))
+    fun get_total_score() {
+        val hands = total20Hands
 
-        val totalScore = TotalScore.getScore(testList)
+        val totalScore = TotalScore.get(hands)
 
-        assertThat(totalScore).isEqualTo(21)
+        Assertions.assertThat(totalScore).isEqualTo(20)
     }
 
     @Test
-    fun has_ace_but_do_not_plus_10() {
-        val testList = listOf(
-            Card(Shape.HEART, Denomination.ACE),
-            Card(Shape.HEART, Denomination.TEN),
-            Card(Shape.HEART, Denomination.THREE)
-        )
+    fun get_total_score_has_ace() {
+        val hands = HandsTest().aceJackHands
 
-        val totalScore = TotalScore.getScore(testList)
+        val totalScore = TotalScore.get(hands)
 
-        assertThat(totalScore).isEqualTo(14)
+        Assertions.assertThat(totalScore).isEqualTo(21)
+    }
+
+    @Test
+    fun get_total_score_has_ace_but_ace_calculate_1() {
+        val hands = hasAceHands
+
+        val totalScore = TotalScore.get(hands)
+
+        Assertions.assertThat(totalScore).isEqualTo(21)
     }
 }

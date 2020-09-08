@@ -1,48 +1,55 @@
 package blackJack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class DealerTest {
-    @Test
-    fun give_card() {
-        val player = Player("test")
-        val dealer = Dealer()
+    val jackQueenDealer = Dealer()
 
-        dealer.giveCard(player)
-
-        assertThat(player.hands).hasSize(1)
+    init {
+        jackQueenDealer.addCard(SPADE_JACK)
+        jackQueenDealer.addCard(SPADE_QUEEN)
     }
 
     @Test
-    fun dealer_can_not_get_card() {
+    fun make_dealer() {
         val dealer = Dealer()
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
 
-        dealer.takeCard()
-
-        assertThat(dealer.hands).hasSize(2)
-    }
-
-    @Test
-    fun dealer_can_get_card() {
-        val dealer = Dealer()
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.SIX))
-
-        dealer.takeCard()
-
-        assertThat(dealer.getHandsSize()).isNotEqualTo(2)
+        assertThat(dealer.deck.cards).hasSize(52)
+        assertThat(dealer.name).isEqualTo("딜러")
+        assertThat(dealer.hands.cards).isEmpty()
     }
 
     @Test
     fun shuffle_deck() {
         val dealer = Dealer()
-        val deck = listOf(Card(Shape.SPADE, Denomination.SIX), Card(Shape.HEART, Denomination.ACE))
+        val cards = listOf(SPADE_JACK, SPADE_QUEEN)
 
-        dealer.shuffleDeck(deck)
+        dealer.shuffleDeck(cards)
 
-        assertThat(dealer.getDeckSize()).isEqualTo(2)
+        assertThat(dealer.deck.cards).hasSize(2)
+    }
+
+    @Test
+    fun give_card() {
+        val dealer = Dealer()
+        val player = Player("joohan")
+        assertThat(dealer.deck.cards).hasSize(52)
+
+        dealer.giveCard(player)
+
+        assertThat(player.hands.cards).hasSize(1)
+        assertThat(dealer.deck.cards).hasSize(51)
+    }
+
+    @Test
+    fun dealer_can_get_card_over17() {
+        val dealer = jackQueenDealer
+
+        assertThatThrownBy {
+            dealer.giveCard(dealer)
+        }.isInstanceOf(IllegalStateException::class.java)
+            .hasMessageContaining("딜러의 카드 총합이 17을 넘겼기 때문에 카드를 더 받을수 없습니다.")
     }
 }

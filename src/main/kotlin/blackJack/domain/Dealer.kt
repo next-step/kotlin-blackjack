@@ -1,25 +1,25 @@
 package blackJack.domain
 
 class Dealer : Person("딜러") {
-    private val deck = Deck()
+    val deck = Deck()
 
-    fun shuffleDeck(cards: List<Card>) {
-        deck.shuffle { cards.shuffled() }
+    fun shuffleDeck(cards: List<Card> = Deck.DEFAULT_DECK) {
+        deck.shuffle(cards)
     }
 
     fun giveCard(person: Person) {
-        person.addCard(deck.getCard())
+        person.addCard(deck.getFirstCard())
     }
 
-    fun takeCard() {
-        while (!isBust() && canAddCard(getTotalScore())) {
-            giveCard(this)
+    override fun addCard(card: Card) {
+        if (canAddCard()) {
+            super.addCard(card)
+        } else {
+            throw IllegalStateException("딜러의 카드 총합이 17을 넘겼기 때문에 카드를 더 받을수 없습니다.")
         }
     }
 
-    private fun canAddCard(totalScore: Int): Boolean = totalScore < MINIMUM
-
-    fun getDeckSize(): Int = deck.cards.size
+    fun canAddCard(): Boolean = getTotalScore() < MINIMUM
 
     companion object {
         private const val MINIMUM = 17

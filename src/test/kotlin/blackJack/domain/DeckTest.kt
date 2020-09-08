@@ -12,22 +12,22 @@ class DeckTest {
     }
 
     @Test
-    fun shuffle_deck() {
+    fun give_card() {
         val deck = Deck()
-        val cards = listOf(Card(Shape.SPADE, Denomination.TEN), Card(Shape.SPADE, Denomination.TEN))
 
-        deck.shuffle { cards }
+        val card = deck.getFirstCard()
 
-        assertThat(deck.cards).hasSize(2)
+        assertThat(card.toString()).isEqualTo("♠A")
+        assertThat(deck.cards).hasSize(51)
     }
 
     @Test
-    fun get_card() {
+    fun shuffle_deck() {
         val deck = Deck()
+        val cards = listOf(Card(Shape.SPADE, Denomination.ACE), Card(Shape.SPADE, Denomination.FIVE))
 
-        val card = deck.getCard()
+        deck.shuffle(cards)
 
-        assertThat(card).isEqualTo(Card(Shape.SPADE, Denomination.ACE))
-        assertThat(deck.cards).hasSize(51)
+        assertThat(deck.cards).hasSize(2)
     }
 }

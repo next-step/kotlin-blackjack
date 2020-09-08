@@ -5,94 +5,33 @@ import org.junit.jupiter.api.Test
 
 class ResultTest {
     @Test
-    fun player_win() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
+    fun make_result() {
+        val players = Players(listOf("joo", "han"))
         val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.NINE))
 
-        val result = Result(dealer, players)
+        val result = Result(players, dealer)
 
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.WIN)
-        assertThat(result.dealerResult[WinOrLose.LOSE]).isEqualTo(1)
+        assertThat(result.dealerProfit).isEqualTo(0)
+        assertThat(result.playersProfit).isNotEmpty()
     }
 
     @Test
-    fun player_lose() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
+    fun get_dealer_result_and_player_result() {
+        val players = Players(listOf("joo", "han", "park"))
+        players.players[0].addCard(SPADE_KING)
+        players.players[1].addCard(SPADE_SIX)
+        players.players[2].addCard(SPADE_NINE)
+        players.players[0].bettingMoney(1000)
+        players.players[1].bettingMoney(1000)
+        players.players[2].bettingMoney(1000)
         val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.NINE))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
+        dealer.addCard(SPADE_NINE)
 
-        val result = Result(dealer, players)
+        val result = Result(players, dealer)
 
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
-        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
-    }
-
-    @Test
-    fun player_is_bust() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
-        val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-
-        val result = Result(dealer, players)
-
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
-        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
-    }
-
-    @Test
-    fun dealer_is_bust() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
-        val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-
-        val result = Result(dealer, players)
-
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.WIN)
-        assertThat(result.dealerResult[WinOrLose.LOSE]).isEqualTo(1)
-    }
-
-    @Test
-    fun player_dealer_is_bust_draw() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
-        val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-
-        val result = Result(dealer, players)
-
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.LOSE)
-        assertThat(result.dealerResult[WinOrLose.WIN]).isEqualTo(1)
-    }
-
-    @Test
-    fun draw() {
-        val players = Players(listOf("joohan"))
-        val player = players.players[0]
-        val dealer = Dealer()
-        player.addCard(Card(Shape.SPADE, Denomination.TEN))
-        dealer.addCard(Card(Shape.SPADE, Denomination.TEN))
-
-        val result = Result(dealer, players)
-
-        assertThat(result.playersResult[player]).isEqualTo(WinOrLose.DRAW)
-        assertThat(result.dealerResult[WinOrLose.DRAW]).isEqualTo(1)
+        assertThat(result.dealerProfit).isEqualTo(0)
+        assertThat(result.playersProfit[players.players[0]]).isEqualTo(1000)
+        assertThat(result.playersProfit[players.players[1]]).isEqualTo(-1000)
+        assertThat(result.playersProfit[players.players[2]]).isEqualTo(0)
     }
 }
