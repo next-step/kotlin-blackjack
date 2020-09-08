@@ -29,11 +29,7 @@ object InputView {
     }
 
     private fun changeInt(inputValue: String): Int {
-        try {
-            return inputValue.toInt()
-        } catch (e: Exception) {
-            throw IllegalArgumentException("$inputValue 는 숫자가 아닙니다.")
-        }
+        return inputValue.toIntOrNull() ?: throw IllegalArgumentException("$inputValue 는 숫자가 아닙니다.")
     }
 
     private fun checkString(inputValue: String): String {
