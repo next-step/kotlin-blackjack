@@ -2,14 +2,14 @@ package blackJack.domain
 
 object TotalScore {
     fun get(hands: List<Card>): Int {
-        val totalScore = hands.sumBy { it.getNumber() }
+        val totalScore = hands.sumBy { it.number }
         if (hasAce(hands)) {
             return calculate(totalScore)
         }
         return totalScore
     }
 
-    private fun hasAce(hands: List<Card>): Boolean = hands.any { it.getNumber() == ACE }
+    private fun hasAce(hands: List<Card>): Boolean = hands.any { it.number == ACE }
 
     private fun calculate(score: Int): Int {
         if (score <= BUST_SCORE) {

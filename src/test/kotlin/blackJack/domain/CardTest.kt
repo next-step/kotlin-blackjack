@@ -15,6 +15,6 @@ class CardTest {
     fun get_card_number() {
         val spadeAce = Card(Shape.SPADE, Denomination.ACE)
 
-        assertThat(spadeAce.getNumber()).isEqualTo(1)
+        assertThat(spadeAce.number).isEqualTo(1)
     }
 }
