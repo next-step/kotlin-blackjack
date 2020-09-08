@@ -15,7 +15,7 @@ class Dealer : Person("딜러") {
         if (canAddCard()) {
             super.addCard(card)
         } else {
-            throw IllegalArgumentException("딜러의 카드 총합이 17을 넘겼기 때문에 카드를 더 받을수 없습니다.")
+            throw IllegalStateException("딜러의 카드 총합이 17을 넘겼기 때문에 카드를 더 받을수 없습니다.")
         }
     }
 
