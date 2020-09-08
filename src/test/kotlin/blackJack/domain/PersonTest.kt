@@ -32,9 +32,7 @@ class PersonTest {
 
     @Test
     fun get_total_score() {
-        val person = Player("joohan")
-        person.addCard(SPADE_JACK)
-        person.addCard(SPADE_KING)
+        val person = DealerTest().jackQueenDealer
 
         val totalScore = person.getTotalScore()
 

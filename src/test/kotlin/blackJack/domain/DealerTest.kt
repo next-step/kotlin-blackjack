@@ -5,6 +5,13 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    val jackQueenDealer = Dealer()
+
+    init {
+        jackQueenDealer.addCard(SPADE_JACK)
+        jackQueenDealer.addCard(SPADE_QUEEN)
+    }
+
     @Test
     fun make_dealer() {
         val dealer = Dealer()
@@ -38,9 +45,7 @@ class DealerTest {
 
     @Test
     fun dealer_can_get_card_over17() {
-        val dealer = Dealer()
-        dealer.addCard(SPADE_QUEEN)
-        dealer.addCard(SPADE_JACK)
+        val dealer = jackQueenDealer
 
         assertThatThrownBy {
             dealer.giveCard(dealer)

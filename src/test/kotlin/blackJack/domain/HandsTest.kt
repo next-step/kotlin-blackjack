@@ -4,6 +4,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class HandsTest {
+    private val aceHands = Hands()
+    val aceJackHands = Hands()
+    init {
+        aceHands.add(SPADE_ACE)
+        aceJackHands.add(SPADE_ACE)
+        aceJackHands.add(SPADE_JACK)
+    }
+
     @Test
     fun make_hands() {
         val hands = Hands()
@@ -15,15 +23,14 @@ class HandsTest {
     fun add_card() {
         val hands = Hands()
 
-        hands.add(SPADE_ACE)
+        hands.add(SPADE_KING)
 
-        assertThat(hands.getFirstCard()).isEqualTo(SPADE_ACE)
+        assertThat(hands.getFirstCard()).isEqualTo(SPADE_KING)
     }
 
     @Test
     fun get_total_score_and_cards_score() {
-        val hands = Hands()
-        hands.add(SPADE_ACE)
+        val hands = aceHands
 
         val totalScore = hands.getTotalScore()
         val cardsScore = hands.getCardsScore()
@@ -34,26 +41,21 @@ class HandsTest {
 
     @Test
     fun has_ace() {
-        val hands = Hands()
-        hands.add(SPADE_ACE)
+        val hands = aceHands
 
         assertThat(hands.hasAce()).isTrue()
     }
 
     @Test
     fun is_black_jack() {
-        val hands = Hands()
-        hands.add(SPADE_ACE)
-        hands.add(SPADE_JACK)
+        val hands = aceJackHands
 
         assertThat(hands.isBlackJack()).isTrue()
     }
 
     @Test
     fun get_first_card() {
-        val hands = Hands()
-        hands.add(SPADE_ACE)
-        hands.add(SPADE_JACK)
+        val hands = aceJackHands
 
         assertThat(hands.getFirstCard()).isEqualTo(SPADE_ACE)
     }

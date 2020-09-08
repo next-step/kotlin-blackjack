@@ -4,11 +4,20 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class TotalScoreTest {
+    private val total20Hands = Hands()
+    private val hasAceHands = Hands()
+
+    init {
+        total20Hands.add(SPADE_JACK)
+        total20Hands.add(SPADE_JACK)
+        hasAceHands.add(SPADE_KING)
+        hasAceHands.add(SPADE_KING)
+        hasAceHands.add(SPADE_ACE)
+    }
+
     @Test
     fun get_total_score() {
-        val hands = Hands()
-        hands.add(SPADE_JACK)
-        hands.add(SPADE_JACK)
+        val hands = total20Hands
 
         val totalScore = TotalScore.get(hands)
 
@@ -17,9 +26,7 @@ class TotalScoreTest {
 
     @Test
     fun get_total_score_has_ace() {
-        val hands = Hands()
-        hands.add(SPADE_JACK)
-        hands.add(SPADE_ACE)
+        val hands = HandsTest().aceJackHands
 
         val totalScore = TotalScore.get(hands)
 
@@ -28,10 +35,7 @@ class TotalScoreTest {
 
     @Test
     fun get_total_score_has_ace_but_ace_calculate_1() {
-        val hands = Hands()
-        hands.add(SPADE_ACE)
-        hands.add(SPADE_JACK)
-        hands.add(SPADE_JACK)
+        val hands = hasAceHands
 
         val totalScore = TotalScore.get(hands)
 

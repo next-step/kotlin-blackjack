@@ -5,6 +5,16 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    private val blackJackPlayer = Player("blackJack")
+    private val bustPlayer = Player("bust")
+    init {
+        blackJackPlayer.addCard(SPADE_ACE)
+        blackJackPlayer.addCard(SPADE_JACK)
+        bustPlayer.addCard(SPADE_KING)
+        bustPlayer.addCard(SPADE_KING)
+        bustPlayer.addCard(SPADE_KING)
+    }
+
     @Test
     fun make_player() {
         val player = Player("joohan")
@@ -39,10 +49,8 @@ class PlayerTest {
 
     @Test
     fun get_profit_blackJack() {
-        val player = Player("joohan")
+        val player = blackJackPlayer
         player.bettingMoney(1000)
-        player.addCard(SPADE_JACK)
-        player.addCard(SPADE_ACE)
 
         val blackJackResult = player.getProfit(WinOrLose.WIN)
 
@@ -51,20 +59,14 @@ class PlayerTest {
 
     @Test
     fun is_bust() {
-        val player = Player("joohan")
-        player.addCard(SPADE_NINE)
-        player.addCard(SPADE_KING)
-        player.addCard(SPADE_JACK)
+        val player = bustPlayer
 
         assertThat(player.isBust()).isTrue()
     }
 
     @Test
     fun player_can_not_add_card_over21() {
-        val player = Player("joo")
-        player.addCard(SPADE_NINE)
-        player.addCard(SPADE_KING)
-        player.addCard(SPADE_JACK)
+        val player = bustPlayer
 
         assertThatThrownBy {
             player.addCard(SPADE_JACK)
