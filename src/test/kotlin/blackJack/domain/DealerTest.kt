@@ -11,7 +11,7 @@ class DealerTest {
 
         assertThat(dealer.deck.cards).hasSize(52)
         assertThat(dealer.name).isEqualTo("딜러")
-        assertThat(dealer.hands).isEmpty()
+        assertThat(dealer.hands.cards).isEmpty()
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerTest {
 
         dealer.giveCard(player)
 
-        assertThat(player.hands).hasSize(1)
+        assertThat(player.hands.cards).hasSize(1)
         assertThat(dealer.deck.cards).hasSize(51)
     }
 

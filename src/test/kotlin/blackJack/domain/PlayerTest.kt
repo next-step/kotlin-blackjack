@@ -10,7 +10,7 @@ class PlayerTest {
         val player = Player("joohan")
 
         assertThat(player.name).isEqualTo("joohan")
-        assertThat(player.hands).hasSize(0)
+        assertThat(player.hands.cards).hasSize(0)
         assertThat(player.betMoney).isEqualTo(0)
     }
 

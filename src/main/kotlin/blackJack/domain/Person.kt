@@ -5,15 +5,13 @@ abstract class Person(val name: String) {
         require(name.isNotBlank()) { "이름은 없을수 없습니다." }
     }
 
-    private val _hands: MutableList<Card> = mutableListOf()
-    val hands
-        get() = _hands.toList()
+    val hands = Hands()
 
     open fun addCard(card: Card) {
-        _hands.add(card)
+        hands.add(card)
     }
 
-    fun getTotalScore(): Int = TotalScore.get(_hands)
+    fun getTotalScore(): Int = hands.getTotalScore()
 
     fun isBust(): Boolean = getTotalScore() > BUST_SCORE
 

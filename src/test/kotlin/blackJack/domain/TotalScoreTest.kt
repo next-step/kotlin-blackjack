@@ -6,27 +6,34 @@ import org.junit.jupiter.api.Test
 class TotalScoreTest {
     @Test
     fun get_total_score() {
-        val cards = listOf(SPADE_JACK, SPADE_QUEEN)
+        val hands = Hands()
+        hands.add(SPADE_JACK)
+        hands.add(SPADE_JACK)
 
-        val totalScore = TotalScore.get(cards)
+        val totalScore = TotalScore.get(hands)
 
         Assertions.assertThat(totalScore).isEqualTo(20)
     }
 
     @Test
     fun get_total_score_has_ace() {
-        val cards = listOf(SPADE_JACK, SPADE_ACE)
+        val hands = Hands()
+        hands.add(SPADE_JACK)
+        hands.add(SPADE_ACE)
 
-        val totalScore = TotalScore.get(cards)
+        val totalScore = TotalScore.get(hands)
 
         Assertions.assertThat(totalScore).isEqualTo(21)
     }
 
     @Test
     fun get_total_score_has_ace_but_ace_calculate_1() {
-        val cards = listOf(SPADE_JACK, SPADE_ACE, SPADE_KING)
+        val hands = Hands()
+        hands.add(SPADE_ACE)
+        hands.add(SPADE_JACK)
+        hands.add(SPADE_JACK)
 
-        val totalScore = TotalScore.get(cards)
+        val totalScore = TotalScore.get(hands)
 
         Assertions.assertThat(totalScore).isEqualTo(21)
     }

@@ -20,9 +20,9 @@ class BlackJackTest() {
 
         blackJack.readyGame()
 
-        assertThat(blackJack.players.players[0].hands).hasSize(2)
-        assertThat(blackJack.players.players[1].hands).hasSize(2)
-        assertThat(blackJack.dealer.hands).hasSize(2)
+        assertThat(blackJack.players.players[0].hands.cards).hasSize(2)
+        assertThat(blackJack.players.players[1].hands.cards).hasSize(2)
+        assertThat(blackJack.dealer.hands.cards).hasSize(2)
     }
 
     @Test

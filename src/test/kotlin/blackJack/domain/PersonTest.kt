@@ -9,7 +9,7 @@ class PersonTest {
     fun makePerson() {
         val person = Player("joohan")
 
-        assertThat(person.hands).hasSize(0)
+        assertThat(person.hands.cards).hasSize(0)
         assertThat(person.name).isEqualTo("joohan")
     }
 
@@ -26,8 +26,8 @@ class PersonTest {
 
         person.addCard(SPADE_ACE)
 
-        assertThat(person.hands).hasSize(1)
-        assertThat(person.hands[0]).isEqualTo(SPADE_ACE)
+        assertThat(person.hands.cards).hasSize(1)
+        assertThat(person.hands.getFirstCard()).isEqualTo(SPADE_ACE)
     }
 
     @Test

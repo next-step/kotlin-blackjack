@@ -34,13 +34,11 @@ class Player(name: String) : Person(name) {
     }
 
     private fun getWinPercent(): Double {
-        if (isBlackJack()) {
+        if (hands.isBlackJack()) {
             return BLACK_JACK_MONEY
         }
         return WIN_MONEY
     }
-
-    private fun isBlackJack(): Boolean = hands.size == BLACK_JACK_HANDS && getTotalScore() == BLACK_JACK_SCORE
 
     companion object {
         private const val DEFAULT_MONEY = 0
@@ -48,7 +46,5 @@ class Player(name: String) : Person(name) {
         private const val WIN_MONEY = 1.0
         private const val DRAW_MONEY = 0.0
         private const val LOSE_MONEY = -1.0
-        private const val BLACK_JACK_HANDS = 2
-        private const val BLACK_JACK_SCORE = 21
     }
 }
