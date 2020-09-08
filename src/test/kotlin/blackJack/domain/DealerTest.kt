@@ -44,7 +44,7 @@ class DealerTest {
 
         assertThatThrownBy {
             dealer.giveCard(dealer)
-        }.isInstanceOf(IllegalArgumentException::class.java)
+        }.isInstanceOf(IllegalStateException::class.java)
             .hasMessageContaining("딜러의 카드 총합이 17을 넘겼기 때문에 카드를 더 받을수 없습니다.")
     }
 }

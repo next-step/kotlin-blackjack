@@ -22,7 +22,7 @@ class Player(name: String) : Person(name) {
     private fun getPercent(winOrLose: WinOrLose): Double {
         return when (winOrLose) {
             WinOrLose.WIN -> {
-                test()
+                getWinPercent()
             }
             WinOrLose.DRAW -> {
                 DRAW_MONEY
@@ -33,7 +33,7 @@ class Player(name: String) : Person(name) {
         }
     }
 
-    fun test(): Double {
+    private fun getWinPercent(): Double {
         if (isBlackJack()) {
             return BLACK_JACK_MONEY
         }
