@@ -47,7 +47,7 @@ class PlayerTest {
     @DisplayName("player 가 21점 일 때 WIN 이다")
     fun `score21Winner`() {
         val player = Player("hello")
-        val playerLoser = Player("hello2")
+        val playerLoser = DealerPlayer(PlayerName("hello2"))
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.EIGHT))
         receiveCard(player, cards)
@@ -59,24 +59,24 @@ class PlayerTest {
     @DisplayName("player 가 같은 점수 일 때 draw 이다")
     fun `scoreDraw`() {
         val player = Player("hello")
-        val playerLoser = Player("hello2")
+        val dealerPlayerDraw = DealerPlayer(PlayerName("hello2"))
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
         receiveCard(player, cards)
-        receiveCard(playerLoser, cardLoser)
-        assertThat(player.compareResult(playerLoser)).isEqualTo(BlackJackWinner.DRAW)
+        receiveCard(dealerPlayerDraw, cardLoser)
+        assertThat(player.compareResult(dealerPlayerDraw)).isEqualTo(BlackJackWinner.DRAW)
     }
 
     @Test
     @DisplayName("player 가 낮은 점수 일 때 lose 이다")
     fun `scoreLoser`() {
-        val player = Player("hello")
+        val dealerPlayer = DealerPlayer(PlayerName("hello"))
         val playerLoser = Player("hello2")
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.SIX))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
-        receiveCard(player, cards)
+        receiveCard(dealerPlayer, cards)
         receiveCard(playerLoser, cardLoser)
-        assertThat(player.compareResult(playerLoser)).isEqualTo(BlackJackWinner.LOSE)
+        assertThat(dealerPlayer.compareResult(playerLoser)).isEqualTo(BlackJackWinner.LOSE)
     }
 
     @Test
