@@ -1,6 +1,7 @@
 package model
 
 import blackjack.BlackJackGame
+import game.BlackJackWinner
 
 abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) {
     private val cardMutableList: MutableList<Card> = mutableListOf()
@@ -41,9 +42,9 @@ abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) 
         return this.playerType == PlayerType.DEALER
     }
 
-    abstract fun compareResult(player: AbstractPlayer): BlackJackWinner
-
     abstract fun receiveCard(blackJackGame: BlackJackGame)
+
+    abstract fun compareResult(player: AbstractPlayer): BlackJackWinner
 
     companion object {
         const val WINNING_POINT = 21

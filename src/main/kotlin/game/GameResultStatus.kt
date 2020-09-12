@@ -1,4 +1,7 @@
-package model
+package game
+
+import model.AbstractPlayer
+import model.PlayerName
 
 class GameResultStatus(player: AbstractPlayer, list: List<AbstractPlayer>) {
     var playerName: PlayerName = player.name

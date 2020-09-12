@@ -1,4 +1,4 @@
-package model
+package game
 
 enum class BlackJackWinner {
     WIN,

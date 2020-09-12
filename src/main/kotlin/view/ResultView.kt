@@ -1,8 +1,8 @@
 package view
 
+import game.BlackJackGameStatusInfo
+import game.GameResultStatus
 import model.AbstractPlayer
-import model.BlackJackGameStatusInfo
-import model.GameResultStatus
 
 object ResultView {
     fun printPlayerInfo(blackJackGameStatusInfo: BlackJackGameStatusInfo) {

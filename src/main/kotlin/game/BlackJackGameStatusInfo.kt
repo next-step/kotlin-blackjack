@@ -1,4 +1,7 @@
-package model
+package game
+
+import model.AbstractPlayer
+import model.PlayerName
 
 class BlackJackGameStatusInfo(private val players: List<AbstractPlayer>) {
 

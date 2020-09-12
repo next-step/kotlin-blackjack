@@ -1,9 +1,9 @@
 
 import blackjack.BlackJackGame
-import model.BlackJackGameStatusInfo
+import game.BlackJackGameStatusInfo
+import game.GameResultStatus
 import model.Cards
 import model.Dealer
-import model.GameResultStatus
 import view.InputView
 import view.ResultView
 
