@@ -1,5 +1,6 @@
 package model
 
+import CardFixture
 import game.BlackJackWinner
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -11,8 +12,8 @@ class DealerPlayerTest {
     fun `over21ScoreLose`() {
         val dealer = DealerPlayer()
         val player = Player("hello")
-        val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN))
-        val cardDealer = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN))
+        val cards = CardFixture.score21OverCards()
+        val cardDealer = CardFixture.score21OverCards()
         receiveCard(dealer, cardDealer)
         receiveCard(player, cards)
         Assertions.assertThat(dealer.compareResult(player)).isEqualTo(BlackJackWinner.LOSE)
