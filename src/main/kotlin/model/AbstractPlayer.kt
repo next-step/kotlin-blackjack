@@ -4,14 +4,14 @@ import blackjack.BlackJackGame
 import game.BlackJackWinner
 
 abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) {
-    private val cardMutableList: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
 
     constructor(name: String) : this(PlayerName(name), PlayerType.PLAYER)
 
     val cards: List<Card>
-        get() = cardMutableList.toList()
+        get() = _cards.toList()
 
-    fun receive(card: Card) = cardMutableList.add(card)
+    fun receive(card: Card) = _cards.add(card)
 
     fun score(): Int {
         val sum = cards.sumBy { it.denomination.score }
@@ -35,7 +35,7 @@ abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) 
     }
 
     fun cardCount(): Int {
-        return cardMutableList.size
+        return _cards.size
     }
 
     fun isDealer(): Boolean {
