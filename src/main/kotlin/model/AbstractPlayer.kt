@@ -2,7 +2,7 @@ package model
 
 import blackjack.BlackJackGame
 
-abstract class AbstractPlayer(open val name: PlayerName, val playerType: PlayerType) {
+abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) {
     private val cardMutableList: MutableList<Card> = mutableListOf()
 
     constructor(name: String) : this(PlayerName(name), PlayerType.PLAYER)
