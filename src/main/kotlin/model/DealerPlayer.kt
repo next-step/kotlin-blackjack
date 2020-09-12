@@ -5,16 +5,12 @@ import view.ResultView
 
 class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(name, PlayerType.DEALER) {
 
-    fun isAbleReceiveCard(): Boolean {
+    private fun isAbleReceiveCard(): Boolean {
         return this.score() <= DEALER_RECEIVE_CARD_SCORE
     }
 
-    companion object {
-        const val DEALER_RECEIVE_CARD_SCORE = 16
-    }
-
     override fun receiveCard(blackJackGame: BlackJackGame) {
-        if (isAbleReceiveCard()) {
+        if (!isAbleReceiveCard()) {
             return
         }
         ResultView.printReceiveCardDealer()
@@ -35,5 +31,9 @@ class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(nam
         } else {
             return BlackJackWinner.LOSE
         }
+    }
+
+    companion object {
+        const val DEALER_RECEIVE_CARD_SCORE = 17
     }
 }
