@@ -1,5 +1,6 @@
 package model
 
+import CardFixture
 import game.BlackJackWinner
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -30,7 +31,7 @@ class PlayerTest {
         val name = PlayerName("hello")
         var player = Player(name)
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
-        receiveCard(player, cards)
+        CardFixture.receiveCard(player, cards)
         assertThat(player.score()).isEqualTo(21)
     }
 
@@ -50,8 +51,8 @@ class PlayerTest {
         val playerLoser = DealerPlayer(PlayerName("hello2"))
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.EIGHT))
-        receiveCard(player, cards)
-        receiveCard(playerLoser, cardLoser)
+        CardFixture.receiveCard(player, cards)
+        CardFixture.receiveCard(playerLoser, cardLoser)
         assertThat(player.compareResult(playerLoser)).isEqualTo(BlackJackWinner.WIN)
     }
 
@@ -62,8 +63,8 @@ class PlayerTest {
         val dealerPlayerDraw = DealerPlayer(PlayerName("hello2"))
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
-        receiveCard(player, cards)
-        receiveCard(dealerPlayerDraw, cardLoser)
+        CardFixture.receiveCard(player, cards)
+        CardFixture.receiveCard(dealerPlayerDraw, cardLoser)
         assertThat(player.compareResult(dealerPlayerDraw)).isEqualTo(BlackJackWinner.DRAW)
     }
 
@@ -74,8 +75,8 @@ class PlayerTest {
         val playerLoser = Player("hello2")
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.SIX))
         val cardLoser = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN))
-        receiveCard(dealerPlayer, cards)
-        receiveCard(playerLoser, cardLoser)
+        CardFixture.receiveCard(dealerPlayer, cards)
+        CardFixture.receiveCard(playerLoser, cardLoser)
         assertThat(dealerPlayer.compareResult(playerLoser)).isEqualTo(BlackJackWinner.LOSE)
     }
 
@@ -85,15 +86,11 @@ class PlayerTest {
         val player = Player("hello")
         val dealer = DealerPlayer()
         val cards = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.SIX))
-        val cardDealer = listOf(Card(Suit.CLUBS, Denomination.ACE), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN), Card(Suit.CLUBS, Denomination.QUEEN))
-        receiveCard(player, cards)
-        receiveCard(dealer, cardDealer)
+        val cardDealer = CardFixture.score21OverCards()
+        CardFixture.receiveCard(player, cards)
+        CardFixture.receiveCard(dealer, cardDealer)
         assertThat(player.compareResult(dealer)).isEqualTo(BlackJackWinner.WIN)
     }
 
-    private fun receiveCard(player: AbstractPlayer, list: List<Card>) {
-        for (card in list) {
-            player.receive(card)
-        }
-    }
+
 }
