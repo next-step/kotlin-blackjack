@@ -34,6 +34,10 @@ class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(nam
         }
     }
 
+    override fun firstCardList(): List<Card> {
+        return cards.dropLast(1)
+    }
+
     companion object {
         const val DEALER_RECEIVE_CARD_SCORE = 17
     }

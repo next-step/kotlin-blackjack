@@ -17,7 +17,7 @@ object ResultView {
 
     fun printCardInfo(players: List<AbstractPlayer>) {
         players.forEach {
-            printCard(it)
+            printFirstCard(it)
             println()
         }
         println()
@@ -26,6 +26,10 @@ object ResultView {
     fun printCardCardReceive(player: AbstractPlayer) {
         printCard(player)
         println()
+    }
+
+    fun printFirstCard(player: AbstractPlayer) {
+        print("${player.name.value}카드 :${player.firstCardList().joinToString { card -> card.toString() }}")
     }
 
     fun printCard(player: AbstractPlayer) {

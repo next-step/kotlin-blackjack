@@ -42,6 +42,8 @@ abstract class AbstractPlayer(val name: PlayerName, val playerType: PlayerType) 
         return this.playerType == PlayerType.DEALER
     }
 
+    abstract fun firstCardList(): List<Card>
+
     abstract fun receiveCard(blackJackGame: BlackJackGame)
 
     abstract fun compareResult(player: AbstractPlayer): BlackJackWinner

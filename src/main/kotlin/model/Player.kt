@@ -15,6 +15,10 @@ class Player(name: PlayerName) : AbstractPlayer(name, PlayerType.PLAYER) {
         }
     }
 
+    override fun firstCardList(): List<Card> {
+        return cards
+    }
+
     override fun compareResult(player: AbstractPlayer): BlackJackWinner {
         player as DealerPlayer
         if (player.isOver()) {
