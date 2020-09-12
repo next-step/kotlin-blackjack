@@ -1,5 +1,9 @@
 package model
 
+import blackjack.BlackJackGame
+import view.InputView
+import view.ResultView
+
 class Player(name: PlayerName) : AbstractPlayer(name, PlayerType.PLAYER) {
     constructor(name: String) : this(PlayerName(name))
 
@@ -20,6 +24,13 @@ class Player(name: PlayerName) : AbstractPlayer(name, PlayerType.PLAYER) {
             return BlackJackWinner.DRAW
         } else {
             return BlackJackWinner.LOSE
+        }
+    }
+
+    override fun receiveCard(blackJackGame: BlackJackGame) {
+        while (isReceiveCard(InputView.receiveCard(this))) {
+            receive(blackJackGame.dealer.draw())
+            ResultView.printCardCardReceive(this)
         }
     }
 }

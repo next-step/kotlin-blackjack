@@ -1,5 +1,8 @@
 package model
 
+import blackjack.BlackJackGame
+import view.ResultView
+
 class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(name, PlayerType.DEALER) {
 
     fun isAbleReceiveCard(): Boolean {
@@ -8,6 +11,14 @@ class DealerPlayer(name: PlayerName = PlayerName("딜러")) : AbstractPlayer(nam
 
     companion object {
         const val DEALER_RECEIVE_CARD_SCORE = 16
+    }
+
+    override fun receiveCard(blackJackGame: BlackJackGame) {
+        if (isAbleReceiveCard()) {
+            return
+        }
+        ResultView.printReceiveCardDealer()
+        receive(blackJackGame.dealer.draw())
     }
 
     override fun compareResult(player: AbstractPlayer): BlackJackWinner {
