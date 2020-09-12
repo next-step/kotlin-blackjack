@@ -1,9 +1,11 @@
 
 import blackjack.BlackJackGame
 import game.BlackJackGameStatusInfo
-import game.GameResultStatus
+import game.GameResultStatusDealer
+import game.GameResultStatusPlayer
 import model.Cards
 import model.Dealer
+import model.DealerPlayer
 import view.InputView
 import view.ResultView
 
@@ -18,7 +20,10 @@ fun main() {
 
     players.forEach { it.receiveCard(blackJackGame) }
 
-    val gameResultStatusList = players.map { GameResultStatus(it, players) }
+    val dealerPlayer = players.first { it.isDealer() }
+    val notDealerPlayers = players.filter { !it.isDealer() }
+    val gameResultStatusPlayer = notDealerPlayers.map { GameResultStatusPlayer(it, dealerPlayer as DealerPlayer) }
+    val gameResultStatusDealer = GameResultStatusDealer(dealerPlayer, notDealerPlayers)
     ResultView.printResult(players)
-    ResultView.printWinner(gameResultStatusList)
+    ResultView.printWinner(gameResultStatusDealer, gameResultStatusPlayer)
 }
