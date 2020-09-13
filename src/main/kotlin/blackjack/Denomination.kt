@@ -25,4 +25,3 @@ enum class Denomination(val value: Int, val symbol: String) {
         }
     }
 }
-

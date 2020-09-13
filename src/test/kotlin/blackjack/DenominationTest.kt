@@ -8,6 +8,5 @@ class DenominationTest {
     @Test
     fun `숫자는 그대로 계산한다`() {
         assertThat(Denomination.getScore("5")).isEqualTo(Denomination.FIVE)
-
     }
 }
