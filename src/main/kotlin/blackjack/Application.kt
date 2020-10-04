@@ -7,6 +7,7 @@ fun main() {
     OutputView.showPlayersCard(players.getPlayers())
     playGame(players.getPlayers())
     OutputView.showWinners(players.getPlayers())
+    OutputView.showResult(getGameResult(players))
 }
 
 fun playGame(players: List<Gamer>) {
@@ -41,6 +42,20 @@ private fun addUserCards(player: Player) {
         } catch (e: IllegalArgumentException) {
             println(e.message)
             break@loop
+        }
+    }
+}
+
+private fun getGameResult(players: Players): List<Pair<String, Result>> {
+    val dealerScore = players.getPlayers().filterIsInstance<Dealer>()[0].getDealerScore()
+    val playerScore = players.getPlayers().filterIsInstance<Player>()
+
+    return playerScore.map {
+        when {
+            dealerScore > Cards.WIN_SCORE -> Pair(it.name, Result.WIN)
+            dealerScore > it.cards.sumCardNumbers() -> Pair(it.name, Result.LOSE)
+            dealerScore < it.cards.sumCardNumbers() -> Pair(it.name, Result.WIN)
+            else -> Pair(it.name, Result.DRAW)
         }
     }
 }
