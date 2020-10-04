@@ -17,10 +17,21 @@ enum class Denomination(private val score: Int, private val symbol: String) {
 
     companion object {
         const val MAX_ACE_SCORE = 11
-        const val MIN_total_SCORE = 10
+        const val MIN_TOTAL_SCORE = 10
 
-        fun getScore(cardScore: Denomination): Int {
-            return cardScore.score
+        fun getScore(card: Denomination): Int {
+            return card.score
+        }
+
+        fun getSymbol(card: Denomination): String {
+            return card.symbol
+        }
+
+        fun calculateACE(totalScore: Int): Int {
+            if (totalScore <= MIN_TOTAL_SCORE) {
+                return MAX_ACE_SCORE
+            }
+            return getScore(ACE)
         }
     }
 }
