@@ -14,4 +14,13 @@ enum class Denomination(private val score: Int, private val symbol: String) {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
+
+    companion object {
+        const val MAX_ACE_SCORE = 11
+        const val MIN_total_SCORE = 10
+
+        fun getScore(cardScore: Denomination): Int {
+            return cardScore.score
+        }
+    }
 }
