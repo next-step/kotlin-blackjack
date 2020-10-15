@@ -23,4 +23,9 @@ class CardsTest {
         val sampleAddCard = Card(Pair(Suit.HEART, Denomination.FIVE))
         assertThat(sampleCards.addCard(sampleAddCard)).isEqualTo(mutableListOf(sampleCard1, sampleCard2, sampleAddCard))
     }
+
+    @Test
+    fun `카드 정보 스트링으로 출력`() {
+        assertThat(sampleCards.toString()).isEqualTo("[5클로버, 4다이아몬드]")
+    }
 }
