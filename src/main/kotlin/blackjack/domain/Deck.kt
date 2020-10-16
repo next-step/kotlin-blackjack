@@ -1,28 +1,31 @@
 package blackjack.domain
 
-class Deck(private var cards: Set<Card>) {
-    val size: Int
-        get() = cards.size
+class Deck(private var deck: Set<Card>) {
 
-    fun giveCard(): Card {
-        val cardPicked = cards.first()
+    constructor() : this(
+        DEFAULT_DECK
+    )
+
+    val size: Int
+        get() = deck.size
+
+    fun giveCard(deck: Set<Card>): Card {
+        deck.shuffled()
+        val cardPicked = deck.first()
+        deck.drop(1)
         return cardPicked
     }
 
+    fun shuffled() = deck.shuffled().toSet()
 
     companion object {
 
 
         private val DEFAULT_DECK = Suit.values().flatMap { cardPackOfSuit(it) }.toSet()
-        fun defaultDeck() =
-            Deck(DEFAULT_DECK.shuffled().toSet())
+
+
         private fun cardPackOfSuit(suit: Suit): Set<Card> {
-            return Denomination.values().map { denomination -> Card(denomination, suit) }.toSet()
+            return Denomination.values().map { denomination -> Card(Pair(suit,denomination)) }.toSet()
         }
     }
-}
-
-fun main() {
-    val deck = Deck.defaultDeck()
-    println(deck.giveCard())
 }
