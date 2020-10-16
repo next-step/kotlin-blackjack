@@ -1,7 +1,9 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
-import domain.Denomination
+
+import blackjack.domain.Denomination
+
 import org.junit.jupiter.api.Test
 
 class DenominationTest {
