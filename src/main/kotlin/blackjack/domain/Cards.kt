@@ -1,6 +1,8 @@
 package blackjack.domain
 
-data class Cards(private val cards: MutableList<Card>) {
+class Cards(cards: Set<Card>) {
+
+    private val cards: MutableSet<Card> = cards.toMutableSet()
 
     fun getCards() = cards
 
@@ -10,7 +12,7 @@ data class Cards(private val cards: MutableList<Card>) {
         return cards.map { it.score() }.sum()
     }
 
-    fun addCard(card: Card): MutableList<Card> {
+    fun addCard(card: Card): Set<Card> {
         cards.add(card)
         return getCards()
     }

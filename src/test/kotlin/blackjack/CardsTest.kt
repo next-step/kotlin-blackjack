@@ -6,6 +6,7 @@ import blackjack.domain.Cards
 import blackjack.domain.Denomination
 import blackjack.domain.Suit
 
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,7 +22,7 @@ val sampleCard2 = Card(
         Denomination.FOUR
     )
 )
-val sampleCards = Cards(mutableListOf(sampleCard1, sampleCard2))
+val sampleCards = Cards(setOf(sampleCard1, sampleCard2))
 
 class CardsTest {
     @Test

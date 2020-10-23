@@ -14,7 +14,8 @@ class DeckTest {
     @Test
     fun `덱이 카드 주면 카드가 하나 없어 져야 함`(){
         val deck = Deck()
-        deck.giveCard(deck.shuffled())
+        val pickCard = deck.giveCard(deck.shuffled())
+        assertThat(pickCard)
         assertThat(deck.shuffled().size).isEqualTo(51)
     }
 }

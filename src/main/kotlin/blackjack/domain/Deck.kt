@@ -10,9 +10,10 @@ class Deck(private var deck: Set<Card>) {
         get() = deck.size
 
     fun giveCard(deck: Set<Card>): Card {
-        deck.shuffled()
+        val shuffledDeck = deck.shuffled().toMutableSet()
         val cardPicked = deck.first()
-        deck.drop(1)
+        shuffledDeck.remove(cardPicked)
+        this.deck = shuffledDeck
         return cardPicked
     }
 

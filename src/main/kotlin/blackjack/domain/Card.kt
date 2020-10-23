@@ -9,4 +9,6 @@ data class Card(private val card: Pair<Suit, Denomination>) {
     override fun toString(): String {
         return "${Denomination.getScore(card.second)}${card.first.value}"
     }
+
+
 }
