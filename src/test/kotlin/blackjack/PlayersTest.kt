@@ -2,16 +2,33 @@ package blackjack
 
 import blackjack.domain.Player
 import blackjack.domain.Players
-import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
+    private lateinit var firstPlayer: Player
+    private lateinit var secondPlayer: Player
+    private lateinit var players: Players
+
+    @BeforeEach
+    fun `set up`() {
+        firstPlayer = Player("jacob")
+        secondPlayer = Player("joseph")
+        players = Players(listOf(firstPlayer, secondPlayer))
+    }
 
     @Test
-    fun `문자로 출력되는지 확인`() {
-        val player1 = Player("jacob")
-        val player2 = Player("joseph")
-        val players = Players(listOf(player1, player2))
-        assertThat(players.toString()).isEqualTo("jacob")
+    fun `size check`() {
+        assertTrue(players.size() == 2)
+    }
+
+    @Test
+    fun `find player`() {
+        val jacob = players.findPlayer(0)
+        val joseph = players.findPlayer(1)
+
+        assertTrue(jacob == firstPlayer)
+        assertTrue(joseph == secondPlayer)
     }
 }

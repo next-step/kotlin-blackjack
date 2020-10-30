@@ -17,6 +17,6 @@ data class Player(private val name: String) {
     fun hasScoreMoreThanMax() = cards.isMoreThanMaxNumber(amountOfScores())
 
     override fun toString(): String {
-        return name.toString()
+        return name
     }
 }
