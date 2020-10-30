@@ -12,12 +12,18 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     private lateinit var player: Player
-    private lateinit var deck: Deck
+    private lateinit var deck1: Deck
+    private lateinit var deck2: Deck
+    private lateinit var deck3: Deck
+    private lateinit var deck4: Deck
 
     @BeforeEach
     fun `set up`() {
         player = Player(name = "mark")
-        deck = Deck(setOf(Card(Pair(Suit.HEART, Denomination.FOUR))))
+        deck1 = Deck(setOf(Card(Pair(Suit.HEART, Denomination.FOUR))))
+        deck2 = Deck(setOf(Card(Pair(Suit.SPADE, Denomination.KING))))
+        deck3 = Deck(setOf(Card(Pair(Suit.DIAMOND, Denomination.JACK))))
+        deck4 = Deck(setOf(Card(Pair(Suit.CLUB, Denomination.QUEEN))))
     }
 
     @Test
@@ -28,8 +34,8 @@ class PlayerTest {
     @Test
     fun `드로우`() {
 
-        val cards = player.draw(deck)
-        val nullCards = player.draw(deck)
+        val cards = player.draw(deck1)
+        val nullCards = player.draw(deck1)
 
         assertThat(cards?.size()).isEqualTo(1)
         assertThat(nullCards?.size()).isEqualTo(null)
@@ -44,7 +50,7 @@ class PlayerTest {
 
     @Test
     fun `카드의 양`() {
-        player.draw(deck)
+        player.draw(deck1)
 
         val amount = player.amountOfCards()
 
@@ -53,10 +59,20 @@ class PlayerTest {
 
     @Test
     fun `스코어 총 점수`() {
-        player.draw(deck)
+        player.draw(deck1)
 
         val totalScore = player.amountOfScores()
 
         assertThat(totalScore).isEqualTo(4)
+    }
+
+    @Test
+    fun `드로우 선택`() {
+
+        player.chooseToDraw("y", deck2)
+        player.chooseToDraw("y", deck1)
+        player.chooseToDraw("y", deck3)
+        player.chooseToDraw("y", deck4)
+        assertThat(player.amountOfCards()).isEqualTo(3)
     }
 }
