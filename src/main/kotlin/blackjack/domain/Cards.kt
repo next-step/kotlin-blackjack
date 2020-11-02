@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.MAXIMUM_GAME_SCORE
+
 class Cards(cards: Set<Card>) {
 
     private val cards: MutableSet<Card> = cards.toMutableSet()
@@ -21,11 +23,7 @@ class Cards(cards: Set<Card>) {
         return cards.map { it }.toString()
     }
 
-    fun isMoreThanMaxNumber(number: Int): Boolean {
-        return number >= MAXIMUM_CARDS_NUMBER
-    }
-
-    companion object {
-        private const val MAXIMUM_CARDS_NUMBER = 21
+    fun isMoreThanMaxScore(number: Int): Boolean {
+        return number >= MAXIMUM_GAME_SCORE
     }
 }

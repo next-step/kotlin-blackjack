@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.view.REPLY_HIT
 
 data class Player(private val name: String) {
-    private val cards: Cards = Cards(emptySet<Card>())
+    private val cards: Cards = Cards(emptySet())
 
     fun chooseToDraw(reply: String, deck: Deck): Player? {
         if (REPLY_HIT == reply && !hasScoreMoreThanMax()) {
@@ -23,7 +23,7 @@ data class Player(private val name: String) {
 
     fun stateOfCards() = cards.toString()
 
-    fun hasScoreMoreThanMax() = cards.isMoreThanMaxNumber(amountOfScores())
+    fun hasScoreMoreThanMax() = cards.isMoreThanMaxScore(amountOfScores())
 
     override fun toString(): String {
         return name

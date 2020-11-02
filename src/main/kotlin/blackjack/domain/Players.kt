@@ -1,12 +1,14 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.DEFAULT_CARD_AMOUNT
+
 data class Players(private val players: List<Player>) {
     override fun toString(): String {
         return players.joinToString()
     }
 
     fun setUpWithCards(deck: Deck) {
-        players.forEach { player -> (1 until 21).map { player.draw(deck) } }
+        players.forEach { player -> (1..DEFAULT_CARD_AMOUNT).map { player.draw(deck) } }
     }
 
     fun findPlayer(nth: Int): Player {

@@ -26,8 +26,13 @@ class Game(players: List<Player>, private val deck: Deck) {
         return player
     }
 
-    fun result(): List<Player> {
+    fun currentPlayer() = players.findPlayer(turn)
+
+    fun isOver() = turn == players.size()
+
+    fun result(): String {
         return (0 until players.size()).map { players.findPlayer(it) }
+            .joinToString("\n") { "${it}카드: ${it.stateOfCards()} - 결과: ${it.amountOfScores()}" }
     }
 
     companion object {
