@@ -17,6 +17,10 @@ class Game(players: List<Player>, private val deck: Deck) {
         this.players.setUpWithCards(deck)
     }
 
+    fun currentPlayers(): Players {
+        return players
+    }
+
     fun giveChanceToDraw(reply: String): Player? {
         val currentPlayer = players.findPlayer(turn)
         val player = currentPlayer.chooseToDraw(reply, deck) ?: return null

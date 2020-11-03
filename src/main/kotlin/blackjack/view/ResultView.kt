@@ -9,7 +9,7 @@ const val NOTIFY_EMPTY_DECK = "-- 더 이상 남아있는 카드가 없습니다
 object ResultView {
 
     fun showResultOfSetUp(players: Players) {
-        println("\n${players}에게 2장의 카드를 나누었습니다")
+        println("\n ${players}에게 2장의 카드를 나누었습니다")
         println(players.stateOfCards() + "\n")
     }
 

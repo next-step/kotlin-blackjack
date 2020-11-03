@@ -9,11 +9,11 @@ const val REPLY_STAND = "n"
 
 object InputView {
 
-    fun readPlayerNames(): String? {
+    fun readPlayerNames(): String {
         return readText(message = ENTER_PLAYER_NAMES)
     }
 
-    fun readReplyToDrawing(player: Player): String? {
+    fun readReplyToDrawing(player: Player): String {
         var text = readText(message = "${player}는(은) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val availableReplies = listOf(REPLY_HIT, REPLY_STAND)
         while (!availableReplies.contains(text)) {
@@ -22,7 +22,7 @@ object InputView {
         return text
     }
 
-    private fun readText(message: String = ""): String? {
+    private fun readText(message: String = ""): String {
         println(message)
         var text = readLine()
         while (text.isNullOrBlank()) {

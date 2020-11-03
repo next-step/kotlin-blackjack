@@ -18,6 +18,6 @@ data class Players(private val players: List<Player>) {
     fun size() = players.size
 
     fun stateOfCards(): String {
-        return players.joinToString("/n") { "${it}카드: ${it.stateOfCards()}" }
+        return players.joinToString("\n") { "${it}카드: ${it.stateOfCards()}" }
     }
 }
