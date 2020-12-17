@@ -14,7 +14,7 @@ class DenominationTest {
     @Test
     fun `Denomination symbol print`() {
         val sample = Denomination.QUEEN
-        assertThat(Denomination.getSymbol(sample)).isEqualTo("QUEEN")
+        assertThat(Denomination.getSymbol(sample)).isEqualTo("Q")
     }
 
     @Test

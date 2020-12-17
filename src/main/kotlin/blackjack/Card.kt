@@ -6,7 +6,11 @@ data class Card(private val card: Pair<Denomination, Suit>) {
         return Denomination.getScore(card.first)
     }
 
+    fun checkAce(): Boolean {
+        return card.first.name == "ACE"
+    }
+
     override fun toString(): String {
-        return card.first.name + card.second.shapeName
+        return Denomination.getSymbol(card.first) + card.second.shapeName
     }
 }

@@ -1,6 +1,7 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class CardTest {
@@ -13,6 +14,12 @@ class CardTest {
 
     @Test
     fun `get string card information`() {
-        assertThat(sampleCard.toString()).isEqualTo("JACK다이아몬드")
+        assertThat(sampleCard.toString()).isEqualTo("J다이아몬드")
+    }
+
+    @Test
+    fun `check card have a Ace card`() {
+        val sampleAceCard = Card(Pair(Denomination.ACE, Suit.CLUB))
+        assertTrue(sampleAceCard.checkAce())
     }
 }

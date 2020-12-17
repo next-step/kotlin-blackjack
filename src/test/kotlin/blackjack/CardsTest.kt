@@ -20,4 +20,9 @@ class CardsTest {
         sampleCards.addCard(sampleCard3)
         assertThat(sampleCards.getTotalScore()).isEqualTo(20)
     }
+
+    @Test
+    fun `get string cards`() {
+        assertThat(sampleCards.toString()).isEqualTo("[8클로버, 7다이아몬드]")
+    }
 }

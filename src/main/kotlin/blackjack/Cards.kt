@@ -9,4 +9,8 @@ data class Cards(private val cards: MutableList<Card>) {
     fun addCard(card: Card) {
         cards.add(card)
     }
+
+    override fun toString(): String {
+        return cards.map { card -> card.toString() }.toString()
+    }
 }
