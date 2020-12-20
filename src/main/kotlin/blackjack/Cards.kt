@@ -1,9 +1,9 @@
 package blackjack
 
-data class Cards(private val cards: MutableList<Card>) {
+data class Cards(private var cards: MutableList<Card> = mutableListOf<Card>()) {
 
     fun getTotalScore(): Int {
-        return cards.map { card -> card.getScore() }.sum()
+        return this.cards.map { card -> card.getScore() }.sum()
     }
 
     fun addCard(card: Card) {
@@ -14,9 +14,14 @@ data class Cards(private val cards: MutableList<Card>) {
         return this.getTotalScore() + card.getScore() > WIN_SCORE
     }
 
+    fun size(): Int {
+        return cards.size
+    }
+
     override fun toString(): String {
         return cards.map { card -> card.toString() }.toString()
     }
+
 
     companion object {
         const val WIN_SCORE = 21
