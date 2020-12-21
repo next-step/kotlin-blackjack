@@ -11,7 +11,7 @@ class DeckTest {
     }
 
     @Test
-    fun `check reduce size after pop card from Deck`(){
+    fun `check reduce size after pop card from Deck`() {
         val sampleDeck = Deck()
         sampleDeck.popDeck()
         assertThat(sampleDeck.size()).isEqualTo(47)

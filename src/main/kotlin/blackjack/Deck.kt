@@ -10,7 +10,6 @@ data class Deck(private var deck: Set<Card>) {
         return deck.size
     }
 
-
     fun popDeck(): Card {
         val shuffleDeck = deck.shuffled().toMutableSet()
         val lastCard = deck.last()
@@ -20,7 +19,6 @@ data class Deck(private var deck: Set<Card>) {
     }
 
     companion object {
-
 
         fun createAllCard(): Set<Card> {
 
