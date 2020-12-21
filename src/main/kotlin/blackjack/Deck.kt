@@ -6,21 +6,25 @@ data class Deck(private var deck: Set<Card>) {
         deck = createAllCard()
     )
 
-    fun size(): Int? {
-        return deck?.size
+    fun size(): Int {
+        return deck.size
     }
 
-    fun popDeck() {
-        deck?.shuffled()
+
+    fun popDeck(): Card {
+        val shuffleDeck = deck.shuffled().toMutableSet()
+        val lastCard = deck.last()
+        shuffleDeck.remove(lastCard)
+        this.deck = shuffleDeck.toSet()
+        return lastCard
     }
 
     companion object {
-        private val initialDeck = setOf<Card>()
+
 
         fun createAllCard(): Set<Card> {
 
             return Suit.values().flatMap { suit -> testDenomination(suit) }.toSet()
-
         }
 
         private fun testDenomination(suit: Suit): Set<Card> {
