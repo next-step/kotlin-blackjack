@@ -10,12 +10,9 @@ data class Cards(private var cards: MutableList<Card> = mutableListOf<Card>()) {
         cards.add(card)
     }
 
+
     fun checkOver(card: Card): Boolean {
         return this.getTotalScore() + card.getScore() > WIN_SCORE
-    }
-
-    fun size(): Int {
-        return cards.size
     }
 
     override fun toString(): String {
