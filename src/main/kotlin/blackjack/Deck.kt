@@ -1,28 +1,30 @@
 package blackjack
 
-data class Deck(private var deck: Cards = Cards()) {
+data class Deck(private var deck: Set<Card>) {
 
     constructor() : this(
         deck = createAllCard()
     )
 
-    fun size(): Int {
-        return deck.size()
+    fun size(): Int? {
+        return deck?.size
+    }
+
+    fun popDeck() {
+        deck?.shuffled()
     }
 
     companion object {
-        private val initialDeck = Cards()
+        private val initialDeck = setOf<Card>()
 
-        fun createAllCard(): Cards {
+        fun createAllCard(): Set<Card> {
 
-            for (name in Suit.values()) {
-                testDenomination(name).map { card -> initialDeck.addCard(card) }
-            }
-            return initialDeck
+            return Suit.values().flatMap { suit -> testDenomination(suit) }.toSet()
+
         }
 
-        private fun testDenomination(suit: Suit): List<Card> {
-            return Denomination.values().map { denomination -> Card(Pair(denomination, suit)) }
+        private fun testDenomination(suit: Suit): Set<Card> {
+            return Denomination.values().map { denomination -> Card(Pair(denomination, suit)) }.toSet()
         }
     }
 }
