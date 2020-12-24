@@ -6,11 +6,15 @@ data class Deck(private var deck: Set<Card>) {
         deck = createAllCard()
     )
 
-    fun size(): Int {
+    fun size(): Int? {
+
         return deck.size
     }
 
-    fun popDeck(): Card {
+    fun popDeck(): Card? {
+        if (deck.isEmpty()) {
+            return null
+        }
         val shuffleDeck = deck.shuffled().toMutableSet()
         val lastCard = deck.last()
         shuffleDeck.remove(lastCard)

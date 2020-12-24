@@ -16,4 +16,13 @@ class DeckTest {
         sampleDeck.popDeck()
         assertThat(sampleDeck.size()).isEqualTo(47)
     }
+
+    @Test
+    fun `return null, if Deck is empty `() {
+        val sampleDeck = Deck()
+        for (x in 0 until 48) {
+            sampleDeck.popDeck()
+        }
+        assertThat(sampleDeck.popDeck()).isEqualTo(null)
+    }
 }
