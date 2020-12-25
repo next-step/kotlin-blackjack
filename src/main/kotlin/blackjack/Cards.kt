@@ -11,8 +11,8 @@ data class Cards(private val cards: MutableSet<Card> = mutableSetOf<Card>()) {
     }
 
 
-    fun checkOver(card: Card): Boolean {
-        return this.getTotalScore() + card.getScore() > WIN_SCORE
+    fun hasMoreThanOver(): Boolean {
+        return this.getTotalScore() >= WIN_SCORE
     }
 
     override fun toString(): String {

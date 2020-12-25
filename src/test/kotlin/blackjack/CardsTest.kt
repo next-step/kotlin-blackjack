@@ -9,7 +9,7 @@ class CardsTest {
     private val sampleCard1 = Card(Pair(Denomination.EIGHT, Suit.CLUB))
     private val sampleCard2 = Card(Pair(Denomination.SEVEN, Suit.DIAMOND))
     private val sampleCards = Cards(mutableSetOf(sampleCard1, sampleCard2))
-    private val sampleCard3 = Card(Pair(Denomination.FIVE, Suit.HEART))
+
 
     @Test
     fun `get tototal score from cards`() {
@@ -18,6 +18,7 @@ class CardsTest {
 
     @Test
     fun `add card`() {
+        val sampleCard3 = Card(Pair(Denomination.FIVE, Suit.HEART))
         sampleCards.addCard(sampleCard3)
         assertThat(sampleCards.getTotalScore()).isEqualTo(20)
     }
@@ -29,8 +30,10 @@ class CardsTest {
 
     @Test
     fun `check total score over max score or not`() {
+        val sampleCard3 = Card(Pair(Denomination.FIVE, Suit.HEART))
         sampleCards.addCard(sampleCard3)
         val sampleCard4 = Card(Pair(Denomination.FIVE, Suit.SPADE))
-        assertTrue(sampleCards.checkOver(sampleCard4))
+        sampleCards.addCard(sampleCard4)
+        assertTrue(sampleCards.hasMoreThanOver())
     }
 }

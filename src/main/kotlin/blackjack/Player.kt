@@ -9,24 +9,25 @@ data class Player(private val name: String) {
         return cards.getTotalScore()
     }
 
-    fun draw(card: Card){
-        return cards.addCard(card)
+    fun draw(card: Card): Player {
+        cards.addCard(card)
+        return this
     }
 
     fun stateCards(): String {
         return cards.toString()
     }
 
-    fun chooseDraw(card: Card): Player? {
-        if (cards.checkOver(card)) {
-            draw(card) ?: return null
+    fun chooseDraw(card: Card) {
+        if (cards.hasMoreThanOver()) {
+            throw IllegalArgumentException("Your score already more than max score....")
+        } else{
+            draw(card)
         }
-        return this
+
     }
 
     override fun toString(): String {
         return name
     }
-
-
 }
