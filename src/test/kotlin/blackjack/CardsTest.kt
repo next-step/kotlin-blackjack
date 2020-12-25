@@ -8,7 +8,7 @@ class CardsTest {
 
     private val sampleCard1 = Card(Pair(Denomination.EIGHT, Suit.CLUB))
     private val sampleCard2 = Card(Pair(Denomination.SEVEN, Suit.DIAMOND))
-    private val sampleCards = Cards(mutableListOf(sampleCard1, sampleCard2))
+    private val sampleCards = Cards(mutableSetOf(sampleCard1, sampleCard2))
     private val sampleCard3 = Card(Pair(Denomination.FIVE, Suit.HEART))
 
     @Test

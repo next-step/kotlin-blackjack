@@ -1,6 +1,6 @@
 package blackjack
 
-data class Cards(private var cards: MutableList<Card> = mutableListOf<Card>()) {
+data class Cards(private val cards: MutableSet<Card> = mutableSetOf<Card>()) {
 
     fun getTotalScore(): Int {
         return this.cards.map { card -> card.getScore() }.sum()
