@@ -38,6 +38,5 @@ class PlayerTest {
         assertThrows<IllegalArgumentException> {
             samplePlayer.chooseDraw(sampleCard4)
         }
-
     }
 }
