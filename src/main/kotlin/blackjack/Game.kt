@@ -1,11 +1,10 @@
 package blackjack
 
-class Game(private val players: Players) {
+class Game(players: List<Player>) {
+    private val players = Players(players as MutableList<Player>)
+    private val turn = 0
 
-    private var turn = 0
-    private val deck = Deck()
-    fun setUp(){
-        
-    }
-
+    constructor(PlayNames: String) : this(
+        PlayNames.split((",")).filterNot { it.isBlank() }.map { Player(it.trim()) }
+    )
 }
