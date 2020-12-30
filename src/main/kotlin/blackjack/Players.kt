@@ -2,25 +2,30 @@ package blackjack
 
 import java.lang.IndexOutOfBoundsException
 
-data class Players(private val player: MutableList<Player> = mutableListOf<Player>()) {
+data class Players(private val players: MutableList<Player> = mutableListOf<Player>()) {
 
     fun findPlayer(nth: Int): Player {
-        return player[nth]
+        return players[nth]
+    }
+
+    fun getCardAllPlayer(card: Card) {
+        players.forEach { it -> it.draw(card) }
     }
 
     fun totalNumberOfPlayers(): Int {
-        return player.size
+        return players.size
     }
 
-    fun stateOfPlayerCard(nth:Int): String {
-        if (nth < totalNumberOfPlayers())  {
+    fun totalAmountOfCards(): Int {
+        return players.map { it.amountOfCards() }.sum()
+    }
+
+    fun stateOfPlayerCard(nth: Int): String {
+        if (nth < totalNumberOfPlayers()) {
             val playerName = findPlayer(nth)
             return playerName.stateCards()
-        }
-        else{
+        } else {
             throw IndexOutOfBoundsException("can't find player")
         }
     }
-
-
 }

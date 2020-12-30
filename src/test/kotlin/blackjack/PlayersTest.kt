@@ -1,7 +1,6 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatNullPointerException
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -28,7 +27,7 @@ class PlayersTest {
     @Test
     fun `find player in list of players`() {
         assertThat(players.findPlayer(0)).isEqualTo(player1)
-        assertThrows<IndexOutOfBoundsException> {(players.findPlayer(5))}
+        assertThrows<IndexOutOfBoundsException> { (players.findPlayer(5)) }
     }
 
     @Test
@@ -37,7 +36,12 @@ class PlayersTest {
     }
 
     @Test
-    fun `state of player's cards`(){
+    fun `amount of Cards`() {
+        assertThat(players.totalAmountOfCards()).isEqualTo(4)
+    }
+
+    @Test
+    fun `state of player's cards`() {
         assertThat(players.stateOfPlayerCard(0)).isEqualTo("[K클로버, 5스페이드]")
     }
 }

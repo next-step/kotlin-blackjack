@@ -1,7 +1,6 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
@@ -20,6 +19,11 @@ class PlayerTest {
     fun `get total player's score`() {
 
         assertThat(samplePlayer.playerScore()).isEqualTo(15)
+    }
+
+    @Test
+    fun `get total amount of cards`() {
+        assertThat(samplePlayer.amountOfCards()).isEqualTo(2)
     }
 
     @Test

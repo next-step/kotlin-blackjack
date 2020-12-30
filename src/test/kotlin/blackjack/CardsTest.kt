@@ -10,10 +10,14 @@ class CardsTest {
     private val sampleCard2 = Card(Pair(Denomination.SEVEN, Suit.DIAMOND))
     private val sampleCards = Cards(mutableSetOf(sampleCard1, sampleCard2))
 
-
     @Test
     fun `get tototal score from cards`() {
         assertThat(sampleCards.getTotalScore()).isEqualTo(15)
+    }
+
+    @Test
+    fun `get amount of cards`() {
+        assertThat(sampleCards.amountOfCards()).isEqualTo(2)
     }
 
     @Test

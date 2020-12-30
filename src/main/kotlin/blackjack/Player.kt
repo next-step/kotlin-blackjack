@@ -18,13 +18,16 @@ data class Player(private val name: String) {
         return cards.toString()
     }
 
+    fun amountOfCards(): Int {
+        return cards.amountOfCards()
+    }
+
     fun chooseDraw(card: Card) {
         if (cards.hasMoreThanOver()) {
             throw IllegalArgumentException("Your score already more than max score....")
-        } else{
+        } else {
             draw(card)
         }
-
     }
 
     override fun toString(): String {
