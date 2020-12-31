@@ -11,12 +11,20 @@ class Game(players: List<Player>, private val deck: Deck) {
 
     init {
         for (i in 0 until DEFAULT_CARD_SIZE) {
-            this.players.getCardAllPlayer(deck.popDeck()!!)
+            players.forEach { player: Player -> player.draw(deck.popDeck()!!) }
         }
     }
 
     fun amountOfCards(): Int {
         return players.totalAmountOfCards()
+    }
+
+    fun amountOfDeck(): Int? {
+        return deck.size()
+    }
+
+    fun numberOfPlayers(): Int {
+        return players.totalNumberOfPlayers()
     }
 
     companion object {

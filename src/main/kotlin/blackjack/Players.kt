@@ -8,10 +8,6 @@ data class Players(private val players: MutableList<Player> = mutableListOf<Play
         return players[nth]
     }
 
-    fun getCardAllPlayer(card: Card) {
-        players.forEach { it -> it.draw(card) }
-    }
-
     fun totalNumberOfPlayers(): Int {
         return players.size
     }

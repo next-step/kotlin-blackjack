@@ -11,7 +11,11 @@ class PlayersTest {
     private lateinit var players: Players
     private lateinit var player1: Player
     private lateinit var player2: Player
-    private lateinit var card: Card
+    private lateinit var card1: Card
+    private lateinit var card2: Card
+    private lateinit var card3: Card
+    private lateinit var card4: Card
+    private lateinit var sampleDeck: Set<Card>
 
     @BeforeEach
     fun `set up`() {
@@ -44,4 +48,5 @@ class PlayersTest {
     fun `state of player's cards`() {
         assertThat(players.stateOfPlayerCard(0)).isEqualTo("[K클로버, 5스페이드]")
     }
+
 }
