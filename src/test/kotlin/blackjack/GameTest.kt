@@ -12,6 +12,7 @@ class GameTest {
     @BeforeEach
     fun `set up`() {
         game = Game("joseph,jacob")
+        player = Player("joseph")
     }
 
     @Test
@@ -28,7 +29,11 @@ class GameTest {
 
     @Test
     fun `check member of game`() {
-        val sampleGame1 = Game("joseph,jacob")
-        assertThat(sampleGame1.numberOfPlayers()).isEqualTo(2)
+        assertThat(game.numberOfPlayers()).isEqualTo(2)
+    }
+
+    @Test
+    fun `string currently player`() {
+        assertThat(game.currentlyPlayer()).isEqualTo(player)
     }
 }

@@ -27,6 +27,10 @@ class Game(players: List<Player>, private val deck: Deck) {
         return players.totalNumberOfPlayers()
     }
 
+    fun currentlyPlayer(): Player {
+        return players.findPlayer(turn)
+    }
+
     companion object {
         const val DEFAULT_CARD_SIZE = 2
     }
