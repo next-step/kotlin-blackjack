@@ -40,7 +40,7 @@ class GameTest {
     }
 
     @Test
-    fun `test except chance draw`(){
+    fun `test except chance draw`() {
         assertThrows<IllegalArgumentException> {
             game.chanceDraw("koltin")
         }

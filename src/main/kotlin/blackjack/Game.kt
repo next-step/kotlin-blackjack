@@ -19,11 +19,10 @@ class Game(players: List<Player>, private val deck: Deck) {
         if (reply == "n") {
             turn++
         }
-        if(reply == "y") {
+        if (reply == "y") {
             val cunPlayer = players.findPlayer(turn)
             cunPlayer.chooseDraw(deck.popDeck()!!)
-        }
-        else{
+        } else {
             throw IllegalArgumentException("Please input correct value")
         }
     }
