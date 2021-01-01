@@ -47,3 +47,5 @@ class Game(players: List<Player>, private val deck: Deck) {
         const val DEFAULT_CARD_SIZE = 2
     }
 }
+
+
