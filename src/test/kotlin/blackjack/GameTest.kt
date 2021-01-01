@@ -3,6 +3,8 @@ package blackjack
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 
 class GameTest {
 
@@ -35,5 +37,12 @@ class GameTest {
     @Test
     fun `string currently player`() {
         assertThat(game.currentlyPlayer()).isEqualTo(player)
+    }
+
+    @Test
+    fun `test except chance draw`(){
+        assertThrows<IllegalArgumentException> {
+            game.chanceDraw("koltin")
+        }
     }
 }

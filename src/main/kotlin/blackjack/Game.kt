@@ -2,7 +2,7 @@ package blackjack
 
 class Game(players: List<Player>, private val deck: Deck) {
     private val players = Players(players as MutableList<Player>)
-    private val turn = 0
+    private var turn = 0
 
     constructor(PlayNames: String, deck: Deck = Deck()) : this(
         PlayNames.split((",")).filterNot { it.isBlank() }.map { Player(it.trim()) },
@@ -12,6 +12,19 @@ class Game(players: List<Player>, private val deck: Deck) {
     init {
         for (i in 0 until DEFAULT_CARD_SIZE) {
             players.forEach { player: Player -> player.draw(deck.popDeck()!!) }
+        }
+    }
+
+    fun chanceDraw(reply: String) {
+        if (reply == "n") {
+            turn++
+        }
+        if(reply == "y") {
+            val cunPlayer = players.findPlayer(turn)
+            cunPlayer.chooseDraw(deck.popDeck()!!)
+        }
+        else{
+            throw IllegalArgumentException("Please input correct value")
         }
     }
 
