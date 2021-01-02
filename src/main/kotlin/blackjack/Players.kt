@@ -1,7 +1,5 @@
 package blackjack
 
-import java.lang.IndexOutOfBoundsException
-
 data class Players(private val players: MutableList<Player> = mutableListOf<Player>()) {
 
     fun findPlayer(nth: Int): Player {
@@ -16,12 +14,11 @@ data class Players(private val players: MutableList<Player> = mutableListOf<Play
         return players.map { it.amountOfCards() }.sum()
     }
 
-    fun stateOfPlayerCard(nth: Int): String {
-        if (nth < totalNumberOfPlayers()) {
-            val playerName = findPlayer(nth)
-            return playerName.stateCards()
-        } else {
-            throw IndexOutOfBoundsException("can't find player")
-        }
+    fun stateOfPlayerCard(): String {
+        return players.joinToString("\n") { player -> "${player}카드: ${player.stateCards()}" }
+    }
+
+    override fun toString(): String {
+        return players.joinToString()
     }
 }

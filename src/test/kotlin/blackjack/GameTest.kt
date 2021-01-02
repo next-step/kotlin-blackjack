@@ -20,6 +20,11 @@ class GameTest {
     }
 
     @Test
+    fun `string players`() {
+        assertThat(game.allPlayers()).isEqualTo(listOf("Joseph", "Jacob"))
+    }
+
+    @Test
     fun `check Game class with card size`() {
 
         assertThat(game.amountOfCards()).isEqualTo(4)

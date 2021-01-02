@@ -46,7 +46,6 @@ class PlayersTest {
 
     @Test
     fun `state of player's cards`() {
-        assertThat(players.stateOfPlayerCard(0)).isEqualTo("[K클로버, 5스페이드]")
+        assertThat(players.stateOfPlayerCard()).isEqualTo("Joseph카드: [K클로버, 5스페이드]\nMark카드: [4하트, 7다이아몬드]")
     }
-
 }

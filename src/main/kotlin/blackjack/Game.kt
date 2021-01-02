@@ -11,8 +11,12 @@ class Game(players: List<Player>, private val deck: Deck) {
 
     init {
         for (i in 0 until DEFAULT_CARD_SIZE) {
-            players.forEach { player: Player -> player.draw(deck.popDeck()!!) }
+            players.map { player: Player -> player.draw(deck.popDeck()!!) }
         }
+    }
+
+    fun allPlayers(): Players {
+        return players
     }
 
     fun chanceDraw(reply: String) {
@@ -39,6 +43,10 @@ class Game(players: List<Player>, private val deck: Deck) {
 
     fun isOver(): Boolean {
         return turn == players.totalNumberOfPlayers()
+    }
+
+    fun lastPlayer(): Player {
+        return players.findPlayer(players.totalNumberOfPlayers())
     }
 
     fun result(): String {
