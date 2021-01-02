@@ -2,8 +2,6 @@ package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 
 class PlayerTest {
     private val sampleCard1 = Card(Pair(Denomination.FIVE, Suit.SPADE))
@@ -36,11 +34,16 @@ class PlayerTest {
     fun `test chooseDraw function`() {
         val sampleCard3 = Card(Pair(Denomination.KING, Suit.SPADE))
         val sampleCard4 = Card(Pair(Denomination.KING, Suit.HEART))
+        assertThat(samplePlayer.chooseDraw(REPLY_HIT, sampleCard3)).isEqualTo(samplePlayer)
         // the player's score is 25
-        samplePlayer.draw(sampleCard3)
+        // samplePlayer.draw(sampleCard3)
         // It not improve score if player's score more than 21
-        assertThrows<IllegalArgumentException> {
-            samplePlayer.chooseDraw(sampleCard4)
-        }
+        assertThat(samplePlayer.chooseDraw(REPLY_HIT, sampleCard4)).isEqualTo(null)
+        assertThat(samplePlayer.chooseDraw(REPLY_STAND, sampleCard4)).isEqualTo(null)
+    }
+
+    companion object {
+        val REPLY_HIT = "y"
+        val REPLY_STAND = "n"
     }
 }

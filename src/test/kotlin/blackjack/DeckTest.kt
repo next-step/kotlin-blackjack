@@ -24,5 +24,6 @@ class DeckTest {
             sampleDeck.popDeck()
         }
         assertThat(sampleDeck.popDeck()).isEqualTo(null)
+        assertThat(sampleDeck.size()).isEqualTo(0)
     }
 }

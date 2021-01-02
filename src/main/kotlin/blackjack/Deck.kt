@@ -6,9 +6,9 @@ data class Deck(private var deck: Set<Card>) {
         deck = createAllCard()
     )
 
-    fun size(): Int? {
+    fun size(): Int {
 
-        return deck.size
+        return deck.size ?: 0
     }
 
     fun popDeck(): Card? {

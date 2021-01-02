@@ -9,12 +9,14 @@ import java.lang.IllegalArgumentException
 class GameTest {
 
     private lateinit var game: Game
-    private lateinit var player: Player
+    private lateinit var Joseph: Player
+    private lateinit var Jacob: Player
 
     @BeforeEach
     fun `set up`() {
-        game = Game("joseph,jacob")
-        player = Player("joseph")
+        game = Game("Joseph,Jacob")
+        Joseph = Player("Joseph")
+        Jacob = Player("Jacob")
     }
 
     @Test
@@ -36,7 +38,7 @@ class GameTest {
 
     @Test
     fun `string currently player`() {
-        assertThat(game.currentlyPlayer()).isEqualTo(player)
+        assertThat(game.currentlyPlayer()).isEqualTo(Joseph)
     }
 
     @Test
@@ -45,6 +47,13 @@ class GameTest {
             game.chanceDraw("koltin")
         }
     }
+
+    @Test
+    fun `test chance draw`() {
+        game.chanceDraw("y")
+        assertThat(game.currentlyPlayer()).isEqualTo(Joseph)
+        assertThat(game.currentlyPlayer().amountOfCards()).isEqualTo(3)
+        game.chanceDraw("n")
+        assertThat(game.currentlyPlayer()).isEqualTo(Jacob)
+    }
 }
-
-

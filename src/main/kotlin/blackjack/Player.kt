@@ -22,12 +22,16 @@ data class Player(private val name: String) {
         return cards.amountOfCards()
     }
 
-    fun chooseDraw(card: Card) {
-        if (cards.hasMoreThanOver()) {
-            throw IllegalArgumentException("Your score already more than max score....")
-        } else {
-            draw(card)
+    fun chooseDraw(reply: String, card: Card): Player? {
+        if (cards.hasMoreThanOver() || reply == "n") {
+            return null
         }
+        if (reply == "y") {
+            draw(card)
+        } else {
+            throw IllegalArgumentException("Please say correct answer...")
+        }
+        return this
     }
 
     override fun toString(): String {

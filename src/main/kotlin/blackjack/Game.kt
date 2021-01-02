@@ -16,15 +16,9 @@ class Game(players: List<Player>, private val deck: Deck) {
     }
 
     fun chanceDraw(reply: String) {
-        if (reply == "n") {
-            turn++
-        }
-        if (reply == "y") {
-            val cunPlayer = players.findPlayer(turn)
-            cunPlayer.chooseDraw(deck.popDeck()!!)
-        } else {
-            throw IllegalArgumentException("Please input correct value")
-        }
+
+        val cunPlayer = players.findPlayer(turn)
+        cunPlayer.chooseDraw(reply, deck.popDeck()!!) ?: turn++
     }
 
     fun amountOfCards(): Int {
@@ -47,5 +41,3 @@ class Game(players: List<Player>, private val deck: Deck) {
         const val DEFAULT_CARD_SIZE = 2
     }
 }
-
-
