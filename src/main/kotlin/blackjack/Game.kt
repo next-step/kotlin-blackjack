@@ -37,6 +37,15 @@ class Game(players: List<Player>, private val deck: Deck) {
         return players.findPlayer(turn)
     }
 
+    fun isOver(): Boolean {
+        return turn == players.totalNumberOfPlayers()
+    }
+
+    fun result(): String {
+        return (0 until players.totalNumberOfPlayers()).map { players.findPlayer(it) }
+            .joinToString("\n") { "${it}카드: ${it.stateCards()} - 결과: ${it.playerScore()}" }
+    }
+
     companion object {
         const val DEFAULT_CARD_SIZE = 2
     }

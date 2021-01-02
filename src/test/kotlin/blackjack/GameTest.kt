@@ -56,4 +56,12 @@ class GameTest {
         game.chanceDraw("n")
         assertThat(game.currentlyPlayer()).isEqualTo(Jacob)
     }
+
+    @Test
+    fun `test game over`() {
+        for (i in 0 until game.numberOfPlayers()) {
+            game.chanceDraw("n")
+        }
+        assertThat(game.isOver()).isEqualTo(true)
+    }
 }
