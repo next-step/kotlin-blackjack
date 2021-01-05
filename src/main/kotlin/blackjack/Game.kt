@@ -19,10 +19,14 @@ class Game(players: List<Player>, private val deck: Deck) {
         return players
     }
 
-    fun chanceDraw(reply: String) {
+    fun chanceDraw(reply: String): Player? {
 
         val cunPlayer = players.findPlayer(turn)
-        cunPlayer.chooseDraw(reply, deck.popDeck()!!) ?: turn++
+        val player = deck.popDeck()?.let { cunPlayer.chooseDraw(reply, it) } ?: return null
+        if (reply == "n" || player.hasMoreThanMax()){
+            turn++
+        }
+        return cunPlayer
     }
 
     fun amountOfCards(): Int {
@@ -46,7 +50,7 @@ class Game(players: List<Player>, private val deck: Deck) {
     }
 
     fun lastPlayer(): Player {
-        return players.findPlayer(players.totalNumberOfPlayers())
+        return players.findPlayer(players.totalNumberOfPlayers()-1)
     }
 
     fun result(): String {

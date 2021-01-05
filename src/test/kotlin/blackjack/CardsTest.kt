@@ -38,6 +38,6 @@ class CardsTest {
         sampleCards.addCard(sampleCard3)
         val sampleCard4 = Card(Pair(Denomination.FIVE, Suit.SPADE))
         sampleCards.addCard(sampleCard4)
-        assertTrue(sampleCards.hasMoreThanOver())
+        assertTrue(sampleCards.isMoreThanMax())
     }
 }

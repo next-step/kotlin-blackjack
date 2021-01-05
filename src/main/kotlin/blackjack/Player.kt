@@ -23,15 +23,14 @@ data class Player(private val name: String) {
     }
 
     fun chooseDraw(reply: String, card: Card): Player? {
-        if (cards.hasMoreThanOver() || reply == "n") {
-            return null
-        }
-        if (reply == "y") {
-            draw(card)
-        } else {
-            throw IllegalArgumentException("Please say correct answer...")
+        if (!cards.isMoreThanMax() && reply == "y") {
+            draw(card) ?: return null
         }
         return this
+    }
+
+    fun hasMoreThanMax(): Boolean {
+        return cards.isMoreThanMax()
     }
 
     override fun toString(): String {

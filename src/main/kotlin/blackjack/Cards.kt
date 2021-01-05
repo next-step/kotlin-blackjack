@@ -14,7 +14,7 @@ data class Cards(private val cards: MutableSet<Card> = mutableSetOf<Card>()) {
         cards.add(card)
     }
 
-    fun hasMoreThanOver(): Boolean {
+    fun isMoreThanMax(): Boolean {
         return this.getTotalScore() >= WIN_SCORE
     }
 
