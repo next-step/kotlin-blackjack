@@ -22,5 +22,4 @@ class DenominationTest {
         assertThat(Denomination.AceCalculator(13)).isEqualTo(1)
         assertThat(Denomination.AceCalculator(9)).isEqualTo(11)
     }
-
 }

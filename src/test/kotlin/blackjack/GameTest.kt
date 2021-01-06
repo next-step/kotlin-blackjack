@@ -69,8 +69,9 @@ class GameTest {
         }
         assertThat(game.isOver()).isEqualTo(true)
     }
+
     @Test
-    fun `last player`(){
+    fun `last player`() {
         assertThat(game.lastPlayer()).isEqualTo(Jacob)
     }
 }

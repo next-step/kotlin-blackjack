@@ -12,5 +12,4 @@ class SuitTest {
         assertThat(sample.shapeName).isEqualTo("클로버")
         assertThat(sample2.shapeName).isEqualTo("다이아몬드")
     }
-
 }

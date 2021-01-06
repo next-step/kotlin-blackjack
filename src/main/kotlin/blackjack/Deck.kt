@@ -24,7 +24,7 @@ data class Deck(private var deck: Set<Card>) {
 
     companion object {
 
-        fun createAllCard(): Set<Card> {
+        private fun createAllCard(): Set<Card> {
 
             return Suit.values().flatMap { suit -> testDenomination(suit) }.toSet()
         }

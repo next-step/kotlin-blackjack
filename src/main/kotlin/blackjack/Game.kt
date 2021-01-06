@@ -1,17 +1,17 @@
 package blackjack
 
-class Game(players: List<Player>, private val deck: Deck) {
+class Game(players: List<Player>?, private val deck: Deck) {
     private val players = Players(players as MutableList<Player>)
     private var turn = 0
 
-    constructor(PlayNames: String, deck: Deck = Deck()) : this(
-        PlayNames.split((",")).filterNot { it.isBlank() }.map { Player(it.trim()) },
+    constructor(PlayNames: String?, deck: Deck = Deck()) : this(
+        PlayNames?.split((","))?.filterNot { it.isBlank() }?.map { Player(it.trim()) },
         deck
     )
 
     init {
         for (i in 0 until DEFAULT_CARD_SIZE) {
-            players.map { player: Player -> player.draw(deck.popDeck()!!) }
+            players?.map { player: Player -> player.draw(deck.popDeck()!!) }
         }
     }
 
@@ -23,7 +23,7 @@ class Game(players: List<Player>, private val deck: Deck) {
 
         val cunPlayer = players.findPlayer(turn)
         val player = deck.popDeck()?.let { cunPlayer.chooseDraw(reply, it) } ?: return null
-        if (reply == "n" || player.hasMoreThanMax()){
+        if (reply == "n" || player.hasMoreThanMax()) {
             turn++
         }
         return cunPlayer
@@ -50,7 +50,7 @@ class Game(players: List<Player>, private val deck: Deck) {
     }
 
     fun lastPlayer(): Player {
-        return players.findPlayer(players.totalNumberOfPlayers()-1)
+        return players.findPlayer(players.totalNumberOfPlayers() - 1)
     }
 
     fun result(): String {
