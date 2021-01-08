@@ -13,8 +13,8 @@ class PlayerTest {
     private val samplePlayer = Player("Jack")
 
     init {
-        samplePlayer.draw(sampleCard1)
-        samplePlayer.draw(sampleCard2)
+        samplePlayer.hit(sampleCard1)
+        samplePlayer.hit(sampleCard2)
     }
 
     @Test
@@ -38,12 +38,15 @@ class PlayerTest {
     fun `test chooseDraw function`() {
         val sampleCard3 = Card(Pair(Denomination.KING, Suit.SPADE))
         val sampleCard4 = Card(Pair(Denomination.KING, Suit.HEART))
-        assertThat(samplePlayer.chooseDraw(REPLY_HIT, sampleCard3)).isEqualTo(samplePlayer)
+        samplePlayer.chooseDraw(REPLY_STAND, sampleCard3)
+        assertThat(samplePlayer.amountOfCards()).isEqualTo(2)
+        samplePlayer.chooseDraw(REPLY_HIT, sampleCard3)
+        assertThat(samplePlayer.amountOfCards()).isEqualTo(3)
         // the player's score is 25
         // samplePlayer.draw(sampleCard3)
         // It not improve score if player's score more than 21
-        assertThat(samplePlayer.chooseDraw(REPLY_HIT, sampleCard4)).isEqualTo(null)
-        assertThat(samplePlayer.chooseDraw(REPLY_STAND, sampleCard4)).isEqualTo(null)
+        samplePlayer.chooseDraw(REPLY_HIT, sampleCard4)
+        assertThat(samplePlayer.amountOfCards()).isEqualTo(3)
     }
 
     companion object {

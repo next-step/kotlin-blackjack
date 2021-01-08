@@ -3,7 +3,7 @@ package blackjack.domain
 data class Deck(private var deck: Set<Card>) {
 
     constructor() : this(
-        deck = createAllCard()
+        deck = createDeck()
     )
 
     fun size(): Int {
@@ -24,7 +24,7 @@ data class Deck(private var deck: Set<Card>) {
 
     companion object {
 
-        private fun createAllCard(): Set<Card> {
+        private fun createDeck(): Set<Card> {
 
             return Suit.values().flatMap { suit -> testDenomination(suit) }.toSet()
         }

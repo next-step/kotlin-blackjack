@@ -10,10 +10,6 @@ data class Players(private val players: MutableList<Player> = mutableListOf<Play
         return players.size
     }
 
-    fun totalAmountOfCards(): Int {
-        return players.map { it.amountOfCards() }.sum()
-    }
-
     fun stateOfPlayerCard(): String {
         return players.joinToString("\n") { player -> "${player}카드: ${player.stateCards()}" }
     }

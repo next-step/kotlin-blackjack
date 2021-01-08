@@ -9,7 +9,7 @@ data class Player(private val name: String) {
         return cards.getTotalScore()
     }
 
-    fun draw(card: Card): Player {
+    fun hit(card: Card): Player {
         cards.addCard(card)
         return this
     }
@@ -22,9 +22,9 @@ data class Player(private val name: String) {
         return cards.amountOfCards()
     }
 
-    fun chooseDraw(reply: String, card: Card): Player? {
+    fun chooseDraw(reply: String, card: Card): Player {
         if (!cards.isMoreThanMax() && reply == "y") {
-            draw(card) ?: return null
+            hit(card)
         }
         return this
     }

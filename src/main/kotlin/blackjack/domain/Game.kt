@@ -11,7 +11,7 @@ class Game(players: List<Player>?, private val deck: Deck) {
 
     init {
         for (i in 0 until DEFAULT_CARD_SIZE) {
-            players?.map { player: Player -> player.draw(deck.popDeck()!!) }
+            players?.map { player: Player -> player.hit(deck.popDeck()!!) }
         }
     }
 
@@ -29,18 +29,14 @@ class Game(players: List<Player>?, private val deck: Deck) {
         return cunPlayer
     }
 
-    fun amountOfCards(): Int {
-        return players.totalAmountOfCards()
-    }
-
     fun amountOfDeck(): Int? {
         return deck.size()
     }
-
+    /*
     fun numberOfPlayers(): Int {
         return players.totalNumberOfPlayers()
     }
-
+*/
     fun currentlyPlayer(): Player {
         return players.findPlayer(turn)
     }
@@ -49,10 +45,11 @@ class Game(players: List<Player>?, private val deck: Deck) {
         return turn == players.totalNumberOfPlayers()
     }
 
+    /*
     fun lastPlayer(): Player {
         return players.findPlayer(players.totalNumberOfPlayers() - 1)
     }
-
+*/
     fun result(): String {
         return (0 until players.totalNumberOfPlayers()).map { players.findPlayer(it) }
             .joinToString("\n") { "${it}카드: ${it.stateCards()} - 결과: ${it.playerScore()}" }

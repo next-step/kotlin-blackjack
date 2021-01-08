@@ -27,20 +27,9 @@ class GameTest {
     }
 
     @Test
-    fun `check Game class with card size`() {
-
-        assertThat(game.amountOfCards()).isEqualTo(4)
-    }
-
-    @Test
     fun `check reduce deck size if give card to player`() {
 
         assertThat(game.amountOfDeck()).isEqualTo(44)
-    }
-
-    @Test
-    fun `check member of game`() {
-        assertThat(game.numberOfPlayers()).isEqualTo(2)
     }
 
     @Test
@@ -62,18 +51,5 @@ class GameTest {
         assertThat(game.currentlyPlayer().amountOfCards()).isEqualTo(3)
         game.chanceDraw("n")
         assertThat(game.currentlyPlayer()).isEqualTo(Jacob)
-    }
-
-    @Test
-    fun `test game over`() {
-        for (i in 0 until game.numberOfPlayers()) {
-            game.chanceDraw("n")
-        }
-        assertThat(game.isOver()).isEqualTo(true)
-    }
-
-    @Test
-    fun `last player`() {
-        assertThat(game.lastPlayer()).isEqualTo(Jacob)
     }
 }
