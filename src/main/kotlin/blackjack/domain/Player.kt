@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Player(private val name: String) {
 

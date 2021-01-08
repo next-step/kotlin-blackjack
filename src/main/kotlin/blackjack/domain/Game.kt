@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Game(players: List<Player>?, private val deck: Deck) {
     private val players = Players(players as MutableList<Player>)

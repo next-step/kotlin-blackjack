@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Players(private val players: MutableList<Player> = mutableListOf<Player>()) {
 

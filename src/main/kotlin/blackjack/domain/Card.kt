@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Card(private val card: Pair<Denomination, Suit>) {
 

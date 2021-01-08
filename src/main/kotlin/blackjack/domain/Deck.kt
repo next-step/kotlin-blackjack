@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Deck(private var deck: Set<Card>) {
 
