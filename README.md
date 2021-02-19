@@ -4,9 +4,9 @@
 
 ## 2단계
 
-- [ ] 블랙잭을 위한 덱을 구성한다
-    - [ ] 플레잉카드를 만든다 [참고](https://ko.wikipedia.org/wiki/%ED%94%8C%EB%A0%88%EC%9E%89_%EC%B9%B4%EB%93%9C)
-        - [ ] 플레잉카드는 4가지 중 하나의 슈트(suit)와, 끗수(denomination)를 가지고 있다.
+- [X] 블랙잭을 위한 덱을 구성한다
+    - [X] 플레잉카드를 만든다 [참고](https://ko.wikipedia.org/wiki/%ED%94%8C%EB%A0%88%EC%9E%89_%EC%B9%B4%EB%93%9C)
+        - [X] 플레잉카드는 4가지 중 하나의 슈트(suit)와, 끗수(denomination)를 가지고 있다.
         
 - [ ] 게임을 진행한 Player를 생성한다
     - [ ] Player는 이름과, 자신이 받은 플레잉카드들을 가지고 있다.
