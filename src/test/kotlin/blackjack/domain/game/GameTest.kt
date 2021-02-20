@@ -94,4 +94,22 @@ class GameTest {
             game.changeNextPlayer()
         }
     }
+
+    @Test
+    fun `마지막 선수인지 확인한다`() {
+        val playersName: List<String> = listOf("van")
+        val game = Game(playersName)
+
+        assertThat(game.isLastPlayer()).isTrue()
+    }
+
+    @Test
+    fun `게임을 종료한다`() {
+        val playersName: List<String> = listOf("van")
+        val game = Game(playersName)
+
+        game.endGame()
+
+        assertThat(game.isEnd).isTrue()
+    }
 }

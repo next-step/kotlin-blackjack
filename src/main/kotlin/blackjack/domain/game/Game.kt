@@ -12,6 +12,9 @@ class Game(playersName: List<String>) {
         get() {
             return players[turn]
         }
+    private var end: Boolean = false
+    val isEnd: Boolean
+        get() = end
 
     fun start() {
         for (player in players) {
@@ -43,5 +46,13 @@ class Game(playersName: List<String>) {
 
     fun existNextPlayer(): Boolean {
         return turn < (players.size - 1)
+    }
+
+    fun isLastPlayer(): Boolean {
+        return turn == (players.size - 1)
+    }
+
+    fun endGame() {
+        end = true
     }
 }
