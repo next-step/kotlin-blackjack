@@ -15,12 +15,12 @@ fun main() {
         OutputView.showBlackJack(game.players)
     } else {
         playGame(game)
+        OutputView.showResult(game.players)
     }
-    OutputView.showResult(game.players)
 }
 
 fun playGame(game: Game) {
-    while (game.isEnableContinue() && !game.isEndPlayerTurn) {
+    while (game.isEnableContinue()) {
         playOneStep(game)
     }
 }

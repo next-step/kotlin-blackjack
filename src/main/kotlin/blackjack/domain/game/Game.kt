@@ -36,9 +36,9 @@ class Game(playersName: List<String>) {
 
     fun isEnableContinue(): Boolean {
         if (turnPlayer.isBurst()) {
-            return false
+            changeNextPlayer()
         }
-        return true
+        return !endPlayerTurn
     }
 
     fun draw() {
@@ -46,8 +46,11 @@ class Game(playersName: List<String>) {
     }
 
     fun changeNextPlayer() {
-        require(existNextPlayer()) { "다음 게임을 진행할 플레이어가 없습니다." }
-        turn += 1
+        if (!existNextPlayer()) {
+            endPlayerTurn()
+        } else {
+            turn += 1
+        }
     }
 
     fun existNextPlayer(): Boolean {

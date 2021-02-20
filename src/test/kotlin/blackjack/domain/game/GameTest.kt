@@ -86,13 +86,13 @@ class GameTest {
     }
 
     @Test
-    fun `다음 선수가없는데 플레이어 변경 시 에러`() {
+    fun `다음 선수가없는데 플레이어 변경 시 플레이어 턴 종료`() {
         val playersName: List<String> = listOf("van")
         val game = Game(playersName)
 
-        assertThrows<IllegalArgumentException> {
-            game.changeNextPlayer()
-        }
+        game.changeNextPlayer()
+
+        assertThat(game.isEndPlayerTurn).isTrue()
     }
 
     @Test
