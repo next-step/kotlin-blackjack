@@ -1,17 +1,21 @@
 package blackjack.domain.game
 
 import blackjack.domain.deck.Deck
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Player.Companion.MAX_SCORE
 
 class Game(playersName: List<String>) {
     val deck: Deck = Deck.createDeck()
     val players: List<Player> = playersName.map { Player(it) }
+    val dealer: Dealer = Dealer()
+
     private var turn: Int = 0
     val turnPlayer: Player
         get() {
             return players[turn]
         }
+
     private var end: Boolean = false
     val isEnd: Boolean
         get() = end
@@ -21,6 +25,8 @@ class Game(playersName: List<String>) {
             player.addCard(deck.draw())
             player.addCard(deck.draw())
         }
+        dealer.addCard(deck.draw())
+        dealer.addCard(deck.draw())
     }
 
     fun existBlackJack(): Boolean {
@@ -54,5 +60,11 @@ class Game(playersName: List<String>) {
 
     fun endGame() {
         end = true
+    }
+
+    fun playDealerTurn() {
+        if (dealer.additionalDraw()) {
+            dealer.addCard(deck.draw())
+        }
     }
 }

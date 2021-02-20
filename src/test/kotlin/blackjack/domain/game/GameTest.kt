@@ -112,4 +112,16 @@ class GameTest {
 
         assertThat(game.isEnd).isTrue()
     }
+
+    @Test
+    fun `dealer의 숫자가 17보다 작으면 패를 한장 추가한다`() {
+        val playersName: List<String> = listOf("van")
+        val game = Game(playersName)
+        game.dealer.addCard(Card(Denomination.TEN, Suit.CLOVER))
+        game.dealer.addCard(Card(Denomination.TWO, Suit.CLOVER))
+
+        game.playDealerTurn()
+
+        assertThat(game.dealer.score()).isGreaterThan(12)
+    }
 }
