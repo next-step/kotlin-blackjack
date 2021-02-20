@@ -18,6 +18,10 @@ class Dealer {
         return player.score()
     }
 
+    fun isBurst(): Boolean {
+        return player.isBurst()
+    }
+
     companion object {
         const val DEALER_NAME = "딜러"
         const val ADDITIONAL_DRAW_CUT = 17
