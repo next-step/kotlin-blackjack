@@ -6,7 +6,6 @@ import blackjack.domain.deck.Suit
 import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class GameTest {
 
@@ -16,7 +15,7 @@ class GameTest {
         val game = Game(playersName)
 
         assertThat(game.players.size).isEqualTo(2)
-        assertThat(game.players).contains(Player("van"))
+        assertThat(game.players).contains(Player("van", 10000))
     }
 
     @Test

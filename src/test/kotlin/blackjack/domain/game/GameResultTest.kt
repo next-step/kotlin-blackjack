@@ -12,7 +12,7 @@ class GameResultTest {
     @Test
     fun `플레이어가 버스트됐다면 플레이어 패배`() {
         val dealer = Dealer()
-        val player = Player("van")
+        val player = Player("van", 10000)
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TEN, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
@@ -26,7 +26,7 @@ class GameResultTest {
         dealer.addCard(Card(Denomination.TEN, Suit.HEART))
         dealer.addCard(Card(Denomination.TEN, Suit.CLOVER))
         dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
-        val player = Player("van")
+        val player = Player("van", 10000)
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
@@ -41,12 +41,12 @@ class GameResultTest {
         dealer.addCard(Card(Denomination.FOUR, Suit.CLOVER))
         dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player = Player("van") //17
+        val player = Player("van", 10000) //17
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player2 = Player("van2") //20
+        val player2 = Player("van2", 10000) //20
         player2.addCard(Card(Denomination.TEN, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.CLOVER))
@@ -62,12 +62,12 @@ class GameResultTest {
         dealer.addCard(Card(Denomination.FOUR, Suit.CLOVER))
         dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player = Player("van") //17
+        val player = Player("van", 10000) //17
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player2 = Player("van2") //20
+        val player2 = Player("van2", 10000) //20
         player2.addCard(Card(Denomination.TEN, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.CLOVER))
@@ -82,12 +82,12 @@ class GameResultTest {
         dealer.addCard(Card(Denomination.FOUR, Suit.CLOVER))
         dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player = Player("van") //17
+        val player = Player("van", 10000) //17
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        val player2 = Player("van2") //20
+        val player2 = Player("van2", 10000) //20
         player2.addCard(Card(Denomination.TEN, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.CLOVER))

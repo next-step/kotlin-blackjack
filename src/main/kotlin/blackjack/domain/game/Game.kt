@@ -7,7 +7,7 @@ import blackjack.domain.player.Player.Companion.MAX_SCORE
 
 class Game(playersName: List<String>) {
     val deck: Deck = Deck.createDeck()
-    val players: List<Player> = playersName.map { Player(it) }
+    val players: List<Player> = playersName.map { Player(it, 10000) }
     val dealer: Dealer = Dealer()
 
     private var turn: Int = 0

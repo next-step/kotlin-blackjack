@@ -4,7 +4,7 @@ import blackjack.domain.deck.Card
 
 
 class Dealer {
-    val player: Player = Player(DEALER_NAME)
+    val player: Player = Player(DEALER_NAME, DEALER_BETTING_MONEY)
 
     fun enableAdditionalDraw(): Boolean {
         return player.score() < ADDITIONAL_DRAW_CUT
@@ -25,5 +25,6 @@ class Dealer {
     companion object {
         const val DEALER_NAME = "딜러"
         const val ADDITIONAL_DRAW_CUT = 17
+        const val DEALER_BETTING_MONEY = 0
     }
 }

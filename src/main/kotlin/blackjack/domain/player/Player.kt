@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.deck.Card
 import blackjack.domain.deck.Card.Companion.ACE_MIN_MAX_POINT_GAP
 
-data class Player(val name: String) {
+data class Player(val name: String, val bettingMoney: Int) {
     private val _cards = mutableListOf<Card>()
     private var existAce: Boolean = false
 
