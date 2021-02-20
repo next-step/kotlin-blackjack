@@ -15,7 +15,7 @@ fun main() {
         OutputView.showBlackJack(game.players)
     } else {
         playGame(game)
-        OutputView.showResult(game.players)
+        OutputView.showResult(game.dealer, game.players)
     }
 }
 
@@ -23,6 +23,11 @@ fun playGame(game: Game) {
     while (game.isEnableContinue()) {
         playOneStep(game)
     }
+
+    if (game.dealer.enableAdditionalDraw()) {
+        OutputView.notifyDealerDraw()
+    }
+    game.playDealerTurn()
 }
 
 fun playOneStep(game: Game) {

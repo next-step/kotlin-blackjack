@@ -66,7 +66,7 @@ class Game(playersName: List<String>) {
     }
 
     fun playDealerTurn() {
-        if (dealer.additionalDraw()) {
+        if (dealer.enableAdditionalDraw()) {
             dealer.addCard(deck.draw())
         }
     }

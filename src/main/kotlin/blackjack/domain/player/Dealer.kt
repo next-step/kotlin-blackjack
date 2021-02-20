@@ -4,9 +4,9 @@ import blackjack.domain.deck.Card
 
 
 class Dealer {
-    private val player: Player = Player(DEALER_NAME)
+    val player: Player = Player(DEALER_NAME)
 
-    fun additionalDraw(): Boolean {
+    fun enableAdditionalDraw(): Boolean {
         return player.score() < ADDITIONAL_DRAW_CUT
     }
 

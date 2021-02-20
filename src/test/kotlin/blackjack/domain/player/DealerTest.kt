@@ -23,6 +23,6 @@ class DealerTest {
         dealer.addCard(Card(Denomination.TEN, Suit.CLOVER))
         dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
 
-        assertThat(dealer.additionalDraw()).isTrue()
+        assertThat(dealer.enableAdditionalDraw()).isTrue()
     }
 }
