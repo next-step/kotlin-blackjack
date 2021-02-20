@@ -1,18 +1,24 @@
 package blackjack
 
+import blackjack.domain.deck.Deck
 import blackjack.domain.game.Game
+import blackjack.domain.player.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val playersName = InputView.inputPlayer()
-    val game = Game(playersName)
+    val playersNames = InputView.inputPlayerNames()
+    val players = playersNames.map { name ->
+        Player(name, InputView.inputBettingFor(name))
+    }
+    val deck = Deck.createDeck()
+    val game = Game(players, deck)
 
     game.start()
     OutputView.showStartStatus(game)
 
     playGame(game)
-    OutputView.showResult(game.dealer, game.playersInGame)
+    OutputView.showResult(game)
 }
 
 fun playGame(game: Game) {

@@ -22,6 +22,10 @@ class Dealer {
         return player.isBust()
     }
 
+    fun isBlackJack(): Boolean {
+        return player.cards.size == 2 && player.score() == 21
+    }
+
     companion object {
         const val DEALER_NAME = "딜러"
         const val ADDITIONAL_DRAW_CUT = 17

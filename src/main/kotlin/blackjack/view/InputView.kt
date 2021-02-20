@@ -7,12 +7,20 @@ object InputView {
     private const val STOP = "n"
     private val ENABLE_ANSWER = listOf(CONTINUE, STOP)
 
-    fun inputPlayer(): List<String> {
+    fun inputPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val players = readLine()
         require(!players.isNullOrBlank()) { "문자열에 null이나 빈 값이 들어가서는 안됩니다." }
 
         return players.split(",")
+    }
+
+    fun inputBettingFor(playerName: String): Int {
+        println("${playerName}의 베팅 금액은?")
+        val bet = readLine()
+        require(!bet.isNullOrBlank()) { "문자열에 null이나 빈 값이 들어가서는 안됩니다." }
+
+        return bet.toInt()
     }
 
     fun additionalDraw(playerName: String): Boolean {

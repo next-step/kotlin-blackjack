@@ -44,10 +44,14 @@ data class Player(val name: String, val bettingMoney: Int) {
     private fun sumDefaultScore() = cards.map { it.denomination.point }.sum()
 
     fun getProfit(isWin: Boolean, rate: Double): Int {
-        if(isWin) {
+        if (isWin) {
             return (bettingMoney * rate).roundToInt()
         }
         return bettingMoney.unaryMinus()
+    }
+
+    fun isBlackJack(): Boolean {
+        return cards.size == 2 && score() == 21
     }
 
     companion object {

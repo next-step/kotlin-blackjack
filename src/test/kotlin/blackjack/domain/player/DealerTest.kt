@@ -25,4 +25,13 @@ class DealerTest {
 
         assertThat(dealer.enableAdditionalDraw()).isTrue()
     }
+
+    @Test
+    internal fun `블랙잭인지 여부를 확인할 수 있다`() {
+        val dealer = Dealer()
+        dealer.addCard(Card(Denomination.TEN, Suit.CLOVER))
+        dealer.addCard(Card(Denomination.ACE, Suit.CLOVER))
+
+        assertThat(dealer.isBlackJack()).isTrue()
+    }
 }

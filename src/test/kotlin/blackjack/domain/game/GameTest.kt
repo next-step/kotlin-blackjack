@@ -13,17 +13,31 @@ class GameTest {
 
     @Test
     fun `이름에 맞게 유저를 생성한다`() {
-        val playersName: List<String> = listOf("van", "van2")
-        val game = Game(playersName)
+        val game = createGameFixture()
 
         assertThat(game.playersInGame.size).isEqualTo(3)
         assertThat(game.playersInGame).contains(Player("van", 10000))
     }
 
+    private fun createGameFixture(): Game {
+        val cards = Stack<Card>()
+        cards.push(Card(Denomination.TWO, Suit.CLOVER))
+        cards.push(Card(Denomination.THREE, Suit.CLOVER))
+        cards.push(Card(Denomination.FOUR, Suit.CLOVER))
+        cards.push(Card(Denomination.FIVE, Suit.CLOVER))
+        cards.push(Card(Denomination.SIX, Suit.CLOVER))
+        cards.push(Card(Denomination.SEVEN, Suit.CLOVER))
+        cards.push(Card(Denomination.EIGHT, Suit.CLOVER))
+        cards.push(Card(Denomination.NINE, Suit.CLOVER))
+        cards.push(Card(Denomination.TEN, Suit.CLOVER))
+        cards.push(Card(Denomination.ACE, Suit.CLOVER))
+        return Game(listOf(Player("van", 10000), Player("van2", 10000), Player("van3", 10000)), Deck(cards))
+    }
+
+
     @Test
     fun `게임을 시작하면 각 플레이어에게 두장씩 카드를 준다`() {
-        val playersName: List<String> = listOf("van", "van2")
-        val game = Game(playersName)
+        val game = createGameFixture()
 
         game.start()
         for (player in game.playersInGame) {
@@ -32,22 +46,9 @@ class GameTest {
     }
 
     @Test
-    fun `블랙잭이 있는지 확인한다`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-        val player = game.players[0]
-        player.addCard(Card(Denomination.TEN, Suit.CLOVER))
-        player.addCard(Card(Denomination.TEN, Suit.HEART))
-        player.addCard(Card(Denomination.ACE, Suit.CLOVER))
-
-        assertThat(game.existBlackJack()).isTrue()
-    }
-
-    @Test
     fun `버스트됐으면 게임 불가`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-        val player = game.players[0]
+        val game = Game(listOf(Player("van", 10000)), Deck.createDeck())
+        val player = game.playersInGame[0]
         player.addCard(Card(Denomination.TEN, Suit.CLOVER))
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
@@ -83,11 +84,12 @@ class GameTest {
     }
 
     @Test
-    internal fun `draw를 원하지 않는다면 다음 플레이어`() {
+    internal fun `draw가 끝나면 게임중인 인원에서 제외된다`() {
         val game = createGameFixture()
+        val player = Player("van", 10000)
         game.playOneStep(additionalDraw = { false }, forEachStep = { {} })
 
-        assertThat(game.turnPlayer.name).isEqualTo("van2")
+        assertThat(game.playersInGame).doesNotContain(player)
     }
 
 //    playersInPlay/playersOutOfGame
@@ -113,4 +115,14 @@ class GameTest {
         assertThat(game.playersInGame).doesNotContain(player)
     }
 
+    @Test
+    fun `플레이어턴이 끝날때 마지막 플레이어도 인게임 플레이어에서 제외된다`() {
+        val game = createGameFixture()
+
+        game.playOneStep(additionalDraw = { false }, forEachStep = { {} })
+        game.playOneStep(additionalDraw = { false }, forEachStep = { {} })
+        game.playOneStep(additionalDraw = { false }, forEachStep = { {} })
+
+        assertThat(game.playersInGame.size).isEqualTo(0)
+    }
 }

@@ -14,10 +14,9 @@ class Game(players: List<Player>, val deck: Deck) {
         get() = _playersOutOfGame.toList()
     val dealer: Dealer = Dealer()
 
-    private var turn: Int = 0
-    val turnPlayer: Player
+    private val turnPlayer: Player?
         get() {
-            return playersInGame[turn]
+            return _playersInGame.firstOrNull()
         }
 
     private var endPlayerTurn: Boolean = false
@@ -32,32 +31,27 @@ class Game(players: List<Player>, val deck: Deck) {
 
         val blackJackPlayers = _playersInGame.filter { it.score() == MAX_SCORE }
         _playersOutOfGame.addAll(blackJackPlayers)
-        _playersInGame = playersInGame.filterNot { it.score() == MAX_SCORE }.toMutableList()
+        _playersInGame = _playersInGame.filterNot { it.score() == MAX_SCORE }.toMutableList()
     }
 
     fun isEnableContinue(): Boolean {
-        if (turnPlayer.isBust()) {
+        if (turnPlayer?.isBust() == true) {
             changeNextPlayer()
         }
         return !endPlayerTurn
     }
 
     private fun draw() {
-        turnPlayer.addCard(deck.draw())
+        turnPlayer?.addCard(deck.draw())
     }
 
     private fun changeNextPlayer() {
-        if (!existNextPlayer()) {
-            endPlayerTurn()
-        } else {
-            turn += 1
-        }
+        assert(turnPlayer != null) { "Player of current turn must not be null" }
+        _playersOutOfGame.add(turnPlayer!!)
+        _playersInGame = _playersInGame.filterNot { it === turnPlayer }.toMutableList()
     }
 
-    private fun existNextPlayer(): Boolean {
-        return turn < (playersInGame.size - 1)
-    }
-
+    //TODO 이름 변경
     private fun endPlayerTurn() {
         endPlayerTurn = true
     }
@@ -69,11 +63,21 @@ class Game(players: List<Player>, val deck: Deck) {
     }
 
     fun playOneStep(additionalDraw: (String) -> Boolean, forEachStep: (Player) -> Unit) {
-        if (additionalDraw(turnPlayer.name)) {
+        assert(turnPlayer != null) { "Player of current turn must not be null" }
+        if (additionalDraw(turnPlayer!!.name)) {
             draw()
-            forEachStep(turnPlayer)
+            forEachStep(turnPlayer!!)
         } else {
-            changeNextPlayer()
+            finishTurn()
         }
     }
+
+    private fun finishTurn() {
+        if (isCurrentPlayerLastInGame()) {
+            endPlayerTurn()
+        }
+        changeNextPlayer()
+    }
+
+    private fun isCurrentPlayerLastInGame() = _playersInGame.size == 1
 }

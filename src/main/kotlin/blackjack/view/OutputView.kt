@@ -8,7 +8,7 @@ import blackjack.domain.player.Player
 
 object OutputView {
     fun showStartStatus(game: Game) {
-        println("딜러, ${showPlayers(game.playersInGame)}에게 2장씩 나누었습니다.")
+        println("딜러, ${showPlayers(game.playersInGame + game.playersOutOfGame)}에게 2장씩 나누었습니다.")
         showPlayer(game.dealer.player)
         for (player in game.playersInGame) {
             showPlayer(player)
@@ -23,33 +23,19 @@ object OutputView {
         return players.joinToString(", ") { it.name }
     }
 
-    fun showBlackJack(players: List<Player>) {
-        println("블랙잭 발생!\n")
-
-        for (player in players) {
+    fun showResult(game: Game) {
+        showPlayerResult(game.dealer.player)
+        for (player in game.playersOutOfGame) {
             showPlayerResult(player)
         }
-    }
-
-    fun showResult(dealer: Dealer, players: List<Player>) {
-        showPlayerResult(dealer.player)
-        for (player in players) {
-            showPlayerResult(player)
-        }
+        val gameResult = GameResult(game)
 
         println()
         println("## 최종 승패")
-        println("딜러: ${GameResult.getDealerWinCounts(dealer, players)}승 ${GameResult.getDealerLoseCounts(dealer, players)}패")
-        for (player in players) {
-            println("${player.name}: ${getPlayerWin(dealer, player)}")
+        println("딜러: ${gameResult.getDealerProfit(game.playersOutOfGame)}")
+        for (player in game.playersOutOfGame) {
+            println("${player.name}: ${gameResult.calculatePlayerProfitFor(player)}")
         }
-    }
-
-    private fun getPlayerWin(dealer: Dealer, player: Player): String {
-        if( GameResult.getPlayerResult(dealer, player)) {
-            return "승"
-        }
-        return "패"
     }
 
     private fun showPlayerResult(player: Player) {

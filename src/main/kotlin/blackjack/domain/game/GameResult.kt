@@ -3,30 +3,36 @@ package blackjack.domain.game
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
-object GameResult {
-    fun getPlayerResult(dealer: Dealer, player: Player): Boolean {
+class GameResult(private val game: Game) {
+    fun getDealerProfit(players: List<Player>): Double {
+        return players.map { calculatePlayerProfitFor(it) }.sum() * -1
+    }
+
+    fun calculatePlayerProfitFor(player: Player): Double {
+        val rate = calculatePlayerProfitRate(game.dealer, player)
+        return player.bettingMoney * rate
+    }
+
+    private fun calculatePlayerProfitRate(dealer: Dealer, player: Player): Double {
+        if (player.isBlackJack() && !dealer.isBlackJack()) {
+            return BLACK_JACK_RATE
+        }
         if (player.isBust()) {
-            return false
+            return PLAYER_BUST_RATE
         }
         if (dealer.isBust()) {
-            return true
+            return NORMAL_RATE
         }
-        return player.score() > dealer.score()
+        if (game.dealer.score() > player.score()) {
+            return PLAYER_LOST_RATE
+        }
+        return NORMAL_RATE
     }
 
-    fun getPlayerProfit(dealer: Dealer, player: Player, rate: Double): Int {
-        return player.getProfit(getPlayerResult(dealer, player), rate)
-    }
-
-    fun getDealerWinCounts(dealer: Dealer, players: List<Player>): Int {
-        return players.filter { !getPlayerResult(dealer, it) }.count()
-    }
-
-    fun getDealerLoseCounts(dealer: Dealer, players: List<Player>): Int {
-        return players.filter { getPlayerResult(dealer, it) }.count()
-    }
-
-    fun getDealerProfit(dealer: Dealer, players: List<Player>): Int {
-        return players.map { getPlayerProfit(dealer, it, 1.0) }.sum()
+    companion object {
+        private const val BLACK_JACK_RATE = 1.5
+        private const val NORMAL_RATE = 1.0
+        private const val PLAYER_BUST_RATE = -1.0
+        private const val PLAYER_LOST_RATE = -1.0
     }
 }
