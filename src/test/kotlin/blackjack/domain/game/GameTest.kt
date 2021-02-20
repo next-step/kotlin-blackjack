@@ -108,9 +108,9 @@ class GameTest {
         val playersName: List<String> = listOf("van")
         val game = Game(playersName)
 
-        game.endGame()
+        game.endPlayerTurn()
 
-        assertThat(game.isEnd).isTrue()
+        assertThat(game.isEndPlayerTurn).isTrue()
     }
 
     @Test

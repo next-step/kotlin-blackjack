@@ -20,7 +20,7 @@ fun main() {
 }
 
 fun playGame(game: Game) {
-    while (game.isEnableContinue() && !game.isEnd) {
+    while (game.isEnableContinue() && !game.isEndPlayerTurn) {
         playOneStep(game)
     }
 }
@@ -38,6 +38,6 @@ fun changePlayer(game: Game) {
     if (game.existNextPlayer()) {
         game.changeNextPlayer()
     } else {
-        game.endGame()
+        game.endPlayerTurn()
     }
 }

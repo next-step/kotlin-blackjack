@@ -16,9 +16,9 @@ class Game(playersName: List<String>) {
             return players[turn]
         }
 
-    private var end: Boolean = false
-    val isEnd: Boolean
-        get() = end
+    private var endPlayerTurn: Boolean = false
+    val isEndPlayerTurn: Boolean
+        get() = endPlayerTurn
 
     fun start() {
         for (player in players) {
@@ -58,8 +58,8 @@ class Game(playersName: List<String>) {
         return turn == (players.size - 1)
     }
 
-    fun endGame() {
-        end = true
+    fun endPlayerTurn() {
+        endPlayerTurn = true
     }
 
     fun playDealerTurn() {
