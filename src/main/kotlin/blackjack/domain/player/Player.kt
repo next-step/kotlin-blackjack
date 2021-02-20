@@ -28,17 +28,17 @@ data class Player(val name: String) {
 
     private fun sumScoreWithAce(): Int {
         val defaultScore = sumDefaultScore()
-        if (!isBurst(defaultScore)) {
+        if (!isBust(defaultScore)) {
             return defaultScore
         }
         return defaultScore - ACE_MIN_MAX_POINT_GAP
     }
 
-    fun isBurst(): Boolean {
-        return isBurst(score())
+    fun isBust(): Boolean {
+        return isBust(score())
     }
 
-    private fun isBurst(score: Int) = score > MAX_SCORE
+    private fun isBust(score: Int) = score > MAX_SCORE
 
     private fun sumDefaultScore() = cards.map { it.denomination.point }.sum()
 

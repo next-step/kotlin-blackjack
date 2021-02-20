@@ -35,7 +35,7 @@ class Game(playersName: List<String>) {
     }
 
     fun isEnableContinue(): Boolean {
-        if (turnPlayer.isBurst()) {
+        if (turnPlayer.isBust()) {
             changeNextPlayer()
         }
         return !endPlayerTurn

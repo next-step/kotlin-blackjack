@@ -18,8 +18,8 @@ class Dealer {
         return player.score()
     }
 
-    fun isBurst(): Boolean {
-        return player.isBurst()
+    fun isBust(): Boolean {
+        return player.isBust()
     }
 
     companion object {

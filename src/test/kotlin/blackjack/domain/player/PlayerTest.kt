@@ -57,6 +57,6 @@ class PlayerTest {
         player.addCard(Card(Denomination.TEN,Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE,Suit.CLOVER))
 
-        assertThat(player.isBurst()).isTrue()
+        assertThat(player.isBust()).isTrue()
     }
 }

@@ -5,10 +5,10 @@ import blackjack.domain.player.Player
 
 object GameResult {
     fun getPlayerResult(dealer: Dealer, player: Player): Boolean {
-        if (player.isBurst()) {
+        if (player.isBust()) {
             return false
         }
-        if (dealer.isBurst()) {
+        if (dealer.isBust()) {
             return true
         }
         return player.score() > dealer.score()
