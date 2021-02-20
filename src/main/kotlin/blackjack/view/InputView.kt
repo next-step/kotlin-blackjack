@@ -15,8 +15,8 @@ object InputView {
         return players.split(",")
     }
 
-    fun additionalDraw(player: Player): Boolean {
-        println("${player.name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun additionalDraw(playerName: String): Boolean {
+        println("${playerName}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readLine()
         require(!answer.isNullOrBlank()) { "문자열에 null이나 빈 값이 들어가서는 안됩니다." }
         require(ENABLE_ANSWER.contains(answer.trim())) { "y,n 중의 하나를 입력해 주세요." }

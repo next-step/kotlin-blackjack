@@ -59,4 +59,12 @@ class PlayerTest {
 
         assertThat(player.isBust()).isTrue()
     }
+
+    @Test
+    fun `자신의 수익금을 알 수 있다`() {
+        val player = Player("van", 10000)
+
+        assertThat(player.getProfit(true, 1.0)).isEqualTo(10000)
+        assertThat(player.getProfit(false, 1.0)).isEqualTo(-10000)
+    }
 }

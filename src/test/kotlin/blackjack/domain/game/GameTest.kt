@@ -1,11 +1,13 @@
 package blackjack.domain.game
 
 import blackjack.domain.deck.Card
+import blackjack.domain.deck.Deck
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
 import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.util.*
 
 class GameTest {
 
@@ -14,8 +16,8 @@ class GameTest {
         val playersName: List<String> = listOf("van", "van2")
         val game = Game(playersName)
 
-        assertThat(game.players.size).isEqualTo(2)
-        assertThat(game.players).contains(Player("van", 10000))
+        assertThat(game.playersInGame.size).isEqualTo(3)
+        assertThat(game.playersInGame).contains(Player("van", 10000))
     }
 
     @Test
@@ -24,7 +26,7 @@ class GameTest {
         val game = Game(playersName)
 
         game.start()
-        for (player in game.players) {
+        for (player in game.playersInGame) {
             assertThat(player.cards.size).isEqualTo(2)
         }
     }
@@ -54,68 +56,8 @@ class GameTest {
     }
 
     @Test
-    fun `현재 플레이어에게 카드를 한장 추가`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-        val player = game.players[0]
-        player.addCard(Card(Denomination.TWO, Suit.CLOVER))
-
-        game.draw()
-
-        assertThat(player.cards.size).isEqualTo(2)
-    }
-
-    @Test
-    fun `카드를 뽑을 추가 플레이어가 존재하는지 확인`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-
-
-        assertThat(game.existNextPlayer()).isFalse()
-    }
-
-    @Test
-    fun `플레이어를 변경`() {
-        val playersName: List<String> = listOf("van", "van2")
-        val game = Game(playersName)
-
-        game.changeNextPlayer()
-
-        assertThat(game.turnPlayer.name).isEqualTo("van2")
-    }
-
-    @Test
-    fun `다음 선수가없는데 플레이어 변경 시 플레이어 턴 종료`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-
-        game.changeNextPlayer()
-
-        assertThat(game.isEndPlayerTurn).isTrue()
-    }
-
-    @Test
-    fun `마지막 선수인지 확인한다`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-
-        assertThat(game.isLastPlayer()).isTrue()
-    }
-
-    @Test
-    fun `게임을 종료한다`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
-
-        game.endPlayerTurn()
-
-        assertThat(game.isEndPlayerTurn).isTrue()
-    }
-
-    @Test
     fun `dealer의 숫자가 17보다 작으면 패를 한장 추가한다`() {
-        val playersName: List<String> = listOf("van")
-        val game = Game(playersName)
+        val game = createGameFixture()
         game.dealer.addCard(Card(Denomination.TEN, Suit.CLOVER))
         game.dealer.addCard(Card(Denomination.TWO, Suit.CLOVER))
 
@@ -123,4 +65,52 @@ class GameTest {
 
         assertThat(game.dealer.score()).isGreaterThan(12)
     }
+
+    @Test
+    internal fun `플레이어 목록으로 게임을 생성할 수 있다`() {
+        val players = listOf(Player("john", 10000), Player("jane", 20000))
+        val game = Game(players, Deck.createDeck())
+
+        assertThat(game.playersInGame).isEqualTo(players)
+    }
+
+    @Test
+    internal fun `draw를 원한다면 진행`() {
+        val game = createGameFixture()
+        game.playOneStep(additionalDraw = { true }, forEachStep = { {} })
+
+        assertThat(game.playersInGame[0].cards.size).isEqualTo(1)
+    }
+
+    @Test
+    internal fun `draw를 원하지 않는다면 다음 플레이어`() {
+        val game = createGameFixture()
+        game.playOneStep(additionalDraw = { false }, forEachStep = { {} })
+
+        assertThat(game.turnPlayer.name).isEqualTo("van2")
+    }
+
+//    playersInPlay/playersOutOfGame
+
+    @Test
+    internal fun `블랙잭인 플레이어는 게임중인 인원에 포함되지 않는다`() {
+        val game = createGameFixture()
+        val player = Player("van", 10000)
+
+        game.start()
+
+        assertThat(game.playersOutOfGame).contains(player)
+    }
+
+
+    @Test
+    internal fun `블랙잭인 플레이어는 인게임인 플레이어에서 제외되어야 한다`() {
+        val game = createGameFixture()
+        val player = Player("van", 10000)
+
+        game.start()
+
+        assertThat(game.playersInGame).doesNotContain(player)
+    }
+
 }

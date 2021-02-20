@@ -8,9 +8,9 @@ import blackjack.domain.player.Player
 
 object OutputView {
     fun showStartStatus(game: Game) {
-        println("딜러, ${showPlayers(game.players)}에게 2장씩 나누었습니다.")
+        println("딜러, ${showPlayers(game.playersInGame)}에게 2장씩 나누었습니다.")
         showPlayer(game.dealer.player)
-        for (player in game.players) {
+        for (player in game.playersInGame) {
             showPlayer(player)
         }
     }

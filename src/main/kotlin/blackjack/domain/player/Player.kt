@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.deck.Card
 import blackjack.domain.deck.Card.Companion.ACE_MIN_MAX_POINT_GAP
+import kotlin.math.roundToInt
 
 data class Player(val name: String, val bettingMoney: Int) {
     private val _cards = mutableListOf<Card>()
@@ -42,7 +43,15 @@ data class Player(val name: String, val bettingMoney: Int) {
 
     private fun sumDefaultScore() = cards.map { it.denomination.point }.sum()
 
+    fun getProfit(isWin: Boolean, rate: Double): Int {
+        if(isWin) {
+            return (bettingMoney * rate).roundToInt()
+        }
+        return bettingMoney.unaryMinus()
+    }
+
     companion object {
+        //TODO 위치 변경 필요
         const val MAX_SCORE = 21
     }
 }

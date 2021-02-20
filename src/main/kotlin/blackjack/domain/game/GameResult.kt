@@ -14,11 +14,19 @@ object GameResult {
         return player.score() > dealer.score()
     }
 
+    fun getPlayerProfit(dealer: Dealer, player: Player, rate: Double): Int {
+        return player.getProfit(getPlayerResult(dealer, player), rate)
+    }
+
     fun getDealerWinCounts(dealer: Dealer, players: List<Player>): Int {
         return players.filter { !getPlayerResult(dealer, it) }.count()
     }
 
     fun getDealerLoseCounts(dealer: Dealer, players: List<Player>): Int {
         return players.filter { getPlayerResult(dealer, it) }.count()
+    }
+
+    fun getDealerProfit(dealer: Dealer, players: List<Player>): Int {
+        return players.map { getPlayerProfit(dealer, it, 1.0) }.sum()
     }
 }
