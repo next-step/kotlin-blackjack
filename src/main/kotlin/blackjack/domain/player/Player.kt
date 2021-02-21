@@ -51,11 +51,10 @@ data class Player(val name: String, val bettingMoney: Int) {
     }
 
     fun isBlackJack(): Boolean {
-        return cards.size == 2 && score() == 21
+        return cards.size == 2 && score() == MAX_SCORE
     }
 
     companion object {
-        //TODO 위치 변경 필요
         const val MAX_SCORE = 21
     }
 }
