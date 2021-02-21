@@ -32,7 +32,7 @@ object OutputView {
 
         println()
         println("## 최종 승패")
-        println("딜러: ${gameResult.getDealerProfit(game.playersOutOfGame)}")
+        println("딜러: ${gameResult.getDealerProfit()}")
         for (player in game.playersOutOfGame) {
             println("${player.name}: ${gameResult.calculatePlayerProfitFor(player)}")
         }

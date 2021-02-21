@@ -51,11 +51,6 @@ class Game(players: List<Player>, val deck: Deck) {
         _playersInGame = _playersInGame.filterNot { it === turnPlayer }.toMutableList()
     }
 
-    //TODO 이름 변경
-    private fun endPlayerTurn() {
-        endPlayerTurn = true
-    }
-
     fun playDealerTurn() {
         if (dealer.enableAdditionalDraw()) {
             dealer.addCard(deck.draw())
@@ -74,7 +69,7 @@ class Game(players: List<Player>, val deck: Deck) {
 
     private fun finishTurn() {
         if (isCurrentPlayerLastInGame()) {
-            endPlayerTurn()
+            endPlayerTurn = true
         }
         changeNextPlayer()
     }

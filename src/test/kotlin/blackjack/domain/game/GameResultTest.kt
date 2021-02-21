@@ -4,34 +4,31 @@ import blackjack.domain.deck.Card
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
-import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class GameResultTest {
-    private fun createGameFixture(): Game =
-        Game(listOf(Player("van", 10000), Player("van2", 10000), Player("van3", 10000)), Deck.createDeck())
-
     @Test
     fun `딜러의 수익금은 모든 플레이어 수익금 -하면 됨`() {
-        val dealer = Dealer() //19
-        dealer.addCard(Card(Denomination.TEN, Suit.HEART))
-        dealer.addCard(Card(Denomination.FOUR, Suit.CLOVER))
-        dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
-
-        val player = Player("van", 10000) //17
+        val player = Player("van", 20000)
         player.addCard(Card(Denomination.TEN, Suit.HEART))
         player.addCard(Card(Denomination.TWO, Suit.CLOVER))
         player.addCard(Card(Denomination.FIVE, Suit.CLOVER))
-
-        val player2 = Player("van2", 10000) //20
+        val player2 = Player("van2", 10000)
         player2.addCard(Card(Denomination.TEN, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.HEART))
         player2.addCard(Card(Denomination.FIVE, Suit.CLOVER))
+        val game = Game(listOf(player, player2), Deck.createDeck())
+        game.dealer.addCard(Card(Denomination.TEN, Suit.HEART))
+        game.dealer.addCard(Card(Denomination.FOUR, Suit.CLOVER))
+        game.dealer.addCard(Card(Denomination.FIVE, Suit.CLOVER))
+        game.playOneStep({ false }, {})
+        game.playOneStep({ false }, {})
 
-        assertThat(GameResult(createGameFixture()).getDealerProfit(listOf(player, player2))).isEqualTo(-20000.0, Offset.offset(0.01))
+        assertThat(GameResult(game).getDealerProfit()).isEqualTo(10000.0, Offset.offset(0.01))
     }
 
     @Test
@@ -106,5 +103,20 @@ class GameResultTest {
         assertThat(GameResult(game).calculatePlayerProfitFor(player)).isEqualTo(-10000.0, Offset.offset(0.01))
     }
 
+    @Test
+    internal fun `참가자가 아닌 사람이 수익금확인시 에러`() {
+        val player = Player("van", 10000)
+        player.addCard(Card(Denomination.TEN, Suit.HEART))
+        player.addCard(Card(Denomination.TWO, Suit.CLOVER))
+        val game = Game(listOf(player), Deck.createDeck())
+        game.dealer.addCard(Card(Denomination.TEN, Suit.HEART))
+        game.dealer.addCard(Card(Denomination.SEVEN, Suit.CLOVER))
+        val playerNotInGame = Player("jinwoo", 5000)
+        game.playOneStep({ false }, {})
+
+        assertThrows<IllegalArgumentException> {
+            GameResult(game).calculatePlayerProfitFor(playerNotInGame)
+        }
+    }
 
 }
