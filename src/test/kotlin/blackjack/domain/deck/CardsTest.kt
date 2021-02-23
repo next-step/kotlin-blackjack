@@ -34,4 +34,11 @@ internal class CardsTest {
 
         assertThat(cards.calculateScore(NormalCalculator)).isEqualTo(19)
     }
+
+    @Test
+    fun `카드를 추가한다`() {
+        val cards = Cards(listOf(Card(Denomination.TEN, Suit.CLOVER), Card(Denomination.NINE, Suit.SPADE)))
+        cards.add(Card(Denomination.FIVE, Suit.CLOVER))
+        assertThat(cards.cards.size).isEqualTo(3)
+    }
 }
