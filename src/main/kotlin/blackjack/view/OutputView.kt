@@ -1,10 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.deck.Card
-import blackjack.domain.player.Player
-
 object OutputView {
-    fun showStartStatus(players: List<Player>) {
+    fun showStartStatus(players: List<PlayerResponseDto>) {
         println("${players.joinToString(", ") { it.name }}에게 2장씩 나누었습니다.")
         for (player in players) {
             showPlayerStatus(player)
@@ -12,21 +9,21 @@ object OutputView {
         println()
     }
 
-    fun showPlayerStatus(player: Player) {
-        println("${player.name}카드: ${showCards(player.status.cards.cards)}")
+    fun showPlayerStatus(player: PlayerResponseDto) {
+        println("${player.name}카드: ${showCards(player.cards)}")
     }
 
-    private fun showCards(cards: List<Card>): String {
-        return cards.joinToString(", ") { "${it.denomination.denomination}${it.suit.koreanName}" }
+    private fun showCards(cards: List<PlayerResponseDto.CardResponseDto>): String {
+        return cards.joinToString(", ") { "${it.denomination}${it.suitName}" }
     }
 
-    fun showResult(players: List<Player>) {
+    fun showResult(players: List<PlayerResponseDto>) {
         for (player in players) {
             showPlayerResult(player)
         }
     }
 
-    private fun showPlayerResult(player: Player) {
-        println("${player.name}카드: ${showCards(player.status.cards.cards)} - 결과: ${player.score()}")
+    private fun showPlayerResult(player: PlayerResponseDto) {
+        println("${player.name}카드: ${showCards(player.cards)} - 결과: ${player.score}")
     }
 }
