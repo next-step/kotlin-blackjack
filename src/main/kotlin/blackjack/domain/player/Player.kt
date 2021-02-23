@@ -21,4 +21,12 @@ class Player(val name: String, deck: Deck) {
     private fun updateCards(action: () -> Status) {
         _status = action()
     }
+
+    fun isFinished(): Boolean {
+        return _status.isFinished()
+    }
+
+    fun score(): Int {
+        return _status.calculate()
+    }
 }
