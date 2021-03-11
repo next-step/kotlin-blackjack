@@ -29,6 +29,7 @@ class ResumeTest {
     @Test
     internal fun company() {
         val person: Person = introduce {
+            name("김광수")
             company("마진좋아")
         }
         assertThat(person.company).isEqualTo("마진좋아")
@@ -37,6 +38,7 @@ class ResumeTest {
     @Test
     internal fun skills() {
         val person: Person = introduce {
+            name("김광수")
             skills {
                 hard("kotlin")
                 soft("Good communication skills")
@@ -51,6 +53,7 @@ class ResumeTest {
     @Test
     internal fun languages() {
         val person: Person = introduce {
+            name("김광수")
             languages {
                 "Korean" level 5
             }
@@ -60,20 +63,21 @@ class ResumeTest {
         )
     }
 
-    private fun introduce(initializer: Person.() -> Unit): Person {
-        return Person().apply(initializer)
+    private fun introduce(initializer: PersonBuilder.() -> Unit): Person {
+        return PersonBuilder().apply(initializer).build()
     }
 
-    class Person {
-        lateinit var name: String
-            private set
+    data class Person(val name: String, val company: String?, val skills: Skills, val languages: Languages)
+
+    class PersonBuilder {
+        private lateinit var name: String
 
         var company: String? = null
             private set
 
-        lateinit var skills: Skills
+        private var skills: Skills = Skills()
 
-        lateinit var languages: Languages
+        private var languages: Languages = Languages()
 
         fun name(name: String) {
             this.name = name
@@ -90,9 +94,11 @@ class ResumeTest {
         fun languages(initializer: Languages.() -> Unit) {
             languages = Languages().apply(initializer)
         }
+
+        fun build(): Person = Person(name, company, skills, languages)
     }
 
-    class Languages(private val levels: MutableList<Level> = mutableListOf()) : List<Level> by levels {
+    data class Languages(private val levels: MutableList<Level> = mutableListOf()) : List<Level> by levels {
         infix fun String.level(level: Int) {
             levels.add(Level(this to level))
         }
@@ -100,7 +106,7 @@ class ResumeTest {
 
     data class Level(val level: Pair<String, Int>)
 
-    class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
+    data class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
         fun hard(name: String) {
             skills.add(Hard(name))
         }
