@@ -48,6 +48,18 @@ class ResumeTest {
         )
     }
 
+    @Test
+    internal fun languages() {
+        val person: Person = introduce {
+            languages {
+                "Korean" level 5
+            }
+        }
+        assertThat(person.languages).containsExactly(
+            Level("Korean" to 5)
+        )
+    }
+
     private fun introduce(initializer: Person.() -> Unit): Person {
         return Person().apply(initializer)
     }
