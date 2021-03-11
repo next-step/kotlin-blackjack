@@ -18,11 +18,24 @@ import org.junit.jupiter.api.Test
 // }
 class ResumeTest {
     @Test
-    internal fun name() {
+    internal fun testName() {
         val person: Person = introduce {
             name("김광수")
         }
 
         assertThat(person.name).isEqualTo("김광수")
+    }
+
+    private fun introduce(initializer: Person.() -> Unit): Person {
+        return Person().apply(initializer)
+    }
+
+    class Person {
+        lateinit var name: String
+            private set
+
+        fun name(name: String) {
+            this.name = name
+        }
     }
 }
