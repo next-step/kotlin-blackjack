@@ -1,9 +1,6 @@
 package blackjack
 
-data class Player(private val name: String, private val cards: Cards) {
-    fun getName() = name
-    fun getCards() = cards
-
+class Player(name: String, cards: Cards) : Gamer(name, cards) {
     fun addMoreCards(selectValue: String, card: Card): Boolean {
         return when {
             selectValue == NO -> true
