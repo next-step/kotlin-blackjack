@@ -71,12 +71,8 @@ class ResumeTest {
 
     class PersonBuilder {
         private lateinit var name: String
-
-        var company: String? = null
-            private set
-
+        private var company: String? = null
         private var skills: Skills = Skills()
-
         private var languages: Languages = Languages()
 
         fun name(name: String) {
