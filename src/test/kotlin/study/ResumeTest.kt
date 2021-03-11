@@ -133,8 +133,8 @@ class Languages {
     fun toList(): List<Language> {
         return languages
     }
-    infix fun String.level(other: Int??): Language {
-        val language = Language(this, other!!)
+    infix fun String.level(other: Int): Language {
+        val language = Language(this, other)
         languages.add(language)
 
         return language
