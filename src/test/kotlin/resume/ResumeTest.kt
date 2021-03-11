@@ -42,7 +42,7 @@ class ResumeTest {
                 soft("Good communication skills")
             }
         }
-        assertThat(person.skills.toList()).containsExactlyInAnyOrder(
+        assertThat(person.skills).containsExactlyInAnyOrder(
             Hard("kotlin"),
             Soft("Good communication skills")
         )
@@ -100,19 +100,13 @@ class ResumeTest {
 
     data class Level(val level: Pair<String, Int>)
 
-    class Skills {
-        private val skills: MutableList<Skill> = mutableListOf()
-
+    class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
         fun hard(name: String) {
             skills.add(Hard(name))
         }
 
         fun soft(name: String) {
             skills.add(Soft(name))
-        }
-
-        fun toList(): List<Skill> {
-            return skills
         }
     }
 }
