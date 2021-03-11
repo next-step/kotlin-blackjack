@@ -73,6 +73,8 @@ class ResumeTest {
 
         lateinit var skills: Skills
 
+        lateinit var languages: Languages
+
         fun name(name: String) {
             this.name = name
         }
@@ -84,7 +86,19 @@ class ResumeTest {
         fun skills(initializer: Skills.() -> Unit) {
             skills = Skills().apply(initializer)
         }
+
+        fun languages(initializer: Languages.() -> Unit) {
+            languages = Languages().apply(initializer)
+        }
     }
+
+    class Languages(private val levels: MutableList<Level> = mutableListOf()) : List<Level> by levels {
+        infix fun String.level(level: Int) {
+            levels.add(Level(this to level))
+        }
+    }
+
+    data class Level(val level: Pair<String, Int>)
 
     class Skills {
         private val skills: MutableList<Skill> = mutableListOf()
