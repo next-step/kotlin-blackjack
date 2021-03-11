@@ -100,7 +100,7 @@ class ResumeTest {
         }
     }
 
-    data class Level(val level: Pair<String, Int>)
+    data class Level(private val level: Pair<String, Int>)
 
     data class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
         fun hard(name: String) {
@@ -115,6 +115,6 @@ class ResumeTest {
 
 sealed class Skill
 
-data class Hard(val name: String) : Skill()
+data class Hard(private val name: String) : Skill()
 
-data class Soft(val name: String) : Skill()
+data class Soft(private val name: String) : Skill()
