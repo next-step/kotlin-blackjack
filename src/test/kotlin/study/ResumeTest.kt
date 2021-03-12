@@ -23,6 +23,7 @@ class ResumeTest {
         assertThat(person.name).isEqualTo("오길환")
         assertThat(person.company).isEqualTo("구글")
     }
+
     @Test
     fun hard() {
         val person: Person = introduce {
@@ -37,6 +38,7 @@ class ResumeTest {
         assertThat(person.company).isEqualTo("구글")
         assertThat(person.skills.toList()).contains(Hard("Kotlin"))
     }
+
     @Test
     fun soft() {
         val person: Person = introduce {
@@ -86,9 +88,11 @@ class ResumeTest {
         )
     }
 }
+
 fun introduce(initializer: Person.() -> Unit): Person {
     return Person().apply(initializer)
 }
+
 class Person {
     lateinit var name: String
     lateinit var company: String
@@ -97,22 +101,27 @@ class Person {
     fun name(name: String) {
         this.name = name
     }
+
     fun company(company: String) {
         this.company = company
     }
+
     fun skills(initializer: Skills.() -> Unit) {
         skills = Skills().apply(initializer)
     }
+
     fun languages(initializer: Languages.() -> Unit) {
         this.languages = Languages().apply(initializer)
     }
 }
+
 class Skills {
     val skills: MutableList<Skill> = mutableListOf()
 
     fun hard(name: String) {
         skills.add(Hard(name))
     }
+
     fun soft(name: String) {
         skills.add(Soft(name))
     }
@@ -132,6 +141,7 @@ class Languages {
     fun toList(): List<Language> {
         return languages
     }
+
     infix fun String.level(other: Int): Language {
         val language = Language(this, other)
         languages.add(language)
@@ -139,4 +149,5 @@ class Languages {
         return language
     }
 }
+
 data class Language(val name: String, val Level: Int)
