@@ -68,19 +68,3 @@ class ResumeTest {
         )
     }
 }
-
-fun introduce(initialize: Person.() -> Unit): Person {
-    return Person().apply(initialize)
-}
-
-class Skills {
-    var values: MutableList<Skill> = mutableListOf()
-
-    fun hard(name: String) {
-        values.add(Hard(name))
-    }
-
-    fun soft(name: String) {
-        values.add(Soft(name))
-    }
-}
