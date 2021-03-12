@@ -84,7 +84,6 @@ class ResumeTest {
             Language("Korean", 5),
             Language("English", 3)
         )
-
     }
 }
 fun introduce(initializer: Person.() -> Unit): Person {
