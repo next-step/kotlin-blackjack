@@ -116,7 +116,7 @@ class Person {
 }
 
 class Skills {
-    val skills: MutableList<Skill> = mutableListOf()
+    private val skills: MutableList<Skill> = mutableListOf()
 
     fun hard(name: String) {
         skills.add(Hard(name))
