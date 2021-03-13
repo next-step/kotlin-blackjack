@@ -32,6 +32,16 @@ class BlackjackGameTest {
         }
     }
 
+    @Test
+    internal fun `결과를 알 수 있다`() {
+        val game = BlackJackGame(listOf(Player.Person("pobi")))
+        game.draw({ true })
+        for (player in game.players) {
+            assertThat(player.cards.size).isEqualTo(1)
+            assertThat(player.score()).isNotZero()
+        }
+    }
+
     class BlackJackGame(val players: List<Player>) {
         fun prepareDraw() {
             repeat(2) {
@@ -39,7 +49,7 @@ class BlackjackGameTest {
             }
         }
 
-        fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
+        fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit = { }) {
             players.forEach {
                 it.draw({ Card("A", Symbol.CLUBS) }, isDraw)
                 result(it)
