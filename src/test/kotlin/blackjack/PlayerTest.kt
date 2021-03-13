@@ -72,9 +72,7 @@ class PlayerTest {
         fun score(): Int {
             return cards.fold(listOf(0)) { acc, card ->
                 acc.flatMap { score -> card.number.map { it + score } }
-            }
-                .filter { it <= 21 }
-                .closeTo(21)
+            }.closeTo(21)
         }
 
         fun draw(card: Card) {
@@ -82,7 +80,11 @@ class PlayerTest {
         }
 
         private fun List<Int>.closeTo(number: Int): Int {
-            return map { it to abs(it - number) }.minBy { it.second }?.first ?: 0
+            val sorted = map { it to abs(it - number) }
+                .sortedBy { it.second }
+                .map { it.first }
+            val result = sorted.firstOrNull { it <= 21 }
+            return result ?: sorted.firstOrNull() ?: 0
         }
     }
 }
