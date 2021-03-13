@@ -10,12 +10,12 @@ class PlayerTest {
     internal fun `플레이어는 받은 카드 목록이 있다`() {
         val player = Player()
             .apply {
-                draw(Card("2", Symbol.HEARTS, 2))
-                draw(Card("8", Symbol.SPADES, 8))
+                draw(Card("2", Symbol.HEARTS))
+                draw(Card("8", Symbol.SPADES))
             }
         assertThat(player.cards).containsExactly(
-            Card("2", Symbol.HEARTS, 2),
-            Card("8", Symbol.SPADES, 8)
+            Card("2", Symbol.HEARTS),
+            Card("8", Symbol.SPADES)
         )
     }
 
