@@ -27,8 +27,8 @@ internal class ResumeTest {
             company("Google")
             skills {
                 soft("A passion for problem solving")
-                soft ("Good communication skills")
-                hard ("Kotlin")
+                soft("Good communication skills")
+                hard("Kotlin")
             }
             languages {
                 "Korean" level 5
