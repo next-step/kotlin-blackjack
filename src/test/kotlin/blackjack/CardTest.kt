@@ -50,6 +50,11 @@ class CardTest {
             deck = deck + Symbol.values().map { Card("A", it, scores) }
         }
 
+        fun normal(numbers: IntRange) {
+            deck = deck + Symbol.values().map { symbol -> numbers.map { Card(it.toString(), symbol, listOf(it)) } }
+                .flatten()
+        }
+
         fun build(): Blackjack = Blackjack(deck)
     }
 
