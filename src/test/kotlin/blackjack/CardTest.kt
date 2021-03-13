@@ -16,12 +16,12 @@ class CardTest {
     internal fun 에이스() {
         val blackjack = blackjack {
             ace(1, 10)
-        }
+        }.build()
         assertThat(blackjack.deck).contains(
-            Card("A", "하트", listOf(1, 10)),
-            Card("A", "클로버", listOf(1, 10)),
-            Card("A", "스페이드", listOf(1, 10)),
-            Card("A", "다이아몬드", listOf(1, 10))
+            Card("A", Shape.HEART, listOf(1, 10)),
+            Card("A", Shape.CLOVER, listOf(1, 10)),
+            Card("A", Shape.SPADE, listOf(1, 10)),
+            Card("A", Shape.DIAMOND, listOf(1, 10))
         )
     }
 
@@ -30,18 +30,21 @@ class CardTest {
     }
 
     class BlackjackBuilder {
-
         var deck: List<Card> = emptyList()
 
         fun ace(vararg numbers: Int) {
-            deck = deck + listOf(
-                Card("A", "하트", numbers.asList()),
-                Card("A", "클로버", numbers.asList()),
-                Card("A", "스페이드", numbers.asList()),
-                Card("A", "다이아몬드", numbers.asList())
-            )
+            val scores = numbers.asList()
+            deck = deck + Shape.values().map { Card("A", it, scores) }
         }
+
+        fun build(): Blackjack = Blackjack(deck)
     }
 
-    data class Card(private val name: String, private val shape: String, private val number: List<Int>)
+    class Blackjack(val deck: List<Card>)
+
+    data class Card(private val name: String, private val shape: Shape, private val number: List<Int>)
+
+    enum class Shape(private val shapeName: String) {
+        HEART("하트"), CLOVER("클로버"), SPADE("스페이드"), DIAMOND("다이아몬드")
+    }
 }
