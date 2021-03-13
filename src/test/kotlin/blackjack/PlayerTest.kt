@@ -41,6 +41,18 @@ class PlayerTest {
         ).isEqualTo(21)
     }
 
+    @Test
+    fun `Ace 가 포함된 합이 21을 초과하면 1로 계산한다`() {
+        assertThat(
+            Player()
+                .apply {
+                    draw(Card("A", Symbol.HEARTS))
+                    draw(Card("10", Symbol.DIAMONDS))
+                    draw(Card("2", Symbol.CLUBS))
+                }.score()
+        ).isEqualTo(13)
+    }
+
     class Player {
         var cards: List<Card> = emptyList()
             private set
