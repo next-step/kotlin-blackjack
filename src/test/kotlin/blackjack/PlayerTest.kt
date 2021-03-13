@@ -9,7 +9,7 @@ import kotlin.math.abs
 class PlayerTest {
     @Test
     internal fun `플레이어는 받은 카드 목록이 있다`() {
-        val player = Player("pobi")
+        val player = Player.Person("pobi")
             .apply {
                 draw(Card("2", Symbol.HEARTS))
                 draw(Card("8", Symbol.SPADES))
@@ -22,7 +22,7 @@ class PlayerTest {
 
     @Test
     internal fun `카드목록의 합을 계산한다`() {
-        val player = Player("pobi")
+        val player = Player.Person("pobi")
             .apply {
                 draw(Card("2", Symbol.HEARTS))
                 draw(Card("8", Symbol.SPADES))
@@ -33,7 +33,7 @@ class PlayerTest {
     @Test
     fun `Ace 는 21 에 가까운 수로 선택한다`() {
         assertThat(
-            Player("pobi")
+            Player.Person("pobi")
                 .apply {
                     draw(Card("A", Symbol.HEARTS))
                     draw(Card("K", Symbol.SPADES))
@@ -44,7 +44,7 @@ class PlayerTest {
     @Test
     fun `Ace 가 포함된 합이 21을 초과하면 1로 계산한다`() {
         assertThat(
-            Player("pobi")
+            Player.Person("pobi")
                 .apply {
                     draw(Card("A", Symbol.HEARTS))
                     draw(Card("10", Symbol.DIAMONDS))
@@ -56,7 +56,7 @@ class PlayerTest {
     @Test
     fun `21을 초과할 수 있다`() {
         assertThat(
-            Player("pobi")
+            Player.Person("pobi")
                 .apply {
                     draw(Card("8", Symbol.HEARTS))
                     draw(Card("8", Symbol.DIAMONDS))
@@ -65,26 +65,34 @@ class PlayerTest {
         ).isEqualTo(24)
     }
 
-    class Player(name: String) {
-        var cards: List<Card> = emptyList()
-            private set
+    interface Player {
+        val name: String
+        val cards: List<Card>
+        fun score(): Int
+        fun draw(card: Card)
 
-        fun score(): Int {
-            return cards.fold(listOf(0)) { acc, card ->
-                acc.flatMap { score -> card.number.map { it + score } }
-            }.closeTo(21)
-        }
+        class Person(override val name: String) : Player {
+            private var _cards: List<Card> = emptyList()
+            override val cards: List<Card>
+                get() = _cards
 
-        fun draw(card: Card) {
-            cards = cards + card
-        }
+            override fun score(): Int {
+                return _cards.fold(listOf(0)) { acc, card ->
+                    acc.flatMap { score -> card.number.map { it + score } }
+                }.closeTo(21)
+            }
 
-        private fun List<Int>.closeTo(number: Int): Int {
-            val sorted = map { it to abs(it - number) }
-                .sortedBy { it.second }
-                .map { it.first }
-            val result = sorted.firstOrNull { it <= 21 }
-            return result ?: sorted.firstOrNull() ?: 0
+            override fun draw(card: Card) {
+                _cards = _cards + card
+            }
+
+            private fun List<Int>.closeTo(number: Int): Int {
+                val sorted = map { it to abs(it - number) }
+                    .sortedBy { it.second }
+                    .map { it.first }
+                val result = sorted.firstOrNull { it <= 21 }
+                return result ?: sorted.firstOrNull() ?: 0
+            }
         }
     }
 }
