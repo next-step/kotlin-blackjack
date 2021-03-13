@@ -18,10 +18,10 @@ class CardTest {
             ace(1, 10)
         }.build()
         assertThat(blackjack.deck).contains(
-            Card("A", Shape.HEART, listOf(1, 10)),
-            Card("A", Shape.CLOVER, listOf(1, 10)),
-            Card("A", Shape.SPADE, listOf(1, 10)),
-            Card("A", Shape.DIAMOND, listOf(1, 10))
+            Card("A", Symbol.HEARTS, listOf(1, 10)),
+            Card("A", Symbol.CLUBS, listOf(1, 10)),
+            Card("A", Symbol.SPADES, listOf(1, 10)),
+            Card("A", Symbol.DIAMONDS, listOf(1, 10))
         )
     }
 
@@ -31,10 +31,10 @@ class CardTest {
             normal(2..10)
         }.build()
         assertThat(blackjack.deck).contains(
-            Card("2", Shape.HEART, listOf(2)),
-            Card("3", Shape.CLOVER, listOf(3)),
-            Card("9", Shape.SPADE, listOf(9)),
-            Card("10", Shape.DIAMOND, listOf(10))
+            Card("2", Symbol.HEARTS, listOf(2)),
+            Card("3", Symbol.CLUBS, listOf(3)),
+            Card("9", Symbol.SPADES, listOf(9)),
+            Card("10", Symbol.DIAMONDS, listOf(10))
         )
     }
 
@@ -47,7 +47,7 @@ class CardTest {
 
         fun ace(vararg numbers: Int) {
             val scores = numbers.asList()
-            deck = deck + Shape.values().map { Card("A", it, scores) }
+            deck = deck + Symbol.values().map { Card("A", it, scores) }
         }
 
         fun build(): Blackjack = Blackjack(deck)
@@ -55,9 +55,12 @@ class CardTest {
 
     class Blackjack(val deck: List<Card>)
 
-    data class Card(private val name: String, private val shape: Shape, private val number: List<Int>)
+    data class Card(private val name: String, private val symbol: Symbol, private val number: List<Int>)
 
-    enum class Shape(private val shapeName: String) {
-        HEART("하트"), CLOVER("클로버"), SPADE("스페이드"), DIAMOND("다이아몬드")
+    enum class Symbol(private val symbolName: String) {
+        HEARTS("하트"),
+        CLUBS("클로버"),
+        SPADES("스페이드"),
+        DIAMONDS("다이아몬드")
     }
 }
