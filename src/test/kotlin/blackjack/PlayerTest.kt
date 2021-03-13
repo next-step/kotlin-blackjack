@@ -29,6 +29,16 @@ class PlayerTest {
         assertThat(player.score()).isEqualTo(10)
     }
 
+    @Test
+    internal fun `Ace 는 21 을 초과하면 작은수로 계산한다`() {
+        val player = Player()
+            .apply {
+                draw(Card("A", Symbol.HEARTS))
+                draw(Card("K", Symbol.SPADES))
+            }
+        assertThat(player.score()).isEqualTo(14)
+    }
+
     class Player {
         var cards: List<Card> = emptyList()
             private set
