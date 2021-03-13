@@ -51,8 +51,10 @@ class CardTest {
         }
 
         fun normal(numbers: IntRange) {
-            deck = deck + Symbol.values().map { symbol -> numbers.map { Card(it.toString(), symbol, listOf(it)) } }
-                .flatten()
+            val symbolCard = { number: Int ->
+                Symbol.values().map { Card(number, it, number) }
+            }
+            deck = deck + numbers.map { symbolCard(it) }.flatten()
         }
 
         fun build(): Blackjack = Blackjack(deck)
@@ -60,7 +62,9 @@ class CardTest {
 
     class Blackjack(val deck: List<Card>)
 
-    data class Card(private val name: String, private val symbol: Symbol, private val number: List<Int>)
+    data class Card(private val name: String, private val symbol: Symbol, private val number: List<Int>) {
+        constructor(name: Int, symbol: Symbol, number: Int) : this(name.toString(), symbol, listOf(number))
+    }
 
     enum class Symbol(private val symbolName: String) {
         HEARTS("하트"),
