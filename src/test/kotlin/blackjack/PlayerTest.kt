@@ -19,6 +19,16 @@ class PlayerTest {
         )
     }
 
+    @Test
+    internal fun `카드목록의 합을 계산한다`() {
+        val player = Player()
+            .apply {
+                draw(Card("2", Symbol.HEARTS))
+                draw(Card("8", Symbol.SPADES))
+            }
+        assertThat(player.score).isEqualTo(10)
+    }
+
     class Player {
         var cards: List<Card> = emptyList()
             private set
