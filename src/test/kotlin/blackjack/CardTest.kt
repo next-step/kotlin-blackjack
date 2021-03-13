@@ -60,28 +60,28 @@ class CardTest {
     class BlackjackBuilder {
         var deck: List<Card> = emptyList()
 
-        fun ace(vararg numbers: Int) {
-            val scores = numbers.asList()
-            deck = deck + Symbol.values().map { Card("A", it, scores) }
+        fun normal(numbers: IntRange) {
+            deck = deck + numbers.map { toSymbolCard(it.toString(), it) }.flatten()
         }
 
-        fun normal(numbers: IntRange) {
-            val symbolCard = { number: Int ->
-                Symbol.values().map { Card(number, it, number) }
-            }
-            deck = deck + numbers.map { symbolCard(it) }.flatten()
+        fun ace(vararg numbers: Int) {
+            deck = deck + toSymbolCard("A", *numbers)
         }
 
         fun jack(number: Int) {
-            deck = deck + Symbol.values().map { Card("J", it, number) }
+            deck = deck + toSymbolCard("J", number)
         }
 
         fun queen(number: Int) {
-            deck = deck + Symbol.values().map { Card("Q", it, number) }
+            deck = deck + toSymbolCard("Q", number)
         }
 
         fun king(number: Int) {
-            deck = deck + Symbol.values().map { Card("K", it, number) }
+            deck = deck + toSymbolCard("K", number)
+        }
+
+        private fun toSymbolCard(name: String, vararg numbers: Int): List<Card> {
+            return Symbol.values().map { Card(name, it, numbers.toList()) }
         }
 
         fun build(): Blackjack = Blackjack(deck)
@@ -90,7 +90,6 @@ class CardTest {
     class Blackjack(val deck: List<Card>)
 
     data class Card(private val name: String, private val symbol: Symbol, private val number: List<Int>) {
-        constructor(name: Int, symbol: Symbol, number: Int) : this(name.toString(), symbol, listOf(number))
         constructor(name: String, symbol: Symbol, number: Int) : this(name, symbol, listOf(number))
     }
 
