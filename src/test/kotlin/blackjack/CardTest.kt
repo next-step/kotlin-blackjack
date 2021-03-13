@@ -90,7 +90,7 @@ class CardTest {
     class Blackjack(val deck: List<Card>)
 
     data class Card(private val name: String, private val symbol: Symbol) {
-        private val number: List<Int> = when (name) {
+        val number: List<Int> = when (name) {
             "A" -> listOf(1, 10)
             "J", "Q", "K" -> listOf(10)
             else -> listOf(name.toInt())

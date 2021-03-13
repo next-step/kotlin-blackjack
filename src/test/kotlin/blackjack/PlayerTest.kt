@@ -26,12 +26,13 @@ class PlayerTest {
                 draw(Card("2", Symbol.HEARTS))
                 draw(Card("8", Symbol.SPADES))
             }
-        assertThat(player.score).isEqualTo(10)
+        assertThat(player.score()).isEqualTo(10)
     }
 
     class Player {
         var cards: List<Card> = emptyList()
             private set
+        fun score(): Int = cards.map { it.number[0] }.sum()
 
         fun draw(card: Card) {
             cards = cards + card
