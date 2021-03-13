@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.CardTest.Card
 import blackjack.CardTest.Symbol
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -12,9 +13,18 @@ class PlayerTest {
                 draw(Card("2", Symbol.HEARTS, 2))
                 draw(Card("8", Symbol.SPADES, 8))
             }
-        assertThat(player.cards).contains(
+        assertThat(player.cards).containsExactly(
             Card("2", Symbol.HEARTS, 2),
             Card("8", Symbol.SPADES, 8)
         )
+    }
+
+    class Player {
+        var cards: List<Card> = emptyList()
+            private set
+
+        fun draw(card: Card) {
+            cards = cards + card
+        }
     }
 }
