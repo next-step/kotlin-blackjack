@@ -38,6 +38,21 @@ class CardTest {
         )
     }
 
+    @Test
+    internal fun `잭, 퀸, 킹`() {
+        val blackjack = blackjack {
+            jack(10)
+            queen(10)
+            king(10)
+        }.build()
+        assertThat(blackjack.deck).contains(
+            Card("J", Symbol.HEARTS, 10),
+            Card("Q", Symbol.CLUBS, 10),
+            Card("K", Symbol.SPADES, 10),
+            Card("J", Symbol.DIAMONDS, 10)
+        )
+    }
+
     private fun blackjack(initializer: BlackjackBuilder.() -> Unit): BlackjackBuilder {
         return BlackjackBuilder().apply(initializer)
     }
