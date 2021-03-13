@@ -25,6 +25,19 @@ class CardTest {
         )
     }
 
+    @Test
+    internal fun 노멀() {
+        val blackjack = blackjack {
+            normal(2..10)
+        }.build()
+        assertThat(blackjack.deck).contains(
+            Card("2", Shape.HEART, listOf(2)),
+            Card("3", Shape.CLOVER, listOf(3)),
+            Card("9", Shape.SPADE, listOf(9)),
+            Card("10", Shape.DIAMOND, listOf(10))
+        )
+    }
+
     private fun blackjack(initializer: BlackjackBuilder.() -> Unit): BlackjackBuilder {
         return BlackjackBuilder().apply(initializer)
     }
