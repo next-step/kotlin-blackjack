@@ -21,6 +21,15 @@ class BlackjackGameTest {
         }
     }
 
+    @Test
+    internal fun `한장을 받는다`() {
+        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), Dealer())
+        val turn = game.nextTurn()
+        assertThat(turn.result.player.cards.size).isEqualTo(0)
+        turn.draw(true)
+        assertThat(turn.result.player.cards.size).isEqualTo(1)
+    }
+
     class Dealer(private val player: Player = Player.Person("dealer")) : Player by player
 
     class BlackJackGame(
