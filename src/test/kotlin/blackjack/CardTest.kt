@@ -31,10 +31,10 @@ class CardTest {
             normal(2..10)
         }.build()
         assertThat(blackjack.deck).contains(
-            Card("2", Symbol.HEARTS, listOf(2)),
-            Card("3", Symbol.CLUBS, listOf(3)),
-            Card("9", Symbol.SPADES, listOf(9)),
-            Card("10", Symbol.DIAMONDS, listOf(10))
+            Card("2", Symbol.HEARTS, 2),
+            Card("3", Symbol.CLUBS, 3),
+            Card("9", Symbol.SPADES, 9),
+            Card("10", Symbol.DIAMONDS, 10)
         )
     }
 
@@ -72,6 +72,18 @@ class CardTest {
             deck = deck + numbers.map { symbolCard(it) }.flatten()
         }
 
+        fun jack(number: Int) {
+            deck = deck + Symbol.values().map { Card("J", it, number) }
+        }
+
+        fun queen(number: Int) {
+            deck = deck + Symbol.values().map { Card("Q", it, number) }
+        }
+
+        fun king(number: Int) {
+            deck = deck + Symbol.values().map { Card("K", it, number) }
+        }
+
         fun build(): Blackjack = Blackjack(deck)
     }
 
@@ -79,6 +91,7 @@ class CardTest {
 
     data class Card(private val name: String, private val symbol: Symbol, private val number: List<Int>) {
         constructor(name: Int, symbol: Symbol, number: Int) : this(name.toString(), symbol, listOf(number))
+        constructor(name: String, symbol: Symbol, number: Int) : this(name, symbol, listOf(number))
     }
 
     enum class Symbol(private val symbolName: String) {
