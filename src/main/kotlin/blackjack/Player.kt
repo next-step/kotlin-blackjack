@@ -15,8 +15,8 @@ interface Player {
             get() = _cards
 
         override fun score(): Int {
-            return _cards.fold(listOf(0)) { acc, card ->
-                acc.flatMap { score -> card.number.map { it + score } }
+            return _cards.fold(listOf(0)) { accumulator, card ->
+                accumulator.flatMap { score -> card.number.map { it + score } }
             }.closeTo(21)
         }
 
