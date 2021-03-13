@@ -23,11 +23,13 @@ class BlackjackGameTest {
 
     @Test
     internal fun `한장을 받는다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), Dealer())
-        val turn = game.nextTurn()
-        assertThat(turn.result.player.cards.size).isEqualTo(0)
-        turn.draw(true)
-        assertThat(turn.result.player.cards.size).isEqualTo(1)
+        val pobi = Player.Person("pobi")
+        val game = BlackJackGame(listOf(pobi), Dealer())
+        assertThat(pobi.cards.size).isEqualTo(0)
+        game.draw({ true }) { player: Player ->
+            assertThat(player).isEqualTo(pobi)
+            assertThat(player.cards.size).isEqualTo(1)
+        }
     }
 
     class Dealer(private val player: Player = Player.Person("dealer")) : Player by player
@@ -38,10 +40,16 @@ class BlackjackGameTest {
     ) {
         fun prepareDraw() {
             repeat(2) {
-                allPlayers().forEach { it.draw(Card("A", Symbol.CLUBS)) }
+                allPlayers().forEach { it.draw({ Card("A", Symbol.CLUBS) }) }
             }
         }
 
         fun allPlayers(): List<Player> = players + dealer
+
+        fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
+            players.forEach {
+                it.draw({ Card("A", Symbol.CLUBS) }, isDraw, result)
+            }
+        }
     }
 }

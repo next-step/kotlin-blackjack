@@ -69,7 +69,12 @@ class PlayerTest {
         val name: String
         val cards: List<Card>
         fun score(): Int
-        fun draw(card: Card)
+        fun draw(card: Card) = draw({ card })
+        fun draw(
+            nextCard: () -> Card,
+            isDraw: (name: String) -> Boolean = { true },
+            result: (Player) -> Unit = {}
+        )
 
         class Person(override val name: String) : Player {
             private var _cards: List<Card> = emptyList()
@@ -86,12 +91,37 @@ class PlayerTest {
                 _cards = _cards + card
             }
 
+            override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
+                if (isDraw(name)) {
+                    draw(nextCard())
+                    result(this)
+                }
+            }
+
             private fun List<Int>.closeTo(number: Int): Int {
                 val sorted = map { it to abs(it - number) }
                     .sortedBy { it.second }
                     .map { it.first }
                 val result = sorted.firstOrNull { it <= 21 }
                 return result ?: sorted.firstOrNull() ?: 0
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Person
+
+                if (name != other.name) return false
+                if (_cards != other._cards) return false
+
+                return true
+            }
+
+            override fun hashCode(): Int {
+                var result = name.hashCode()
+                result = 31 * result + _cards.hashCode()
+                return result
             }
         }
     }
