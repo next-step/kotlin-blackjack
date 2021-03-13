@@ -8,8 +8,8 @@ class PlayerTest {
     internal fun `플레이어는 받은 카드 목록이 있다`() {
         val player = Player.Person("pobi")
             .apply {
-                draw(Card("2", Symbol.HEARTS))
-                draw(Card("8", Symbol.SPADES))
+                accept(Card("2", Symbol.HEARTS))
+                accept(Card("8", Symbol.SPADES))
             }
         assertThat(player.cards).containsExactly(
             Card("2", Symbol.HEARTS),
@@ -21,8 +21,8 @@ class PlayerTest {
     internal fun `카드목록의 합을 계산한다`() {
         val player = Player.Person("pobi")
             .apply {
-                draw(Card("2", Symbol.HEARTS))
-                draw(Card("8", Symbol.SPADES))
+                accept(Card("2", Symbol.HEARTS))
+                accept(Card("8", Symbol.SPADES))
             }
         assertThat(player.score()).isEqualTo(10)
     }
@@ -32,8 +32,8 @@ class PlayerTest {
         assertThat(
             Player.Person("pobi")
                 .apply {
-                    draw(Card("A", Symbol.HEARTS))
-                    draw(Card("K", Symbol.SPADES))
+                    accept(Card("A", Symbol.HEARTS))
+                    accept(Card("K", Symbol.SPADES))
                 }.score()
         ).isEqualTo(21)
     }
@@ -43,9 +43,9 @@ class PlayerTest {
         assertThat(
             Player.Person("pobi")
                 .apply {
-                    draw(Card("A", Symbol.HEARTS))
-                    draw(Card("10", Symbol.DIAMONDS))
-                    draw(Card("2", Symbol.CLUBS))
+                    accept(Card("A", Symbol.HEARTS))
+                    accept(Card("10", Symbol.DIAMONDS))
+                    accept(Card("2", Symbol.CLUBS))
                 }.score()
         ).isEqualTo(13)
     }
@@ -55,9 +55,9 @@ class PlayerTest {
         assertThat(
             Player.Person("pobi")
                 .apply {
-                    draw(Card("8", Symbol.HEARTS))
-                    draw(Card("8", Symbol.DIAMONDS))
-                    draw(Card("8", Symbol.CLUBS))
+                    accept(Card("8", Symbol.HEARTS))
+                    accept(Card("8", Symbol.DIAMONDS))
+                    accept(Card("8", Symbol.CLUBS))
                 }.score()
         ).isEqualTo(24)
     }

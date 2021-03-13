@@ -6,12 +6,8 @@ interface Player {
     val name: String
     val cards: List<Card>
     fun score(): Int
-    fun draw(card: Card)
-    fun draw(
-        nextCard: () -> Card,
-        isDraw: (name: String) -> Boolean = { true },
-        result: (Player) -> Unit = { }
-    )
+    fun accept(card: Card)
+    fun draw(draw: Draw)
 
     class Person(override val name: String) : Player {
         private var _cards: List<Card> = emptyList()
@@ -24,14 +20,14 @@ interface Player {
             }.closeTo(21)
         }
 
-        override fun draw(card: Card) {
+        override fun accept(card: Card) {
             _cards = _cards + card
         }
 
-        override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
-            while (isDraw(name)) {
-                draw(nextCard())
-                result(this)
+        override fun draw(draw: Draw) {
+            while (draw.accepted(name)) {
+                accept(draw.nextCard())
+                draw.result(this)
             }
         }
 
