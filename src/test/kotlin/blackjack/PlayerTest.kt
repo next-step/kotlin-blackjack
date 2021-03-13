@@ -4,6 +4,7 @@ import blackjack.CardTest.Card
 import blackjack.CardTest.Symbol
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import kotlin.math.abs
 
 class PlayerTest {
     @Test
@@ -30,22 +31,35 @@ class PlayerTest {
     }
 
     @Test
-    internal fun `Ace 는 21 을 초과하면 작은수로 계산한다`() {
-        val player = Player()
-            .apply {
-                draw(Card("A", Symbol.HEARTS))
-                draw(Card("K", Symbol.SPADES))
-            }
-        assertThat(player.score()).isEqualTo(14)
+    fun `Ace 는 21 에 가까운 수로 선택한다`() {
+        assertThat(
+            Player()
+                .apply {
+                    draw(Card("A", Symbol.HEARTS))
+                    draw(Card("K", Symbol.SPADES))
+                }.score()
+        ).isEqualTo(21)
     }
 
     class Player {
         var cards: List<Card> = emptyList()
             private set
-        fun score(): Int = cards.map { it.number[0] }.sum()
+
+        fun score(): Int {
+            val result = cards.fold(listOf(0)) { acc, card ->
+                acc.flatMap { score -> card.number.map { it + score } }
+            }
+            return result
+                .filter { 21 <= it }
+                .closeTo(21)
+        }
 
         fun draw(card: Card) {
             cards = cards + card
+        }
+
+        private fun List<Int>.closeTo(number: Int): Int {
+            return map { it to abs(it - number) }.minBy { it.second }?.first ?: 0
         }
     }
 }
