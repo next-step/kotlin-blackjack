@@ -40,7 +40,7 @@ class BlackjackGameTest {
     ) {
         fun prepareDraw() {
             repeat(2) {
-                allPlayers().forEach { it.draw({ Card("A", Symbol.CLUBS) }) }
+                allPlayers().forEach { it.draw(Card("A", Symbol.CLUBS)) }
             }
         }
 
@@ -48,7 +48,8 @@ class BlackjackGameTest {
 
         fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
             players.forEach {
-                it.draw({ Card("A", Symbol.CLUBS) }, isDraw, result)
+                it.draw({ Card("A", Symbol.CLUBS) }, isDraw)
+                result(it)
             }
         }
     }

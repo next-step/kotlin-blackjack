@@ -69,11 +69,10 @@ class PlayerTest {
         val name: String
         val cards: List<Card>
         fun score(): Int
-        fun draw(card: Card) = draw({ card })
+        fun draw(card: Card)
         fun draw(
             nextCard: () -> Card,
-            isDraw: (name: String) -> Boolean = { true },
-            result: (Player) -> Unit = {}
+            isDraw: (name: String) -> Boolean = { true }
         )
 
         class Person(override val name: String) : Player {
@@ -91,10 +90,9 @@ class PlayerTest {
                 _cards = _cards + card
             }
 
-            override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
+            override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean) {
                 if (isDraw(name)) {
                     draw(nextCard())
-                    result(this)
                 }
             }
 
