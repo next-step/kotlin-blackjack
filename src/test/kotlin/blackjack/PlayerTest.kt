@@ -58,11 +58,10 @@ class PlayerTest {
             private set
 
         fun score(): Int {
-            val result = cards.fold(listOf(0)) { acc, card ->
+            return cards.fold(listOf(0)) { acc, card ->
                 acc.flatMap { score -> card.number.map { it + score } }
             }
-            return result
-                .filter { 21 <= it }
+                .filter { it <= 21 }
                 .closeTo(21)
         }
 
