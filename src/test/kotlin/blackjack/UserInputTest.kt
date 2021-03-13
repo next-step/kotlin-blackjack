@@ -2,9 +2,6 @@ package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.io.InputStreamReader
-import java.io.StringReader
-import java.util.Scanner
 
 class UserInputTest {
     @Test
@@ -17,38 +14,5 @@ class UserInputTest {
     fun `y 를 받는다`() {
         val userInput = UserInput.Char("질문", "y\n")
         assertThat(userInput.answer()).isEqualTo('y')
-    }
-
-    interface UserInput<T> {
-        fun answer(): T
-
-        class StringList(
-            private val question: String,
-            readable: Readable = InputStreamReader(System.`in`)
-        ) : UserInput<List<String>> {
-            private val scanner: Scanner = Scanner(readable)
-
-            constructor(question: String, answer: String) : this(question, StringReader(answer))
-
-            override fun answer(): List<String> {
-                println(question)
-                return scanner.nextLine()
-                    .split(",")
-            }
-        }
-
-        class Char(
-            private val question: String,
-            readable: Readable = InputStreamReader(System.`in`)
-        ) : UserInput<kotlin.Char> {
-            private val scanner: Scanner = Scanner(readable)
-
-            constructor(question: String, answer: String) : this(question, StringReader(answer))
-
-            override fun answer(): kotlin.Char {
-                println(question)
-                return scanner.nextLine().first()
-            }
-        }
     }
 }

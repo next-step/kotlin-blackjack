@@ -1,8 +1,5 @@
 package blackjack
 
-import blackjack.CardTest.Card
-import blackjack.CardTest.Symbol
-import blackjack.PlayerTest.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -39,21 +36,6 @@ class BlackjackGameTest {
         for (player in game.players) {
             assertThat(player.cards.size).isEqualTo(1)
             assertThat(player.score()).isNotZero()
-        }
-    }
-
-    class BlackJackGame(val players: List<Player>) {
-        fun prepareDraw() {
-            repeat(2) {
-                players.forEach { it.draw(Card("A", Symbol.CLUBS)) }
-            }
-        }
-
-        fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit = { }) {
-            players.forEach {
-                it.draw({ Card("A", Symbol.CLUBS) }, isDraw)
-                result(it)
-            }
         }
     }
 }
