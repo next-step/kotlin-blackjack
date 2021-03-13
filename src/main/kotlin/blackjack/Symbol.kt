@@ -1,6 +1,6 @@
 package blackjack
 
-enum class Symbol(private val symbolName: String) {
+enum class Symbol(val displayName: String) {
     HEARTS("하트"),
     CLUBS("클로버"),
     SPADES("스페이드"),

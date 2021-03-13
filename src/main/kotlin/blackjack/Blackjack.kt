@@ -1,3 +1,11 @@
 package blackjack
 
-class Blackjack(val deck: List<blackjack.Card>)
+class Blackjack(deck: List<Card>) : List<Card> by deck {
+    private val shuffled: MutableList<Card>
+        get() = shuffled().toMutableList()
+
+    @OptIn(ExperimentalStdlibApi::class)
+    fun next(): Card {
+        return shuffled.removeFirst()
+    }
+}

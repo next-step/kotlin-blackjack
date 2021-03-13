@@ -17,7 +17,7 @@ class CardTest {
         val blackjack = blackjack {
             ace()
         }.build()
-        assertThat(blackjack.deck).contains(
+        assertThat(blackjack).contains(
             Card("A", Symbol.HEARTS),
             Card("A", Symbol.CLUBS),
             Card("A", Symbol.SPADES),
@@ -30,7 +30,7 @@ class CardTest {
         val blackjack = blackjack {
             normal(2..10)
         }.build()
-        assertThat(blackjack.deck).contains(
+        assertThat(blackjack).contains(
             Card("2", Symbol.HEARTS),
             Card("3", Symbol.CLUBS),
             Card("9", Symbol.SPADES),
@@ -45,7 +45,7 @@ class CardTest {
             queen()
             king()
         }.build()
-        assertThat(blackjack.deck).contains(
+        assertThat(blackjack).contains(
             Card("J", Symbol.HEARTS),
             Card("Q", Symbol.CLUBS),
             Card("K", Symbol.SPADES),

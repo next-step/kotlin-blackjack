@@ -9,7 +9,8 @@ interface Player {
     fun draw(card: Card)
     fun draw(
         nextCard: () -> Card,
-        isDraw: (name: String) -> Boolean = { true }
+        isDraw: (name: String) -> Boolean = { true },
+        result: (Player) -> Unit = { }
     )
 
     class Person(override val name: String) : Player {
@@ -27,9 +28,10 @@ interface Player {
             _cards = _cards + card
         }
 
-        override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean) {
-            if (isDraw(name)) {
+        override fun draw(nextCard: () -> Card, isDraw: (name: String) -> Boolean, result: (Player) -> Unit) {
+            while (isDraw(name)) {
                 draw(nextCard())
+                result(this)
             }
         }
 
