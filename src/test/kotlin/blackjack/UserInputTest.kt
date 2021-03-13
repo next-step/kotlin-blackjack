@@ -36,5 +36,19 @@ class UserInputTest {
                     .split(",")
             }
         }
+
+        class Char(
+            private val question: String,
+            readable: Readable = InputStreamReader(System.`in`)
+        ) : UserInput<kotlin.Char> {
+            private val scanner: Scanner = Scanner(readable)
+
+            constructor(question: String, answer: String) : this(question, StringReader(answer))
+
+            override fun answer(): kotlin.Char {
+                println(question)
+                return scanner.nextLine().first()
+            }
+        }
     }
 }
