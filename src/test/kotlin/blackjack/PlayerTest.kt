@@ -53,6 +53,18 @@ class PlayerTest {
         ).isEqualTo(13)
     }
 
+    @Test
+    fun `21을 초과할 수 있다`() {
+        assertThat(
+            Player()
+                .apply {
+                    draw(Card("8", Symbol.HEARTS))
+                    draw(Card("8", Symbol.DIAMONDS))
+                    draw(Card("8", Symbol.CLUBS))
+                }.score()
+        ).isEqualTo(24)
+    }
+
     class Player {
         var cards: List<Card> = emptyList()
             private set
