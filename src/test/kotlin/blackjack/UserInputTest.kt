@@ -13,6 +13,12 @@ class UserInputTest {
         assertThat(userInput.answer()).isEqualTo(listOf("pobi", "json"))
     }
 
+    @Test
+    fun `y 를 받는다`() {
+        val userInput = UserInput.Char("질문", "y\n")
+        assertThat(userInput.answer()).isEqualTo('y')
+    }
+
     interface UserInput<T> {
         fun answer(): T
 
