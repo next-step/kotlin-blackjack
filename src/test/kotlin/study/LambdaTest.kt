@@ -20,7 +20,6 @@ class LambdaTest {
     fun sumAllOverThree() {
         assertThat(sum(numbers) { it > 3 }).isEqualTo(sumAllOverThree(numbers))
     }
-
 }
 
 fun sum(numbers: List<Int>, condition: (Int) -> Boolean): Int {
@@ -60,4 +59,3 @@ fun sumAllOverThree(numbers: List<Int>): Int {
     }
     return total
 }
-

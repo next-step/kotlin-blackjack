@@ -9,7 +9,7 @@ class CarTest {
     fun 이동() {
 
         val car = Car("jason", 0)
-        val actual: Car = car.move{true}
+        val actual: Car = car.move { true }
 
         assertThat(actual).isEqualTo(Car("jason", 1))
     }
@@ -17,7 +17,7 @@ class CarTest {
     @Test
     fun 정지() {
         val car = Car("jason", 0)
-        val movable = {false}
+        val movable = { false }
 
         val actual: Car = car.move(movable)
         assertThat(actual).isEqualTo(Car("jason", 0))
@@ -25,7 +25,7 @@ class CarTest {
 }
 
 data class Car(val name: String, val position: Int) {
-    fun move(isMovable:() -> Boolean): Car {
+    fun move(isMovable: () -> Boolean): Car {
         if (isMovable()) {
             return copy(position = position + 1)
         }
@@ -36,4 +36,3 @@ data class Car(val name: String, val position: Int) {
 interface MoveStrategy {
     val isMovable: Boolean
 }
-
