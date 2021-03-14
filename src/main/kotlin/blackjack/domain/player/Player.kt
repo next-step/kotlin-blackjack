@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
-class Player(private val name: String) {
+import blackjack.domain.Cards
+
+class Player(private val name: String, private val cards: Cards) {
     init {
         require(name.isNotBlank())
     }
