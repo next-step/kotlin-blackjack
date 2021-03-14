@@ -11,7 +11,7 @@ object ResultView {
 
     fun result(game: BlackJackGame) {
         println()
-        for (player in game.players) {
+        for (player in game.allPlayers()) {
             println("${player.name}카드: ${player.cards.names()} - 결과: ${player.score()}")
         }
     }

@@ -20,7 +20,7 @@ class BlackjackGameTest {
     internal fun `처음엔 두장씩 준다`() {
         val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
         game.prepareDraw()
-        assertThat(game.players).allSatisfy {
+        assertThat(game.allPlayers()).allSatisfy {
             assertThat(it.cards.size).isEqualTo(2)
         }
     }
@@ -44,7 +44,9 @@ class BlackjackGameTest {
         val game = BlackJackGame(listOf(Player.Person("pobi")), deck)
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() })
-        for (player in game.players) {
+        game.endDraw()
+
+        for (player in game.allPlayers()) {
             assertThat(player.cards.size).isEqualTo(1)
             assertThat(player.score()).isNotZero()
         }

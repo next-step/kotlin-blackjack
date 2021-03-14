@@ -1,10 +1,11 @@
 package blackjack
 
-class BlackJackGame(val players: List<Player>, private val deck: Blackjack) {
+class BlackJackGame(private val players: List<Player>, private val deck: Blackjack) {
     private val dealer: Player.Dealer = Player.Dealer()
     fun prepareDraw(result: (List<Player>) -> Unit = { }) {
         repeat(2) {
             players.forEach { it.accept(deck.next()) }
+            dealer.accept(deck.next())
         }
         result(players)
     }
@@ -16,4 +17,8 @@ class BlackJackGame(val players: List<Player>, private val deck: Blackjack) {
     }
 
     fun allPlayers(): List<Player> = players + dealer
+
+    fun endDraw() {
+        dealer.accept(deck.next())
+    }
 }
