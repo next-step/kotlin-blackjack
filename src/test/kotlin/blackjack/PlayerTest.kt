@@ -61,4 +61,15 @@ class PlayerTest {
                 }.score()
         ).isEqualTo(24)
     }
+
+    @Test
+    fun `딜러는 16 미만이면 한장 더 받는다`() {
+        val dealer = Player.Dealer()
+            .apply {
+                accept(Card("10", Symbol.HEARTS))
+                accept(Card("6", Symbol.DIAMONDS))
+            }
+        dealer.take { Card("2", Symbol.CLUBS) }
+        assertThat(dealer.score()).isEqualTo(18)
+    }
 }

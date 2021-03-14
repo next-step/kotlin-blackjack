@@ -72,5 +72,13 @@ interface Player {
         override fun hashCode(): Int {
             return player.hashCode()
         }
+
+        fun take(nextCard: () -> Card): Boolean {
+            return (score() <= 16).also {
+                if (it) {
+                    accept(nextCard())
+                }
+            }
+        }
     }
 }

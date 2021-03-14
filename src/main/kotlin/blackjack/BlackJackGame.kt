@@ -18,7 +18,9 @@ class BlackJackGame(private val players: List<Player>, private val deck: Blackja
 
     fun allPlayers(): List<Player> = players + dealer
 
-    fun endDraw() {
-        dealer.accept(deck.next())
+    fun endDraw(taken: () -> Unit = { }) {
+        if (dealer.take { deck.next() }) {
+            taken()
+        }
     }
 }
