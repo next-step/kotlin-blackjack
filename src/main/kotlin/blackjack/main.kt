@@ -27,6 +27,20 @@ fun main() {
     }
 
     ResultView.result(game)
+
+    val gameResult = result {
+        update(game.players vs game.dealer)
+    }.build()
+
+    for (result in gameResult) {
+        println("${result.name}: ${ResultToString(result)}")
+    }
+}
+
+class ResultToString(val playerResult: PlayerResult) {
+    override fun toString(): String {
+        return "${playerResult.wins}승" + "${playerResult.losses}패" + "${playerResult.draws}무"
+    }
 }
 
 private fun drawQuestion(name: String): Boolean {

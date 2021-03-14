@@ -6,6 +6,9 @@ data class PlayerResult(
     var losses: Int = 0,
     var draws: Int = 0
 ) {
+    val name: String
+        get() = player.name
+
     fun update(playResult: Player.Person.PlayResult) {
         when (playResult) {
             Player.Person.PlayResult.WIN -> wins += 1
