@@ -1,7 +1,7 @@
 package blackjack.enums
 
 enum class CardShape(
-    val shape: String
+    val expression: String
 ) {
     Heart("하트"),
     Diamond("다이아몬드"),

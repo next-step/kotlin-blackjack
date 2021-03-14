@@ -4,9 +4,11 @@ import blackjack.constant.BLACK_JACK_TWENTY_ONE
 import blackjack.enums.CardType
 
 class Player(
-    private val name: String
+    val name: String
 ) {
     private val cards = mutableSetOf<Card>()
+    val cardNames: List<String>
+        get() = cards.map { "${it.type.expression}${it.shape.expression}" }
 
     fun takeCard(card: Card): Boolean {
         return cards.add(card)

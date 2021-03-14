@@ -1,7 +1,7 @@
 package blackjack.enums
 
 enum class CardType(
-    val description: String,
+    val expression: String,
     val point: Int
 ) {
     Two("2", 2),
