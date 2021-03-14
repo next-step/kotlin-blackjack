@@ -53,6 +53,10 @@ interface Player {
         override fun hashCode(): Int {
             return name.hashCode()
         }
+
+        enum class PlayResult {
+            WIN, LOSSES, DRAWS
+        }
     }
 
     class Dealer(private val player: Player) : Player by player {
@@ -80,5 +84,15 @@ interface Player {
                 }
             }
         }
+    }
+}
+
+infix fun Player.vs(dealer: Player): Player.Person.PlayResult {
+    val myScore = score()
+    val dealerScore = dealer.score()
+    return when {
+        myScore > dealerScore -> Player.Person.PlayResult.WIN
+        myScore < dealerScore -> Player.Person.PlayResult.LOSSES
+        else -> Player.Person.PlayResult.DRAWS
     }
 }
