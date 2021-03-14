@@ -18,6 +18,7 @@ object CardView {
     }
 
     fun printResult(player: Player, point: Int) {
-        println("${player.name}: ${player.cardNames.joinToString()} - 결과: ${point}")
+        println()
+        println("${player.name}: ${player.cardNames.joinToString()} - 결과: $point")
     }
 }
