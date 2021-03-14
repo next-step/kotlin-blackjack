@@ -4,6 +4,7 @@ import blackjack.domain.CardPack
 import blackjack.domain.Player
 import blackjack.ui.CardView
 import blackjack.ui.PlayerInputView
+import blackjack.ui.model.BlackJackResult
 
 object BlackJackController {
     fun run() {
@@ -11,7 +12,7 @@ object BlackJackController {
         val players = PlayerInputView.askPlayerNames()
 
         for (player in players) {
-            giveTwoCardsForAllPlayers(cardPack, player)
+            giveTwoCards(cardPack, player)
         }
 
         CardView.printCardsOf(players)
@@ -20,9 +21,8 @@ object BlackJackController {
             giveCardsUntilStop(player, cardPack)
         }
 
-        for (player in players) {
-            CardView.printResult(player, player.calculateCardSum())
-        }
+        CardView.printResults(players.map { BlackJackResult.from(it) })
+
     }
 
     private fun giveCardsUntilStop(player: Player, cardPack: CardPack) {
@@ -35,7 +35,7 @@ object BlackJackController {
         }
     }
 
-    private fun giveTwoCardsForAllPlayers(cardPack: CardPack, player: Player) {
+    private fun giveTwoCards(cardPack: CardPack, player: Player) {
         repeat(2) {
             player.takeCard(cardPack.pickCard())
         }

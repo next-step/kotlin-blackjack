@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.Player
+import blackjack.ui.model.BlackJackResult
 
 object CardView {
 
@@ -17,8 +18,15 @@ object CardView {
         println("${player.name}: ${player.cardNames.joinToString()}")
     }
 
-    fun printResult(player: Player, point: Int) {
+    fun printResults(blackJackResults: List<BlackJackResult>) {
         println()
-        println("${player.name}: ${player.cardNames.joinToString()} - 결과: $point")
+        for (blackJackResult in blackJackResults) {
+            printSingleResult(blackJackResult)
+        }
+    }
+
+    private fun printSingleResult(blackJackResult: BlackJackResult) {
+        println()
+        println("${blackJackResult.name}: ${blackJackResult.cardNames.joinToString()} - 결과: ${blackJackResult.point}")
     }
 }
