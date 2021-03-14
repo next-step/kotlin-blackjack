@@ -13,7 +13,7 @@ class BlackjackGameTest {
         val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
         assertThat(game.allPlayers())
             .hasSize(3)
-            .contains(Dealer())
+            .contains(Player.Dealer())
     }
 
     @Test

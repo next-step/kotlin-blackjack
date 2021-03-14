@@ -38,5 +38,39 @@ interface Player {
             val result = sorted.firstOrNull { it <= 21 }
             return result ?: sorted.firstOrNull() ?: 0
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Person
+
+            if (name != other.name) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return name.hashCode()
+        }
+    }
+
+    class Dealer(private val player: Player) : Player by player {
+        constructor() : this(Person("dealer"))
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Dealer
+
+            if (player != other.player) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return player.hashCode()
+        }
     }
 }
