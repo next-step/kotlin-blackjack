@@ -22,9 +22,7 @@ class PlayResultTest {
 
     @Test
     internal fun `승패를 계산한다`() {
-        val result = result {
-            update(listOf(pobi, jason) vs dealer)
-        }.build()
+        val result = listOf(pobi, jason) vs dealer
 
         assertThat(result).contains(
             PlayerResult(dealer, wins = 1, losses = 1),

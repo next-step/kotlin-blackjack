@@ -18,34 +18,18 @@ data class PlayerResult(
     }
 }
 
-fun result(builder: PlayResultBuilder.() -> Unit): PlayResultBuilder {
-    return PlayResultBuilder().apply(builder)
-}
-
-class PlayResultBuilder {
-    private val playerResult: MutableList<PlayerResult> = mutableListOf()
-
-    fun update(list: List<PlayerResult>) {
-        playerResult.addAll(list)
+infix fun List<Player>.vs(dealer: Player.Dealer): List<PlayerResult> {
+    if (dealer.score() > 21) {
+        return map { PlayerResult(it, wins = 1) }
     }
 
-    fun update(result: PlayerResult) {
-        playerResult.add(result)
-    }
-
-    fun build(): List<PlayerResult> {
-        return playerResult
-    }
-}
-
-infix fun List<Player>.vs(other: Player): List<PlayerResult> {
-    return map { it to (it vs other) }
+    return map { it to (it vs dealer) }
         .map { (player, playResult) ->
             PlayerResult(player)
                 .apply {
                     update(playResult)
                 }
-        } + (other vs this)
+        } + (dealer vs this)
 }
 
 private infix fun Player.vs(players: List<Player>): PlayerResult {

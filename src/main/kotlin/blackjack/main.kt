@@ -28,9 +28,7 @@ fun main() {
 
     ResultView.result(game)
 
-    val gameResult = result {
-        update(game.players vs game.dealer)
-    }.build()
+    val gameResult = game.players vs game.dealer
 
     for (result in gameResult) {
         println("${result.name}: ${ResultToString(result)}")
