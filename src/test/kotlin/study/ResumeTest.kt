@@ -89,15 +89,16 @@ class ResumeTest {
     }
 }
 
-fun introduce(initializer: Person.() -> Unit): Person {
-    return Person().apply(initializer)
+fun introduce(initializer: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder().apply(initializer).build()
 }
 
-class Person {
-    lateinit var name: String
-    lateinit var company: String
-    lateinit var skills: Skills
-    lateinit var languages: Languages
+class PersonBuilder {
+    private var name: String = ""
+    private var company: String = ""
+    private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
+
     fun name(name: String) {
         this.name = name
     }
@@ -107,13 +108,19 @@ class Person {
     }
 
     fun skills(initializer: Skills.() -> Unit) {
-        skills = Skills().apply(initializer)
+        this.skills = Skills().apply(initializer)
     }
 
     fun languages(initializer: Languages.() -> Unit) {
         this.languages = Languages().apply(initializer)
     }
+
+    fun build(): Person {
+        return Person(name, company, skills, languages)
+    }
 }
+
+class Person(val name: String, val company: String, val skills: Skills, val languages: Languages)
 
 class Skills {
     private val skills: MutableList<Skill> = mutableListOf()
