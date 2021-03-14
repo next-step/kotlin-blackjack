@@ -9,8 +9,11 @@ class BlackjackGameTest {
     }.build()
 
     @Test
-    internal fun `플레이어가 있다`() {
-        BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
+    internal fun `딜러와 플레이어가 있다`() {
+        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
+        assertThat(game.allPlayers())
+            .hasSize(3)
+            .contains(Dealer())
     }
 
     @Test
