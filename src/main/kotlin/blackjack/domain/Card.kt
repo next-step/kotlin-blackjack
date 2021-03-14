@@ -1,8 +1,4 @@
-package blackjack
-
-
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+package blackjack.domain
 
 class Card private constructor(val value: Pair<String, Pattern>) {
 
@@ -28,7 +24,12 @@ class Card private constructor(val value: Pair<String, Pattern>) {
     companion object {
         private val NUMBERS =
             listOf<String>("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "J", "Q", "K")
-        private val PATTERNS = listOf(Pattern.HEART, Pattern.DIAMOND, Pattern.SPADE, Pattern.CLOVER)
+        private val PATTERNS = listOf(
+            Pattern.HEART,
+            Pattern.DIAMOND,
+            Pattern.SPADE,
+            Pattern.CLOVER
+        )
         private val HEARTS = NUMBERS.map { number ->
             Card(number to Pattern.HEART)
         }
@@ -54,23 +55,5 @@ class Card private constructor(val value: Pair<String, Pattern>) {
             }
             return null
         }
-    }
-}
-
-enum class Pattern(val pattern: String) {
-    HEART("하트"),
-    DIAMOND("다이아"),
-    SPADE("스페이드"),
-    CLOVER("클로버")
-}
-
-class CardTest {
-    @Test
-    fun `같은 카드 2번 드로우 하면 null 값이 출력`() {
-        val firstDraw = Card.drawCard(Pattern.HEART, "A")
-        val secondDraw = Card.drawCard(Pattern.HEART, "A")
-
-        assertThat(firstDraw).isNotNull
-        assertThat(secondDraw).isNull()
     }
 }
