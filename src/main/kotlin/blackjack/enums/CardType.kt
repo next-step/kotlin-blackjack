@@ -4,17 +4,21 @@ enum class CardType(
     val description: String,
     val point: Int
 ) {
-    Two("하트", 2),
-    Three("하트", 3),
-    Four("하트", 4),
-    Five("하트", 5),
-    Six("하트", 6),
-    Seven("하트", 7),
-    Eight("하트", 8),
-    Nine("하트", 9),
-    Ten("하트", 10),
-    King("하트", 10),
-    Queen("하트", 10),
-    Jack("하트", 10),
-    Ace("하트", 11);
+    Two("2", 2),
+    Three("3", 3),
+    Four("4", 4),
+    Five("5", 5),
+    Six("6", 6),
+    Seven("7", 7),
+    Eight("8", 8),
+    Nine("9", 9),
+    Ten("10", 10),
+    King("K", 10),
+    Queen("Q", 10),
+    Jack("J", 10),
+    Ace("A", 11);
+
+    companion object {
+        const val DECREMENTABLE_POINT_OF_ACE = 10
+    }
 }
