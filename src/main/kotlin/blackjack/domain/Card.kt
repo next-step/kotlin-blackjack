@@ -1,9 +1,6 @@
 package blackjack.domain
 
 internal data class Card private constructor(val symbol: CardSymbol, val number: CardNumber) {
-    fun scores(): List<Int> {
-        return this.number.scores
-    }
 
     companion object {
         private val CACHE = CardSymbol.values()
