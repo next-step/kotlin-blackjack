@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import kotlin.random.Random
-
 class Card private constructor(val value: Pair<String, Pattern>) {
 
     override fun equals(other: Any?): Boolean {
@@ -40,10 +38,11 @@ class Card private constructor(val value: Pair<String, Pattern>) {
         }
 
         private fun checkValidateNumber(number: String) {
-            if(!NUMBERS.contains(number)) throw RuntimeException("올바르지 않은 카드번호입니다.")
+            if (!NUMBERS.contains(number)) throw RuntimeException("올바르지 않은 카드번호입니다.")
         }
+
         private fun checkValidatePattern(pattern: Pattern) {
-            if(!PATTERNS.contains(pattern)) throw RuntimeException("올바르지 않은 카드무늬입니다.")
+            if (!PATTERNS.contains(pattern)) throw RuntimeException("올바르지 않은 카드무늬입니다.")
         }
     }
 }
