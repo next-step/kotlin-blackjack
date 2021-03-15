@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import kotlin.random.Random
+
 class Card private constructor(val value: Pair<String, Pattern>) {
 
     override fun equals(other: Any?): Boolean {
@@ -22,6 +24,8 @@ class Card private constructor(val value: Pair<String, Pattern>) {
     }
 
     companion object {
+        private const val AVAILABLE_CARD = true
+        private const val DUPLICATED_CARD = false
         private val NUMBERS =
             listOf<String>("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "J", "Q", "K")
         private val PATTERNS = listOf(
@@ -42,18 +46,28 @@ class Card private constructor(val value: Pair<String, Pattern>) {
         private val CLOVERS = NUMBERS.map { number ->
             Card(number to Pattern.CLOVER)
         }
-        private val CARDS =
+        val CARDS =
             (HEARTS + DIAMONDS + SPADES + CLOVERS)
-                .associateWith { card -> true }
+                .associateWith { card -> AVAILABLE_CARD }
                 .toMutableMap()
 
-        fun drawCard(pattern: Pattern, number: String): Card? {
-            val card = Card(number to pattern)
-            if (CARDS[card] == true) {
+        fun drawCard(): Card {
+            val randomPattern  = PATTERNS[Random.nextInt(0, PATTERNS.size - 1)]
+            val randomNumber = NUMBERS[Random.nextInt(0, NUMBERS.size - 1)]
+            val card = Card(randomNumber to randomPattern)
+
+            if (!isDuplicateCard(card)) {
                 CARDS[card] = false
                 return card
             }
-            return null
+            return drawCard()
+        }
+
+        private fun isDuplicateCard(card: Card?): Boolean {
+            if(CARDS[card] == DUPLICATED_CARD) {
+                return true
+            }
+            return false
         }
     }
 }
