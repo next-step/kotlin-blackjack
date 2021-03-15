@@ -1,13 +1,13 @@
 package blackjack.domain
 
 internal class Player(val name: String) {
-    private val _cards = mutableListOf<Card>()
+    private val playerCards: PlayerCards = PlayerCards()
 
     val cards: List<Card>
-        get() = this._cards.toList()
+        get() = this.playerCards.cards
 
     fun acceptCard(card: Card) {
-        this._cards.add(card)
+        this.playerCards.add(card)
     }
 
     fun canHit(): Boolean {
@@ -15,6 +15,6 @@ internal class Player(val name: String) {
     }
 
     fun score(): Int {
-        return CardNumber.score(this._cards.map { it.number })
+        return playerCards.score()
     }
 }
