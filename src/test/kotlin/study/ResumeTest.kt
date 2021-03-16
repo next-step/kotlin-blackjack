@@ -76,7 +76,6 @@ class ResumeTest {
         )
     }
 
-
     @Test
     fun languages() {
         val person: Person = introduce {
