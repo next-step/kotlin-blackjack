@@ -37,7 +37,7 @@ class ResumeTest {
         }
         assertThat(person.name).isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
-        assertThat(person.skills.values).contains(
+        assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")
         )
     }
@@ -60,10 +60,10 @@ class ResumeTest {
 
         assertThat(person.name).isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
-        assertThat(person.skills.values).contains(
+        assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")
         )
-        assertThat(person.languages.values).contains(
+        assertThat(person.languages?.values).contains(
             entry("Korean", 5), entry("English", 3)
         )
     }

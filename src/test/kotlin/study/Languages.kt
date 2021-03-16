@@ -1,9 +1,11 @@
 package study
 
 class Languages {
-    val values: MutableMap<String, Int> = mutableMapOf()
+    private val _values: MutableMap<String, Int> = mutableMapOf()
+    val values: Map<String, Int>
+        get() = _values.toMutableMap()
 
     infix fun String.level(level: Int) {
-        values[this] = level
+        _values[this] = level
     }
 }

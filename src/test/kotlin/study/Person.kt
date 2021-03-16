@@ -2,8 +2,8 @@ package study
 
 class Person {
     lateinit var name: String
-    lateinit var skills: Skills
-    lateinit var languages: Languages
+    var skills: Skills? = null
+    var languages: Languages? = null
     var company: String? = null
 
     fun name(name: String) {

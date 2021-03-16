@@ -1,14 +1,16 @@
 package study
 
 class Skills {
-    var values: MutableList<Skill> = mutableListOf()
+    private var _values: MutableList<Skill> = mutableListOf()
+    val values: List<Skill>
+        get() = _values.toMutableList()
 
     fun hard(name: String) {
-        values.add(Hard(name))
+        _values.add(Hard(name))
     }
 
     fun soft(name: String) {
-        values.add(Soft(name))
+        _values.add(Soft(name))
     }
 }
 
