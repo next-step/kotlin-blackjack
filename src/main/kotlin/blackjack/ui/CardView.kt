@@ -1,21 +1,21 @@
 package blackjack.ui
 
-import blackjack.domain.Player
 import blackjack.ui.model.BlackJackResult
+import blackjack.ui.model.PlayerDTO
 
 object CardView {
 
-    fun printCardsOf(players: List<Player>) {
-        val names = players.joinToString(", ") { it.name }
+    fun printCardsOf(playerDTOs: List<PlayerDTO>) {
+        val names = playerDTOs.joinToString(", ") { it.name }
         println("${names}에게 2장의 나누었습니다.")
-        for (player in players) {
-            printCardsOf(player)
+        for (playerDTO in playerDTOs) {
+            printCardsOfSinglePlayer(playerDTO)
         }
         println()
     }
 
-    fun printCardsOf(player: Player) {
-        println("${player.name}: ${player.cardNames.joinToString()}")
+    fun printCardsOfSinglePlayer(playerDTO: PlayerDTO) {
+        println("${playerDTO.name}: ${playerDTO.cards.joinToString(", ") { it.expression }}")
     }
 
     fun printResults(blackJackResults: List<BlackJackResult>) {
@@ -26,7 +26,6 @@ object CardView {
     }
 
     private fun printSingleResult(blackJackResult: BlackJackResult) {
-        println()
         println("${blackJackResult.name}: ${blackJackResult.cardNames.joinToString()} - 결과: ${blackJackResult.point}")
     }
 }

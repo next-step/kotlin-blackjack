@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.constant.BLACK_JACK_TWENTY_ONE
 import blackjack.enums.CardType
+import blackjack.ui.model.PlayerDTO
 
 class Player(
     val name: String
@@ -22,5 +23,9 @@ class Player(
             cardPointSum = if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
         }
         return cardPointSum
+    }
+
+    fun toPlayerDTO(): PlayerDTO {
+        return PlayerDTO(name, cards.toMutableSet())
     }
 }

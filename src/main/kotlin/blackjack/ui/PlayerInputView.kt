@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.Player
+import blackjack.ui.model.PlayerDTO
 
 object PlayerInputView {
     fun askPlayerNames(): List<Player> {
@@ -11,8 +12,8 @@ object PlayerInputView {
         return names.split(",").map { Player(it) }
     }
 
-    fun askMoreCard(player: Player): Boolean {
-        println("${player.name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askMoreCard(name: String): Boolean {
+        println("${name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val agreeYn = readLine() ?: throw IllegalArgumentException("입력된 응답이 없습니다.")
         return when (agreeYn) {
             "y" -> true

@@ -9,4 +9,6 @@ class Card(
 ) {
     val point
         get() = type.point
+    val expression
+        get() = "${type.expression}${shape.expression}"
 }
