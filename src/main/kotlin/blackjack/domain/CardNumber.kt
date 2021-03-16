@@ -25,13 +25,15 @@ internal enum class CardNumber(val score: Int, val displayName: String = score.t
             var sum = _numbers.sumBy { it.score }
 
             repeat(aceNumberCount) {
-                sum += if (sum + 11 <= 21) {
-                    11
+                sum += if (sum + 11 <= BlackJackGame.MAX_SCORE) {
+                    ACE_SECOND_SCORE
                 } else {
-                    1
+                    ACE.score
                 }
             }
             return sum
         }
+
+        private const val ACE_SECOND_SCORE = 11
     }
 }

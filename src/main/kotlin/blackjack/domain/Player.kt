@@ -11,10 +11,13 @@ internal class Player(val name: String) {
     }
 
     fun canHit(): Boolean {
-        return score() < 21
+        return score() < BlackJackGame.MAX_SCORE
     }
 
     fun score(): Int {
         return playerCards.score()
+    }
+
+    companion object {
     }
 }

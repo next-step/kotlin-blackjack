@@ -18,4 +18,8 @@ internal class BlackJackGame {
             player.acceptCard(cardPack.next())
         }
     }
+
+    companion object {
+        const val MAX_SCORE = 21
+    }
 }
