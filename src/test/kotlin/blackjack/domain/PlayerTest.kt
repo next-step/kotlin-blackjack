@@ -14,7 +14,7 @@ internal class PlayerTest {
         val cardSum = player.calculateCardSum()
         assertThat(cardSum).isEqualTo(CardType.Two.point)
     }
-    
+
     @Test
     fun `Ace 한 개를 포함한 카드를 받아서 현재 숫자를 계산한다(Ace를 11로 계산)`() {
         val player = Player("song")

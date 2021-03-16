@@ -1,7 +1,6 @@
 package blackjack.ui
 
 import blackjack.domain.Player
-import blackjack.ui.model.PlayerDTO
 
 object PlayerInputView {
     fun askPlayerNames(): List<Player> {

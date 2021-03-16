@@ -15,7 +15,6 @@ internal class DealerTest {
         Assertions.assertThat(playerDTOs).extracting("name").contains("song", "kim")
         Assertions.assertThat(playerDTOs[0].cards).hasSize(2)
         Assertions.assertThat(playerDTOs[1].cards).hasSize(2)
-
     }
 
     @Test

@@ -11,10 +11,13 @@ object BlackJackController {
         val players = PlayerInputView.askPlayerNames()
         val dealer = Dealer(players, cardPack)
 
-        val playerDTOsAfterStart = dealer.giveTwoCardsToAllPlayers()
-        CardView.printCardsOf(playerDTOsAfterStart)
+        val playerDTOs = dealer.giveTwoCardsToAllPlayers()
+        CardView.printCardsOf(playerDTOs)
 
-        val blackJackResults = dealer.giveCardUntilStop(PlayerInputView::askMoreCard, CardView::printCardsOfSinglePlayer)
+        val blackJackResults = dealer.giveCardUntilStop(
+            PlayerInputView::askMoreCard,
+            CardView::printCardsOfSinglePlayer
+        )
 
         CardView.printResults(blackJackResults)
     }
