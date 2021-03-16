@@ -1,8 +1,8 @@
 package blackjack.domain
 
-internal enum class CardNumber(val score: Int) {
+internal enum class CardNumber(val score: Int, val displayName: String = score.toString()) {
 
-    ACE(1),
+    ACE(1, "A"),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -12,9 +12,9 @@ internal enum class CardNumber(val score: Int) {
     EIGHT(8),
     NINE(9),
     TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10);
+    JACK(10, "J"),
+    QUEEN(10, "Q"),
+    KING(10, "K");
 
     companion object {
         fun score(numbers: List<CardNumber>): Int {

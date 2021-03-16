@@ -2,6 +2,11 @@ package blackjack.domain
 
 internal data class Card private constructor(val symbol: CardSymbol, val number: CardNumber) {
 
+    val name: String
+        get() {
+            return number.displayName + symbol.krName
+        }
+
     companion object {
         private val CACHE = CardSymbol.values()
             .flatMap { symbol -> CardNumber.values().map { grade -> symbol to grade } }
