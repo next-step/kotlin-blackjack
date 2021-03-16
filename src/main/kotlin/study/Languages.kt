@@ -1,10 +1,12 @@
 package study
 
 class Languages {
-    private val languages: MutableList<Language> = mutableListOf()
+    private val _languages: MutableList<Language> = mutableListOf()
+    private val languages: List<Language>
+        get() = _languages
 
     infix fun String.level(level: Int) {
-        languages.add(Language(this, level))
+        _languages.add(Language(this, level))
     }
 
     fun toList(): List<Language> {
