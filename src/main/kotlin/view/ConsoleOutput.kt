@@ -14,13 +14,13 @@ class ConsoleOutput {
             append("${names}에게 2장의 카드를 나누었습니다.\n")
 
             players.players.forEach {
-                append("${it.playerName.name}카드 : ${it.hands.joinToString(", ") { showCard(it) }}\n")
+                append("${it.playerName.name}카드 : ${it.hands.cards.joinToString(", ") { showCard(it) }}\n")
             }
         }
         println(builder)
     }
 
     private fun showCard(card: Card): String {
-        return "${card.symbol.symbol}${card.suit.korean}"
+        return "${card.symbol.alias}${card.suit.korean}"
     }
 }

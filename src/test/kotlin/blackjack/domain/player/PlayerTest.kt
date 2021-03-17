@@ -1,5 +1,7 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.CardSuit
+import blackjack.domain.card.CardSymbol
 import blackjack.domain.createCard
 import blackjack.domain.createPlayer
 import org.assertj.core.api.Assertions.assertThat
@@ -11,10 +13,32 @@ internal class PlayerTest {
     @Test
     fun draw() {
         val player = createPlayer("pobi")
-        val card = createCard("ACE", "SPADE")
+        val card = createCard(CardSymbol.ACE.name, CardSuit.SPADE.name)
 
         player.draw(card)
 
-        assertThat(player.hands).isEqualTo(listOf(card))
+        assertThat(player.hands.cards).isEqualTo(listOf(card))
+    }
+
+    @DisplayName("카드의 합이 21이 넘지 않는 경우 True 반환")
+    @Test
+    fun canDraw() {
+        val player = createPlayer("pobi")
+        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.ACE.name, CardSuit.SPADE.name))
+
+        assertThat(player.canDraw()).isTrue
+    }
+
+    @DisplayName("카드의 합이 21이 넘는 경우 False 반환")
+    @Test
+    fun canDraw2() {
+        val player = createPlayer("pobi")
+        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.TWO.name, CardSuit.SPADE.name))
+
+        assertThat(player.canDraw()).isFalse
     }
 }

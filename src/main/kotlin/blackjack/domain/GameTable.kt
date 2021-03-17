@@ -11,6 +11,10 @@ class GameTable(val players: Players) {
         players.draw(cardDeck, FIRST_DRAW_COUNT)
     }
 
+    fun proceedRemainingRound() {
+        players.draw(cardDeck)
+    }
+
     companion object {
         private const val FIRST_DRAW_COUNT = 2
     }

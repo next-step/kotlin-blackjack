@@ -13,7 +13,10 @@ object BlackjackController {
         consoleOutput.printUserNameInputMessage()
         val players = PlayerFactory.create(consoleInput.read())
 
-        GameTable(players).proceedFirstRound()
+        val gameTable = GameTable(players)
+        gameTable.proceedFirstRound()
         consoleOutput.printFirstDrawMessage(players)
+
+        gameTable.proceedRemainingRound()
     }
 }

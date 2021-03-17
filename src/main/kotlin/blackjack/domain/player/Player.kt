@@ -1,11 +1,16 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Hands
 
 class Player(val playerName: PlayerName) {
-    private val _hands = mutableListOf<Card>()
-    val hands
-        get() = _hands.toList()
+    val hands = Hands(mutableListOf())
 
-    fun draw(card: Card) = _hands.add(card)
+    fun draw(card: Card) = hands.draw(card)
+
+    fun canDraw() = hands.calculateScore() <= DRAW_CONDITION
+
+    companion object {
+        private const val DRAW_CONDITION = 21
+    }
 }
