@@ -105,7 +105,7 @@ class ResumeTest {
     class Skills {
         private val _skills: MutableList<Skill> = mutableListOf()
         val skills: List<Skill>
-            get() = _skills
+            get() = _skills.toList()
 
         fun hard(name: String) {
             _skills.add(Hard(name))
@@ -119,7 +119,7 @@ class ResumeTest {
     class Languages {
         private val _languages: MutableList<Language> = mutableListOf()
         val language: List<Language>
-            get() = _languages
+            get() = _languages.toList()
 
         infix fun String.level(level: Int) {
             _languages.add(Language(Pair(this, level)))
