@@ -1,3 +1,3 @@
 package blackjack.domain.card
 
-class Card(symbol: CardSymbol, suit: CardSuit)
+class Card(val symbol: CardSymbol, val suit: CardSuit)

@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-data class PlayerName(private val name: String) {
+data class PlayerName(val name: String) {
     init {
         validateLength()
         validateContainBlank()

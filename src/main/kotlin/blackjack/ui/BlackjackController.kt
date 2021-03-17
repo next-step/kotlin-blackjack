@@ -14,5 +14,6 @@ object BlackjackController {
         val players = PlayerFactory.create(consoleInput.read())
 
         GameTable(players).proceedFirstRound()
+        consoleOutput.printFirstDrawMessage(players)
     }
 }
