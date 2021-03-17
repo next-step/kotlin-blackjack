@@ -1,11 +1,5 @@
 package study
 
-import Hard
-import Language
-import Person
-import Soft
-import introduce
-import languages
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
