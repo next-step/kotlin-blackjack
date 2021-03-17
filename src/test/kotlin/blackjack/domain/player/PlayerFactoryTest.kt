@@ -13,8 +13,8 @@ internal class PlayerFactoryTest {
         val users = PlayerFactory.create(input)
 
         assertAll(
-            { assertThat(users.size).isEqualTo(2) },
-            { assertThat(users.map { it.playerName }).containsExactly(PlayerName("pobi"), PlayerName("jason")) }
+            { assertThat(users.players.size).isEqualTo(2) },
+            { assertThat(users.players.map { it.playerName }).containsExactly(PlayerName("pobi"), PlayerName("jason")) }
         )
     }
 }
