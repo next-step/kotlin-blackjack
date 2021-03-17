@@ -1,3 +1,7 @@
+package study
+
+import Skill
+
 class Skills {
     private val skills: MutableList<Skill> = mutableListOf()
 

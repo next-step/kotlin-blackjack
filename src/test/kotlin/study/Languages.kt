@@ -1,3 +1,5 @@
+package study
+
 class Languages {
     private val languages: MutableList<Language> = mutableListOf()
 
@@ -6,4 +8,8 @@ class Languages {
     }
 
     fun toList(): List<Language> = languages.toList()
+}
+
+fun languages(initializer: Languages.() -> Unit): Languages {
+    return Languages().apply(initializer)
 }

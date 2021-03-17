@@ -1,3 +1,4 @@
+package study
 
 class Person {
     lateinit var name: String
@@ -16,4 +17,8 @@ class Person {
     fun skills(initializer: Skills.() -> Unit) {
         skills = Skills().apply(initializer)
     }
+}
+
+fun introduce(initializer: Person.() -> Unit): Person {
+    return Person().apply(initializer)
 }
