@@ -10,7 +10,7 @@ class Player(val playerName: PlayerName) {
         get() = hands.calculateScore()
 
     fun draw(card: Card, decider: DrawDecider) {
-        if (canDraw() && decider == DrawDecider.DRAW) {
+        if (canDraw() && decider.isDraw()) {
             hands.draw(card)
         }
     }

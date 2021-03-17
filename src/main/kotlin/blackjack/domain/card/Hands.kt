@@ -1,12 +1,15 @@
 package blackjack.domain.card
 
-class Hands(val cards: MutableList<Card>) {
+class Hands(private val _cards: MutableList<Card>) {
+    val cards
+        get() = _cards.toList()
+
     fun draw(card: Card): Boolean {
-        return cards.add(card)
+        return _cards.add(card)
     }
 
     fun calculateScore(): Int {
-        val score = cards.map { it.symbol.score }.sum()
+        val score = _cards.map { it.symbol.score }.sum()
         return applyAceCondition(score)
     }
 
@@ -17,7 +20,7 @@ class Hands(val cards: MutableList<Card>) {
         return score
     }
 
-    private fun hasAce() = cards.any { it.symbol == CardSymbol.ACE }
+    private fun hasAce() = _cards.any { it.symbol == CardSymbol.ACE }
 
     companion object {
         private const val ACE_INCREASE_CONDITION = 11
