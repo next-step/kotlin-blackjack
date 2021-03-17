@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.GameTable
 import blackjack.domain.player.PlayerFactory
 import view.ConsoleInput
 import view.ConsoleOutput
@@ -11,5 +12,7 @@ object BlackjackController {
     fun run() {
         consoleOutput.printUserNameInputMessage()
         val players = PlayerFactory.create(consoleInput.read())
+
+        GameTable(players).proceedFirstRound()
     }
 }

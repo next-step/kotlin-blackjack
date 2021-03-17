@@ -1,5 +1,5 @@
 package blackjack.domain.card
 
 enum class CardSuit {
-    CLUB, DIAMOND, HEARTS, SPADES
+    CLUB, DIAMOND, HEART, SPADE
 }

@@ -6,4 +6,6 @@ object CardDeck {
         get() = _cards.toList()
 
     private fun initCard() = CardSymbol.values().flatMap { symbol -> CardSuit.values().map { Card(symbol, it) } }
+
+    fun shuffle() = _cards.shuffled()
 }
