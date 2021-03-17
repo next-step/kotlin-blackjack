@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.PlayerFactory
 import view.ConsoleInput
 import view.ConsoleOutput
 
@@ -9,6 +10,6 @@ object BlackjackController {
 
     fun run() {
         consoleOutput.printUserNameInputMessage()
-        consoleInput.read()
+        val players = PlayerFactory.create(consoleInput.read())
     }
 }
