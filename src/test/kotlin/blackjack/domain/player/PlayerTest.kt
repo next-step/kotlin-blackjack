@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.DrawDecider
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.createCard
@@ -15,7 +16,7 @@ internal class PlayerTest {
         val player = createPlayer("pobi")
         val card = createCard(CardSymbol.ACE.name, CardSuit.SPADE.name)
 
-        player.draw(card)
+        player.draw(card, DrawDecider.DRAW)
 
         assertThat(player.hands.cards).isEqualTo(listOf(card))
     }
@@ -24,9 +25,9 @@ internal class PlayerTest {
     @Test
     fun canDraw() {
         val player = createPlayer("pobi")
-        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name))
-        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name))
-        player.draw(createCard(CardSymbol.ACE.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name), DrawDecider.DRAW)
+        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name), DrawDecider.DRAW)
+        player.draw(createCard(CardSymbol.ACE.name, CardSuit.SPADE.name), DrawDecider.DRAW)
 
         assertThat(player.canDraw()).isTrue
     }
@@ -35,9 +36,9 @@ internal class PlayerTest {
     @Test
     fun canDraw2() {
         val player = createPlayer("pobi")
-        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name))
-        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name))
-        player.draw(createCard(CardSymbol.TWO.name, CardSuit.SPADE.name))
+        player.draw(createCard(CardSymbol.KING.name, CardSuit.SPADE.name), DrawDecider.DRAW)
+        player.draw(createCard(CardSymbol.QUEEN.name, CardSuit.SPADE.name), DrawDecider.DRAW)
+        player.draw(createCard(CardSymbol.TWO.name, CardSuit.SPADE.name), DrawDecider.DRAW)
 
         assertThat(player.canDraw()).isFalse
     }

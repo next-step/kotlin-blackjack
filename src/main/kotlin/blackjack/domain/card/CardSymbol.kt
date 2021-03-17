@@ -13,5 +13,5 @@ enum class CardSymbol(val alias: String, val score: Int) {
     TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
-    KING("K", 10)
+    KING("K", 10);
 }

@@ -1,6 +1,7 @@
 package view
 
 import blackjack.domain.card.Card
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 class ConsoleOutput {
@@ -14,13 +15,25 @@ class ConsoleOutput {
             append("${names}에게 2장의 카드를 나누었습니다.\n")
 
             players.players.forEach {
-                append("${it.playerName.name}카드 : ${it.hands.cards.joinToString(", ") { showCard(it) }}\n")
+                append("${showHands(it)}\n")
             }
         }
         println(builder)
     }
 
+    private fun showHands(player: Player): String {
+        return "${player.playerName.name}카드 : ${player.hands.cards.joinToString(", ") { showCard(it) }}"
+    }
+
     private fun showCard(card: Card): String {
         return "${card.symbol.alias}${card.suit.korean}"
+    }
+
+    fun printDecideDrawingMessage(player: Player) {
+        println("${player.playerName.name}는 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+    }
+
+    fun printHandsStatus(player: Player) {
+        println(showHands(player))
     }
 }
