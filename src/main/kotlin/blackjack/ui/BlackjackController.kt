@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.PlayerFactory
+import blackjack.domain.player.PlayerFactory
 import view.ConsoleInput
 import view.ConsoleOutput
 
