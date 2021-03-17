@@ -22,7 +22,7 @@ class ConsoleOutput {
     }
 
     private fun showHands(player: Player): String {
-        return "${player.playerName.name}카드 : ${player.hands.cards.joinToString(", ") { showCard(it) }}"
+        return "${player.playerName.name}카드: ${player.hands.cards.joinToString(", ") { showCard(it) }}"
     }
 
     private fun showCard(card: Card): String {
@@ -35,5 +35,9 @@ class ConsoleOutput {
 
     fun printHandsStatus(player: Player) {
         println(showHands(player))
+    }
+
+    fun printGameResult(players: Players) {
+        players.players.forEach { println("\n${showHands(it)} - 결과: ${it.score}") }
     }
 }
