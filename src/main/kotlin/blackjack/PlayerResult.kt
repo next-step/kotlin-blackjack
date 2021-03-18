@@ -15,7 +15,7 @@ data class PlayerResult(private val player: CardPlayer, var wins: Int = 0, var l
 
 infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
     if (dealer.score() > 21) {
-        return map { PlayerResult(it, wins = 1) }
+        return map { PlayerResult(it, wins = 1) } + PlayerResult(dealer, losses = 1)
     }
 
     return map { it to (it vs dealer) }
