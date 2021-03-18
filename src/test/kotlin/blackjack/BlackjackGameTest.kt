@@ -2,6 +2,7 @@ package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 
 class BlackjackGameTest {
     private val deck = blackjack {
@@ -60,5 +61,23 @@ class BlackjackGameTest {
         game.endDraw()
 
         assertThat(game.dealer.cards.size).isEqualTo(1)
+    }
+
+    @Test
+    fun `딜러가 21을 초과하면 플레이어가 승리한다`() {
+        val game = BlackJackGame(listOf(CardPlayer.Player("pobi")), deck)
+
+        game.dealer.accept(Card("K", Symbol.HEARTS))
+        game.dealer.accept(Card("K", Symbol.HEARTS))
+        game.dealer.accept(Card("K", Symbol.HEARTS))
+
+        val list = game.players vs game.dealer
+        list.find { it.name == "pobi" }?.let {
+            assertThat(it.wins).isEqualTo(1)
+        } ?: run { fail("포비가 우승해야 합니다") }
+
+        list.find { it.name == "dealer" }?.let {
+            assertThat(it.losses).isEqualTo(1)
+        } ?: run { fail("딜러가 패배해야 합니다") }
     }
 }
