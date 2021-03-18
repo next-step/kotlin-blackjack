@@ -1,5 +1,8 @@
 package blackjack
 
+import blackjack.PlayResult.WINS
+import blackjack.PlayResult.DRAWS
+import blackjack.PlayResult.LOSSES
 import kotlin.math.abs
 
 interface CardPlayer {
@@ -89,12 +92,12 @@ interface CardPlayer {
     }
 }
 
-infix fun CardPlayer.vs(dealer: CardPlayer): PlayResult {
+infix fun CardPlayer.vs(other: CardPlayer): PlayResult {
     val myScore = score()
-    val dealerScore = dealer.score()
+    val otherScore = other.score()
     return when {
-        myScore > dealerScore -> PlayResult.WINS
-        myScore < dealerScore -> PlayResult.LOSSES
-        else -> PlayResult.DRAWS
+        myScore > otherScore -> WINS
+        myScore < otherScore -> LOSSES
+        else -> DRAWS
     }
 }

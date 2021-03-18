@@ -1,7 +1,7 @@
 package blackjack
 
 object ResultView {
-    fun prepare(players: List<CardPlayer>) {
+    fun prepare(players: Players) {
         val names = players.joinToString(", ") { it.name }
         println("${names}에게 2장의 나누었습니다.")
         for (player in players) {

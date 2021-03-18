@@ -7,6 +7,7 @@ fun main() {
 
     val players = UserInput.StringList("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)").answer()
         .map { CardPlayer.Player(it) }
+        .let { Players(it) }
 
     val game = BlackJackGame(players, deck)
 
@@ -28,9 +29,7 @@ fun main() {
 
     ResultView.result(game)
 
-    val gameResult = game.players vs game.dealer
-
-    for (result in gameResult) {
+    for (result in players.gameResult()) {
         println("${result.name}: ${ResultToString(result)}")
     }
 }
