@@ -72,4 +72,20 @@ class PlayerTest {
         dealer.take { Card("2", Symbol.CLUBS) }
         assertThat(dealer.score()).isEqualTo(18)
     }
+
+    @Test
+    @OptIn(ExperimentalStdlibApi::class)
+    fun `21 이상이면 그만 받는다`() {
+        val person = Player.Person("pobi")
+            .apply {
+                accept(Card("A", Symbol.HEARTS))
+                accept(Card("K", Symbol.DIAMONDS))
+            }
+
+        val answer = mutableListOf(true, false)
+        person.draw(
+            Draw({ Card("2", Symbol.HEARTS) }, { answer.removeFirst() })
+        )
+        assertThat(person.score()).isEqualTo(21)
+    }
 }
