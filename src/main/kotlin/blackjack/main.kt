@@ -35,12 +35,6 @@ fun main() {
     }
 }
 
-class ResultToString(val playerResult: PlayerResult) {
-    override fun toString(): String {
-        return "${playerResult.wins}승" + "${playerResult.losses}패" + "${playerResult.draws}무"
-    }
-}
-
 private fun drawQuestion(name: String): Boolean {
     return when (UserInput.Char("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)").answer()) {
         'y' -> true

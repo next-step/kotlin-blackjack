@@ -53,14 +53,18 @@ interface Player {
         override fun hashCode(): Int {
             return name.hashCode()
         }
-
-        enum class PlayResult {
-            WIN, LOSSES, DRAWS
-        }
     }
 
     class Dealer(private val player: Player) : Player by player {
         constructor() : this(Person("dealer"))
+
+        fun take(nextCard: () -> Card): Boolean {
+            return (score() <= 16).also {
+                if (it) {
+                    accept(nextCard())
+                }
+            }
+        }
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -76,23 +80,15 @@ interface Player {
         override fun hashCode(): Int {
             return player.hashCode()
         }
-
-        fun take(nextCard: () -> Card): Boolean {
-            return (score() <= 16).also {
-                if (it) {
-                    accept(nextCard())
-                }
-            }
-        }
     }
 }
 
-infix fun Player.vs(dealer: Player): Player.Person.PlayResult {
+infix fun Player.vs(dealer: Player): PlayResult {
     val myScore = score()
     val dealerScore = dealer.score()
     return when {
-        myScore > dealerScore -> Player.Person.PlayResult.WIN
-        myScore < dealerScore -> Player.Person.PlayResult.LOSSES
-        else -> Player.Person.PlayResult.DRAWS
+        myScore > dealerScore -> PlayResult.WINS
+        myScore < dealerScore -> PlayResult.LOSSES
+        else -> PlayResult.DRAWS
     }
 }

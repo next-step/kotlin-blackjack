@@ -1,19 +1,14 @@
 package blackjack
 
-data class PlayerResult(
-    private val player: Player,
-    var wins: Int = 0,
-    var losses: Int = 0,
-    var draws: Int = 0
-) {
+data class PlayerResult(private val player: Player, var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
     val name: String
         get() = player.name
 
-    fun update(playResult: Player.Person.PlayResult) {
+    fun update(playResult: PlayResult) {
         when (playResult) {
-            Player.Person.PlayResult.WIN -> wins += 1
-            Player.Person.PlayResult.LOSSES -> losses += 1
-            Player.Person.PlayResult.DRAWS -> draws += 1
+            PlayResult.WINS -> wins += 1
+            PlayResult.LOSSES -> losses += 1
+            PlayResult.DRAWS -> draws += 1
         }
     }
 }
