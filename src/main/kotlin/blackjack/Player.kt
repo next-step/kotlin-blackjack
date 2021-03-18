@@ -9,6 +9,10 @@ interface Player {
     fun accept(card: Card)
     fun draw(draw: Draw)
 
+    companion object {
+        const val BLACKJACK = 21
+    }
+
     class Person(override val name: String) : Player {
         private var _cards: List<Card> = emptyList()
         override val cards: List<Card>
@@ -17,7 +21,7 @@ interface Player {
         override fun score(): Int {
             return _cards.fold(listOf(0)) { accumulator, card ->
                 accumulator.flatMap { score -> card.number.map { it + score } }
-            }.closeTo(21)
+            }.closeTo(BLACKJACK)
         }
 
         override fun accept(card: Card) {
@@ -25,7 +29,7 @@ interface Player {
         }
 
         override fun draw(draw: Draw) {
-            while (score() < 21 && draw.accepted(name)) {
+            while (score() < BLACKJACK && draw.accepted(name)) {
                 accept(draw.nextCard())
                 draw.result(this)
             }
@@ -35,7 +39,7 @@ interface Player {
             val sorted = map { it to abs(it - number) }
                 .sortedBy { it.second }
                 .map { it.first }
-            val result = sorted.firstOrNull { it <= 21 }
+            val result = sorted.firstOrNull { it <= BLACKJACK }
             return result ?: sorted.firstOrNull() ?: 0
         }
 
@@ -58,12 +62,10 @@ interface Player {
     class Dealer(private val player: Player) : Player by player {
         constructor() : this(Person("dealer"))
 
-        fun take(nextCard: () -> Card): Boolean {
-            return (score() <= 16).also {
-                if (it) {
-                    accept(nextCard())
-                }
-            }
+        fun lastWant() = score() <= HIT_UNTIL
+
+        fun take(last: () -> Card) {
+            accept(last())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -79,6 +81,10 @@ interface Player {
 
         override fun hashCode(): Int {
             return player.hashCode()
+        }
+
+        companion object {
+            const val HIT_UNTIL = 16
         }
     }
 }

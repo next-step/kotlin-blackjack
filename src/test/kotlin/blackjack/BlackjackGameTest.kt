@@ -51,4 +51,14 @@ class BlackjackGameTest {
             assertThat(player.score()).isNotZero()
         }
     }
+
+    @Test
+    @OptIn(ExperimentalStdlibApi::class)
+    fun `딜러가 마지막 카드를 받는다`() {
+        val game = BlackJackGame(listOf(Player.Person("pobi")), deck)
+
+        game.endDraw()
+
+        assertThat(game.dealer.cards.size).isEqualTo(1)
+    }
 }
