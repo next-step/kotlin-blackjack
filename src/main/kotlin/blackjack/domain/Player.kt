@@ -17,7 +17,4 @@ internal class Player(val name: String) {
     fun score(): Int {
         return playerCards.score()
     }
-
-    companion object {
-    }
 }

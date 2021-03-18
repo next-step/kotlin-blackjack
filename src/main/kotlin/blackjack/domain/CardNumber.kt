@@ -18,22 +18,17 @@ internal enum class CardNumber(val score: Int, val displayName: String = score.t
 
     companion object {
         fun score(numbers: List<CardNumber>): Int {
-            val _numbers = mutableListOf(*numbers.toTypedArray())
-            _numbers.remove(ACE)
-
-            val aceNumberCount = numbers.size - _numbers.size
-            var sum = _numbers.sumBy { it.score }
+            val aceNumberCount = numbers.count { it == ACE }
+            var sum = numbers.sumBy { it.score }
 
             repeat(aceNumberCount) {
-                sum += if (sum + 11 <= BlackJackGame.MAX_SCORE) {
-                    ACE_SECOND_SCORE
-                } else {
-                    ACE.score
+                if (sum + ACE_SECOND_SCORE_GAP <= BlackJackGame.MAX_SCORE) {
+                    sum += ACE_SECOND_SCORE_GAP
                 }
             }
             return sum
         }
 
-        private const val ACE_SECOND_SCORE = 11
+        private const val ACE_SECOND_SCORE_GAP = 10
     }
 }

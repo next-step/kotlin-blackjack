@@ -1,11 +1,29 @@
 package blackjack.domain
 
-internal data class Card private constructor(val symbol: CardSymbol, val number: CardNumber) {
+internal class Card private constructor(val symbol: CardSymbol, val number: CardNumber) {
 
     val name: String
         get() {
             return number.displayName + symbol.krName
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Card
+
+        if (symbol != other.symbol) return false
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = symbol.hashCode()
+        result = 31 * result + number.hashCode()
+        return result
+    }
 
     companion object {
         private val CACHE = CardSymbol.values()

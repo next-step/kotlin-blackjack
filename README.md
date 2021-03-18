@@ -1,7 +1,7 @@
 # kotlin-blackjack
 
 카드
-- [X] 카드는 총 53장이다.
+- [X] 카드는 총 52장이다.
     - [X] 2-9, ace(1, 11), king(10), queen(10), jack (10)
 
 - [X] 카든 무늬
