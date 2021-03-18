@@ -25,7 +25,7 @@ interface Player {
         }
 
         override fun draw(draw: Draw) {
-            while (draw.accepted(name)) {
+            while (score() < 21 && draw.accepted(name)) {
                 accept(draw.nextCard())
                 draw.result(this)
             }
