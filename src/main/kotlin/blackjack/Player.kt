@@ -2,6 +2,11 @@ package blackjack
 
 class Player(val name: String) {
     val cardDeck = Cards()
+
+    fun getCardText(): String {
+        val cardTexts = cardDeck.cards.map { it.cardNumber.showName + it.type.showName }
+        return "${name}카드: ${cardTexts.joinToString(", ")}"
+    }
 }
 
 class Players(private val _players: List<Player>) {
