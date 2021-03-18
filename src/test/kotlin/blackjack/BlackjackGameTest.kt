@@ -67,7 +67,6 @@ class BlackjackGameTest {
     @Test
     fun `딜러가 21을 초과하면 플레이어가 승리한다`() {
         val players = Players(CardPlayer.Player("pobi"))
-        val game = BlackJackGame(players, deck)
 
         players.dealer.accept(Card("K", Symbol.HEARTS))
         players.dealer.accept(Card("K", Symbol.HEARTS))
@@ -78,7 +77,7 @@ class BlackjackGameTest {
             assertThat(it.wins).isEqualTo(1)
         } ?: run { fail("포비가 우승해야 합니다") }
 
-        list.find { it.name == "dealer" }?.let {
+        list.find { it.name == players.dealer.name }?.let {
             assertThat(it.losses).isEqualTo(1)
         } ?: run { fail("딜러가 패배해야 합니다") }
     }
