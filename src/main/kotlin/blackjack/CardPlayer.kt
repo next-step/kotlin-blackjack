@@ -2,7 +2,7 @@ package blackjack
 
 import kotlin.math.abs
 
-interface Player {
+interface CardPlayer {
     val name: String
     val cards: List<Card>
     fun score(): Int
@@ -13,7 +13,7 @@ interface Player {
         const val BLACKJACK = 21
     }
 
-    class Person(override val name: String) : Player {
+    class Player(override val name: String) : CardPlayer {
         private var _cards: List<Card> = emptyList()
         override val cards: List<Card>
             get() = _cards
@@ -47,7 +47,7 @@ interface Player {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
-            other as Person
+            other as Player
 
             if (name != other.name) return false
 
@@ -59,8 +59,8 @@ interface Player {
         }
     }
 
-    class Dealer(private val player: Player) : Player by player {
-        constructor() : this(Person("dealer"))
+    class Dealer(private val player: CardPlayer) : CardPlayer by player {
+        constructor() : this(Player("dealer"))
 
         fun lastWant() = score() <= HIT_UNTIL
 
@@ -89,7 +89,7 @@ interface Player {
     }
 }
 
-infix fun Player.vs(dealer: Player): PlayResult {
+infix fun CardPlayer.vs(dealer: CardPlayer): PlayResult {
     val myScore = score()
     val dealerScore = dealer.score()
     return when {

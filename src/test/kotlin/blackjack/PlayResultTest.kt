@@ -4,17 +4,17 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayResultTest {
-    private val pobi = Player.Person("pobi")
+    private val pobi = CardPlayer.Player("pobi")
         .apply {
             accept(Card("A", Symbol.DIAMONDS))
             accept(Card("K", Symbol.DIAMONDS))
         }
-    private val jason = Player.Person("jason")
+    private val jason = CardPlayer.Player("jason")
         .apply {
             accept(Card("K", Symbol.DIAMONDS))
             accept(Card("2", Symbol.DIAMONDS))
         }
-    private val dealer = Player.Dealer()
+    private val dealer = CardPlayer.Dealer()
         .apply {
             accept(Card("K", Symbol.DIAMONDS))
             accept(Card("K", Symbol.DIAMONDS))

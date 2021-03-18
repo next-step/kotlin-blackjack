@@ -10,15 +10,15 @@ class BlackjackGameTest {
 
     @Test
     internal fun `딜러와 플레이어가 있다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
+        val game = BlackJackGame(listOf(CardPlayer.Player("pobi"), CardPlayer.Player("json")), deck)
         assertThat(game.allPlayers())
             .hasSize(3)
-            .contains(Player.Dealer())
+            .contains(CardPlayer.Dealer())
     }
 
     @Test
     internal fun `처음엔 두장씩 준다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
+        val game = BlackJackGame(listOf(CardPlayer.Player("pobi"), CardPlayer.Player("json")), deck)
         game.prepareDraw()
         assertThat(game.allPlayers()).allSatisfy {
             assertThat(it.cards.size).isEqualTo(2)
@@ -28,11 +28,11 @@ class BlackjackGameTest {
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     internal fun `한장을 받는다`() {
-        val pobi = Player.Person("pobi")
+        val pobi = CardPlayer.Player("pobi")
         val game = BlackJackGame(listOf(pobi), deck)
         assertThat(pobi.cards.size).isEqualTo(0)
         val answer = mutableListOf(true, false)
-        game.draw({ answer.removeFirst() }) { player: Player ->
+        game.draw({ answer.removeFirst() }) { player: CardPlayer ->
             assertThat(player).isEqualTo(pobi)
             assertThat(player.cards.size).isEqualTo(1)
         }
@@ -41,7 +41,7 @@ class BlackjackGameTest {
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     internal fun `결과를 알 수 있다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi")), deck)
+        val game = BlackJackGame(listOf(CardPlayer.Player("pobi")), deck)
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() })
         game.endDraw()
@@ -55,7 +55,7 @@ class BlackjackGameTest {
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     fun `딜러가 마지막 카드를 받는다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi")), deck)
+        val game = BlackJackGame(listOf(CardPlayer.Player("pobi")), deck)
 
         game.endDraw()
 

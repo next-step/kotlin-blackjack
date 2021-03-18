@@ -1,6 +1,6 @@
 package blackjack
 
-data class PlayerResult(private val player: Player, var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
+data class PlayerResult(private val player: CardPlayer, var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
     val name: String
         get() = player.name
 
@@ -13,7 +13,7 @@ data class PlayerResult(private val player: Player, var wins: Int = 0, var losse
     }
 }
 
-infix fun List<Player>.vs(dealer: Player.Dealer): List<PlayerResult> {
+infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
     if (dealer.score() > 21) {
         return map { PlayerResult(it, wins = 1) }
     }
@@ -27,7 +27,7 @@ infix fun List<Player>.vs(dealer: Player.Dealer): List<PlayerResult> {
         } + (dealer vs this)
 }
 
-private infix fun Player.vs(players: List<Player>): PlayerResult {
+private infix fun CardPlayer.vs(players: List<CardPlayer>): PlayerResult {
     val thisPlayer = this
     return PlayerResult(this)
         .apply {
