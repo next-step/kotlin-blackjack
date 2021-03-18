@@ -4,13 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CardTest {
-    // blackjack {
-    //     ace(1, 10)
-    //     normal(2..10)
-    //     jack(10)
-    //     queen(10)
-    //     king(10)
-    // }
 
     @Test
     internal fun 에이스() {
