@@ -13,6 +13,10 @@ fun main() {
     players.players.forEach {
         println(it.getCardText())
     }
+
+    players.players.forEach {
+        blackJack.moreCard(it, cardExtractor)
+    }
 }
 
 class BlackJack {
@@ -26,5 +30,23 @@ class BlackJack {
                 Player(it)
             }
         )
+    }
+
+    fun parseAnswer(answer: String?): Boolean {
+        require(answer != null && (answer == "y" || answer == "n")) { "응답은 y나 n을 해주세요." }
+        return answer == "y"
+    }
+
+    fun moreCard(player: Player, cardExtractor: CardExtractor) {
+        while (!player.isDead()) {
+            val answer = inputReceiveCardAnswer(player.name)
+            if (parseAnswer(answer)) {
+                player.cardDeck.add(cardExtractor.getCard())
+            } else {
+                println(player.getCardText())
+                break
+            }
+            println(player.getCardText())
+        }
     }
 }

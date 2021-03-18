@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource
 
 class BlackJackTest {
-    val blackJack = BlackJack()
+    private val blackJack = BlackJack()
 
     @Test
     fun `이름을 입력받아 플레이어를 반환한다`() {
@@ -24,5 +24,16 @@ class BlackJackTest {
     @Test
     fun `특정 이름이 공백이면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> { blackJack.parsePlayers("서진혁,,nextstep") }
+    }
+
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun `응답을 입력하지 않으면 예외가 발생한다`(answer: String?) {
+        assertThrows<IllegalArgumentException> { blackJack.parseAnswer(answer) }
+    }
+
+    @Test
+    fun `응답을 y혹은 n이 아니면 예외가 발생한다`() {
+        assertThrows<java.lang.IllegalArgumentException> { blackJack.parseAnswer("a") }
     }
 }
