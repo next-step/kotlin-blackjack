@@ -17,6 +17,11 @@ fun main() {
     players.players.forEach {
         blackJack.moreCard(it, cardExtractor)
     }
+
+    players.players.forEach {
+        print(it.getCardText())
+        println(" - 결과: ${it.cardDeck.getScore()}")
+    }
 }
 
 class BlackJack {
