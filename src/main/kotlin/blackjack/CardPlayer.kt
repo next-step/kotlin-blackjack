@@ -97,6 +97,9 @@ interface CardPlayer {
 }
 
 infix fun CardPlayer.vs(other: CardPlayer): PlayResult {
+    if (other.busts()) {
+        return WINS
+    }
     val myScore = score()
     val otherScore = other.score()
     return when {

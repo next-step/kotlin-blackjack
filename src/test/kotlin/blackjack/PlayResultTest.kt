@@ -9,18 +9,26 @@ class PlayResultTest {
     private val dealer = CardPlayer.Dealer()
 
     @Test
-    internal fun `승패를 계산한다`() {
+    fun `승패를 계산한다`() {
         pobi.apply {
-            accept(Card("A"))
             accept(Card("K"))
+            accept(Card("K"))
+        }.also {
+            assertThat(it.score()).isEqualTo(20)
         }
+
         jason.apply {
             accept(Card("K"))
             accept(Card("2"))
+        }.also {
+            assertThat(it.score()).isEqualTo(12)
         }
+
         dealer.apply {
             accept(Card("K"))
-            accept(Card("K"))
+            accept(Card("9"))
+        }.also {
+            assertThat(it.score()).isEqualTo(19)
         }
 
         val result = Players(dealer, pobi, jason).gameResult()
@@ -38,6 +46,8 @@ class PlayResultTest {
             accept(Card("K"))
             accept(Card("K"))
             accept(Card("K"))
+        }.also {
+            assertThat(it.score()).isEqualTo(30)
         }
 
         val list = Players(dealer, pobi).gameResult()
@@ -58,14 +68,21 @@ class PlayResultTest {
             accept(Card("K"))
             accept(Card("K"))
             accept(Card("2"))
+        }.also {
+            assertThat(it.busts()).isTrue()
         }
         jason.apply {
             accept(Card("K"))
             accept(Card("K"))
+        }.also {
+            assertThat(it.busts()).isFalse()
         }
         dealer.apply {
             accept(Card("K"))
+            accept(Card("K"))
             accept(Card("2"))
+        }.also {
+            assertThat(it.busts()).isTrue()
         }
 
         val result = Players(dealer, pobi, jason).gameResult()

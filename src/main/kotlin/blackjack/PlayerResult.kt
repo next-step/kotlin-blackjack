@@ -18,11 +18,21 @@ class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int
         }
     }
 
+    fun inverselyUpdate(playResult: PlayerResult) {
+        wins += playResult.losses
+        losses += playResult.wins
+        draws += playResult.draws
+    }
+
     fun build(player: CardPlayer): PlayerResult {
         return PlayerResult(player, wins, losses, draws)
     }
 }
 
 fun result(initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
+    return PlayerResultBuilder().apply(initializer)
+}
+
+fun inverselyResult(results: List<PlayerResult>, initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
     return PlayerResultBuilder().apply(initializer)
 }
