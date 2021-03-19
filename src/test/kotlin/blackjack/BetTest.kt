@@ -19,6 +19,13 @@ class BetTest {
             .isEqualTo(10_000)
     }
 
+    @Test
+    internal fun `블랙잭은 수익이 150%이다`() {
+        val pobi = CardPlayer.Player("pobi")
+        assertThat(PlayerResult(pobi, wins = 1).income(Bet(pobi, 10_000)))
+            .isEqualTo(15_000)
+    }
+
     class DealerAdjustment(private val playerResult: List<PlayerResult>, private val bet: List<Bet>) {
         fun income(): Int {
             return playerResult.sortedBy { it.name }.zip(bet.sortedBy { it.name })
