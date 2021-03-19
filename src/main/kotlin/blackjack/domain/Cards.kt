@@ -13,10 +13,15 @@ class Cards(vararg elements: Card) {
         }
 
     init {
-        require(this._elements.size == 2)
+        require(this._elements.size == CARDS_MIN_COUNT)
+        require(this._elements.distinct().count() == CARDS_MIN_COUNT)
     }
 
     fun add(card: Card) {
         _elements.add(card)
+    }
+
+    companion object {
+        private const val CARDS_MIN_COUNT = 2
     }
 }
