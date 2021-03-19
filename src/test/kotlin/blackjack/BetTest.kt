@@ -21,7 +21,8 @@ class BetTest {
 
     @Test
     internal fun `블랙잭은 수익이 150%이다`() {
-        val pobi = CardPlayer.Player("pobi")
+        val pobi = CardPlayer.Player("pobi", listOf(Card("A", Symbol.HEARTS), Card("K", Symbol.HEARTS)))
+
         assertThat(PlayerResult(pobi, wins = 1).income(Bet(pobi, 10_000)))
             .isEqualTo(15_000)
     }

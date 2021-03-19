@@ -9,6 +9,7 @@ interface CardPlayer {
     fun accept(card: Card)
     fun draw(draw: Draw)
     fun busts(): Boolean
+    fun blackjack(): Boolean
 
     companion object {
         const val BLACKJACK = 21
@@ -45,6 +46,8 @@ interface CardPlayer {
             val result = sorted.firstOrNull { it <= BLACKJACK }
             return result ?: sorted.firstOrNull() ?: 0
         }
+
+        override fun blackjack(): Boolean = cards.size == 2 && score() == BLACKJACK
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
