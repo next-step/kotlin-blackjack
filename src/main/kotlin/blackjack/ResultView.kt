@@ -3,10 +3,11 @@ package blackjack
 object ResultView {
     fun prepare(players: Players) {
         val names = players.joinToString(", ") { it.name }
-        println("${names}에게 2장의 나누었습니다.")
+        println("\n${names}에게 2장의 나누었습니다.")
         for (player in players) {
             println("${player.name}카드: ${player.cards.names()}")
         }
+        println()
     }
 
     fun result(players: Players, bettings: List<Bet>) {

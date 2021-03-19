@@ -14,12 +14,9 @@ fun main() {
     }.map { (player, money) -> Bet(player, money) }
 
     val game = BlackJackGame(players, deck)
+    game.prepareDraw()
 
-    game.prepareDraw {
-        println()
-        ResultView.prepare(it)
-        println()
-    }
+    ResultView.prepare(players)
 
     game.draw({ name ->
         drawQuestion(name)

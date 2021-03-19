@@ -2,12 +2,11 @@ package blackjack
 
 class BlackJackGame(private val players: Players, private val deck: Blackjack) {
 
-    fun prepareDraw(result: (Players) -> Unit = { }) {
+    fun prepareDraw() {
         val allPlayers = players.allPlayers()
         for (player in allPlayers + allPlayers) {
             player.accept(deck.next())
         }
-        result(allPlayers)
     }
 
     fun draw(isDraw: (name: String) -> Boolean, result: (CardPlayer) -> Unit = { }) {
