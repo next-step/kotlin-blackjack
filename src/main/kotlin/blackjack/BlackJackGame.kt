@@ -4,7 +4,7 @@ import blackjack.domain.Cards
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
 import blackjack.domain.player.Player
-import blackjack.dto.Dto
+import blackjack.dto.PlayerDto
 import blackjack.dto.ResultDto
 import blackjack.userinterface.Console
 import blackjack.userinterface.UserInterface
@@ -25,7 +25,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
             userNames.map { Player(it, Cards(deck.draw(), deck.draw())) }
         }
 
-        userInterface.outputPlayerCards(players.map(::Dto))
+        userInterface.outputPlayerCards(players.map(::PlayerDto))
         players.forEach { takeCardsIfNecessary(it) }
         userInterface.outputGameResult(players.map(::ResultDto))
     }
