@@ -18,3 +18,7 @@ class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int
         return PlayerResult(player, wins, losses, draws)
     }
 }
+
+fun result(initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
+    return PlayerResultBuilder().apply(initializer)
+}

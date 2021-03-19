@@ -25,19 +25,19 @@ class Players(
             return map { PlayerResult(it, wins = 1) } + PlayerResult(dealer, losses = 1)
         }
 
-        return map { it to (it vs dealer) }
-            .map { (player, playResult) ->
-                PlayerResultBuilder().apply {
-                    update(playResult)
-                }.build(player)
-            } + (dealer vs this)
+        return map {
+            result {
+                update(it vs dealer)
+            }.build(it)
+        } + (dealer vs this)
     }
 
     private infix fun CardPlayer.Dealer.vs(players: List<CardPlayer>): PlayerResult {
-        val thisPlayer = this
-        return PlayerResultBuilder().apply {
+        val vs: (CardPlayer) -> PlayResult = { player -> this vs player }
+
+        return result {
             for (player in players) {
-                update(thisPlayer vs player)
+                update(vs(player))
             }
         }.build(this)
     }
