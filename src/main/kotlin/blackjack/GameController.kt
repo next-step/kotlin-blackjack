@@ -5,6 +5,9 @@ import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 
+private const val YES = "Y"
+private const val NO = "N"
+
 fun main() {
     val players = InputView.inputPlayer().map { name -> Player(name) }
     OutputView.printPlayerInfo(players)
@@ -25,11 +28,11 @@ private fun doPlayerTurn(player: Player) {
         answer = InputView.selectCardDraw(player.name)
         checkAnswerIsYes(answer, player)
         playerGotWinningCards = checkMyCardsIsWinning(player)
-    } while (answer != "N" && !playerGotWinningCards)
+    } while (answer != NO && !playerGotWinningCards)
 }
 
 private fun checkAnswerIsYes(answer: String, player: Player) {
-    if (answer == "Y") {
+    if (answer == YES) {
         player.drawCard()
         OutputView.printPlayerCardList(player)
     }
