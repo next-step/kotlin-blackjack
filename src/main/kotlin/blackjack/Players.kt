@@ -12,9 +12,7 @@ class Players(
 
     fun allPlayers(): Players = Players(players + dealer)
 
-    fun gameResult(): List<PlayerResult> {
-        return players vs dealer
-    }
+    fun gameResult(): List<PlayerResult> = players vs dealer
 
     fun lastTake() = object : LastTake {
         override fun required(): Boolean = dealer.lastWant()
@@ -23,27 +21,13 @@ class Players(
     }
 
     private infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
-        if (dealer.busts()) {
-            return map {
-                if (it.busts()) {
-                    PlayerResult(it, losses = 1)
-                } else {
-                    PlayerResult(it, wins = 1)
-                }
-            }.let {
-                it + result {
-                    it.forEach(this::inverselyUpdate)
-                }.build(dealer)
-            }
-        }
-
         return map {
-            result {
-                update(it vs dealer)
+            playerResult {
+                it vs dealer
             }.build(it)
         }.let {
-            it + result {
-                it.forEach(this::inverselyUpdate)
+            it + playerResult {
+                it apply this::inversely
             }.build(dealer)
         }
     }

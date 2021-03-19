@@ -10,7 +10,13 @@ data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val l
 }
 
 class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
-    fun update(playResult: PlayResult) {
+    fun inversely(playResult: PlayerResult) {
+        wins += playResult.losses
+        losses += playResult.wins
+        draws += playResult.draws
+    }
+
+    private fun update(playResult: PlayResult) {
         when (playResult) {
             PlayResult.WINS -> wins += 1
             PlayResult.LOSSES -> losses += 1
@@ -18,10 +24,26 @@ class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int
         }
     }
 
-    fun inverselyUpdate(playResult: PlayerResult) {
-        wins += playResult.losses
-        losses += playResult.wins
-        draws += playResult.draws
+    infix fun List<PlayerResult>.apply(accept: (PlayerResult) -> Unit) {
+        return forEach(accept)
+    }
+
+    infix fun CardPlayer.vs(other: CardPlayer) {
+        if (busts()) {
+            update(PlayResult.LOSSES)
+            return
+        }
+        if (other.busts()) {
+            update(PlayResult.WINS)
+            return
+        }
+        val myScore = score()
+        val otherScore = other.score()
+        when {
+            myScore > otherScore -> update(PlayResult.WINS)
+            myScore < otherScore -> update(PlayResult.LOSSES)
+            else -> update(PlayResult.DRAWS)
+        }
     }
 
     fun build(player: CardPlayer): PlayerResult {
@@ -29,10 +51,6 @@ class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int
     }
 }
 
-fun result(initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
-    return PlayerResultBuilder().apply(initializer)
-}
-
-fun inverselyResult(results: List<PlayerResult>, initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
+fun playerResult(initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
     return PlayerResultBuilder().apply(initializer)
 }
