@@ -1,6 +1,6 @@
 package blackjack
 
-data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val losses: Int = 0, val draws: Int = 0) {
+data class PlayerResult(private val player: CardPlayer, val playResult: PlayResult) {
     val name: String
         get() = player.name
 
@@ -8,13 +8,11 @@ data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val l
         if (player.blackjack()) {
             return bet.blackjack
         }
-        if (wins > 0) {
-            return bet.win
+        return when (playResult) {
+            PlayResult.WINS -> bet.win
+            PlayResult.LOSSES -> bet.lost
+            else -> 0
         }
-        if (losses > 0) {
-            return bet.lost
-        }
-        return 0
     }
 
     fun income(bettings: List<Bet>): Int {
@@ -22,42 +20,22 @@ data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val l
     }
 
     override fun toString(): String {
-        return "PlayerResult(name='$name', wins=$wins, losses=$losses, draws=$draws)"
+        return "PlayerResult(name='$name', playResult=$playResult)"
     }
 }
 
-class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
-    private fun update(playResult: PlayResult) {
-        when (playResult) {
-            PlayResult.WINS -> wins += 1
-            PlayResult.LOSSES -> losses += 1
-            PlayResult.DRAWS -> draws += 1
-        }
+infix fun CardPlayer.vs(other: CardPlayer.Dealer): PlayResult {
+    if (busts()) {
+        return PlayResult.LOSSES
     }
-
-    infix fun CardPlayer.vs(other: CardPlayer.Dealer) {
-        if (busts()) {
-            update(PlayResult.LOSSES)
-            return
-        }
-        if (other.busts()) {
-            update(PlayResult.WINS)
-            return
-        }
-        val myScore = score()
-        val otherScore = other.score()
-        when {
-            myScore > otherScore -> update(PlayResult.WINS)
-            myScore < otherScore -> update(PlayResult.LOSSES)
-            else -> update(PlayResult.DRAWS)
-        }
+    if (other.busts()) {
+        return PlayResult.WINS
     }
-
-    fun build(player: CardPlayer): PlayerResult {
-        return PlayerResult(player, wins, losses, draws)
+    val myScore = score()
+    val otherScore = other.score()
+    return when {
+        myScore > otherScore -> PlayResult.WINS
+        myScore < otherScore -> PlayResult.LOSSES
+        else -> PlayResult.DRAWS
     }
-}
-
-fun playerResult(initializer: PlayerResultBuilder.() -> Unit): PlayerResultBuilder {
-    return PlayerResultBuilder().apply(initializer)
 }

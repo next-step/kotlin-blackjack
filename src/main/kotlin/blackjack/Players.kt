@@ -22,9 +22,7 @@ class Players(
 
     private infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
         return map {
-            playerResult {
-                it vs dealer
-            }.build(it)
+            PlayerResult(it, it vs dealer)
         }
     }
 

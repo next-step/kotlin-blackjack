@@ -19,8 +19,8 @@ class PlayResultTest {
         val result = Players(dealer, pobi, jason).gameResult()
 
         assertThat(result).contains(
-            PlayerResult(pobi, wins = 1),
-            PlayerResult(jason, losses = 1)
+            PlayerResult(pobi, PlayResult.WINS),
+            PlayerResult(jason, PlayResult.LOSSES)
         )
     }
 
@@ -39,7 +39,7 @@ class PlayResultTest {
         val result = Players(dealer, pobi, jason).gameResult()
 
         assertThat(result)
-            .containsExactlyInAnyOrder(PlayerResult(pobi, draws = 1), PlayerResult(jason, draws = 1))
+            .containsExactlyInAnyOrder(PlayerResult(pobi, PlayResult.DRAWS), PlayerResult(jason, PlayResult.DRAWS))
     }
 
     @Test
@@ -55,7 +55,7 @@ class PlayResultTest {
         val list = Players(dealer, pobi).gameResult()
 
         assertThat(list)
-            .filteredOnAssertions { assertThat(it).isEqualTo(PlayerResult(pobi, wins = 1)) }
+            .filteredOnAssertions { assertThat(it).isEqualTo(PlayerResult(pobi, PlayResult.WINS)) }
             .hasSize(1)
     }
 
@@ -76,8 +76,8 @@ class PlayResultTest {
         val result = Players(dealer, pobi, jason).gameResult()
 
         assertThat(result).contains(
-            PlayerResult(pobi, losses = 1),
-            PlayerResult(jason, wins = 1)
+            PlayerResult(pobi, PlayResult.LOSSES),
+            PlayerResult(jason, PlayResult.WINS)
         )
     }
 
