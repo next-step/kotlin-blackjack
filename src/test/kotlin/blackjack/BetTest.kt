@@ -16,6 +16,12 @@ class BetTest {
         val pobi = CardPlayer.Player("pobi")
 
         assertThat(DealerAdjustment(PlayerResult(pobi, losses = 1), Bet(pobi, 10_000)).income())
-            .isEqualTo(-10_000)
+            .isEqualTo(10_000)
+    }
+
+    class DealerAdjustment(private val playerResult: PlayerResult, private val bet: Bet) {
+        fun income(): Int {
+            return -playerResult.income(bet)
+        }
     }
 }
