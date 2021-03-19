@@ -14,8 +14,7 @@ interface CardPlayer {
         const val BLACKJACK = 21
     }
 
-    class Player(override val name: String) : CardPlayer {
-        private var _cards: List<Card> = emptyList()
+    class Player(override val name: String, private var _cards: List<Card> = emptyList()) : CardPlayer {
 
         override val cards: List<Card>
             get() = _cards

@@ -28,7 +28,7 @@ class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int
         return forEach(accept)
     }
 
-    infix fun CardPlayer.vs(other: CardPlayer) {
+    infix fun CardPlayer.vs(other: CardPlayer.Dealer) {
         if (busts()) {
             update(PlayResult.LOSSES)
             return

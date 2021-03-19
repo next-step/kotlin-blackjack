@@ -4,31 +4,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class PlayResultTest {
-    private val pobi = CardPlayer.Player("pobi")
-    private val jason = CardPlayer.Player("jason")
-    private val dealer = CardPlayer.Dealer()
-
     @Test
     fun `승패를 계산한다`() {
-        pobi.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.score()).isEqualTo(20)
+        val pobi = playerWith("pobi", "K", "K") {
+            it scoreIs 20
         }
-
-        jason.apply {
-            accept(Card("K"))
-            accept(Card("2"))
-        }.also {
-            assertThat(it.score()).isEqualTo(12)
+        val jason = playerWith("jason", "K", "2") {
+            it scoreIs 12
         }
-
-        dealer.apply {
-            accept(Card("K"))
-            accept(Card("9"))
-        }.also {
-            assertThat(it.score()).isEqualTo(19)
+        val dealer = dealerWith("K", "9") {
+            it scoreIs 19
         }
 
         val result = Players(dealer, pobi, jason).gameResult()
@@ -42,25 +27,14 @@ class PlayResultTest {
 
     @Test
     fun `무승부가 있다`() {
-        pobi.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.score()).isEqualTo(20)
+        val pobi = playerWith("pobi", "K", "K") {
+            it scoreIs 20
         }
-
-        jason.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.score()).isEqualTo(20)
+        val jason = playerWith("jason", "K", "K") {
+            it scoreIs 20
         }
-
-        dealer.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.score()).isEqualTo(20)
+        val dealer = dealerWith("K", "K") {
+            it scoreIs 20
         }
 
         val result = Players(dealer, pobi, jason).gameResult()
@@ -75,12 +49,12 @@ class PlayResultTest {
 
     @Test
     fun `딜러가 21을 초과하면 플레이어가 승리한다`() {
-        dealer.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.score()).isEqualTo(30)
+        val pobi = playerWith("pobi", "A") {
+            it scoreIs 11
+        }
+
+        val dealer = dealerWith("K", "K", "K") {
+            it scoreIs 30
         }
 
         val list = Players(dealer, pobi).gameResult()
@@ -97,25 +71,16 @@ class PlayResultTest {
 
     @Test
     fun `pobi 가 21을 초과하고 딜러도 초과하면 남은 jason 승, 딜러 1승 1패 pobi 패`() {
-        pobi.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-            accept(Card("2"))
-        }.also {
-            assertThat(it.busts()).isTrue()
+        val pobi = playerWith("pobi", "K", "K", "2") {
+            it busts true
         }
-        jason.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-        }.also {
-            assertThat(it.busts()).isFalse()
+
+        val jason = playerWith("json", "K", "K") {
+            it busts false
         }
-        dealer.apply {
-            accept(Card("K"))
-            accept(Card("K"))
-            accept(Card("2"))
-        }.also {
-            assertThat(it.busts()).isTrue()
+
+        val dealer = dealerWith("K", "K", "2") {
+            it busts true
         }
 
         val result = Players(dealer, pobi, jason).gameResult()
@@ -127,5 +92,23 @@ class PlayResultTest {
         )
     }
 
-    fun Card(name: String) = Card(name, Symbol.values().random())
+    private fun playerWith(name: String, vararg cardNames: String, assert: (CardPlayer) -> Unit): CardPlayer {
+        val cards = cardNames.map { Card(it, Symbol.values().random()) }.toList()
+        return CardPlayer.Player(name, cards)
+            .also {
+                assert(it)
+            }
+    }
+
+    private fun dealerWith(vararg cardNames: String, assert: (CardPlayer) -> Unit): CardPlayer.Dealer {
+        return CardPlayer.Dealer(playerWith("dealer", *cardNames, assert = assert))
+    }
+
+    private infix fun CardPlayer.scoreIs(score: Int) {
+        assertThat(score()).isEqualTo(score)
+    }
+
+    private infix fun CardPlayer.busts(busted: Boolean) {
+        assertThat(busts()).isEqualTo(busted)
+    }
 }
