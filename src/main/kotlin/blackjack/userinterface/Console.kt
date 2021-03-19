@@ -7,7 +7,7 @@ class Console : UserInterface {
     override fun inputPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val input = readLine() ?: throw RuntimeException("입력이사항")
-        return input.split(",").map { it.trim() }.also {
+        return input.split(PLAYER_NAME_DELIMITER).map { it.trim() }.also {
             validateDuplicateName(it)
         }
     }
@@ -44,4 +44,8 @@ class Console : UserInterface {
     }
 
     private fun PlayerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"
+
+    companion object {
+        private const val PLAYER_NAME_DELIMITER = ","
+    }
 }
