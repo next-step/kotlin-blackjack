@@ -8,9 +8,9 @@ import java.lang.IllegalStateException
 class CardsTest {
 
     private val cards1 = Cards(arrayListOf(
-        Card(Number.ACE to Pattern.SPADE),
+        Card(Number.FIVE to Pattern.SPADE),
         Card(Number.ACE to Pattern.CLOVER),
-        Card(Number.TWO to Pattern.CLOVER)
+        Card(Number.FIVE to Pattern.CLOVER)
     ))
 
     private val cards2 = Cards(arrayListOf(
@@ -31,8 +31,12 @@ class CardsTest {
     }
 
     @Test
-    fun `Ace는 최선을 계산하는 지 확인`() {
-        assertThat(cards1.calculateMyCards()).isEqualTo(24)
+    fun `Ace는 최선을 계산하는 지 확인 (11이 되야 하는경우)`() {
+        assertThat(cards1.calculateMyCards()).isEqualTo(21)
+    }
+
+    @Test
+    fun `Ace는 최선을 계산하는 지 확인 (1이 되야 하는경우)`() {
         assertThat(cards2.calculateMyCards()).isEqualTo(21)
     }
 }
