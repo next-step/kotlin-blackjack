@@ -17,6 +17,6 @@ class BatTest {
         pobi beats dealer
 
         assertThat(pobi.money).isEqualTo(20_000)
-        assertThat(dealer.money).isEqualTo(-20_000)
+        assertThat(dealer.money).isEqualTo(-10_000)
     }
 }
