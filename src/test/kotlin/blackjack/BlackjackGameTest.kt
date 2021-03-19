@@ -59,7 +59,6 @@ class BlackjackGameTest {
     }
 
     @Test
-    @OptIn(ExperimentalStdlibApi::class)
     fun `딜러가 마지막 카드를 받는다`() {
         val dealer = CardPlayer.Dealer()
         BlackJackGame(Players(dealer), deck).endDraw()
