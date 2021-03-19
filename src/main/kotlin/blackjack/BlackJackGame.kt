@@ -3,8 +3,7 @@ package blackjack
 class BlackJackGame(private val players: Players, private val deck: Blackjack) {
 
     fun prepareDraw() {
-        val allPlayers = players.allPlayers()
-        for (player in allPlayers + allPlayers) {
+        for (player in players.allPlayers() * PREPARE_DRAWS) {
             player.accept(deck.next())
         }
     }
@@ -22,5 +21,9 @@ class BlackJackGame(private val players: Players, private val deck: Blackjack) {
             lastTake.take(deck.next())
             taken()
         }
+    }
+
+    companion object {
+        const val PREPARE_DRAWS = 2
     }
 }

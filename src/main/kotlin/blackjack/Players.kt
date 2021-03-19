@@ -26,8 +26,10 @@ class Players(
         }
     }
 
-    interface LastTake {
-        fun required(): Boolean
-        fun take(card: Card)
-    }
+    operator fun times(i: Int): Players = Players((1..i).flatMap { this.players })
+}
+
+interface LastTake {
+    fun required(): Boolean
+    fun take(card: Card)
 }
