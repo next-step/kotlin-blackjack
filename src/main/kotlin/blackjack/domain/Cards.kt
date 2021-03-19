@@ -1,19 +1,22 @@
 package blackjack.domain
 
 class Cards(vararg elements: Card) {
-    val elements = elements.toMutableList()
+    private val _elements = elements.toMutableList()
+    val elements: List<Card>
+        get() = _elements.map { it.copy() }
+
     val score: Score
         get() {
-            val firstCard = elements[0]
-            val otherCards = elements.subList(1, elements.size)
+            val firstCard = _elements[0]
+            val otherCards = _elements.subList(1, _elements.size)
             return firstCard.calculateScore(otherCards)
         }
 
     init {
-        require(this.elements.size == 2)
+        require(this._elements.size == 2)
     }
 
     fun add(card: Card) {
-        elements.add(card)
+        _elements.add(card)
     }
 }
