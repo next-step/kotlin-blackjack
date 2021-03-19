@@ -19,13 +19,4 @@ class BatTest {
         assertThat(pobi.money).isEqualTo(20_000)
         assertThat(dealer.money).isEqualTo(-20_000)
     }
-
-    data class Bat(private val player: CardPlayer, private var _money: Int = 0) {
-        val money: Int = _money
-
-        infix fun beats(dealer: Bat) {
-            _money *= 2
-            dealer._money -= _money
-        }
-    }
 }
