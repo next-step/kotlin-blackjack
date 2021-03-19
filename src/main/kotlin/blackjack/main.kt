@@ -21,7 +21,7 @@ fun main() {
     game.draw({ name ->
         drawQuestion(name)
     }) {
-        println("${it.name}카드: ${it.cards.names()}")
+        println("${it.name}카드: ${it.hand.names()}")
     }
 
     game.endDraw {

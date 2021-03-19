@@ -11,7 +11,7 @@ class PlayerTest {
                 accept(Card("2", Symbol.HEARTS))
                 accept(Card("8", Symbol.SPADES))
             }
-        assertThat(player.cards).containsExactly(
+        assertThat(player.hand).containsExactly(
             Card("2", Symbol.HEARTS),
             Card("8", Symbol.SPADES)
         )

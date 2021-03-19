@@ -23,7 +23,7 @@ class BlackjackGameTest {
         BlackJackGame(players, deck).prepareDraw()
 
         assertThat(players.allPlayers()).allSatisfy {
-            assertThat(it.cards).hasSize(2)
+            assertThat(it.hand).hasSize(2)
         }
     }
 
@@ -37,7 +37,7 @@ class BlackjackGameTest {
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() }) {
             assertThat(it).isEqualTo(pobi)
-            assertThat(it.cards).hasSize(1)
+            assertThat(it.hand).hasSize(1)
             invokecount++
         }
         assertThat(invokecount).isEqualTo(1)
@@ -53,7 +53,7 @@ class BlackjackGameTest {
         game.endDraw()
 
         assertThat(players).allSatisfy {
-            assertThat(it.cards).hasSize(1)
+            assertThat(it.hand).hasSize(1)
             assertThat(it.score()).isNotZero()
         }
     }
@@ -63,6 +63,6 @@ class BlackjackGameTest {
         val dealer = CardPlayer.Dealer()
         BlackJackGame(Players(dealer), deck).endDraw()
 
-        assertThat(dealer.cards).hasSize(1)
+        assertThat(dealer.hand).hasSize(1)
     }
 }
