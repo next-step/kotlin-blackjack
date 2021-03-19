@@ -3,6 +3,7 @@ package blackjack
 data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val losses: Int = 0, val draws: Int = 0) {
     val name: String
         get() = player.name
+
     fun income(bet: Bet): Int {
         if (player.blackjack()) {
             return bet.blackjack
@@ -14,6 +15,10 @@ data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val l
             return bet.lost
         }
         return 0
+    }
+
+    fun income(bettings: List<Bet>): Int {
+        return income(bettings.first { it.name == player.name })
     }
 
     override fun toString(): String {

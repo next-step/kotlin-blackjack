@@ -1,6 +1,6 @@
 package blackjack
 
-class Bet(player: CardPlayer.Player, betMoney: Int) {
+class Bet(player: CardPlayer, betMoney: Int) {
     val name: String = player.name
 
     val win: Int = betMoney

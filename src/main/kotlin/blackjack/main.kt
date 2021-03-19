@@ -9,6 +9,10 @@ fun main() {
         .map { CardPlayer.Player(it) }
         .let { Players(it) }
 
+    val bettings = players.map {
+        it to UserInput.Int("${it.name}의 배팅 금액은?").answer()
+    }.map { (player, money) -> Bet(player, money) }
+
     val game = BlackJackGame(players, deck)
 
     game.prepareDraw {
@@ -29,8 +33,12 @@ fun main() {
 
     ResultView.result(players)
 
-    for (result in players.gameResult()) {
-        println("${result.name}: ${ResultToString(result)}")
+    val gameResult = players.gameResult().filter { it.name != "dealer" }
+    println("## 최종 수익")
+    println("딜러: ${DealerAdjustment(gameResult, bettings).income()}")
+
+    for (result in gameResult) {
+        println("${result.name}: ${result.income(bettings)}")
     }
 }
 
