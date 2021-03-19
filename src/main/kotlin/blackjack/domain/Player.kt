@@ -1,11 +1,13 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    private val cards: Cards = Cards(arrayListOf<Card>())
+class Player(
+    val name: String
+) {
+    val cards = Cards(arrayListOf())
 
     init {
-        repeat(INIT_CARD_NUMBER) {
-            cards.drawCard()
+        repeat(PLAYER_INIT_CARD) {
+            drawCard()
         }
     }
 
@@ -13,15 +15,11 @@ class Player(val name: String) {
         cards.drawCard()
     }
 
-    fun calculateCards(): Int {
-        return cards.calculateCards()
-    }
-
-    fun getCardList(): List<Card> {
-        return cards.toList()
+    fun calculateMyCards(): Int {
+        return cards.calculateMyCards()
     }
 
     companion object {
-        private const val INIT_CARD_NUMBER = 2
+        const val PLAYER_INIT_CARD = 2
     }
 }
