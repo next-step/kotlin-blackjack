@@ -13,10 +13,19 @@ class BatTest {
     internal fun `승패에 따라 돈이 오간다`() {
         val pobi = Bat(CardPlayer.Player("pobi"), 10_000)
         val dealer = Bat(CardPlayer.Dealer())
+
         pobi beats dealer
-        assertThat(pobi).isEqualTo(pobi.copy(money = 20_000))
-        assertThat(dealer).isEqualTo(dealer.copy(money = -20_000))
+
+        assertThat(pobi.money).isEqualTo(20_000)
+        assertThat(dealer.money).isEqualTo(-20_000)
     }
 
-    data class Bat(private val player: CardPlayer, private val money: Int)
+    data class Bat(private val player: CardPlayer, private var _money: Int = 0) {
+        val money: Int = _money
+
+        infix fun beats(dealer: Bat) {
+            _money *= 2
+            dealer._money -= _money
+        }
+    }
 }
