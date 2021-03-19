@@ -11,17 +11,17 @@ class BlackjackGameTest {
 
     @Test
     internal fun `딜러와 플레이어가 있다`() {
-        val game = BlackJackGame(Players(CardPlayer.Player("pobi"), CardPlayer.Player("json")), deck)
-        assertThat(game.allPlayers())
+        val players = Players(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
+        assertThat(players.allPlayers())
             .hasSize(3)
             .contains(CardPlayer.Dealer())
     }
 
     @Test
     internal fun `처음엔 두장씩 준다`() {
-        val game = BlackJackGame(Players(CardPlayer.Player("pobi"), CardPlayer.Player("json")), deck)
-        game.prepareDraw()
-        assertThat(game.allPlayers()).allSatisfy {
+        val players = Players(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
+        val game = BlackJackGame(players, deck).prepareDraw()
+        assertThat(players.allPlayers()).allSatisfy {
             assertThat(it.cards.size).isEqualTo(2)
         }
     }
@@ -42,12 +42,13 @@ class BlackjackGameTest {
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     internal fun `결과를 알 수 있다`() {
-        val game = BlackJackGame(Players(CardPlayer.Player("pobi")), deck)
+        val players = Players(CardPlayer.Player("pobi"))
+        val game = BlackJackGame(players, deck)
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() })
         game.endDraw()
 
-        for (player in game.allPlayers()) {
+        for (player in players.allPlayers()) {
             assertThat(player.cards.size).isEqualTo(1)
             assertThat(player.score()).isNotZero()
         }

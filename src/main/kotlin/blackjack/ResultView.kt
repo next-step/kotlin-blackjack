@@ -9,9 +9,9 @@ object ResultView {
         }
     }
 
-    fun result(game: BlackJackGame) {
+    fun result(players: Players) {
         println()
-        for (player in game.allPlayers()) {
+        for (player in players.allPlayers()) {
             println("${player.name}카드: ${player.cards.names()} - 결과: ${player.score()}")
         }
     }

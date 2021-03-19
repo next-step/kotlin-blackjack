@@ -1,13 +1,13 @@
 package blackjack
 
-class BlackJackGame(val players: Players, private val deck: Blackjack) {
+class BlackJackGame(private val players: Players, private val deck: Blackjack) {
 
     fun prepareDraw(result: (Players) -> Unit = { }) {
         repeat(2) {
             players.all { it.accept(deck.next()) }
             players.dealer.accept(deck.next())
         }
-        result(allPlayers())
+        result(players.allPlayers())
     }
 
     fun draw(isDraw: (name: String) -> Boolean, result: (CardPlayer) -> Unit = { }) {
@@ -15,8 +15,6 @@ class BlackJackGame(val players: Players, private val deck: Blackjack) {
             it.draw(Draw(deck::next, isDraw, result))
         }
     }
-
-    fun allPlayers(): Players = players.allPlayers()
 
     fun endDraw(taken: () -> Unit = { }) {
         if (players.dealer.lastWant()) {
