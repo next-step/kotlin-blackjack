@@ -10,7 +10,7 @@ class Player(val name: String, val cards: Cards) {
     }
 
     fun isNotTakeable(): Boolean {
-        return cards.score >= Score(21)
+        return cards.score >= Score.BLACKJACK
     }
 
     fun takeCard(card: Card) {

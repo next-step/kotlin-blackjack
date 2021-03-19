@@ -10,4 +10,8 @@ data class Score(val value: Int) : Comparable<Score> {
     operator fun minus(that: Score) = copy(value = this.value - that.value)
 
     override fun compareTo(other: Score) = value.compareTo(other = other.value)
+
+    companion object {
+        val BLACKJACK = Score(21)
+    }
 }

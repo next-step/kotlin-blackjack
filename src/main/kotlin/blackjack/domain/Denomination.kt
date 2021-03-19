@@ -39,7 +39,7 @@ enum class Denomination(private val primaryScore: Score, private val secondarySc
             return score
         }
 
-        if (score <= BLACKJACK_SCORE) {
+        if (score <= Score.BLACKJACK) {
             return score
         }
 
@@ -48,6 +48,5 @@ enum class Denomination(private val primaryScore: Score, private val secondarySc
 
     companion object {
         private val ACE_GAP = ACE.primaryScore - ACE.secondaryScore
-        private val BLACKJACK_SCORE = Score(21)
     }
 }
