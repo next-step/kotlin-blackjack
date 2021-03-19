@@ -25,10 +25,6 @@ class Players(
             playerResult {
                 it vs dealer
             }.build(it)
-        }.let {
-            it + playerResult {
-                it apply this::inversely
-            }.build(dealer)
         }
     }
 

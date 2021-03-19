@@ -14,9 +14,8 @@ class BetTest {
     @Test
     internal fun `플레이어가 지면 딜러는 얻는다`() {
         val pobi = CardPlayer.Player("pobi")
-        val dealer = CardPlayer.Dealer()
 
-        assertThat(DealerAdjustment(listOf(PlayerResult(pobi, losses = 1), PlayerResult(dealer)), listOf(Bet(pobi, 10_000))).income())
+        assertThat(DealerAdjustment(listOf(PlayerResult(pobi, losses = 1)), listOf(Bet(pobi, 10_000))).income())
             .isEqualTo(10_000)
     }
 

@@ -27,22 +27,12 @@ data class PlayerResult(private val player: CardPlayer, val wins: Int = 0, val l
 }
 
 class PlayerResultBuilder(var wins: Int = 0, var losses: Int = 0, var draws: Int = 0) {
-    fun inversely(playResult: PlayerResult) {
-        wins += playResult.losses
-        losses += playResult.wins
-        draws += playResult.draws
-    }
-
     private fun update(playResult: PlayResult) {
         when (playResult) {
             PlayResult.WINS -> wins += 1
             PlayResult.LOSSES -> losses += 1
             PlayResult.DRAWS -> draws += 1
         }
-    }
-
-    infix fun List<PlayerResult>.apply(accept: (PlayerResult) -> Unit) {
-        return forEach(accept)
     }
 
     infix fun CardPlayer.vs(other: CardPlayer.Dealer) {

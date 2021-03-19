@@ -33,7 +33,7 @@ fun main() {
 
     ResultView.result(players)
 
-    val gameResult = players.gameResult().filter { it.name != "dealer" }
+    val gameResult = players.gameResult()
     println("## 최종 수익")
     println("딜러: ${DealerAdjustment(gameResult, bettings).income()}")
 
