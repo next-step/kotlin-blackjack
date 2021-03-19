@@ -11,6 +11,7 @@ interface CardPlayer {
     fun score(): Int
     fun accept(card: Card)
     fun draw(draw: Draw)
+    fun busts(): Boolean
 
     companion object {
         const val BLACKJACK = 21
@@ -18,6 +19,7 @@ interface CardPlayer {
 
     class Player(override val name: String) : CardPlayer {
         private var _cards: List<Card> = emptyList()
+
         override val cards: List<Card>
             get() = _cards
 
@@ -37,6 +39,8 @@ interface CardPlayer {
                 draw.result(this)
             }
         }
+
+        override fun busts(): Boolean = score() > BLACKJACK
 
         private fun List<Int>.closeTo(number: Int): Int {
             val sorted = map { it to abs(it - number) }

@@ -21,7 +21,7 @@ class Players(
     }
 
     private infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
-        if (dealer.score() > 21) {
+        if (dealer.busts()) {
             return map { PlayerResult(it, wins = 1) } + PlayerResult(dealer, losses = 1)
         }
 
