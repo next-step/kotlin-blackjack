@@ -31,15 +31,7 @@ fun main() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    ResultView.result(players)
-
-    val gameResult = players.gameResult()
-    println("## 최종 수익")
-    println("딜러: ${DealerAdjustment(gameResult, bettings).income()}")
-
-    for (result in gameResult) {
-        println("${result.name}: ${result.income(bettings)}")
-    }
+    ResultView.result(players, bettings)
 }
 
 private fun drawQuestion(name: String): Boolean {

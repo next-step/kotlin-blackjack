@@ -9,10 +9,18 @@ object ResultView {
         }
     }
 
-    fun result(players: Players) {
+    fun result(players: Players, bettings: List<Bet>) {
         println()
         for (player in players.allPlayers()) {
             println("${player.name}카드: ${player.cards.names()} - 결과: ${player.score()}")
+        }
+
+        val gameResult = players.gameResult()
+        println("## 최종 수익")
+        println("딜러: ${DealerAdjustment(gameResult, bettings).income()}")
+
+        for (result in gameResult) {
+            println("${result.name}: ${result.income(bettings)}")
         }
     }
 
