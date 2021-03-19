@@ -32,9 +32,9 @@ class BlackjackGameTest {
     internal fun `한장을 받는다`() {
         val pobi = CardPlayer.Player("pobi")
         val game = BlackJackGame(Players(pobi), deck)
-        val answer = mutableListOf(true, false)
 
         var invokecount = 0
+        val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() }) {
             assertThat(it).isEqualTo(pobi)
             assertThat(it.cards).hasSize(1)
@@ -62,7 +62,7 @@ class BlackjackGameTest {
     @OptIn(ExperimentalStdlibApi::class)
     fun `딜러가 마지막 카드를 받는다`() {
         val dealer = CardPlayer.Dealer()
-        BlackJackGame(Players(dealer, CardPlayer.Player("pobi")), deck).endDraw()
+        BlackJackGame(Players(dealer), deck).endDraw()
 
         assertThat(dealer.cards).hasSize(1)
     }

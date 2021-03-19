@@ -63,17 +63,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러는 16 미만이면 한장 더 받는다`() {
-        val dealer = CardPlayer.Dealer()
-            .apply {
-                accept(Card("10", Symbol.HEARTS))
-                accept(Card("6", Symbol.DIAMONDS))
-            }
-        dealer.take { Card("2", Symbol.CLUBS) }
-        assertThat(dealer.score()).isEqualTo(18)
-    }
-
-    @Test
     @OptIn(ExperimentalStdlibApi::class)
     fun `21 이상이면 그만 받는다`() {
         val person = CardPlayer.Player("pobi")
