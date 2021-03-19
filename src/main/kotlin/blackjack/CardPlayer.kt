@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.PlayResult.WINS
 import blackjack.PlayResult.DRAWS
 import blackjack.PlayResult.LOSSES
+import blackjack.PlayResult.WINS
 import kotlin.math.abs
 
 interface CardPlayer {
@@ -67,8 +67,8 @@ interface CardPlayer {
 
         fun lastWant() = score() <= HIT_UNTIL
 
-        fun take(last: () -> Card) {
-            accept(last())
+        fun take(last: Card) {
+            accept(last)
         }
 
         override fun equals(other: Any?): Boolean {
