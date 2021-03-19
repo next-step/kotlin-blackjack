@@ -66,26 +66,4 @@ class BlackjackGameTest {
 
         assertThat(dealer.cards).hasSize(1)
     }
-
-    @Test
-    fun `딜러가 21을 초과하면 플레이어가 승리한다`() {
-        val dealer = CardPlayer.Dealer()
-        val players = Players(dealer, CardPlayer.Player("pobi"))
-
-        dealer.apply {
-            accept(Card("K", Symbol.HEARTS))
-            accept(Card("K", Symbol.HEARTS))
-            accept(Card("K", Symbol.HEARTS))
-        }
-
-        val list = players.gameResult()
-        assertThat(list)
-            .hasSize(2)
-            .filteredOnAssertions { assertThat(it).isEqualTo(PlayerResult(players.first(), wins = 1)) }
-            .hasSize(1)
-
-        assertThat(list)
-            .filteredOnAssertions { assertThat(it).isEqualTo(PlayerResult(dealer, losses = 1)) }
-            .hasSize(1)
-    }
 }
