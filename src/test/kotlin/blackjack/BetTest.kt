@@ -15,13 +15,16 @@ class BetTest {
     internal fun `플레이어가 지면 딜러는 얻는다`() {
         val pobi = CardPlayer.Player("pobi")
 
-        assertThat(DealerAdjustment(PlayerResult(pobi, losses = 1), Bet(pobi, 10_000)).income())
+        assertThat(DealerAdjustment(listOf(PlayerResult(pobi, losses = 1)), listOf(Bet(pobi, 10_000))).income())
             .isEqualTo(10_000)
     }
 
-    class DealerAdjustment(private val playerResult: PlayerResult, private val bet: Bet) {
+    class DealerAdjustment(private val playerResult: List<PlayerResult>, private val bet: List<Bet>) {
         fun income(): Int {
-            return -playerResult.income(bet)
+            return playerResult.sortedBy { it.name }.zip(bet.sortedBy { it.name })
+                .onEach { require(it.first.name == it.second.name) }
+                .map { (pr, bet) -> pr.income(bet) }
+                .sumBy { -it }
         }
     }
 }
