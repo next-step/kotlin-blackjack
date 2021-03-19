@@ -22,15 +22,17 @@ class Console : UserInterface {
     }
 
     override fun outputCurrentCards(playerDto: PlayerDto) {
-        println("${playerDto.name}카드: ${playerDto.cards.joinToString()}")
+        println(playerDto.viewFormat())
     }
 
     override fun outputPlayerCards(playerDto: List<PlayerDto>) {
         println("${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
-        playerDto.forEach { println("${it.name}카드: ${it.cards.joinToString()}") }
+        playerDto.forEach { println(it.viewFormat()) }
     }
 
     override fun outputGameResult(result: List<ResultDto>) {
         result.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
     }
+
+    private fun PlayerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"
 }
