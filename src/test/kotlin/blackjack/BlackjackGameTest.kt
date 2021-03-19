@@ -9,41 +9,60 @@ class BlackjackGameTest {
     }.build()
 
     @Test
-    internal fun `플레이어가 있다`() {
-        BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
+    internal fun `딜러와 플레이어가 있다`() {
+        val players = listOf(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
+
+        assertThat(Players(players).allPlayers())
+            .hasSize(3)
+            .containsAll(players + CardPlayer.Dealer())
     }
 
     @Test
     internal fun `처음엔 두장씩 준다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi"), Player.Person("json")), deck)
-        game.prepareDraw()
-        assertThat(game.players).allSatisfy {
-            assertThat(it.cards.size).isEqualTo(2)
+        val players = Players(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
+        BlackJackGame(players, deck).prepareDraw()
+
+        assertThat(players.allPlayers()).allSatisfy {
+            assertThat(it.cards).hasSize(2)
         }
     }
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     internal fun `한장을 받는다`() {
-        val pobi = Player.Person("pobi")
-        val game = BlackJackGame(listOf(pobi), deck)
-        assertThat(pobi.cards.size).isEqualTo(0)
+        val pobi = CardPlayer.Player("pobi")
+        val game = BlackJackGame(Players(pobi), deck)
+
+        var invokecount = 0
         val answer = mutableListOf(true, false)
-        game.draw({ answer.removeFirst() }) { player: Player ->
-            assertThat(player).isEqualTo(pobi)
-            assertThat(player.cards.size).isEqualTo(1)
+        game.draw({ answer.removeFirst() }) {
+            assertThat(it).isEqualTo(pobi)
+            assertThat(it.cards).hasSize(1)
+            invokecount++
         }
+        assertThat(invokecount).isEqualTo(1)
     }
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
     internal fun `결과를 알 수 있다`() {
-        val game = BlackJackGame(listOf(Player.Person("pobi")), deck)
+        val players = Players(CardPlayer.Player("pobi"))
+        val game = BlackJackGame(players, deck)
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() })
-        for (player in game.players) {
-            assertThat(player.cards.size).isEqualTo(1)
-            assertThat(player.score()).isNotZero()
+        game.endDraw()
+
+        assertThat(players).allSatisfy {
+            assertThat(it.cards).hasSize(1)
+            assertThat(it.score()).isNotZero()
         }
+    }
+
+    @Test
+    fun `딜러가 마지막 카드를 받는다`() {
+        val dealer = CardPlayer.Dealer()
+        BlackJackGame(Players(dealer), deck).endDraw()
+
+        assertThat(dealer.cards).hasSize(1)
     }
 }

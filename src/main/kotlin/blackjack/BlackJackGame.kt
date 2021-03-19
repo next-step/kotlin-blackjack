@@ -1,16 +1,27 @@
 package blackjack
 
-class BlackJackGame(val players: List<Player>, private val deck: Blackjack) {
-    fun prepareDraw(result: (List<Player>) -> Unit = { }) {
-        repeat(2) {
-            players.forEach { it.accept(deck.next()) }
+class BlackJackGame(private val players: Players, private val deck: Blackjack) {
+
+    fun prepareDraw(result: (Players) -> Unit = { }) {
+        val allPlayers = players.allPlayers()
+        for (player in allPlayers + allPlayers) {
+            player.accept(deck.next())
         }
-        result(players)
+        result(allPlayers)
     }
 
-    fun draw(isDraw: (name: String) -> Boolean, result: (Player) -> Unit = { }) {
-        players.forEach {
+    fun draw(isDraw: (name: String) -> Boolean, result: (CardPlayer) -> Unit = { }) {
+        players.all {
             it.draw(Draw(deck::next, isDraw, result))
+        }
+    }
+
+    fun endDraw(taken: () -> Unit = { }) {
+        val lastTake = players.lastTake()
+
+        if (lastTake.required()) {
+            lastTake.take(deck.next())
+            taken()
         }
     }
 }
