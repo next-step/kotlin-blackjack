@@ -21,6 +21,10 @@ class Console : UserInterface {
         }
     }
 
+    override fun outputCurrentCards(playerDto: PlayerDto) {
+        println("${playerDto.name}카드: ${playerDto.cards.joinToString()}")
+    }
+
     override fun outputPlayerCards(playerDto: List<PlayerDto>) {
         println("${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
         playerDto.forEach { println("${it.name}카드: ${it.cards.joinToString()}") }

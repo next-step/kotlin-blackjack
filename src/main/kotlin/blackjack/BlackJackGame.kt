@@ -39,6 +39,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
             false -> return
             true -> {
                 player.takeCard(deck.draw())
+                userInterface.outputCurrentCards(PlayerDto(player))
                 return takeCardsIfNecessary(player)
             }
         }
