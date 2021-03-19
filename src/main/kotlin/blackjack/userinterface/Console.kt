@@ -6,7 +6,16 @@ import blackjack.dto.ResultDto
 class Console : UserInterface {
     override fun inputPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readLine()?.split(",")?.map { it.trim() } ?: throw RuntimeException("입력이사항")
+        val input = readLine() ?: throw RuntimeException("입력이사항")
+        return input.split(",").map { it.trim() }.also {
+            validateDuplicateName(it)
+        }
+    }
+
+    private fun validateDuplicateName(playerNames: List<String>) {
+        if (playerNames.size != playerNames.distinct().size) {
+            throw RuntimeException("입력한 이름에 중복이 있어요. 입력한 이름: $playerNames")
+        }
     }
 
     override tailrec fun inputCardTakenWhether(playerName: String): Boolean {
