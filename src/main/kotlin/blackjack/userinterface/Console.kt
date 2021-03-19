@@ -6,7 +6,7 @@ import blackjack.dto.ResultDto
 class Console : UserInterface {
     override fun inputPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val input = readLine() ?: throw RuntimeException("입력이사항")
+        val input = readLine() ?: throw RuntimeException("입력값 오류")
         return input.split(PLAYER_NAME_DELIMITER).map { it.trim() }.also {
             validateDuplicateName(it)
         }
