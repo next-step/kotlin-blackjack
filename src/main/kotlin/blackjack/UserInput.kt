@@ -35,4 +35,18 @@ interface UserInput<T> {
             return scanner.nextLine().first()
         }
     }
+
+    class Int(
+        private val question: String,
+        readable: Readable = InputStreamReader(System.`in`)
+    ) : UserInput<kotlin.Int> {
+        private val scanner: Scanner = Scanner(readable)
+
+        constructor(question: String, answer: String) : this(question, StringReader(answer))
+
+        override fun answer(): kotlin.Int {
+            println(question)
+            return scanner.nextInt()
+        }
+    }
 }
