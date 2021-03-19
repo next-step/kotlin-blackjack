@@ -1,5 +1,5 @@
 package study
 
-fun introduce(initializer: Person.() -> Unit): Person {
-    return Person().apply(initializer)
+fun introduce(initializer: Person.Builder.() -> Unit): Person {
+    return Person.Builder().apply(initializer).build()
 }
