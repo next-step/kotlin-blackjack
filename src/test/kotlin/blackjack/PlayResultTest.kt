@@ -41,6 +41,39 @@ class PlayResultTest {
     }
 
     @Test
+    fun `무승부가 있다`() {
+        pobi.apply {
+            accept(Card("K"))
+            accept(Card("K"))
+        }.also {
+            assertThat(it.score()).isEqualTo(20)
+        }
+
+        jason.apply {
+            accept(Card("K"))
+            accept(Card("K"))
+        }.also {
+            assertThat(it.score()).isEqualTo(20)
+        }
+
+        dealer.apply {
+            accept(Card("K"))
+            accept(Card("K"))
+        }.also {
+            assertThat(it.score()).isEqualTo(20)
+        }
+
+        val result = Players(dealer, pobi, jason).gameResult()
+
+        assertThat(result)
+            .filteredOnAssertions { assertThat(it).isEqualTo(PlayerResult(dealer, draws = 2)) }
+            .hasSize(1)
+
+        assertThat(result)
+            .contains(PlayerResult(pobi, draws = 1), PlayerResult(jason, draws = 1))
+    }
+
+    @Test
     fun `딜러가 21을 초과하면 플레이어가 승리한다`() {
         dealer.apply {
             accept(Card("K"))
