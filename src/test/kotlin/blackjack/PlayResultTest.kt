@@ -52,5 +52,30 @@ class PlayResultTest {
             .hasSize(1)
     }
 
+    @Test
+    fun `pobi 가 21을 초과하고 딜러도 초과하면 남은 jason 승, 딜러 1승 1패 pobi 패`() {
+        pobi.apply {
+            accept(Card("K"))
+            accept(Card("K"))
+            accept(Card("2"))
+        }
+        jason.apply {
+            accept(Card("K"))
+            accept(Card("K"))
+        }
+        dealer.apply {
+            accept(Card("K"))
+            accept(Card("2"))
+        }
+
+        val result = Players(dealer, pobi, jason).gameResult()
+
+        assertThat(result).contains(
+            PlayerResult(dealer, wins = 1, losses = 1),
+            PlayerResult(pobi, losses = 1),
+            PlayerResult(jason, wins = 1)
+        )
+    }
+
     fun Card(name: String) = Card(name, Symbol.values().random())
 }
