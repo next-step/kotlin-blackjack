@@ -23,10 +23,10 @@ class Console : UserInterface {
 
     override fun outputPlayerCards(playerDto: List<PlayerDto>) {
         println("${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
-        playerDto.forEach { println("${it.name}카드: ${it.cards.joinToString(", ") { "${it.denomination}_${it.suit}" }}") }
+        playerDto.forEach { println("${it.name}카드: ${it.cards.joinToString()}") }
     }
 
     override fun outputGameResult(result: List<ResultDto>) {
-        result.forEach { println("${it.name}카드: ${it.cards.joinToString(", ") { "${it.denomination}_${it.suit}" }} - 결과: ${it.score}") }
+        result.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
     }
 }
