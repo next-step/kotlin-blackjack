@@ -1,12 +1,11 @@
 package blackjack
 
-import java.util.Random
+import kotlin.random.Random
 
 class CardExtractor {
-    private val random = Random()
 
     fun getCard(): Card {
-        return allCards.removeAt(random.nextInt(allCards.size))
+        return allCards.removeAt(Random.nextInt(allCards.size))
     }
 
     companion object {
