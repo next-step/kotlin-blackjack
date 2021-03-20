@@ -7,4 +7,8 @@ fun main() {
     val players = InputView.readPlayers()
 
     OutputView.printFirstDraw(players)
+
+    players.forEach {
+        InputView.drawCards(it)
+    }
 }

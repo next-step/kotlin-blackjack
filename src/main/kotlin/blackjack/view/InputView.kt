@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Player
 import blackjack.model.Players
 
 object InputView {
@@ -11,5 +12,16 @@ object InputView {
         }
 
         return Players.Builder().playerNames(input.split(",")).build()
+    }
+
+    fun drawCards(player: Player) {
+        while (true) {
+            println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            if (readLine()?.trim()?.toLowerCase() != "y") {
+                break
+            }
+            player.draw()
+            println("${player}카드: ${player.cards}")
+        }
     }
 }

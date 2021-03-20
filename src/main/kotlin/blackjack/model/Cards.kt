@@ -6,6 +6,8 @@ class Cards(private val cards: List<Card> = firstDraw()) : List<Card> by cards {
     }
 
     companion object {
-        fun firstDraw() = listOf(Card.get(), Card.get())
+        const val INITIAL_DRAW_COUNT = 2
+
+        private fun firstDraw() = (1..INITIAL_DRAW_COUNT).map { Card.get() }
     }
 }
