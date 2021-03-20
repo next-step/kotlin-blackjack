@@ -51,11 +51,12 @@ class BlackJack {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
                 player.cardDeck.add(cardExtractor.getCard())
-            } else {
-                println(getPlayerCardText(player))
-                break
             }
             println(getPlayerCardText(player))
+
+            if (answer == NO) {
+                break
+            }
         }
     }
 
