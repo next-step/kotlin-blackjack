@@ -5,6 +5,10 @@ import blackjack.Card.Companion.BLACK_JACK_NUM
 class Player(val name: String) {
     val cardDeck = Cards()
 
+    init {
+        require(name.isNotBlank()) { "이름이 공백이어서는 안됩니다." }
+    }
+
     fun addCard(card: Card) {
         cardDeck.add(card)
     }
