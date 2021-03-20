@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.BlackJack.Companion.SEPARATOR
+
 fun main() {
     val blackJack = BlackJack()
     val cardExtractor = CardExtractor()
@@ -7,7 +9,7 @@ fun main() {
 
     players.addCardAllPlayer(cardExtractor)
 
-    println(players.players.joinToString(", ") { it.name } + "에게 2장의 카드를 나누어주었습니다.")
+    println(players.players.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     players.players.forEach {
         println(getPlayerCardText(it))
     }
@@ -27,12 +29,12 @@ class BlackJack {
     fun parsePlayers(names: String?): Players {
         require(names != null) { "이름을 입력해주세요" }
 
-        return Players(names.split(",").map { Player(it) })
+        return Players(names.split(DELIMITER).map { Player(it) })
     }
 
     fun parseAnswer(answer: String?): Boolean {
-        require(answer != null && (answer == "y" || answer == "n")) { "응답은 y나 n을 해주세요." }
-        return answer == "y"
+        require(answer != null && (answer == YES || answer == NO)) { "응답은 y나 n을 해주세요." }
+        return answer == YES
     }
 
     fun moreCard(player: Player, cardExtractor: CardExtractor) {
@@ -46,5 +48,12 @@ class BlackJack {
             }
             println(getPlayerCardText(player))
         }
+    }
+
+    companion object {
+        const val YES = "y"
+        const val NO = "n"
+        const val SEPARATOR = ", "
+        const val DELIMITER = ","
     }
 }
