@@ -13,12 +13,20 @@ class Cards(vararg elements: Card) {
         }
 
     init {
-        require(this._elements.size == CARDS_MIN_COUNT)
-        require(this._elements.distinct().count() == CARDS_MIN_COUNT)
+        validateSize()
+        validateDuplication()
     }
 
     fun add(card: Card) {
         _elements.add(card)
+    }
+
+    private fun validateSize() {
+        require(this._elements.size == CARDS_MIN_COUNT)
+    }
+
+    private fun validateDuplication() {
+        require(this._elements.distinct().count() == CARDS_MIN_COUNT)
     }
 
     companion object {
