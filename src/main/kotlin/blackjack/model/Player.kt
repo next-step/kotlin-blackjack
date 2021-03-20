@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Player(private val name: String) {
-    var cards = Cards()
+    var cards = Cards.Builder().build()
 
     override fun toString(): String {
         return name
@@ -11,6 +11,8 @@ class Player(private val name: String) {
         val mutableCardList = cards.toMutableList()
         mutableCardList.add(Card.get())
 
-        cards = Cards(mutableCardList)
+        cards = Cards.Builder().cards(
+            mutableCardList
+        ).build()
     }
 }

@@ -11,4 +11,6 @@ fun main() {
     players.forEach {
         InputView.drawCards(it)
     }
+
+    OutputView.printResult(players)
 }

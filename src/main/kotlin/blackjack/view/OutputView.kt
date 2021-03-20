@@ -10,4 +10,10 @@ object OutputView {
             println("${it}카드: ${it.cards}")
         }
     }
+
+    fun printResult(players: Players) {
+        players.forEach {
+            println("${it}카드: ${it.cards} - 결과: ${it.cards.getScore()}")
+        }
+    }
 }
