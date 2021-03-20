@@ -19,7 +19,7 @@ enum class Denomination(private val primaryScore: Score, private val secondarySc
     constructor(score: Score) : this(score, score)
 
     fun calculateScore(otherDenominations: List<Denomination>): Score {
-        val denominations = listOf(this, *otherDenominations.toTypedArray())
+        val denominations = listOf(this) + otherDenominations
 
         val aceCount = denominations.count { ACE == it }
 
