@@ -9,7 +9,7 @@ data class Card private constructor(
     }
 
     fun optimizeScore(total: Int): Int {
-        if(spell.minorDigit != null && total + spell.minorDigit <= GameConfig.BUST_CONDITION) {
+        if (spell.minorDigit != null && total + spell.minorDigit <= GameConfig.BUST_CONDITION) {
             return spell.minorDigit
         }
 

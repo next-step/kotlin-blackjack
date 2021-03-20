@@ -10,7 +10,7 @@ class Player private constructor(
     }
 
     fun addPlayerCard(card: Card): Cards {
-        if(isBust()) throw IllegalArgumentException("플레이어가 버스트되어 카드를 추가할 수 없습니다.")
+        if (isBust()) throw IllegalArgumentException("플레이어가 버스트되어 카드를 추가할 수 없습니다.")
         cards.addCard(card)
         return cards
     }

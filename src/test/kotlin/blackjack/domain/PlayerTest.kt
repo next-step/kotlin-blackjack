@@ -14,6 +14,5 @@ internal class PlayerTest {
         assertThrows<IllegalArgumentException> {
             player.addPlayerCard(Card.of(CardSuit.HEARTS, CardSpell.ACE))
         }
-
     }
 }

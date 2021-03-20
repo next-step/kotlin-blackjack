@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.DealMachine
 import blackjack.domain.Player
 
 object InputView {
@@ -11,7 +10,7 @@ object InputView {
     private const val REJECT_DEAL_ANSWER = "n"
 
     fun enterPlayerNames(): String {
-        println(INPUT_PLAYER_NAMES_COMMENT )
+        println(INPUT_PLAYER_NAMES_COMMENT)
         return readLine() ?: throw IllegalArgumentException()
     }
 

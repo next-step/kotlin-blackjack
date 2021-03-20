@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Cards private constructor(
     private val _cards: MutableList<Card>
-){
+) {
     val cards: List<Card>
         get() = this._cards.toList()
 
@@ -17,7 +17,8 @@ class Cards private constructor(
 
     fun calculate(): Int {
         return cards.fold(0) {
-            total, next -> total + next.optimizeScore(total)
+            total, next ->
+            total + next.optimizeScore(total)
         }
     }
 

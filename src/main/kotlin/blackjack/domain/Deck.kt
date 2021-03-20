@@ -7,7 +7,7 @@ object Deck {
     }
 
     fun pick(): Card {
-        if(isEmpty()) throw IllegalStateException("덱에 카드가 더이상 존재하지 않습니다.")
+        if (isEmpty()) throw IllegalStateException("덱에 카드가 더이상 존재하지 않습니다.")
         val card: Card = cards.random()
         cards.remove(card)
         return card
@@ -19,10 +19,9 @@ object Deck {
 
     private fun initializeCards() {
         initializeCardsByCardSuit()
-
     }
 
-    private fun initializeCardsByCardSuit(){
+    private fun initializeCardsByCardSuit() {
         CardSuit.values().forEach {
             initializeCardsByCardSpell(it)
         }

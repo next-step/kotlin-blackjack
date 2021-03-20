@@ -14,7 +14,7 @@ object DealMachine {
     }
 
     fun deal(dealAnswer: DealAnswer, player: Player) {
-        if(dealAnswer == DealAnswer.NO) return
+        if (dealAnswer == DealAnswer.NO) return
         deal(player)
     }
 
