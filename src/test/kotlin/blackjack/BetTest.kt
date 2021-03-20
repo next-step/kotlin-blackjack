@@ -26,4 +26,12 @@ class BetTest {
         assertThat(PlayerResult(pobi, PlayResult.WINS).income(Bet(pobi, 10_000)))
             .isEqualTo(15_000)
     }
+
+    @Test
+    internal fun `무승부는 돈을 돌려받는다`() {
+        val pobi = CardPlayer.Player("pobi", listOf(Card("A", Symbol.HEARTS), Card("K", Symbol.HEARTS)))
+
+        assertThat(DealerAdjustment(listOf(PlayerResult(pobi, PlayResult.DRAWS)), listOf(Bet(pobi, 10_000))).income())
+            .isEqualTo(0)
+    }
 }

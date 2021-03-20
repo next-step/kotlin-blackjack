@@ -5,6 +5,9 @@ data class PlayerResult(private val player: CardPlayer, val playResult: PlayResu
         get() = player.name
 
     fun income(bet: Bet): Int {
+        if (playResult == PlayResult.DRAWS) {
+            return 0
+        }
         if (player.blackjack()) {
             return bet.blackjack
         }
