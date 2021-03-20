@@ -14,7 +14,7 @@ class Player(val name: String) {
     }
 
     fun getCardText(): String {
-        val cardTexts = cardDeck.cards.map { it.cardNumber.showName + it.type.showName }
+        val cardTexts = cardDeck.cards.map { it.cardNumber.showName + getCardTypeText(it.type) }
         return "${name}카드: ${cardTexts.joinToString(", ")}"
     }
 
