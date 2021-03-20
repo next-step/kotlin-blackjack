@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.RandomShuffleStrategy
 import blackjack.domain.createPlayers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -11,7 +12,7 @@ internal class PlayersTest {
     @Test
     fun drawAtFirst() {
         val players = createPlayers("pobi", "jason")
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck(RandomShuffleStrategy())
 
         players.drawAtFirst(cardDeck)
 

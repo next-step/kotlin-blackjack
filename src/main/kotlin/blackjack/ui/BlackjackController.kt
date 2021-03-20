@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.DrawDecider
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.RandomShuffleStrategy
 import blackjack.domain.player.PlayerFactory
 import blackjack.domain.player.Players
 import view.ConsoleInput
@@ -14,7 +15,7 @@ object BlackjackController {
     fun run() {
         consoleOutput.printUserNameInputMessage()
         val players = PlayerFactory.create(consoleInput.read())
-        proceedRound(players, CardDeck())
+        proceedRound(players, CardDeck(RandomShuffleStrategy()))
         consoleOutput.printGameResult(players)
     }
 
