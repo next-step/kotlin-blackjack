@@ -9,7 +9,7 @@ class BlackjackGameTest {
     }.build()
 
     @Test
-    internal fun `딜러와 플레이어가 있다`() {
+    internal fun `Players 일급 컬렉션은 딜러를 포함한 목록을 제공한다`() {
         val players = listOf(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
 
         assertThat(Players(players).allPlayers())
