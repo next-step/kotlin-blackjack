@@ -5,6 +5,10 @@ import blackjack.Card.Companion.BLACK_JACK_NUM
 class Player(val name: String) {
     val cardDeck = Cards()
 
+    fun addCard(card: Card) {
+        cardDeck.add(card)
+    }
+
     fun getCardText(): String {
         val cardTexts = cardDeck.cards.map { it.cardNumber.showName + it.type.showName }
         return "${name}카드: ${cardTexts.joinToString(", ")}"
@@ -18,4 +22,8 @@ class Player(val name: String) {
 class Players(private val _players: List<Player>) {
     val players: List<Player>
         get() = _players.toList()
+
+    fun addCardAllPlayer(cardExtractor: CardExtractor) {
+        players.forEach { it.addCard(cardExtractor.getCard()) }
+    }
 }
