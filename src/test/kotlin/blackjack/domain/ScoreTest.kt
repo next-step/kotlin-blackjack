@@ -23,7 +23,7 @@ internal class ScoreTest {
     }
 
     @Test
-    fun `뺼셈이 가능하다`() {
+    fun `뺄셈이 가능하다`() {
         assertThat(Score(2) - Score(1)).isEqualTo(Score(1))
     }
 }
