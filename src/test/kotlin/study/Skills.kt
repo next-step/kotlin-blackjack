@@ -8,12 +8,12 @@ class Skills(
 class SkillsBuilder {
     private val values: MutableList<Skill> = mutableListOf()
 
-    fun hard(name: String) {
-        values.add(Hard(name))
+    fun hard(nameLamda: () -> String) {
+        values.add(Hard(nameLamda()))
     }
 
-    fun soft(name: String) {
-        values.add(Soft(name))
+    fun soft(nameLamda: () -> String) {
+        values.add(Soft(nameLamda()))
     }
 
     fun build(): Skills {

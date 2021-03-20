@@ -13,12 +13,12 @@ class PersonBuilder {
     private var languages: Languages? = null
     private var company: String? = null
 
-    fun name(name: String) {
-        this.name = name
+    fun name(nameLamda: () -> String) {
+        this.name = nameLamda()
     }
 
-    fun company(company: String) {
-        this.company = company
+    fun company(companyLamda: () -> String) {
+        this.company = companyLamda()
     }
 
     fun skills(initialize: SkillsBuilder.() -> Unit) {

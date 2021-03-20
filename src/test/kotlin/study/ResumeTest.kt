@@ -9,7 +9,7 @@ class ResumeTest {
     @Test
     fun name() {
         val person: Person = introduce {
-            name("송태헌")
+            name { "송태헌" }
         }
         assertThat(person).extracting("name").isEqualTo("송태헌")
     }
@@ -17,8 +17,8 @@ class ResumeTest {
     @Test
     fun company() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
         }
         assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
@@ -27,12 +27,12 @@ class ResumeTest {
     @Test
     fun skills() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
             skills {
-                hard("kotlin")
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                hard { "kotlin" }
+                soft { "A passion for problem solving" }
+                soft { "Good communication skills" }
             }
         }
         assertThat(person).extracting("name").isEqualTo("송태헌")
@@ -45,12 +45,12 @@ class ResumeTest {
     @Test
     fun lauguages() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
             skills {
-                hard("kotlin")
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                hard { "kotlin" }
+                soft { "A passion for problem solving" }
+                soft { "Good communication skills" }
             }
             languages {
                 "Korean" level 5
