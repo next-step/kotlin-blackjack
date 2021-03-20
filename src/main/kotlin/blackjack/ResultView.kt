@@ -1,5 +1,10 @@
 package blackjack
 
+fun getPlayerCardText(player: Player): String {
+    val cardTexts = player.cardDeck.cards.map { getCardNumberText(it.cardNumber) + getCardTypeText(it.type) }
+    return "${player.name}카드: ${cardTexts.joinToString(", ")}"
+}
+
 fun getCardTypeText(cardType: CardType): String {
     return when (cardType) {
         CardType.SPADE -> "스페이드"

@@ -13,11 +13,6 @@ class Player(val name: String) {
         cardDeck.add(card)
     }
 
-    fun getCardText(): String {
-        val cardTexts = cardDeck.cards.map { getCardNumberText(it.cardNumber) + getCardTypeText(it.type) }
-        return "${name}카드: ${cardTexts.joinToString(", ")}"
-    }
-
     fun isDead(): Boolean {
         return cardDeck.getScore() > BLACK_JACK_NUM
     }

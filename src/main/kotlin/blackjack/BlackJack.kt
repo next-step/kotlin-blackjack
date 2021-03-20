@@ -9,7 +9,7 @@ fun main() {
 
     println(players.players.joinToString(", ") { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     players.players.forEach {
-        println(it.getCardText())
+        println(getPlayerCardText(it))
     }
 
     players.players.forEach {
@@ -17,7 +17,7 @@ fun main() {
     }
 
     players.players.forEach {
-        print(it.getCardText())
+        print(getPlayerCardText(it))
         println(" - 결과: ${it.cardDeck.getScore()}")
     }
 }
@@ -41,10 +41,10 @@ class BlackJack {
             if (parseAnswer(answer)) {
                 player.cardDeck.add(cardExtractor.getCard())
             } else {
-                println(player.getCardText())
+                println(getPlayerCardText(player))
                 break
             }
-            println(player.getCardText())
+            println(getPlayerCardText(player))
         }
     }
 }
