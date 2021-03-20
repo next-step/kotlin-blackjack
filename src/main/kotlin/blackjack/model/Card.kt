@@ -1,6 +1,10 @@
 package blackjack.model
 
 class Card private constructor(private val cardNumber: CardNumber, private val suit: Suit) {
+    override fun toString(): String {
+        return "$cardNumber$suit"
+    }
+
     companion object {
         private val CARDS: Map<Suit, Map<CardNumber, Card>> = Suit.values().associate { s ->
             Pair(s, CardNumber.values().associate { cn -> Pair(cn, Card(cn, s)) })
