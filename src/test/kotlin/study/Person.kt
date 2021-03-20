@@ -29,5 +29,5 @@ class PersonBuilder {
         this.languages = LanguagesBuilder().apply(initialize).build()
     }
 
-    fun build() = Person(name,skills, languages, company)
+    fun build() = Person(name, skills, languages, company)
 }

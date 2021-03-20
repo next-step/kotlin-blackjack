@@ -2,7 +2,6 @@ package study
 
 class Skills(
     val values: List<Skill>
-
 )
 
 class SkillsBuilder {
