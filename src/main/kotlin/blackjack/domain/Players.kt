@@ -14,7 +14,7 @@ class Players(
 
     fun gameResult(): List<PlayerResult> = players vs dealer
 
-    fun lastTake() = object : LastTake {
+    fun lastTake() = object : DealerLastTake {
         override fun required(): Boolean = dealer.lastWant()
 
         override fun take(card: Card) = dealer.take(card)
@@ -29,7 +29,7 @@ class Players(
     operator fun times(i: Int): Players = Players((1..i).flatMap { this.players })
 }
 
-interface LastTake {
+interface DealerLastTake {
     fun required(): Boolean
     fun take(card: Card)
 }
