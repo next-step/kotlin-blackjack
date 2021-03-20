@@ -3,7 +3,7 @@ package blackjack.domain
 class Cards(vararg elements: Card) {
     private val _elements = elements.toMutableList()
     val elements: List<Card>
-        get() = _elements.map { it.copy() }
+        get() = _elements.toList()
 
     val score: Score
         get() {
