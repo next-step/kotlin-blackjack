@@ -1,16 +1,23 @@
 package study
 
-class Skills {
-    private val _values: MutableList<Skill> = mutableListOf()
+class Skills(
     val values: List<Skill>
-        get() = _values.toMutableList()
+
+)
+
+class SkillsBuilder {
+    private val values: MutableList<Skill> = mutableListOf()
 
     fun hard(name: String) {
-        _values.add(Hard(name))
+        values.add(Hard(name))
     }
 
     fun soft(name: String) {
-        _values.add(Soft(name))
+        values.add(Soft(name))
+    }
+
+    fun build(): Skills {
+        return Skills(values)
     }
 }
 

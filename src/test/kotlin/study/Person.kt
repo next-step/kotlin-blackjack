@@ -21,12 +21,12 @@ class PersonBuilder {
         this.company = company
     }
 
-    fun skills(initialize: Skills.() -> Unit) {
-        this.skills = Skills().apply(initialize)
+    fun skills(initialize: SkillsBuilder.() -> Unit) {
+        this.skills = SkillsBuilder().apply(initialize).build()
     }
 
-    fun languages(initialize: Languages.() -> Unit) {
-        this.languages = Languages().apply(initialize)
+    fun languages(initialize: LanguagesBuilder.() -> Unit) {
+        this.languages = LanguagesBuilder().apply(initialize).build()
     }
 
     fun build() = Person(name,skills, languages, company)
