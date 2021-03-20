@@ -31,4 +31,11 @@ internal class CardsTest {
         val cards = Cards(card1, card2)
         assertThat(cards.score).isEqualTo(Score(12))
     }
+
+    @Test
+    fun `카드를 추가할 수 있다`() {
+        val cards = Cards(card1, card2)
+        cards.add(card3)
+        assertThat(cards.elements).containsExactly(card1, card2, card3)
+    }
 }
