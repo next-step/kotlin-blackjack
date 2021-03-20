@@ -1,11 +1,13 @@
 package blackjack.view
 
+import blackjack.domain.player.Dealer
 import blackjack.domain.Player
+import blackjack.domain.PlayerMatchResult
 
 internal class OutputView {
-    fun renderStartGame(players: List<Player>) {
+    fun renderCards(dealer: Dealer, players: List<Player>) {
         val names = players.map { it.name }.joinToString(SEPARATOR)
-        println("\n${names}에게 2장의 나누었습니다.")
+        println("\n${dealer.name}와 ${names}에게 2장의 나누었습니다.")
 
         players.forEach {
             renderPlayerCards(it)
@@ -14,16 +16,34 @@ internal class OutputView {
     }
 
     fun renderPlayerCards(player: Player) {
-        val cardNames = player.cards.map { it.name }.joinToString(SEPARATOR)
+        val cardNames = player.visibleCards.map { it.name }.joinToString(SEPARATOR)
         println("${player.name}카드: $cardNames")
     }
 
-    fun renderResult(players: List<Player>) {
+    fun renderDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun renderCardsAndScore(dealer: Dealer, players: List<Player>) {
         println()
-        players.forEach {
-            val cardNames = it.cards.map { it.name }.joinToString(SEPARATOR)
-            println("${it.name}카드: $cardNames - 결과: ${it.score()}")
+        renderPlayerCardsAndScore(dealer)
+        players.forEach(this::renderPlayerCardsAndScore)
+    }
+
+    fun renderResult(result: PlayerMatchResult) {
+        println("\n## 최종 승패")
+
+        val dealerResult = result.dealerResults.groupBy { it }.map { "${it.value.size}${it.key.desc}" }.joinToString(SEPARATOR)
+        println("딜러: $dealerResult")
+
+        result.playerResult.forEach {
+            println("${it.key.name}: ${it.value.desc}")
         }
+    }
+
+    private fun renderPlayerCardsAndScore(player: Player) {
+        val cardNames = player.cards.map { it.name }.joinToString(SEPARATOR)
+        println("${player.name}카드: $cardNames - 결과: ${player.score()}")
     }
 
     companion object {
