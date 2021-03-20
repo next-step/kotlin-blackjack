@@ -25,15 +25,4 @@ class BlackJackTest {
     fun `특정 이름이 공백이면 예외가 발생한다`() {
         assertThrows<IllegalArgumentException> { blackJack.parsePlayers("서진혁,,nextstep") }
     }
-
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun `응답을 입력하지 않으면 예외가 발생한다`(answer: String?) {
-        assertThrows<IllegalArgumentException> { blackJack.parseAnswer(answer) }
-    }
-
-    @Test
-    fun `응답을 y혹은 n이 아니면 예외가 발생한다`() {
-        assertThrows<java.lang.IllegalArgumentException> { blackJack.parseAnswer("a") }
-    }
 }

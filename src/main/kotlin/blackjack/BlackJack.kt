@@ -33,15 +33,23 @@ class BlackJack {
         return Players(names.split(DELIMITER).map { Player(it) })
     }
 
-    fun parseAnswer(answer: String?): Boolean {
-        require(answer != null && (answer == YES || answer == NO)) { "응답은 y나 n을 해주세요." }
-        return answer == YES
+    private fun getReceiveCardAnswer(player: Player): String {
+        while (true) {
+            val answer = inputReceiveCardAnswer(player.name)
+            require(answer != null) { "응답을 반드시 입력해주세요." }
+
+            if (answer != YES && answer != NO) {
+                println("응답은 y나 n을 해주세요.")
+            } else {
+                return answer
+            }
+        }
     }
 
     fun moreCard(player: Player, cardExtractor: CardExtractor) {
         while (!player.isDead()) {
-            val answer = inputReceiveCardAnswer(player.name)
-            if (parseAnswer(answer)) {
+            val answer = getReceiveCardAnswer(player)
+            if (answer == YES) {
                 player.cardDeck.add(cardExtractor.getCard())
             } else {
                 println(getPlayerCardText(player))
