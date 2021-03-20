@@ -8,6 +8,7 @@ fun main() {
     val players = blackJack.parsePlayers(inputName())
 
     players.addCardAllPlayer(cardExtractor)
+    players.addCardAllPlayer(cardExtractor)
 
     println(players.players.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     players.players.forEach {
