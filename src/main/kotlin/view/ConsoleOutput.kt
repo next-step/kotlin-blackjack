@@ -38,6 +38,6 @@ class ConsoleOutput {
     }
 
     fun printGameResult(players: Players) {
-        players.players.forEach { println("\n${showHands(it)} - 결과: ${it.score}") }
+        players.players.forEach { println("\n${showHands(it)} - 결과: ${it.calculateScore()}") }
     }
 }

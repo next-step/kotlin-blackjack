@@ -6,8 +6,6 @@ import blackjack.domain.card.Hands
 
 class Player(val playerName: PlayerName) {
     val hands = Hands(mutableListOf())
-    val score
-        get() = hands.calculateScore()
 
     fun draw(card: Card, decider: DrawDecider) {
         if (canDraw() && decider.isDraw()) {
@@ -16,6 +14,8 @@ class Player(val playerName: PlayerName) {
     }
 
     fun canDraw() = hands.calculateScore() <= DRAW_CONDITION
+
+    fun calculateScore() = hands.calculateScore()
 
     companion object {
         private const val DRAW_CONDITION = 21
