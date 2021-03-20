@@ -11,7 +11,7 @@ class ResumeTest {
         val person: Person = introduce {
             name("송태헌")
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
     }
 
     @Test
@@ -20,7 +20,7 @@ class ResumeTest {
             name("송태헌")
             company("회사")
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
     }
 
@@ -35,7 +35,7 @@ class ResumeTest {
                 soft("Good communication skills")
             }
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
         assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")
@@ -58,7 +58,7 @@ class ResumeTest {
             }
         }
 
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
         assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")

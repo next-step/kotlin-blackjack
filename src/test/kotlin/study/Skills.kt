@@ -1,7 +1,7 @@
 package study
 
 class Skills {
-    private var _values: MutableList<Skill> = mutableListOf()
+    private val _values: MutableList<Skill> = mutableListOf()
     val values: List<Skill>
         get() = _values.toMutableList()
 
