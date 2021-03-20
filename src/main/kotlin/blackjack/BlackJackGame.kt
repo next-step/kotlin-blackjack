@@ -4,6 +4,7 @@ import blackjack.domain.Cards
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerNames
 import blackjack.dto.PlayerDto
 import blackjack.dto.ResultDto
 import blackjack.userinterface.Console
@@ -21,7 +22,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
 
     fun run() {
         val players = run {
-            val userNames = userInterface.inputPlayerNames()
+            val userNames = PlayerNames(userInterface.inputPlayerNames())
             userNames.map { Player(it, Cards(deck.draw(), deck.draw())) }
         }
 
