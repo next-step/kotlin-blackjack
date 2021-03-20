@@ -1,11 +1,10 @@
 package blackjack.domain.player
 
 import blackjack.domain.DrawDecider
-import blackjack.domain.card.Card
-import java.util.Stack
+import blackjack.domain.card.CardDeck
 
 class Players(val players: List<Player>) {
-    fun drawAtFirst(cardDeck: Stack<Card>) {
+    fun drawAtFirst(cardDeck: CardDeck) {
         return players.forEach { player ->
             repeat(FIRST_DRAW_COUNT) { player.draw(cardDeck.pop(), DrawDecider.DRAW) }
         }

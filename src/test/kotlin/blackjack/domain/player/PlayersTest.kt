@@ -11,7 +11,7 @@ internal class PlayersTest {
     @Test
     fun drawAtFirst() {
         val players = createPlayers("pobi", "jason")
-        val cardDeck = CardDeck.shuffle()
+        val cardDeck = CardDeck()
 
         players.drawAtFirst(cardDeck)
 
