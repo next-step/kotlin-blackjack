@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class BlackjackBuilder {
     var deck: List<Card> = emptyList()

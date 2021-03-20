@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class PlayerResult(private val player: CardPlayer, val playResult: PlayResult) {
     val name: String

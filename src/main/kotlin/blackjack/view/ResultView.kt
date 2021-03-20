@@ -1,4 +1,9 @@
-package blackjack
+package blackjack.view
+
+import blackjack.domain.Bet
+import blackjack.domain.DealerAdjustment
+import blackjack.domain.Hand
+import blackjack.domain.Players
 
 object ResultView {
     fun prepare(players: Players) {

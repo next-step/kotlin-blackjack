@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Bet(player: CardPlayer, betMoney: Int) {
     val name: String = player.name

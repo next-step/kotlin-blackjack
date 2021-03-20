@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Blackjack(deck: List<Card>) : List<Card> by deck {
     private val shuffled: MutableList<Card>

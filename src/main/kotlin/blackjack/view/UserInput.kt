@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 import java.io.InputStreamReader
 import java.io.StringReader

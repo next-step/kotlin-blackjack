@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class DealerAdjustment(private val playerResult: List<PlayerResult>, private val bet: List<Bet>) {
     fun income(): Int {

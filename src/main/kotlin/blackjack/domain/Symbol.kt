@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Symbol(val displayName: String) {
     HEARTS("하트"),

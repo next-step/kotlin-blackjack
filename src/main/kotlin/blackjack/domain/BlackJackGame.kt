@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class BlackJackGame(private val players: Players, private val deck: Blackjack) {
 
