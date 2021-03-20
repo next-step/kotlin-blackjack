@@ -9,5 +9,9 @@ class Card private constructor(private val cardNumber: CardNumber, private val s
         fun get(cardNumber: CardNumber, suit: Suit): Card {
             return CARDS[suit]!![cardNumber]!!
         }
+
+        fun get(): Card {
+            return CARDS[Suit.values().random()]!![CardNumber.values().random()]!!
+        }
     }
 }

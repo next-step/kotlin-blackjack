@@ -1,7 +1,6 @@
 package blackjack.model
 
 class Players private constructor(private val players: List<Player>) : List<Player> by players {
-
     class Builder {
         private var players: List<Player> = listOf()
 
