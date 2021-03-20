@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.BlackJack.Companion.SEPARATOR
+const val SEPARATOR = ", "
 
 fun main() {
     val blackJack = BlackJack()
@@ -63,7 +63,6 @@ class BlackJack {
     companion object {
         const val YES = "y"
         const val NO = "n"
-        const val SEPARATOR = ", "
         const val DELIMITER = ","
     }
 }
