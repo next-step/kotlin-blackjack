@@ -6,11 +6,15 @@ class Deck(elements: Set<Card>) {
     private val elements = elements.toMutableList()
 
     init {
-        require(elements.size == 52)
+        require(elements.size == DECK_INIT_SIZE)
     }
 
     fun draw(): Card {
         check(elements.isNotEmpty())
         return elements.removeAt(0)
+    }
+
+    companion object {
+        private const val DECK_INIT_SIZE = 52
     }
 }
