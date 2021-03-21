@@ -43,19 +43,8 @@ internal class GameTableTest {
     fun proceedGame() {
         gameTable.proceedGame({ DrawDecider.DRAW }) {
             assertAll(
-                { assertThat(it.dealer.hands.cards.size).isEqualTo(1) },
+                { assertThat(it.dealer.hands.cards.size).isEqualTo(2) },
                 { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 1 } }
-            )
-        }
-    }
-
-    @DisplayName("STAND를 인자로 받은 경우 해당 유저가 카드를 뽑지 않는다")
-    @Test
-    fun proceedGame2() {
-        gameTable.proceedGame({ DrawDecider.STAND }) {
-            assertAll(
-                { assertThat(it.dealer.hands.cards.size).isEqualTo(0) },
-                { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 0 } }
             )
         }
     }

@@ -16,7 +16,7 @@ internal class HandsTest {
 
         val actual = Hands(cards).calculateScore()
 
-        assertThat(actual).isEqualTo(12)
+        assertThat(actual.score).isEqualTo(12)
     }
 
     @DisplayName("Ace를 갖고 있고 점수가 11점 이하인 경우 10 추가된 합 반환")
@@ -29,6 +29,6 @@ internal class HandsTest {
 
         val actual = Hands(cards).calculateScore()
 
-        assertThat(actual).isEqualTo(18)
+        assertThat(actual.score).isEqualTo(18)
     }
 }

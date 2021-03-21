@@ -18,9 +18,7 @@ class Users(val users: List<User>) {
     }
 
     fun getResult(): GameResult {
-        val dealer = users[0]
-        val players = users.drop(1)
-        return GameResult(players.map { Pair(it, it.calculateScore().compareTo(dealer.calculateScore())) }.toMap())
+        return GameResult(dealer = users[0], players = users.drop(1))
     }
 
     private fun drawPlayers(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider) {
