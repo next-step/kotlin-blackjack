@@ -12,7 +12,17 @@ class Users(val users: List<User>) {
     }
 
     fun draw(drawDecider: (User) -> DrawDecider, cardDeck: CardDeck) {
-        users.forEach { it.draw(cardDeck.pop(), drawDecider(it)) }
+        drawPlayers(cardDeck, drawDecider)
+        drawDealer(cardDeck, drawDecider)
+    }
+
+    private fun drawPlayers(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider) {
+        users.drop(1).forEach { it.draw(cardDeck.pop(), drawDecider(it)) }
+    }
+
+    private fun drawDealer(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider) {
+        val dealer = users[0] as Dealer
+        dealer.drawAdditional(cardDeck, drawDecider(dealer))
     }
 
     fun toUserInfo(): UserInfo {

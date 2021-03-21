@@ -46,4 +46,8 @@ class ConsoleOutput {
         println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore()}")
         info.players.users.forEach { println("${showHands(it)} - 결과: ${it.calculateScore()}") }
     }
+
+    fun printDealerDrawingMessage() {
+        println("딜러는 16 이하라 한 장의 카드를 더 받았습니다.")
+    }
 }

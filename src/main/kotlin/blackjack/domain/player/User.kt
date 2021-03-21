@@ -7,7 +7,7 @@ import blackjack.domain.card.Hands
 abstract class User(val userName: UserName) {
     val hands = Hands(mutableListOf())
 
-    fun draw(card: Card, decider: DrawDecider) {
+    open fun draw(card: Card, decider: DrawDecider) {
         if (canDraw() && decider.isDraw()) {
             hands.draw(card)
         }
