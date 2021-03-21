@@ -4,23 +4,23 @@ enum class CardType(
     val expression: String,
     val point: Int
 ) {
-    Two("2", 2),
-    Three("3", 3),
-    Four("4", 4),
-    Five("5", 5),
-    Six("6", 6),
-    Seven("7", 7),
-    Eight("8", 8),
-    Nine("9", 9),
-    Ten("10", 10),
-    King("K", 10),
-    Queen("Q", 10),
-    Jack("J", 10),
-    Ace("A", 11);
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    KING("K", 10),
+    QUEEN("Q", 10),
+    JACK("J", 10),
+    ACE("A", 11);
 
     companion object {
         fun findAceCount(cards: Set<Card>): Int {
-            return cards.count { it.type == Ace }
+            return cards.count { it.type == ACE }
         }
 
         const val DECREMENTABLE_POINT_OF_ACE = 10
