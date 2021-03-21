@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.DrawDecider
 import blackjack.domain.GameResult
-import blackjack.domain.UserInfo
 import blackjack.domain.card.CardDeck
 
 class Users(val users: List<User>) {

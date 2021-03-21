@@ -47,7 +47,7 @@ internal class UsersTest {
 
     @DisplayName("게임의 결과 반환")
     @Test
-     fun getResult() {
+    fun getResult() {
         val users = createUsers("pobi", "jason")
 
         val result = users.getResult()

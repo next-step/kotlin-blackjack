@@ -4,6 +4,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.User
+import blackjack.domain.player.UserInfo
 import blackjack.domain.player.Users
 
 class GameTable(players: List<Player>, private val cardDeck: CardDeck) {

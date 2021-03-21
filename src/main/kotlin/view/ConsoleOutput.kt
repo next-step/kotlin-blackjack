@@ -2,7 +2,7 @@ package view
 
 import blackjack.domain.GameResult
 import blackjack.domain.ResultType
-import blackjack.domain.UserInfo
+import blackjack.domain.player.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.User
 
@@ -18,7 +18,7 @@ class ConsoleOutput {
 
             append(
                 "${info.dealer.userName.name}카드: ${
-                    info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }
+                info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }
                 }\n"
             )
             info.players.users.forEach {
