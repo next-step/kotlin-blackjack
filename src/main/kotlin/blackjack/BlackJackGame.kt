@@ -3,9 +3,9 @@ package blackjack
 const val SEPARATOR = ", "
 
 fun main() {
-    val blackJack = BlackJack()
+    val game = BlackJackGame()
     val cardExtractor = CardExtractor()
-    val players = blackJack.parsePlayers(inputName())
+    val players = game.parsePlayers(inputName())
 
     players.hit(cardExtractor)
 
@@ -15,7 +15,7 @@ fun main() {
     }
 
     players.players.forEach {
-        blackJack.moreCard(it, cardExtractor)
+        game.moreCard(it, cardExtractor)
     }
 
     players.players.forEach {
@@ -24,7 +24,7 @@ fun main() {
     }
 }
 
-class BlackJack {
+class BlackJackGame {
 
     fun parsePlayers(names: String?): Players {
         require(names != null) { "이름을 입력해주세요" }
