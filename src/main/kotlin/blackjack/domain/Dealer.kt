@@ -37,6 +37,6 @@ class Dealer(
     }
 
     companion object {
-        const val FIRST_GIVEN_CARD_SIZE = 2
+        private const val FIRST_GIVEN_CARD_SIZE = 2
     }
 }
