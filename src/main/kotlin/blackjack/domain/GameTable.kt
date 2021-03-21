@@ -15,7 +15,7 @@ class GameTable(players: List<Player>, private val cardDeck: CardDeck) {
     }
 
     fun proceedGame(drawDecider: (User) -> DrawDecider, result: (UserInfo) -> Unit) {
-        users.decideDraw(drawDecider, cardDeck)
+        users.draw(drawDecider, cardDeck)
         result(users.toUserInfo())
     }
 

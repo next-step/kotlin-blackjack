@@ -11,6 +11,7 @@ internal class PlayerFactoryTest {
     @Test
     fun create() {
         val input = "pobi,jason"
+
         val players = PlayerFactory.create(input)
 
         assertAll(

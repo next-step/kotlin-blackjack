@@ -11,7 +11,7 @@ class Users(val users: List<User>) {
         }
     }
 
-    fun decideDraw(drawDecider: (User) -> DrawDecider, cardDeck: CardDeck) {
+    fun draw(drawDecider: (User) -> DrawDecider, cardDeck: CardDeck) {
         users.forEach { it.draw(cardDeck.pop(), drawDecider(it)) }
     }
 
