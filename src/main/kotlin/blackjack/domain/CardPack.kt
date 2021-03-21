@@ -17,9 +17,7 @@ class CardPack {
 
         check(cards.isNotEmpty()) { "모든 카드가 사용되었습니다." }
 
-        val pickedCard = cards[0]
-        cards.remove(pickedCard)
-        return pickedCard
+        return cards.removeAt(0)
     }
 
     private fun createCardsOf(cardShape: CardShape) {
