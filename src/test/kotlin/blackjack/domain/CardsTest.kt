@@ -13,10 +13,10 @@ internal class CardsTest {
             )
         )
 
-        cards.addCard(Card.of(CardSuit.CLUBS, CardSpell.ACE))
-        assertThat(cards.bust()).isFalse()
-        cards.addCard(Card.of(CardSuit.HEARTS, CardSpell.ACE))
-        assertThat(cards.bust()).isTrue()
+        cards + Card.of(CardSuit.CLUBS, CardSpell.ACE)
+        assertThat(cards.isBust()).isFalse()
+        cards + Card.of(CardSuit.HEARTS, CardSpell.ACE)
+        assertThat(cards.isBust()).isTrue()
     }
 
     @Test
@@ -36,7 +36,16 @@ internal class CardsTest {
             )
         )
 
-        assertThat(cards.calculate()).isEqualTo(15)
-        assertThat(cards2.calculate()).isEqualTo(21)
+        val cards3 = Cards.from(
+            listOf(
+                Card.of(CardSuit.CLUBS, CardSpell.ACE),
+                Card.of(CardSuit.CLUBS, CardSpell.TEN),
+                Card.of(CardSuit.CLUBS, CardSpell.JACK)
+            )
+        )
+
+        assertThat(cards.calculate()).isEqualTo(Score(15))
+        assertThat(cards2.calculate()).isEqualTo(Score(21))
+        assertThat(cards3.calculate()).isEqualTo(Score(21))
     }
 }

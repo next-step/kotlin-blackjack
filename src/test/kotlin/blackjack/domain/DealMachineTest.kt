@@ -8,7 +8,7 @@ internal class DealMachineTest {
     fun `처음에는 2장의 카드를 나눠준다`() {
         val players = Players("hong,lee")
 
-        DealMachine.initialDeal(players)
+        DealMachine(Deck()).initialDeal(players)
 
         players.players.forEach {
             assertThat(it.cards.cards.size).isEqualTo(2)
