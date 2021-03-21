@@ -1,17 +1,16 @@
 package blackjack.domain
 
-import blackjack.ui.model.BlackJackResult
 import blackjack.ui.model.PlayerDto
 
 class Dealer(
-    val players: List<Player>,
+    private val players: Players,
     private val cardPack: CardPack
 ) {
     fun giveTwoCardsToAllPlayers(): List<PlayerDto> {
         repeat(FIRST_GIVEN_CARD_SIZE) {
-            players.forEach { it.takeCard(cardPack.pickCard()) }
+            players.giveToAllPlayers(cardPack)
         }
-        return players.map { it.toPlayerDTO() }
+        return players.toPlayerDtos()
     }
 
     fun giveCard(player: Player) {
