@@ -22,10 +22,13 @@ class Player(
         val aceCount = CardType.findAceCount(cards)
 
         repeat(aceCount) {
-            cardPointSum = if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
+            cardPointSum = changeAcePointToOneToWin(cardPointSum)
         }
         return cardPointSum
     }
+
+    private fun changeAcePointToOneToWin(cardPointSum: Int) =
+        if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
     fun toPlayerDTO(): PlayerDTO {
         return PlayerDTO(name, cards.toMutableSet())
