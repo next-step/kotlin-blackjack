@@ -15,9 +15,7 @@ class CardPack {
 
     fun pickCard(): Card {
 
-        if (cards.isEmpty()) {
-            throw IllegalStateException("모든 카드가 사용되었습니다.")
-        }
+        check(cards.isNotEmpty()) { "모든 카드가 사용되었습니다." }
 
         val pickedCard = cards[0]
         cards.remove(pickedCard)
