@@ -7,7 +7,7 @@ abstract class GameParticipants(
 
     init {
         repeat(PLAYER_INIT_CARD) {
-            drawCard()
+            cards.drawCard()
         }
     }
 

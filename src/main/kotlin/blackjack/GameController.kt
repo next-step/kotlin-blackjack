@@ -12,14 +12,15 @@ private const val NO = "N"
 fun main() {
     val players = InputView.inputPlayer().map { name -> Player(name) }
     val dealer = Dealer()
-    OutputView.printPlayerInfo(players)
+    OutputView.printPlayerInfo(players+dealer)
 
     for (player in players) {
         doPlayerTurn(player)
     }
+    doDealerTurn(dealer)
 
     OutputView.printPlayersCardList(players+dealer)
-    OutputView.printGameResult(players)
+    OutputView.printGameResult(players + dealer)
 }
 
 private fun doPlayerTurn(player: Player) {
@@ -31,6 +32,10 @@ private fun doPlayerTurn(player: Player) {
         checkAnswerIsYes(answer, player)
         playerGotWinningCards = checkMyCardsIsWinning(player)
     } while (answer != NO && !playerGotWinningCards)
+}
+
+private fun doDealerTurn(dealer: Dealer) {
+    dealer.drawCard()
 }
 
 private fun checkAnswerIsYes(answer: String, player: Player) {

@@ -22,8 +22,9 @@ object OutputView {
     }
 
     fun printGameResult(players: List<GameParticipants>) {
+        println("\n--------- 게임 결과 ------------")
         for (player in players) {
-            println("Player[${player.name}] 카드 : ${player.cards.getCardList()} - 결과: ${player.calculateMyCards()}")
+            println("${player.name} 카드 : ${player.cards.getCardList()} - 결과: ${player.calculateMyCards()}")
         }
     }
 }
