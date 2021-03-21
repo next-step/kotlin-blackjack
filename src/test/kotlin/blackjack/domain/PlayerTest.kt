@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.enums.CardShape
 import blackjack.enums.CardType
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 internal class PlayerTest {
@@ -53,5 +54,16 @@ internal class PlayerTest {
         player.takeCard(Card(CardShape.Clover, CardType.Five))
         val cardSum = player.calculateCardSum()
         assertThat(cardSum).isEqualTo(17)
+    }
+
+    @Test
+    fun `점수가 21점 이상이면, 더 이상 카드를 받을 수 없다`() {
+        val player = Player("song")
+        player.takeCard(Card(CardShape.Clover, CardType.Ten))
+        player.takeCard(Card(CardShape.Heart, CardType.Ten))
+        player.takeCard(Card(CardShape.Clover, CardType.Ten))
+
+        assertThatThrownBy { player.takeCard(Card(CardShape.Clover, CardType.Ten)) }
+            .isInstanceOf(IllegalStateException::class.java)
     }
 }

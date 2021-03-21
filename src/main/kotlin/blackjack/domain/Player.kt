@@ -8,9 +8,12 @@ class Player(
 ) {
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
-        get() = cards.map { "${it.type.expression}${it.shape.expression}" }
+        get() = cards.map { it.toString() }
 
     fun takeCard(card: Card): Boolean {
+
+        check(calculateCardSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
+
         return cards.add(card)
     }
 
