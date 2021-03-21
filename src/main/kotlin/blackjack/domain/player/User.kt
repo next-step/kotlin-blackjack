@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.DrawDecider
+import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hands
 
@@ -13,7 +14,7 @@ abstract class User(val userName: UserName) {
         }
     }
 
-    fun calculateScore() = hands.calculateScore()
+    fun calculateScore(): Score = hands.calculateScore()
 
     abstract fun canDraw(): Boolean
 }

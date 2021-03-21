@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import blackjack.domain.Score
+
 class Hands(private val _cards: MutableList<Card>) {
     val cards
         get() = _cards.toList()
@@ -8,16 +10,16 @@ class Hands(private val _cards: MutableList<Card>) {
         return _cards.add(card)
     }
 
-    fun calculateScore(): Int {
+    fun calculateScore(): Score {
         val score = _cards.map { it.symbol.score }.sum()
         return applyAceCondition(score)
     }
 
-    private fun applyAceCondition(score: Int): Int {
+    private fun applyAceCondition(score: Int): Score {
         if (hasAce() && score <= ACE_INCREASE_CONDITION) {
-            return score + ACE_INCREASE_SCORE
+            return Score(score + ACE_INCREASE_SCORE)
         }
-        return score
+        return Score(score)
     }
 
     private fun hasAce() = _cards.any { it.symbol == CardSymbol.ACE }

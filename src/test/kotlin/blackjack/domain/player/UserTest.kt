@@ -31,7 +31,7 @@ class UserTest {
 
         val actual = user.calculateScore()
 
-        Assertions.assertThat(actual).isEqualTo(5)
+        Assertions.assertThat(actual.score).isEqualTo(5)
     }
 
     companion object {
