@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.constant.BLACK_JACK_TWENTY_ONE
 import blackjack.enums.CardType
 import blackjack.ui.model.PlayerDTO
 
@@ -27,5 +26,9 @@ class Player(
 
     fun toPlayerDTO(): PlayerDTO {
         return PlayerDTO(name, cards.toMutableSet())
+    }
+
+    companion object {
+        private const val BLACK_JACK_TWENTY_ONE = 21
     }
 }
