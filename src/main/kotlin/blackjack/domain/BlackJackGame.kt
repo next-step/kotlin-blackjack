@@ -1,7 +1,6 @@
 package blackjack.domain
 
 internal class BlackJackGame {
-
     private val cardPack: CardPack = CardPack()
 
     fun startGame(players: List<Player>) {

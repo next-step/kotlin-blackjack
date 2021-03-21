@@ -1,7 +1,8 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Player
+import blackjack.domain.player.Customer
+import blackjack.domain.player.Dealer
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -9,11 +10,12 @@ fun main() {
     val inputView = InputView()
     val outputView = OutputView()
 
-    val players = inputView.getPlayerNames().map { Player(it) }
+    val dealer = Dealer()
+    val players = inputView.getPlayerNames().map { Customer(it) }
     val blackJackGame = BlackJackGame()
 
-    blackJackGame.startGame(players)
-    outputView.renderStartGame(players)
+    blackJackGame.startGame(players.plus(dealer))
+    outputView.renderCards(dealer, players)
 
     players.forEach {
         while (it.canHit() && inputView.isHit(it)) {
@@ -21,5 +23,12 @@ fun main() {
             outputView.renderPlayerCards(it)
         }
     }
-    outputView.renderResult(players)
+
+    while (dealer.canHit()) {
+        blackJackGame.hit(dealer)
+        outputView.renderDealerHit()
+    }
+
+    outputView.renderCardsAndScore(dealer, players)
+    outputView.renderResult(dealer.match(players))
 }
