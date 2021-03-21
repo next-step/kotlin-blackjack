@@ -6,8 +6,10 @@ import blackjack.domain.PlayerMatchResult
 
 internal class OutputView {
     fun renderCards(dealer: Dealer, players: List<Player>) {
-        val names = players.map { it.name }.joinToString(SEPARATOR)
+        val names = players.joinToString(SEPARATOR) { it.name }
         println("\n${dealer.name}와 ${names}에게 2장의 나누었습니다.")
+
+        renderPlayerCards(dealer)
 
         players.forEach {
             renderPlayerCards(it)

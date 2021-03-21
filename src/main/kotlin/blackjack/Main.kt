@@ -14,7 +14,7 @@ fun main() {
     val players = inputView.getPlayerNames().map { Customer(it) }
     val blackJackGame = BlackJackGame()
 
-    blackJackGame.startGame(listOf(dealer, players))
+    blackJackGame.startGame(players.plus(dealer))
     outputView.renderCards(dealer, players)
 
     players.forEach {
@@ -31,10 +31,4 @@ fun main() {
 
     outputView.renderCardsAndScore(dealer, players)
     outputView.renderResult(dealer.match(players))
-}
-
-fun <T> listOf(t: T, list: List<T>): List<T> {
-    val list = mutableListOf<T>(t)
-    list.addAll(list)
-    return list.toList()
 }
