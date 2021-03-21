@@ -2,7 +2,6 @@ package view
 
 import blackjack.domain.UserInfo
 import blackjack.domain.card.Card
-import blackjack.domain.player.Dealer
 import blackjack.domain.player.User
 
 class ConsoleOutput {
@@ -12,13 +11,13 @@ class ConsoleOutput {
 
     fun printFirstDrawMessage(info: UserInfo) {
         val builder = StringBuilder().apply {
-            val playerNames = info.players.players.joinToString(", ") { it.userName.name }
+            val playerNames = info.players.users.joinToString(", ") { it.userName.name }
             append("${info.dealer.userName.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
 
             append(
                 "${info.dealer.userName.name}카드: ${info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }}\n"
             )
-            info.players.players.forEach {
+            info.players.users.forEach {
                 append("${showHands(it)}\n")
             }
         }
@@ -39,12 +38,12 @@ class ConsoleOutput {
 
     fun printHandsStatus(info: UserInfo) {
         println(showHands(info.dealer))
-        info.players.players.forEach { println(showHands(it)) }
+        info.players.users.forEach { println(showHands(it)) }
     }
 
     fun printGameResult(info: UserInfo) {
         println()
         println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore()}")
-        info.players.players.forEach { println("${showHands(it)} - 결과: ${it.calculateScore()}") }
+        info.players.users.forEach { println("${showHands(it)} - 결과: ${it.calculateScore()}") }
     }
 }

@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.CardSymbol
+import blackjack.domain.player.PlayerFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -14,8 +15,7 @@ internal class GameTableTest {
 
     @BeforeEach
     fun setUp() {
-        val players = createPlayers("pobi")
-        gameTable = GameTable(players, CardDeck(SortedShuffleStrategy()))
+        gameTable = GameTable(PlayerFactory.create("pobi"), CardDeck(SortedShuffleStrategy()))
     }
 
     @DisplayName("게임 준비 단계에서 모든 유저가 2장씩 카드를 뽑는다")
@@ -33,7 +33,7 @@ internal class GameTableTest {
         gameTable.prepareGame {
             assertAll(
                 { assertThat(it.dealer.hands.cards).isEqualTo(dealerCards) },
-                { assertThat(it.players.players[0].hands.cards).isEqualTo(playerCards) }
+                { assertThat(it.players.users[0].hands.cards).isEqualTo(playerCards) }
             )
         }
     }
@@ -44,7 +44,7 @@ internal class GameTableTest {
         gameTable.proceedGame({ DrawDecider.DRAW }) {
             assertAll(
                 { assertThat(it.dealer.hands.cards.size).isEqualTo(1) },
-                { assertThat(it.players.players.map { it.hands.cards.size }).allMatch { it == 1 } }
+                { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 1 } }
             )
         }
     }
@@ -55,7 +55,7 @@ internal class GameTableTest {
         gameTable.proceedGame({ DrawDecider.STAND }) {
             assertAll(
                 { assertThat(it.dealer.hands.cards.size).isEqualTo(0) },
-                { assertThat(it.players.players.map { it.hands.cards.size }).allMatch { it == 0 } }
+                { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 0 } }
             )
         }
     }
@@ -66,7 +66,7 @@ internal class GameTableTest {
         gameTable.endGame {
             assertAll(
                 { assertThat(it.dealer.hands.cards.size).isEqualTo(0) },
-                { assertThat(it.players.players.map { it.hands.cards.size }).allMatch { it == 0 } }
+                { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 0 } }
             )
         }
     }

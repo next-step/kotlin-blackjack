@@ -2,29 +2,24 @@ package blackjack.domain
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Players
+import blackjack.domain.player.Player
 import blackjack.domain.player.User
+import blackjack.domain.player.Users
 
-class GameTable(private val players: Players, private val cardDeck: CardDeck) {
-    private val dealer = Dealer()
+class GameTable(players: List<Player>, private val cardDeck: CardDeck) {
+    private val users = Users(listOf(Dealer()) + players)
 
     fun prepareGame(result: (UserInfo) -> Unit) {
-        dealer.drawAtFirst(cardDeck)
-        players.drawAtFirst(cardDeck)
-        result(UserInfo(Pair(dealer, players)))
+        users.drawAtFirst(cardDeck)
+        result(users.toUserInfo())
     }
 
     fun proceedGame(drawDecider: (User) -> DrawDecider, result: (UserInfo) -> Unit) {
-        players.all {
-            val decider = drawDecider(it)
-            it.draw(cardDeck.pop(), decider)
-        }
-        val decider = drawDecider(dealer)
-        dealer.draw(cardDeck.pop(), decider)
-        result(UserInfo(Pair(dealer, players)))
+        users.decideDraw(drawDecider, cardDeck)
+        result(users.toUserInfo())
     }
 
     fun endGame(result: (UserInfo) -> Unit) {
-        result(UserInfo(Pair(dealer, players)))
+        result(users.toUserInfo())
     }
 }

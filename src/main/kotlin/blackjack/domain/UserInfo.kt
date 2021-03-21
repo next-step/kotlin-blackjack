@@ -1,9 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Players
+import blackjack.domain.player.Users
 
-class UserInfo(private val info: Pair<Dealer, Players>) {
+data class UserInfo(private val info: Pair<Dealer, Users>) {
     val dealer
         get() = info.first
     val players

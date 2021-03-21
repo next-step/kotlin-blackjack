@@ -5,7 +5,6 @@ import blackjack.domain.GameTable
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.RandomShuffleStrategy
 import blackjack.domain.player.PlayerFactory
-import blackjack.domain.player.Players
 import view.ConsoleInput
 import view.ConsoleOutput
 

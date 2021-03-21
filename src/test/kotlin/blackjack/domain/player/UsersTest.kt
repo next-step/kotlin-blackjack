@@ -7,15 +7,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-internal class PlayersTest {
+internal class UsersTest {
     @DisplayName("첫 번째로 카드를 뽑는 경우 2개를 뽑는다")
     @Test
     fun drawAtFirst() {
-        val players = createPlayers("pobi", "jason")
+        val users = createPlayers("pobi", "jason")
         val cardDeck = CardDeck(RandomShuffleStrategy())
 
-        players.drawAtFirst(cardDeck)
+        users.drawAtFirst(cardDeck)
 
-        assertThat(players.players).allMatch { it.hands.cards.size == 2 }
+        assertThat(users.users).allMatch { it.hands.cards.size == 2 }
     }
 }

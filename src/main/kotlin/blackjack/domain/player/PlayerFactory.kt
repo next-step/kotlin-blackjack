@@ -4,10 +4,10 @@ class PlayerFactory {
     companion object {
         private const val DELIMITERS = ","
 
-        fun create(input: String): Players {
+        fun create(input: String): List<Player> {
             val names = input.split(DELIMITERS)
             validateDuplicatedName(names)
-            return Players(names.map { Player(UserName(it)) })
+            return names.map { Player(UserName(it)) }
         }
 
         private fun validateDuplicatedName(names: List<String>) {
