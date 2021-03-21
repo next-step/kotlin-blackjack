@@ -1,24 +1,33 @@
 package study
 
-class Person {
-    lateinit var name: String
-    lateinit var skills: Skills
-    lateinit var languages: Languages
-    var company: String? = null
+data class Person(
+    val name: String,
+    val skills: Skills?,
+    val languages: Languages?,
+    val company: String?
+)
 
-    fun name(name: String) {
-        this.name = name
+class PersonBuilder {
+    private var name: String = ""
+    private var skills: Skills? = null
+    private var languages: Languages? = null
+    private var company: String? = null
+
+    fun name(nameLamda: () -> String) {
+        this.name = nameLamda()
     }
 
-    fun company(company: String) {
-        this.company = company
+    fun company(companyLamda: () -> String) {
+        this.company = companyLamda()
     }
 
-    fun skills(initialize: Skills.() -> Unit) {
-        this.skills = Skills().apply(initialize)
+    fun skills(initialize: SkillsBuilder.() -> Unit) {
+        this.skills = SkillsBuilder().apply(initialize).build()
     }
 
-    fun languages(initialize: Languages.() -> Unit) {
-        this.languages = Languages().apply(initialize)
+    fun languages(initialize: LanguagesBuilder.() -> Unit) {
+        this.languages = LanguagesBuilder().apply(initialize).build()
     }
+
+    fun build() = Person(name, skills, languages, company)
 }

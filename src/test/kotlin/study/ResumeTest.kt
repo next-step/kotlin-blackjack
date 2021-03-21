@@ -9,35 +9,35 @@ class ResumeTest {
     @Test
     fun name() {
         val person: Person = introduce {
-            name("송태헌")
+            name { "송태헌" }
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
     }
 
     @Test
     fun company() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
     }
 
     @Test
     fun skills() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
             skills {
-                hard("kotlin")
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                hard { "kotlin" }
+                soft { "A passion for problem solving" }
+                soft { "Good communication skills" }
             }
         }
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
-        assertThat(person.skills.values).contains(
+        assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")
         )
     }
@@ -45,12 +45,12 @@ class ResumeTest {
     @Test
     fun lauguages() {
         val person: Person = introduce {
-            name("송태헌")
-            company("회사")
+            name { "송태헌" }
+            company { "회사" }
             skills {
-                hard("kotlin")
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                hard { "kotlin" }
+                soft { "A passion for problem solving" }
+                soft { "Good communication skills" }
             }
             languages {
                 "Korean" level 5
@@ -58,12 +58,12 @@ class ResumeTest {
             }
         }
 
-        assertThat(person.name).isEqualTo("송태헌")
+        assertThat(person).extracting("name").isEqualTo("송태헌")
         assertThat(person.company).isEqualTo("회사")
-        assertThat(person.skills.values).contains(
+        assertThat(person.skills?.values).contains(
             Hard("kotlin"), Soft("A passion for problem solving"), Soft("Good communication skills")
         )
-        assertThat(person.languages.values).contains(
+        assertThat(person.languages?.values).contains(
             entry("Korean", 5), entry("English", 3)
         )
     }
