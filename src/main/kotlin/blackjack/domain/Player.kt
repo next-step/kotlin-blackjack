@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.CardType
 import blackjack.ui.model.PlayerDTO
 
 class Player(

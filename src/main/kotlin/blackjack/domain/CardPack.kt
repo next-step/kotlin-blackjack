@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.CardShape
-import blackjack.enums.CardType
-
 class CardPack {
     private val cards = mutableListOf<Card>()
 

@@ -1,6 +1,4 @@
-package blackjack.enums
-
-import blackjack.domain.Card
+package blackjack.domain
 
 enum class CardType(
     val expression: String,
