@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.DrawDecider
+import blackjack.domain.GameTable
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.RandomShuffleStrategy
 import blackjack.domain.player.PlayerFactory
@@ -15,13 +16,15 @@ object BlackjackController {
     fun run() {
         consoleOutput.printUserNameInputMessage()
         val players = PlayerFactory.create(consoleInput.read())
-        proceedRound(players, CardDeck(RandomShuffleStrategy()))
+        val userInfo = GameTable(players, CardDeck(RandomShuffleStrategy())).proceedFirstRound()
+        consoleOutput.printFirstDrawMessage(userInfo)
+
         consoleOutput.printGameResult(players)
     }
 
     private fun proceedRound(players: Players, cardDeck: CardDeck) {
         players.drawAtFirst(cardDeck)
-        consoleOutput.printFirstDrawMessage(players)
+//        consoleOutput.printFirstDrawMessage(players)
 
         players.players.forEach {
             consoleOutput.printDecideDrawingMessage(it)

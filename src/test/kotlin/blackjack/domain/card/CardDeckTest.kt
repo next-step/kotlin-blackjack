@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.domain.SortedShuffleStrategy
 import blackjack.domain.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -13,11 +14,7 @@ internal class CardDeckTest {
 
     @BeforeEach
     fun setUp() {
-        cards = CardDeck(object : ShuffleStrategy {
-            override fun shuffle(cards: List<Card>): List<Card> {
-                return cards.sortedWith(compareBy({ it.symbol }, { it.suit }))
-            }
-        })
+        cards = CardDeck(SortedShuffleStrategy())
     }
 
     @DisplayName("카드덱 생성")
