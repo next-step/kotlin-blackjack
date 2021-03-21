@@ -15,21 +15,19 @@ object BlackjackController {
 
     fun run() {
         consoleOutput.printUserNameInputMessage()
-        val players = PlayerFactory.create(consoleInput.read())
-        val userInfo = GameTable(players, CardDeck(RandomShuffleStrategy())).proceedFirstRound()
-        consoleOutput.printFirstDrawMessage(userInfo)
+        val gameTable = GameTable(PlayerFactory.create(consoleInput.read()), CardDeck(RandomShuffleStrategy()))
 
-        consoleOutput.printGameResult(players)
-    }
+        gameTable.prepareGame {
+            consoleOutput.printFirstDrawMessage(it)
+        }
 
-    private fun proceedRound(players: Players, cardDeck: CardDeck) {
-        players.drawAtFirst(cardDeck)
-//        consoleOutput.printFirstDrawMessage(players)
-
-        players.players.forEach {
+        gameTable.proceedGame({
             consoleOutput.printDecideDrawingMessage(it)
-            it.draw(cardDeck.pop(), DrawDecider.of(consoleInput.read()))
-            consoleOutput.printHandsStatus(it)
+            DrawDecider.of(consoleInput.read())
+        }) { consoleOutput.printHandsStatus(it) }
+
+        gameTable.endGame {
+            consoleOutput.printGameResult(it)
         }
     }
 }

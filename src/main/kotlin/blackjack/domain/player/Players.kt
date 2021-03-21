@@ -10,6 +10,8 @@ class Players(val players: List<Player>) {
         }
     }
 
+    fun all(action: (Player) -> Unit) = players.forEach(action)
+
     companion object {
         private const val FIRST_DRAW_COUNT = 2
     }

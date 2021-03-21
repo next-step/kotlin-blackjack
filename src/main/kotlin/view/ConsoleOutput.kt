@@ -3,8 +3,6 @@ package view
 import blackjack.domain.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
 import blackjack.domain.player.User
 
 class ConsoleOutput {
@@ -17,7 +15,9 @@ class ConsoleOutput {
             val playerNames = info.players.players.joinToString(", ") { it.userName.name }
             append("${info.dealer.userName.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
 
-            append("${showHands(info.dealer)}\n")
+            append(
+                "${info.dealer.userName.name}카드: ${info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }}\n"
+            )
             info.players.players.forEach {
                 append("${showHands(it)}\n")
             }
@@ -26,9 +26,6 @@ class ConsoleOutput {
     }
 
     private fun showHands(user: User): String {
-        if (user is Dealer) {
-            return "${user.userName.name}카드: ${user.hands.cards.drop(1).joinToString(", ") { showCard(it) }}"
-        }
         return "${user.userName.name}카드: ${user.hands.cards.joinToString(", ") { showCard(it) }}"
     }
 
@@ -40,12 +37,14 @@ class ConsoleOutput {
         println("${user.userName.name}는 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
     }
 
-    fun printHandsStatus(user: User) {
-        println(showHands(user))
+    fun printHandsStatus(info: UserInfo) {
+        println(showHands(info.dealer))
+        info.players.players.forEach { println(showHands(it)) }
     }
 
-    fun printGameResult(players: Players) {
+    fun printGameResult(info: UserInfo) {
         println()
-        players.players.forEach { println("${showHands(it)} - 결과: ${it.calculateScore()}") }
+        println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore()}")
+        info.players.players.forEach { println("${showHands(it)} - 결과: ${it.calculateScore()}") }
     }
 }
