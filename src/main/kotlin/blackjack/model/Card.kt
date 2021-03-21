@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Card private constructor(val cardNumber: CardNumber, private val suit: Suit) {
+class Card private constructor(private val cardNumber: CardNumber, private val suit: Suit) {
     fun isAce(): Boolean {
         return cardNumber == CardNumber.ACE
     }

@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Cards
 import blackjack.model.Players
+import blackjack.model.Rule
 
 object OutputView {
     fun printFirstDraw(players: Players) {
@@ -13,7 +14,7 @@ object OutputView {
 
     fun printResult(players: Players) {
         players.forEach {
-            println("${it}카드: ${it.cards} - 결과: ${it.cards.getScore()}")
+            println("${it}카드: ${it.cards} - 결과: ${Rule.getScore(it.cards)}")
         }
     }
 }

@@ -1,23 +1,15 @@
 package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-internal class CardsTest {
-    @Test
-    fun `Cards 기본 생성자를 사용하면 2개의 카드가 생성된다`() {
-        val result = Cards.Builder().build()
-
-        assertThat(result.size).isEqualTo(2)
-    }
-
+internal class RuleTest {
     @ParameterizedTest
     @MethodSource("scoreProvider")
-    fun `getHighestScore 가능한 가장 큰 점수를 리턴한다`(cards: Cards, score: Score) {
-        val result = cards.getHighestScore()
+    fun `21이하의 가능한 가장 큰 수를 리턴(불가능하면 가장 작은 수 리턴)`(cards: Cards, score: Score) {
+        val result = Rule.getScore(cards)
 
         assertThat(result).isEqualTo(score)
     }
@@ -35,7 +27,7 @@ internal class CardsTest {
                                 Card.get(CardNumber.TEN, Suit.DIAMOND)
                             )
                         ).build(),
-                        Score(31)
+                        Score(21)
                     )
                 },
                 Arguments {
@@ -47,7 +39,7 @@ internal class CardsTest {
                                 Card.get(CardNumber.ACE, Suit.DIAMOND)
                             )
                         ).build(),
-                        Score(33)
+                        Score(13)
                     )
                 },
                 Arguments {

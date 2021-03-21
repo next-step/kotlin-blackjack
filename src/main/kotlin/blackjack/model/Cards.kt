@@ -1,16 +1,12 @@
 package blackjack.model
 
 class Cards private constructor(private val cards: List<Card> = firstDraw()) : List<Card> by cards {
-    fun getScore(): Score {
-        var aceCount = cards.count { it.isAce() }
-        var score = cards.fold(Score.ZERO) { acc, card -> acc + card.getScores().highest() }
+    fun countAce(): Int {
+        return cards.count { it.isAce() }
+    }
 
-        while (score > Score.MAXIMUM && aceCount > 0) {
-            score -= (CardNumber.ACE.scores.highest() - CardNumber.ACE.scores.lowest())
-            aceCount--
-        }
-
-        return score
+    fun getHighestScore(): Score {
+        return cards.fold(Score.ZERO) { acc, card -> acc + card.getScores().highest() }
     }
 
     override fun toString(): String {
