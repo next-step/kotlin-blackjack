@@ -19,7 +19,7 @@ class GameTable(players: List<Player>, private val cardDeck: CardDeck) {
         result(users.toUserInfo())
     }
 
-    fun endGame(result: (UserInfo) -> Unit) {
-        result(users.toUserInfo())
+    fun endGame(result: (GameResult) -> Unit) {
+        result(users.getResult())
     }
 }

@@ -9,8 +9,10 @@ data class Score(val score: Int) {
         return this.score <= score
     }
 
+    fun compareTo(other: Score): ResultType = ResultType.of(score.compareTo(other.score))
+
     companion object {
-        private const val MIN_SCORE = 1
+        private const val MIN_SCORE = 0
         private const val MAX_SCORE = 30
     }
 }

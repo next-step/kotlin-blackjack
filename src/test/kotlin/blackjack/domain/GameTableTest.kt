@@ -60,13 +60,15 @@ internal class GameTableTest {
         }
     }
 
-    @DisplayName("유저들의 정보를 반환")
+    @DisplayName("게임의 결과를 반환")
     @Test
     fun endGame() {
         gameTable.endGame {
             assertAll(
-                { assertThat(it.dealer.hands.cards.size).isEqualTo(0) },
-                { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 0 } }
+                { assertThat(it.players.map { it.value }).isEqualTo(listOf(ResultType.DRAW)) },
+                { assertThat(it.dealer[ResultType.WIN]).isEqualTo(0) },
+                { assertThat(it.dealer[ResultType.DRAW]).isEqualTo(1) },
+                { assertThat(it.dealer[ResultType.LOSE]).isEqualTo(0) },
             )
         }
     }

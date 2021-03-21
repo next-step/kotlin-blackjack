@@ -1,5 +1,7 @@
 package view
 
+import blackjack.domain.GameResult
+import blackjack.domain.ResultType
 import blackjack.domain.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.User
@@ -15,7 +17,9 @@ class ConsoleOutput {
             append("${info.dealer.userName.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
 
             append(
-                "${info.dealer.userName.name}카드: ${info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }}\n"
+                "${info.dealer.userName.name}카드: ${
+                    info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }
+                }\n"
             )
             info.players.users.forEach {
                 append("${showHands(it)}\n")
@@ -41,7 +45,7 @@ class ConsoleOutput {
         info.players.users.forEach { println(showHands(it)) }
     }
 
-    fun printGameResult(info: UserInfo) {
+    fun printCardAndScore(info: UserInfo) {
         println()
         println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore().score}")
         info.players.users.forEach { println("${showHands(it)} - 결과: ${it.calculateScore().score}") }
@@ -49,5 +53,14 @@ class ConsoleOutput {
 
     fun printDealerDrawingMessage() {
         println("딜러는 16 이하라 한 장의 카드를 더 받았습니다.")
+    }
+
+    fun printGameRecord(result: GameResult) {
+        val builder = StringBuilder().apply {
+            append("\n## 최종 승패\n")
+            append("딜러: ${result.dealer[ResultType.WIN]}승 ${result.dealer[ResultType.LOSE]}패\n")
+            result.players.forEach { append("${it.key.userName.name}: ${it.value.symbol}\n") }
+        }
+        println(builder)
     }
 }

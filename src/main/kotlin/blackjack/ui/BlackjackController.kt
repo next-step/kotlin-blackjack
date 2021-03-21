@@ -20,7 +20,9 @@ object BlackjackController {
 
         gameTable.prepareGame { consoleOutput.printFirstDrawMessage(it) }
 
-        gameTable.proceedGame(inputDraw()) { consoleOutput.printGameResult(it) }
+        gameTable.proceedGame(inputDraw()) { consoleOutput.printCardAndScore(it) }
+
+        gameTable.endGame { consoleOutput.printGameRecord(it) }
     }
 
     private fun inputDraw(): (User) -> DrawDecider = inputDraw@{

@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.DrawDecider
+import blackjack.domain.GameResult
 import blackjack.domain.UserInfo
 import blackjack.domain.card.CardDeck
 
@@ -14,6 +15,12 @@ class Users(val users: List<User>) {
     fun draw(drawDecider: (User) -> DrawDecider, cardDeck: CardDeck) {
         drawPlayers(cardDeck, drawDecider)
         drawDealer(cardDeck, drawDecider)
+    }
+
+    fun getResult(): GameResult {
+        val dealer = users[0]
+        val players = users.drop(1)
+        return GameResult(players.map { Pair(it, it.calculateScore().compareTo(dealer.calculateScore())) }.toMap())
     }
 
     private fun drawPlayers(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider) {
