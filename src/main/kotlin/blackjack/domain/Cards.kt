@@ -7,9 +7,13 @@ class Cards(vararg elements: Card) {
 
     val score: Score
         get() {
-            val firstCard = _elements[0]
-            val otherCards = _elements.subList(1, _elements.size)
-            return firstCard.calculateScore(otherCards)
+            val summedScores = _elements
+                .map { it.scores() }
+                .reduce { acc, card -> acc.sumDistinct(card) }
+
+            return summedScores.sorted().lastOrNull { it <= Score.BLACKJACK }
+                ?: summedScores.min()
+                ?: throw RuntimeException("점수가 없다. _elements: $_elements, summedScores: $summedScores")
         }
 
     init {
@@ -27,6 +31,12 @@ class Cards(vararg elements: Card) {
 
     private fun validateDuplication() {
         require(this._elements.distinct().count() == CARDS_MIN_COUNT)
+    }
+
+    private fun List<Score>.sumDistinct(scores: List<Score>): List<Score> {
+        return this.flatMap { score ->
+            scores.map { score + it }.distinct()
+        }
     }
 
     companion object {

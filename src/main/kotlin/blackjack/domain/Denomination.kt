@@ -18,35 +18,5 @@ enum class Denomination(private val primaryScore: Score, private val secondarySc
 
     constructor(score: Score) : this(score, score)
 
-    fun calculateScore(otherDenominations: List<Denomination>): Score {
-        val denominations = listOf(this) + otherDenominations
-
-        val aceCount = denominations.count { ACE == it }
-
-        val score = denominations
-            .map { it.primaryScore }
-            .reduce { acc, score -> acc + score }
-
-        return if (aceCount != 0) {
-            withAce(aceCount, score)
-        } else {
-            score
-        }
-    }
-
-    private tailrec fun withAce(count: Int, score: Score): Score {
-        if (count == 0) {
-            return score
-        }
-
-        if (score <= Score.BLACKJACK) {
-            return score
-        }
-
-        return withAce(count - 1, score - ACE_GAP)
-    }
-
-    companion object {
-        private val ACE_GAP = ACE.primaryScore - ACE.secondaryScore
-    }
+    fun scores(): List<Score> = listOf(primaryScore, secondaryScore).distinct()
 }

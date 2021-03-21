@@ -8,48 +8,54 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 internal class DenominationTest {
+
+    @ParameterizedTest(name = "{0}은 {1}점이다")
+    @MethodSource("provideFromTwoToTen")
+    fun `2~10 끗수는 번호에 맞게 점수를 제공한다`(denomination: Denomination, expected: List<Score>) {
+        val result = denomination.scores()
+        assertThat(result).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "{0}은 {1}점이다")
+    @MethodSource("provideJQK")
+    fun `J,Q,K 는 10점을 제공한다`(denomination: Denomination) {
+        val expected = Score(10)
+        val result = denomination.scores()
+        assertThat(result).isNotEqualTo(expected)
+    }
+
     @Test
-    fun `점수를 계산한다 2 + 3 + 4 = 9`() {
-        val result = Denomination.TWO.calculateScore(
-            listOf(
-                Denomination.THREE,
-                Denomination.FOUR
-            )
-        )
-        assertThat(result).isEqualTo(Score(9))
-    }
+    fun `A 는 1점, 11점을 제공한다`() {
+        val denomination = Denomination.ACE
+        val expected = listOf(Score(1), Score(11))
 
-    @ParameterizedTest
-    @MethodSource("provideDenominationsWithAce")
-    fun `에이스는 기본적으로 11점이다`(denomination: Denomination, others: List<Denomination>, expected: Score) {
-        val result = denomination.calculateScore(others)
-        assertThat(result).isEqualTo(expected)
-    }
+        val result = denomination.scores()
 
-    @ParameterizedTest
-    @MethodSource("provideDenominationsWithAceOver21")
-    fun `점수 결과가 21이 넘는 경우 에이스는 1점으로 계산한다`(denomination: Denomination, others: List<Denomination>, expected: Score) {
-        val result = denomination.calculateScore(others)
-        assertThat(result).isEqualTo(expected)
+        assertThat(result).isNotEqualTo(expected)
     }
 
     companion object {
         @JvmStatic
-        private fun provideDenominationsWithAce(): Stream<Arguments> {
+        private fun provideFromTwoToTen(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(Denomination.TWO, listOf(Denomination.ACE), Score(13)),
-                Arguments.of(Denomination.TWO, listOf(Denomination.ACE, Denomination.THREE), Score(16)),
-                Arguments.of(Denomination.ACE, listOf(Denomination.TEN), Score(21))
+                Arguments.of(Denomination.TWO, listOf(Score(2))),
+                Arguments.of(Denomination.THREE, listOf(Score(3))),
+                Arguments.of(Denomination.FOUR, listOf(Score(4))),
+                Arguments.of(Denomination.FIVE, listOf(Score(5))),
+                Arguments.of(Denomination.SIX, listOf(Score(6))),
+                Arguments.of(Denomination.SEVEN, listOf(Score(7))),
+                Arguments.of(Denomination.EIGHT, listOf(Score(8))),
+                Arguments.of(Denomination.NINE, listOf(Score(9))),
+                Arguments.of(Denomination.TEN, listOf(Score(10)))
             )
         }
 
         @JvmStatic
-        private fun provideDenominationsWithAceOver21(): Stream<Arguments> {
+        private fun provideJQK(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(Denomination.ACE, listOf(Denomination.ACE), Score(12)),
-                Arguments.of(Denomination.TWO, listOf(Denomination.ACE, Denomination.ACE), Score(14)),
-                Arguments.of(Denomination.ACE, listOf(Denomination.ACE, Denomination.ACE, Denomination.ACE), Score(14)),
-                Arguments.of(Denomination.FIVE, listOf(Denomination.SIX, Denomination.ACE), Score(12))
+                Arguments.of(Denomination.JACK),
+                Arguments.of(Denomination.QUEEN),
+                Arguments.of(Denomination.KING)
             )
         }
     }
