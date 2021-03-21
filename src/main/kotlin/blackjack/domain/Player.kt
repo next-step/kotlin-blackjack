@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerDTO
+import blackjack.ui.model.PlayerDto
 
 class Player(
     val name: String
@@ -29,8 +29,8 @@ class Player(
     private fun changeAcePointToOneToWin(cardPointSum: Int) =
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
-    fun toPlayerDTO(): PlayerDTO {
-        return PlayerDTO(name, cards.toMutableSet())
+    fun toPlayerDTO(): PlayerDto {
+        return PlayerDto(name, cards.toMutableSet())
     }
 
     companion object {

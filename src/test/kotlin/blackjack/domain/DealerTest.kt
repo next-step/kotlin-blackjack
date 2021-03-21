@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerDTO
+import blackjack.ui.model.PlayerDto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -26,7 +26,7 @@ internal class DealerTest {
             return false
         }
 
-        fun doAfterReceive(playerDTO: PlayerDTO) {
+        fun doAfterReceive(playerDto: PlayerDto) {
             println("카드를 받았습니다.")
         }
 

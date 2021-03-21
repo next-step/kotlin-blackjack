@@ -3,13 +3,9 @@ package blackjack.ui.model
 import blackjack.domain.Player
 
 class BlackJackResult(
-    val name: String,
-    val cardNames: List<String>,
-    val point: Int
+    player: Player
 ) {
-    companion object {
-        fun from(player: Player): BlackJackResult {
-            return BlackJackResult(player.name, player.cardNames, player.calculateCardSum())
-        }
-    }
+    val name: String = player.name
+    val cardNames: List<String> = player.cardNames
+    val point: Int = player.calculateCardSum()
 }
