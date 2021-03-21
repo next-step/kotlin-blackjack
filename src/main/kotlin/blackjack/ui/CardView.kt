@@ -15,7 +15,7 @@ object CardView {
     }
 
     fun printCardsOfSinglePlayer(playerDTO: PlayerDTO) {
-        println("${playerDTO.name}: ${playerDTO.cards.joinToString(", ") { it.expression }}")
+        println("${playerDTO.name}: ${playerDTO.cards.joinToString(", ") { it.toString() }}")
     }
 
     fun printResults(blackJackResults: List<BlackJackResult>) {

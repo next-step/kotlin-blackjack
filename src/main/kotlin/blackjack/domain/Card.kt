@@ -7,8 +7,9 @@ class Card(
     val shape: CardShape,
     val type: CardType
 ) {
-    val point
-        get() = type.point
-    val expression
-        get() = "${type.expression}${shape.expression}"
+    val point = type.point
+
+    override fun toString(): String {
+        return "${type.expression}${shape.expression}"
+    }
 }

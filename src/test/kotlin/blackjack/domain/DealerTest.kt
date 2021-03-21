@@ -50,7 +50,7 @@ internal class DealerTest {
                 askTimes = 0
                 false
             }
-        }) { playerDTO -> println("${playerDTO.name} ${playerDTO.cards.joinToString(", ") { it.expression }}") }
+        }) { playerDTO -> println("${playerDTO.name} ${playerDTO.cards.joinToString(", ") { it.toString() }}") }
 
         Assertions.assertThat(blackJackResults).extracting("name").contains("song", "kim")
         Assertions.assertThat(blackJackResults[0].cardNames).hasSize(2)
