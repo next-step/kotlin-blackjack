@@ -1,5 +1,7 @@
 package blackjack.enums
 
+import blackjack.domain.Card
+
 enum class CardType(
     val expression: String,
     val point: Int
@@ -19,6 +21,10 @@ enum class CardType(
     Ace("A", 11);
 
     companion object {
+        fun findAceCount(cards: Set<Card>): Int {
+            return cards.count { it.type == Ace }
+        }
+
         const val DECREMENTABLE_POINT_OF_ACE = 10
     }
 }

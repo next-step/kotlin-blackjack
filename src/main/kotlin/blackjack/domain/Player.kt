@@ -19,7 +19,7 @@ class Player(
 
     fun calculateCardSum(): Int {
         var cardPointSum = cards.sumBy { it.point }
-        val aceCount = cards.count { it.type == CardType.Ace }
+        val aceCount = CardType.findAceCount(cards)
 
         repeat(aceCount) {
             cardPointSum = if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
