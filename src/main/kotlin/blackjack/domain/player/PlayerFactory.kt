@@ -7,7 +7,7 @@ class PlayerFactory {
         fun create(input: String): Players {
             val names = input.split(DELIMITERS)
             validateDuplicatedName(names)
-            return Players(names.map { Player(PlayerName(it)) })
+            return Players(names.map { Player(UserName(it)) })
         }
 
         private fun validateDuplicatedName(names: List<String>) {

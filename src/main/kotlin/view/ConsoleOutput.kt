@@ -11,7 +11,7 @@ class ConsoleOutput {
 
     fun printFirstDrawMessage(players: Players) {
         val builder = StringBuilder().apply {
-            val names = players.players.joinToString(",") { it.playerName.name }
+            val names = players.players.joinToString(",") { it.userName.name }
             append("${names}에게 2장의 카드를 나누었습니다.\n")
 
             players.players.forEach {
@@ -22,7 +22,7 @@ class ConsoleOutput {
     }
 
     private fun showHands(player: Player): String {
-        return "${player.playerName.name}카드: ${player.hands.cards.joinToString(", ") { showCard(it) }}"
+        return "${player.userName.name}카드: ${player.hands.cards.joinToString(", ") { showCard(it) }}"
     }
 
     private fun showCard(card: Card): String {
@@ -30,7 +30,7 @@ class ConsoleOutput {
     }
 
     fun printDecideDrawingMessage(player: Player) {
-        println("${player.playerName.name}는 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        println("${player.userName.name}는 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
     }
 
     fun printHandsStatus(player: Player) {

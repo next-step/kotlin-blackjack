@@ -15,7 +15,7 @@ internal class PlayerFactoryTest {
 
         assertAll(
             { assertThat(users.players.size).isEqualTo(2) },
-            { assertThat(users.players.map { it.playerName }).containsExactly(PlayerName("pobi"), PlayerName("jason")) }
+            { assertThat(users.players.map { it.userName }).containsExactly(UserName("pobi"), UserName("jason")) }
         )
     }
 
