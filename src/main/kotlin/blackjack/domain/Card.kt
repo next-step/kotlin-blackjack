@@ -4,15 +4,7 @@ data class Card private constructor(
     val suit: CardSuit,
     val spell: CardSpell
 ) {
-    override fun toString(): String {
-        return "$spell$suit"
-    }
-
-    fun optimizeScore(total: Int): Int {
-        if (spell.minorDigit != null && total + spell.minorDigit <= GameConfig.BUST_CONDITION) {
-            return spell.minorDigit
-        }
-
+    fun getDigit(): Int {
         return spell.digit
     }
 

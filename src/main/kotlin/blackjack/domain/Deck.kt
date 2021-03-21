@@ -1,10 +1,7 @@
 package blackjack.domain
 
-object Deck {
-    private val cards: MutableSet<Card> = hashSetOf()
-    init {
-        initializeCards()
-    }
+class Deck {
+    private val cards: MutableList<Card> = initializeCardsByCardSuit()
 
     fun pick(): Card {
         if (isEmpty()) throw IllegalStateException("덱에 카드가 더이상 존재하지 않습니다.")
@@ -17,19 +14,17 @@ object Deck {
         return cards.isEmpty()
     }
 
-    private fun initializeCards() {
-        initializeCardsByCardSuit()
-    }
-
-    private fun initializeCardsByCardSuit() {
+    private fun initializeCardsByCardSuit(): MutableList<Card> {
+        val cardsSet: MutableList<Card> = mutableListOf()
         CardSuit.values().forEach {
-            initializeCardsByCardSpell(it)
+            initializeCardsByCardSpell(cardsSet, it)
         }
+        return cardsSet
     }
 
-    private fun initializeCardsByCardSpell(cardSuit: CardSuit) {
+    private fun initializeCardsByCardSpell(cardsSet: MutableList<Card>, cardSuit: CardSuit) {
         CardSpell.values().forEach {
-            this.cards.add(Card.of(cardSuit, it))
+            cardsSet.add(Card.of(cardSuit, it))
         }
     }
 }

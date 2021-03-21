@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.DealAnswer
 import blackjack.domain.Player
 
 object InputView {
@@ -15,11 +16,15 @@ object InputView {
     }
 
     fun enterDealAnswer(player: Player): String {
-        println("${player.name}$INPUT_DEAL_QUESTION_COMMENT")
-        val dealAnswer = readLine() ?: throw IllegalArgumentException()
-        require(dealAnswer == ACCEPT_DEAL_ANSWER || dealAnswer == REJECT_DEAL_ANSWER) {
-            "카드 수락 여부는, '$ACCEPT_DEAL_ANSWER' 혹은 '$REJECT_DEAL_ANSWER' 으로만 입력 하여야 합니다."
+        println("${player.name.name}$INPUT_DEAL_QUESTION_COMMENT")
+        return readLine() ?: throw IllegalArgumentException()
+    }
+
+    fun selectDealAnswer(answer: String): DealAnswer {
+        return when (answer) {
+            ACCEPT_DEAL_ANSWER -> DealAnswer.YES
+            REJECT_DEAL_ANSWER -> DealAnswer.NO
+            else -> throw IllegalArgumentException("카드 수락 여부는, '$ACCEPT_DEAL_ANSWER' 혹은 '$REJECT_DEAL_ANSWER' 으로만 입력 하여야 합니다.")
         }
-        return dealAnswer
     }
 }

@@ -4,23 +4,22 @@ class Cards private constructor(
     private val _cards: MutableList<Card>
 ) {
     val cards: List<Card>
-        get() = this._cards.toList()
+        get() = _cards.toList()
 
-    fun addCard(card: Card): List<Card> {
+    operator fun plus(card: Card) {
         _cards.add(card)
-        return this.cards
     }
 
-    fun bust(): Boolean {
-        return calculate() > GameConfig.BUST_CONDITION
+    fun isBust(): Boolean {
+        return isBust(calculate())
     }
 
-    fun calculate(): Int {
-        return cards.fold(0) {
-            total, next ->
-            total + next.optimizeScore(total)
-        }
+    private fun isBust(score: Score): Boolean {
+        if (score.bust) return true
+        return score.value > GameConfig.BUST_CONDITION
     }
+
+    fun calculate(): Score = CardScoreCalculator.calculate(_cards)
 
     companion object {
         fun from(cards: List<Card>): Cards {

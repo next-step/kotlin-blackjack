@@ -5,6 +5,7 @@ import blackjack.domain.DealMachine
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.domain.Players
+import blackjack.view.converter.CardResultStringConverter
 
 object ResultView {
     private const val SHOW_CARDS_SUFFIX = "카드: "
@@ -17,7 +18,7 @@ object ResultView {
     }
 
     fun showInitialPlayerCards(players: Players) {
-        println("${players.players.map { it.name }.joinToString(", ")}에게 ${DealMachine.INITIAL_DEAL_COUNT}장을 나누었습니다.")
+        println("${players.players.map { it.name.name }.joinToString(", ")}에게 ${DealMachine.INITIAL_DEAL_COUNT}장을 나누었습니다.")
         players.players.forEach {
             showPlayerCards(it)
         }
@@ -34,14 +35,14 @@ object ResultView {
     }
 
     private fun showPlayerName(playerName: PlayerName) {
-        print("$playerName")
+        print("${playerName.name}")
     }
 
     private fun showCards(cards: Cards) {
-        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ")}")
+        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { CardResultStringConverter.convert(it) }}")
     }
 
     private fun showCardsAndScore(cards: Cards) {
-        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ")} - 결과: ${cards.calculate()}")
+        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { CardResultStringConverter.convert(it) }} - 결과: ${cards.calculate().value}")
     }
 }

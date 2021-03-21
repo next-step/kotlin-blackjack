@@ -1,20 +1,17 @@
 package blackjack.domain
 
 enum class CardSpell(
-    val digit: Int,
-    val minorDigit: Int?,
-    private val alias: String?
+    val digit: Int
 ) {
-    ACE(1, 11, "A"),
+    ACE(1),
     TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10),
-    JACK(10, "J"), QUEEN(10, "Q"), KING(10, "K");
+    JACK(10), QUEEN(10), KING(10);
 
-    constructor(digit: Int) : this(digit, null, null)
-    constructor(digit: Int, alias: String) : this(digit, null, alias)
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 
-    override fun toString(): String {
-        if (alias != null) return alias
-
-        return digit.toString()
+    companion object {
+        const val ACE_MINOR_DIGIT = 11
     }
 }

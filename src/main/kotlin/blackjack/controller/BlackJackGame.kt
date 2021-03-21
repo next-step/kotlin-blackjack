@@ -2,15 +2,17 @@ package blackjack.controller
 
 import blackjack.domain.DealAnswer
 import blackjack.domain.DealMachine
+import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 object BlackJackGame {
+    private val dealMachine: DealMachine = DealMachine(Deck())
 
     fun start(players: Players) {
-        DealMachine.initialDeal(players)
+        dealMachine.initialDeal(players)
         ResultView.showInitialPlayerCards(players)
 
         players.players.forEach {
@@ -24,10 +26,10 @@ object BlackJackGame {
         var dealAnswer: DealAnswer = DealAnswer.YES
         var isBust = false
 
-        while (dealAnswer == DealAnswer.YES && !isBust) {
+        while (dealAnswer.isYes() && !isBust) {
             val answer = InputView.enterDealAnswer(player)
-            dealAnswer = DealAnswer.select(answer)
-            DealMachine.deal(dealAnswer, player)
+            dealAnswer = InputView.selectDealAnswer(answer)
+            dealMachine.deal(dealAnswer, player)
             ResultView.showPlayerCards(player)
             isBust = player.isBust()
         }

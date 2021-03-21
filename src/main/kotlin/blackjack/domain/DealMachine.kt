@@ -1,14 +1,15 @@
 package blackjack.domain
 
-object DealMachine {
-    const val INITIAL_DEAL_COUNT = 2
+class DealMachine(
+    private val deck: Deck
+) {
 
     fun initialDeal(players: Players) {
         players.players.forEach(this::initialDeal)
     }
 
     private fun initialDeal(player: Player) {
-        (1..INITIAL_DEAL_COUNT).forEach { _ ->
+        repeat(INITIAL_DEAL_COUNT) {
             deal(player)
         }
     }
@@ -19,7 +20,11 @@ object DealMachine {
     }
 
     private fun deal(player: Player) {
-        val card = Deck.pick()
+        val card = deck.pick()
         player.addPlayerCard(card)
+    }
+
+    companion object {
+        const val INITIAL_DEAL_COUNT = 2
     }
 }
