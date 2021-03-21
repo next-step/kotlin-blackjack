@@ -41,7 +41,7 @@ internal class GameTableTest {
     @DisplayName("DRAW를 인자로 받은 경우 해당 유저가 카드를 뽑고 유저 정보를 반환")
     @Test
     fun proceedGame() {
-        gameTable.proceedGame({ DrawDecider.DRAW }) {
+        gameTable.proceedGame({ DrawDecider.DRAW }, {}) {
             assertAll(
                 { assertThat(it.dealer.hands.cards.size).isEqualTo(2) },
                 { assertThat(it.players.users.map { it.hands.cards.size }).allMatch { it == 1 } }

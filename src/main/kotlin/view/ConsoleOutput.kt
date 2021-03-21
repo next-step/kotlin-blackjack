@@ -40,9 +40,8 @@ class ConsoleOutput {
         println("${user.userName.name}는 한 장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
     }
 
-    fun printHandsStatus(info: UserInfo) {
-        println(showHands(info.dealer))
-        info.players.users.forEach { println(showHands(it)) }
+    fun printHandsStatus(user: User) {
+        println(showHands(user))
     }
 
     fun printCardAndScore(info: UserInfo) {

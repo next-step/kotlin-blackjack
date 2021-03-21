@@ -20,7 +20,7 @@ object BlackjackController {
 
         gameTable.prepareGame { consoleOutput.printFirstDrawMessage(it) }
 
-        gameTable.proceedGame(inputDraw()) { consoleOutput.printCardAndScore(it) }
+        gameTable.proceedGame(inputDraw(), printStatus()) { consoleOutput.printCardAndScore(it) }
 
         gameTable.endGame { consoleOutput.printGameRecord(it) }
     }
@@ -33,4 +33,6 @@ object BlackjackController {
         consoleOutput.printDecideDrawingMessage(it)
         DrawDecider.of(consoleInput.read())
     }
+
+    private fun printStatus(): (User) -> Unit = { consoleOutput.printHandsStatus(it) }
 }

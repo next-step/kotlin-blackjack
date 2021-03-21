@@ -29,7 +29,7 @@ internal class UsersTest {
         val users = createUsers("pobi", "jason")
         val cardDeck = CardDeck(SortedShuffleStrategy())
 
-        users.draw({ DrawDecider.DRAW }, cardDeck)
+        users.draw(cardDeck, { DrawDecider.DRAW }, {})
 
         assertThat(users.users[0].hands.cards.size).isEqualTo(2)
     }
@@ -40,7 +40,7 @@ internal class UsersTest {
         val users = createUsers("pobi", "jason")
         val cardDeck = CardDeck(RandomShuffleStrategy())
 
-        users.draw({ DrawDecider.DRAW }, cardDeck)
+        users.draw(cardDeck, { DrawDecider.DRAW }, {})
 
         assertThat(users.users.drop(1)).allMatch { it.hands.cards.size == 1 }
     }
