@@ -11,8 +11,11 @@ data class Score(val score: Int) {
 
     fun compareTo(other: Score): ResultType = ResultType.of(score.compareTo(other.score))
 
+    fun isBurst() = score > BLACKJACK_SCORE
+
     companion object {
         private const val MIN_SCORE = 0
         private const val MAX_SCORE = 30
+        private const val BLACKJACK_SCORE = 21
     }
 }

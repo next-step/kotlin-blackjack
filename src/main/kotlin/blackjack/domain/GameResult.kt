@@ -9,7 +9,7 @@ class GameResult(players: List<User>, dealer: User) {
             return mapOf(
                 Pair(ResultType.WIN, players.count { it.value == ResultType.LOSE }),
                 Pair(ResultType.DRAW, players.count { it.value == ResultType.DRAW }),
-                Pair(ResultType.LOSE, players.count { it.value == ResultType.LOSE }),
+                Pair(ResultType.LOSE, players.count { it.value == ResultType.WIN }),
             )
         }
 

@@ -58,7 +58,7 @@ class ConsoleOutput {
     fun printGameRecord(result: GameResult) {
         val builder = StringBuilder().apply {
             append("\n## 최종 승패\n")
-            append("딜러: ${result.dealer[ResultType.WIN]}승 ${result.dealer[ResultType.LOSE]}패\n")
+            append("딜러: ${result.dealer[ResultType.WIN]}승 ${result.dealer[ResultType.DRAW]}무 ${result.dealer[ResultType.LOSE]}패\n")
             result.players.forEach { append("${it.key.userName.name}: ${it.value.symbol}\n") }
         }
         println(builder)

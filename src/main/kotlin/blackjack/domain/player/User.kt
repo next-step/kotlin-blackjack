@@ -14,7 +14,13 @@ abstract class User(val userName: UserName) {
         }
     }
 
-    fun calculateScore(): Score = hands.calculateScore()
+    fun calculateScore(): Score {
+        val score = hands.calculateScore()
+        if (score.isBurst()) {
+            return Score(0)
+        }
+        return score
+    }
 
     abstract fun canDraw(): Boolean
 }
