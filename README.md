@@ -6,4 +6,4 @@
   - [x] 각 카드에는 `suit`, `denomination` 이 있다.
     - [x] `suit` 에는 heart, club, diamond, spade 가 있다.
     - [x] `denomination` 에는 ACE, 2 ~ 10, Jack, Queen, King 이 있다.
-- [ ] 랜덤한 카드를 deck에서 뽑아 준다.
+- [x] 랜덤한 카드를 deck에서 뽑아 준다.
