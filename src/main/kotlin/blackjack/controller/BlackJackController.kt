@@ -3,9 +3,8 @@ package blackjack.controller
 import blackjack.domain.CardPack
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.ui.ResultView
 import blackjack.ui.PlayerInputView
-import blackjack.ui.model.PlayerCardResult
+import blackjack.ui.ResultView
 
 object BlackJackController {
     fun run() {

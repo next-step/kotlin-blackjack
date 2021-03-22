@@ -40,7 +40,7 @@ object ResultView {
         println("## 최종 승패")
         println(playerWinTypes.dealerResult)
         playerWinTypes.keys.forEach {
-            println("${it}: ${playerWinTypes[it]?.description}")
+            println("$it: ${playerWinTypes[it]?.description}")
         }
     }
 }
