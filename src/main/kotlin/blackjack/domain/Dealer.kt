@@ -13,13 +13,12 @@ class Dealer(
         return players.toPlayerDtos()
     }
 
-    fun giveCard2(player: Player, hasAccepted: Boolean): PlayerDto {
+    fun giveCard(player: Player, hasAccepted: Boolean): PlayerDto {
         if (hasAccepted) {
             player.takeCard(cardPack.pickCard())
         }
         return player.toPlayerDto()
     }
-
 
     companion object {
         private const val FIRST_GIVEN_CARD_SIZE = 2

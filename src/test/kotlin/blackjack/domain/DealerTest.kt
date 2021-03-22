@@ -21,10 +21,10 @@ internal class DealerTest {
         val players = Players(listOf(Player("song")))
         val dealer = Dealer(players, CardPack())
 
-        val playerDto1 = dealer.giveCard2(players[0], false)
+        val playerDto1 = dealer.giveCard(players[0], false)
         assertThat(playerDto1.cards).hasSize(0)
 
-        val playerDto2 = dealer.giveCard2(players[0], true)
+        val playerDto2 = dealer.giveCard(players[0], true)
         assertThat(playerDto2.cards).hasSize(1)
     }
 }
