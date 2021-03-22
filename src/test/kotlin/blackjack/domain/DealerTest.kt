@@ -61,6 +61,26 @@ internal class DealerTest {
         assertThat(result["song"]).isEqualTo(PlayerWinType.WIN)
     }
 
+    @Test
+    fun `16이하면 카드를 더 받는다`() {
+        val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.TWO, CardType.THREE))
+
+        val canTake = dealer.takeCardIfUnderSixteen()
+        assertThat(canTake).isTrue()
+    }
+
+    @Test
+    fun `16초과면 카드를 더 받지 않는다`() {
+        val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.NINE, CardType.TEN))
+
+        val canTake = dealer.takeCardIfUnderSixteen()
+        assertThat(canTake).isFalse()
+    }
+
     private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =
         cardTypes.map { Card(CardShape.CLOVER, it) }.toSet()
 }
