@@ -13,10 +13,6 @@ class Dealer(
         return players.toPlayerDtos()
     }
 
-    fun giveCard(player: Player) {
-        player.takeCard(cardPack.pickCard())
-    }
-
     fun giveCard2(player: Player, hasAccepted: Boolean): PlayerDto {
         if (hasAccepted) {
             player.takeCard(cardPack.pickCard())
