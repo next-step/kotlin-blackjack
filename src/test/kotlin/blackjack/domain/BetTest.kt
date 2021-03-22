@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.CardPlayer
+import blackjack.playerWith
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -21,16 +21,16 @@ class BetTest {
     }
 
     @Test
-    internal fun `블랙잭은 수익이 150%이다`() {
-        val pobi = CardPlayer.Player("pobi", listOf(Card("A", Symbol.HEARTS), Card("K", Symbol.HEARTS)))
+    internal fun `블랙잭(두 카드가 21)이면 배팅금액의 150%를 받는다`() {
+        val pobi = playerWith("pobi", "A", "K")
 
         assertThat(PlayerResult(pobi, PlayResult.WINS).income(Bet(pobi, 10_000)))
             .isEqualTo(15_000)
     }
 
     @Test
-    internal fun `무승부는 돈을 돌려받는다`() {
-        val pobi = CardPlayer.Player("pobi", listOf(Card("A", Symbol.HEARTS), Card("K", Symbol.HEARTS)))
+    internal fun `무승부이면 0원을 받는다`() {
+        val pobi = playerWith("pobi", "A", "K")
 
         assertThat(DealerAdjustment(listOf(PlayerResult(pobi, PlayResult.DRAWS)), listOf(Bet(pobi, 10_000))).income())
             .isEqualTo(0)

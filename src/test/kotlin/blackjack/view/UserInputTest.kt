@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.view.UserInput
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

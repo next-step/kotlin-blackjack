@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.dealerWith
+import blackjack.playerWith
+import blackjack.scoreIs
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -79,22 +82,6 @@ class PlayResultTest {
             PlayerResult(pobi, PlayResult.LOSSES),
             PlayerResult(jason, PlayResult.WINS)
         )
-    }
-
-    private fun playerWith(name: String, vararg cardNames: String, assert: (CardPlayer) -> Unit): CardPlayer {
-        val cards = cardNames.map { Card(it, Symbol.values().random()) }.toList()
-        return CardPlayer.Player(name, cards)
-            .also {
-                assert(it)
-            }
-    }
-
-    private fun dealerWith(vararg cardNames: String, assert: (CardPlayer) -> Unit): CardPlayer.Dealer {
-        return CardPlayer.Dealer(playerWith("dealer", *cardNames, assert = assert))
-    }
-
-    private infix fun CardPlayer.scoreIs(score: Int) {
-        assertThat(score()).isEqualTo(score)
     }
 
     private infix fun CardPlayer.busts(busted: Boolean) {
