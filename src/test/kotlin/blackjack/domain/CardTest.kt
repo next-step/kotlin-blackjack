@@ -2,6 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class CardTest {
 
@@ -44,5 +45,10 @@ class CardTest {
             Card("K", Symbol.SPADES),
             Card("J", Symbol.DIAMONDS)
         )
+    }
+
+    @Test
+    internal fun `비정상 카드이름`() {
+        assertThrows<IllegalArgumentException> { Card("1", Symbol.HEARTS) }
     }
 }
