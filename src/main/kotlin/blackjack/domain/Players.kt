@@ -5,12 +5,17 @@ import blackjack.ui.model.PlayerDto
 class Players(
     private val values: List<Player>
 ) : List<Player> by values {
+    private val _values = values.toMutableList()
+
     fun giveToAllPlayers(cardPack: CardPack) {
-        values.forEach { it.takeCard(cardPack.pickCard()) }
+        _values.forEach { it.takeCard(cardPack.pickCard()) }
     }
 
     fun toPlayerDtos(): List<PlayerDto> {
-        return values.map { it.toPlayerDto() }
+        return _values.map { it.toPlayerDto() }
     }
 
+    fun addDealerAsPlayer(dealer: Dealer) {
+        _values.add(dealer)
+    }
 }

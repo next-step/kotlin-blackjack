@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.ui.model.PlayerDto
 
-class Player(
+open class Player(
     val name: String
 ) {
     private val cards = mutableSetOf<Card>()
