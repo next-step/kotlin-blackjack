@@ -39,9 +39,7 @@ class Dealer(
         val playerWinTypes = PlayerWinTypes()
         val dealerPoint = this.calculateCardSum()
         players.filter { it != this }
-            .forEach {
-                playerWinTypes[it.name] = WinType.findWinTypeOfPlayer(it.calculateCardSum(), dealerPoint)
-            }
+            .forEach { playerWinTypes[it.name] = WinType.findWinTypeOfPlayer(it.calculateCardSum(), dealerPoint) }
         return playerWinTypes
     }
 
