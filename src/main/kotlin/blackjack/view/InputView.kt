@@ -16,12 +16,12 @@ object InputView {
 
     fun drawCards(player: Player) {
         while (true) {
-            println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             if (readLine()?.trim()?.toLowerCase() != "y") {
                 break
             }
             player.draw()
-            println("${player}카드: ${player.cards}")
+            println("${player.name}카드: ${player.cards}")
         }
     }
 }

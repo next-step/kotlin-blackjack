@@ -9,10 +9,6 @@ class Cards private constructor(private val cards: List<Card> = firstDraw()) : L
         return cards.fold(Score.ZERO) { acc, card -> acc + card.getScores().highest() }
     }
 
-    override fun toString(): String {
-        return cards.joinToString(separator = ", ") { "$it" }
-    }
-
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 

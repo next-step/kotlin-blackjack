@@ -1,6 +1,6 @@
 package blackjack.model
 
-data class Score(private val score: Int) : Comparable<Score> {
+data class Score(val score: Int) : Comparable<Score> {
     operator fun plus(other: Score): Score {
         return Score(score + other.score)
     }
@@ -11,10 +11,6 @@ data class Score(private val score: Int) : Comparable<Score> {
 
     override operator fun compareTo(other: Score): Int {
         return score.compareTo(other.score)
-    }
-
-    override fun toString(): String {
-        return score.toString()
     }
 
     companion object {

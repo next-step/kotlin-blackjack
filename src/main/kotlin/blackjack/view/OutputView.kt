@@ -6,15 +6,18 @@ import blackjack.model.Rule
 
 object OutputView {
     fun printFirstDraw(players: Players) {
-        println("${players}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
-        players.forEach {
-            println("${it}카드: ${it.cards}")
+        println("${players.joinToString(", ") { it.name }}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
+        players.forEach { player ->
+            println("${player.name}카드: ${toString(player.cards)}")
         }
     }
 
     fun printResult(players: Players) {
-        players.forEach {
-            println("${it}카드: ${it.cards} - 결과: ${Rule.getScore(it.cards)}")
+        players.forEach { player ->
+            println("${player.name}카드: ${toString(player.cards)} - 결과: ${Rule.getScore(player.cards).score}")
         }
     }
+
+    private fun toString(cards: Cards): String =
+        cards.joinToString(separator = ", ") { "${it.cardNumber}${it.suit}" }
 }

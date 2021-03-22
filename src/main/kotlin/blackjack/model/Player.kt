@@ -1,11 +1,7 @@
 package blackjack.model
 
-class Player(private val name: String) {
+class Player(val name: String) {
     var cards = Cards.Builder().build()
-
-    override fun toString(): String {
-        return name
-    }
 
     fun draw() {
         val mutableCardList = cards.toMutableList()
