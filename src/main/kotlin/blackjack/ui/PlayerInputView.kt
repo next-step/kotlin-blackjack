@@ -9,7 +9,8 @@ object PlayerInputView {
         val names = readLine() ?: throw IllegalArgumentException("입력된 이름이 없습니다.")
         println()
 
-        return Players(names.split(",").map { Player(it) })
+        val playerList = names.split(",").map { Player(it) }.toMutableList()
+        return Players(playerList)
     }
 
     fun askMoreCard(name: String): Boolean {

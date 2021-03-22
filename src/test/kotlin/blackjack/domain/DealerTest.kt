@@ -7,7 +7,7 @@ internal class DealerTest {
 
     @Test
     fun `player에게 두 장의 카드씩 준다`() {
-        val players = Players(listOf(Player("song"), Player("kim")))
+        val players = Players(mutableListOf(Player("song"), Player("kim")))
         val dealer = Dealer(players, CardPack())
 
         val playerDtos = dealer.giveTwoCardsToAllPlayers()
@@ -18,7 +18,7 @@ internal class DealerTest {
 
     @Test
     fun `특정 player가 accept하면 카드를 준다`() {
-        val players = Players(listOf(Player("song")))
+        val players = Players(mutableListOf(Player("song")))
         val dealer = Dealer(players, CardPack())
 
         val playerDto1 = dealer.giveCard(players[0], false)
@@ -30,7 +30,7 @@ internal class DealerTest {
 
     @Test
     fun `승패를 계산한다(dealer가 21이 넘은 경우)`() {
-        val players = Players(listOf(Player("song"), Player("kim")))
+        val players = Players(mutableListOf(Player("song"), Player("kim")))
         val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE))
 
         val result = dealer.findPlayerWinTypes()
@@ -40,7 +40,7 @@ internal class DealerTest {
     @Test
     fun `승패를 계산한다(player보다 dealer의 점수가 높은 경우)`() {
         val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
-        val players = Players(listOf(player))
+        val players = Players(mutableListOf(player))
         val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
 
         val result = dealer.findPlayerWinTypes()
@@ -52,7 +52,7 @@ internal class DealerTest {
     @Test
     fun `승패를 계산한다(player보다 dealer의 점수가 낮은 경우)`() {
         val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
-        val players = Players(listOf(player))
+        val players = Players(mutableListOf(player))
         val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
 
         val result = dealer.findPlayerWinTypes()
