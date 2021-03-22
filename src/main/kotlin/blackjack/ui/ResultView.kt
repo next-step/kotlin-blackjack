@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.WinType
+import blackjack.domain.PlayerWinType
 import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 import blackjack.ui.model.PlayerWinTypes
@@ -45,9 +45,9 @@ object ResultView {
     }
 }
 
-private val WinType.description: String
+private val PlayerWinType.description: String
     get() = when (this) {
-        WinType.WIN -> "승"
-        WinType.LOSE -> "패"
-        WinType.DRAW -> "무승부"
+        PlayerWinType.WIN -> "승"
+        PlayerWinType.LOSE -> "패"
+        PlayerWinType.DRAW -> "무승부"
     }

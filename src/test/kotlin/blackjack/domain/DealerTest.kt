@@ -46,7 +46,7 @@ internal class DealerTest {
         val result = dealer.findPlayerWinTypes()
         assertThat(result.dealerResult).isEqualTo("1승 0패")
 
-        assertThat(result["song"]).isEqualTo(WinType.LOSE)
+        assertThat(result["song"]).isEqualTo(PlayerWinType.LOSE)
     }
 
     @Test
@@ -58,7 +58,7 @@ internal class DealerTest {
         val result = dealer.findPlayerWinTypes()
         assertThat(result.dealerResult).isEqualTo("0승 1패")
 
-        assertThat(result["song"]).isEqualTo(WinType.WIN)
+        assertThat(result["song"]).isEqualTo(PlayerWinType.WIN)
     }
 
     private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =

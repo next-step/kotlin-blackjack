@@ -1,14 +1,14 @@
 package blackjack.ui.model
 
-import blackjack.domain.WinType
+import blackjack.domain.PlayerWinType
 
 class PlayerWinTypes(
-    private val map: MutableMap<String, WinType> = mutableMapOf()
-) : MutableMap<String, WinType> by map {
+    private val map: MutableMap<String, PlayerWinType> = mutableMapOf()
+) : MutableMap<String, PlayerWinType> by map {
     val dealerResult: String
         get() = "${findDealerWinCount()}승 ${findDealerLoseCount()}패"
 
-    private fun findDealerWinCount(): Int = map.count { it.value == WinType.LOSE }
+    private fun findDealerWinCount(): Int = map.count { it.value == PlayerWinType.LOSE }
 
-    private fun findDealerLoseCount() = map.count { it.value == WinType.WIN }
+    private fun findDealerLoseCount() = map.count { it.value == PlayerWinType.WIN }
 }
