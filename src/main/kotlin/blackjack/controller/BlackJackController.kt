@@ -25,10 +25,10 @@ object BlackJackController {
     }
 
     private fun askAndGiveCards(player: Player, dealer: Dealer) {
-        while (PlayerInputView.askMoreCard(player.name)) {
-            dealer.giveCard(player)
-            CardView.printCardsOfSinglePlayer(player.toPlayerDTO())
-        }
-        CardView.printCardsOfSinglePlayer(player.toPlayerDTO())
+        do {
+            val hasAccepted = PlayerInputView.askMoreCard(player.name)
+            val playerDto = dealer.giveCard2(player, hasAccepted)
+            CardView.printCardsOfSinglePlayer(playerDto)
+        } while (hasAccepted)
     }
 }

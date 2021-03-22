@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DealerTest {
@@ -10,9 +10,21 @@ internal class DealerTest {
         val players = Players(listOf(Player("song"), Player("kim")))
         val dealer = Dealer(players, CardPack())
 
-        val playerDTOs = dealer.giveTwoCardsToAllPlayers()
-        Assertions.assertThat(playerDTOs).extracting("name").contains("song", "kim")
-        Assertions.assertThat(playerDTOs[0].cards).hasSize(2)
-        Assertions.assertThat(playerDTOs[1].cards).hasSize(2)
+        val playerDtos = dealer.giveTwoCardsToAllPlayers()
+        assertThat(playerDtos).extracting("name").contains("song", "kim")
+        assertThat(playerDtos[0].cards).hasSize(2)
+        assertThat(playerDtos[1].cards).hasSize(2)
+    }
+
+    @Test
+    fun `특정 player가 accept하면 카드를 준다`() {
+        val players = Players(listOf(Player("song")))
+        val dealer = Dealer(players, CardPack())
+
+        val playerDto1 = dealer.giveCard2(players[0], false)
+        assertThat(playerDto1.cards).hasSize(0)
+
+        val playerDto2 = dealer.giveCard2(players[0], true)
+        assertThat(playerDto2.cards).hasSize(1)
     }
 }

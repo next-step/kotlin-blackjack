@@ -29,7 +29,7 @@ class Player(
     private fun changeAcePointToOneToWin(cardPointSum: Int) =
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
-    fun toPlayerDTO(): PlayerDto {
+    fun toPlayerDto(): PlayerDto {
         return PlayerDto(name, cards.toMutableSet())
     }
 

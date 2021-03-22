@@ -10,7 +10,7 @@ class Players(
     }
 
     fun toPlayerDtos(): List<PlayerDto> {
-        return values.map { it.toPlayerDTO() }
+        return values.map { it.toPlayerDto() }
     }
 
 }
