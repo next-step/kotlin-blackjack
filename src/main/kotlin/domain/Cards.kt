@@ -2,7 +2,7 @@ package domain
 
 class Cards(vararg card: Card) {
     private var _elements = card.toMutableList()
-    val element: List<Card>
+    val elements: List<Card>
         get() = _elements.toList()
     val score: Score
         get() = _elements
