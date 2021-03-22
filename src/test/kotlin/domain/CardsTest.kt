@@ -22,7 +22,7 @@ internal class CardsTest {
     }
 
     @Test
-    fun `cards 는 내부의 점수를 계산할 수 있다 ACE가 11점으로 계산 되는 경우 1 + 10 + 3 = 14`() {
+    fun `cards 는 내부의 점수를 계산할 수 있다 ACE가 1점으로 계산 되는 경우 1 + 10 + 3 = 14`() {
         val cards = Cards(aceCard, tenCard, threeCard)
         assertThat(cards.score).isEqualTo(Score.of(14))
     }
