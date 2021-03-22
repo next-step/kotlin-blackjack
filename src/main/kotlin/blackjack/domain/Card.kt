@@ -1,8 +1,8 @@
 package blackjack.domain
 
 data class Card(
-    private val suit: Suit,
-    private val denomination: Denomination
+    val suit: Suit,
+    val denomination: Denomination
 ) : Comparable<Card> {
 
     fun calculateScore(otherScore: Score): Score {
