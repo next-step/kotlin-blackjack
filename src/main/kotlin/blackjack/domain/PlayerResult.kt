@@ -12,8 +12,8 @@ data class PlayerResult(private val player: CardPlayer, val playResult: PlayResu
             return bet.blackjack
         }
         return when (playResult) {
-            PlayResult.WINS -> bet.win
-            PlayResult.LOSSES -> bet.lost
+            PlayResult.WINS -> bet.money
+            PlayResult.LOSSES -> -bet.money
             else -> 0
         }
     }
