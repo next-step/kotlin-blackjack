@@ -6,7 +6,7 @@ import blackjack.domain.player.Player
 import blackjack.view.inputAnswer
 import blackjack.view.inputPlayerNames
 import blackjack.view.printPlayerCards
-import blackjack.view.printPlayersCards
+import blackjack.view.printPlayersResult
 import blackjack.view.printStartMessage
 
 fun main() {
@@ -19,7 +19,7 @@ fun main() {
         askTakeCard(deck, it)
     }
 
-    printPlayersCards(players)
+    printPlayersResult(players)
 }
 
 private fun askTakeCard(deck: Deck, it: Player) {

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Score private constructor(private val value: Int) : Comparable<Score> {
+class Score private constructor(val value: Int) : Comparable<Score> {
 
     operator fun plus(that: Score) = Score(value = this.value + that.value)
 
