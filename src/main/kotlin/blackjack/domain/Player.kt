@@ -5,6 +5,10 @@ import blackjack.ui.model.PlayerDto
 open class Player(
     val name: String
 ) {
+    constructor(name: String, cards: Set<Card>) : this(name) {
+        this.cards.addAll(cards)
+    }
+
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
         get() = cards.map { it.toString() }
@@ -34,6 +38,6 @@ open class Player(
     }
 
     companion object {
-        private const val BLACK_JACK_TWENTY_ONE = 21
+        const val BLACK_JACK_TWENTY_ONE = 21
     }
 }

@@ -2,7 +2,7 @@ package blackjack.ui.model
 
 import blackjack.domain.Player
 
-class BlackJackResult(
+class PlayerCardResult(
     player: Player
 ) {
     val name: String = player.name

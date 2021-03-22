@@ -1,9 +1,10 @@
 package blackjack.domain
 
+import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 
 class Players(
-    private val values: List<Player>
+    values: List<Player>
 ) : List<Player> by values {
     private val _values = values.toMutableList()
 
@@ -15,7 +16,15 @@ class Players(
         return _values.map { it.toPlayerDto() }
     }
 
+    fun toPlayerCardResults(): List<PlayerCardResult> {
+        return _values.map { PlayerCardResult(it) }
+    }
+
     fun addDealerAsPlayer(dealer: Dealer) {
-        _values.add(dealer)
+        _values.add(DEALER_INDEX, dealer)
+    }
+
+    companion object {
+        private const val DEALER_INDEX = 0
     }
 }

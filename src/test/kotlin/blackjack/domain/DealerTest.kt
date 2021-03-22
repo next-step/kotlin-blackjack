@@ -27,4 +27,40 @@ internal class DealerTest {
         val playerDto2 = dealer.giveCard(players[0], true)
         assertThat(playerDto2.cards).hasSize(1)
     }
+
+    @Test
+    fun `승패를 계산한다(dealer가 21이 넘은 경우)`() {
+        val players = Players(listOf(Player("song"), Player("kim")))
+        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE))
+
+        val result = dealer.findPlayerWinTypes()
+        assertThat(result.dealerResult).isEqualTo("0승 2패")
+    }
+
+    @Test
+    fun `승패를 계산한다(player보다 dealer의 점수가 높은 경우)`() {
+        val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val players = Players(listOf(player))
+        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+
+        val result = dealer.findPlayerWinTypes()
+        assertThat(result.dealerResult).isEqualTo("1승 0패")
+
+        assertThat(result["song"]).isEqualTo(WinType.LOSE)
+    }
+
+    @Test
+    fun `승패를 계산한다(player보다 dealer의 점수가 낮은 경우)`() {
+        val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+        val players = Players(listOf(player))
+        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
+
+        val result = dealer.findPlayerWinTypes()
+        assertThat(result.dealerResult).isEqualTo("0승 1패")
+
+        assertThat(result["song"]).isEqualTo(WinType.WIN)
+    }
+
+    private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =
+        cardTypes.map { Card(CardShape.CLOVER, it) }.toSet()
 }
