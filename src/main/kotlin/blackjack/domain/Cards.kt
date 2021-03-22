@@ -12,6 +12,10 @@ class Cards(vararg card: Card) {
 
     fun add(card: Card) = _elements.add(card)
 
+    override fun toString(): String {
+        return "Cards(_elements=$_elements)"
+    }
+
     companion object {
         val BLACKJACK_SCORE = Score.of(21)
     }
