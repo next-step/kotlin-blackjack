@@ -1,4 +1,4 @@
-package domain.deck
+package blackjack.domain.deck
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

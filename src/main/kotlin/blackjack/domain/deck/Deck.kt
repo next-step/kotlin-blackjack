@@ -1,6 +1,6 @@
-package domain.deck
+package blackjack.domain.deck
 
-import domain.Card
+import blackjack.domain.Card
 
 class Deck(elements: List<Card>) {
     private val _elements = elements.toMutableList()

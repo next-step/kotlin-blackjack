@@ -1,4 +1,4 @@
-package domain
+package blackjack.domain
 
 class Score private constructor(private val value: Int) : Comparable<Score> {
 

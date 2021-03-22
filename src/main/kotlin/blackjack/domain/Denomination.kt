@@ -1,4 +1,4 @@
-package domain
+package blackjack.domain
 
 enum class Denomination(private val score: Score) {
     ACE(Score.of(11)),

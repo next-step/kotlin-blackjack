@@ -1,6 +1,6 @@
-package domain.player
+package blackjack.domain.player
 
-import domain.Cards
+import blackjack.domain.Cards
 
 class Player(val name: Name, val cards: Cards) {
 
