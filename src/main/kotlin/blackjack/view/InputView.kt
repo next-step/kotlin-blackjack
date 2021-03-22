@@ -21,7 +21,7 @@ object InputView {
                 break
             }
             player.draw()
-            println("${player.name}카드: ${player.cards}")
+            println("${player.name}카드: ${toString(player.cards)}")
         }
     }
 }

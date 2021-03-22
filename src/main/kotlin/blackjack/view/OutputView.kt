@@ -17,7 +17,4 @@ object OutputView {
             println("${player.name}카드: ${toString(player.cards)} - 결과: ${Rule.getScore(player.cards).score}")
         }
     }
-
-    private fun toString(cards: Cards): String =
-        cards.joinToString(separator = ", ") { "${it.cardNumber}${it.suit}" }
 }
