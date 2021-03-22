@@ -19,11 +19,8 @@ internal class CardPackTest {
 
     @Test
     fun `카드 53번 째, 카드를 뽑으면 에러`() {
-        val cardPack = CardPack()
+        val cardPack = CardPack(isEmpty = true)
 
-        repeat(52) {
-            cardPack.pickCard()
-        }
         Assertions.assertThatThrownBy { cardPack.pickCard() }
             .isInstanceOf(IllegalStateException::class.java)
     }

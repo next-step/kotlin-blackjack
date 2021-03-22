@@ -1,13 +1,13 @@
 package blackjack.domain
 
-class CardPack {
+class CardPack(isEmpty: Boolean = false) {
     private val cards = mutableListOf<Card>()
 
     init {
-        CardShape.values().forEach { cardShape ->
-            createCardsOf(cardShape)
+        if (!isEmpty) {
+            createAllShapeCards()
+            cards.shuffle()
         }
-        cards.shuffle()
     }
 
     fun pickCard(): Card {
@@ -17,7 +17,13 @@ class CardPack {
         return cards.removeAt(0)
     }
 
-    private fun createCardsOf(cardShape: CardShape) {
+    private fun createAllShapeCards() {
+        CardShape.values().forEach { cardShape ->
+            createSingleShapeCardsOf(cardShape)
+        }
+    }
+
+    private fun createSingleShapeCardsOf(cardShape: CardShape) {
         CardType.values().forEach { cardType ->
             cards.add(Card(cardShape, cardType))
         }
