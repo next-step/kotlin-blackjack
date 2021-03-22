@@ -26,4 +26,13 @@ internal class CardsTest {
         val cards = Cards(aceCard, tenCard, threeCard)
         assertThat(cards.score).isEqualTo(Score.of(14))
     }
+
+    @Test
+    fun `cards에 카드가 추가될 경우 점수도 변경되어야 한다`() {
+        val cards = Cards(tenCard, threeCard)
+        assertThat(cards.score).isEqualTo(Score.of(13))
+
+        cards.add(Card(Suit.CLUB, Denomination.THREE))
+        assertThat(cards.score).isEqualTo(Score.of(16))
+    }
 }
