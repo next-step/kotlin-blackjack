@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackjackBuilder {
+class DeckBuilder {
     var deck: List<Card> = emptyList()
 
     fun normal(numbers: IntRange) {
@@ -27,9 +27,9 @@ class BlackjackBuilder {
         return Symbol.values().map { Card(name, it) }
     }
 
-    fun build(): Blackjack = Blackjack(deck)
+    fun build(): Deck = Deck(deck)
 }
 
-fun blackjack(initializer: BlackjackBuilder.() -> Unit): BlackjackBuilder {
-    return BlackjackBuilder().apply(initializer)
+fun deck(initializer: DeckBuilder.() -> Unit): DeckBuilder {
+    return DeckBuilder().apply(initializer)
 }

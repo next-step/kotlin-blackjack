@@ -3,10 +3,10 @@ package blackjack
 import blackjack.view.ResultView.names
 import blackjack.domain.Bet
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Blackjack
+import blackjack.domain.Deck
 import blackjack.domain.CardPlayer
 import blackjack.domain.Players
-import blackjack.domain.blackjack
+import blackjack.domain.deck
 import blackjack.view.ResultView
 import blackjack.view.UserInput
 
@@ -47,8 +47,8 @@ private fun drawQuestion(name: String): Boolean {
     }
 }
 
-private fun buildDeck(): Blackjack {
-    return blackjack {
+private fun buildDeck(): Deck {
+    return deck {
         ace()
         normal(2..10)
         jack()

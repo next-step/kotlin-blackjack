@@ -8,7 +8,7 @@ class CardTest {
 
     @Test
     internal fun 에이스() {
-        val blackjack = blackjack {
+        val blackjack = deck {
             ace()
         }.build()
         assertThat(blackjack).contains(
@@ -21,7 +21,7 @@ class CardTest {
 
     @Test
     internal fun 노멀() {
-        val blackjack = blackjack {
+        val blackjack = deck {
             normal(2..10)
         }.build()
         assertThat(blackjack).contains(
@@ -34,7 +34,7 @@ class CardTest {
 
     @Test
     internal fun `잭, 퀸, 킹`() {
-        val blackjack = blackjack {
+        val blackjack = deck {
             jack()
             queen()
             king()

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackGame(private val players: Players, private val deck: Blackjack) {
+class BlackJackGame(private val players: Players, private val deck: Deck) {
 
     fun prepareDraw() {
         for (player in players.allPlayers() * PREPARE_DRAWS) {

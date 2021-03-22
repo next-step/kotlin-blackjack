@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackGameTest {
-    private val deck = blackjack {
+    private val deck = deck {
         normal(2..10)
     }.build()
 
