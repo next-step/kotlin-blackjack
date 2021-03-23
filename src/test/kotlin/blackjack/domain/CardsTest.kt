@@ -13,9 +13,9 @@ internal class CardsTest {
             )
         )
 
-        cards + Card.of(CardSuit.CLUBS, CardSpell.ACE)
+        cards.addCard(Card.of(CardSuit.CLUBS, CardSpell.ACE))
         assertThat(cards.isBust()).isFalse()
-        cards + Card.of(CardSuit.HEARTS, CardSpell.ACE)
+        cards.addCard(Card.of(CardSuit.HEARTS, CardSpell.ACE))
         assertThat(cards.isBust()).isTrue()
     }
 

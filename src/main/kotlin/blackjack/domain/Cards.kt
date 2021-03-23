@@ -6,7 +6,7 @@ class Cards private constructor(
     val cards: List<Card>
         get() = _cards.toList()
 
-    operator fun plus(card: Card) {
+    fun addCard(card: Card) {
         _cards.add(card)
     }
 
