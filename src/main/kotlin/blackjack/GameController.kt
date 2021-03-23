@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
@@ -12,15 +13,16 @@ private const val NO = "N"
 fun main() {
     val players = InputView.inputPlayer().map { name -> Player(name) }
     val dealer = Dealer()
-    OutputView.printPlayerInfo(players+dealer)
+    val allPaticipants = Participants(players+dealer)
+    OutputView.printPlayerInfo(allPaticipants)
 
     for (player in players) {
         doPlayerTurn(player)
     }
     doDealerTurn(dealer)
 
-    OutputView.printPlayersCardList(players+dealer)
-    OutputView.printGameResult(players + dealer)
+    OutputView.printPlayersCardList(allPaticipants)
+    OutputView.printGameResult(allPaticipants)
 }
 
 private fun doPlayerTurn(player: Player) {

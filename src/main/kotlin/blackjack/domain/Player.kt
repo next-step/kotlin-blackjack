@@ -1,8 +1,6 @@
 package blackjack.domain
 
-class Player(
-    name: String
-) : GameParticipants(name) {
+class Player(name: String) : GameParticipants(name) {
 
     override fun drawCard() {
         cards.drawCard()
