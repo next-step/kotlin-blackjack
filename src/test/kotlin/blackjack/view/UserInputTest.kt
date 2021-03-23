@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,5 +14,11 @@ class UserInputTest {
     fun `y 를 받는다`() {
         val userInput = UserInput.Char("질문", "y\n")
         assertThat(userInput.answer()).isEqualTo('y')
+    }
+
+    @Test
+    fun `숫자를 받는다`() {
+        val userInput = UserInput.Int("질문", "10000\n")
+        assertThat(userInput.answer()).isEqualTo(10000)
     }
 }

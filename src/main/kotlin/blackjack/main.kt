@@ -1,6 +1,14 @@
 package blackjack
 
-import blackjack.ResultView.names
+import blackjack.view.ResultView.names
+import blackjack.domain.Bet
+import blackjack.domain.BlackJackGame
+import blackjack.domain.Deck
+import blackjack.domain.CardPlayer
+import blackjack.domain.Players
+import blackjack.domain.deck
+import blackjack.view.ResultView
+import blackjack.view.UserInput
 
 fun main() {
     val deck = buildDeck()
@@ -9,29 +17,26 @@ fun main() {
         .map { CardPlayer.Player(it) }
         .let { Players(it) }
 
-    val game = BlackJackGame(players, deck)
+    val bettings = players.map {
+        it to UserInput.Int("${it.name}의 배팅 금액은?").answer()
+    }.map { (player, money) -> Bet(player, money) }
 
-    game.prepareDraw {
-        println()
-        ResultView.prepare(it)
-        println()
-    }
+    val game = BlackJackGame(players, deck)
+    game.prepareDraw()
+
+    ResultView.prepare(players)
 
     game.draw({ name ->
         drawQuestion(name)
     }) {
-        println("${it.name}카드: ${it.cards.names()}")
+        println("${it.name}카드: ${it.hand.names()}")
     }
 
     game.endDraw {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    ResultView.result(players)
-
-    for (result in players.gameResult()) {
-        println("${result.name}: ${ResultToString(result)}")
-    }
+    ResultView.result(players, bettings)
 }
 
 private fun drawQuestion(name: String): Boolean {
@@ -42,8 +47,8 @@ private fun drawQuestion(name: String): Boolean {
     }
 }
 
-private fun buildDeck(): Blackjack {
-    return blackjack {
+private fun buildDeck(): Deck {
+    return deck {
         ace()
         normal(2..10)
         jack()

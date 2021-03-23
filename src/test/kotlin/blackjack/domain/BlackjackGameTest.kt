@@ -1,15 +1,17 @@
-package blackjack
+package blackjack.domain
 
+import blackjack.dealerWith
+import blackjack.scoreIs
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackGameTest {
-    private val deck = blackjack {
+    private val deck = deck {
         normal(2..10)
     }.build()
 
     @Test
-    internal fun `딜러와 플레이어가 있다`() {
+    internal fun `Players 일급 컬렉션은 딜러를 포함한 목록을 제공한다`() {
         val players = listOf(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
 
         assertThat(Players(players).allPlayers())
@@ -18,18 +20,18 @@ class BlackjackGameTest {
     }
 
     @Test
-    internal fun `처음엔 두장씩 준다`() {
+    internal fun `초기분배는 카드 두장을 받는다`() {
         val players = Players(CardPlayer.Player("pobi"), CardPlayer.Player("json"))
         BlackJackGame(players, deck).prepareDraw()
 
         assertThat(players.allPlayers()).allSatisfy {
-            assertThat(it.cards).hasSize(2)
+            assertThat(it.hand).hasSize(2)
         }
     }
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
-    internal fun `한장을 받는다`() {
+    internal fun `카드를 받는다고 하면 한장을 받는다`() {
         val pobi = CardPlayer.Player("pobi")
         val game = BlackJackGame(Players(pobi), deck)
 
@@ -37,7 +39,7 @@ class BlackjackGameTest {
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() }) {
             assertThat(it).isEqualTo(pobi)
-            assertThat(it.cards).hasSize(1)
+            assertThat(it.hand).hasSize(1)
             invokecount++
         }
         assertThat(invokecount).isEqualTo(1)
@@ -45,24 +47,35 @@ class BlackjackGameTest {
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
-    internal fun `결과를 알 수 있다`() {
+    internal fun `받은 카드에 대해 점수가 존재한다`() {
         val players = Players(CardPlayer.Player("pobi"))
         val game = BlackJackGame(players, deck)
         val answer = mutableListOf(true, false)
         game.draw({ answer.removeFirst() })
-        game.endDraw()
 
         assertThat(players).allSatisfy {
-            assertThat(it.cards).hasSize(1)
+            assertThat(it.hand).hasSize(1)
             assertThat(it.score()).isNotZero()
         }
     }
 
     @Test
-    fun `딜러가 마지막 카드를 받는다`() {
-        val dealer = CardPlayer.Dealer()
+    fun `종료시 딜러 카드가 16 이하이면 카드 한장을 더 받는다`() {
+        val dealer = dealerWith("10", "6") {
+            it scoreIs 16
+        }
         BlackJackGame(Players(dealer), deck).endDraw()
 
-        assertThat(dealer.cards).hasSize(1)
+        assertThat(dealer.hand).hasSize(3)
+    }
+
+    @Test
+    fun `종료시 딜러 카드가 17 이상이면 더 받지 않는다`() {
+        val dealer = dealerWith("10", "7") {
+            it scoreIs 17
+        }
+        BlackJackGame(Players(dealer), deck).endDraw()
+
+        assertThat(dealer.hand).hasSize(2)
     }
 }

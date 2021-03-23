@@ -1,33 +1,24 @@
-package blackjack
-
-import blackjack.PlayResult.DRAWS
-import blackjack.PlayResult.LOSSES
-import blackjack.PlayResult.WINS
-import kotlin.math.abs
+package blackjack.domain
 
 interface CardPlayer {
     val name: String
-    val cards: List<Card>
+    val hand: Hand
     fun score(): Int
     fun accept(card: Card)
     fun draw(draw: Draw)
     fun busts(): Boolean
+    fun blackjack(): Boolean
 
     companion object {
         const val BLACKJACK = 21
     }
 
-    class Player(override val name: String) : CardPlayer {
-        private var _cards: List<Card> = emptyList()
+    class Player(override val name: String, private var _cards: List<Card> = emptyList()) : CardPlayer {
 
-        override val cards: List<Card>
-            get() = _cards
+        override val hand: Hand
+            get() = Hand(_cards)
 
-        override fun score(): Int {
-            return _cards.fold(listOf(0)) { accumulator, card ->
-                accumulator.flatMap { score -> card.number.map { it + score } }
-            }.closeTo(BLACKJACK)
-        }
+        override fun score(): Int = hand.score()
 
         override fun accept(card: Card) {
             _cards = _cards + card
@@ -42,13 +33,7 @@ interface CardPlayer {
 
         override fun busts(): Boolean = score() > BLACKJACK
 
-        private fun List<Int>.closeTo(number: Int): Int {
-            val sorted = map { it to abs(it - number) }
-                .sortedBy { it.second }
-                .map { it.first }
-            val result = sorted.firstOrNull { it <= BLACKJACK }
-            return result ?: sorted.firstOrNull() ?: 0
-        }
+        override fun blackjack(): Boolean = hand.size == 2 && score() == BLACKJACK
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -93,15 +78,5 @@ interface CardPlayer {
         companion object {
             const val HIT_UNTIL = 16
         }
-    }
-}
-
-infix fun CardPlayer.vs(other: CardPlayer): PlayResult {
-    val myScore = score()
-    val otherScore = other.score()
-    return when {
-        myScore > otherScore -> WINS
-        myScore < otherScore -> LOSSES
-        else -> DRAWS
     }
 }

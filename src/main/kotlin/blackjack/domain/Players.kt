@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Players(
     private val players: List<CardPlayer>,
@@ -14,36 +14,22 @@ class Players(
 
     fun gameResult(): List<PlayerResult> = players vs dealer
 
-    fun lastTake() = object : LastTake {
+    fun lastTake() = object : DealerLastTake {
         override fun required(): Boolean = dealer.lastWant()
 
         override fun take(card: Card) = dealer.take(card)
     }
 
     private infix fun List<CardPlayer>.vs(dealer: CardPlayer.Dealer): List<PlayerResult> {
-        if (dealer.busts()) {
-            return map { PlayerResult(it, wins = 1) } + PlayerResult(dealer, losses = 1)
-        }
-
         return map {
-            result {
-                update(it vs dealer)
-            }.build(it)
-        } + (dealer vs this)
+            PlayerResult(it, it vs dealer)
+        }
     }
 
-    private infix fun CardPlayer.Dealer.vs(players: List<CardPlayer>): PlayerResult {
-        val vs: (CardPlayer) -> PlayResult = { player -> this vs player }
+    operator fun times(i: Int): Players = Players((1..i).flatMap { this.players })
+}
 
-        return result {
-            for (player in players) {
-                update(vs(player))
-            }
-        }.build(this)
-    }
-
-    interface LastTake {
-        fun required(): Boolean
-        fun take(card: Card)
-    }
+interface DealerLastTake {
+    fun required(): Boolean
+    fun take(card: Card)
 }

@@ -1,13 +1,11 @@
-package blackjack
+package blackjack.domain
 
-class BlackJackGame(private val players: Players, private val deck: Blackjack) {
+class BlackJackGame(private val players: Players, private val deck: Deck) {
 
-    fun prepareDraw(result: (Players) -> Unit = { }) {
-        val allPlayers = players.allPlayers()
-        for (player in allPlayers + allPlayers) {
+    fun prepareDraw() {
+        for (player in players.allPlayers() * PREPARE_DRAWS) {
             player.accept(deck.next())
         }
-        result(allPlayers)
     }
 
     fun draw(isDraw: (name: String) -> Boolean, result: (CardPlayer) -> Unit = { }) {
@@ -23,5 +21,9 @@ class BlackJackGame(private val players: Players, private val deck: Blackjack) {
             lastTake.take(deck.next())
             taken()
         }
+    }
+
+    companion object {
+        const val PREPARE_DRAWS = 2
     }
 }

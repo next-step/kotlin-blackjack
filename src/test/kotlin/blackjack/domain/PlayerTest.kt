@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -11,14 +11,14 @@ class PlayerTest {
                 accept(Card("2", Symbol.HEARTS))
                 accept(Card("8", Symbol.SPADES))
             }
-        assertThat(player.cards).containsExactly(
+        assertThat(player.hand).containsExactly(
             Card("2", Symbol.HEARTS),
             Card("8", Symbol.SPADES)
         )
     }
 
     @Test
-    internal fun `카드목록의 합을 계산한다`() {
+    internal fun `카드목록의 합을 계산할 수 있다`() {
         val player = CardPlayer.Player("pobi")
             .apply {
                 accept(Card("2", Symbol.HEARTS))
@@ -64,16 +64,16 @@ class PlayerTest {
 
     @Test
     @OptIn(ExperimentalStdlibApi::class)
-    fun `21 이상이면 그만 받는다`() {
+    fun `21 이상이면 답변여부와 상관없이 카드를 받지 않는다`() {
         val person = CardPlayer.Player("pobi")
             .apply {
                 accept(Card("A", Symbol.HEARTS))
                 accept(Card("K", Symbol.DIAMONDS))
             }
 
-        val answer = mutableListOf(true, false)
+        val acceptCard = true
         person.draw(
-            Draw({ Card("2", Symbol.HEARTS) }, { answer.removeFirst() })
+            Draw({ Card("2", Symbol.HEARTS) }, { acceptCard })
         )
         assertThat(person.score()).isEqualTo(21)
     }
