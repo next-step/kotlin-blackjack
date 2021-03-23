@@ -10,5 +10,3 @@ class Player(name: String, cards: Cards = Cards(arrayListOf())) : GameParticipan
         return cards.calculateMyCards()
     }
 }
-
-

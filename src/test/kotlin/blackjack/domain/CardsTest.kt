@@ -3,21 +3,24 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalStateException
 
 class CardsTest {
 
-    private val cards1 = Cards(arrayListOf(
-        Card(Number.FIVE to Pattern.SPADE),
-        Card(Number.ACE to Pattern.CLOVER),
-        Card(Number.FIVE to Pattern.CLOVER)
-    ))
+    private val cards1 = Cards(
+        arrayListOf(
+            Card(Number.FIVE to Pattern.SPADE),
+            Card(Number.ACE to Pattern.CLOVER),
+            Card(Number.FIVE to Pattern.CLOVER)
+        )
+    )
 
-    private val cards2 = Cards(arrayListOf(
-        Card(Number.KING to Pattern.SPADE),
-        Card(Number.ACE to Pattern.CLOVER),
-        Card(Number.KING to Pattern.CLOVER)
-    ))
+    private val cards2 = Cards(
+        arrayListOf(
+            Card(Number.KING to Pattern.SPADE),
+            Card(Number.ACE to Pattern.CLOVER),
+            Card(Number.KING to Pattern.CLOVER)
+        )
+    )
 
     private val duplicatedCards = arrayListOf(
         Card(Number.THREE to Pattern.SPADE),

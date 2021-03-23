@@ -9,7 +9,7 @@ abstract class GameParticipants(
 ) {
 
     init {
-        if(cards.getCardList().isNullOrEmpty()) {
+        if (cards.getCardList().isNullOrEmpty()) {
             initDrawCard()
         }
     }

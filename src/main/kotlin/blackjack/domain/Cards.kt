@@ -52,10 +52,10 @@ class Cards(private val value: ArrayList<Card>) {
     }
 
     private fun checkContainDuplicateCard() {
-        val numberOfDuplicate= value.groupBy { it }
+        val numberOfDuplicate = value.groupBy { it }
             .values
-            .count{ it.size > 1}
-        if(numberOfDuplicate > 0) throw IllegalStateException("중복된 카드가 존재할 수 없습니다.")
+            .count { it.size > 1 }
+        if (numberOfDuplicate > 0) throw IllegalStateException("중복된 카드가 존재할 수 없습니다.")
     }
 
     companion object {

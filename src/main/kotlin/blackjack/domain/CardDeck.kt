@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import java.lang.IllegalStateException
 import java.util.Stack
 
 object CardDeck {
@@ -20,8 +19,7 @@ object CardDeck {
     }
 
     fun drawCard(): Card {
-        if(cards.isNullOrEmpty()) throw IllegalStateException("더 이상 카드가 없습니다.")
+        if (cards.isNullOrEmpty()) throw IllegalStateException("더 이상 카드가 없습니다.")
         return cards.pop()
     }
-
 }

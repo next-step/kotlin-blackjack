@@ -1,11 +1,9 @@
 package blackjack.domain
 
-import kotlin.math.abs
-
 class Participants(val value: List<GameParticipants>) {
 
     fun getWinners(): List<GameParticipants> {
-        if(isDealerCardsOver21()) {
+        if (isDealerCardsOver21()) {
             return value.filter {
                 it !is Dealer
             }

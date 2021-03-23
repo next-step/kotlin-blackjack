@@ -13,7 +13,7 @@ private const val NO = "N"
 fun main() {
     val players = InputView.inputPlayer().map { name -> Player(name) }
     val dealer = Dealer()
-    val allPaticipants = Participants(players+dealer)
+    val allPaticipants = Participants(players + dealer)
     OutputView.printPlayerInfo(allPaticipants)
 
     for (player in players) {

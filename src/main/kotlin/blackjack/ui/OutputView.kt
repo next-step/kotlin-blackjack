@@ -32,7 +32,7 @@ object OutputView {
     fun printGameWinner(players: Participants) {
         println("\n## 최종 승패")
         val winners = players.getWinners()
-        for(player in players.value) {
+        for (player in players.value) {
             println("${player.name} : ${player.isWinner(winners)}")
         }
     }

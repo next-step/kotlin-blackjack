@@ -25,7 +25,6 @@ class ParticipantsTest {
         )
     )
 
-
     @Test
     fun `딜러가 21이 초과하지 않는 경우 21과 가까운 사람이 승리`() {
         val participants = listOf<GameParticipants>(
@@ -57,6 +56,4 @@ class ParticipantsTest {
             Player("Kim", kimCards)
         )
     }
-
-
 }
