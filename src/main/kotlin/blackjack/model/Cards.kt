@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Cards private constructor(private val cards: List<Card> = firstDraw()) : List<Card> by cards {
+class Cards private constructor(private val cards: List<Card>) : List<Card> by cards {
     fun countAce(): Int {
         return cards.count { it.isAce() }
     }
@@ -16,7 +16,7 @@ class Cards private constructor(private val cards: List<Card> = firstDraw()) : L
     }
 
     class Builder {
-        private var cards: List<Card>? = null
+        private var cards: List<Card> = firstDraw()
 
         fun cards(cards: List<Card>): Builder {
             this.cards = cards
@@ -24,10 +24,7 @@ class Cards private constructor(private val cards: List<Card> = firstDraw()) : L
         }
 
         fun build(): Cards {
-            if (cards != null) {
-                return Cards(cards!!.toList())
-            }
-            return Cards()
+            return Cards(cards.toList())
         }
     }
 }
