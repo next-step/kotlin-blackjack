@@ -14,19 +14,19 @@ class Participants(val value: List<GameParticipants>) {
         return compareDistance(minimumDistance)
     }
 
-    fun compareDistance(minimumDistance: Int): List<GameParticipants> {
+    private fun compareDistance(minimumDistance: Int): List<GameParticipants> {
         return value.filter {
             it.getDistance() == minimumDistance
         }
     }
 
-    fun isDealerCardsOver21(): Boolean {
+    private fun isDealerCardsOver21(): Boolean {
         return value.find {
             it is Dealer
         }!!.calculateMyCards() > 21
     }
 
-    fun getMinimumDistance(): Int {
+    private fun getMinimumDistance(): Int {
         return value.map {
             it.getDistance()
         }.min() ?: 0

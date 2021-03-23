@@ -1,11 +1,12 @@
 package blackjack.domain
 
 class Dealer(
-    name: String = "딜러"
-) : GameParticipants(name) {
+    name: String = "딜러",
+    cards: Cards = Cards(arrayListOf())
+) : GameParticipants(name, cards) {
 
     override fun drawCard() {
-        if(checkCardsSumIsOver()) {
+        if (checkCardsSumIsOver()) {
             cards.drawCard()
         }
     }
@@ -15,7 +16,7 @@ class Dealer(
     }
 
     private fun checkCardsSumIsOver(): Boolean {
-        if(calculateMyCards() >= 17) {
+        if (calculateMyCards() >= 17) {
             println("딜러는 17이상이라 카드를 받지 않습니다.")
             return false
         }
