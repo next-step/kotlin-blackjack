@@ -1,13 +1,14 @@
 package blackjack.domain
 
+import java.util.LinkedList
+
 class Deck {
-    private val cards: MutableList<Card> = initializeCardsByCardSuit()
+    private val cards = LinkedList(initializeCardsByCardSuit())
 
     fun pick(): Card {
         if (isEmpty()) throw IllegalStateException("덱에 카드가 더이상 존재하지 않습니다.")
-        val card: Card = cards.random()
-        cards.remove(card)
-        return card
+        cards.shuffle()
+        return cards.pop()
     }
 
     private fun isEmpty(): Boolean {
