@@ -5,7 +5,6 @@ import blackjack.domain.DealMachine
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.domain.Players
-import blackjack.view.converter.CardResultStringConverter
 
 object ResultView {
     private const val SHOW_CARDS_SUFFIX = "카드: "
@@ -39,10 +38,10 @@ object ResultView {
     }
 
     private fun showCards(cards: Cards) {
-        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { CardResultStringConverter.convert(it) }}")
+        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { it.viewString() }}")
     }
 
     private fun showCardsAndScore(cards: Cards) {
-        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { CardResultStringConverter.convert(it) }} - 결과: ${cards.calculate().value}")
+        println("$SHOW_CARDS_SUFFIX${cards.cards.joinToString(", ") { it.viewString() }} - 결과: ${cards.calculate().value}")
     }
 }
