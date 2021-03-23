@@ -9,8 +9,8 @@ abstract class GameParticipants(
 ) {
 
     init {
-        repeat(PLAYER_INIT_CARD) {
-            cards.drawCard()
+        if(cards.getCardList().isNullOrEmpty()) {
+            initDrawCard()
         }
     }
 
@@ -25,6 +25,12 @@ abstract class GameParticipants(
             return "승"
         }
         return "패"
+    }
+
+    private fun initDrawCard() {
+        repeat(PLAYER_INIT_CARD) {
+            cards.drawCard()
+        }
     }
 
     override fun equals(other: Any?): Boolean {
