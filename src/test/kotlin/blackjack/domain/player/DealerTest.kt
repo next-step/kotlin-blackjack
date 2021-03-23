@@ -3,8 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardSymbol
-import blackjack.domain.MatchResult
-import blackjack.domain.PlayerMatchResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,9 +10,10 @@ internal class DealerTest {
 
     @Test
     fun `16점 이하 이면 hit`() {
-        val dealer = Dealer()
-        dealer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.FIVE))
-        dealer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.TEN))
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.FIVE),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN)
+        )
 
         assertThat(dealer.canHit()).isEqualTo(true)
 
@@ -24,18 +23,80 @@ internal class DealerTest {
     }
 
     @Test
-    fun `승패를 계산 한다`() {
-        val customer = Customer("정주영")
-        customer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.FIVE))
-        customer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.TEN))
+    fun `고객이 이미 burst시 수익= 고객배팅금`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.QUEEN)
+        )
 
+        val customer = Customer("고객1", 10000)
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TEN))
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.QUEEN))
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.SEVEN))
+
+        assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(10000)
+    }
+
+    @Test
+    fun `딜러가 burst시 수익= -고객베팅금`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.QUEEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.SEVEN)
+        )
+
+        val customer = Customer("고객1", 10000)
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TEN))
+
+        assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(-10000)
+    }
+
+    @Test
+    fun `무승부시 딜러 수익= 0원`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.QUEEN)
+        )
+
+        val customer = Customer("고객1", 10000)
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TEN))
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.QUEEN))
+
+        assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(0)
+    }
+
+    @Test
+    fun `딜러 패배시 딜러 수익= -고객배팅금`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TWO)
+        )
+
+        val customer = Customer("고객1", 10000)
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TEN))
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.QUEEN))
+
+        assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(-10000)
+    }
+
+    @Test
+    fun `고객이 블렉잭으로 딜러 패배시 딜러 수익= -고객배팅금*2`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TWO)
+        )
+
+        val customer = Customer("고객1", 10000)
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TEN))
+        customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.ACE))
+
+        assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(-20000)
+    }
+
+    fun createDealer(vararg cards: Card): Dealer {
         val dealer = Dealer()
-        dealer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.SEVEN))
-        dealer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.TEN))
+        cards.forEach { dealer.acceptCard(it) }
 
-        val result = dealer.match(listOf(customer))
-        val expect = PlayerMatchResult(listOf(MatchResult.WIN), mapOf(customer to MatchResult.LOSE))
-
-        assertThat(result).isEqualTo(expect)
+        return dealer
     }
 }
