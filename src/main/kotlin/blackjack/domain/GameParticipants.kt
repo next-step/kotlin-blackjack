@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Cards.Companion.WINNING_NUMBER
 import kotlin.math.abs
 
 abstract class GameParticipants(
@@ -15,11 +16,12 @@ abstract class GameParticipants(
 
     abstract fun drawCard()
     abstract fun calculateMyCards(): Int
-    fun getDistance(): Int{
-        return abs(21 - cards.calculateMyCards())
+    fun getDistance(): Int {
+        return abs(WINNING_NUMBER - cards.calculateMyCards())
     }
+
     fun isWinner(winner: List<GameParticipants>): String {
-        if(winner.contains(this)) {
+        if (winner.contains(this)) {
             return "승"
         }
         return "패"
