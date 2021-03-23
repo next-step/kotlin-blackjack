@@ -7,9 +7,11 @@ import blackjack.domain.createCard
 import blackjack.domain.createPlayer
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class UserTest {
     @DisplayName("유저가 카드를 인자로 받은 경우 카드 목록에 추가")
     @ParameterizedTest
@@ -47,8 +49,5 @@ class UserTest {
         Assertions.assertThat(actual.score).isEqualTo(0)
     }
 
-    companion object {
-        @JvmStatic
-        fun provideUsers() = listOf(Dealer(), createPlayer("pobi"))
-    }
+    fun provideUsers() = listOf(Dealer(), createPlayer("pobi"))
 }

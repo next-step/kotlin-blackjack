@@ -10,10 +10,12 @@ import blackjack.domain.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class DealerTest {
     @DisplayName("카드의 합이 16 이하인 경우 True 반환")
     @ParameterizedTest
@@ -51,14 +53,10 @@ internal class DealerTest {
         assertThat(dealer.hands.cards.size).isEqualTo(3)
     }
 
-    companion object {
-        @JvmStatic
-        fun provideOverSixteen() = listOf(cardArgumentsOf(CardSymbol.TWO, CardSymbol.FIVE, CardSymbol.KING))
+    fun provideOverSixteen() = listOf(cardArgumentsOf(CardSymbol.TWO, CardSymbol.FIVE, CardSymbol.KING))
 
-        @JvmStatic
-        fun provideUnderSixteen() = listOf(cardArgumentsOf(CardSymbol.TWO, CardSymbol.FOUR, CardSymbol.KING))
+    fun provideUnderSixteen() = listOf(cardArgumentsOf(CardSymbol.TWO, CardSymbol.FOUR, CardSymbol.KING))
 
-        private fun cardArgumentsOf(vararg symbols: CardSymbol) =
-            Arguments.of(*symbols.map { Card(it, CardSuit.SPADE) }.toTypedArray())
-    }
+    private fun cardArgumentsOf(vararg symbols: CardSymbol) =
+        Arguments.of(*symbols.map { Card(it, CardSuit.SPADE) }.toTypedArray())
 }
