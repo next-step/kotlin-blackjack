@@ -13,3 +13,5 @@ fun createPlayer(name: String) = Player(UserName(name))
 fun createUsers(vararg name: String) = Users(listOf(Dealer()) + name.map { Player(UserName(it)) }.toList())
 
 fun createCard(symbol: String, suit: String) = Card(CardSymbol.valueOf(symbol), CardSuit.valueOf(suit))
+
+val SORTED_SHUFFLE = { cards: List<Card> -> cards.sortedWith(compareBy({ it.symbol }, { it.suit })) }

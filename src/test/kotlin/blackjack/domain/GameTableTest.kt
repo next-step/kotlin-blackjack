@@ -15,7 +15,7 @@ internal class GameTableTest {
 
     @BeforeEach
     fun setUp() {
-        gameTable = GameTable(PlayerFactory.create("pobi"), CardDeck(SortedShuffleStrategy()))
+        gameTable = GameTable(PlayerFactory.create("pobi"), CardDeck(SORTED_SHUFFLE))
     }
 
     @DisplayName("게임 준비 단계에서 모든 유저가 2장씩 카드를 뽑는다")

@@ -1,5 +1,3 @@
 package blackjack.domain.card
 
-interface ShuffleStrategy {
-    fun shuffle(cards: List<Card>): List<Card>
-}
+val RANDOM_SHUFFLE = { cards: List<Card> -> cards.shuffled() }

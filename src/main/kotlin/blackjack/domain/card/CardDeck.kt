@@ -3,14 +3,14 @@ package blackjack.domain.card
 import util.toStack
 import java.util.Stack
 
-class CardDeck(private val shuffleStrategy: ShuffleStrategy) {
+class CardDeck(private val shuffleStrategy: (List<Card>) -> List<Card>) {
     private var _cards: Stack<Card> = initCard()
     val cards
         get() = _cards.toList()
 
     private fun initCard(): Stack<Card> {
         val deck = CardSymbol.values().flatMap { symbol -> CardSuit.values().map { Card(symbol, it) } }
-        return shuffleStrategy.shuffle(deck).toStack()
+        return shuffleStrategy(deck).toStack()
     }
 
     fun pop(): Card {

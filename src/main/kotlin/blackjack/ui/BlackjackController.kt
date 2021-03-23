@@ -3,7 +3,7 @@ package blackjack.ui
 import blackjack.domain.DrawDecider
 import blackjack.domain.GameTable
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.RandomShuffleStrategy
+import blackjack.domain.card.RANDOM_SHUFFLE
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.PlayerFactory
 import blackjack.domain.player.User
@@ -16,7 +16,7 @@ object BlackjackController {
 
     fun run() {
         consoleOutput.printUserNameInputMessage()
-        val gameTable = GameTable(PlayerFactory.create(consoleInput.read()), CardDeck(RandomShuffleStrategy()))
+        val gameTable = GameTable(PlayerFactory.create(consoleInput.read()), CardDeck(RANDOM_SHUFFLE))
 
         gameTable.prepareGame { consoleOutput.printFirstDrawMessage(it) }
 

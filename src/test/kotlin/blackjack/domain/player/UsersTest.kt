@@ -2,10 +2,9 @@ package blackjack.domain.player
 
 import blackjack.domain.DrawDecider
 import blackjack.domain.ResultType
-import blackjack.domain.SortedShuffleStrategy
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.RandomShuffleStrategy
 import blackjack.domain.createUsers
+import blackjack.domain.SORTED_SHUFFLE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -16,7 +15,7 @@ internal class UsersTest {
     @Test
     fun drawAtFirst() {
         val users = createUsers("pobi", "jason")
-        val cardDeck = CardDeck(RandomShuffleStrategy())
+        val cardDeck = CardDeck(SORTED_SHUFFLE)
 
         users.drawAtFirst(cardDeck)
 
@@ -27,7 +26,7 @@ internal class UsersTest {
     @Test
     fun drawDealer() {
         val users = createUsers("pobi", "jason")
-        val cardDeck = CardDeck(SortedShuffleStrategy())
+        val cardDeck = CardDeck(SORTED_SHUFFLE)
 
         users.draw(cardDeck, { DrawDecider.DRAW }, {})
 
@@ -38,7 +37,7 @@ internal class UsersTest {
     @Test
     fun drawPlayer() {
         val users = createUsers("pobi", "jason")
-        val cardDeck = CardDeck(RandomShuffleStrategy())
+        val cardDeck = CardDeck(SORTED_SHUFFLE)
 
         users.draw(cardDeck, { DrawDecider.DRAW }, {})
 
