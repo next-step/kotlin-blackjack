@@ -6,10 +6,6 @@ import blackjack.domain.card.DefaultCardFactory
 class CardPack(cardFactory: CardFactory = DefaultCardFactory()) {
     private val cards = cardFactory.createCards()
 
-    constructor(isEmpty: Boolean) : this() {
-
-    }
-
     fun pickCard(): Card {
 
         check(cards.isNotEmpty()) { "모든 카드가 사용되었습니다." }
