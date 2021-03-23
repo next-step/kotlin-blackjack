@@ -15,17 +15,20 @@ class Deck {
         return cards.isEmpty()
     }
 
-    private fun initializeCardsByCardSuit(): MutableList<Card> {
-        val cardsSet: MutableList<Card> = mutableListOf()
+    private fun initializeCardsByCardSuit(): List<Card> {
+        var cardsSet: List<Card> = mutableListOf()
         CardSuit.values().forEach {
-            initializeCardsByCardSpell(cardsSet, it)
+            cardsSet = initializeCardsByCardSpell(cardsSet, it)
         }
         return cardsSet
     }
 
-    private fun initializeCardsByCardSpell(cardsSet: MutableList<Card>, cardSuit: CardSuit) {
+    private fun initializeCardsByCardSpell(cardsSet: List<Card>, cardSuit: CardSuit): List<Card> {
+        val cardsSet: MutableList<Card> = cardsSet.toMutableList()
         CardSpell.values().forEach {
             cardsSet.add(Card.of(cardSuit, it))
         }
+
+        return cardsSet
     }
 }
