@@ -1,13 +1,13 @@
 package blackjack.domain.player
 
-class PlayerFactory {
+class UserFactory {
     companion object {
         private const val DELIMITERS = ","
 
-        fun create(input: String): List<Player> {
+        fun create(input: String): Users {
             val names = input.split(DELIMITERS)
             validateDuplicatedName(names)
-            return names.map { Player(UserName(it.trim())) }
+            return Users(listOf(Dealer()) + names.map { Player(UserName(it.trim())) })
         }
 
         private fun validateDuplicatedName(names: List<String>) {

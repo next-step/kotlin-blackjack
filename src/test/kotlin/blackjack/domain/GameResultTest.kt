@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.PlayerFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -11,7 +10,7 @@ internal class GameResultTest {
     @DisplayName("플레이어들의 승패로 딜러의 승패 반환")
     @Test
     fun dealer() {
-        val result = GameResult(PlayerFactory.create("pobi,jason"), Dealer())
+        val result = GameResult(listOf(createPlayer("pobi"), createPlayer("jason")), Dealer())
 
         assertAll(
             { assertThat(result.dealer[ResultType.WIN]).isEqualTo(0) },

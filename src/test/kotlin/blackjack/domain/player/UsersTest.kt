@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.DrawDecider
 import blackjack.domain.ResultType
 import blackjack.domain.card.CardDeck
 import blackjack.domain.createUsers
@@ -20,28 +19,6 @@ internal class UsersTest {
         users.drawAtFirst(cardDeck)
 
         assertThat(users.users).allMatch { it.hands.cards.size == 2 }
-    }
-
-    @DisplayName("딜러가 16 이하일 경우 계속 카드를 뽑는다")
-    @Test
-    fun drawDealer() {
-        val users = createUsers("pobi", "jason")
-        val cardDeck = CardDeck(SORTED_SHUFFLE)
-
-        users.draw(cardDeck, { DrawDecider.DRAW }, {})
-
-        assertThat(users.users[0].hands.cards.size).isEqualTo(2)
-    }
-
-    @DisplayName("플레이어가 DRAW를 인자로 받은 경우 1개의 카드를 뽑는다")
-    @Test
-    fun drawPlayer() {
-        val users = createUsers("pobi", "jason")
-        val cardDeck = CardDeck(SORTED_SHUFFLE)
-
-        users.draw(cardDeck, { DrawDecider.DRAW }, {})
-
-        assertThat(users.users.drop(1)).allMatch { it.hands.cards.size == 1 }
     }
 
     @DisplayName("게임의 결과 반환")

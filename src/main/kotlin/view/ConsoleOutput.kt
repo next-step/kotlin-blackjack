@@ -14,7 +14,7 @@ class ConsoleOutput {
     fun printFirstDrawMessage(info: UserInfo) {
         val builder = StringBuilder().apply {
             val playerNames = info.players.users.joinToString(", ") { it.userName.name }
-            append("${info.dealer.userName.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
+            append("\n${info.dealer.userName.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
 
             append(
                 "${info.dealer.userName.name}카드: ${

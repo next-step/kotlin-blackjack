@@ -1,12 +1,9 @@
 package blackjack.ui
 
 import blackjack.domain.DrawDecider
-import blackjack.domain.GameTable
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.RANDOM_SHUFFLE
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.PlayerFactory
-import blackjack.domain.player.User
+import blackjack.domain.player.UserFactory
 import view.ConsoleInput
 import view.ConsoleOutput
 
@@ -16,23 +13,24 @@ object BlackjackController {
 
     fun run() {
         consoleOutput.printUserNameInputMessage()
-        val gameTable = GameTable(PlayerFactory.create(consoleInput.read()), CardDeck(RANDOM_SHUFFLE))
+        val users = UserFactory.create(consoleInput.read())
+        val cardDeck = CardDeck(RANDOM_SHUFFLE)
 
-        gameTable.prepareGame { consoleOutput.printFirstDrawMessage(it) }
+        users.drawAtFirst(cardDeck)
+        consoleOutput.printFirstDrawMessage(users.toUserInfo())
 
-        gameTable.proceedGame(inputDraw(), printStatus()) { consoleOutput.printCardAndScore(it) }
-
-        gameTable.endGame { consoleOutput.printGameRecord(it) }
-    }
-
-    private fun inputDraw(): (User) -> DrawDecider = inputDraw@{
-        if (it is Dealer) {
-            consoleOutput.printDealerDrawingMessage()
-            return@inputDraw DrawDecider.DRAW
+        users.doPlayers {
+            consoleOutput.printDecideDrawingMessage(it)
+            it.draw(cardDeck.pop(), DrawDecider.of(consoleInput.read()))
+            consoleOutput.printHandsStatus(it)
         }
-        consoleOutput.printDecideDrawingMessage(it)
-        DrawDecider.of(consoleInput.read())
-    }
 
-    private fun printStatus(): (User) -> Unit = { consoleOutput.printHandsStatus(it) }
+        users.doDealer {
+            it.drawAdditional(cardDeck)
+            consoleOutput.printDealerDrawingMessage()
+        }
+
+        consoleOutput.printCardAndScore(users.toUserInfo())
+        consoleOutput.printGameRecord(users.getResult())
+    }
 }

@@ -11,24 +11,11 @@ class Users(val users: List<User>) {
         }
     }
 
-    fun draw(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider, action: (User) -> Unit) {
-        drawPlayers(cardDeck, drawDecider, action)
-        drawDealer(cardDeck, drawDecider, action)
-    }
+    fun doPlayers(action: (User) -> Unit) = users.drop(1).forEach(action)
 
-    fun getResult(): GameResult {
-        return GameResult(dealer = users[0], players = users.drop(1))
-    }
+    fun doDealer(action: (Dealer) -> Unit) = action
 
-    private fun drawPlayers(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider, action: (User) -> Unit) {
-        users.drop(1).forEach { it.draw(cardDeck.pop(), drawDecider(it)); action(it) }
-    }
-
-    private fun drawDealer(cardDeck: CardDeck, drawDecider: (User) -> DrawDecider, action: (User) -> Unit) {
-        val dealer = users[0] as Dealer
-        dealer.drawAdditional(cardDeck, drawDecider(dealer))
-        action(dealer)
-    }
+    fun getResult() = GameResult(dealer = users[0], players = users.drop(1))
 
     fun toUserInfo(): UserInfo {
         return UserInfo(Pair(users[0] as Dealer, Users(users.drop(1))))
