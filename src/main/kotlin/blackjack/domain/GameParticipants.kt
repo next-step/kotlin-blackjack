@@ -18,6 +18,12 @@ abstract class GameParticipants(
     fun getDistance(): Int{
         return abs(21 - cards.calculateMyCards())
     }
+    fun isWinner(winner: List<GameParticipants>): String {
+        if(winner.contains(this)) {
+            return "승"
+        }
+        return "패"
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

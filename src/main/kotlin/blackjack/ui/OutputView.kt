@@ -28,4 +28,12 @@ object OutputView {
             println("${player.name} 카드 : ${player.cards.getCardList()} - 결과: ${player.calculateMyCards()}")
         }
     }
+
+    fun printGameWinner(players: Participants) {
+        println("\n## 최종 승패")
+        val winners = players.getWinners()
+        for(player in players.value) {
+            println("${player.name} : ${player.isWinner(winners)}")
+        }
+    }
 }

@@ -23,6 +23,8 @@ fun main() {
 
     OutputView.printPlayersCardList(allPaticipants)
     OutputView.printGameResult(allPaticipants)
+
+    OutputView.printGameWinner(allPaticipants)
 }
 
 private fun doPlayerTurn(player: Player) {
