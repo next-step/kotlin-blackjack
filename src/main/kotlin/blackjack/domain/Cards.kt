@@ -9,7 +9,7 @@ class Cards(vararg elements: Card) {
         get() {
             val summedScores = _elements
                 .map { it.scores() }
-                .reduce { acc, card -> acc.sumDistinct(card) }
+                .reduce { acc, scores -> acc.sumDistinct(scores) }
 
             return summedScores.sorted().lastOrNull { it <= Score.BLACKJACK }
                 ?: summedScores.min()
