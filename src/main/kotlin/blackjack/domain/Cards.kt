@@ -2,20 +2,19 @@ package blackjack.domain
 
 import kotlin.math.abs
 
-class Cards(private val value: ArrayList<Card>) {
-    var sum: Int = 0
-        private set
+class Cards(private val cards: ArrayList<Card>) {
+    private var sum: Int = 0
 
     init {
         checkContainDuplicateCard()
     }
 
     fun drawCard() {
-        value.add(CardDeck.drawCard())
+        cards.add(CardDeck.drawCard())
     }
 
     fun getCardList(): List<String> {
-        return value.map {
+        return cards.map {
             it.displayName
         }
     }
@@ -23,7 +22,7 @@ class Cards(private val value: ArrayList<Card>) {
     fun calculateMyCards(): Int {
         sortByAce()
         sum = 0
-        for (card in value) {
+        for (card in cards) {
             sum += getCardNumber(card)
         }
 
@@ -38,7 +37,7 @@ class Cards(private val value: ArrayList<Card>) {
     }
 
     private fun sortByAce() {
-        value.sortBy { card -> card.value.first == Number.ACE }
+        cards.sortBy { card -> card.value.first == Number.ACE }
     }
 
     private fun selectAceIsBetterNumber(): Int {
@@ -52,7 +51,7 @@ class Cards(private val value: ArrayList<Card>) {
     }
 
     private fun checkContainDuplicateCard() {
-        val numberOfDuplicate = value.groupBy { it }
+        val numberOfDuplicate = cards.groupBy { it }
             .values
             .count { it.size > 1 }
         if (numberOfDuplicate > 0) throw IllegalStateException("중복된 카드가 존재할 수 없습니다.")
