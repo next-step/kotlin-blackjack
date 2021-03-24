@@ -1,8 +1,8 @@
 package blackjack.card
 
-enum class CardType(val desc: String) {
-    SPADE("스페이드"),
-    HEART("하트"),
-    DIAMOND("다이아몬드"),
-    CLOVER("클로버")
+enum class CardType {
+    SPADE,
+    HEART,
+    DIAMOND,
+    CLOVER
 }

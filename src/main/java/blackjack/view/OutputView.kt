@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.Player
 import blackjack.card.Card
+import blackjack.const.BlackjackConst.CARD_NAME_MAP
 
 object OutputView {
 
@@ -18,6 +19,6 @@ object OutputView {
     }
 
     private fun getCardNames(cards: List<Card>): String {
-        return cards.joinToString { "${it.cardValue.desc}${it.cardType.desc}" }
+        return cards.joinToString { "${it.cardValue.desc}${CARD_NAME_MAP[it.cardType]}" }
     }
 }
