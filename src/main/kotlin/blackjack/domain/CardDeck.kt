@@ -6,7 +6,6 @@ object CardDeck {
 
     private val numbers = Number.values().toList()
     private val patterns = Pattern.values().toList()
-    private val combine = numbers.associateWith { patterns }
     private val cards: Stack<Card> = init()
 
     private fun init(): Stack<Card> {
