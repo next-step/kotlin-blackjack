@@ -11,8 +11,7 @@ import blackjack.userinterface.Console
 import blackjack.userinterface.UserInterface
 
 fun main() {
-    val console = Console
-    val game = BlackJackGame(console)
+    val game = BlackJackGame(Console)
     game.run()
 }
 
