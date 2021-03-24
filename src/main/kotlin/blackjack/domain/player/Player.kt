@@ -1,23 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.DrawDecider
-import blackjack.domain.card.Card
-import blackjack.domain.card.Hands
-
-class Player(val playerName: PlayerName) {
-    val hands = Hands(mutableListOf())
-
-    fun draw(card: Card, decider: DrawDecider) {
-        if (canDraw() && decider.isDraw()) {
-            hands.draw(card)
-        }
-    }
-
-    fun canDraw() = hands.calculateScore() <= DRAW_CONDITION
-
-    fun calculateScore() = hands.calculateScore()
+class Player(userName: UserName) : User(userName) {
+    override fun canDraw() = hands.calculateScore().isLowerThan(PLAYER_DRAW_CONDITION)
 
     companion object {
-        private const val DRAW_CONDITION = 21
+        private const val PLAYER_DRAW_CONDITION = 21
     }
 }

@@ -6,16 +6,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
-internal class PlayerFactoryTest {
-    @DisplayName("플레이어 생성")
+internal class UserFactoryTest {
+    @DisplayName("유저 생성")
     @Test
     fun create() {
         val input = "pobi,jason"
-        val users = PlayerFactory.create(input)
+
+        val players = UserFactory.create(input)
 
         assertAll(
-            { assertThat(users.players.size).isEqualTo(2) },
-            { assertThat(users.players.map { it.playerName }).containsExactly(PlayerName("pobi"), PlayerName("jason")) }
+            { assertThat(players.users.size).isEqualTo(3) },
+            { assertThat(players.users.map { it.userName }).containsExactly(UserName("딜러"), UserName("pobi"), UserName("jason")) }
         )
     }
 
@@ -23,6 +24,6 @@ internal class PlayerFactoryTest {
     @Test
     fun validateDuplicatedName() {
         val duplicatedInput = "pobi,pobi"
-        assertThrows<IllegalArgumentException> { PlayerFactory.create(duplicatedInput) }
+        assertThrows<IllegalArgumentException> { UserFactory.create(duplicatedInput) }
     }
 }
