@@ -28,33 +28,32 @@ fun main() {
 }
 
 private fun doPlayerTurn(player: Player) {
-    var answer = ""
-    var playerGotWinningCards = false
-
+    var isKeepPlayerTurn = true
     do {
-        answer = InputView.selectCardDraw(player.name)
-        checkAnswerIsYes(answer, player)
-        playerGotWinningCards = checkMyCardsIsWinning(player)
-    } while (answer != NO && !playerGotWinningCards)
+        isKeepPlayerTurn = selectDrawCard(player)
+    } while (isKeepPlayerTurn)
 }
 
 private fun doDealerTurn(dealer: Dealer) {
     dealer.drawCard()
 }
 
-private fun checkAnswerIsYes(answer: String, player: Player) {
+private fun selectDrawCard(player: Player): Boolean {
+    if(!player.checkMyCardsIsOver21()) {
+        val answer = InputView.selectCardDraw(player.name)
+        return checkPlayerAnswerIsYes(answer, player)
+    }
+    OutputView.printWhenCardsOver21()
+    return false
+}
+
+private fun checkPlayerAnswerIsYes(answer: String, player: Player): Boolean {
     if (answer == YES) {
         player.drawCard()
         OutputView.printPlayerCardList(player)
-    }
-}
-
-private fun checkMyCardsIsWinning(player: Player): Boolean {
-    val totalScore = player.calculateMyCards()
-    if (totalScore == Cards.WINNING_NUMBER) {
-        println("이미 21에 해당하는 카드를 가지고 있기 때문에 턴을 스킵합니다.")
         return true
     }
-
     return false
 }
+
+

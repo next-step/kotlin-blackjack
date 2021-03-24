@@ -16,7 +16,7 @@ class Dealer(
     }
 
     private fun checkCardsSumIsOver(): Boolean {
-        if (calculateMyCards() >= 17) {
+        if (calculateMyCards() >= DEALER_CARDS_STANDARD) {
             return false
         }
         return true

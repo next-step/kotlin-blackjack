@@ -36,4 +36,8 @@ object OutputView {
             println("${player.name} : ${player.isWinner(winners)}")
         }
     }
+
+    fun printWhenCardsOver21() {
+        println("## 카드의 합이 21이상이기 때문에 스킵합니다.\n")
+    }
 }
