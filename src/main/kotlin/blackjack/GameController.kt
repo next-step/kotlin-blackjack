@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Participants
 import blackjack.domain.Player
@@ -39,7 +38,7 @@ private fun doDealerTurn(dealer: Dealer) {
 }
 
 private fun selectDrawCard(player: Player): Boolean {
-    if(!player.checkMyCardsIsOver21()) {
+    if (!player.checkMyCardsIsOver21()) {
         val answer = InputView.selectCardDraw(player.name)
         return checkPlayerAnswerIsYes(answer, player)
     }
@@ -55,5 +54,3 @@ private fun checkPlayerAnswerIsYes(answer: String, player: Player): Boolean {
     }
     return false
 }
-
-

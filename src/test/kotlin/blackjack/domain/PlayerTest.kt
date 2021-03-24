@@ -15,7 +15,7 @@ class PlayerTest {
 
     @Test
     fun `카드가 21이상인지 확인`() {
-        val player = Player("John", johnCards )
+        val player = Player("John", johnCards)
         assertThat(player.checkMyCardsIsOver21()).isFalse()
     }
 }
