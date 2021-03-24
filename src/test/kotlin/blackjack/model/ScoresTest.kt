@@ -9,7 +9,7 @@ internal class ScoresTest {
     @ParameterizedTest
     @MethodSource("scoreListProvider")
     fun `가장 큰 점수와 낮은 점수를 돌려준다`(scores: List<Int>) {
-        val result = Scores.Builder().scoresFromInt(scores).build()
+        val result = ScoresFactory.create(scores)
 
         assertThat(result.size).isEqualTo(scores.size)
         assertThat(result.highest()).isEqualTo(Score(7))

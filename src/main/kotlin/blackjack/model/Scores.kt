@@ -12,15 +12,10 @@ class Scores private constructor(private val scores: TreeSet<Score>) : Set<Score
     }
 
     class Builder {
-        private lateinit var scores: List<Score>
+        private var scores: List<Score> = listOf()
 
         fun scores(scores: List<Score>): Builder {
             this.scores = scores
-            return this
-        }
-
-        fun scoresFromInt(scores: List<Int>): Builder {
-            this.scores = scores.map { Score(it) }
             return this
         }
 

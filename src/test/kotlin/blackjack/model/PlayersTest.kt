@@ -10,7 +10,7 @@ internal class PlayersTest {
     @ParameterizedTest
     @MethodSource("playerNamesProvider")
     fun `플레이어 이름의 리스트로 Players를 만들 수 있다`(names: List<String>) {
-        val result = Players.Builder().playerNames(names).build()
+        val result = PlayersFactory.create(names)
 
         assertThat(result[0]).hasFieldOrPropertyWithValue("name", names[0])
         assertThat(result[1]).hasFieldOrPropertyWithValue("name", names[1])

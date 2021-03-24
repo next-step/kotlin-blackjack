@@ -10,11 +10,6 @@ class Players private constructor(private val players: List<Player>) : List<Play
             return this
         }
 
-        fun playerNames(playerNames: List<String>): Builder {
-            this.players = playerNames.map { Player(it) }
-            return this
-        }
-
         fun build() = Players(players.toList())
     }
 }

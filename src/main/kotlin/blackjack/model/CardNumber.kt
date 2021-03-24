@@ -1,19 +1,19 @@
 package blackjack.model
 
 enum class CardNumber(private val symbol: String, val scores: Scores) {
-    ACE("A", Scores.Builder().scoresFromInt(listOf(1, 11)).build()),
-    TWO("2", Scores.Builder().scoresFromInt(listOf(2)).build()),
-    THREE("3", Scores.Builder().scoresFromInt(listOf(3)).build()),
-    FOUR("4", Scores.Builder().scoresFromInt(listOf(4)).build()),
-    FIVE("5", Scores.Builder().scoresFromInt(listOf(5)).build()),
-    SIX("6", Scores.Builder().scoresFromInt(listOf(6)).build()),
-    SEVEN("7", Scores.Builder().scoresFromInt(listOf(7)).build()),
-    EIGHT("8", Scores.Builder().scoresFromInt(listOf(8)).build()),
-    NINE("9", Scores.Builder().scoresFromInt(listOf(9)).build()),
-    TEN("10", Scores.Builder().scoresFromInt(listOf(10)).build()),
-    JACK("J", Scores.Builder().scoresFromInt(listOf(10)).build()),
-    QUEEN("Q", Scores.Builder().scoresFromInt(listOf(10)).build()),
-    KING("K", Scores.Builder().scoresFromInt(listOf(10)).build());
+    ACE("A", ScoresFactory.create(listOf(1, 11))),
+    TWO("2", ScoresFactory.create(listOf(2))),
+    THREE("3", ScoresFactory.create(listOf(3))),
+    FOUR("4", ScoresFactory.create(listOf(4))),
+    FIVE("5", ScoresFactory.create(listOf(5))),
+    SIX("6", ScoresFactory.create(listOf(6))),
+    SEVEN("7", ScoresFactory.create(listOf(7))),
+    EIGHT("8", ScoresFactory.create(listOf(8))),
+    NINE("9", ScoresFactory.create(listOf(9))),
+    TEN("10", ScoresFactory.create(listOf(10))),
+    JACK("J", ScoresFactory.create(listOf(10))),
+    QUEEN("Q", ScoresFactory.create(listOf(10))),
+    KING("K", ScoresFactory.create(listOf(10)));
 
     override fun toString(): String {
         return symbol

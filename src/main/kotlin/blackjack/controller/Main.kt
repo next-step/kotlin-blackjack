@@ -1,13 +1,13 @@
 package blackjack.controller
 
 import blackjack.model.Player
-import blackjack.model.Players
+import blackjack.model.PlayersFactory
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.ViewUtil
 
 fun main() {
-    val players = Players.Builder().playerNames(InputView.readNames()).build()
+    val players = PlayersFactory.create(InputView.readNames())
 
     OutputView.printFirstDraw(players)
 

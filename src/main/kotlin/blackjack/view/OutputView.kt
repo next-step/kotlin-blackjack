@@ -15,7 +15,7 @@ object OutputView {
 
     fun printResult(players: Players) {
         players.forEach { player ->
-            println("${player.name}카드: ${toString(player.cards)} - 결과: ${Rule.getScore(player.cards).score}")
+            println("${player.name}카드: ${toString(player.cards)} - 결과: ${Rule.getScore(player.cards).value}")
         }
     }
 }
