@@ -9,24 +9,14 @@ class BlackjackGame {
     private val gameLeader = GameLeader(CardFactory.makeCards())
 
     fun start() {
-        val players: List<Player> =
-            InputView.inputPlayerNames().map { Player(it, gameLeader.giveTwoCards()) }
-
-        players.forEach { OutputView.showCard(it) }
-
-        players.forEach(::needToMoreCard)
-
-        players.forEach {
-            OutputView.showResult(it, gameLeader.sum(it.cards))
+        val players: List<Player> = InputView.inputPlayerNames().map {
+            Player(it, gameLeader.giveTwoCards())
         }
-    }
 
-    private fun needToMoreCard(player: Player) {
-        if (!InputView.inputReceiveCardYn(player.name)) return
+        OutputView.showPlayersCard(players)
 
-        player.receiveCard(gameLeader.giveCard())
-        OutputView.showCard(player)
+        players.forEach(gameLeader::needToMoreCard)
 
-        needToMoreCard(player)
+        OutputView.showResult(players)
     }
 }

@@ -1,26 +1,31 @@
 package blackjack
 
 import blackjack.card.Card
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class GameLeader(cards: List<Card>) {
 
-    companion object {
-        private const val BLACKJACK_STANDARD_VALUE = 21
-    }
-
     private val _cards: MutableList<Card> = cards.toMutableList()
+
+    init {
+        _cards.shuffle()
+    }
 
     fun giveTwoCards(): List<Card> {
         return (0..1).map { giveCard() }
     }
 
-    fun giveCard(): Card {
-        _cards.shuffle()
-        return _cards.removeAt(0)
+    fun needToMoreCard(player: Player) {
+        if (!InputView.inputReceiveCardYn(player.name)) return
+
+        player.receiveCard(giveCard())
+        OutputView.showCard(player)
+
+        if (player.isReceiveMoreCard()) needToMoreCard(player)
     }
 
-    fun sum(cards: List<Card>): Int {
-        val sumValue = cards.sumBy { it.cardValue.otherValue }
-        return if (sumValue > BLACKJACK_STANDARD_VALUE) cards.sumBy { it.cardValue.value } else sumValue
+    private fun giveCard(): Card {
+        return _cards.removeAt(0)
     }
 }
