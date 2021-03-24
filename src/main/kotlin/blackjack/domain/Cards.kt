@@ -23,31 +23,14 @@ class Cards(private val cards: ArrayList<Card>) {
         sortByAce()
         sum = 0
         for (card in cards) {
-            sum += getCardNumber(card)
+            sum += card.getCardNumber(sum)
         }
 
         return sum
     }
 
-    private fun getCardNumber(card: Card): Int {
-        if (card.value.first == Number.ACE) {
-            return selectAceIsBetterNumber()
-        }
-        return card.value.first.score
-    }
-
     private fun sortByAce() {
         cards.sortBy { card -> card.value.first == Number.ACE }
-    }
-
-    private fun selectAceIsBetterNumber(): Int {
-        val whenAceIs11 = abs(WINNING_NUMBER - (sum + 11))
-        val whenAceIs1 = abs(WINNING_NUMBER - (sum + 1))
-
-        if (whenAceIs11 < whenAceIs1) {
-            return 11
-        }
-        return 1
     }
 
     private fun checkContainDuplicateCard() {
