@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
@@ -16,7 +15,7 @@ class Player(val name: Name, val cards: Cards) {
         if (this === other) return true
         if (other !is Player) return false
 
-        if (name != other.name) return false
+class Player(name: Name, cards: Cards) : Participant(name, cards) {
 
         return true
     }
