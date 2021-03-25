@@ -13,6 +13,10 @@ data class Player(val name: String, val cards: Cards) {
         return cards.score >= Score.BLACKJACK
     }
 
+    fun isTakeableDealer(): Boolean {
+        return cards.score <= Score.DEALER_TAKEABLE_LIMIT
+    }
+
     fun takeCard(card: Card) {
         cards.add(card)
     }

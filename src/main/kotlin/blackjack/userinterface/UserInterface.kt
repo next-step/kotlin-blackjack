@@ -9,4 +9,5 @@ interface UserInterface {
     fun outputCurrentCards(playerDto: PlayerDto)
     fun outputPlayerCards(playerDto: List<PlayerDto>)
     fun outputGameResult(result: List<ResultDto>)
+    fun outputDealerTaken(dealerLimitScore: Int)
 }

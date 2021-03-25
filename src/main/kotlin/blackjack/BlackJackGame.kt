@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.Cards
+import blackjack.domain.Score
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
 import blackjack.domain.player.Player
@@ -29,7 +30,13 @@ class BlackJackGame(private val userInterface: UserInterface) {
 
         userInterface.outputPlayerCards((listOf(dealer) + players).map(::PlayerDto))
         players.forEach { takeCardsIfNecessary(it) }
-        userInterface.outputGameResult(players.map(::ResultDto))
+
+        if (dealer.isTakeableDealer()) {
+            dealer.takeCard(deck.draw())
+            userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
+        }
+
+        userInterface.outputGameResult((listOf(dealer) + players).map(::ResultDto))
     }
 
     private tailrec fun takeCardsIfNecessary(player: Player) {

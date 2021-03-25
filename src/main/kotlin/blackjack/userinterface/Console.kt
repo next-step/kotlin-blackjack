@@ -37,6 +37,10 @@ object Console : UserInterface {
         println(playerDto.viewFormat())
     }
 
+    override fun outputDealerTaken(dealerLimitScore: Int) {
+        println("딜러는 $dealerLimitScore 이하라 한장의 카드를 더 받았습니다.")
+    }
+
     override fun outputPlayerCards(playerDto: List<PlayerDto>) {
         println("딜러와 ${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
         playerDto.forEach { println(it.viewFormat()) }

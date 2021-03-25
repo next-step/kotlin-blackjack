@@ -12,6 +12,7 @@ data class Score(val value: Int) : Comparable<Score> {
     override fun compareTo(other: Score) = value.compareTo(other = other.value)
 
     companion object {
+        val DEALER_TAKEABLE_LIMIT = Score(16)
         val BLACKJACK = Score(21)
     }
 }
