@@ -4,6 +4,7 @@ import blackjack.domain.Cards
 import blackjack.domain.Score
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.dto.PlayerDto
@@ -21,7 +22,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
     private val deck: Deck = DeckFactory.create()
 
     fun run() {
-        val dealer = Player("딜러", Cards(deck.draw(), deck.draw()))
+        val dealer = Dealer("딜러", Cards(deck.draw(), deck.draw()))
 
         val players = run {
             val userNames = PlayerNames(userInterface.inputPlayerNames())
@@ -31,7 +32,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
         userInterface.outputPlayerCards((listOf(dealer) + players).map(::PlayerDto))
         players.forEach { takeCardsIfNecessary(it) }
 
-        if (dealer.isTakeableDealer()) {
+        if (!dealer.isNotTakeable()) {
             dealer.takeCard(deck.draw())
             userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
         }

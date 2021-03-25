@@ -3,10 +3,10 @@ package blackjack.domain.player
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
-class Player(name: String, cards: Cards) : Gamer(name, cards) {
+class Dealer(name: String, cards: Cards) : Gamer(name, cards) {
 
     override fun isNotTakeable(): Boolean {
-        return cards.score >= Score.BLACKJACK
+        return cards.score > Score.DEALER_TAKEABLE_LIMIT
     }
 
     override fun equals(other: Any?): Boolean {
