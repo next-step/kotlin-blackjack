@@ -1,15 +1,11 @@
 package blackjack.domain.player
 
-import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
-data class Player(val name: String, val cards: Cards) {
-    init {
-        require(name.isNotBlank())
-    }
+class Player(name: String, cards: Cards) : Gamer(name, cards) {
 
-    fun isNotTakeable(): Boolean {
+    override fun isNotTakeable(): Boolean {
         return cards.score >= Score.BLACKJACK
     }
 
@@ -17,7 +13,13 @@ data class Player(val name: String, val cards: Cards) {
         return cards.score <= Score.DEALER_TAKEABLE_LIMIT
     }
 
-    fun takeCard(card: Card) {
-        cards.add(card)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return javaClass.hashCode()
     }
 }
