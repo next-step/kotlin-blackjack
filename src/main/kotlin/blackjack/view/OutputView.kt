@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.Denomination
+import blackjack.domain.card.Denomination
 import blackjack.domain.MatchResult
 import blackjack.domain.Result
-import blackjack.domain.Suit
+import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player

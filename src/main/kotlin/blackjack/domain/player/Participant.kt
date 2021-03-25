@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
-import blackjack.domain.Score
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Score
 
 open class Participant(val name: Name, val cards: Cards) {
     val score: Score

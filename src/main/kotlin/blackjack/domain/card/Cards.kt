@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Cards(vararg card: Card) {
     private var _elements = card.toMutableList()

@@ -1,10 +1,10 @@
 package blackjack.domain.player
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
-import blackjack.domain.Denomination
-import blackjack.domain.Score
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Score
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

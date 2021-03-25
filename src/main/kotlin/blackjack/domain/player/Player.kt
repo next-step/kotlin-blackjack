@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-import blackjack.domain.Cards
+import blackjack.domain.card.Cards
 import blackjack.domain.MatchResult
 
 class Player(name: Name, cards: Cards) : Participant(name, cards) {

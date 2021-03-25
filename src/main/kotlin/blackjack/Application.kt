@@ -1,6 +1,6 @@
-import blackjack.domain.Cards
+import blackjack.domain.card.Cards
 import blackjack.domain.Result
-import blackjack.domain.Score
+import blackjack.domain.card.Score
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
 import blackjack.domain.player.Dealer
