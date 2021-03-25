@@ -8,6 +8,7 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.dto.GamerDto
+import blackjack.dto.GamersDto
 import blackjack.dto.ResultDto
 import blackjack.userinterface.Console
 import blackjack.userinterface.UserInterface
@@ -29,7 +30,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
             userNames.map { Player(it, Cards(deck.draw(), deck.draw())) }
         }
 
-        userInterface.outputGamerCards((listOf(dealer) + players).map(::GamerDto))
+        userInterface.outputGamerCards(GamersDto(dealer, players))
         players.forEach { takeCardsIfNecessary(it) }
 
         if (dealer.isTakeable()) {
