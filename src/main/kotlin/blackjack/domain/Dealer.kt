@@ -15,12 +15,7 @@ class Dealer(
         return cards.calculateMyCards()
     }
 
-    private fun checkCardsSumIsOver(): Boolean {
-        if (calculateMyCards() >= DEALER_CARDS_STANDARD) {
-            return false
-        }
-        return true
-    }
+    private fun checkCardsSumIsOver(): Boolean = calculateMyCards() < DEALER_CARDS_STANDARD
 
     companion object {
         private const val DEALER_CARDS_STANDARD = 17

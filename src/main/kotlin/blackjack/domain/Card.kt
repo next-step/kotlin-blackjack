@@ -13,7 +13,7 @@ data class Card(val value: Pair<Number, Pattern>) {
         return value.first.score
     }
 
-    private fun checkCardIsAce(): Boolean {
+    fun checkCardIsAce(): Boolean {
         return value.first == Number.ACE
     }
 

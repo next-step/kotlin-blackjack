@@ -11,11 +11,8 @@ class Cards(private val cards: ArrayList<Card>) {
         cards.add(CardDeck.drawCard())
     }
 
-    fun getCardList(): List<String> {
-        return cards.map {
-            it.displayName
-        }
-    }
+    fun getCardList(): List<String> = cards.map { it.displayName }
+
 
     fun calculateMyCards(): Int {
         sortByAce()
@@ -28,7 +25,7 @@ class Cards(private val cards: ArrayList<Card>) {
     }
 
     private fun sortByAce() {
-        cards.sortBy { card -> card.value.first == Number.ACE }
+        cards.sortBy { card -> card.checkCardIsAce() }
     }
 
     private fun checkContainDuplicateCard() {
