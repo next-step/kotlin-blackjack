@@ -1,12 +1,22 @@
 package blackjack.view
 
 import blackjack.domain.Denomination
+import blackjack.domain.MatchResult
+import blackjack.domain.Result
 import blackjack.domain.Suit
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 
-fun printStartMessage(players: List<Player>) {
-    println("${players.map { it.name.value }.joinToString { it }}에게 2장의 카드를 나누었습니다.")
+fun printStartMessage(dealer: Dealer, players: List<Player>) {
+    println("딜러와 ${players.map { it.name.value }.joinToString { it }}에게 2장의 카드를 나누었습니다.")
+    printDealerCards(dealer)
     printPlayersCards(players)
+}
+
+private fun printDealerCards(dealer: Dealer) {
+    val card = dealer.cards.elements[0]
+    println("${dealer.name.value} 카드: ${mapping(card.denomination)}${mapping(card.suit)}")
 }
 
 private fun printPlayersCards(players: List<Player>) {
@@ -19,14 +29,14 @@ fun printPlayerCards(player: Player) {
     )
 }
 
-fun printPlayersResult(players: List<Player>) {
+fun printParticipantsResult(participants: List<Participant>) {
     println()
-    players.forEach { printPlayerResult(it) }
+    participants.forEach { printPlayerResult(it) }
 }
 
-private fun printPlayerResult(player: Player) {
+private fun printPlayerResult(participant: Participant) {
     println(
-        "${player.name.value} 카드: ${player.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${player.score.value}"
+        "${participant.name.value} 카드: ${participant.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${participant.score.value}"
     )
 }
 
@@ -51,4 +61,16 @@ private fun mapping(suit: Suit) = when (suit) {
     Suit.HEART -> "하트"
     Suit.CLUB -> "클럽"
     Suit.DIAMOND -> "다이아몬드"
+}
+
+fun printResult(result: Result) {
+    println()
+    println("## 최종 승패")
+    result.elements.forEach { (player, matchResult) -> println("${player.name.value}: ${mapping(matchResult)}") }
+}
+
+fun mapping(matchResult: MatchResult) = when (matchResult) {
+    MatchResult.WIN -> "승"
+    MatchResult.LOSE -> "패"
+    else -> "무"
 }
