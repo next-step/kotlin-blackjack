@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.exception.ScoreNotExistException
+
 class Cards(vararg elements: Card) {
     private val _elements = elements.toMutableList()
     val elements: List<Card>
@@ -13,7 +15,7 @@ class Cards(vararg elements: Card) {
 
             return summedScores.sorted().lastOrNull { it <= Score.BLACKJACK }
                 ?: summedScores.min()
-                ?: throw RuntimeException("점수가 없다. _elements: $_elements, summedScores: $summedScores")
+                ?: throw ScoreNotExistException("점수가 없다. _elements: $_elements, summedScores: $summedScores")
         }
 
     init {
