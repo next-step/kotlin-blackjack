@@ -2,7 +2,7 @@ package blackjack.userinterface
 
 import blackjack.dto.GamerDto
 import blackjack.dto.GamersDto
-import blackjack.dto.ResultDto
+import blackjack.dto.ResultsDto
 
 object Console : UserInterface {
 
@@ -51,8 +51,12 @@ object Console : UserInterface {
         players.forEach { println(it.viewFormat()) }
     }
 
-    override fun outputGameResult(result: List<ResultDto>) {
-        result.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
+    override fun outputGameResult(resultDto: ResultsDto) {
+        val dealer = resultDto.dealer
+        val players = resultDto.players
+
+        println("딜러 카드: ${dealer.cards.joinToString()} - 결과: ${dealer.score}")
+        players.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
     }
 
     private fun GamerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"

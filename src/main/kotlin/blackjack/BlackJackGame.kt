@@ -9,7 +9,7 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.dto.GamerDto
 import blackjack.dto.GamersDto
-import blackjack.dto.ResultDto
+import blackjack.dto.ResultsDto
 import blackjack.userinterface.Console
 import blackjack.userinterface.UserInterface
 
@@ -38,7 +38,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
             userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
         }
 
-        userInterface.outputGameResult((listOf(dealer) + players).map(::ResultDto))
+        userInterface.outputGameResult(ResultsDto(dealer, players))
     }
 
     private tailrec fun takeCardsIfNecessary(player: Player) {
