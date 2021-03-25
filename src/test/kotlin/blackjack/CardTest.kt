@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class CardTest {
     @ParameterizedTest
-    @CsvSource("NUMBER_8, DIAMOND", "KING, HEART", "ACE, CLOVER")
+    @CsvSource("EIGHT, DIAMOND", "KING, HEART", "ACE, CLOVER")
     fun `카드는 문양과 숫자를 가지고 있다`(number: CardNumber, suite: CardSuite) {
         val card = Card(suite, number)
 
