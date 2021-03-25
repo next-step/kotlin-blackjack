@@ -14,7 +14,7 @@ class CardNumberTests {
     }
 
     @ParameterizedTest
-    @CsvSource("NUMBER_2, 2", "NUMBER_3, 3", "NUMBER_4, 4", "NUMBER_5, 5", "NUMBER_6, 6", "NUMBER_7, 7", "NUMBER_8, 8", "NUMBER_9, 9", "NUMBER_10, 10")
+    @CsvSource("TWO, 2", "THREE, 3", "FOUR, 4", "FIVE, 5", "SIX, 6", "SEVEN, 7", "EIGHT, 8", "NINE, 9", "TEN, 10")
     fun `숫자를 가진 카드넘버는 그 숫자와 일치해야 한다`(cardNumber: CardNumber, exceptedValue: Int) {
         assertThat(cardNumber.value).contains(exceptedValue)
     }
