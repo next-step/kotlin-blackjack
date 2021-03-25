@@ -9,7 +9,7 @@ abstract class Gamer(val name: String, val cards: Cards) {
         require(name.isNotBlank())
     }
 
-    abstract fun isNotTakeable(): Boolean
+    abstract fun isTakeable(): Boolean
 
     fun takeCard(card: Card) {
         cards.add(card)

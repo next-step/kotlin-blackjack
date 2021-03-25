@@ -32,7 +32,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
         userInterface.outputPlayerCards((listOf(dealer) + players).map(::PlayerDto))
         players.forEach { takeCardsIfNecessary(it) }
 
-        if (!dealer.isNotTakeable()) {
+        if (dealer.isTakeable()) {
             dealer.takeCard(deck.draw())
             userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
         }
@@ -41,7 +41,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
     }
 
     private tailrec fun takeCardsIfNecessary(player: Player) {
-        if (player.isNotTakeable()) {
+        if (!player.isTakeable()) {
             return
         }
 

@@ -5,8 +5,8 @@ import blackjack.domain.Score
 
 class Dealer(name: String, cards: Cards) : Gamer(name, cards) {
 
-    override fun isNotTakeable(): Boolean {
-        return cards.score > Score.DEALER_TAKEABLE_LIMIT
+    override fun isTakeable(): Boolean {
+        return cards.score <= Score.DEALER_TAKEABLE_LIMIT
     }
 
     override fun equals(other: Any?): Boolean {
