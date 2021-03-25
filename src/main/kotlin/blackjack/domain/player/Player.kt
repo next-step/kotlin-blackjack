@@ -1,30 +1,22 @@
 package blackjack.domain.player
 
 import blackjack.domain.Cards
-import blackjack.domain.Score
-
-class Player(val name: Name, val cards: Cards) {
-    val score: Score
-        get() = cards.score
-
-    fun take(card: Card) {
-        cards.add(card)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Player) return false
+import blackjack.domain.MatchResult
 
 class Player(name: Name, cards: Cards) : Participant(name, cards) {
 
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return name.hashCode()
+    fun match(dealer: Dealer) = when (score.compareTo(dealer.score)) {
+        WIN -> MatchResult.WIN
+        LOSE -> MatchResult.LOSE
+        else -> MatchResult.DRAW
     }
 
     override fun toString(): String {
         return "Player(name=$name, cards=$cards)"
+    }
+
+    companion object {
+        private const val WIN = 1
+        private const val LOSE = -1
     }
 }

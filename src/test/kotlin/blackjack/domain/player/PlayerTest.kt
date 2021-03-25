@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Denomination
+import blackjack.domain.MatchResult
 import blackjack.domain.Score
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
@@ -30,5 +31,32 @@ internal class PlayerTest {
         val card = Card(Suit.SPADE, Denomination.SIX)
         player.take(card)
         assertThat(player.score).isEqualTo(Score.of(19))
+    }
+
+    @Test
+    fun `플레이어가 딜러보다 점수가 높을 경우`() {
+        val dealer = Dealer(Cards((card1)))
+        val cards = Cards(card1, card2)
+        val player = Player(Name("test"), cards)
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.WIN)
+    }
+
+    @Test
+    fun `플레이어가 딜러보다 점수가 낮을 경우`() {
+        val dealer = Dealer(Cards(card1, card2))
+        val cards = Cards(card1)
+        val player = Player(Name("test"), cards)
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.LOSE)
+    }
+
+    @Test
+    fun `플레이어가 딜러보다 점수가 같을 경우`() {
+        val dealer = Dealer(Cards((card1)))
+        val cards = Cards(card1)
+        val player = Player(Name("test"), cards)
+
+        assertThat(player.match(dealer)).isEqualTo(MatchResult.DRAW)
     }
 }
