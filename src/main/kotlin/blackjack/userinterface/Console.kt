@@ -38,7 +38,7 @@ object Console : UserInterface {
     }
 
     override fun outputPlayerCards(playerDto: List<PlayerDto>) {
-        println("${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
         playerDto.forEach { println(it.viewFormat()) }
     }
 
