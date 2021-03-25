@@ -2,6 +2,8 @@ package study
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import study.domain.Company
+import study.domain.Name
 import study.domain.Resume
 import study.domain.introduce
 
@@ -27,7 +29,7 @@ internal class ResumeTest {
             name("남동민")
         }
 
-        assertThat(resume.name).isEqualTo("남동민")
+        assertThat(resume.name).isEqualTo(Name("남동민"))
     }
 
     @Test
@@ -37,6 +39,6 @@ internal class ResumeTest {
             company("에이치티비욘드")
         }
 
-        assertThat(resume.company).isEqualTo("에이치티비욘드")
+        assertThat(resume.company).isEqualTo(Company("에이치티비욘드"))
     }
 }

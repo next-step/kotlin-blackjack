@@ -1,6 +1,6 @@
 package study.domain
 
 class Resume(
-    val name: String,
-    val company: String?
+    val name: Name,
+    val company: Company?
 )

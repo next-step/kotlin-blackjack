@@ -21,8 +21,8 @@ class IntroduceDsl {
 
     fun build(): Resume {
         return Resume(
-            name = name,
-            company = company
+            name = Name(name),
+            company = company?.let { Company(it) }
         )
     }
 }
