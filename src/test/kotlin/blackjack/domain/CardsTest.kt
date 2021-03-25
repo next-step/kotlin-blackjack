@@ -2,32 +2,44 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
 
-    private val cards = Cards(arrayListOf(Card.makeCard("A", Pattern.HEART), Card.makeCard("A", Pattern.HEART)))
-    private val cards2 = Cards(arrayListOf(Card.makeCard("A", Pattern.HEART), Card.makeCard("J", Pattern.HEART)))
-    private val cards3 = Cards(
+    private val cards1 = Cards(
         arrayListOf(
-            Card.makeCard("A", Pattern.HEART),
-            Card.makeCard("J", Pattern.HEART),
-            Card.makeCard("A", Pattern.SPADE)
+            Card(Number.FIVE to Pattern.SPADE),
+            Card(Number.ACE to Pattern.CLOVER),
+            Card(Number.FIVE to Pattern.CLOVER)
         )
     )
 
+    private val cards2 = Cards(
+        arrayListOf(
+            Card(Number.KING to Pattern.SPADE),
+            Card(Number.ACE to Pattern.CLOVER),
+            Card(Number.KING to Pattern.CLOVER)
+        )
+    )
+
+    private val duplicatedCards = arrayListOf(
+        Card(Number.THREE to Pattern.SPADE),
+        Card(Number.EIGHT to Pattern.CLOVER),
+        Card(Number.EIGHT to Pattern.CLOVER)
+    )
+
     @Test
-    fun `카드패에 Ace가 있는경우 가장 마지막으로 정렬되는지 확인`() {
-        val sortBeforeLast = cards2.toList().last()
-        cards2.calculateCards()
-        val sortAfterLast = cards2.toList().last()
-        assertThat(sortBeforeLast).isEqualTo(Card.makeCard("J", Pattern.HEART))
-        assertThat(sortAfterLast).isEqualTo(Card.makeCard("A", Pattern.HEART))
+    fun `Cards 생성시 중복된 카드가 존재할 경우 Exception 발생`() {
+        assertThrows<IllegalStateException> { Cards(duplicatedCards) }
     }
 
     @Test
-    fun `주어진 카드에서 21과 가장 가깝게 출력하는지 확인`() {
-        assertThat(cards.calculateCards()).isEqualTo(22)
-        assertThat(cards2.calculateCards()).isEqualTo(21)
-        assertThat(cards3.calculateCards()).isEqualTo(22)
+    fun `Ace는 최선을 계산하는 지 확인 (11이 되야 하는경우)`() {
+        assertThat(cards1.calculateMyCards()).isEqualTo(21)
+    }
+
+    @Test
+    fun `Ace는 최선을 계산하는 지 확인 (1이 되야 하는경우)`() {
+        assertThat(cards2.calculateMyCards()).isEqualTo(21)
     }
 }

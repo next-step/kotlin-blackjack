@@ -1,27 +1,18 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    private val cards: Cards = Cards(arrayListOf<Card>())
+import blackjack.domain.Cards.Companion.WINNING_NUMBER
 
-    init {
-        repeat(INIT_CARD_NUMBER) {
-            cards.drawCard()
-        }
-    }
+class Player(name: String, cards: Cards = Cards(arrayListOf())) : GameParticipants(name, cards) {
 
-    fun drawCard() {
+    override fun drawCard() {
         cards.drawCard()
     }
 
-    fun calculateCards(): Int {
-        return cards.calculateCards()
+    override fun calculateMyCards(): Int {
+        return cards.calculateMyCards()
     }
 
-    fun getCardList(): List<Card> {
-        return cards.toList()
-    }
-
-    companion object {
-        private const val INIT_CARD_NUMBER = 2
+    fun checkMyCardsIsOver21(): Boolean {
+        return cards.calculateMyCards() >= WINNING_NUMBER
     }
 }

@@ -1,48 +1,29 @@
 package blackjack.domain
 
-class Card private constructor(val value: Pair<String, Pattern>) {
+import kotlin.math.abs
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+data class Card(val value: Pair<Number, Pattern>) {
+    val displayName: String
+        get() = value.first.displayName + value.second.pattern
 
-        other as Card
-
-        if (value != other.value) return false
-
-        return true
+    fun getCardNumber(sum: Int): Int {
+        if (checkCardIsAce()) {
+            return selectAceIsBetterNumber(sum)
+        }
+        return value.first.score
     }
 
-    override fun hashCode(): Int {
-        return value.hashCode()
+    private fun checkCardIsAce(): Boolean {
+        return value.first == Number.ACE
     }
 
-    override fun toString(): String {
-        return value.first + value.second.pattern
-    }
+    private fun selectAceIsBetterNumber(sum: Int): Int {
+        val whenAceIs11 = abs(Cards.WINNING_NUMBER - (sum + 11))
+        val whenAceIs1 = abs(Cards.WINNING_NUMBER - (sum + 1))
 
-    companion object {
-        val NUMBERS =
-            listOf<String>("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "J", "Q", "K")
-        val PATTERNS = listOf(
-            Pattern.HEART,
-            Pattern.DIAMOND,
-            Pattern.SPADE,
-            Pattern.CLOVER
-        )
-
-        fun makeCard(number: String, pattern: Pattern): Card {
-            checkValidateNumber(number)
-            checkValidatePattern(pattern)
-            return Card(number to pattern)
+        if (whenAceIs11 < whenAceIs1) {
+            return 11
         }
-
-        private fun checkValidateNumber(number: String) {
-            if (!NUMBERS.contains(number)) throw RuntimeException("올바르지 않은 카드번호입니다.")
-        }
-
-        private fun checkValidatePattern(pattern: Pattern) {
-            if (!PATTERNS.contains(pattern)) throw RuntimeException("올바르지 않은 카드무늬입니다.")
-        }
+        return 1
     }
 }
