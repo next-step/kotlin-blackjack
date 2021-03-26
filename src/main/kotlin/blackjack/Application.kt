@@ -7,7 +7,7 @@ import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.view.inputAnswer
 import blackjack.view.inputPlayerNames
-import blackjack.view.printDealerTakeCardMassage
+import blackjack.view.printDealerTakeCardMessage
 import blackjack.view.printParticipantsResult
 import blackjack.view.printPlayerCards
 import blackjack.view.printResult
@@ -26,7 +26,7 @@ fun main() {
     }
 
     while (dealer.isMustTakeCard()) {
-        printDealerTakeCardMassage()
+        printDealerTakeCardMessage()
         dealer.take(deck.draw())
     }
 
