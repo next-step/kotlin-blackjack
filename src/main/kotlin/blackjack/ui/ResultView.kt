@@ -22,10 +22,10 @@ object ResultView {
 
     fun printInfoOfDealerCard() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        println()
     }
 
     fun printCardResults(playerCardResults: List<PlayerCardResult>) {
+        println()
         for (blackJackResult in playerCardResults) {
             printSingleResult(blackJackResult)
         }
@@ -39,8 +39,8 @@ object ResultView {
     fun printWinningResult(playerWinTypes: PlayerWinTypes) {
         println("## 최종 승패")
         println(playerWinTypes.dealerResult)
-        playerWinTypes.keys.forEach {
-            println("$it: ${playerWinTypes[it]?.description}")
+        playerWinTypes.forEach {
+            println("${it.key}: ${it.value.description}")
         }
     }
 }
