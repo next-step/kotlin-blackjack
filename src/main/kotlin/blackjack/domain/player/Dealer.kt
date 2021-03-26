@@ -9,7 +9,9 @@ class Dealer(state: State) : Participant(DEALER_NAME, state) {
         if (score <= HIT_ROLE) {
             return true
         }
-        state.stay()
+        if (state.isFinished().not()) {
+            state.stay()
+        }
         return false
     }
 
