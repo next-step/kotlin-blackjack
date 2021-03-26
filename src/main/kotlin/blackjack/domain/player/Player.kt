@@ -11,6 +11,12 @@ class Player(name: Name, state: State) : Participant(name, state) {
         else -> MatchResult.DRAW
     }
 
+    fun canHit() = state.isHit()
+
+    fun stay() {
+        state = state.stay()
+    }
+
     override fun toString(): String {
         return "Player(name=$name, state=$state)"
     }
