@@ -13,18 +13,18 @@ class Dealer(
         players.addDealerAsPlayer(this)
     }
 
-    fun giveTwoCardsToAllPlayers(): List<PlayerDto> {
+    fun giveTwoCardsToAllPlayers(): Players {
         repeat(FIRST_GIVEN_CARD_SIZE) {
             players.giveToAllPlayers(cardPack)
         }
-        return players.toPlayerDtos()
+        return players
     }
 
-    fun giveCard(player: Player, hasAccepted: Boolean): PlayerDto {
+    fun giveCard(player: Player, hasAccepted: Boolean): Player {
         if (hasAccepted) {
             player.takeCard(cardPack.pickCard())
         }
-        return player.toPlayerDto()
+        return player
     }
 
     fun takeCardIfUnderSixteen(): Boolean {

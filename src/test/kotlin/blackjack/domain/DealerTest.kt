@@ -10,7 +10,7 @@ internal class DealerTest {
         val players = Players(mutableListOf(Player("song"), Player("kim")))
         val dealer = Dealer(players, CardPack())
 
-        val playerDtos = dealer.giveTwoCardsToAllPlayers()
+        val playerDtos = dealer.giveTwoCardsToAllPlayers().toPlayerDtos()
         assertThat(playerDtos).extracting("name").contains("song", "kim")
         assertThat(playerDtos[0].cards).hasSize(2)
         assertThat(playerDtos[1].cards).hasSize(2)
@@ -21,10 +21,10 @@ internal class DealerTest {
         val players = Players(mutableListOf(Player("song")))
         val dealer = Dealer(players, CardPack())
 
-        val playerDto1 = dealer.giveCard(players[0], false)
+        val playerDto1 = dealer.giveCard(players[0], false).toPlayerDto()
         assertThat(playerDto1.cards).hasSize(0)
 
-        val playerDto2 = dealer.giveCard(players[0], true)
+        val playerDto2 = dealer.giveCard(players[0], true).toPlayerDto()
         assertThat(playerDto2.cards).hasSize(1)
     }
 

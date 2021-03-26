@@ -12,8 +12,8 @@ object BlackJackController {
         val players = PlayerInputView.askPlayerNames()
         val dealer = Dealer(players, cardPack)
 
-        val playerDTOs = dealer.giveTwoCardsToAllPlayers()
-        ResultView.printCardsOf(playerDTOs)
+        dealer.giveTwoCardsToAllPlayers()
+        ResultView.printCardsOf(players.toPlayerDtos())
 
         players.filter { it != dealer }.forEach {
             askAndGiveCards(it, dealer)
@@ -33,8 +33,8 @@ object BlackJackController {
     private fun askAndGiveCards(player: Player, dealer: Dealer) {
         do {
             val hasAccepted = PlayerInputView.askMoreCard(player.name)
-            val playerDto = dealer.giveCard(player, hasAccepted)
-            ResultView.printCardsOfSinglePlayer(playerDto)
+            val player = dealer.giveCard(player, hasAccepted)
+            ResultView.printCardsOfSinglePlayer(player.toPlayerDto())
         } while (hasAccepted)
     }
 }
