@@ -18,6 +18,10 @@ enum class CardType(
     JACK("J", 10),
     ACE("A", 11);
 
+    override fun toString(): String {
+        return expression
+    }
+
     companion object {
         fun findAceCount(cards: Set<Card>): Int {
             return cards.count { it.type == ACE }
