@@ -1,4 +1,3 @@
-
 import blackjack.domain.Result
 import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck

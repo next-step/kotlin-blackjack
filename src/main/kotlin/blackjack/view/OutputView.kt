@@ -70,11 +70,23 @@ private fun mapping(suit: Suit) = when (suit) {
 fun printResult(result: Result) {
     println()
     println("## 최종 승패")
+    println("딜러: ${mapDealerScore(result.elements.values).entries.joinToString { entry -> entry.value.toString() + entry.key }}")
     result.elements.forEach { (player, matchResult) -> println("${player.name.value}: ${mapping(matchResult)}") }
 }
 
-fun mapping(matchResult: MatchResult) = when (matchResult) {
+private fun mapDealerScore(matchResults: Collection<MatchResult>) =
+    matchResults.map { mappingForDealer(it) }
+        .groupingBy { it }
+        .eachCount()
+
+private fun mapping(matchResult: MatchResult) = when (matchResult) {
     MatchResult.WIN -> "승"
     MatchResult.LOSE -> "패"
+    else -> "무"
+}
+
+private fun mappingForDealer(matchResult: MatchResult) = when (matchResult) {
+    MatchResult.WIN -> "패"
+    MatchResult.LOSE -> "승"
     else -> "무"
 }

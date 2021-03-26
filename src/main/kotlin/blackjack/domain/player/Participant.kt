@@ -4,7 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Score
 import blackjack.domain.card.state.State
 
-open class Participant(val name: Name, _state: State) {
+open class Participant(
+    val name: Name,
+    _state: State
+) {
     var state: State = _state
         protected set
 
