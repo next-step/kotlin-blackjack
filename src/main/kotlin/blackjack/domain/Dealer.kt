@@ -36,11 +36,11 @@ class Dealer(
     }
 
     fun findPlayerWinTypes(): PlayerWinTypes {
-        val playerWinTypes = PlayerWinTypes()
+        val winTypeMap = mutableMapOf<String, PlayerWinType>()
         val dealerPoint = this.calculateCardSum()
         players.filter { it != this }
-            .forEach { playerWinTypes[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
-        return playerWinTypes
+            .forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
+        return PlayerWinTypes(winTypeMap)
     }
 
     companion object {

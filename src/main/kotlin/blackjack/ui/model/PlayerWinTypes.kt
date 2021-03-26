@@ -3,8 +3,8 @@ package blackjack.ui.model
 import blackjack.domain.PlayerWinType
 
 class PlayerWinTypes(
-    private val map: MutableMap<String, PlayerWinType> = mutableMapOf()
-) : MutableMap<String, PlayerWinType> by map {
+    private val map: Map<String, PlayerWinType>
+) : Map<String, PlayerWinType> by map {
     val dealerResult: String
         get() = "${findDealerWinCount()}승 ${findDealerLoseCount()}패"
 
