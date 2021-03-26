@@ -19,8 +19,7 @@ object BlackJackController {
             askAndGiveCards(it, dealer)
         }
 
-        val wasUnderSixteen = dealer.takeCardIfUnderSixteen()
-        if (wasUnderSixteen) {
+        while (dealer.takeCardIfUnderSixteen()) {
             ResultView.printInfoOfThirdCardOfDealer()
         }
 
@@ -37,6 +36,5 @@ object BlackJackController {
             val playerDto = dealer.giveCard(player, hasAccepted)
             ResultView.printCardsOfSinglePlayer(playerDto)
         } while (hasAccepted)
-        println()
     }
 }
