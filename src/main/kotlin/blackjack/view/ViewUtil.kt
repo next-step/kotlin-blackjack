@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.Cards
+import blackjack.model.trump.Cards
 
 object ViewUtil {
     fun toString(cards: Cards): String =

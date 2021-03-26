@@ -1,4 +1,7 @@
-package blackjack.model
+package blackjack.model.trump
+
+import blackjack.model.Scores
+import blackjack.model.ScoresFactory
 
 enum class CardNumber(private val symbol: String, val scores: Scores) {
     ACE("A", ScoresFactory.create(listOf(1, 11))),

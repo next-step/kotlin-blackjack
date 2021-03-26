@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.trump.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -22,12 +23,12 @@ internal class PlayerTest {
     }
 
     @Test
-    fun `draw 를 하면 카드를 한장 더 뽑는다`() {
+    fun `userResponse 가 "y" 이면 카드를 한장 더 뽑는다`() {
         val player = Player("sangw0804")
 
         assertThat(player.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT)
 
-        player.draw()
+        player.keepDrawing("y")
 
         assertThat(player.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT + 1)
     }

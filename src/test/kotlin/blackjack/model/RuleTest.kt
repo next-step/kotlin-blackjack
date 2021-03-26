@@ -1,5 +1,9 @@
 package blackjack.model
 
+import blackjack.model.trump.Card
+import blackjack.model.trump.CardNumber
+import blackjack.model.trump.Cards
+import blackjack.model.trump.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

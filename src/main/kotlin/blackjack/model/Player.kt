@@ -1,14 +1,20 @@
 package blackjack.model
 
+import blackjack.model.trump.Cards
+
 class Player(val name: String) {
-    var cards = Cards.Builder().build()
+    var cards = Cards.Builder().cards(Cards.firstDraw()).build()
+        private set
 
-    fun draw() {
-        val mutableCardList = cards.toMutableList()
-        mutableCardList.add(Card.get())
+    fun keepDrawing(userResponse: String): Boolean {
+        if (userResponse == "y") {
+            draw()
+            return true
+        }
+        return false
+    }
 
-        cards = Cards.Builder().cards(
-            mutableCardList
-        ).build()
+    private fun draw() {
+        cards = cards.draw()
     }
 }

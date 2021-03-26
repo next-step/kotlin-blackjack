@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.trump
 
 enum class Suit(private val koreanName: String) {
     SPADE("스페이드"),

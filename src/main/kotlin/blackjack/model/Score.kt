@@ -14,6 +14,8 @@ data class Score(val value: Int) : Comparable<Score> {
     }
 
     companion object {
+        fun isValid(score: Score): Boolean = score in ZERO..MAXIMUM
+
         val MAXIMUM = Score(21)
 
         val ZERO = Score(0)
