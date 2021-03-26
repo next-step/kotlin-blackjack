@@ -1,6 +1,6 @@
 package study.domain
 
-class Languages(val languages: List<Language>) {
+class Languages(private val languages: List<Language>) {
     fun toList(): List<Language> {
         return this.languages
     }
