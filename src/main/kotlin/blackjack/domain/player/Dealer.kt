@@ -7,7 +7,7 @@ import blackjack.domain.Player
 import kotlin.math.roundToInt
 
 internal class Dealer : Player("딜러") {
-    override val maxHitScore: Int get() = HITTABLE_MAX_SCORE
+    override val maxHittableScore: Int get() = HITTABLE_MAX_SCORE
 
     override val visibleCards: List<Card>
         get() {
@@ -26,7 +26,7 @@ internal class Dealer : Player("딜러") {
             return -1 * customer.betting
         }
         if (this.score() > BlackJackGame.MAX_SCORE) {
-            return (customer.state.earningsRate() * customer.betting).roundToInt()
+            return (customer.state.earningsRate * customer.betting).roundToInt()
         }
 
         // 딜러승
@@ -40,7 +40,7 @@ internal class Dealer : Player("딜러") {
         }
 
         // 고객승
-        return (customer.state.earningsRate() * customer.betting).roundToInt()
+        return (customer.state.earningsRate * customer.betting).roundToInt()
     }
 
     companion object {

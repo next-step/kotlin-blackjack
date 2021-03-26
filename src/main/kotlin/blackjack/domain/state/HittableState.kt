@@ -4,11 +4,6 @@ import blackjack.domain.PlayerCards
 import blackjack.domain.State
 
 internal class HittableState(cards: PlayerCards) : State(cards) {
-    override fun canHit(max: Int): Boolean {
-        return this.score() < max
-    }
-
-    override fun earningsRate(): Double {
-        return 1.0
-    }
+    override val hittable: Boolean = true
+    override val earningsRate: Double get() = 1.0
 }

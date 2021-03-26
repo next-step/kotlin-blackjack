@@ -31,7 +31,7 @@ internal class BlackJackGameTest {
     }
 
     @Test
-    fun `카드가 21점 미만 일 경우만 hit 할수있다`() {
+    fun `카드가 21점 미만 일 경우만 hit 할수 있다`() {
         val blackJackGame = BlackJackGame()
         val playerA = Customer("a")
         playerA.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.TEN))

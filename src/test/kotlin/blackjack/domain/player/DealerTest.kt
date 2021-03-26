@@ -5,6 +5,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.CardSymbol
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class DealerTest {
 
@@ -41,7 +42,7 @@ internal class DealerTest {
     fun `딜러가 burst시 수익= -고객베팅금`() {
         val dealer = createDealer(
             Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
-            Card.of(CardSymbol.DIAMONDS, CardNumber.QUEEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.FIVE),
             Card.of(CardSymbol.DIAMONDS, CardNumber.SEVEN)
         )
 
@@ -91,6 +92,16 @@ internal class DealerTest {
         customer.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.ACE))
 
         assertThat(dealer.match(listOf(customer)).dealerEarning).isEqualTo(-20000)
+    }
+
+    @Test
+    fun `딜러는 16점 초과시 카드를 받을 수 없다`() {
+        val dealer = createDealer(
+            Card.of(CardSymbol.DIAMONDS, CardNumber.TEN),
+            Card.of(CardSymbol.DIAMONDS, CardNumber.SEVEN)
+        )
+
+        assertThrows<IllegalStateException> { dealer.acceptCard(Card.of(CardSymbol.DIAMONDS, CardNumber.TWO)) }
     }
 
     fun createDealer(vararg cards: Card): Dealer {
