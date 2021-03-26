@@ -15,6 +15,8 @@ open class Participant(val name: Name, _state: State) {
         state = state.draw(card)
     }
 
+    fun isBust() = state.isBust()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Player) return false

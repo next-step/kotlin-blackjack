@@ -17,4 +17,6 @@ interface State {
     fun isFinished(): Boolean
 
     fun isHit(): Boolean
+
+    fun isBust(): Boolean
 }

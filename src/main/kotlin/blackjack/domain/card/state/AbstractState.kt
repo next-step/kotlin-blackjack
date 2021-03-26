@@ -9,4 +9,6 @@ abstract class AbstractState(override val cards: Cards) : State {
         get() = cards.score
 
     override fun stay(): State = Stay(cards)
+
+    override fun isBust() = false
 }

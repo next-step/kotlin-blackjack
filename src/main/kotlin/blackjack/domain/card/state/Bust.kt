@@ -6,4 +6,6 @@ class Bust(cards: Cards) : Finished(cards) {
     init {
         require(cards.score > BlackJack.SCORE)
     }
+
+    override fun isBust() = true
 }

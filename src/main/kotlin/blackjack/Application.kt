@@ -1,3 +1,4 @@
+import blackjack.domain.MatchResult
 import blackjack.domain.Result
 import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck
@@ -30,10 +31,20 @@ fun main() {
         dealer.take(deck.draw())
     }
 
-    val result = Result(
-        players.map { it to it.match(dealer) }
-            .toMap()
-    )
+    val result = when (dealer.isBust()) {
+        true -> {
+            Result(
+                players.map { it to MatchResult.WIN }
+                    .toMap()
+            )
+        }
+        else -> {
+            Result(
+                players.map { it to it.match(dealer) }
+                    .toMap()
+            )
+        }
+    }
 
     printParticipantsResult(listOf(dealer).plus(players))
     printResult(result)
