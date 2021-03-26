@@ -20,7 +20,7 @@ object ResultView {
         println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it.toString() }}")
     }
 
-    fun printInfoOfThirdCardOfDealer() {
+    fun printInfoOfDealerCard() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         println()
     }

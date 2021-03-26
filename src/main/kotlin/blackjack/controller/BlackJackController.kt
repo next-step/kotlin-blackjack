@@ -20,7 +20,7 @@ object BlackJackController {
         }
 
         while (dealer.takeCardIfUnderSixteen()) {
-            ResultView.printInfoOfThirdCardOfDealer()
+            ResultView.printInfoOfDealerCard()
         }
 
         val playerCardResults = players.toPlayerCardResults()
