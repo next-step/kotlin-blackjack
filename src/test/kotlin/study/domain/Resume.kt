@@ -3,5 +3,6 @@ package study.domain
 class Resume(
     val name: Name,
     val company: Company?,
-    val skills: Skills
+    val skills: Skills,
+    val languages: Languages
 )
