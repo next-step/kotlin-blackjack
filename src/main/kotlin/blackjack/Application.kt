@@ -35,7 +35,7 @@ fun main() {
             .toMap()
     )
 
-    printParticipantsResult(listOf(dealer).plus(players))
+    printParticipantsResult(listOf(dealer) + players)
     printResult(result)
 }
 
