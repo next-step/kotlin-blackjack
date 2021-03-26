@@ -29,7 +29,7 @@ internal class CustomerTest {
     }
 
     @Test
-    fun `hit 가능 여부`() {
+    fun `21점 이하만 hit할수있다`() {
         val player = Customer("정주영")
         // 2
         player.acceptCard(Card.of(CardSymbol.CLOVER, CardNumber.TWO))

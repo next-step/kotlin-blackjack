@@ -11,7 +11,7 @@ fun main() {
     val outputView = OutputView()
 
     val dealer = Dealer()
-    val players = inputView.getPlayerNames().map { Customer(it) }
+    val players = inputView.getPlayerNames().map { Customer(it, inputView.getPlayerBetting(it)) }
     val blackJackGame = BlackJackGame()
 
     blackJackGame.startGame(players.plus(dealer))
@@ -30,5 +30,5 @@ fun main() {
     }
 
     outputView.renderCardsAndScore(dealer, players)
-    outputView.renderResult(dealer.match(players))
+    outputView.renderEarnings(dealer.match(players))
 }

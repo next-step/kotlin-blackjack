@@ -2,12 +2,13 @@ package blackjack.domain.player
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
-import blackjack.domain.MatchResult
+import blackjack.domain.EarningResult
 import blackjack.domain.Player
-import blackjack.domain.PlayerMatchResult
-import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 internal class Dealer : Player("딜러") {
+    override val maxHittableScore: Int get() = HITTABLE_MAX_SCORE
+
     override val visibleCards: List<Card>
         get() {
             if (this.cards.isEmpty()) {
@@ -16,29 +17,30 @@ internal class Dealer : Player("딜러") {
             return this.cards.subList(0, 1)
         }
 
-    override fun canHit(): Boolean = score() <= HITTABLE_MAX_SCORE
-
-    fun match(players: List<Player>): PlayerMatchResult {
-        val playerResult: Map<Player, MatchResult> = players.map { it to match(it) }.toMap()
-        return PlayerMatchResult(playerResult.values.map { it.findOpposite() }, playerResult)
+    fun match(customers: List<Customer>): EarningResult {
+        return EarningResult(customers.map { it to match(it) }.toMap())
     }
 
-    private fun match(player: Player): MatchResult {
-        if (score() > BlackJackGame.MAX_SCORE) {
-            return MatchResult.WIN
+    private fun match(customer: Customer): Int {
+        if (customer.score() > BlackJackGame.MAX_SCORE) {
+            return -1 * customer.betting
+        }
+        if (this.score() > BlackJackGame.MAX_SCORE) {
+            return (customer.state.earningsRate * customer.betting).roundToInt()
         }
 
-        val dealerGap = BlackJackGame.MAX_SCORE - this.score()
-        val playerGap = (BlackJackGame.MAX_SCORE - player.score()).absoluteValue
-
-        if (dealerGap < playerGap) {
-            return MatchResult.LOSE
-        }
-        if (dealerGap == playerGap) {
-            return MatchResult.DRAW
+        // 딜러승
+        if (this.score() > customer.score()) {
+            return -1 * customer.betting
         }
 
-        return MatchResult.WIN
+        // 무승부
+        if (this.score() == customer.score()) {
+            return 0
+        }
+
+        // 고객승
+        return (customer.state.earningsRate * customer.betting).roundToInt()
     }
 
     companion object {

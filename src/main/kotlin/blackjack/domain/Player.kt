@@ -1,19 +1,31 @@
 package blackjack.domain
 
-internal abstract class Player(val name: String) {
-    private val playerCards: PlayerCards = PlayerCards()
+import blackjack.domain.state.HittableState
 
-    abstract fun canHit(): Boolean
+internal abstract class Player(val name: String, val betting: Int = 5000) {
+    var state: State = HittableState(PlayerCards())
+
+    abstract val maxHittableScore: Int
     abstract val visibleCards: List<Card>
 
     val cards: List<Card>
-        get() = this.playerCards.cards
+        get() {
+            return this.state.cards
+        }
 
     fun acceptCard(card: Card) {
-        this.playerCards.add(card)
+        if (!canHit()) {
+            throw IllegalStateException("only hittable")
+        }
+
+        this.state = state.addCard(card)
+    }
+
+    fun canHit(): Boolean {
+        return maxHittableScore > this.score() && this.state.hittable
     }
 
     fun score(): Int {
-        return playerCards.score()
+        return state.score()
     }
 }

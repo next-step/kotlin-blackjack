@@ -1,8 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.EarningResult
 import blackjack.domain.player.Dealer
 import blackjack.domain.Player
-import blackjack.domain.PlayerMatchResult
 
 internal class OutputView {
     fun renderCards(dealer: Dealer, players: List<Player>) {
@@ -32,14 +32,11 @@ internal class OutputView {
         players.forEach(this::renderPlayerCardsAndScore)
     }
 
-    fun renderResult(result: PlayerMatchResult) {
+    fun renderEarnings(earningResult: EarningResult) {
         println("\n## 최종 승패")
-
-        val dealerResult = result.dealerResults.groupBy { it }.map { "${it.value.size}${it.key.desc}" }.joinToString(SEPARATOR)
-        println("딜러: $dealerResult")
-
-        result.playerResult.forEach {
-            println("${it.key.name}: ${it.value.desc}")
+        println("딜러: ${earningResult.dealerEarning}")
+        earningResult.customerEarnings.forEach {
+            println("${it.key.name}: ${it.value}")
         }
     }
 

@@ -1,16 +1,20 @@
 package blackjack.domain
 
-internal class PlayerCards {
-    private val _cards = mutableListOf<Card>()
+internal class PlayerCards(val cards: List<Card> = listOf()) {
 
-    val cards: List<Card>
-        get() = this._cards.toList()
-
-    fun add(card: Card) {
-        this._cards.add(card)
+    fun add(card: Card): PlayerCards {
+        return PlayerCards(cards.plus(card))
     }
 
     fun score(): Int {
-        return CardNumber.score(this._cards.map { it.number })
+        return CardNumber.score(this.cards.map { it.number })
+    }
+
+    fun isBurst(): Boolean {
+        return this.score() > BlackJackGame.MAX_SCORE
+    }
+
+    fun isBlackJack(): Boolean {
+        return this.cards.size == BlackJackGame.START_CARD_COUNT && this.score() == BlackJackGame.MAX_SCORE
     }
 }

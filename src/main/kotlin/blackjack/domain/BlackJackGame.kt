@@ -6,7 +6,7 @@ internal class BlackJackGame {
     fun startGame(players: List<Player>) {
         players.forEach {
             val player = it
-            repeat(2) {
+            repeat(START_CARD_COUNT) {
                 player.acceptCard(cardPack.next())
             }
         }
@@ -20,5 +20,6 @@ internal class BlackJackGame {
 
     companion object {
         const val MAX_SCORE = 21
+        const val START_CARD_COUNT = 2
     }
 }
