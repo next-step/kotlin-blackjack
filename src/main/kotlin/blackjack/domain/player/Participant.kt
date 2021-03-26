@@ -5,8 +5,8 @@ import blackjack.domain.card.Score
 import blackjack.domain.card.state.State
 
 open class Participant(val name: Name, _state: State) {
-    var state = _state
-        private set
+    var state: State = _state
+        protected set
 
     val score: Score
         get() = state.score
