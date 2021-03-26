@@ -1,7 +1,4 @@
-
 import blackjack.domain.Result
-import blackjack.domain.card.Score
-import blackjack.domain.card.state.BlackJack
 import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
@@ -10,6 +7,7 @@ import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.view.inputAnswer
 import blackjack.view.inputPlayerNames
+import blackjack.view.printDealerTakeCardMassage
 import blackjack.view.printParticipantsResult
 import blackjack.view.printPlayerCards
 import blackjack.view.printResult
@@ -27,8 +25,8 @@ fun main() {
         askTakeCard(deck, it)
     }
 
-    while (dealer.score < Score.of(16)) {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    while (dealer.isMustTakeCard()) {
+        printDealerTakeCardMassage()
         dealer.take(deck.draw())
     }
 
@@ -41,9 +39,13 @@ fun main() {
     printResult(result)
 }
 
-private fun askTakeCard(deck: Deck, it: Player) {
-    while (it.score < BlackJack.SCORE && inputAnswer(it)) {
-        it.take(deck.draw())
-        printPlayerCards(it)
+private fun askTakeCard(deck: Deck, player: Player) {
+    while (player.canHit()) {
+        if (inputAnswer(player)) {
+            player.take(deck.draw())
+            printPlayerCards(player)
+        } else {
+            player.stay()
+        }
     }
 }

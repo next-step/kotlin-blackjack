@@ -14,6 +14,10 @@ fun printStartMessage(dealer: Dealer, players: List<Player>) {
     printPlayersCards(players)
 }
 
+fun printDealerTakeCardMassage() {
+    println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+}
+
 private fun printDealerCards(dealer: Dealer) {
     val card = dealer.state.cards.elements[0]
     println("${dealer.name.value} 카드: ${mapping(card.denomination)}${mapping(card.suit)}")
