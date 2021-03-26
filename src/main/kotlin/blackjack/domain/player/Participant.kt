@@ -1,15 +1,18 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
 import blackjack.domain.card.Score
+import blackjack.domain.card.state.State
 
-open class Participant(val name: Name, val cards: Cards) {
+open class Participant(val name: Name, _state: State) {
+    var state = _state
+        private set
+
     val score: Score
-        get() = cards.score
+        get() = state.score
 
     fun take(card: Card) {
-        cards.add(card)
+        state = state.draw(card)
     }
 
     override fun equals(other: Any?): Boolean {

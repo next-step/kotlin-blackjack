@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.card.Denomination
 import blackjack.domain.MatchResult
 import blackjack.domain.Result
+import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
@@ -15,7 +15,7 @@ fun printStartMessage(dealer: Dealer, players: List<Player>) {
 }
 
 private fun printDealerCards(dealer: Dealer) {
-    val card = dealer.cards.elements[0]
+    val card = dealer.state.cards.elements[0]
     println("${dealer.name.value} 카드: ${mapping(card.denomination)}${mapping(card.suit)}")
 }
 
@@ -25,7 +25,7 @@ private fun printPlayersCards(players: List<Player>) {
 
 fun printPlayerCards(player: Player) {
     println(
-        "${player.name.value} 카드: ${player.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }}"
+        "${player.name.value} 카드: ${player.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }}"
     )
 }
 
@@ -36,7 +36,7 @@ fun printParticipantsResult(participants: List<Participant>) {
 
 private fun printPlayerResult(participant: Participant) {
     println(
-        "${participant.name.value} 카드: ${participant.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${participant.score.value}"
+        "${participant.name.value} 카드: ${participant.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${participant.score.value}"
     )
 }
 

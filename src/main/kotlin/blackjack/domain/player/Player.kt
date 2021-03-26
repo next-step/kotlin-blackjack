@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Cards
 import blackjack.domain.MatchResult
+import blackjack.domain.card.state.State
 
-class Player(name: Name, cards: Cards) : Participant(name, cards) {
+class Player(name: Name, state: State) : Participant(name, state) {
 
     fun match(dealer: Dealer) = when (score.compareTo(dealer.score)) {
         WIN -> MatchResult.WIN
@@ -12,7 +12,7 @@ class Player(name: Name, cards: Cards) : Participant(name, cards) {
     }
 
     override fun toString(): String {
-        return "Player(name=$name, cards=$cards)"
+        return "Player(name=$name, state=$state)"
     }
 
     companion object {

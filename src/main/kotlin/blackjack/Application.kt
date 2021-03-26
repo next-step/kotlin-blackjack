@@ -1,6 +1,8 @@
-import blackjack.domain.card.Cards
+
 import blackjack.domain.Result
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Score
+import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
 import blackjack.domain.player.Dealer
@@ -15,10 +17,10 @@ import blackjack.view.printStartMessage
 
 fun main() {
     val deck = DeckFactory.create()
-    val dealer = Dealer(Cards(deck.draw(), deck.draw()))
+    val dealer = Dealer(StateFactory.create(deck.draw(), deck.draw()))
 
     val playerNames = inputPlayerNames().map { Name(it) }
-    val players = playerNames.map { Player(name = it, cards = Cards(deck.draw(), deck.draw())) }
+    val players = playerNames.map { Player(name = it, state = StateFactory.create(deck.draw(), deck.draw())) }
     printStartMessage(dealer, players)
 
     players.forEach {
