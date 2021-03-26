@@ -7,11 +7,11 @@ fun introduce(init: IntroduceDsl.() -> Unit): Resume {
 }
 
 class IntroduceDsl {
-    lateinit var name: String
+    private lateinit var name: String
 
-    var company: String? = null
+    private var company: String? = null
 
-    val skills: MutableList<Skill> = mutableListOf()
+    private val skills: MutableList<Skill> = mutableListOf()
 
     fun name(name: String) {
         this.name = name
@@ -34,7 +34,7 @@ class IntroduceDsl {
     }
 
     class SkillsDsl {
-        val skills: MutableList<Skill> = mutableListOf()
+        private val skills: MutableList<Skill> = mutableListOf()
         fun soft(skill: String) {
             skills.add(SoftSkill(skill))
         }
