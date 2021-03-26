@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class CardType(
-    val expression: String,
+    private val expression: String,
     val point: Int
 ) {
     TWO("2", 2),
