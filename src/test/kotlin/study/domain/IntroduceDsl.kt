@@ -35,6 +35,7 @@ class IntroduceDsl {
 
     class SkillsDsl {
         private val skills: MutableList<Skill> = mutableListOf()
+
         fun soft(skill: String) {
             skills.add(SoftSkill(skill))
         }
