@@ -53,5 +53,4 @@ internal class PlayerTest {
 
     fun getCardSetOfClover(vararg cardTypes: CardType): MutableSet<Card> =
         cardTypes.map { Card(CardShape.CLOVER, it) }.toMutableSet()
-
 }

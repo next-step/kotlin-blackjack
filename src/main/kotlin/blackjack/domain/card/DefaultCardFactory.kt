@@ -22,5 +22,4 @@ class DefaultCardFactory : CardFactory {
             cards.add(Card(cardShape, cardType))
         }
     }
-
 }
