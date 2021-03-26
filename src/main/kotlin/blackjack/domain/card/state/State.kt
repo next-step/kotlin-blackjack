@@ -15,4 +15,6 @@ interface State {
     fun stay(): State
 
     fun isFinished(): Boolean
+
+    fun isHit(): Boolean
 }

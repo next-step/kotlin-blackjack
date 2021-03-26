@@ -14,4 +14,6 @@ abstract class Finished(cards: Cards) : AbstractState(cards) {
     }
 
     override fun isFinished() = true
+
+    override fun isHit() = false
 }
