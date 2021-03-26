@@ -4,7 +4,7 @@ import blackjack.domain.card.CardFactory
 import blackjack.domain.card.DefaultCardFactory
 
 class CardPack(cardFactory: CardFactory = DefaultCardFactory()) {
-    private val cards = cardFactory.createCards()
+    private val cards = cardFactory.createCards().toMutableList()
 
     fun pickCard(): Card {
 
