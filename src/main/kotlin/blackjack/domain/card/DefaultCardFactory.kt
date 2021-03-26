@@ -9,17 +9,9 @@ class DefaultCardFactory : CardFactory {
         return createAllShapeCards().shuffled().toMutableList()
     }
 
-    private fun createAllShapeCards(): MutableList<Card> {
-        val cards = mutableListOf<Card>()
-        CardShape.values().forEach { cardShape ->
-            createSingleShapeCardsOf(cardShape, cards)
-        }
-        return cards
-    }
-
-    private fun createSingleShapeCardsOf(cardShape: CardShape, cards: MutableList<Card>) {
-        CardType.values().forEach { cardType ->
-            cards.add(Card(cardShape, cardType))
+    private fun createAllShapeCards(): List<Card> {
+        return CardShape.values().flatMap { cardShape ->
+            CardType.values().map { cardType -> Card(cardShape, cardType) }
         }
     }
 }
