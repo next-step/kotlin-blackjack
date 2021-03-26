@@ -1,7 +1,7 @@
 
 import blackjack.domain.Result
-import blackjack.domain.card.Cards
 import blackjack.domain.card.Score
+import blackjack.domain.card.state.BlackJack
 import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
@@ -42,7 +42,7 @@ fun main() {
 }
 
 private fun askTakeCard(deck: Deck, it: Player) {
-    while (it.score < Cards.BLACKJACK_SCORE && inputAnswer(it)) {
+    while (it.score < BlackJack.SCORE && inputAnswer(it)) {
         it.take(deck.draw())
         printPlayerCards(it)
     }

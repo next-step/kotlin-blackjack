@@ -15,8 +15,4 @@ class Cards(vararg card: Card) {
     override fun toString(): String {
         return "Cards(_elements=$_elements)"
     }
-
-    companion object {
-        val BLACKJACK_SCORE = Score.of(21)
-    }
 }

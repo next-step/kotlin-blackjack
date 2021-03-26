@@ -6,10 +6,10 @@ import blackjack.domain.card.Cards
 object StateFactory {
     fun create(firstCard: Card, secondCard: Card): State {
         val cards = Cards(firstCard, secondCard)
-        if (cards.score > Cards.BLACKJACK_SCORE) {
+        if (cards.score > BlackJack.SCORE) {
             return Bust(cards)
         }
-        if (cards.score == Cards.BLACKJACK_SCORE) {
+        if (cards.score == BlackJack.SCORE) {
             return BlackJack(cards)
         }
         return Hit(cards)

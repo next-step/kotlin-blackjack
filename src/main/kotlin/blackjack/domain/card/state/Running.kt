@@ -7,10 +7,10 @@ abstract class Running(cards: Cards) : AbstractState(cards) {
 
     override fun draw(card: Card): State {
         cards.add(card)
-        if (cards.score == Cards.BLACKJACK_SCORE) {
+        if (cards.score == BlackJack.SCORE) {
             return BlackJack(cards)
         }
-        if (cards.score > Cards.BLACKJACK_SCORE) {
+        if (cards.score > BlackJack.SCORE) {
             return Bust(cards)
         }
         return Hit(cards)
