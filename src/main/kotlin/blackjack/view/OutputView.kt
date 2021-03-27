@@ -20,7 +20,7 @@ fun printDealerTakeCardMessage() {
 
 private fun printDealerCards(dealer: Dealer) {
     val card = dealer.state.cards.elements[0]
-    println("${dealer.name.value} 카드: ${mapping(card.denomination)}${mapping(card.suit)}")
+    println("${dealer.name.value} 🃏: ${mapping(card.denomination)}${mapping(card.suit)}")
 }
 
 private fun printPlayersCards(players: List<Player>) {
@@ -29,7 +29,7 @@ private fun printPlayersCards(players: List<Player>) {
 
 fun printPlayerCards(player: Player) {
     println(
-        "${player.name.value} 카드: ${player.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }}"
+        "${player.name.value} 🃏: ${player.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }}"
     )
 }
 
@@ -40,7 +40,7 @@ fun printParticipantsResult(participants: List<Participant>) {
 
 private fun printPlayerResult(participant: Participant) {
     println(
-        "${participant.name.value} 카드: ${participant.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${participant.score.value}"
+        "${participant.name.value} 🃏: ${participant.state.cards.elements.joinToString { "${mapping(it.denomination)}${mapping(it.suit)}" }} - 결과: ${participant.score.value}"
     )
 }
 
@@ -61,10 +61,10 @@ private fun mapping(denomination: Denomination) = when (denomination) {
 }
 
 private fun mapping(suit: Suit) = when (suit) {
-    Suit.SPADE -> "스페이드"
-    Suit.HEART -> "하트"
-    Suit.CLUB -> "클럽"
-    Suit.DIAMOND -> "다이아몬드"
+    Suit.SPADE -> "♠️"
+    Suit.HEART -> "♥️"
+    Suit.CLUB -> "♣️"
+    Suit.DIAMOND -> "♦️"
 }
 
 fun printResult(result: Result) {
