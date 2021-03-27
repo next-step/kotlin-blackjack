@@ -34,7 +34,7 @@ open class Player(
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
     override fun toPlayerDto(): PlayerDto {
-        return PlayerDto(name, cards.toMutableSet())
+        return PlayerDto(name, cards)
     }
 
     companion object {

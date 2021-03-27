@@ -4,7 +4,7 @@ import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 
 class Players(
-    private val values: MutableList<Player>
+    private val values: List<Player>
 ) : List<Player> by values {
 
     fun giveToAllPlayers(cardPack: CardPack) {

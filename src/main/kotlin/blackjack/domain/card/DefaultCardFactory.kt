@@ -5,7 +5,7 @@ import blackjack.domain.CardShape
 import blackjack.domain.CardType
 
 class DefaultCardFactory : CardFactory {
-    override fun createCards(): MutableList<Card> {
+    override fun createCards(): List<Card> {
         return createAllShapeCards().shuffled().toMutableList()
     }
 

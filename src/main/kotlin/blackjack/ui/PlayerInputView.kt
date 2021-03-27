@@ -9,7 +9,7 @@ object PlayerInputView {
         val names = readLine() ?: throw IllegalArgumentException("입력된 이름이 없습니다.")
         println()
 
-        val playerList = names.split(",").map { Player(it) }.toMutableList()
+        val playerList = names.split(",").map { Player(it) }
         return Players(playerList)
     }
 
