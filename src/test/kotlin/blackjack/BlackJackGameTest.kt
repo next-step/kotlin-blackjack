@@ -11,18 +11,18 @@ class BlackJackGameTest {
 
     @Test
     fun `이름을 입력받아 플레이어를 반환한다`() {
-        val players = game.parsePlayers("서진혁,nextstep,kotlin")
-        assertThat(players.players.map { it.name }).isEqualTo(listOf("서진혁", "nextstep", "kotlin"))
+        val players = game.getUsers("서진혁,nextstep,kotlin")
+        assertThat(players.users.map { it.name }).containsAll(listOf("서진혁", "nextstep", "kotlin"))
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     fun `이름을 입력하지 않으면 예외가 발생한다`(names: String?) {
-        assertThrows<IllegalArgumentException> { game.parsePlayers(names) }
+        assertThrows<IllegalArgumentException> { game.getUsers(names) }
     }
 
     @Test
     fun `특정 이름이 공백이면 예외가 발생한다`() {
-        assertThrows<IllegalArgumentException> { game.parsePlayers("서진혁,,nextstep") }
+        assertThrows<IllegalArgumentException> { game.getUsers("서진혁,,nextstep") }
     }
 }

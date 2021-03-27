@@ -3,12 +3,12 @@ package blackjack
 fun main() {
     val game = BlackJackGame()
     val cardExtractor = CardExtractor()
-    val players = game.parsePlayers(inputName())
+    val players = game.getUsers(inputName())
 
     players.hit(cardExtractor)
     printHit(players)
 
-    players.players.forEach {
+    players.users.filterIsInstance(Player::class.java).forEach {
         game.moreCard(it, cardExtractor)
     }
 
@@ -17,10 +17,14 @@ fun main() {
 
 class BlackJackGame {
 
-    fun parsePlayers(names: String?): Players {
+    fun getUsers(names: String?): Users {
+        return Users(parsePlayers(names) + Dealer())
+    }
+
+    private fun parsePlayers(names: String?): List<Player> {
         require(names != null) { "이름을 입력해주세요" }
 
-        return Players(names.split(DELIMITER).map { Player(it) })
+        return names.split(DELIMITER).map { Player(it) }
     }
 
     private fun getReceiveCardAnswer(player: Player): String {
