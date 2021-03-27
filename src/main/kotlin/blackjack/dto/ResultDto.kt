@@ -24,9 +24,9 @@ data class DealerResult(
     constructor(dealer: Dealer, playersResult: List<MatchingResult>) : this(
         cards = dealer.state.cards.toView(),
         score = dealer.score.value,
-        winCount = playersResult.filter { it == MatchingResult.WIN }.count(),
+        winCount = playersResult.filter { it == MatchingResult.LOSE }.count(),
         drawCount = playersResult.filter { it == MatchingResult.DRAW }.count(),
-        loseCount = playersResult.filter { it == MatchingResult.LOSE }.count()
+        loseCount = playersResult.filter { it == MatchingResult.WIN }.count()
     )
 }
 
