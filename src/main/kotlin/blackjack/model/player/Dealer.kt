@@ -14,6 +14,8 @@ class Dealer(cards: Cards, name: String = "딜러") : Player(cards, name) {
         }
     }
 
+    fun isDraw() = this.cards.size > Cards.INITIAL_DRAW_COUNT
+
     companion object {
         val MINIMUM_SCORE = Score(16)
     }

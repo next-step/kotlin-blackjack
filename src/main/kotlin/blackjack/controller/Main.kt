@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.model.Judge
+import blackjack.model.Rule
 import blackjack.model.player.Player
 import blackjack.model.player.PlayersFactory
 import blackjack.model.TrumpRule
@@ -9,7 +9,6 @@ import blackjack.model.player.Players
 import blackjack.model.trump.Cards
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import blackjack.view.ViewUtil
 
 fun main() {
     val players = PlayersFactory.create(InputView.readNames())
@@ -22,8 +21,8 @@ fun main() {
         drawUntilUserStop(it)
     }
 
-    if (dealer.cards.size > Cards.INITIAL_DRAW_COUNT) {
-        println("딜러는 ${Dealer.MINIMUM_SCORE.value}이하라 한장의 카드를 더 받았습니다.")
+    if (dealer.isDraw()) {
+        OutputView.printDealerReason()
     }
 
     val rule = TrumpRule()
@@ -31,25 +30,23 @@ fun main() {
         OutputView.printResult(it.name, it.cards, rule.getScore(it.cards))
     }
 
-    println("## 최종 승패")
-    println(
-        "${dealer.name}: ${
-        if (players.filter { Judge.isWin(dealer.getScore(rule), it.getScore(rule)) }.count() > 0) "${
-        players.filter { Judge.isWin(dealer.getScore(rule), it.getScore(rule)) }.count()
-        }승" else ""
-        } ${
-        if (players.filter { Judge.isWin(it.getScore(rule), dealer.getScore(rule)) }.count() > 0) "${
-        players.filter { Judge.isWin(it.getScore(rule), dealer.getScore(rule)) }.count()
-        }패" else ""
-        }"
-    )
+    printJudgeResult(dealer, players, rule)
+}
+
+private fun printJudgeResult(
+    dealer: Dealer,
+    players: Players,
+    rule: Rule
+) {
+    OutputView.printJudgeTitle()
+    OutputView.printDealerJudgeResult(dealer.name, players.countLose(dealer, rule), players.countWin(dealer, rule))
     players.forEach {
-        println("${it.name}: ${if (Judge.isWin(it.getScore(rule), dealer.getScore(rule))) "승" else "패"}")
+        OutputView.printPlayerJudgeResult(it.name, it.isWin(dealer, rule))
     }
 }
 
 private fun drawUntilUserStop(player: Player) {
     while (player.keepDrawing(InputView.readUserResponse(player.name))) {
-        println("${player.name}카드: ${ViewUtil.toString(player.cards)}")
+        OutputView.printPlayer(player)
     }
 }
