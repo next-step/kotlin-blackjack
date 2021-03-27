@@ -42,7 +42,7 @@ class BlackJackGame {
     }
 
     fun moreCard(player: Player, randomCardExtractor: RandomCardExtractor) {
-        while (!player.isDead()) {
+        while (!player.isBust()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
                 player.cardDeck.add(randomCardExtractor.getCard())

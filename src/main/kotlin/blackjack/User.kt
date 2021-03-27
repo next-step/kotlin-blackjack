@@ -11,7 +11,7 @@ abstract class User(val name: String) {
         cardDeck.add(card)
     }
 
-    fun isDead(): Boolean {
+    fun isBust(): Boolean {
         return cardDeck.getScore() > Card.BLACK_JACK_NUM
     }
 
