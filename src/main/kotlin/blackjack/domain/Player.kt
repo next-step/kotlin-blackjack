@@ -13,6 +13,6 @@ class Player(name: String, cards: Cards = Cards(arrayListOf())) : GameParticipan
     }
 
     fun checkMyCardsIsOver21(): Boolean {
-        return cards.calculateMyCards() >= WINNING_NUMBER
+        return cards.calculateMyCards() > WINNING_NUMBER
     }
 }
