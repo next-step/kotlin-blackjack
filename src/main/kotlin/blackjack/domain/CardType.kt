@@ -23,10 +23,6 @@ enum class CardType(
     }
 
     companion object {
-        fun findAceCount(cards: Set<Card>): Int {
-            return cards.count { it.type == ACE }
-        }
-
         const val DECREMENTABLE_POINT_OF_ACE = 10
     }
 }
