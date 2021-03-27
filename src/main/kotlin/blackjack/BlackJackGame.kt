@@ -10,6 +10,11 @@ fun main() {
     users.hit(cardExtractor)
     printHit(users)
 
+    if (dealer.isBust()) {
+        printDealerBust(dealer)
+        return
+    }
+
     players.players.forEach {
         game.moreCard(it, cardExtractor)
     }

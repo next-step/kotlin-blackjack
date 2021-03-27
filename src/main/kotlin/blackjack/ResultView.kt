@@ -2,6 +2,10 @@ package blackjack
 
 const val SEPARATOR = ", "
 
+fun User.printResult() {
+    println("${this.cardText()} - 결과: ${this.cardDeck.getScore()}")
+}
+
 fun User.cardText(): String {
     val cardTexts = cardDeck.cards.map { it.cardNumber.text() + it.type.text() }
     return "${name}카드: ${cardTexts.joinToString(", ")}"
@@ -43,6 +47,11 @@ fun printHit(users: Users) {
 
 fun printResult(users: Users) {
     users.users.forEach {
-        println("${it.cardText()} - 결과: ${it.cardDeck.getScore()}")
+        it.printResult()
     }
+}
+
+fun printDealerBust(dealer: Dealer) {
+    dealer.printResult()
+    println("딜러가 Bust하였습니다. 모든 플레이어가 승리합니다.")
 }
