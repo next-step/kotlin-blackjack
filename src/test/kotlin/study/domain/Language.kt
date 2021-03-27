@@ -1,3 +1,3 @@
 package study.domain
 
-data class Language(val language: String, val level: Int)
+data class Language(private val language: String, private val level: Int)
