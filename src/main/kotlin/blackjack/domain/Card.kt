@@ -18,10 +18,7 @@ data class Card(val value: Pair<Number, Pattern>) {
     }
 
     private fun selectAceIsBetterNumber(sum: Int): Int {
-        val whenAceIs11 = abs(Cards.WINNING_NUMBER - (sum + 11))
-        val whenAceIs1 = abs(Cards.WINNING_NUMBER - (sum + 1))
-
-        if (whenAceIs11 < whenAceIs1) {
+        if (sum + 11 <= Cards.WINNING_NUMBER) {
             return 11
         }
         return 1
