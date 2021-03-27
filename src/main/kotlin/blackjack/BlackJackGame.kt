@@ -19,7 +19,7 @@ fun main() {
         game.moreCard(it, cardExtractor)
     }
 
-    printResult(users)
+    printResult(dealer, players)
 }
 
 class BlackJackGame {
