@@ -44,10 +44,10 @@ object Console : UserInterface {
 
     override fun outputGamerCards(gamersDto: GamersDto) {
         val players = gamersDto.players
-        val dealerCards = gamersDto.dealerCards
+        val dealerFirstCard = gamersDto.dealerFistCard
 
         println("딜러와 ${players.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
-        println("딜러 카드: ${dealerCards.joinToString()}")
+        println("딜러 카드: $dealerFirstCard")
         players.forEach { println(it.viewFormat()) }
     }
 
