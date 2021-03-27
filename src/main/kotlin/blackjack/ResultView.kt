@@ -1,5 +1,7 @@
 package blackjack
 
+const val SEPARATOR = ", "
+
 fun Player.cardText(): String {
     val cardTexts = cardDeck.cards.map { it.cardNumber.text() + it.type.text() }
     return "${name}카드: ${cardTexts.joinToString(", ")}"
@@ -29,5 +31,18 @@ fun CardNumber.text(): String {
         CardNumber.JACK -> "J"
         CardNumber.QUEEN -> "Q"
         CardNumber.KING -> "K"
+    }
+}
+
+fun printHit(players: Players) {
+    println(players.players.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
+    players.players.forEach {
+        println(it.cardText())
+    }
+}
+
+fun printResult(players: Players) {
+    players.players.forEach {
+        println("${it.cardText()} - 결과: ${it.cardDeck.getScore()}")
     }
 }

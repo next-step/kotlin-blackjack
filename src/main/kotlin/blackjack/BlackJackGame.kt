@@ -1,27 +1,18 @@
 package blackjack
 
-const val SEPARATOR = ", "
-
 fun main() {
     val game = BlackJackGame()
     val cardExtractor = CardExtractor()
     val players = game.parsePlayers(inputName())
 
     players.hit(cardExtractor)
-
-    println(players.players.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
-    players.players.forEach {
-        println(it.cardText())
-    }
+    printHit(players)
 
     players.players.forEach {
         game.moreCard(it, cardExtractor)
     }
 
-    players.players.forEach {
-        print(it.cardText())
-        println(" - 결과: ${it.cardDeck.getScore()}")
-    }
+    printResult(players)
 }
 
 class BlackJackGame {
