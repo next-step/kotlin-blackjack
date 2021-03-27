@@ -1,13 +1,15 @@
 package blackjack.domain.player
 
 import blackjack.domain.Card
+import blackjack.domain.Score
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
 class Player(override val name: String, override var state: State) : Gamer {
 
-    val score = state.cards.score
+    val score: Score
+        get() = state.cards.score
 
     init {
         require(name.isNotBlank())
