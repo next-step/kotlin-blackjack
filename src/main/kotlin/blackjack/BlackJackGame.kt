@@ -3,22 +3,23 @@ package blackjack
 fun main() {
     val game = BlackJackGame()
     val cardExtractor = RandomCardExtractor()
-    val players = game.getUsers(inputName())
+    val dealer = Dealer()
+    val users = game.getUsers(inputName(), dealer)
 
-    players.hit(cardExtractor)
-    printHit(players)
+    users.hit(cardExtractor)
+    printHit(users)
 
-    players.users.filterIsInstance(Player::class.java).forEach {
+    users.users.filterIsInstance(Player::class.java).forEach {
         game.moreCard(it, cardExtractor)
     }
 
-    printResult(players)
+    printResult(users)
 }
 
 class BlackJackGame {
 
-    fun getUsers(names: String?): Users {
-        return Users(parsePlayers(names) + Dealer())
+    fun getUsers(names: String?, dealer: Dealer): Users {
+        return Users(parsePlayers(names) + dealer)
     }
 
     private fun parsePlayers(names: String?): List<Player> {
