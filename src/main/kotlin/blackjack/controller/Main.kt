@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.Player
-import blackjack.model.PlayersFactory
+import blackjack.model.player.Player
+import blackjack.model.player.PlayersFactory
 import blackjack.model.Rule
 import blackjack.view.InputView
 import blackjack.view.OutputView

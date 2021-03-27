@@ -21,7 +21,9 @@ class Cards private constructor(private val cards: List<Card>) : List<Card> by c
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 
-        fun firstDraw() = (1..INITIAL_DRAW_COUNT).map { Card.get() }
+        fun firstDraw() = Cards((1..INITIAL_DRAW_COUNT).map { Card.get() })
+
+        fun empty() = Cards(listOf())
     }
 
     class Builder {

@@ -1,10 +1,10 @@
-package blackjack.model
+package blackjack.model.player
 
 import blackjack.model.trump.Cards
 
-class Player(val name: String) {
-    var cards = Cards.Builder().cards(Cards.firstDraw()).build()
-        private set
+open class Player(cards: Cards, val name: String) {
+    var cards = cards
+        protected set
 
     fun keepDrawing(userResponse: String): Boolean {
         if (userResponse == "y") {
