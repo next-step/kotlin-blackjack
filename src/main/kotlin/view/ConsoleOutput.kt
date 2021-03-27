@@ -5,6 +5,7 @@ import blackjack.domain.ResultType
 import blackjack.domain.player.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.User
+import blackjack.domain.player.UserName
 
 class ConsoleOutput {
     fun printUserNameInputMessage() {
@@ -61,5 +62,9 @@ class ConsoleOutput {
             result.players.forEach { append("${it.key.userName.name}: ${it.value.symbol}\n") }
         }
         println(builder)
+    }
+
+    fun printBettingMoneyInputMessage(name: UserName) {
+        println("${name.name}의 배팅 금액은?")
     }
 }

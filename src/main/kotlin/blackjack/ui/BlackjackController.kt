@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.DrawDecider
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.RANDOM_SHUFFLE
@@ -13,7 +14,13 @@ object BlackjackController {
 
     fun run() {
         consoleOutput.printUserNameInputMessage()
-        val users = UserFactory.create(consoleInput.read())
+        val userNames = UserFactory.createUserNames(consoleInput.read())
+        val bettingMoneys = userNames.map {
+            consoleOutput.printBettingMoneyInputMessage(it)
+            BettingMoney(consoleInput.read())
+        }
+
+        val users = UserFactory.createUsers(userNames, bettingMoneys)
         val cardDeck = CardDeck(RANDOM_SHUFFLE)
 
         users.drawAtFirst(cardDeck)

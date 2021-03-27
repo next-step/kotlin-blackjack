@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BettingMoney(input: String) {
+data class BettingMoney(private val input: String) {
     private val money: Int
 
     init {
