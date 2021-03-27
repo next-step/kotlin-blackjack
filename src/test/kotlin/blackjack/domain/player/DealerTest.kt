@@ -26,15 +26,19 @@ internal class DealerTest {
             return Stream.of(
                 Arguments.of(
                     Cards(
-                        Card(Suit.HEART, Denomination.JACK),
-                        Card(Suit.DIAMOND, Denomination.SIX)
+                        listOf(
+                            Card(Suit.HEART, Denomination.JACK),
+                            Card(Suit.DIAMOND, Denomination.SIX)
+                        )
                     ),
                     true
                 ),
                 Arguments.of(
                     Cards(
-                        Card(Suit.HEART, Denomination.JACK),
-                        Card(Suit.HEART, Denomination.SEVEN)
+                        listOf(
+                            Card(Suit.HEART, Denomination.JACK),
+                            Card(Suit.HEART, Denomination.SEVEN)
+                        )
                     ),
                     false
                 )

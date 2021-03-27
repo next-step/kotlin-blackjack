@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 
 internal class GamerTest {
 
-    private val cards = Cards(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK))
+    private val cards = Cards(listOf(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK)))
 
     @Test
     fun `게이머 이름의 길이는 1글자 이상이다`() {

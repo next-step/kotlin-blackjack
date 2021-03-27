@@ -2,46 +2,34 @@ package blackjack.domain
 
 import blackjack.domain.exception.ScoreNotExistException
 
-class Cards(vararg elements: Card) {
-    private val _elements = elements.toMutableList()
-    val elements: List<Card>
-        get() = _elements.toList()
+data class Cards(val elements: List<Card>) {
 
     val score: Score
         get() {
-            val summedScores = _elements
+            val summedScores = elements
                 .map { it.scores() }
                 .reduce { acc, scores -> acc.sumDistinct(scores) }
 
             return summedScores.sorted().lastOrNull { it <= Score.BLACKJACK }
                 ?: summedScores.min()
-                ?: throw ScoreNotExistException("점수가 없다. _elements: $_elements, summedScores: $summedScores")
+                ?: throw ScoreNotExistException("점수가 없다. _elements: $elements, summedScores: $summedScores")
         }
 
     init {
-        validateSize()
         validateDuplication()
     }
 
-    fun add(card: Card) {
-        _elements.add(card)
-    }
-
-    private fun validateSize() {
-        require(this._elements.size == CARDS_MIN_COUNT)
+    fun add(card: Card): Cards {
+        return Cards(elements + card)
     }
 
     private fun validateDuplication() {
-        require(this._elements.distinct().count() == CARDS_MIN_COUNT)
+        require(this.elements.count() == this.elements.distinct().count())
     }
 
     private fun List<Score>.sumDistinct(scores: List<Score>): List<Score> {
         return this.flatMap { score ->
             scores.map { score + it }.distinct()
         }
-    }
-
-    companion object {
-        private const val CARDS_MIN_COUNT = 2
     }
 }

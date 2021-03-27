@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Cards
+import blackjack.domain.CardsFactory
 import blackjack.domain.Score
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckFactory
@@ -23,11 +23,11 @@ class BlackJackGame(private val userInterface: UserInterface) {
     private val deck: Deck = DeckFactory.create()
 
     fun run() {
-        val dealer = Dealer("딜러", Cards(deck.draw(), deck.draw()))
+        val dealer = Dealer("딜러", CardsFactory.makeCards(deck.draw() to deck.draw()))
 
         val players = run {
             val userNames = PlayerNames(userInterface.inputPlayerNames())
-            userNames.map { Player(it, Cards(deck.draw(), deck.draw())) }
+            userNames.map { Player(it, CardsFactory.makeCards(deck.draw() to deck.draw())) }
         }
 
         userInterface.outputGamerCards(GamersDto(dealer, players))
