@@ -14,4 +14,14 @@ abstract class User(val name: String) {
     fun isDead(): Boolean {
         return cardDeck.getScore() > Card.BLACK_JACK_NUM
     }
+
+    open fun hit(cardExtractor: CardExtractor) {
+        repeat(HIT_COUNT) {
+            addCard(cardExtractor.getCard())
+        }
+    }
+
+    companion object {
+        private const val HIT_COUNT = 2
+    }
 }
