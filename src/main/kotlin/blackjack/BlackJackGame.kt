@@ -33,12 +33,19 @@ class BlackJackGame(private val userInterface: UserInterface) {
         userInterface.outputGamerCards(GamersDto(dealer, players))
         players.forEach { takeCardsIfNecessary(it) }
 
-        if (dealer.isTakeable()) {
-            dealer.takeCard(deck.draw())
-            userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
-        }
+        takeCardsIfNeccessary(dealer)
 
         userInterface.outputGameResult(ResultsDto(dealer, players))
+    }
+
+    private tailrec fun takeCardsIfNeccessary(dealer: Dealer) {
+        if (!dealer.isTakeable()) {
+            return
+        }
+
+        dealer.takeCard(deck.draw())
+        userInterface.outputDealerTaken(Score.DEALER_TAKEABLE_LIMIT.value)
+        takeCardsIfNeccessary(dealer)
     }
 
     private tailrec fun takeCardsIfNecessary(player: Player) {
