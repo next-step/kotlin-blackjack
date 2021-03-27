@@ -30,7 +30,7 @@ class Player(
         return cardPointSum
     }
 
-    private fun changeAcePointToOneToWin(cardPointSum: Int) =
+    private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
     override fun toPlayerDto(): PlayerDto {
