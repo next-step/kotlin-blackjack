@@ -3,10 +3,12 @@ package blackjack.domain.card.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class Finished(cards: Cards) : AbstractState(cards) {
+abstract class Finished(
+    override val cards: Cards
+) : State {
 
     override fun draw(card: Card): State {
-        throw IllegalStateException()
+        throw IllegalStateException("더이상 카드를 받을 수 없는 상태.")
     }
 
     override fun stay(): State {
@@ -14,6 +16,4 @@ abstract class Finished(cards: Cards) : AbstractState(cards) {
     }
 
     override fun isFinished() = true
-
-    override fun isHit() = false
 }
