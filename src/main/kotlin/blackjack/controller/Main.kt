@@ -19,6 +19,7 @@ fun main() {
     val rule = TrumpRule
     if (!dealer.getScore(rule).isValid()) {
         printJudgeResult(dealer, players, rule)
+        return
     }
 
     players.forEach {
