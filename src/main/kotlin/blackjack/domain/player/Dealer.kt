@@ -10,7 +10,7 @@ class Dealer(state: State) : Participant(DEALER_NAME, state) {
             return true
         }
         if (state.isFinished().not()) {
-            state.stay()
+            state = state.stay()
         }
         return false
     }
