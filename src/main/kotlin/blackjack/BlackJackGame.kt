@@ -4,12 +4,13 @@ fun main() {
     val game = BlackJackGame()
     val cardExtractor = RandomCardExtractor()
     val dealer = Dealer()
-    val users = game.getUsers(inputName(), dealer)
+    val players = game.parsePlayers(inputName())
+    val users = game.getUsers(dealer, players)
 
     users.hit(cardExtractor)
     printHit(users)
 
-    users.users.filterIsInstance(Player::class.java).forEach {
+    players.players.forEach {
         game.moreCard(it, cardExtractor)
     }
 
@@ -18,14 +19,14 @@ fun main() {
 
 class BlackJackGame {
 
-    fun getUsers(names: String?, dealer: Dealer): Users {
-        return Users(parsePlayers(names) + dealer)
+    fun getUsers(dealer: Dealer, players: Players): Users {
+        return Users(players.players + dealer)
     }
 
-    private fun parsePlayers(names: String?): List<Player> {
+    fun parsePlayers(names: String?): Players {
         require(names != null) { "이름을 입력해주세요" }
 
-        return names.split(DELIMITER).map { Player(it) }
+        return Players(names.split(DELIMITER).map { Player(it) })
     }
 
     private fun getReceiveCardAnswer(player: Player): String {
