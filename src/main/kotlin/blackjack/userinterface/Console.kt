@@ -57,6 +57,10 @@ object Console : UserInterface {
 
         println("딜러 카드: ${dealer.cards.joinToString()} - 결과: ${dealer.score}")
         players.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
+
+        println("\n## 최종 승패")
+        println("딜러: ${dealer.winCount}승 ${dealer.drawCount}무 ${dealer.loseCount}패")
+        players.forEach { println("${it.name}: ${it.matchResult}") }
     }
 
     private fun GamerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"

@@ -35,7 +35,7 @@ class BlackJackGame(private val userInterface: UserInterface) {
 
         takeCardsIfNeccessary(dealer)
 
-        userInterface.outputGameResult(ResultsDto(dealer, players))
+        userInterface.outputGameResult(ResultsDto(dealer, players.map { Pair(it, it.matchResult(dealer)) }))
     }
 
     private tailrec fun takeCardsIfNeccessary(dealer: Dealer) {
