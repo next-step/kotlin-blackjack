@@ -46,12 +46,12 @@ class Dealer(
         return PlayerWinTypes(winTypeMap)
     }
 
-    fun takeCard(): Boolean {
-        return takeCard(cardPack.pickCard())
+    fun takeCard() {
+        takeCard(cardPack.pickCard())
     }
 
-    override fun takeCard(card: Card): Boolean {
-        return player.takeCard(card)
+    override fun takeCard(card: Card) {
+        player.takeCard(card)
     }
 
     override fun calculateCardSum(): Int {

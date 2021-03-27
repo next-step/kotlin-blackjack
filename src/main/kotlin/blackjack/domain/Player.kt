@@ -13,11 +13,11 @@ class Player(
         this.cards.addAll(cards)
     }
 
-    override fun takeCard(card: Card): Boolean {
+    override fun takeCard(card: Card) {
 
         check(calculateCardSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
 
-        return cards.add(card)
+        cards.add(card)
     }
 
     override fun calculateCardSum(): Int {
