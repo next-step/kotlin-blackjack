@@ -15,6 +15,6 @@ class Dealer(cards: Cards, name: String = "딜러") : Player(cards, name) {
     }
 
     companion object {
-        private val MINIMUM_SCORE = Score(16)
+        val MINIMUM_SCORE = Score(16)
     }
 }
