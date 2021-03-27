@@ -7,5 +7,5 @@ class PlayerCardResult(
 ) {
     val name: String = player.name
     val cardNames: List<String> = player.cardNames
-    val point: Int = player.calculateCardSum()
+    val point: Int = player.cardPointSum()
 }

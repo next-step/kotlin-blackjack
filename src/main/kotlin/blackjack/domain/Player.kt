@@ -15,12 +15,12 @@ class Player(
 
     override fun takeCard(card: Card) {
 
-        check(calculateCardSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
+        check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
 
         cards.add(card)
     }
 
-    override fun calculateCardSum(): Int {
+    override fun cardPointSum(): Int {
         var cardPointSum = cards.sumBy { it.point }
         val aceCount = cards.count { it.isAce }
 

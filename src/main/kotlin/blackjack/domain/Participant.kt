@@ -4,6 +4,6 @@ import blackjack.ui.model.PlayerDto
 
 interface Participant {
     fun takeCard(card: Card)
-    fun calculateCardSum(): Int
+    fun cardPointSum(): Int
     fun toPlayerDto(): PlayerDto
 }

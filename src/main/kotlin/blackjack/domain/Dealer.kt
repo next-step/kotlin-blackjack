@@ -14,7 +14,7 @@ class Dealer(
     val cardResult: PlayerCardResult
         get() = PlayerCardResult(player)
     val isUnderSixteen: Boolean
-        get() = this.calculateCardSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
+        get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
 
     fun giveTwoCardsToAllPlayers(): Players {
         repeat(FIRST_GIVEN_CARD_SIZE) {
@@ -32,7 +32,7 @@ class Dealer(
     }
 
     fun takeCardIfUnderSixteen(): Boolean {
-        if (this.calculateCardSum() <= DEALER_POINT_TO_TAKE_MORE_CARD) {
+        if (this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD) {
             this.takeCard(cardPack.pickCard())
             return true
         }
@@ -41,8 +41,8 @@ class Dealer(
 
     fun findPlayerWinTypes(): PlayerWinTypes {
         val winTypeMap = mutableMapOf<String, PlayerWinType>()
-        val dealerPoint = this.calculateCardSum()
-        players.forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
+        val dealerPoint = this.cardPointSum()
+        players.forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.cardPointSum(), dealerPoint) }
         return PlayerWinTypes(winTypeMap)
     }
 
@@ -54,8 +54,8 @@ class Dealer(
         player.takeCard(card)
     }
 
-    override fun calculateCardSum(): Int {
-        return player.calculateCardSum()
+    override fun cardPointSum(): Int {
+        return player.cardPointSum()
     }
 
     override fun toPlayerDto(): PlayerDto {
