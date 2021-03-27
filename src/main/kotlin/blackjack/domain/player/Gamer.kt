@@ -3,15 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Cards
 
-abstract class Gamer(val name: String, val cards: Cards) {
+interface Gamer {
 
-    init {
-        require(name.isNotBlank())
-    }
+    val name: String
+    val cards: Cards
 
-    abstract fun isTakeable(): Boolean
-
-    fun takeCard(card: Card) {
-        cards.add(card)
-    }
+    fun isTakeable(): Boolean
+    fun takeCard(card: Card) = cards.add(card)
 }

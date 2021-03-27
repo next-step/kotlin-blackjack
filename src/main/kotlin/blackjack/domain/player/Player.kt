@@ -3,7 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
-class Player(name: String, cards: Cards) : Gamer(name, cards) {
+class Player(override val name: String, override val cards: Cards) : Gamer {
+
+    init {
+        require(name.isNotBlank())
+    }
 
     override fun isTakeable(): Boolean {
         return cards.score < Score.BLACKJACK

@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
-class Dealer(name: String, cards: Cards) : Gamer(name, cards) {
+class Dealer(override val name: String, override val cards: Cards) : Gamer {
 
     override fun isTakeable(): Boolean {
         return cards.score <= Score.DEALER_TAKEABLE_LIMIT
