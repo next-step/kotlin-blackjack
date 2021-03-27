@@ -7,5 +7,5 @@ data class GamersDto(
     val dealerCards: List<String>,
     val players: List<GamerDto>
 ) {
-    constructor(dealer: Dealer, players: List<Player>) : this(dealer.cards.toView(), players.map(::GamerDto))
+    constructor(dealer: Dealer, players: List<Player>) : this(dealer.state.cards.toView(), players.map(::GamerDto))
 }

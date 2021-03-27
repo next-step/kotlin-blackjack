@@ -1,13 +1,13 @@
 package blackjack.domain.player
 
 import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.state.State
 
 interface Gamer {
 
     val name: String
-    val cards: Cards
+    val state: State
 
     fun isTakeable(): Boolean
-    fun takeCard(card: Card) = cards.add(card)
+    fun takeCard(card: Card)
 }

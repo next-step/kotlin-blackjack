@@ -1,12 +1,18 @@
 package blackjack.domain.player
 
-import blackjack.domain.Cards
+import blackjack.domain.Card
 import blackjack.domain.Score
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
 
-class Dealer(override val name: String, override val cards: Cards) : Gamer {
+class Dealer(override val name: String, override var state: State) : Gamer {
 
     override fun isTakeable(): Boolean {
-        return cards.score <= Score.DEALER_TAKEABLE_LIMIT
+        return state is Hit && state.cards.score <= Score.DEALER_TAKEABLE_LIMIT
+    }
+
+    override fun takeCard(card: Card) {
+        state = state.draw(card)
     }
 
     override fun equals(other: Any?): Boolean {

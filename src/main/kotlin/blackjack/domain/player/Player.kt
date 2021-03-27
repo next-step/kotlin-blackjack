@@ -1,16 +1,21 @@
 package blackjack.domain.player
 
-import blackjack.domain.Cards
-import blackjack.domain.Score
+import blackjack.domain.Card
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
 
-class Player(override val name: String, override val cards: Cards) : Gamer {
+class Player(override val name: String, override var state: State) : Gamer {
 
     init {
         require(name.isNotBlank())
     }
 
     override fun isTakeable(): Boolean {
-        return cards.score < Score.BLACKJACK
+        return state is Hit
+    }
+
+    override fun takeCard(card: Card) {
+        state = state.draw(card)
     }
 
     override fun equals(other: Any?): Boolean {

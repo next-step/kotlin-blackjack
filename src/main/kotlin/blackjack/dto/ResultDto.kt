@@ -14,7 +14,7 @@ data class DealerResult(
     val cards: List<String>,
     val score: Int
 ) {
-    constructor(dealer: Dealer) : this(dealer.cards.toView(), dealer.cards.score.value)
+    constructor(dealer: Dealer) : this(dealer.state.cards.toView(), dealer.state.cards.score.value)
 }
 
 data class PlayerResult(
@@ -22,5 +22,5 @@ data class PlayerResult(
     val cards: List<String>,
     val score: Int
 ) {
-    constructor(player: Player) : this(player.name, player.cards.toView(), player.cards.score.value)
+    constructor(player: Player) : this(player.name, player.state.cards.toView(), player.state.cards.score.value)
 }
