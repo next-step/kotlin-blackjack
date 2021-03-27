@@ -11,8 +11,10 @@ class Dealer(
 ) : Participant {
 
     private val player = Player("딜러", cards)
-    val cardResult
+    val cardResult: PlayerCardResult
         get() = PlayerCardResult(player)
+    val isUnderSixteen: Boolean
+        get() = this.calculateCardSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
 
     fun giveTwoCardsToAllPlayers(): Players {
         repeat(FIRST_GIVEN_CARD_SIZE) {
@@ -42,6 +44,10 @@ class Dealer(
         val dealerPoint = this.calculateCardSum()
         players.forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
         return PlayerWinTypes(winTypeMap)
+    }
+
+    fun takeCard(): Boolean {
+        return takeCard(cardPack.pickCard())
     }
 
     override fun takeCard(card: Card): Boolean {

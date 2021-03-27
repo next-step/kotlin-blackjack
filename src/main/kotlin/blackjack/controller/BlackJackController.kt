@@ -19,7 +19,8 @@ object BlackJackController {
             askAndGiveCards(it, dealer)
         }
 
-        while (dealer.takeCardIfUnderSixteen()) {
+        while (dealer.isUnderSixteen) {
+            dealer.takeCard()
             ResultView.printInfoOfDealerBehavior()
         }
 
