@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CardExtractorTest {
-    private val cardExtractor = CardExtractor()
+    private val cardExtractor = RandomCardExtractor()
 
     @Test
     fun `카드를 추출할때 중복된 카드가 나오지 않는다`() {

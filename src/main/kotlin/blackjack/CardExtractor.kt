@@ -2,15 +2,23 @@ package blackjack
 
 import java.util.LinkedList
 
-class CardExtractor {
-    private val cards = LinkedList(allCards.shuffled())
+abstract class CardExtractor(protected val cards: LinkedList<Card>) {
 
     fun getCard(): Card {
         if (cards.isEmpty()) {
-            cards.addAll(allCards.shuffled())
+            addAll()
         }
 
         return cards.pop()
+    }
+
+    abstract fun addAll()
+}
+
+class RandomCardExtractor : CardExtractor(LinkedList(allCards.shuffled())) {
+
+    override fun addAll() {
+        cards.addAll(allCards.shuffled())
     }
 
     companion object {

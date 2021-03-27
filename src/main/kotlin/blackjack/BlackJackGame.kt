@@ -2,7 +2,7 @@ package blackjack
 
 fun main() {
     val game = BlackJackGame()
-    val cardExtractor = CardExtractor()
+    val cardExtractor = RandomCardExtractor()
     val players = game.getUsers(inputName())
 
     players.hit(cardExtractor)
@@ -40,11 +40,11 @@ class BlackJackGame {
         }
     }
 
-    fun moreCard(player: Player, cardExtractor: CardExtractor) {
+    fun moreCard(player: Player, randomCardExtractor: RandomCardExtractor) {
         while (!player.isDead()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
-                player.cardDeck.add(cardExtractor.getCard())
+                player.cardDeck.add(randomCardExtractor.getCard())
             }
             println(player.cardText())
 
