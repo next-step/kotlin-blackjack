@@ -19,10 +19,6 @@ class Players(
         return values.map { PlayerCardResult(it) }
     }
 
-    fun addDealerAsPlayer(player: Player) {
-        values.add(DEALER_INDEX, player)
-    }
-
     companion object {
         private const val DEALER_INDEX = 0
     }
