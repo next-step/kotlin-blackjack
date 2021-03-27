@@ -9,10 +9,10 @@ import blackjack.ui.ResultView
 object BlackJackController {
     fun run() {
         val cardPack = CardPack()
-        val players = PlayerInputView.askPlayerNames()
+        var players = PlayerInputView.askPlayerNames()
         val dealer = Dealer(players, cardPack)
 
-        dealer.giveTwoCardsToAllPlayers()
+        players = dealer.giveTwoCardsToAllPlayers()
         ResultView.printCardsOf(players.toPlayerDtos(), dealer.toPlayerDto())
 
         players.forEach {
