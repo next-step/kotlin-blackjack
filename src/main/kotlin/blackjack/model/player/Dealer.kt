@@ -1,6 +1,6 @@
 package blackjack.model.player
 
-import blackjack.model.Score
+import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 
 class Dealer(cards: Cards, name: String = "딜러") : Player(cards, name) {
@@ -14,7 +14,7 @@ class Dealer(cards: Cards, name: String = "딜러") : Player(cards, name) {
         }
     }
 
-    fun isDraw() = this.cards.size > Cards.INITIAL_DRAW_COUNT
+    fun isOneMoreDraw() = this.cards.size > Cards.INITIAL_DRAW_COUNT
 
     companion object {
         val MINIMUM_SCORE = Score(16)

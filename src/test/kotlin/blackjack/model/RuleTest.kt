@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.score.Score
 import blackjack.model.trump.Card
 import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Cards
@@ -13,7 +14,7 @@ internal class RuleTest {
     @ParameterizedTest
     @MethodSource("scoreProvider")
     fun `21이하의 가능한 가장 큰 수를 리턴(불가능하면 가장 작은 수 리턴)`(cards: Cards, score: Score) {
-        val result = TrumpRule().getScore(cards)
+        val result = TrumpRule.getScore(cards)
 
         assertThat(result).isEqualTo(score)
     }

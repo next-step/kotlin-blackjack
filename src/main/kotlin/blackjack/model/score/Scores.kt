@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.score
 
 import java.util.TreeSet
 

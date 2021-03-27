@@ -2,7 +2,7 @@ package blackjack.model.player
 
 import blackjack.model.Judge
 import blackjack.model.Rule
-import blackjack.model.Score
+import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 
 open class Player(cards: Cards, val name: String) {
@@ -17,7 +17,7 @@ open class Player(cards: Cards, val name: String) {
         return !isWin(opponent, rule)
     }
 
-    private fun getScore(rule: Rule): Score {
+    fun getScore(rule: Rule): Score {
         return rule.getScore(cards)
     }
 

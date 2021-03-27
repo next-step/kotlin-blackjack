@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.score
 
 object ScoresFactory {
     fun create(scoreValues: List<Int>): Scores {

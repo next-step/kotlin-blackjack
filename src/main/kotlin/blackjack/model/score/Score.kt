@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.score
 
 data class Score(val value: Int) : Comparable<Score> {
     fun isValid(): Boolean {

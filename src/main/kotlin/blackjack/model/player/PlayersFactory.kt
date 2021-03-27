@@ -4,8 +4,6 @@ import blackjack.model.trump.Cards
 
 object PlayersFactory {
     fun create(playerNames: List<String>): Players {
-        val players = playerNames.map { Player(Cards.firstDraw(), it) }
-
-        return Players.Builder().players(players).build()
+        return Players.Builder().players(playerNames.map { Player(Cards.firstDraw(), it) }).build()
     }
 }

@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.model.trump.Cards
 import blackjack.model.player.Players
-import blackjack.model.Score
+import blackjack.model.score.Score
 import blackjack.model.player.Dealer
 import blackjack.model.player.Player
 import blackjack.view.ViewUtil.toString

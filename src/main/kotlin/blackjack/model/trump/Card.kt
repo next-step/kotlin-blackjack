@@ -1,6 +1,6 @@
 package blackjack.model.trump
 
-import blackjack.model.Scores
+import blackjack.model.score.Scores
 
 class Card internal constructor(val cardNumber: CardNumber, val suit: Suit) {
     fun isAce(): Boolean {

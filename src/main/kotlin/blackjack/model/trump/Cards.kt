@@ -1,6 +1,6 @@
 package blackjack.model.trump
 
-import blackjack.model.Score
+import blackjack.model.score.Score
 
 class Cards private constructor(private val cards: List<Card>) : List<Card> by cards {
     fun countAce(): Int {
