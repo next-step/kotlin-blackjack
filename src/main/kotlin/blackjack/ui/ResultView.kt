@@ -7,25 +7,31 @@ import blackjack.ui.model.PlayerWinTypes
 
 object ResultView {
 
-    fun printCardsOf(playerDtos: List<PlayerDto>) {
+    fun printCardsOf(playerDtos: List<PlayerDto>, dealerDto: PlayerDto) {
         val names = playerDtos.joinToString(", ") { it.name }
-        println("${names}에게 2장의 나누었습니다.")
+        println("${dealerDto.name}, ${names}에게 2장의 나누었습니다.")
+        printCardsOfDealer(dealerDto)
         for (playerDTO in playerDtos) {
             printCardsOfSinglePlayer(playerDTO)
         }
         println()
     }
 
+    private fun printCardsOfDealer(dealerDto: PlayerDto) {
+        println("${dealerDto.name}: ${dealerDto.cards.first()}")
+    }
+
     fun printCardsOfSinglePlayer(playerDto: PlayerDto) {
         println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it.toString() }}")
     }
 
-    fun printInfoOfDealerCard() {
+    fun printInfoOfDealerBehavior() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printCardResults(playerCardResults: List<PlayerCardResult>) {
+    fun printCardResults(dealerResult: PlayerCardResult, playerCardResults: List<PlayerCardResult>) {
         println()
+        printSingleResult(dealerResult)
         for (blackJackResult in playerCardResults) {
             printSingleResult(blackJackResult)
         }

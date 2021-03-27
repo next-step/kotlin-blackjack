@@ -4,7 +4,7 @@ import blackjack.ui.model.PlayerDto
 
 open class Player(
     val name: String
-) {
+) : Participant {
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
         get() = cards.map { it.toString() }
@@ -13,14 +13,14 @@ open class Player(
         this.cards.addAll(cards)
     }
 
-    fun takeCard(card: Card): Boolean {
+    override fun takeCard(card: Card): Boolean {
 
         check(calculateCardSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
 
         return cards.add(card)
     }
 
-    fun calculateCardSum(): Int {
+    override fun calculateCardSum(): Int {
         var cardPointSum = cards.sumBy { it.point }
         val aceCount = CardType.findAceCount(cards)
 
@@ -33,7 +33,7 @@ open class Player(
     private fun changeAcePointToOneToWin(cardPointSum: Int) =
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 
-    fun toPlayerDto(): PlayerDto {
+    override fun toPlayerDto(): PlayerDto {
         return PlayerDto(name, cards.toMutableSet())
     }
 

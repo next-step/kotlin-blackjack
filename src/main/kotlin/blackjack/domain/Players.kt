@@ -19,8 +19,8 @@ class Players(
         return values.map { PlayerCardResult(it) }
     }
 
-    fun addDealerAsPlayer(dealer: Dealer) {
-        values.add(DEALER_INDEX, dealer)
+    fun addDealerAsPlayer(player: Player) {
+        values.add(DEALER_INDEX, player)
     }
 
     companion object {

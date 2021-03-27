@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 import blackjack.ui.model.PlayerWinTypes
 
@@ -7,15 +8,16 @@ class Dealer(
     private val players: Players,
     private val cardPack: CardPack,
     cards: Set<Card> = emptySet()
-) : Player("딜러", cards) {
+) : Participant {
 
-    init {
-        players.addDealerAsPlayer(this)
-    }
+    private val player = Player("딜러", cards)
+    val cardResult
+        get() = PlayerCardResult(player)
 
     fun giveTwoCardsToAllPlayers(): Players {
         repeat(FIRST_GIVEN_CARD_SIZE) {
             players.giveToAllPlayers(cardPack)
+            player.takeCard(cardPack.pickCard())
         }
         return players
     }
@@ -38,9 +40,20 @@ class Dealer(
     fun findPlayerWinTypes(): PlayerWinTypes {
         val winTypeMap = mutableMapOf<String, PlayerWinType>()
         val dealerPoint = this.calculateCardSum()
-        players.filter { it != this }
-            .forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
+        players.forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.calculateCardSum(), dealerPoint) }
         return PlayerWinTypes(winTypeMap)
+    }
+
+    override fun takeCard(card: Card): Boolean {
+        return player.takeCard(card)
+    }
+
+    override fun calculateCardSum(): Int {
+        return player.calculateCardSum()
+    }
+
+    override fun toPlayerDto(): PlayerDto {
+        return player.toPlayerDto()
     }
 
     companion object {
