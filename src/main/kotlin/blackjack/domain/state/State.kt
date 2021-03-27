@@ -8,4 +8,5 @@ interface State {
     val cards: Cards
 
     fun draw(card: Card): State
+    fun stay(): Stay
 }

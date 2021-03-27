@@ -10,6 +10,10 @@ class Player(override val name: String, override var state: State) : Gamer {
         require(name.isNotBlank())
     }
 
+    fun stay() {
+        state = state.stay()
+    }
+
     override fun isTakeable(): Boolean {
         return state is Hit
     }

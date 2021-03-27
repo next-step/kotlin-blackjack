@@ -47,12 +47,13 @@ class BlackJackGame(private val userInterface: UserInterface) {
         }
 
         when (userInterface.inputCardTakenWhether(player.name)) {
-            false -> return
+            false -> player.stay()
             true -> {
                 player.takeCard(deck.draw())
                 userInterface.outputCurrentCards(GamerDto(player))
-                return takeCardsIfNecessary(player)
             }
         }
+
+        return takeCardsIfNecessary(player)
     }
 }

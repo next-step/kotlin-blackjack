@@ -40,4 +40,13 @@ internal class HitTest {
 
         Assertions.assertThat(result).isEqualTo(expected)
     }
+
+    @Test
+    fun `Stay 상태로 변경할 수 있다`() {
+        val expected = Stay(score18Cards)
+
+        val result = Hit(score18Cards).stay()
+
+        Assertions.assertThat(result).isEqualTo(expected)
+    }
 }

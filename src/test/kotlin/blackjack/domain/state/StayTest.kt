@@ -21,4 +21,15 @@ internal class StayTest {
 
         Assertions.assertThat(result.message).isEqualTo(expected)
     }
+
+    @Test
+    fun `스테이 상태에서 스테이를 하는 경우 예외를 반환한다`() {
+        val stayCards = Cards(listOf(Card(Suit.SPADE, Denomination.JACK), Card(Suit.SPADE, Denomination.ACE)))
+        val stay = Stay(stayCards)
+        val expected = "Stay 상태에서 Stay 로 바꿀 수 없다."
+
+        val result = assertThrows<UnsupportedOperationException> { stay.stay() }
+
+        Assertions.assertThat(result.message).isEqualTo(expected)
+    }
 }
