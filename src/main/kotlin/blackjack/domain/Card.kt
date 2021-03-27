@@ -7,6 +7,6 @@ class Card(
     val point = type.point
 
     override fun toString(): String {
-        return "${type}${shape}"
+        return "$type$shape"
     }
 }
