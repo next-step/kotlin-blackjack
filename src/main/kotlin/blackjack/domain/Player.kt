@@ -22,7 +22,7 @@ open class Player(
 
     override fun calculateCardSum(): Int {
         var cardPointSum = cards.sumBy { it.point }
-        val aceCount = CardType.findAceCount(cards.map { it.type })
+        val aceCount = cards.count { it.isAce }
 
         repeat(aceCount) {
             cardPointSum = changeAcePointToOneToWin(cardPointSum)

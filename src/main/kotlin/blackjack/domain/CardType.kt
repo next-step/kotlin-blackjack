@@ -18,6 +18,9 @@ enum class CardType(
     JACK("J", 10),
     ACE("A", 11);
 
+    val isAce: Boolean
+        get() = this == ACE
+
     override fun toString(): String {
         return expression
     }
