@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import kotlin.math.abs
+
 class Cards(private val cards: ArrayList<Card>) {
     private var sum: Int = 0
 

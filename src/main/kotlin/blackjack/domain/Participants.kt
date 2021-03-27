@@ -19,9 +19,8 @@ class Participants(val value: List<GameParticipants>) {
     }
 
     private fun isDealerCardsOver21(): Boolean {
-        return value.find {
-            it is Dealer
-        }!!.calculateMyCards() > 21
+        val dealer = value.find { it is Dealer }  ?: throw IllegalStateException("딜러는 무조건 존재해야 합니다.")
+        return dealer.calculateMyCards() >= 21
     }
 
     private fun getMinimumDistance(): Int {
