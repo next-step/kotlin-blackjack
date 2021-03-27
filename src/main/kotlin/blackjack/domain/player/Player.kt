@@ -7,6 +7,8 @@ import blackjack.domain.state.State
 
 class Player(override val name: String, override var state: State) : Gamer {
 
+    val score = state.cards.score
+
     init {
         require(name.isNotBlank())
     }
@@ -34,7 +36,7 @@ class Player(override val name: String, override var state: State) : Gamer {
     }
 
     fun matchResult(dealer: Dealer): MatchingResult {
-        if (state is Bust) {
+        if (this.state is Bust) {
             return MatchingResult.LOSE
         }
 
@@ -42,11 +44,11 @@ class Player(override val name: String, override var state: State) : Gamer {
             return MatchingResult.WIN
         }
 
-        if (state.cards.score > dealer.state.cards.score) {
+        if (this.score > dealer.score) {
             return MatchingResult.WIN
         }
 
-        if (state.cards.score < dealer.state.cards.score) {
+        if (this.score < dealer.score) {
             return MatchingResult.LOSE
         }
 
