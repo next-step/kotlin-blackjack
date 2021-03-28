@@ -46,7 +46,7 @@ fun Player.matchResultText(dealerScore: Int): String {
     }
 }
 
-fun printHit(users: Users) {
+fun printFirstDeal(users: Users) {
     println(users.users.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     users.users.forEach {
         println(it.cardText())

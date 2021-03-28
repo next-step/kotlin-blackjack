@@ -2,8 +2,8 @@ package blackjack
 
 class Dealer : User(NAME) {
 
-    override fun hit(cardExtractor: CardExtractor) {
-        super.hit(cardExtractor)
+    override fun firstDeal(cardExtractor: CardExtractor) {
+        super.firstDeal(cardExtractor)
 
         if (cardDeck.getScore() <= STAND_RANGE) {
             addCard(cardExtractor.getCard())

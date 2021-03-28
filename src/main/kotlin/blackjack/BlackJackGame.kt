@@ -7,8 +7,8 @@ fun main() {
     val players = game.parsePlayers(inputName())
     val users = game.getUsers(dealer, players)
 
-    users.hit(cardExtractor)
-    printHit(users)
+    users.firstDeal(cardExtractor)
+    printFirstDeal(users)
 
     if (dealer.isBust()) {
         printDealerBust(dealer)

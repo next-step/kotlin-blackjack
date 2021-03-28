@@ -15,13 +15,13 @@ abstract class User(val name: String) {
         return cardDeck.getScore() > Card.BLACK_JACK_NUM
     }
 
-    open fun hit(cardExtractor: CardExtractor) {
-        repeat(HIT_COUNT) {
+    open fun firstDeal(cardExtractor: CardExtractor) {
+        repeat(FIRST_CARD_COUNT) {
             addCard(cardExtractor.getCard())
         }
     }
 
     companion object {
-        private const val HIT_COUNT = 2
+        private const val FIRST_CARD_COUNT = 2
     }
 }

@@ -10,7 +10,7 @@ class UsersTest {
 
     @Test
     fun `힛을 이용하면 모든 플레이어에게 카드를 2장 부여한다`() {
-        users.hit(RandomCardExtractor())
+        users.firstDeal(RandomCardExtractor())
 
         Assertions.assertThat(player.cardDeck.cards.size).isEqualTo(2)
         Assertions.assertThat(player2.cardDeck.cards.size).isEqualTo(2)

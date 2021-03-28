@@ -14,7 +14,7 @@ class DealerTest {
 
     @Test
     fun `딜러는 점수가 16점 이하면 반드시 추가로 카드를 뽑는다`() {
-        dealer.hit(LowCardExtractor())
+        dealer.firstDeal(LowCardExtractor())
         assertThat(dealer.cardDeck.cards.size).isEqualTo(3)
     }
 
