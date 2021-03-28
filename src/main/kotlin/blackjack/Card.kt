@@ -1,3 +1,3 @@
 package blackjack
 
-class Card(val suit: Suit, val symbol: Symbol)
+data class Card(val suit: Suit, val symbol: Symbol)
