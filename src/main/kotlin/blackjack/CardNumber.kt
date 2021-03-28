@@ -15,10 +15,14 @@ enum class CardNumber(val score: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10)
-}
+    KING(10);
 
-fun CardNumber.addExecute(_score: Int): Int = when (this) {
-    CardNumber.ACE -> if (_score + score > BLACK_JACK_NUM) _score + 1 else _score + score
-    else -> _score + score
+    fun addExecute(_score: Int): Int = when (this) {
+        ACE -> if (_score + score > BLACK_JACK_NUM) _score + ACE_LOW_SCORE else _score + score
+        else -> _score + score
+    }
+
+    companion object {
+        const val ACE_LOW_SCORE = 1
+    }
 }
