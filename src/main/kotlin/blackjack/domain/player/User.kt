@@ -16,7 +16,7 @@ abstract class User(val userName: UserName) {
 
     fun calculateScore(): Score {
         val score = hands.calculateScore()
-        if (score.isBurst()) {
+        if (score.isBust) {
             return Score(0)
         }
         return score
