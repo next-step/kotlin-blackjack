@@ -8,7 +8,7 @@ class Players(
 ) : List<Player> by values {
 
     fun giveToAllPlayers(cardPack: CardPack) {
-        values.forEach { it.takeCard(cardPack.pickCard()) }
+        values.forEach { it.takeCard(cardPack.poll()) }
     }
 
     fun toPlayerDtos(): List<PlayerDto> {

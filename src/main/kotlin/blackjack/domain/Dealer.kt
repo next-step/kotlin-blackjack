@@ -19,21 +19,21 @@ class Dealer(
     fun giveTwoCardsToAllPlayers(): Players {
         repeat(FIRST_GIVEN_CARD_SIZE) {
             players.giveToAllPlayers(cardPack)
-            player.takeCard(cardPack.pickCard())
+            player.takeCard(cardPack.poll())
         }
         return players
     }
 
     fun giveCard(player: Player, hasAccepted: Boolean): Player {
         if (hasAccepted) {
-            player.takeCard(cardPack.pickCard())
+            player.takeCard(cardPack.poll())
         }
         return player
     }
 
     fun takeCardIfUnderSixteen(): Boolean {
         if (this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD) {
-            this.takeCard(cardPack.pickCard())
+            this.takeCard(cardPack.poll())
             return true
         }
         return false
@@ -47,7 +47,7 @@ class Dealer(
     }
 
     fun takeCard() {
-        takeCard(cardPack.pickCard())
+        takeCard(cardPack.poll())
     }
 
     override fun takeCard(card: Card) {
