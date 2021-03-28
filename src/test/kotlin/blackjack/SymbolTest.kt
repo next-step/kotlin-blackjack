@@ -32,7 +32,7 @@ internal class SymbolTest {
         assertThat(actual).containsExactlyElementsOf(expected)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}의 이니셜은 {1}이다")
     @CsvSource(
         "ACE, A",
         "TWO, 2",
