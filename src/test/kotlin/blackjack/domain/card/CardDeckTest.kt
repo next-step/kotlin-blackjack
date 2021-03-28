@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
-import blackjack.domain.createCard
 import blackjack.domain.SORTED_SHUFFLE
+import blackjack.domain.createCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
