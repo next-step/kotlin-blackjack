@@ -29,39 +29,6 @@ internal class DealerTest {
     }
 
     @Test
-    fun `승패를 계산한다(dealer가 21이 넘은 경우)`() {
-        val players = Players(mutableListOf(Player("song"), Player("kim")))
-        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE))
-
-        val result = dealer.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("0승 2패")
-    }
-
-    @Test
-    fun `승패를 계산한다(player보다 dealer의 점수가 높은 경우)`() {
-        val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
-        val players = Players(mutableListOf(player))
-        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
-
-        val result = dealer.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("1승 0패")
-
-        assertThat(result["song"]).isEqualTo(PlayerWinType.LOSE)
-    }
-
-    @Test
-    fun `승패를 계산한다(player보다 dealer의 점수가 낮은 경우)`() {
-        val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
-        val players = Players(mutableListOf(player))
-        val dealer = Dealer(players, CardPack(), makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
-
-        val result = dealer.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("0승 1패")
-
-        assertThat(result["song"]).isEqualTo(PlayerWinType.WIN)
-    }
-
-    @Test
     fun `16이하면 카드를 더 받는다`() {
         val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
         val players = Players(mutableListOf(player))

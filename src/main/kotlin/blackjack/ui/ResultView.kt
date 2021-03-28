@@ -25,8 +25,10 @@ object ResultView {
         println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it.toString() }}")
     }
 
-    fun printInfoOfDealerBehavior() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printInfoOfDealerBehavior(addedDealerCard: Int) {
+        if (addedDealerCard != 0) {
+            println("딜러는 16이하라 ${addedDealerCard}장의 카드를 더 받았습니다.")
+        }
     }
 
     fun printCardResults(dealerResult: PlayerCardResult, playerCardResults: List<PlayerCardResult>) {
