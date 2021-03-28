@@ -9,7 +9,7 @@ class UsersTest {
     private val users = Users(listOf(player, player2))
 
     @Test
-    fun `힛을 이용하면 모든 플레이어에게 카드를 2장 부여한다`() {
+    fun `처음 시작에는 모든 플레이어에게 카드를 2장 부여한다`() {
         users.firstDeal(RandomCardExtractor())
 
         Assertions.assertThat(player.cardDeck.cards.size).isEqualTo(2)
