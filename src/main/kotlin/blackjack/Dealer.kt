@@ -10,6 +10,10 @@ class Dealer : User(NAME) {
         }
     }
 
+    override fun getFirstDeal(): List<Card> {
+        return listOf(cardDeck.cards[0])
+    }
+
     companion object {
         const val NAME = "딜러"
         const val STAND_RANGE = 16

@@ -21,6 +21,8 @@ abstract class User(val name: String) {
         }
     }
 
+    abstract fun getFirstDeal(): List<Card>
+
     companion object {
         private const val FIRST_CARD_COUNT = 2
     }

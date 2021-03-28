@@ -11,6 +11,11 @@ fun User.cardText(): String {
     return "${name}카드: ${cardTexts.joinToString(", ")}"
 }
 
+fun User.firstDealCardText(): String {
+    val cardTexts = getFirstDeal().map { it.cardNumber.text() + it.type.text() }
+    return "${name}카드: ${cardTexts.joinToString(", ")}"
+}
+
 fun CardType.text(): String {
     return when (this) {
         CardType.SPADE -> "스페이드"
@@ -49,7 +54,7 @@ fun Player.matchResultText(dealerScore: Int): String {
 fun printFirstDeal(users: Users) {
     println(users.users.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     users.users.forEach {
-        println(it.cardText())
+        println(it.firstDealCardText())
     }
 }
 
