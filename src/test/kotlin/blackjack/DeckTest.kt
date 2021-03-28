@@ -21,7 +21,7 @@ internal class DeckTest {
         "HEARTS,ACE",
         "SPADES,FIVE"
     )
-    internal fun `덱은 카드를 뽑을 수 있다`(suit: Suit, symbol: Symbol) {
+    internal fun `덱에서 카드를 뽑을 수 있다`(suit: Suit, symbol: Symbol) {
         // given
         val deck = Deck(listOf(Card(suit, symbol)))
         val expectedCardList = listOf(Card(suit, symbol))
