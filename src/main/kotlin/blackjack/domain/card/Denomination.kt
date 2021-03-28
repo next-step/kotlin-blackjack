@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.card.state.BlackJack
 
 enum class Denomination(private val score: Score) {
     ACE(Score.of(11)),
@@ -19,7 +21,7 @@ enum class Denomination(private val score: Score) {
         return otherScore +
             when (this) {
                 ACE ->
-                    if (score + otherScore > Cards.BLACKJACK_SCORE)
+                    if (score + otherScore > BlackJack.SCORE)
                         ACE_OTHER_SCORE
                     else
                         score

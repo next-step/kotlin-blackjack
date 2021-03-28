@@ -1,8 +1,8 @@
 package blackjack.domain.deck
 
-import blackjack.domain.Card
-import blackjack.domain.Denomination
-import blackjack.domain.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 
 object DeckFactory {
     private val cards: List<Card> = Suit.values()
