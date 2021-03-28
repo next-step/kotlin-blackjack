@@ -2,9 +2,9 @@ package view
 
 import blackjack.domain.GameResult
 import blackjack.domain.ResultType
-import blackjack.domain.player.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.User
+import blackjack.domain.player.UserInfo
 import blackjack.domain.player.UserName
 
 class ConsoleOutput {
@@ -19,7 +19,7 @@ class ConsoleOutput {
 
             append(
                 "${info.dealer.userName.name}카드: ${
-                info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }
+                    info.dealer.hands.cards.drop(1).joinToString(", ") { showCard(it) }
                 }\n"
             )
             info.players.users.forEach {
@@ -57,9 +57,9 @@ class ConsoleOutput {
 
     fun printGameRecord(result: GameResult) {
         val builder = StringBuilder().apply {
-            append("\n## 최종 승패\n")
-            append("딜러: ${result.dealer[ResultType.WIN]}승 ${result.dealer[ResultType.DRAW]}무 ${result.dealer[ResultType.LOSE]}패\n")
-            result.players.forEach { append("${it.key.userName.name}: ${it.value.symbol}\n") }
+            append("\n## 최종 수익\n")
+            append("딜러: ${result.dealer}\n")
+            result.players.forEach { append("${it.key.userName.name}: ${it.value.money}\n") }
         }
         println(builder)
     }

@@ -9,7 +9,9 @@ import blackjack.domain.player.UserName
 import blackjack.domain.player.UserNames
 import blackjack.domain.player.Users
 
-fun createPlayer(name: String) = Player(UserName(name), BettingMoney("0"))
+fun createPlayer(name: String) = Player(UserName(name), BettingMoney(0))
+
+fun createPlayer(name: String, money: Int) = Player(UserName(name), BettingMoney(money))
 
 fun createUsers(vararg name: String) = Users(listOf(Dealer()) + name.map { Player(UserName(it), BettingMoney("0")) })
 
