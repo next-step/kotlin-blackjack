@@ -1,7 +1,7 @@
 package blackjack
 
 class Deck(cards: List<Card>) {
-    val cards = cards.toMutableList()
+    private val cards = cards.toMutableList()
 
     fun draw(): Card {
         return try {
