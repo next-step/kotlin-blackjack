@@ -13,5 +13,5 @@ class Card(val suit: Suit,  val denomination: Denomination) {
         get() = denomination.score
 
     val displayName: String
-        get() = suit.name + denomination.name
+        get() = "${suit.name} ${denomination.name}"
 }

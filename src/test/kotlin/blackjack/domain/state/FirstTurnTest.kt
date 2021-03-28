@@ -13,7 +13,7 @@ class FirstTurnTest {
     @Test
     fun blackjack() {
         val firstTurn = FirstTurn()
-        val cards = Cards(listOf(CLUB_ACE, CLUB_KING))
+        val cards = Cards(arrayListOf(CLUB_ACE, CLUB_KING))
         val state = firstTurn.draw(cards)
         assertThat(state).isInstanceOf(Blackjack::class.java)
     }
@@ -21,7 +21,7 @@ class FirstTurnTest {
     @Test
     fun hit() {
         val firstTurn = FirstTurn()
-        val cards = Cards(listOf(CLUB_ACE, CLUB_TWO))
+        val cards = Cards(arrayListOf(CLUB_ACE, CLUB_TWO))
         val state = firstTurn.draw(cards)
         assertThat(state).isInstanceOf(Hit::class.java)
     }
