@@ -16,7 +16,7 @@ fun main() {
     }
 
     players.players.forEach {
-        game.moreCard(it, cardExtractor)
+        game.hitOrStand(it, cardExtractor)
     }
 
     printResult(dealer, players)
@@ -47,7 +47,7 @@ class BlackJackGame {
         }
     }
 
-    fun moreCard(player: Player, randomCardExtractor: RandomCardExtractor) {
+    fun hitOrStand(player: Player, randomCardExtractor: RandomCardExtractor) {
         while (!player.isBust()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
