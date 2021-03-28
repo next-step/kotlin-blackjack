@@ -15,15 +15,15 @@ internal class StayTest {
     private val cards = Cards(ten)
 
     @Test
-    fun `Stay 는 점수가 21점 미만일 경우에만 생성 된다`() {
+    fun `Stay 는 점수가 21점 이하일 경우에만 생성 된다`() {
         assertDoesNotThrow { Stay(cards) }
     }
 
     @Test
-    fun `Stay 는 점수가 21점 이상일 경우 생성이 불가능하다 21점 인 경우`() {
-        val ace = Card(Suit.CLUB, Denomination.ACE)
+    fun `Stay 는 점수가 21점 초과일 경우 생성이 불가능하다 21점 인 경우`() {
+        val two = Card(Suit.CLUB, Denomination.TWO)
 
-        val cards = Cards(ten, ace)
+        val cards = Cards(ten, ten, two)
         assertThrows<IllegalArgumentException> { Stay(cards) }
     }
 

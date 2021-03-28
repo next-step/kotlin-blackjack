@@ -10,7 +10,7 @@ abstract class Running(
     override fun draw(card: Card): State {
         cards.add(card)
         if (cards.score == BlackJack.SCORE) {
-            return BlackJack(cards)
+            return Stay(cards)
         }
         if (cards.score > BlackJack.SCORE) {
             return Bust(cards)
