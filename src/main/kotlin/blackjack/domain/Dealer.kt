@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
-import blackjack.ui.model.PlayerWinTypes
 
 class Dealer(
     cards: Set<Card> = emptySet()

@@ -78,7 +78,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.TWO, CardType.THREE))
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealerDto.cards.size).isGreaterThan(2)//2장 이상을 갖는다
+        assertThat(blackjackGame.dealerDto.cards.size).isGreaterThan(2) // 2장 이상을 갖는다
     }
 
     @Test
@@ -88,7 +88,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.JACK, CardType.QUEEN))
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealerDto.cards.size).isEqualTo(2)//2장만을 가지고 있다
+        assertThat(blackjackGame.dealerDto.cards.size).isEqualTo(2) // 2장만을 가지고 있다
     }
 
     private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =

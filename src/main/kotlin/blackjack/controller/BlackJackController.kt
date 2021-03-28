@@ -1,8 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.CardPack
-import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.ui.PlayerInputView
 import blackjack.ui.ResultView
