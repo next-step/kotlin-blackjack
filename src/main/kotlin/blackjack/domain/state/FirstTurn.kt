@@ -4,8 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 class FirstTurn {
-    fun draw(card1: Card, card2: Card): State {
-        val cards = Cards(listOf(card1, card2))
+    fun draw(cards: Cards): State {
         if (cards.isBlackjack) {
             return Blackjack()
         }

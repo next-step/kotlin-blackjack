@@ -8,8 +8,8 @@ class Hit(val cards: Cards) : State {
     override val isFinished: Boolean = false
 
     override fun draw(card: Card): State {
-        val addedCards = cards.add(card)
-        if (addedCards.isBust) {
+        cards.add(card)
+        if (cards.isBust) {
             return Bust()
         }
         return Hit(cards)

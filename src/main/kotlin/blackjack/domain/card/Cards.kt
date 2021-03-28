@@ -1,10 +1,15 @@
 package blackjack.domain.card
 
-class Cards(private val values: List<Card>) {
+class Cards(cards: List<Card>) {
     val isBlackjack: Boolean
         get() = score().isBlackjack
     val isBust: Boolean
         get() = score().isBust
+
+    private val _values: MutableList<Card> = cards.toMutableList()
+    val values: List<Card>
+        get() = _values
+
 
     fun score(): Score {
         var sum = Score(values.map { it.score }.sum())
@@ -15,9 +20,7 @@ class Cards(private val values: List<Card>) {
         return sum
     }
 
-    fun add(card: Card): Cards {
-        val values = values.toMutableList()
-        values.add(card)
-        return Cards(values)
+    fun add(card: Card) {
+        _values.add(card)
     }
 }
