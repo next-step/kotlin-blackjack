@@ -5,8 +5,9 @@ import blackjack.domain.player.User
 
 class GameResult(players: List<User>, dealer: User) {
     val players: Map<User, BettingMoney> = initPlayerResult(players, dealer)
-    val dealer
-        get() = players.values.sumOf { it.money } * -1
+    val dealer = initDealerResult()
+
+    private fun initDealerResult(): Int = players.values.sumOf { it.money } * -1
 
     private fun initPlayerResult(players: List<User>, dealer: User) =
         players.map { Pair(it, calculateProfit(it, dealer)) }.toMap()

@@ -1,10 +1,10 @@
 package blackjack.domain
 
-enum class ResultType(val symbol: String, val predicate: (Int) -> Boolean, val profitRate: Double) {
-    WIN("승", { compareResult -> compareResult > 0 }, 1.0),
-    DRAW("무", { compareResult -> compareResult == 0 }, 0.0),
-    LOSE("패", { compareResult -> compareResult < 0 }, -1.0),
-    BLACKJACK_WIN("승", { compareResult -> compareResult > 0 }, 1.5);
+enum class ResultType(val predicate: (Int) -> Boolean, val profitRate: Double) {
+    WIN({ compareResult -> compareResult > 0 }, 1.0),
+    DRAW({ compareResult -> compareResult == 0 }, 0.0),
+    LOSE({ compareResult -> compareResult < 0 }, -1.0),
+    BLACKJACK_WIN({ compareResult -> compareResult > 0 }, 1.5);
 
     companion object {
         fun of(score1: Score, score2: Score): ResultType {
