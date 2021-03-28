@@ -9,7 +9,7 @@ import blackjack.ui.ResultView
 
 object BlackJackController {
     fun run() {
-        var players = PlayerInputView.askPlayerNames()
+        val players = PlayerInputView.askPlayerNames()
         val blackjackGame = BlackjackGame(players)
 
         blackjackGame.giveTwoCardsToAllPlayers()
@@ -20,7 +20,7 @@ object BlackJackController {
         }
 
         blackjackGame.giveCardsToDealer()
-        ResultView.printInfoOfDealerBehavior(blackjackGame.dealerDto.cards.size - 2)
+        ResultView.printInfoOfDealerBehavior(blackjackGame.addedDealerCardNumber)
 
         ResultView.printCardResults(blackjackGame.dealerCardResults, blackjackGame.playerCardResults)
 

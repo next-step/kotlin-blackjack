@@ -4,10 +4,10 @@ import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 import blackjack.ui.model.PlayerWinTypes
 
-class BlackjackGame(private val players: Players) {
+class BlackjackGame(private val players: Players, dealerCards: Set<Card> = emptySet()) {
 
     private val cardPack = CardPack()
-    private var dealer: Dealer = Dealer(players, cardPack) //TODO Change to val
+    private val dealer = Dealer(dealerCards)
 
     val dealerDto: PlayerDto
         get() = dealer.toPlayerDto()
@@ -17,10 +17,8 @@ class BlackjackGame(private val players: Players) {
         get() = players.toPlayerCardResults()
     val dealerCardResults: PlayerCardResult
         get() = dealer.cardResult
-
-    constructor(players: Players, dealerCards: Set<Card>) : this(players) {
-        dealer = Dealer(players, cardPack, dealerCards)
-    }
+    val addedDealerCardNumber: Int
+        get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE
 
     fun giveTwoCardsToAllPlayers() {
         repeat(FIRST_GIVEN_CARD_SIZE) {

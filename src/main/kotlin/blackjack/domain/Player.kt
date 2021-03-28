@@ -8,6 +8,8 @@ class Player(
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
         get() = cards.map { it.toString() }
+    val cardSize: Int
+        get() = cards.size
 
     constructor(name: String, cards: Set<Card>) : this(name) {
         this.cards.addAll(cards)
