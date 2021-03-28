@@ -45,8 +45,8 @@ internal class DealerTest {
     @Test
     fun drawAdditional() {
         val dealer = Dealer()
+        dealer.draw(createCard(CardSymbol.JACK.name, CardSuit.SPADE.name), DrawDecider.DRAW)
         dealer.draw(createCard(CardSymbol.TWO.name, CardSuit.SPADE.name), DrawDecider.DRAW)
-        dealer.draw(createCard(CardSymbol.FIVE.name, CardSuit.SPADE.name), DrawDecider.DRAW)
 
         dealer.drawAdditional(CardDeck(SORTED_SHUFFLE))
 
