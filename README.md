@@ -12,7 +12,7 @@
 - 문양(Suit)이 있다
   - [x] 문양은 스페이드(Spades), 하트(Hearts), 다이아몬드(Diamonds), 클로버(Clubs)가 있다
 - 눈(Symbol)이 있다
-  - [ ] 눈은 A(Ace), 2, 3, 4, 5, 6, 7, 8, 9, 10, J(Jack), Q(Queen), K(King)가 있다
+  - [x] 눈은 A(Ace), 2, 3, 4, 5, 6, 7, 8, 9, 10, J(Jack), Q(Queen), K(King)가 있다
 - 카드가 있다
   - [ ] 카드는 슈트 하나와 눈 하나를 가지고 있다
 - 덱이 있다
