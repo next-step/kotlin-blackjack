@@ -6,6 +6,8 @@ import blackjack.domain.Score
 
 data class Hit(override val cards: Cards) : State {
 
+    override fun isTakeable() = true
+
     override fun draw(card: Card): State {
         val addedCards = cards.add(card)
 

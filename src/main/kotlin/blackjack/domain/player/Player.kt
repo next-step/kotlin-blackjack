@@ -3,7 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Score
 import blackjack.domain.state.Bust
-import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
 class Player(override val name: String, override var state: State) : Gamer {
@@ -20,7 +19,7 @@ class Player(override val name: String, override var state: State) : Gamer {
     }
 
     override fun isTakeable(): Boolean {
-        return state is Hit
+        return state.isTakeable()
     }
 
     override fun takeCard(card: Card) {

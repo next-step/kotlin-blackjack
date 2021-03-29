@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.Card
 import blackjack.domain.Score
-import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
 class Dealer(override val name: String, override var state: State) : Gamer {
@@ -11,7 +10,7 @@ class Dealer(override val name: String, override var state: State) : Gamer {
         get() = state.cards.score
 
     override fun isTakeable(): Boolean {
-        return state is Hit && score <= Score.DEALER_TAKEABLE_LIMIT
+        return state.isTakeable() && score <= Score.DEALER_TAKEABLE_LIMIT
     }
 
     override fun takeCard(card: Card) {

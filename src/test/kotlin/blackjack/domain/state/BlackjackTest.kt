@@ -11,6 +11,13 @@ import org.junit.jupiter.api.assertThrows
 internal class BlackjackTest {
 
     @Test
+    fun `블랙잭 상태는 카드를 더 받을 수 없다`() {
+        val blackjackCards = Cards(listOf(Card(Suit.SPADE, Denomination.JACK), Card(Suit.SPADE, Denomination.ACE)))
+        val blackjack = Blackjack(blackjackCards)
+        assertThat(blackjack.isTakeable()).isFalse()
+    }
+
+    @Test
     fun `블랙잭 상태에서 카드를 뽑을 경우 예외를 반환한다`() {
         val blackjackCards = Cards(listOf(Card(Suit.SPADE, Denomination.JACK), Card(Suit.SPADE, Denomination.ACE)))
         val blackjack = Blackjack(blackjackCards)

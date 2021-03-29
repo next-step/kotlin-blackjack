@@ -12,6 +12,12 @@ internal class HitTest {
     private val score18Cards = Cards(listOf(Card(Suit.SPADE, Denomination.EIGHT), Card(Suit.SPADE, Denomination.JACK)))
 
     @Test
+    fun `힛 상태는 카드를 더 받을 수 있다`() {
+        val hit = Hit(score18Cards)
+        Assertions.assertThat(hit.isTakeable()).isTrue()
+    }
+
+    @Test
     fun `카드 한장을 더해서 21점인 경우 블랙잭 상태다`() {
         val score3Card = Card(Suit.SPADE, Denomination.THREE)
         val expected = Blackjack(score18Cards.add(score3Card))
