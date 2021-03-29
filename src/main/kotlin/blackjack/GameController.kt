@@ -1,11 +1,14 @@
 package blackjack
 
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Participant
 import blackjack.domain.participants.Player
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 
 fun main() {
     val players = createPlayers()
+    val dealer = Dealer()
     OutputView.printAllPlayerCards(players)
 
     gameStart(players)
@@ -13,28 +16,28 @@ fun main() {
     OutputView.printResult(players)
 }
 
-fun createPlayers(): List<Player> {
+fun createPlayers(): List<Participant> {
     val names = InputView.inputPlayers()
     return names.map { Player(it) }
 }
 
-fun gameStart(players: List<Player>) {
-    for(player in players) {
-        playerTurn(player)
+fun gameStart(participants: List<Participant>) {
+    for(participant in participants) {
+        playerTurn(participant)
     }
 }
 
-fun playerTurn(player: Player) {
+fun playerTurn(participant: Participant) {
     var answer = "Y"
-    while(answer == "Y" && player.checkPlayerCanDraw()) {
-        answer = InputView.selectDrawCard(player.name)
-        playSelection(player, answer)
+    while(answer == "Y" && participant.checkCardDrawAvailable()) {
+        answer = InputView.selectDrawCard(participant.name)
+        playSelection(participant, answer)
     }
 }
 
-fun playSelection(player: Player, answer: String) {
+fun playSelection(participant: Participant, answer: String) {
     if(answer == "Y") {
-        player.drawCard()
-        OutputView.printPlayerCards(player)
+        participant.drawCard()
+        OutputView.printPlayerCards(participant)
     }
 }
