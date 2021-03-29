@@ -1,28 +1,9 @@
 package blackjack
 
-import blackjack.Card.Companion.BLACK_JACK_NUM
-
-class Player(val name: String) {
-    val cardDeck = Cards()
-
-    init {
-        require(name.isNotBlank()) { "이름이 공백이어서는 안됩니다." }
-    }
-
-    fun addCard(card: Card) {
-        cardDeck.add(card)
-    }
-
-    fun isDead(): Boolean {
-        return cardDeck.getScore() > BLACK_JACK_NUM
+class Player(name: String) : User(name) {
+    override fun getFirstDeal(): List<Card> {
+        return listOf(cardDeck.cards[0], cardDeck.cards[1])
     }
 }
 
-class Players(private val _players: List<Player>) {
-    val players: List<Player>
-        get() = _players.toList()
-
-    fun addCardAllPlayer(cardExtractor: CardExtractor) {
-        players.forEach { it.addCard(cardExtractor.getCard()) }
-    }
-}
+class Players(val players: List<Player>)

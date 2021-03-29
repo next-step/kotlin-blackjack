@@ -1,31 +1,32 @@
 package blackjack
 
-const val SEPARATOR = ", "
-
 fun main() {
-    val blackJack = BlackJack()
-    val cardExtractor = CardExtractor()
-    val players = blackJack.parsePlayers(inputName())
+    val game = BlackJackGame()
+    val cardExtractor = RandomCardExtractor()
+    val dealer = Dealer()
+    val players = game.parsePlayers(inputName())
+    val users = game.getUsers(dealer, players)
 
-    players.addCardAllPlayer(cardExtractor)
-    players.addCardAllPlayer(cardExtractor)
+    users.firstDeal(cardExtractor)
+    printFirstDeal(users)
 
-    println(players.players.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
-    players.players.forEach {
-        println(getPlayerCardText(it))
+    if (dealer.isBust()) {
+        printDealerBust(dealer)
+        return
     }
 
     players.players.forEach {
-        blackJack.moreCard(it, cardExtractor)
+        game.hitOrStand(it, cardExtractor)
     }
 
-    players.players.forEach {
-        print(getPlayerCardText(it))
-        println(" - 결과: ${it.cardDeck.getScore()}")
-    }
+    printResult(dealer, players)
 }
 
-class BlackJack {
+class BlackJackGame {
+
+    fun getUsers(dealer: Dealer, players: Players): Users {
+        return Users(players.players + dealer)
+    }
 
     fun parsePlayers(names: String?): Players {
         require(names != null) { "이름을 입력해주세요" }
@@ -46,13 +47,13 @@ class BlackJack {
         }
     }
 
-    fun moreCard(player: Player, cardExtractor: CardExtractor) {
-        while (!player.isDead()) {
+    fun hitOrStand(player: Player, randomCardExtractor: RandomCardExtractor) {
+        while (!player.isBust()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
-                player.cardDeck.add(cardExtractor.getCard())
+                player.cardDeck.add(randomCardExtractor.getCard())
             }
-            println(getPlayerCardText(player))
+            println(player.cardText())
 
             if (answer == NO) {
                 break

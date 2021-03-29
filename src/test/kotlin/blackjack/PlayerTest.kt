@@ -12,6 +12,6 @@ class PlayerTest {
         player.cardDeck.add(Card(CardType.SPADE, CardNumber.JACK))
         player.cardDeck.add(Card(CardType.SPADE, CardNumber.QUEEN))
 
-        assertTrue(player.isDead())
+        assertTrue(player.isBust())
     }
 }

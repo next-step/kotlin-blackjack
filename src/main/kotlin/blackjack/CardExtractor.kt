@@ -1,18 +1,31 @@
 package blackjack
 
-import kotlin.random.Random
+import java.util.LinkedList
 
-class CardExtractor {
+abstract class CardExtractor(protected val cards: LinkedList<Card>) {
 
     fun getCard(): Card {
-        return allCards.removeAt(Random.nextInt(allCards.size))
+        if (cards.isEmpty()) {
+            addAll()
+        }
+
+        return cards.pop()
+    }
+
+    abstract fun addAll()
+}
+
+class RandomCardExtractor : CardExtractor(LinkedList(allCards.shuffled())) {
+
+    override fun addAll() {
+        cards.addAll(allCards.shuffled())
     }
 
     companion object {
-        private val allCards: MutableList<Card> = CardType.values().flatMap { cardType ->
+        private val allCards: List<Card> = CardType.values().flatMap { cardType ->
             CardNumber.values().map { cardNumber ->
                 Card(cardType, cardNumber)
             }
-        }.toMutableList()
+        }
     }
 }
