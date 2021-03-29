@@ -21,8 +21,12 @@ class Player(
         state = FirstTurn().draw(cards)
     }
 
+    fun checkPlayerCanDraw(): Boolean {
+        return !state.isFinished
+    }
+
     fun drawCard() {
-        if(!state.isFinished) {
+        if(checkPlayerCanDraw()) {
             val card = CardDeck.drawCard()
             state = state.draw(card)
         }
@@ -30,6 +34,10 @@ class Player(
 
     fun getPlayerScore(): Int {
         return cards.score().value
+    }
+
+    fun showPlayersCard(): String {
+        return cards.displayCards.joinToString(", ")
     }
 
     private fun initCards() {
