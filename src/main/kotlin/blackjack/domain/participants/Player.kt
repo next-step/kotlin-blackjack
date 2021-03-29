@@ -8,45 +8,23 @@ import blackjack.domain.state.FirstTurn
 import blackjack.domain.state.State
 
 class Player(
-    val name: String,
+    name: String,
     initCards: ArrayList<Card> = arrayListOf<Card>()
-) {
-    private val cards: Cards = Cards(initCards)
+) : Participant(name, initCards){
     var state: State
 
     init {
-        if(initCards.isEmpty()) {
-            initCards()
-        }
         state = FirstTurn().draw(cards)
     }
 
-    fun checkPlayerCanDraw(): Boolean {
-        return !state.isFinished
-    }
-
-    fun drawCard() {
-        if(checkPlayerCanDraw()) {
+    override fun drawCard() {
+        if(checkCardDrawAvailable()) {
             val card = CardDeck.drawCard()
             state = state.draw(card)
         }
     }
 
-    fun getPlayerScore(): Int {
-        return cards.score().value
-    }
-
-    fun showPlayersCard(): String {
-        return cards.displayCards.joinToString(", ")
-    }
-
-    private fun initCards() {
-        repeat(INIT_CARDS) {
-            cards.add(CardDeck.drawCard())
-        }
-    }
-
-    companion object {
-        private const val INIT_CARDS = 2
+    override fun checkCardDrawAvailable(): Boolean {
+        return !state.isFinished
     }
 }
