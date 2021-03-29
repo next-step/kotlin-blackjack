@@ -47,11 +47,11 @@ class BlackJackGame {
         }
     }
 
-    fun hitOrStand(player: Player, randomCardExtractor: RandomCardExtractor) {
+    fun hitOrStand(player: Player, cardExtractor: CardExtractor) {
         while (!player.isBust()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
-                player.cardDeck.add(randomCardExtractor.getCard())
+                player.cardDeck.add(cardExtractor.getCard())
             }
             println(player.cardText())
 
