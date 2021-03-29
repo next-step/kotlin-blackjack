@@ -22,7 +22,5 @@ data class Hit(override val cards: Cards) : State {
         return Blackjack(addedCards)
     }
 
-    override fun stay(): Stay {
-        return Stay(cards)
-    }
+    override fun stay() = Stay(cards)
 }

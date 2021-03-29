@@ -9,9 +9,7 @@ class Dealer(override val name: String, override var state: State) : Gamer {
     val score: Score
         get() = state.cards.score
 
-    override fun isTakeable(): Boolean {
-        return state.isTakeable() && score <= Score.DEALER_TAKEABLE_LIMIT
-    }
+    override fun isTakeable() = state.isTakeable() && score <= Score.DEALER_TAKEABLE_LIMIT
 
     override fun takeCard(card: Card) {
         state = state.draw(card)

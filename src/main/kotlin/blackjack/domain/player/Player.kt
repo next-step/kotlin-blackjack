@@ -18,9 +18,7 @@ class Player(override val name: String, override var state: State) : Gamer {
         state = state.stay()
     }
 
-    override fun isTakeable(): Boolean {
-        return state.isTakeable()
-    }
+    override fun isTakeable() = state.isTakeable()
 
     override fun takeCard(card: Card) {
         state = state.draw(card)
