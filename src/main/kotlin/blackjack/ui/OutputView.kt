@@ -4,6 +4,7 @@ import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Participant
 import blackjack.domain.participants.Player
 import blackjack.domain.participants.Players
+import blackjack.domain.winning.BettingResult
 
 object OutputView {
     fun printAllPlayerCards(players: Players, dealer: Dealer) {
@@ -35,11 +36,9 @@ object OutputView {
         println("딜러는 17이상이라 카드를 더이상 받지 않습니다.")
     }
 
-    fun printGameWinning(playersEarnRate: Map<Player, Double>, dealer: Dealer) {
-        val dealerBenefit = playersEarnRate.values.filter { it < 0 }.sum() * -1
-
-        println("딜러 : $dealerBenefit")
-        playersEarnRate.forEach { (player, earnRate) ->
+    fun printGameWinning(bettingResult: BettingResult, dealer: Dealer) {
+        println("딜러 : ${bettingResult.getDealerProfit()}")
+        bettingResult.results.forEach { (player, earnRate) ->
             println("${player.name} : $earnRate")
         }
     }
