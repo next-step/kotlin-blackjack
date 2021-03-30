@@ -4,7 +4,9 @@ fun main() {
     val game = BlackJackGame()
     val cardExtractor = RandomCardExtractor()
     val dealer = Dealer()
-    val players = game.parsePlayers(inputName())
+    val names = game.parseName(inputName())
+    val prices = names.map { inputPrice(it).parseInt() }
+    val players = game.parsePlayers(names, prices)
     val users = game.getUsers(dealer, players)
 
     users.firstDeal(cardExtractor)
@@ -28,10 +30,14 @@ class BlackJackGame {
         return Users(players.players + dealer)
     }
 
-    fun parsePlayers(names: String?): Players {
-        require(names != null) { "이름을 입력해주세요" }
+    fun parseName(names: String?): List<String> {
+        require(names != null && names.isNotBlank()) { "이름을 입력해주세요" }
 
-        return Players(names.split(DELIMITER).map { Player(it, 1) })
+        return names.split(DELIMITER)
+    }
+
+    fun parsePlayers(names: List<String>, prices: List<Int>): Players {
+        return Players((names.indices).map { Player(names[it], prices[it]) })
     }
 
     private fun getReceiveCardAnswer(player: Player): String {
