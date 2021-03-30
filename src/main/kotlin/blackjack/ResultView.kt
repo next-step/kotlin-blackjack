@@ -48,15 +48,18 @@ fun printFirstDeal(users: Users) {
     users.users.forEach {
         println(it.firstDealCardText())
     }
+    println()
 }
 
 fun printResult(users: Users) {
     users.users.forEach { it.printResult() }
+    println()
 
     println("## 최종 수익")
     users.users.forEach {
         println("${it.name}: ${it.getEvaluate(users)}")
     }
+    println()
 }
 
 fun printDealerBust(dealer: Dealer) {
