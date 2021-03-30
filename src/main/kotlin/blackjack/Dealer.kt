@@ -10,6 +10,10 @@ class Dealer : User(NAME) {
         }
     }
 
+    override fun getEvaluate(users: Users): Int {
+        TODO("Not yet implemented")
+    }
+
     override fun getFirstDeal(): List<Card> {
         return listOf(cardDeck.cards[0])
     }

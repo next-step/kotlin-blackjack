@@ -12,8 +12,14 @@ abstract class User(val name: String) {
     }
 
     fun isBust(): Boolean {
-        return cardDeck.getScore() > Card.BLACK_JACK_NUM
+        return cardDeck.getScore() > BLACK_JACK_NUM
     }
+
+    fun isBlackJack(): Boolean {
+        return cardDeck.getScore() == BLACK_JACK_NUM && cardDeck.cards.size == FIRST_CARD_COUNT
+    }
+
+    abstract fun getEvaluate(users: Users): Int
 
     open fun firstDeal(cardExtractor: CardExtractor) {
         repeat(FIRST_CARD_COUNT) {
@@ -25,5 +31,6 @@ abstract class User(val name: String) {
 
     companion object {
         private const val FIRST_CARD_COUNT = 2
+        const val BLACK_JACK_NUM = 21
     }
 }
