@@ -31,7 +31,7 @@ class BlackJackGame {
     fun parsePlayers(names: String?): Players {
         require(names != null) { "이름을 입력해주세요" }
 
-        return Players(names.split(DELIMITER).map { Player(it) })
+        return Players(names.split(DELIMITER).map { Player(it, 1) })
     }
 
     private fun getReceiveCardAnswer(player: Player): String {

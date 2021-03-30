@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class UsersTest {
-    private val player = Player("kasha")
-    private val player2 = Player("nextstep")
+    private val player = Player("kasha", 1)
+    private val player2 = Player("nextstep", 1)
     private val users = Users(listOf(player, player2))
 
     @Test
