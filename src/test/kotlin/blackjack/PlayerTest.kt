@@ -37,4 +37,45 @@ class PlayerTest {
 
         assertThat(player.getEvaluate(users)).isEqualTo(4500)
     }
+
+    @Test
+    fun `플레이어와 딜러 모두 블랙잭일 경우 베팅액을 돌려 받는다`() {
+        val player = Player("kasha", 3000)
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.ACE))
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.TEN))
+        val dealer = Dealer()
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.ACE))
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.TEN))
+        val users = Users(listOf(dealer, player))
+
+        assertThat(player.getEvaluate(users)).isEqualTo(0)
+    }
+
+    @Test
+    fun `플레이어가 딜러를 이겼을 경우 베팅액을 받는다`() {
+        val price = 3000
+        val player = Player("kasha", price)
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.SEVEN))
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.TEN))
+        val dealer = Dealer()
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.TWO))
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.TEN))
+        val users = Users(listOf(dealer, player))
+
+        assertThat(player.getEvaluate(users)).isEqualTo(price)
+    }
+
+    @Test
+    fun `플레이어가 딜러에게 졌을 경우 베팅액을 잃는다`() {
+        val price = 3000
+        val player = Player("kasha", price)
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.TWO))
+        player.cardDeck.add(Card(CardType.SPADE, CardNumber.TEN))
+        val dealer = Dealer()
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.SEVEN))
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.TEN))
+        val users = Users(listOf(dealer, player))
+
+        assertThat(player.getEvaluate(users)).isEqualTo(price.unaryMinus())
+    }
 }

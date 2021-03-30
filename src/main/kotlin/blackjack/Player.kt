@@ -11,10 +11,16 @@ class Player(name: String, val price: Int) : User(name) {
     }
 
     override fun getEvaluate(users: Users): Int {
-        if (isBlackJack())
-            return (price * BLACK_JACK_REWARD_RATE).toInt()
+        val dealer = users.users.filterIsInstance(Dealer::class.java).first()
 
-        return 0
+        if (isBlackJack())
+            return if (dealer.isBlackJack()) 0 else (price * BLACK_JACK_REWARD_RATE).toInt()
+
+        return if (isWin(dealer)) price else price.unaryMinus()
+    }
+
+    private fun isWin(dealer: Dealer): Boolean {
+        return dealer.isBust() || (!isBust() && cardDeck.getScore() > dealer.cardDeck.getScore())
     }
 
     companion object {
