@@ -5,12 +5,13 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 import blackjack.domain.state.FirstTurn
 import blackjack.domain.state.State
+import blackjack.domain.state.Stay
 
 abstract class Participant(
     val name: String,
     initCards: ArrayList<Card>
 ) {
-    val cards: Cards = Cards(initCards)
+    private val cards: Cards = Cards(initCards)
     var state: State
 
     init {
@@ -21,7 +22,16 @@ abstract class Participant(
     }
 
     abstract fun checkCardDrawAvailable(): Boolean
-    abstract fun drawCard()
+    fun drawCard() {
+        if(checkCardDrawAvailable()) {
+            val card = CardDeck.drawCard()
+            state = state.draw(card)
+        }
+    }
+
+    fun stay() {
+        state = Stay()
+    }
 
     fun getScore(): Int {
         return cards.score().value

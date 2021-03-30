@@ -24,13 +24,6 @@ class Player(
         return false
     }
 
-    override fun drawCard() {
-        if(checkCardDrawAvailable()) {
-            val card = CardDeck.drawCard()
-            state = state.draw(card)
-        }
-    }
-
     override fun checkCardDrawAvailable(): Boolean {
         return !state.isFinished
     }

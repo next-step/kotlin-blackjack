@@ -53,5 +53,7 @@ fun playSelection(player: Player, answer: String) {
     if (answer == "Y") {
         player.drawCard()
         OutputView.printPlayerCards(player)
+        return
     }
+    player.stay()
 }

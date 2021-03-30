@@ -9,14 +9,8 @@ class Dealer(
     name: String = "딜러",
     initCards: ArrayList<Card> = arrayListOf<Card>()
 ) : Participant(name, initCards) {
-    override fun drawCard() {
-        if (checkCardDrawAvailable()) {
-            val card = CardDeck.drawCard()
-            state = state.draw(card)
-        }
-    }
 
     override fun checkCardDrawAvailable(): Boolean {
-        return cards.score().value <= 16
+        return getScore() <= 16
     }
 }

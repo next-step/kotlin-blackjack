@@ -4,12 +4,7 @@ import blackjack.domain.CLUB_ACE
 import blackjack.domain.CLUB_KING
 import blackjack.domain.CLUB_TEN
 import blackjack.domain.CLUB_TWO
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
-import blackjack.domain.card.Cards
-import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
-import blackjack.domain.state.FirstTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -38,5 +33,29 @@ class PlayerTest {
         val player = Player("John", arrayListOf(CLUB_TEN, CLUB_KING))
         player.drawCard()
         assertThat(player.state).isInstanceOf(Bust::class.java)
+    }
+
+    @Test
+    fun `Bust상태에서는 패배처리`() {
+        val player = Player("John", arrayListOf(CLUB_TEN, CLUB_KING))
+        val dealer = Dealer()
+        player.drawCard()
+        if (player.state is Bust) {
+            assertThat(player.isWinner(dealer)).isFalse()
+        }
+    }
+
+    @Test
+    fun `BlackJack인 경우 승리`() {
+        val player = Player("John", arrayListOf(CLUB_TEN, CLUB_ACE))
+        val dealer = Dealer()
+        assertThat(player.isWinner(dealer)).isTrue()
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 BlackJack인 경우 승리`() {
+        val player = Player("John", arrayListOf(CLUB_TEN, CLUB_ACE))
+        val dealer = Dealer(initCards = arrayListOf(CLUB_TEN, CLUB_ACE))
+        assertThat(player.isWinner(dealer)).isTrue()
     }
 }
