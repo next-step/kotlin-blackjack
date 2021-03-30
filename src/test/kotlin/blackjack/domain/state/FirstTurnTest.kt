@@ -5,7 +5,6 @@ import blackjack.domain.CLUB_KING
 import blackjack.domain.CLUB_TWO
 import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class FirstTurnTest {

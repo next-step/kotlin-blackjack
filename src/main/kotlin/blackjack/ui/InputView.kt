@@ -1,7 +1,6 @@
 package blackjack.ui
 
 import blackjack.domain.participants.Players
-import kotlin.IllegalArgumentException
 
 object InputView {
 
@@ -17,7 +16,7 @@ object InputView {
     }
 
     fun inputBatting(players: Players) {
-        for(player in players.values) {
+        for (player in players.values) {
             println("${player.name}의 배팅 금액은 ?")
             val money = readLine()?.toDouble() ?: throw IllegalArgumentException("돈은 공백일 수 없습니다.")
             player.betMoney(money)

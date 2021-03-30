@@ -10,5 +10,6 @@ abstract class Finished : State {
     override fun draw(card: Card): State {
         throw IllegalStateException("더 이상 카드를 받을 수 없습니다.")
     }
+
     abstract fun isWinning(player: Player, dealer: Dealer): GameResult
 }

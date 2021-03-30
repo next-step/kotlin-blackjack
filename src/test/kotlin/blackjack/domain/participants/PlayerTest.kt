@@ -5,6 +5,7 @@ import blackjack.domain.CLUB_KING
 import blackjack.domain.CLUB_TEN
 import blackjack.domain.CLUB_TWO
 import blackjack.domain.state.Bust
+import blackjack.domain.winning.GameResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -41,7 +42,7 @@ class PlayerTest {
         val dealer = Dealer()
         player.drawCard()
         if (player.state is Bust) {
-            assertThat(player.isWinner(dealer)).isFalse()
+            assertThat(player.isWinning(dealer)).isEqualTo(GameResult.LOSE)
         }
     }
 
@@ -49,13 +50,13 @@ class PlayerTest {
     fun `BlackJack인 경우 승리`() {
         val player = Player("John", arrayListOf(CLUB_TEN, CLUB_ACE))
         val dealer = Dealer()
-        assertThat(player.isWinner(dealer)).isTrue()
+        assertThat(player.isWinning(dealer)).isEqualTo(GameResult.WIN)
     }
 
     @Test
-    fun `딜러와 플레이어 모두 BlackJack인 경우 승리`() {
+    fun `딜러와 플레이어 모두 BlackJack인 경우 무승부`() {
         val player = Player("John", arrayListOf(CLUB_TEN, CLUB_ACE))
         val dealer = Dealer(initCards = arrayListOf(CLUB_TEN, CLUB_ACE))
-        assertThat(player.isWinner(dealer)).isTrue()
+        assertThat(player.isWinning(dealer)).isEqualTo(GameResult.DRAW)
     }
 }

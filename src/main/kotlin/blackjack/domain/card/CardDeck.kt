@@ -1,12 +1,12 @@
 package blackjack.domain.card
 
-import java.util.*
+import java.util.LinkedList
 
 object CardDeck {
 
     private val CARDS: LinkedList<Card> = LinkedList<Card>()
 
-    fun drawCard():Card {
+    fun drawCard(): Card {
         return CARDS.pop()
     }
 

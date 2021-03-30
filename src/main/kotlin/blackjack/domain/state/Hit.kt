@@ -2,10 +2,10 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Score
 
 class Hit(val cards: Cards) : State {
     constructor(vararg cards: Card) : this(Cards(cards.toList() as ArrayList<Card>))
+
     override val isFinished: Boolean
         get() = cards.isBlackjack
 
@@ -14,7 +14,7 @@ class Hit(val cards: Cards) : State {
         if (cards.isBust) {
             return Bust()
         }
-        if(cards.isBlackjack) {
+        if (cards.isBlackjack) {
             return Stay()
         }
         return Hit(cards)

@@ -1,6 +1,5 @@
 package blackjack.domain.participants
 
-import blackjack.domain.CLUB_ACE
 import blackjack.domain.CLUB_KING
 import blackjack.domain.CLUB_TWO
 import org.assertj.core.api.Assertions

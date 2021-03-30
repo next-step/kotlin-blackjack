@@ -1,11 +1,6 @@
 package blackjack.domain.card
 
-import java.lang.IllegalStateException
-import java.util.*
-import kotlin.IllegalArgumentException
-import kotlin.collections.HashMap
-
-class Card(val suit: Suit,  val denomination: Denomination) {
+class Card(val suit: Suit, val denomination: Denomination) {
     val isAce: Boolean
         get() = denomination.isAce
 

@@ -7,4 +7,3 @@ interface State {
     fun profit(money: Double): Double
     fun draw(card: Card): State
 }
-

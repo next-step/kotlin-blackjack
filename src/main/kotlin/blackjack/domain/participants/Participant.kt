@@ -15,7 +15,7 @@ abstract class Participant(
     var state: State
 
     init {
-        if(initCards.isEmpty()) {
+        if (initCards.isEmpty()) {
             initCards()
         }
         state = FirstTurn().draw(cards)
@@ -23,7 +23,7 @@ abstract class Participant(
 
     abstract fun checkCardDrawAvailable(): Boolean
     fun drawCard() {
-        if(checkCardDrawAvailable()) {
+        if (checkCardDrawAvailable()) {
             val card = CardDeck.drawCard()
             state = state.draw(card)
         }

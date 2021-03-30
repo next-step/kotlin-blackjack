@@ -8,7 +8,7 @@ import blackjack.domain.participants.Players
 object OutputView {
     fun printAllPlayerCards(players: Players, dealer: Dealer) {
         val names = players.values.joinToString { it.name }
-        println("딜러와 ${names} 에게 2장의 카드를 나누었습니다.")
+        println("딜러와 $names 에게 2장의 카드를 나누었습니다.")
         for (participant in players.values) {
             println("${participant.name} 카드 : ${participant.showCards()}")
         }
@@ -39,8 +39,8 @@ object OutputView {
         val dealerBenefit = playersEarnRate.values.filter { it < 0 }.sum() * -1
 
         println("딜러 : $dealerBenefit")
-        playersEarnRate.forEach { player, earnRate ->
-            println("${player.name} : ${earnRate}")
+        playersEarnRate.forEach { (player, earnRate) ->
+            println("${player.name} : $earnRate")
         }
     }
 

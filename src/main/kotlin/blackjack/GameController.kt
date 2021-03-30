@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Participant
 import blackjack.domain.participants.Players
 import blackjack.domain.participants.Player
 import blackjack.ui.InputView
@@ -21,7 +20,6 @@ fun main() {
 
     val playersEarnRate = players.getPlayersEarnRate(dealer)
     OutputView.printGameWinning(playersEarnRate, dealer)
-
 }
 
 fun createPlayers(): Players {
