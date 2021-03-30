@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.participants.Players
 import kotlin.IllegalArgumentException
 
 object InputView {
@@ -13,5 +14,13 @@ object InputView {
     fun selectDrawCard(name: String): String {
         println("${name}은 한장의 카드를 더 받겠습니까?")
         return readLine() ?: throw IllegalArgumentException("Y/N 으로 대답해주세요")
+    }
+
+    fun inputBatting(players: Players) {
+        for(player in players.values) {
+            println("${player.name}의 배팅 금액은 ?")
+            val money = readLine()?.toDouble() ?: throw IllegalArgumentException("돈은 공백일 수 없습니다.")
+            player.betMoney(money)
+        }
     }
 }

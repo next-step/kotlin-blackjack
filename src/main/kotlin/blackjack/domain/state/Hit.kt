@@ -14,6 +14,9 @@ class Hit(val cards: Cards) : State {
         if (cards.isBust) {
             return Bust()
         }
+        if(cards.isBlackjack) {
+            return Stay()
+        }
         return Hit(cards)
     }
 

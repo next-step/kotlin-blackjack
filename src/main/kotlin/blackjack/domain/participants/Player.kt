@@ -1,27 +1,38 @@
 package blackjack.domain.participants
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
-import blackjack.domain.card.Cards
-import blackjack.domain.card.Score
-import blackjack.domain.state.Blackjack
-import blackjack.domain.state.Bust
-import blackjack.domain.state.FirstTurn
-import blackjack.domain.state.State
+import blackjack.domain.state.Finished
+import blackjack.domain.winning.GameResult
 
 class Player(
     name: String,
     initCards: ArrayList<Card> = arrayListOf<Card>()
-) : Participant(name, initCards){
+) : Participant(name, initCards) {
+    private var money = 0.0
 
-    fun isWinner(dealer: Dealer): Boolean {
-        val dealerScore = dealer.getScore()
+    fun getEarnRate(dealer: Dealer): Double {
+        val profit = state.profit(money)
+        val isWinning = isWinning(dealer)
+        return when (isWinning) {
+            GameResult.WIN -> {
+                profit
+            }
+            GameResult.LOSE -> {
+                -1 * money
+            }
+            GameResult.DRAW -> {
+                money
+            }
+        }
+    }
 
-        if(state is Blackjack) return true
-        if(this.state is Bust) return false
-        if(dealerScore > 21) return true
-        if(this.getScore() > dealerScore) return true
-        return false
+    fun betMoney(money: Double) {
+        this.money = money
+    }
+
+    fun isWinning(dealer: Dealer): GameResult {
+        val ad = state as Finished
+        return ad.isWinning(this, dealer)
     }
 
     override fun checkCardDrawAvailable(): Boolean {

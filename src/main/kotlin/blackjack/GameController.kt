@@ -11,14 +11,16 @@ fun main() {
     val players = createPlayers()
     val dealer = Dealer()
 
+    InputView.inputBatting(players)
+
     OutputView.printAllPlayerCards(players, dealer)
 
     gameStart(players, dealer)
 
     OutputView.printResult(players, dealer)
 
-    val winners = players.getWinners(dealer)
-    OutputView.printGameWinning(winners, dealer)
+    val playersEarnRate = players.getPlayersEarnRate(dealer)
+    OutputView.printGameWinning(playersEarnRate, dealer)
 
 }
 

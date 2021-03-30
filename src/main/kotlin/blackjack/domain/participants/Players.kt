@@ -3,9 +3,9 @@ package blackjack.domain.participants
 class Players(
     val values: List<Player>
 ) {
-    fun getWinners(dealer: Dealer): Map<String, Boolean> {
+    fun getPlayersEarnRate(dealer: Dealer): Map<Player, Double> {
         return values.associate {
-            it.name to it.isWinner(dealer)
+            it to it.getEarnRate(dealer)
         }
     }
 }
