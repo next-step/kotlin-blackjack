@@ -6,15 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class GameTest {
-    private val HIT = 1
-    private val BLACK_JACK = 3
-
     @Test
     fun `블랙잭은 처음에 카드를 2장을 가져가면 현재 상태를 리턴한다`() {
         val game = Game(Card(CardSuite.HEART, CardNumber.ACE), Card(CardSuite.SPADE, CardNumber.TWO))
         val state = game.state
 
-        assertThat(state).isEqualTo(HIT)
+        assertThat(state).isEqualTo(States.HIT)
     }
 
     @ParameterizedTest
@@ -30,7 +27,7 @@ class GameTest {
         val game = Game(Card(firstCardSuite, firstCardNumber), Card(secondCardSuite, secondCardNumber))
         val state = game.state
 
-        assertThat(state).isEqualTo(HIT)
+        assertThat(state).isEqualTo(States.HIT)
     }
 
     @Test
@@ -38,6 +35,6 @@ class GameTest {
         val game = Game(Card(CardSuite.HEART, CardNumber.ACE), Card(CardSuite.SPADE, CardNumber.JACK))
         val state = game.state
 
-        assertThat(state).isEqualTo(BLACK_JACK)
+        assertThat(state).isEqualTo(States.BLACK_JACK)
     }
 }
