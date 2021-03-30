@@ -23,11 +23,11 @@ class BlackJackGame(private val userInterface: UserInterface) {
     private val deck: Deck = DeckFactory.create()
 
     fun run() {
-        val dealer = Dealer("딜러", StateFactory.init(deck.draw() to deck.draw()))
+        val dealer = Dealer("딜러", StateFactory.init(deck.draw(), deck.draw()))
 
         val players = run {
             val userNames = PlayerNames(userInterface.inputPlayerNames())
-            userNames.map { Player(it, StateFactory.init(deck.draw() to deck.draw())) }
+            userNames.map { Player(it, StateFactory.init(deck.draw(), deck.draw())) }
         }
 
         userInterface.outputGamerCards(GamersDto(dealer, players))
