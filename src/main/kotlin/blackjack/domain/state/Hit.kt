@@ -23,4 +23,6 @@ data class Hit(override val cards: Cards) : State {
     }
 
     override fun stay() = Stay(cards)
+
+    override fun isBust() = false
 }

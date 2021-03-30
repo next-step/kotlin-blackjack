@@ -10,4 +10,6 @@ class DummyState(override val cards: Cards) : State {
     override fun draw(card: Card) = throw UnsupportedOperationException("this is dummy.")
 
     override fun stay() = throw UnsupportedOperationException("this is dummy.")
+
+    override fun isBust() = throw UnsupportedOperationException("this is dummy.")
 }
