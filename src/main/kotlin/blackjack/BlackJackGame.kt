@@ -24,7 +24,7 @@ fun main() {
         game.hitOrStand(it, cardExtractor)
     }
 
-    printResult(dealer, players)
+    printResult(users)
 }
 
 class BlackJackGame {

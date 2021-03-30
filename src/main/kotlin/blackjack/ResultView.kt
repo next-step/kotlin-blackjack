@@ -43,14 +43,6 @@ fun CardNumber.text(): String {
     }
 }
 
-fun Player.matchResultText(dealerScore: Int): String {
-    return if (!this.isBust() && this.cardDeck.getScore() > dealerScore) {
-        "승"
-    } else {
-        "패"
-    }
-}
-
 fun printFirstDeal(users: Users) {
     println(users.users.joinToString(SEPARATOR) { it.name } + "에게 2장의 카드를 나누어주었습니다.")
     users.users.forEach {
@@ -58,19 +50,12 @@ fun printFirstDeal(users: Users) {
     }
 }
 
-fun printResult(dealer: Dealer, players: Players) {
-    dealer.printResult()
-    players.players.forEach {
-        it.printResult()
-    }
+fun printResult(users: Users) {
+    users.users.forEach { it.printResult() }
 
-    val dealerScore = dealer.cardDeck.getScore()
-    val dealerWin = players.players.count { it.cardDeck.getScore() <= dealerScore }
-    val dealerLose = players.players.size - dealerWin
-    println("## 최종 승패")
-    println("${dealer.name}: ${dealerWin}승 ${dealerLose}패")
-    players.players.forEach {
-        println("${it.name}: ${it.matchResultText(dealerScore)}")
+    println("## 최종 수익")
+    users.users.forEach {
+        println("${it.name}: ${it.getEvaluate(users)}")
     }
 }
 
