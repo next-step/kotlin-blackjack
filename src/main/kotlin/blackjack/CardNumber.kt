@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardNumber(val value: List<Int>) {
+enum class CardNumber(val value: Int) {
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -13,7 +13,5 @@ enum class CardNumber(val value: List<Int>) {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(1,11);
-
-    constructor(vararg number: Int) : this(number.toList())
+    ACE(1);
 }
