@@ -23,16 +23,6 @@ class Player(override val name: String, override var state: State) : Gamer {
         state = state.draw(card)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
-    }
-
     fun matchResult(dealer: Dealer): MatchingResult {
         return state.match(dealer.state)
     }

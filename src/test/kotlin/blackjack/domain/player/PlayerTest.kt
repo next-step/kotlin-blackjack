@@ -38,11 +38,6 @@ internal class PlayerTest {
         assertThrows<IllegalArgumentException> { Player(" ", dummyState) }
     }
 
-    @Test
-    fun `이름이 같을 경우 같은 플레이어로 취급한다`() {
-        assertThat(Player("자손", dummyState)).isEqualTo(Player("자손", dummyState))
-    }
-
     @ParameterizedTest
     @MethodSource("provideCards")
     fun `플레이어 카드의 상태가 히트가 아닌 경우 카드를 더이상 가질 수 없다`(state: State, expected: Boolean) {
