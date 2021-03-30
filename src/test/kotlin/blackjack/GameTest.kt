@@ -17,9 +17,16 @@ class GameTest {
     }
 
     @ParameterizedTest
-    @CsvSource("HEART,QUEEN")
-    fun `카드의 숫자의 합이 21미만이면 Hit 이다`() {
-        val game = Game(Card(CardSuite.HEART, CardNumber.QUEEN), Card(CardSuite.SPADE, CardNumber.KING)) // 20
+    @CsvSource(
+        "HEART,QUEEN,SPADE,KING",
+        "HEART,ACE,SPADE,ACE",
+        "HEART,TWO,SPADE,TEN",
+        "HEART,FOUR,SPADE,FIVE",
+        "HEART,SEVEN,SPADE,ACE",
+        "HEART,NINE,SPADE,NINE"
+    )
+    fun `카드의 숫자의 합이 21미만이면 Hit 이다`(firstCardSuite: CardSuite, firstCardNumber: CardNumber, secondCardSuite: CardSuite, secondCardNumber: CardNumber) {
+        val game = Game(Card(firstCardSuite, firstCardNumber), Card(secondCardSuite, secondCardNumber))
         val state = game.state
 
         assertThat(state).isEqualTo(HIT)
