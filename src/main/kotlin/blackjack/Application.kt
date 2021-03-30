@@ -1,3 +1,4 @@
+import blackjack.domain.Money
 import blackjack.domain.Result
 import blackjack.domain.card.state.StateFactory
 import blackjack.domain.deck.Deck
@@ -6,6 +7,7 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.view.inputAnswer
+import blackjack.view.inputBetting
 import blackjack.view.inputPlayerNames
 import blackjack.view.printDealerTakeCardMessage
 import blackjack.view.printParticipantsResult
@@ -18,7 +20,13 @@ fun main() {
     val dealer = Dealer(StateFactory.create(deck.draw(), deck.draw()))
 
     val playerNames = inputPlayerNames().map { Name(it) }
-    val players = playerNames.map { Player(name = it, state = StateFactory.create(deck.draw(), deck.draw())) }
+    val players = playerNames.map {
+        Player(
+            name = it,
+            state = StateFactory.create(deck.draw(), deck.draw()),
+            betting = Money(inputBetting(it))
+        )
+    }
     printStartMessage(dealer, players)
 
     players.forEach {
