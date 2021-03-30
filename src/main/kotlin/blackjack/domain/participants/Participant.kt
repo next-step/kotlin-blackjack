@@ -3,17 +3,21 @@ package blackjack.domain.participants
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
+import blackjack.domain.state.FirstTurn
+import blackjack.domain.state.State
 
 abstract class Participant(
     val name: String,
     initCards: ArrayList<Card>
 ) {
     val cards: Cards = Cards(initCards)
+    var state: State
 
     init {
         if(initCards.isEmpty()) {
             initCards()
         }
+        state = FirstTurn().draw(cards)
     }
 
     abstract fun checkCardDrawAvailable(): Boolean

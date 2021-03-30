@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Participant
+import blackjack.domain.participants.Players
 import blackjack.domain.participants.Player
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
@@ -9,35 +10,48 @@ import blackjack.ui.OutputView
 fun main() {
     val players = createPlayers()
     val dealer = Dealer()
-    OutputView.printAllPlayerCards(players)
 
-    gameStart(players)
+    OutputView.printAllPlayerCards(players, dealer)
 
-    OutputView.printResult(players)
+    gameStart(players, dealer)
+
+    OutputView.printResult(players, dealer)
+
+    val winners = players.getWinners(dealer)
+    OutputView.printGameWinning(winners, dealer)
+
 }
 
-fun createPlayers(): List<Participant> {
+fun createPlayers(): Players {
     val names = InputView.inputPlayers()
-    return names.map { Player(it) }
+    return Players(
+        names.map { Player(it) }
+    )
 }
 
-fun gameStart(participants: List<Participant>) {
-    for(participant in participants) {
-        playerTurn(participant)
+fun gameStart(players: Players, dealer: Dealer) {
+    for (player in players.values) {
+        playerTurn(player)
     }
+    dealerTurn(dealer)
 }
 
-fun playerTurn(participant: Participant) {
+fun playerTurn(player: Player) {
     var answer = "Y"
-    while(answer == "Y" && participant.checkCardDrawAvailable()) {
-        answer = InputView.selectDrawCard(participant.name)
-        playSelection(participant, answer)
+    while (answer == "Y" && player.checkCardDrawAvailable()) {
+        answer = InputView.selectDrawCard(player.name)
+        playSelection(player, answer)
     }
 }
 
-fun playSelection(participant: Participant, answer: String) {
-    if(answer == "Y") {
-        participant.drawCard()
-        OutputView.printPlayerCards(participant)
+fun dealerTurn(dealer: Dealer) {
+    OutputView.printDealerDrawInfo(dealer)
+    dealer.drawCard()
+}
+
+fun playSelection(player: Player, answer: String) {
+    if (answer == "Y") {
+        player.drawCard()
+        OutputView.printPlayerCards(player)
     }
 }
