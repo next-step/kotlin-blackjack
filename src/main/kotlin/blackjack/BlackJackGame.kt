@@ -15,6 +15,9 @@ fun main() {
     if (dealer.isBust()) {
         printDealerBust(dealer)
         return
+    } else if (dealer.isBlackJack()) {
+        printResult(users)
+        return
     }
 
     players.players.forEach {
