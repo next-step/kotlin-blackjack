@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
@@ -38,5 +39,13 @@ internal class BustTest {
         val bust = Bust(cards)
 
         assertThrows<IllegalStateException> { bust.stay() }
+    }
+
+    @Test
+    fun `bust 의 수익금은 -1배 이다`() {
+        val bust = Bust(cards)
+
+        val money = Money(10000)
+        assertThat(bust.profit(money)).isEqualTo(money * 1.5)
     }
 }

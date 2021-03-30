@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Score
@@ -20,4 +21,8 @@ interface State {
     fun isHit() = false
 
     fun isBust() = false
+
+    fun isBlackJack() = false
+
+    fun profit(money: Money): Money
 }
