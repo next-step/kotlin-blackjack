@@ -61,6 +61,6 @@ class BlackJackGame(private val userInterface: UserInterface) {
             }
         }
 
-        return takeCardsIfNecessary(player)
+        takeCardsIfNecessary(player)
     }
 }
