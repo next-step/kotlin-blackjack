@@ -19,7 +19,7 @@ fun main() {
     OutputView.printResult(players, dealer)
 
     val playersEarnRate = players.getPlayersEarnRate(dealer)
-    OutputView.printGameWinning(playersEarnRate, dealer)
+    OutputView.printGameWinning(playersEarnRate)
 }
 
 fun createPlayers(): Players {

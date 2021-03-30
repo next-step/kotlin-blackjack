@@ -2,7 +2,6 @@ package blackjack.ui
 
 import blackjack.domain.participants.Dealer
 import blackjack.domain.participants.Participant
-import blackjack.domain.participants.Player
 import blackjack.domain.participants.Players
 import blackjack.domain.winning.BettingResult
 
@@ -36,7 +35,7 @@ object OutputView {
         println("딜러는 17이상이라 카드를 더이상 받지 않습니다.")
     }
 
-    fun printGameWinning(bettingResult: BettingResult, dealer: Dealer) {
+    fun printGameWinning(bettingResult: BettingResult) {
         println("딜러 : ${bettingResult.getDealerProfit()}")
         bettingResult.results.forEach { (player, earnRate) ->
             println("${player.name} : $earnRate")
