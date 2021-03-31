@@ -7,6 +7,9 @@ import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
 open class Player(cards: Cards, val name: String) {
+
+    constructor(deck: Deck, name: String) : this(Cards.firstDraw(deck), name)
+
     var cards = cards
         protected set
 
@@ -18,7 +21,9 @@ open class Player(cards: Cards, val name: String) {
         return !isWin(opponent, rule)
     }
 
-    fun getScore(rule: Rule): Score {
+    fun hasValidScore(rule: Rule) = getScore(rule).isValid()
+
+    private fun getScore(rule: Rule): Score {
         return rule.getScore(cards)
     }
 

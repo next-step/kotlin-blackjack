@@ -26,17 +26,13 @@ internal class DealerTest {
             return listOf(
                 Arguments {
                     arrayOf(
-                        Cards.Builder()
-                            .cards(listOf(deck.peekCard(CardNumber.EIGHT, Suit.CLUB), deck.peekCard(CardNumber.FIVE, Suit.HEART)))
-                            .build(),
+                        Cards(listOf(deck.peekCard(CardNumber.EIGHT, Suit.CLUB), deck.peekCard(CardNumber.FIVE, Suit.HEART))),
                         3
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder()
-                            .cards(listOf(deck.peekCard(CardNumber.ACE, Suit.HEART), deck.peekCard(CardNumber.TEN, Suit.CLUB)))
-                            .build(),
+                        Cards(listOf(deck.peekCard(CardNumber.ACE, Suit.HEART), deck.peekCard(CardNumber.TEN, Suit.CLUB))),
                         2
                     )
                 }

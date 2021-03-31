@@ -4,7 +4,6 @@ import blackjack.model.player.Player
 import blackjack.model.TrumpRule
 import blackjack.model.player.Dealer
 import blackjack.model.player.Players
-import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 import blackjack.model.trump.TrumpDeck
 import blackjack.view.InputView
@@ -13,13 +12,13 @@ import blackjack.view.OutputView
 fun main() {
     val deck = TrumpDeck()
     val players = Players(InputView.readNames(), deck)
-    val dealer = Dealer(Cards.firstDraw(deck), deck)
+    val dealer = Dealer(deck)
     val playersAndDealer = Players((players + dealer).toList())
 
     OutputView.printFirstDraw(playersAndDealer)
 
     val rule = TrumpRule
-    if (!dealer.getScore(rule).isValid()) {
+    if (!dealer.hasValidScore(rule)) {
         printJudgeResult(dealer, players, rule)
         return
     }
@@ -28,7 +27,7 @@ fun main() {
         drawUntilUserStop(it, deck)
     }
 
-    if (dealer.isOneMoreDraw()) {
+    if (dealer.didOneMoreDraw()) {
         OutputView.printDealerReason()
     }
 

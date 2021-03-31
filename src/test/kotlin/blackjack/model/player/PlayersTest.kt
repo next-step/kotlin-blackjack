@@ -20,11 +20,11 @@ internal class PlayersTest {
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
-        val playerList = mutableListOf(Player(Cards.firstDraw(deck), "sangw0804"))
+        val playerList = mutableListOf(Player(deck, "sangw0804"))
 
         val players = Players(playerList)
 
-        playerList.add(Player(Cards.firstDraw(deck), "newPlayer"))
+        playerList.add(Player(deck, "newPlayer"))
 
         assertThat(players.size).isEqualTo(1)
     }

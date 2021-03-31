@@ -1,7 +1,7 @@
 package blackjack.model
 
 import blackjack.model.score.Score
-import blackjack.model.score.ScoresFactory
+import blackjack.model.score.Scores
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -11,7 +11,7 @@ internal class ScoresTest {
     @ParameterizedTest
     @MethodSource("scoreListProvider")
     fun `가장 큰 점수와 낮은 점수를 돌려준다`(scores: List<Int>) {
-        val result = ScoresFactory.create(scores)
+        val result = Scores(scores)
 
         assertThat(result.size).isEqualTo(scores.size)
         assertThat(result.highest()).isEqualTo(Score(7))

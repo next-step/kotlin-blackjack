@@ -27,47 +27,39 @@ internal class RuleTest {
             return listOf(
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
-                                deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
-                                deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
-                                deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
-                            )
-                        ).build(),
+                        Cards(
+                            deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
+                            deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
+                            deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
+                        ),
                         Score(21)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
-                                deck.peekCard(CardNumber.ACE, Suit.CLUB),
-                                deck.peekCard(CardNumber.ACE, Suit.HEART)
-                            )
-                        ).build(),
+                        Cards(
+                            deck.peekCard(CardNumber.ACE, Suit.CLUB),
+                            deck.peekCard(CardNumber.ACE, Suit.HEART)
+                        ),
                         Score(12)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
-                                deck.peekCard(CardNumber.THREE, Suit.SPADE),
-                                deck.peekCard(CardNumber.JACK, Suit.SPADE),
-                                deck.peekCard(CardNumber.TEN, Suit.SPADE)
-                            )
-                        ).build(),
+                        Cards(
+                            deck.peekCard(CardNumber.THREE, Suit.SPADE),
+                            deck.peekCard(CardNumber.JACK, Suit.SPADE),
+                            deck.peekCard(CardNumber.TEN, Suit.SPADE)
+                        ),
                         Score(23)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
-                                deck.peekCard(CardNumber.ACE, Suit.SPADE),
-                                deck.peekCard(CardNumber.TEN, Suit.HEART)
-                            )
-                        ).build(),
+                        Cards(
+                            deck.peekCard(CardNumber.ACE, Suit.SPADE),
+                            deck.peekCard(CardNumber.TEN, Suit.HEART)
+                        ),
                         Score(21)
                     )
                 }

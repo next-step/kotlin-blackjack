@@ -8,7 +8,7 @@ class Players private constructor(private val players: Set<Player>) : Set<Player
 
     constructor(players: List<Player>) : this(players.toSet())
 
-    constructor(playerNames: List<String>, deck: Deck) : this(playerNames.map { Player(Cards.firstDraw(deck), it) })
+    constructor(playerNames: List<String>, deck: Deck) : this(playerNames.map { Player(deck, it) })
 
     fun countWin(opponent: Player, rule: Rule): Int {
         return players.filter { it.isWin(opponent, rule) }.count()

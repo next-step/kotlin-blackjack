@@ -32,47 +32,39 @@ internal class CardsTest {
             return listOf(
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
-                                deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
-                                deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
-                                deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
-                            )
-                        ).build(),
+                        Cards(
+                            deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
+                            deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
+                            deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
+                        ),
                         Score(31)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
+                        Cards(
                                 deck.peekCard(CardNumber.ACE, Suit.SPADE),
                                 deck.peekCard(CardNumber.ACE, Suit.CLUB)
-                            )
-                        ).build(),
+                        ),
                         Score(22)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
+                        Cards(
                                 deck.peekCard(CardNumber.THREE, Suit.SPADE),
                                 deck.peekCard(CardNumber.JACK, Suit.CLUB),
                                 deck.peekCard(CardNumber.TEN, Suit.HEART)
-                            )
-                        ).build(),
+                        ),
                         Score(23)
                     )
                 },
                 Arguments {
                     arrayOf(
-                        Cards.Builder().cards(
-                            listOf(
+                        Cards(
                                 deck.peekCard(CardNumber.TEN, Suit.CLUB),
                                 deck.peekCard(CardNumber.ACE, Suit.HEART)
-                            )
-                        ).build(),
+                        ),
                         Score(21)
                     )
                 }

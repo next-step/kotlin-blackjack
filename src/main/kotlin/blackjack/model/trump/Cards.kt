@@ -2,7 +2,12 @@ package blackjack.model.trump
 
 import blackjack.model.score.Score
 
-class Cards private constructor(private val cards: List<Card>) : List<Card> by cards {
+class Cards private constructor(private val cards: Set<Card>) : Set<Card> by cards {
+
+    constructor(cards: List<Card>) : this(cards.toSet())
+
+    constructor(vararg cards: Card) : this(cards.toSet())
+
     fun countAce(): Int {
         return cards.count { it.isAce() }
     }
@@ -12,28 +17,15 @@ class Cards private constructor(private val cards: List<Card>) : List<Card> by c
     }
 
     fun draw(deck: Deck): Cards {
-        val mutableCards = cards.toMutableList()
+        val mutableCards = cards.toMutableSet()
         mutableCards.add(deck.draw())
 
-        return Cards(mutableCards.toList())
+        return Cards(mutableCards.toSet())
     }
 
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 
         fun firstDraw(deck: Deck) = Cards((1..INITIAL_DRAW_COUNT).map { deck.draw() })
-    }
-
-    class Builder {
-        private var cards: List<Card> = listOf()
-
-        fun cards(cards: List<Card>): Builder {
-            this.cards = cards
-            return this
-        }
-
-        fun build(): Cards {
-            return Cards(cards.toList())
-        }
     }
 }
