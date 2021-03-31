@@ -11,10 +11,6 @@ class Players(
         values.forEach { it.takeCard(cardPack.poll()) }
     }
 
-    fun toPlayerDtos(): List<PlayerDto> {
-        return values.map { it.toPlayerDto() }
-    }
-
     fun toPlayerCardResults(): List<PlayerCardResult> {
         return values.map { PlayerCardResult(it) }
     }

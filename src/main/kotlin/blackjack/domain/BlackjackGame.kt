@@ -1,22 +1,12 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerCardResult
-import blackjack.ui.model.PlayerDto
 import blackjack.ui.model.PlayerWinTypes
 
-class BlackjackGame(private val players: Players, dealerCards: Set<Card> = emptySet()) {
+class BlackjackGame(val players: Players, dealerCards: Set<Card> = emptySet()) {
 
     private val cardPack = CardPack()
-    private val dealer = Dealer(dealerCards)
+    val dealer = Dealer(dealerCards)
 
-    val dealerDto: PlayerDto
-        get() = dealer.toPlayerDto()
-    val playerDtos: List<PlayerDto>
-        get() = players.toPlayerDtos()
-    val playerCardResults: List<PlayerCardResult>
-        get() = players.toPlayerCardResults()
-    val dealerCardResults: PlayerCardResult
-        get() = dealer.cardResult
     val addedCardNumberOfDealer: Int
         get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE
 

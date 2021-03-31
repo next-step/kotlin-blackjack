@@ -1,15 +1,10 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerCardResult
-import blackjack.ui.model.PlayerDto
-
 class Dealer(
     cards: Set<Card> = emptySet()
 ) : Participant {
 
-    private val player = Player("딜러", cards)
-    val cardResult: PlayerCardResult
-        get() = PlayerCardResult(player)
+    val player = Player("딜러", cards)
     val isUnderSixteen: Boolean
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize
@@ -21,10 +16,6 @@ class Dealer(
 
     override fun cardPointSum(): Int {
         return player.cardPointSum()
-    }
-
-    override fun toPlayerDto(): PlayerDto {
-        return player.toPlayerDto()
     }
 
     companion object {

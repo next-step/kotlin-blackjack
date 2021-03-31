@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.ui.model.PlayerDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +13,7 @@ internal class BlackjackGameTest {
 
         blackjackGame.giveTwoCardsToAllPlayers()
 
-        val playerDtos = blackjackGame.playerDtos
+        val playerDtos = blackjackGame.players.map { PlayerDto(it) }
         assertThat(playerDtos).extracting("name").contains("song", "kim")
         assertThat(playerDtos[0].cards).hasSize(2)
         assertThat(playerDtos[1].cards).hasSize(2)
@@ -78,7 +79,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.TWO, CardType.THREE))
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealerDto.cards.size).isGreaterThan(2) // 2장 이상을 갖는다
+        assertThat(PlayerDto(blackjackGame.dealer).cards.size).isGreaterThan(2) // 2장 이상을 갖는다
     }
 
     @Test
@@ -88,7 +89,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.JACK, CardType.QUEEN))
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealerDto.cards.size).isEqualTo(2) // 2장만을 가지고 있다
+        assertThat(PlayerDto(blackjackGame.dealer).cards.size).isEqualTo(2) // 2장만을 가지고 있다
     }
 
     private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =

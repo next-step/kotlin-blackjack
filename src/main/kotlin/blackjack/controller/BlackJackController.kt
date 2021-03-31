@@ -4,6 +4,8 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Player
 import blackjack.ui.PlayerInputView
 import blackjack.ui.ResultView
+import blackjack.ui.model.PlayerCardResult
+import blackjack.ui.model.PlayerDto
 
 object BlackJackController {
     fun run() {
@@ -11,7 +13,10 @@ object BlackJackController {
         val blackjackGame = BlackjackGame(players)
 
         blackjackGame.giveTwoCardsToAllPlayers()
-        ResultView.printCardsOf(blackjackGame.playerDtos, blackjackGame.dealerDto)
+
+        val playerDtos = blackjackGame.players.map { PlayerDto(it) }
+        val dealerDto = PlayerDto(blackjackGame.dealer)
+        ResultView.printCardsOf(playerDtos, dealerDto)
 
         players.forEach {
             blackjackGame.askAndGiveCards(it)
@@ -20,7 +25,9 @@ object BlackJackController {
         blackjackGame.giveCardsToDealer()
         ResultView.printInfoOfDealerBehavior(blackjackGame.addedCardNumberOfDealer)
 
-        ResultView.printCardResults(blackjackGame.dealerCardResults, blackjackGame.playerCardResults)
+        val dealerResult = PlayerCardResult(blackjackGame.dealer)
+        val playerResults = blackjackGame.players.map { PlayerCardResult(it) }
+        ResultView.printCardResults(dealerResult, playerResults)
 
         val playerWinTypes = blackjackGame.findPlayerWinTypes()
         ResultView.printWinningResult(playerWinTypes)
@@ -30,7 +37,7 @@ object BlackJackController {
         do {
             val hasAccepted = PlayerInputView.askMoreCard(player.name)
             giveCard(player, hasAccepted)
-            ResultView.printCardsOfSinglePlayer(player.toPlayerDto())
+            ResultView.printCardsOfSinglePlayer(PlayerDto(player))
         } while (hasAccepted)
     }
 }
