@@ -17,7 +17,7 @@ class BlackjackGame(private val players: Players, dealerCards: Set<Card> = empty
         get() = players.toPlayerCardResults()
     val dealerCardResults: PlayerCardResult
         get() = dealer.cardResult
-    val addedDealerCardNumber: Int
+    val addedCardNumberOfDealer: Int
         get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE
 
     fun giveTwoCardsToAllPlayers() {

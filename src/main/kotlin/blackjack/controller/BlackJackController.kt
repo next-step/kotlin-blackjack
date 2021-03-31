@@ -18,7 +18,7 @@ object BlackJackController {
         }
 
         blackjackGame.giveCardsToDealer()
-        ResultView.printInfoOfDealerBehavior(blackjackGame.addedDealerCardNumber)
+        ResultView.printInfoOfDealerBehavior(blackjackGame.addedCardNumberOfDealer)
 
         ResultView.printCardResults(blackjackGame.dealerCardResults, blackjackGame.playerCardResults)
 
