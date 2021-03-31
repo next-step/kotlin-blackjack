@@ -11,7 +11,7 @@ class Dealer : User(NAME) {
     }
 
     override fun getEvaluate(users: Users): Int {
-        return users.users.filterIsInstance(Player::class.java).map { it.getEvaluate(users) }.sum().unaryMinus()
+        return users.users.filterIsInstance<Player>().map { it.getEvaluate(users) }.sum().unaryMinus()
     }
 
     override fun getFirstDeal(): List<Card> {
