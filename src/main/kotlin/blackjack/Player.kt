@@ -13,10 +13,12 @@ class Player(name: String, val price: Int) : User(name) {
     override fun getEvaluate(users: Users): Int {
         val dealer = users.users.filterIsInstance<Dealer>().first()
 
-        if (isBlackJack())
-            return if (dealer.isBlackJack()) 0 else (price * BLACK_JACK_REWARD_RATE).toInt()
-
-        return if (isWin(dealer)) price else price.unaryMinus()
+        return when {
+            isBlackJack() && dealer.isBlackJack() -> 0
+            isBlackJack() -> (price * BLACK_JACK_REWARD_RATE).toInt()
+            isWin(dealer) -> price
+            else -> price.unaryMinus()
+        }
     }
 
     private fun isWin(dealer: Dealer): Boolean {
