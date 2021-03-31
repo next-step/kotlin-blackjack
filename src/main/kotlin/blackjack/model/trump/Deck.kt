@@ -1,5 +1,6 @@
 package blackjack.model.trump
 
-class Deck internal constructor(
-    private val deck: Map<Suit, DeckWithSameSuit> = Suit.values().associate { Pair(it, DeckWithSameSuit(it)) }
-) : Map<Suit, DeckWithSameSuit> by deck
+interface Deck : MutableList<Card> {
+    fun peekCard(cardNumber: CardNumber, suit: Suit): Card
+    fun draw(): Card
+}

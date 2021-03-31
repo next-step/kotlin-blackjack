@@ -4,6 +4,7 @@ import blackjack.model.Judge
 import blackjack.model.Rule
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
+import blackjack.model.trump.Deck
 
 open class Player(cards: Cards, val name: String) {
     var cards = cards
@@ -21,15 +22,15 @@ open class Player(cards: Cards, val name: String) {
         return rule.getScore(cards)
     }
 
-    fun keepDrawing(userResponse: String): Boolean {
+    fun keepDrawing(userResponse: String, deck: Deck): Boolean {
         if (userResponse == "y") {
-            draw()
+            draw(deck)
             return true
         }
         return false
     }
 
-    private fun draw() {
-        cards = cards.draw()
+    private fun draw(deck: Deck) {
+        cards = cards.draw(deck)
     }
 }

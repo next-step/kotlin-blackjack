@@ -8,10 +8,12 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 internal class PlayersTest {
+    private val deck = MockDeck()
+
     @ParameterizedTest
     @MethodSource("playerNamesProvider")
     fun `플레이어 이름의 리스트로 Players를 만들 수 있다`(names: List<String>) {
-        val result = PlayersFactory.create(names)
+        val result = PlayersFactory.create(names, deck)
 
         assertThat(result[0]).hasFieldOrPropertyWithValue("name", names[0])
         assertThat(result[1]).hasFieldOrPropertyWithValue("name", names[1])
@@ -19,11 +21,11 @@ internal class PlayersTest {
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
-        val playerList = mutableListOf(Player(Cards.firstDraw(), "sangw0804"))
+        val playerList = mutableListOf(Player(Cards.firstDraw(deck), "sangw0804"))
 
         val players = Players.Builder().players(playerList).build()
 
-        playerList.add(Player(Cards.firstDraw(), "newPlayer"))
+        playerList.add(Player(Cards.firstDraw(deck), "newPlayer"))
 
         assertThat(players.size).isEqualTo(1)
     }

@@ -1,8 +1,8 @@
 package blackjack.model.player
 
-import blackjack.model.trump.Card
 import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Cards
+import blackjack.model.trump.TrumpDeck
 import blackjack.model.trump.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,19 +13,21 @@ internal class DealerTest {
     @ParameterizedTest
     @MethodSource("cardsProvider")
     fun `딜러는 처음 받은 2장의 카드 점수 합이 16이하면 한장 더 받는다`(cards: Cards, cardsSize: Int) {
-        val dealer = Dealer(cards)
+        val dealer = Dealer(cards, deck)
 
         assertThat(dealer.cards.size).isEqualTo(cardsSize)
     }
 
     companion object {
+        private val deck = TrumpDeck()
+
         @JvmStatic
         private fun cardsProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(
                         Cards.Builder()
-                            .cards(listOf(Card.get(CardNumber.EIGHT, Suit.CLUB), Card.get(CardNumber.FIVE, Suit.HEART)))
+                            .cards(listOf(deck.peekCard(CardNumber.EIGHT, Suit.CLUB), deck.peekCard(CardNumber.FIVE, Suit.HEART)))
                             .build(),
                         3
                     )
@@ -33,7 +35,7 @@ internal class DealerTest {
                 Arguments {
                     arrayOf(
                         Cards.Builder()
-                            .cards(listOf(Card.get(CardNumber.ACE, Suit.HEART), Card.get(CardNumber.TEN, Suit.CLUB)))
+                            .cards(listOf(deck.peekCard(CardNumber.ACE, Suit.HEART), deck.peekCard(CardNumber.TEN, Suit.CLUB)))
                             .build(),
                         2
                     )

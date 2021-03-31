@@ -2,15 +2,16 @@ package blackjack.model.player
 
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
+import blackjack.model.trump.Deck
 
-class Dealer(cards: Cards, name: String = "딜러") : Player(cards, name) {
+class Dealer(cards: Cards, deck: Deck, name: String = "딜러") : Player(cards, name) {
     init {
-        checkNeedToDraw()
+        checkNeedToDraw(deck)
     }
 
-    private fun checkNeedToDraw() {
+    private fun checkNeedToDraw(deck: Deck) {
         if (super.cards.getHighestScore() <= MINIMUM_SCORE) {
-            super.cards = super.cards.draw()
+            super.cards = super.cards.draw(deck)
         }
     }
 

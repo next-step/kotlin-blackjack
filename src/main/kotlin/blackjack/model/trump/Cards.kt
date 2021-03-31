@@ -11,9 +11,9 @@ class Cards private constructor(private val cards: List<Card>) : List<Card> by c
         return cards.fold(Score.ZERO) { acc, card -> acc + card.getScores().highest() }
     }
 
-    fun draw(): Cards {
+    fun draw(deck: Deck): Cards {
         val mutableCards = cards.toMutableList()
-        mutableCards.add(Card.get())
+        mutableCards.add(deck.draw())
 
         return Cards(mutableCards.toList())
     }
@@ -21,7 +21,7 @@ class Cards private constructor(private val cards: List<Card>) : List<Card> by c
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 
-        fun firstDraw() = Cards((1..INITIAL_DRAW_COUNT).map { Card.get() })
+        fun firstDraw(deck: Deck) = Cards((1..INITIAL_DRAW_COUNT).map { deck.draw() })
     }
 
     class Builder {

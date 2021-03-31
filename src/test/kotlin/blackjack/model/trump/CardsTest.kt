@@ -1,5 +1,6 @@
 package blackjack.model.trump
 
+import blackjack.model.player.MockDeck
 import blackjack.model.score.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -10,7 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource
 internal class CardsTest {
     @Test
     fun `Cards 기본 생성자를 사용하면 2개의 카드가 생성된다`() {
-        val result = Cards.firstDraw()
+        val result = Cards.firstDraw(deck)
 
         assertThat(result.size).isEqualTo(2)
     }
@@ -24,6 +25,8 @@ internal class CardsTest {
     }
 
     companion object {
+        private val deck = MockDeck()
+
         @JvmStatic
         fun scoreProvider(): List<Arguments> {
             return listOf(
@@ -31,9 +34,9 @@ internal class CardsTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.JACK, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
+                                deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
+                                deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
                             )
                         ).build(),
                         Score(31)
@@ -43,21 +46,20 @@ internal class CardsTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.ACE, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.ACE, Suit.SPADE),
+                                deck.peekCard(CardNumber.ACE, Suit.CLUB)
                             )
                         ).build(),
-                        Score(33)
+                        Score(22)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.THREE, Suit.DIAMOND),
-                                Card.get(CardNumber.JACK, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.THREE, Suit.SPADE),
+                                deck.peekCard(CardNumber.JACK, Suit.CLUB),
+                                deck.peekCard(CardNumber.TEN, Suit.HEART)
                             )
                         ).build(),
                         Score(23)
@@ -67,8 +69,8 @@ internal class CardsTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.TEN, Suit.CLUB),
+                                deck.peekCard(CardNumber.ACE, Suit.HEART)
                             )
                         ).build(),
                         Score(21)

@@ -6,12 +6,15 @@ import blackjack.model.TrumpRule
 import blackjack.model.player.Dealer
 import blackjack.model.player.Players
 import blackjack.model.trump.Cards
+import blackjack.model.trump.Deck
+import blackjack.model.trump.TrumpDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val players = PlayersFactory.create(InputView.readNames())
-    val dealer = Dealer(Cards.firstDraw())
+    val deck = TrumpDeck()
+    val players = PlayersFactory.create(InputView.readNames(), deck)
+    val dealer = Dealer(Cards.firstDraw(deck), deck)
     val playersAndDealer = Players.Builder().players(players + dealer).build()
 
     OutputView.printFirstDraw(playersAndDealer)
@@ -23,7 +26,7 @@ fun main() {
     }
 
     players.forEach {
-        drawUntilUserStop(it)
+        drawUntilUserStop(it, deck)
     }
 
     if (dealer.isOneMoreDraw()) {
@@ -37,8 +40,8 @@ fun main() {
     printJudgeResult(dealer, players, rule)
 }
 
-private fun drawUntilUserStop(player: Player) {
-    while (player.keepDrawing(InputView.readUserResponse(player.name))) {
+private fun drawUntilUserStop(player: Player, deck: Deck) {
+    while (player.keepDrawing(InputView.readUserResponse(player.name), deck)) {
         OutputView.printPlayer(player)
     }
 }

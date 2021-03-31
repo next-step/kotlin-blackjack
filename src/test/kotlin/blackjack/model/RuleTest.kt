@@ -1,9 +1,9 @@
 package blackjack.model
 
+import blackjack.model.player.MockDeck
 import blackjack.model.score.Score
-import blackjack.model.trump.Card
-import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Cards
+import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -20,6 +20,8 @@ internal class RuleTest {
     }
 
     companion object {
+        private val deck = MockDeck()
+
         @JvmStatic
         fun scoreProvider(): List<Arguments> {
             return listOf(
@@ -27,9 +29,9 @@ internal class RuleTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.JACK, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
+                                deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
+                                deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
                             )
                         ).build(),
                         Score(21)
@@ -39,21 +41,20 @@ internal class RuleTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.ACE, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.ACE, Suit.CLUB),
+                                deck.peekCard(CardNumber.ACE, Suit.HEART)
                             )
                         ).build(),
-                        Score(13)
+                        Score(12)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.THREE, Suit.DIAMOND),
-                                Card.get(CardNumber.JACK, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.THREE, Suit.SPADE),
+                                deck.peekCard(CardNumber.JACK, Suit.SPADE),
+                                deck.peekCard(CardNumber.TEN, Suit.SPADE)
                             )
                         ).build(),
                         Score(23)
@@ -63,8 +64,8 @@ internal class RuleTest {
                     arrayOf(
                         Cards.Builder().cards(
                             listOf(
-                                Card.get(CardNumber.ACE, Suit.DIAMOND),
-                                Card.get(CardNumber.TEN, Suit.DIAMOND)
+                                deck.peekCard(CardNumber.ACE, Suit.SPADE),
+                                deck.peekCard(CardNumber.TEN, Suit.HEART)
                             )
                         ).build(),
                         Score(21)
