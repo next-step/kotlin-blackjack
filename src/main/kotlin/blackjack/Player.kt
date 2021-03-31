@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(name: String, val price: Int) : User(name) {
+class Player(name: String, private val price: Int) : User(name) {
 
     init {
         require(price > 0) { "베팅 금액은 반드시 0보다 커야합니다." }
