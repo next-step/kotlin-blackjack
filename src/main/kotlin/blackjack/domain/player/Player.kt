@@ -1,23 +1,28 @@
 package blackjack.domain.player
 
-import blackjack.domain.MatchResult
+import blackjack.domain.Money
 import blackjack.domain.card.state.State
 
-class Player(name: Name, state: State) : Participant(name, state) {
+class Player(
+    name: Name,
+    state: State,
+    private val betting: Money
+) : Participant(name, state) {
 
-    fun match(dealer: Dealer): MatchResult {
-        if (dealer.isBust()) {
-            return MatchResult.WIN
+    fun match(dealer: Dealer): Money {
+
+        if (dealer.state.isBlackJack() && this.state.isBlackJack()) {
+            return Money.ZERO
         }
 
-        if (this.isBust()) {
-            return MatchResult.LOSE
+        if (dealer.state.isBust()) {
+            return betting
         }
 
         return when (score.compareTo(dealer.score)) {
-            WIN -> MatchResult.WIN
-            LOSE -> MatchResult.LOSE
-            else -> MatchResult.DRAW
+            WIN -> state.profit(betting)
+            LOSE -> betting * -1.0
+            else -> Money.ZERO
         }
     }
 

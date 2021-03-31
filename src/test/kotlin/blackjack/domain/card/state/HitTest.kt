@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
@@ -40,5 +41,14 @@ internal class HitTest {
         val hit = Hit(cards)
 
         assertDoesNotThrow { hit.stay() }
+    }
+
+    @Test
+    fun `hit 의 수익금을 계산 할 수 없다`() {
+        val cards = Cards(ten)
+        val hit = Hit(cards)
+
+        val money = Money(10000)
+        assertThrows<IllegalStateException> { hit.profit(money) }
     }
 }

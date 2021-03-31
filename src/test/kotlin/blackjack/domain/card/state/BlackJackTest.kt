@@ -1,10 +1,12 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
@@ -46,5 +48,13 @@ internal class BlackJackTest {
         val blackJack = BlackJack(cards)
 
         assertThrows<IllegalStateException> { blackJack.stay() }
+    }
+
+    @Test
+    fun `blackJack의 수익금은 1,5배 이다`() {
+        val blackJack = BlackJack(cards)
+
+        val money = Money(10000)
+        assertThat(blackJack.profit(money)).isEqualTo(money * 1.5)
     }
 }
