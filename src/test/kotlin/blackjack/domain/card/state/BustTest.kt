@@ -46,6 +46,6 @@ internal class BustTest {
         val bust = Bust(cards)
 
         val money = Money(10000)
-        assertThat(bust.profit(money)).isEqualTo(money * 1.5)
+        assertThat(bust.profit(money)).isEqualTo(money * -1.0)
     }
 }
