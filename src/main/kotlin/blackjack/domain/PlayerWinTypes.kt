@@ -1,7 +1,4 @@
-package blackjack.ui.model
-
-import blackjack.domain.PlayerWinType
-import blackjack.domain.Players
+package blackjack.domain
 
 class PlayerWinTypes(
     private val map: Map<String, PlayerWinType>

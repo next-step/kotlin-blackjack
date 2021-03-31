@@ -42,7 +42,7 @@ internal class BlackjackGameTest {
     @Test
     fun `승패를 계산한다(dealer가 21이 넘은 경우)`() {
         val players = Players(mutableListOf(Player("song"), Player("kim")))
-        val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE))
+        val blackjackGame = BlackjackGame(players, Dealer(makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE)))
 
         val result = blackjackGame.findPlayerWinTypes()
         assertThat(result.dealerResult).isEqualTo("0승 2패")
@@ -52,7 +52,8 @@ internal class BlackjackGameTest {
     fun `승패를 계산한다(player보다 dealer의 점수가 높은 경우)`() {
         val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
         val players = Players(mutableListOf(player))
-        val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+        val dealer = Dealer(makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
+        val blackjackGame = BlackjackGame(players, dealer)
 
         val result = blackjackGame.findPlayerWinTypes()
         assertThat(result.dealerResult).isEqualTo("1승 0패")
@@ -64,7 +65,8 @@ internal class BlackjackGameTest {
     fun `승패를 계산한다(player보다 dealer의 점수가 낮은 경우)`() {
         val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
         val players = Players(mutableListOf(player))
-        val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
+        val dealer = Dealer(makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
+        val blackjackGame = BlackjackGame(players, dealer)
 
         val result = blackjackGame.findPlayerWinTypes()
         assertThat(result.dealerResult).isEqualTo("0승 1패")
@@ -76,7 +78,8 @@ internal class BlackjackGameTest {
     fun `dealer의 카드가 16이하면 카드를 더 받는다`() {
         val player = Player("song")
         val players = Players(mutableListOf(player))
-        val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val dealer = Dealer(makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
         assertThat(PlayerDto(blackjackGame.dealer).cards.size).isGreaterThan(2) // 2장 이상을 갖는다
@@ -86,7 +89,8 @@ internal class BlackjackGameTest {
     fun `dealer의 카드가 16초과면 카드를 더 받지 않는다`() {
         val player = Player("song")
         val players = Players(mutableListOf(player))
-        val blackjackGame = BlackjackGame(players, makeCardSetPointOf(CardType.JACK, CardType.QUEEN))
+        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.QUEEN))
+        val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
         assertThat(PlayerDto(blackjackGame.dealer).cards.size).isEqualTo(2) // 2장만을 가지고 있다

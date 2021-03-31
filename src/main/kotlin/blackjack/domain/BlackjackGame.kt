@@ -1,11 +1,8 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerWinTypes
-
-class BlackjackGame(val players: Players, dealerCards: Set<Card> = emptySet()) {
+class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
 
     private val cardPack = CardPack()
-    val dealer = Dealer(dealerCards)
 
     val addedCardNumberOfDealer: Int
         get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE
