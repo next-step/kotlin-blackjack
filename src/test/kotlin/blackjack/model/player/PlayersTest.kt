@@ -13,17 +13,16 @@ internal class PlayersTest {
     @ParameterizedTest
     @MethodSource("playerNamesProvider")
     fun `플레이어 이름의 리스트로 Players를 만들 수 있다`(names: List<String>) {
-        val result = PlayersFactory.create(names, deck)
+        val result = Players(names, deck)
 
-        assertThat(result[0]).hasFieldOrPropertyWithValue("name", names[0])
-        assertThat(result[1]).hasFieldOrPropertyWithValue("name", names[1])
+        assertThat(result.map { it.name }).containsAll(names)
     }
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
         val playerList = mutableListOf(Player(Cards.firstDraw(deck), "sangw0804"))
 
-        val players = Players.Builder().players(playerList).build()
+        val players = Players(playerList)
 
         playerList.add(Player(Cards.firstDraw(deck), "newPlayer"))
 

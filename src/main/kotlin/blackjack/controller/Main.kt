@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.player.Player
-import blackjack.model.player.PlayersFactory
 import blackjack.model.TrumpRule
 import blackjack.model.player.Dealer
 import blackjack.model.player.Players
@@ -13,9 +12,9 @@ import blackjack.view.OutputView
 
 fun main() {
     val deck = TrumpDeck()
-    val players = PlayersFactory.create(InputView.readNames(), deck)
+    val players = Players(InputView.readNames(), deck)
     val dealer = Dealer(Cards.firstDraw(deck), deck)
-    val playersAndDealer = Players.Builder().players(players + dealer).build()
+    val playersAndDealer = Players((players + dealer).toList())
 
     OutputView.printFirstDraw(playersAndDealer)
 
