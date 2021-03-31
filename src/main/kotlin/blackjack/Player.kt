@@ -11,7 +11,7 @@ class Player(name: String, val price: Int) : User(name) {
     }
 
     override fun getEvaluate(users: Users): Int {
-        val dealer = users.users.filterIsInstance<Dealer>().first()
+        val dealer = users.getDealer()
 
         return when {
             isBlackJack() && dealer.isBlackJack() -> 0

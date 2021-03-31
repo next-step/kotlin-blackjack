@@ -11,7 +11,7 @@ class Dealer : User(NAME) {
     }
 
     override fun getEvaluate(users: Users): Int {
-        return users.users.filterIsInstance<Player>()
+        return users.getPlayers().players
             .map { it.getEvaluate(users) }
             .sum()
             .unaryMinus()
