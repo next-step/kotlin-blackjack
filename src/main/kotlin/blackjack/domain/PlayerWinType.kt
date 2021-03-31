@@ -15,5 +15,8 @@ enum class PlayerWinType {
 
             return LOSE
         }
+
+        fun isLose(winType: PlayerWinType): Boolean = winType == LOSE
+        fun isWin(winType: PlayerWinType): Boolean = winType == WIN
     }
 }

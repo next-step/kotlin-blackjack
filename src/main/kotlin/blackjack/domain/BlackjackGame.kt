@@ -30,10 +30,8 @@ class BlackjackGame(val players: Players, dealerCards: Set<Card> = emptySet()) {
     }
 
     fun findPlayerWinTypes(): PlayerWinTypes {
-        val winTypeMap = mutableMapOf<String, PlayerWinType>()
         val dealerPoint = dealer.cardPointSum()
-        players.forEach { winTypeMap[it.name] = PlayerWinType.findPlayerWinType(it.cardPointSum(), dealerPoint) }
-        return PlayerWinTypes(winTypeMap)
+        return PlayerWinTypes.of(players, dealerPoint)
     }
 
     companion object {
