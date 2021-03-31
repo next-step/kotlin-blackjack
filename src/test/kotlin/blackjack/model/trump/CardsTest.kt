@@ -43,8 +43,8 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                                deck.peekCard(CardNumber.ACE, Suit.SPADE),
-                                deck.peekCard(CardNumber.ACE, Suit.CLUB)
+                            deck.peekCard(CardNumber.ACE, Suit.SPADE),
+                            deck.peekCard(CardNumber.ACE, Suit.CLUB)
                         ),
                         Score(22)
                     )
@@ -52,9 +52,9 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                                deck.peekCard(CardNumber.THREE, Suit.SPADE),
-                                deck.peekCard(CardNumber.JACK, Suit.CLUB),
-                                deck.peekCard(CardNumber.TEN, Suit.HEART)
+                            deck.peekCard(CardNumber.THREE, Suit.SPADE),
+                            deck.peekCard(CardNumber.JACK, Suit.CLUB),
+                            deck.peekCard(CardNumber.TEN, Suit.HEART)
                         ),
                         Score(23)
                     )
@@ -62,8 +62,8 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                                deck.peekCard(CardNumber.TEN, Suit.CLUB),
-                                deck.peekCard(CardNumber.ACE, Suit.HEART)
+                            deck.peekCard(CardNumber.TEN, Suit.CLUB),
+                            deck.peekCard(CardNumber.ACE, Suit.HEART)
                         ),
                         Score(21)
                     )

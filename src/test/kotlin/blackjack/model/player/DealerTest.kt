@@ -2,7 +2,6 @@ package blackjack.model.player
 
 import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Cards
-import blackjack.model.trump.TrumpDeck
 import blackjack.model.trump.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,7 +18,7 @@ internal class DealerTest {
     }
 
     companion object {
-        private val deck = TrumpDeck()
+        private val deck = MockDeck()
 
         @JvmStatic
         private fun cardsProvider(): List<Arguments> {

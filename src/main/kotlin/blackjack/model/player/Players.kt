@@ -1,7 +1,6 @@
 package blackjack.model.player
 
 import blackjack.model.Rule
-import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
 class Players private constructor(private val players: Set<Player>) : Set<Player> by players {

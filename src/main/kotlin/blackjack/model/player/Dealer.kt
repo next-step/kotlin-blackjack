@@ -1,6 +1,5 @@
 package blackjack.model.player
 
-import blackjack.model.Rule
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
