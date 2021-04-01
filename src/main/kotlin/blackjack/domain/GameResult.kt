@@ -15,9 +15,9 @@ class GameResult(players: List<User>, dealer: User) {
     private fun calculateProfit(_player: User, dealer: User): BettingMoney {
         val player = _player as Player
         if (dealer.score.isBust) {
-            return player.bettingMoney.multiply(ResultType.WIN.profitRate)
+            return player.bettingMoney * ResultType.WIN.profitRate
         }
         val resultType = player.score compareTo dealer.score
-        return player.bettingMoney.multiply(resultType.profitRate)
+        return player.bettingMoney * resultType.profitRate
     }
 }
