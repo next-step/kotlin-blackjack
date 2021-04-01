@@ -10,4 +10,8 @@ class Players(
             values.associateWith { it.getEarnRate(dealer) }
         )
     }
+
+    fun toString(): String {
+        return values.joinToString { it.name }
+    }
 }

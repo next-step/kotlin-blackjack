@@ -7,7 +7,7 @@ import blackjack.domain.winning.BettingResult
 
 object OutputView {
     fun printAllPlayerCards(players: Players, dealer: Dealer) {
-        val names = players.values.joinToString { it.name }
+        val names = players.toString()
         println("딜러와 $names 에게 2장의 카드를 나누었습니다.")
         for (participant in players.values) {
             println("${participant.name} 카드 : ${participant.showCards()}")
