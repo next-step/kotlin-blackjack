@@ -5,12 +5,8 @@ data class Score(val value: Int) {
     val isBust: Boolean = value > 21
 
     fun plusTenIfNotBust(): Score {
-        val result =
-            Score(value + TEN)
-        if (result.isBust) {
-            return this
-        }
-        return result
+        val result = Score(value + TEN)
+        return if(result.isBust) this else result
     }
 
     companion object {
