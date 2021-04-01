@@ -1,9 +1,6 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.Card
-import blackjack.domain.participants.Dealer
-import blackjack.domain.participants.Player
-import blackjack.domain.winning.GameResult
 
 abstract class Finished : State {
     override val isFinished: Boolean = true

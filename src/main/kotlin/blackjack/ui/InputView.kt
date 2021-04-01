@@ -1,7 +1,5 @@
 package blackjack.ui
 
-import blackjack.domain.participants.Players
-
 object InputView {
 
     fun inputPlayers(): List<String> {

@@ -13,7 +13,7 @@ class PlayerTest {
 
     @Test
     fun `블랙잭이 나온 상태에서는 드로우를 해도 무시해버림`() {
-        val player = Player("John", arrayListOf(CLUB_ACE, CLUB_KING),0.0)
+        val player = Player("John", arrayListOf(CLUB_ACE, CLUB_KING), 0.0)
         val beforeDrawScore = player.getScore()
         player.drawCard()
         val afterDrawScore = player.getScore()

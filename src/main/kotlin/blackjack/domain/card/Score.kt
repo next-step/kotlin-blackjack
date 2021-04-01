@@ -6,7 +6,7 @@ data class Score(val value: Int) {
 
     fun plusTenIfNotBust(): Score {
         val result = Score(value + TEN)
-        return if(result.isBust) this else result
+        return if (result.isBust) this else result
     }
 
     companion object {

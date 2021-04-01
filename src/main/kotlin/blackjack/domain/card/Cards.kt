@@ -6,7 +6,7 @@ class Cards(private val _values: ArrayList<Card>) {
     val isBust: Boolean
         get() = score().isBust
     val displayCards: String
-        get() = _values.joinToString(", ") {it.displayName}
+        get() = _values.joinToString(", ") { it.displayName }
 
     fun score(): Score {
         var sum = Score(_values.map { it.score }.sum())

@@ -3,10 +3,8 @@ package blackjack.domain.participants
 import blackjack.domain.card.Card
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
-import blackjack.domain.state.Finished
 import blackjack.domain.state.Stay
 import blackjack.domain.winning.GameResult
-import java.lang.IllegalStateException
 
 class Player(
     name: String,
@@ -36,7 +34,7 @@ class Player(
     }
 
     fun isWinning(dealer: Dealer): GameResult {
-        return when(state) {
+        return when (state) {
             is Stay -> {
                 whenStateIsStayWinning(dealer)
             }
@@ -67,7 +65,6 @@ class Player(
         if (dealer.state is Blackjack) return GameResult.DRAW
         return GameResult.WIN
     }
-
 
     override fun checkCardDrawAvailable(): Boolean {
         return !state.isFinished
