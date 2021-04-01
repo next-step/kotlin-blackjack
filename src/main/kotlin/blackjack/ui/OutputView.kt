@@ -27,8 +27,8 @@ object OutputView {
         println("${dealer.name} 카드 : ${dealer.showCards()} - 합계 ${dealer.getScore()}")
     }
 
-    fun printDealerDrawInfo(dealer: Dealer) {
-        if (dealer.checkCardDrawAvailable()) {
+    fun printDealerDrawInfo(dealer: Dealer, isCardDrawable: Boolean) {
+        if (isCardDrawable) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             return
         }
@@ -40,10 +40,5 @@ object OutputView {
         bettingResult.results.forEach { (player, earnRate) ->
             println("${player.name} : $earnRate")
         }
-    }
-
-    private fun convertBooleanToString(boolean: Boolean): String {
-        if (boolean) return "승"
-        return "패"
     }
 }

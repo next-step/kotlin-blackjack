@@ -45,7 +45,7 @@ fun playerTurn(player: Player) {
 }
 
 fun dealerTurn(dealer: Dealer) {
-    OutputView.printDealerDrawInfo(dealer)
+    OutputView.printDealerDrawInfo(dealer, dealer.checkCardDrawAvailable())
     dealer.drawCard()
 }
 
