@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.playingcard
 
 enum class Symbol(val initial: String) {
     ACE("A"),

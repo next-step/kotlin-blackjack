@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.playingcard
 
 data class Card(val suit: Suit, val symbol: Symbol) {
     companion object {

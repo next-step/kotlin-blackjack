@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.playingcard
 
 class Deck(cards: List<Card>) {
     private val cards = cards.toMutableList()

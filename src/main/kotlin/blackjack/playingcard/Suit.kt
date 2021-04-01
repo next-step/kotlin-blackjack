@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.playingcard
 
 enum class Suit {
     SPADES,
