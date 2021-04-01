@@ -38,7 +38,7 @@ abstract class Participant(
     }
 
     fun showCards(): String {
-        return cards.displayCards.joinToString(", ")
+        return cards.displayCards
     }
 
     private fun initCards() {

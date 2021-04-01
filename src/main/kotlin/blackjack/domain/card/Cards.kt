@@ -5,8 +5,8 @@ class Cards(private val _values: ArrayList<Card>) {
         get() = score().isBlackjack
     val isBust: Boolean
         get() = score().isBust
-    val displayCards: List<String>
-        get() = _values.map { it.displayName }
+    val displayCards: String
+        get() = _values.joinToString(", ") {it.displayName}
 
     fun score(): Score {
         var sum = Score(_values.map { it.score }.sum())
