@@ -1,4 +1,4 @@
-package blackjack.model.player
+package blackjack.model.gamer
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -6,31 +6,31 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-internal class PlayersTest {
+internal class GamersTest {
     private val deck = MockDeck()
 
     @ParameterizedTest
-    @MethodSource("playerNamesProvider")
+    @MethodSource("gamerNamesProvider")
     fun `플레이어 이름의 리스트로 Players를 만들 수 있다`(names: List<String>) {
-        val result = Players(names, deck)
+        val result = Gamers(names, deck)
 
         assertThat(result.map { it.name }).containsAll(names)
     }
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
-        val playerList = mutableListOf(Player(deck, "sangw0804"))
+        val gamerList = mutableListOf(Player(deck, "sangw0804"))
 
-        val players = Players(playerList)
+        val gamers = Gamers(gamerList)
 
-        playerList.add(Player(deck, "newPlayer"))
+        gamerList.add(Player(deck, "newPlayer"))
 
-        assertThat(players.size).isEqualTo(1)
+        assertThat(gamers.size).isEqualTo(1)
     }
 
     companion object {
         @JvmStatic
-        fun playerNamesProvider(): List<Arguments> {
+        fun gamerNamesProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(

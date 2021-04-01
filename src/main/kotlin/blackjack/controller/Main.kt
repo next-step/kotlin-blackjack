@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.model.player.Player
-import blackjack.model.TrumpRule
-import blackjack.model.player.Dealer
-import blackjack.model.player.Players
+import blackjack.model.BlackJackRule
+import blackjack.model.gamer.Dealer
+import blackjack.model.gamer.Gamer
+import blackjack.model.gamer.Gamers
 import blackjack.model.trump.Deck
 import blackjack.model.trump.TrumpDeck
 import blackjack.view.InputView
@@ -11,19 +11,19 @@ import blackjack.view.OutputView
 
 fun main() {
     val deck = TrumpDeck()
-    val players = Players(InputView.readNames(), deck)
+    val gamers = Gamers(InputView.readNames(), deck)
     val dealer = Dealer(deck)
-    val playersAndDealer = Players((players + dealer).toList())
+    val gamersAndDealer = Gamers((gamers + dealer).toList())
 
-    OutputView.printFirstDraw(playersAndDealer)
+    OutputView.printFirstDraw(gamersAndDealer)
 
-    val rule = TrumpRule
+    val rule = BlackJackRule
     if (!dealer.hasValidScore(rule)) {
-        printJudgeResult(dealer, players, rule)
+        printJudgeResult(dealer, gamers, rule)
         return
     }
 
-    players.forEach {
+    gamers.forEach {
         drawUntilUserStop(it, deck)
     }
 
@@ -31,27 +31,27 @@ fun main() {
         OutputView.printDealerReason()
     }
 
-    playersAndDealer.forEach {
+    gamersAndDealer.forEach {
         OutputView.printResult(it.name, it.cards, rule.getScore(it.cards))
     }
 
-    printJudgeResult(dealer, players, rule)
+    printJudgeResult(dealer, gamers, rule)
 }
 
-private fun drawUntilUserStop(player: Player, deck: Deck) {
-    while (player.keepDrawing(InputView.readUserResponse(player.name), deck)) {
-        OutputView.printPlayer(player)
+private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {
+    while (gamer.keepDrawing(InputView.readUserResponse(gamer.name), deck)) {
+        OutputView.printPlayer(gamer)
     }
 }
 
 private fun printJudgeResult(
     dealer: Dealer,
-    players: Players,
-    rule: TrumpRule
+    gamers: Gamers,
+    rule: BlackJackRule
 ) {
     OutputView.printJudgeTitle()
-    OutputView.printDealerJudgeResult(dealer.name, players.countLose(dealer, rule), players.countWin(dealer, rule))
-    players.forEach {
+    OutputView.printDealerJudgeResult(dealer.name, gamers.countLose(dealer, rule), gamers.countWin(dealer, rule))
+    gamers.forEach {
         OutputView.printPlayerJudgeResult(it.name, it.isWin(dealer, rule))
     }
 }

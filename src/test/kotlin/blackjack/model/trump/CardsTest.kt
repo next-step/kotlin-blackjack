@@ -1,6 +1,6 @@
 package blackjack.model.trump
 
-import blackjack.model.player.MockDeck
+import blackjack.model.gamer.MockDeck
 import blackjack.model.score.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package blackjack.model.player
+package blackjack.model.gamer
 
 import blackjack.model.trump.Cards
 import org.assertj.core.api.Assertions.assertThat
@@ -12,26 +12,26 @@ internal class PlayerTest {
     @ParameterizedTest
     @ValueSource(strings = ["pobi"])
     fun `플레이어는 이름을 가진다`(name: String) {
-        val player = Player(deck, name)
+        val gamer = Player(deck, name)
 
-        assertThat(player).hasFieldOrPropertyWithValue("name", name)
+        assertThat(gamer).hasFieldOrPropertyWithValue("name", name)
     }
 
     @Test
     fun `플레이어는 카드들을 가진다`() {
-        val player = Player(deck, "sangw0804")
+        val gamer = Player(deck, "sangw0804")
 
-        assertThat(player).hasFieldOrProperty("cards")
+        assertThat(gamer).hasFieldOrProperty("cards")
     }
 
     @Test
     fun `userResponse 가 "y" 이면 카드를 한장 더 뽑는다`() {
-        val player = Player(deck, "sangw0804")
+        val gamer = Player(deck, "sangw0804")
 
-        assertThat(player.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT)
+        assertThat(gamer.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT)
 
-        player.keepDrawing("y", deck)
+        gamer.keepDrawing("y", deck)
 
-        assertThat(player.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT + 1)
+        assertThat(gamer.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT + 1)
     }
 }

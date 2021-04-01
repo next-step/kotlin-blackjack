@@ -17,8 +17,8 @@ object InputView {
         return input
     }
 
-    fun readUserResponse(playerName: String): String {
-        val input = readLineWhileNullOrBlank("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun readUserResponse(gamerName: String): String {
+        val input = readLineWhileNullOrBlank("${gamerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         return input.trim().toLowerCase()
     }

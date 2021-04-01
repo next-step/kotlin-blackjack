@@ -8,14 +8,14 @@ import org.junit.jupiter.params.provider.MethodSource
 
 internal class JudgeTest {
     @ParameterizedTest
-    @MethodSource("playerOpponentProvider")
-    fun `조건에 따라 승리 여부를 판단한다`(playerScore: Score, opponentScore: Score, isWin: Boolean) {
-        assertThat(Judge.isWin(playerScore, opponentScore)).isEqualTo(isWin)
+    @MethodSource("gamerOpponentProvider")
+    fun `조건에 따라 승리 여부를 판단한다`(gamerScore: Score, opponentScore: Score, isWin: Boolean) {
+        assertThat(Judge.isWin(gamerScore, opponentScore)).isEqualTo(isWin)
     }
 
     companion object {
         @JvmStatic
-        private fun playerOpponentProvider(): List<Arguments> {
+        private fun gamerOpponentProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(

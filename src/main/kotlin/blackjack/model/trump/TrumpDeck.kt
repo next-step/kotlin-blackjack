@@ -1,18 +1,8 @@
 package blackjack.model.trump
 
-class TrumpDeck internal constructor(
+class TrumpDeck constructor(
     private val deck: MutableList<Card> = buildDeck()
 ) : Deck, MutableList<Card> by deck {
-    override fun peekCard(cardNumber: CardNumber, suit: Suit): Card {
-        val foundCard = deck.find { it == Card(cardNumber, suit) }
-
-        requireNotNull(foundCard)
-
-        deck.removeIf { it == Card(cardNumber, suit) }
-
-        return foundCard
-    }
-
     override fun draw(): Card {
         return deck.removeAt(0)
     }

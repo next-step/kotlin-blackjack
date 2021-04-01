@@ -3,15 +3,15 @@ package blackjack.model
 import blackjack.model.score.Score
 
 object Judge {
-    fun isWin(playerScore: Score, opponentScore: Score): Boolean {
+    fun isWin(gamerScore: Score, opponentScore: Score): Boolean {
         if (!opponentScore.isValid()) {
             return true
         }
 
-        if (!playerScore.isValid()) {
+        if (!gamerScore.isValid()) {
             return false
         }
 
-        return playerScore >= opponentScore
+        return gamerScore >= opponentScore
     }
 }

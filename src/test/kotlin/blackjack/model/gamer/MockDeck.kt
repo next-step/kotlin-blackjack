@@ -1,4 +1,4 @@
-package blackjack.model.player
+package blackjack.model.gamer
 
 import blackjack.model.trump.Card
 import blackjack.model.trump.CardNumber
@@ -8,7 +8,7 @@ import blackjack.model.trump.Suit
 class MockDeck(
     private val deck: MutableList<Card> = buildDeck()
 ) : Deck, MutableList<Card> by deck {
-    override fun peekCard(cardNumber: CardNumber, suit: Suit): Card {
+    fun peekCard(cardNumber: CardNumber, suit: Suit): Card {
         return deck.find { it == Card(cardNumber, suit) }!!
     }
 

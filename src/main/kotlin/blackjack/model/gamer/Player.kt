@@ -1,4 +1,4 @@
-package blackjack.model.player
+package blackjack.model.gamer
 
 import blackjack.model.Judge
 import blackjack.model.Rule
@@ -6,28 +6,28 @@ import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
-open class Player(cards: Cards, val name: String) {
+open class Player(cards: Cards, override val name: String) : Gamer {
 
     constructor(deck: Deck, name: String) : this(Cards.firstDraw(deck), name)
 
-    var cards = cards
+    override var cards = cards
         protected set
 
-    fun isWin(opponent: Player, rule: Rule): Boolean {
+    override fun isWin(opponent: Gamer, rule: Rule): Boolean {
         return Judge.isWin(getScore(rule), opponent.getScore(rule))
     }
 
-    fun isLose(opponent: Player, rule: Rule): Boolean {
+    override fun isLose(opponent: Gamer, rule: Rule): Boolean {
         return !isWin(opponent, rule)
     }
 
-    fun hasValidScore(rule: Rule) = getScore(rule).isValid()
+    override fun hasValidScore(rule: Rule) = getScore(rule).isValid()
 
-    private fun getScore(rule: Rule): Score {
+    override fun getScore(rule: Rule): Score {
         return rule.getScore(cards)
     }
 
-    fun keepDrawing(userResponse: String, deck: Deck): Boolean {
+    override fun keepDrawing(userResponse: String, deck: Deck): Boolean {
         if (userResponse == "y") {
             draw(deck)
             return true
@@ -35,7 +35,7 @@ open class Player(cards: Cards, val name: String) {
         return false
     }
 
-    private fun draw(deck: Deck) {
+    fun draw(deck: Deck) {
         cards = cards.draw(deck)
     }
 }
