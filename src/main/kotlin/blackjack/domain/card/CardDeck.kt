@@ -6,15 +6,6 @@ object CardDeck {
 
     private val CARDS: LinkedList<Card> = LinkedList<Card>()
 
-    fun drawCard(): Card {
-        return CARDS.pop()
-    }
-
-    fun of(suit: Suit, denomination: Denomination): Card {
-        return CARDS.find { it.suit == suit && it.denomination == denomination }
-            ?: throw IllegalArgumentException("해당 카드를 찾을 수 없습니다.")
-    }
-
     init {
         for (suit in Suit.values()) {
             for (denomination in Denomination.values()) {
@@ -22,5 +13,14 @@ object CardDeck {
             }
         }
         CARDS.shuffle()
+    }
+
+    fun drawCard(): Card {
+        return CARDS.pop()
+    }
+
+    fun of(suit: Suit, denomination: Denomination): Card {
+        return CARDS.find { it.suit == suit && it.denomination == denomination }
+            ?: throw IllegalArgumentException("해당 카드를 찾을 수 없습니다.")
     }
 }
