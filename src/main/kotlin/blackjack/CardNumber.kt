@@ -13,5 +13,5 @@ enum class CardNumber(val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(1);
+    ACE(1)
 }
