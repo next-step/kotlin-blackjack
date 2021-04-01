@@ -7,7 +7,7 @@ class GameResult(players: List<User>, dealer: User) {
     val players: Map<User, BettingMoney> = initPlayerResult(players, dealer)
     val dealer: BettingMoney = initDealerResult()
 
-    private fun initDealerResult() = BettingMoneys(players.values.toList()).sum()
+    private fun initDealerResult() = BettingMoneys(players.values.toList()).sum() * -1.0
 
     private fun initPlayerResult(players: List<User>, dealer: User) =
         players.map { Pair(it, calculateProfit(it, dealer)) }.toMap()

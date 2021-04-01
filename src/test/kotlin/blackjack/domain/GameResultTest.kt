@@ -30,7 +30,7 @@ internal class GameResultTest {
 
         val result = GameResult(listOf(player), Dealer())
 
-        assertThat(result.dealer).isEqualTo(bettingMoney * -1)
+        assertThat(result.dealer).isEqualTo(BettingMoney(bettingMoney * -1))
     }
 
     companion object {
