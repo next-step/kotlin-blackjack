@@ -4,7 +4,7 @@ import blackjack.domain.DrawDecider
 import blackjack.domain.card.CardDeck
 
 class Dealer : User(DEALER_NAME) {
-    override fun canDraw(): Boolean = calculateScore().isLowerThan(DEALER_DRAW_CONDITION)
+    override fun canDraw(): Boolean = score.isLowerThan(DEALER_DRAW_CONDITION)
 
     fun drawAdditional(cardDeck: CardDeck) {
         while (canDraw()) {

@@ -14,7 +14,7 @@ data class Score(val score: Int) {
         return this.score <= score
     }
 
-    fun compareTo(other: Score): ResultType = ResultType.of(this, other)
+    infix fun compareTo(other: Score): ResultType = ResultType.of(this, other)
 
     companion object {
         private const val MIN_SCORE = 0

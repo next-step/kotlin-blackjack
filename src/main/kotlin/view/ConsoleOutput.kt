@@ -46,8 +46,8 @@ class ConsoleOutput {
 
     fun printCardAndScore(info: UserInfo) {
         println()
-        println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore().score}")
-        info.players.users.forEach { println("${showHands(it)} - 결과: ${it.calculateScore().score}") }
+        println("${showHands(info.dealer)} - 결과: ${info.dealer.score.score}")
+        info.players.users.forEach { println("${showHands(it)} - 결과: ${it.score.score}") }
     }
 
     fun printDealerDrawingMessage() {

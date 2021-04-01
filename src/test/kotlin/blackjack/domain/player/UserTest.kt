@@ -29,7 +29,7 @@ class UserTest {
         user.draw(createCard(CardSymbol.TWO.name, CardSuit.SPADE.name), DrawDecider.DRAW)
         user.draw(createCard(CardSymbol.THREE.name, CardSuit.SPADE.name), DrawDecider.DRAW)
 
-        val actual = user.calculateScore()
+        val actual = user.score
 
         Assertions.assertThat(actual.score).isEqualTo(5)
     }
