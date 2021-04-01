@@ -4,7 +4,9 @@ fun main() {
     val game = BlackJackGame()
     val cardExtractor = RandomCardExtractor()
     val dealer = Dealer()
-    val players = game.parsePlayers(inputName())
+    val names = game.parseName(inputName())
+    val prices = names.map { inputPrice(it).parseInt() }
+    val players = game.parsePlayers(names, prices)
     val users = game.getUsers(dealer, players)
 
     users.firstDeal(cardExtractor)
@@ -13,13 +15,16 @@ fun main() {
     if (dealer.isBust()) {
         printDealerBust(dealer)
         return
+    } else if (dealer.isBlackJack()) {
+        printResult(users)
+        return
     }
 
     players.players.forEach {
         game.hitOrStand(it, cardExtractor)
     }
 
-    printResult(dealer, players)
+    printResult(users)
 }
 
 class BlackJackGame {
@@ -28,10 +33,14 @@ class BlackJackGame {
         return Users(players.players + dealer)
     }
 
-    fun parsePlayers(names: String?): Players {
-        require(names != null) { "이름을 입력해주세요" }
+    fun parseName(names: String?): List<String> {
+        require(names != null && names.isNotBlank()) { "이름을 입력해주세요" }
 
-        return Players(names.split(DELIMITER).map { Player(it) })
+        return names.split(DELIMITER)
+    }
+
+    fun parsePlayers(names: List<String>, prices: List<Int>): Players {
+        return Players((names.indices).map { Player(names[it], prices[it]) })
     }
 
     private fun getReceiveCardAnswer(player: Player): String {
@@ -47,11 +56,11 @@ class BlackJackGame {
         }
     }
 
-    fun hitOrStand(player: Player, randomCardExtractor: RandomCardExtractor) {
+    fun hitOrStand(player: Player, cardExtractor: CardExtractor) {
         while (!player.isBust()) {
             val answer = getReceiveCardAnswer(player)
             if (answer == YES) {
-                player.cardDeck.add(randomCardExtractor.getCard())
+                player.cardDeck.add(cardExtractor.getCard())
             }
             println(player.cardText())
 

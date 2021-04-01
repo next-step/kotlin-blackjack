@@ -7,4 +7,12 @@ class Users(private val _users: List<User>) {
     fun firstDeal(cardExtractor: CardExtractor) {
         users.forEach { it.firstDeal(cardExtractor) }
     }
+
+    fun getDealer(): Dealer {
+        return users.filterIsInstance<Dealer>().first()
+    }
+
+    fun getPlayers(): Players {
+        return Players(users.filterIsInstance<Player>())
+    }
 }

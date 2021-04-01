@@ -8,6 +8,24 @@ class DealerTest {
     private val dealer = Dealer()
 
     @Test
+    fun `딜러의 최종 수익을 올바르게 계산한다`() {
+        val price1 = 3000
+        val price2 = 4000
+        val player1 = Player("kasha", price1)
+        player1.cardDeck.add(Card(CardType.SPADE, CardNumber.TWO))
+        player1.cardDeck.add(Card(CardType.SPADE, CardNumber.TEN))
+        val player2 = Player("nextstep", price2)
+        player2.cardDeck.add(Card(CardType.SPADE, CardNumber.SEVEN))
+        player2.cardDeck.add(Card(CardType.SPADE, CardNumber.TEN))
+        val dealer = Dealer()
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.FIVE))
+        dealer.cardDeck.add(Card(CardType.HEART, CardNumber.TEN))
+        val users = Users(listOf(dealer, player1, player2))
+
+        assertThat(dealer.getEvaluate(users)).isEqualTo(price1 - price2)
+    }
+
+    @Test
     fun `Dealer의 이름은 딜러로 고정된다`() {
         assertThat(dealer.name).isEqualTo("딜러")
     }

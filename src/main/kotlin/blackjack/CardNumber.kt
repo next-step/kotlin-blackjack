@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.Card.Companion.BLACK_JACK_NUM
+import blackjack.User.Companion.BLACK_JACK_NUM
 
 enum class CardNumber(val score: Int) {
     ACE(11),

@@ -10,6 +10,13 @@ class Dealer : User(NAME) {
         }
     }
 
+    override fun getEvaluate(users: Users): Int {
+        return users.getPlayers().players
+            .map { it.getEvaluate(users) }
+            .sum()
+            .unaryMinus()
+    }
+
     override fun getFirstDeal(): List<Card> {
         return listOf(cardDeck.cards[0])
     }

@@ -10,6 +10,7 @@ class Cards {
     }
 
     fun getScore(): Int {
-        return cards.sortedBy { it.cardNumber.score }.fold(0) { acc, card -> card.cardNumber.addExecute(acc) }
+        return cards.sortedBy { it.cardNumber.score }
+            .fold(0) { acc, card -> card.cardNumber.addExecute(acc) }
     }
 }
