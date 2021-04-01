@@ -10,8 +10,6 @@ fun main() {
     val players = createPlayers()
     val dealer = Dealer()
 
-    InputView.inputBatting(players)
-
     OutputView.printAllPlayerCards(players, dealer)
 
     gameStart(players, dealer)
@@ -24,8 +22,12 @@ fun main() {
 
 fun createPlayers(): Players {
     val names = InputView.inputPlayers()
+    val bettingTable = InputView.inputBatting(names)
+
     return Players(
-        names.map { Player(it) }
+        names.zip(bettingTable) { name, money ->
+            Player(name, initMoney = money)
+        }
     )
 }
 

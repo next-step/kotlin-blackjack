@@ -6,9 +6,14 @@ import blackjack.domain.winning.GameResult
 
 class Player(
     name: String,
-    initCards: ArrayList<Card> = arrayListOf<Card>()
+    initCards: ArrayList<Card> = arrayListOf<Card>(),
+    initMoney: Double
 ) : Participant(name, initCards) {
     private var money = 0.0
+
+    init {
+        this.money = initMoney
+    }
 
     fun getEarnRate(dealer: Dealer): Double {
         val profit = state.profit(money)
@@ -24,10 +29,6 @@ class Player(
                 money
             }
         }
-    }
-
-    fun betMoney(money: Double) {
-        this.money = money
     }
 
     fun isWinning(dealer: Dealer): GameResult {

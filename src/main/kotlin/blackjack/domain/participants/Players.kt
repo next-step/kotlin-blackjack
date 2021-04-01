@@ -11,7 +11,7 @@ class Players(
         )
     }
 
-    fun toString(): String {
+    override fun toString(): String {
         return values.joinToString { it.name }
     }
 }

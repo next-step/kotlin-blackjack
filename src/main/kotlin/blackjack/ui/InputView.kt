@@ -15,11 +15,13 @@ object InputView {
         return readLine() ?: throw IllegalArgumentException("Y/N 으로 대답해주세요")
     }
 
-    fun inputBatting(players: Players) {
-        for (player in players.values) {
-            println("${player.name}의 배팅 금액은 ?")
+    fun inputBatting(names: List<String>): List<Double> {
+        val bettingTable = mutableListOf<Double>()
+        for (name in names) {
+            println("${name}의 배팅 금액은 ?")
             val money = readLine()?.toDouble() ?: throw IllegalArgumentException("돈은 공백일 수 없습니다.")
-            player.betMoney(money)
+            bettingTable.add(money)
         }
+        return bettingTable
     }
 }
