@@ -3,10 +3,10 @@ package blackjack
 data class Game(private val cards: MutableList<Card>) {
     val state: States
         get() {
-            var score = firstCard.number.value + secondCard.number.value
+            var score = cards.sumBy { it.number.value }
 
-            if (firstCard.number == CardNumber.ACE || secondCard.number == CardNumber.ACE) {
-                score += SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE
+            for (card in cards) {
+                score = calculateAce(card, score)
             }
 
             if (score < BLACK_JACK_SCORE) {
@@ -15,8 +15,18 @@ data class Game(private val cards: MutableList<Card>) {
                 return States.BLACK_JACK
             }
 
-            return States.UNDEFINED
+            return States.BUST
         }
+
+    private fun calculateAce(card: Card, score: Int): Int {
+        if (card.number == CardNumber.ACE && score + SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE <= BLACK_JACK_SCORE) {
+            return SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE + score
+        }
+
+        return score
+    }
+
+    constructor(firstCard: Card, secondCard: Card) : this(mutableListOf(firstCard, secondCard))
 
     fun draw(card: Card) {
         cards.add(card)
