@@ -1,6 +1,6 @@
 package blackjack
 
-data class Game(private val firstCard: Card, private val secondCard: Card) {
+data class Game(private val cards: MutableList<Card>) {
     val state: States
         get() {
             var score = firstCard.number.value + secondCard.number.value
@@ -17,6 +17,10 @@ data class Game(private val firstCard: Card, private val secondCard: Card) {
 
             return States.UNDEFINED
         }
+
+    fun draw(card: Card) {
+        cards.add(card)
+    }
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
