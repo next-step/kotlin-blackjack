@@ -3,19 +3,8 @@ package blackjack
 data class Game(private var cards: Cards) {
     val state: States
         get() {
-            var score = cards.sumBy { it.number.value }
-
-            for (card in cards) {
-                score = calculateAce(card, score)
-            }
-
-            if (score < BLACK_JACK_SCORE) {
-                return States.HIT
-            } else if (score == BLACK_JACK_SCORE) {
-                return States.BLACK_JACK
-            }
-
-            return States.BUST
+            val score = cards.score
+            return States.valueOf(score)
         }
 
     fun draw(card: Card) {
