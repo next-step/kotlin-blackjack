@@ -37,4 +37,16 @@ class GameTest {
 
         assertThat(state).isEqualTo(States.BLACK_JACK)
     }
+
+    @Test
+    fun `카드의 숫자의 합이 21미만이면 카드를 받을 수 있다`() {
+        val game = Game(Card(CardSuite.HEART, CardNumber.KING), Card(CardSuite.SPADE, CardNumber.QUEEN))
+        val state = game.state
+
+        assertThat(state).isEqualTo(States.HIT)
+
+        game.draw(Card(CardSuite.SPADE, CardNumber.THREE))
+
+        assertThat(game.state).isEqualTo(States.BUST)
+    }
 }
