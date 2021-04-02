@@ -13,9 +13,14 @@ fun main() {
     val deck = TrumpDeck()
     val gamers = Gamers(InputView.readNames(), deck)
     val dealer = Dealer(deck)
-    val gamersAndDealer = Gamers((gamers + dealer).toList())
 
-    OutputView.printFirstDraw(gamersAndDealer)
+    OutputView.printFirstDraw(gamers + dealer)
+
+    dealer.drawIfNeeded(deck)
+
+    if (dealer.didOneMoreDraw()) {
+        OutputView.printDealerReason()
+    }
 
     val rule = BlackJackRule
     if (!dealer.hasValidScore(rule)) {
@@ -27,11 +32,7 @@ fun main() {
         drawUntilUserStop(it, deck)
     }
 
-    if (dealer.didOneMoreDraw()) {
-        OutputView.printDealerReason()
-    }
-
-    gamersAndDealer.forEach {
+    (gamers + dealer).forEach {
         OutputView.printResult(it.name, it.cards, rule.getScore(it.cards))
     }
 

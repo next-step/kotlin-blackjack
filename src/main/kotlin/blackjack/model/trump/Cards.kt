@@ -18,7 +18,7 @@ class Cards private constructor(private val cards: Set<Card>) : Set<Card> by car
 
     fun draw(deck: Deck): Cards {
         val mutableCards = cards.toMutableSet()
-        mutableCards.add(deck.draw())
+        deck.draw()?.let { mutableCards.add(it) }
 
         return Cards(mutableCards.toSet())
     }
@@ -26,6 +26,6 @@ class Cards private constructor(private val cards: Set<Card>) : Set<Card> by car
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 
-        fun firstDraw(deck: Deck) = Cards((1..INITIAL_DRAW_COUNT).map { deck.draw() })
+        fun firstDraw(deck: Deck) = Cards((1..INITIAL_DRAW_COUNT).mapNotNull { deck.draw() })
     }
 }

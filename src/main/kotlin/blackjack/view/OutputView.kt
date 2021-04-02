@@ -1,14 +1,13 @@
 package blackjack.view
 
 import blackjack.model.trump.Cards
-import blackjack.model.gamer.Gamers
 import blackjack.model.score.Score
 import blackjack.model.gamer.Dealer
 import blackjack.model.gamer.Gamer
 import blackjack.view.ViewUtil.toString
 
 object OutputView {
-    fun printFirstDraw(gamers: Gamers) {
+    fun printFirstDraw(gamers: Set<Gamer>) {
         println("${gamers.joinToString(", ") { it.name }}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
         gamers.forEach {
             printPlayer(it)
