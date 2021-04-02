@@ -12,6 +12,10 @@ object Judge {
             return false
         }
 
+        if (gamerScore.isMaximum() && opponentScore.isMaximum()) {
+            return gamerScore.isBlackJack || !opponentScore.isBlackJack
+        }
+
         return gamerScore >= opponentScore
     }
 }

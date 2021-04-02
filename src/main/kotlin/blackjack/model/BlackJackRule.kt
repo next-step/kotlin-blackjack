@@ -6,14 +6,24 @@ import blackjack.model.trump.Cards
 
 object BlackJackRule : Rule {
     override fun getScore(cards: Cards): Score {
-        var aceCount = cards.countAce()
         var score = cards.getHighestScore()
 
-        while (!score.isValid() && aceCount > 0) {
-            score -= (CardNumber.ACE.scores.highest() - CardNumber.ACE.scores.lowest())
-            aceCount--
+        if (score.isMaximum()) {
+            return Score(score.value, true)
         }
 
-        return score
+        return findValidScore(score, cards.countAce())
+    }
+
+    private fun findValidScore(score: Score, aceCount: Int): Score {
+        var scoreVar = score
+        var aceCountVar = aceCount
+
+        while (!scoreVar.isValid() && aceCountVar > 0) {
+            scoreVar -= CardNumber.ACE.diffHighestAndLowest()
+            aceCountVar--
+        }
+
+        return scoreVar
     }
 }

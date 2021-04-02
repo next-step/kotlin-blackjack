@@ -19,6 +19,14 @@ internal class RuleTest {
         assertThat(result).isEqualTo(score)
     }
 
+    @ParameterizedTest
+    @MethodSource("blackJackScoreProvider")
+    fun `A + 10카드 2장의 경우 블랙잭 score 리턴`(cards: Cards) {
+        val result = BlackJackRule.getScore(cards)
+
+        assertThat(result.isBlackJack).isTrue()
+    }
+
     companion object {
         private val deck = MockDeck()
 
@@ -60,7 +68,21 @@ internal class RuleTest {
                             deck.peekCard(CardNumber.ACE, Suit.SPADE),
                             deck.peekCard(CardNumber.TEN, Suit.HEART)
                         ),
-                        Score(21)
+                        Score(21, true)
+                    )
+                }
+            )
+        }
+
+        @JvmStatic
+        fun blackJackScoreProvider(): List<Arguments> {
+            return listOf(
+                Arguments {
+                    arrayOf(
+                        Cards(
+                            deck.peekCard(CardNumber.ACE, Suit.HEART),
+                            deck.peekCard(CardNumber.KING, Suit.SPADE)
+                        )
                     )
                 }
             )

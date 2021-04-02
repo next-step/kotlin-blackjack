@@ -44,6 +44,20 @@ internal class JudgeTest {
                         Score(25),
                         true
                     )
+                },
+                Arguments {
+                    arrayOf(
+                        Score(21, true),
+                        Score(21, false),
+                        true
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Score(21, false),
+                        Score(21, true),
+                        false
+                    )
                 }
             )
         }

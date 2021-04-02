@@ -1,5 +1,6 @@
 package blackjack.model.trump
 
+import blackjack.model.score.Score
 import blackjack.model.score.Scores
 
 enum class CardNumber(private val symbol: String, val scores: Scores) {
@@ -16,6 +17,10 @@ enum class CardNumber(private val symbol: String, val scores: Scores) {
     JACK("J", Scores(10)),
     QUEEN("Q", Scores(10)),
     KING("K", Scores(10));
+
+    fun diffHighestAndLowest(): Score {
+        return scores.highest() - scores.lowest()
+    }
 
     override fun toString(): String {
         return symbol
