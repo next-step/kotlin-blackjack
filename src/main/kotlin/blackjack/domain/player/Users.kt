@@ -13,7 +13,7 @@ class Users(val users: List<User>) {
 
     fun doPlayers(action: (User) -> Unit) = users.drop(1).forEach(action)
 
-    fun doDealer(action: (Dealer) -> Unit) = action
+    fun doDealer(action: (Dealer) -> Unit) = action(users[0] as Dealer)
 
     fun getResult() = GameResult(dealer = users[0], players = users.drop(1))
 

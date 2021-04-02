@@ -1,10 +1,10 @@
 package view
 
 import blackjack.domain.GameResult
-import blackjack.domain.ResultType
-import blackjack.domain.player.UserInfo
 import blackjack.domain.card.Card
 import blackjack.domain.player.User
+import blackjack.domain.player.UserInfo
+import blackjack.domain.player.UserName
 
 class ConsoleOutput {
     fun printUserNameInputMessage() {
@@ -46,8 +46,8 @@ class ConsoleOutput {
 
     fun printCardAndScore(info: UserInfo) {
         println()
-        println("${showHands(info.dealer)} - 결과: ${info.dealer.calculateScore().score}")
-        info.players.users.forEach { println("${showHands(it)} - 결과: ${it.calculateScore().score}") }
+        println("${showHands(info.dealer)} - 결과: ${info.dealer.score.score}")
+        info.players.users.forEach { println("${showHands(it)} - 결과: ${it.score.score}") }
     }
 
     fun printDealerDrawingMessage() {
@@ -56,10 +56,14 @@ class ConsoleOutput {
 
     fun printGameRecord(result: GameResult) {
         val builder = StringBuilder().apply {
-            append("\n## 최종 승패\n")
-            append("딜러: ${result.dealer[ResultType.WIN]}승 ${result.dealer[ResultType.DRAW]}무 ${result.dealer[ResultType.LOSE]}패\n")
-            result.players.forEach { append("${it.key.userName.name}: ${it.value.symbol}\n") }
+            append("\n## 최종 수익\n")
+            append("딜러: ${result.dealer.money}\n")
+            result.players.forEach { append("${it.key.userName.name}: ${it.value.money}\n") }
         }
         println(builder)
+    }
+
+    fun printBettingMoneyInputMessage(name: UserName) {
+        println("${name.name}의 배팅 금액은?")
     }
 }

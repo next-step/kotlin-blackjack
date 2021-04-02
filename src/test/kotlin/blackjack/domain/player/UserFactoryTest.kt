@@ -1,29 +1,37 @@
 package blackjack.domain.player
 
+import blackjack.domain.BettingMoney
+import blackjack.domain.createUserNames
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 
 internal class UserFactoryTest {
-    @DisplayName("유저 생성")
+    @DisplayName("유저 이름 생성")
     @Test
-    fun create() {
-        val input = "pobi,jason"
+    fun createUserNames() {
+        val names = "pobi, jason"
 
-        val players = UserFactory.create(input)
+        val userNames = UserFactory.createUserNames(names)
 
-        assertAll(
-            { assertThat(players.users.size).isEqualTo(3) },
-            { assertThat(players.users.map { it.userName }).containsExactly(UserName("딜러"), UserName("pobi"), UserName("jason")) }
-        )
+        assertThat(userNames.userNames).isEqualTo(createUserNames("pobi", "jason").userNames)
     }
 
-    @DisplayName("중복된 이름의 플레이어가 있는 경우 예외 발생")
+    @DisplayName("유저 생성")
     @Test
-    fun validateDuplicatedName() {
-        val duplicatedInput = "pobi,pobi"
-        assertThrows<IllegalArgumentException> { UserFactory.create(duplicatedInput) }
+    fun createUsers() {
+        val userNames = createUserNames("pobi", "jason")
+        val bettingMoneys = listOf(BettingMoney("0"), BettingMoney("0"))
+
+        val users = UserFactory.createUsers(userNames, bettingMoneys)
+
+        assertAll(
+            { assertThat(users.users.size).isEqualTo(3) },
+            {
+                assertThat(users.users.map { it.userName })
+                    .contains(UserName("딜러"), UserName("pobi"), UserName("jason"))
+            }
+        )
     }
 }
