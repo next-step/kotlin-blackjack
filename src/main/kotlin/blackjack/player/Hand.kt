@@ -1,5 +1,5 @@
 package blackjack.player
 
-import blackjack.playingcard.Card
+import blackjack.playingcard.Cards
 
-class Hand(val cards: List<Card>)
+class Hand(val cards: Cards)
