@@ -23,6 +23,10 @@ class Cards private constructor(private val cards: Set<Card>) : Set<Card> by car
         return Cards(mutableCards.toSet())
     }
 
+    fun isNoAdditionalDraw(): Boolean {
+        return cards.size == INITIAL_DRAW_COUNT
+    }
+
     companion object {
         const val INITIAL_DRAW_COUNT = 2
 

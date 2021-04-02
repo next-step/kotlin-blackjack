@@ -8,7 +8,7 @@ object BlackJackRule : Rule {
     override fun getScore(cards: Cards): Score {
         var score = cards.getHighestScore()
 
-        if (score.isMaximum()) {
+        if (score.isMaximum() && cards.isNoAdditionalDraw()) {
             return Score(score.value, true)
         }
 

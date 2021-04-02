@@ -21,10 +21,10 @@ internal class RuleTest {
 
     @ParameterizedTest
     @MethodSource("blackJackScoreProvider")
-    fun `A + 10카드 2장의 경우 블랙잭 score 리턴`(cards: Cards) {
+    fun `A + 10카드 2장의 경우 블랙잭 score 리턴`(cards: Cards, isBlackJack: Boolean) {
         val result = BlackJackRule.getScore(cards)
 
-        assertThat(result.isBlackJack).isTrue()
+        assertThat(result.isBlackJack).isEqualTo(isBlackJack)
     }
 
     companion object {
@@ -82,7 +82,18 @@ internal class RuleTest {
                         Cards(
                             deck.peekCard(CardNumber.ACE, Suit.HEART),
                             deck.peekCard(CardNumber.KING, Suit.SPADE)
-                        )
+                        ),
+                        true
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Cards(
+                            deck.peekCard(CardNumber.SEVEN, Suit.SPADE),
+                            deck.peekCard(CardNumber.SEVEN, Suit.HEART),
+                            deck.peekCard(CardNumber.SEVEN, Suit.CLUB)
+                        ),
+                        false
                     )
                 }
             )
