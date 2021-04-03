@@ -1,56 +1,61 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Participants
-import blackjack.domain.Player
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Players
+import blackjack.domain.participants.Player
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 
-private const val YES = "Y"
-private const val NO = "N"
-
 fun main() {
-    val players = InputView.inputPlayer().map { name -> Player(name) }
+    val players = createPlayers()
     val dealer = Dealer()
-    val allPaticipants = Participants(players + dealer)
-    OutputView.printPlayerInfo(allPaticipants)
 
-    for (player in players) {
-        doPlayerTurn(player)
+    OutputView.printAllPlayerCards(players, dealer)
+
+    gameStart(players, dealer)
+
+    OutputView.printResult(players, dealer)
+
+    val playersEarnRate = players.getPlayersEarnRate(dealer)
+    OutputView.printGameWinning(playersEarnRate)
+}
+
+fun createPlayers(): Players {
+    val names = InputView.inputPlayers()
+    val bettingTable = InputView.inputBatting(names)
+
+    return Players(
+        names.zip(bettingTable) { name, money ->
+            Player(name, initMoney = money)
+        }
+    )
+}
+
+fun gameStart(players: Players, dealer: Dealer) {
+    for (player in players.values) {
+        playerTurn(player)
     }
-    doDealerTurn(dealer)
-
-    OutputView.printPlayersCardList(allPaticipants)
-    OutputView.printGameResult(allPaticipants)
-
-    OutputView.printGameWinner(allPaticipants)
+    dealerTurn(dealer)
 }
 
-private fun doPlayerTurn(player: Player) {
-    var isKeepPlayerTurn = true
-    do {
-        isKeepPlayerTurn = selectDrawCard(player)
-    } while (isKeepPlayerTurn)
+fun playerTurn(player: Player) {
+    var answer = "Y"
+    while (answer == "Y" && player.checkCardDrawAvailable()) {
+        answer = InputView.selectDrawCard(player.name)
+        playSelection(player, answer)
+    }
 }
 
-private fun doDealerTurn(dealer: Dealer) {
+fun dealerTurn(dealer: Dealer) {
+    OutputView.printDealerDrawInfo(dealer, dealer.checkCardDrawAvailable())
     dealer.drawCard()
 }
 
-private fun selectDrawCard(player: Player): Boolean {
-    if (!player.checkMyCardsIsOver21()) {
-        val answer = InputView.selectCardDraw(player.name)
-        return checkPlayerAnswerIsYes(answer, player)
-    }
-    OutputView.printWhenCardsOver21()
-    return false
-}
-
-private fun checkPlayerAnswerIsYes(answer: String, player: Player): Boolean {
-    if (answer == YES) {
+fun playSelection(player: Player, answer: String) {
+    if (answer == "Y") {
         player.drawCard()
-        OutputView.printPlayerCardList(player)
-        return true
+        OutputView.printPlayerCards(player)
+        return
     }
-    return false
+    player.stay()
 }

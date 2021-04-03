@@ -1,43 +1,44 @@
 package blackjack.ui
 
-import blackjack.domain.GameParticipants
-import blackjack.domain.Participants
+import blackjack.domain.participants.Dealer
+import blackjack.domain.participants.Participant
+import blackjack.domain.participants.Players
+import blackjack.domain.winning.BettingResult
 
 object OutputView {
-
-    fun printPlayerInfo(players: Participants) {
-        println("${players.value.map { it.name }}에게 2장을 나누었습니다.")
-        for (player in players.value) {
-            println("${player.name}: ${player.cards.getCardList()}")
+    fun printAllPlayerCards(players: Players, dealer: Dealer) {
+        val names = players.toString()
+        println("딜러와 $names 에게 2장의 카드를 나누었습니다.")
+        for (participant in players.values) {
+            println("${participant.name} 카드 : ${participant.showCards()}")
         }
+        println("${dealer.name} 카드 : ${dealer.showCards()}")
     }
 
-    fun printPlayersCardList(players: Participants) {
-        for (player in players.value) {
-            println("[${player.name}] 카드: ${player.cards.getCardList()}")
+    fun printPlayerCards(participant: Participant) {
+        println("${participant.name} 의 카드 : ${participant.showCards()}")
+    }
+
+    fun printResult(players: Players, dealer: Dealer) {
+        println("\n ----------- 결산 -----------")
+        for (participant in players.values) {
+            println("${participant.name} 카드 : ${participant.showCards()} - 합계 ${participant.getScore()}")
         }
+        println("${dealer.name} 카드 : ${dealer.showCards()} - 합계 ${dealer.getScore()}")
     }
 
-    fun printPlayerCardList(player: GameParticipants) {
-        println("[${player.name}] 카드: ${player.cards.getCardList()}")
-    }
-
-    fun printGameResult(players: Participants) {
-        println("\n--------- 게임 결과 ------------")
-        for (player in players.value) {
-            println("${player.name} 카드 : ${player.cards.getCardList()} - 결과: ${player.calculateMyCards()}")
+    fun printDealerDrawInfo(dealer: Dealer, isCardDrawable: Boolean) {
+        if (isCardDrawable) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            return
         }
+        println("딜러는 17이상이라 카드를 더이상 받지 않습니다.")
     }
 
-    fun printGameWinner(players: Participants) {
-        println("\n## 최종 승패")
-        val winners = players.getWinners()
-        for (player in players.value) {
-            println("${player.name} : ${player.isWinner(winners)}")
+    fun printGameWinning(bettingResult: BettingResult) {
+        println("딜러 : ${bettingResult.getDealerProfit()}")
+        bettingResult.results.forEach { (player, earnRate) ->
+            println("${player.name} : $earnRate")
         }
-    }
-
-    fun printWhenCardsOver21() {
-        println("## 카드의 합이 21이상이기 때문에 스킵합니다.\n")
     }
 }
