@@ -17,7 +17,7 @@ internal class DealerTest {
 
     @ParameterizedTest
     @MethodSource("provideDealerCards")
-    fun `딜러 카드의 점수기 16점 보다 높은 경우 카드를 더이상 가질 수 없다`(state: State, expected: Boolean) {
+    fun `딜러 카드의 점수가 16점 보다 높은 경우 카드를 더이상 가질 수 없다`(state: State, expected: Boolean) {
         val dealer = Dealer("자손", state)
         val result = dealer.isTakeable()
         assertThat(result).isEqualTo(expected)
