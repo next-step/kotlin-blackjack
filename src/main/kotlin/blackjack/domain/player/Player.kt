@@ -4,7 +4,10 @@ import blackjack.domain.Card
 import blackjack.domain.Score
 import blackjack.domain.state.State
 
-class Player(val name: String, var state: State) {
+class Player(val name: String, state: State) {
+
+    var state = state
+        private set
 
     val score: Score
         get() = state.cards.score
