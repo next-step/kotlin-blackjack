@@ -1,7 +1,7 @@
 package blackjack.userinterface
 
-import blackjack.dto.GamerDto
-import blackjack.dto.GamersDto
+import blackjack.dto.PlayerDto
+import blackjack.dto.GamerCardsDto
 import blackjack.dto.ResultsDto
 
 object Console : UserInterface {
@@ -34,17 +34,17 @@ object Console : UserInterface {
         }
     }
 
-    override fun outputCurrentCards(gamerDto: GamerDto) {
-        println(gamerDto.viewFormat())
+    override fun outputCurrentCards(playerDto: PlayerDto) {
+        println(playerDto.viewFormat())
     }
 
     override fun outputDealerTaken(dealerLimitScore: Int) {
         println("딜러는 $dealerLimitScore 이하라 한장의 카드를 더 받았습니다.")
     }
 
-    override fun outputGamerCards(gamersDto: GamersDto) {
-        val players = gamersDto.players
-        val dealerFirstCard = gamersDto.dealerFistCard
+    override fun outputGamerCards(gamerCardsDto: GamerCardsDto) {
+        val players = gamerCardsDto.players
+        val dealerFirstCard = gamerCardsDto.dealerFistCard
 
         println("딜러와 ${players.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
         println("딜러 카드: $dealerFirstCard")
@@ -63,5 +63,5 @@ object Console : UserInterface {
         players.forEach { println("${it.name}: ${it.matchResult}") }
     }
 
-    private fun GamerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"
+    private fun PlayerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"
 }

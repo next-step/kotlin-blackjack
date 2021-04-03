@@ -4,7 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Score
 import blackjack.domain.state.State
 
-class Player(override val name: String, override var state: State) : Gamer {
+class Player(val name: String, var state: State) {
 
     val score: Score
         get() = state.cards.score
@@ -13,13 +13,13 @@ class Player(override val name: String, override var state: State) : Gamer {
         require(name.isNotBlank())
     }
 
+    fun isTakeable() = state.isTakeable()
+
     fun stay() {
         state = state.stay()
     }
 
-    override fun isTakeable() = state.isTakeable()
-
-    override fun takeCard(card: Card) {
+    fun takeCard(card: Card) {
         state = state.draw(card)
     }
 

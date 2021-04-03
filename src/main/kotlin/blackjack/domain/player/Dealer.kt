@@ -4,24 +4,38 @@ import blackjack.domain.Card
 import blackjack.domain.Score
 import blackjack.domain.state.State
 
-class Dealer(override val name: String, override var state: State) : Gamer {
+class Dealer(name: String, state: State) {
+
+    private val player = Player(name, state)
+
+    val state: State
+        get() = player.state
 
     val score: Score
-        get() = state.cards.score
+        get() = player.score
 
-    override fun isTakeable() = state.isTakeable() && score <= Score.DEALER_TAKEABLE_LIMIT
-
-    override fun takeCard(card: Card) {
-        state = state.draw(card)
+    init {
+        stayIfNotTakeable()
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return true
+    fun isTakeable() = player.isTakeable()
+
+    fun stay() {
+        player.stay()
     }
 
-    override fun hashCode(): Int {
-        return javaClass.hashCode()
+    fun takeCard(card: Card) {
+        player.takeCard(card)
+        stayIfNotTakeable()
+    }
+
+    private fun stayIfNotTakeable() {
+        if (!isTakeable()) {
+            return
+        }
+        if (score <= Score.DEALER_TAKEABLE_LIMIT) {
+            return
+        }
+        stay()
     }
 }
