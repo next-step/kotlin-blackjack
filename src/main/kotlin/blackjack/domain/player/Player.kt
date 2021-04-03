@@ -29,4 +29,10 @@ class Player(val name: String, state: State) {
     fun matchResult(dealer: Dealer): MatchingResult {
         return state.match(dealer.state)
     }
+
+    fun stayIfNotWantDraw(inputCardTakenWhether: Boolean) {
+        if (!inputCardTakenWhether) {
+            stay()
+        }
+    }
 }

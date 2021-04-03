@@ -7,8 +7,8 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.domain.state.StateFactory
-import blackjack.dto.PlayerDto
 import blackjack.dto.GamerCardsDto
+import blackjack.dto.PlayerDto
 import blackjack.dto.ResultsDto
 import blackjack.userinterface.Console
 import blackjack.userinterface.UserInterface
@@ -53,14 +53,14 @@ class BlackJackGame(private val userInterface: UserInterface) {
             return
         }
 
-        when (userInterface.inputCardTakenWhether(player.name)) {
-            false -> player.stay()
-            true -> {
-                player.takeCard(deck.draw())
-                userInterface.outputCurrentCards(PlayerDto(player))
-            }
+        player.stayIfNotWantDraw(userInterface.inputCardTakenWhether(player.name))
+
+        if (!player.isTakeable()) {
+            return
         }
 
+        player.takeCard(deck.draw())
+        userInterface.outputCurrentCards(PlayerDto(player))
         takeCardsIfNecessary(player)
     }
 }
