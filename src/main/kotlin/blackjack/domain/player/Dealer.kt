@@ -15,7 +15,7 @@ class Dealer(name: String, state: State) {
         get() = player.score
 
     init {
-        stayIfNotTakeable()
+        stayIfNotTakeableScore()
     }
 
     fun isTakeable() = player.isTakeable()
@@ -26,10 +26,10 @@ class Dealer(name: String, state: State) {
 
     fun takeCard(card: Card) {
         player.takeCard(card)
-        stayIfNotTakeable()
+        stayIfNotTakeableScore()
     }
 
-    private fun stayIfNotTakeable() {
+    private fun stayIfNotTakeableScore() {
         if (!isTakeable()) {
             return
         }
