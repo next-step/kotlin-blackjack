@@ -1,20 +1,19 @@
 package blackjack
 
-data class Game(private var cards: Cards) {
-    val state: States
+data class Game(private val players: Players, private var cards: Cards = Cards(ALL_CARDS)) {
+    val state: GameStates
         get() {
-            val score = cards.score
-            return States.valueOf(score)
+            if (isEndState()) {
+                return GameStates.END
+            }
+
+            return GameStates.PLAYING
         }
 
-    fun draw(card: Card) {
-        cards = Cards(cards + card)
-    }
-
-    constructor(firstCard: Card, secondCard: Card) : this(Cards(listOf(firstCard, secondCard)))
+    private fun isEndState() = players.countOfPlayingState == NO_PLAYING_COUNT
 
     companion object {
-        private const val BLACK_JACK_SCORE = 21
-        private const val SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE = 10
+        const val BLACK_JACK_SCORE = 21
+        private const val NO_PLAYING_COUNT = 0
     }
 }
