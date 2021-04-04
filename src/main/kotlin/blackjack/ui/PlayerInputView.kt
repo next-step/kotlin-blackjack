@@ -1,14 +1,16 @@
 package blackjack.ui
 
 import blackjack.domain.Player
+import blackjack.domain.Players
 
 object PlayerInputView {
-    fun askPlayerNames(): List<Player> {
+    fun askPlayerNames(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val names = readLine() ?: throw IllegalArgumentException("입력된 이름이 없습니다.")
         println()
 
-        return names.split(",").map { Player(it) }
+        val playerList = names.split(",").map { Player(it) }
+        return Players(playerList)
     }
 
     fun askMoreCard(name: String): Boolean {

@@ -1,24 +1,43 @@
 package blackjack.controller
 
-import blackjack.domain.CardPack
-import blackjack.domain.Dealer
-import blackjack.ui.CardView
+import blackjack.domain.BlackjackGame
+import blackjack.domain.Player
 import blackjack.ui.PlayerInputView
+import blackjack.ui.ResultView
+import blackjack.ui.model.PlayerCardResult
+import blackjack.ui.model.PlayerDto
 
 object BlackJackController {
     fun run() {
-        val cardPack = CardPack()
         val players = PlayerInputView.askPlayerNames()
-        val dealer = Dealer(players, cardPack)
+        val blackjackGame = BlackjackGame(players)
 
-        val playerDTOs = dealer.giveTwoCardsToAllPlayers()
-        CardView.printCardsOf(playerDTOs)
+        blackjackGame.giveTwoCardsToAllPlayers()
 
-        val blackJackResults = dealer.giveCardUntilStop(
-            PlayerInputView::askMoreCard,
-            CardView::printCardsOfSinglePlayer
-        )
+        val playerDtos = blackjackGame.players.map { PlayerDto(it) }
+        val dealerDto = PlayerDto(blackjackGame.dealer)
+        ResultView.printCardsOf(playerDtos, dealerDto)
 
-        CardView.printResults(blackJackResults)
+        players.forEach {
+            blackjackGame.askAndGiveCards(it)
+        }
+
+        blackjackGame.giveCardsToDealer()
+        ResultView.printInfoOfDealerBehavior(blackjackGame.addedCardNumberOfDealer)
+
+        val dealerResult = PlayerCardResult(blackjackGame.dealer)
+        val playerResults = blackjackGame.players.map { PlayerCardResult(it) }
+        ResultView.printCardResults(dealerResult, playerResults)
+
+        val playerWinTypes = blackjackGame.findPlayerWinTypes()
+        ResultView.printWinningResult(playerWinTypes)
+    }
+
+    private fun BlackjackGame.askAndGiveCards(player: Player) {
+        do {
+            val hasAccepted = PlayerInputView.askMoreCard(player.name)
+            giveCard(player, hasAccepted)
+            ResultView.printCardsOfSinglePlayer(PlayerDto(player))
+        } while (hasAccepted)
     }
 }

@@ -1,14 +1,14 @@
 package blackjack.domain
 
-import blackjack.enums.CardShape
-import blackjack.enums.CardType
-
 class Card(
-    val shape: CardShape,
-    val type: CardType
+    private val shape: CardShape,
+    private val type: CardType
 ) {
-    val point
-        get() = type.point
-    val expression
-        get() = "${type.expression}${shape.expression}"
+    val point = type.point
+    val isAce: Boolean
+        get() = type.isAce
+
+    override fun toString(): String {
+        return "$type$shape"
+    }
 }

@@ -1,32 +1,15 @@
 package blackjack.domain
 
-import blackjack.enums.CardShape
-import blackjack.enums.CardType
+import blackjack.domain.card.CardFactory
+import blackjack.domain.card.DefaultCardFactory
 
-class CardPack {
-    private val cards = mutableListOf<Card>()
+class CardPack(cardFactory: CardFactory = DefaultCardFactory()) {
+    private val cards = cardFactory.createCards().toMutableList()
 
-    init {
-        CardShape.values().forEach { cardShape ->
-            createCardsOf(cardShape)
-        }
-        cards.shuffle()
-    }
+    fun poll(): Card {
 
-    fun pickCard(): Card {
+        check(cards.isNotEmpty()) { "모든 카드가 사용되었습니다." }
 
-        if (cards.isEmpty()) {
-            throw IllegalStateException("모든 카드가 사용되었습니다.")
-        }
-
-        val pickedCard = cards[0]
-        cards.remove(pickedCard)
-        return pickedCard
-    }
-
-    private fun createCardsOf(cardShape: CardShape) {
-        CardType.values().forEach { cardType ->
-            cards.add(Card(cardShape, cardType))
-        }
+        return cards.removeAt(0)
     }
 }

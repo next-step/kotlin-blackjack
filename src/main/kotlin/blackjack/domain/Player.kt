@@ -1,31 +1,41 @@
 package blackjack.domain
 
-import blackjack.constant.BLACK_JACK_TWENTY_ONE
-import blackjack.enums.CardType
-import blackjack.ui.model.PlayerDTO
+import blackjack.ui.model.PlayerDto
 
 class Player(
     val name: String
-) {
+) : Participant {
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
-        get() = cards.map { "${it.type.expression}${it.shape.expression}" }
+        get() = cards.map { it.toString() }
+    val cardSize: Int
+        get() = cards.size
 
-    fun takeCard(card: Card): Boolean {
-        return cards.add(card)
+    constructor(name: String, cards: Set<Card>) : this(name) {
+        this.cards.addAll(cards)
     }
 
-    fun calculateCardSum(): Int {
+    override fun takeCard(card: Card) {
+
+        check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
+
+        cards.add(card)
+    }
+
+    override fun cardPointSum(): Int {
         var cardPointSum = cards.sumBy { it.point }
-        val aceCount = cards.count { it.type == CardType.Ace }
+        val aceCount = cards.count { it.isAce }
 
         repeat(aceCount) {
-            cardPointSum = if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
+            cardPointSum = changeAcePointToOneToWin(cardPointSum)
         }
         return cardPointSum
     }
 
-    fun toPlayerDTO(): PlayerDTO {
-        return PlayerDTO(name, cards.toMutableSet())
+    private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
+        if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
+
+    companion object {
+        const val BLACK_JACK_TWENTY_ONE = 21
     }
 }
