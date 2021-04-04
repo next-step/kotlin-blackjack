@@ -1,6 +1,7 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -15,5 +16,10 @@ class CardTest {
             { assertThat(card.number).isEqualTo(number) },
             { assertThat(card.suite).isEqualTo(suite) }
         )
+    }
+
+    @Test
+    fun `한 게임 당 52장의 카드를 가지고 있다`() {
+        assertThat(Card.CARDS.size).isEqualTo(52)
     }
 }
