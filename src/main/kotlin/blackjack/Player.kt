@@ -6,6 +6,11 @@ class Player(private var cards: Cards) {
             return States.valueOf(cards.score, field)
         }
 
+    val isPlayingState: Boolean
+        get() {
+            return state == States.HIT
+        }
+
     fun draw(card: Card) {
         if (state == States.STAY) {
             throw IllegalStateException("STAY이므로 draw 할 수 없습니다.")
