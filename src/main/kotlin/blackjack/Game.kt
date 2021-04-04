@@ -1,6 +1,6 @@
 package blackjack
 
-data class Game(private val players: Players, private var cards: Cards = Cards(ALL_CARDS)) {
+data class Game(private val players: Players, private var cards: GameCards = GameCards()) {
     val state: GameStates
         get() {
             if (isEndState()) {
