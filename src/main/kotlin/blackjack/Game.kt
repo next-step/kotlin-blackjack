@@ -1,6 +1,12 @@
 package blackjack
 
-data class Game(private val players: Players, private var cards: GameCards = GameCards()) {
+class Game(names: Names, private var cards: GameCards = GameCards()) {
+    val players: Players = Players(
+        names.map {
+            Player(it, cards.poll(), cards.poll())
+        }.toSet()
+    )
+
     val state: GameStates
         get() {
             if (isEndState()) {
@@ -16,6 +22,7 @@ data class Game(private val players: Players, private var cards: GameCards = Gam
         val card = cards.poll()
         target.draw(card)
     }
+
     private fun isEndState() = players.countOfPlayingState == NO_PLAYING_COUNT
 
     companion object {
