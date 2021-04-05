@@ -23,5 +23,11 @@ class Player(private var playerCards: PlayerCards) {
         state = States.STAY
     }
 
+    fun throwExceptionIfIsNotPlayingState() {
+        if(isPlayingState.not()) {
+            throw IllegalStateException("게임이 진행 불가능한 상태입니다. : $state")
+        }
+    }
+
     constructor(firstCard: Card, secondCard: Card): this(PlayerCards(firstCard, secondCard))
 }
