@@ -1,7 +1,8 @@
 package blackjack.userinterface
 
 import blackjack.dto.PlayerDto
-import blackjack.dto.ResultDto
+import blackjack.dto.GamerCardsDto
+import blackjack.dto.ResultsDto
 
 object Console : UserInterface {
 
@@ -37,13 +38,29 @@ object Console : UserInterface {
         println(playerDto.viewFormat())
     }
 
-    override fun outputPlayerCards(playerDto: List<PlayerDto>) {
-        println("${playerDto.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
-        playerDto.forEach { println(it.viewFormat()) }
+    override fun outputDealerTaken(dealerLimitScore: Int) {
+        println("딜러는 $dealerLimitScore 이하라 한장의 카드를 더 받았습니다.")
     }
 
-    override fun outputGameResult(result: List<ResultDto>) {
-        result.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
+    override fun outputGamerCards(gamerCardsDto: GamerCardsDto) {
+        val players = gamerCardsDto.players
+        val dealerFirstCard = gamerCardsDto.dealerFistCard
+
+        println("딜러와 ${players.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
+        println("딜러 카드: $dealerFirstCard")
+        players.forEach { println(it.viewFormat()) }
+    }
+
+    override fun outputGameResult(resultDto: ResultsDto) {
+        val dealer = resultDto.dealer
+        val players = resultDto.players
+
+        println("딜러 카드: ${dealer.cards.joinToString()} - 결과: ${dealer.score}")
+        players.forEach { println("${it.name}카드: ${it.cards.joinToString()} - 결과: ${it.score}") }
+
+        println("\n## 최종 승패")
+        println("딜러: ${dealer.winCount}승 ${dealer.drawCount}무 ${dealer.loseCount}패")
+        players.forEach { println("${it.name}: ${it.matchResult}") }
     }
 
     private fun PlayerDto.viewFormat(): String = "${this.name}카드: ${this.cards.joinToString()}"

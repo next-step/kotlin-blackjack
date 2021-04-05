@@ -2,7 +2,6 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -16,25 +15,15 @@ internal class CardsTest {
     private val card3 = Card(Suit.DIAMOND, Denomination.ACE)
 
     @Test
-    fun `Cards 는 서로 다른 두장의 카드를 받는다`() {
-        assertDoesNotThrow { Cards(card1, card2) }
-    }
-
-    @Test
     fun `Cards 는 같은 두장의 카드로 만들 경우 예외처리`() {
-        assertThrows<IllegalArgumentException> { Cards(card1, card1) }
-    }
-
-    @Test
-    fun `Cards 는 서로 다른 세장의 카드로 만들 경우 예외처리`() {
-        assertThrows<IllegalArgumentException> { Cards(card1, card2, card3) }
+        assertThrows<IllegalArgumentException> { Cards(listOf(card1, card1)) }
     }
 
     @Test
     fun `카드를 추가할 수 있다`() {
-        val cards = Cards(card1, card2)
-        cards.add(card3)
-        assertThat(cards.elements).containsExactly(card1, card2, card3)
+        val cards = Cards(listOf(card1, card2))
+        val result = cards.add(card3)
+        assertThat(result.elements).containsExactly(card1, card2, card3)
     }
 
     @ParameterizedTest
@@ -56,34 +45,42 @@ internal class CardsTest {
         private fun provideHasUnderOrSameScore21(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.TWO),
-                        Card(Suit.DIAMOND, Denomination.THREE),
-                        Card(Suit.SPADE, Denomination.FOUR)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.TWO),
+                            Card(Suit.DIAMOND, Denomination.THREE),
+                            Card(Suit.SPADE, Denomination.FOUR)
+                        )
                     ),
                     Score(9) // 2 + 3 + 4
                 ),
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.ACE),
-                        Card(Suit.DIAMOND, Denomination.KING),
-                        Card(Suit.SPADE, Denomination.FOUR)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.ACE),
+                            Card(Suit.DIAMOND, Denomination.KING),
+                            Card(Suit.SPADE, Denomination.FOUR)
+                        )
                     ),
                     Score(15) // 1 + 10 + 4
                 ),
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.ACE),
-                        Card(Suit.DIAMOND, Denomination.ACE),
-                        Card(Suit.SPADE, Denomination.KING)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.ACE),
+                            Card(Suit.DIAMOND, Denomination.ACE),
+                            Card(Suit.SPADE, Denomination.KING)
+                        )
                     ),
                     Score(12) // 1 + 1 + 10
                 ),
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.ACE),
-                        Card(Suit.DIAMOND, Denomination.ACE),
-                        Card(Suit.SPADE, Denomination.ACE)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.ACE),
+                            Card(Suit.DIAMOND, Denomination.ACE),
+                            Card(Suit.SPADE, Denomination.ACE)
+                        )
                     ),
                     Score(13) // 11 + 1 + 1
                 )
@@ -94,42 +91,37 @@ internal class CardsTest {
         private fun provideHasNotUnderOrSameScore21(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.FOUR),
-                        Card(Suit.DIAMOND, Denomination.KING),
-                        Card(Suit.SPADE, Denomination.JACK)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.FOUR),
+                            Card(Suit.DIAMOND, Denomination.KING),
+                            Card(Suit.SPADE, Denomination.JACK)
+                        )
                     ),
                     Score(24) // 4 + 10 + 10
                 ),
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.NINE),
-                        Card(Suit.DIAMOND, Denomination.KING),
-                        Card(Suit.SPADE, Denomination.JACK)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.NINE),
+                            Card(Suit.DIAMOND, Denomination.KING),
+                            Card(Suit.SPADE, Denomination.JACK)
+                        )
                     ),
                     Score(29) // 9 + 10 + 10
                 ),
                 Arguments.of(
-                    makeCards(
-                        Card(Suit.HEART, Denomination.ACE),
-                        Card(Suit.DIAMOND, Denomination.ACE),
-                        Card(Suit.SPADE, Denomination.KING),
-                        Card(Suit.SPADE, Denomination.JACK)
+                    Cards(
+                        listOf(
+                            Card(Suit.HEART, Denomination.ACE),
+                            Card(Suit.DIAMOND, Denomination.ACE),
+                            Card(Suit.SPADE, Denomination.KING),
+                            Card(Suit.SPADE, Denomination.JACK)
+                        )
                     ),
                     Score(22) // 1 + 1 + 10 + 10
                 )
             )
-        }
-
-        private fun makeCards(vararg cards: Card): Cards {
-            val cardInitSize = 2
-
-            val initCards = cards.take(cardInitSize)
-            val restCards = cards.drop(cardInitSize)
-
-            return Cards(*initCards.toTypedArray()).apply {
-                restCards.forEach(this::add)
-            }
         }
     }
 }

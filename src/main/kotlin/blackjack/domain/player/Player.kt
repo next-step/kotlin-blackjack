@@ -1,19 +1,38 @@
 package blackjack.domain.player
 
 import blackjack.domain.Card
-import blackjack.domain.Cards
 import blackjack.domain.Score
+import blackjack.domain.state.State
 
-data class Player(val name: String, val cards: Cards) {
+class Player(val name: String, state: State) {
+
+    var state = state
+        private set
+
+    val score: Score
+        get() = state.cards.score
+
     init {
         require(name.isNotBlank())
     }
 
-    fun isNotTakeable(): Boolean {
-        return cards.score >= Score.BLACKJACK
+    fun isTakeable() = state.isTakeable()
+
+    fun stay() {
+        state = state.stay()
     }
 
     fun takeCard(card: Card) {
-        cards.add(card)
+        state = state.draw(card)
+    }
+
+    fun matchResult(dealer: Dealer): MatchingResult {
+        return state.match(dealer.state)
+    }
+
+    fun stayIfNotWantDraw(inputCardTakenWhether: Boolean) {
+        if (!inputCardTakenWhether) {
+            stay()
+        }
     }
 }
