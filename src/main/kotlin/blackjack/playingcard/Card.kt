@@ -1,6 +1,9 @@
 package blackjack.playingcard
 
 data class Card private constructor(val suit: Suit, val symbol: Symbol) {
+    val value: Value
+        get() = symbol.value
+
     companion object {
         val ALL: List<Card> = Suit.values().flatMap { suit ->
             Symbol.values().map { symbol -> Card(suit, symbol) }

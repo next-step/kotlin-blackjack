@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.EnumSource
 
 internal class CardTest {
     @ParameterizedTest
@@ -32,6 +33,13 @@ internal class CardTest {
             val other = Card.of(suit, symbol)
             assertThat(one).isSameAs(other)
         }
+    }
+
+    @ParameterizedTest
+    @EnumSource
+    internal fun `카드의 값은 카드 눈의 값과 동일하다`(symbol: Symbol) {
+        val card = Card.of(Suit.HEARTS, symbol)
+        assertThat(card.value).isEqualTo(symbol.value)
     }
 
     @Test
