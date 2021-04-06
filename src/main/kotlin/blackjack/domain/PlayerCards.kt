@@ -12,6 +12,16 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
         return PlayerCards(cards + card)
     }
 
+    private fun calculateScore(): Int {
+        val score = cards.sumBy { it.number.value }
+
+        for (card in cards) {
+            return calculateAce(card, score)
+        }
+
+        return score
+    }
+
     private fun calculateAce(card: Card, score: Int): Int {
         if (card.number == CardNumber.ACE && score + SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE <= Game.BLACK_JACK_SCORE) {
             return SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE + score

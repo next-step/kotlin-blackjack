@@ -6,7 +6,11 @@ class Player(val name: String, cards: PlayerCards) {
 
     var state: States = States.HIT
         get() {
-            return valueOf(cards.score, field)
+            if (field == States.STAY || field == States.BLACK_JACK) {
+                return field
+            }
+
+            return findStateByScore(cards.score)
         }
 
     val isPlaying: Boolean
@@ -20,17 +24,10 @@ class Player(val name: String, cards: PlayerCards) {
         }
     }
 
-    constructor(name: String, firstCard: Card, secondCard: Card) : this(name, PlayerCards(firstCard, secondCard))
+    constructor(name: String, cards: Set<Card>) : this(name, PlayerCards(cards))
+    constructor(name: String, vararg cards: Card) : this(name, PlayerCards(cards.toSet()))
 
-    private fun valueOf(score: Int, state: States): States {
-        if (state == States.STAY || state == States.BLACK_JACK) {
-            return state
-        }
-
-        return valueOf(score)
-    }
-
-    private fun valueOf(score: Int): States {
+    private fun findStateByScore(score: Int): States {
         if (score < Game.BLACK_JACK_SCORE) {
             return States.HIT
         } else if (score > Game.BLACK_JACK_SCORE) {
