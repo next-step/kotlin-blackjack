@@ -18,7 +18,7 @@ enum class States(val state: Int) {
         private fun valueOf(score: Int, sizeOfCards: Int): States {
             if (score < Game.BLACK_JACK_SCORE) {
                 return HIT
-            } else if(score > Game.BLACK_JACK_SCORE) {
+            } else if (score > Game.BLACK_JACK_SCORE) {
                 return BUST
             } else if (score == Game.BLACK_JACK_SCORE && sizeOfCards == Game.BLACK_JACK_CARD_COUNT) {
                 return BLACK_JACK

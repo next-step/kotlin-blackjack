@@ -1,41 +1,43 @@
 package blackjack
 
+import blackjack.view.InputView
+import blackjack.view.ResultView
+
 fun main() {
-    println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    val names: Names = Names(readLine()!!)
+    val names = Names(InputView.playerNames())
 
-    val game: Game = Game(names)
-    println("${names.joinToString(",")} 에게 2장을 나누었습니다.")
+    val game = Game(names)
 
-    game.players.forEach {
-        print("${it.name}카드: ")
-        it.cards.forEach(
-            ::print
-        )
-        println()
-    }
+    ResultView.printInitNotice(names, Game.BLACK_JACK_CARD_COUNT)
 
+    ResultView.printAllPlayerCards(game)
 
+    playGameWithPlayers(game)
+
+    ResultView.printAllResult(game)
 }
 
-/*
-게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)
-pobi,jason
+private fun playGameWithPlayers(game: Game) {
+    game.players.forEach {
+        playGame(it, game)
+    }
+}
 
-pobi, jason에게 2장의 나누었습니다.
-pobi카드: 2하트, 8스페이드
-jason카드: 7클로버, K스페이드
+private fun playGame(it: Player, game: Game) {
+    while (it.isPlayingState) {
+        val answer = InputView.askIfPlayerWantToMoreCard(it.name)
 
-pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
-y
-pobi카드: 2하트, 8스페이드, A클로버
-pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
-n
-jason은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
-n
-jason카드: 7클로버, K스페이드
+        drawOfStopByAnswer(answer, game, it)
 
-pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
-jason카드: 7클로버, K스페이드 - 결과: 17
+        ResultView.printPlayerCards(it.name, it.cards)
+    }
+}
 
- */
+private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Player) {
+    if (answer) {
+        game.draw(it)
+        return
+    }
+
+    it.stop()
+}

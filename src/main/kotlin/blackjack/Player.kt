@@ -25,10 +25,10 @@ class Player(val name: String, cards: PlayerCards) {
     }
 
     fun throwExceptionIfIsNotPlayingState() {
-        if(isPlayingState.not()) {
+        if (isPlayingState.not()) {
             throw IllegalStateException("게임이 진행 불가능한 상태입니다. : $state")
         }
     }
 
-    constructor(name: String, firstCard: Card, secondCard: Card): this(name, PlayerCards(firstCard, secondCard))
+    constructor(name: String, firstCard: Card, secondCard: Card) : this(name, PlayerCards(firstCard, secondCard))
 }
