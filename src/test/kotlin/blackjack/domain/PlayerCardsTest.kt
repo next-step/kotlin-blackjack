@@ -1,8 +1,8 @@
-package blackjack
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.util.LinkedList
+import java.util.*
 
 class PlayerCardsTest {
     @Test

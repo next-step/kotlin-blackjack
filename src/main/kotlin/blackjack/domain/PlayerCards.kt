@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
     val score: Int

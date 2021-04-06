@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class States(val state: Int) {
     HIT(1),

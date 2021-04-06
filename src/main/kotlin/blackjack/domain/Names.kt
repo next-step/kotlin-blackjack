@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Names(private val names: List<String>) : List<String> by names {
     constructor(names: String) : this(names.split(NAME_SPLITTER))

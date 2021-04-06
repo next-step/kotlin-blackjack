@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Game(names: Names, private var cards: GameCards = GameCards()) {
     val players: Players = Players(
