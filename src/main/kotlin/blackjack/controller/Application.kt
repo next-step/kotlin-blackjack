@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.controller
 
 import blackjack.domain.Game
 import blackjack.domain.Names
@@ -27,7 +27,7 @@ private fun playGameWithPlayers(game: Game) {
 }
 
 private fun playGame(it: Player, game: Game) {
-    while (it.isPlayingState) {
+    while (it.isPlaying) {
         val answer = InputView.askIfPlayerWantToMoreCard(it.name)
 
         drawOfStopByAnswer(answer, game, it)
