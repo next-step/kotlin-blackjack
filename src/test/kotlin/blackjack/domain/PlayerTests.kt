@@ -44,7 +44,12 @@ class PlayerTests {
         "HEART,SEVEN,SPADE,ACE",
         "HEART,NINE,SPADE,NINE"
     )
-    fun `카드의 숫자의 합이 21미만이면 Hit 이다`(firstCardSuite: CardSuite, firstCardNumber: CardNumber, secondCardSuite: CardSuite, secondCardNumber: CardNumber) {
+    fun `카드의 숫자의 합이 21미만이면 Hit 이다`(
+        firstCardSuite: CardSuite,
+        firstCardNumber: CardNumber,
+        secondCardSuite: CardSuite,
+        secondCardNumber: CardNumber
+    ) {
         val game = Player(TEST_NAME, Card(firstCardSuite, firstCardNumber), Card(secondCardSuite, secondCardNumber))
         val state = game.state
 
