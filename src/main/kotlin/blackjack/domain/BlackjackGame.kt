@@ -25,7 +25,7 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
     }
 
     fun findPlayerWinTypes(): PlayerWinTypes {
-        val dealerPoint = dealer.cardPointSum()
+        val dealerPoint = PlayerPoint(dealer.cardPointSum(), dealer.isBlackjack)
         return PlayerWinTypes.of(players, dealerPoint)
     }
 

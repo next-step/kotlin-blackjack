@@ -58,4 +58,5 @@ private val PlayerWinType.description: String
         PlayerWinType.WIN -> "승"
         PlayerWinType.LOSE -> "패"
         PlayerWinType.DRAW -> "무승부"
+        PlayerWinType.BLACKJACK -> "블랙잭"
     }

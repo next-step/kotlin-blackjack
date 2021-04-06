@@ -1,11 +1,15 @@
 package blackjack.domain
 
 enum class PlayerWinType {
-    WIN, LOSE, DRAW;
+    WIN, LOSE, DRAW, BLACKJACK;
 
     companion object {
-        fun findPlayerWinType(playerPoint: Int, dealerPoint: Int): PlayerWinType {
-            if (dealerPoint > Player.BLACK_JACK_TWENTY_ONE || dealerPoint < playerPoint) {
+        fun findPlayerWinType(playerPoint: PlayerPoint, dealerPoint: PlayerPoint): PlayerWinType {
+            if (playerPoint.isBlackjack && !dealerPoint.isBlackjack) {
+                return BLACKJACK
+            }
+
+            if (dealerPoint.point > Player.BLACK_JACK_TWENTY_ONE || dealerPoint.point < playerPoint.point) {
                 return WIN
             }
 
@@ -17,6 +21,6 @@ enum class PlayerWinType {
         }
 
         fun isLose(winType: PlayerWinType): Boolean = winType == LOSE
-        fun isWin(winType: PlayerWinType): Boolean = winType == WIN
+        fun isWin(winType: PlayerWinType): Boolean = winType == WIN || winType == BLACKJACK
     }
 }

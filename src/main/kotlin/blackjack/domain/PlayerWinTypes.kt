@@ -10,9 +10,10 @@ class PlayerWinTypes(
     private fun findDealerLoseCount(): Int = map.count { PlayerWinType.isWin(it.value) }
 
     companion object {
-        fun of(players: Players, dealerPoint: Int): PlayerWinTypes {
+        fun of(players: Players, dealerPoint: PlayerPoint): PlayerWinTypes {
             val winTypeMap = players.associate {
-                val playerWinType = PlayerWinType.findPlayerWinType(it.cardPointSum(), dealerPoint)
+                val playerPoint = PlayerPoint(it.cardPointSum(), it.isBlackjack)
+                val playerWinType = PlayerWinType.findPlayerWinType(playerPoint, dealerPoint)
                 Pair(it.name, playerWinType)
             }
             return PlayerWinTypes(winTypeMap)

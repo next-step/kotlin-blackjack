@@ -13,8 +13,9 @@ class Player(
         get() = _isBlackjack
     private var _isBlackjack: Boolean = false
 
-    constructor(name: String, cards: Set<Card>) : this(name) {
+    constructor(name: String, cards: Set<Card>, isBlackjack: Boolean = false) : this(name) {
         this.cards.addAll(cards)
+        _isBlackjack = isBlackjack
     }
 
     constructor(name: String) : this(name, 0)
