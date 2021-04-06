@@ -1,3 +1,13 @@
 package blackjack.playingcard
 
-class Cards(private val elements: List<Card>)
+class Cards(elements: List<Card> = emptyList()) {
+    private val elements = elements.toMutableList()
+
+    fun toList(): List<Card> {
+        return elements
+    }
+
+    fun add(card: Card) {
+        elements.add(card)
+    }
+}
