@@ -1,17 +1,19 @@
 package blackjack.card
 
-enum class CardValue(val desc: String, val value: Int, val otherValue: Int, val hasOtherValue: Boolean) {
+enum class CardValue(val desc: String, val value: Int) {
 
-    ONE("A", 1, 11, true),
-    TWO("2", 2, 2, false),
-    THREE("3", 3, 3, false),
-    FOUR("4", 4, 4, false),
-    FIVE("5", 5, 5, false),
-    SIX("6", 6, 6, false),
-    SEVEN("7", 7, 7, false),
-    EIGHT("8", 8, 8, false),
-    NINE("9", 9, 9, false),
-    KING("K", 10, 10, false),
-    QUEEN("Q", 10, 10, false),
-    JACK("J", 10, 10, false);
+    ONE("A", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    KING("K", 10),
+    QUEEN("Q", 10),
+    JACK("J", 10);
+
 }

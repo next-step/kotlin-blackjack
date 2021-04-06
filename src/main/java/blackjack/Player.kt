@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.card.Card
-import blackjack.const.BlackjackConst.BLACKJACK_STANDARD_VALUE
 
 class Player(val name: String, cards: List<Card>) {
 
@@ -15,19 +14,11 @@ class Player(val name: String, cards: List<Card>) {
     }
 
     fun getTotalSum(): Int {
-        val sumValue = _cards.sumBy { it.cardValue.value }
-        val sumOtherValue = _cards.sumBy { it.cardValue.otherValue }
-
-        if (!hasOtherValueCard()) return sumValue
-
-        return if (sumOtherValue <= BLACKJACK_STANDARD_VALUE) sumOtherValue else sumValue
+        return BlackjackRule.getTotalSum(_cards)
     }
 
     fun isReceiveMoreCard(): Boolean {
-        return getTotalSum() < BLACKJACK_STANDARD_VALUE
+        return BlackjackRule.isReceiveMoreCard(getTotalSum())
     }
 
-    private fun hasOtherValueCard(): Boolean {
-        return _cards.any { it.cardValue.hasOtherValue }
-    }
 }

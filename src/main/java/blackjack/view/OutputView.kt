@@ -2,9 +2,16 @@ package blackjack.view
 
 import blackjack.Player
 import blackjack.card.Card
-import blackjack.const.BlackjackConst.CARD_NAME_MAP
+import blackjack.card.CardType
 
 object OutputView {
+
+    private fun CardType.getCardName(): String = when {
+        this == CardType.SPADE -> "스페이드"
+        this == CardType.HEART -> "하트"
+        this == CardType.DIAMOND -> "다이아몬드"
+        else -> "클로버"
+    }
 
     fun showPlayersCard(players: List<Player>) {
         players.forEach(::showCard)
@@ -19,6 +26,7 @@ object OutputView {
     }
 
     private fun getCardNames(cards: List<Card>): String {
-        return cards.joinToString { "${it.cardValue.desc}${CARD_NAME_MAP[it.cardType]}" }
+        return cards.joinToString { "${it.cardValue.desc}${it.cardType.getCardName()}" }
     }
+
 }
