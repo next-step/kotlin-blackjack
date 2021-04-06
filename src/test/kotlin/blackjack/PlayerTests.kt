@@ -70,4 +70,20 @@ class PlayerTests {
 
         assertThat(game.state).isEqualTo(States.BUST)
     }
+
+    @Test
+    fun `처음 받은 2장의 카드의 합이 21인 경우에만 블랙잭이 된다`() {
+        val player = Player(TEST_NAME, Card(CardSuite.DIAMOND, CardNumber.ACE), Card(CardSuite.DIAMOND, CardNumber.QUEEN))
+
+        assertThat(player.state).isEqualTo(States.BLACK_JACK)
+    }
+
+    @Test
+    fun `처음 받은 2장 이상의 카드의 합이 21인 경우에는 STAY 이다`() {
+        val player = Player(TEST_NAME, Card(CardSuite.DIAMOND, CardNumber.KING), Card(CardSuite.DIAMOND, CardNumber.QUEEN))
+
+        player.draw(Card(CardSuite.DIAMOND, CardNumber.ACE))
+
+        assertThat(player.state).isEqualTo(States.STAY)
+    }
 }
