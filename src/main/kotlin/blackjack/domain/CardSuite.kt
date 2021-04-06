@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class CardSuite(val koreanName: String) {
     HEART("하트"),

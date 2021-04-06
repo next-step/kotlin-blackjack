@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Player(val name: String, cards: PlayerCards) {
     var cards: PlayerCards = cards

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Ace(val number: Int) {
     FIRST(1),
