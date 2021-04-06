@@ -23,10 +23,10 @@ internal class HandTest {
     )
     fun `손패에 카드를 주어 카드를 추가할 수 있다`(suit: Suit, symbol: Symbol) {
         // given
-        val givenCard = Card(Suit.DIAMONDS, Symbol.NINE)
+        val givenCard = Card.of(Suit.DIAMONDS, Symbol.NINE)
         val hand = Hand(Cards(listOf(givenCard)))
 
-        val newCard = Card(suit, symbol)
+        val newCard = Card.of(suit, symbol)
         val expected = listOf(givenCard, newCard)
 
         // when

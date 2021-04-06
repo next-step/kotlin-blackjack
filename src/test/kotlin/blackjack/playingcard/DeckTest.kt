@@ -11,7 +11,7 @@ internal class DeckTest {
     @Test
     internal fun `덱은 카드리스트로 생성된다`() {
         // given
-        val cards = listOf(Card(Suit.HEARTS, Symbol.ACE))
+        val cards = listOf(Card.of(Suit.HEARTS, Symbol.ACE))
 
         assertDoesNotThrow { Deck(cards) }
     }
@@ -23,8 +23,8 @@ internal class DeckTest {
     )
     internal fun `덱에서 카드를 뽑을 수 있다`(suit: Suit, symbol: Symbol) {
         // given
-        val deck = Deck(listOf(Card(suit, symbol)))
-        val expectedCardList = listOf(Card(suit, symbol))
+        val deck = Deck(listOf(Card.of(suit, symbol)))
+        val expectedCardList = listOf(Card.of(suit, symbol))
 
         // when
         val actualCard: Card = deck.draw()
@@ -45,14 +45,14 @@ internal class DeckTest {
         // given
         val deck = Deck(
             listOf(
-                Card(Suit.HEARTS, Symbol.ACE),
-                Card(Suit.DIAMONDS, Symbol.TWO)
+                Card.of(Suit.HEARTS, Symbol.ACE),
+                Card.of(Suit.DIAMONDS, Symbol.TWO)
             )
         )
 
         val expectedCards: List<Card> = listOf(
-            Card(Suit.HEARTS, Symbol.ACE),
-            Card(Suit.DIAMONDS, Symbol.TWO)
+            Card.of(Suit.HEARTS, Symbol.ACE),
+            Card.of(Suit.DIAMONDS, Symbol.TWO)
         )
 
         // when

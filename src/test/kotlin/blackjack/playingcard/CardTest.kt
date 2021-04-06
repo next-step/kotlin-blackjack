@@ -13,7 +13,7 @@ internal class CardTest {
         "HEARTS, KING"
     )
     internal fun `카드는 문양 하나와 눈 하나를 가진다`(suit: Suit, symbol: Symbol) {
-        val card = Card(suit = suit, symbol = symbol)
+        val card = Card.of(suit = suit, symbol = symbol)
 
         assertAll(
             { assertThat(card.suit).isEqualTo(suit) },
@@ -22,17 +22,16 @@ internal class CardTest {
     }
 
     @Test
-    internal fun `카드는 객체가 달라도 문양과 눈이 같으면 동일하다`() {
-        // given
-        val suit = Suit.DIAMONDS
-        val symbol = Symbol.JACK
-        val one = Card(suit, symbol)
+    internal fun `카드는 문양과 눈이 같으면 동일하다`() {
+        val cartesianProduct = Suit.values().flatMap { suit ->
+            Symbol.values().map { symbol -> suit to symbol }
+        }
 
-        // when
-        val another = Card(suit, symbol)
-
-        // then
-        assertThat(one).isEqualTo(another)
+        assertThat(cartesianProduct).allSatisfy { (suit, symbol) ->
+            val one = Card.of(suit, symbol)
+            val other = Card.of(suit, symbol)
+            assertThat(one).isSameAs(other)
+        }
     }
 
     @Test
@@ -41,7 +40,7 @@ internal class CardTest {
         val cartesianProduct = Suit.values().flatMap { suit ->
             Symbol.values().map { symbol -> suit to symbol }
         }
-        val expected = cartesianProduct.map { (suit, symbol) -> Card(suit, symbol) }
+        val expected = cartesianProduct.map { (suit, symbol) -> Card.of(suit, symbol) }
 
         // when
         val actual = Card.ALL
