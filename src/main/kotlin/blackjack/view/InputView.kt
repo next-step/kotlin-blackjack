@@ -1,25 +1,28 @@
 package blackjack.view
 
-class InputView {
-    companion object {
-        tailrec fun playerNames(): String {
-            println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+object InputView {
+    private const val CONTINUE = "y"
+    private const val BREAK = "n"
 
-            return readLine() ?: playerNames()
+    fun playerNames(): String {
+        return question("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+    }
+
+    fun askIfPlayerWantToMoreCard(name: String): Boolean {
+        val answer = question("$name 는 한장의 카드를 더 받겠습니까?(예는 $CONTINUE, 아니요는 $BREAK)").toLowerCase()
+
+        if (answer == CONTINUE) {
+            return true
+        } else if (answer == BREAK) {
+            return false
         }
 
-        fun askIfPlayerWantToMoreCard(name: String): Boolean {
-            println("$name 는 한장의 카드를 더 받겠습니까?(예는 y, 아니요는 n)")
+        throw IllegalArgumentException("잘못된 입력값입니다.")
+    }
 
-            val answer = readLine()!!.toLowerCase()
+    private tailrec fun question(question: String): String {
+        println(question)
 
-            if (answer == "y") {
-                return true
-            } else if (answer == "n") {
-                return false
-            }
-
-            throw IllegalArgumentException("잘못된 입력값입니다.")
-        }
+        return readLine() ?: question(question)
     }
 }
