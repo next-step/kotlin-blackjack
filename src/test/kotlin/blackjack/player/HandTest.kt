@@ -48,13 +48,6 @@ internal class HandTest {
         assertThat(actual).isEmpty()
     }
 
-    @Test
-    internal fun `손패가 비어있으면 합은 0이다`() {
-        val hand = Hand()
-
-        assertThat(hand.sumValues()).isEqualTo(Value(0))
-    }
-
     @ParameterizedTest
     @MethodSource
     fun `손패 값은 카드 값의 합과 같다`(expected: Value, cards: Cards) {
@@ -68,6 +61,7 @@ internal class HandTest {
     companion object {
         @JvmStatic
         fun `손패 값은 카드 값의 합과 같다`(): Stream<Arguments> = Stream.of(
+            Arguments.of(Value.ZERO, Cards(emptyList())),
             Arguments.of(Value(11), Cards(listOf(Card.of(Suit.SPADES, Symbol.ACE)))),
             Arguments.of(
                 Value(15),
