@@ -6,7 +6,7 @@ class Player(val name: String, cards: PlayerCards) {
 
     var state: States = States.HIT
         get() {
-            return States.valueOf(cards.score, field)
+            return States.valueOf(cards.score, cards.size, field)
         }
 
     val isPlayingState: Boolean
@@ -30,5 +30,5 @@ class Player(val name: String, cards: PlayerCards) {
         }
     }
 
-    constructor(firstCard: Card, secondCard: Card): this(PlayerCards(firstCard, secondCard))
+    constructor(name: String, firstCard: Card, secondCard: Card): this(name, PlayerCards(firstCard, secondCard))
 }
