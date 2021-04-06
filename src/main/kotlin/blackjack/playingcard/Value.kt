@@ -7,6 +7,10 @@ data class Value(private val value: Int) {
 
     fun toInt(): Int = value
 
+    operator fun plus(other: Value): Value {
+        return Value(this.value + other.value)
+    }
+
     companion object {
         val ZERO = Value(0)
     }

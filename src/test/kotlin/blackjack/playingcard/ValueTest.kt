@@ -20,6 +20,21 @@ internal class ValueTest {
         assertThat(Value(integer).toInt()).isEqualTo(integer)
     }
 
+    @ParameterizedTest
+    @CsvSource(
+        "0, 0",
+        "1, 1",
+        "11, 2"
+    )
+    internal fun `값은 더할 수 있다`(a: Int, b: Int) {
+        val valueA = Value(a)
+        val valueB = Value(b)
+        val expected: Int = valueA.toInt() + valueB.toInt()
+        val actual: Int = (valueA + valueB).toInt()
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
     @Test
     internal fun `값은 객체가 달라도, 가지고 있는 정수가 같다면 동일하다`() {
         val one = Value(3)

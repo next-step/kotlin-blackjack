@@ -10,4 +10,8 @@ class Cards(elements: List<Card> = emptyList()) {
     fun add(card: Card) {
         elements.add(card)
     }
+
+    fun sum(): Value {
+        return elements.fold(Value.ZERO) { acc, card -> acc + card.value }
+    }
 }

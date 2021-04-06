@@ -46,6 +46,20 @@ internal class CardsTest {
         assertThat(actual).containsExactlyElementsOf(expected)
     }
 
+    @Test
+    internal fun `카드뭉치 내의 카드 값의 합을 반환할 수 있다`() {
+        val cardList = listOf(
+            Card.of(Suit.SPADES, Symbol.FIVE),
+            Card.of(Suit.SPADES, Symbol.QUEEN)
+        )
+        val cards = Cards(cardList)
+        val expected: Value = Value(15)
+
+        val actual: Value = cards.sum()
+
+        assertThat(actual).isEqualTo(expected)
+    }
+
     companion object {
         @JvmStatic
         fun `카드뭉치에서 생성 시 주어진 카드 리스트를 그대로 반환 받을 수 있다`(): Stream<Arguments> = Stream.of(
