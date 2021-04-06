@@ -3,12 +3,7 @@ package blackjack.domain
 class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
     val score: Int
         get() {
-            val score = cards.sumBy { it.number.value }
-
-            for (card in cards) {
-                return calculateAce(card, score)
-            }
-            return score
+            return calculateScore()
         }
 
     constructor(vararg cards: Card) : this(cards.toSet())
