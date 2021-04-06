@@ -1,9 +1,8 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerDto
-
 class Player(
-    val name: String
+    val name: String,
+    val price: Int
 ) : Participant {
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
@@ -14,6 +13,8 @@ class Player(
     constructor(name: String, cards: Set<Card>) : this(name) {
         this.cards.addAll(cards)
     }
+
+    constructor(name: String) : this(name, 0)
 
     override fun takeCard(card: Card) {
 
