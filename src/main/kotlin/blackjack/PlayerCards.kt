@@ -1,6 +1,6 @@
 package blackjack
 
-class PlayerCards(private val cards: Set<Card>): Set<Card> by cards {
+class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
     val score: Int
         get() {
             val score = cards.sumBy { it.number.value }
@@ -11,7 +11,7 @@ class PlayerCards(private val cards: Set<Card>): Set<Card> by cards {
             return score
         }
 
-    constructor(vararg cards: Card): this(cards.toSet())
+    constructor(vararg cards: Card) : this(cards.toSet())
 
     fun addCard(card: Card): PlayerCards {
         return PlayerCards(cards + card)

@@ -23,7 +23,7 @@ class Game(names: Names, private var cards: GameCards = GameCards()) {
         target.draw(card)
     }
 
-    private fun isEndState() = players.countOfPlayingState == NO_PLAYING_COUNT
+    fun isEndState() = players.countOfPlayingState == NO_PLAYING_COUNT
 
     companion object {
         const val BLACK_JACK_SCORE = 21
