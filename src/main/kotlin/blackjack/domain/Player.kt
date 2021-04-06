@@ -9,6 +9,9 @@ class Player(
         get() = cards.map { it.toString() }
     val cardSize: Int
         get() = cards.size
+    override val isBlackjack: Boolean
+        get() = _isBlackjack
+    private var _isBlackjack: Boolean = false
 
     constructor(name: String, cards: Set<Card>) : this(name) {
         this.cards.addAll(cards)
@@ -21,6 +24,15 @@ class Player(
         check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
 
         cards.add(card)
+    }
+
+    override fun takeFirstTwoCards(card1: Card, card2: Card) {
+        takeCard(card1)
+        takeCard(card2)
+
+        if (cardPointSum() == BLACK_JACK_TWENTY_ONE) {
+            _isBlackjack = true
+        }
     }
 
     override fun cardPointSum(): Int {

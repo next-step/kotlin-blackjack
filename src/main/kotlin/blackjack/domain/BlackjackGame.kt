@@ -8,10 +8,8 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
         get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE
 
     fun giveTwoCardsToAllPlayers() {
-        repeat(FIRST_GIVEN_CARD_SIZE) {
-            players.giveToAllPlayers(cardPack)
-            dealer.takeCard(cardPack.poll())
-        }
+        players.giveFirstTwoCardsToAllPlayers(cardPack)
+        dealer.takeFirstTwoCards(cardPack.poll(), cardPack.poll())
     }
 
     fun giveCard(player: Player, hasAccepted: Boolean) {

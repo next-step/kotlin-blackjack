@@ -51,6 +51,22 @@ internal class PlayerTest {
             .isInstanceOf(IllegalStateException::class.java)
     }
 
+    @Test
+    fun `처음 2장의 카드를 받는다 (블랙잭이 아닌 경우)`() {
+        val player = Player("song")
+        player.takeFirstTwoCards(Card(CardShape.CLOVER, CardType.ACE), Card(CardShape.CLOVER, CardType.ACE))
+
+        assertThat(player.isBlackjack).isFalse()
+    }
+
+    @Test
+    fun `처음 2장의 카드를 받는다 (블랙잭인 경우)`() {
+        val player = Player("song")
+        player.takeFirstTwoCards(Card(CardShape.CLOVER, CardType.ACE), Card(CardShape.CLOVER, CardType.JACK))
+
+        assertThat(player.isBlackjack).isTrue()
+    }
+
     fun getCardSetOfClover(vararg cardTypes: CardType): MutableSet<Card> =
         cardTypes.map { Card(CardShape.CLOVER, it) }.toMutableSet()
 }

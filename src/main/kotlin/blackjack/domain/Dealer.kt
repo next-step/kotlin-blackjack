@@ -9,9 +9,15 @@ class Dealer(
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize
         get() = player.cardSize
+    override val isBlackjack: Boolean
+        get() = player.isBlackjack
 
     override fun takeCard(card: Card) {
         player.takeCard(card)
+    }
+
+    override fun takeFirstTwoCards(card1: Card, card2: Card) {
+        player.takeFirstTwoCards(card1, card2)
     }
 
     override fun cardPointSum(): Int {

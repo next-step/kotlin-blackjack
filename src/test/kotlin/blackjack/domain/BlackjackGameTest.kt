@@ -17,6 +17,7 @@ internal class BlackjackGameTest {
         assertThat(playerDtos).extracting("name").contains("song", "kim")
         assertThat(playerDtos[0].cards).hasSize(2)
         assertThat(playerDtos[1].cards).hasSize(2)
+        assertThat(blackjackGame.dealer.cardSize).isEqualTo(2)
     }
 
     @Test
