@@ -9,7 +9,3 @@ class Languages {
 
     fun toList(): List<Language> = languages.toList()
 }
-
-fun languages(initializer: Languages.() -> Unit): Languages {
-    return Languages().apply(initializer)
-}

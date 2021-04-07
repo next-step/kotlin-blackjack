@@ -8,7 +8,7 @@ class ResumeTest {
     @Test
     fun name() {
         val person: Person = introduce {
-            name("이기원")
+            name { "이기원" }
         }
 
         assertThat(person.name).isEqualTo("이기원")
@@ -17,8 +17,8 @@ class ResumeTest {
     @Test
     fun company() {
         val person: Person = introduce {
-            name("이기원")
-            company("중견기업")
+            name { "이기원" }
+            company { "중견기업" }
         }
         assertThat(person.name).isEqualTo("이기원")
         assertThat(person.company).isEqualTo("중견기업")
@@ -27,8 +27,8 @@ class ResumeTest {
     @Test
     fun hardSkill() {
         val person: Person = introduce {
-            name("이기원")
-            company("중견기업")
+            name { "이기원" }
+            company { "중견기업" }
             skills {
                 hard("kotlin")
             }
@@ -41,8 +41,8 @@ class ResumeTest {
     @Test
     fun soft() {
         val person: Person = introduce {
-            name("이기원")
-            company("중견기업")
+            name { "이기원" }
+            company { "중견기업" }
             skills {
                 hard("kotlin")
                 soft("A passion for problem solving")
@@ -61,12 +61,16 @@ class ResumeTest {
     @Test
     fun language() {
         val person: Person = introduce {
-            name("이기원")
-            company("중견기업")
+            name { "이기원" }
+            company { "중견기업" }
             skills {
                 hard("kotlin")
                 soft("A passion for problem solving")
                 soft("Good communications Skill")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
             }
         }
         assertThat(person.name).isEqualTo("이기원")
@@ -76,11 +80,6 @@ class ResumeTest {
             Soft("A passion for problem solving"),
             Soft("Good communications Skill")
         )
-
-        person.languages = languages {
-            "Korean" level 5
-            "English" level 3
-        }
 
         assertThat(person.languages.toList()).containsExactlyInAnyOrder(
             Language("Korean", 5),
