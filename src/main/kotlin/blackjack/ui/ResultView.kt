@@ -45,14 +45,6 @@ object ResultView {
         println("${playerCardResult.name}: ${playerCardResult.cardNames.joinToString()} - 결과: ${playerCardResult.point}")
     }
 
-    fun printWinningResult(playerWinTypes: PlayerWinTypes) {
-        println("## 최종 승패")
-        println(playerWinTypes.dealerResult)
-        playerWinTypes.forEach {
-            println("${it.key}: ${it.value.description}")
-        }
-    }
-
     fun printProfitResult(profits: Profits) {
         println("${profits.dealerProfit.name}: ${profits.dealerProfit.amount}")
         profits.playerProfits.map {
