@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.ui.model.PlayerDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 internal class BlackjackGameTest {
 
@@ -17,7 +18,6 @@ internal class BlackjackGameTest {
         assertThat(playerDtos).extracting("name").contains("song", "kim")
         assertThat(playerDtos[0].cards).hasSize(2)
         assertThat(playerDtos[1].cards).hasSize(2)
-        assertThat(blackjackGame.dealer.cardSize).isEqualTo(2)
     }
 
     @Test
@@ -41,41 +41,6 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `승패를 계산한다(dealer가 21이 넘은 경우)`() {
-        val players = Players(mutableListOf(Player("song"), Player("kim")))
-        val blackjackGame = BlackjackGame(players, Dealer(makeCardSetPointOf(CardType.SEVEN, CardType.EIGHT, CardType.NINE)))
-
-        val result = blackjackGame.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("0승 2패")
-    }
-
-    @Test
-    fun `승패를 계산한다(player보다 dealer의 점수가 높은 경우)`() {
-        val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
-        val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
-        val blackjackGame = BlackjackGame(players, dealer)
-
-        val result = blackjackGame.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("1승 0패")
-
-        assertThat(result["song"]).isEqualTo(PlayerWinType.LOSE)
-    }
-
-    @Test
-    fun `승패를 계산한다(player보다 dealer의 점수가 낮은 경우)`() {
-        val player = Player("song", makeCardSetPointOf(CardType.EIGHT, CardType.ACE))
-        val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.TWO, CardType.THREE, CardType.FOUR))
-        val blackjackGame = BlackjackGame(players, dealer)
-
-        val result = blackjackGame.findPlayerWinTypes()
-        assertThat(result.dealerResult).isEqualTo("0승 1패")
-
-        assertThat(result["song"]).isEqualTo(PlayerWinType.WIN)
-    }
-
-    @Test
     fun `dealer의 카드가 16이하면 카드를 더 받는다`() {
         val player = Player("song")
         val players = Players(mutableListOf(player))
@@ -95,6 +60,57 @@ internal class BlackjackGameTest {
 
         blackjackGame.giveCardsToDealer()
         assertThat(PlayerDto(blackjackGame.dealer).cards.size).isEqualTo(2) // 2장만을 가지고 있다
+    }
+
+    @Test
+    fun `player 한 명이 win인 경우 profit을 계산한다`() {
+        val player = Player("song", 10000, makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+        val blackjackGame = BlackjackGame(players, dealer)
+
+        val profits = blackjackGame.findProfits()
+        assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal(-10000))
+        assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal(10000))
+    }
+
+    @Test
+    fun `player 한 명이 Lose인 경우 profit을 계산한다`() {
+        val player = Player("song", 10000, makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+        val blackjackGame = BlackjackGame(players, dealer)
+
+        val profits = blackjackGame.findProfits()
+        assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal(10000))
+        assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal(-10000))
+    }
+
+    @Test
+    fun `player 한 명이 Blackjack인 경우 profit을 계산한다`() {
+        val player = Player("song", 10000, makeCardSetPointOf(CardType.ACE, CardType.JACK), true)
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+        val blackjackGame = BlackjackGame(players, dealer)
+
+        val profits = blackjackGame.findProfits()
+        assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal("-15000"))
+        assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal("15000"))
+    }
+
+    @Test
+    fun `player 한 명이 Blackjack이고, 다른 한 명이 win인 경우 profit을 계산한다`() {
+        val player1 = Player("song", 10000, makeCardSetPointOf(CardType.ACE, CardType.JACK), true)
+        val player2 = Player("kim", 20000, makeCardSetPointOf(CardType.QUEEN, CardType.JACK))
+        val players = Players(mutableListOf(player1, player2))
+        val dealer = Dealer(makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+        val blackjackGame = BlackjackGame(players, dealer)
+
+        val profits = blackjackGame.findProfits()
+        assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal(-35000))
+        assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal(15000))
+        assertThat(profits.playerProfits[1].amount).isEqualTo(BigDecimal(20000))
+
     }
 
     private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =

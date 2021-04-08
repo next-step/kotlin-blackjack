@@ -18,6 +18,11 @@ class Player(
         _isBlackjack = isBlackjack
     }
 
+    constructor(name: String, price: Int, cards: Set<Card>, isBlackjack: Boolean = false) : this(name, price) {
+        this.cards.addAll(cards)
+        _isBlackjack = isBlackjack
+    }
+
     constructor(name: String) : this(name, 0)
 
     override fun takeCard(card: Card) {

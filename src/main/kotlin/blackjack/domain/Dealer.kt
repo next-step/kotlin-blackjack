@@ -5,6 +5,7 @@ class Dealer(
 ) : Participant {
 
     val player = Player("딜러", cards)
+    val name: String = player.name
     val isUnderSixteen: Boolean
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize

@@ -4,6 +4,7 @@ import blackjack.domain.PlayerWinType
 import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
 import blackjack.domain.PlayerWinTypes
+import blackjack.domain.Profits
 
 object ResultView {
 
@@ -22,7 +23,7 @@ object ResultView {
     }
 
     fun printCardsOfSinglePlayer(playerDto: PlayerDto) {
-        println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it.toString() }}")
+        println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it }}")
     }
 
     fun printInfoOfDealerBehavior(addedDealerCardNumber: Int) {
@@ -49,6 +50,13 @@ object ResultView {
         println(playerWinTypes.dealerResult)
         playerWinTypes.forEach {
             println("${it.key}: ${it.value.description}")
+        }
+    }
+
+    fun printProfitResult(profits: Profits) {
+        println("${profits.dealerProfit.name}: ${profits.dealerProfit.amount}")
+        profits.playerProfits.map {
+            println("${it.name}: ${it.amount}")
         }
     }
 }

@@ -29,8 +29,8 @@ object BlackJackController {
         val playerResults = blackjackGame.players.map { PlayerCardResult(it) }
         ResultView.printCardResults(dealerResult, playerResults)
 
-        val playerWinTypes = blackjackGame.findPlayerWinTypes()
-        ResultView.printWinningResult(playerWinTypes)
+        val profits = blackjackGame.findProfits()
+        ResultView.printProfitResult(profits)
     }
 
     private fun BlackjackGame.askAndGiveCards(player: Player) {

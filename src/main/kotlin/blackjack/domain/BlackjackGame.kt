@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
 
     private val cardPack = CardPack()
@@ -24,9 +26,20 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
         }
     }
 
-    fun findPlayerWinTypes(): PlayerWinTypes {
+    fun findProfits(): Profits {
         val dealerPoint = PlayerPoint(dealer.cardPointSum(), dealer.isBlackjack)
-        return PlayerWinTypes.of(players, dealerPoint)
+        val playerWinTypes = PlayerWinTypes.of(players, dealerPoint)
+
+        var dealerProfitAmount = BigDecimal.ZERO
+        val playerProfits = players.map {
+            val profitAmount =
+                playerWinTypes[it.name]?.calculateProfit(it.price) ?: throw RuntimeException("잘못된 플레이어가 들어갔습니다.")
+            dealerProfitAmount += profitAmount * BigDecimal(-1)
+            Profit(it.name, profitAmount)
+        }
+
+        val dealerProfit = Profit(dealer.name, dealerProfitAmount)
+        return Profits(dealerProfit, playerProfits)
     }
 
     companion object {
