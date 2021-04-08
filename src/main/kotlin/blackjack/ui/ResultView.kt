@@ -3,7 +3,6 @@ package blackjack.ui
 import blackjack.domain.PlayerWinType
 import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
-import blackjack.domain.PlayerWinTypes
 import blackjack.domain.Profits
 
 object ResultView {

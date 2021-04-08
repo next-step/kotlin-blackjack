@@ -28,18 +28,23 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
 
     fun findProfits(): Profits {
         val dealerPoint = PlayerPoint(dealer.cardPointSum(), dealer.isBlackjack)
-        val playerWinTypes = PlayerWinTypes.of(players, dealerPoint)
 
-        var dealerProfitAmount = BigDecimal.ZERO
         val playerProfits = players.map {
-            val profitAmount =
-                playerWinTypes[it.name]?.calculateProfit(it.price) ?: throw RuntimeException("잘못된 플레이어가 들어갔습니다.")
-            dealerProfitAmount += profitAmount * BigDecimal(-1)
-            Profit(it.name, profitAmount)
+            it.profit(dealerPoint)
         }
 
+        val dealerProfitAmount =
+            playerProfits.fold(BigDecimal.ZERO) { acc, profit -> acc + profit.amount } * BigDecimal("-1")
         val dealerProfit = Profit(dealer.name, dealerProfitAmount)
+
         return Profits(dealerProfit, playerProfits)
+    }
+
+    private fun Player.profit(dealerPoint: PlayerPoint): Profit {
+        val playerPoint = PlayerPoint(this.cardPointSum(), this.isBlackjack)
+        val playerWinType = PlayerWinType.findPlayerWinType(playerPoint, dealerPoint)
+        val profitAmount = playerWinType.calculateProfit(this.price)
+        return Profit(this.name, profitAmount)
     }
 
     companion object {
