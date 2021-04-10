@@ -18,8 +18,13 @@ class Hand(val cards: Cards = Cards.empty()) {
             return Status.NOT_BUST
         }
 
-    fun add(card: Card) {
+    fun add(card: Card): Status {
+        if (status == Status.BUST) {
+            return this.status
+        }
+
         cards.add(card)
+        return this.status
     }
 
     fun calculateValues(): Value {

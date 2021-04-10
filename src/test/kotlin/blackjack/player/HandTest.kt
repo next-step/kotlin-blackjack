@@ -7,6 +7,7 @@ import blackjack.playingcard.Symbol
 import blackjack.playingcard.Value
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.extension.ParameterContext
 import org.junit.jupiter.params.ParameterizedTest
@@ -134,6 +135,76 @@ internal class HandTest {
 
         // then
         assertThat(hand.status).isEqualTo(Hand.Status.NOT_BUST)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "TWO, NOT_BUST",
+        "THREE, BUST"
+    )
+    internal fun `손패가 버스트 상태가 아닐 때 카드를 추가하면, 가지고 있는 카드에 주어진 카드를 추가하고 나서 그 상태를 반환한다`(
+        addingCardSymbol: Symbol,
+        expectedStatus: Hand.Status
+    ) {
+        // given
+        val cardsWithValue19 = Cards.from(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.SPADES, Symbol.NINE)
+            )
+        )
+        val hand = Hand(cardsWithValue19)
+        val addingCard = Card.of(Suit.HEARTS, addingCardSymbol)
+
+        val expectedHandCards = Cards.from(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.SPADES, Symbol.NINE),
+                addingCard
+            )
+        )
+
+        // when
+        val actualStatus = hand.add(addingCard)
+        val actualHandCards = hand.cards
+
+        // then
+        assertAll(
+            { assertThat(actualStatus).isEqualTo(expectedStatus).isEqualTo(hand.status) },
+            { assertThat(actualHandCards).isEqualTo(expectedHandCards) }
+        )
+    }
+
+    @Test
+    internal fun `손패가 버스트 상태일 때 카드를 추가하면, 손패에 카드를 추가하지 않고 버스트 상태를 반환한다`() {
+        // given
+        val cardsWithValue22 = Cards.from(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.HEARTS, Symbol.TEN),
+                Card.of(Suit.DIAMONDS, Symbol.TWO)
+            )
+        )
+        val hand = Hand(cardsWithValue22)
+        val addingCard = Card.of(Suit.CLUBS, Symbol.ACE)
+
+        val expectedCards = Cards.from(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.HEARTS, Symbol.TEN),
+                Card.of(Suit.DIAMONDS, Symbol.TWO)
+            )
+        )
+
+        // when
+        val actualStatus: Hand.Status = hand.add(addingCard)
+        val actualHandCards: Cards = hand.cards
+
+        // then
+        assertAll(
+            { assertThat(actualStatus).isEqualTo(Hand.Status.BUST) },
+            { assertThat(actualHandCards).isEqualTo(expectedCards) }
+        )
     }
 
     // 참고: https://github.com/junit-team/junit5/issues/2256#issuecomment-612438057
