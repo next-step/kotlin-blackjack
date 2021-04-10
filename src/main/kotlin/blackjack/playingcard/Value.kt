@@ -21,5 +21,6 @@ data class Value(private val value: Int) : Comparable<Value> {
 
     companion object {
         val ZERO = Value(0)
+        val BLACKJACK_THRESHOLD = Value(21)
     }
 }

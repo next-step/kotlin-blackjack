@@ -15,8 +15,8 @@ enum class Symbol(val initial: String, private val value: Value) {
     KING("K", Value(10)),
     ACE("A", Value(11)) {
         override fun valueBy(sumOthers: Value): Value {
-            if (super.value + sumOthers > Value(21)) {
-                return Value(1)
+            if (super.value + sumOthers > Value.BLACKJACK_THRESHOLD) {
+                return ACE_HARD
             }
 
             return super.value
@@ -25,5 +25,9 @@ enum class Symbol(val initial: String, private val value: Value) {
 
     open fun valueBy(sumOthers: Value): Value {
         return this.value
+    }
+
+    companion object {
+        private val ACE_HARD = Value(1)
     }
 }
