@@ -24,4 +24,14 @@ internal class PlayerTest {
         // then
         assertThat(player.name).isEqualTo(name)
     }
+
+    @Test
+    internal fun `플레이어는 생성되면 빈 손패를 가지고 있다`() {
+        // when
+        val player = Player(Name("Arnold Snyder"))
+        val hand: Hand = player.hand
+
+        // then
+        assertThat(hand.cards.toList()).isEmpty()
+    }
 }
