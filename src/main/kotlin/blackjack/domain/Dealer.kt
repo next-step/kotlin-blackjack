@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Dealer(
     cards: Set<Card> = emptySet()
 ) : Participant {
@@ -23,6 +25,10 @@ class Dealer(
 
     override fun cardPointSum(): Int {
         return player.cardPointSum()
+    }
+
+    fun profit(playerProfits: List<Profit>): BigDecimal {
+        return playerProfits.fold(BigDecimal.ZERO) { acc, profit -> acc + profit.amount } * BigDecimal("-1")
     }
 
     companion object {

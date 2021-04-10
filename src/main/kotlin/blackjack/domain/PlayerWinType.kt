@@ -18,15 +18,16 @@ enum class PlayerWinType(
                 return BLACKJACK
             }
 
+            if (playerPoint.point > Player.BLACK_JACK_TWENTY_ONE
+                || (dealerPoint.point > playerPoint.point && dealerPoint.point <= Player.BLACK_JACK_TWENTY_ONE)) {
+                return LOSE
+            }
+
             if (dealerPoint.point > Player.BLACK_JACK_TWENTY_ONE || dealerPoint.point < playerPoint.point) {
                 return WIN
             }
 
-            if (dealerPoint == playerPoint) {
-                return DRAW
-            }
-
-            return LOSE
+            return DRAW
         }
 
         fun isLose(winType: PlayerWinType): Boolean = winType == LOSE

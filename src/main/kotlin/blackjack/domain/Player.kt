@@ -51,6 +51,13 @@ class Player(
         return cardPointSum
     }
 
+    fun profit(dealerPoint: PlayerPoint): Profit {
+        val playerPoint = PlayerPoint(this.cardPointSum(), this.isBlackjack)
+        val playerWinType = PlayerWinType.findPlayerWinType(playerPoint, dealerPoint)
+        val profitAmount = playerWinType.calculateProfit(this.price)
+        return Profit(this.name, profitAmount)
+    }
+
     private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
         if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
 

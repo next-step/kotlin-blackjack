@@ -33,18 +33,10 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
             it.profit(dealerPoint)
         }
 
-        val dealerProfitAmount =
-            playerProfits.fold(BigDecimal.ZERO) { acc, profit -> acc + profit.amount } * BigDecimal("-1")
+        val dealerProfitAmount = dealer.profit(playerProfits)
         val dealerProfit = Profit(dealer.name, dealerProfitAmount)
 
         return Profits(dealerProfit, playerProfits)
-    }
-
-    private fun Player.profit(dealerPoint: PlayerPoint): Profit {
-        val playerPoint = PlayerPoint(this.cardPointSum(), this.isBlackjack)
-        val playerWinType = PlayerWinType.findPlayerWinType(playerPoint, dealerPoint)
-        val profitAmount = playerWinType.calculateProfit(this.price)
-        return Profit(this.name, profitAmount)
     }
 
     companion object {

@@ -99,6 +99,18 @@ internal class BlackjackGameTest {
     }
 
     @Test
+    fun `player와 dealer가 모두 Bust인 경우 profit을 계산한다`() {
+        val player = Player("song", 10000, makeCardSetPointOf(CardType.KING, CardType.JACK, CardType.QUEEN), false)
+        val players = Players(mutableListOf(player))
+        val dealer = Dealer(makeCardSetPointOf(CardType.KING, CardType.JACK, CardType.QUEEN))
+        val blackjackGame = BlackjackGame(players, dealer)
+
+        val profits = blackjackGame.findProfits()
+        assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal("10000"))
+        assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal("-10000"))
+    }
+
+    @Test
     fun `player 한 명이 Blackjack이고, 다른 한 명이 win인 경우 profit을 계산한다`() {
         val player1 = Player("song", 10000, makeCardSetPointOf(CardType.ACE, CardType.JACK), true)
         val player2 = Player("kim", 20000, makeCardSetPointOf(CardType.QUEEN, CardType.JACK))
