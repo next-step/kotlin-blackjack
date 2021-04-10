@@ -9,7 +9,9 @@ class Hand(val cards: Cards = Cards()) {
         cards.add(card)
     }
 
-    fun sumValues(): Value {
-        return cards.sum()
+    fun calculateValues(): Value {
+        return cards.toList()
+            .sortedBy { it.symbol }
+            .fold(Value.ZERO) { sum, card -> sum + card.valueBy(sum) }
     }
 }

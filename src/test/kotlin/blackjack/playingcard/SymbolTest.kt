@@ -7,10 +7,9 @@ import org.junit.jupiter.params.provider.CsvSource
 
 internal class SymbolTest {
     @Test
-    internal fun `눈 목록`() {
+    internal fun `눈의 순서`() {
         // given
         val expected = listOf(
-            Symbol.ACE,
             Symbol.TWO,
             Symbol.THREE,
             Symbol.FOUR,
@@ -22,7 +21,8 @@ internal class SymbolTest {
             Symbol.TEN,
             Symbol.JACK,
             Symbol.QUEEN,
-            Symbol.KING
+            Symbol.KING,
+            Symbol.ACE
         )
 
         // when
@@ -69,14 +69,34 @@ internal class SymbolTest {
         "TEN, 10",
         "JACK, 10",
         "QUEEN, 10",
-        "KING, 10",
-        "ACE, 11"
+        "KING, 10"
     )
-    internal fun `눈은 카드 값을 가진다`(symbol: Symbol, value: Int) {
+    internal fun `A를 제외한 눈의 카드 값은 다른 값이 무엇이든 간에 상관없이 정해진 값을 가진다`(symbol: Symbol, expectedValue: Int) {
         // when
-        val actualInitial = symbol.value
+        val valueWhenSumUnder21 = symbol.valueBy(Value(2))
+        val valueWhenSumOver21 = symbol.valueBy(Value(30))
 
         // then
-        assertThat(actualInitial).isEqualTo(Value(value))
+        assertThat(valueWhenSumUnder21)
+            .isEqualTo(valueWhenSumOver21)
+            .isEqualTo(Value(expectedValue))
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "2,11",
+        "10,11",
+        "11,1",
+        "21,1"
+    )
+    internal fun `A는 주어진 값과 자기 자신의 값의 합이 21을 초과하면 값을 1로, 21 이하면 값을 11로 판단한다`(sumOthers: Int, expected: Int) {
+        // given
+        val expectedValue = Value(expected)
+
+        // when
+        val actualValue = Symbol.ACE.valueBy(sumOthers = Value(sumOthers))
+
+        // then
+        assertThat(actualValue).isEqualTo(expectedValue)
     }
 }

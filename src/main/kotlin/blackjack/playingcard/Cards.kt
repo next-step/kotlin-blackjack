@@ -12,6 +12,7 @@ class Cards(elements: List<Card> = emptyList()) {
     }
 
     fun sum(): Value {
-        return elements.fold(Value.ZERO) { acc, card -> acc + card.value }
+        return elements.sortedBy { it.symbol }
+            .fold(Value.ZERO) { sum, card -> sum + card.valueBy(sum) }
     }
 }

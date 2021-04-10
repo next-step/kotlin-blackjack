@@ -1,7 +1,6 @@
 package blackjack.playingcard
 
-enum class Symbol(val initial: String, val value: Value) {
-    ACE("A", Value(11)),
+enum class Symbol(val initial: String, private val value: Value) {
     TWO("2", Value(2)),
     THREE("3", Value(3)),
     FOUR("4", Value(4)),
@@ -13,5 +12,18 @@ enum class Symbol(val initial: String, val value: Value) {
     TEN("10", Value(10)),
     JACK("J", Value(10)),
     QUEEN("Q", Value(10)),
-    KING("K", Value(10));
+    KING("K", Value(10)),
+    ACE("A", Value(11)) {
+        override fun valueBy(sumOthers: Value): Value {
+            if (super.value + sumOthers > Value(21)) {
+                return Value(1)
+            }
+
+            return super.value
+        }
+    };
+
+    open fun valueBy(sumOthers: Value): Value {
+        return this.value
+    }
 }

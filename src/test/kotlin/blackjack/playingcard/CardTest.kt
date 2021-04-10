@@ -38,8 +38,14 @@ internal class CardTest {
     @ParameterizedTest
     @EnumSource
     internal fun `카드의 값은 카드 눈의 값과 동일하다`(symbol: Symbol) {
+        // given
+        val sumOthers = Value(10)
+
+        // when
         val card = Card.of(Suit.HEARTS, symbol)
-        assertThat(card.value).isEqualTo(symbol.value)
+        val actual = card.valueBy(Value(10))
+
+        assertThat(actual).isEqualTo(symbol.valueBy(sumOthers))
     }
 
     @Test
