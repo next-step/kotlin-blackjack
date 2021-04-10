@@ -28,6 +28,7 @@ class Player(
     override fun takeCard(card: Card) {
 
         check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
+        check(!isBlackjack) { "blackjack인 경우 카드를 더 받지 않습니다." }
 
         cards.add(card)
     }
