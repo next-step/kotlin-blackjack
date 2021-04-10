@@ -105,6 +105,37 @@ internal class HandTest {
         assertThat(actualValue).isEqualTo(expectedValue)
     }
 
+    @Test
+    internal fun `손패의 합이 21을 초과하면 버스트 상태이다`() {
+        val cardsOver21 = Cards(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.HEARTS, Symbol.TEN),
+                Card.of(Suit.DIAMONDS, Symbol.TWO)
+            )
+        )
+        // given
+        val hand = Hand(cardsOver21)
+
+        // then
+        assertThat(hand.status).isEqualTo(Hand.Status.BUST)
+    }
+
+    @Test
+    internal fun `손패의 합이 21 이하이면 버스트가 아닌 상태이다`() {
+        val cardsLessOrEqual21 = Cards(
+            listOf(
+                Card.of(Suit.SPADES, Symbol.TEN),
+                Card.of(Suit.DIAMONDS, Symbol.ACE)
+            )
+        )
+        // given
+        val hand = Hand(cardsLessOrEqual21)
+
+        // then
+        assertThat(hand.status).isEqualTo(Hand.Status.NOT_BUST)
+    }
+
     // 참고: https://github.com/junit-team/junit5/issues/2256#issuecomment-612438057
     internal class SymbolVarargsAggregator : ArgumentsAggregator {
         @Throws(ArgumentsAggregationException::class)
