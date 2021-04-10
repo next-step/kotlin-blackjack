@@ -23,7 +23,7 @@ import java.util.stream.Stream
 internal class HandTest {
     @Test
     fun `손패는 카드리스트를 가진다`() {
-        assertDoesNotThrow { Hand(cards = Cards()) }
+        assertDoesNotThrow { Hand(cards = Cards.empty()) }
     }
 
     @ParameterizedTest
@@ -34,24 +34,24 @@ internal class HandTest {
     fun `손패에 카드를 주어 카드를 추가할 수 있다`(suit: Suit, symbol: Symbol) {
         // given
         val givenCard = Card.of(Suit.DIAMONDS, Symbol.NINE)
-        val hand = Hand(Cards(listOf(givenCard)))
+        val hand = Hand(Cards.from(listOf(givenCard)))
 
         val newCard = Card.of(suit, symbol)
-        val expected = listOf(givenCard, newCard)
+        val expected = Cards.from(listOf(givenCard, newCard))
 
         // when
         hand.add(newCard)
-        val actual = hand.cards.toList()
+        val actual = hand.cards
 
         // then
-        assertThat(actual).containsExactlyElementsOf(expected)
+        assertThat(actual).isEqualTo(expected)
     }
 
     @Test
     internal fun `손패는 아무 값 없이 생성하면 비어있다`() {
-        val actual = Hand().cards.toList()
+        val actual = Hand().cards
 
-        assertThat(actual).isEmpty()
+        assertThat(actual).isEqualTo(Cards.empty())
     }
 
     @ParameterizedTest
@@ -67,7 +67,7 @@ internal class HandTest {
     @Test
     internal fun `A를 11로 했을 때 손패의 합이 21을 넘지 않으면, 손패의 A들은 그대로 11로 취급한다`() {
         // given
-        val cards = Cards(
+        val cards = Cards.from(
             listOf(
                 Card.of(Suit.HEARTS, Symbol.ACE),
                 Card.of(Suit.HEARTS, Symbol.TWO)
@@ -94,7 +94,7 @@ internal class HandTest {
         @AggregateWith(SymbolVarargsAggregator::class) vararg symbols: Symbol
     ) {
         // given
-        val cards = Cards(symbols.map { symbol -> Card.of(Suit.SPADES, symbol) })
+        val cards = Cards.from(symbols.map { symbol -> Card.of(Suit.SPADES, symbol) })
         val hand = Hand(cards)
         val expectedValue = Value(expected)
 
@@ -107,7 +107,7 @@ internal class HandTest {
 
     @Test
     internal fun `손패의 합이 21을 초과하면 버스트 상태이다`() {
-        val cardsOver21 = Cards(
+        val cardsOver21 = Cards.from(
             listOf(
                 Card.of(Suit.SPADES, Symbol.TEN),
                 Card.of(Suit.HEARTS, Symbol.TEN),
@@ -123,7 +123,7 @@ internal class HandTest {
 
     @Test
     internal fun `손패의 합이 21 이하이면 버스트가 아닌 상태이다`() {
-        val cardsLessOrEqual21 = Cards(
+        val cardsLessOrEqual21 = Cards.from(
             listOf(
                 Card.of(Suit.SPADES, Symbol.TEN),
                 Card.of(Suit.DIAMONDS, Symbol.ACE)
@@ -153,11 +153,11 @@ internal class HandTest {
     companion object {
         @JvmStatic
         fun `손패에 A가 없을 때, 손패 값은 카드 값의 합과 같다`(): Stream<Arguments> = Stream.of(
-            Arguments.of(Value.ZERO, Cards(emptyList())),
-            Arguments.of(Value(11), Cards(listOf(Card.of(Suit.SPADES, Symbol.ACE)))),
+            Arguments.of(Value.ZERO, Cards.empty()),
+            Arguments.of(Value(11), Cards.from(listOf(Card.of(Suit.SPADES, Symbol.ACE)))),
             Arguments.of(
                 Value(15),
-                Cards(
+                Cards.from(
                     listOf(
                         Card.of(Suit.SPADES, Symbol.FIVE),
                         Card.of(Suit.SPADES, Symbol.TEN)
@@ -166,7 +166,7 @@ internal class HandTest {
             ),
             Arguments.of(
                 Value(30),
-                Cards(
+                Cards.from(
                     listOf(
                         Card.of(Suit.SPADES, Symbol.KING),
                         Card.of(Suit.SPADES, Symbol.QUEEN),

@@ -1,8 +1,6 @@
 package blackjack.playingcard
 
-class Cards(elements: List<Card> = emptyList()) {
-    private val elements = elements.toMutableList()
-
+data class Cards private constructor(private val elements: MutableList<Card> = mutableListOf()) {
     fun toList(): List<Card> {
         return elements
     }
@@ -14,5 +12,11 @@ class Cards(elements: List<Card> = emptyList()) {
     fun sum(): Value {
         return elements.sortedBy { it.symbol }
             .fold(Value.ZERO) { sum, card -> sum + card.valueBy(sum) }
+    }
+
+    companion object {
+        fun from(list: List<Card>): Cards = Cards(list.toMutableList())
+
+        fun empty(): Cards = Cards()
     }
 }

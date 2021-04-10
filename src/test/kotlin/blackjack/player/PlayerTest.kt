@@ -1,6 +1,7 @@
 package blackjack.player
 
 import blackjack.playingcard.Card
+import blackjack.playingcard.Cards
 import blackjack.playingcard.Deck
 import blackjack.playingcard.Suit
 import blackjack.playingcard.Symbol
@@ -38,7 +39,7 @@ internal class PlayerTest {
         val hand: Hand = player.hand
 
         // then
-        assertThat(hand.cards.toList()).isEmpty()
+        assertThat(hand.cards).isEqualTo(Cards.empty())
     }
 
     @ParameterizedTest
@@ -52,11 +53,12 @@ internal class PlayerTest {
             listOf(Card.of(suit, symbol))
         )
         val player = Player(Name("Russ Hamilton"))
+        val expected = Cards.from(listOf(Card.of(suit, symbol)))
 
         // when
         player.drawOneFrom(deck)
 
         // then
-        assertThat(player.hand.cards.toList()).containsExactly(Card.of(suit, symbol))
+        assertThat(player.hand.cards).isEqualTo(expected)
     }
 }

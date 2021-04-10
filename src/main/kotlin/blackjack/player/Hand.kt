@@ -4,7 +4,7 @@ import blackjack.playingcard.Card
 import blackjack.playingcard.Cards
 import blackjack.playingcard.Value
 
-class Hand(val cards: Cards = Cards()) {
+class Hand(val cards: Cards = Cards.empty()) {
     enum class Status {
         BUST,
         NOT_BUST,
