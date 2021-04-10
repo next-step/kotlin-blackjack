@@ -10,21 +10,6 @@ import study.domain.Resume
 import study.domain.SoftSkill
 import study.domain.introduce
 
-/*
-introduce {
-  name("남동민")
-  company("에이치티비욘드")
-  skills {
-    soft ("A passion for problem solving")
-    soft ("Attitude to develop with a spirit of improvement")
-    hard ("Kotlin")
-  }
-  languages {
-    "Korean" level 5
-    "English" level 3
-  }
-}
- */
 internal class ResumeTest {
     @Test
     internal fun `이름 작성`() {

@@ -1,3 +1,3 @@
 package study.domain
 
-data class SoftSkill(val skill: String) : Skill
+data class SoftSkill(private val skill: String) : Skill

@@ -1,3 +1,3 @@
 package study.domain
 
-data class Name(val name: String)
+data class Name(private val name: String)
