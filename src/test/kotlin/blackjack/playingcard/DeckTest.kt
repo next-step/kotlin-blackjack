@@ -3,6 +3,7 @@ package blackjack.playingcard
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -38,6 +39,21 @@ internal class DeckTest {
         val deck = Deck(listOf())
 
         assertThatExceptionOfType(NoSuchElementException::class.java).isThrownBy { deck.draw() }
+    }
+
+    @Test
+    internal fun `덱에서 카드를 뽑으면, 뽑힌 카드가 덱에서 없어진다`() {
+        // given
+        val deck = Deck(listOf(Card.of(Suit.HEARTS, Symbol.ACE)))
+
+        // when
+        val drawnCard = deck.draw()
+
+        // then
+        assertAll(
+            { assertThatExceptionOfType(NoSuchElementException::class.java).isThrownBy { deck.draw() } },
+            { assertThat(drawnCard).isEqualTo(Card.of(Suit.HEARTS, Symbol.ACE)) }
+        )
     }
 
     @Test
