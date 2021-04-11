@@ -19,7 +19,8 @@ class Player(
     }
 
     override fun takeFirstTwoCards(card1: Card, card2: Card) {
-        state = state.takeFirstTwoCards(Cards(listOf(card1, card2)))
+        val cards = Cards(listOf(card1, card2))
+        state = state.takeFirstTwoCards(cards)
     }
 
     override fun cardPointSum(): Int {
