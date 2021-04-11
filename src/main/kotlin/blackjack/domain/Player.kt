@@ -1,9 +1,15 @@
 package blackjack.domain
 
+import blackjack.domain.state.State
+import blackjack.domain.state.notstarted.NotStarted
+
 class Player(
     val name: String,
     private val price: Int
 ) : Participant {
+
+    private var state: State = NotStarted()
+
     private val cards = mutableSetOf<Card>()
     val cardNames: List<String>
         get() = cards.map { it.toString() }

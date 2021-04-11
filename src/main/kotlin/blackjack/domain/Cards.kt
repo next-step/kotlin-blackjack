@@ -13,18 +13,29 @@ package blackjack.domain
 class Cards(
     private val values: List<Card>
 ) : List<Card> by values {
-    private val point: Int
-        get() = values.sumBy { it.point }
     val isBust: Boolean
-        get() = point > BLACK_JACK_NUMBER
+        get() = calculatePoint() > BLACK_JACK_TWENTY_ONE
     val isBlackjack: Boolean
-        get() = point == BLACK_JACK_NUMBER
+        get() = calculatePoint() == BLACK_JACK_TWENTY_ONE
 
     fun with(card: Card): Cards {
         return Cards(listOf(*values.toTypedArray(), card))
     }
 
+    fun calculatePoint(): Int {
+        var cardPointSum = values.sumBy { it.point }
+        val aceCount = values.count { it.isAce }
+
+        repeat(aceCount) {
+            cardPointSum = changeAcePointToOneToWin(cardPointSum)
+        }
+        return cardPointSum
+    }
+
+    private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
+        if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
+
     companion object {
-        private const val BLACK_JACK_NUMBER = 21
+        private const val BLACK_JACK_TWENTY_ONE = 21
     }
 }

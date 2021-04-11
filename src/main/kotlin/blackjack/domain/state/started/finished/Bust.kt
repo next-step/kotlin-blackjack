@@ -1,12 +1,11 @@
-package blackjack.domain.state.finished
+package blackjack.domain.state.started.finished
 
-import blackjack.domain.Card
 import blackjack.domain.Cards
 import java.math.BigDecimal
 
-class BlackJack(
+class Bust(
     cards: Cards
 ) : Finished(cards) {
     override val earningRatio: BigDecimal
-        get() = BigDecimal("1.5")
+        get() = BigDecimal("-1")
 }
