@@ -7,8 +7,6 @@ import blackjack.domain.Cards
 import blackjack.domain.state.started.Hit
 import blackjack.domain.state.started.finished.BlackJack
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
-
 import org.junit.jupiter.api.Test
 
 internal class NotStartedTest {

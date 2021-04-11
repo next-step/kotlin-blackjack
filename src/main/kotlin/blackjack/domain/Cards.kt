@@ -1,15 +1,5 @@
-/*
- * Copyright (c) 2021. LINE Corporation. All rights reserved.
- * LINE Corporation PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
-
 package blackjack.domain
 
-
-/**
- * @author tae-heon.song<taeheon.song@linecorp.com>
- * @since 2021. 04. 10.
- */
 class Cards(
     private val values: List<Card>
 ) : List<Card> by values {

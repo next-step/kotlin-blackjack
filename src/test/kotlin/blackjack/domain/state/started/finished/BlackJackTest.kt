@@ -5,7 +5,6 @@ import blackjack.domain.CardShape
 import blackjack.domain.CardType
 import blackjack.domain.Cards
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
 
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal

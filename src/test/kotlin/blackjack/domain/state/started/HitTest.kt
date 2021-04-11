@@ -4,14 +4,9 @@ import blackjack.domain.Card
 import blackjack.domain.CardShape
 import blackjack.domain.CardType
 import blackjack.domain.Cards
-import blackjack.domain.state.started.finished.BlackJack
 import blackjack.domain.state.started.finished.Bust
-import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Assertions.*
-
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
 
 internal class HitTest {
 

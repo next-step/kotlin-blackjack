@@ -126,7 +126,6 @@ internal class BlackjackGameTest {
         assertThat(profits.dealerProfit.amount).isEqualTo(BigDecimal(-35000))
         assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal(15000))
         assertThat(profits.playerProfits[1].amount).isEqualTo(BigDecimal(20000))
-
     }
 
     private fun cards(vararg cardTypes: CardType): Cards =
