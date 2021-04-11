@@ -31,7 +31,7 @@ class Dealer(
     }
 
     override fun stay() {
-        state.stay()
+        player.stay()
     }
 
     fun profit(playerProfits: List<Profit>): BigDecimal {
