@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.state.started.Hit
+
 class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
 
     private val cardPack = CardPack()
@@ -15,7 +17,7 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
     fun giveCard(player: Player, hasAccepted: Boolean) {
         if (hasAccepted) {
             player.takeCard(cardPack.poll())
-        } else {
+        } else if (player.state is Hit) {
             player.stay()
         }
     }
@@ -24,7 +26,9 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
         while (dealer.isUnderSixteen) {
             dealer.takeCard(cardPack.poll())
         }
-        dealer.stay()
+        if (dealer.state is Hit) {
+            dealer.stay()
+        }
     }
 
     fun findProfits(): Profits {
