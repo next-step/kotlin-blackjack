@@ -30,7 +30,6 @@ enum class PlayerWinType(
             return DRAW
         }
 
-        fun isLose(winType: PlayerWinType): Boolean = winType == LOSE
-        fun isWin(winType: PlayerWinType): Boolean = winType == WIN || winType == BLACKJACK
+
     }
 }

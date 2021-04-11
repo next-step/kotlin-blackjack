@@ -9,7 +9,7 @@ import java.math.BigDecimal
 abstract class Finished(
     cards: Cards
 ) : Started(cards) {
-    abstract val earningRatio: BigDecimal
+    protected abstract val earningRatio: BigDecimal
 
     override fun takeCard(card: Card): State {
         throw RuntimeException("Finished에서 카드를 더 받을 수 없습니다.")
