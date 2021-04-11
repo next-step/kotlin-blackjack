@@ -23,6 +23,10 @@ class Player(
         state = state.takeFirstTwoCards(cards)
     }
 
+    override fun stay() {
+        state = state.stay()
+    }
+
     override fun cardPointSum(): Int {
         return state.cardPointSum()
     }
@@ -30,10 +34,6 @@ class Player(
     fun profit(dealerState: State): Profit {
         val profitAmount = state.profit(price, dealerState)
         return Profit(this.name, profitAmount)
-    }
-
-    override fun stay() {
-        state.stay()
     }
 
     companion object {
