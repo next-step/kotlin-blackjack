@@ -26,11 +26,23 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
         }
     }
 
+    //TODO: delete
     fun findProfits(): Profits {
         val dealerPoint = PlayerPoint(dealer.cardPointSum(), dealer.isBlackjack)
 
         val playerProfits = players.map {
             it.profit(dealerPoint)
+        }
+
+        val dealerProfitAmount = dealer.profit(playerProfits)
+        val dealerProfit = Profit(dealer.name, dealerProfitAmount)
+
+        return Profits(dealerProfit, playerProfits)
+    }
+
+    fun findProfits2(): Profits {
+        val playerProfits = players.map {
+            it.profit(dealer.state)
         }
 
         val dealerProfitAmount = dealer.profit(playerProfits)

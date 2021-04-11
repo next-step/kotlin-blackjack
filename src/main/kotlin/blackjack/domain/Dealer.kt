@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.state.State
+import blackjack.domain.state.notstarted.NotStarted
 import java.math.BigDecimal
 
 class Dealer(
@@ -7,6 +9,9 @@ class Dealer(
 ) : Participant {
 
     val player = Player("딜러", cards)
+    val state
+        get() = player.state
+
     val name: String = player.name
     val isUnderSixteen: Boolean
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD

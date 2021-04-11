@@ -8,16 +8,16 @@ class Player(
     private val price: Int
 ) : Participant {
 
-    private var state: State = NotStarted()
+    var state: State = NotStarted()
 
-    private val cards = mutableSetOf<Card>()
+    private val cards = mutableSetOf<Card>() //TODO: Delete
     val cardNames: List<String>
         get() = cards.map { it.toString() }
     val cardSize: Int
         get() = cards.size
-    override val isBlackjack: Boolean
+    override val isBlackjack: Boolean //TODO: Delete
         get() = _isBlackjack
-    private var _isBlackjack: Boolean = false
+    private var _isBlackjack: Boolean = false //TODO: Delete
 
     constructor(name: String, cards: Set<Card>, isBlackjack: Boolean = false) : this(name) {
         this.cards.addAll(cards)
@@ -32,32 +32,18 @@ class Player(
     constructor(name: String) : this(name, 0)
 
     override fun takeCard(card: Card) {
-
-        check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
-        check(!isBlackjack) { "blackjack인 경우 카드를 더 받지 않습니다." }
-
-        cards.add(card)
+        state.takeCard(card)
     }
 
     override fun takeFirstTwoCards(card1: Card, card2: Card) {
-        takeCard(card1)
-        takeCard(card2)
-
-        if (cardPointSum() == BLACK_JACK_TWENTY_ONE) {
-            _isBlackjack = true
-        }
+        state.takeFirstTwoCards(Cards(listOf(card1, card2)))
     }
 
     override fun cardPointSum(): Int {
-        var cardPointSum = cards.sumBy { it.point }
-        val aceCount = cards.count { it.isAce }
-
-        repeat(aceCount) {
-            cardPointSum = changeAcePointToOneToWin(cardPointSum)
-        }
-        return cardPointSum
+        return state.cardPointSum()
     }
 
+    //TODO: delete
     fun profit(dealerPoint: PlayerPoint): Profit {
         val playerPoint = PlayerPoint(this.cardPointSum(), this.isBlackjack)
         val playerWinType = PlayerWinType.findPlayerWinType(playerPoint, dealerPoint)
@@ -65,8 +51,10 @@ class Player(
         return Profit(this.name, profitAmount)
     }
 
-    private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
-        if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
+    fun profit(dealerState: State): Profit {
+        val profitAmount = state.profit(price, dealerState)
+        return Profit(this.name, profitAmount)
+    }
 
     companion object {
         const val BLACK_JACK_TWENTY_ONE = 21
