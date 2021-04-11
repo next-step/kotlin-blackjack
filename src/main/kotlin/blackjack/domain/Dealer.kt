@@ -5,10 +5,10 @@ import blackjack.domain.state.notstarted.NotStarted
 import java.math.BigDecimal
 
 class Dealer(
-    cards: Set<Card> = emptySet()
+    state: State = NotStarted()
 ) : Participant {
 
-    val player = Player("딜러", cards)
+    val player = Player("딜러", state)
     val state
         get() = player.state
 
@@ -17,8 +17,6 @@ class Dealer(
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize
         get() = player.cardSize
-    override val isBlackjack: Boolean
-        get() = player.isBlackjack
 
     override fun takeCard(card: Card) {
         player.takeCard(card)
@@ -30,6 +28,10 @@ class Dealer(
 
     override fun cardPointSum(): Int {
         return player.cardPointSum()
+    }
+
+    override fun stay() {
+        state.stay()
     }
 
     fun profit(playerProfits: List<Profit>): BigDecimal {

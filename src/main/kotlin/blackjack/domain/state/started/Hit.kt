@@ -4,6 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.state.State
 import blackjack.domain.state.started.finished.Bust
+import blackjack.domain.state.started.finished.Stay
 import java.math.BigDecimal
 
 class Hit(
@@ -21,5 +22,9 @@ class Hit(
 
     override fun profit(betAmount: Int, dealerState: State): BigDecimal {
         throw RuntimeException("Finish되지 않은 상태에서 이익을 계산할 수 없습니다.")
+    }
+
+    override fun stay(): State {
+        return Stay(cards)
     }
 }

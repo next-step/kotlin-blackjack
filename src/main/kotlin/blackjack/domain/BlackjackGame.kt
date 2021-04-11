@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import java.math.BigDecimal
-
 class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
 
     private val cardPack = CardPack()
@@ -17,6 +15,8 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
     fun giveCard(player: Player, hasAccepted: Boolean) {
         if (hasAccepted) {
             player.takeCard(cardPack.poll())
+        } else {
+            player.stay()
         }
     }
 
@@ -24,23 +24,10 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
         while (dealer.isUnderSixteen) {
             dealer.takeCard(cardPack.poll())
         }
+        dealer.stay()
     }
 
-    //TODO: delete
     fun findProfits(): Profits {
-        val dealerPoint = PlayerPoint(dealer.cardPointSum(), dealer.isBlackjack)
-
-        val playerProfits = players.map {
-            it.profit(dealerPoint)
-        }
-
-        val dealerProfitAmount = dealer.profit(playerProfits)
-        val dealerProfit = Profit(dealer.name, dealerProfitAmount)
-
-        return Profits(dealerProfit, playerProfits)
-    }
-
-    fun findProfits2(): Profits {
         val playerProfits = players.map {
             it.profit(dealer.state)
         }

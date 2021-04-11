@@ -1,5 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.state.started.Hit
+import blackjack.domain.state.started.finished.BlackJack
+import blackjack.domain.state.started.finished.Bust
+import blackjack.domain.state.started.finished.Stay
 import blackjack.ui.model.PlayerDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,7 +26,7 @@ internal class BlackjackGameTest {
 
     @Test
     fun `player가 동의한 경우 카드를 준다`() {
-        val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val player = Player("song", Hit(cards(CardType.TWO, CardType.THREE)))
         val players = Players(mutableListOf(player))
         val blackjackGame = BlackjackGame(players)
 
@@ -32,7 +36,7 @@ internal class BlackjackGameTest {
 
     @Test
     fun `player가 동의하지 않은 경우 카드를 준다`() {
-        val player = Player("song", makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val player = Player("song", Hit(cards(CardType.TWO, CardType.THREE)))
         val players = Players(mutableListOf(player))
         val blackjackGame = BlackjackGame(players)
 
@@ -44,7 +48,7 @@ internal class BlackjackGameTest {
     fun `dealer의 카드가 16이하면 카드를 더 받는다`() {
         val player = Player("song")
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.TWO, CardType.THREE))
+        val dealer = Dealer(Hit(cards(CardType.TWO, CardType.THREE)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
@@ -55,7 +59,7 @@ internal class BlackjackGameTest {
     fun `dealer의 카드가 16초과면 카드를 더 받지 않는다`() {
         val player = Player("song")
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.QUEEN))
+        val dealer = Dealer(Hit(cards(CardType.JACK, CardType.QUEEN)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
@@ -63,10 +67,10 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `player 한 명이 win인 경우 profit을 계산한다`() {
-        val player = Player("song", 10000, makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+    fun `player 한 명이 stay(win)인 경우 profit을 계산한다`() {
+        val player = Player("song", Stay(cards(CardType.JACK, CardType.EIGHT)), 10000)
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+        val dealer = Dealer(Stay(cards(CardType.NINE, CardType.EIGHT)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         val profits = blackjackGame.findProfits()
@@ -75,10 +79,10 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `player 한 명이 Lose인 경우 profit을 계산한다`() {
-        val player = Player("song", 10000, makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+    fun `player 한 명이 stay(Lose)인 경우 profit을 계산한다`() {
+        val player = Player("song", Stay(cards(CardType.NINE, CardType.EIGHT)), 10000)
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+        val dealer = Dealer(Stay(cards(CardType.JACK, CardType.EIGHT)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         val profits = blackjackGame.findProfits()
@@ -88,9 +92,9 @@ internal class BlackjackGameTest {
 
     @Test
     fun `player 한 명이 Blackjack인 경우 profit을 계산한다`() {
-        val player = Player("song", 10000, makeCardSetPointOf(CardType.ACE, CardType.JACK), true)
+        val player = Player("song", BlackJack(cards(CardType.ACE, CardType.JACK)), 10000)
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.JACK, CardType.EIGHT))
+        val dealer = Dealer(Stay(cards(CardType.JACK, CardType.EIGHT)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         val profits = blackjackGame.findProfits()
@@ -100,9 +104,9 @@ internal class BlackjackGameTest {
 
     @Test
     fun `player와 dealer가 모두 Bust인 경우 profit을 계산한다`() {
-        val player = Player("song", 10000, makeCardSetPointOf(CardType.KING, CardType.JACK, CardType.QUEEN), false)
+        val player = Player("song", Bust(cards(CardType.KING, CardType.JACK, CardType.QUEEN)), 10000)
         val players = Players(mutableListOf(player))
-        val dealer = Dealer(makeCardSetPointOf(CardType.KING, CardType.JACK, CardType.QUEEN))
+        val dealer = Dealer(Bust(cards(CardType.KING, CardType.JACK, CardType.QUEEN)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         val profits = blackjackGame.findProfits()
@@ -111,11 +115,11 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `player 한 명이 Blackjack이고, 다른 한 명이 win인 경우 profit을 계산한다`() {
-        val player1 = Player("song", 10000, makeCardSetPointOf(CardType.ACE, CardType.JACK), true)
-        val player2 = Player("kim", 20000, makeCardSetPointOf(CardType.QUEEN, CardType.JACK))
+    fun `player 한 명이 Blackjack이고, 다른 한 명이 stay(win)인 경우 profit을 계산한다`() {
+        val player1 = Player("song", BlackJack(cards(CardType.ACE, CardType.JACK)), 10000)
+        val player2 = Player("kim", Stay(cards(CardType.QUEEN, CardType.JACK)), 20000)
         val players = Players(mutableListOf(player1, player2))
-        val dealer = Dealer(makeCardSetPointOf(CardType.NINE, CardType.EIGHT))
+        val dealer = Dealer(Hit(cards(CardType.NINE, CardType.EIGHT)))
         val blackjackGame = BlackjackGame(players, dealer)
 
         val profits = blackjackGame.findProfits()
@@ -125,6 +129,6 @@ internal class BlackjackGameTest {
 
     }
 
-    private fun makeCardSetPointOf(vararg cardTypes: CardType): Set<Card> =
-        cardTypes.map { Card(CardShape.CLOVER, it) }.toSet()
+    private fun cards(vararg cardTypes: CardType): Cards =
+        Cards(cardTypes.map { Card(CardShape.CLOVER, it) }.toList())
 }

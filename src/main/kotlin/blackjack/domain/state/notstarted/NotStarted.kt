@@ -21,10 +21,18 @@ class NotStarted : State {
     }
 
     override fun cardPointSum(): Int {
-        return 0
+        return NO_CARD_POINT
     }
 
     override fun profit(betAmount: Int, dealerState: State): BigDecimal {
         throw RuntimeException("시작하지 않은 상태에서 이익을 계산할 수 없습니다.")
+    }
+
+    override fun stay(): State {
+        throw RuntimeException("시작하지 않은 상태에서 stay를 호출할 수 없습니다.")
+    }
+
+    companion object {
+        private const val NO_CARD_POINT = 0
     }
 }

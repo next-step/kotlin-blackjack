@@ -14,4 +14,8 @@ abstract class Finished(
     override fun takeCard(card: Card): State {
         throw RuntimeException("Finished에서 카드를 더 받을 수 없습니다.")
     }
+
+    override fun stay(): State {
+        throw RuntimeException("Finished에서 stay를 호출할 수 없습니다.")
+    }
 }

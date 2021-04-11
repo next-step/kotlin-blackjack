@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.state.notstarted.NotStarted
 
 object PlayerInputView {
     fun askPlayerNames(): Players {
@@ -11,7 +12,7 @@ object PlayerInputView {
 
         val playerList = names.split(",").map {
             val price = askBetAmount(it)
-            Player(it, price)
+            Player(it, NotStarted(), price)
         }
         return Players(playerList)
     }

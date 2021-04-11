@@ -17,6 +17,8 @@ class Cards(
         get() = calculatePoint() > BLACK_JACK_TWENTY_ONE
     val isBlackjack: Boolean
         get() = calculatePoint() == BLACK_JACK_TWENTY_ONE
+    val cardNames: List<String>
+        get() = values.map { it.toString() }
 
     fun with(card: Card): Cards {
         return Cards(listOf(*values.toTypedArray(), card))
