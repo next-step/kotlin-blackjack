@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Rule
 import blackjack.model.trump.Cards
 import blackjack.model.score.Score
 import blackjack.model.gamer.Dealer
@@ -18,7 +19,13 @@ object OutputView {
         println("${gamer.name}카드: ${toString(gamer.cards)}")
     }
 
-    fun printResult(name: String, cards: Cards, score: Score) {
+    fun printResults(gamers: Set<Gamer>, rule: Rule) {
+        gamers.forEach {
+            printResult(it.name, it.cards, rule.getScore(it.cards))
+        }
+    }
+
+    private fun printResult(name: String, cards: Cards, score: Score) {
         println("${name}카드: ${toString(cards)} - 결과: ${score.value}")
     }
 

@@ -16,26 +16,23 @@ fun main() {
 
     OutputView.printFirstDraw(gamers + dealer)
 
-    dealer.drawIfNeeded(deck)
-
-    if (dealer.didOneMoreDraw()) {
-        OutputView.printDealerReason()
-    }
-
     val rule = BlackJackRule
-    if (!dealer.hasValidScore(rule)) {
-        printJudgeResult(dealer, gamers, rule)
-        return
-    }
 
     gamers.forEach {
         drawUntilUserStop(it, deck)
     }
 
-    (gamers + dealer).forEach {
-        OutputView.printResult(it.name, it.cards, rule.getScore(it.cards))
+    dealer.drawIfNeeded(deck)
+    if (dealer.didOneMoreDraw()) {
+        OutputView.printDealerReason()
     }
 
+    if (!dealer.hasValidScore(rule)) {
+        printJudgeResult(dealer, gamers, rule)
+        return
+    }
+
+    OutputView.printResults(gamers + dealer, rule)
     printJudgeResult(dealer, gamers, rule)
 }
 

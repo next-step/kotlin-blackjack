@@ -17,9 +17,9 @@ object InputView {
         return input
     }
 
-    fun readUserResponse(gamerName: String): String {
+    fun readUserResponse(gamerName: String): Boolean {
         val input = readLineWhileNullOrBlank("${gamerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
-        return input.trim().toLowerCase()
+        return input.trim().toLowerCase() == "y"
     }
 }

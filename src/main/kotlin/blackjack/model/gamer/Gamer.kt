@@ -11,7 +11,7 @@ interface Gamer {
 
     fun isWin(opponent: Gamer, rule: Rule): Boolean
     fun isLose(opponent: Gamer, rule: Rule): Boolean
-    fun keepDrawing(userResponse: String, deck: Deck): Boolean
+    fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean
     fun hasValidScore(rule: Rule): Boolean
     fun getScore(rule: Rule): Score
 }

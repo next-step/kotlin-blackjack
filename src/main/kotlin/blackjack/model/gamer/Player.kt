@@ -27,12 +27,11 @@ open class Player(cards: Cards, override val name: String) : Gamer {
         return rule.getScore(cards)
     }
 
-    override fun keepDrawing(userResponse: String, deck: Deck): Boolean {
-        if (userResponse == "y") {
+    override fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean {
+        if (userResponse) {
             draw(deck)
-            return true
         }
-        return false
+        return userResponse
     }
 
     fun draw(deck: Deck) {
