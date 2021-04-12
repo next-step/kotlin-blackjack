@@ -1,29 +1,58 @@
 package blackjack.controller
 
-import blackjack.model.Player
-import blackjack.model.PlayersFactory
+import blackjack.model.BlackJackRule
+import blackjack.model.gamer.Dealer
+import blackjack.model.gamer.Gamer
+import blackjack.model.gamer.Gamers
+import blackjack.model.trump.Deck
+import blackjack.model.trump.TrumpDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import blackjack.view.ViewUtil
 
 fun main() {
-    val players = PlayersFactory.create(InputView.readNames())
+    val deck = TrumpDeck()
+    val gamers = Gamers(InputView.readNames(), deck)
+    val dealer = Dealer(deck)
 
-    OutputView.printFirstDraw(players)
+    OutputView.printFirstDraw(gamers + dealer)
 
-    players.forEach {
-        drawUntilUserStop(it)
+    dealer.drawIfNeeded(deck)
+
+    if (dealer.didOneMoreDraw()) {
+        OutputView.printDealerReason()
     }
 
-    OutputView.printResult(players)
+    val rule = BlackJackRule
+    if (!dealer.hasValidScore(rule)) {
+        printJudgeResult(dealer, gamers, rule)
+        return
+    }
+
+    gamers.forEach {
+        drawUntilUserStop(it, deck)
+    }
+
+    (gamers + dealer).forEach {
+        OutputView.printResult(it.name, it.cards, rule.getScore(it.cards))
+    }
+
+    printJudgeResult(dealer, gamers, rule)
 }
 
-private fun drawUntilUserStop(player: Player) {
-    while (true) {
-        if (InputView.readUserResponse(player.name) != "y") {
-            break
-        }
-        player.draw()
-        println("${player.name}카드: ${ViewUtil.toString(player.cards)}")
+private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {
+    while (gamer.keepDrawing(InputView.readUserResponse(gamer.name), deck)) {
+        OutputView.printPlayer(gamer)
+    }
+}
+
+private fun printJudgeResult(
+    dealer: Dealer,
+    gamers: Gamers,
+    rule: BlackJackRule
+) {
+    OutputView.printJudgeTitle()
+    OutputView.printDealerJudgeResult(dealer.name, gamers.countLose(dealer, rule), gamers.countWin(dealer, rule))
+    gamers.forEach {
+        OutputView.printPlayerJudgeResult(it.name, it.isWin(dealer, rule))
     }
 }
