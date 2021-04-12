@@ -30,7 +30,7 @@ internal class PlayerTest {
 
         assertThat(gamer.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT)
 
-        gamer.keepDrawing("y", deck)
+        gamer.keepDrawing(true, deck)
 
         assertThat(gamer.cards.size).isEqualTo(Cards.INITIAL_DRAW_COUNT + 1)
     }
