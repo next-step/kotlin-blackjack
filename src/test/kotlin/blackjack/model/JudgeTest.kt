@@ -8,55 +8,62 @@ import org.junit.jupiter.params.provider.MethodSource
 
 internal class JudgeTest {
     @ParameterizedTest
-    @MethodSource("gamerOpponentProvider")
-    fun `조건에 따라 승리 여부를 판단한다`(gamerScore: Score, opponentScore: Score, isWin: Boolean) {
-        assertThat(Judge.isWin(gamerScore, opponentScore)).isEqualTo(isWin)
+    @MethodSource("gamerOpponentBetProvider")
+    fun `조건에 따라 수익을 계산한다`(gamerScore: Score, opponentScore: Score, betAmount: Int) {
+        assertThat(Judge.calculateRevenue(gamerScore, opponentScore, Bet(1000))).isEqualTo(betAmount)
     }
 
     companion object {
         @JvmStatic
-        private fun gamerOpponentProvider(): List<Arguments> {
+        private fun gamerOpponentBetProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(
                         Score(15),
                         Score(13),
-                        true
+                        1000
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(18),
-                        false
+                        -1000
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(23),
                         Score(18),
-                        false
+                        -1000
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(25),
-                        true
+                        1000
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, true),
                         Score(21, false),
-                        true
+                        1500
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, false),
                         Score(21, true),
-                        false
+                        -1000
+                    )
+                },
+                Arguments {
+                    arrayOf(
+                        Score(21, true),
+                        Score(21, true),
+                        0
                     )
                 }
             )

@@ -26,10 +26,6 @@ class Dealer(cards: Cards, name: String = "딜러") : Gamer {
 
     fun didOneMoreDraw() = gamer.cards.size > Cards.INITIAL_DRAW_COUNT
 
-    override fun isWin(opponent: Gamer, rule: Rule): Boolean = gamer.isWin(opponent, rule)
-
-    override fun isLose(opponent: Gamer, rule: Rule): Boolean = gamer.isLose(opponent, rule)
-
     override fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean = gamer.keepDrawing(userResponse, deck)
 
     override fun hasValidScore(rule: Rule): Boolean = gamer.hasValidScore(rule)

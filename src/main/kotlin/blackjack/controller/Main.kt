@@ -1,6 +1,8 @@
 package blackjack.controller
 
 import blackjack.model.BlackJackRule
+import blackjack.model.Judge
+import blackjack.model.Rule
 import blackjack.model.gamer.Dealer
 import blackjack.model.gamer.Gamer
 import blackjack.model.gamer.Gamers
@@ -34,8 +36,6 @@ fun main() {
 
     OutputView.printResults(gamers + dealer, rule)
     printJudgeResult(dealer, gamers, rule)
-
-    OutputView.printBetResults(gamers + dealer)
 }
 
 private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {
@@ -47,11 +47,20 @@ private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {
 private fun printJudgeResult(
     dealer: Dealer,
     gamers: Gamers,
-    rule: BlackJackRule
+    rule: Rule
 ) {
     OutputView.printJudgeTitle()
-    OutputView.printDealerJudgeResult(dealer.name, gamers.countLose(dealer, rule), gamers.countWin(dealer, rule))
+    OutputView.printRevenue(
+        dealer.name,
+        - gamers.fold(0) { acc, gamer ->
+            acc + Judge.calculateRevenue(
+                rule.getScore(gamer.cards),
+                rule.getScore(dealer.cards),
+                gamer.bet
+            )
+        }
+    )
     gamers.forEach {
-        OutputView.printPlayerJudgeResult(it.name, it.isWin(dealer, rule))
+        OutputView.printRevenue(it.name, Judge.calculateRevenue(rule.getScore(it.cards), rule.getScore(dealer.cards), it.bet))
     }
 }

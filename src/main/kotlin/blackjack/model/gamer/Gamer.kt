@@ -11,8 +11,6 @@ interface Gamer {
     val name: String
     val bet: Bet
 
-    fun isWin(opponent: Gamer, rule: Rule): Boolean
-    fun isLose(opponent: Gamer, rule: Rule): Boolean
     fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean
     fun hasValidScore(rule: Rule): Boolean
     fun getScore(rule: Rule): Score

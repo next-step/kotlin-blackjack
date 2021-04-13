@@ -3,19 +3,27 @@ package blackjack.model
 import blackjack.model.score.Score
 
 object Judge {
-    fun isWin(gamerScore: Score, opponentScore: Score): Boolean {
+    fun calculateRevenue(gamerScore: Score, opponentScore: Score, gamerBet: Bet): Int {
         if (!opponentScore.isValid()) {
-            return true
+            return gamerBet.amount
         }
 
         if (!gamerScore.isValid()) {
-            return false
+            return -gamerBet.amount
         }
 
-        if (gamerScore.isMaximum() && opponentScore.isMaximum()) {
-            return gamerScore.isBlackJack || !opponentScore.isBlackJack
+        if (gamerScore.isBlackJack && opponentScore.isBlackJack) {
+            return 0
         }
 
-        return gamerScore >= opponentScore
+        if (gamerScore.isBlackJack) {
+            return (gamerBet.amount * 1.5).toInt()
+        }
+
+        if (opponentScore.isBlackJack) {
+            return -gamerBet.amount
+        }
+
+        return if (gamerScore >= opponentScore) gamerBet.amount else -gamerBet.amount
     }
 }

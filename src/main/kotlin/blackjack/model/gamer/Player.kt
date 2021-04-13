@@ -1,7 +1,6 @@
 package blackjack.model.gamer
 
 import blackjack.model.Bet
-import blackjack.model.Judge
 import blackjack.model.Rule
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
@@ -13,14 +12,6 @@ open class Player(cards: Cards, override val name: String, override val bet: Bet
 
     override var cards = cards
         protected set
-
-    override fun isWin(opponent: Gamer, rule: Rule): Boolean {
-        return Judge.isWin(getScore(rule), opponent.getScore(rule))
-    }
-
-    override fun isLose(opponent: Gamer, rule: Rule): Boolean {
-        return !isWin(opponent, rule)
-    }
 
     override fun hasValidScore(rule: Rule) = getScore(rule).isValid()
 

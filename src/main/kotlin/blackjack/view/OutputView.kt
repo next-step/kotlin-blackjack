@@ -33,32 +33,11 @@ object OutputView {
         println("딜러는 ${Dealer.MINIMUM_SCORE.value}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printPlayerJudgeResult(gamerName: String, isWin: Boolean) {
-        println("$gamerName: ${if (isWin) "승" else "패"}")
-    }
-
-    fun printDealerJudgeResult(
-        dealerName: String,
-        dealerWinCount: Int,
-        dealerLoseCount: Int
-    ) {
-        println(
-            "$dealerName: ${if (dealerWinCount > 0) "${dealerWinCount}승" else ""} ${if (dealerLoseCount > 0) "${dealerLoseCount}패" else ""}"
-        )
+    fun printRevenue(gamerName: String, gamerRevenue: Int) {
+        println("$gamerName: $gamerRevenue")
     }
 
     fun printJudgeTitle() {
-        println("## 최종 승패")
-    }
-
-    fun printBetResults(gamers: Set<Gamer>) {
         println("## 최종 수익")
-        gamers.forEach {
-            printBetResult(it)
-        }
-    }
-
-    private fun printBetResult(gamer: Gamer) {
-        println("${gamer.name}: ${gamer.bet}")
     }
 }
