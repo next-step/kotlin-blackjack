@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource
 internal class JudgeTest {
     @ParameterizedTest
     @MethodSource("gamerOpponentBetProvider")
-    fun `조건에 따라 수익을 계산한다`(gamerScore: Score, opponentScore: Score, betAmount: Int) {
-        assertThat(Judge.calculateRevenue(gamerScore, opponentScore, Bet(1000))).isEqualTo(betAmount)
+    fun `조건에 따라 수익을 계산한다`(gamerScore: Score, opponentScore: Score, bet: Bet) {
+        assertThat(Judge.calculateRevenue(gamerScore, opponentScore, Bet(1000))).isEqualTo(bet)
     }
 
     companion object {
@@ -21,49 +21,49 @@ internal class JudgeTest {
                     arrayOf(
                         Score(15),
                         Score(13),
-                        1000
+                        Bet(1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(18),
-                        -1000
+                        Bet(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(23),
                         Score(18),
-                        -1000
+                        Bet(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(25),
-                        1000
+                        Bet(1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, true),
                         Score(21, false),
-                        1500
+                        Bet(1500)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, false),
                         Score(21, true),
-                        -1000
+                        Bet(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, true),
                         Score(21, true),
-                        0
+                        Bet.ZERO
                     )
                 }
             )

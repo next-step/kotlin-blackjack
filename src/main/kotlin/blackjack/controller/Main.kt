@@ -50,17 +50,8 @@ private fun printJudgeResult(
     rule: Rule
 ) {
     OutputView.printJudgeTitle()
-    OutputView.printRevenue(
-        dealer.name,
-        - gamers.fold(0) { acc, gamer ->
-            acc + Judge.calculateRevenue(
-                rule.getScore(gamer.cards),
-                rule.getScore(dealer.cards),
-                gamer.bet
-            )
-        }
-    )
+    OutputView.printRevenue(dealer.name, - gamers.calculateRevenue(rule, dealer).amount)
     gamers.forEach {
-        OutputView.printRevenue(it.name, Judge.calculateRevenue(rule.getScore(it.cards), rule.getScore(dealer.cards), it.bet))
+        OutputView.printRevenue(it.name, Judge.calculateRevenue(rule.getScore(it.cards), rule.getScore(dealer.cards), it.bet).amount)
     }
 }
