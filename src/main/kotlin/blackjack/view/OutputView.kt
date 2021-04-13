@@ -50,4 +50,15 @@ object OutputView {
     fun printJudgeTitle() {
         println("## 최종 승패")
     }
+
+    fun printBetResults(gamers: Set<Gamer>) {
+        println("## 최종 수익")
+        gamers.forEach {
+            printBetResult(it)
+        }
+    }
+
+    private fun printBetResult(gamer: Gamer) {
+        println("${gamer.name}: ${gamer.bet}")
+    }
 }

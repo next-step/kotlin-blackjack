@@ -11,7 +11,7 @@ import blackjack.view.OutputView
 
 fun main() {
     val deck = TrumpDeck()
-    val gamers = Gamers(InputView.readNames(), deck)
+    val gamers = Gamers(InputView.readPlayerInfos(), deck)
     val dealer = Dealer(deck)
 
     OutputView.printFirstDraw(gamers + dealer)
@@ -34,6 +34,8 @@ fun main() {
 
     OutputView.printResults(gamers + dealer, rule)
     printJudgeResult(dealer, gamers, rule)
+
+    OutputView.printBetResults(gamers + dealer)
 }
 
 private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {

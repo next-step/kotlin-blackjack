@@ -1,17 +1,20 @@
 package blackjack.model.gamer
 
+import blackjack.model.Bet
 import blackjack.model.Rule
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
 class Dealer(cards: Cards, name: String = "딜러") : Gamer {
-    private val gamer: Player = Player(cards, name)
+    private val gamer: Player = Player(cards, name, Bet.ZERO)
 
     override val cards: Cards
         get() = gamer.cards
     override val name: String
         get() = gamer.name
+    override val bet: Bet
+        get() = gamer.bet
 
     constructor(deck: Deck) : this(Cards.firstDraw(deck))
 

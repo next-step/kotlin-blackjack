@@ -1,5 +1,6 @@
 package blackjack.model.gamer
 
+import blackjack.model.Bet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -11,19 +12,19 @@ internal class GamersTest {
 
     @ParameterizedTest
     @MethodSource("gamerNamesProvider")
-    fun `플레이어 이름의 리스트로 Players를 만들 수 있다`(names: List<String>) {
-        val result = Gamers(names, deck)
+    fun `플레이어 이름과 베팅 금액의 리스트로 Players를 만들 수 있다`(nameAndBets: List<Pair<String, Int>>) {
+        val result = Gamers(nameAndBets, deck)
 
-        assertThat(result.map { it.name }).containsAll(names)
+        assertThat(result.map { it.name }).containsAll(nameAndBets.map { it.first })
     }
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
-        val gamerList = mutableListOf(Player(deck, "sangw0804"))
+        val gamerList = mutableListOf(Player(deck, "sangw0804", Bet(1000)))
 
         val gamers = Gamers(gamerList)
 
-        gamerList.add(Player(deck, "newPlayer"))
+        gamerList.add(Player(deck, "newPlayer", Bet(1000)))
 
         assertThat(gamers.size).isEqualTo(1)
     }
@@ -34,7 +35,10 @@ internal class GamersTest {
             return listOf(
                 Arguments {
                     arrayOf(
-                        listOf("sangw0804", "pobi")
+                        listOf(
+                            ("sangw0804" to 1000),
+                            ("pobi" to 2000)
+                        )
                     )
                 }
             )

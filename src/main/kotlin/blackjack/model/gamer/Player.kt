@@ -1,14 +1,15 @@
 package blackjack.model.gamer
 
+import blackjack.model.Bet
 import blackjack.model.Judge
 import blackjack.model.Rule
 import blackjack.model.score.Score
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
-open class Player(cards: Cards, override val name: String) : Gamer {
+open class Player(cards: Cards, override val name: String, override val bet: Bet) : Gamer {
 
-    constructor(deck: Deck, name: String) : this(Cards.firstDraw(deck), name)
+    constructor(deck: Deck, name: String, bet: Bet) : this(Cards.firstDraw(deck), name, bet)
 
     override var cards = cards
         protected set
