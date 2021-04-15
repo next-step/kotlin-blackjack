@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.card.Card
 
-class Dealer(cards: List<Card>) {
+class Dealer(cards: List<Card>, name: String = "딜러") : Player(name) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 
@@ -21,4 +21,7 @@ class Dealer(cards: List<Card>) {
         return _cards.removeAt(0)
     }
 
+    override fun isReceiveMoreCard(): Boolean {
+        return BlackjackRule.isReceiveMoreDealerCard(getTotalSum())
+    }
 }

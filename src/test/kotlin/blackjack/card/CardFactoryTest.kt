@@ -9,5 +9,4 @@ class CardFactoryTest {
     fun `카드 개수 확인`() {
         assertThat(CardFactory.makeCards().size).isEqualTo(52)
     }
-
 }

@@ -2,9 +2,9 @@ package blackjack
 
 import blackjack.card.Card
 
-class Player(val name: String, cards: List<Card>) {
+open class Player(val name: String) {
 
-    private val _cards: MutableList<Card> = cards.toMutableList()
+    private val _cards: MutableList<Card> = mutableListOf()
 
     val cards: List<Card>
         get() = _cards.toList()
@@ -13,12 +13,15 @@ class Player(val name: String, cards: List<Card>) {
         _cards.add(card)
     }
 
+    fun receiveCards(cards: List<Card>) {
+        _cards.addAll(cards)
+    }
+
     fun getTotalSum(): Int {
         return BlackjackRule.getTotalSum(_cards)
     }
 
-    fun isReceiveMoreCard(): Boolean {
+    open fun isReceiveMoreCard(): Boolean {
         return BlackjackRule.isReceiveMoreCard(getTotalSum())
     }
-
 }
