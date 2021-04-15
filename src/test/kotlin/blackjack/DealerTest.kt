@@ -1,8 +1,10 @@
 package blackjack
 
+import blackjack.card.Card
 import blackjack.card.CardFactory
+import blackjack.card.CardType
+import blackjack.card.CardValue
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class DealerTest {
@@ -30,4 +32,19 @@ class DealerTest {
         assertThat(dealer.cardCount).isEqualTo(makeCards.size - 2)
     }
 
+    @Test
+    fun `딜러 플레이어 - 카드 지급 가능 확인`() {
+        val cards = listOf(Card(CardType.CLOVER, CardValue.SIX), Card(CardType.CLOVER, CardValue.QUEEN))
+        val dealer = Dealer(cards)
+        dealer.receiveCards(dealer.giveTwoCards())
+        assertThat(dealer.isReceiveMoreCard()).isEqualTo(true)
+    }
+
+    @Test
+    fun `딜러 플레이어 - 카드 지급 불가능 확인`() {
+        val cards = listOf(Card(CardType.CLOVER, CardValue.SEVEN), Card(CardType.CLOVER, CardValue.QUEEN))
+        val dealer = Dealer(cards)
+        dealer.receiveCards(dealer.giveTwoCards())
+        assertThat(dealer.isReceiveMoreCard()).isEqualTo(false)
+    }
 }

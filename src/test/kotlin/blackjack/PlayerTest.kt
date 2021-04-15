@@ -14,14 +14,16 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("arguments")
     fun `합산 테스트`(cards: List<Card>, sumValue: Int) {
-        val player = Player("A-name", cards)
+        val player = Player("A-name")
+        player.receiveCards(cards)
         assertThat(player.getTotalSum()).isEqualTo(sumValue)
     }
 
     @ParameterizedTest
     @MethodSource("arguments2")
     fun `추가 카드 더 받는 테스트`(cards: List<Card>, result: Boolean) {
-        val player = Player("A-name", cards)
+        val player = Player("A-name")
+        player.receiveCards(cards)
         assertThat(player.isReceiveMoreCard()).isEqualTo(result)
     }
 

@@ -15,5 +15,4 @@ enum class CardValue(val desc: String, val value: Int) {
     KING("K", 10),
     QUEEN("Q", 10),
     JACK("J", 10);
-
 }

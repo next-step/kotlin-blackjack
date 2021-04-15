@@ -9,15 +9,18 @@ class BlackjackGame {
     private val dealer = Dealer(CardFactory.makeCards())
 
     fun start() {
-        val players: List<Player> = InputView.inputPlayerNames().map {
-            Player(it, dealer.giveTwoCards())
-        }
+        val players: List<Player> = InputView.inputPlayerNames().map { Player(it) }
+        players.forEach { it.receiveCards(dealer.giveTwoCards()) }
+        dealer.receiveCards(dealer.giveTwoCards())
 
-        OutputView.showPlayersCard(players)
+        OutputView.showPlayersCard(players, dealer)
 
         players.forEach(::needToMoreCard)
+        needToMoreDealerCard(dealer)
 
-        OutputView.showResult(players)
+        OutputView.showResult(players.plus(dealer))
+
+        OutputView.showResultWinAndLose(BlackjackRule.resultWinnerAndLosers(players.plus(dealer)))
     }
 
     private fun needToMoreCard(player: Player) {
@@ -27,5 +30,11 @@ class BlackjackGame {
         OutputView.showCard(player)
 
         if (player.isReceiveMoreCard()) needToMoreCard(player)
+    }
+
+    private fun needToMoreDealerCard(dealer: Dealer) {
+        if (!dealer.isReceiveMoreCard()) return
+        dealer.receiveCard(dealer.giveCard())
+        OutputView.showDealerMoreCard(dealer)
     }
 }
