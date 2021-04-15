@@ -6,7 +6,11 @@ class Skills {
     var skills = emptyList<Skill>()
         get() = _skills.toList()
 
-    fun add(skill: Skill) {
-        _skills.add(skill)
+    fun soft(name: String) {
+        _skills.add(Skill(name))
+    }
+
+    fun hard(name: String) {
+        _skills.add(Skill(name))
     }
 }

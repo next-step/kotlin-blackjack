@@ -1,12 +1,12 @@
 package study
 
 class Languages {
-    private var _languages = mutableListOf<Language>()
+    private var _languages = mutableMapOf<String, Int>()
 
-    var languages = emptyList<Language>()
-        get() = _languages.toList()
+    val languages: Map<String, Int>
+        get() = _languages.toMap()
 
-    fun add(language: Language) {
-        _languages.add(language)
+    infix fun String.level(level: Int) {
+        _languages[this] = level
     }
 }

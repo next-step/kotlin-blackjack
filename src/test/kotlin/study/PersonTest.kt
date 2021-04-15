@@ -41,8 +41,8 @@ class PersonTest {
     @Test
     fun `언어 설정`() {
         val person = introduce {
-            name("박재성")
-            company("우아한형제들")
+            name("jiwhun")
+            company("woowa")
             skills {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
@@ -55,6 +55,6 @@ class PersonTest {
         }
 
         assertThat(person.languages.size).isEqualTo(2)
-        assertThat(person.languages.contains(Language("English", 3))).isEqualTo(true)
+        assertThat(person.languages.containsKey("English")).isEqualTo(true)
     }
 }
