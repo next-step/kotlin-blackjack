@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 class DefaultCardFactory : CardFactory {
     override fun createCards(): List<Card> {
-        return createAllShapeCards().shuffled().toMutableList()
+        return createAllShapeCards().shuffled()
     }
 
     private fun createAllShapeCards(): List<Card> {

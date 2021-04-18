@@ -45,8 +45,6 @@ object ResultView {
 
     fun printProfitResult(profits: Profits) {
         println("${profits.dealerProfit.name}: ${profits.dealerProfit.amount}")
-        profits.playerProfits.map {
-            println("${it.name}: ${it.amount}")
-        }
+        println(profits.playerProfits.map { "${it.name}: ${it.amount}" }.joinToString("\n"))
     }
 }
