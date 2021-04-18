@@ -8,7 +8,6 @@ interface State {
     val cardSize: Int
         get() = 0
     val cardNames: List<String>
-        get() = emptyList()
 
     fun takeFirstTwoCards(cards: Cards): State
     fun takeCard(card: Card): State

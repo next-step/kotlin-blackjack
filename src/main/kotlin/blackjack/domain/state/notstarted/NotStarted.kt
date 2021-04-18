@@ -9,6 +9,9 @@ import java.math.BigDecimal
 
 class NotStarted : State {
 
+    override val cardNames: List<String>
+        get() = emptyList()
+
     override fun takeFirstTwoCards(cards: Cards): State {
         if (cards.isBlackjack) {
             return BlackJack(cards)
