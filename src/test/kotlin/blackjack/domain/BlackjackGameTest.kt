@@ -39,7 +39,7 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `player가 동의하지 않은 경우 카드를 준다`() {
+    fun `player가 동의하지 않은 경우 카드를 주지 않는다`() {
         val player = Player("song", Hit(cards(CardType.TWO, CardType.THREE)))
         val players = Players(listOf(player))
         val blackjackGame = BlackjackGame(players)
