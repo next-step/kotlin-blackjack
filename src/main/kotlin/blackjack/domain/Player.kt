@@ -37,8 +37,4 @@ class Player(
         val profitAmount = state.profit(price, dealerState)
         return Profit(this.name, profitAmount)
     }
-
-    companion object {
-        const val BLACK_JACK_TWENTY_ONE = 21
-    }
 }
