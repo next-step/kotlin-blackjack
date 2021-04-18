@@ -7,10 +7,7 @@ import java.math.BigDecimal
 class Bust(
     cards: Cards
 ) : Finished(cards) {
-    override val earningRatio: BigDecimal
-        get() = BigDecimal("-1")
-
-    override fun profit(betAmount: Int, dealerState: State): BigDecimal {
-        return BigDecimal(betAmount) * earningRatio
+    override fun findEarningRatio(dealerState: State): BigDecimal {
+        return LOSING_RATIO
     }
 }

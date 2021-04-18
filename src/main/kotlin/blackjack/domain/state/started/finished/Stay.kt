@@ -8,24 +8,20 @@ import java.math.RoundingMode
 class Stay(
     cards: Cards
 ) : Finished(cards) {
-    override val earningRatio: BigDecimal
-        get() = BigDecimal.ONE
-
-    override fun profit(betAmount: Int, dealerState: State): BigDecimal {
+    override fun findEarningRatio(dealerState: State): BigDecimal {
         if (dealerState is BlackJack) {
-            return BigDecimal(betAmount).multiply(dealerState.earningRatio)
-                .multiply(BigDecimal(-1))
-                .setScale(0, RoundingMode.FLOOR)
+            return BLACKJACK_EARNING_RATIO * LOSING_RATIO
         }
 
         if (cardPointSum() < dealerState.cardPointSum()) {
-            return BigDecimal(betAmount) * BigDecimal(-1)
+            return LOSING_RATIO
         }
 
         if (cardPointSum() == dealerState.cardPointSum()) {
-            return BigDecimal.ZERO
+            return NO_EARNING_RATIO
         }
 
-        return BigDecimal(betAmount) * earningRatio
+        return EARNING_RATIO
     }
+
 }

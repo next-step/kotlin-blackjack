@@ -8,13 +8,10 @@ import java.math.RoundingMode
 class BlackJack(
     cards: Cards
 ) : Finished(cards) {
-    public override val earningRatio: BigDecimal
-        get() = BigDecimal("1.5")
-
-    override fun profit(betAmount: Int, dealerState: State): BigDecimal {
+    override fun findEarningRatio(dealerState: State): BigDecimal {
         if (dealerState is BlackJack) {
-            return BigDecimal.ZERO
+            return NO_EARNING_RATIO
         }
-        return BigDecimal(betAmount).multiply(earningRatio).setScale(0, RoundingMode.FLOOR)
+        return BLACKJACK_EARNING_RATIO
     }
 }
