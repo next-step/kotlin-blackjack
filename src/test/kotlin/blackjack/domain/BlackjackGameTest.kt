@@ -8,7 +8,6 @@ import blackjack.domain.state.started.Hit
 import blackjack.domain.state.started.finished.BlackJack
 import blackjack.domain.state.started.finished.Bust
 import blackjack.domain.state.started.finished.Stay
-import blackjack.ui.model.PlayerDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -22,10 +21,8 @@ internal class BlackjackGameTest {
 
         blackjackGame.giveTwoCardsToAllPlayers()
 
-        val playerDtos = blackjackGame.players.map { PlayerDto(it) }
-        assertThat(playerDtos).extracting("name").contains("song", "kim")
-        assertThat(playerDtos[0].cards).hasSize(2)
-        assertThat(playerDtos[1].cards).hasSize(2)
+        assertThat(blackjackGame.players[0].state.cardSize).isEqualTo(2)
+        assertThat(blackjackGame.players[1].state.cardSize).isEqualTo(2)
     }
 
     @Test
@@ -56,7 +53,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
-        assertThat(PlayerDto(blackjackGame.dealer).cards.size).isGreaterThan(2) // 2장 이상을 갖는다
+        assertThat(blackjackGame.dealer.state.cardSize).isGreaterThan(2) // 2장 이상을 갖는다
     }
 
     @Test
@@ -67,7 +64,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
-        assertThat(PlayerDto(blackjackGame.dealer).cards.size).isEqualTo(2) // 2장만을 가지고 있다
+        assertThat(blackjackGame.dealer.state.cardSize).isEqualTo(2) // 2장만을 가지고 있다
     }
 
     @Test
