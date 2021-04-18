@@ -21,8 +21,8 @@ internal class BlackjackGameTest {
 
         blackjackGame.giveTwoCardsToAllPlayers()
 
-        assertThat(blackjackGame.players[0].state.cardSize).isEqualTo(2)
-        assertThat(blackjackGame.players[1].state.cardSize).isEqualTo(2)
+        assertThat(blackjackGame.players[0].cardSize).isEqualTo(2)
+        assertThat(blackjackGame.players[1].cardSize).isEqualTo(2)
     }
 
     @Test
@@ -53,7 +53,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealer.state.cardSize).isGreaterThan(2) // 2장 이상을 갖는다
+        assertThat(blackjackGame.dealer.cardSize).isGreaterThan(2) // 2장 이상을 갖는다
     }
 
     @Test
@@ -64,7 +64,7 @@ internal class BlackjackGameTest {
         val blackjackGame = BlackjackGame(players, dealer)
 
         blackjackGame.giveCardsToDealer()
-        assertThat(blackjackGame.dealer.state.cardSize).isEqualTo(2) // 2장만을 가지고 있다
+        assertThat(blackjackGame.dealer.cardSize).isEqualTo(2) // 2장만을 가지고 있다
     }
 
     @Test
