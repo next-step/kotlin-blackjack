@@ -1,9 +1,9 @@
 package blackjack.domain.state.started.finished
 
-import blackjack.domain.Card
-import blackjack.domain.CardShape
-import blackjack.domain.CardType
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal

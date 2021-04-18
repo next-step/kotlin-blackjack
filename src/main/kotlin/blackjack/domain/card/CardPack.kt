@@ -1,7 +1,4 @@
-package blackjack.domain
-
-import blackjack.domain.card.CardFactory
-import blackjack.domain.card.DefaultCardFactory
+package blackjack.domain.card
 
 class CardPack(cardFactory: CardFactory = DefaultCardFactory()) {
     private val cards = cardFactory.createCards().toMutableList()

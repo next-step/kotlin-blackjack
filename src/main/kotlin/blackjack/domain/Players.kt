@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardPack
+
 class Players(
     private val values: List<Player>
 ) : List<Player> by values {

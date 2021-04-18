@@ -1,7 +1,7 @@
 package blackjack.domain.state.started
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 import blackjack.domain.state.started.finished.Bust
 import blackjack.domain.state.started.finished.Stay

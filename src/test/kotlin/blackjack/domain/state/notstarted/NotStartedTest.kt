@@ -1,9 +1,9 @@
 package blackjack.domain.state.notstarted
 
-import blackjack.domain.Card
-import blackjack.domain.CardShape
-import blackjack.domain.CardType
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
 import blackjack.domain.state.started.Hit
 import blackjack.domain.state.started.finished.BlackJack
 import org.assertj.core.api.Assertions

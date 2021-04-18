@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardPack
 import blackjack.domain.card.EmptyCardFactory
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

@@ -1,10 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardPack
 import blackjack.domain.state.started.Hit
 
-class BlackjackGame(val players: Players, val dealer: Dealer = Dealer()) {
-
-    private val cardPack = CardPack()
+class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private val cardPack: CardPack = CardPack()) {
 
     val addedCardNumberOfDealer: Int
         get() = dealer.cardSize - FIRST_GIVEN_CARD_SIZE

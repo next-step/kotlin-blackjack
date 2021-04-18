@@ -1,9 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.Card
-import blackjack.domain.CardShape
-import blackjack.domain.CardType
-
 class DefaultCardFactory : CardFactory {
     override fun createCards(): List<Card> {
         return createAllShapeCards().shuffled().toMutableList()

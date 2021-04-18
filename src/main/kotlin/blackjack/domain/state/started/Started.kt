@@ -1,6 +1,6 @@
 package blackjack.domain.state.started
 
-import blackjack.domain.Cards
+import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 
 abstract class Started(
