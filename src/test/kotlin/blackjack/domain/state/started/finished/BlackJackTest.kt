@@ -21,10 +21,23 @@ internal class BlackJackTest {
     }
 
     @Test
-    fun `dealerState가 Blackjack이 아닌 경우 profit 계산`() {
+    fun `dealerState가 stay인 경우 profit 계산`() {
         val blackjackCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.ACE)))
+        val stayCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK)))
         val playerState = BlackJack(blackjackCards)
-        val dealerState = Stay(blackjackCards)
+        val dealerState = Stay(stayCards)
+
+        val profit = playerState.profit(10000, dealerState)
+        assertThat(profit).isEqualTo(BigDecimal(15000))
+    }
+
+    @Test
+    fun `dealerState가 bust인 경우 profit 계산`() {
+        val blackjackCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.ACE)))
+        val bustCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK), Card(CardShape.SPADE, CardType.TEN)))
+
+        val playerState = BlackJack(blackjackCards)
+        val dealerState = Bust(bustCards)
 
         val profit = playerState.profit(10000, dealerState)
         assertThat(profit).isEqualTo(BigDecimal(15000))
