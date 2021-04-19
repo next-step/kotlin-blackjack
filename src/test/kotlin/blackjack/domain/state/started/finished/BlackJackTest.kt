@@ -1,9 +1,7 @@
 package blackjack.domain.state.started.finished
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
+import blackjack.domain.cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -12,7 +10,7 @@ internal class BlackJackTest {
 
     @Test
     fun `dealerState가 Blackjack인 경우 profit 계산`() {
-        val blackjackCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.ACE)))
+        val blackjackCards = cards(CardType.QUEEN, CardType.ACE)
         val playerState = BlackJack(blackjackCards)
         val dealerState = BlackJack(blackjackCards)
 
@@ -22,8 +20,8 @@ internal class BlackJackTest {
 
     @Test
     fun `dealerState가 stay인 경우 profit 계산`() {
-        val blackjackCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.ACE)))
-        val stayCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK)))
+        val blackjackCards = cards(CardType.QUEEN, CardType.ACE)
+        val stayCards = cards(CardType.QUEEN, CardType.JACK)
         val playerState = BlackJack(blackjackCards)
         val dealerState = Stay(stayCards)
 
@@ -33,8 +31,8 @@ internal class BlackJackTest {
 
     @Test
     fun `dealerState가 bust인 경우 profit 계산`() {
-        val blackjackCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.ACE)))
-        val bustCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK), Card(CardShape.SPADE, CardType.TEN)))
+        val blackjackCards = cards(CardType.QUEEN, CardType.ACE)
+        val bustCards = cards(CardType.QUEEN, CardType.JACK, CardType.TEN)
 
         val playerState = BlackJack(blackjackCards)
         val dealerState = Bust(bustCards)

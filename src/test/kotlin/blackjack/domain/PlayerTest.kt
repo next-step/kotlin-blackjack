@@ -1,9 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
 import blackjack.domain.state.started.Running.Hit
 import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions.assertThat
@@ -12,7 +9,7 @@ import java.math.BigDecimal
 
 internal class PlayerTest {
 
-    private val cards = Cards(listOf(Card(CardShape.SPADE, CardType.TWO), Card(CardShape.SPADE, CardType.THREE)))
+    private val cards = cards(CardType.TWO, CardType.THREE)
 
     @Test
     fun stay() {
@@ -25,22 +22,19 @@ internal class PlayerTest {
     @Test
     fun takeCardTest() {
         val player = Player("song", Hit(cards))
-        val addedCard = Card(CardShape.SPADE, CardType.TWO)
-        player.takeCard(addedCard)
+        player.takeCard(cardTwo)
 
-        assertThat(player.state.cardNames).contains(addedCard.toString())
+        assertThat(player.state.cardNames).contains(cardTwo.toString())
     }
 
     @Test
     fun takeFirstTwoCardsTest() {
         val player = Player("song")
-        val card1 = Card(CardShape.SPADE, CardType.TWO)
-        val card2 = Card(CardShape.SPADE, CardType.THREE)
 
-        player.takeFirstTwoCards(card1, card2)
+        player.takeFirstTwoCards(cardTwo, cardThree)
 
         assertThat(player.state).isInstanceOf(Hit::class.java)
-        assertThat(player.state.cardNames).contains(card1.toString(), card2.toString())
+        assertThat(player.state.cardNames).contains(cardTwo.toString(), cardThree.toString())
     }
 
     @Test
@@ -56,7 +50,7 @@ internal class PlayerTest {
         val name = "song"
         val player = Player(name, Stay(cards), 1000)
 
-        val dealerCards = Cards(listOf(Card(CardShape.SPADE, CardType.NINE), Card(CardShape.SPADE, CardType.JACK)))
+        val dealerCards = cards(CardType.NINE, CardType.JACK)
         val dealerState = Stay(dealerCards)
 
         val result = player.profit(dealerState)

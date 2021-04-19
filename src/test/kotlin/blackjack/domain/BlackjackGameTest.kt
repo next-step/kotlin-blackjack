@@ -1,9 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
 import blackjack.domain.state.started.Running.Hit
 import blackjack.domain.state.started.finished.BlackJack
 import blackjack.domain.state.started.finished.Bust
@@ -128,7 +125,4 @@ internal class BlackjackGameTest {
         assertThat(profits.playerProfits[0].amount).isEqualTo(BigDecimal(15000))
         assertThat(profits.playerProfits[1].amount).isEqualTo(BigDecimal(20000))
     }
-
-    private fun cards(vararg cardTypes: CardType): Cards =
-        Cards(cardTypes.map { Card(CardShape.CLOVER, it) }.toList())
 }

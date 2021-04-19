@@ -1,19 +1,15 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
 import blackjack.domain.state.notstarted.NotStarted
 import blackjack.domain.state.started.Running.Hit
 import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
 
 internal class DealerTest {
 
-    private val cards = Cards(listOf(Card(CardShape.SPADE, CardType.TWO), Card(CardShape.SPADE, CardType.THREE)))
+    private val cards = cards(CardType.TWO, CardType.THREE)
 
     @Test
     fun stay() {
@@ -26,22 +22,19 @@ internal class DealerTest {
     @Test
     fun takeCardTest() {
         val dealer = Dealer(Hit(cards))
-        val addedCard = Card(CardShape.SPADE, CardType.TWO)
-        dealer.takeCard(addedCard)
+        dealer.takeCard(cardTwo)
 
-        assertThat(dealer.state.cardNames).contains(addedCard.toString())
+        assertThat(dealer.state.cardNames).contains(cardTwo.toString())
     }
 
     @Test
     fun takeFirstTwoCardsTest() {
         val dealer = Dealer(NotStarted())
-        val card1 = Card(CardShape.SPADE, CardType.TWO)
-        val card2 = Card(CardShape.SPADE, CardType.THREE)
 
-        dealer.takeFirstTwoCards(card1, card2)
+        dealer.takeFirstTwoCards(cardTwo, cardThree)
 
         assertThat(dealer.state).isInstanceOf(Hit::class.java)
-        assertThat(dealer.state.cardNames).contains(card1.toString(), card2.toString())
+        assertThat(dealer.state.cardNames).contains(cardTwo.toString(), cardThree.toString())
     }
 
     @Test
