@@ -1,4 +1,4 @@
-package blackjack.domain.state.started.Running
+package blackjack.domain.state.started.run
 
 import blackjack.domain.card.Cards
 import blackjack.domain.state.started.Started
