@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.state.State
 import blackjack.domain.state.notstarted.NotStarted
-import java.math.BigDecimal
 
 class Dealer(
     state: State = NotStarted()
