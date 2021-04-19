@@ -35,10 +35,6 @@ class Dealer(
         player.stay()
     }
 
-    fun profit(playerProfits: List<Profit>): BigDecimal {
-        return playerProfits.fold(BigDecimal.ZERO) { acc, profit -> acc + profit.amount } * BigDecimal("-1")
-    }
-
     companion object {
         private const val DEALER_POINT_TO_TAKE_MORE_CARD = 16
     }

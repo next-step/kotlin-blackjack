@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardPack
+import java.math.BigDecimal
 
 class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private val cardPack: CardPack = CardPack()) {
 
@@ -34,10 +35,14 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private
             it.profit(dealer.state)
         }
 
-        val dealerProfitAmount = dealer.profit(playerProfits)
+        val dealerProfitAmount = sumOfPlayerProfits(playerProfits) * BigDecimal("-1")
         val dealerProfit = Profit(dealer.name, dealerProfitAmount)
 
         return Profits(dealerProfit, playerProfits)
+    }
+
+    private fun sumOfPlayerProfits(playerProfits: List<Profit>): BigDecimal {
+        return playerProfits.fold(BigDecimal.ZERO) { acc, profit -> acc + profit.amount }
     }
 
     companion object {

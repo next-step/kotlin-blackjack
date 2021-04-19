@@ -51,14 +51,4 @@ internal class DealerTest {
 
         assertThat(cardPointSum).isEqualTo(5)
     }
-
-    @Test
-    fun profitTest() {
-        val dealer = Dealer(Hit(cards))
-
-        val playerProfits = listOf(Profit("a", BigDecimal("1000")), Profit("b", BigDecimal("2000")))
-        val result = dealer.profit(playerProfits)
-
-        assertThat(result).isEqualTo(BigDecimal("-3000"))
-    }
 }
