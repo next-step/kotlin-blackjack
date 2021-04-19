@@ -15,13 +15,6 @@ class NotStarted : State {
     override val cardNames: List<String>
         get() = emptyList()
 
-    override fun takeFirstTwoCards(cards: Cards): State {
-        if (cards.isBlackjack) {
-            return BlackJack(cards)
-        }
-        return Hit(cards)
-    }
-
     override fun takeCard(card: Card): State {
         throw IllegalStateException("시작하지 않은 상태에서 카드를 받을 수 없습니다.")
     }

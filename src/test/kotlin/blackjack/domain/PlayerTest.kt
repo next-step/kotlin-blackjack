@@ -1,7 +1,10 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
+import blackjack.domain.state.notstarted.NotStarted
 import blackjack.domain.state.started.Running.Hit
+import blackjack.domain.state.started.finished.BlackJack
 import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -28,13 +31,23 @@ internal class PlayerTest {
     }
 
     @Test
-    fun takeFirstTwoCardsTest() {
+    fun `takeFirstTwoCards 블랙잭이 아닌 경우`() {
         val player = Player("song")
 
         player.takeFirstTwoCards(cardTwo, cardThree)
 
         assertThat(player.state).isInstanceOf(Hit::class.java)
         assertThat(player.state.cardNames).contains(cardTwo.toString(), cardThree.toString())
+    }
+
+    @Test
+    fun `takeFirstTwoCards 블랙잭인 경우`() {
+        val player = Player("song")
+
+        player.takeFirstTwoCards(cardAce, cardQueen)
+
+        assertThat(player.state).isInstanceOf(BlackJack::class.java)
+        assertThat(player.state.cardNames).contains(cardAce.toString(), cardQueen.toString())
     }
 
     @Test

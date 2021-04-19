@@ -4,6 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 import blackjack.domain.state.notstarted.NotStarted
+import blackjack.domain.state.started.Running.Hit
+import blackjack.domain.state.started.finished.BlackJack
 
 class Player(
     val name: String,
@@ -22,7 +24,7 @@ class Player(
 
     override fun takeFirstTwoCards(card1: Card, card2: Card) {
         val cards = Cards(listOf(card1, card2))
-        state = state.takeFirstTwoCards(cards)
+        state = if (cards.isBlackjack) BlackJack(cards) else Hit(cards)
     }
 
     override fun stay() {
