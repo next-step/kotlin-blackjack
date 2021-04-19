@@ -6,9 +6,16 @@ import java.math.BigDecimal
 
 interface State {
     val isRunning: Boolean
+    val cardNames: List<String>
+
+    val isBust: Boolean
+        get() = false
+
+    val isBlackJack: Boolean
+        get() = false
+
     val cardSize: Int
         get() = 0
-    val cardNames: List<String>
 
     fun takeFirstTwoCards(cards: Cards): State
     fun takeCard(card: Card): State

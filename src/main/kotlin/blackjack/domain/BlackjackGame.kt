@@ -15,7 +15,7 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private
     fun giveCard(player: Player, hasAccepted: Boolean) {
         if (hasAccepted) {
             player.takeCard(cardPack.poll())
-        } else if (!player.state.isRunning) {
+        } else if (player.state.isRunning) {
             player.stay()
         }
     }
@@ -24,7 +24,7 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private
         while (dealer.isUnderSixteen) {
             dealer.takeCard(cardPack.poll())
         }
-        if (!dealer.state.isRunning) {
+        if (dealer.state.isRunning) {
             dealer.stay()
         }
     }
