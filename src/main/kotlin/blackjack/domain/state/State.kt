@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards
 import java.math.BigDecimal
 
 interface State {
+    val isRunning: Boolean
     val cardSize: Int
         get() = 0
     val cardNames: List<String>

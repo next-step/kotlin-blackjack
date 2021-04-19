@@ -4,10 +4,13 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 import blackjack.domain.state.started.finished.BlackJack
-import blackjack.domain.state.started.Hit
+import blackjack.domain.state.started.Running.Hit
 import java.math.BigDecimal
 
 class NotStarted : State {
+
+    override val isRunning: Boolean
+        get() = false
 
     override val cardNames: List<String>
         get() = emptyList()

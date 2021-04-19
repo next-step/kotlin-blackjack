@@ -1,15 +1,16 @@
-package blackjack.domain.state.started
+package blackjack.domain.state.started.Running
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
+import blackjack.domain.state.started.Started
 import blackjack.domain.state.started.finished.Bust
 import blackjack.domain.state.started.finished.Stay
 import java.math.BigDecimal
 
 class Hit(
     cards: Cards
-) : Started(cards) {
+) : Running(cards) {
 
     override fun takeCard(card: Card): State {
         val newCards = cards.with(card)

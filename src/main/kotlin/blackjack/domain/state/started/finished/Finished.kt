@@ -10,6 +10,9 @@ import java.math.RoundingMode
 abstract class Finished(
     cards: Cards
 ) : Started(cards) {
+    override val isRunning: Boolean
+        get() = false
+
     override fun takeCard(card: Card): State {
         throw IllegalStateException("Finished에서 카드를 더 받을 수 없습니다.")
     }
