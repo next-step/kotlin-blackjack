@@ -53,4 +53,26 @@ internal class StayTest {
         val profit = playerState.profit(10000, dealerState)
         assertThat(profit).isEqualTo(BigDecimal(-10000))
     }
+
+    @Test
+    fun `dealer가 21을 초과하고, player는 초과하지 않은 경우 profit을 계산한다`() {
+        val playerCards = Cards(listOf(Card(CardShape.SPADE, CardType.TWO), Card(CardShape.SPADE, CardType.ACE)))
+        val dealerCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK), Card(CardShape.SPADE, CardType.TEN)))
+        val playerState = Stay(playerCards)
+        val dealerState = Bust(dealerCards)
+
+        val profit = playerState.profit(10000, dealerState)
+        assertThat(profit).isEqualTo(BigDecimal(10000))
+    }
+
+    @Test
+    fun `dealer와 player가 21을 초과하는 경우 profit을 계산한다`() {
+        val playerCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK), Card(CardShape.SPADE, CardType.TEN)))
+        val dealerCards = Cards(listOf(Card(CardShape.SPADE, CardType.QUEEN), Card(CardShape.SPADE, CardType.JACK), Card(CardShape.SPADE, CardType.TEN)))
+        val playerState = Bust(playerCards)
+        val dealerState = Bust(dealerCards)
+
+        val profit = playerState.profit(10000, dealerState)
+        assertThat(profit).isEqualTo(BigDecimal(-10000))
+    }
 }

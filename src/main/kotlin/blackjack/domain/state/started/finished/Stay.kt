@@ -8,6 +8,10 @@ class Stay(
     cards: Cards
 ) : Finished(cards) {
     override fun findEarningRatio(dealerState: State): BigDecimal {
+        if (dealerState is Bust) {
+            return EARNING_RATIO
+        }
+
         if (dealerState is BlackJack || cardPointSum() < dealerState.cardPointSum()) {
             return LOSING_RATIO
         }
