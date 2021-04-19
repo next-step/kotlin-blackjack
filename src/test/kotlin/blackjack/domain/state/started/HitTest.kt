@@ -5,7 +5,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.state.started.finished.Bust
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class HitTest {
@@ -17,7 +17,7 @@ internal class HitTest {
 
         val nextState = playerState.takeCard(Card(CardShape.HEART, CardType.QUEEN))
 
-        Assertions.assertThat(nextState).isInstanceOf(Bust::class.java)
+        assertThat(nextState).isInstanceOf(Bust::class.java)
     }
 
     @Test
@@ -27,6 +27,6 @@ internal class HitTest {
 
         val nextState = playerState.takeCard(Card(CardShape.HEART, CardType.TWO))
 
-        Assertions.assertThat(nextState).isInstanceOf(Hit::class.java)
+        assertThat(nextState).isInstanceOf(Hit::class.java)
     }
 }

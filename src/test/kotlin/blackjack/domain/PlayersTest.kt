@@ -1,8 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardPack
-import org.assertj.core.api.Assertions
-
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class PlayersTest {
@@ -13,7 +12,7 @@ internal class PlayersTest {
 
         players.giveFirstTwoCardsToAllPlayers(CardPack())
 
-        Assertions.assertThat(players[0].cardSize).isEqualTo(2)
-        Assertions.assertThat(players[1].cardSize).isEqualTo(2)
+        assertThat(players[0].cardSize).isEqualTo(2)
+        assertThat(players[1].cardSize).isEqualTo(2)
     }
 }

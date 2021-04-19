@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
@@ -18,7 +18,7 @@ internal class StayTest {
         val dealerState = Stay(dealerCards)
 
         val profit = playerState.profit(10000, dealerState)
-        Assertions.assertThat(profit).isEqualTo(BigDecimal(10000))
+        assertThat(profit).isEqualTo(BigDecimal(10000))
     }
 
     @Test
@@ -29,7 +29,7 @@ internal class StayTest {
         val dealerState = Stay(dealerCards)
 
         val profit = playerState.profit(10000, dealerState)
-        Assertions.assertThat(profit).isEqualTo(BigDecimal(-10000))
+        assertThat(profit).isEqualTo(BigDecimal(-10000))
     }
 
     @Test
@@ -40,7 +40,7 @@ internal class StayTest {
         val dealerState = Stay(dealerCards)
 
         val profit = playerState.profit(10000, dealerState)
-        Assertions.assertThat(profit).isEqualTo(BigDecimal(0))
+        assertThat(profit).isEqualTo(BigDecimal(0))
     }
 
     @Test
@@ -51,6 +51,6 @@ internal class StayTest {
         val dealerState = BlackJack(dealerCards)
 
         val profit = playerState.profit(10000, dealerState)
-        Assertions.assertThat(profit).isEqualTo(BigDecimal(-15000))
+        assertThat(profit).isEqualTo(BigDecimal(-10000))
     }
 }

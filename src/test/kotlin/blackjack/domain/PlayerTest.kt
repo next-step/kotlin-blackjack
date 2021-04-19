@@ -6,7 +6,7 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.state.started.Hit
 import blackjack.domain.state.started.finished.Stay
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 
@@ -19,7 +19,7 @@ internal class PlayerTest {
         val player = Player("song", Hit(cards))
 
         player.stay()
-        Assertions.assertThat(player.state).isInstanceOf(Stay::class.java)
+        assertThat(player.state).isInstanceOf(Stay::class.java)
     }
 
     @Test
@@ -28,7 +28,7 @@ internal class PlayerTest {
         val addedCard = Card(CardShape.SPADE, CardType.TWO)
         player.takeCard(addedCard)
 
-        Assertions.assertThat(player.state.cardNames).contains(addedCard.toString())
+        assertThat(player.state.cardNames).contains(addedCard.toString())
     }
 
     @Test
@@ -39,8 +39,8 @@ internal class PlayerTest {
 
         player.takeFirstTwoCards(card1, card2)
 
-        Assertions.assertThat(player.state).isInstanceOf(Hit::class.java)
-        Assertions.assertThat(player.state.cardNames).contains(card1.toString(), card2.toString())
+        assertThat(player.state).isInstanceOf(Hit::class.java)
+        assertThat(player.state.cardNames).contains(card1.toString(), card2.toString())
     }
 
     @Test
@@ -48,7 +48,7 @@ internal class PlayerTest {
         val player = Player("song", Hit(cards))
         val cardPointSum = player.cardPointSum()
 
-        Assertions.assertThat(cardPointSum).isEqualTo(5)
+        assertThat(cardPointSum).isEqualTo(5)
     }
 
     @Test
@@ -60,7 +60,7 @@ internal class PlayerTest {
         val dealerState = Stay(dealerCards)
 
         val result = player.profit(dealerState)
-        Assertions.assertThat(result.name).isEqualTo(name)
-        Assertions.assertThat(result.amount).isEqualTo(BigDecimal("-1000"))
+        assertThat(result.name).isEqualTo(name)
+        assertThat(result.amount).isEqualTo(BigDecimal("-1000"))
     }
 }
