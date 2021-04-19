@@ -1,9 +1,8 @@
-package blackjack.domain.state.started.Running
+package blackjack.domain.state.started.running
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
-import blackjack.domain.state.started.Started
 import blackjack.domain.state.started.finished.Bust
 import blackjack.domain.state.started.finished.Stay
 import java.math.BigDecimal

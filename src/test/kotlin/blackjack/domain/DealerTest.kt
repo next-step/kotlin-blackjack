@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.CardType
 import blackjack.domain.state.notstarted.NotStarted
-import blackjack.domain.state.started.Running.Hit
+import blackjack.domain.state.started.running.Hit
 import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
