@@ -12,7 +12,7 @@ abstract class Started(
         get() = cards.size
 
     override fun takeFirstTwoCards(cards: Cards): State {
-        throw RuntimeException("이미 시작한 경우, 2장의 카드를 받을 수 없습니다.")
+        throw IllegalStateException("이미 시작한 경우, 2장의 카드를 받을 수 없습니다.")
     }
 
     override fun cardPointSum(): Int {

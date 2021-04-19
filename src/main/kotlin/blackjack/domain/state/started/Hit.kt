@@ -21,7 +21,7 @@ class Hit(
     }
 
     override fun profit(betAmount: Int, dealerState: State): BigDecimal {
-        throw RuntimeException("Finish되지 않은 상태에서 이익을 계산할 수 없습니다.")
+        throw IllegalStateException("Finish되지 않은 상태에서 이익을 계산할 수 없습니다.")
     }
 
     override fun stay(): State {

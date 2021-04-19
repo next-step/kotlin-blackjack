@@ -11,11 +11,11 @@ abstract class Finished(
     cards: Cards
 ) : Started(cards) {
     override fun takeCard(card: Card): State {
-        throw RuntimeException("Finished에서 카드를 더 받을 수 없습니다.")
+        throw IllegalStateException("Finished에서 카드를 더 받을 수 없습니다.")
     }
 
     override fun stay(): State {
-        throw RuntimeException("Finished에서 stay를 호출할 수 없습니다.")
+        throw IllegalStateException("Finished에서 stay를 호출할 수 없습니다.")
     }
 
     override fun profit(betAmount: Int, dealerState: State): BigDecimal {

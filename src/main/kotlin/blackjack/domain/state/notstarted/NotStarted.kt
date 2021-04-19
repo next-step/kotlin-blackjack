@@ -20,7 +20,7 @@ class NotStarted : State {
     }
 
     override fun takeCard(card: Card): State {
-        throw RuntimeException("시작하지 않은 상태에서 카드를 받을 수 없습니다.")
+        throw IllegalStateException("시작하지 않은 상태에서 카드를 받을 수 없습니다.")
     }
 
     override fun cardPointSum(): Int {
@@ -28,11 +28,11 @@ class NotStarted : State {
     }
 
     override fun profit(betAmount: Int, dealerState: State): BigDecimal {
-        throw RuntimeException("시작하지 않은 상태에서 이익을 계산할 수 없습니다.")
+        throw IllegalStateException("시작하지 않은 상태에서 이익을 계산할 수 없습니다.")
     }
 
     override fun stay(): State {
-        throw RuntimeException("시작하지 않은 상태에서 stay를 호출할 수 없습니다.")
+        throw IllegalStateException("시작하지 않은 상태에서 stay를 호출할 수 없습니다.")
     }
 
     companion object {
