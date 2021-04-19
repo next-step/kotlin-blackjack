@@ -4,7 +4,7 @@ import blackjack.domain.card.CardType
 import blackjack.domain.cardQueen
 import blackjack.domain.cardTwo
 import blackjack.domain.cards
-import blackjack.domain.state.started.run.*
+import blackjack.domain.state.started.run.Hit
 import blackjack.domain.state.started.finished.Bust
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
