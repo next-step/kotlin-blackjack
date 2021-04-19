@@ -14,7 +14,6 @@ interface State {
         get() = false
 
     val cardSize: Int
-        get() = 0
 
     fun takeCard(card: Card): State
     fun cardPointSum(): Int
