@@ -1,7 +1,10 @@
 package blackjack.domain.state.notstarted
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.state.State
+import blackjack.domain.state.started.finished.BlackJack
+import blackjack.domain.state.started.run.Hit
 import java.math.BigDecimal
 
 class NotStarted : State {
@@ -14,6 +17,10 @@ class NotStarted : State {
 
     override val cardSize: Int
         get() = 0
+
+    override fun takeFirstTwoCards(cards: Cards): State {
+        return if (cards.isBlackjack) BlackJack(cards) else Hit(cards)
+    }
 
     override fun takeCard(card: Card): State {
         throw IllegalStateException("시작하지 않은 상태에서 카드를 받을 수 없습니다.")
