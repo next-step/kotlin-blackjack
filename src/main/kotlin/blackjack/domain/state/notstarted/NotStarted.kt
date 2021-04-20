@@ -9,14 +9,11 @@ import java.math.BigDecimal
 
 class NotStarted : State {
 
-    override val isRunning: Boolean
-        get() = false
-
-    override val cardNames: List<String>
-        get() = emptyList()
-
-    override val cardSize: Int
-        get() = 0
+    override val cardNames: List<String> = emptyList()
+    override val cardSize: Int = 0
+    override val isRunning: Boolean = false
+    override val isBust: Boolean = false
+    override val isBlackJack: Boolean = false
 
     override fun takeFirstTwoCards(cards: Cards): State {
         return if (cards.isBlackjack) BlackJack(cards) else Hit(cards)

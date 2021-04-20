@@ -7,8 +7,7 @@ import java.math.BigDecimal
 class BlackJack(
     cards: Cards
 ) : Finished(cards) {
-    override val isBlackJack: Boolean
-        get() = true
+    override val isBlackJack: Boolean = true
 
     override fun findEarningRatio(dealerState: State): BigDecimal {
         if (dealerState.isBlackJack) {

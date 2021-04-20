@@ -30,4 +30,13 @@ internal class HitTest {
 
         assertThat(nextState).isInstanceOf(Hit::class.java)
     }
+
+    @Test
+    fun `카드 size 테스트`() {
+        val hit = Hit(cards(CardType.ACE, CardType.JACK))
+        assertThat(hit.cardSize).isEqualTo(2)
+
+        hit.takeCard(cardTwo)
+        assertThat(hit.cardSize).isEqualTo(3)
+    }
 }

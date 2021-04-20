@@ -7,12 +7,8 @@ import java.math.BigDecimal
 interface State {
     val isRunning: Boolean
     val cardNames: List<String>
-
     val isBust: Boolean
-        get() = false
-
     val isBlackJack: Boolean
-        get() = false
 
     val cardSize: Int
 

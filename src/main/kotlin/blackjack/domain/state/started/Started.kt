@@ -10,6 +10,8 @@ abstract class Started(
         get() = cards.cardNames
     override val cardSize: Int
         get() = cards.size
+    override val isBust: Boolean = false
+    override val isBlackJack: Boolean = false
 
     override fun takeFirstTwoCards(cards: Cards): State {
         throw IllegalStateException("시작한 상태에서는 처음 2장의 카드를 받을 수 없습니다.")
