@@ -17,6 +17,8 @@ class Dealer(
         get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize
         get() = player.cardSize
+    val isPlaying: Boolean
+        get() = state.isRunning
 
     override fun takeCard(card: Card) {
         player.takeCard(card)

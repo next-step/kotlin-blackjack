@@ -17,6 +17,8 @@ class Player(
         get() = state.cardNames
     val cardSize: Int
         get() = state.cardSize
+    val isPlaying: Boolean
+        get() = state.isRunning
 
     override fun takeCard(card: Card) {
         state = state.takeCard(card)
