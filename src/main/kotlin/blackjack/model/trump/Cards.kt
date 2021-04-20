@@ -2,7 +2,10 @@ package blackjack.model.trump
 
 import blackjack.model.score.Score
 
-class Cards private constructor(private val cards: Set<Card>) : Set<Card> by cards {
+class Cards private constructor(private val cards: Set<Card>) : Iterable<Card> {
+
+    val size: Int
+        get() = cards.size
 
     constructor(cards: List<Card>) : this(cards.toSet())
 
@@ -31,5 +34,9 @@ class Cards private constructor(private val cards: Set<Card>) : Set<Card> by car
         const val INITIAL_DRAW_COUNT = 2
 
         fun firstDraw(deck: Deck) = Cards((1..INITIAL_DRAW_COUNT).mapNotNull { deck.draw() })
+    }
+
+    override fun iterator(): Iterator<Card> {
+        return cards.iterator()
     }
 }

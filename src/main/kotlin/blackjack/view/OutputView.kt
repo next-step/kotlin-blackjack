@@ -8,7 +8,7 @@ import blackjack.model.gamer.Gamer
 import blackjack.view.ViewUtil.toString
 
 object OutputView {
-    fun printFirstDraw(gamers: Set<Gamer>) {
+    fun printFirstDraw(gamers: List<Gamer>) {
         println("${gamers.joinToString(", ") { it.name }}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
         gamers.forEach {
             printPlayer(it)
@@ -19,7 +19,7 @@ object OutputView {
         println("${gamer.name}카드: ${toString(gamer.cards)}")
     }
 
-    fun printResults(gamers: Set<Gamer>, rule: Rule) {
+    fun printResults(gamers: List<Gamer>, rule: Rule) {
         gamers.forEach {
             printResult(it.name, it.cards, rule.getScore(it.cards))
         }

@@ -24,7 +24,7 @@ class Dealer(cards: Cards, name: String = "딜러") : Gamer {
         }
     }
 
-    fun didOneMoreDraw() = gamer.cards.size > Cards.INITIAL_DRAW_COUNT
+    fun didOneMoreDraw() = cards.size > Cards.INITIAL_DRAW_COUNT
 
     override fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean = gamer.keepDrawing(userResponse, deck)
 

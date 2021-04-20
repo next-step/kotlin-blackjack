@@ -5,8 +5,11 @@ import blackjack.model.Judge
 import blackjack.model.Rule
 import blackjack.model.trump.Deck
 
-class Gamers private constructor(private val gamers: Set<Gamer>) : Set<Gamer> by gamers {
-    constructor(gamers: List<Gamer>) : this(gamers.toSet())
+class Gamers constructor(gamers: List<Gamer>) : Iterable<Gamer> {
+    private val gamers = gamers.toList()
+
+    val size: Int
+        get() = gamers.size
 
     constructor(namesAndBets: List<Pair<String, Int>>, deck: Deck) : this(namesAndBets.map { (name, betAmount) -> Player(deck, name, Bet(betAmount)) })
 
@@ -14,5 +17,9 @@ class Gamers private constructor(private val gamers: Set<Gamer>) : Set<Gamer> by
         return gamers.fold(Bet.ZERO) { betSum, gamer ->
             betSum + Judge.calculateRevenue(rule.getScore(gamer.cards), rule.getScore(opponent.cards), gamer.bet)
         }
+    }
+
+    override fun iterator(): Iterator<Gamer> {
+        return gamers.iterator()
     }
 }
