@@ -7,7 +7,9 @@ import blackjack.domain.state.started.finished.BlackJack
 import blackjack.domain.state.started.run.Hit
 import java.math.BigDecimal
 
-class NotStarted : State {
+class NotStarted(
+    private val cards: Cards = Cards(emptyList())
+) : State {
 
     override val cardNames: List<String> = emptyList()
     override val cardSize: Int = 0
@@ -15,7 +17,7 @@ class NotStarted : State {
     override val isBust: Boolean = false
     override val isBlackJack: Boolean = false
 
-    fun takeFirstTwoCards(cards: Cards): State {
+    fun start(): State {
         return if (cards.isBlackjack) BlackJack(cards) else Hit(cards)
     }
 
