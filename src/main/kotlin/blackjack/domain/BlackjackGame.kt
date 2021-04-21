@@ -16,18 +16,13 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private
     fun giveCard(player: Player, hasAccepted: Boolean) {
         if (hasAccepted) {
             player.takeCard(cardPack.poll())
-        } else if (player.isPlaying) {
+        } else if (player.isRunning) {
             player.stay()
         }
     }
 
     fun giveCardsToDealer() {
-        while (dealer.isUnderSixteen) {
-            dealer.takeCard(cardPack.poll())
-        }
-        if (dealer.isPlaying) {
-            dealer.stay()
-        }
+        dealer.takeCardUntilSixteen(cardPack)
     }
 
     fun findProfits(): Profits {

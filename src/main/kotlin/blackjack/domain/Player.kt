@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardPack
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 import blackjack.domain.state.notstarted.NotStarted
@@ -11,12 +12,12 @@ class Player(
     private val price: Int = 0
 ) : Participant {
 
+    val isRunning: Boolean
+        get() = state.isRunning
     val cardNames: List<String>
         get() = state.cardNames
     val cardSize: Int
         get() = state.cardSize
-    val isPlaying: Boolean
-        get() = state.isRunning
 
     override fun takeCard(card: Card) {
         state = state.takeCard(card)
@@ -27,7 +28,7 @@ class Player(
         state = notStarted.takeFirstTwoCards(cards)
     }
 
-    override fun stay() {
+    fun stay() {
         state = state.stay()
     }
 
@@ -38,6 +39,14 @@ class Player(
     fun profit(dealerState: State): Profit {
         val profitAmount = state.profit(price, dealerState)
         return Profit(this.name, profitAmount)
+    }
+
+    fun takeCardIfAccept(hasAccepted: Boolean, card: Card) {
+        if (hasAccepted) {
+            takeCard(card)
+        } else if (state.isRunning) {
+            stay()
+        }
     }
 
     companion object {

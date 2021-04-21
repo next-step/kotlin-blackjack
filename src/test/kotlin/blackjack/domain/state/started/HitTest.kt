@@ -4,6 +4,7 @@ import blackjack.domain.card.CardType
 import blackjack.domain.cardQueen
 import blackjack.domain.cardTwo
 import blackjack.domain.cards
+import blackjack.domain.state.State
 import blackjack.domain.state.started.run.Hit
 import blackjack.domain.state.started.finished.Bust
 import org.assertj.core.api.Assertions.assertThat
@@ -33,10 +34,10 @@ internal class HitTest {
 
     @Test
     fun `카드 size 테스트`() {
-        val hit = Hit(cards(CardType.ACE, CardType.JACK))
+        var hit: State = Hit(cards(CardType.ACE, CardType.JACK))
         assertThat(hit.cardSize).isEqualTo(2)
 
-        hit.takeCard(cardTwo)
+        hit = hit.takeCard(cardTwo)
         assertThat(hit.cardSize).isEqualTo(3)
     }
 }

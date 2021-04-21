@@ -40,6 +40,7 @@ internal class BlackjackGameTest {
 
         blackjackGame.giveCard(player, false)
         assertThat(player.cardNames).hasSize(2)
+        assertThat(player.state).isInstanceOf(Stay::class.java)
     }
 
     @Test

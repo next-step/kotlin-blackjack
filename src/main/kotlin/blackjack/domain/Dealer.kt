@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardPack
 import blackjack.domain.state.State
 import blackjack.domain.state.notstarted.NotStarted
 
@@ -13,12 +14,10 @@ class Dealer(
         get() = player.state
 
     val name: String = player.name
-    val isUnderSixteen: Boolean
-        get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
     val cardSize
         get() = player.cardSize
-    val isPlaying: Boolean
-        get() = state.isRunning
+    private val isUnderSixteen: Boolean
+        get() = this.cardPointSum() <= DEALER_POINT_TO_TAKE_MORE_CARD
 
     override fun takeCard(card: Card) {
         player.takeCard(card)
@@ -32,7 +31,16 @@ class Dealer(
         return player.cardPointSum()
     }
 
-    override fun stay() {
+    fun takeCardUntilSixteen(cardPack: CardPack) {
+        while (isUnderSixteen) {
+            takeCard(cardPack.poll())
+        }
+        if (state.isRunning) {
+            stay()
+        }
+    }
+
+    private fun stay() {
         player.stay()
     }
 
