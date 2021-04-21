@@ -7,7 +7,7 @@ import blackjack.domain.state.notstarted.NotStarted
 
 class Player(
     val name: String,
-    var state: State = NotStarted(),
+    var state: State = notStarted,
     private val price: Int = 0
 ) : Participant {
 
@@ -24,7 +24,7 @@ class Player(
 
     override fun takeFirstTwoCards(card1: Card, card2: Card) {
         val cards = Cards(listOf(card1, card2))
-        state = state.takeFirstTwoCards(cards)
+        state = notStarted.takeFirstTwoCards(cards)
     }
 
     override fun stay() {
@@ -38,5 +38,9 @@ class Player(
     fun profit(dealerState: State): Profit {
         val profitAmount = state.profit(price, dealerState)
         return Profit(this.name, profitAmount)
+    }
+
+    companion object {
+        private val notStarted = NotStarted()
     }
 }

@@ -15,7 +15,7 @@ class NotStarted : State {
     override val isBust: Boolean = false
     override val isBlackJack: Boolean = false
 
-    override fun takeFirstTwoCards(cards: Cards): State {
+    fun takeFirstTwoCards(cards: Cards): State {
         return if (cards.isBlackjack) BlackJack(cards) else Hit(cards)
     }
 
