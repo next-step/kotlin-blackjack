@@ -24,6 +24,7 @@ class Dealer(
     }
 
     override fun takeFirstTwoCards(cards: List<Card>) {
+        require(cards.size == 2) { "takeFirstTwoCards()에서는 2장의 카드를 받아야합니다." }
         player.takeFirstTwoCards(cards)
     }
 
