@@ -10,7 +10,7 @@ class BlackjackGame(val players: Players, val dealer: Dealer = Dealer(), private
 
     fun giveTwoCardsToAllPlayers() {
         players.giveFirstTwoCardsToAllPlayers(cardPack)
-        dealer.takeFirstTwoCards(cardPack.poll(), cardPack.poll())
+        dealer.takeFirstTwoCards(listOf(cardPack.poll(), cardPack.poll()))
     }
 
     fun giveCard(player: Player, hasAccepted: Boolean) {

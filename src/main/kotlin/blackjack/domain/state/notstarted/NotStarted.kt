@@ -17,12 +17,15 @@ class NotStarted(
     override val isBust: Boolean = false
     override val isBlackJack: Boolean = false
 
-    fun start(): State {
-        return if (cards.isBlackjack) BlackJack(cards) else Hit(cards)
-    }
-
     override fun takeCard(card: Card): State {
-        throw IllegalStateException("시작하지 않은 상태에서 카드를 받을 수 없습니다.")
+        val newCards = cards.with(card)
+        if (newCards.size < 2) {
+            return NotStarted(newCards)
+        }
+        if (newCards.isBlackjack) {
+            return BlackJack(newCards)
+        }
+        return Hit(newCards)
     }
 
     override fun cardPointSum(): Int {

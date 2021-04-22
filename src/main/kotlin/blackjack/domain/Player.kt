@@ -22,9 +22,10 @@ class Player(
         state = state.takeCard(card)
     }
 
-    override fun takeFirstTwoCards(card1: Card, card2: Card) {
-        val cards = Cards(listOf(card1, card2))
-        state = NotStarted(cards).start()
+    override fun takeFirstTwoCards(cards: List<Card>) {
+        cards.forEach {
+            state = state.takeCard(it)
+        }
     }
 
     fun stay() {

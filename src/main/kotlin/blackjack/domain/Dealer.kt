@@ -23,8 +23,8 @@ class Dealer(
         player.takeCard(card)
     }
 
-    override fun takeFirstTwoCards(card1: Card, card2: Card) {
-        player.takeFirstTwoCards(card1, card2)
+    override fun takeFirstTwoCards(cards: List<Card>) {
+        player.takeFirstTwoCards(cards)
     }
 
     override fun cardPointSum(): Int {
