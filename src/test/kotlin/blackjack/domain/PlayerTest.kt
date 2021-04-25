@@ -1,56 +1,71 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardType
+import blackjack.domain.state.started.run.Hit
+import blackjack.domain.state.started.finished.BlackJack
+import blackjack.domain.state.started.finished.Stay
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 internal class PlayerTest {
 
+    private val cards = cards(CardType.TWO, CardType.THREE)
+
     @Test
-    fun `카드를 받아서 현재 숫자를 계산한다(2클로버)`() {
-        val player = Player("song", getCardSetOfClover(CardType.TWO))
-        val cardSum = player.cardPointSum()
-        assertThat(cardSum).isEqualTo(CardType.TWO.point)
+    fun stay() {
+        val player = Player("song", Hit(cards))
+
+        player.stay()
+        assertThat(player.state).isInstanceOf(Stay::class.java)
     }
 
     @Test
-    fun `Ace 한 개를 포함한 카드를 받아서 현재 숫자를 계산한다(Ace를 11로 계산)`() {
-        val player = Player("song", getCardSetOfClover(CardType.TWO, CardType.ACE))
-        val cardSum = player.cardPointSum()
-        assertThat(cardSum).isEqualTo(13)
+    fun takeCardTest() {
+        val player = Player("song", Hit(cards))
+        player.takeCard(cardTwo)
+
+        assertThat(player.state.cardNames).contains(cardTwo.toString())
     }
 
     @Test
-    fun `Ace 한 개를 포함한 카드를 받아서 현재 숫자를 계산한다(Ace를 1로 계산)`() {
-        val player = Player("song", getCardSetOfClover(CardType.TWO, CardType.TEN, CardType.ACE))
-        val cardSum = player.cardPointSum()
-        assertThat(cardSum).isEqualTo(13)
+    fun `takeFirstTwoCards 블랙잭이 아닌 경우`() {
+        val player = Player("song")
+
+        player.takeFirstTwoCards(cardTwo, cardThree)
+
+        assertThat(player.state).isInstanceOf(Hit::class.java)
+        assertThat(player.state.cardNames).contains(cardTwo.toString(), cardThree.toString())
     }
 
     @Test
-    fun `Ace 두 개를 포함한 카드를 받아서 현재 숫자를 계산한다(둘 다 1로 계산)`() {
-        val player = Player("song", getCardSetOfClover(CardType.ACE, CardType.ACE, CardType.TEN, CardType.TWO))
+    fun `takeFirstTwoCards 블랙잭인 경우`() {
+        val player = Player("song")
 
-        val cardSum = player.cardPointSum()
-        assertThat(cardSum).isEqualTo(14)
+        player.takeFirstTwoCards(cardAce, cardQueen)
+
+        assertThat(player.state).isInstanceOf(BlackJack::class.java)
+        assertThat(player.state.cardNames).contains(cardAce.toString(), cardQueen.toString())
     }
 
     @Test
-    fun `Ace 두 개를 포함한 카드를 받아서 현재 숫자를 계산한다(하나는 11, 하나는 1로 계산)`() {
-        val player = Player("song", getCardSetOfClover(CardType.ACE, CardType.FIVE, CardType.ACE))
+    fun cardPointSumTest() {
+        val player = Player("song", Hit(cards))
+        val cardPointSum = player.cardPointSum()
 
-        val cardSum = player.cardPointSum()
-        assertThat(cardSum).isEqualTo(17)
+        assertThat(cardPointSum).isEqualTo(5)
     }
 
     @Test
-    fun `점수가 21점 이상이면, 더 이상 카드를 받을 수 없다`() {
-        val player = Player("song", getCardSetOfClover(CardType.TEN, CardType.JACK, CardType.QUEEN))
+    fun profitTest() {
+        val name = "song"
+        val player = Player(name, Stay(cards), 1000)
 
-        assertThatThrownBy { player.takeCard(Card(CardShape.CLOVER, CardType.TEN)) }
-            .isInstanceOf(IllegalStateException::class.java)
+        val dealerCards = cards(CardType.NINE, CardType.JACK)
+        val dealerState = Stay(dealerCards)
+
+        val result = player.profit(dealerState)
+        assertThat(result.name).isEqualTo(name)
+        assertThat(result.amount).isEqualTo(BigDecimal("-1000"))
     }
-
-    fun getCardSetOfClover(vararg cardTypes: CardType): MutableSet<Card> =
-        cardTypes.map { Card(CardShape.CLOVER, it) }.toMutableSet()
 }

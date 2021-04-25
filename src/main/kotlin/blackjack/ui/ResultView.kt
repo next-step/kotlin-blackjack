@@ -1,9 +1,8 @@
 package blackjack.ui
 
-import blackjack.domain.PlayerWinType
 import blackjack.ui.model.PlayerCardResult
 import blackjack.ui.model.PlayerDto
-import blackjack.domain.PlayerWinTypes
+import blackjack.domain.Profits
 
 object ResultView {
 
@@ -22,7 +21,7 @@ object ResultView {
     }
 
     fun printCardsOfSinglePlayer(playerDto: PlayerDto) {
-        println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it.toString() }}")
+        println("${playerDto.name}: ${playerDto.cards.joinToString(", ") { it }}")
     }
 
     fun printInfoOfDealerBehavior(addedDealerCardNumber: Int) {
@@ -44,18 +43,8 @@ object ResultView {
         println("${playerCardResult.name}: ${playerCardResult.cardNames.joinToString()} - 결과: ${playerCardResult.point}")
     }
 
-    fun printWinningResult(playerWinTypes: PlayerWinTypes) {
-        println("## 최종 승패")
-        println(playerWinTypes.dealerResult)
-        playerWinTypes.forEach {
-            println("${it.key}: ${it.value.description}")
-        }
+    fun printProfitResult(profits: Profits) {
+        println("${profits.dealerProfit.name}: ${profits.dealerProfit.amount}")
+        println(profits.playerProfits.map { "${it.name}: ${it.amount}" }.joinToString("\n"))
     }
 }
-
-private val PlayerWinType.description: String
-    get() = when (this) {
-        PlayerWinType.WIN -> "승"
-        PlayerWinType.LOSE -> "패"
-        PlayerWinType.DRAW -> "무승부"
-    }

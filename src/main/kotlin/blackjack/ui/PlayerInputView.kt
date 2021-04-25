@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.state.notstarted.NotStarted
 
 object PlayerInputView {
     fun askPlayerNames(): Players {
@@ -9,8 +10,18 @@ object PlayerInputView {
         val names = readLine() ?: throw IllegalArgumentException("입력된 이름이 없습니다.")
         println()
 
-        val playerList = names.split(",").map { Player(it) }
+        val playerList = names.split(",").map {
+            val price = askBetAmount(it)
+            Player(it, NotStarted(), price)
+        }
         return Players(playerList)
+    }
+
+    private fun askBetAmount(name: String): Int {
+        println("${name}의 배팅 금액은?")
+        val price = readLine()?.toIntOrNull() ?: throw IllegalArgumentException("잘못된 금액이 들어왔습니다.")
+        println()
+        return price
     }
 
     fun askMoreCard(name: String): Boolean {

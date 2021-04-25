@@ -1,41 +1,42 @@
 package blackjack.domain
 
-import blackjack.ui.model.PlayerDto
+import blackjack.domain.card.Card
+import blackjack.domain.state.State
+import blackjack.domain.state.notstarted.NotStarted
 
 class Player(
-    val name: String
+    val name: String,
+    var state: State = NotStarted(),
+    private val price: Int = 0
 ) : Participant {
-    private val cards = mutableSetOf<Card>()
-    val cardNames: List<String>
-        get() = cards.map { it.toString() }
-    val cardSize: Int
-        get() = cards.size
 
-    constructor(name: String, cards: Set<Card>) : this(name) {
-        this.cards.addAll(cards)
-    }
+    val isRunning: Boolean
+        get() = state.isRunning
+    val cardNames: List<String>
+        get() = state.cardNames
+    val cardSize: Int
+        get() = state.cardSize
 
     override fun takeCard(card: Card) {
+        state = state.takeCard(card)
+    }
 
-        check(cardPointSum() <= BLACK_JACK_TWENTY_ONE) { "21점이 넘어서 더 이상 카드를 받을 수 없습니다." }
+    override fun takeFirstTwoCards(card1: Card, card2: Card) {
+        listOf(card1, card2).forEach {
+            state = state.takeCard(it)
+        }
+    }
 
-        cards.add(card)
+    fun stay() {
+        state = state.stay()
     }
 
     override fun cardPointSum(): Int {
-        var cardPointSum = cards.sumBy { it.point }
-        val aceCount = cards.count { it.isAce }
-
-        repeat(aceCount) {
-            cardPointSum = changeAcePointToOneToWin(cardPointSum)
-        }
-        return cardPointSum
+        return state.cardPointSum()
     }
 
-    private fun changeAcePointToOneToWin(cardPointSum: Int): Int =
-        if (cardPointSum > BLACK_JACK_TWENTY_ONE) cardPointSum - CardType.DECREMENTABLE_POINT_OF_ACE else cardPointSum
-
-    companion object {
-        const val BLACK_JACK_TWENTY_ONE = 21
+    fun profit(dealerState: State): Profit {
+        val profitAmount = state.profit(price, dealerState)
+        return Profit(this.name, profitAmount)
     }
 }
