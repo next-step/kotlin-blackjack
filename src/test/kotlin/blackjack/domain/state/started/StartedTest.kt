@@ -1,7 +1,6 @@
 package blackjack.domain.state.started
 
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
 import blackjack.domain.cardQueen
 import blackjack.domain.cardTwo
 import blackjack.domain.cards

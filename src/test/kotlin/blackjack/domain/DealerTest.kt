@@ -48,7 +48,6 @@ internal class DealerTest {
         assertThat(dealer.cardSize).isEqualTo(2) // 2장 이상을 갖는다
     }
 
-
     @Test
     fun takeCardTest() {
         val dealer = Dealer(Hit(cards))
