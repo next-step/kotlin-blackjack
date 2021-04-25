@@ -22,8 +22,8 @@ class Player(
         state = state.takeCard(card)
     }
 
-    override fun takeFirstTwoCards(cards: List<Card>) {
-        cards.forEach {
+    override fun takeFirstTwoCards(card1: Card, card2: Card) {
+        listOf(card1, card2).forEach {
             state = state.takeCard(it)
         }
     }

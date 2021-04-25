@@ -61,7 +61,7 @@ internal class DealerTest {
     fun takeFirstTwoCardsTest() {
         val dealer = Dealer(NotStarted())
 
-        dealer.takeFirstTwoCards(listOf(cardTwo, cardThree))
+        dealer.takeFirstTwoCards(cardTwo, cardThree)
 
         assertThat(dealer.state).isInstanceOf(Hit::class.java)
         assertThat(dealer.state.cardNames).contains(cardTwo.toString(), cardThree.toString())

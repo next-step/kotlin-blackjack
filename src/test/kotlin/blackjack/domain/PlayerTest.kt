@@ -32,7 +32,7 @@ internal class PlayerTest {
     fun `takeFirstTwoCards 블랙잭이 아닌 경우`() {
         val player = Player("song")
 
-        player.takeFirstTwoCards(listOf(cardTwo, cardThree))
+        player.takeFirstTwoCards(cardTwo, cardThree)
 
         assertThat(player.state).isInstanceOf(Hit::class.java)
         assertThat(player.state.cardNames).contains(cardTwo.toString(), cardThree.toString())
@@ -42,7 +42,7 @@ internal class PlayerTest {
     fun `takeFirstTwoCards 블랙잭인 경우`() {
         val player = Player("song")
 
-        player.takeFirstTwoCards(listOf(cardAce, cardQueen))
+        player.takeFirstTwoCards(cardAce, cardQueen)
 
         assertThat(player.state).isInstanceOf(BlackJack::class.java)
         assertThat(player.state.cardNames).contains(cardAce.toString(), cardQueen.toString())

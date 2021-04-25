@@ -7,6 +7,6 @@ class Players(
 ) : List<Player> by values {
 
     fun giveFirstTwoCardsToAllPlayers(cardPack: CardPack) {
-        values.forEach { it.takeFirstTwoCards(listOf(cardPack.poll(), cardPack.poll())) }
+        values.forEach { it.takeFirstTwoCards(cardPack.poll(), cardPack.poll()) }
     }
 }
