@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Game
 import blackjack.domain.PlayerCards
 
@@ -31,6 +32,9 @@ object ResultView {
     }
 
     private fun explainCards(cards: PlayerCards): String {
-        return cards.joinToString(NAME_SEPARATOR) { "${it.number.displayName}${it.suite.koreanName}" }
+        return cards.joinToString(NAME_SEPARATOR) { it.fullName }
     }
+
+    private val Card.fullName: String
+        get() = number.displayName + suite.koreanName
 }
