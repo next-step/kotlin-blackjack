@@ -28,13 +28,11 @@ class Player(val name: String, cards: PlayerCards) {
     constructor(name: String, vararg cards: Card) : this(name, PlayerCards(cards.toSet()))
 
     private fun findStateByScore(score: Int): States {
-        if (score < Game.BLACK_JACK_SCORE) {
-            return States.HIT
-        } else if (score > Game.BLACK_JACK_SCORE) {
-            return States.BUST
+        return when {
+            score < Game.BLACK_JACK_SCORE -> { States.HIT }
+            score > Game.BLACK_JACK_SCORE -> { States.BUST }
+            else -> { States.STAY }
         }
-
-        return States.STAY
     }
 
     fun draw(card: Card) {
