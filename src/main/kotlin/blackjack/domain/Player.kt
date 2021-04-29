@@ -6,6 +6,10 @@ class Player(val name: String, cards: PlayerCards) {
 
     var state: States = States.HIT
         get() {
+            if (name == "dealer" && cards.score > 21) {
+                return States.WIN
+            }
+
             if (field == States.STAY || field == States.BLACK_JACK) {
                 return field
             }
@@ -49,5 +53,17 @@ class Player(val name: String, cards: PlayerCards) {
         if (isPlaying.not()) {
             throw IllegalStateException("게임이 진행 불가능한 상태입니다. : $state")
         }
+    }
+
+    fun isSmallerThanMinimumDealerScore(): Boolean {
+        return cards.score <= 16
+    }
+
+    fun isEnd(): Boolean {
+        if (name == "dealer") {
+            return state == States.WIN
+        }
+
+        return state == States.BLACK_JACK
     }
 }
