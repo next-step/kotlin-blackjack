@@ -4,5 +4,6 @@ enum class States {
     HIT,
     BUST,
     BLACK_JACK,
-    STAY;
+    STAY,
+    WIN;
 }
