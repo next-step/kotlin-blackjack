@@ -7,6 +7,9 @@ import blackjack.domain.PlayerCards
 object ResultView {
     private const val NAME_SEPARATOR = ","
 
+    private val Card.fullName: String
+        get() = CardDisplayNumber.retrieveDisplayName(number) + suite.koreanName
+
     fun printAllPlayerCards(game: Game) {
         game.players.forEach {
             printPlayerCards(it.name, it.cards)
@@ -34,7 +37,4 @@ object ResultView {
     private fun explainCards(cards: PlayerCards): String {
         return cards.joinToString(NAME_SEPARATOR) { it.fullName }
     }
-
-    private val Card.fullName: String
-        get() = number.displayName + suite.koreanName
 }
