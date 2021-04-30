@@ -11,13 +11,13 @@ object ResultView {
         get() = CardDisplayNumber.retrieveDisplayName(number) + suite.koreanName
 
     fun printAllPlayerCards(game: Game) {
-        game.players.forEach {
+        game.participants.forEach {
             printPlayerCards(it.name, it.cards)
         }
     }
 
     fun printAllResult(game: Game) {
-        game.players.forEach {
+        game.participants.forEach {
             printResult(it.name, it.cards)
         }
     }

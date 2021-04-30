@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 class PlayerTests {
+
     @Test
     fun `플레이어는 카드 2장을 가지고 시작한다`() {
         val player = Player(TEST_NAME, Card(CardSuite.HEART, CardNumber.ACE), Card(CardSuite.DIAMOND, CardNumber.QUEEN))

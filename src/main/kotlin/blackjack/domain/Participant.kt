@@ -7,6 +7,10 @@ abstract class Participant(val name: String, cards: PlayerCards) {
 
     var state: States = States.HIT
         get() {
+            if (field == States.STAY || field == States.BLACK_JACK) {
+                return field
+            }
+
             return findStateByScore(cards.score)
         }
         private set
@@ -20,7 +24,7 @@ abstract class Participant(val name: String, cards: PlayerCards) {
 
     abstract val isEnd: Boolean
 
-    abstract fun isSmallerThanMinimumDealerScore(): Boolean
+    abstract fun isSmallerThanMinimumScore(): Boolean
 
     fun draw(card: Card) {
         throwExceptionIfIsNotPlayingState()

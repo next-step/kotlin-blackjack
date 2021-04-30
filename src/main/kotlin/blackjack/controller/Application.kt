@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Game
 import blackjack.domain.Names
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -21,41 +21,36 @@ fun main() {
 }
 
 private fun playGameWithPlayers(game: Game) {
-    game.players.forEach {
+    game.participants.forEach {
         playGame(it, game)
     }
 }
 
-private fun playGame(player: Player, game: Game) {
-    while (player.isPlaying) {
+private fun playGame(participant: Participant, game: Game) {
+    while (participant.isPlaying) {
 
-        if (player.isEnd) {
+        if (participant.isEnd) {
             break
         }
 
-        drawIfDealerScoreSmallerThanMinimum(player, game)
+        drawIfSmallerThanMinimum(participant, game)
 
-        val answer = InputView.askIfPlayerWantToMoreCard(player.name)
+        val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
 
-        drawOfStopByAnswer(answer, game, player)
+        drawOfStopByAnswer(answer, game, participant)
 
-        ResultView.printPlayerCards(player.name, player.cards)
+        ResultView.printPlayerCards(participant.name, participant.cards)
     }
 }
 
-private fun drawIfDealerScoreSmallerThanMinimum(player: Player, game: Game) {
-    if (player.name == "dealer") {
-        drawIfSmallerThanMinimum(player, game)
+private fun drawIfSmallerThanMinimum(participant: Participant, game: Game) {
+    if (participant.isSmallerThanMinimumScore()) {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        game.draw(participant)
     }
 }
 
-private fun drawIfSmallerThanMinimum(player: Player, game: Game) {
-    if (player.isSmallerThanMinimumDealerScore()) {
-        game.draw(player)
-    }
-}
-
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Player) {
+private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Participant) {
     if (answer) {
         game.draw(it)
         return

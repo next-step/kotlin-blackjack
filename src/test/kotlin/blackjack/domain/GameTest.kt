@@ -13,8 +13,8 @@ class GameTest {
         val names = Names("오길환,상구좌")
         val game = Game(names)
 
-        val firstPlayer = game.players.first()
-        val secondPlayer = game.players.last()
+        val firstPlayer = game.participants.first()
+        val secondPlayer = game.participants.last()
 
         firstPlayer.draw(Card(CardSuite.HEART, CardNumber.SIX))
         firstPlayer.draw(Card(CardSuite.HEART, CardNumber.QUEEN))
@@ -35,7 +35,7 @@ class GameTest {
         )
 
         val game = Game(Names(TEST_NAME), cards)
-        val firstPlayer = game.players.first()
+        val firstPlayer = game.participants.first()
 
         game.draw(firstPlayer)
 
@@ -57,7 +57,7 @@ class GameTest {
         )
 
         val game = Game(Names(TEST_NAME), cards)
-        val firstPlayer = game.players.first()
+        val firstPlayer = game.participants.first()
 
         game.draw(firstPlayer)
 
@@ -76,7 +76,7 @@ class GameTest {
         )
 
         val game = Game(Names(TEST_NAME), cards)
-        val dealer = game.players.first()
+        val dealer = game.participants.first()
 
         assertThat(dealer.cards).hasSize(3)
     }
