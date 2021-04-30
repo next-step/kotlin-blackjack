@@ -12,10 +12,10 @@ internal class GamersTest {
 
     @ParameterizedTest
     @MethodSource("gamerNamesProvider")
-    fun `플레이어 이름과 베팅 금액의 리스트로 Players를 만들 수 있다`(nameAndBets: List<Pair<String, Int>>) {
-        val result = Gamers(nameAndBets, deck)
+    fun `플레이어 이름과 베팅 금액의 리스트로 Players를 만들 수 있다`(sources: List<PlayerBuildSource>) {
+        val result = Gamers(sources, deck)
 
-        assertThat(result.map { it.name }).containsAll(nameAndBets.map { it.first })
+        assertThat(result.map { it.name }).containsAll(sources.map { it.name })
     }
 
     @Test
@@ -36,8 +36,8 @@ internal class GamersTest {
                 Arguments {
                     arrayOf(
                         listOf(
-                            ("sangw0804" to 1000),
-                            ("pobi" to 2000)
+                            PlayerBuildSource("sangw0804", 1000),
+                            PlayerBuildSource("pobi", 2000)
                         )
                     )
                 }

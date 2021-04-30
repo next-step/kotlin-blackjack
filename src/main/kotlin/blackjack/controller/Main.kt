@@ -5,6 +5,7 @@ import blackjack.model.Judge
 import blackjack.model.gamer.Dealer
 import blackjack.model.gamer.Gamer
 import blackjack.model.gamer.Gamers
+import blackjack.model.gamer.PlayerBuildSource
 import blackjack.model.trump.Deck
 import blackjack.model.trump.TrumpDeck
 import blackjack.view.InputView
@@ -12,7 +13,7 @@ import blackjack.view.OutputView
 
 fun main() {
     val deck = TrumpDeck()
-    val gamers = Gamers(InputView.readPlayerInfos(), deck)
+    val gamers = Gamers(InputView.readPlayerInfos().map { PlayerBuildSource(it) }, deck)
     val dealer = Dealer(deck)
 
     OutputView.printFirstDraw((gamers + dealer).map { it.name })
