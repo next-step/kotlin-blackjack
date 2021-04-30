@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Game(names: Names, private var cards: GameCards = GameCards()) {
-    val players: Players = Players(generatePlayer(names))
+    val participants: Participants = Participants(generateParticipants(names))
 
     val state: GameStates
         get() {
@@ -12,18 +12,22 @@ class Game(names: Names, private var cards: GameCards = GameCards()) {
         }
 
     private val isEndState
-        get() = players.countOfPlayingState == NO_PLAYING_COUNT
+        get() = participants.countOfPlayingState == NO_PLAYING_COUNT
 
-    fun draw(target: Player) {
-        target.throwExceptionIfIsNotPlayingState()
+    fun draw(participant: Participant) {
+        participant.throwExceptionIfIsNotPlayingState()
 
         val card = cards.poll()
-        target.draw(card)
+        participant.draw(card)
     }
 
-    private fun generatePlayer(names: Names) = names.map {
-        Player(it, (START_INDEX..BLACK_JACK_CARD_COUNT).map { cards.poll() }.toSet())
-    }.toSet()
+    private fun generateParticipants(names: Names): Set<Participant> {
+        val players = names.map { Player(it, pollCardsToFirstDraw()) }.toSet()
+
+        return players.plusElement(Dealer(pollCardsToFirstDraw()))
+    }
+
+    private fun pollCardsToFirstDraw() = (START_INDEX..BLACK_JACK_CARD_COUNT).map { cards.poll() }.toSet()
 
     companion object {
         const val BLACK_JACK_SCORE = 21
