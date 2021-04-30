@@ -18,7 +18,7 @@ class Player : Participant {
         }
     }
 
-    override fun isSmallerThanMinimumDealerScore(): Boolean {
-        return cards.score <= 16
+    override fun isSmallerThanMinimumScore(): Boolean {
+        return false
     }
 }
