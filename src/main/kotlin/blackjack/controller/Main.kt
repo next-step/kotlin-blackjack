@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.BlackJackRule
 import blackjack.model.Judge
-import blackjack.model.Rule
 import blackjack.model.gamer.Dealer
 import blackjack.model.gamer.Gamer
 import blackjack.model.gamer.Gamers
@@ -16,9 +15,10 @@ fun main() {
     val gamers = Gamers(InputView.readPlayerInfos(), deck)
     val dealer = Dealer(deck)
 
-    OutputView.printFirstDraw(gamers + dealer)
-
-    val rule = BlackJackRule
+    OutputView.printFirstDraw((gamers + dealer).map { it.name })
+    (gamers + dealer).forEach {
+        OutputView.printPlayer(it.name, it.cards)
+    }
 
     gamers.forEach {
         drawUntilUserStop(it, deck)
@@ -29,29 +29,30 @@ fun main() {
         OutputView.printDealerReason()
     }
 
-    if (!dealer.hasValidScore(rule)) {
-        printJudgeResult(dealer, gamers, rule)
+    if (!dealer.hasValidScore(BlackJackRule)) {
+        printJudgeResult(dealer, gamers)
         return
     }
 
-    OutputView.printResults(gamers + dealer, rule)
-    printJudgeResult(dealer, gamers, rule)
+    (gamers + dealer).forEach {
+        OutputView.printResult(it.name, it.cards, BlackJackRule.getScore(it.cards))
+    }
+    printJudgeResult(dealer, gamers)
 }
 
 private fun drawUntilUserStop(gamer: Gamer, deck: Deck) {
     while (gamer.keepDrawing(InputView.readUserResponse(gamer.name), deck)) {
-        OutputView.printPlayer(gamer)
+        OutputView.printPlayer(gamer.name, gamer.cards)
     }
 }
 
 private fun printJudgeResult(
     dealer: Dealer,
-    gamers: Gamers,
-    rule: Rule
+    gamers: Gamers
 ) {
     OutputView.printJudgeTitle()
-    OutputView.printRevenue(dealer.name, - gamers.calculateRevenue(rule, dealer).amount)
+    OutputView.printRevenue(dealer.name, - Judge.calculateRevenue(gamers, dealer, BlackJackRule).amount)
     gamers.forEach {
-        OutputView.printRevenue(it.name, Judge.calculateRevenue(rule.getScore(it.cards), rule.getScore(dealer.cards), it.bet).amount)
+        OutputView.printRevenue(it.name, Judge.calculateRevenue(BlackJackRule.getScore(it.cards), BlackJackRule.getScore(dealer.cards), it.betMoney).amount)
     }
 }

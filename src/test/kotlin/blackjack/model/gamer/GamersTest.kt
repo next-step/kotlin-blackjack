@@ -1,6 +1,6 @@
 package blackjack.model.gamer
 
-import blackjack.model.Bet
+import blackjack.model.BetMoney
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -20,11 +20,11 @@ internal class GamersTest {
 
     @Test
     fun `Players 는 immutable 해야 한다`() {
-        val gamerList = mutableListOf(Player(deck, "sangw0804", Bet(1000)))
+        val gamerList = mutableListOf(Player(deck, "sangw0804", BetMoney(1000)))
 
         val gamers = Gamers(gamerList)
 
-        gamerList.add(Player(deck, "newPlayer", Bet(1000)))
+        gamerList.add(Player(deck, "newPlayer", BetMoney(1000)))
 
         assertThat(gamers.size).isEqualTo(1)
     }

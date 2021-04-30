@@ -9,8 +9,8 @@ import org.junit.jupiter.params.provider.MethodSource
 internal class JudgeTest {
     @ParameterizedTest
     @MethodSource("gamerOpponentBetProvider")
-    fun `조건에 따라 수익을 계산한다`(gamerScore: Score, opponentScore: Score, bet: Bet) {
-        assertThat(Judge.calculateRevenue(gamerScore, opponentScore, Bet(1000))).isEqualTo(bet)
+    fun `조건에 따라 수익을 계산한다`(gamerScore: Score, opponentScore: Score, betMoney: BetMoney) {
+        assertThat(Judge.calculateRevenue(gamerScore, opponentScore, BetMoney(1000))).isEqualTo(betMoney)
     }
 
     companion object {
@@ -21,49 +21,49 @@ internal class JudgeTest {
                     arrayOf(
                         Score(15),
                         Score(13),
-                        Bet(1000)
+                        BetMoney(1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(18),
-                        Bet(-1000)
+                        BetMoney(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(23),
                         Score(18),
-                        Bet(-1000)
+                        BetMoney(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(12),
                         Score(25),
-                        Bet(1000)
+                        BetMoney(1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, true),
                         Score(21, false),
-                        Bet(1500)
+                        BetMoney(1500)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, false),
                         Score(21, true),
-                        Bet(-1000)
+                        BetMoney(-1000)
                     )
                 },
                 Arguments {
                     arrayOf(
                         Score(21, true),
                         Score(21, true),
-                        Bet.ZERO
+                        BetMoney.ZERO
                     )
                 }
             )

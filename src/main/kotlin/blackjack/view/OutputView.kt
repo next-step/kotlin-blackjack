@@ -1,31 +1,20 @@
 package blackjack.view
 
-import blackjack.model.Rule
 import blackjack.model.trump.Cards
 import blackjack.model.score.Score
 import blackjack.model.gamer.Dealer
-import blackjack.model.gamer.Gamer
 import blackjack.view.ViewUtil.toString
 
 object OutputView {
-    fun printFirstDraw(gamers: List<Gamer>) {
-        println("${gamers.joinToString(", ") { it.name }}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
-        gamers.forEach {
-            printPlayer(it)
-        }
+    fun printFirstDraw(gamerNames: List<String>) {
+        println("${gamerNames.joinToString(separator = ",")}에게 ${Cards.INITIAL_DRAW_COUNT}장의 카드를 나누었습니다.")
     }
 
-    fun printPlayer(gamer: Gamer) {
-        println("${gamer.name}카드: ${toString(gamer.cards)}")
+    fun printPlayer(name: String, cards: Cards) {
+        println("${name}카드: ${toString(cards)}")
     }
 
-    fun printResults(gamers: List<Gamer>, rule: Rule) {
-        gamers.forEach {
-            printResult(it.name, it.cards, rule.getScore(it.cards))
-        }
-    }
-
-    private fun printResult(name: String, cards: Cards, score: Score) {
+    fun printResult(name: String, cards: Cards, score: Score) {
         println("${name}카드: ${toString(cards)} - 결과: ${score.value}")
     }
 
