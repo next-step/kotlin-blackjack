@@ -58,12 +58,26 @@ class GameTest {
 
         val game = Game(Names(TEST_NAME), cards)
         val firstPlayer = game.players.first()
-        // hit
+
         game.draw(firstPlayer)
-        // bust
 
         assertThrows<IllegalStateException> {
-            game.draw(firstPlayer) // bust
+            game.draw(firstPlayer)
         }
+    }
+
+    @Test
+    fun `딜러는 처음에 받은 2장의 합계가 16이하이면 반드시 1장의 카드를 추가로 받아야한다`() {
+        val cards = GameCards(
+            setOf(
+                Card(CardSuite.DIAMOND, CardNumber.TWO),
+                Card(CardSuite.DIAMOND, CardNumber.THREE)
+            )
+        )
+
+        val game = Game(Names(TEST_NAME), cards)
+        val dealer = game.players.first()
+
+        assertThat(dealer.cards).hasSize(3)
     }
 }

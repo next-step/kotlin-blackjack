@@ -26,13 +26,32 @@ private fun playGameWithPlayers(game: Game) {
     }
 }
 
-private fun playGame(it: Player, game: Game) {
-    while (it.isPlaying) {
-        val answer = InputView.askIfPlayerWantToMoreCard(it.name)
+private fun playGame(player: Player, game: Game) {
+    while (player.isPlaying) {
 
-        drawOfStopByAnswer(answer, game, it)
+        if (player.isEnd) {
+            break
+        }
 
-        ResultView.printPlayerCards(it.name, it.cards)
+        drawIfDealerScoreSmallerThanMinimum(player, game)
+
+        val answer = InputView.askIfPlayerWantToMoreCard(player.name)
+
+        drawOfStopByAnswer(answer, game, player)
+
+        ResultView.printPlayerCards(player.name, player.cards)
+    }
+}
+
+private fun drawIfDealerScoreSmallerThanMinimum(player: Player, game: Game) {
+    if (player.name == "dealer") {
+        drawIfSmallerThanMinimum(player, game)
+    }
+}
+
+private fun drawIfSmallerThanMinimum(player: Player, game: Game) {
+    if (player.isSmallerThanMinimumDealerScore()) {
+        game.draw(player)
     }
 }
 
