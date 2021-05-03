@@ -5,14 +5,11 @@ class Game(names: Names, private var cards: GameCards = GameCards()) {
 
     val state: GameStates
         get() {
-            if (isEndState) {
+            if (players.allEndGame) {
                 return GameStates.END
             }
             return GameStates.PLAYING
         }
-
-    private val isEndState
-        get() = players.countOfPlayingState == NO_PLAYING_COUNT
 
     fun draw(target: Player) {
         target.throwExceptionIfIsNotPlayingState()
@@ -29,6 +26,5 @@ class Game(names: Names, private var cards: GameCards = GameCards()) {
         const val BLACK_JACK_SCORE = 21
         const val BLACK_JACK_CARD_COUNT = 2
         const val START_INDEX = 1
-        private const val NO_PLAYING_COUNT = 0
     }
 }
