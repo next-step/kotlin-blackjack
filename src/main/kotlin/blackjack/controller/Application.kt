@@ -26,13 +26,13 @@ private fun playGameWithPlayers(game: Game) {
     }
 }
 
-private fun playGame(it: Player, game: Game) {
-    while (it.isPlaying) {
-        val answer = InputView.askIfPlayerWantToMoreCard(it.name)
+private fun playGame(player: Player, game: Game) {
+    while (player.isPlaying) {
+        val answer = InputView.askIfPlayerWantToMoreCard(player.name)
 
-        drawOfStopByAnswer(answer, game, it)
+        drawOfStopByAnswer(answer, game, player)
 
-        ResultView.printPlayerCards(it.name, it.cards)
+        ResultView.printPlayerCards(player.name, player.cards)
     }
 }
 
