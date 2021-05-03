@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumber(val number: Int, val displayName: String) {
+enum class CardNumber(val cardValue: Int, val displayName: String) {
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),

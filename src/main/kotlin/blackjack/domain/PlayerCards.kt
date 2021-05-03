@@ -11,7 +11,7 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
     }
 
     private fun calculateScore(): Int {
-        val score = cards.sumBy { it.number.number }
+        val score = cards.sumBy { it.number.cardValue }
 
         for (card in cards) {
             return calculateAce(card, score)
