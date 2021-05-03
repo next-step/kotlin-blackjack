@@ -25,7 +25,6 @@ class Player(val name: String, cards: PlayerCards) {
     }
 
     constructor(name: String, cards: Set<Card>) : this(name, PlayerCards(cards))
-    constructor(name: String, vararg cards: Card) : this(name, PlayerCards(cards.toSet()))
 
     private fun findStateByScore(score: Int): States {
         if (score < Game.BLACK_JACK_SCORE) {
