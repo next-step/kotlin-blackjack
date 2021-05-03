@@ -12,10 +12,10 @@ class Game(names: Names, private var cards: GameCards = GameCards()) {
         }
 
     fun draw(target: Player) {
-        target.throwExceptionIfIsNotPlayingState()
-
-        val card = cards.poll()
+        val card = cards.nextCard()
         target.draw(card)
+
+        cards.removeFront()
     }
 
     private fun generatePlayer(names: Names) = names.map {
