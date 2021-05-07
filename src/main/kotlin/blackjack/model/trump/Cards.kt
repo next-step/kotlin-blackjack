@@ -1,8 +1,20 @@
 package blackjack.model.trump
 
+import blackjack.model.BlackJackRule
 import blackjack.model.score.Score
 
 class Cards private constructor(private val cards: Set<Card>) : Set<Card> by cards {
+    val initializing: Boolean
+        get() = cards.size < INITIAL_DRAW_COUNT
+
+    val isBlackJack: Boolean
+        get() = getHighestScore().isMaximum() && isNoAdditionalDraw()
+
+    val isValid: Boolean
+        get() = score.isValid()
+
+    val score: Score
+        get() = BlackJackRule.getScore(this)
 
     constructor(cards: List<Card>) : this(cards.toSet())
 
@@ -23,8 +35,12 @@ class Cards private constructor(private val cards: Set<Card>) : Set<Card> by car
         return Cards(mutableCards.toSet())
     }
 
-    fun isNoAdditionalDraw(): Boolean {
+    private fun isNoAdditionalDraw(): Boolean {
         return cards.size == INITIAL_DRAW_COUNT
+    }
+
+    operator fun plus(other: Card): Cards {
+        return Cards(cards + other)
     }
 
     companion object {

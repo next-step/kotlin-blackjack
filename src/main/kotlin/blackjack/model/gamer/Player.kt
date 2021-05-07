@@ -1,41 +1,40 @@
 package blackjack.model.gamer
 
-import blackjack.model.Judge
-import blackjack.model.Rule
+import blackjack.model.BetMoney
 import blackjack.model.score.Score
+import blackjack.model.state.BlackJack
+import blackjack.model.state.Bust
+import blackjack.model.state.Initial
+import blackjack.model.state.State
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
-open class Player(cards: Cards, override val name: String) : Gamer {
+data class Player(override val name: String, override val betMoney: BetMoney, override var state: State = Initial()) : Gamer {
+    override val isBlackJack: Boolean
+        get() = state is BlackJack
 
-    constructor(deck: Deck, name: String) : this(Cards.firstDraw(deck), name)
+    override val isBust: Boolean
+        get() = state is Bust
 
-    override var cards = cards
-        protected set
+    override val cards: Cards
+        get() = state.cards
 
-    override fun isWin(opponent: Gamer, rule: Rule): Boolean {
-        return Judge.isWin(getScore(rule), opponent.getScore(rule))
-    }
+    constructor(source: PlayerBuildSource) : this(source.name, source.betMoney)
 
-    override fun isLose(opponent: Gamer, rule: Rule): Boolean {
-        return !isWin(opponent, rule)
-    }
+    override fun getScore(): Score = state.score
 
-    override fun hasValidScore(rule: Rule) = getScore(rule).isValid()
+    override fun calculateRevenue(): BetMoney = state.calculateRevenue(betMoney)
 
-    override fun getScore(rule: Rule): Score {
-        return rule.getScore(cards)
-    }
-
-    override fun keepDrawing(userResponse: String, deck: Deck): Boolean {
-        if (userResponse == "y") {
+    override fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean {
+        if (userResponse) {
             draw(deck)
-            return true
         }
-        return false
+        return userResponse
     }
 
-    fun draw(deck: Deck) {
-        cards = cards.draw(deck)
+    override fun draw(deck: Deck) {
+        deck.draw()?.let {
+            state = state.add(it)
+        }
     }
 }

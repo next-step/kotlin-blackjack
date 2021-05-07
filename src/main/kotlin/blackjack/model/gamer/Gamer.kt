@@ -1,17 +1,21 @@
 package blackjack.model.gamer
 
-import blackjack.model.Rule
+import blackjack.model.BetMoney
 import blackjack.model.score.Score
+import blackjack.model.state.State
 import blackjack.model.trump.Cards
 import blackjack.model.trump.Deck
 
 interface Gamer {
+    val isBlackJack: Boolean
+    val isBust: Boolean
     val cards: Cards
+    val state: State
     val name: String
+    val betMoney: BetMoney
 
-    fun isWin(opponent: Gamer, rule: Rule): Boolean
-    fun isLose(opponent: Gamer, rule: Rule): Boolean
-    fun keepDrawing(userResponse: String, deck: Deck): Boolean
-    fun hasValidScore(rule: Rule): Boolean
-    fun getScore(rule: Rule): Score
+    fun keepDrawing(userResponse: Boolean, deck: Deck): Boolean
+    fun getScore(): Score
+    fun calculateRevenue(): BetMoney
+    fun draw(deck: Deck)
 }

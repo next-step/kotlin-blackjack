@@ -1,7 +1,7 @@
 package blackjack.model
 
-import blackjack.model.gamer.MockDeck
 import blackjack.model.score.Score
+import blackjack.model.trump.Card
 import blackjack.model.trump.Cards
 import blackjack.model.trump.CardNumber
 import blackjack.model.trump.Suit
@@ -19,14 +19,6 @@ internal class RuleTest {
         assertThat(result).isEqualTo(score)
     }
 
-    @ParameterizedTest
-    @MethodSource("blackJackScoreProvider")
-    fun `A + 10카드 2장의 경우 블랙잭 score 리턴`(cards: Cards, isBlackJack: Boolean) {
-        val result = BlackJackRule.getScore(cards)
-
-        assertThat(result.isBlackJack).isEqualTo(isBlackJack)
-    }
-
     companion object {
         private val deck = MockDeck()
 
@@ -36,9 +28,9 @@ internal class RuleTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
-                            deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
-                            deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
+                            Card(CardNumber.ACE, Suit.DIAMOND),
+                            Card(CardNumber.JACK, Suit.DIAMOND),
+                            Card(CardNumber.TEN, Suit.DIAMOND)
                         ),
                         Score(21)
                     )
@@ -46,8 +38,8 @@ internal class RuleTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.CLUB),
-                            deck.peekCard(CardNumber.ACE, Suit.HEART)
+                            Card(CardNumber.ACE, Suit.CLUB),
+                            Card(CardNumber.ACE, Suit.HEART)
                         ),
                         Score(12)
                     )
@@ -55,45 +47,20 @@ internal class RuleTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.THREE, Suit.SPADE),
-                            deck.peekCard(CardNumber.JACK, Suit.SPADE),
-                            deck.peekCard(CardNumber.TEN, Suit.SPADE)
+                            Card(CardNumber.THREE, Suit.SPADE),
+                            Card(CardNumber.JACK, Suit.SPADE),
+                            Card(CardNumber.TEN, Suit.SPADE)
                         ),
-                        Score(23)
+                        Score.ZERO
                     )
                 },
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.SPADE),
-                            deck.peekCard(CardNumber.TEN, Suit.HEART)
+                            Card(CardNumber.ACE, Suit.SPADE),
+                            Card(CardNumber.TEN, Suit.HEART)
                         ),
-                        Score(21, true)
-                    )
-                }
-            )
-        }
-
-        @JvmStatic
-        fun blackJackScoreProvider(): List<Arguments> {
-            return listOf(
-                Arguments {
-                    arrayOf(
-                        Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.HEART),
-                            deck.peekCard(CardNumber.KING, Suit.SPADE)
-                        ),
-                        true
-                    )
-                },
-                Arguments {
-                    arrayOf(
-                        Cards(
-                            deck.peekCard(CardNumber.SEVEN, Suit.SPADE),
-                            deck.peekCard(CardNumber.SEVEN, Suit.HEART),
-                            deck.peekCard(CardNumber.SEVEN, Suit.CLUB)
-                        ),
-                        false
+                        Score(21)
                     )
                 }
             )

@@ -1,21 +1,26 @@
 package blackjack.model
 
-import blackjack.model.score.Score
+import blackjack.model.gamer.Dealer
+import blackjack.model.gamer.Gamer
+import blackjack.model.gamer.Gamers
 
 object Judge {
-    fun isWin(gamerScore: Score, opponentScore: Score): Boolean {
-        if (!opponentScore.isValid()) {
-            return true
-        }
+    fun calculateRevenue(gamer: Gamer, opponents: Gamers): BetMoney {
+        return opponents.fold(BetMoney.ZERO) { betSum, opponent -> betSum + calculateRevenue(gamer, opponent) }
+    }
 
-        if (!gamerScore.isValid()) {
-            return false
+    fun calculateRevenue(gamer: Gamer, opponent: Gamer): BetMoney {
+        return if (gamer.getScore() >= opponent.getScore()) {
+            withBetMoneyIfDealer(gamer, opponent).calculateRevenue()
+        } else {
+            - withBetMoneyIfDealer(opponent, gamer).calculateRevenue()
         }
+    }
 
-        if (gamerScore.isMaximum() && opponentScore.isMaximum()) {
-            return gamerScore.isBlackJack || !opponentScore.isBlackJack
+    private fun withBetMoneyIfDealer(gamer: Gamer, opponent: Gamer): Gamer {
+        if (gamer is Dealer) {
+            return gamer.copy(betMoney = opponent.betMoney)
         }
-
-        return gamerScore >= opponentScore
+        return gamer
     }
 }

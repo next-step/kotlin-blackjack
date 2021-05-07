@@ -2,7 +2,10 @@ package blackjack.model.score
 
 import java.util.TreeSet
 
-class Scores private constructor(private val scores: TreeSet<Score>) : Set<Score> by scores {
+class Scores private constructor(private val scores: TreeSet<Score>) {
+
+    val size: Int
+        get() = scores.size
 
     constructor(scores: List<Int>) : this(TreeSet(scores.map { Score(it) }))
 

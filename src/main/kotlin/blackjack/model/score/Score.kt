@@ -1,8 +1,8 @@
 package blackjack.model.score
 
-data class Score(val value: Int, val isBlackJack: Boolean = false) : Comparable<Score> {
+data class Score(val value: Int) : Comparable<Score> {
     fun isValid(): Boolean {
-        return this in ZERO..MAXIMUM
+        return this in MINIMUM..MAXIMUM
     }
 
     fun isMaximum(): Boolean {
@@ -23,6 +23,7 @@ data class Score(val value: Int, val isBlackJack: Boolean = false) : Comparable<
 
     companion object {
         val MAXIMUM = Score(21)
+        val MINIMUM = Score(1)
 
         val ZERO = Score(0)
     }
