@@ -1,39 +1,26 @@
 package blackjack.model
 
+import blackjack.model.gamer.Dealer
 import blackjack.model.gamer.Gamer
 import blackjack.model.gamer.Gamers
-import blackjack.model.score.Score
 
 object Judge {
-    private const val BLACK_JACK_TIMES = 1.5
+    fun calculateRevenue(gamer: Gamer, opponents: Gamers): BetMoney {
+        return opponents.fold(BetMoney.ZERO) { betSum, opponent -> betSum + calculateRevenue(gamer, opponent) }
+    }
 
-    fun calculateRevenue(gamers: Gamers, opponent: Gamer, rule: Rule): BetMoney {
-        return gamers.fold(BetMoney.ZERO) { betSum, gamer ->
-            betSum + calculateRevenue(rule.getScore(gamer.cards), rule.getScore(opponent.cards), gamer.betMoney)
+    fun calculateRevenue(gamer: Gamer, opponent: Gamer): BetMoney {
+        return if (gamer.getScore() >= opponent.getScore()) {
+            withBetMoneyIfDealer(gamer, opponent).calculateRevenue()
+        } else {
+            - withBetMoneyIfDealer(opponent, gamer).calculateRevenue()
         }
     }
 
-    fun calculateRevenue(gamerScore: Score, opponentScore: Score, gamerBetMoney: BetMoney): BetMoney {
-        if (!opponentScore.isValid()) {
-            return gamerBetMoney
+    private fun withBetMoneyIfDealer(gamer: Gamer, opponent: Gamer): Gamer {
+        if (gamer is Dealer) {
+            return gamer.copy(betMoney = opponent.betMoney)
         }
-
-        if (!gamerScore.isValid()) {
-            return -gamerBetMoney
-        }
-
-        if (gamerScore.isBlackJack && opponentScore.isBlackJack) {
-            return BetMoney.ZERO
-        }
-
-        if (gamerScore.isBlackJack) {
-            return (gamerBetMoney * BLACK_JACK_TIMES)
-        }
-
-        if (opponentScore.isBlackJack) {
-            return -gamerBetMoney
-        }
-
-        return if (gamerScore >= opponentScore) gamerBetMoney else -gamerBetMoney
+        return gamer
     }
 }

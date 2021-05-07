@@ -13,6 +13,10 @@ data class BetMoney(val amount: Int) {
         return BetMoney(amount + other.amount)
     }
 
+    operator fun minus(other: BetMoney): BetMoney {
+        return BetMoney(this.amount - other.amount)
+    }
+
     companion object {
         val ZERO = BetMoney(0)
     }

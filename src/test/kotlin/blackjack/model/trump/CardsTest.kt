@@ -1,6 +1,5 @@
 package blackjack.model.trump
 
-import blackjack.model.gamer.MockDeck
 import blackjack.model.score.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -11,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource
 internal class CardsTest {
     @Test
     fun `Cards 기본 생성자를 사용하면 2개의 카드가 생성된다`() {
-        val result = Cards.firstDraw(deck)
+        val result = Cards.firstDraw(TrumpDeck())
 
         assertThat(result.size).isEqualTo(2)
     }
@@ -25,17 +24,15 @@ internal class CardsTest {
     }
 
     companion object {
-        private val deck = MockDeck()
-
         @JvmStatic
         fun scoreProvider(): List<Arguments> {
             return listOf(
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.DIAMOND),
-                            deck.peekCard(CardNumber.JACK, Suit.DIAMOND),
-                            deck.peekCard(CardNumber.TEN, Suit.DIAMOND)
+                            Card(CardNumber.ACE, Suit.DIAMOND),
+                            Card(CardNumber.JACK, Suit.DIAMOND),
+                            Card(CardNumber.TEN, Suit.DIAMOND)
                         ),
                         Score(31)
                     )
@@ -43,8 +40,8 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.ACE, Suit.SPADE),
-                            deck.peekCard(CardNumber.ACE, Suit.CLUB)
+                            Card(CardNumber.ACE, Suit.SPADE),
+                            Card(CardNumber.ACE, Suit.CLUB)
                         ),
                         Score(22)
                     )
@@ -52,9 +49,9 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.THREE, Suit.SPADE),
-                            deck.peekCard(CardNumber.JACK, Suit.CLUB),
-                            deck.peekCard(CardNumber.TEN, Suit.HEART)
+                            Card(CardNumber.THREE, Suit.SPADE),
+                            Card(CardNumber.JACK, Suit.CLUB),
+                            Card(CardNumber.TEN, Suit.HEART)
                         ),
                         Score(23)
                     )
@@ -62,8 +59,8 @@ internal class CardsTest {
                 Arguments {
                     arrayOf(
                         Cards(
-                            deck.peekCard(CardNumber.TEN, Suit.CLUB),
-                            deck.peekCard(CardNumber.ACE, Suit.HEART)
+                            Card(CardNumber.TEN, Suit.CLUB),
+                            Card(CardNumber.ACE, Suit.HEART)
                         ),
                         Score(21)
                     )
