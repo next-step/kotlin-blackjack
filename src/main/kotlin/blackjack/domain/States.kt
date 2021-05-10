@@ -5,5 +5,6 @@ enum class States {
     BUST,
     BLACK_JACK,
     STAY,
-    WIN;
+    WIN,
+    LOSE;
 }
