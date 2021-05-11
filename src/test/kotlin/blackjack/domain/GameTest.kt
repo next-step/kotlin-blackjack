@@ -10,11 +10,17 @@ class GameTest {
 
     @Test
     fun `모든 플레이어가 카드를 받지 않는 상태가 되면 게임이 종료된다`() {
-        val names = Names("오길환,상구좌")
-        val game = Game(names)
+        val cards = PlayerCards(
+            setOf(
+                Card(CardSuite.DIAMOND, CardNumber.TWO),
+                Card(CardSuite.DIAMOND, CardNumber.THREE)
+            )
+        )
 
-        val firstPlayer = game.participants.first()
-        val secondPlayer = game.participants.last()
+        val firstPlayer = Player("오길환", cards)
+        val secondPlayer = Dealer(cards)
+        val game = Game(Participants(setOf(firstPlayer)), secondPlayer)
+
 
         firstPlayer.draw(Card(CardSuite.HEART, CardNumber.SIX))
         firstPlayer.draw(Card(CardSuite.HEART, CardNumber.QUEEN))
@@ -26,7 +32,7 @@ class GameTest {
 
     @Test
     fun `게임에서는 카드를 한장을 뽑아서 플레이어에게 줄 수 있다`() {
-        val cards = GameCards(
+        val cards = PlayerCards(
             setOf(
                 Card(CardSuite.DIAMOND, CardNumber.ACE),
                 Card(CardSuite.HEART, CardNumber.SIX),
@@ -34,7 +40,9 @@ class GameTest {
             )
         )
 
-        val game = Game(Names(TEST_NAME), cards)
+        val player = Player(TEST_NAME, Card(CardSuite.CLOVER, CardNumber.FIVE), Card(CardSuite.CLOVER, CardNumber.TWO))
+
+        val game = Game(Participants(setOf(player)), Dealer(cards))
         val firstPlayer = game.participants.first()
 
         game.draw(firstPlayer)
@@ -56,7 +64,15 @@ class GameTest {
             )
         )
 
-        val game = Game(Names(TEST_NAME), cards)
+        val playerCards = PlayerCards(
+            setOf(
+                Card(CardSuite.CLOVER, CardNumber.FIVE),
+                Card(CardSuite.CLOVER, CardNumber.TWO))
+        )
+
+        val player = Player(TEST_NAME, playerCards)
+
+        val game = Game(Participants(setOf(player)), Dealer(playerCards), cards)
         val firstPlayer = game.participants.first()
 
         game.draw(firstPlayer)
@@ -75,7 +91,15 @@ class GameTest {
             )
         )
 
-        val game = Game(Names(TEST_NAME), cards)
+        val playerCards = PlayerCards(
+            setOf(
+                Card(CardSuite.CLOVER, CardNumber.FIVE),
+                Card(CardSuite.CLOVER, CardNumber.TWO))
+        )
+
+        val player = Player(TEST_NAME, playerCards)
+
+        val game = Game(Participants(setOf(player)), Dealer(playerCards), cards)
         val dealer = game.participants.first()
 
         assertThat(dealer.cards).hasSize(3)
