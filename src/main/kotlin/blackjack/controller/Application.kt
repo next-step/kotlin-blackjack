@@ -30,17 +30,17 @@ private fun playGame(player: Player, game: Game) {
     while (player.isPlaying) {
         val answer = InputView.askIfPlayerWantToMoreCard(player.name)
 
-        drawOfStopByAnswer(answer, game, player)
+        drawOrStopByAnswer(answer, game, player)
 
         ResultView.printPlayerCards(player.name, player.cards)
     }
 }
 
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Player) {
+private fun drawOrStopByAnswer(answer: Boolean, game: Game, player: Player) {
     if (answer) {
-        game.draw(it)
+        game.draw(player)
         return
     }
 
-    it.stop()
+    player.stop()
 }
