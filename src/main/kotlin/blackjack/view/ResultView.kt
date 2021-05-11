@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Game
-import blackjack.domain.PlayerCards
+import blackjack.domain.Cards
 
 object ResultView {
     private const val NAME_SEPARATOR = ","
@@ -22,15 +22,15 @@ object ResultView {
         println("${names.joinToString(NAME_SEPARATOR)} 에게 $blackJackCardCount 장을 나누었습니다. ")
     }
 
-    fun printPlayerCards(name: String, cards: PlayerCards) {
+    fun printPlayerCards(name: String, cards: Cards) {
         println("${name}카드: ${explainCards(cards)}")
     }
 
-    private fun printResult(name: String, cards: PlayerCards) {
+    private fun printResult(name: String, cards: Cards) {
         println("${name}카드: ${explainCards(cards)} - 결과 : ${cards.score}")
     }
 
-    private fun explainCards(cards: PlayerCards): String {
+    private fun explainCards(cards: Cards): String {
         return cards.joinToString(NAME_SEPARATOR) { "${it.number.displayName}${it.suite.koreanName}" }
     }
 }

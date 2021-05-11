@@ -1,13 +1,13 @@
 package blackjack.domain
 
-class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
+class Cards(private val cards: Set<Card>) : Set<Card> by cards {
     val score: Int
         get() {
             return calculateScore()
         }
 
-    fun addCard(card: Card): PlayerCards {
-        return PlayerCards(cards + card)
+    fun addCard(card: Card): Cards {
+        return Cards(cards + card)
     }
 
     private fun calculateScore(): Int {

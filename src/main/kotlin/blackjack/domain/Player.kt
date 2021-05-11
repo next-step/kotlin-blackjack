@@ -1,7 +1,7 @@
 package blackjack.domain
 
-class Player(val name: String, cards: PlayerCards) {
-    var cards: PlayerCards = cards
+class Player(val name: String, cards: Cards) {
+    var cards: Cards = cards
         private set
 
     var state: States = States.HIT
@@ -24,7 +24,7 @@ class Player(val name: String, cards: PlayerCards) {
         }
     }
 
-    constructor(name: String, cards: Set<Card>) : this(name, PlayerCards(cards))
+    constructor(name: String, cards: Set<Card>) : this(name, Cards(cards))
 
     private fun findStateByScore(score: Int): States {
         if (score < Game.BLACK_JACK_SCORE) {

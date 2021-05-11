@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.LinkedList
 
-class PlayerCardsTest {
+class CardsTest {
     @Test
     fun `카드를 맨 앞의 카드 한장을 뽑아서 리턴 해야 한다`() {
         val cards = GameCards(
@@ -26,9 +26,9 @@ class PlayerCardsTest {
     @ParameterizedTest
     @MethodSource("cardGenerate")
     fun `카드에 맞게 점수를 가져야 한다`(cardAndScore: Pair<Set<Card>, Int>) {
-        val playerCards: PlayerCards = PlayerCards(cardAndScore.first)
+        val cards: Cards = Cards(cardAndScore.first)
 
-        assertThat(playerCards.score)
+        assertThat(cards.score)
             .isEqualTo(cardAndScore.second)
     }
 
