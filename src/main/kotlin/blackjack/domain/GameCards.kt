@@ -9,4 +9,6 @@ class GameCards(cards: Set<Card> = Card.CARDS) {
     fun poll(): Card {
         return _cards.poll() ?: throw IllegalStateException("뽑을 카드가 없습니다.")
     }
+
+    fun pollCardsToFirstDraw() = (Game.START_INDEX..Game.BLACK_JACK_CARD_COUNT).map { _cards.poll() }.toSet()
 }
