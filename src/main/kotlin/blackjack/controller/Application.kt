@@ -1,15 +1,24 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.GameCards
 import blackjack.domain.Names
 import blackjack.domain.Participant
+import blackjack.domain.Participants
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     val names = Names(InputView.playerNames())
 
-    val game = Game(names)
+    val gameCards = GameCards()
+
+    val players = generatePlayers(names, gameCards)
+    val dealer = generateDealer(gameCards)
+
+    val game = Game(players, dealer)
 
     ResultView.printInitNotice(names, Game.BLACK_JACK_CARD_COUNT)
 
@@ -18,6 +27,15 @@ fun main() {
     playGameWithPlayers(game)
 
     ResultView.printAllResult(game)
+
+    println("## 최종 승패")
+
+    game.findWinner()
+
+    println("${dealer.name} : ${dealer.result}")
+    game.participants.forEach {
+        println("${it.name} : ${it.result}")
+    }
 }
 
 private fun playGameWithPlayers(game: Game) {
@@ -29,11 +47,11 @@ private fun playGameWithPlayers(game: Game) {
 private fun playGame(participant: Participant, game: Game) {
     while (participant.isPlaying) {
 
+        drawIfSmallerThanMinimum(participant, game)
+
         if (participant.isEnd) {
             break
         }
-
-        drawIfSmallerThanMinimum(participant, game)
 
         val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
 
@@ -58,3 +76,7 @@ private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Participant) {
 
     it.stop()
 }
+
+private fun generatePlayers(names: Names, cards: GameCards) = Participants(names.map { Player(it, cards.pollCardsToFirstDraw()) }.toSet())
+
+private fun generateDealer(cards: GameCards) = Dealer(cards.pollCardsToFirstDraw())
