@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import kotlin.math.abs
+
 abstract class Participant(val name: String, cards: PlayerCards) {
 
     var cards: PlayerCards = cards
@@ -15,14 +17,16 @@ abstract class Participant(val name: String, cards: PlayerCards) {
         }
         private set
 
+    var result: States = States.LOSE
+
     val isPlaying: Boolean
         get() {
             return state == States.HIT
         }
 
-    abstract fun findStateByScore(score: Int): States
-
     abstract val isEnd: Boolean
+
+    abstract fun findStateByScore(score: Int): States
 
     abstract fun isSmallerThanMinimumScore(): Boolean
 
@@ -40,5 +44,17 @@ abstract class Participant(val name: String, cards: PlayerCards) {
 
     fun stop() {
         state = States.STAY
+    }
+
+    fun lose() {
+        result = States.LOSE
+    }
+
+    fun win() {
+        result = States.WIN
+    }
+
+    fun calculateToFindWinner(): Int {
+        return abs(Game.BLACK_JACK_SCORE - cards.score)
     }
 }
