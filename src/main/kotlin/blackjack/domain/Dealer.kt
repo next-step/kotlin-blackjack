@@ -1,12 +1,12 @@
 package blackjack.domain
 
-class Dealer(cards: PlayerCards) : Participant("딜러", cards) {
+class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
 
     constructor(cards: Set<Card>) : this(PlayerCards(cards))
 
     override val isEnd: Boolean
         get() {
-            return state == States.WIN
+            return state == States.HIT
         }
 
     override fun findStateByScore(score: Int): States {
@@ -24,5 +24,6 @@ class Dealer(cards: PlayerCards) : Participant("딜러", cards) {
 
     companion object {
         private const val MINIMUM_DEALER_FIRST_SCORE = 16
+        private const val DEALER_NAME = "딜러"
     }
 }
