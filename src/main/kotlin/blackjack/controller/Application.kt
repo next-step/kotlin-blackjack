@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.Game
+import blackjack.domain.GameStates
 import blackjack.domain.Names
 import blackjack.domain.Player
 import blackjack.view.InputView
@@ -21,13 +22,9 @@ fun main() {
 }
 
 private fun playGameWithPlayers(game: Game) {
-    game.players.forEach {
-        playGame(it, game)
-    }
-}
+    while (game.state == GameStates.PLAYING) {
+        val player = game.players.findOneByStatusIsPlaying()
 
-private fun playGame(player: Player, game: Game) {
-    while (player.isPlaying) {
         val answer = InputView.askIfPlayerWantToMoreCard(player.name)
 
         drawOrStopByAnswer(answer, game, player)
