@@ -5,7 +5,6 @@ import blackjack.domain.Game
 import blackjack.domain.GameCards
 import blackjack.domain.Names
 import blackjack.domain.Participant
-import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -24,7 +23,7 @@ fun main() {
 
     ResultView.printAllPlayerCards(game)
 
-    playGameWithPlayers(game)
+    playGameWithParticipants(game)
 
     ResultView.printAllResult(game)
 
@@ -35,23 +34,16 @@ fun main() {
     ResultView.printGameResults(dealer, game)
 }
 
-private fun playGameWithPlayers(game: Game) {
+private fun playGameWithParticipants(game: Game) {
     game.participants.forEach {
         playGame(it, game)
     }
 
-    playGame(game.dealer, game)
+    drawIfSmallerThanMinimum(game.dealer, game)
 }
 
 private fun playGame(participant: Participant, game: Game) {
     while (participant.isPlaying) {
-
-        drawIfSmallerThanMinimum(participant, game)
-
-        if (participant.isEnd) {
-            break
-        }
-
         val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
 
         drawOfStopByAnswer(answer, game, participant)
@@ -60,10 +52,10 @@ private fun playGame(participant: Participant, game: Game) {
     }
 }
 
-private fun drawIfSmallerThanMinimum(participant: Participant, game: Game) {
-    if (participant.isSmallerThanMinimumScore()) {
+private fun drawIfSmallerThanMinimum(dealer: Dealer, game: Game) {
+    if (dealer.isSmallerThanMinimumScore()) {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        game.draw(participant)
+        game.draw(dealer)
     }
 }
 
