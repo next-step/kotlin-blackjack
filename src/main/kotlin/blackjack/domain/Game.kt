@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Game(val participants: Participants, val dealer: Participant, private var cards: GameCards = GameCards()) {
+class Game(val participants: Participants, val dealer: Dealer, private var cards: GameCards = GameCards()) {
 
     val state: GameStates
         get() {
@@ -12,7 +12,7 @@ class Game(val participants: Participants, val dealer: Participant, private var 
         }
 
     private val isEndState
-        get() = participants.countOfPlayingState == NO_PLAYING_COUNT && dealer.isEnd
+        get() = participants.countOfPlayingState == NO_PLAYING_COUNT
 
     fun draw(participant: Participant) {
         participant.throwExceptionIfIsNotPlayingState()
