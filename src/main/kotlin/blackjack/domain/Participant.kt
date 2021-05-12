@@ -55,4 +55,8 @@ abstract class Participant(val name: String, cards: PlayerCards) {
     fun calculateToFindWinner(): Int {
         return abs(Game.BLACK_JACK_SCORE - cards.score)
     }
+
+    fun retrieveScore(): Int {
+        return cards.score
+    }
 }
