@@ -17,7 +17,7 @@ fun main() {
     val players = Player.generatePlayers(names, gameCards)
     val dealer = Dealer.generateDealer(gameCards)
 
-    val game = Game(players, dealer)
+    val game = Game(players, dealer, gameCards)
 
     ResultView.printInitNotice(names, Game.BLACK_JACK_CARD_COUNT)
 
@@ -59,11 +59,11 @@ private fun drawIfSmallerThanMinimum(dealer: Dealer, game: Game) {
     }
 }
 
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Participant) {
+private fun drawOfStopByAnswer(answer: Boolean, game: Game, participant: Participant) {
     if (answer) {
-        game.draw(it)
+        game.draw(participant)
         return
     }
 
-    it.stop()
+    participant.stop()
 }
