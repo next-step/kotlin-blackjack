@@ -21,4 +21,10 @@ class Player : Participant {
     override fun isSmallerThanMinimumScore(): Boolean {
         return false
     }
+
+    companion object {
+        fun generatePlayers(names: Names, cards: GameCards) = Participants(names.map {
+            Player(it, cards.pollCardsToFirstDraw())
+        }.toSet())
+    }
 }

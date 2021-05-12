@@ -23,6 +23,8 @@ class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
     }
 
     companion object {
+        fun generateDealer(cards: GameCards) = Dealer(cards.pollCardsToFirstDraw())
+
         private const val MINIMUM_DEALER_FIRST_SCORE = 16
         private const val DEALER_NAME = "딜러"
     }

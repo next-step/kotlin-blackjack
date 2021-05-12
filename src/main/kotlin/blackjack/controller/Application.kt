@@ -15,8 +15,8 @@ fun main() {
 
     val gameCards = GameCards()
 
-    val players = generatePlayers(names, gameCards)
-    val dealer = generateDealer(gameCards)
+    val players = Player.generatePlayers(names, gameCards)
+    val dealer = Dealer.generateDealer(gameCards)
 
     val game = Game(players, dealer)
 
@@ -28,14 +28,11 @@ fun main() {
 
     ResultView.printAllResult(game)
 
-    println("## 최종 승패")
+    ResultView.printGameResultTitle()
 
     game.findWinner()
 
-    println("${dealer.name} : ${dealer.result}")
-    game.participants.forEach {
-        println("${it.name} : ${it.result}")
-    }
+    ResultView.printGameResults(dealer, game)
 }
 
 private fun playGameWithPlayers(game: Game) {
@@ -76,7 +73,3 @@ private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Participant) {
 
     it.stop()
 }
-
-private fun generatePlayers(names: Names, cards: GameCards) = Participants(names.map { Player(it, cards.pollCardsToFirstDraw()) }.toSet())
-
-private fun generateDealer(cards: GameCards) = Dealer(cards.pollCardsToFirstDraw())
