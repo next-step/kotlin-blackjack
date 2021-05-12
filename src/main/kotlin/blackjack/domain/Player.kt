@@ -2,11 +2,6 @@ package blackjack.domain
 
 class Player : Participant {
 
-    override val isEnd: Boolean
-        get() {
-            return state == States.BLACK_JACK
-        }
-
     constructor(name: String, cards: Set<Card>) : super(name, PlayerCards(cards))
     constructor(name: String, vararg cards: Card) : this(name, PlayerCards(cards.toSet()))
 
@@ -16,10 +11,6 @@ class Player : Participant {
             score > Game.BLACK_JACK_SCORE -> { States.BUST }
             else -> { States.STAY }
         }
-    }
-
-    override fun isSmallerThanMinimumScore(): Boolean {
-        return false
     }
 
     companion object {

@@ -4,11 +4,6 @@ class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
 
     constructor(cards: Set<Card>) : this(PlayerCards(cards))
 
-    override val isEnd: Boolean
-        get() {
-            return state == States.HIT
-        }
-
     override fun findStateByScore(score: Int): States {
         return when {
             score < Game.BLACK_JACK_SCORE -> { States.HIT }
@@ -18,7 +13,7 @@ class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
         }
     }
 
-    override fun isSmallerThanMinimumScore(): Boolean {
+    fun isSmallerThanMinimumScore(): Boolean {
         return cards.score <= MINIMUM_DEALER_FIRST_SCORE
     }
 

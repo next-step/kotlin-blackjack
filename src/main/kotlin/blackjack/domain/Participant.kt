@@ -24,11 +24,7 @@ abstract class Participant(val name: String, cards: PlayerCards) {
             return state == States.HIT
         }
 
-    abstract val isEnd: Boolean
-
     abstract fun findStateByScore(score: Int): States
-
-    abstract fun isSmallerThanMinimumScore(): Boolean
 
     fun draw(card: Card) {
         throwExceptionIfIsNotPlayingState()
@@ -44,10 +40,6 @@ abstract class Participant(val name: String, cards: PlayerCards) {
 
     fun stop() {
         state = States.STAY
-    }
-
-    fun lose() {
-        result = States.LOSE
     }
 
     fun win() {
