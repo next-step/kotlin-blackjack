@@ -39,6 +39,8 @@ private fun playGameWithPlayers(game: Game) {
     game.participants.forEach {
         playGame(it, game)
     }
+
+    playGame(game.dealer, game)
 }
 
 private fun playGame(participant: Participant, game: Game) {
