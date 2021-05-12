@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Game(val participants: Participants, private val dealer: Participant, private var cards: GameCards = GameCards()) {
+class Game(val participants: Participants, val dealer: Participant, private var cards: GameCards = GameCards()) {
 
     val state: GameStates
         get() {

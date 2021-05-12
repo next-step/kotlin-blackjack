@@ -18,6 +18,9 @@ object ResultView {
         game.participants.forEach {
             printResult(it.name, it.cards)
         }
+
+        val dealer = game.dealer
+        printResult(dealer.name, dealer.cards)
     }
 
     fun printGameResultTitle() {
