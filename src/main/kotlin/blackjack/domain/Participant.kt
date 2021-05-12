@@ -24,6 +24,12 @@ abstract class Participant(val name: String, cards: PlayerCards) {
             return state == States.HIT
         }
 
+    init {
+        if (cards.score == Game.BLACK_JACK_SCORE) {
+            state = States.BLACK_JACK
+        }
+    }
+
     abstract fun findStateByScore(score: Int): States
 
     fun draw(card: Card) {
