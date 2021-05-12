@@ -14,8 +14,8 @@ class Player : Participant {
     }
 
     companion object {
-        fun generatePlayers(names: Names, cards: GameCards) = Participants(names.map {
-            Player(it, cards.pollCardsToFirstDraw())
-        }.toSet())
+        fun generatePlayers(names: Names, cards: GameCards): Participants {
+            return Participants(names.map { Player(it, cards.pollCardsToFirstDraw()) }.toSet())
+        }
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.lang.IllegalArgumentException
+
 class Game(val participants: Participants, val dealer: Dealer, private var cards: GameCards = GameCards()) {
 
     val state: GameStates
@@ -22,17 +24,20 @@ class Game(val participants: Participants, val dealer: Dealer, private var cards
     }
 
     fun findWinner() {
-        if (dealer.cards.score > BLACK_JACK_SCORE) {
+        if (dealer.isWinScore()) {
             return
         }
 
-        val winner = participants.minBy { it.calculateToFindWinner() }!!
+        val winner = findWinnerScore()
+        makeWinners(winner)
+    }
 
-        participants.filter {
-            it.cards.score == winner.cards.score
-        }.forEach {
-            it.win()
-        }
+    private fun findWinnerScore(): Participant {
+        return participants.minBy { it.calculateToFindWinner() } ?: throw IllegalArgumentException("무승부입니다.")
+    }
+
+    private fun makeWinners(winner: Participant) {
+        participants.filter { it.cards.score == winner.cards.score }.forEach { it.win() }
     }
 
     companion object {

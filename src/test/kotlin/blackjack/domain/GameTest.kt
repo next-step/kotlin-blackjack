@@ -37,7 +37,8 @@ class GameTest {
         val playerCards = PlayerCards(
             setOf(
                 Card(CardSuite.CLOVER, CardNumber.JACK),
-                Card(CardSuite.HEART, CardNumber.JACK))
+                Card(CardSuite.HEART, CardNumber.JACK)
+            )
         )
 
         val player = Player(TEST_NAME, playerCards)

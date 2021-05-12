@@ -1,6 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Game
+import blackjack.domain.Dealer
+import blackjack.domain.Participant
+import blackjack.domain.PlayerCards
 
 object ResultView {
     private const val NAME_SEPARATOR = ","

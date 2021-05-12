@@ -17,6 +17,10 @@ class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
         return cards.score <= MINIMUM_DEALER_FIRST_SCORE
     }
 
+    fun isWinScore(): Boolean {
+        return cards.score > Game.BLACK_JACK_SCORE
+    }
+
     companion object {
         fun generateDealer(cards: GameCards) = Dealer(cards.pollCardsToFirstDraw())
 

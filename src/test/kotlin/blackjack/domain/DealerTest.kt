@@ -11,7 +11,8 @@ class DealerTest {
         val playerCards = PlayerCards(
             setOf(
                 Card(CardSuite.CLOVER, CardNumber.FIVE),
-                Card(CardSuite.CLOVER, CardNumber.TWO))
+                Card(CardSuite.CLOVER, CardNumber.TWO)
+            )
         )
 
         val dealer = Dealer(playerCards)
