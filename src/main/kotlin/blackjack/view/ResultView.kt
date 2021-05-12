@@ -1,8 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.Game
-import blackjack.domain.PlayerCards
+import blackjack.domain.*
 
 object ResultView {
     private const val NAME_SEPARATOR = ","
@@ -20,6 +18,24 @@ object ResultView {
         game.participants.forEach {
             printResult(it.name, it.cards)
         }
+    }
+
+    fun printGameResultTitle() {
+        println("## 최종 승패")
+    }
+
+    fun printGameResults(dealer: Dealer, game: Game) {
+        printParticipantGameResult(dealer)
+
+        printAllParticipantGameResult(game)
+    }
+
+    private fun printAllParticipantGameResult(game: Game) {
+        game.participants.forEach { printParticipantGameResult(it) }
+    }
+
+    private fun printParticipantGameResult(participant: Participant) {
+        println("${participant.name} : ${participant.result}")
     }
 
     fun printInitNotice(names: List<String>, blackJackCardCount: Int) {
