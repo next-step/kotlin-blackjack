@@ -1,7 +1,10 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.GameCards
 import blackjack.domain.Names
+import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -9,38 +12,58 @@ import blackjack.view.ResultView
 fun main() {
     val names = Names(InputView.playerNames())
 
-    val game = Game(names)
+    val gameCards = GameCards()
+
+    val players = Player.generatePlayers(names, gameCards)
+    val dealer = Dealer.generateDealer(gameCards)
+
+    val game = Game(players, dealer, gameCards)
 
     ResultView.printInitNotice(names, Game.BLACK_JACK_CARD_COUNT)
 
     ResultView.printAllPlayerCards(game)
 
-    playGameWithPlayers(game)
+    playGameWithParticipants(game)
 
     ResultView.printAllResult(game)
+
+    ResultView.printGameResultTitle()
+
+    game.findWinner()
+
+    ResultView.printGameResults(dealer, game)
 }
 
-private fun playGameWithPlayers(game: Game) {
-    game.players.forEach {
+private fun playGameWithParticipants(game: Game) {
+    game.participants.forEach {
         playGame(it, game)
     }
+
+    drawIfSmallerThanMinimum(game.dealer, game)
 }
 
-private fun playGame(it: Player, game: Game) {
-    while (it.isPlaying) {
-        val answer = InputView.askIfPlayerWantToMoreCard(it.name)
+private fun playGame(participant: Participant, game: Game) {
+    while (participant.isPlaying) {
+        val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
 
-        drawOfStopByAnswer(answer, game, it)
+        drawOfStopByAnswer(answer, game, participant)
 
-        ResultView.printPlayerCards(it.name, it.cards)
+        ResultView.printPlayerCards(participant.name, participant.cards)
     }
 }
 
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Player) {
+private fun drawIfSmallerThanMinimum(dealer: Dealer, game: Game) {
+    if (dealer.isSmallerThanMinimumScore()) {
+        ResultView.printReceiveMoreCardOnDealer()
+        game.draw(dealer)
+    }
+}
+
+private fun drawOfStopByAnswer(answer: Boolean, game: Game, participant: Participant) {
     if (answer) {
-        game.draw(it)
+        game.draw(participant)
         return
     }
 
-    it.stop()
+    participant.stop()
 }

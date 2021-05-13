@@ -1,21 +1,52 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Game
+import blackjack.domain.Dealer
+import blackjack.domain.Participant
 import blackjack.domain.PlayerCards
 
 object ResultView {
     private const val NAME_SEPARATOR = ","
 
+    private val Card.fullName: String
+        get() = CardDisplayNumber.retrieveDisplayName(number) + suite.koreanName
+
     fun printAllPlayerCards(game: Game) {
-        game.players.forEach {
+        game.participants.forEach {
             printPlayerCards(it.name, it.cards)
         }
     }
 
     fun printAllResult(game: Game) {
-        game.players.forEach {
+        game.participants.forEach {
             printResult(it.name, it.cards)
         }
+
+        val dealer = game.dealer
+        printResult(dealer.name, dealer.cards)
+    }
+
+    fun printGameResultTitle() {
+        println("## 최종 승패")
+    }
+
+    fun printGameResults(dealer: Dealer, game: Game) {
+        printParticipantGameResult(dealer)
+
+        printAllParticipantGameResult(game)
+    }
+
+    fun printReceiveMoreCardOnDealer() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    private fun printAllParticipantGameResult(game: Game) {
+        game.participants.forEach { printParticipantGameResult(it) }
+    }
+
+    private fun printParticipantGameResult(participant: Participant) {
+        println("${participant.name} : ${participant.result}")
     }
 
     fun printInitNotice(names: List<String>, blackJackCardCount: Int) {
@@ -31,6 +62,7 @@ object ResultView {
     }
 
     private fun explainCards(cards: PlayerCards): String {
-        return cards.joinToString(NAME_SEPARATOR) { "${it.number.displayName}${it.suite.koreanName}" }
+        return cards.joinToString(NAME_SEPARATOR) { it.fullName }
     }
+
 }
