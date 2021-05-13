@@ -54,7 +54,7 @@ private fun playGame(participant: Participant, game: Game) {
 
 private fun drawIfSmallerThanMinimum(dealer: Dealer, game: Game) {
     if (dealer.isSmallerThanMinimumScore()) {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        ResultView.printReceiveMoreCardOnDealer()
         game.draw(dealer)
     }
 }
