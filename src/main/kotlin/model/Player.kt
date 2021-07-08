@@ -1,46 +1,34 @@
 package model
 
-import kotlin.math.abs
+import blackjack.BlackJackGame
+import game.BlackJackWinner
+import view.InputView
+import view.ResultView
 
-class Player(val name: PlayerName) {
-    private val cardMutableList: MutableList<Card> = mutableListOf()
-
+class Player(name: PlayerName) : AbstractPlayer(name, PlayerType.PLAYER) {
     constructor(name: String) : this(PlayerName(name))
-    val cards: List<Card>
-        get() = cardMutableList.toList()
 
-    fun receive(card: Card) = cardMutableList.add(card)
-
-    fun score(): Int {
-        val sum = cards.sumBy { it.denomination.score }
-        return if (isAceBonus(sum)) {
-            sum + ACE_BONUS
-        } else {
-            sum
+    override fun receiveCard(blackJackGame: BlackJackGame) {
+        while (isReceiveCard(InputView.receiveCard(this))) {
+            receive(blackJackGame.dealer.draw())
+            ResultView.printCardCardReceive(this)
         }
     }
 
-    private fun isAceBonus(sum: Int) = hasAce() && sum <= ACE_BONUS_CONDITION
-
-    private fun hasAce(): Boolean {
-        return cards.any { it.denomination.isAce() }
+    override fun firstCardList(): List<Card> {
+        return cards
     }
 
-    fun isOver(): Boolean = score() >= WINNING_POINT
-
-    fun scoreGap(): Int = abs(WINNING_POINT - score())
-
-    fun isReceiveCard(isReceive: Boolean): Boolean {
-        return isReceive && !isOver()
-    }
-
-    fun cardCount(): Int {
-        return cardMutableList.size
-    }
-
-    companion object {
-        const val WINNING_POINT = 21
-        const val ACE_BONUS = 10
-        const val ACE_BONUS_CONDITION = 11
+    override fun compareResult(player: AbstractPlayer): BlackJackWinner {
+        player as DealerPlayer
+        if (player.isOver()) {
+            return BlackJackWinner.WIN
+        } else if (this.score() > player.score()) {
+            return BlackJackWinner.WIN
+        } else if (this.score() == player.score()) {
+            return BlackJackWinner.DRAW
+        } else {
+            return BlackJackWinner.LOSE
+        }
     }
 }

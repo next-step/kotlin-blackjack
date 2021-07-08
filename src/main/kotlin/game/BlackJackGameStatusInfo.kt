@@ -1,6 +1,9 @@
-package model
+package game
 
-class PlayInfo(private val players: List<Player>) {
+import model.AbstractPlayer
+import model.PlayerName
+
+class BlackJackGameStatusInfo(private val players: List<AbstractPlayer>) {
 
     fun playerNames(): List<PlayerName> {
         return players.map { it.name }
