@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
-class Game(val participants: Participants, val dealer: Dealer, private var cards: GameCards = GameCards()) {
+class Game(val participants: Participants, val dealer: Dealer, private val cards: GameCards = GameCards()) {
 
     fun draw(participant: Participant) {
         participant.throwExceptionIfIsNotPlayingState()
