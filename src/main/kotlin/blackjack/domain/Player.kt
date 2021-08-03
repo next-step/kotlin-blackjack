@@ -7,9 +7,9 @@ class Player : Participant {
 
     override fun findStateByScore(score: Int): States {
         return when {
-            score < Game.BLACK_JACK_SCORE -> { States.HIT }
-            score > Game.BLACK_JACK_SCORE -> { States.BUST }
-            else -> { States.STAY }
+            score < Game.BLACK_JACK_SCORE -> States.HIT
+            score > Game.BLACK_JACK_SCORE -> States.BUST
+            else -> States.STAY
         }
     }
 

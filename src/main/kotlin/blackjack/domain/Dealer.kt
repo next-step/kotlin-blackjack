@@ -6,10 +6,10 @@ class Dealer(cards: PlayerCards) : Participant(DEALER_NAME, cards) {
 
     override fun findStateByScore(score: Int): States {
         return when {
-            score < Game.BLACK_JACK_SCORE -> { States.HIT }
-            score < Game.BLACK_JACK_SCORE -> { States.HIT }
-            score >= Game.BLACK_JACK_SCORE -> { States.WIN }
-            else -> { States.STAY }
+            score < Game.BLACK_JACK_SCORE -> States.HIT
+            score < Game.BLACK_JACK_SCORE -> States.HIT
+            score >= Game.BLACK_JACK_SCORE -> States.WIN
+            else -> States.STAY
         }
     }
 
