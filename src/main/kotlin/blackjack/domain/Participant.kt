@@ -20,9 +20,7 @@ abstract class Participant(val name: String, cards: PlayerCards) {
     var result: States = States.LOSE
 
     val isPlaying: Boolean
-        get() {
-            return state == States.HIT
-        }
+        get() = state == States.HIT
 
     init {
         if (cards.score == Game.BLACK_JACK_SCORE) {
