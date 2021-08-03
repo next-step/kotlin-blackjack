@@ -28,7 +28,7 @@ fun main() {
 
     ResultView.printGameResultTitle()
 
-    game.findWinner()
+    game.assignWinner()
 
     ResultView.printGameResults(dealer, game)
 }

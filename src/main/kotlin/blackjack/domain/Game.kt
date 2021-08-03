@@ -12,7 +12,7 @@ class Game(val participants: Participants, val dealer: Dealer, private var cards
         participant.draw(card)
     }
 
-    fun findWinner() {
+    fun assignWinner() {
         if (dealer.isWinScore()) {
             return
         }
