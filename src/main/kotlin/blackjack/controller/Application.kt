@@ -46,7 +46,7 @@ private fun playGame(participant: Participant, game: Game) {
     while (participant.isPlaying) {
         val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
 
-        drawOfStopByAnswer(answer, game, participant)
+        drawOrStopByAnswer(answer, game, participant)
 
         ResultView.printPlayerCards(participant.name, participant.cards)
     }
@@ -59,7 +59,7 @@ private fun drawIfSmallerThanMinimum(dealer: Dealer, game: Game) {
     }
 }
 
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, participant: Participant) {
+private fun drawOrStopByAnswer(answer: Boolean, game: Game, participant: Participant) {
     if (answer) {
         game.draw(participant)
         return
