@@ -28,6 +28,10 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
         return score
     }
 
+    fun isSameScore(cards: PlayerCards) : Boolean {
+        return score == cards.score
+    }
+
     companion object {
         private const val SUBTRACT_FIRST_AND_SECONDARY_ACE_SCORE = 10
     }
