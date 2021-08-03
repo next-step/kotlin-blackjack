@@ -10,9 +10,9 @@ object InputView {
 
     fun askIfPlayerWantToMoreCard(name: String): Boolean {
         return when (question("$name 는 한장의 카드를 더 받겠습니까?(예는 $CONTINUE, 아니요는 $BREAK)").toLowerCase()) {
-            CONTINUE -> { true }
-            BREAK -> { false }
-            else -> throw IllegalArgumentException("잘못된 입력값입니다.")
+            CONTINUE -> true
+            BREAK -> false
+            else -> throw IllegalArgumentException("잘못된 입력값입니다. : $this")
         }
     }
 
