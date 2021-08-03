@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import java.lang.IllegalArgumentException
-
 class Game(val participants: Participants, val dealer: Dealer, private var cards: GameCards = GameCards()) {
 
     fun draw(participant: Participant) {
