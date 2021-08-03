@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.view.InputView
+import blackjack.view.ResultView
+
 class Game(val participants: Participants, val dealer: Dealer, private var cards: GameCards = GameCards()) {
 
     fun draw(participant: Participant) {
@@ -14,16 +17,46 @@ class Game(val participants: Participants, val dealer: Dealer, private var cards
             return
         }
 
-        val winner = findWinnerScore()
-        makeWinners(winner)
+        val winner = participants.findWinnerScore()
+        participants.makeWinners(winner)
     }
 
-    private fun findWinnerScore(): Participant {
-        return participants.minBy { it.calculateToFindWinner() } ?: throw IllegalArgumentException("무승부입니다.")
+    fun playGameWithParticipants() {
+        playGames()
+
+        drawIfSmallerThanMinimum()
     }
 
-    private fun makeWinners(winner: Participant) {
-        participants.filter { it.retrieveScore() == winner.retrieveScore() }.forEach { it.win() }
+    private fun playGames() {
+        participants.forEach {
+            playGame(it)
+        }
+    }
+
+    private fun playGame(participant: Participant) {
+        while (participant.isPlaying) {
+            val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
+
+            drawOrStopByAnswer(participant, answer)
+
+            ResultView.printPlayerCards(participant.name, participant.cards)
+        }
+    }
+
+    private fun drawOrStopByAnswer(participant: Participant, answer: Boolean) {
+        if (answer) {
+            draw(participant)
+            return
+        }
+
+        participant.stop()
+    }
+
+    private fun drawIfSmallerThanMinimum() {
+        if (dealer.isSmallerThanMinimumScore()) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            draw(dealer)
+        }
     }
 
     companion object {
