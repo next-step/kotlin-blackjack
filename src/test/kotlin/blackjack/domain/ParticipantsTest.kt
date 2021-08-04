@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.fixture.PlayFixture.TEST_NAME
 import blackjack.fixture.PlayFixture.TEST_SECOND_NAME
-import blackjack.view.CardSuite
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

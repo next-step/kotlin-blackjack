@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.view.CardSuite
-
 data class Card(val suite: CardSuite, val number: CardNumber) {
 
     companion object {

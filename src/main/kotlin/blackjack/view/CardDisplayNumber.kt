@@ -18,6 +18,4 @@ object CardDisplayNumber {
 
             return this.value.toChar()
         }
-
-
 }
