@@ -32,5 +32,3 @@ fun main() {
 
     ResultView.printGameResults(dealer, game)
 }
-
-

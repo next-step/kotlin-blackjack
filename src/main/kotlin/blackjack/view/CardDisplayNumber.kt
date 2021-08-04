@@ -12,7 +12,7 @@ object CardDisplayNumber {
                 return ACE_DISPLAY_NAME
             }
 
-            if (this == CardNumber.JACK || this ==  CardNumber.QUEEN || this == CardNumber.KING) {
+            if (this == CardNumber.JACK || this == CardNumber.QUEEN || this == CardNumber.KING) {
                 return this.name[INDEX_OF_DISPLAY_NAME]
             }
 

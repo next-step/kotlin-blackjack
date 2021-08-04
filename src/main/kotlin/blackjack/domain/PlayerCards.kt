@@ -28,7 +28,7 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
         return score
     }
 
-    fun isSameScore(cards: PlayerCards) : Boolean {
+    fun isSameScore(cards: PlayerCards): Boolean {
         return score == cards.score
     }
 

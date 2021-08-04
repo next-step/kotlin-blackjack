@@ -54,7 +54,7 @@ abstract class Participant(val name: String, cards: PlayerCards) {
         return abs(Game.BLACK_JACK_SCORE - cards.score)
     }
 
-    fun isSameScore(player : Participant) : Boolean {
+    fun isSameScore(player: Participant): Boolean {
         return cards.isSameScore(player.cards)
     }
 }
