@@ -53,7 +53,7 @@ class Game(val participants: Participants, val dealer: Dealer, private val cards
     }
 
     private fun drawIfSmallerThanMinimum() {
-        if (dealer.isSmallerThanMinimumScore()) {
+        while (dealer.isSmallerThanMinimumScore()) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             draw(dealer)
         }
