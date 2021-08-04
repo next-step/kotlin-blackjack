@@ -5,12 +5,15 @@ import blackjack.domain.Game
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.PlayerCards
+import blackjack.view.CardDisplayNumber.displayName
 
 object ResultView {
     private const val NAME_SEPARATOR = ","
 
     private val Card.fullName: String
-        get() = CardDisplayNumber.retrieveDisplayName(number) + suite.koreanName
+        get() {
+            return number.displayName + suite.koreanName
+        }
 
     fun printAllPlayerCards(game: Game) {
         game.participants.forEach {
