@@ -6,8 +6,6 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
             return calculateScore()
         }
 
-    constructor(vararg cards: Card) : this(cards.toSet())
-
     fun addCard(card: Card): PlayerCards {
         return PlayerCards(cards + card)
     }
@@ -28,6 +26,10 @@ class PlayerCards(private val cards: Set<Card>) : Set<Card> by cards {
         }
 
         return score
+    }
+
+    fun isSameScore(cards: PlayerCards): Boolean {
+        return score == cards.score
     }
 
     companion object {

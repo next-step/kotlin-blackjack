@@ -1,6 +1,8 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.GameCards
 import blackjack.domain.Names
 import blackjack.domain.Player
 import blackjack.view.InputView
@@ -9,38 +11,24 @@ import blackjack.view.ResultView
 fun main() {
     val names = Names(InputView.playerNames())
 
-    val game = Game(names)
+    val gameCards = GameCards()
+
+    val players = Player.generatePlayers(names, gameCards)
+    val dealer = Dealer.generateDealer(gameCards)
+
+    val game = Game(players, dealer, gameCards)
 
     ResultView.printInitNotice(names, Game.BLACK_JACK_CARD_COUNT)
 
     ResultView.printAllPlayerCards(game)
 
-    playGameWithPlayers(game)
+    game.playGameWithParticipants()
 
     ResultView.printAllResult(game)
-}
 
-private fun playGameWithPlayers(game: Game) {
-    game.players.forEach {
-        playGame(it, game)
-    }
-}
+    ResultView.printGameResultTitle()
 
-private fun playGame(it: Player, game: Game) {
-    while (it.isPlaying) {
-        val answer = InputView.askIfPlayerWantToMoreCard(it.name)
+    game.assignWinner()
 
-        drawOfStopByAnswer(answer, game, it)
-
-        ResultView.printPlayerCards(it.name, it.cards)
-    }
-}
-
-private fun drawOfStopByAnswer(answer: Boolean, game: Game, it: Player) {
-    if (answer) {
-        game.draw(it)
-        return
-    }
-
-    it.stop()
+    ResultView.printGameResults(dealer, game)
 }

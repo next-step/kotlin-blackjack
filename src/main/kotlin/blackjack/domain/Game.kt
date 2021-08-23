@@ -1,34 +1,67 @@
 package blackjack.domain
 
-class Game(names: Names, private var cards: GameCards = GameCards()) {
-    val players: Players = Players(generatePlayer(names))
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
-    val state: GameStates
-        get() {
-            if (isEndState) {
-                return GameStates.END
-            }
-            return GameStates.PLAYING
-        }
+class Game(val participants: Participants, val dealer: Dealer, private val cards: GameCards = GameCards()) {
 
-    private val isEndState
-        get() = players.countOfPlayingState == NO_PLAYING_COUNT
-
-    fun draw(target: Player) {
-        target.throwExceptionIfIsNotPlayingState()
+    fun draw(participant: Participant) {
+        participant.throwExceptionIfIsNotPlayingState()
 
         val card = cards.poll()
-        target.draw(card)
+        participant.draw(card)
     }
 
-    private fun generatePlayer(names: Names) = names.map {
-        Player(it, (START_INDEX..BLACK_JACK_CARD_COUNT).map { cards.poll() }.toSet())
-    }.toSet()
+    fun assignWinner() {
+        if (dealer.isWinScore()) {
+            return
+        }
+
+        val winner = participants.findWinnerScore()
+        participants.makeWinners(winner)
+    }
+
+    fun playGameWithParticipants() {
+        playGames()
+
+        drawIfSmallerThanMinimum()
+    }
+
+    private fun playGames() {
+        participants.forEach {
+            playGame(it)
+        }
+    }
+
+    private fun playGame(participant: Participant) {
+        while (participant.isPlaying) {
+            val answer = InputView.askIfPlayerWantToMoreCard(participant.name)
+
+            drawOrStopByAnswer(participant, answer)
+
+            ResultView.printPlayerCards(participant.name, participant.cards)
+        }
+    }
+
+    private fun drawOrStopByAnswer(participant: Participant, answer: Boolean) {
+        if (answer) {
+            draw(participant)
+            return
+        }
+
+        participant.stop()
+    }
+
+    private fun drawIfSmallerThanMinimum() {
+        while (dealer.isSmallerThanMinimumScore()) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            draw(dealer)
+        }
+    }
 
     companion object {
         const val BLACK_JACK_SCORE = 21
         const val BLACK_JACK_CARD_COUNT = 2
         const val START_INDEX = 1
-        private const val NO_PLAYING_COUNT = 0
     }
 }

@@ -9,15 +9,13 @@ object InputView {
     }
 
     fun askIfPlayerWantToMoreCard(name: String): Boolean {
-        val answer = question("$name 는 한장의 카드를 더 받겠습니까?(예는 $CONTINUE, 아니요는 $BREAK)").toLowerCase()
+        val answer = question("$name 는 한장의 카드를 더 받겠습니까?(예는 $CONTINUE, 아니요는 $BREAK)")
 
-        if (answer == CONTINUE) {
-            return true
-        } else if (answer == BREAK) {
-            return false
+        return when (answer.toLowerCase()) {
+            CONTINUE -> true
+            BREAK -> false
+            else -> throw IllegalArgumentException("잘못된 입력값입니다. : $answer")
         }
-
-        throw IllegalArgumentException("잘못된 입력값입니다.")
     }
 
     private tailrec fun question(question: String): String {
