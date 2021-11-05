@@ -22,8 +22,8 @@ internal class KotlinDslTest {
 
         assertThat(person.name).isEqualTo("ninjasul")
         assertThat(person.company).isEqualTo("KakaoPay")
-        assertThat(person.skills.items).containsExactlyInAnyOrder(Soft("communication"), Hard("kotlin"))
-        assertThat(person.languages.items).containsExactlyInAnyOrder(Language("Korean", 5), Language("English", 3))
+        assertThat(person.skills.items).containsExactly(Soft("communication"), Hard("kotlin"))
+        assertThat(person.languages.items).containsExactly(Language("Korean", 5), Language("English", 3))
     }
 
     @Test
@@ -33,7 +33,7 @@ internal class KotlinDslTest {
             hard("kotlin")
         }
 
-        assertThat(skills.items).containsExactlyInAnyOrder(Soft("communication"), Hard("kotlin"))
+        assertThat(skills.items).containsExactly(Soft("communication"), Hard("kotlin"))
     }
 
     @Test
@@ -42,6 +42,6 @@ internal class KotlinDslTest {
             "Korean" level 5
             "English" level 3
         }
-        assertThat(languages.items).containsExactlyInAnyOrder(Language("Korean", 5), Language("English", 3))
+        assertThat(languages.items).containsExactly(Language("Korean", 5), Language("English", 3))
     }
 }
