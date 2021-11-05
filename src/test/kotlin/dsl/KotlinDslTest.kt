@@ -42,6 +42,7 @@ internal class KotlinDslTest {
             "Korean" level 5
             "English" level 3
         }
+
         assertThat(languages.items).containsExactly(Language("Korean", 5), Language("English", 3))
     }
 }
