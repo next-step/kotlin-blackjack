@@ -23,7 +23,7 @@ internal class CardTest {
     @Test
     fun `CardNumber가 ACE인 Card 객체에 대해 isAceCard() 메소드를 호출하면 false를 리턴한다`() {
         val cardSymbols = CardSymbol.values().toList()
-        val cardNumbers = CardNumber.values().filter { it !=  CardNumber.ACE }.toList()
+        val cardNumbers = CardNumber.values().filter { it != CardNumber.ACE }.toList()
 
         for (cardSymbol in cardSymbols) {
             for (cardNumber in cardNumbers) {
@@ -38,7 +38,7 @@ internal class CardTest {
     @Test
     fun `CardNumber가 ACE인 Card 객체에 대해 isAceCard() 메소드를 호출하면 true를 리턴한다`() {
         val cardSymbols = CardSymbol.values().toList()
-        val cardNumbers = CardNumber.values().filter { it ==  CardNumber.ACE }.toList()
+        val cardNumbers = CardNumber.values().filter { it == CardNumber.ACE }.toList()
 
         for (cardSymbol in cardSymbols) {
             for (cardNumber in cardNumbers) {

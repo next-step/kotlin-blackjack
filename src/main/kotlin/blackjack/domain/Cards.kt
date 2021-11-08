@@ -63,8 +63,8 @@ class Cards {
     private fun isMaximumCardValuesMoreProperResult(
         sumOfMinimumCardValues: Int,
         sumOfMaximumCardValues: Int
-    ) = abs(MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMinimumCardValues) >
-            abs(MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMaximumCardValues)
+    ) =
+        abs(MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMinimumCardValues) > abs(MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMaximumCardValues)
 
     companion object {
         private const val MAXIMUM_SUM_OF_CARD_NUMBERS = 21

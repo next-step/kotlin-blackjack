@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 
 internal class CardNumberTest {
     @ParameterizedTest
-    @ValueSource(strings = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10",])
+    @ValueSource(strings = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
     fun `J, Q, K 외 문자열을 isRoyaFamily() 메소드의 인자로 입력하면 false를 리턴한다`(text: String) {
         assertThat(CardNumber.isRoyalFamily(text)).isFalse
     }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import java.util.*
+import java.util.Stack
 
 data class CardDeck(val cards: Stack<Card>) {
     fun getNextCard(): Card {
