@@ -7,6 +7,10 @@ data class Player(val name: String) {
         require(name.isNotBlank()) { WRONG_PLAYER_NAME_MESSAGE }
     }
 
+    fun getCards(): List<Card> {
+        return cards.cards.toList()
+    }
+
     fun receiveCard(card: Card) {
         cards.add(card)
     }
