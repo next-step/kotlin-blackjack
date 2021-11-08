@@ -1,18 +1,18 @@
 package blackjack.domain
 
-enum class Symbol(val score: Int) {
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10),
+enum class Symbol(val score: Score) {
+    ACE(Score(1)),
+    TWO(Score(2)),
+    THREE(Score(3)),
+    FOUR(Score(4)),
+    FIVE(Score(5)),
+    SIX(Score(6)),
+    SEVEN(Score(7)),
+    EIGHT(Score(8)),
+    NINE(Score(9)),
+    TEN(Score(10)),
+    JACK(Score(10)),
+    QUEEN(Score(10)),
+    KING(Score(10)),
     ;
 }
