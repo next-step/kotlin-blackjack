@@ -1,13 +1,35 @@
 package blackjack.view.result
 
+import blackjack.domain.Dealer.Companion.BASIC_CARD_NUMBER
+import blackjack.domain.Player
 import blackjack.domain.Players
 
 class ConsoleResultView : ResultView {
-    override fun showCardsDelivered(players: Players) {
-        println(getPlayerNames(players) + "에게 2장의 카드를 나누었습니다.")
+    override fun showDeliveredBasicCards(players: Players) {
+        println("%s에게 ${BASIC_CARD_NUMBER}장의 카드를 나누었습니다.".format(players.getNames()))
+        players.players.forEach {
+            showPlayerCards(it)
+            println()
+        }
+        println()
     }
 
-    private fun getPlayerNames(players: Players): String {
-        return players.players.joinToString { it.name }
+    override fun showPlayerCards(player: Player, shouldPrintNewLineCharacter: Boolean) {
+        print("%s카드: %s".format(player.name, player.getCardsString()))
+
+        if (shouldPrintNewLineCharacter) {
+            println()
+        }
+    }
+
+    override fun showPlayerResults(players: Players) {
+        players.players.forEach {
+            showPlayerCards(it)
+            showPlayerResult(it)
+        }
+    }
+
+    private fun showPlayerResult(player: Player) {
+        println(" - 결과 ${player.getResult()}")
     }
 }
