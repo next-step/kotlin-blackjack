@@ -7,17 +7,14 @@ class ResumeTest {
 
     @Test
     fun name() {
-        val person = introduce {
-            name("김범준")
-        }
+        val person = introduce("김범준")
 
         assertThat(person.name).isEqualTo("김범준")
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("김범준")
+        val person = introduce("김범준") {
             company("Kakao")
         }
 
@@ -27,8 +24,7 @@ class ResumeTest {
 
     @Test
     fun skills() {
-        val person = introduce {
-            name("김범준")
+        val person = introduce("김범준") {
             company("Kakao")
             skills {
                 soft("love kotlin")
@@ -45,8 +41,7 @@ class ResumeTest {
 
     @Test
     fun languages() {
-        val person = introduce {
-            name("김범준")
+        val person = introduce("김범준") {
             company("Kakao")
             skills {
                 soft("love kotlin")
@@ -69,6 +64,6 @@ class ResumeTest {
     }
 }
 
-fun introduce(dsl: PersonDsl.() -> Unit): Person {
-    return PersonDsl().apply(dsl).toPerson()
+fun introduce(name: String, dsl: PersonDsl.() -> Unit = {}): Person {
+    return PersonDsl(name).apply(dsl).toPerson()
 }

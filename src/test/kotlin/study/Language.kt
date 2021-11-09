@@ -8,6 +8,7 @@ class Languages(languages: List<Language>) : List<Language> by languages {
 }
 
 class LanguagesDsl {
+
     private var languages: MutableList<Language> = mutableListOf()
 
     infix fun String.level(score: Int) {

@@ -2,16 +2,11 @@ package study
 
 data class Person(val name: String, val company: String?, val skills: Skills, val languages: Languages)
 
-class PersonDsl {
+class PersonDsl(private val name: String) {
 
-    private lateinit var name: String
     private var company: String? = null
     private var skills: Skills = Skills.empty()
     private var languages: Languages = Languages.empty()
-
-    fun name(name: String) {
-        this.name = name
-    }
 
     fun company(company: String) {
         this.company = company
