@@ -1,4 +1,4 @@
-package dsl
+package dsl.person
 
 import dsl.languages.Languages
 import dsl.skills.Skills
