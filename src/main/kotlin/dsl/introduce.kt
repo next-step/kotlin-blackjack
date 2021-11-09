@@ -1,7 +1,5 @@
 package dsl
 
-fun introduce(init: Person.() -> Unit): Person {
-    return Person().apply {
-        init()
-    }
+fun introduce(init: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder().apply(init).build()
 }

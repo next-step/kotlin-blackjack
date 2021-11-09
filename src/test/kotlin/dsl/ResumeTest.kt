@@ -37,7 +37,7 @@ class ResumeTest {
             }
         }
 
-        assertThat(person.skills.skills).contains(Soft("A passion for problem solving"))
+        assertThat(person.skills).contains(Soft("A passion for problem solving"))
     }
 
     @Test
