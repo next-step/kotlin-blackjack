@@ -21,17 +21,17 @@ class ResumeTest {
     fun company() {
         val person = introduce {
             name("이소현")
-            company("이소현")
+            company("여기어때")
         }
 
-        assertThat(person.company).isEqualTo("이소현")
+        assertThat(person.company).isEqualTo("여기어때")
     }
 
     @Test
     fun soft_skills() {
         val person = introduce {
             name("이소현")
-            company("이소현")
+            company("여기어때")
             skills {
                 soft("A passion for problem solving")
             }
@@ -44,7 +44,7 @@ class ResumeTest {
     fun hard_skills() {
         val person = introduce {
             name("이소현")
-            company("이소현")
+            company("여기어때")
             skills {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
@@ -59,7 +59,7 @@ class ResumeTest {
     fun language() {
         val person = introduce {
             name("이소현")
-            company("이소현")
+            company("여기어때")
             skills {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
@@ -67,7 +67,7 @@ class ResumeTest {
             }
             languages {
                 "Korean" level 5
-                "English" level 3
+                "English" level 2
             }
         }
 
