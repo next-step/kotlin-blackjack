@@ -32,18 +32,42 @@ class ResumeTest {
         }
         assertThat(person.skills).contains(Hard("Kotlin"))
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("정상훈")
+            company("마드라스체크")
+            skills {
+                soft ("A passion for problem solving")
+                soft ("Good communication skills")
+                hard ("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        assertThat(person.languages).contains(Pair("Korean", 5))
+    }
 }
 
 private fun introduce(initializer: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(initializer).build()
 }
 
-data class Person(val name:String, val company:String, val skills: Skills)
+data class Person(
+    val name: String,
+    val company: String,
+    val skills: Skills,
+    val languages: Languages
+)
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String = ""
     private var company: String = ""
     private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
 
     fun name(name: String) {
         this.name = name
@@ -57,10 +81,18 @@ class PersonBuilder {
         skills = Skills().apply(initializer)
     }
 
-    fun build() = Person(name, company, skills)
+    fun languages(initializer: Languages.() -> Unit) {
+        languages = Languages().apply(initializer)
+    }
+
+    fun build() = Person(name, company, skills, languages)
 }
 
-class Skills(val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
+class Languages(private val languages: MutableList<Pair<String, Int>> = mutableListOf()) : List<Pair<String, Int>> by languages {
+    infix fun String.level(other: Int) = languages.add(Pair(this, other))
+}
+
+class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
 
     fun soft(name: String) {
         skills.add(Soft(name))
@@ -68,13 +100,6 @@ class Skills(val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by 
 
     fun hard(name: String) {
         skills.add(Hard(name))
-    }
-
-    fun sealed(skill: Skill) {
-        when(skill) {
-            is Hard -> ""
-            is Soft -> ""
-        }
     }
 }
 
