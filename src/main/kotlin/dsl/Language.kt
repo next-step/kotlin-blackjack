@@ -5,8 +5,8 @@ enum class Language(private val language: String) {
     ENGLISH("English");
 
     companion object {
-        fun values(language: String): Language =
-            values().find { it.language == language }
-                ?: throw IllegalArgumentException()
+        fun values(language: String): Language = values().find {
+            it.language == language
+        } ?: throw IllegalArgumentException()
     }
 }

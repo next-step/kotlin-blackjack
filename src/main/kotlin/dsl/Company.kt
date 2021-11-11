@@ -1,9 +1,3 @@
 package dsl
 
-class Company(val value: String) {
-    init {
-        if (value.isNullOrBlank()) {
-            throw IllegalArgumentException()
-        }
-    }
-}
+data class Company(val value: String)

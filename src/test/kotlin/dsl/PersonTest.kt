@@ -1,5 +1,6 @@
 package dsl
 
+import dsl.PersonBuilder.Companion.introduce
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -20,7 +21,7 @@ class PersonTest {
             company("우아한형제들")
         }
         Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company.value).isEqualTo("우아한형제들")
+        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
     }
 
     @Test
@@ -35,7 +36,7 @@ class PersonTest {
             }
         }
         Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company.value).isEqualTo("우아한형제들")
+        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
         Assertions.assertThat(person.skills.values).contains(
             Soft("A passion for problem solving"),
             Soft("Good communication skills"),
@@ -59,7 +60,7 @@ class PersonTest {
             }
         }
         Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company.value).isEqualTo("우아한형제들")
+        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
         Assertions.assertThat(person.skills.values).contains(
             Soft("A passion for problem solving"),
             Soft("Good communication skills"),
