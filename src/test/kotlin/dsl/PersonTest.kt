@@ -1,8 +1,9 @@
 package dsl
 
 import dsl.PersonBuilder.Companion.introduce
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PersonTest {
 
@@ -11,7 +12,7 @@ class PersonTest {
         val person: Person = introduce {
             name("김우재")
         }
-        Assertions.assertThat(person.name.value).isEqualTo("김우재")
+        assertThat(person.name.value).isEqualTo("김우재")
     }
 
     @Test
@@ -20,8 +21,10 @@ class PersonTest {
             name("김우재")
             company("우아한형제들")
         }
-        Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
+        assertAll(
+            { assertThat(person.name.value).isEqualTo("김우재") },
+            { assertThat(person.company!!.value).isEqualTo("우아한형제들") },
+        )
     }
 
     @Test
@@ -35,12 +38,16 @@ class PersonTest {
                 hard("Kotlin")
             }
         }
-        Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
-        Assertions.assertThat(person.skills.values).contains(
-            Soft("A passion for problem solving"),
-            Soft("Good communication skills"),
-            Hard("Kotlin")
+        assertAll(
+            { assertThat(person.name.value).isEqualTo("김우재") },
+            { assertThat(person.company!!.value).isEqualTo("우아한형제들") },
+            {
+                assertThat(person.skills.values).contains(
+                    Soft("A passion for problem solving"),
+                    Soft("Good communication skills"),
+                    Hard("Kotlin")
+                )
+            },
         )
     }
 
@@ -59,17 +66,23 @@ class PersonTest {
                 "English" level 3
             }
         }
-        Assertions.assertThat(person.name.value).isEqualTo("김우재")
-        Assertions.assertThat(person.company!!.value).isEqualTo("우아한형제들")
-        Assertions.assertThat(person.skills.values).contains(
-            Soft("A passion for problem solving"),
-            Soft("Good communication skills"),
-            Hard("Kotlin")
+        assertAll(
+            { assertThat(person.name.value).isEqualTo("김우재") },
+            { assertThat(person.company!!.value).isEqualTo("우아한형제들") },
+            {
+                assertThat(person.skills.values).contains(
+                    Soft("A passion for problem solving"),
+                    Soft("Good communication skills"),
+                    Hard("Kotlin")
+                )
+            },
+            {
+                assertThat(person.languages.languages)
+                    .containsKeys(
+                        Language.KOREAN,
+                        Language.ENGLISH,
+                    )
+            }
         )
-        Assertions.assertThat(person.languages.languages)
-            .containsKeys(
-                Language.KOREAN,
-                Language.ENGLISH,
-            )
     }
 }
