@@ -16,8 +16,8 @@ internal class CardNumberValueTest {
 
     @ParameterizedTest
     @EmptySource
-    @ValueSource(strings = ["0", "11"])
-    fun `getValue() 메소드 호출 시 text인자로 "0", "11", 빈문자열을 입력하면 IlleagalArgumentException이 발생한다`(text: String) {
+    @ValueSource(strings = ["0", "12"])
+    fun `getValue() 메소드 호출 시 text인자로 "0", "12", 빈문자열을 입력하면 IlleagalArgumentException이 발생한다`(text: String) {
         assertThrows<IllegalArgumentException> { CardNumberValue.getValue(text) }
     }
 

@@ -8,37 +8,36 @@ value class CardNumberValue(val value: Int) {
     companion object {
         private const val MINIMUM_CARD_VALUE = 1
         private const val MAXIMUM_CARD_VALUE = 11
+        private const val ACE_DEFAULT_VALUE = 1
+        private const val ROYAL_FAMILY_VALUE = 10
         private const val WRONG_CARD_VALUE_MESSAGE = "잘못된 카드 값입니다.($MINIMUM_CARD_VALUE~$MAXIMUM_CARD_VALUE 입력})"
 
-        private val numberPool = IntRange(MINIMUM_CARD_VALUE, MAXIMUM_CARD_VALUE)
-            .map { CardNumberValue(it) }
-            .toList()
+        private val numberPool = (MINIMUM_CARD_VALUE..MAXIMUM_CARD_VALUE)
+            .associateWith { CardNumberValue(it) }
 
-        private operator fun get(index: Int): CardNumberValue {
-            require(index in MINIMUM_CARD_VALUE..MAXIMUM_CARD_VALUE) { WRONG_CARD_VALUE_MESSAGE }
-            return numberPool[index - 1]
+        operator fun get(value: Int): CardNumberValue {
+            require(value in MINIMUM_CARD_VALUE..MAXIMUM_CARD_VALUE) { WRONG_CARD_VALUE_MESSAGE }
+            return numberPool[value]!!
         }
 
-        fun getValue(text: String, chooseExtraValue: Boolean = false): CardNumberValue {
-            if (CardNumber.isAce(text)) {
-                return getAceCardNumber(chooseExtraValue)
+        fun getValue(rank: String, chooseLargerValue: Boolean = false): CardNumberValue {
+            if (CardNumber.isAce(rank)) {
+                return getAceValue(chooseLargerValue)
             }
 
-            if (CardNumber.isRoyalFamily(text)) {
-                return numberPool[9]
+            if (CardNumber.isRoyalFamily(rank)) {
+                return numberPool[ROYAL_FAMILY_VALUE]!!
             }
 
-            val value = text.toIntOrNull()
-            require(value != null && value in MINIMUM_CARD_VALUE until MAXIMUM_CARD_VALUE) { WRONG_CARD_VALUE_MESSAGE }
-            return numberPool[value - 1]
+            return CardNumberValue[rank.toInt()]
         }
 
-        private fun getAceCardNumber(chooseExtraValue: Boolean): CardNumberValue {
-            if (chooseExtraValue) {
-                return numberPool[10]
+        private fun getAceValue(chooseLargerValue: Boolean): CardNumberValue {
+            if (chooseLargerValue) {
+                return numberPool[MAXIMUM_CARD_VALUE]!!
             }
 
-            return numberPool[0]
+            return numberPool[ACE_DEFAULT_VALUE]!!
         }
     }
 }
