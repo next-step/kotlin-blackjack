@@ -3,6 +3,7 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.EnumSource
 
 class CardDeckTest {
@@ -27,5 +28,15 @@ class CardDeckTest {
         cardDeck.drawOne()
 
         assertThat(cardDeck.cards.size).isEqualTo(51)
+    }
+
+    @ParameterizedTest
+    @CsvSource("1,51", "10,42", "52,0")
+    fun `덱에서 카드 여러장을 뽑을 수 있다`(drawCount: Int, expectedRemainingCount: Int) {
+        val cardDeck = CardDeck()
+        val cards = cardDeck.drawMany(drawCount = drawCount)
+        println(cards)
+        assertThat(cards.size).isEqualTo(drawCount)
+        assertThat(cardDeck.cards.size).isEqualTo(expectedRemainingCount)
     }
 }

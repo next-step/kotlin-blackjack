@@ -9,6 +9,10 @@ class CardDeck {
         return _cards.removeLast()
     }
 
+    fun drawMany(drawCount: Int): List<Card> {
+        return (1..drawCount).map { _cards.removeLast() }
+    }
+
     private fun setupCards(): MutableList<Card> {
         val cards = CardSymbol.values().flatMap { symbol ->
             CardNumber.NUMBER_RANGE.map { Card(symbol, CardNumber(it)) }
