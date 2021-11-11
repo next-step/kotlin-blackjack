@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class CardTest {
 
     @Test
-    fun `Card 객체를 생성하고 toString() 메소드의 결과값을 테스트`() {
+    fun `Card 객체를 생성하고 toString() 메소드의 결과값을 확인`() {
         val cardSymbols = CardSymbol.values().toList()
         val cardNumbers = CardNumber.values().toList()
 
@@ -16,21 +16,6 @@ internal class CardTest {
 
                 assertThat(card).isNotNull
                 assertThat(card.toString()).isEqualTo(cardNumber.rank + cardSymbol.koreanName)
-            }
-        }
-    }
-
-    @Test
-    fun `CardNumber가 ACE인 Card 객체에 대해 isAceCard() 메소드를 호출하면 false를 리턴한다`() {
-        val cardSymbols = CardSymbol.values().toList()
-        val cardNumbers = CardNumber.values().filter { it != CardNumber.ACE }.toList()
-
-        for (cardSymbol in cardSymbols) {
-            for (cardNumber in cardNumbers) {
-                val card = Card(cardSymbol, cardNumber)
-
-                assertThat(card).isNotNull
-                assertThat(card.hasAce()).isEqualTo(false)
             }
         }
     }

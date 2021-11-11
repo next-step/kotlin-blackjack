@@ -15,16 +15,6 @@ internal class CardsTest {
     }
 
     @Test
-    fun `add() 메소드를 두번 호출하면 cards에 카드 두장이 들어있다`() {
-        val cards = Cards()
-        cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
-        cards.add(Card(CardSymbol.HEART, CardNumber.TWO))
-
-        assertThat(cards).isNotNull
-        assertThat(cards.cards.size).isEqualTo(2)
-    }
-
-    @Test
     fun `CardNumber 로 JACK 한장, ACE 한장을 가지고 있는 cards에 대해 canReceiveAdditionalCard() 메소드를 호출하면 true를 리턴한다`() {
         val cards = Cards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.JACK))
@@ -43,6 +33,15 @@ internal class CardsTest {
     }
 
     @Test
+    fun `CardNumber 로 ACE 한장, 9 한장을 가지고 있는 cards에 대해 canReceiveAdditionalCard() 메소드를 호출하면 true를 리턴한다`() {
+        val cards = Cards()
+        cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
+        cards.add(Card(CardSymbol.HEART, CardNumber.NINE))
+
+        assertThat(cards.canReceiveAdditionalCard()).isTrue
+    }
+
+    @Test
     fun `CardNumber 로 QUEEN 한장, KING 한장, TWO 한장을 가지고 있는 cards에 대해 canReceiveAdditionalCard() 메소드를 호출하면 false를 리턴한다`() {
         val cards = Cards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.QUEEN))
@@ -50,16 +49,6 @@ internal class CardsTest {
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.TWO))
 
         assertThat(cards.canReceiveAdditionalCard()).isFalse
-    }
-
-    @Test
-    fun `CardNumber 로 THREE 한장, FIVE 한장, SEVEN 한장을 가지고 있는 cards에 대해 getResult() 메소드를 호출하면 15를 리턴한다`() {
-        val cards = Cards()
-        cards.add(Card(CardSymbol.SPADE, CardNumber.THREE))
-        cards.add(Card(CardSymbol.HEART, CardNumber.FIVE))
-        cards.add(Card(CardSymbol.DIAMOND, CardNumber.SEVEN))
-
-        assertThat(cards.getResult()).isEqualTo(15)
     }
 
     @Test
@@ -78,6 +67,16 @@ internal class CardsTest {
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
 
         assertThat(cards.getResult()).isEqualTo(20)
+    }
+
+    @Test
+    fun `CardNumber 로 JACK 한장, QUEEN 한장, ACE를 한장 가지고 있는 cards에 대해 getResult() 메소드를 호출하면 21을 리턴한다`() {
+        val cards = Cards()
+        cards.add(Card(CardSymbol.SPADE, CardNumber.JACK))
+        cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
+        cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
+
+        assertThat(cards.getResult()).isEqualTo(21)
     }
 
     @Test
