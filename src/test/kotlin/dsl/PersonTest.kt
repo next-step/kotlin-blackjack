@@ -65,5 +65,10 @@ class PersonTest {
             Soft("Good communication skills"),
             Hard("Kotlin")
         )
+        Assertions.assertThat(person.languages.languages)
+            .containsKeys(
+                Language.KOREAN,
+                Language.ENGLISH,
+            )
     }
 }
