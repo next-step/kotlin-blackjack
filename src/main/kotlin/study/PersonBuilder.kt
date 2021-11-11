@@ -4,6 +4,7 @@ class PersonBuilder {
     lateinit var name: String
     private var company: String? = null
     private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
 
     fun name(name: String) {
         this.name = name
@@ -17,5 +18,9 @@ class PersonBuilder {
         skills = Skills().apply(initializer)
     }
 
-    fun build(): Person = Person(name, company, skills)
+    fun languages(initializer: Languages.() -> Unit) {
+        languages = Languages().apply(initializer)
+    }
+
+    fun build(): Person = Person(name, company, skills, languages)
 }

@@ -46,4 +46,25 @@ class ResumeTest {
         }
         assertThat(person.skills).contains(Hard("Kotlin"))
     }
+
+    @Test
+    fun language() {
+        val person = introduce {
+            name("김진엽")
+            company("드림포라")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        assertThat(person.languages).contains(
+            Language("Korean", 5),
+            Language("English", 3)
+        )
+    }
 }
