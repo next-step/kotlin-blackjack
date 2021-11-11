@@ -13,13 +13,6 @@ data class CardDeck(val cards: Stack<Card>) {
 
         private val cardPool: Map<CardSymbol, List<Card>> = buildCardPool()
 
-        private fun buildCardPool(): Map<CardSymbol, List<Card>> {
-            return CardSymbol.values().associateWith { buildCardsPerSymbol(it) }
-        }
-
-        private fun buildCardsPerSymbol(symbol: CardSymbol) =
-            CardNumber.values().map { Card(symbol, it) }.toList()
-
         fun getShuffledCards(): Stack<Card> {
             return Stack<Card>().also { it.addAll(getShuffledCardList()) }
         }
@@ -28,5 +21,12 @@ data class CardDeck(val cards: Stack<Card>) {
             .flatten()
             .shuffled()
             .toList()
+
+        private fun buildCardPool(): Map<CardSymbol, List<Card>> {
+            return CardSymbol.values().associateWith { buildCardsPerSymbol(it) }
+        }
+
+        private fun buildCardsPerSymbol(symbol: CardSymbol) =
+            CardNumber.values().map { Card(symbol, it) }.toList()
     }
 }
