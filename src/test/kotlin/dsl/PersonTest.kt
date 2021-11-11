@@ -36,7 +36,7 @@ class PersonTest {
         }
         Assertions.assertThat(person.name.value).isEqualTo("김우재")
         Assertions.assertThat(person.company.value).isEqualTo("우아한형제들")
-        Assertions.assertThat(person.skills).contains(
+        Assertions.assertThat(person.skills.values).contains(
             Soft("A passion for problem solving"),
             Soft("Good communication skills"),
             Hard("Kotlin")
