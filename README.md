@@ -8,6 +8,7 @@
 ### CardSymbol
 
 ### CardNumber
+- [x] 카드번호는 번호를 가진다.
 - [x] 범위를 벗어나는 번호를 받으면 에러를 일으킨다.
 
 ### CardDeck

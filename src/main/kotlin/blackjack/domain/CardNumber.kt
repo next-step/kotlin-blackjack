@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class CardNumber(private val number: Int) {
+data class CardNumber(val number: Int) {
     init {
         require(number in NUMBER_RANGE) { INVALID_NUMBER_ERROR_MSG }
     }
