@@ -10,7 +10,7 @@ class PersonTest {
         val person: Person = introduce {
             name("김우재")
         }
-        Assertions.assertThat(person.name).isEqualTo("김우재")
+        Assertions.assertThat(person.name.value).isEqualTo("김우재")
     }
 
     @Test
@@ -19,7 +19,7 @@ class PersonTest {
             name("김우재")
             company("우아한형제들")
         }
-        Assertions.assertThat(person.name).isEqualTo("김우재")
-        Assertions.assertThat(person.company).isEqualTo("우아한형제들")
+        Assertions.assertThat(person.name.value).isEqualTo("김우재")
+        Assertions.assertThat(person.company.value).isEqualTo("우아한형제들")
     }
 }
