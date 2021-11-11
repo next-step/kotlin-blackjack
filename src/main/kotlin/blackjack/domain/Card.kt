@@ -5,7 +5,7 @@ data class Card(val symbol: CardSymbol, val number: CardNumber) {
         return number.text + symbol.koreanName
     }
 
-    fun isAceCard(): Boolean {
+    fun hasAce(): Boolean {
         return CardNumber.isAce(number.text)
     }
 }

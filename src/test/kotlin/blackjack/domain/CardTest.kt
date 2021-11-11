@@ -30,7 +30,7 @@ internal class CardTest {
                 val card = Card(cardSymbol, cardNumber)
 
                 assertThat(card).isNotNull
-                assertThat(card.isAceCard()).isEqualTo(false)
+                assertThat(card.hasAce()).isEqualTo(false)
             }
         }
     }
@@ -45,7 +45,7 @@ internal class CardTest {
                 val card = Card(cardSymbol, cardNumber)
 
                 assertThat(card).isNotNull
-                assertThat(card.isAceCard()).isEqualTo(true)
+                assertThat(card.hasAce()).isEqualTo(true)
             }
         }
     }

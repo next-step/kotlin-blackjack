@@ -6,7 +6,7 @@ class Cards {
     val cards: MutableList<Card> = mutableListOf()
 
     private fun hasAnyAceCard(): Boolean {
-        return cards.any { card -> card.isAceCard() }
+        return cards.any { card -> card.hasAce() }
     }
 
     fun add(card: Card) {
@@ -24,7 +24,7 @@ class Cards {
     private fun getSumOfMinimumCardValues() = sumOfCardValues(cards)
 
     private fun getSumOfMaximumCardValues(): Int {
-        val firstAceCard = cards.firstOrNull { it.isAceCard() }
+        val firstAceCard = cards.firstOrNull { it.hasAce() }
         val restCards = cards.filter { it != firstAceCard }
 
         if (firstAceCard == null) {
