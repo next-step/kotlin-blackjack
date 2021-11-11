@@ -5,20 +5,28 @@ import kotlin.math.abs
 class Cards {
     val cards: MutableList<Card> = mutableListOf()
 
-    private fun hasAnyAceCard(): Boolean {
-        return cards.any { card -> card.hasAce() }
+    override fun toString(): String {
+        return cards.joinToString { it.toString() }
     }
 
     fun add(card: Card) {
         cards.add(card)
     }
 
-    override fun toString(): String {
-        return cards.joinToString { it.toString() }
-    }
-
     fun canReceiveAdditionalCard(): Boolean {
         return getSumOfMinimumCardValues() < MAXIMUM_SUM_OF_CARD_NUMBERS
+    }
+
+    fun getResult(): Int {
+        if (hasAnyAceCard()) {
+            return getResultForHavingAnyAceCard()
+        }
+
+        return getSumOfMinimumCardValues()
+    }
+
+    private fun hasAnyAceCard(): Boolean {
+        return cards.any { card -> card.hasAce() }
     }
 
     private fun getSumOfMinimumCardValues() = sumOfCardValues(cards)
@@ -36,14 +44,6 @@ class Cards {
 
     private fun sumOfCardValues(targetCards: List<Card>) = targetCards
         .sumOf { CardNumberValue.getValue(it.number.rank).value }
-
-    fun getResult(): Int {
-        if (hasAnyAceCard()) {
-            return getResultForHavingAnyAceCard()
-        }
-
-        return getSumOfMinimumCardValues()
-    }
 
     private fun getResultForHavingAnyAceCard(): Int {
         val sumOfMinimumCardValues = getSumOfMinimumCardValues()
