@@ -1,0 +1,4 @@
+package blackject
+
+class BlackjectApplication {
+}
