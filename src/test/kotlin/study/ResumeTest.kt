@@ -2,11 +2,15 @@ package study
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import study.domain.Hard
+import study.domain.Language
+import study.domain.Soft
+import study.domain.introduce
 
 class ResumeTest {
     @Test
     fun name() {
-       val person =  introduce {
+        val person = introduce {
             name("장세훈")
         }
         assertThat(person.name).isEqualTo("장세훈")
@@ -14,7 +18,7 @@ class ResumeTest {
 
     @Test
     fun company() {
-        val person =  introduce {
+        val person = introduce {
             name("장세훈")
             company("회사")
         }
@@ -23,7 +27,7 @@ class ResumeTest {
 
     @Test
     fun soft() {
-        val person =  introduce {
+        val person = introduce {
             name("장세훈")
             company("회사")
             skills {
@@ -35,7 +39,7 @@ class ResumeTest {
 
     @Test
     fun hard() {
-        val person =  introduce {
+        val person = introduce {
             name("장세훈")
             company("회사")
             skills {
@@ -46,43 +50,26 @@ class ResumeTest {
         assertThat(person.skills.skills).contains(Hard("Kotlin"))
     }
 
-}
-
-private fun introduce(initializer: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(initializer).build()
-}
-
-data class Person(val name: String, val company: String?, val skills: Skills)
-
-class PersonBuilder{
-    lateinit var name: String
-    private var company: String? = null
-    private var skills: Skills = Skills()
-
-    fun name(name: String){
-        this.name = name
-    }
-    fun company(company: String){
-        this.company = company
-    }
-    fun skills(initializer: Skills.() -> Unit){
-    skills = Skills().apply(initializer)
-    }
-    fun build(): Person = Person(name , company, skills)
-}
-
-class Skills(val skills: MutableList<Skill> = mutableListOf()): List<Skill> by skills {
-
-    fun soft(name: String) {
-        skills.add(Soft(name))
-    }
-    fun hard(name: String) {
-        skills.add(Hard(name))
+    @Test
+    fun language() {
+        val person = introduce {
+            name("장세훈")
+            company("회사")
+            skills {
+                soft("passion")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+            }
+        }
+        assertThat(person.languages.toList()).containsExactlyInAnyOrder(
+            Language("Korean", 5)
+        )
     }
 }
 
-sealed class Skill
 
-data class Hard(val name: String) : Skill()
 
-data class Soft(val name: String) : Skill()
+
+
