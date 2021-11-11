@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.view.input.ConsoleInputView.Companion.WRONG_PLAYER_NAME_MESSAGE
+
 data class Player(val name: String) {
     private val cards: Cards = Cards()
 
@@ -25,9 +27,5 @@ data class Player(val name: String) {
 
     fun getResult(): Int {
         return cards.getResult()
-    }
-
-    companion object {
-        private const val WRONG_PLAYER_NAME_MESSAGE = "잘못된 플레이어 이름입니다.(1글자 이상, 공백문자 금지)"
     }
 }

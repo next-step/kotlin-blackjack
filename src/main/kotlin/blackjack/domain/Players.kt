@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.view.input.ConsoleInputView.Companion.NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO
+import blackjack.view.input.ConsoleInputView.Companion.PLAYER_NAME_DELIMITER
+
 data class Players(val players: List<Player>) {
     init {
         require(players.isNotEmpty()) { NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO }
@@ -10,9 +13,6 @@ data class Players(val players: List<Player>) {
     }
 
     companion object {
-        private const val PLAYER_NAME_DELIMITER = ","
-        private const val NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO = "적어도 한명의 플레이어가 존재해야 합니다."
-
         fun from(input: String): Players {
             return Players(buildPlayer(input.split(PLAYER_NAME_DELIMITER)))
         }
