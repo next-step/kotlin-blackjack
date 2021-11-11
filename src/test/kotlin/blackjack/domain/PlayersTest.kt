@@ -24,13 +24,4 @@ internal class PlayersTest {
         assertThat(players).isNotNull
         assertThat(players.players.size).isEqualTo(2)
     }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["a,b,c", "참가자1, 참가자2, 참가자3", "!!,$$, ]]"])
-    fun `,로 구분된 참가자 이름을 세 개 입력하면 세 개의 Player를 가진 Players 객체가 생성된다`(input: String) {
-        val players = Players.from(input)
-
-        assertThat(players).isNotNull
-        assertThat(players.players.size).isEqualTo(3)
-    }
 }
