@@ -1,4 +1,7 @@
 package blackject
 
-class BlackjectApplication {
+import blackject.controller.BlackjectController
+
+fun main() {
+    BlackjectController().start()
 }
