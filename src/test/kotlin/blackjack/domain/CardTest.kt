@@ -15,7 +15,7 @@ internal class CardTest {
                 val card = Card(cardSymbol, cardNumber)
 
                 assertThat(card).isNotNull
-                assertThat(card.toString()).isEqualTo(cardNumber.text + cardSymbol.koreanName)
+                assertThat(card.toString()).isEqualTo(cardNumber.rank + cardSymbol.koreanName)
             }
         }
     }

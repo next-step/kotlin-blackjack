@@ -31,11 +31,11 @@ class Cards {
             return sumOfCardValues(restCards)
         }
 
-        return CardNumberValue.getValue(firstAceCard.number.text, true).value + sumOfCardValues(restCards)
+        return CardNumberValue.getValue(firstAceCard.number.rank, true).value + sumOfCardValues(restCards)
     }
 
-    private fun sumOfCardValues(targetCards: List<Card>) =
-        targetCards.sumOf { CardNumberValue.getValue(it.number.text).value }
+    private fun sumOfCardValues(targetCards: List<Card>) = targetCards
+        .sumOf { CardNumberValue.getValue(it.number.rank).value }
 
     fun getResult(): Int {
         if (hasAnyAceCard()) {
