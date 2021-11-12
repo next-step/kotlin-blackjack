@@ -1,12 +1,12 @@
 package blackjack
 
-import blackjack.service.Parser
+import blackjack.service.PlayersParser
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class ParserTest {
+class PlayersParserTest {
 
-    private val parser = Parser()
+    private val parser = PlayersParser()
 
     @Test
     fun `Input 을 parse 했을 때 , 을 기준으로 분리`() {
