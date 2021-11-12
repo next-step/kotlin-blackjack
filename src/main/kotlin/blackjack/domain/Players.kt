@@ -8,6 +8,8 @@ data class Players(val players: List<Player>) {
         require(players.isNotEmpty()) { NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO }
     }
 
+    operator fun get(index: Int): Player = players[index]
+
     fun getNames(): String {
         return players.joinToString { it.name }
     }

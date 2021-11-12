@@ -24,4 +24,14 @@ internal class PlayersTest {
         assertThat(players).isNotNull
         assertThat(players.players.size).isEqualTo(2)
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["a ", "참    가   자1"])
+    fun `참가자 이름 중에 공백이나 탭 문자가 들어있는 경우 trim 처리되어 참가자 이름이 입력된다`(input: String) {
+        val players = Players.from(input)
+
+        assertThat(players).isNotNull
+        assertThat(players.players.size).isEqualTo(1)
+        assertThat(players.players[0].name).isEqualTo(input.trim())
+    }
 }
