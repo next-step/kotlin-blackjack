@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.view.input.InputView
 import blackjack.view.result.ResultView
 
-class Dealer(private val deck: CardDeck) {
+class Dealer(private val deck: DealerCardDeck) {
     fun deliverBasicCards(players: Players) {
         players.players
             .forEach { player -> repeat(BASIC_CARD_NUMBER) { player.receiveCard(deck.getNextCard()) } }

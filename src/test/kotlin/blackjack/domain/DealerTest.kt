@@ -15,8 +15,8 @@ internal class DealerTest {
             Card(CardSymbol.DIAMOND, CardNumber.JACK),
             Card(CardSymbol.CLUBS, CardNumber.QUEEN),
         )
-        val cardDeck = CardDeck(Stack<Card>().also { it.addAll(cards) })
-        val dealer = Dealer(cardDeck)
+        val dealerCardDeck = DealerCardDeck(Stack<Card>().also { it.addAll(cards) })
+        val dealer = Dealer(dealerCardDeck)
 
         dealer.deliverBasicCards(players)
 

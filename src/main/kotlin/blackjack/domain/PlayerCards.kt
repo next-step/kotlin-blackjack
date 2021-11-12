@@ -2,7 +2,7 @@ package blackjack.domain
 
 import kotlin.math.abs
 
-class Cards {
+class PlayerCards {
     val cards: MutableList<Card> = mutableListOf()
 
     override fun toString(): String {

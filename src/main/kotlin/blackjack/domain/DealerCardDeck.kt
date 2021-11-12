@@ -2,7 +2,7 @@ package blackjack.domain
 
 import java.util.Stack
 
-data class CardDeck(val cards: Stack<Card>) {
+data class DealerCardDeck(val cards: Stack<Card>) {
     fun getNextCard(): Card {
         check(cards.isNotEmpty()) { NO_CARD_LEFT_MESSAGE }
         return cards.pop()!!

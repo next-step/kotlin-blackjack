@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.view.input.ConsoleInputView.Companion.WRONG_PLAYER_NAME_MESSAGE
 
 data class Player(val name: String) {
-    private val cards: Cards = Cards()
+    private val cards: PlayerCards = PlayerCards()
 
     init {
         require(name.isNotBlank()) { WRONG_PLAYER_NAME_MESSAGE }

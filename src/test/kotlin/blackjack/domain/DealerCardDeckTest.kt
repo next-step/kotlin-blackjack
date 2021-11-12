@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.util.Stack
 
-internal class CardDeckTest {
+internal class DealerCardDeckTest {
 
     @Test
     fun `비어있는 CardDeck에 getNextCard() 메소드를 호출하면 IllegalStateException이 발생한다`() {
-        val cardDeck = CardDeck(Stack<Card>())
+        val cardDeck = DealerCardDeck(Stack<Card>())
 
         assertThrows<IllegalStateException> {
             cardDeck.getNextCard()
@@ -21,9 +21,9 @@ internal class CardDeckTest {
         val cards = listOf(
             Card(CardSymbol.SPADE, CardNumber.ACE),
         )
-        val cardDeck = CardDeck(Stack<Card>().also { it.addAll(cards) })
+        val dealerCardDeck = DealerCardDeck(Stack<Card>().also { it.addAll(cards) })
 
-        assertThat(cardDeck.getNextCard()).isEqualTo(Card(CardSymbol.SPADE, CardNumber.ACE))
+        assertThat(dealerCardDeck.getNextCard()).isEqualTo(Card(CardSymbol.SPADE, CardNumber.ACE))
     }
 
     @Test
@@ -32,16 +32,16 @@ internal class CardDeckTest {
             Card(CardSymbol.SPADE, CardNumber.ACE),
             Card(CardSymbol.CLUBS, CardNumber.KING),
         )
-        val cardDeck = CardDeck(Stack<Card>().also { it.addAll(cards) })
+        val dealerCardDeck = DealerCardDeck(Stack<Card>().also { it.addAll(cards) })
 
-        assertThat(cardDeck.getNextCard()).isEqualTo(Card(CardSymbol.CLUBS, CardNumber.KING))
+        assertThat(dealerCardDeck.getNextCard()).isEqualTo(Card(CardSymbol.CLUBS, CardNumber.KING))
     }
 
     @Test
     fun `getShuffledCards() 메소드를 호출하면 52장의 카드가 들어있는 Stack을 얻을 수 있다`() {
-        val cardDeck = CardDeck(CardDeck.getShuffledCards())
+        val dealerCardDeck = DealerCardDeck(DealerCardDeck.getShuffledCards())
 
-        assertThat(cardDeck).isNotNull
-        assertThat(cardDeck.cards.size).isEqualTo(52)
+        assertThat(dealerCardDeck).isNotNull
+        assertThat(dealerCardDeck.cards.size).isEqualTo(52)
     }
 }
