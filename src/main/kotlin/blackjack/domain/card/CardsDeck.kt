@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class CardsDeck {
     private val cards = CardDenomination.values().flatMap { cardDenomination ->
