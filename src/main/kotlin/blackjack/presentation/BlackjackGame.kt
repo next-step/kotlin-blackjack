@@ -20,4 +20,8 @@ class BlackjackGame {
             player.copy(cards = cards)
         }
     }
+
+    fun getCard(cardsDeck: CardsDeck,): Card {
+        return cardsDeck.divide()
+    }
 }

@@ -2,8 +2,11 @@ package blackjack.presentation
 
 import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Player
+import blackjack.exception.CardExhaustException
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class BlackjackGameTest {
 
@@ -22,5 +25,27 @@ class BlackjackGameTest {
 
         assertEquals(2, actual[0].cards.size)
         assertEquals(2, actual[1].cards.size)
+    }
+
+    @Test
+    fun `카드를 더 받는다`() {
+        val game = BlackjackGame()
+        val card = game.getCard(CardsDeck())
+
+        assertNotNull(card)
+    }
+
+    @Test
+    fun `카드가 모두 소진되었다면 Exception`() {
+        val game = BlackjackGame()
+
+        assertThrows<CardExhaustException> {
+            val cardsDeck = CardsDeck()
+            val cardCount = 52
+
+            repeat(cardCount + 1) {
+                game.getCard(cardsDeck)
+            }
+        }
     }
 }
