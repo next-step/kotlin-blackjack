@@ -4,5 +4,5 @@ import blackjack.domain.card.Card
 
 data class Player(
     val name: String,
-    val cards: List<Card>
+    val cards: List<Card> = emptyList()
 )
