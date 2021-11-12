@@ -36,4 +36,12 @@ internal class CardDeckTest {
 
         assertThat(cardDeck.getNextCard()).isEqualTo(Card(CardSymbol.CLUBS, CardNumber.KING))
     }
+
+    @Test
+    fun `getShuffledCards() 메소드를 호출하면 52장의 카드가 들어있는 Stack을 얻을 수 있다`() {
+        val cardDeck = CardDeck(CardDeck.getShuffledCards())
+
+        assertThat(cardDeck).isNotNull
+        assertThat(cardDeck.cards.size).isEqualTo(52)
+    }
 }

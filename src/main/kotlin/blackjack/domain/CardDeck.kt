@@ -11,12 +11,11 @@ data class CardDeck(val cards: Stack<Card>) {
     companion object {
         private const val NO_CARD_LEFT_MESSAGE = "덱에 카드가 남아있지 않습니다."
 
-        private val cardPool: Map<CardSymbol, List<Card>> = buildCardPool()
-
         fun getShuffledCards(): Stack<Card> = Stack<Card>()
             .also { it.addAll(getShuffledCardList()) }
 
-        private fun getShuffledCardList() = cardPool.values
+        private fun getShuffledCardList() = buildCardPool()
+            .values
             .flatten()
             .shuffled()
             .toList()
