@@ -5,7 +5,6 @@ enum class CardDenomination(
     val value: List<Int>,
 ) {
     ACE("ACE", listOf(1, 11)),
-    ONE("ONE", listOf(1)),
     TWO("TWO", listOf(2)),
     THREE("THREE", listOf(3)),
     FOUR("FOUR", listOf(4)),
