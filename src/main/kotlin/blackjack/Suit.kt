@@ -1,5 +1,8 @@
 package blackjack
 
+/**
+ * 카드 모양.
+ */
 enum class Suit(val value: String) {
     SPADE("스페이드"),
     HEART("하트"),

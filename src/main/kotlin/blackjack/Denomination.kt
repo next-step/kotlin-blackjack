@@ -1,5 +1,8 @@
 package blackjack
 
+/**
+ * 끝수.
+ */
 enum class Denomination(val mark: String, val point: Pair<Int, Int?>) {
     ACE("A", Pair(1, 11)),
     TWO("2", Pair(2, null)),
