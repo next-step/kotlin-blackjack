@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 /**
  * 카드 모양.

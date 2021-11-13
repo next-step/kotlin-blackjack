@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 interface Player {
     fun receiveCard(card: Card): Gamer

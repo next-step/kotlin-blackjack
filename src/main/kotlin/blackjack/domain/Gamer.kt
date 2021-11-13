@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Gamer(
     val name: Name,
