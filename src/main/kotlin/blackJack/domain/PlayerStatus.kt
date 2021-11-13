@@ -8,6 +8,10 @@ data class PlayerStatus(val cards: Cards, val decisionStatus: DecisionStatus = H
 
     fun ableGetACard(): Boolean = decisionStatus.isContinue()
 
+    fun noWantReceiveCard(): PlayerStatus {
+        return this.copy(cards = cards, decisionStatus = DecisionStatus.changeDecisionStatus(cards, false))
+    }
+
     fun update(card: Card): PlayerStatus {
         val cards = cards + card
         return this.copy(cards = cards, decisionStatus = DecisionStatus.changeDecisionStatus(cards))

@@ -51,31 +51,80 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어의 현재 점수는 11점이면 21이하이기 때문에 카드를 더 받을 수 있다`() {
+    fun `플레이어의 현재 점수는 11점이면 21이하이기 때문에 카드를 더 받을 수 있다 해당 상태는 히트이다`() {
         // given
-        val player = Player.of("김형준")
+        val playerStatus = Player.of("김형준")
             .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
             .receiveCard(Card(Suit.SPADES, Denomination.KING))
+            .status
 
         // when
-        val decisionStatus = player.status.ableGetACard()
+        val decisionStatus = playerStatus.decisionStatus
+        val isContinue = playerStatus.ableGetACard()
 
         // then
-        assertThat(decisionStatus).isEqualTo(true)
+        assertAll({
+            assertThat(decisionStatus is Hit).isEqualTo(true)
+            assertThat(isContinue).isEqualTo(true)
+        })
     }
 
     @Test
-    fun `플레이어의 현재 점수는 22점이면 21이상이기 때문에 카드를 더 받을 수 있다`() {
+    fun `플레이어의 현재 점수는 11점이면 21점이하면 플레이어는 카드를 안받을 수 있다 안받는 다면 상태는 스테이이다`() {
         // given
-        val player = Player.of("김형준")
+        val noWantedPlayer = Player.of("김형준")
+            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+            .receiveCard(Card(Suit.SPADES, Denomination.KING))
+            .status.noWantReceiveCard()
+
+        // when
+        val decisionStatus = noWantedPlayer.decisionStatus
+        val isContinue = noWantedPlayer.ableGetACard()
+
+        // then
+        assertAll({
+            assertThat(decisionStatus is Stay).isEqualTo(true)
+            assertThat(isContinue).isEqualTo(false)
+        })
+    }
+
+    @Test
+    fun `플레이어의 현재 점수가 21점이면 플레이어의 상태는 블랙잭이다`() {
+        // given
+        val playerStatus = Player.of("김형준")
+            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+            .receiveCard(Card(Suit.SPADES, Denomination.KING))
+            .receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
+            .status
+
+        // when
+        val decisionStatus = playerStatus.decisionStatus
+        val isContinue = playerStatus.ableGetACard()
+
+        // then
+        assertAll({
+            assertThat(decisionStatus is BlackJack).isEqualTo(true)
+            assertThat(isContinue).isEqualTo(false)
+        })
+    }
+
+    @Test
+    fun `플레이어의 현재 점수는 22점이면 21이상이기 때문에 카드를 더 받을 수 있다 해당 상태는 버스트이다`() {
+        // given
+        val playerStatus = Player.of("김형준")
             .receiveCard(Card(Suit.HEARTS, Denomination.TWO))
             .receiveCard(Card(Suit.SPADES, Denomination.KING))
             .receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
+            .status
 
         // when
-        val decisionStatus = player.status.ableGetACard()
+        val decisionStatus = playerStatus.decisionStatus
+        val isContinue = playerStatus.ableGetACard()
 
         // then
-        assertThat(decisionStatus).isEqualTo(false)
+        assertAll({
+            assertThat(decisionStatus is Bust).isEqualTo(true)
+            assertThat(isContinue).isEqualTo(false)
+        })
     }
 }
