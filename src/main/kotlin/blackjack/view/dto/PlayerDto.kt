@@ -1,8 +1,8 @@
 package blackjack.view.dto
 
-import blackjack.domain.Card
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.Card
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 data class PlayersDto(val players: List<PlayerDto>) : List<PlayerDto> by players {
 

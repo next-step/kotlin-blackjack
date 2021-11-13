@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Deck
 
 private const val GAME_START_DRAW_COUNT = 2
 

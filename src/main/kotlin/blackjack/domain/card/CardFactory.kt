@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 object CardFactory {
 
@@ -6,7 +6,7 @@ object CardFactory {
 
     private fun createAllCards(): List<Card> {
         return Symbol.values().flatMap { symbol ->
-            Type.values().map {  type ->
+            Type.values().map { type ->
                 Card(symbol, type)
             }
         }

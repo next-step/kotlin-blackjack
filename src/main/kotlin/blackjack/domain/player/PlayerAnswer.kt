@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.player
 
 enum class PlayerAnswer(val hit: Boolean, private val answer: String) {
     YES(true, "Y"),
