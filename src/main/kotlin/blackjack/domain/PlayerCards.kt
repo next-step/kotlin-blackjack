@@ -15,7 +15,7 @@ class PlayerCards {
 
     fun canReceiveAdditionalCard(): Boolean = getSumOfMinimumCardValues() < MAXIMUM_SUM_OF_CARD_NUMBERS
 
-    fun getResult(): Int {
+    fun getCardsResultPoint(): Int {
         if (hasAnyAceCard()) {
             return getResultForHavingAnyAceCard()
         }

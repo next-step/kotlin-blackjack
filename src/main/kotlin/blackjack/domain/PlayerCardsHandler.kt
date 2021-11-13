@@ -20,6 +20,6 @@ class PlayerCardsHandler {
     }
 
     fun getCardsResultPoint(): Int {
-        return cards.getResult()
+        return cards.getCardsResultPoint()
     }
 }

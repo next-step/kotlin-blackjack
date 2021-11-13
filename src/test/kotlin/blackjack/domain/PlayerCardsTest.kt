@@ -57,7 +57,7 @@ internal class PlayerCardsTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.KING))
 
-        assertThat(cards.getResult()).isEqualTo(21)
+        assertThat(cards.getCardsResultPoint()).isEqualTo(21)
     }
 
     @Test
@@ -66,7 +66,7 @@ internal class PlayerCardsTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.JACK))
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
 
-        assertThat(cards.getResult()).isEqualTo(20)
+        assertThat(cards.getCardsResultPoint()).isEqualTo(20)
     }
 
     @Test
@@ -76,7 +76,7 @@ internal class PlayerCardsTest {
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
 
-        assertThat(cards.getResult()).isEqualTo(21)
+        assertThat(cards.getCardsResultPoint()).isEqualTo(21)
     }
 
     @Test
@@ -85,7 +85,7 @@ internal class PlayerCardsTest {
         playerCards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         playerCards.add(Card(CardSymbol.HEART, CardNumber.TWO))
 
-        assertThat(playerCards.getResult()).isEqualTo(13)
+        assertThat(playerCards.getCardsResultPoint()).isEqualTo(13)
     }
 
     @Test
@@ -94,7 +94,7 @@ internal class PlayerCardsTest {
         playerCards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         playerCards.add(Card(CardSymbol.HEART, CardNumber.ACE))
 
-        assertThat(playerCards.getResult()).isEqualTo(12)
+        assertThat(playerCards.getCardsResultPoint()).isEqualTo(12)
     }
 
     @Test
@@ -104,7 +104,7 @@ internal class PlayerCardsTest {
         playerCards.add(Card(CardSymbol.HEART, CardNumber.ACE))
         playerCards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
 
-        assertThat(playerCards.getResult()).isEqualTo(13)
+        assertThat(playerCards.getCardsResultPoint()).isEqualTo(13)
     }
 
     @Test
@@ -115,6 +115,6 @@ internal class PlayerCardsTest {
         playerCards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
         playerCards.add(Card(CardSymbol.CLUBS, CardNumber.ACE))
 
-        assertThat(playerCards.getResult()).isEqualTo(14)
+        assertThat(playerCards.getCardsResultPoint()).isEqualTo(14)
     }
 }
