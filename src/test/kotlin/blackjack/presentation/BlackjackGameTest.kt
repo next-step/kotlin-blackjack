@@ -30,7 +30,10 @@ class BlackjackGameTest {
     @Test
     fun `카드를 더 받는다`() {
         val game = BlackjackGame()
-        val card = game.getCard(CardsDeck())
+        val card = game.addCard(
+            Player("one"),
+            CardsDeck()
+        )
 
         assertNotNull(card)
     }
@@ -44,7 +47,10 @@ class BlackjackGameTest {
             val cardCount = 52
 
             repeat(cardCount + 1) {
-                game.getCard(cardsDeck)
+                game.addCard(
+                    Player("one"),
+                    cardsDeck
+                )
             }
         }
     }

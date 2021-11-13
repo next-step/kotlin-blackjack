@@ -8,8 +8,7 @@ class CardsDeck {
         CardPattern.values().map { cardPattern ->
             Card(
                 pattern = cardPattern.name,
-                denomination = cardDenomination.denomination,
-                value = cardDenomination.value
+                denomination = cardDenomination
             )
         }
     }.shuffled()

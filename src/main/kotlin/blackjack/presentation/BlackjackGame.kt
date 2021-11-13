@@ -21,7 +21,13 @@ class BlackjackGame {
         }
     }
 
-    fun getCard(cardsDeck: CardsDeck,): Card {
-        return cardsDeck.divide()
+    fun addCard(
+        player: Player,
+        cardsDeck: CardsDeck
+    ): Player {
+        val card = cardsDeck.divide()
+        return player.copy(
+            cards = player.cards + card
+        )
     }
 }
