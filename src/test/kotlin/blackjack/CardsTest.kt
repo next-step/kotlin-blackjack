@@ -12,7 +12,7 @@ internal class CardsTest {
         val card2 = Card(Suit.HEART, Denomination.SEVEN)
         val cards = listOf(card1, card2)
 
-        assertThat(Cards(cards)).isNotNull
+        assertThat(Cards.from(cards)).isNotNull
     }
 
     @Test
@@ -22,6 +22,6 @@ internal class CardsTest {
 
         val cards = listOf(card1, card2)
 
-        assertThrows<IllegalArgumentException> { Cards(cards) }
+        assertThrows<IllegalArgumentException> { Cards.from(cards) }
     }
 }
