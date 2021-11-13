@@ -21,4 +21,16 @@ data class Gamer(
     override fun isMyTurn(): Boolean {
         return playerStatus == PlayerStatus.BURST
     }
+
+    override fun openCards(): Cards {
+        return cards
+    }
+
+    override fun getPlayerName(): Name {
+        return name
+    }
+
+    override fun getHighestPoint(): Int {
+        return cards.getHighestPoint()
+    }
 }

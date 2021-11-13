@@ -8,4 +8,10 @@ interface Player {
     fun turnOn(): Gamer
 
     fun isMyTurn(): Boolean
+
+    fun openCards(): Cards
+
+    fun getPlayerName(): Name
+
+    fun getHighestPoint(): Int
 }

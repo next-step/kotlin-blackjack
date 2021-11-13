@@ -16,5 +16,9 @@ enum class Denomination(val mark: String, val point: Pair<Int, Int?>) {
     TEN("10", Pair(10, null)),
     JACK("J", Pair(10, null)),
     QUEEN("Q", Pair(10, null)),
-    KING("K", Pair(10, null))
+    KING("K", Pair(10, null));
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 }
