@@ -1,16 +1,16 @@
 package blackJack.domain
 
-interface DecisionStatus {
+interface PlayerDecision {
     fun isContinue(): Boolean
 
     companion object {
-        fun changeDecisionStatus(cards: Cards, isContinue: Boolean = true): DecisionStatus {
+        fun changeDecision(cards: Cards, isContinue: Boolean = true): PlayerDecision {
             if (!isContinue) {
                 return Stay()
             }
 
             return when (cards.sumCards()) {
-                in MIN_NUMBER until MAX_NUMBER -> Hit()
+                in MIN_NUMBER..MAX_NUMBER -> Hit()
                 BLACKJACK -> BlackJack()
                 else -> Bust()
             }

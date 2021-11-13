@@ -1,6 +1,6 @@
 package blackJack.domain
 
-class BlackJack : DecisionStatus {
+class BlackJack : PlayerDecision {
     override fun isContinue(): Boolean {
         return false
     }

@@ -1,6 +1,6 @@
 package blackJack.domain
 
-data class PlayerStatus(val cards: Cards, val decisionStatus: DecisionStatus = Hit()) {
+data class PlayerStatus(val cards: Cards, val decisionStatus: PlayerDecision = Hit()) {
 
     fun inquireCards() = cards
 
@@ -9,12 +9,12 @@ data class PlayerStatus(val cards: Cards, val decisionStatus: DecisionStatus = H
     fun ableGetACard(): Boolean = decisionStatus.isContinue()
 
     fun noWantReceiveCard(): PlayerStatus {
-        return this.copy(cards = cards, decisionStatus = DecisionStatus.changeDecisionStatus(cards, false))
+        return this.copy(cards = cards, decisionStatus = PlayerDecision.changeDecision(cards, false))
     }
 
     fun update(card: Card): PlayerStatus {
         val cards = cards + card
-        return this.copy(cards = cards, decisionStatus = DecisionStatus.changeDecisionStatus(cards))
+        return this.copy(cards = cards, decisionStatus = PlayerDecision.changeDecision(cards))
     }
 
     companion object {

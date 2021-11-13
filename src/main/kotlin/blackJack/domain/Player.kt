@@ -6,6 +6,10 @@ data class Player(val playerName: String, val status: PlayerStatus) {
         return this.copy(playerName = playerName, status = status.update(card))
     }
 
+    fun noReceiveCard(): Player {
+        return this.copy(playerName = playerName, status = status.noWantReceiveCard())
+    }
+
     companion object {
         fun of(playerName: String): Player {
             return Player(playerName, PlayerStatus.of())

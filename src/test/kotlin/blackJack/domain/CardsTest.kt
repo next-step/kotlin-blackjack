@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CardsTest {
 
     @Test
-    fun `카드의 숫자는 총 52장이다`() {
+    fun `카드 뭉치는 총 52장이다`() {
         // given
         val cards = Cards.create()
 
@@ -14,10 +14,19 @@ class CardsTest {
         val cardsSize = cards.getSize()
 
         // then
-        assertThat(cardsSize).isEqualTo(CARD_SIZE)
+        assertThat(cardsSize).isEqualTo(41)
     }
 
-    companion object {
-        private const val CARD_SIZE = 52
+    @Test
+    fun `카드 뭉치(52장)에서 1장을 빼면 51장이다`() {
+        // given
+        val cards = Cards.create()
+        val card = Card(Suit.DIAMONDS, Denomination.KING)
+
+        // when
+        val cardsSize = (cards - card).getSize()
+
+        // then
+        assertThat(cardsSize).isEqualTo(51)
     }
 }

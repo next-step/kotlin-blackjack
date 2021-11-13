@@ -1,23 +1,31 @@
 package blackJack.domain
 
 @JvmInline
-value class Cards(val cards: List<Card>) {
+value class Cards(private val cards: List<Card>) {
 
     operator fun plus(card: Card): Cards {
-        checkOverlap(card)
-        val value = cards + card
-        return Cards(value)
+        checkDuplicate(card)
+        return Cards(cards + card)
+    }
+
+    operator fun minus(card: Card): Cards {
+        return Cards(cards - card)
     }
 
     fun getSize(): Int = cards.size
 
-    private fun checkOverlap(card: Card) {
-        require(card !in cards) { "중복 된 카드가 있습니다." }
+    fun toList(): List<Card> = cards
+
+    private fun checkDuplicate(card: Card) {
+        require(card !in cards) { DUPLICATE_ERROR }
     }
 
-    fun sumCards() = cards.map { it.denomination.score }.sum()
+    fun sumCards() = cards.sumOf { it.denomination.score }
+
+    fun drawRandomCard() = cards.random()
 
     companion object {
+        private const val DUPLICATE_ERROR = "중복 된 카드가 있습니다."
         private val denominations = Denomination.values()
         private val suits = Suit.values()
 
