@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.gamer
 
 class Players private constructor(
     value: List<Player>,
@@ -6,8 +6,7 @@ class Players private constructor(
     val value = value.toList()
 
     companion object {
-        fun from(playerNames: List<String>): Players {
-            val players = playerNames.map { Player(it) }
+        fun from(players: List<Player>): Players {
             return Players(players)
         }
     }

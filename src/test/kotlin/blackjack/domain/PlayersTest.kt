@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.gamer.Player
+import blackjack.domain.gamer.Players
 import blackjack.exception.InvalidPlayerNameException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -13,28 +15,28 @@ class PlayersTest {
     @DisplayName("n명의 플레이어 생성")
     fun `sut returns correctly`() {
         // Arrange
-        val playerNames = mutableListOf("tommy", "pobi", "jason")
+        val tommy = Player("tommy")
+        val pobi = Player("pobi")
+        val jason = Player("jason")
 
         // Act
-        val players = Players.from(playerNames)
+        val participants = mutableListOf(tommy, pobi, jason)
+        val players = Players.from(participants)
 
         // Assert
-        playerNames.add("hangyeol")
+        participants.add(Player("hangyeol"))
         assertThat(players.value).hasSize(3)
-        assertThat(players.value).contains(
-            Player("tommy"),
-            Player("pobi"),
-            Player("jason"),
-        )
+        assertThat(players.value).contains(tommy, pobi, jason)
     }
 
     @Test
     @DisplayName("잘못된 이름이 입력될 경우 예외 발생")
     fun `sut throw InvalidPlayerNameException`() {
-        // Arrange
-        val playerNames = listOf("", "tommy")
-
         // Act, Assert
-        assertThrows<InvalidPlayerNameException> { Players.from(playerNames) }
+        assertThrows<InvalidPlayerNameException> {
+            Players.from(
+                listOf(Player(""), Player("tommy"))
+            )
+        }
     }
 }
