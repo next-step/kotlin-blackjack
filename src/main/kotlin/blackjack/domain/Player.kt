@@ -3,29 +3,29 @@ package blackjack.domain
 import blackjack.view.input.ConsoleInputView.Companion.WRONG_PLAYER_NAME_MESSAGE
 
 data class Player(val name: String) {
-    private val cards: PlayerCards = PlayerCards()
+    private val cardsHandler = PlayerCardsHandler()
 
     init {
         require(name.isNotBlank()) { WRONG_PLAYER_NAME_MESSAGE }
     }
 
     fun getCards(): List<Card> {
-        return cards.cards.toList()
+        return cardsHandler.getCards()
     }
 
     fun receiveCard(card: Card) {
-        cards.add(card)
+        cardsHandler.addCard(card)
     }
 
     fun getCardsString(): String {
-        return cards.toString()
+        return cardsHandler.getCardsString()
     }
 
     fun canReceiveAdditionalCard(): Boolean {
-        return cards.canReceiveAdditionalCard()
+        return cardsHandler.canReceiveAdditionalCard()
     }
 
-    fun getResult(): Int {
-        return cards.getResult()
+    fun getCardsResultPoint(): Int {
+        return cardsHandler.getCardsResultPoint()
     }
 }

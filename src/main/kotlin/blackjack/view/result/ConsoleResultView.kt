@@ -30,6 +30,6 @@ class ConsoleResultView : ResultView {
     }
 
     private fun showPlayerResult(player: Player) {
-        println(" - 결과 ${player.getResult()}")
+        println(" - 결과 ${player.getCardsResultPoint()}")
     }
 }
