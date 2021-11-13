@@ -1,3 +1,3 @@
 package blackJack.domain
 
-class Card(private val suit: Suit, private val denomination: Denomination)
+data class Card(private val suit: Suit, val denomination: Denomination)

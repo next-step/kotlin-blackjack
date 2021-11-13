@@ -1,6 +1,6 @@
 package blackJack.domain
 
-enum class Denomination(private val score: Int) {
+enum class Denomination(val score: Int) {
     ACE(1),
     TWO(2),
     THREE(3),
