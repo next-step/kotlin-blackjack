@@ -16,7 +16,7 @@ fun main() {
 
     val deck = Deck.create()
 
-    players.drawAtGameStart(deck)
+    players.hitAtGameStart(deck)
     ConsoleOutputView.giveFirstTwoCards(PlayersDto(players))
 
     players.forEach {
@@ -29,5 +29,5 @@ fun main() {
 
 private fun Player.hitIfWant(deck: Deck): Player.DrawResult {
     val answer = PlayerAnswer.from(ConsoleInputView.getAnswer(name.value))
-    return draw(deck, answer)
+    return hit(deck, answer)
 }

@@ -6,9 +6,9 @@ private const val GAME_START_DRAW_COUNT = 2
 
 class Players(val players: List<Player>) {
 
-    fun drawAtGameStart(deck: Deck) {
+    fun hitAtGameStart(deck: Deck) {
         repeat(GAME_START_DRAW_COUNT) {
-            players.forEach { it.draw(deck) }
+            players.forEach { it.hit(deck) }
         }
     }
 
