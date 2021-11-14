@@ -41,5 +41,17 @@ class ResumeTest {
         val actual = Hard("Kotlin") in person.skills
         assertThat(actual).isTrue
     }
+
+    @Test
+    fun languages() {
+        val person = introduce("Laco") {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        val actual = Language("Korean", 5) in person.languages
+        assertThat(actual).isTrue
+    }
 }
 
