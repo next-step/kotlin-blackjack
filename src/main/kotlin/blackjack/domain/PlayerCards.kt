@@ -23,13 +23,13 @@ class PlayerCards {
         return getSumOfMinimumCardValues()
     }
 
-    private fun hasAnyAceCard(): Boolean {
+    fun hasAnyAceCard(): Boolean {
         return cards.any { card -> card.hasAce() }
     }
 
-    private fun getSumOfMinimumCardValues() = sumOfCardValues(cards)
+    fun getSumOfMinimumCardValues() = sumOfCardValues(cards)
 
-    private fun getSumOfMaximumCardValues(): Int {
+    fun getSumOfMaximumCardValues(): Int {
         val firstAceCard = cards.firstOrNull { it.hasAce() }
         val restCards = cards.filter { it != firstAceCard }
 
@@ -43,12 +43,12 @@ class PlayerCards {
     private fun sumOfCardValues(targetCards: List<Card>) = targetCards
         .sumOf { CardNumberValue.getValue(it.number.rank).value }
 
-    private fun getResultForHavingAnyAceCard(): Int {
+    fun getResultForHavingAnyAceCard(): Int {
         val sumOfMinimumCardValues = getSumOfMinimumCardValues()
         val sumOfMaximumCardValues = getSumOfMaximumCardValues()
 
         if (!exceededMaximumCardValues(sumOfMaximumCardValues) &&
-            isMaximumCardValuesMoreProperResult(sumOfMinimumCardValues, sumOfMaximumCardValues)
+            isMaximumCardValuesCloserToBlackJack(sumOfMinimumCardValues, sumOfMaximumCardValues)
         ) {
             return sumOfMaximumCardValues
         }
@@ -56,9 +56,9 @@ class PlayerCards {
         return sumOfMinimumCardValues
     }
 
-    private fun exceededMaximumCardValues(sum: Int) = sum > MAXIMUM_SUM_OF_CARD_NUMBERS
+    fun exceededMaximumCardValues(sum: Int) = sum > MAXIMUM_SUM_OF_CARD_NUMBERS
 
-    private fun isMaximumCardValuesMoreProperResult(
+    fun isMaximumCardValuesCloserToBlackJack(
         sumOfMinimumCardValues: Int,
         sumOfMaximumCardValues: Int
     ) =
