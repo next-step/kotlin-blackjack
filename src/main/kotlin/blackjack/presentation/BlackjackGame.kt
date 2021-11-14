@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Player
 
-class BlackjackGame {
+object BlackjackGame {
 
     fun start(
         players: List<Player>,

@@ -8,29 +8,25 @@ import blackjack.service.PlayersParser
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-val inputView = InputView()
-val outputView = OutputView()
-val blackjackGame = BlackjackGame()
-
 fun main() {
     val cardsDeck = CardsDeck()
 
-    val players = blackjackGame.start(
+    val players = BlackjackGame.start(
         initPlayers(),
         cardsDeck
     )
 
-    outputView.printStartResult(players)
+    OutputView.printStartResult(players)
 
     val cardReceivedPlayers = divideCards(players, cardsDeck)
 
-    outputView.printResult(cardReceivedPlayers)
+    OutputView.printResult(cardReceivedPlayers)
 }
 
 private fun initPlayers(): List<Player> {
     val parser = PlayersParser()
 
-    val inputPlayersName = inputView.inputPlayersName()
+    val inputPlayersName = InputView.inputPlayersName()
     val playersName = parser.parse(inputPlayersName)
     return playersName.map { playerName -> Player(name = playerName) }
 }
@@ -44,16 +40,16 @@ private fun divideCards(
         var wantMoreCard = true
 
         while (cardReceivedPlayer.getCardSum() <= 21 && wantMoreCard) {
-            wantMoreCard = inputView.inputWantMoreCard(player.name).fromYNToBoolean()
+            wantMoreCard = InputView.inputWantMoreCard(player.name).fromYNToBoolean()
 
             if (wantMoreCard) {
-                cardReceivedPlayer = blackjackGame.addCard(
+                cardReceivedPlayer = BlackjackGame.addCard(
                     cardReceivedPlayer,
                     cardsDeck
                 )
             }
 
-            outputView.printPlayerCard(cardReceivedPlayer)
+            OutputView.printPlayerCard(cardReceivedPlayer)
         }
 
         cardReceivedPlayer
