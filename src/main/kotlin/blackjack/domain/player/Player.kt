@@ -18,24 +18,23 @@ data class Player(
     }
 
     fun getCardSum(): Int {
-        var sum = 0
-        val sortedCards = _cards
+        return _cards
             .sortedByDescending { card -> card.denomination.order }
-
-        for (card in sortedCards) {
-            val denomination = card.denomination
-
-            sum += if (denomination == CardDenomination.ACE) {
-                if (sum + denomination.value[1] > 21) {
-                    denomination.value[0]
+            .fold(START_INDEX) { sum, card ->
+                val denomination = card.denomination
+                sum + if (denomination == CardDenomination.ACE) {
+                    if (sum + denomination.value[1] > 21) {
+                        denomination.value[0]
+                    } else {
+                        denomination.value[1]
+                    }
                 } else {
-                    denomination.value[1]
+                    denomination.value[0]
                 }
-            } else {
-                denomination.value[0]
             }
-        }
+    }
 
-        return sum
+    companion object {
+        private const val START_INDEX = 0
     }
 }
