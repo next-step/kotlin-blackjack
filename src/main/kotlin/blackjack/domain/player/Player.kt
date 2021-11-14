@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDenomination
 
 data class Player(
     val name: String,
@@ -22,15 +21,7 @@ data class Player(
             .sortedByDescending { card -> card.denomination.order }
             .fold(START_INDEX) { sum, card ->
                 val denomination = card.denomination
-                sum + if (denomination == CardDenomination.ACE) {
-                    if (sum + denomination.value[1] > 21) {
-                        denomination.value[0]
-                    } else {
-                        denomination.value[1]
-                    }
-                } else {
-                    denomination.value[0]
-                }
+                sum + denomination.getValue(sum)
             }
     }
 

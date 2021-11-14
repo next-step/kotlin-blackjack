@@ -2,10 +2,14 @@ package blackjack.domain.card
 
 enum class CardDenomination(
     val denomination: String,
-    val value: List<Int>,
+    private val value: List<Int>,
     val order: Int,
+    val getValue: (Int) -> Int = { _ -> value[0] },
 ) {
-    ACE("ACE", listOf(1, 11), 1),
+    ACE("ACE", listOf(1, 11), 1, { sum ->
+        if (sum + 11 > 21) ACE.value[0]
+        else ACE.value[1]
+    }),
     TWO("2", listOf(2), 2),
     THREE("3", listOf(3), 3),
     FOUR("4", listOf(4), 4),
