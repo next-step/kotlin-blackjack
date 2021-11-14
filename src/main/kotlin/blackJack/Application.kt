@@ -5,5 +5,5 @@ import blackJack.view.InputView
 import blackJack.view.ResultView
 
 fun main() {
-    BlackJackController(InputView(), ResultView()).start()
+    BlackJackController(InputView, ResultView).start()
 }

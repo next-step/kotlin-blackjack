@@ -3,7 +3,7 @@ package blackJack.view
 import blackJack.dto.PlayerDto
 import blackJack.dto.PlayersDto
 
-class ResultView {
+object ResultView {
     fun receiveTwoCard(playersDto: PlayersDto) {
         println("${playersDto.getPlayerNames()} 에게 2장의 나누었습니다.")
         playersDto.toList().map {
