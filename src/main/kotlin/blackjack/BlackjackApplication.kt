@@ -35,22 +35,31 @@ private fun divideCards(
     cardsDeck: CardsDeck,
 ): List<Player> {
     return players.map { player ->
-        var cardReceivedPlayer = player
         var wantMoreCard = true
 
-        while (cardReceivedPlayer.getCardSum() <= 21 && wantMoreCard) {
+        while (player.getCardSum() <= 21 && wantMoreCard) {
             wantMoreCard = InputView.inputWantMoreCard(player.name).fromYNToBoolean()
 
-            if (wantMoreCard) {
-                cardReceivedPlayer = BlackjackGame.addCard(
-                    cardReceivedPlayer,
-                    cardsDeck
-                )
-            }
+            addCardWhenWantMoreCard(wantMoreCard, player, cardsDeck)
 
-            OutputView.printPlayerCard(cardReceivedPlayer)
+            OutputView.printPlayerCard(player)
         }
 
-        cardReceivedPlayer
+        player
     }
+}
+
+private fun addCardWhenWantMoreCard(
+    wantMoreCard: Boolean,
+    player: Player,
+    cardsDeck: CardsDeck,
+): Player {
+    if (wantMoreCard) {
+        return BlackjackGame.addCard(
+            player,
+            cardsDeck
+        )
+    }
+
+    return player
 }
