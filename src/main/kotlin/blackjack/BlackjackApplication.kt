@@ -4,7 +4,7 @@ import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Player
 import blackjack.extensions.fromYNToBoolean
 import blackjack.presentation.BlackjackGame
-import blackjack.service.PlayersParser
+import blackjack.util.PlayersParserUtil
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -24,10 +24,9 @@ fun main() {
 }
 
 private fun initPlayers(): List<Player> {
-    val parser = PlayersParser()
-
     val inputPlayersName = InputView.inputPlayersName()
-    val playersName = parser.parse(inputPlayersName)
+    val playersName = PlayersParserUtil.parse(inputPlayersName)
+
     return playersName.map { playerName -> Player(name = playerName) }
 }
 
