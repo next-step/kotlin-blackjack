@@ -24,6 +24,7 @@ enum class CardNumber (
         private const val ACE_MIN_VALUE = 1
         private const val ACE_MAX_VALUE = 11
         private const val LOYAL_VALUE = 10
+        private const val DEFAULT_NUMBER = 0
 
         fun isAce(numberName: String): Boolean {
             return ACE.numberName == numberName
@@ -33,8 +34,9 @@ enum class CardNumber (
             return (KING.numberName == numberName) || (QUEEN.numberName == numberName) || (JACK.numberName == numberName)
         }
 
-        fun getNumberValue(number: CardNumber, isMaxValue: Boolean = false): Int {
+        fun getNumberValue(number: CardNumber?, isMaxValue: Boolean = false): Int {
             return when (number) {
+                null -> DEFAULT_NUMBER
                 ACE -> if (isMaxValue) ACE_MAX_VALUE else ACE_MIN_VALUE
                 KING, QUEEN, JACK -> LOYAL_VALUE
                 else -> number.numberName.toInt()
