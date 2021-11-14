@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class CardTest {
+class CardDeckTest {
 
     @Test
     @DisplayName("전체 카드 리스트 개수 확인")

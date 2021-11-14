@@ -12,7 +12,7 @@ object CardsDeck {
         .toSet()
         .toList()
 
-    val mutableCardList = originCardTotalList.toMutableList()
+    private val mutableCardList = originCardTotalList.toMutableList()
 
     fun takeCard(takeNUmber: Int): List<Card> {
         val cards = mutableCardList.shuffled().take(takeNUmber)
