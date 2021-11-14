@@ -13,9 +13,12 @@ class BlackjectController {
     fun start() {
         val persons = getParticipant()
         outView.printGivenCard(persons, CardsDeck.NUMBER_INIT_CARD)
-        persons.forEach { giveCard(it, CardsDeck.NUMBER_INIT_CARD) }
-        persons.forEach { askMoreCard(it) }
-        persons.forEach { gameResult(it) }
+        persons
+            .forEach { giveCard(it, CardsDeck.NUMBER_INIT_CARD) }
+        persons
+            .forEach { askMoreCard(it) }
+        persons
+            .forEach { gameResult(it) }
     }
 
     private fun getParticipant(): List<Person> {
@@ -50,6 +53,7 @@ class BlackjectController {
 
         fun isAnswerYes(answer: String?): Boolean {
             require(!answer.isNullOrEmpty())
+            require(answer == ANSWER_NO || answer == ANSWER_YES)
             return when (answer) {
                 ANSWER_YES -> true
                 ANSWER_NO -> false
