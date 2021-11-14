@@ -7,7 +7,7 @@ class CardsDeck {
     private val cards = CardDenomination.values().flatMap { cardDenomination ->
         CardPattern.values().map { cardPattern ->
             Card(
-                pattern = cardPattern.name,
+                pattern = cardPattern,
                 denomination = cardDenomination
             )
         }
