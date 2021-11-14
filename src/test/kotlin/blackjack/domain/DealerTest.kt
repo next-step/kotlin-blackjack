@@ -21,7 +21,7 @@ internal class DealerTest {
         dealer.deliverBasicCards(players)
 
         players.players.forEach {
-            assertThat(it.getCards().size).isEqualTo(2)
+            assertThat(it.cardsHandler.getCards().size).isEqualTo(2)
         }
     }
 
@@ -34,7 +34,7 @@ internal class DealerTest {
 
         players.players.forEach {
             dealer.deliverAdditionalCard(it)
-            assertThat(it.getCards().size).isEqualTo(3)
+            assertThat(it.cardsHandler.getCards().size).isEqualTo(3)
         }
     }
 }

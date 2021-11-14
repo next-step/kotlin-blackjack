@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class PlayerCardsHandler {
+import blackjack.service.ParticipantCardAdditionDecider
+import blackjack.service.ResultCalculator
+
+class PlayerCardsHandler(private val cardAdditionDecider: ParticipantCardAdditionDecider, private val resultCalculator: ResultCalculator) {
     private val cards: PlayerCards = PlayerCards()
 
     fun addCard(card: Card) {
@@ -8,7 +11,7 @@ class PlayerCardsHandler {
     }
 
     fun canReceiveAdditionalCard(): Boolean {
-        return cards.canReceiveAdditionalCard()
+        return cardAdditionDecider.canReceiveAdditionalCard(resultCalculator.getSumOfMinimumCardValues(cards.cards))
     }
 
     fun getCards(): List<Card> {
@@ -20,6 +23,6 @@ class PlayerCardsHandler {
     }
 
     fun getCardsResultPoint(): Int {
-        return cards.getCardsResultPoint()
+        return resultCalculator.getCardsResultPoint(cards.cards)
     }
 }

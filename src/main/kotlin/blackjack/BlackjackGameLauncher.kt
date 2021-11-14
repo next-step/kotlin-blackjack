@@ -1,9 +1,8 @@
 package blackjack
 
-import blackjack.domain.DealerCardDeck
 import blackjack.domain.Dealer
+import blackjack.domain.DealerCardDeck
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.view.input.InputView
 import blackjack.view.result.ResultView
 
@@ -22,7 +21,7 @@ class BlackjackGameLauncher(private val inputView: InputView, private val result
     }
 
     private fun deliverAdditionalCards(dealer: Dealer, player: Player) {
-        while (player.canReceiveAdditionalCard() && inputView.askToReceiveAdditionalCardOrNot(player)) {
+        while (player.cardsHandler.canReceiveAdditionalCard() && inputView.askToReceiveAdditionalCardOrNot(player)) {
             dealer.deliverAdditionalCard(player)
             resultView.showPlayerCards(player, true)
         }

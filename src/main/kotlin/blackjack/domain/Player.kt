@@ -1,31 +1,13 @@
 package blackjack.domain
 
+import blackjack.service.PlayerCardAdditionDecider
+import blackjack.service.ResultCalculator
 import blackjack.view.input.ConsoleInputView.Companion.WRONG_PLAYER_NAME_MESSAGE
 
 data class Player(val name: String) {
-    private val cardsHandler = PlayerCardsHandler()
+    val cardsHandler = PlayerCardsHandler(PlayerCardAdditionDecider(), ResultCalculator())
 
     init {
         require(name.isNotBlank()) { WRONG_PLAYER_NAME_MESSAGE }
-    }
-
-    fun getCards(): List<Card> {
-        return cardsHandler.getCards()
-    }
-
-    fun receiveCard(card: Card) {
-        cardsHandler.addCard(card)
-    }
-
-    fun getCardsString(): String {
-        return cardsHandler.getCardsString()
-    }
-
-    fun canReceiveAdditionalCard(): Boolean {
-        return cardsHandler.canReceiveAdditionalCard()
-    }
-
-    fun getCardsResultPoint(): Int {
-        return cardsHandler.getCardsResultPoint()
     }
 }

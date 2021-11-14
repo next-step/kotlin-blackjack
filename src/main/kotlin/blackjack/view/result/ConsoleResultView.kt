@@ -15,7 +15,7 @@ class ConsoleResultView : ResultView {
     }
 
     override fun showPlayerCards(player: Player, shouldPrintNewLineCharacter: Boolean) {
-        print("%s카드: %s".format(player.name, player.getCardsString()))
+        print("%s카드: %s".format(player.name, player.cardsHandler.getCardsString()))
 
         if (shouldPrintNewLineCharacter) {
             println()
@@ -30,6 +30,6 @@ class ConsoleResultView : ResultView {
     }
 
     private fun showPlayerResult(player: Player) {
-        println(" - 결과 ${player.getCardsResultPoint()}")
+        println(" - 결과 ${player.cardsHandler.getCardsResultPoint()}")
     }
 }

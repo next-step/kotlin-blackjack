@@ -10,7 +10,7 @@ class ConsoleInputView : InputView {
     }
 
     override fun askToReceiveAdditionalCardOrNot(player: Player): Boolean {
-        println("${player.name}은(는) 한장의 카드를 더 받겠습니까?(예는 ${YES}, 아니오는 ${NO})")
+        println("${player.name}은(는) 한장의 카드를 더 받겠습니까?(예는 $YES, 아니오는 $NO)")
         return YES.equals(readLine() ?: NO, true)
     }
 

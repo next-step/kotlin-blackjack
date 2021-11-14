@@ -2,9 +2,6 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 
 internal class PlayerCardsTest {
 
@@ -16,7 +13,7 @@ internal class PlayerCardsTest {
         assertThat(cards).isNotNull
         assertThat(cards.cards.size).isEqualTo(1)
     }
-
+/*
     @Test
     fun `CardNumber 로 JACK 한장, ACE 한장을 가지고 있는 cards에 대해 canReceiveAdditionalCard() 메소드를 호출하면 true를 리턴한다`() {
         val cards = PlayerCards()
@@ -255,5 +252,5 @@ internal class PlayerCardsTest {
     fun `sumOfMaximumCardValues 가 sumOfMinimumCardValues 보다 21에 가까운 경우 isMaximumCardValuesCloserToBlackJack() 를 호출하면 true를 리턴한다`(
         sumOfMinimumCardValues: Int, sumOfMaximumCardValues: Int) {
         assertThat(PlayerCards().isMaximumCardValuesCloserToBlackJack(sumOfMinimumCardValues, sumOfMaximumCardValues)).isTrue
-    }
+    }*/
 }
