@@ -3,12 +3,14 @@ package blackjack.domain.player
 @JvmInline
 value class PlayerName(val value: String) {
 
+    init {
+        require(value.isNotEmpty()) { "이름은 공백일 수 없습니다." }
+    }
+
     companion object {
 
-        private const val NAME_DELIMITER = ","
-
-        fun from(names: String): List<PlayerName> {
-            return names.split(NAME_DELIMITER).map { PlayerName(it.trim()) }
+        fun from(names: List<String>): List<PlayerName> {
+            return names.map { PlayerName(it) }
         }
     }
 }

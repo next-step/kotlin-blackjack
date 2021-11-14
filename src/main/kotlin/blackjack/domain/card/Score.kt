@@ -33,7 +33,7 @@ value class Score(val value: Int) {
     }
 
     companion object {
-        private const val BLACK_JACK = 21
+        const val BLACK_JACK = 21
         private const val ACE_REVISE = 10
         private const val MIN_SCORE = 0
 

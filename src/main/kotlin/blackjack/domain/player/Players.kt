@@ -15,4 +15,12 @@ class Players(val players: List<Player>) {
     fun forEach(action: (Player) -> Unit) {
         players.forEach(action)
     }
+
+    companion object {
+
+        fun from(names: List<PlayerName>): Players {
+            val players = names.map { Player(it) }
+            return Players(players)
+        }
+    }
 }

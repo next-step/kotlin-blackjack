@@ -12,7 +12,7 @@ import blackjack.view.dto.PlayersDto
 
 fun main() {
     val names: List<PlayerName> = PlayerName.from(ConsoleInputView.getNames())
-    val players = Players(names.map { Player(it) })
+    val players = Players.from(names)
 
     val deck = Deck.create()
 

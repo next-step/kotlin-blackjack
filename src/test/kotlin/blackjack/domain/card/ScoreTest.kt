@@ -18,7 +18,7 @@ class ScoreTest {
 
     @Test
     fun `점수가 21점이면 BlackJack이다`() {
-        val score = Score(21)
+        val score = Score(Score.BLACK_JACK)
 
         assertThat(score.isBlackJack()).isTrue
         assertThat(score.isBust()).isFalse
