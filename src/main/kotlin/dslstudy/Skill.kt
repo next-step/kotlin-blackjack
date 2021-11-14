@@ -1,7 +1,7 @@
 package dslstudy
 
-sealed class Skill(open val name: String)
+sealed class Skill
 
-data class Soft(override val name: String) : Skill(name)
+data class Soft(val name: String) : Skill()
 
-data class Hard(override val name: String) : Skill(name)
+data class Hard(val name: String) : Skill()

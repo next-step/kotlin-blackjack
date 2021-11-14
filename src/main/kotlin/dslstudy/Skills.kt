@@ -1,7 +1,7 @@
 package dslstudy
 
 class Skills(
-    val skills: MutableList<Skill> = mutableListOf()
+    private val skills: MutableList<Skill> = mutableListOf()
 ) : List<Skill> by skills {
 
     fun soft(name: String) {
