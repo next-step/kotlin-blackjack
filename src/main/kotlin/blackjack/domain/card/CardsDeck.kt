@@ -16,14 +16,10 @@ class CardsDeck {
         .toMutableList()
 
     fun divide(): Card {
-        if (cards.size == ZERO) {
+        if (cards.isEmpty()) {
             throw CardExhaustException("카드가 모두 소진되었습니다.")
         }
 
         return cards.removeFirst()
-    }
-
-    companion object {
-        private const val ZERO = 0
     }
 }
