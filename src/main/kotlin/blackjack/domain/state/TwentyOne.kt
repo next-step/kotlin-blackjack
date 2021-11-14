@@ -11,5 +11,7 @@ class TwentyOne(
         throw UnsupportedDrawException()
     }
 
+    override fun toString(): String = "TwentyOne"
+
     override fun currentCards(): Cards = cards
 }

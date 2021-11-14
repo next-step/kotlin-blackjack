@@ -1,9 +1,7 @@
 package blackjack
 
-import blackjack.domain.Players
-import blackjack.view.InputView
+import blackjack.presentation.BlackjackController
 
 fun main() {
-    val playerNames: List<String> = InputView.inputPlayers()
-    val players = Players.from(playerNames)
+    BlackjackController().run()
 }

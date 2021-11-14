@@ -11,5 +11,7 @@ class Blackjack(
         throw UnsupportedDrawException()
     }
 
+    override fun toString(): String = "Blackjack"
+
     override fun currentCards(): Cards = cards
 }

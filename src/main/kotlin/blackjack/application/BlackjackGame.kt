@@ -2,6 +2,7 @@ package blackjack.application
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.gamer.Player
+import blackjack.domain.state.Blackjack
 import blackjack.domain.state.FirstDraw
 import blackjack.domain.state.Stand
 import blackjack.domain.state.State
@@ -26,6 +27,9 @@ class BlackjackGame private constructor(
     }
 
     private fun draw(deck: Deck, state: State): State {
+        if (state.currentCards().isBlackjack()) {
+            return Blackjack(player.cards)
+        }
         val card = deck.takeOut()
         return state.draw(card)
     }

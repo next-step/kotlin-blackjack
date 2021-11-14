@@ -11,5 +11,7 @@ class Bust(
         throw UnsupportedDrawException()
     }
 
+    override fun toString(): String = "Bust"
+
     override fun currentCards(): Cards = cards
 }

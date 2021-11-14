@@ -12,5 +12,7 @@ class Stand(
         throw UnsupportedDrawException()
     }
 
+    override fun toString(): String = "Stand"
+
     override fun currentCards(): Cards = cards
 }
