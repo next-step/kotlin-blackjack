@@ -15,14 +15,16 @@ class Player(val playerName: String) {
     }
 
     fun noReceiveCard() {
-        _status = status.noWantReceiveCard()
+        _status = status.changeContinueStatus(false)
     }
-
-    fun getPlayerDecisionStatus(): PlayerDecision = status.decisionStatus
 
     fun getAbleReceivedCard(): Boolean = status.ableGetACard()
 
     fun getCards() = status.cards
+
+    fun isBlackJackPlayer(): Boolean = status.isBlackJack()
+
+    fun getScore() = status.sumScore()
 
     companion object {
         fun of(playerName: String): Player {

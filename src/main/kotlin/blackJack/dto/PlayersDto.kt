@@ -29,7 +29,7 @@ class PlayerDto(val name: String, val cards: String, val score: Int) {
             val cards = player.getCards().toList().joinToString {
                 "${it.denomination.score}${it.suit}"
             }
-            val score = player.status.getCurrentScore()
+            val score = player.status.sumScore()
 
             return PlayerDto(name, cards, score)
         }

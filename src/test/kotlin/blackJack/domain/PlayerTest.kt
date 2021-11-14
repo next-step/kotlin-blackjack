@@ -18,7 +18,7 @@ class PlayerTest {
         // then
         assertAll({
             assertThat(player.playerName).isEqualTo("김형준")
-            assertThat(player.status.inquireCards().getSize()).isEqualTo(2)
+            assertThat(player.status.cards.getSize()).isEqualTo(2)
         })
     }
 
@@ -46,7 +46,7 @@ class PlayerTest {
         player.receiveCard(Card(Suit.SPADES, Denomination.KING))
 
         // when
-        val currentScore = player.status.getCurrentScore()
+        val currentScore = player.getScore()
 
         // then
         assertThat(currentScore).isEqualTo(11)
@@ -58,11 +58,10 @@ class PlayerTest {
         val player = Player.of("김형준")
         player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
         player.receiveCard(Card(Suit.SPADES, Denomination.KING))
-        val playerStatus = player.status
 
         // when
-        val decisionStatus = playerStatus.decisionStatus
-        val isContinue = playerStatus.ableGetACard()
+        val decisionStatus = player.status.decisionStatus
+        val isContinue = player.getAbleReceivedCard()
 
         // then
         assertAll({
@@ -74,14 +73,14 @@ class PlayerTest {
     @Test
     fun `플레이어의 현재 점수는 11점이면 21점이하면 플레이어는 카드를 안받을 수 있다 안받는 다면 상태는 스테이이다`() {
         // given
-        val noWantedPlayer = Player.of("김형준")
-        noWantedPlayer.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-        noWantedPlayer.receiveCard(Card(Suit.SPADES, Denomination.KING))
-        val noWantReceiveCard = noWantedPlayer.status.noWantReceiveCard()
+        val player = Player.of("김형준")
+        player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
 
         // when
-        val decisionStatus = noWantReceiveCard.decisionStatus
-        val isContinue = noWantReceiveCard.ableGetACard()
+        player.noReceiveCard()
+        val decisionStatus = player.status.decisionStatus
+        val isContinue = player.getAbleReceivedCard()
 
         // then
         assertAll({
@@ -97,15 +96,14 @@ class PlayerTest {
         player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
         player.receiveCard(Card(Suit.SPADES, Denomination.KING))
         player.receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
-        val playerStatus = player.status
 
         // when
-        val decisionStatus = playerStatus.decisionStatus
-        val isContinue = playerStatus.ableGetACard()
+        val isContinue = player.getAbleReceivedCard()
+        val isBlackJack = player.isBlackJackPlayer()
 
         // then
         assertAll({
-            assertThat(decisionStatus is BlackJack).isEqualTo(true)
+            assertThat(isBlackJack).isEqualTo(true)
             assertThat(isContinue).isEqualTo(false)
         })
     }
@@ -118,11 +116,9 @@ class PlayerTest {
         player.receiveCard(Card(Suit.SPADES, Denomination.KING))
         player.receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
 
-        val playerStatus = player.status
-
         // when
-        val decisionStatus = playerStatus.decisionStatus
-        val isContinue = playerStatus.ableGetACard()
+        val decisionStatus = player.status.decisionStatus
+        val isContinue = player.getAbleReceivedCard()
 
         // then
         assertAll({

@@ -1,7 +1,7 @@
 package blackJack.controller
 
-import blackJack.domain.BlackJack
 import blackJack.domain.Player
+import blackJack.domain.PlayerDecision
 import blackJack.domain.Players
 import blackJack.domain.PlayingCard
 import blackJack.dto.PlayerDto
@@ -27,8 +27,7 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun receiveCard(player: Player, playingCard: PlayingCard): Player {
-        val playerStatus = player.getPlayerDecisionStatus()
-        if (playerStatus !is BlackJack) {
+        if (!player.isBlackJackPlayer()) {
             return continuousReceiveCard(player, playingCard)
         }
         return player
