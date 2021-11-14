@@ -5,8 +5,8 @@ import java.util.Stack
 class Deck() {
     val cards = generateCards()
 
-    fun drawCard() {
-        cards.pop()
+    fun drawCard(): Card {
+        return cards.pop()
     }
 
     private fun generateCards(): Stack<Card> {
