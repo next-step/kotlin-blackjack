@@ -1,6 +1,5 @@
 package blackjack.presentation
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Player
 
@@ -12,15 +11,13 @@ object BlackjackGame {
         players: List<Player>,
         cardsDeck: CardsDeck,
     ): List<Player> {
-        return players.map { player ->
-            val cards = mutableListOf<Card>()
-
+        players.forEach { player ->
             repeat(FIRST_CARD_DIVIDE_COUNT) {
-                cards.add(cardsDeck.divide())
+                player.addCard(cardsDeck.divide())
             }
-
-            player.copy(cards = cards)
         }
+
+        return players
     }
 
     fun addCard(
@@ -28,8 +25,9 @@ object BlackjackGame {
         cardsDeck: CardsDeck
     ): Player {
         val card = cardsDeck.divide()
-        return player.copy(
-            cards = player.cards + card
-        )
+
+        player.addCard(card)
+
+        return player
     }
 }

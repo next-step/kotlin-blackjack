@@ -9,19 +9,10 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `Ace 가 2장일때 Card 의 합은 12`() {
-        val player = Player(
-            "one",
-            listOf(
-                Card(
-                    pattern = CardPattern.DIAMOND.name,
-                    denomination = CardDenomination.ACE,
-                ),
-                Card(
-                    pattern = CardPattern.HEART.name,
-                    denomination = CardDenomination.ACE,
-                )
-            )
-        )
+        val player = Player("one")
+
+        player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
+        player.addCard(Card(CardPattern.DIAMOND, CardDenomination.ACE))
 
         val actual = player.getCardSum()
 
@@ -30,19 +21,10 @@ class PlayerTest {
 
     @Test
     fun `Ace, King 일때 Card 의 합은 21`() {
-        val player = Player(
-            "one",
-            listOf(
-                Card(
-                    pattern = CardPattern.DIAMOND.name,
-                    denomination = CardDenomination.ACE,
-                ),
-                Card(
-                    pattern = CardPattern.HEART.name,
-                    denomination = CardDenomination.KING,
-                )
-            )
-        )
+        val player = Player("one")
+
+        player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
+        player.addCard(Card(CardPattern.DIAMOND, CardDenomination.KING))
 
         val actual = player.getCardSum()
 
@@ -51,23 +33,11 @@ class PlayerTest {
 
     @Test
     fun `9, ACE, ACE 일때 Card 의 합은 21`() {
-        val player = Player(
-            "one",
-            listOf(
-                Card(
-                    pattern = CardPattern.DIAMOND.name,
-                    denomination = CardDenomination.ACE,
-                ),
-                Card(
-                    pattern = CardPattern.HEART.name,
-                    denomination = CardDenomination.ACE,
-                ),
-                Card(
-                    pattern = CardPattern.HEART.name,
-                    denomination = CardDenomination.NINE,
-                )
-            )
-        )
+        val player = Player("one")
+
+        player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
+        player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
+        player.addCard(Card(CardPattern.DIAMOND, CardDenomination.ACE))
 
         val actual = player.getCardSum()
 

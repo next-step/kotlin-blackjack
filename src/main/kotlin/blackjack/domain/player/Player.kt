@@ -5,11 +5,21 @@ import blackjack.domain.card.CardDenomination
 
 data class Player(
     val name: String,
-    val cards: List<Card> = emptyList()
 ) {
+
+    private var _cards = mutableListOf<Card>()
+    val cards: List<Card>
+        get() {
+            return _cards.toList()
+        }
+
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
     fun getCardSum(): Int {
         var sum = 0
-        val sortedCards = cards
+        val sortedCards = _cards
             .sortedByDescending { card -> card.denomination.order }
 
         for (card in sortedCards) {
