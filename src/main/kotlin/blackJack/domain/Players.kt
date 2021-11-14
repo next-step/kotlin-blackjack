@@ -25,6 +25,7 @@ class Players(private val players: List<Player>) {
         fun enterGameRoom(names: String): Players {
             return Players(StringUtils.splitString(names).map { Player.of(it) })
         }
+
         private const val INIT_RECEIVE_CARD_NUMBER = 2
     }
 }
