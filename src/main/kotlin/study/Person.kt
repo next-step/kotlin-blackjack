@@ -7,7 +7,7 @@ data class Person(
     val languages: Languages
 ) {
 
-    class Builder(private var name: String) {
+    class Builder(private val name: String) {
         var company: String? = null
         var skills: Skills = Skills.empty()
         var languages: Languages = Languages.empty()
