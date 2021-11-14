@@ -29,12 +29,10 @@ class BlackjackController() {
 
     private fun playingPhase(deck: Deck, players: Players): Players {
         lateinit var receiveCardAllPlayers: Players
+        receiveCardAllPlayers = receiveCardAllPlayers(deck, players)
 
-        while (true) {
+        while (!receiveCardAllPlayers.isAllPlayerTurnOff()) {
             receiveCardAllPlayers = receiveCardAllPlayers(deck, players)
-            if (receiveCardAllPlayers.isAllPlayerTurnOff()) {
-                break
-            }
         }
         return receiveCardAllPlayers
     }
@@ -55,9 +53,13 @@ class BlackjackController() {
         val name = player.getPlayerName().name.toString()
         var receivedCardPlayers = players
         var receiveCardPlayer = player
-        while (InputView.askGamerReceiveMoreCard(name) != PLAYER_TURN_OFF_INPUT) {
-            receiveCardPlayer = receiveCardPlayer.receiveCard(deck.drawCard())
-            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, receiveCardPlayer.turnOn())
+        while (isPlayerTurnOff(name)) {
+            val update = receiveCardPlayer.receiveCard(deck.drawCard())
+            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, update)
+
+            val updatedStatus = update.turnOn()
+            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(update, updatedStatus)
+            receiveCardPlayer = updatedStatus
             OutputView.printCards(receiveCardPlayer)
         }
         receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, receiveCardPlayer.turnOff())
@@ -65,9 +67,10 @@ class BlackjackController() {
         return receivedCardPlayers
     }
 
+    private fun isPlayerTurnOff(name: String) = InputView.askGamerReceiveMoreCard(name) != PLAYER_TURN_OFF_INPUT
+
     companion object {
         private const val INIT_RECEIVE_CARD_COUNT = 2
         private const val PLAYER_TURN_OFF_INPUT = "n"
-        private const val PLAYER_TURN_ON_INPUT = "y"
     }
 }
