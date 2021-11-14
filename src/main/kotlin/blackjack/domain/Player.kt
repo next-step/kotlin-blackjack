@@ -1,11 +1,11 @@
 package blackjack.domain
 
 interface Player {
-    fun receiveCard(card: Card): Gamer
+    fun receiveCard(card: Card): Player
 
-    fun turnOff(): Gamer
+    fun turnOff(): Player
 
-    fun turnOn(): Gamer
+    fun turnOn(): Player
 
     fun isMyTurn(): Boolean
 

@@ -9,20 +9,43 @@ object OutputView {
         val initPhasePlayers = players.players
         val names = initPhasePlayers.joinToString() { it.getPlayerName().name.toString() }
         println("$names$PRINT_CARD_INIT_PHASE")
-        printCards(initPhasePlayers)
+        printPlayersCards(initPhasePlayers)
     }
 
-    fun printCards(players: List<Player>) {
+    fun printPlayingPhase(players: Players) {
+        val playingPhasePlayers = players.players
+        printCardWithPoint(playingPhasePlayers)
+    }
+
+    fun printCards(player: Player) {
+        val (playerName, cardResult) = getCardResult(player)
+        println("$playerName: $cardResult")
+    }
+
+    private fun printPlayersCards(players: List<Player>) {
         players.forEach { player ->
-            val playerName = player.getPlayerName().name
-            val playerCards = player.openCards().cards
-            val stringBuilder = StringBuilder()
-            stringBuilder.apply {
-                append(playerCards.joinToString() { it.denomination.mark + it.suit.value })
-            }
-            println("$playerName: $stringBuilder")
+            val (playerName, cardResult) = getCardResult(player)
+            println("$playerName: $cardResult")
         }
     }
 
+    private fun printCardWithPoint(players: List<Player>) {
+        players.forEach { player ->
+            val (playerName, cardResult) = getCardResult(player)
+            println("$playerName: $cardResult $PRINT_POINT_RESULT ${player.getHighestPoint()}")
+        }
+    }
+
+    private fun getCardResult(player: Player): Pair<String?, StringBuilder> {
+        val playerName = player.getPlayerName().name
+        val playerCards = player.openCards().cards
+        val cardResult = StringBuilder()
+        cardResult.apply {
+            append(playerCards.joinToString() { it.denomination.mark + it.suit.value })
+        }
+        return Pair(playerName, cardResult)
+    }
+
     private const val PRINT_CARD_INIT_PHASE = "에게 2장을 나누었습니다."
+    private const val PRINT_POINT_RESULT = "- 결과:"
 }

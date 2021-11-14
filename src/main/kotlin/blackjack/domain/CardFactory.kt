@@ -11,7 +11,7 @@ object CardFactory : CardGenerator {
     private fun MutableList<Card>.generateFromSuits() {
         enumValues<Suit>().map {
             addToCards(this, it)
-        }.shuffled().toList()
+        }
     }
 
     private fun addToCards(

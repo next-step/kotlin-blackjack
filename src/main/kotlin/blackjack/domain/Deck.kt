@@ -11,7 +11,7 @@ class Deck() {
 
     private fun generateCards(): Stack<Card> {
         return Stack<Card>().apply {
-            addAll(CardFactory.generateCards())
+            addAll(CardFactory.generateCards().shuffled())
         }
     }
 }

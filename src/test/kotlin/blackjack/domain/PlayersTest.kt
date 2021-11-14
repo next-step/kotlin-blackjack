@@ -40,4 +40,13 @@ internal class PlayersTest {
 
         assertThat(actual).allMatch { !it.openCards().isEmpty() }
     }
+
+    @Test
+    fun `플레이어가 모두 종료상태라면 true를 아니라면 false를 리턴한다`() {
+        val givenGamer1 = Gamer(Name("player1"))
+        val givenGamer2 = Gamer(Name("player2"))
+        val players = Players(listOf(givenGamer1, givenGamer2))
+
+        assertThat(players.isAllPlayerTurnOff()).isTrue
+    }
 }
