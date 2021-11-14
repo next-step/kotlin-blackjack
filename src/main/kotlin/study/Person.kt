@@ -9,8 +9,8 @@ data class Person(
 
     class Builder(private var name: String) {
         var company: String? = null
-        var skills: Skills = Skills.EMPTY
-        var languages: Languages = Languages.EMPTY
+        var skills: Skills = Skills.empty()
+        var languages: Languages = Languages.empty()
 
         fun skills(initializer: Skills.() -> Unit): Builder = apply {
             this.skills = Skills().apply(initializer)

@@ -11,6 +11,6 @@ class Languages(languages: List<Language> = emptyList()) {
     operator fun contains(language: Language): Boolean = languages.contains(language)
 
     companion object {
-        val EMPTY = Languages()
+        fun empty() = Languages()
     }
 }

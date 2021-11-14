@@ -15,6 +15,6 @@ class Skills(skills: List<Skill> = emptyList()) {
     operator fun contains(skill: Skill): Boolean = skills.contains(skill)
 
     companion object {
-        val EMPTY = Skills()
+        fun empty() = Skills()
     }
 }
