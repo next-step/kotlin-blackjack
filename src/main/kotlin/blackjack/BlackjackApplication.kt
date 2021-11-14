@@ -18,9 +18,9 @@ fun main() {
 
     OutputView.printStartResult(players)
 
-    val cardReceivedPlayers = divideCards(players, cardsDeck)
+    divideCards(players, cardsDeck)
 
-    OutputView.printResult(cardReceivedPlayers)
+    OutputView.printResult(players)
 }
 
 private fun initPlayers(): List<Player> {
@@ -33,8 +33,8 @@ private fun initPlayers(): List<Player> {
 private fun divideCards(
     players: List<Player>,
     cardsDeck: CardsDeck,
-): List<Player> {
-    return players.map { player ->
+) {
+    players.forEach { player ->
         var wantMoreCard = true
 
         while (player.getCardSum() <= 21 && wantMoreCard) {
@@ -44,8 +44,6 @@ private fun divideCards(
 
             OutputView.printPlayerCard(player)
         }
-
-        player
     }
 }
 
