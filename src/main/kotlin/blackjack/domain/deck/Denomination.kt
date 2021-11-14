@@ -22,9 +22,5 @@ enum class Denomination(
         fun isAce(symbol: String): Boolean {
             return ACE.symbol == symbol
         }
-
-        fun isDrawingCard(symbol: String): Boolean {
-            return listOf(KING.symbol, QUEEN.symbol, JACK.symbol).contains(symbol)
-        }
     }
 }
