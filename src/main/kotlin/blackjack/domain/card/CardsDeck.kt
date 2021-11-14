@@ -11,15 +11,19 @@ class CardsDeck {
                 denomination = cardDenomination
             )
         }
-    }.shuffled()
-
-    private var dividedCount = 0
+    }
+        .shuffled()
+        .toMutableList()
 
     fun divide(): Card {
-        if (dividedCount >= cards.size) {
+        if (cards.size == ZERO) {
             throw CardExhaustException("카드가 모두 소진되었습니다.")
         }
 
-        return cards[dividedCount++]
+        return cards.removeFirst()
+    }
+
+    companion object {
+        private const val ZERO = 0
     }
 }
