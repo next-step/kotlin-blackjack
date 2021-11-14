@@ -14,7 +14,7 @@ class CardsTest {
         val cardsSize = cards.getSize()
 
         // then
-        assertThat(cardsSize).isEqualTo(41)
+        assertThat(cardsSize).isEqualTo(52)
     }
 
     @Test

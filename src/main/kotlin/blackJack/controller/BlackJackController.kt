@@ -27,31 +27,28 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun receiveCard(player: Player, playingCard: PlayingCard): Player {
-        var _player = player
-        val playerStatus = _player.status.decisionStatus
+        val playerStatus = player.getPlayerDecisionStatus()
         if (playerStatus !is BlackJack) {
-            _player = continuousReceiveCard(_player, playingCard)
+            return continuousReceiveCard(player, playingCard)
         }
-        return _player
+        return player
     }
 
     private fun continuousReceiveCard(player: Player, playingCard: PlayingCard): Player {
-        var _player = player
-        while (_player.status.ableGetACard()) {
-            val isContinue = inputView.doYouWantCardView(PlayerDto.of(_player))
-            _player = updatePlayerStatus(isContinue, _player, playingCard)
+        while (player.getAbleReceivedCard()) {
+            val isContinue = inputView.doYouWantCardView(PlayerDto.of(player))
+            return updatePlayerStatus(isContinue, player, playingCard)
         }
-        return _player
+        return player
     }
 
     private fun updatePlayerStatus(isContinue: Boolean, player: Player, playingCard: PlayingCard): Player {
-        var _player = player
         if (isContinue) {
-            _player = _player.receiveCard(playingCard.drawCard())
-            resultView.receiveCard(PlayerDto.of(_player))
+            player.receiveCard(playingCard.drawCard())
+            resultView.receiveCard(PlayerDto.of(player))
         } else {
-            _player = _player.noReceiveCard()
+            player.noReceiveCard()
         }
-        return _player
+        return player
     }
 }

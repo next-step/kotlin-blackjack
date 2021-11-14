@@ -26,7 +26,7 @@ class PlayerDto(val name: String, val cards: String, val score: Int) {
     companion object {
         fun of(player: Player): PlayerDto {
             val name = player.playerName
-            val cards = player.status.cards.toList().joinToString {
+            val cards = player.getCards().toList().joinToString {
                 "${it.denomination.score}${it.suit}"
             }
             val score = player.status.getCurrentScore()

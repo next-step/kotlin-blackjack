@@ -17,7 +17,8 @@ class Players(private val players: List<Player>) {
         return if (n <= 0) {
             player
         } else {
-            factorial(n - 1, player.receiveCard(playingCard.drawCard()), playingCard)
+            player.receiveCard(playingCard.drawCard())
+            factorial(n - 1, player, playingCard)
         }
     }
 

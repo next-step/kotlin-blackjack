@@ -10,8 +10,10 @@ class PlayerTest {
     fun `플레이어는 이름이 지정되어 있고, 카드를 가지고 있다`() {
         // given
         val player = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
+
+        // when
+        player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
 
         // then
         assertAll({
@@ -28,8 +30,8 @@ class PlayerTest {
         // when
         val actual = runCatching {
             player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                .receiveCard(Card(Suit.SPADES, Denomination.KING))
-                .receiveCard(Card(Suit.SPADES, Denomination.KING))
+            player.receiveCard(Card(Suit.SPADES, Denomination.KING))
+            player.receiveCard(Card(Suit.SPADES, Denomination.KING))
         }.exceptionOrNull()
 
         // then
@@ -40,8 +42,8 @@ class PlayerTest {
     fun `플레이어의 현재 점수는 11점이다`() {
         // given
         val player = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
+        player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
 
         // when
         val currentScore = player.status.getCurrentScore()
@@ -53,10 +55,10 @@ class PlayerTest {
     @Test
     fun `플레이어의 현재 점수는 11점이면 21이하이기 때문에 카드를 더 받을 수 있다 해당 상태는 히트이다`() {
         // given
-        val playerStatus = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
-            .status
+        val player = Player.of("김형준")
+        player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        val playerStatus = player.status
 
         // when
         val decisionStatus = playerStatus.decisionStatus
@@ -73,13 +75,13 @@ class PlayerTest {
     fun `플레이어의 현재 점수는 11점이면 21점이하면 플레이어는 카드를 안받을 수 있다 안받는 다면 상태는 스테이이다`() {
         // given
         val noWantedPlayer = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
-            .status.noWantReceiveCard()
+        noWantedPlayer.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        noWantedPlayer.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        val noWantReceiveCard = noWantedPlayer.status.noWantReceiveCard()
 
         // when
-        val decisionStatus = noWantedPlayer.decisionStatus
-        val isContinue = noWantedPlayer.ableGetACard()
+        val decisionStatus = noWantReceiveCard.decisionStatus
+        val isContinue = noWantReceiveCard.ableGetACard()
 
         // then
         assertAll({
@@ -91,11 +93,11 @@ class PlayerTest {
     @Test
     fun `플레이어의 현재 점수가 21점이면 플레이어의 상태는 블랙잭이다`() {
         // given
-        val playerStatus = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
-            .receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
-            .status
+        val player = Player.of("김형준")
+        player.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        player.receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
+        val playerStatus = player.status
 
         // when
         val decisionStatus = playerStatus.decisionStatus
@@ -111,11 +113,12 @@ class PlayerTest {
     @Test
     fun `플레이어의 현재 점수는 22점이면 21이상이기 때문에 카드를 더 받을 수 있다 해당 상태는 버스트이다`() {
         // given
-        val playerStatus = Player.of("김형준")
-            .receiveCard(Card(Suit.HEARTS, Denomination.TWO))
-            .receiveCard(Card(Suit.SPADES, Denomination.KING))
-            .receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
-            .status
+        val player = Player.of("김형준")
+        player.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
+        player.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        player.receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
+
+        val playerStatus = player.status
 
         // when
         val decisionStatus = playerStatus.decisionStatus
