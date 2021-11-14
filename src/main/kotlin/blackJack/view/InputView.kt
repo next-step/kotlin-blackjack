@@ -13,7 +13,11 @@ object InputView {
         println("${playerDto.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readLine()!!) {
             "y" -> true
-            else -> false
+            "n" -> false
+            else -> {
+                println("y나 n만 가능합니다")
+                return doYouWantCardView(playerDto)
+            }
         }
     }
 }
