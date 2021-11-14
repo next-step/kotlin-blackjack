@@ -1,7 +1,6 @@
 package blackJack.controller
 
 import blackJack.domain.Player
-import blackJack.domain.PlayerDecision
 import blackJack.domain.Players
 import blackJack.domain.PlayingCard
 import blackJack.dto.PlayerDto
@@ -19,35 +18,32 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         resultView.receiveTwoCard(PlayersDto.of(startedPlayer))
 
         startedPlayer.toList().map {
-            val player = receiveCard(it, playingCard)
-            PlayerDto.of(player)
+            receiveCard(it, playingCard)
+            PlayerDto.of(it)
         }.forEach {
             resultView.gameResult(it)
         }
     }
 
-    private fun receiveCard(player: Player, playingCard: PlayingCard): Player {
+    private fun receiveCard(player: Player, playingCard: PlayingCard) {
         if (!player.isBlackJackPlayer()) {
-            return continuousReceiveCard(player, playingCard)
+            continuousReceiveCard(player, playingCard)
         }
-        return player
     }
 
-    private fun continuousReceiveCard(player: Player, playingCard: PlayingCard): Player {
+    private fun continuousReceiveCard(player: Player, playingCard: PlayingCard) {
         while (player.getAbleReceivedCard()) {
             val isContinue = inputView.doYouWantCardView(PlayerDto.of(player))
-            return updatePlayerStatus(isContinue, player, playingCard)
+            updatePlayerStatus(isContinue, player, playingCard)
         }
-        return player
     }
 
-    private fun updatePlayerStatus(isContinue: Boolean, player: Player, playingCard: PlayingCard): Player {
+    private fun updatePlayerStatus(isContinue: Boolean, player: Player, playingCard: PlayingCard) {
         if (isContinue) {
             player.receiveCard(playingCard.drawCard())
             resultView.receiveCard(PlayerDto.of(player))
         } else {
             player.noReceiveCard()
         }
-        return player
     }
 }
