@@ -6,7 +6,12 @@ data class Player(
     val name: String,
 ) {
 
+    init {
+        require(name.isNotBlank()) { "이름은 공백제외 1글자 이상이어야 합니다." }
+    }
+
     private var _cards = mutableListOf<Card>()
+
     val cards: List<Card>
         get() {
             return _cards.toList()

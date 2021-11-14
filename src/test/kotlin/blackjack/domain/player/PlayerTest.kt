@@ -5,6 +5,9 @@ import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardPattern
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerTest {
     @Test
@@ -42,5 +45,24 @@ class PlayerTest {
         val actual = player.getCardSum()
 
         assertEquals(21, actual)
+    }
+
+    @ValueSource(strings = ["", " "])
+    @ParameterizedTest
+    fun `Player 이름 빈값, 공백일때 exception`(name: String) {
+        assertThrows<IllegalArgumentException> {
+            Player(name)
+        }
+    }
+
+    @Test
+    fun `카드를 추가하면 카드가 1장 추가된다`() {
+        val player = Player("one")
+
+        player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
+
+        val actual = player.cards
+
+        assertEquals(1, actual.size)
     }
 }
