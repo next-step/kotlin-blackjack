@@ -11,7 +11,9 @@ class Participant(
         private const val DELIMITER_NAME = ","
         fun addPerson(name: String?): Participant {
             require(!name.isNullOrEmpty())
-            val list = name.split(DELIMITER_NAME).map { Person(name = it) }
+            val list = name
+                .split(DELIMITER_NAME)
+                .map { Person(name = it) }
             return Participant(list)
         }
     }

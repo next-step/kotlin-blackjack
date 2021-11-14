@@ -15,13 +15,16 @@ object CardsDeck {
     private val mutableCardList = originCardTotalList.toMutableList()
 
     fun takeCard(takeNUmber: Int): List<Card> {
-        val cards = mutableCardList.shuffled().take(takeNUmber)
+        val cards = mutableCardList
+            .shuffled()
+            .take(takeNUmber)
         mutableCardList.removeAll(cards)
         return cards
     }
 
     private fun getCardNumberList(cardType: CardType): List<Card> = CardNumber
         .values()
+        .asSequence()
         .map { Card(cardType, it) }
         .toList()
 }
