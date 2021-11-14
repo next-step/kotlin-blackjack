@@ -25,14 +25,14 @@ value class Cards(private val cards: List<Card>) {
     fun drawRandomCard() = cards.random()
 
     companion object {
-        private const val DUPLICATE_ERROR = "중복 된 카드가 있습니다."
-        private val denominations = Denomination.values()
-        private val suits = Suit.values()
-
         fun create(): Cards = Cards(makeCards())
 
         private fun makeCards(): List<Card> = suits.map { suit ->
             denominations.map { denomination -> Card(suit, denomination) }
         }.flatten()
+
+        private const val DUPLICATE_ERROR = "중복 된 카드가 있습니다."
+        private val denominations = Denomination.values()
+        private val suits = Suit.values()
     }
 }

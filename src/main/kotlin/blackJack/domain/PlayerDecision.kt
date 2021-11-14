@@ -16,7 +16,6 @@ interface PlayerDecision {
             }
         }
 
-
         private const val MIN_NUMBER = 0
         private const val MAX_NUMBER = 20
         private const val BLACKJACK = 21
