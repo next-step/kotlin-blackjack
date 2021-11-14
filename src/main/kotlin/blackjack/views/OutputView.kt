@@ -8,8 +8,10 @@ object OutputView {
     fun printInitPhase(players: Players) {
         val initPhasePlayers = players.players
         val names = initPhasePlayers.joinToString() { it.getPlayerName().name.toString() }
+        println()
         println("$names$PRINT_CARD_INIT_PHASE")
         printPlayersCards(initPhasePlayers)
+        println()
     }
 
     fun printPlayingPhase(players: Players) {
@@ -23,16 +25,17 @@ object OutputView {
     }
 
     private fun printPlayersCards(players: List<Player>) {
-        players.forEach { player ->
-            val (playerName, cardResult) = getCardResult(player)
+        players.forEach {
+            val (playerName, cardResult) = getCardResult(it)
             println("$playerName: $cardResult")
         }
     }
 
     private fun printCardWithPoint(players: List<Player>) {
-        players.forEach { player ->
-            val (playerName, cardResult) = getCardResult(player)
-            println("$playerName: $cardResult $PRINT_POINT_RESULT ${player.getHighestPoint()}")
+        println()
+        players.forEach {
+            val (playerName, cardResult) = getCardResult(it)
+            println("$playerName: $cardResult $PRINT_POINT_RESULT ${it.getHighestPoint()}")
         }
     }
 

@@ -1,5 +1,11 @@
 package blackjack.domain
 
+fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
+    return map {
+        if (block(it)) newValue else it
+    }
+}
+
 data class Players(val players: List<Player>) : List<Player> by players {
 
     fun receiveCardFromDeck(deck: Deck): Players {
@@ -11,8 +17,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
     }
 
     fun updatePlayerStatus(before: Player, after: Player): Players {
-        val players1 = players - before
-        return Players(players1 + after)
+        return Players(players.replace(after) { it == before })
     }
 
     init {

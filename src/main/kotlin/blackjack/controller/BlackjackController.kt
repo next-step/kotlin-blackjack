@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Deck
 import blackjack.domain.Names
+import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.views.InputView
 import blackjack.views.OutputView
@@ -41,18 +42,26 @@ class BlackjackController() {
     private fun receiveCardAllPlayers(deck: Deck, players: Players): Players {
         var receivedCardPlayers = players.copy()
         for (player in receivedCardPlayers) {
-            val name = player.getPlayerName().name.toString()
-            val receiveCardAnswer = InputView.askGamerReceiveMoreCard(name)
-            if (receiveCardAnswer == PLAYER_TURN_ON_INPUT) {
-                val receiveCardPlayer = player.receiveCard(deck.drawCard())
-                receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(player, receiveCardPlayer.turnOn())
-                OutputView.printCards(receiveCardPlayer)
-            }
-            if (receiveCardAnswer == PLAYER_TURN_OFF_INPUT) {
-                receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(player, player.turnOff())
-                OutputView.printCards(player)
-            }
+            receivedCardPlayers = addMoreCards(player, deck, receivedCardPlayers)
         }
+        return receivedCardPlayers
+    }
+
+    private fun addMoreCards(
+        player: Player,
+        deck: Deck,
+        players: Players
+    ): Players {
+        val name = player.getPlayerName().name.toString()
+        var receivedCardPlayers = players
+        var receiveCardPlayer = player
+        while (InputView.askGamerReceiveMoreCard(name) != PLAYER_TURN_OFF_INPUT) {
+            receiveCardPlayer = receiveCardPlayer.receiveCard(deck.drawCard())
+            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, receiveCardPlayer.turnOn())
+            OutputView.printCards(receiveCardPlayer)
+        }
+        receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, receiveCardPlayer.turnOff())
+        OutputView.printCards(receiveCardPlayer)
         return receivedCardPlayers
     }
 
