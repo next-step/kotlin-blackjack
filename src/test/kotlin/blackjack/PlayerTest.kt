@@ -20,4 +20,13 @@ class PlayerTest {
     fun `플레이어를 비어있는 이름으로 만들면 RuntimeException 예외가 발생한다`() {
         assertThrows<RuntimeException> { Player("", Cards.empty()) }
     }
+
+    @Test
+    fun `플레이어는 카드를 받을 수 있다`() {
+        assertThat(
+            Player("laco", Cards.empty())
+                .receive(Card(Denomination.ACE, Suit.HEART))
+                .cards
+        ).isEqualTo(Cards(listOf(Card(Denomination.ACE, Suit.HEART))))
+    }
 }
