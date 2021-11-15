@@ -3,6 +3,7 @@ package blackjack
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
 
@@ -13,5 +14,10 @@ class PlayerTest {
             { assertThat(player.name).isEqualTo("laco") },
             { assertThat(player.cards).isEqualTo(Cards.empty()) }
         )
+    }
+
+    @Test
+    fun `플레이어를 비어있는 이름으로 만들면 RuntimeException 예외가 발생한다`() {
+        assertThrows<RuntimeException> { Player("", Cards.empty()) }
     }
 }
