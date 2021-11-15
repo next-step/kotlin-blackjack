@@ -45,4 +45,15 @@ class CardsTest {
     fun `비어있는지 확인할 수 있다`() {
         assertThat(Cards.empty().isEmpty()).isTrue
     }
+
+    @Test
+    fun `가장 위에 있는 카드를 뽑을 수 있다`() {
+        assertThat(
+            Cards.empty()
+                .add(Card(Denomination.ACE, Suit.CLOVER))
+                .add(Card(Denomination.ACE, Suit.HEART))
+                .draw()
+                .peek()
+        ).isEqualTo(Card(Denomination.ACE, Suit.HEART))
+    }
 }

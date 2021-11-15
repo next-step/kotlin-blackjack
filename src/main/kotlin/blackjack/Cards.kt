@@ -12,6 +12,8 @@ data class Cards(private val cards: List<Card>) {
 
     fun peek(): Card? = cards.firstOrNull()
 
+    fun draw(): Cards = Cards(cards.drop(1))
+
     fun isEmpty(): Boolean = size == 0
 
     operator fun contains(card: Card): Boolean = card in cards
