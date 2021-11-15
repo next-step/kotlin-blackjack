@@ -15,12 +15,20 @@ data class Person(
     val cardList: List<Card>
         get() = _cardList.toList()
 
-    fun isTakeMoreCard(): Boolean = MAX_TOTAL_NUMBER > getTotalCount(_cardList)
+    private fun isCloseMaxIntMoreThenMinNumber(maxInt: Int, maxCardNumber: Int, minCardNumber: Int): Boolean =
+        abs(maxInt - maxCardNumber) < abs(maxInt - minCardNumber)
 
-    fun getResultNumber(): Int {
-        val minCardNumber = getTotalCount(_cardList)
-        val maxCardNumber = getTotalCount(_cardList, true)
-        if (!exceedMaximumCardNumber(maxCardNumber) && abs(MAX_TOTAL_NUMBER - maxCardNumber) < abs(MAX_TOTAL_NUMBER - minCardNumber)) {
+    fun isTakeMoreCard(maxInt: Int): Boolean = maxInt > getTotalCount(_cardList)
+
+    fun getResultNumber(maxInt: Int): Int {
+        val minCardNumber = getTotalCount(_cardList, isMaxNumber = false)
+        val maxCardNumber = getTotalCount(_cardList, isMaxNumber = true)
+        if (!exceedMaximumCardNumber(maxInt, maxCardNumber) && isCloseMaxIntMoreThenMinNumber(
+                maxInt,
+                maxCardNumber,
+                minCardNumber
+            )
+        ) {
             return maxCardNumber
         }
         return minCardNumber
@@ -31,13 +39,12 @@ data class Person(
     }
 
     companion object {
-        const val MAX_TOTAL_NUMBER = 21
 
         fun getTotalCount(list: List<Card>, isMaxNumber: Boolean = false): Int =
             list
                 .map { it.number }
                 .sumOf { CardNumber.getNumberValue(it, isMaxNumber) }
 
-        fun exceedMaximumCardNumber(sum: Int) = sum > MAX_TOTAL_NUMBER
+        fun exceedMaximumCardNumber(maxInt: Int, sum: Int) = sum > maxInt
     }
 }

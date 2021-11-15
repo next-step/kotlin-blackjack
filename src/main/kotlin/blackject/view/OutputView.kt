@@ -12,7 +12,7 @@ object OutputView {
         println("${person.name}카드: ${person.cardList.joinToString { it.cardName }}")
     }
 
-    fun gameResult(person: Person) {
-        println("${person.name}카드: ${person.cardList.joinToString { it.cardName }} - 결과: ${person.getResultNumber()}")
+    fun gameResult(person: Person, maxNumber: Int) {
+        println("${person.name}카드: ${person.cardList.joinToString { it.cardName }} - 결과: ${person.getResultNumber(maxNumber)}")
     }
 }

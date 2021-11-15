@@ -2,14 +2,18 @@ package blackject.controller
 
 import blackject.model.Participant
 import blackject.model.Person
+import blackject.model.Rule
 import blackject.model.card.CardsDeck
 import blackject.view.InputView
 import blackject.view.OutputView
 
-class BlackjectController {
+class BlackjectController(
+    private val rule: Rule,
+    private val cardsDeck: CardsDeck
+) {
     fun start() {
         val persons = getParticipant()
-        OutputView.printGivenCard(persons, CardsDeck.NUMBER_INIT_CARD)
+        OutputView.printGivenCard(persons, cardsDeck.NUMBER_INIT_CARD)
         persons
             .forEach {
                 giveCard(it, CardsDeck.NUMBER_INIT_CARD)
@@ -18,7 +22,7 @@ class BlackjectController {
         persons
             .forEach { askMoreCard(InputView.inputAnswerMoreCard(it.name), it) }
         persons
-            .forEach { OutputView.gameResult(it) }
+            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER) }
     }
 
     private fun getParticipant(): List<Person> {
@@ -33,7 +37,7 @@ class BlackjectController {
     private fun askMoreCard(answer: String?, person: Person) {
         when (isAnswerYes(answer)) {
             true -> {
-                if (!person.isTakeMoreCard()) return
+                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
                 giveCard(person, CardsDeck.NUMBER_ONE_TIME)
                 OutputView.printCardListOfPerson(person)
                 askMoreCard(InputView.inputAnswerMoreCard(person.name), person)

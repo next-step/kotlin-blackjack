@@ -6,6 +6,7 @@ package blackject.model.card
 object CardsDeck {
     const val NUMBER_INIT_CARD = 2
     const val NUMBER_ONE_TIME = 1
+
     val originCardTotalList: List<Card> = CardType
         .values()
         .flatMap { getCardNumberList(it) }
