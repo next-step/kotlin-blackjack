@@ -1,4 +1,4 @@
-package blackjack.service
+package blackjack.domain
 
 import blackjack.domain.PlayerCards.Companion.MAXIMUM_SUM_OF_CARD_NUMBERS
 

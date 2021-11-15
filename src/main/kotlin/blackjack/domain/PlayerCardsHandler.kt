@@ -1,13 +1,10 @@
-package blackjack.service
+package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.PlayerCards
-
-class PlayerCardsHandler: ParticipantCardsHandler {
-    private val cardAdditionDecider = PlayerCardAdditionDecider()
-    private val resultCalculator = ResultCalculator()
-    private val cards = PlayerCards()
-
+class PlayerCardsHandler(
+    private val cards: ParticipantCards,
+    private val cardAdditionDecider: ParticipantCardAdditionDecider,
+    private val resultCalculator: ResultCalculator
+) : ParticipantCardsHandler {
     override fun addCard(card: Card) {
         cards.add(card)
     }

@@ -1,13 +1,12 @@
 package blackjack.domain
 
-import blackjack.service.PlayerCardsHandler
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class PlayerCardsHandlerTest {
     @Test
     fun `addCard() 메소드를 호출하면 카드를 추가할 수 있다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.TEN)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.KING)
 
@@ -20,7 +19,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `ACE 카드 한장과 9 한장의 카드를 추가한 후 canReceiveAdditionalCard()를 호출하면 true를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.ACE)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.NINE)
 
@@ -32,7 +31,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `JACK 카드 한장과 QUEEN 한장의 카드를 추가한 후 canReceiveAdditionalCard()를 호출하면 true를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.JACK)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.QUEEN)
 
@@ -44,7 +43,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `ACE 카드 한장과 10 한장의 카드를 추가한 후 canReceiveAdditionalCard()를 호출하면 true를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.ACE)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.TEN)
 
@@ -56,7 +55,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `KING 카드 한장과 10 한장, TWO 한장의 카드를 추가한 후 canReceiveAdditionalCard()를 호출하면 false를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.KING)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.TEN)
         val thirdCard = Card(CardSymbol.CLUBS, CardNumber.TWO)
@@ -70,7 +69,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `CLUBS ACE 카드 한장을 추가한 후 getCardsString()를 호출하면 'A클로버' 를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.CLUBS, CardNumber.ACE)
         cardsHandler.addCard(firstCard)
 
@@ -80,7 +79,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `SPADE KING 카드 한장과 DIAMOND TEN 한장을 추가한 후 getCardsString()를 호출하면 'K스페이드, 10다이아몬드' 를 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.KING)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.TEN)
 
@@ -95,7 +94,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `ACE 카드 한장과 5카드 한장을 추가한 후 getCardsResultPoint()를 호출하면 16을 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.ACE)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.FIVE)
 
@@ -107,7 +106,7 @@ internal class PlayerCardsHandlerTest {
 
     @Test
     fun `KING 카드 한장과 9카드 한장을 추가한 후 getCardsResultPoint()를 호출하면 19을 리턴한다`() {
-        val cardsHandler = PlayerCardsHandler()
+        val cardsHandler = PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
         val firstCard = Card(CardSymbol.SPADE, CardNumber.KING)
         val secondCard = Card(CardSymbol.DIAMOND, CardNumber.NINE)
 

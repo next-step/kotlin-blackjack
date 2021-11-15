@@ -1,6 +1,4 @@
-package blackjack.service
-
-import blackjack.domain.Card
+package blackjack.domain
 
 interface ParticipantCardsHandler {
     fun addCard(card: Card)

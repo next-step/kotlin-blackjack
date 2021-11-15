@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.service.PlayerCardsHandler
 import blackjack.view.input.ConsoleInputView.Companion.NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO
 import blackjack.view.input.ConsoleInputView.Companion.PLAYER_NAME_DELIMITER
 
@@ -21,7 +20,12 @@ data class Players(val players: List<Player>) {
         }
 
         private fun buildPlayer(names: List<String>) = names
-            .map { Player(it.trim(), PlayerCardsHandler()) }
+            .map {
+                Player(
+                    it.trim(),
+                    PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
+                )
+            }
             .toList()
     }
 }

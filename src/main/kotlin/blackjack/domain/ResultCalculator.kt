@@ -1,8 +1,5 @@
-package blackjack.service
+package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumberValue
-import blackjack.domain.PlayerCards
 import kotlin.math.abs
 
 class ResultCalculator {

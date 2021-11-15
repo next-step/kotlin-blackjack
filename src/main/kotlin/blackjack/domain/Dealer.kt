@@ -2,8 +2,8 @@ package blackjack.domain
 
 class Dealer(private val deck: DealerCardDeck) {
     fun deliverBasicCards(players: Players) {
-        players.players.forEach {
-            player -> deliverBasicCards(player)
+        players.players.forEach { player ->
+            deliverBasicCards(player)
         }
     }
 
