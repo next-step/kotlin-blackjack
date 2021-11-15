@@ -18,11 +18,10 @@ class ScoreTest {
 
     @Test
     fun `점수가 21점이면 BlackJack이다`() {
-        val score = Score(Score.BLACK_JACK)
+        val score = Score.BLACK_JACK_SCORE
 
         assertThat(score.isBlackJack()).isTrue
         assertThat(score.isBust()).isFalse
-        assertThat(score.canHit()).isFalse
     }
 
     @ParameterizedTest
@@ -32,7 +31,6 @@ class ScoreTest {
 
         assertThat(score.isBlackJack()).isFalse
         assertThat(score.isBust()).isTrue
-        assertThat(score.canHit()).isFalse
     }
 
     @ParameterizedTest
@@ -42,7 +40,6 @@ class ScoreTest {
 
         assertThat(score.isBlackJack()).isFalse
         assertThat(score.isBust()).isFalse
-        assertThat(score.canHit()).isTrue
     }
 
     @ParameterizedTest

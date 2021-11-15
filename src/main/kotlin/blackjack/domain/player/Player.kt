@@ -4,16 +4,9 @@ import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Score
 
-class Player(val name: PlayerName, val hand: Hand = Hand.createEmpty()) {
+private const val PLAYER_FIRST_OPEN_COUNT = 2
 
-    val score: Score
-        get() = hand.score
-
-    fun hit(deck: Deck) {
-        check(canHit()) { "카드를 뽑을 수 없습니다." }
-
-        hand.add(deck.drawCard())
-    }
+class Player(name: PlayerName, hand: Hand = Hand.createEmpty()) : Gamer(name, hand) {
 
     fun hitIfYes(deck: Deck, answer: PlayerAnswer): DrawResult {
         if (!answer.hit) {
@@ -23,7 +16,8 @@ class Player(val name: PlayerName, val hand: Hand = Hand.createEmpty()) {
         return DrawResult(success)
     }
 
-    fun canHit(): Boolean = hand.canHit()
+    override fun canHit() = (score < Score.BLACK_JACK_SCORE)
+    override fun firstOpenCardsCount() = PLAYER_FIRST_OPEN_COUNT
 
     @JvmInline
     value class DrawResult(val success: Boolean)

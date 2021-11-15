@@ -1,14 +1,10 @@
 package blackjack.domain.card
 
 @JvmInline
-value class Score(val value: Int) {
+value class Score(val value: Int) : Comparable<Score> {
 
     init {
         require(value >= MIN_SCORE) { "점수는 $MIN_SCORE 이상이어야 합니다.." }
-    }
-
-    fun canHit(): Boolean {
-        return !isBlackJack() && !isBust()
     }
 
     fun isBlackJack(): Boolean {
@@ -32,12 +28,17 @@ value class Score(val value: Int) {
         return Score(value + other.value)
     }
 
+    override fun compareTo(other: Score): Int {
+        return compareValues(value, other.value)
+    }
+
     companion object {
-        const val BLACK_JACK = 21
+        private const val BLACK_JACK = 21
         private const val ACE_REVISE = 10
         private const val MIN_SCORE = 0
 
         val INITIAL = Score(MIN_SCORE)
+        val BLACK_JACK_SCORE = Score(BLACK_JACK)
     }
 }
 

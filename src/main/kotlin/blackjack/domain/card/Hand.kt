@@ -18,8 +18,6 @@ class Hand(cards: List<Card>) {
         _cards.add(card)
     }
 
-    fun canHit() = score.canHit()
-
     fun isBlackJack() = score.isBlackJack()
 
     fun isBust() = score.isBust()

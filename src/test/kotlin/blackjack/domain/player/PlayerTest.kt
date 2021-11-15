@@ -4,7 +4,6 @@ import blackjack.domain.card.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 @Suppress("NonAsciiCharacters")
 class PlayerTest {
@@ -28,23 +27,45 @@ class PlayerTest {
     }
 
     @Test
-    fun `Player가 Deck에서 카드를 뽑으면 Hand에 카드가 한 장 추가된다`() {
-        val player = Player(name)
+    fun `Player는 스코어가 블랙잭 스코어보다 작다면 hit할 수 있다`() {
+        val underBlackJackHand = Hand(listOf(
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+        ))
+        val player = Player(name, underBlackJackHand)
 
-        player.hit(deck)
+        val result = player.canHit()
 
-        assertThat(player.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(Hand(listOf(topOfDeck)))
+        assertThat(result).isTrue
     }
 
     @Test
-    fun `Player의 Hand가 hit할 수 없으면 카드를 뽑지 못한다`() {
-        val player = Player(name, hitImpossibleHand)
+    fun `Player는 스코어가 블랙잭 스코어와 같다면 hit할 수 없다`() {
+        val blackJackScoreHand = Hand(listOf(
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.ACE, Type.CLUB),
+        ))
+        val player = Player(name, blackJackScoreHand)
 
-        assertThrows<IllegalStateException> {
-            player.hit(deck)
-        }
+        val result = player.canHit()
+
+        assertThat(result).isFalse
+    }
+
+    @Test
+    fun `Player는 스코어가 블랙잭 스코어보다 크다면 hit할 수 없다`() {
+        val blackJackScoreHand = Hand(listOf(
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.ACE, Type.CLUB),
+            Card(Symbol.ACE, Type.CLUB),
+        ))
+        val player = Player(name, blackJackScoreHand)
+
+        val result = player.canHit()
+
+        assertThat(result).isFalse
     }
 
     @Test
