@@ -3,6 +3,7 @@ package blackjack.presentation
 import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 object BlackjackGame {
@@ -10,7 +11,7 @@ object BlackjackGame {
     private const val FIRST_CARD_DIVIDE_COUNT = 2
 
     fun start(
-        players: List<Participant>,
+        players: List<Player>,
         cardsDeck: CardsDeck,
     ): Players {
         val dealer = Dealer()
@@ -22,7 +23,7 @@ object BlackjackGame {
 
         return Players(
             dealer = dealer,
-            players = players
+            guest = players
         )
     }
 
@@ -35,5 +36,9 @@ object BlackjackGame {
         player.addCard(card)
 
         return player
+    }
+
+    fun match(players: Players) {
+        players.match()
     }
 }

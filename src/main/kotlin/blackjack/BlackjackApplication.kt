@@ -17,16 +17,16 @@ fun main() {
         initPlayers(),
         cardsDeck
     )
-    val dealer = BlackjackGame.start(
-        listOf(Dealer()),
-        cardsDeck
-    )
 
     OutputView.printStartResult(players)
 
-    divideCards(players.dealer, players.players, cardsDeck)
+    divideCards(players.dealer, players.guest, cardsDeck)
 
-    OutputView.printResult(players)
+    OutputView.printDivideResult(players)
+
+    BlackjackGame.match(players)
+
+    OutputView.printMatchResult(players)
 }
 
 private fun initPlayers(): List<Player> {

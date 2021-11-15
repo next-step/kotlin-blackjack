@@ -9,7 +9,7 @@ class PlayersTest {
     fun `getAllPlayers 를 호출할시 딜러를 포함한 모든 플레이어를 반환한다`() {
         val players = Players(
             dealer = Dealer(),
-            players = listOf(
+            guest = listOf(
                 Player("one"),
                 Player("two"),
             )
