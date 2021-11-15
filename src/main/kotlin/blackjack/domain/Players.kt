@@ -3,15 +3,15 @@ package blackjack.domain
 import blackjack.view.input.ConsoleInputView.Companion.NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO
 import blackjack.view.input.ConsoleInputView.Companion.PLAYER_NAME_DELIMITER
 
-data class Players(val players: List<Player>) {
+data class Players(val items: List<Player>) {
     init {
-        require(players.isNotEmpty()) { NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO }
+        require(items.isNotEmpty()) { NUMBER_OF_PLAYER_SHOULD_BE_LARGER_THAN_ZERO }
     }
 
-    operator fun get(index: Int): Player = players[index]
+    operator fun get(index: Int): Player = items[index]
 
     fun getNames(): String {
-        return players.joinToString { it.name }
+        return items.joinToString { it.name }
     }
 
     companion object {

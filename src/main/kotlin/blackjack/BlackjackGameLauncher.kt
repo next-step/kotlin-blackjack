@@ -14,7 +14,7 @@ class BlackjackGameLauncher(private val inputView: InputView, private val result
         dealer.deliverBasicCards(players)
         resultView.showDeliveredBasicCards(players)
 
-        players.players.forEach { player -> deliverAdditionalCards(dealer, player) }
+        players.items.forEach { player -> deliverAdditionalCards(dealer, player) }
 
         resultView.showPlayerResults(players)
     }

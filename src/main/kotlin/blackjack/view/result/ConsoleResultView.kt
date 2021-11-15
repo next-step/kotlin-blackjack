@@ -7,7 +7,7 @@ import blackjack.domain.Players
 class ConsoleResultView : ResultView {
     override fun showDeliveredBasicCards(players: Players) {
         println("%s에게 ${BASIC_CARD_NUMBER}장의 카드를 나누었습니다.".format(players.getNames()))
-        players.players.forEach {
+        players.items.forEach {
             showPlayerCards(it)
             println()
         }
@@ -23,7 +23,7 @@ class ConsoleResultView : ResultView {
     }
 
     override fun showPlayerResults(players: Players) {
-        players.players.forEach {
+        players.items.forEach {
             showPlayerCards(it)
             showPlayerResult(it)
         }

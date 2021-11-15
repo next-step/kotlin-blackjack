@@ -22,7 +22,7 @@ internal class PlayersTest {
         val players = Players.from(input)
 
         assertThat(players).isNotNull
-        assertThat(players.players.size).isEqualTo(2)
+        assertThat(players.items.size).isEqualTo(2)
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ internal class PlayersTest {
         val players = Players.from(input)
 
         assertThat(players).isNotNull
-        assertThat(players.players.size).isEqualTo(1)
-        assertThat(players.players[0].name).isEqualTo(input.trim())
+        assertThat(players.items.size).isEqualTo(1)
+        assertThat(players.items[0].name).isEqualTo(input.trim())
     }
 }
