@@ -2,7 +2,7 @@ package blackject.model
 
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
-import java.lang.Math.abs
+import kotlin.math.abs
 
 /**
  * 참가자 정보 관리 클래스
