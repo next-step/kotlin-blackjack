@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 data class Cards(private val cards: List<Card>) {
 

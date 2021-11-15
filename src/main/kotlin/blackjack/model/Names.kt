@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 @JvmInline
 value class Names(private val names: List<Name>) {

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 enum class Denomination(val symbol: String, val defaultScore: Int) {
     ACE("A", 1),

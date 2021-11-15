@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 data class Player(val name: Name, val cards: Cards) {
 

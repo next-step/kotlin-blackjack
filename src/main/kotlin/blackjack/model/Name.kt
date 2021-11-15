@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 @JvmInline
 value class Name private constructor(private val value: String) {
