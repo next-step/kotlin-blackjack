@@ -1,5 +1,6 @@
 package blackjack
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -15,5 +16,14 @@ class CardsTest {
                 )
             )
         }
+    }
+
+    @Test
+    fun `카드를 추가할 수 있다`() {
+        assertThat(
+            Cards.empty()
+                .add(Card(Denomination.ACE, Suit.CLOVER))
+                .contains(Card(Denomination.ACE, Suit.CLOVER))
+        ).isTrue
     }
 }
