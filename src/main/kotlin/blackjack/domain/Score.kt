@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.error.ScoreOutOfBoundsException
+
 class Score(val score: Int) {
 
     companion object {
@@ -7,6 +9,6 @@ class Score(val score: Int) {
         private const val MAXIMUM_SCORE = 32
         private val CACHE: Map<Int, Score> = (MINIMUM_SCORE..MAXIMUM_SCORE).associateWith { Score(it) }
 
-        fun from(score: Int): Score = CACHE[score] ?: throw IllegalArgumentException()
+        fun from(score: Int): Score = CACHE[score] ?: throw ScoreOutOfBoundsException(score)
     }
 }

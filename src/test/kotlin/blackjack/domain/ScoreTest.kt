@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.error.ScoreOutOfBoundsException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -38,6 +39,6 @@ class ScoreTest {
     fun `음수는 점수가 될 수 없다`(negativeNumber: Int) {
         val exception = assertThrows<ScoreOutOfBoundsException> { Score.from(negativeNumber) }
 
-        assertThat(exception.message).isEqualTo("'%s'는 스코어의 범위를 벗어난 값입니다".format(negativeNumber))
+        assertThat(exception.message).isEqualTo("'%s'는 스코어의 범위를 벗어난 값 입니다.".format(negativeNumber))
     }
 }
