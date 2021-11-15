@@ -40,4 +40,9 @@ class CardsTest {
                 .peek()
         ).isEqualTo(Card(Denomination.ACE, Suit.CLOVER))
     }
+
+    @Test
+    fun `비어있는지 확인할 수 있다`() {
+        assertThat(Cards.empty().isEmpty()).isTrue
+    }
 }
