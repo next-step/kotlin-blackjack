@@ -1,14 +1,17 @@
 package blackjack.domain
 
 class PlayerCards {
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
+
+    val cards: List<Card>
+        get() = _cards
 
     override fun toString(): String {
-        return cards.joinToString { it.toString() }
+        return _cards.joinToString { it.toString() }
     }
 
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     companion object {
