@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.RepetitionInfo
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @DisplayName("점수(Score)")
 class ScoreTest {
@@ -28,5 +31,13 @@ class ScoreTest {
             { assertThat(score).isNotNull },
             { assertThat(score).isExactlyInstanceOf(Score::class.java) },
         )
+    }
+
+    @ParameterizedTest(name = "입력걊: {0}")
+    @ValueSource(ints = [-1, -10, -100, Integer.MIN_VALUE])
+    fun `음수는 점수가 될 수 없다`(negativeNumber: Int) {
+        val exception = assertThrows<ScoreOutOfBoundsException> { Score.from(negativeNumber) }
+
+        assertThat(exception.message).isEqualTo("'%s'는 스코어의 범위를 벗어난 값입니다".format(negativeNumber))
     }
 }
