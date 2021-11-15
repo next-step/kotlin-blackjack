@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Deck(private val deck: Set<PlayingCard>) {
+@JvmInline
+value class Deck private constructor(private val _deck: Set<PlayingCard>) {
+    val deck: List<PlayingCard>
+        get() = _deck.shuffled()
 
     companion object {
         fun initialize(): Deck = Deck(
