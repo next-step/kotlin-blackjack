@@ -49,6 +49,6 @@ class ResultCalculator {
     fun isMaximumCardValuesCloserToBlackJack(
         sumOfMinimumCardValues: Int,
         sumOfMaximumCardValues: Int
-    ) =
-        abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMinimumCardValues) > abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMaximumCardValues)
+    ) = abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMinimumCardValues) >
+        abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMaximumCardValues)
 }
