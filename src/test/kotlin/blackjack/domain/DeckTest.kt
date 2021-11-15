@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -10,7 +10,7 @@ internal class DeckTest {
 
     @Test
     fun `초기화된 덱을 구성할 수 있다`() {
-        val deck: Deck = Deck.initialize()
+        val deck = Deck.initialize()
 
         assertAll(
             { assertThat(deck).isNotNull },

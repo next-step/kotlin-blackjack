@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-@DisplayName("카드(Deck)")
+@DisplayName("카드(PlayingCard)")
 internal class PlayingCardTest {
 
     @Test
