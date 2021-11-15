@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 data class Gamer(
     val name: Name,
@@ -18,7 +21,7 @@ data class Gamer(
         return Gamer(name, PlayerStatus.BURST, cards)
     }
 
-    override fun isMyTurn(): Boolean {
+    override fun isBurst(): Boolean {
         return playerStatus == PlayerStatus.BURST
     }
 

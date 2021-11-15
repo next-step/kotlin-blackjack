@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 object CardFactory : CardGenerator {
 

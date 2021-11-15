@@ -1,5 +1,9 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -51,6 +55,6 @@ internal class GamerTest {
         val givenCards = Cards.EMPTY
         val givenGamer = Gamer(givenName, givenStatus, givenCards)
 
-        assertThat(givenGamer.isMyTurn()).isTrue
+        assertThat(givenGamer.isBurst()).isTrue
     }
 }

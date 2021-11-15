@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 interface Player {
     fun receiveCard(card: Card): Player
@@ -7,7 +10,7 @@ interface Player {
 
     fun turnOn(): Player
 
-    fun isMyTurn(): Boolean
+    fun isBurst(): Boolean
 
     fun openCards(): Cards
 

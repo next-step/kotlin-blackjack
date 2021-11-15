@@ -1,9 +1,9 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
-import blackjack.domain.Names
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.Deck
+import blackjack.domain.player.Names
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.views.InputView
 import blackjack.views.OutputView
 
@@ -28,43 +28,40 @@ class BlackjackController() {
     }
 
     private fun playingPhase(deck: Deck, players: Players): Players {
-        lateinit var receiveCardAllPlayers: Players
-        receiveCardAllPlayers = receiveCardAllPlayers(deck, players)
+        lateinit var readyPlayers: Players
+        readyPlayers = players.turnToReady()
 
-        while (!receiveCardAllPlayers.isAllPlayerTurnOff()) {
-            receiveCardAllPlayers = receiveCardAllPlayers(deck, players)
+        while (!readyPlayers.isAllPlayerTurnOff()) {
+            readyPlayers = receiveCardAllPlayers(deck, players)
         }
-        return receiveCardAllPlayers
+        return readyPlayers
     }
 
     private fun receiveCardAllPlayers(deck: Deck, players: Players): Players {
-        var receivedCardPlayers = players.copy()
-        for (player in receivedCardPlayers) {
-            receivedCardPlayers = addMoreCards(player, deck, receivedCardPlayers)
+        var receivedCardPlayers = players
+        for (player in receivedCardPlayers.players) {
+            receivedCardPlayers = receiveCard(player, deck, receivedCardPlayers)
         }
         return receivedCardPlayers
     }
 
-    private fun addMoreCards(
+    private fun receiveCard(
         player: Player,
         deck: Deck,
         players: Players
     ): Players {
         val name = player.getPlayerName().name.toString()
-        var receivedCardPlayers = players
-        var receiveCardPlayer = player
+        var updatedPlayers = players
+        var myTurnPlayer = player
         while (isPlayerTurnOff(name)) {
-            val update = receiveCardPlayer.receiveCard(deck.drawCard())
-            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, update)
-
-            val updatedStatus = update.turnOn()
-            receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(update, updatedStatus)
-            receiveCardPlayer = updatedStatus
-            OutputView.printCards(receiveCardPlayer)
+            val result = updatedPlayers.receiveCards(myTurnPlayer, deck)
+            updatedPlayers = result.players
+            myTurnPlayer = result.player
+            OutputView.printCards(myTurnPlayer)
         }
-        receivedCardPlayers = receivedCardPlayers.updatePlayerStatus(receiveCardPlayer, receiveCardPlayer.turnOff())
-        OutputView.printCards(receiveCardPlayer)
-        return receivedCardPlayers
+        updatedPlayers = updatedPlayers.endPlayerTurn(myTurnPlayer)
+        OutputView.printCards(myTurnPlayer)
+        return updatedPlayers
     }
 
     private fun isPlayerTurnOff(name: String) = InputView.askGamerReceiveMoreCard(name) != PLAYER_TURN_OFF_INPUT

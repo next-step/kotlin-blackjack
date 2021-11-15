@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Cards internal constructor(val cards: List<Card>) : List<Card> by cards {
     init {

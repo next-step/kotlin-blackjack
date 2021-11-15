@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 /**
  * 카드 모양.

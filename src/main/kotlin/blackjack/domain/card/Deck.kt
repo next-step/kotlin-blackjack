@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import java.util.Stack
 
 class Deck() {
-    val cards = generateCards()
+    private val cards = generateCards()
 
     fun drawCard(): Card {
         return cards.pop()
