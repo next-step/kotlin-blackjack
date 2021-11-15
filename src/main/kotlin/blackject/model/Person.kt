@@ -9,7 +9,7 @@ import java.lang.Math.abs
  * */
 data class Person(
     val name: String,
-    val cardList: MutableList<Card> = mutableListOf()
+    private val cardList: MutableList<Card> = mutableListOf()
 ) {
 
     fun isTakeMoreCard(): Boolean = MAX_TOTAL_NUMBER > getTotalCount(cardList)
@@ -21,6 +21,10 @@ data class Person(
             return maxCardNumber
         }
         return minCardNumber
+    }
+
+    fun addCard(cards: List<Card>) {
+        cardList.addAll(0, cards)
     }
 
     companion object {

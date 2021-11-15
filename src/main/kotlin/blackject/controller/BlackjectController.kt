@@ -25,7 +25,7 @@ class BlackjectController {
 
     private fun giveCard(person: Person, cardCount: Int) {
         val cards = CardsDeck.takeCard(cardCount)
-        person.cardList.addAll(0, cards)
+        person.addCard(cards)
         OutputView.printCardListOfPerson(person)
     }
 
