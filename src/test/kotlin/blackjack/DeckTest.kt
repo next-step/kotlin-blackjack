@@ -27,4 +27,9 @@ class DeckTest {
     fun `덱의 가장 위에 있는 카드가 무엇인지 확인할 수 있다`() {
         assertThat(Deck.shuffled().peek()).isNotNull
     }
+
+    @Test
+    fun `덱의 가장 위에 있는 카드를 뽑을 수 있다`() {
+        assertThat(Deck.shuffled().draw().size).isEqualTo(51)
+    }
 }

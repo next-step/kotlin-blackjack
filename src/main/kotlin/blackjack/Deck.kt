@@ -8,6 +8,8 @@ class Deck private constructor(private val cards: Cards) {
 
     fun peek(): Card? = cards.peek()
 
+    fun draw(): Deck = Deck(cards.draw())
+
     companion object {
         fun shuffled(): Deck = Denomination.values()
             .asSequence()
