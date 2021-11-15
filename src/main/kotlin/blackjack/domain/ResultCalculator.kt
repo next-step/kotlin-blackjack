@@ -3,23 +3,23 @@ package blackjack.domain
 import kotlin.math.abs
 
 class ResultCalculator {
-    fun getCardsResultPoint(cards: List<Card>): Int {
-        if (hasAnyAceCard(cards)) {
-            return getResultForHavingAnyAceCard(cards)
+    fun getCardsResultPoint(playerCards: ParticipantCards): Int {
+        if (hasAnyAceCard(playerCards)) {
+            return getResultForHavingAnyAceCard(playerCards)
         }
 
-        return getSumOfMinimumCardValues(cards)
+        return getSumOfMinimumCardValues(playerCards)
     }
 
-    fun hasAnyAceCard(cards: List<Card>): Boolean {
-        return cards.any { card -> card.hasAce() }
+    fun hasAnyAceCard(playerCards: ParticipantCards): Boolean {
+        return playerCards.cards.any { card -> card.hasAce() }
     }
 
-    fun getSumOfMinimumCardValues(cards: List<Card>) = sumOfCardValues(cards)
+    fun getSumOfMinimumCardValues(playerCards: ParticipantCards) = sumOfCardValues(playerCards.cards)
 
-    fun getSumOfMaximumCardValues(cards: List<Card>): Int {
-        val firstAceCard = cards.firstOrNull { it.hasAce() }
-        val restCards = cards.filter { it != firstAceCard }
+    fun getSumOfMaximumCardValues(playerCards: ParticipantCards): Int {
+        val firstAceCard = playerCards.cards.firstOrNull { it.hasAce() }
+        val restCards = playerCards.cards.filter { it != firstAceCard }
 
         if (firstAceCard == null) {
             return sumOfCardValues(restCards)
@@ -31,13 +31,12 @@ class ResultCalculator {
     private fun sumOfCardValues(targetCards: List<Card>) = targetCards
         .sumOf { CardNumberValue.getValue(it.number.rank).value }
 
-    fun getResultForHavingAnyAceCard(cards: List<Card>): Int {
-        val sumOfMinimumCardValues = getSumOfMinimumCardValues(cards)
-        val sumOfMaximumCardValues = getSumOfMaximumCardValues(cards)
+    fun getResultForHavingAnyAceCard(playerCards: ParticipantCards): Int {
+        val sumOfMinimumCardValues = getSumOfMinimumCardValues(playerCards)
+        val sumOfMaximumCardValues = getSumOfMaximumCardValues(playerCards)
 
         if (!exceededMaximumCardValues(sumOfMaximumCardValues) &&
-            isMaximumCardValuesCloserToBlackJack(sumOfMinimumCardValues, sumOfMaximumCardValues)
-        ) {
+            isMaximumCardValuesCloserToBlackJack(sumOfMinimumCardValues, sumOfMaximumCardValues)) {
             return sumOfMaximumCardValues
         }
 

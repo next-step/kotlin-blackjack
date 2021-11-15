@@ -20,7 +20,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.KING))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(21)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(21)
     }
 
     @Test
@@ -31,7 +31,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.JACK))
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(20)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(20)
     }
 
     @Test
@@ -43,7 +43,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(21)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(21)
     }
 
     @Test
@@ -54,7 +54,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.TWO))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(13)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(13)
     }
 
     @Test
@@ -65,7 +65,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.ACE))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(12)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(12)
     }
 
     @Test
@@ -77,7 +77,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.HEART, CardNumber.ACE))
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(13)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(13)
     }
 
     @Test
@@ -90,7 +90,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
         cards.add(Card(CardSymbol.CLUBS, CardNumber.ACE))
 
-        assertThat(resultCalculator.getCardsResultPoint(cards.cards)).isEqualTo(14)
+        assertThat(resultCalculator.getCardsResultPoint(cards)).isEqualTo(14)
     }
 
     @Test
@@ -100,7 +100,7 @@ internal class ResultCalculatorTest {
         val cards = PlayerCards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
 
-        assertThat(resultCalculator.hasAnyAceCard(cards.cards)).isEqualTo(true)
+        assertThat(resultCalculator.hasAnyAceCard(cards)).isEqualTo(true)
     }
 
     @Test
@@ -110,7 +110,7 @@ internal class ResultCalculatorTest {
         val cards = PlayerCards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.TWO))
 
-        assertThat(resultCalculator.hasAnyAceCard(cards.cards)).isEqualTo(false)
+        assertThat(resultCalculator.hasAnyAceCard(cards)).isEqualTo(false)
     }
 
     @Test
@@ -119,7 +119,7 @@ internal class ResultCalculatorTest {
         val cards = PlayerCards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
 
-        assertThat(resultCalculator.getSumOfMinimumCardValues(cards.cards)).isEqualTo(1)
+        assertThat(resultCalculator.getSumOfMinimumCardValues(cards)).isEqualTo(1)
     }
 
     @Test
@@ -131,7 +131,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
         cards.add(Card(CardSymbol.CLUBS, CardNumber.ACE))
 
-        assertThat(resultCalculator.getSumOfMinimumCardValues(cards.cards)).isEqualTo(4)
+        assertThat(resultCalculator.getSumOfMinimumCardValues(cards)).isEqualTo(4)
     }
 
     @Test
@@ -142,7 +142,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.KING))
 
-        assertThat(resultCalculator.getSumOfMinimumCardValues(cards.cards)).isEqualTo(11)
+        assertThat(resultCalculator.getSumOfMinimumCardValues(cards)).isEqualTo(11)
     }
 
     @Test
@@ -152,7 +152,7 @@ internal class ResultCalculatorTest {
         val cards = PlayerCards()
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
 
-        assertThat(resultCalculator.getSumOfMaximumCardValues(cards.cards)).isEqualTo(11)
+        assertThat(resultCalculator.getSumOfMaximumCardValues(cards)).isEqualTo(11)
     }
 
     @Test
@@ -163,7 +163,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.KING))
 
-        assertThat(resultCalculator.getSumOfMaximumCardValues(cards.cards)).isEqualTo(21)
+        assertThat(resultCalculator.getSumOfMaximumCardValues(cards)).isEqualTo(21)
     }
 
     @Test
@@ -174,7 +174,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.JACK))
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
 
-        assertThat(resultCalculator.getSumOfMaximumCardValues(cards.cards)).isEqualTo(20)
+        assertThat(resultCalculator.getSumOfMaximumCardValues(cards)).isEqualTo(20)
     }
 
     @Test
@@ -185,7 +185,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.SPADE, CardNumber.ACE))
         cards.add(Card(CardSymbol.HEART, CardNumber.QUEEN))
 
-        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards.cards)).isEqualTo(21)
+        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards)).isEqualTo(21)
     }
 
     @Test
@@ -197,7 +197,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.HEART, CardNumber.ACE))
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.KING))
 
-        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards.cards)).isEqualTo(12)
+        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards)).isEqualTo(12)
     }
 
     @Test
@@ -210,7 +210,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.DIAMOND, CardNumber.ACE))
         cards.add(Card(CardSymbol.CLUBS, CardNumber.JACK))
 
-        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards.cards)).isEqualTo(13)
+        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards)).isEqualTo(13)
     }
 
     @Test
@@ -224,7 +224,7 @@ internal class ResultCalculatorTest {
         cards.add(Card(CardSymbol.CLUBS, CardNumber.ACE))
         cards.add(Card(CardSymbol.CLUBS, CardNumber.JACK))
 
-        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards.cards)).isEqualTo(14)
+        assertThat(resultCalculator.getResultForHavingAnyAceCard(cards)).isEqualTo(14)
     }
 
     @ParameterizedTest
