@@ -1,21 +1,19 @@
 package blackJack.domain
 
 class Player(val playerName: String) {
-    private var _status: PlayerStatus = PlayerStatus.of()
-
-    val status: PlayerStatus
-        get() = _status
+    var status: PlayerStatus = PlayerStatus.of()
+        private set
 
     init {
         require(playerName.isNotEmpty()) { IS_PLAYER_NAME_BLACK }
     }
 
     fun receiveCard(card: Card) {
-        _status = status.update(card)
+        status = status.update(card)
     }
 
     fun noReceiveCard() {
-        _status = status.changeContinueStatus(false)
+        status = status.changeContinueStatus(false)
     }
 
     fun getAbleReceivedCard(): Boolean = status.ableGetACard()
