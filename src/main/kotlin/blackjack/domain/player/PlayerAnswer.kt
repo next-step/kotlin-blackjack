@@ -15,3 +15,7 @@ enum class PlayerAnswer(val hit: Boolean, private val answer: String) {
         }
     }
 }
+
+fun interface AnswerProvider {
+    fun getAnswer(gamer: Gamer): PlayerAnswer
+}

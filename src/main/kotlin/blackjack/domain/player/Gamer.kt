@@ -4,13 +4,24 @@ import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Score
 
-abstract class Gamer(val name: PlayerName, val hand: Hand = Hand.createEmpty()) {
+abstract class Gamer(
+    val name: PlayerName,
+    val hand: Hand = Hand.createEmpty(),
+    private val callback: AfterHitWhileCallback = AfterHitWhileCallback {}
+) {
 
-    abstract fun canHit(): Boolean
-
-    fun firstOpenCards() = hand.cards.take(firstOpenCardsCount())
+    protected abstract fun wantHit(answerProvider: AnswerProvider): Boolean
 
     protected abstract fun firstOpenCardsCount(): Int
+
+    fun hitWhileWant(deck: Deck, answerProvider: AnswerProvider) {
+        while (wantHit(answerProvider)) {
+            hit(deck)
+            callback.onAfterHit(this)
+        }
+    }
+
+    fun firstOpenCards() = hand.cards.take(firstOpenCardsCount())
 
     val score: Score
         get() = hand.score
@@ -20,4 +31,10 @@ abstract class Gamer(val name: PlayerName, val hand: Hand = Hand.createEmpty()) 
 
         hand.add(deck.drawCard())
     }
+
+    fun canHit() = wantHit { PlayerAnswer.YES }
+}
+
+fun interface AfterHitWhileCallback {
+    fun onAfterHit(gamer: Gamer)
 }

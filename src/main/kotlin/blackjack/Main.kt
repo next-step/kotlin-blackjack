@@ -10,36 +10,21 @@ import blackjack.view.dto.GamersDto
 
 fun main() {
     val names: List<PlayerName> = PlayerName.from(ConsoleInputView.getNames())
-    val gamers = Gamers.from(names)
+    val gamers = Gamers.from(
+        names,
+        playerAfterHit = { ConsoleOutputView.printGamer(GamerDto(it)) },
+        dealerAfterHit = { ConsoleOutputView.printDealerHit() },
+    )
     val deck = Deck.create()
 
     gamers.hitAtGameStart(deck)
     ConsoleOutputView.giveFirstTwoCards(getGamersAtFirst(gamers))
 
-    gamers.players.forEach {
-        hitWhileWant(it, deck)
+    gamers.hitWhileWant(deck) {
+        PlayerAnswer.from(ConsoleInputView.getAnswer(it.name.value))
     }
-    hitUntilImpossible(gamers.dealer, deck)
 
     ConsoleOutputView.printResult(GamersDto(gamers))
-}
-
-private fun hitWhileWant(player: Player, deck: Deck) {
-    while (player.canHit() && player.wantHit()) {
-        player.hit(deck)
-        ConsoleOutputView.printGamer(GamerDto(player))
-    }
-}
-
-private fun Player.wantHit(): Boolean {
-    return PlayerAnswer.from(ConsoleInputView.getAnswer(name.value)).hit
-}
-
-private fun hitUntilImpossible(dealer: Dealer, deck: Deck) {
-    while (dealer.canHit()) {
-        dealer.hit(deck)
-        ConsoleOutputView.printDealerHit()
-    }
 }
 
 private fun getGamersAtFirst(gamers: Gamers): GamersDto {

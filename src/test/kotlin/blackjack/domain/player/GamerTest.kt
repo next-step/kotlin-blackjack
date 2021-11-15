@@ -43,13 +43,48 @@ class GamerTest {
             gamer.hit(deck)
         }
     }
+
+    @Test
+    fun `카드를 뽑을 수 있다면 대답이 No일때까지 카드를 뽑는다`() {
+        val player = TestGamer(canHit = true)
+
+        player.hitWhileWant(deck, AnswerYesThird())
+
+        assertThat(player.hand.cards).hasSize(AnswerYesThird.YES_COUNT)
+    }
+
+    @Test
+    fun `대답이 No이면, 카드를 뽑지 않는다`() {
+        val player = TestGamer(canHit = true)
+
+        player.hitWhileWant(deck) { PlayerAnswer.NO }
+
+        assertThat(player.hand.cards).isEmpty()
+    }
 }
 
 class TestGamer(private val canHit: Boolean) : Gamer(PlayerName("test"), Hand.createEmpty()) {
 
-    override fun canHit() = canHit
+    override fun wantHit(answerProvider: AnswerProvider) = canHit && answerProvider.getAnswer(this).hit
 
     override fun firstOpenCardsCount(): Int {
         throw UnsupportedOperationException()
+    }
+}
+
+class AnswerYesThird : AnswerProvider {
+
+    private var count = YES_COUNT
+
+    override fun getAnswer(gamer: Gamer): PlayerAnswer {
+        if (count > 0) {
+            count--
+            return PlayerAnswer.YES
+        }
+        return PlayerAnswer.NO
+    }
+
+    companion object {
+        const val YES_COUNT = 3
     }
 }

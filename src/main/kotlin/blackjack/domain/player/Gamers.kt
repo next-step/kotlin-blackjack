@@ -2,24 +2,35 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 
-private const val GAME_START_DRAW_COUNT = 2
+private const val GAME_START_HIT_COUNT = 2
 
 class Gamers(val players: List<Player>, val dealer: Dealer) {
 
-    val gamers: List<Gamer> = listOf(dealer) + players
+    val gamers: List<Gamer> = players + dealer
 
     fun hitAtGameStart(deck: Deck) {
-        repeat(GAME_START_DRAW_COUNT) {
-            dealer.hit(deck)
-            players.forEach { it.hit(deck) }
+        repeat(GAME_START_HIT_COUNT) {
+            gamers.forEach { it.hit(deck) }
+        }
+    }
+
+    fun hitWhileWant(deck: Deck, answerProvider: AnswerProvider) {
+        gamers.forEach {
+            it.hitWhileWant(deck, answerProvider)
         }
     }
 
     companion object {
 
-        fun from(names: List<PlayerName>): Gamers {
-            val players = names.map { Player(it) }
-            return Gamers(players, Dealer())
+        fun from(
+            names: List<PlayerName>,
+            playerAfterHit: AfterHitWhileCallback,
+            dealerAfterHit: AfterHitWhileCallback,
+        ): Gamers {
+            val players = names.map { Player(it, playerAfterHit) }
+            val dealer = Dealer(dealerAfterHit)
+            return Gamers(players, dealer)
         }
     }
+
 }

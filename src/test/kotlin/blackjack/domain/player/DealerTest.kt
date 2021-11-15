@@ -16,9 +16,9 @@ class DealerTest {
             Card(Symbol.TEN, Type.CLUB),
             Card(Symbol.SIX, Type.CLUB),
         ))
-        val player = Dealer(underHitHand)
+        val dealer = Dealer(hand = underHitHand)
 
-        val result = player.canHit()
+        val result = dealer.canHit()
 
         assertThat(result).isTrue
     }
@@ -29,9 +29,9 @@ class DealerTest {
             Card(Symbol.TEN, Type.CLUB),
             Card(Symbol.SEVEN, Type.CLUB),
         ))
-        val player = Dealer(overHitHand)
+        val dealer = Dealer(hand = overHitHand)
 
-        val result = player.canHit()
+        val result = dealer.canHit()
 
         assertThat(result).isFalse
     }
