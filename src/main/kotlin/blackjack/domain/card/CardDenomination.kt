@@ -4,11 +4,11 @@ enum class CardDenomination(
     val denomination: String,
     private val value: List<Int>,
     val order: Int,
-    val getValue: (Int) -> Int = { _ -> value[0] },
+    val getValue: (Int) -> Int = { _ -> value[BASIC_VALUE_INDEX] },
 ) {
     ACE("ACE", listOf(1, 11), 1, { sum ->
-        if (sum + 11 > 21) ACE.value[0]
-        else ACE.value[1]
+        if (sum + 11 > 21) ACE.value[BASIC_VALUE_INDEX]
+        else ACE.value[SPECIAL_VALUE_INDEX]
     }),
     TWO("2", listOf(2), 2),
     THREE("3", listOf(3), 3),
@@ -21,5 +21,10 @@ enum class CardDenomination(
     TEN("10", listOf(10), 10),
     JACK("J", listOf(10), 11),
     QUEEN("Q", listOf(10), 12),
-    KING("K", listOf(10), 13),
+    KING("K", listOf(10), 13);
+
+    companion object {
+        private const val BASIC_VALUE_INDEX = 0
+        private const val SPECIAL_VALUE_INDEX = 1
+    }
 }
