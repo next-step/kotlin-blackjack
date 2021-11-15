@@ -18,6 +18,8 @@ data class Cards(private val cards: List<Card>) {
 
     fun isEmpty(): Boolean = size == 0
 
+    fun sum(): Int = ScoreHelper.sum(cards)
+
     operator fun contains(card: Card): Boolean = card in cards
 
     companion object {

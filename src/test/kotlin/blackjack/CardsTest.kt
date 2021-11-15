@@ -56,4 +56,14 @@ class CardsTest {
                 .peek()
         ).isEqualTo(Card(Denomination.ACE, Suit.HEART))
     }
+
+    @Test
+    fun `카드들의 숫자 합을 계산할 수 있다`() {
+        assertThat(
+            Cards.empty()
+                .add(Card(Denomination.ACE, Suit.CLOVER))
+                .add(Card(Denomination.ACE, Suit.HEART))
+                .sum()
+        ).isEqualTo(12)
+    }
 }
