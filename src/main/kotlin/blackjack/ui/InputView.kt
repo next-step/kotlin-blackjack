@@ -10,7 +10,7 @@ class InputView(private val inputStrategy: InputStrategy, private val outputStra
         return inputStrategy.execute()
     }
 
-    fun inputParticipantInformation(): String {
+    fun inputWhetherAdditionalCardAcquisition(): String {
         outputStrategy.execute(ADDITIONAL_CARD_ACQUISITION_INPUT_MESSAGE)
         return inputStrategy.execute()
     }
