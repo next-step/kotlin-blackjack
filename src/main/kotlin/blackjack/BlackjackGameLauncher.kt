@@ -14,15 +14,14 @@ class BlackjackGameLauncher(private val inputView: InputView, private val result
         dealer.deliverBasicCards(players)
         resultView.showDeliveredBasicCards(players)
 
-        players.players
-            .forEach { player -> deliverAdditionalCards(dealer, player) }
+        players.players.forEach { player -> deliverAdditionalCards(dealer, player) }
 
         resultView.showPlayerResults(players)
     }
 
     private fun deliverAdditionalCards(dealer: Dealer, player: Player) {
         while (player.cardsHandler.canReceiveAdditionalCard() && inputView.askToReceiveAdditionalCardOrNot(player)) {
-            dealer.deliverAdditionalCard(player)
+            dealer.deliverCard(player)
             resultView.showPlayerCards(player, true)
         }
     }
