@@ -2,8 +2,8 @@ package blackjack.domain
 
 import blackjack.error.ScoreOutOfBoundsException
 
-class Score(val score: Int) {
-
+@JvmInline
+value class Score private constructor(val score: Int) {
     companion object {
         private const val MINIMUM_SCORE = 0
         private const val MAXIMUM_SCORE = 32
