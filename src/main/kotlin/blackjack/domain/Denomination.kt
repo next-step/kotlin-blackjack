@@ -14,5 +14,4 @@ enum class Denomination(score: Int) {
     JACK(10),
     QUEEN(10),
     KING(10)
-
 }
