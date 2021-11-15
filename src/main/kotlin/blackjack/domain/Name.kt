@@ -9,8 +9,4 @@ value class Name(val name: String) {
             throw InvalidPlayerNameException(name)
         }
     }
-
-
-
-
 }
