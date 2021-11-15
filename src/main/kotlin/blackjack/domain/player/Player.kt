@@ -23,10 +23,9 @@ data class Player(
 
     fun getCardSum(): Int {
         return _cards
-            .sortedByDescending { card -> card.denomination.order }
+            .sortedByDescending { card -> card.getOrder() }
             .fold(START_INDEX) { sum, card ->
-                val denomination = card.denomination
-                sum + denomination.getValue(sum)
+                sum + card.getValue(sum)
             }
     }
 
