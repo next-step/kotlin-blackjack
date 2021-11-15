@@ -1,20 +1,20 @@
 package blackjack.domain.state
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("카드들(Cards)")
-internal class CardsTest {
+internal class PlayingCardsTest {
 
     @Test
     fun `카드들에는 빈값이 들어올 수 있다`() {
-        val cards: Cards = Cards.initialize()
+        val playingCards: PlayingCards = PlayingCards.initialize()
 
         assertAll(
-            { assertThat(cards).isNotNull },
-            { assertThat(cards).isExactlyInstanceOf(Cards::class.java) },
+            { assertThat(playingCards).isNotNull },
+            { assertThat(playingCards).isExactlyInstanceOf(PlayingCards::class.java) },
         )
     }
 }
