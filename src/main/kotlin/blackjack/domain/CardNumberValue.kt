@@ -10,7 +10,7 @@ value class CardNumberValue(val value: Int) {
         private const val MAXIMUM_CARD_VALUE = 11
         private const val ACE_DEFAULT_VALUE = 1
         private const val ROYAL_FAMILY_VALUE = 10
-        private const val WRONG_CARD_VALUE_MESSAGE = "잘못된 카드 값입니다.($MINIMUM_CARD_VALUE~$MAXIMUM_CARD_VALUE 입력})"
+        private const val WRONG_CARD_VALUE_MESSAGE = "잘못된 카드 값입니다.($MINIMUM_CARD_VALUE~$MAXIMUM_CARD_VALUE 입력)"
 
         private val numberPool = (MINIMUM_CARD_VALUE..MAXIMUM_CARD_VALUE)
             .associateWith { CardNumberValue(it) }
@@ -26,7 +26,7 @@ value class CardNumberValue(val value: Int) {
             }
 
             if (CardNumber.isRoyalFamily(rank)) {
-                return numberPool[ROYAL_FAMILY_VALUE]!!
+                return CardNumberValue[ROYAL_FAMILY_VALUE]
             }
 
             return CardNumberValue[rank.toInt()]
@@ -34,10 +34,10 @@ value class CardNumberValue(val value: Int) {
 
         private fun getAceValue(chooseLargerValue: Boolean): CardNumberValue {
             if (chooseLargerValue) {
-                return numberPool[MAXIMUM_CARD_VALUE]!!
+                return CardNumberValue[MAXIMUM_CARD_VALUE]
             }
 
-            return numberPool[ACE_DEFAULT_VALUE]!!
+            return CardNumberValue[ACE_DEFAULT_VALUE]
         }
     }
 }
