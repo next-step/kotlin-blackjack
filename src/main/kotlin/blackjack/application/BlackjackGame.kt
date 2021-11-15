@@ -22,14 +22,14 @@ class BlackjackGame private constructor(
         if (state.isStand(sign)) {
             return BlackjackGame(player, Stand(player.cards))
         }
+        if (state.currentCards().isBlackjack()) {
+            return BlackjackGame(player, Blackjack(player.cards))
+        }
         val currentState = draw(deck, state)
         return BlackjackGame(player, currentState)
     }
 
     private fun draw(deck: Deck, state: State): State {
-        if (state.currentCards().isBlackjack()) {
-            return Blackjack(player.cards)
-        }
         val card = deck.takeOut()
         return state.draw(card)
     }

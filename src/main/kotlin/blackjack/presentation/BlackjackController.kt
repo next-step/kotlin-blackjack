@@ -33,6 +33,7 @@ class BlackjackController(
             while (true) {
                 val inputCardSign = inputCardSign(blackjackGame)
                 val progressedBlackjack = blackjackGame.play(deck, inputCardSign)
+                println()
                 OutputView.printPlayerCard(blackjackGame.player)
 
                 if (progressedBlackjack.state.isFinished()) {
