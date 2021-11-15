@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.extensions.deepCopy
+
 class CardDeck {
     private val _cards: MutableList<Card> = setupCards()
     val cards: List<Card>
@@ -21,6 +23,4 @@ class CardDeck {
             .shuffled()
             .toMutableList()
     }
-
-    private fun List<Card>.deepCopy() = this.map { it.copy() }
 }

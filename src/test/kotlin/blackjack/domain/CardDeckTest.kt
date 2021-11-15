@@ -35,7 +35,7 @@ class CardDeckTest {
     fun `덱에서 카드 여러장을 뽑을 수 있다`(drawCount: Int, expectedRemainingCount: Int) {
         val cardDeck = CardDeck()
         val cards = cardDeck.drawMany(drawCount = drawCount)
-        println(cards)
+
         assertThat(cards.size).isEqualTo(drawCount)
         assertThat(cardDeck.cards.size).isEqualTo(expectedRemainingCount)
     }

@@ -1,8 +1,8 @@
 package blackjack.domain
 
-data class CardNumber(val number: Int) {
+data class CardNumber(val value: Int) {
     init {
-        require(number in NUMBER_RANGE) { INVALID_NUMBER_ERROR_MSG }
+        require(value in NUMBER_RANGE) { INVALID_NUMBER_ERROR_MSG }
     }
 
     companion object {

@@ -1,13 +1,15 @@
 package blackjack.domain
 
-data class Player(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
+class Player(val name: String) {
+    private val deck = PlayerDeck()
     val cards: List<Card>
-        get() = _cards.deepCopy()
+        get() = deck.cards
 
     fun takeCards(vararg cards: Card) {
-        _cards.addAll(cards)
+        deck.addCards(*cards)
     }
 
-    private fun List<Card>.deepCopy() = this.map { it.copy() }
+    fun getTotalScore(): Int {
+        return deck.getTotalScore()
+    }
 }

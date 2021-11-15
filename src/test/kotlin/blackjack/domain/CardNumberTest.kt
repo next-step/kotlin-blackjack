@@ -10,9 +10,9 @@ import java.lang.IllegalArgumentException
 class CardNumberTest {
     @Test
     fun `번호를 가진다`() {
-        val cardNumber = CardNumber(number = 1)
+        val cardNumber = CardNumber(value = 1)
 
-        assertThat(cardNumber.number).isEqualTo(1)
+        assertThat(cardNumber.value).isEqualTo(1)
     }
 
     @ParameterizedTest
