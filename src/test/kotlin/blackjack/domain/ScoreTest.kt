@@ -9,6 +9,7 @@ import org.junit.jupiter.api.RepetitionInfo
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 @DisplayName("점수(Score)")
@@ -40,5 +41,15 @@ class ScoreTest {
         val exception = assertThrows<ScoreOutOfBoundsException> { Score.from(negativeNumber) }
 
         assertThat(exception.message).isEqualTo("'%s'는 스코어의 범위를 벗어난 값 입니다.".format(negativeNumber))
+    }
+
+    @ParameterizedTest(name = "입력걊: {0}")
+    @CsvSource(value = ["0:1:1", "1:1:2", "21:11:32"], delimiter = ':')
+    fun `두개의 점수를 더한 값을 반환한다`(firstScoreInt: Int, secondScoreInt: Int, expectedInt: Int) {
+        val firstScore = Score.from(firstScoreInt)
+        val secondScore = Score.from(secondScoreInt)
+        val expected = Score.from(expectedInt)
+
+        assertThat(Score.plus(secondScore)).isEqualTo(expected)
     }
 }
