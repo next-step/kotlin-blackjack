@@ -3,10 +3,12 @@ package blackjack.domain.state
 import blackjack.domain.Denomination
 import blackjack.domain.PlayingCard
 import blackjack.domain.Suit
+import blackjack.error.DuplicatePlayingCardException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @DisplayName("카드들(Cards)")
 internal class PlayingCardsTest {
@@ -28,5 +30,16 @@ internal class PlayingCardsTest {
         val actual = playingCards.plus(PlayingCard(Suit.SPADE, Denomination.ACE))
 
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `기존에 들어있는 카드는 추가될 수가 없다`() {
+        val spadeAce = PlayingCard(Suit.SPADE, Denomination.ACE)
+        val playingCards: PlayingCards = PlayingCards.from(setOf(spadeAce))
+        val exception = assertThrows<DuplicatePlayingCardException> {
+            playingCards.plus(spadeAce)
+        }
+
+        assertThat(exception.message).isEqualTo("'%s_%s'는 이미 덱에 존재하는 카드입니다.".format(spadeAce.suit.name, spadeAce.denomination.name))
     }
 }
