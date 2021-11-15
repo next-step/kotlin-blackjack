@@ -9,14 +9,17 @@ import java.lang.Math.abs
  * */
 data class Person(
     val name: String,
-    private val cardList: MutableList<Card> = mutableListOf()
+    private val _cardList: MutableList<Card> = mutableListOf()
 ) {
 
-    fun isTakeMoreCard(): Boolean = MAX_TOTAL_NUMBER > getTotalCount(cardList)
+    val cardList: List<Card>
+        get() = _cardList.toList()
+
+    fun isTakeMoreCard(): Boolean = MAX_TOTAL_NUMBER > getTotalCount(_cardList)
 
     fun getResultNumber(): Int {
-        val minCardNumber = getTotalCount(cardList)
-        val maxCardNumber = getTotalCount(cardList, true)
+        val minCardNumber = getTotalCount(_cardList)
+        val maxCardNumber = getTotalCount(_cardList, true)
         if (!exceedMaximumCardNumber(maxCardNumber) && abs(MAX_TOTAL_NUMBER - maxCardNumber) < abs(MAX_TOTAL_NUMBER - minCardNumber)) {
             return maxCardNumber
         }
@@ -24,7 +27,7 @@ data class Person(
     }
 
     fun addCard(cards: List<Card>) {
-        cardList.addAll(0, cards)
+        _cardList.addAll(0, cards)
     }
 
     companion object {

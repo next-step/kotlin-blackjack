@@ -11,9 +11,12 @@ class BlackjectController {
         val persons = getParticipant()
         OutputView.printGivenCard(persons, CardsDeck.NUMBER_INIT_CARD)
         persons
-            .forEach { giveCard(it, CardsDeck.NUMBER_INIT_CARD) }
+            .forEach {
+                giveCard(it, CardsDeck.NUMBER_INIT_CARD)
+                OutputView.printCardListOfPerson(it)
+            }
         persons
-            .forEach { askMoreCard(it) }
+            .forEach { askMoreCard(InputView.inputAnswerMoreCard(it.name), it) }
         persons
             .forEach { OutputView.gameResult(it) }
     }
@@ -24,17 +27,18 @@ class BlackjectController {
     }
 
     private fun giveCard(person: Person, cardCount: Int) {
-        val cards = CardsDeck.takeCard(cardCount)
-        person.addCard(cards)
-        OutputView.printCardListOfPerson(person)
+        person.addCard(CardsDeck.takeCard(cardCount))
     }
 
-    private fun askMoreCard(person: Person) {
-        while (true) {
-            if (!person.isTakeMoreCard()) break
-            val ask = InputView.inputAnswerMoreCard(person.name)
-            if (!isAnswerYes(ask)) break
-            giveCard(person, CardsDeck.NUMBER_ONE_TIME)
+    private fun askMoreCard(answer: String?, person: Person) {
+        when (isAnswerYes(answer)) {
+            true -> {
+                if (!person.isTakeMoreCard()) return
+                giveCard(person, CardsDeck.NUMBER_ONE_TIME)
+                OutputView.printCardListOfPerson(person)
+                askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
+            }
+            else -> return
         }
     }
 
