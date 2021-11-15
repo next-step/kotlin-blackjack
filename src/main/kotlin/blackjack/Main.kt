@@ -18,15 +18,20 @@ fun main() {
     ConsoleOutputView.giveFirstTwoCards(getGamersAtFirst(gamers))
 
     gamers.forEach {
-        while (it.canHit() && it.hitIfYes(deck).success) {
+        while (it.canHit() && it.wantHit()) {
+            it.hit(deck)
             ConsoleOutputView.printGamer(GamerDto(it))
         }
     }
-    while(gamers.dealer.canHit()) {
+    while (gamers.dealer.canHit()) {
         gamers.dealer.hit(deck)
         ConsoleOutputView.printDealerHit()
     }
     ConsoleOutputView.printResult(GamersDto(gamers))
+}
+
+private fun Player.wantHit(): Boolean {
+    return PlayerAnswer.from(ConsoleInputView.getAnswer(name.value)).hit
 }
 
 private fun getGamersAtFirst(gamers: Gamers): GamersDto {
@@ -42,9 +47,4 @@ private fun getGamersAtFirst(gamers: Gamers): GamersDto {
 
 private fun getFirstOpenCards(gamer: Gamer): List<CardDto> {
     return gamer.firstOpenCards().map { CardDto(it) }
-}
-
-private fun Player.hitIfYes(deck: Deck): Player.DrawResult {
-    val answer = PlayerAnswer.from(ConsoleInputView.getAnswer(name.value))
-    return hitIfYes(deck, answer)
 }
