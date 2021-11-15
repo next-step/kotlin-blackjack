@@ -29,6 +29,15 @@ class CardsTest {
 
     @Test
     fun `남아있는 카드 개수를 알 수 있다`() {
-        assertThat(Cards.empty().size).isEqualTo(0)
+        assertThat(Cards.empty().size).isZero
+    }
+
+    @Test
+    fun `가장 위에 있는 카드를 확인할 수 있다`() {
+        assertThat(
+            Cards.empty()
+                .add(Card(Denomination.ACE, Suit.CLOVER))
+                .peek()
+        ).isEqualTo(Card(Denomination.ACE, Suit.CLOVER))
     }
 }

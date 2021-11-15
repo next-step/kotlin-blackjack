@@ -10,6 +10,8 @@ data class Cards(private val cards: List<Card>) {
 
     fun add(card: Card) = Cards(cards + card)
 
+    fun peek(): Card? = cards.firstOrNull()
+
     operator fun contains(card: Card): Boolean = card in cards
 
     companion object {
