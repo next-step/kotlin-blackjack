@@ -26,4 +26,9 @@ class CardsTest {
                 .contains(Card(Denomination.ACE, Suit.CLOVER))
         ).isTrue
     }
+
+    @Test
+    fun `남아있는 카드 개수를 알 수 있다`() {
+        assertThat(Cards.empty().size).isEqualTo(0)
+    }
 }

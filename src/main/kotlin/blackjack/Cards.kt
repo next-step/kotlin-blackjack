@@ -1,7 +1,8 @@
 package blackjack
 
-@JvmInline
-value class Cards(private val cards: List<Card>) {
+data class Cards(private val cards: List<Card>) {
+
+    val size = cards.size
 
     init {
         require(cards == cards.distinct())
