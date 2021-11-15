@@ -6,6 +6,8 @@ class Deck private constructor(private val cards: Cards) {
 
     fun isEmpty(): Boolean = size == 0
 
+    fun peek(): Card? = cards.peek()
+
     companion object {
         fun shuffled(): Deck = Denomination.values()
             .asSequence()

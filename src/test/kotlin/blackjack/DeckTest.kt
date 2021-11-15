@@ -22,4 +22,9 @@ class DeckTest {
         val deck = Deck.shuffled()
         assertThat(deck.size).isEqualTo(52)
     }
+
+    @Test
+    fun `덱의 가장 위에 있는 카드가 무엇인지 확인할 수 있다`() {
+        assertThat(Deck.shuffled().peek()).isNotNull
+    }
 }
