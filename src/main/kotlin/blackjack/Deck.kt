@@ -1,8 +1,19 @@
 package blackjack
 
-data class Deck(private val cards: List<Card>) {
+class Deck private constructor(private val cards: Cards) {
 
     val size: Int = cards.size
 
     fun isEmpty(): Boolean = size == 0
+
+    companion object {
+        fun shuffled(): Deck = Denomination.values()
+            .asSequence()
+            .flatMap { denomination -> Suit.values().map { suit -> Card(denomination, suit) } }
+            .shuffled()
+            .toList()
+            .let { Deck(Cards(it)) }
+
+        fun empty(): Deck = Deck(Cards.empty())
+    }
 }
