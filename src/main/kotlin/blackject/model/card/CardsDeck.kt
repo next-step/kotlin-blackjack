@@ -7,19 +7,17 @@ object CardsDeck {
     const val NUMBER_INIT_CARD = 2
     const val NUMBER_ONE_TIME = 1
 
-    val originCardTotalList: List<Card> = CardType
+    private val originCardTotalList: MutableList<Card> = CardType
         .values()
         .flatMap { getCardNumberList(it) }
         .toSet()
-        .toList()
-
-    private val mutableCardList = originCardTotalList.toMutableList()
+        .toMutableList()
 
     fun takeCard(takeNUmber: Int): List<Card> {
-        val cards = mutableCardList
+        val cards = originCardTotalList
             .shuffled()
             .take(takeNUmber)
-        mutableCardList.removeAll(cards)
+        originCardTotalList.removeAll(cards)
         return cards
     }
 
