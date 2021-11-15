@@ -20,14 +20,14 @@ fun main() {
     ConsoleOutputView.giveFirstTwoCards(PlayersDto(players))
 
     players.forEach {
-        while (it.canHit() && it.hitIfWant(deck).success) {
+        while (it.canHit() && it.hitIfYes(deck).success) {
             ConsoleOutputView.printPlayer(PlayerDto(it))
         }
     }
     ConsoleOutputView.printResult(PlayersDto(players))
 }
 
-private fun Player.hitIfWant(deck: Deck): Player.DrawResult {
+private fun Player.hitIfYes(deck: Deck): Player.DrawResult {
     val answer = PlayerAnswer.from(ConsoleInputView.getAnswer(name.value))
-    return hit(deck, answer)
+    return hitIfYes(deck, answer)
 }

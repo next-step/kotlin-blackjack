@@ -51,7 +51,7 @@ class PlayerTest {
     fun `대답이 Yes고, 카드를 뽑으면 성공한다`() {
         val player = Player(name)
 
-        val result = player.hit(deck, PlayerAnswer.YES)
+        val result = player.hitIfYes(deck, PlayerAnswer.YES)
 
         assertThat(result.success).isTrue
         assertThat(player.hand)
@@ -63,7 +63,7 @@ class PlayerTest {
     fun `대답이 Yes지만, 카드를 뽑지 못하면 실패한다`() {
         val player = Player(name, hitImpossibleHand)
 
-        val result = player.hit(deck, PlayerAnswer.YES)
+        val result = player.hitIfYes(deck, PlayerAnswer.YES)
 
         assertThat(result.success).isFalse
         assertThat(player.hand)
@@ -75,7 +75,7 @@ class PlayerTest {
     fun `대답이 No이면, 카드를 뽑지 않고 실패한다`() {
         val player = Player(name)
 
-        val result = player.hit(deck, PlayerAnswer.NO)
+        val result = player.hitIfYes(deck, PlayerAnswer.NO)
 
         assertThat(result.success).isFalse
         assertThat(player.hand)

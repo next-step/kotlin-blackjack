@@ -15,7 +15,7 @@ class Player(val name: PlayerName, val hand: Hand = Hand.createEmpty()) {
         hand.add(deck.drawCard())
     }
 
-    fun hit(deck: Deck, answer: PlayerAnswer): DrawResult {
+    fun hitIfYes(deck: Deck, answer: PlayerAnswer): DrawResult {
         if (!answer.hit) {
             return DrawResult(false)
         }
