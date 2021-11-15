@@ -45,7 +45,6 @@ class BlackjackController {
     ): Players = players.flatMap { player -> drawWhileNeeded(player, onDraw) }
 
     private fun drawWhileNeeded(player: Player, onDraw: (Player) -> Unit): Player {
-        if (deck.isEmpty()) return player
         var result = player
         while (!deck.isEmpty() && askDraw(player)) {
             result = draw(result)
