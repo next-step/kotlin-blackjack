@@ -1,6 +1,7 @@
 package blackject
 
 import blackject.model.Person
+import blackject.model.Rule
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
@@ -36,7 +37,7 @@ class PersonTest {
         val expectedValue = false
 
         val total = Person.getTotalCount(cards)
-        val isExceed = Person.exceedMaximumCardNumber(total)
+        val isExceed = Person.exceedMaximumCardNumber(Rule.MAX_TOTAL_NUMBER, total)
 
         assertThat(isExceed).isEqualTo(expectedValue)
     }
@@ -51,8 +52,8 @@ class PersonTest {
         )
         val expectedValue = 20
 
-        val person = Person(name = "test", cardList = cards)
-        val total = person.getResultNumber()
+        val person = Person(name = "test", _cardList = cards)
+        val total = person.getResultNumber(Rule.MAX_TOTAL_NUMBER)
 
         assertThat(total).isEqualTo(expectedValue)
     }
