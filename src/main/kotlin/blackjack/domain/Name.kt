@@ -1,4 +1,4 @@
 package blackjack.domain
 
-class Name {
+class Name(name: String) {
 }
