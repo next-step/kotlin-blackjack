@@ -20,6 +20,8 @@ data class Cards(private val cards: List<Card>) {
 
     fun sum(): Int = ScoreHelper.sum(cards)
 
+    fun joinToString() = cards.joinToString { "${it.denomination.symbol}${it.suit.value}" }
+
     operator fun contains(card: Card): Boolean = card in cards
 
     companion object {
