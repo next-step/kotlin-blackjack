@@ -1,29 +1,35 @@
 package blackjack.presentation
 
 import blackjack.domain.card.CardsDeck
-import blackjack.domain.player.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Players
 
 object BlackjackGame {
 
     private const val FIRST_CARD_DIVIDE_COUNT = 2
 
     fun start(
-        players: List<Player>,
+        players: List<Participant>,
         cardsDeck: CardsDeck,
-    ): List<Player> {
-        players.forEach { player ->
+    ): Players {
+        val dealer = Dealer()
+        (listOf(dealer) + players).forEach { player ->
             repeat(FIRST_CARD_DIVIDE_COUNT) {
                 player.addCard(cardsDeck.divide())
             }
         }
 
-        return players
+        return Players(
+            dealer = dealer,
+            players = players
+        )
     }
 
     fun addCard(
-        player: Player,
+        player: Participant,
         cardsDeck: CardsDeck
-    ): Player {
+    ): Participant {
         val card = cardsDeck.divide()
 
         player.addCard(card)

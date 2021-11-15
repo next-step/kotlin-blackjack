@@ -1,6 +1,8 @@
 package blackjack
 
 import blackjack.domain.card.CardsDeck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.extensions.fromYNToBoolean
 import blackjack.presentation.BlackjackGame
@@ -15,10 +17,14 @@ fun main() {
         initPlayers(),
         cardsDeck
     )
+    val dealer = BlackjackGame.start(
+        listOf(Dealer()),
+        cardsDeck
+    )
 
     OutputView.printStartResult(players)
 
-    divideCards(players, cardsDeck)
+    divideCards(players.dealer, players.players, cardsDeck)
 
     OutputView.printResult(players)
 }
@@ -31,7 +37,8 @@ private fun initPlayers(): List<Player> {
 }
 
 private fun divideCards(
-    players: List<Player>,
+    dealer: Dealer,
+    players: List<Participant>,
     cardsDeck: CardsDeck,
 ) {
     players.forEach { player ->
@@ -45,13 +52,19 @@ private fun divideCards(
             OutputView.printPlayerCard(player)
         }
     }
+
+    dealer
+        .addCardWhenLessThanStandard(cardsDeck)
+        ?.let {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        }
 }
 
 private fun addCardWhenWantMoreCard(
     wantMoreCard: Boolean,
-    player: Player,
+    player: Participant,
     cardsDeck: CardsDeck,
-): Player {
+): Participant {
     if (wantMoreCard) {
         return BlackjackGame.addCard(
             player,

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.assertThrows
 class BlackjackGameTest {
 
     @Test
-    fun `각 플레이어는 시작시 2장의 카드를 받는다`() {
+    fun `각 플레이어와 딜러는 시작시 2장의 카드를 받는다`() {
         val players = listOf(
             Player(name = "one"),
             Player(name = "two")
@@ -22,8 +22,12 @@ class BlackjackGameTest {
             CardsDeck()
         )
 
-        assertEquals(2, actual[0].cards.size)
-        assertEquals(2, actual[1].cards.size)
+        val actualDealer = actual.dealer
+        val actualPlayers = actual.players
+
+        assertEquals(2, actualDealer.cards.size)
+        assertEquals(2, actualPlayers[0].cards.size)
+        assertEquals(2, actualPlayers[1].cards.size)
     }
 
     @Test
