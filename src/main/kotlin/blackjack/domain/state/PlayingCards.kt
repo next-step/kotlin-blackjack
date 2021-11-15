@@ -2,8 +2,13 @@ package blackjack.domain.state
 
 import blackjack.domain.PlayingCard
 
-class PlayingCards private constructor(private val playingCard: Set<PlayingCard>) {
+@JvmInline
+value class PlayingCards private constructor(private val playingCards: Set<PlayingCard>) {
+
+    operator fun plus(playingCard: PlayingCard): PlayingCards = from(playingCards.plus(playingCard))
+
     companion object {
-        fun initialize(): PlayingCards = PlayingCards(setOf())
+        fun initialize(): PlayingCards = from(setOf())
+        fun from(playingCards: Set<PlayingCard>): PlayingCards = PlayingCards(playingCards.toSet())
     }
 }

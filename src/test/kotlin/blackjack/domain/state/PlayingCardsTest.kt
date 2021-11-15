@@ -23,9 +23,9 @@ internal class PlayingCardsTest {
 
     @Test
     fun `카드들에는 새로운 카드가 추가될 수 있다`() {
-        val expected = PlayingCards.from(listOf(PlayingCard(Suit.SPADE, Denomination.ACE)))
+        val expected = PlayingCards.from(setOf(PlayingCard(Suit.SPADE, Denomination.ACE)))
         val playingCards: PlayingCards = PlayingCards.initialize()
-        val actual = playingCards.add(PlayingCard(Suit.SPADE, Denomination.ACE))
+        val actual = playingCards.plus(PlayingCard(Suit.SPADE, Denomination.ACE))
 
         assertThat(actual).isEqualTo(expected)
     }
