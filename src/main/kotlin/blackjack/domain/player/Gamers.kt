@@ -4,10 +4,13 @@ import blackjack.domain.card.Deck
 
 private const val GAME_START_DRAW_COUNT = 2
 
-class Players(val players: List<Player>) {
+class Gamers(private val players: List<Player>, val dealer: Dealer) {
+
+    val gamers: List<Gamer> = listOf(dealer) + players
 
     fun hitAtGameStart(deck: Deck) {
         repeat(GAME_START_DRAW_COUNT) {
+            dealer.hit(deck)
             players.forEach { it.hit(deck) }
         }
     }
@@ -18,9 +21,9 @@ class Players(val players: List<Player>) {
 
     companion object {
 
-        fun from(names: List<PlayerName>): Players {
+        fun from(names: List<PlayerName>): Gamers {
             val players = names.map { Player(it) }
-            return Players(players)
+            return Gamers(players, Dealer())
         }
     }
 }

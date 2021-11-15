@@ -1,29 +1,33 @@
 package blackjack.view
 
-import blackjack.view.dto.PlayerDto
-import blackjack.view.dto.PlayersDto
+import blackjack.view.dto.GamerDto
+import blackjack.view.dto.GamersDto
 
 object ConsoleOutputView {
 
-    fun giveFirstTwoCards(players: PlayersDto) {
-        val playerNames = players.joinToString(",") { it.name }
+    fun giveFirstTwoCards(gamers: GamersDto) {
+        val playerNames = gamers.joinToString(",") { it.name }
         println("${playerNames}에게 2장의 카드를 나누었습니다.")
         println()
-        players.forEach { printPlayer(it) }
+        gamers.forEach { printGamer(it) }
     }
 
-    fun printResult(players: PlayersDto) {
-        players.forEach {
-            printPlayer(it, lastNewLine = false)
+    fun printResult(gamers: GamersDto) {
+        gamers.forEach {
+            printGamer(it, lastNewLine = false)
             println(" - 결과: ${it.score}")
         }
     }
 
-    fun printPlayer(player: PlayerDto, lastNewLine: Boolean = true) {
-        val cardNames = player.cards.joinToString(",") { it.name }
-        print("${player.name}카드: $cardNames")
+    fun printGamer(gamer: GamerDto, lastNewLine: Boolean = true) {
+        val cardNames = gamer.cards.joinToString(",") { it.name }
+        print("${gamer.name}카드: $cardNames")
         if (lastNewLine) {
             println()
         }
+    }
+
+    fun printDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }

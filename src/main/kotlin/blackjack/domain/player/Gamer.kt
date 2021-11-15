@@ -8,7 +8,9 @@ abstract class Gamer(val name: PlayerName, val hand: Hand = Hand.createEmpty()) 
 
     abstract fun canHit(): Boolean
 
-    abstract fun firstOpenCardsCount(): Int
+    fun firstOpenCards() = hand.cards.take(firstOpenCardsCount())
+
+    protected abstract fun firstOpenCardsCount(): Int
 
     val score: Score
         get() = hand.score
