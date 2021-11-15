@@ -8,8 +8,12 @@ value class Names(private val names: List<Name>) {
     companion object {
         private const val DELIMITER = ","
 
-        fun parse(text: String): Names = text.split(DELIMITER)
-            .map { Name.valueOf(it.trim()) }
-            .let(::Names)
+        fun parse(text: String): Names {
+            if (text.isEmpty()) return Names(emptyList())
+
+            return text.split(DELIMITER)
+                .map { Name.valueOf(it.trim()) }
+                .let(::Names)
+        }
     }
 }

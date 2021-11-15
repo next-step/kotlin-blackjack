@@ -19,18 +19,24 @@ class BlackjackController {
         val names = inputView.getNames() ?: return
         var players = names.map { Player(it, Cards.empty()) }.let(Players::of)
         deck = Deck.shuffled()
-        players = drawAll(players)
-        outputView.printFirstDraw(players, FIRST_DRAW_COUNT)
+        players = firstDraw(players)
+        outputView.printFirstDraw(players)
         players = drawWhileNeeded(players) { player -> outputView.printPlayerCards(player) }
         outputView.printResult(players)
     }
 
-    private fun drawAll(players: Players): Players {
+    private fun firstDraw(players: Players): Players {
         var result = players
         repeat(FIRST_DRAW_COUNT) {
             result = result.flatMap { player -> draw(player) }
         }
         return result
+    }
+
+    private fun draw(player: Player): Player {
+        val card = deck.peek() ?: return player
+        deck = deck.draw()
+        return player.receive(card)
     }
 
     private fun drawWhileNeeded(
@@ -49,12 +55,6 @@ class BlackjackController {
     }
 
     private fun askDraw(player: Player): Boolean = inputView.askDraw(player) == DrawAction.YES
-
-    private fun draw(player: Player): Player {
-        val card = deck.peek() ?: return player
-        deck = deck.draw()
-        return player.receive(card)
-    }
 
     companion object {
         private const val FIRST_DRAW_COUNT = 2
