@@ -31,7 +31,7 @@ value class CardNumberValue(val value: Int) {
 
             return CardNumberValue[rank.toInt()]
         }
-        
+
         fun getAceValue(chooseLargerValue: Boolean): CardNumberValue {
             if (chooseLargerValue) {
                 return CardNumberValue[MAXIMUM_CARD_VALUE]
