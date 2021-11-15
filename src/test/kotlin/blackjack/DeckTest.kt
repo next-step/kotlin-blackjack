@@ -10,4 +10,10 @@ class DeckTest {
         val deck = Deck(emptyList())
         assertThat(deck.size).isZero
     }
+
+    @Test
+    fun `덱이 비어있는지 여부를 알 수 있다`() {
+        val deck = Deck(emptyList())
+        assertThat(deck.isEmpty()).isTrue
+    }
 }
