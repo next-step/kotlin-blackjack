@@ -14,4 +14,13 @@ class ScoreHelperTest {
         )
         assertThat(ScoreHelper.sum(cards)).isEqualTo(6)
     }
+
+    @Test
+    fun `Ace를 제외한 나머지 점수들의 합이 10이하 일경우 Ace는 11점으로 계산한다`() {
+        val cards = listOf(
+            Card(Denomination.ACE, Suit.HEART),
+            Card(Denomination.TEN, Suit.HEART)
+        )
+        assertThat(ScoreHelper.sum(cards)).isEqualTo(21)
+    }
 }
