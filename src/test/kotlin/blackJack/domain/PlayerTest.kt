@@ -6,6 +6,8 @@ import org.junit.jupiter.api.assertAll
 
 class PlayerTest {
 
+
+
     @Test
     fun `플레이어는 이름이 지정되어 있고, 카드를 가지고 있다`() {
         // given
@@ -17,7 +19,7 @@ class PlayerTest {
 
         // then
         assertAll({
-            assertThat(player.playerName).isEqualTo("김형준")
+            assertThat(player.name).isEqualTo("김형준")
             assertThat(player.status.cards.getSize()).isEqualTo(2)
         })
     }
@@ -125,5 +127,17 @@ class PlayerTest {
             assertThat(decisionStatus is Bust).isEqualTo(true)
             assertThat(isContinue).isEqualTo(false)
         })
+    }
+
+    @Test
+    fun `플레이어는 딜러가 아니다`() {
+        // given
+        val player = Player.of("김형준")
+
+        // when
+        val isDealer = player.isDealer()
+
+        // then
+        assertThat(isDealer).isFalse
     }
 }
