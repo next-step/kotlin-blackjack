@@ -25,6 +25,14 @@ internal class PlayerTest {
     fun `사용자는 기본적으로 플레잉중인 상태다`() {
         val player = Player.fromName("test")
 
-        assertThat(player.isFinish()).isFalse()
+        assertThat(player.isFinished()).isFalse
+    }
+
+    @Test
+    fun `더이상 게임을 진행하지 않는다면 플레잉이 끝난 상태다`() {
+        val player = Player.fromName("test")
+        val finishedPlayer = player.continuePlayingTheGame("n")
+
+        assertThat(finishedPlayer.isFinished()).isFalse
     }
 }
