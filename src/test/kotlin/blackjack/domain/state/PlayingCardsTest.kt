@@ -60,6 +60,18 @@ internal class PlayingCardsTest {
         assertThat(score.score).isEqualTo(20)
     }
 
+    @Test
+    fun `ACE 는 21애 가까운 수가 되도록 11을 반환한다`() {
+        val playingCards = PlayingCards.from(
+            setOf(
+                PlayingCard(Suit.CLUB, Denomination.ACE),
+                PlayingCard(Suit.CLUB, Denomination.TEN),
+            )
+        )
+        val score = playingCards.sumScore()
+        assertThat(score.score).isEqualTo(21)
+    }
+
     companion object {
         fun allPlayingCards(): List<PlayingCard> = Suit.values().flatMap { suit: Suit ->
             Denomination.values().map { denomination ->
