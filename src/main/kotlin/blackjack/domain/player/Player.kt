@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.Command
 import blackjack.domain.playingcard.PlayingCard
 import blackjack.domain.state.PlayingState
 import blackjack.domain.state.Running
@@ -15,6 +16,12 @@ class Player(
 
     fun addCards(extraPlayingCards: List<PlayingCard>): Player =
         Player(_name, playingState, playingCards.addCards(extraPlayingCards))
+
+    fun continuePlayingTheGame(command: String): Player =
+        continuePlayingTheGame(Command.values(command))
+
+    private fun continuePlayingTheGame(command: Command): Player =
+        Player(_name, PlayingState.of(command.type), playingCards)
 
     companion object {
         fun fromName(name: String): Player = Player(Name(name))

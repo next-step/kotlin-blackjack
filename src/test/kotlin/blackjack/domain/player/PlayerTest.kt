@@ -33,6 +33,6 @@ internal class PlayerTest {
         val player = Player.fromName("test")
         val finishedPlayer = player.continuePlayingTheGame("n")
 
-        assertThat(finishedPlayer.isFinished()).isFalse
+        assertThat(finishedPlayer.isFinished()).isTrue
     }
 }
