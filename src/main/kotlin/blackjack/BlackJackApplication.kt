@@ -36,7 +36,7 @@ class BlackJackApplication(private val inputView: InputView, private val splitSt
         println(players)
     }
 
-    private tailrec fun startGame(player: Player, deck: Deck): Player {
+    private fun startGame(player: Player, deck: Deck): Player {
         return try {
             val command = inputView.inputWhetherAdditionalCardAcquisition(player.name)
             val changedPlayer = player.continuePlayingTheGame(command)
