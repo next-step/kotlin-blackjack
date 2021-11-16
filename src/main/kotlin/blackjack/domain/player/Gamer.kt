@@ -33,6 +33,8 @@ abstract class Gamer(
     }
 
     fun canHit() = wantHit { PlayerAnswer.YES }
+
+    fun isBust() = hand.isBust()
 }
 
 fun interface AfterHitWhileCallback {
