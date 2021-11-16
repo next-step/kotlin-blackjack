@@ -31,14 +31,4 @@ internal class CardNumberValueTest {
     fun `getValue() 메소드 호출 시 text인자로 "A", chooseExtraValue로 false로 입력하면 1의 값을 가진 CardNumberValue를 리턴한다 `() {
         assertThat(CardNumberValue.getValue("A")).isEqualTo(CardNumberValue(1))
     }
-
-    @Test
-    fun `getAceValue() 메소드 호출 시 chooseLargerValue 값을 true로 입력하면 11의 값을 가진 CardNumberValue를 리턴한다 `() {
-        assertThat(CardNumberValue.getAceValue(true)).isEqualTo(CardNumberValue(11))
-    }
-
-    @Test
-    fun `getAceValue() 메소드 호출 시 chooseLargerValue 값을 false로 입력하면 1의 값을 가진 CardNumberValue를 리턴한다 `() {
-        assertThat(CardNumberValue.getAceValue(false)).isEqualTo(CardNumberValue(1))
-    }
 }

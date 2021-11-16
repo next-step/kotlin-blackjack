@@ -12,7 +12,7 @@ class PlayerCardsHandler(
     }
 
     override fun canReceiveAdditionalCard(): Boolean {
-        return cardAdditionDecider.canReceiveAdditionalCard(resultCalculator.getSumOfMinimumCardValues(cards))
+        return cardAdditionDecider.canReceiveAdditionalCard(resultCalculator.getDefaultCardsResultPoint(cards))
     }
 
     override fun getCards(): List<Card> {

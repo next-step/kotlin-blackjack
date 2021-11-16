@@ -1,53 +1,27 @@
 package blackjack.domain
 
-import kotlin.math.abs
+import blackjack.domain.CardNumberValue.Companion.ACE_EXTRA_VALUE
+import blackjack.domain.ParticipantCards.Companion.MAXIMUM_SUM_OF_CARD_NUMBERS
 
 class ResultCalculator {
     fun getCardsResultPoint(playerCards: ParticipantCards): Int {
-        if (hasAnyAceCard(playerCards)) {
-            return getResultForHavingAnyAceCard(playerCards)
+        val defaultCardsResultPoint = getDefaultCardsResultPoint(playerCards)
+        val cardsResultPointWithAce = defaultCardsResultPoint + ACE_EXTRA_VALUE
+
+        if (hasAnyAceCard(playerCards) && !isBustedCardsResultPoint(cardsResultPointWithAce)) {
+            return cardsResultPointWithAce
         }
 
-        return getSumOfMinimumCardValues(playerCards)
+        return defaultCardsResultPoint
     }
 
-    fun hasAnyAceCard(playerCards: ParticipantCards): Boolean {
-        return playerCards.cards.any { card -> card.hasAce() }
-    }
-
-    fun getSumOfMinimumCardValues(playerCards: ParticipantCards) = sumOfCardValues(playerCards.cards)
-
-    fun getSumOfMaximumCardValues(playerCards: ParticipantCards): Int {
-        val firstAceCard = playerCards.cards.firstOrNull { it.hasAce() }
-        val restCards = playerCards.cards.filter { it != firstAceCard }
-
-        if (firstAceCard == null) {
-            return sumOfCardValues(restCards)
-        }
-
-        return CardNumberValue.getValue(firstAceCard.number.rank, true).value + sumOfCardValues(restCards)
-    }
-
-    private fun sumOfCardValues(targetCards: List<Card>) = targetCards
+    fun getDefaultCardsResultPoint(playerCards: ParticipantCards): Int = playerCards
+        .cards
         .sumOf { CardNumberValue.getValue(it.number.rank).value }
 
-    fun getResultForHavingAnyAceCard(playerCards: ParticipantCards): Int {
-        val sumOfMinimumCardValues = getSumOfMinimumCardValues(playerCards)
-        val sumOfMaximumCardValues = getSumOfMaximumCardValues(playerCards)
+    fun hasAnyAceCard(participantCards: ParticipantCards): Boolean = participantCards
+        .cards
+        .any { card -> card.hasAce() }
 
-        if (!exceededMaximumCardValues(sumOfMaximumCardValues) &&
-            isMaximumCardValuesCloserToBlackJack(sumOfMinimumCardValues, sumOfMaximumCardValues)) {
-            return sumOfMaximumCardValues
-        }
-
-        return sumOfMinimumCardValues
-    }
-
-    fun exceededMaximumCardValues(sum: Int) = sum > PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS
-
-    fun isMaximumCardValuesCloserToBlackJack(
-        sumOfMinimumCardValues: Int,
-        sumOfMaximumCardValues: Int
-    ) = abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMinimumCardValues) >
-        abs(PlayerCards.MAXIMUM_SUM_OF_CARD_NUMBERS - sumOfMaximumCardValues)
+    fun isBustedCardsResultPoint(sum: Int): Boolean = sum > MAXIMUM_SUM_OF_CARD_NUMBERS
 }

@@ -9,6 +9,7 @@ value class CardNumberValue(val value: Int) {
         private const val MINIMUM_CARD_VALUE = 1
         private const val MAXIMUM_CARD_VALUE = 11
         private const val ACE_DEFAULT_VALUE = 1
+        const val ACE_EXTRA_VALUE = 10
         private const val ROYAL_FAMILY_VALUE = 10
         private const val WRONG_CARD_VALUE_MESSAGE = "잘못된 카드 값입니다.($MINIMUM_CARD_VALUE~$MAXIMUM_CARD_VALUE 입력)"
 
@@ -20,9 +21,9 @@ value class CardNumberValue(val value: Int) {
             return numberPool[value]!!
         }
 
-        fun getValue(rank: String, chooseLargerValue: Boolean = false): CardNumberValue {
+        fun getValue(rank: String): CardNumberValue {
             if (CardNumber.isAce(rank)) {
-                return getAceValue(chooseLargerValue)
+                return CardNumberValue[ACE_DEFAULT_VALUE]
             }
 
             if (CardNumber.isRoyalFamily(rank)) {
@@ -30,14 +31,6 @@ value class CardNumberValue(val value: Int) {
             }
 
             return CardNumberValue[rank.toInt()]
-        }
-
-        fun getAceValue(chooseLargerValue: Boolean): CardNumberValue {
-            if (chooseLargerValue) {
-                return CardNumberValue[MAXIMUM_CARD_VALUE]
-            }
-
-            return CardNumberValue[ACE_DEFAULT_VALUE]
         }
     }
 }

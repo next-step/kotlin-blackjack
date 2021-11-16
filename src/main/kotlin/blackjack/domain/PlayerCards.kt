@@ -13,8 +13,4 @@ class PlayerCards : ParticipantCards {
     override fun add(card: Card) {
         _cards.add(card)
     }
-
-    companion object {
-        const val MAXIMUM_SUM_OF_CARD_NUMBERS = 21
-    }
 }
