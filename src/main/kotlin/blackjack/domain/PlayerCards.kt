@@ -6,9 +6,7 @@ class PlayerCards : ParticipantCards {
     override val cards: List<Card>
         get() = _cards
 
-    override fun getCardsString(): String {
-        return _cards.joinToString { it.toString() }
-    }
+    override fun getCardsString(): String = _cards.joinToString { it.toString() }
 
     override fun add(card: Card) {
         _cards.add(card)

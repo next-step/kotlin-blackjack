@@ -3,6 +3,7 @@ package blackjack.view.result
 import blackjack.domain.Dealer.Companion.BASIC_CARD_NUMBER
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.ResultCalculator
 
 class ConsoleResultView : ResultView {
     override fun showDeliveredBasicCards(players: Players) {
@@ -22,14 +23,14 @@ class ConsoleResultView : ResultView {
         }
     }
 
-    override fun showPlayerResults(players: Players) {
+    override fun showPlayerResults(resultCalculator: ResultCalculator, players: Players) {
         players.items.forEach {
             showPlayerCards(it)
-            showPlayerResult(it)
+            showPlayerResult(resultCalculator, it)
         }
     }
 
-    private fun showPlayerResult(player: Player) {
-        println(" - 결과 ${player.cardsHandler.getCardsResultPoint()}")
+    private fun showPlayerResult(resultCalculator: ResultCalculator, player: Player) {
+        println(" - 결과 ${resultCalculator.getCardsResultPoint(player.cardsHandler.getCards())}")
     }
 }

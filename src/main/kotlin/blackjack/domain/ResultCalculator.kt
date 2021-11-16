@@ -1,27 +1,22 @@
 package blackjack.domain
 
-import blackjack.domain.CardNumberValue.Companion.ACE_EXTRA_VALUE
-import blackjack.domain.ParticipantCards.Companion.MAXIMUM_SUM_OF_CARD_NUMBERS
+import blackjack.domain.CardPoint.Companion.MAXIMUM_SUM_OF_CARD_POINTS
 
 class ResultCalculator {
     fun getCardsResultPoint(playerCards: ParticipantCards): Int {
-        val defaultCardsResultPoint = getDefaultCardsResultPoint(playerCards)
-        val cardsResultPointWithAce = defaultCardsResultPoint + ACE_EXTRA_VALUE
+        val defaultCardsResultPoint = playerCards.getSumOfCardsPoint()
+        val cardsResultPointWithAce = defaultCardsResultPoint + ACE_EXTRA_POINT
 
-        if (hasAnyAceCard(playerCards) && !isBustedCardsResultPoint(cardsResultPointWithAce)) {
+        if (playerCards.hasAceCard() && !isBustedCardsResultPoint(cardsResultPointWithAce)) {
             return cardsResultPointWithAce
         }
 
         return defaultCardsResultPoint
     }
 
-    fun getDefaultCardsResultPoint(playerCards: ParticipantCards): Int = playerCards
-        .cards
-        .sumOf { CardNumberValue.getValue(it.number.rank).value }
+    fun isBustedCardsResultPoint(sum: Int): Boolean = sum > MAXIMUM_SUM_OF_CARD_POINTS
 
-    fun hasAnyAceCard(participantCards: ParticipantCards): Boolean = participantCards
-        .cards
-        .any { card -> card.hasAce() }
-
-    fun isBustedCardsResultPoint(sum: Int): Boolean = sum > MAXIMUM_SUM_OF_CARD_NUMBERS
+    companion object {
+        private const val ACE_EXTRA_POINT = 10
+    }
 }

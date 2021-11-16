@@ -11,8 +11,8 @@ internal class DealerTest {
     fun `deliverBasicCards() 메소드로 Players들에게 카드를 나눠주면 각 Player들은 카드를 2장씩 가지게 된다`() {
         val players = Players(
             listOf(
-                Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())),
-                Player("bbb", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator()))
+                Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider())),
+                Player("bbb", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider()))
             )
         )
 
@@ -33,13 +33,13 @@ internal class DealerTest {
         dealer.deliverBasicCards(players)
 
         players.items.forEach {
-            assertThat(it.cardsHandler.getCards().size).isEqualTo(2)
+            assertThat(it.cardsHandler.getCards().cards.size).isEqualTo(2)
         }
     }
 
     @Test
     fun `deliverBasicCards() 메소드로 Player에게 카드를 나눠주면 카드를 2장 가지게 된다`() {
-        val player = Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator()))
+        val player = Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider()))
 
         val deckCardsBuilder = object : DeckCardsBuilder {
             override fun build(): Stack<Card> {
@@ -56,15 +56,15 @@ internal class DealerTest {
 
         dealer.deliverBasicCards(player)
 
-        assertThat(player.cardsHandler.getCards().size).isEqualTo(2)
+        assertThat(player.cardsHandler.getCards().cards.size).isEqualTo(2)
     }
 
     @Test
     fun `deliverCard() 메소드로 Players들에게 카드를 나눠주면 각 Player들은 카드를 한장씩 더 가지게 된다`() {
         val players = Players(
             listOf(
-                Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())),
-                Player("bbb", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator()))
+                Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider())),
+                Player("bbb", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider()))
             )
         )
 
@@ -87,7 +87,7 @@ internal class DealerTest {
 
         players.items.forEach {
             dealer.deliverCard(it)
-            assertThat(it.cardsHandler.getCards().size).isEqualTo(3)
+            assertThat(it.cardsHandler.getCards().cards.size).isEqualTo(3)
         }
     }
 }

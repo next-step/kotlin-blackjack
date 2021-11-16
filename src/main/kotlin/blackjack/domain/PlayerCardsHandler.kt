@@ -4,26 +4,21 @@ import blackjack.service.ParticipantCardAdditionDecider
 
 class PlayerCardsHandler(
     private val cards: ParticipantCards,
-    private val cardAdditionDecider: ParticipantCardAdditionDecider,
-    private val resultCalculator: ResultCalculator
+    private val cardAdditionDecider: ParticipantCardAdditionDecider
 ) : ParticipantCardsHandler {
     override fun addCard(card: Card) {
         cards.add(card)
     }
 
     override fun canReceiveAdditionalCard(): Boolean {
-        return cardAdditionDecider.canReceiveAdditionalCard(resultCalculator.getDefaultCardsResultPoint(cards))
+        return cardAdditionDecider.canReceiveAdditionalCard(cards.getSumOfCardsPoint())
     }
 
-    override fun getCards(): List<Card> {
-        return cards.cards
+    override fun getCards(): ParticipantCards {
+        return cards
     }
 
     override fun getCardsString(): String {
         return cards.getCardsString()
-    }
-
-    override fun getCardsResultPoint(): Int {
-        return resultCalculator.getCardsResultPoint(cards)
     }
 }

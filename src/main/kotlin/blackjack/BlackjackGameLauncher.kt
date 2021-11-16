@@ -3,11 +3,16 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.DealerCardDeck
 import blackjack.domain.Player
+import blackjack.domain.ResultCalculator
 import blackjack.service.ShuffledDeckCardsBuilder
 import blackjack.view.input.InputView
 import blackjack.view.result.ResultView
 
-class BlackjackGameLauncher(private val inputView: InputView, private val resultView: ResultView) {
+class BlackjackGameLauncher(
+    private val inputView: InputView,
+    private val resultView: ResultView,
+    private val resultCalculator: ResultCalculator
+) {
     fun launch() {
         val players = inputView.getPlayers()
 
@@ -17,7 +22,7 @@ class BlackjackGameLauncher(private val inputView: InputView, private val result
 
         players.items.forEach { player -> deliverAdditionalCards(dealer, player) }
 
-        resultView.showPlayerResults(players)
+        resultView.showPlayerResults(resultCalculator, players)
     }
 
     private fun deliverAdditionalCards(dealer: Dealer, player: Player) {

@@ -24,7 +24,7 @@ data class Players(val items: List<Player>) {
             .map {
                 Player(
                     it.trim(),
-                    PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator())
+                    PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider())
                 )
             }
             .toList()
