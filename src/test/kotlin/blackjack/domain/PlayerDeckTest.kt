@@ -2,6 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class PlayerDeckTest {
@@ -11,7 +12,7 @@ class PlayerDeckTest {
         val playerDeck = PlayerDeck()
         val cards = (1..cardCount).map { Card(CardSymbol.CLOVER, CardNumber(it)) }
 
-        playerDeck.addCards(*cards.toTypedArray())
+        playerDeck.addCards(cards)
 
         assertThat(playerDeck.cards.size).isEqualTo(cardCount)
     }
@@ -23,8 +24,30 @@ class PlayerDeckTest {
         val playerDeck = PlayerDeck()
         val cards = cardNumbers.map { Card(CardSymbol.CLOVER, CardNumber(it)) }
 
-        playerDeck.addCards(*cards.toTypedArray())
+        playerDeck.addCards(cards)
 
         assertThat(playerDeck.getTotalScore()).isEqualTo(cardNumbers.sum())
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [11, 12, 13])
+    fun `점수 계산 시 코트 카드는 10점으로 계산한다`(cardNumber: Int) {
+        val playerDeck = PlayerDeck()
+        playerDeck.addCards(listOf(Card(CardSymbol.CLOVER, CardNumber(cardNumber))))
+
+        assertThat(playerDeck.getTotalScore()).isEqualTo(10)
+    }
+
+    @ParameterizedTest
+    @CsvSource("1,10|21", "1,10,10|21", "1|11", "1,1|12", delimiter = '|')
+    fun `점수 계산 시 에이스 카드는 1점 또는 11점으로 계산한다`(cardNumbers: String, expectedScore: Int) {
+        val playerDeck = PlayerDeck()
+        playerDeck.addCards(
+            cardNumbers
+                .split(",")
+                .map { Card(CardSymbol.CLOVER, CardNumber(it.toInt())) }
+        )
+
+        assertThat(playerDeck.getTotalScore()).isEqualTo(expectedScore)
     }
 }

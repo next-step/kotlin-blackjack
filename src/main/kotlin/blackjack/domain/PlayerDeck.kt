@@ -9,7 +9,7 @@ class PlayerDeck {
     val cards: List<Card>
         get() = (normalCards + aceCards + courtCards).deepCopy()
 
-    fun addCards(vararg cards: Card) {
+    fun addCards(cards: List<Card>) {
         cards.forEach {
             when {
                 it.number.value == ACE_NUMBER -> aceCards.add(it)
@@ -24,7 +24,7 @@ class PlayerDeck {
         normalCards.forEach { totalScore += it.number.value }
         courtCards.forEach { _ -> totalScore += MAX_NUMBER }
         aceCards.forEach {
-            totalScore += if (totalScore + it.number.value > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
+            totalScore += if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
         }
         return totalScore
     }
