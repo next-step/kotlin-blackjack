@@ -32,8 +32,8 @@ class Gamers(private val players: List<Player>, private val dealer: Dealer) {
             playerAfterHit: AfterHitWhileCallback,
             dealerAfterHit: AfterHitWhileCallback,
         ): Gamers {
-            val players = names.map { Player(it, playerAfterHit) }
-            val dealer = Dealer(dealerAfterHit)
+            val players = names.map { Player(it, afterHitCallBack = playerAfterHit) }
+            val dealer = Dealer(afterHitCallBack = dealerAfterHit)
             return Gamers(players, dealer)
         }
     }

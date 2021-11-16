@@ -7,17 +7,18 @@ import blackjack.domain.card.Score
 abstract class Gamer(
     val name: PlayerName,
     val hand: Hand = Hand.createEmpty(),
-    private val callback: AfterHitWhileCallback = AfterHitWhileCallback {}
 ) {
 
     protected abstract fun wantHit(answerProvider: AnswerProvider): Boolean
 
     protected abstract fun firstOpenCardsCount(): Int
 
+    protected abstract val afterHitCallBack: AfterHitWhileCallback?
+
     fun hitWhileWant(deck: Deck, answerProvider: AnswerProvider) {
         while (wantHit(answerProvider)) {
             hit(deck)
-            callback.onAfterHit(this)
+            afterHitCallBack?.onAfterHit(this)
         }
     }
 

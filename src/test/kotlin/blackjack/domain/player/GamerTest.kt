@@ -67,6 +67,8 @@ class TestGamer(private val canHit: Boolean) : Gamer(PlayerName("test"), Hand.cr
 
     override fun wantHit(answerProvider: AnswerProvider) = canHit && answerProvider.getAnswer(this).hit
 
+    override val afterHitCallBack: AfterHitWhileCallback? = null
+
     override fun firstOpenCardsCount(): Int {
         throw UnsupportedOperationException()
     }

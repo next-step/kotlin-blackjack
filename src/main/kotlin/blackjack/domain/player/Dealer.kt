@@ -8,9 +8,9 @@ private val DEALER_HIT_MAX_SCORE = Score(16)
 private val DEALER_NAME = PlayerName("딜러")
 
 class Dealer(
-    callback: AfterHitWhileCallback = AfterHitWhileCallback {},
     hand: Hand = Hand.createEmpty(),
-) : Gamer(DEALER_NAME, hand, callback) {
+    override val afterHitCallBack: AfterHitWhileCallback? = null,
+) : Gamer(DEALER_NAME, hand) {
 
     override fun wantHit(answerProvider: AnswerProvider): Boolean {
         return score <= DEALER_HIT_MAX_SCORE

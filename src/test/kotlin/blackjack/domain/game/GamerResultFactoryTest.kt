@@ -17,8 +17,8 @@ class GamerResultFactoryTest {
 
     @Test
     fun `플레이어가 bust라면 플레이어는 패배한다`() {
-        val dealer = Dealer(hand = Hand(bustScore))
-        val player = Player(name, hand = Hand(bustScore))
+        val dealer = Dealer(Hand(bustScore))
+        val player = Player(name, Hand(bustScore))
 
         val result = GamerResultFactory.getPlayerResult(dealer, player)
 
@@ -27,8 +27,8 @@ class GamerResultFactoryTest {
 
     @Test
     fun `Dealer만 bust라면 플레이어는 승리한다`() {
-        val dealer = Dealer(hand = Hand(bustScore))
-        val player = Player(name, hand = Hand(2))
+        val dealer = Dealer(Hand(bustScore))
+        val player = Player(name, Hand(2))
 
         val result = GamerResultFactory.getPlayerResult(dealer, player)
 
@@ -37,8 +37,8 @@ class GamerResultFactoryTest {
 
     @Test
     fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 높다면 플레이어가 승리한다`() {
-        val dealer = Dealer(hand = Hand(18))
-        val player = Player(name, hand = Hand(19))
+        val dealer = Dealer(Hand(18))
+        val player = Player(name, Hand(19))
 
         val result = GamerResultFactory.getPlayerResult(dealer, player)
 
@@ -47,8 +47,8 @@ class GamerResultFactoryTest {
 
     @Test
     fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 같다면 플레이어는 비긴다`() {
-        val dealer = Dealer(hand = Hand(18))
-        val player = Player(name, hand = Hand(18))
+        val dealer = Dealer(Hand(18))
+        val player = Player(name, Hand(18))
 
         val result = GamerResultFactory.getPlayerResult(dealer, player)
 
@@ -57,8 +57,8 @@ class GamerResultFactoryTest {
 
     @Test
     fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 낮다면 플레이어는 진다`() {
-        val dealer = Dealer(hand = Hand(18))
-        val player = Player(name, hand = Hand(17))
+        val dealer = Dealer(Hand(18))
+        val player = Player(name, Hand(17))
 
         val result = GamerResultFactory.getPlayerResult(dealer, player)
 
