@@ -1,10 +1,11 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.BlackJackResult
 
 private const val GAME_START_HIT_COUNT = 2
 
-class Gamers(val players: List<Player>, val dealer: Dealer) {
+class Gamers(private val players: List<Player>, private val dealer: Dealer) {
 
     val gamers: List<Gamer> = players + dealer
 
@@ -18,6 +19,10 @@ class Gamers(val players: List<Player>, val dealer: Dealer) {
         gamers.forEach {
             it.hitWhileWant(deck, answerProvider)
         }
+    }
+
+    fun getResult(): BlackJackResult {
+        return BlackJackResult.from(dealer, players)
     }
 
     companion object {

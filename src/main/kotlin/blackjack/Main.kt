@@ -4,6 +4,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.player.*
 import blackjack.view.ConsoleInputView
 import blackjack.view.ConsoleOutputView
+import blackjack.view.dto.BlackJackResultDto
 import blackjack.view.dto.CardDto
 import blackjack.view.dto.GamerDto
 import blackjack.view.dto.GamersDto
@@ -25,6 +26,7 @@ fun main() {
     }
 
     ConsoleOutputView.printResult(GamersDto(gamers))
+    ConsoleOutputView.printBlackJackResult(BlackJackResultDto(gamers.getResult()))
 }
 
 private fun getGamersAtFirst(gamers: Gamers): GamersDto {
