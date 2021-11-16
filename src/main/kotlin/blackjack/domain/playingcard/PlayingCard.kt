@@ -1,3 +1,8 @@
 package blackjack.domain.playingcard
 
-data class PlayingCard(val suit: Suit, val denomination: Denomination)
+import blackjack.domain.Score
+
+data class PlayingCard(private val suit: Suit, private val denomination: Denomination) {
+    val score: Score
+        get() = denomination.score
+}

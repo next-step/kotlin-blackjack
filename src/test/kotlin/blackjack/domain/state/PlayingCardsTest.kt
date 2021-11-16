@@ -56,8 +56,8 @@ internal class PlayingCardsTest {
                 PlayingCard(Suit.CLUB, Denomination.SIX),
             )
         )
-        val score = playingCards.score()
-        assertThat(score.sum()).isEqualTo(20)
+        val score = playingCards.sumScore()
+        assertThat(score.score).isEqualTo(20)
     }
 
     companion object {
