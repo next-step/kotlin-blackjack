@@ -1,6 +1,5 @@
 package blackjack.ui
 
-import blackjack.domain.player.Player
 import blackjack.strategy.ui.input.InputStrategy
 import blackjack.strategy.ui.output.OutputStrategy
 
@@ -11,8 +10,8 @@ class InputView(private val inputStrategy: InputStrategy, private val outputStra
         return inputStrategy.execute()
     }
 
-    fun inputWhetherAdditionalCardAcquisition(player: Player): String {
-        outputStrategy.execute(ADDITIONAL_CARD_ACQUISITION_INPUT_MESSAGE.format(player.name))
+    fun inputWhetherAdditionalCardAcquisition(name: String): String {
+        outputStrategy.execute(ADDITIONAL_CARD_ACQUISITION_INPUT_MESSAGE.format(name))
         return inputStrategy.execute()
     }
 

@@ -14,8 +14,10 @@ class Player(
 
     fun isFinished(): Boolean = playingState.isFinish()
 
-    fun addCards(extraPlayingCards: List<PlayingCard>): Player =
-        Player(_name, playingState, playingCards.addCards(extraPlayingCards))
+    fun addCards(extraPlayingCards: List<PlayingCard>): Player {
+        val addedPlayingCards: PlayingCards = playingCards.addCards(extraPlayingCards)
+        return Player(_name, playingState, addedPlayingCards)
+    }
 
     fun continuePlayingTheGame(command: String): Player =
         continuePlayingTheGame(Command.values(command))

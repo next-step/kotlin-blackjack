@@ -2,7 +2,9 @@ package blackjack
 
 import blackjack.domain.Deck
 import blackjack.domain.Players
+import blackjack.domain.player.Player
 import blackjack.strategy.assign.FirstAssignCardStrategy
+import blackjack.strategy.assign.HitAssignCardStrategy
 import blackjack.strategy.shuffle.DeckRandomShuffleStrategy
 import blackjack.strategy.split.CommaSplitStrategy
 import blackjack.strategy.split.SplitStrategy
@@ -27,15 +29,34 @@ val command = Command.values(inputView.inputWhetherAdditionalCardAcquisition())
 class BlackJackApplication(private val inputView: InputView, private val splitStrategy: SplitStrategy) {
     fun run() {
         val deck = Deck.initialize(DeckRandomShuffleStrategy)
-        var players = players().assignCards(deck, FirstAssignCardStrategy)
+        var players = inputParticipantsInformation().assignCards(deck, FirstAssignCardStrategy)
+        players = players.players
+            .map { player -> startGame(player, deck) }
+            .let { Players.from(it) }
+        println(players)
     }
 
-    private fun players(): Players {
+    private tailrec fun startGame(player: Player, deck: Deck): Player {
+        return try {
+            val command = inputView.inputWhetherAdditionalCardAcquisition(player.name)
+            val changedPlayer = player.continuePlayingTheGame(command)
+            if (changedPlayer.isFinished()) {
+                return changedPlayer
+            }
+            val playingCard = HitAssignCardStrategy.assign(deck)
+            startGame(changedPlayer.addCards(playingCard), deck)
+        } catch (e: Exception) {
+            println(e.message)
+            startGame(player, deck)
+        }
+    }
+
+    private fun inputParticipantsInformation(): Players {
         return try {
             Players.of(inputView.inputParticipantsInformation(), CommaSplitStrategy)
         } catch (e: Exception) {
             println(e.message)
-            players()
+            inputParticipantsInformation()
         }
     }
 }

@@ -2,7 +2,7 @@ package blackjack.domain.playingcard
 
 import blackjack.domain.Score
 
-enum class Denomination(score: Score) {
+enum class Denomination(val score: Score) {
     ACE(Score.from(1)),
     TWO(Score.from(2)),
     THREE(Score.from(3)),

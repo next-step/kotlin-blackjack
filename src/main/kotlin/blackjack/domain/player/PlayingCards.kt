@@ -8,7 +8,7 @@ value class PlayingCards private constructor(private val playingCards: Set<Playi
 
     fun addCards(extraPlayingCards: List<PlayingCard>): PlayingCards =
         if (playingCards.any(extraPlayingCards::contains)) throw DuplicatePlayingCardException(extraPlayingCards)
-        else PlayingCards(playingCards + extraPlayingCards)
+        else PlayingCards(playingCards.plus(extraPlayingCards))
 
     companion object {
         fun initialize(): PlayingCards = from(setOf())
