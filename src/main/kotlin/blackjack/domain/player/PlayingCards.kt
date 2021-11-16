@@ -11,9 +11,15 @@ value class PlayingCards private constructor(private val playingCards: Set<Playi
         if (playingCards.any(extraPlayingCards::contains)) throw DuplicatePlayingCardException(extraPlayingCards)
         else PlayingCards(playingCards.plus(extraPlayingCards))
 
-    fun sumScore(): Score = playingCards
-        .map(PlayingCard::score)
-        .reduce(Score::plus)
+    fun sumScore(): Score {
+        val sum = playingCards
+            .map(PlayingCard::score)
+            .reduce(Score::plus)
+        if (playingCards.any(PlayingCard::hasAce) && sum.canAdditionalAceScore()) {
+            return sum.plus(Score.additionalAceScore())
+        }
+        return sum
+    }
 
     companion object {
         fun initialize(): PlayingCards = from(setOf())

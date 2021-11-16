@@ -15,5 +15,5 @@ enum class Denomination(val score: Score) {
     TEN(Score.from(10)),
     JACK(Score.from(10)),
     QUEEN(Score.from(10)),
-    KING(Score.from(10))
+    KING(Score.from(10));
 }
