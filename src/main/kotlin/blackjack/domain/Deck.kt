@@ -4,18 +4,23 @@ import blackjack.domain.playingcard.Denomination
 import blackjack.domain.playingcard.PlayingCard
 import blackjack.domain.playingcard.Suit
 import blackjack.strategy.shuffle.DeckShuffleStrategy
+import java.util.Stack
 
-@JvmInline
-value class Deck private constructor(private val deck: List<PlayingCard>) {
+data class Deck private constructor(private val _deck: List<PlayingCard>) {
+    private val deck: Stack<PlayingCard> = _deck.toCollection(Stack())
+
+    fun pop(count: Int = DEFAULT_POP_COUNT): List<PlayingCard> = (DEFAULT_POP_COUNT..count).map { deck.pop() }
+
     companion object {
+        private const val DEFAULT_POP_COUNT = 1
+
         fun initialize(deckShuffleStrategy: DeckShuffleStrategy): Deck =
-            Deck(deckShuffleStrategy.shuffle(playingCards()))
+            Deck(deckShuffleStrategy.shuffle(playingCardsAllSuit()))
 
-        private fun playingCards() = Suit.values()
-            .map(Companion::playingCardPerSuit)
-            .flatten()
+        private fun playingCardsAllSuit() = Suit.values()
+            .flatMap(Companion::playingCardsPerSuit)
 
-        private fun playingCardPerSuit(suit: Suit) = Denomination.values()
+        private fun playingCardsPerSuit(suit: Suit) = Denomination.values()
             .map { denomination -> PlayingCard(suit, denomination) }
     }
 }

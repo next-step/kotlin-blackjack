@@ -6,12 +6,12 @@ import blackjack.error.DuplicatePlayingCardException
 @JvmInline
 value class PlayingCards private constructor(private val playingCards: Set<PlayingCard>) {
 
-    operator fun plus(playingCard: PlayingCard): PlayingCards =
-        if (playingCards.contains(playingCard)) throw DuplicatePlayingCardException(playingCard)
-        else from(playingCards.plus(playingCard))
+    fun addCards(extraPlayingCards: List<PlayingCard>): PlayingCards =
+        if (playingCards.any(extraPlayingCards::contains)) throw DuplicatePlayingCardException(extraPlayingCards)
+        else PlayingCards(playingCards + extraPlayingCards)
 
     companion object {
         fun initialize(): PlayingCards = from(setOf())
-        fun from(playingCards: Set<PlayingCard>): PlayingCards = PlayingCards(playingCards.toSet())
+        private fun from(playingCards: Set<PlayingCard>): PlayingCards = PlayingCards(playingCards.toSet())
     }
 }

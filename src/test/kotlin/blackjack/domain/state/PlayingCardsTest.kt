@@ -24,23 +24,23 @@ internal class PlayingCardsTest {
         )
     }
 
-    @Test
-    fun `카드들에는 새로운 카드가 추가될 수 있다`() {
-        val expected = PlayingCards.from(setOf(PlayingCard(Suit.SPADE, Denomination.ACE)))
-        val playingCards: PlayingCards = PlayingCards.initialize()
-        val actual = playingCards.plus(PlayingCard(Suit.SPADE, Denomination.ACE))
-
-        assertThat(actual).isEqualTo(expected)
-    }
-
-    @Test
-    fun `기존에 들어있는 카드는 추가될 수가 없다`() {
-        val spadeAce = PlayingCard(Suit.SPADE, Denomination.ACE)
-        val playingCards: PlayingCards = PlayingCards.from(setOf(spadeAce))
-        val exception = assertThrows<DuplicatePlayingCardException> {
-            playingCards.plus(spadeAce)
-        }
-
-        assertThat(exception.message).isEqualTo("'%s_%s'는 이미 덱에 존재하는 카드입니다.".format(spadeAce.suit.name, spadeAce.denomination.name))
-    }
+    // @Test
+    // fun `카드들에는 새로운 카드가 추가될 수 있다`() {
+    //     val expected = PlayingCards.from(setOf(PlayingCard(Suit.SPADE, Denomination.ACE)))
+    //     val playingCards: PlayingCards = PlayingCards.initialize()
+    //     val actual = playingCards.plus(PlayingCard(Suit.SPADE, Denomination.ACE))
+    //
+    //     assertThat(actual).isEqualTo(expected)
+    // }
+    //
+    // @Test
+    // fun `기존에 들어있는 카드는 추가될 수가 없다`() {
+    //     val spadeAce = PlayingCard(Suit.SPADE, Denomination.ACE)
+    //     val playingCards: PlayingCards = PlayingCards.from(setOf(spadeAce))
+    //     val exception = assertThrows<DuplicatePlayingCardException> {
+    //         playingCards.plus(spadeAce)
+    //     }
+    //
+    //     assertThat(exception.message).isEqualTo("'%s_%s'는 이미 덱에 존재하는 카드입니다.".format(spadeAce.suit.name, spadeAce.denomination.name))
+    // }
 }

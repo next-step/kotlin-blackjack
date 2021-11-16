@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class Command(private val command: String, private val type: Boolean) {
+enum class Command(private val command: String, val type: Boolean) {
     YES("y", true),
     NO("n", false);
 
