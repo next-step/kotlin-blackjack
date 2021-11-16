@@ -4,26 +4,22 @@ import blackjack.domain.card.CardsDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.player.Participants
+import blackjack.service.DetermineMatch
 
-object BlackjackGame {
-
-    private const val FIRST_CARD_DIVIDE_COUNT = 2
+class BlackjackGame(
+    private val determineMatch: DetermineMatch
+) {
 
     fun start(
         players: List<Player>,
         cardsDeck: CardsDeck,
-    ): Players {
-        val dealer = Dealer()
-        (listOf(dealer.dealer) + players.map { it.player }).forEach { player ->
-            repeat(FIRST_CARD_DIVIDE_COUNT) {
-                player.addCard(cardsDeck.divide())
-            }
-        }
-
-        return Players(
+    ): Participants {
+        val dealer = Dealer(Participant("딜러"))
+        return Participants(
             dealer = dealer,
-            guest = players
+            players = players,
+            cardsDeck
         )
     }
 
@@ -38,7 +34,7 @@ object BlackjackGame {
         return player
     }
 
-    fun match(players: Players) {
-        players.match()
+    fun match(participants: Participants) {
+        determineMatch.match(participants.dealer, participants.players)
     }
 }

@@ -4,7 +4,12 @@ import blackjack.domain.card.Card
 
 class Participant(
     val name: String,
-) {
+) : CardFunction {
+
+    init {
+        require(name.isNotBlank()) { "이름은 공백제외 1글자 이상이어야 합니다." }
+    }
+
     private var _cards = mutableListOf<Card>()
 
     val cards: List<Card>
@@ -12,11 +17,11 @@ class Participant(
             return _cards.toList()
         }
 
-    fun addCard(card: Card) {
+    override fun addCard(card: Card) {
         _cards.add(card)
     }
 
-    fun getCardSum(): Int {
+    override fun getCardSum(): Int {
         return _cards
             .sortedByDescending { card -> card.getOrder() }
             .fold(START_INDEX) { sum, card ->
