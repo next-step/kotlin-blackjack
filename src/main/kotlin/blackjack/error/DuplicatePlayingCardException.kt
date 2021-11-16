@@ -6,6 +6,6 @@ class DuplicatePlayingCardException(private val playingCard: List<PlayingCard>) 
     override val message = MESSAGE
 
     companion object {
-        private const val MESSAGE = "이미 덱에 존재하는 카드입니다."
+        private const val MESSAGE = "이미 덱에 존재하는 카드가 있습니다."
     }
 }
