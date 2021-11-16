@@ -17,6 +17,8 @@ data class PlayerStatus(val cards: Cards, val decisionStatus: PlayerDecision = H
 
     fun isBlackJack(): Boolean = decisionStatus is BlackJack
 
+    fun isBustStatus(): Boolean = decisionStatus is Bust
+
     companion object {
         fun of(): PlayerStatus {
             return PlayerStatus(Cards(listOf()), Hit())

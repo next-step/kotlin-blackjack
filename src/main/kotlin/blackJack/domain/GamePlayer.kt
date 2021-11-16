@@ -22,5 +22,7 @@ open class GamePlayer(
 
     fun isBlackJackPlayer(): Boolean = status.isBlackJack()
 
+    fun isBustPlayer(): Boolean = status.isBustStatus()
+
     fun getScore() = status.sumScore()
 }

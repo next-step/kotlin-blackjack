@@ -1,10 +1,15 @@
 package blackJack.domain
 
 import blackJack.utils.StringUtils
+import java.util.NoSuchElementException
 
 class GamePlayers(private val players: List<GamePlayer>) {
 
     fun toList(): List<GamePlayer> = players
+
+    fun getDealer(): GamePlayer = players.firstOrNull { it.isDealer() } ?: throw NoSuchElementException(NOT_FOUND_DEALER)
+
+    fun getPlayers(): GamePlayers = GamePlayers(players.filter { !it.isDealer() })
 
     fun startBlackJack(playingCard: PlayingCard): GamePlayers {
         val players = players.map { player ->
@@ -30,5 +35,6 @@ class GamePlayers(private val players: List<GamePlayer>) {
         }
 
         private const val INIT_RECEIVE_CARD_NUMBER = 2
+        private const val NOT_FOUND_DEALER = "딜러가 없습니다."
     }
 }

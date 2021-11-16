@@ -119,12 +119,12 @@ class PlayerTest {
         player.receiveCard(Card(Suit.DIAMONDS, Denomination.KING))
 
         // when
-        val decisionStatus = player.status.decisionStatus
+        val isBust = player.isBustPlayer()
         val isContinue = player.getAbleReceivedCard()
 
         // then
         assertAll({
-            assertThat(decisionStatus is Bust).isEqualTo(true)
+            assertThat(isBust).isEqualTo(true)
             assertThat(isContinue).isEqualTo(false)
         })
     }

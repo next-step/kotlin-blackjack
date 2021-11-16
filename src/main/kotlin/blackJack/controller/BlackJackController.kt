@@ -3,6 +3,7 @@ package blackJack.controller
 import blackJack.domain.GamePlayer
 import blackJack.domain.GamePlayers
 import blackJack.domain.PlayingCard
+import blackJack.domain.Results
 import blackJack.dto.PlayerDto
 import blackJack.dto.GamePlayersDto
 import blackJack.view.InputView
@@ -17,13 +18,12 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         val startedPlayer = gamePlayers.startBlackJack(playingCard)
         resultView.receiveTwoCard(GamePlayersDto.of(startedPlayer))
 
-        startedPlayer.toList().map {
-            receiveCard(it, playingCard)
-            PlayerDto.of(it)
-        }.forEach {
-            resultView.gameResult(it)
-        }
+        val inGamePlayers = playingGame(startedPlayer, playingCard)
+        val gameOverPlayers = resultingGame(inGamePlayers)
+        resultView.winOrLoseView(Results.from(gameOverPlayers))
     }
+
+
 
     private fun receiveCard(player: GamePlayer, playingCard: PlayingCard) {
         if (!player.isBlackJackPlayer() && !player.isDealer()) {
@@ -34,7 +34,7 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun continuousDealerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
-        if(player.getAbleReceivedCard()) {
+        if (player.getAbleReceivedCard()) {
             player.receiveCard(playingCard.drawCard())
             resultView.receiveCardToDealer(PlayerDto.of(player))
         } else {
@@ -57,4 +57,17 @@ class BlackJackController(private val inputView: InputView, private val resultVi
             player.noReceiveCard()
         }
     }
+
+    private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard): GamePlayers =
+        GamePlayers(startedPlayer.toList().map {
+            receiveCard(it, playingCard)
+            return@map it
+        })
+
+    private fun resultingGame(inGamePlayers: GamePlayers): GamePlayers =
+        GamePlayers(inGamePlayers.toList().map {
+            resultView.gameResult(PlayerDto.of(it))
+            return@map it
+        })
+
 }

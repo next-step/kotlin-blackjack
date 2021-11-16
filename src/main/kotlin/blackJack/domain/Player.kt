@@ -1,6 +1,6 @@
 package blackJack.domain
 
-class Player(name: String) : GamePlayer(name= name, type = GamePlayerType.PLAYER) {
+class Player(name: String) : GamePlayer(name = name, type = GamePlayerType.PLAYER) {
 
     init {
         require(name.isNotEmpty()) { IS_PLAYER_NAME_BLACK }
