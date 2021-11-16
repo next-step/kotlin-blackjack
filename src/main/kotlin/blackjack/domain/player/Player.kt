@@ -13,7 +13,15 @@ class Player(
     var resultStatus = ResultStatus.UNKNOWN
         private set
 
+    fun isCardReceiveAble(): Boolean {
+        return player.getCardSum() < DEADLINE
+    }
+
     fun determineWinOrLose(winOrLose: ResultStatus) {
         resultStatus = winOrLose
+    }
+
+    companion object {
+        private const val DEADLINE = 21
     }
 }

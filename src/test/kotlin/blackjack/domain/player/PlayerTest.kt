@@ -4,6 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardPattern
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -91,5 +93,44 @@ class PlayerTest {
         player.determineWinOrLose(ResultStatus.TIE)
 
         assertEquals(ResultStatus.TIE, player.resultStatus)
+    }
+
+    @Test
+    fun `가진 카드의합이 21보다 작을때 카드를 받을 수 있다`() {
+        val player = Player("one")
+
+        val actual = player.isCardReceiveAble()
+
+        assertTrue(actual)
+    }
+
+    @Test
+    fun `가진 카드의합이 21이상일 때 카드를 받을 수 없다`() {
+        val player = Player("one")
+
+        player.player.addCard(
+            Card(
+                pattern = CardPattern.DIAMOND,
+                denomination = CardDenomination.TEN
+            )
+        )
+
+        player.player.addCard(
+            Card(
+                pattern = CardPattern.HEART,
+                denomination = CardDenomination.TEN
+            )
+        )
+
+        player.player.addCard(
+            Card(
+                pattern = CardPattern.CLOVER,
+                denomination = CardDenomination.TEN
+            )
+        )
+
+        val actual = player.isCardReceiveAble()
+
+        assertFalse(actual)
     }
 }

@@ -44,7 +44,7 @@ private fun divideCards(
     players.forEach { player ->
         var wantMoreCard = true
 
-        while (player.player.getCardSum() <= 21 && wantMoreCard) {
+        while (player.isCardReceiveAble() && wantMoreCard) {
             wantMoreCard = InputView.inputWantMoreCard(player.name).fromYNToBoolean()
 
             addCardWhenWantMoreCard(wantMoreCard, player, cardsDeck)
