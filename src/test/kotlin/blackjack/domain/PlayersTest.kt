@@ -12,8 +12,7 @@ internal class PlayersTest {
     @ParameterizedTest(name = "입력값: {0}")
     @ValueSource(strings = ["a", "a,b", "a,b,c"])
     fun `이름을 통해 참가자를 만들 수 있다`(namesString: String) {
-        val names = namesString.split(",")
-        val players: Players = Players.from(names)
+        val players: Players = Players.of(namesString) { it.split(",") }
 
         assertAll(
             { assertThat(players).isNotNull },
