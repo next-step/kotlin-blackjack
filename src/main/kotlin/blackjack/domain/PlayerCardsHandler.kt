@@ -18,7 +18,7 @@ class PlayerCardsHandler(
     }
 
     override fun getCardsString(): String {
-        return cards.toString()
+        return cards.getCardsString()
     }
 
     override fun getCardsResultPoint(): Int {
