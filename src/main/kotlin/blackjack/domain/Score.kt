@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.error.ScoreOutOfBoundsException
 
 @JvmInline
-value class Score private constructor(val score: Int) {
+value class Score private constructor(private val score: Int) {
     operator fun plus(other: Score): Score = from(this.score + other.score)
 
     companion object {

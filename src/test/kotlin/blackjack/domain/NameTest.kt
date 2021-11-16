@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.player.Name
 import blackjack.error.InvalidPlayerNameException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName

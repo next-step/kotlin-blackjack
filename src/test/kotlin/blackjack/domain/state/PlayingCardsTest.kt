@@ -1,9 +1,9 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
-import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
+import blackjack.domain.playingcard.Denomination
+import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.player.PlayingCards
+import blackjack.domain.playingcard.Suit
 import blackjack.error.DuplicatePlayingCardException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
