@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.service
 
 interface ParticipantCardAdditionDecider {
     fun canReceiveAdditionalCard(sum: Int): Boolean
