@@ -8,7 +8,4 @@ class Player(
     private val name: Name,
     private var playingState: PlayingState = Running,
     private val playingCards: PlayingCards = PlayingCards.initialize(),
-) {
-
-
-}
+)
