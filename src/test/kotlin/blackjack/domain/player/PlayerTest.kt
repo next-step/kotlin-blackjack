@@ -1,38 +1,18 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.*
+import blackjack.Hand
+import blackjack.domain.card.Score.Companion.BLACK_JACK_SCORE
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
 class PlayerTest {
 
     private val name = PlayerName("aaj")
-    private lateinit var deck: Deck
-    private lateinit var topOfDeck: Card
-
-    @BeforeEach
-    fun setUp() {
-        deck = Deck(
-            listOf(
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.NINE, Type.CLUB),
-                Card(Symbol.TWO, Type.CLUB),
-                Card(Symbol.ACE, Type.CLUB),
-            )
-        )
-        topOfDeck = deck.cards.first()
-    }
 
     @Test
     fun `Player는 스코어가 블랙잭 스코어보다 작다면 hit할 수 있다`() {
-        val underBlackJackHand = Hand(
-            listOf(
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.TEN, Type.CLUB),
-            )
-        )
+        val underBlackJackHand = Hand(BLACK_JACK_SCORE.value - 1)
         val player = Player(name, hand = underBlackJackHand)
 
         val result = player.canHit()
@@ -42,13 +22,7 @@ class PlayerTest {
 
     @Test
     fun `Player는 스코어가 블랙잭 스코어와 같다면 hit할 수 없다`() {
-        val blackJackScoreHand = Hand(
-            listOf(
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.ACE, Type.CLUB),
-            )
-        )
+        val blackJackScoreHand = Hand(BLACK_JACK_SCORE.value)
         val player = Player(name, hand = blackJackScoreHand)
 
         val result = player.canHit()
@@ -58,14 +32,7 @@ class PlayerTest {
 
     @Test
     fun `Player는 스코어가 블랙잭 스코어보다 크다면 hit할 수 없다`() {
-        val blackJackScoreHand = Hand(
-            listOf(
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.ACE, Type.CLUB),
-                Card(Symbol.ACE, Type.CLUB),
-            )
-        )
+        val blackJackScoreHand = Hand(BLACK_JACK_SCORE.value + 1)
         val player = Player(name, hand = blackJackScoreHand)
 
         val result = player.canHit()
