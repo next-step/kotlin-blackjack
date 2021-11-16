@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -18,5 +19,12 @@ internal class PlayerTest {
             { assertThat(player).isNotNull },
             { assertThat(player).isExactlyInstanceOf(Player::class.java) }
         )
+    }
+
+    @Test
+    fun `사용자는 기본적으로 플레잉중인 상태다`() {
+        val player = Player.fromName("test")
+
+        assertThat(player.isFinish()).isFalse()
     }
 }
