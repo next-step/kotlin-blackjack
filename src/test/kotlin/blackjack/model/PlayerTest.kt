@@ -30,4 +30,18 @@ class PlayerTest {
                 .cards
         ).isEqualTo(Cards(listOf(Card(Denomination.ACE, Suit.HEART))))
     }
+
+    @Test
+    fun `플레이어는 조건에따라 카드를 계속해서 받을 수 있다`() {
+        val cards = listOf(
+            Card(Denomination.ACE, Suit.HEART),
+            Card(Denomination.ACE, Suit.DIAMOND),
+        )
+        var count = 0
+        assertThat(
+            player
+                .receiveWhile(10) { cards.getOrNull(count++) }
+                .cards
+        ).isEqualTo(Cards(cards))
+    }
 }

@@ -3,13 +3,20 @@ package blackjack.model
 @JvmInline
 value class Players private constructor(private val players: List<Player>) {
 
-    fun <T> map(transform: (Player) -> T) = players.map(transform)
+    fun toNames(): Names = players.map { it.name }.let(Names::of)
 
-    fun flatMap(transform: (Player) -> Player) = Players(players.map(transform))
+    fun receiveWhile(
+        limit: Int = Int.MAX_VALUE,
+        onDraw: (Player) -> Card?
+    ): Players = players
+        .map { player -> player.receiveWhile(limit) { onDraw(player) } }
+        .let(::Players)
 
-    fun forEach(action: (Player) -> Unit) = players.forEach(action)
+    fun toList(): List<Player> = players
 
     companion object {
-        fun of(players: List<Player>) = Players(players)
+        fun from(names: Names): Players = names.toList()
+            .map { Player(it, Cards.empty()) }
+            .let(::Players)
     }
 }

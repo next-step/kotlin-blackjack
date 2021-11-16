@@ -6,13 +6,12 @@ import blackjack.view.res.getString
 
 class OutputView {
 
-    fun printFirstDraw(players: Players) {
-        val names = players.map { it.name }
-        val count = players.map { it.cards.size }.minOrNull() ?: 0
-        if (count == 0) return
+    fun printFirstDraw(players: Players, drawCount: Int) {
+        val names = players.toNames().toList()
+        if (drawCount == 0) return
         println()
-        println("${names.joinToString()}에게 ${count}장의 카드를 나누었습니다.")
-        players.forEach { player -> printPlayerCards(player) }
+        println("${names.joinToString()}에게 ${drawCount}장의 카드를 나누었습니다.")
+        players.toList().forEach { player -> printPlayerCards(player) }
         println()
     }
 
@@ -26,7 +25,7 @@ class OutputView {
     }
 
     fun printResult(players: Players) {
-        players.forEach { player ->
+        players.toList().forEach { player ->
             printPlayerCards(player, false)
             println(" - 결과: ${player.cards.sum()}")
         }

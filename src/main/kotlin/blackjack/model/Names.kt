@@ -1,7 +1,13 @@
 package blackjack.model
 
 @JvmInline
-value class Names(private val names: List<Name>) {
+value class Names private constructor(private val names: List<Name>) {
 
-    fun <T> map(transform: (Name) -> T): List<T> = names.map(transform)
+    fun toList(): List<Name> = names
+
+    companion object {
+        fun of(names: List<Name>) = Names(names)
+
+        fun from(vararg names: String) = Names(names.map { Name.valueOf(it) })
+    }
 }

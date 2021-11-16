@@ -4,6 +4,8 @@ class Deck private constructor(private val cards: Cards) {
 
     fun isEmpty(): Boolean = cards.isEmpty()
 
+    fun isNotEmpty(): Boolean = !isEmpty()
+
     fun peek(): Card? = cards.peek()
 
     fun draw(): Deck = Deck(cards.draw())
