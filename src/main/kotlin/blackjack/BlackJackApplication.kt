@@ -1,23 +1,25 @@
 package blackjack
 
-import blackjack.domain.Command
+import blackjack.domain.Deck
+import blackjack.domain.Players
+import blackjack.strategy.shuffle.DeckRandomShuffleStrategy
+import blackjack.strategy.split.CommaSplitStrategy
+import blackjack.strategy.split.SplitStrategy
+import blackjack.strategy.ui.input.ConsoleInputStrategy
+import blackjack.strategy.ui.output.ConsoleOutputStrategy
 import blackjack.ui.InputView
-import global.strategy.split.CommaSplitStrategy
-import global.strategy.split.SplitStrategy
-import global.strategy.ui.input.ConsoleInputStrategy
-import global.strategy.ui.output.ConsoleOutputStrategy
 
 class BlackJackApplication(private val inputView: InputView, private val splitStrategy: SplitStrategy) {
     fun run() {
-        val names = inputView.inputParticipantsInformation()
-
+        val deck = Deck.initialize(DeckRandomShuffleStrategy)
+        val players = players()
         /**
         val 사람 = splitStrategy.split(names)
 
         while(사람.상태isFinish()) {
-            val command = Command.values(inputView.inputWhetherAdditionalCardAcquisition())
-            사람.행동(command)
-            아웃풋뷰.출력(사람)
+        val command = Command.values(inputView.inputWhetherAdditionalCardAcquisition())
+        사람.행동(command)
+        아웃풋뷰.출력(사람)
         }
 
 
@@ -26,6 +28,15 @@ class BlackJackApplication(private val inputView: InputView, private val splitSt
          * 상태패턴 추가
          */
 
+    }
+
+    private fun players(): Players {
+        return try {
+            Players.of(inputView.inputParticipantsInformation(), CommaSplitStrategy)
+        } catch (e: Exception) {
+            println(e.message)
+            players()
+        }
     }
 }
 

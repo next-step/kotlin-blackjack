@@ -10,7 +10,7 @@ internal class DeckTest {
 
     @Test
     fun `초기화된 덱을 구성할 수 있다`() {
-        val deck = Deck.initialize()
+        val deck = Deck.initialize { it }
 
         assertAll(
             { assertThat(deck).isNotNull },

@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import global.strategy.ui.output.OutputStrategy
+import blackjack.strategy.ui.output.OutputStrategy
 
 class OutPutView(private val outputStrategy: OutputStrategy) {
 

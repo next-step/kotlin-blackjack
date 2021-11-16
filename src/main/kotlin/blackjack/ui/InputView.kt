@@ -1,7 +1,7 @@
 package blackjack.ui
 
-import global.strategy.ui.input.InputStrategy
-import global.strategy.ui.output.OutputStrategy
+import blackjack.strategy.ui.input.InputStrategy
+import blackjack.strategy.ui.output.OutputStrategy
 
 class InputView(private val inputStrategy: InputStrategy, private val outputStrategy: OutputStrategy) {
 

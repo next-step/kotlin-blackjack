@@ -1,4 +1,4 @@
-package global.strategy.ui.output
+package blackjack.strategy.ui.output
 
 object ConsoleOutputStrategy : OutputStrategy {
     override fun execute(message: String) {

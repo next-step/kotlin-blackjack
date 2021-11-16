@@ -1,4 +1,4 @@
-package global.strategy.split
+package blackjack.strategy.split
 
 object CommaSplitStrategy : SplitStrategy {
     private const val SINGLE_BLANK = ","
