@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Name
 import blackjack.model.Names
 import blackjack.model.Player
 
@@ -7,7 +8,11 @@ class InputView {
 
     fun getNames(): Names? {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readLine()?.let { Names.parse(it) }
+
+        val input = readLine() ?: return null
+        return input.split(NAME_DELIMITER)
+            .map { Name.valueOf(it.trim()) }
+            .let(::Names)
     }
 
     fun askDraw(player: Player): DrawAction {
@@ -26,5 +31,7 @@ class InputView {
     companion object {
         private const val ASK_DRAW_YES = "Y"
         private const val ASK_DRAW_NO = "N"
+
+        private const val NAME_DELIMITER = ","
     }
 }

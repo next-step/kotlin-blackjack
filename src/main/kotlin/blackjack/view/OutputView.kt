@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.view.res.getString
 
 class OutputView {
 
@@ -16,7 +17,11 @@ class OutputView {
     }
 
     fun printPlayerCards(player: Player, newline: Boolean = true) {
-        print("${player.name}카드: ${player.cards.joinToString()}")
+        val name = player.name
+        val cardsDisplay = player.cards.toList().joinToString {
+            "${it.denomination.symbol}${getString(it.suit)}"
+        }
+        print("${name}카드: $cardsDisplay")
         if (newline) println()
     }
 
