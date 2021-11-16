@@ -43,7 +43,7 @@ object OutputView {
 
         val dealerMatchResult = dealer.getMatchResult()
 
-        println("${dealer.name}: ${dealerMatchResult[ResultStatus.WIN] ?: 0}승 ${dealerMatchResult[ResultStatus.LOSE]}패 ${dealerMatchResult[ResultStatus.TIE] ?: 0}무")
+        println("${dealer.dealer.name}: ${dealerMatchResult[ResultStatus.WIN] ?: 0}승 ${dealerMatchResult[ResultStatus.LOSE]}패 ${dealerMatchResult[ResultStatus.TIE] ?: 0}무")
 
         guest.forEach { player ->
             println("${player.name}: ${player.resultStatus.value}")

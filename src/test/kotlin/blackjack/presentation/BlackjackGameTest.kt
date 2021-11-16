@@ -28,8 +28,8 @@ class BlackjackGameTest {
             CardsDeck()
         )
 
-        val actualDealer = actual.dealer
-        val actualPlayers = actual.guest
+        val actualDealer = actual.dealer.dealer
+        val actualPlayers = actual.guest.map { it.player }
 
         assertEquals(2, actualDealer.cards.size)
         assertEquals(2, actualPlayers[0].cards.size)
@@ -39,7 +39,7 @@ class BlackjackGameTest {
     @Test
     fun `카드를 더 받는다`() {
         val card = BlackjackGame.addCard(
-            Player("one"),
+            Player("one").player,
             CardsDeck()
         )
 
@@ -54,7 +54,7 @@ class BlackjackGameTest {
 
             repeat(cardCount + 1) {
                 BlackjackGame.addCard(
-                    Player("one"),
+                    Player("one").player,
                     cardsDeck
                 )
             }
@@ -81,20 +81,20 @@ class BlackjackGameTest {
 
     private fun buildPlayers(): Players {
         val dealer = Dealer()
-        dealer.addCard(Card(pattern = CardPattern.HEART, denomination = CardDenomination.TEN))
-        dealer.addCard(Card(pattern = CardPattern.HEART, denomination = CardDenomination.EIGHT))
+        dealer.dealer.addCard(Card(pattern = CardPattern.HEART, denomination = CardDenomination.TEN))
+        dealer.dealer.addCard(Card(pattern = CardPattern.HEART, denomination = CardDenomination.EIGHT))
 
         val one = Player("one")
-        one.addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.TEN))
-        one.addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.NINE))
+        one.player.addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.TEN))
+        one.player.addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.NINE))
 
         val two = Player("one")
-        two.addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.TEN))
-        two.addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.SEVEN))
+        two.player.addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.TEN))
+        two.player.addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.SEVEN))
 
         val three = Player("one")
-        three.addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.TEN))
-        three.addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.EIGHT))
+        three.player.addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.TEN))
+        three.player.addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.EIGHT))
 
         return Players(
             dealer = dealer,

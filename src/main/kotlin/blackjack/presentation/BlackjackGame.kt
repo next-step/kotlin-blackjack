@@ -15,7 +15,7 @@ object BlackjackGame {
         cardsDeck: CardsDeck,
     ): Players {
         val dealer = Dealer()
-        (listOf(dealer) + players).forEach { player ->
+        (listOf(dealer.dealer) + players.map { it.player }).forEach { player ->
             repeat(FIRST_CARD_DIVIDE_COUNT) {
                 player.addCard(cardsDeck.divide())
             }

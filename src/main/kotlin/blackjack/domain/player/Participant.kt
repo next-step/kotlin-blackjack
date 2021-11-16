@@ -2,8 +2,8 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
-abstract class Participant(
-    open val name: String,
+class Participant(
+    val name: String,
 ) {
     private var _cards = mutableListOf<Card>()
 

@@ -23,13 +23,13 @@ class DealerTest {
     fun `현재 가지고 있는 카드의 총합이 17이상이면 카드를 받지 않는다`() {
         val dealer = Dealer()
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.ACE,
             )
         )
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.KING,
@@ -45,20 +45,20 @@ class DealerTest {
     fun `현재 가지고 있는 카드가 21을 초과할때 모두 패배 한다`() {
         val dealer = Dealer()
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.TEN,
             )
         )
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.KING,
             )
         )
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.HEART,
                 denomination = CardDenomination.KING,
@@ -80,20 +80,20 @@ class DealerTest {
     fun `현재 가지고 있는 카드가 플레이어의 카드보다 클경우 승리한다`() {
         val dealer = Dealer()
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.ACE,
             )
         )
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.KING,
             )
         )
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.HEART,
                 denomination = CardDenomination.KING,
@@ -111,7 +111,7 @@ class DealerTest {
     fun `현재 가지고 있는 카드가 플레이어의 카드보다 작을경우 패배한다`() {
         val dealer = Dealer()
 
-        dealer.addCard(
+        dealer.dealer.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.TWO,
@@ -119,7 +119,7 @@ class DealerTest {
         )
 
         val player = Player("one")
-        player.addCard(
+        player.player.addCard(
             Card(
                 pattern = CardPattern.DIAMOND,
                 denomination = CardDenomination.THREE,

@@ -3,8 +3,9 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardsDeck
 
-class Dealer : Participant("딜러") {
+class Dealer {
 
+    val dealer = Participant("딜러")
     private val _resultStatuses = mutableListOf<ResultStatus>()
     val resultStatuses: List<ResultStatus>
         get() {
@@ -14,12 +15,12 @@ class Dealer : Participant("딜러") {
     fun addCardWhenLessThanStandard(
         cardsDeck: CardsDeck,
     ): Card? {
-        if (getCardSum() >= STANDARD) {
+        if (dealer.getCardSum() >= STANDARD) {
             return null
         }
 
         val card = cardsDeck.divide()
-        addCard(card)
+        dealer.addCard(card)
 
         return card
     }
@@ -31,7 +32,7 @@ class Dealer : Participant("딜러") {
     }
 
     fun match(players: List<Player>) {
-        val dealerCardSum = getCardSum()
+        val dealerCardSum = dealer.getCardSum()
 
         if (dealerCardSum > DEADLINE) {
             allLose(players)
@@ -50,7 +51,7 @@ class Dealer : Participant("딜러") {
 
     private fun determineWinOrLose(players: List<Player>, dealerCardSum: Int) {
         players.forEach { player ->
-            val playerCardSum = player.getCardSum()
+            val playerCardSum = player.player.getCardSum()
 
             if (playerCardSum > dealerCardSum) {
                 _resultStatuses.add(ResultStatus.LOSE)

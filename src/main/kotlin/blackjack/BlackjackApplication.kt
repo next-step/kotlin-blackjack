@@ -38,18 +38,18 @@ private fun initPlayers(): List<Player> {
 
 private fun divideCards(
     dealer: Dealer,
-    players: List<Participant>,
+    players: List<Player>,
     cardsDeck: CardsDeck,
 ) {
     players.forEach { player ->
         var wantMoreCard = true
 
-        while (player.getCardSum() <= 21 && wantMoreCard) {
+        while (player.player.getCardSum() <= 21 && wantMoreCard) {
             wantMoreCard = InputView.inputWantMoreCard(player.name).fromYNToBoolean()
 
             addCardWhenWantMoreCard(wantMoreCard, player, cardsDeck)
 
-            OutputView.printPlayerCard(player)
+            OutputView.printPlayerCard(player.player)
         }
     }
 
@@ -62,15 +62,15 @@ private fun divideCards(
 
 private fun addCardWhenWantMoreCard(
     wantMoreCard: Boolean,
-    player: Participant,
+    player: Player,
     cardsDeck: CardsDeck,
 ): Participant {
     if (wantMoreCard) {
         return BlackjackGame.addCard(
-            player,
+            player.player,
             cardsDeck
         )
     }
 
-    return player
+    return player.player
 }

@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class PlayerTest {
     @Test
     fun `Ace 가 2장일때 Card 의 합은 12`() {
-        val player = Player("one")
+        val player = Player("one").player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
         player.addCard(Card(CardPattern.DIAMOND, CardDenomination.ACE))
@@ -24,7 +24,7 @@ class PlayerTest {
 
     @Test
     fun `Ace, King 일때 Card 의 합은 21`() {
-        val player = Player("one")
+        val player = Player("one").player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
         player.addCard(Card(CardPattern.DIAMOND, CardDenomination.KING))
@@ -36,7 +36,7 @@ class PlayerTest {
 
     @Test
     fun `9, ACE, ACE 일때 Card 의 합은 21`() {
-        val player = Player("one")
+        val player = Player("one").player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
@@ -57,7 +57,7 @@ class PlayerTest {
 
     @Test
     fun `카드를 추가하면 카드가 1장 추가된다`() {
-        val player = Player("one")
+        val player = Player("one").player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
 

@@ -6,7 +6,7 @@ class Players(
 ) {
 
     fun getAllPlayers(): List<Participant> {
-        return listOf(dealer) + guest
+        return listOf(dealer.dealer) + guest.map { it.player }
     }
 
     fun match() {
