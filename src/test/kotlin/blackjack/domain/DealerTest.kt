@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.service.DeckCardsBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.Stack
@@ -14,14 +15,18 @@ internal class DealerTest {
             )
         )
 
-        val cards = listOf(
-            Card(CardSymbol.SPADE, CardNumber.ACE),
-            Card(CardSymbol.HEART, CardNumber.KING),
-            Card(CardSymbol.DIAMOND, CardNumber.JACK),
-            Card(CardSymbol.CLUBS, CardNumber.QUEEN),
-        )
+        val deckCardsBuilder = object : DeckCardsBuilder {
+            override fun build(): Stack<Card> {
+                val cards = Stack<Card>()
+                cards.push(Card(CardSymbol.SPADE, CardNumber.ACE))
+                cards.push(Card(CardSymbol.HEART, CardNumber.KING))
+                cards.push(Card(CardSymbol.DIAMOND, CardNumber.JACK))
+                cards.push(Card(CardSymbol.CLUBS, CardNumber.QUEEN))
+                return cards
+            }
+        }
 
-        val dealerCardDeck = DealerCardDeck(Stack<Card>().also { it.addAll(cards) })
+        val dealerCardDeck = DealerCardDeck(deckCardsBuilder.build())
         val dealer = Dealer(dealerCardDeck)
 
         dealer.deliverBasicCards(players)
@@ -35,12 +40,17 @@ internal class DealerTest {
     fun `deliverBasicCards() 메소드로 Player에게 카드를 나눠주면 카드를 2장 가지게 된다`() {
         val player = Player("aaa", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator()))
 
-        val cards = listOf(
-            Card(CardSymbol.HEART, CardNumber.KING),
-            Card(CardSymbol.DIAMOND, CardNumber.JACK),
-            Card(CardSymbol.CLUBS, CardNumber.QUEEN),
-        )
-        val dealerCardDeck = DealerCardDeck(Stack<Card>().also { it.addAll(cards) })
+        val deckCardsBuilder = object : DeckCardsBuilder {
+            override fun build(): Stack<Card> {
+                val cards = Stack<Card>()
+                cards.push(Card(CardSymbol.HEART, CardNumber.KING))
+                cards.push(Card(CardSymbol.DIAMOND, CardNumber.JACK))
+                cards.push(Card(CardSymbol.CLUBS, CardNumber.QUEEN))
+                return cards
+            }
+        }
+
+        val dealerCardDeck = DealerCardDeck(deckCardsBuilder.build())
         val dealer = Dealer(dealerCardDeck)
 
         dealer.deliverBasicCards(player)
@@ -56,7 +66,21 @@ internal class DealerTest {
                 Player("bbb", PlayerCardsHandler(PlayerCards(), PlayerCardAdditionDecider(), ResultCalculator()))
             )
         )
-        val dealer = Dealer(DealerCardDeck(DealerCardDeck.getShuffledCards()))
+
+        val deckCardsBuilder = object : DeckCardsBuilder {
+            override fun build(): Stack<Card> {
+                val cards = Stack<Card>()
+                cards.push(Card(CardSymbol.HEART, CardNumber.KING))
+                cards.push(Card(CardSymbol.DIAMOND, CardNumber.JACK))
+                cards.push(Card(CardSymbol.CLUBS, CardNumber.QUEEN))
+                cards.push(Card(CardSymbol.SPADE, CardNumber.ACE))
+                cards.push(Card(CardSymbol.DIAMOND, CardNumber.TWO))
+                cards.push(Card(CardSymbol.HEART, CardNumber.SEVEN))
+                return cards
+            }
+        }
+
+        val dealer = Dealer(DealerCardDeck(deckCardsBuilder.build()))
 
         dealer.deliverBasicCards(players)
 

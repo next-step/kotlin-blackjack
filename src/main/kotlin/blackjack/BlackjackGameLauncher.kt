@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.DealerCardDeck
 import blackjack.domain.Player
+import blackjack.service.ShuffledDeckCardsBuilder
 import blackjack.view.input.InputView
 import blackjack.view.result.ResultView
 
@@ -10,7 +11,7 @@ class BlackjackGameLauncher(private val inputView: InputView, private val result
     fun launch() {
         val players = inputView.getPlayers()
 
-        val dealer = Dealer(DealerCardDeck(DealerCardDeck.getShuffledCards()))
+        val dealer = Dealer(DealerCardDeck(ShuffledDeckCardsBuilder().build()))
         dealer.deliverBasicCards(players)
         resultView.showDeliveredBasicCards(players)
 
