@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.Command
 import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.state.End
 import blackjack.domain.state.PlayingState
 import blackjack.domain.state.Running
 
@@ -14,8 +15,12 @@ class Player(
 
     fun isFinished(): Boolean = playingState.isFinish()
 
-    fun addCards(extraPlayingCards: List<PlayingCard>): Player {
+    fun addPlayingCards(extraPlayingCards: List<PlayingCard>): Player {
         val addedPlayingCards: PlayingCards = playingCards.plus(extraPlayingCards)
+        val sumScore = addedPlayingCards.sumScore()
+        if (sumScore.isOverBlackJack()) {
+            return Player(_name, End, addedPlayingCards)
+        }
         return Player(_name, playingState, addedPlayingCards)
     }
 

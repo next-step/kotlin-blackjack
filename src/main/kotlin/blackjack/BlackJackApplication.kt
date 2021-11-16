@@ -44,7 +44,7 @@ class BlackJackApplication(private val inputView: InputView, private val splitSt
                 return changedPlayer
             }
             val playingCard = HitAssignCardStrategy.assign(deck)
-            startGame(changedPlayer.addCards(playingCard), deck)
+            startGame(changedPlayer.addPlayingCards(playingCard), deck)
         } catch (e: Exception) {
             println(e.message)
             startGame(player, deck)

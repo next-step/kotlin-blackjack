@@ -9,6 +9,8 @@ value class Score private constructor(val score: Int) {
     fun canAdditionalAceScore(): Boolean =
         (Math.addExact(score, ADDITIONAL_ACE_SCORE) <= BLACK_JACK)
 
+    fun isOverBlackJack(): Boolean = (score > BLACK_JACK)
+
     companion object {
         private const val MINIMUM_SCORE = 0
         private const val MAXIMUM_SCORE = 32

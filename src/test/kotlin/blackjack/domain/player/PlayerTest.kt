@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
-import blackjack.domain.state.PlayingCardsTest
+import blackjack.domain.playingcard.Denomination
+import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.playingcard.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -48,8 +50,15 @@ internal class PlayerTest {
     @Test
     fun `보유한 카드들의 스코어가 21을 초과하면 플레잉이 끝난 상태로 바뀐다`() {
         val player = Player.fromName("test")
-        val finishedPlayer = player.addCards(PlayingCardsTest.allPlayingCards())
-
+        val externalPlayingCards = listOf(
+            PlayingCard(Suit.CLUB, Denomination.ACE),
+            PlayingCard(Suit.CLUB, Denomination.TWO),
+            PlayingCard(Suit.CLUB, Denomination.THREE),
+            PlayingCard(Suit.CLUB, Denomination.FOUR),
+            PlayingCard(Suit.CLUB, Denomination.FIVE),
+            PlayingCard(Suit.CLUB, Denomination.SEVEN)
+        )
+        val finishedPlayer = player.addPlayingCards(externalPlayingCards)
         assertThat(finishedPlayer.isFinished()).isTrue
     }
 }

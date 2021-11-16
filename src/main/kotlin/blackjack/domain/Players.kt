@@ -11,7 +11,7 @@ class Players private constructor(private val _players: List<Player>) {
     fun assignCards(deck: Deck, assignCardStrategy: AssignCardStrategy): Players =
         Players(
             _players
-                .map { player -> player.addCards(assignCardStrategy.assign(deck)) }
+                .map { player -> player.addPlayingCards(assignCardStrategy.assign(deck)) }
                 .toList()
         )
 
