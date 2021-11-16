@@ -27,9 +27,10 @@ internal class PlayingCardsTest {
     @Test
     fun `카드들에 새로운 카드들이 추가될 수 있다`() {
         val externalPlayingCards = allPlayingCards()
+        val expected = PlayingCards.from(externalPlayingCards.toSet())
+
         val playingCards: PlayingCards = PlayingCards.initialize()
         val actual = playingCards.plus(externalPlayingCards)
-        val expected = PlayingCards.from(externalPlayingCards.toSet())
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -37,11 +38,26 @@ internal class PlayingCardsTest {
     @Test
     fun `카드들에 새로운 카드들이 추가될 때 중복된 카드가 들어오면 예외를 발생한다`() {
         val externalPlayingCards = allPlayingCards()
-        val duplicatedPlayingCards = listOf(PlayingCard(Suit.CLUB, Denomination.ACE))
-        val playingCards: PlayingCards = PlayingCards.initialize().plus(duplicatedPlayingCards)
+        val duplicatedPlayingCards = setOf(PlayingCard(Suit.CLUB, Denomination.ACE))
+        val playingCards: PlayingCards = PlayingCards.from(duplicatedPlayingCards)
         val exception = assertThrows<DuplicatePlayingCardException> { playingCards.plus(externalPlayingCards) }
 
         assertThat(exception.message).isEqualTo("이미 덱에 존재하는 카드가 있습니다.")
+    }
+
+    @Test
+    fun `카드들은 점수의 합을 반환한다`() {
+        val playingCards = PlayingCards.from(
+            setOf(
+                PlayingCard(Suit.CLUB, Denomination.TWO),
+                PlayingCard(Suit.CLUB, Denomination.THREE),
+                PlayingCard(Suit.CLUB, Denomination.FOUR),
+                PlayingCard(Suit.CLUB, Denomination.FIVE),
+                PlayingCard(Suit.CLUB, Denomination.SIX),
+            )
+        )
+        val score = playingCards.score()
+        assertThat(score.sum()).isEqualTo(20)
     }
 
     companion object {
