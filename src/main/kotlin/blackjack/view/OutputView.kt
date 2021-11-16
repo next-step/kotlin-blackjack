@@ -49,4 +49,8 @@ object OutputView {
             println("${player.name}: ${player.resultStatus.value}")
         }
     }
+
+    fun printDealerReceivedCard() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
 }
