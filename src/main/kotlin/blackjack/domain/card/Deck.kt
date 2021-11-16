@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 @JvmInline
 value class Deck private constructor(private val _deck: Set<PlayingCard>) {

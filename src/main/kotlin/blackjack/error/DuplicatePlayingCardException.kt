@@ -1,6 +1,6 @@
 package blackjack.error
 
-import blackjack.domain.PlayingCard
+import blackjack.domain.card.PlayingCard
 
 class DuplicatePlayingCardException(private val playingCard: PlayingCard) : RuntimeException() {
     override val message = MESSAGE.format(playingCard.suit.name, playingCard.denomination.name)

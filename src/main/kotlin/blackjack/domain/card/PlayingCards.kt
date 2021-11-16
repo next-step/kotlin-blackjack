@@ -1,6 +1,5 @@
-package blackjack.domain.state
+package blackjack.domain.card
 
-import blackjack.domain.PlayingCard
 import blackjack.error.DuplicatePlayingCardException
 
 @JvmInline
