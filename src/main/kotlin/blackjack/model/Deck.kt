@@ -2,9 +2,7 @@ package blackjack.model
 
 class Deck private constructor(private val cards: Cards) {
 
-    val size: Int = cards.size
-
-    fun isEmpty(): Boolean = size == 0
+    fun isEmpty(): Boolean = cards.isEmpty()
 
     fun peek(): Card? = cards.peek()
 
