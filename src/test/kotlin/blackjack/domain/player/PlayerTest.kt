@@ -29,6 +29,14 @@ internal class PlayerTest {
     }
 
     @Test
+    fun `게임을 진행하고자 한다면 플레잉중인 상태다`() {
+        val player = Player.fromName("test")
+        val finishedPlayer = player.continuePlayingTheGame("y")
+
+        assertThat(finishedPlayer.isFinished()).isFalse
+    }
+
+    @Test
     fun `더이상 게임을 진행하지 않는다면 플레잉이 끝난 상태다`() {
         val player = Player.fromName("test")
         val finishedPlayer = player.continuePlayingTheGame("n")
