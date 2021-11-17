@@ -24,6 +24,14 @@ internal class PlayerTest {
         )
     }
 
+    @ParameterizedTest(name = "입력값 : {0}")
+    @ValueSource(strings = ["a", "b", "c", "ab", "abc"])
+    fun `사용자의 이름을 반환한다`(name: String) {
+        val player = Player.fromName(name)
+
+        assertThat(player.name).isEqualTo(name)
+    }
+
     @Test
     fun `사용자는 기본적으로 플레잉중인 상태다`() {
         val player = Player.fromName("test")

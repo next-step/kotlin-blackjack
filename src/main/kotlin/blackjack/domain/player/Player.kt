@@ -16,7 +16,7 @@ class Player(
     fun addPlayingCards(extraCards: List<Card>): Player {
         val addedHands: Hands = hands.plus(extraCards)
         val sumScore = addedHands.score()
-        if (sumScore.isOverBlackJack()) {
+        if (sumScore.isOverMaximum()) {
             return Player(_name, addedHands, End)
         }
         return Player(_name, addedHands, playingState)
