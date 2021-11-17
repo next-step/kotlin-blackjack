@@ -1,8 +1,8 @@
 package blackjack.strategy.assign
 
-import blackjack.domain.Deck
-import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.card.Deck
+import blackjack.domain.card.Card
 
 object HitAssignCardStrategy : AssignCardStrategy {
-    override fun assign(deck: Deck): List<PlayingCard> = deck.pop()
+    override fun assign(deck: Deck): List<Card> = deck.pop()
 }

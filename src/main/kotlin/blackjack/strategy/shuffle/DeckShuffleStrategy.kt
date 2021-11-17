@@ -1,7 +1,7 @@
 package blackjack.strategy.shuffle
 
-import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.card.Card
 
 fun interface DeckShuffleStrategy {
-    fun shuffle(lottoNumbers: List<PlayingCard>): List<PlayingCard>
+    fun shuffle(lottoNumbers: List<Card>): List<Card>
 }

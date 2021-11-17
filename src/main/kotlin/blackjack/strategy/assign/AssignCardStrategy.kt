@@ -1,8 +1,8 @@
 package blackjack.strategy.assign
 
-import blackjack.domain.Deck
-import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.card.Deck
+import blackjack.domain.card.Card
 
 fun interface AssignCardStrategy {
-    fun assign(deck: Deck): List<PlayingCard>
+    fun assign(deck: Deck): List<Card>
 }

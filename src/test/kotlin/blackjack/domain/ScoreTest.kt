@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Score
 import blackjack.error.ScoreOutOfBoundsException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll

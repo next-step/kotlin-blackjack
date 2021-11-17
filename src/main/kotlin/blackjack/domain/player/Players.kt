@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.player
 
-import blackjack.domain.player.Player
+import blackjack.domain.card.Deck
 import blackjack.strategy.assign.AssignCardStrategy
 import blackjack.strategy.split.SplitStrategy
 

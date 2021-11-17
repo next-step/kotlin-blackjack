@@ -1,4 +1,4 @@
-package blackjack.domain.state
+package blackjack.domain.player.state
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll

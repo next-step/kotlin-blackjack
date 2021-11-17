@@ -1,6 +1,4 @@
-package blackjack.domain.playingcard
-
-import blackjack.domain.Score
+package blackjack.domain.card
 
 enum class Denomination(val score: Score) {
     ACE(Score.from(1)),

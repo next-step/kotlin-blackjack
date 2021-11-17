@@ -1,4 +1,4 @@
-package blackjack.domain.state
+package blackjack.domain.player.state
 
 sealed class PlayingState {
     abstract fun isFinish(): Boolean

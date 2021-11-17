@@ -1,8 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
 
 import blackjack.error.CommandNotFoundException
 
-enum class Command(private val command: String, val type: Boolean) {
+enum class Command(private val command: String, val nextDraw: Boolean) {
     YES("y", true),
     NO("n", false);
 

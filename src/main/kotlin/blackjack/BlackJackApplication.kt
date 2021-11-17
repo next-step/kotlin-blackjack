@@ -1,16 +1,17 @@
 package blackjack
 
-import blackjack.domain.Deck
-import blackjack.domain.Players
+import blackjack.domain.card.Deck
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.strategy.assign.FirstAssignCardStrategy
 import blackjack.strategy.assign.HitAssignCardStrategy
 import blackjack.strategy.shuffle.DeckRandomShuffleStrategy
 import blackjack.strategy.split.CommaSplitStrategy
-import blackjack.strategy.split.SplitStrategy
 import blackjack.strategy.ui.input.ConsoleInputStrategy
 import blackjack.strategy.ui.output.ConsoleOutputStrategy
+import blackjack.ui.ErrorView
 import blackjack.ui.InputView
+import blackjack.ui.ResultView
 
 /**
 val 사람 = splitStrategy.split(names)
@@ -26,28 +27,38 @@ val command = Command.values(inputView.inputWhetherAdditionalCardAcquisition())
  * 사람이 가지고 있는 상태가 있으면 좋을 듯 -> Runninng, Finish
  * 상태패턴 추가
  */
-class BlackJackApplication(private val inputView: InputView, private val splitStrategy: SplitStrategy) {
+class BlackJackApplication(
+    private val inputView: InputView,
+    private val resultView: ResultView,
+    private val errorView: ErrorView,
+) {
     fun run() {
         val deck = Deck.initialize(DeckRandomShuffleStrategy)
         var players = inputParticipantsInformation().assignCards(deck, FirstAssignCardStrategy)
+        resultView.noticeAssignCard(players)
         players = players.players
             .map { player -> startGame(player, deck) }
             .let { Players.from(it) }
-        println(players)
+        resultView.showResult(players)
     }
 
-    private fun startGame(player: Player, deck: Deck): Player {
+    private fun startGame(previousPlayer: Player, deck: Deck): Player {
         return try {
-            val command = inputView.inputWhetherAdditionalCardAcquisition(player.name)
-            val changedPlayer = player.continuePlayingTheGame(command)
-            if (changedPlayer.isFinished()) {
-                return changedPlayer
+            if (previousPlayer.isFinished()) {
+                return previousPlayer
+            }
+            val command = inputView.inputWhetherAdditionalCardAcquisition(previousPlayer.name)
+            var nowPlayer = previousPlayer.continuePlay(command)
+            if (nowPlayer.isFinished()) {
+                return nowPlayer
             }
             val playingCard = HitAssignCardStrategy.assign(deck)
-            startGame(changedPlayer.addPlayingCards(playingCard), deck)
+            nowPlayer = nowPlayer.addPlayingCards(playingCard)
+            resultView.showPlayerHands(nowPlayer)
+            startGame(nowPlayer, deck)
         } catch (e: Exception) {
-            println(e.message)
-            startGame(player, deck)
+            errorView.showErrorMessage(e.message)
+            startGame(previousPlayer, deck)
         }
     }
 
@@ -55,7 +66,7 @@ class BlackJackApplication(private val inputView: InputView, private val splitSt
         return try {
             Players.of(inputView.inputParticipantsInformation(), CommaSplitStrategy)
         } catch (e: Exception) {
-            println(e.message)
+            errorView.showErrorMessage(e.message)
             inputParticipantsInformation()
         }
     }
@@ -63,5 +74,7 @@ class BlackJackApplication(private val inputView: InputView, private val splitSt
 
 fun main() {
     val inputView = InputView(ConsoleInputStrategy, ConsoleOutputStrategy)
-    BlackJackApplication(inputView, CommaSplitStrategy).run()
+    val resultView = ResultView(ConsoleOutputStrategy)
+    val errorView = ErrorView(ConsoleOutputStrategy)
+    BlackJackApplication(inputView, resultView, errorView).run()
 }

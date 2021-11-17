@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
-import blackjack.domain.playingcard.Denomination
-import blackjack.domain.playingcard.PlayingCard
-import blackjack.domain.playingcard.Suit
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Card
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,7 +34,7 @@ internal class PlayerTest {
     @Test
     fun `게임을 진행하고자 한다면 플레잉중인 상태다`() {
         val player = Player.fromName("test")
-        val playingPlayer = player.continuePlayingTheGame("y")
+        val playingPlayer = player.continuePlay("y")
 
         assertThat(playingPlayer.isFinished()).isFalse
     }
@@ -42,7 +42,7 @@ internal class PlayerTest {
     @Test
     fun `더이상 게임을 진행하지 않는다면 플레잉이 끝난 상태다`() {
         val player = Player.fromName("test")
-        val finishedPlayer = player.continuePlayingTheGame("n")
+        val finishedPlayer = player.continuePlay("n")
 
         assertThat(finishedPlayer.isFinished()).isTrue
     }
@@ -51,12 +51,12 @@ internal class PlayerTest {
     fun `보유한 카드들의 스코어가 21을 초과하면 플레잉이 끝난 상태로 바뀐다`() {
         val player = Player.fromName("test")
         val externalPlayingCards = listOf(
-            PlayingCard(Suit.CLUB, Denomination.ACE),
-            PlayingCard(Suit.CLUB, Denomination.TWO),
-            PlayingCard(Suit.CLUB, Denomination.THREE),
-            PlayingCard(Suit.CLUB, Denomination.FOUR),
-            PlayingCard(Suit.CLUB, Denomination.FIVE),
-            PlayingCard(Suit.CLUB, Denomination.SEVEN)
+            Card(Suit.CLUB, Denomination.ACE),
+            Card(Suit.CLUB, Denomination.TWO),
+            Card(Suit.CLUB, Denomination.THREE),
+            Card(Suit.CLUB, Denomination.FOUR),
+            Card(Suit.CLUB, Denomination.FIVE),
+            Card(Suit.CLUB, Denomination.SEVEN)
         )
         val finishedPlayer = player.addPlayingCards(externalPlayingCards)
         assertThat(finishedPlayer.isFinished()).isTrue

@@ -1,7 +1,7 @@
 package blackjack.strategy.shuffle
 
-import blackjack.domain.playingcard.PlayingCard
+import blackjack.domain.card.Card
 
 object DeckRandomShuffleStrategy : DeckShuffleStrategy {
-    override fun shuffle(deck: List<PlayingCard>): List<PlayingCard> = deck.shuffled()
+    override fun shuffle(deck: List<Card>): List<Card> = deck.shuffled()
 }
