@@ -7,11 +7,7 @@ class Dealer(
     val dealer: Participant
 ) : CardFunction by dealer {
 
-    private val _resultStatuses = mutableListOf<ResultStatus>()
-    val resultStatuses: List<ResultStatus>
-        get() {
-            return _resultStatuses.toList()
-        }
+    private val resultStatuses = mutableListOf<ResultStatus>()
 
     fun addCardWhenLessThanStandard(
         cardsDeck: CardsDeck,
@@ -27,7 +23,7 @@ class Dealer(
     }
 
     fun determineWinOrLose(resultStatus: ResultStatus) {
-        _resultStatuses.add(resultStatus)
+        resultStatuses.add(resultStatus)
     }
 
     fun getMatchResult(): Map<ResultStatus, Int> {

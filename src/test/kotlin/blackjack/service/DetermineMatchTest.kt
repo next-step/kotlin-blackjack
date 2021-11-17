@@ -29,8 +29,9 @@ class DetermineMatchTest {
 
         determineMatch.match(dealer, players)
 
-        assertEquals(ResultStatus.LOSE, dealer.resultStatuses[0])
-        assertEquals(ResultStatus.LOSE, dealer.resultStatuses[1])
+        val actual = dealer.getMatchResult()
+
+        assertEquals(2, actual[ResultStatus.LOSE])
     }
 
     @Test
@@ -45,7 +46,9 @@ class DetermineMatchTest {
 
         determineMatch.match(dealer, players)
 
-        assertEquals(ResultStatus.WIN, dealer.resultStatuses[0])
+        val actual = dealer.getMatchResult()
+
+        assertEquals(1, actual[ResultStatus.WIN])
     }
 
     @Test
@@ -62,7 +65,9 @@ class DetermineMatchTest {
 
         determineMatch.match(dealer, players)
 
-        assertEquals(ResultStatus.LOSE, dealer.resultStatuses[0])
+        val actual = dealer.getMatchResult()
+
+        assertEquals(1, actual[ResultStatus.LOSE])
     }
 
     @Test
