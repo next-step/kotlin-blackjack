@@ -8,7 +8,7 @@ import blackjack.error.DuplicatePlayingCardException
 value class PlayingCards private constructor(private val playingCards: Set<PlayingCard>) {
 
     operator fun plus(extraPlayingCards: List<PlayingCard>): PlayingCards =
-        if (playingCards.any(extraPlayingCards::contains)) throw DuplicatePlayingCardException(extraPlayingCards)
+        if (playingCards.any(extraPlayingCards::contains)) throw DuplicatePlayingCardException
         else PlayingCards(playingCards.plus(extraPlayingCards))
 
     fun sumScore(): Score {

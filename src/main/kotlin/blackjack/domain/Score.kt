@@ -4,7 +4,7 @@ import blackjack.error.ScoreOutOfBoundsException
 
 @JvmInline
 value class Score private constructor(val score: Int) {
-    operator fun plus(other: Score): Score = from(this.score + other.score)
+    operator fun plus(other: Score): Score = from(this.score.plus(other.score))
 
     fun canAdditionalAceScore(): Boolean =
         (Math.addExact(score, ADDITIONAL_ACE_SCORE) <= BLACK_JACK)

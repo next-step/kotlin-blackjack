@@ -21,7 +21,7 @@ class Player(
         if (sumScore.isOverBlackJack()) {
             return Player(_name, End, addedPlayingCards)
         }
-        return Player(_name, playingState, addedPlayingCards)
+        return this
     }
 
     fun continuePlayingTheGame(command: String): Player =

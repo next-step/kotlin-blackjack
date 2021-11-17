@@ -4,7 +4,7 @@ sealed class PlayingState {
     abstract fun isFinish(): Boolean
 
     companion object {
-        fun of(t: Boolean) = if (t) Running else End
+        fun of(nextDraw: Boolean) = if (nextDraw) Running else End
     }
 }
 

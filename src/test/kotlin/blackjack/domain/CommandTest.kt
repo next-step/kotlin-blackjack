@@ -1,9 +1,13 @@
 package blackjack.domain
 
+import blackjack.error.CommandNotFoundException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 @DisplayName("커멘더(Command)")
 internal class CommandTest {
@@ -16,5 +20,13 @@ internal class CommandTest {
             { assertThat(Command.values("n")).isEqualTo(Command.NO) },
             { assertThat(Command.values("N")).isEqualTo(Command.NO) }
         )
+    }
+
+    @ParameterizedTest(name = "입력 값 : {0}")
+    @ValueSource(strings = ["", "a", "10", "$"])
+    fun `y or n 외의 다른 문자열 입력시 예외발생`(command: String) {
+        val exception = assertThrows<CommandNotFoundException> { Command.values(command) }
+
+        assertThat(exception.message).isEqualTo("'%s'는 유효한 커멘드가 아닙니다.".format(command))
     }
 }
