@@ -39,32 +39,34 @@ jason카드: 7 클로버, K스페이드 - 결과: 17
 ## 클래스 설계
 
 * [x] 덱
-    * 모든 플레이카드의 종류가 들어있는 클래스
+  * [x] 모든 플레이카드의 종류가 들어있는 클래스
 * [x] 플레이카드(트럼프)
-    * 끗수와 슈트로 이루어진 클래스
+  * [x] 끗수와 슈트로 이루어진 클래스
 * [x] 끗수
-    * enum 타입의 클래스
-    * 13개로 구성 : ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, KING, QUEEN, JACK
+  * [x] enum 타입의 클래스
+  * [x] 13개로 구성 : ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, KING, QUEEN, JACK
 * [x] 슈트
-    * enum 타입의 클래스
-    * 4개로 구성 : SPADE, HEART, DIAMOND, CLUB
+  * [x] enum 타입의 클래스
+  * [x] 4개로 구성 : SPADE, HEART, DIAMOND, CLUB
 * [x] 점수
-    * 일반적으로 생성되는 것이 아닌 수익 계산 메서드의 결과물로 사용될 클래스
-    * 32점이 최고 점수
-    * 불변 캐싱을 적용하면 좋을 것 같다.
+  * [x] 일반적으로 생성되는 것이 아닌 수익 계산 메서드의 결과물로 사용될 클래스
+  * [x] 32점이 최고 점수
+  * [x] 불변 캐싱을 적용하면 좋을 것 같다.
 * [x] 플레이어
-    * 이름, 보유 카드수, 진행상태를 가진 클래스
+  * [x] 이름, 카드패, 진행상태를 가진 클래스
 * [x] 이름
-    * [x] 특별한 제약조건은 없으나 공백은 안 된다.
-* [x] 커멘드
-    * y/n
-    * enum 으로 만들면 된다.
+  * [x] 특별한 제약조건은 없으나 공백은 안 된다.
+* [x] 카드패
+  * [x] 카드들을 가진 일급 컬렉션이다.
+  * [x] 초기에는 비어있는 카드 뭉치를 가진다
 * [x] 진행 상태
-    * [x] Playing 인터페이스 타입 이용
-    * [x] Running/Finish 2가지 상태를 만들어서 관리
-    * [x] isFinish() 메서드를 통해 여부에 따라 ask 동작
-    * [x] 상태 패턴으로 Score가 21이 넘어가면 Finish
-    * [x] 상태 패턴으로 stop 값이 들어오면 Finish
+  * [x] Playing 인터페이스 타입 이용
+  * [x] Running/Finish 2가지 상태를 만들어서 관리
+  * [x] isFinish() 메서드를 통해 여부에 따라 ask 동작
+  * [x] 상태 패턴으로 Score가 21이 넘어가면 Finish
+  * [x] 상태 패턴으로 stop 값이 들어오면 Finish
+* [x] 커멘드
+  * [x] y/n enum 으로 만들면 된다.
     
 ## 비즈니스 로직 
 

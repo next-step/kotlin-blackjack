@@ -12,8 +12,10 @@ value class Deck private constructor(private val deck: Stack<Card>) {
         private const val DEFAULT_POP_COUNT = 1
 
         fun initialize(deckShuffleStrategy: DeckShuffleStrategy): Deck =
-            Deck(deckShuffleStrategy.shuffle(playingCardsAllSuit())
-                .toCollection(Stack()))
+            Deck(
+                deckShuffleStrategy.shuffle(playingCardsAllSuit())
+                    .toCollection(Stack())
+            )
 
         private fun playingCardsAllSuit() = Suit.values()
             .flatMap(Companion::playingCardsPerSuit)
