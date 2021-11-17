@@ -13,20 +13,6 @@ import blackjack.ui.ErrorView
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
-/**
-val 사람 = splitStrategy.split(names)
-
-while(사람.상태isFinish()) {
-val command = Command.values(inputView.inputWhetherAdditionalCardAcquisition())
-사람.행동(command)
-아웃풋뷰.출력(사람)
-}
-
-
- * 사람 만들고 사람마다 y 동작
- * 사람이 가지고 있는 상태가 있으면 좋을 듯 -> Runninng, Finish
- * 상태패턴 추가
- */
 class BlackJackApplication(
     private val inputView: InputView,
     private val resultView: ResultView,

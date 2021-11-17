@@ -6,25 +6,25 @@ import blackjack.error.DuplicatePlayingCardException
 
 @JvmInline
 value class Hands private constructor(val hands: List<Card>) {
-    operator fun plus(extraCard: List<Card>): Hands {
-        if (hands.any(extraCard::contains)) {
-            throw DuplicatePlayingCardException
-        }
-        return Hands(hands.plus(extraCard))
-    }
 
-    fun score(): Score {
-        val sum = hands
-            .map(Card::score)
-            .reduce(Score::plus)
-        return calculateAceScore(sum)
-    }
+    fun score(): Score = calculateAceScore(sumScore())
+
+    private fun sumScore() = hands
+        .map(Card::score)
+        .reduce(Score::plus)
 
     private fun calculateAceScore(sum: Score): Score {
         if (hands.any(Card::hasAce) && sum.canAddExtraAceScore()) {
             return sum.plus(Score.extraAceScore())
         }
         return sum
+    }
+
+    operator fun plus(extraCard: List<Card>): Hands {
+        if (hands.any(extraCard::contains)) {
+            throw DuplicatePlayingCardException
+        }
+        return Hands(hands.plus(extraCard))
     }
 
     companion object {

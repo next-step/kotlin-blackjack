@@ -4,11 +4,12 @@ import blackjack.error.ScoreOutOfBoundsException
 
 @JvmInline
 value class Score private constructor(val score: Int) {
-    operator fun plus(other: Score): Score = from(this.score.plus(other.score))
 
     fun canAddExtraAceScore(): Boolean = (Math.addExact(score, EXTRA_ACE_SCORE) <= MAXIMUM_SCORE)
 
     fun isOverMaximum(): Boolean = (score > MAXIMUM_SCORE)
+
+    operator fun plus(other: Score): Score = from(this.score.plus(other.score))
 
     companion object {
         private const val MINIMUM_SCORE = 0

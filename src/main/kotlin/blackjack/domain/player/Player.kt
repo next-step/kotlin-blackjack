@@ -29,6 +29,7 @@ class Player(
     private fun continuePlay(command: Command): Player = Player(_name, hands, PlayingState.of(command.nextDraw))
 
     companion object {
-        fun fromName(name: String): Player = Player(Name(name))
+        fun fromName(name: String): Player = fromName(Name(name))
+        private fun fromName(name: Name): Player = Player(name)
     }
 }

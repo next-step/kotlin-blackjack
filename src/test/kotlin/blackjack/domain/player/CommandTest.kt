@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.player
 
-import blackjack.domain.player.Command
 import blackjack.error.CommandNotFoundException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll

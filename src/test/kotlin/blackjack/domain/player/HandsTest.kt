@@ -1,8 +1,7 @@
-package blackjack.domain.player.state
+package blackjack.domain.player
 
-import blackjack.domain.player.Hands
-import blackjack.domain.card.Denomination
 import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.error.DuplicatePlayingCardException
 import org.assertj.core.api.Assertions.assertThat

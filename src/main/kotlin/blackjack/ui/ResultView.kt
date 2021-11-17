@@ -81,5 +81,3 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val RESULT_MESSAGE = "%s카드: %s - 결과: %s"
     }
 }
-
-

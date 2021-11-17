@@ -15,10 +15,7 @@ class Players private constructor(val players: List<Player>) {
 
     companion object {
         fun of(names: String, splitStrategy: SplitStrategy): Players =
-            from(
-                splitStrategy.split(names)
-                    .map(Player::fromName)
-            )
+            from(splitStrategy.split(names).map(Player::fromName))
 
         fun from(players: List<Player>): Players = Players(players.toList())
     }
