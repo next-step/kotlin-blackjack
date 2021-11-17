@@ -1,33 +1,40 @@
 package blackjack.presentation
 
 import blackjack.domain.card.CardsDeck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
+import blackjack.domain.player.Participants
+import blackjack.service.DetermineMatch
 
-object BlackjackGame {
-
-    private const val FIRST_CARD_DIVIDE_COUNT = 2
+class BlackjackGame(
+    private val determineMatch: DetermineMatch
+) {
 
     fun start(
         players: List<Player>,
         cardsDeck: CardsDeck,
-    ): List<Player> {
-        players.forEach { player ->
-            repeat(FIRST_CARD_DIVIDE_COUNT) {
-                player.addCard(cardsDeck.divide())
-            }
-        }
-
-        return players
+    ): Participants {
+        val dealer = Dealer(Participant("딜러"))
+        return Participants(
+            dealer = dealer,
+            players = players,
+            cardsDeck
+        )
     }
 
     fun addCard(
-        player: Player,
+        player: Participant,
         cardsDeck: CardsDeck
-    ): Player {
+    ): Participant {
         val card = cardsDeck.divide()
 
         player.addCard(card)
 
         return player
+    }
+
+    fun match(participants: Participants) {
+        determineMatch.match(participants.dealer, participants.players)
     }
 }

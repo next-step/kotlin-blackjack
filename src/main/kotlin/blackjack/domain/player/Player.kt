@@ -1,36 +1,21 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
+class Player(
+    val player: Participant
+) : CardFunction by player {
 
-data class Player(
-    val name: String,
-) {
+    var resultStatus = ResultStatus.UNKNOWN
+        private set
 
-    init {
-        require(name.isNotBlank()) { "이름은 공백제외 1글자 이상이어야 합니다." }
+    fun isCardReceiveAble(): Boolean {
+        return player.getCardSum() < DEADLINE
     }
 
-    private var _cards = mutableListOf<Card>()
-
-    val cards: List<Card>
-        get() {
-            return _cards.toList()
-        }
-
-    fun addCard(card: Card) {
-        _cards.add(card)
-    }
-
-    fun getCardSum(): Int {
-        return _cards
-            .sortedByDescending { card -> card.denomination.order }
-            .fold(START_INDEX) { sum, card ->
-                val denomination = card.denomination
-                sum + denomination.getValue(sum)
-            }
+    fun determineWinOrLose(winOrLose: ResultStatus) {
+        resultStatus = winOrLose
     }
 
     companion object {
-        private const val START_INDEX = 0
+        private const val DEADLINE = 21
     }
 }
