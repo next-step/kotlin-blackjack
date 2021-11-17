@@ -16,7 +16,7 @@ class BlackjackGame(
         cardsDeck: CardsDeck,
     ): Participants {
         val dealer = Dealer(Participant("딜러"))
-        return Participants(
+        return Participants.build(
             dealer = dealer,
             players = players,
             cardsDeck
