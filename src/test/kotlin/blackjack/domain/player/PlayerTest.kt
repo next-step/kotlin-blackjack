@@ -48,6 +48,21 @@ internal class PlayerTest {
     }
 
     @Test
+    fun `보유한 카드들의 스코어가 21을 초과하지 않으면 플레잉 중인 상태다`() {
+        val player = Player.fromName("test")
+        val externalPlayingCards = listOf(
+            Card(Suit.CLUB, Denomination.ACE),
+            Card(Suit.CLUB, Denomination.TWO),
+            Card(Suit.CLUB, Denomination.THREE),
+            Card(Suit.CLUB, Denomination.FOUR),
+            Card(Suit.CLUB, Denomination.FIVE),
+            Card(Suit.CLUB, Denomination.SIX)
+        )
+        val finishedPlayer = player.addPlayingCards(externalPlayingCards)
+        assertThat(finishedPlayer.isFinished()).isFalse
+    }
+
+    @Test
     fun `보유한 카드들의 스코어가 21을 초과하면 플레잉이 끝난 상태로 바뀐다`() {
         val player = Player.fromName("test")
         val externalPlayingCards = listOf(
