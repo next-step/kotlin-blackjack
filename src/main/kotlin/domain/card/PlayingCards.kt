@@ -6,7 +6,7 @@ data class PlayingCards(private val cards: List<PlayingCard>) : List<PlayingCard
     operator fun plus(card: PlayingCard) = PlayingCards(this.cards + listOf(card))
 
     fun state() = when (score()) {
-        BLACKJACK_NUMBER -> CardState.FINISHED
+        PlayingCard.BLACKJACK_NUMBER -> CardState.FINISHED
         in runningNumbers -> CardState.RUNNING
         else -> CardState.BUST
     }
@@ -16,7 +16,6 @@ data class PlayingCards(private val cards: List<PlayingCard>) : List<PlayingCard
 
     companion object {
         const val START_SIZE = 2
-        private const val BLACKJACK_NUMBER = 21
-        private val runningNumbers = 1..20
+        private val runningNumbers = 1 until PlayingCard.BLACKJACK_NUMBER
     }
 }
