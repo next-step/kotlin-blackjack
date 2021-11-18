@@ -1,6 +1,11 @@
 package domain.player
 
-import domain.card.*
+import domain.card.CardGenerator
+import domain.card.Denomination
+import domain.card.MockedCardGenerator
+import domain.card.PlayingCard
+import domain.card.PlayingCards
+import domain.card.Suit
 import exception.IllegalPlayException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
@@ -31,7 +36,6 @@ internal class PlayerTest {
             { assertThat(player.isFinished()).isFalse() },
             { assertThat(player.name()).isEqualTo(name) }
         )
-
     }
 
     @DisplayName("draw 를 하면 카드가 추가 되어야한다.")

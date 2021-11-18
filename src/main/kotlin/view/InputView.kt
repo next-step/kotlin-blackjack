@@ -15,7 +15,7 @@ object InputView {
     private fun readInput(): String {
         val input = readLine()
         require(!input.isNullOrBlank()) { "빈 값을 입력할 수는 없습니다." }
-        return input;
+        return input
     }
 
     private const val NAME_DELIMITER = ","

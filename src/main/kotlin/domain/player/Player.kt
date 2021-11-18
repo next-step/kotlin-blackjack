@@ -19,5 +19,4 @@ class Player private constructor(private val playerInfo: PlayerInfo, private var
         }
         playerState = if (draw) playerState.draw(cardGenerator.getCard()) else playerState.stay()
     }
-
 }

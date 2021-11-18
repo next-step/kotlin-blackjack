@@ -19,7 +19,9 @@ internal class PlayingCardTest {
     @Test
     fun aceScoreOne() {
         val expected = 1
-        assertAll(Suit.values().map { PlayingCard.of(Denomination.ACE, it) }
-            .map { { assertThat(it.score()).isEqualTo(expected) } })
+        assertAll(
+            Suit.values().map { PlayingCard.of(Denomination.ACE, it) }
+                .map { { assertThat(it.score()).isEqualTo(expected) } }
+        )
     }
 }

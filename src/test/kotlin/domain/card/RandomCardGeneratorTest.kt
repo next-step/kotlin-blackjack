@@ -30,6 +30,6 @@ internal class RandomCardGeneratorTest {
     }
 
     companion object {
-        private const val CARD_SIZE = 52;
+        private const val CARD_SIZE = 52
     }
 }
