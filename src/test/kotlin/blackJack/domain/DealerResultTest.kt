@@ -20,7 +20,7 @@ class DealerResultTest {
         // when
         val dealerResult = DealerResult.winOrLose(playerResults)
 
-        //then
+        // then
         assertAll({
             assertThat(dealerResult.win).isEqualTo(1)
             assertThat(dealerResult.lose).isEqualTo(2)

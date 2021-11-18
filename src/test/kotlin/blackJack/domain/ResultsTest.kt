@@ -43,6 +43,47 @@ class ResultsTest {
     }
 
     @Test
+    fun `딜러가 버스터인 경우에 플레이어 한명은 버스터이고, 다른 두명은 스테이인 경우 플레이어 모두 승리한다`() {
+        // given
+        val gamePlayers =
+            GamePlayers(
+                listOf(
+                    Player.of("flamme").apply {
+                        this.receiveCard(Card(Suit.HEARTS, Denomination.THREE))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+                    },
+                    Player.of("rain").apply {
+                        this.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                    },
+                    Player.of("chacha").apply {
+                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                    },
+                    Dealer().apply {
+                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                        this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+                    }
+                )
+            )
+
+        // when
+        val results = Results.from(gamePlayers)
+        val dealerResult = results.dealerResult
+
+        // then
+        assertAll({
+            assertThat(dealerResult.win).isEqualTo(0)
+            assertThat(dealerResult.lose).isEqualTo(3)
+            assertThat(dealerResult.draw).isEqualTo(0)
+        })
+    }
+
+    @Test
     fun `딜러가 없다면 에러`() {
         // given
         val gamePlayers =
