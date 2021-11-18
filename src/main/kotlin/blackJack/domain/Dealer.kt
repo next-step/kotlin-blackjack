@@ -1,8 +1,15 @@
 package blackJack.domain
 
-class Dealer : GamePlayer(name = DEALER_NAME) {
+class Dealer(
+    name: String = DEALER_NAME,
+) : GamePlayer(name = name) {
 
-    override fun getAbleReceivedCard(): Boolean = getScore() < ABLE_MAXIMUM_SUM
+    override fun getAbleReceivedCard(): Boolean =
+        getScore() < ABLE_MAXIMUM_SUM
+
+    override fun isPlayer(): Boolean {
+        return !super.isPlayer()
+    }
 
     companion object {
         private const val DEALER_NAME = "DEALER"

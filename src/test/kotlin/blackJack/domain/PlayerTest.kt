@@ -18,7 +18,7 @@ class PlayerTest {
         // then
         assertAll({
             assertThat(player.name).isEqualTo("김형준")
-            assertThat(player.status.cards.getSize()).isEqualTo(2)
+            assertThat(player.status.cards.size).isEqualTo(2)
         })
     }
 
@@ -133,7 +133,7 @@ class PlayerTest {
         val player = Player.of("김형준")
 
         // when
-        val isDealer = player.isDealer()
+        val isDealer = player.isPlayer()
 
         // then
         assertThat(isDealer).isFalse

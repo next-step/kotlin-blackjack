@@ -1,27 +1,45 @@
 package blackJack.domain
 
-data class PlayerStatus(val cards: Cards, val decisionStatus: PlayerDecision = Hit()) {
+interface PlayerStatus {
+    fun isPlayer(): Boolean
+    fun getAbleReceivedCard(): Boolean
+    fun isBlackJackPlayer(): Boolean
+    fun isBustPlayer(): Boolean
+    fun getScore(): Int
+    fun noReceiveCard(boolean: Boolean = false)
+    fun receiveCard(card: Card)
+}
 
-    fun sumScore(): Int = cards.sumCards()
+class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: PlayerDecision = Hit()) : PlayerStatus {
 
-    fun ableGetACard(): Boolean = decisionStatus.isContinue()
+    val cards: Cards
+        get() = _cards
 
-    fun changeContinueStatus(boolean: Boolean): PlayerStatus {
-        return this.copy(cards = cards, decisionStatus = PlayerDecision.changeDecision(cards, boolean))
+    val decisionStatus: PlayerDecision
+        get() = _decisionStatus
+
+    override fun isPlayer(): Boolean = false
+
+    override fun getAbleReceivedCard(): Boolean = _decisionStatus.isContinue()
+
+    override fun isBlackJackPlayer(): Boolean = _decisionStatus is BlackJack
+
+    override fun isBustPlayer(): Boolean = _decisionStatus is Bust
+
+    override fun getScore() = _cards.sumCards()
+
+    override fun noReceiveCard(boolean: Boolean) {
+        this._decisionStatus = PlayerDecision.changeDecision(_cards, boolean)
     }
 
-    fun update(card: Card): PlayerStatus {
-        val cards = cards + card
-        return this.copy(cards = cards, decisionStatus = PlayerDecision.changeDecision(cards))
+    override fun receiveCard(card: Card) {
+        this._cards += card
+        this._decisionStatus = PlayerDecision.changeDecision(_cards)
     }
-
-    fun isBlackJack(): Boolean = decisionStatus is BlackJack
-
-    fun isBustStatus(): Boolean = decisionStatus is Bust
 
     companion object {
-        fun of(): PlayerStatus {
-            return PlayerStatus(Cards(listOf()), Hit())
+        fun of(): PlayerStatusImpl {
+            return PlayerStatusImpl(Cards(listOf()), Hit())
         }
     }
 }

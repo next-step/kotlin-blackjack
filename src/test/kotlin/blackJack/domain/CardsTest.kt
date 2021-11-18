@@ -11,7 +11,7 @@ class CardsTest {
         val cards = Cards.create()
 
         // when
-        val cardsSize = cards.getSize()
+        val cardsSize = cards.size
 
         // then
         assertThat(cardsSize).isEqualTo(52)
@@ -24,7 +24,7 @@ class CardsTest {
         val card = Card(Suit.DIAMONDS, Denomination.KING)
 
         // when
-        val cardsSize = (cards - card).getSize()
+        val cardsSize = (cards - card).size
 
         // then
         assertThat(cardsSize).isEqualTo(51)

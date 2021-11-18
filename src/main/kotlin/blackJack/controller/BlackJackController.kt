@@ -23,8 +23,8 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {
-        startedPlayer.toList().forEach {
-            if (!it.isBlackJackPlayer() && !it.isDealer()) {
+        startedPlayer.forEach {
+            if (!it.isBlackJackPlayer() && !it.isPlayer()) {
                 continuousPlayerReceiveCard(it, playingCard)
             } else {
                 continuousDealerReceiveCard(it, playingCard)
@@ -58,7 +58,7 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun resultingGame(inGamePlayers: GamePlayers) {
-        inGamePlayers.toList().forEach {
+        inGamePlayers.forEach {
             resultView.gameResult(PlayerDto.of(it))
         }
     }

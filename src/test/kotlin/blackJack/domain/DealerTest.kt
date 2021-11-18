@@ -23,7 +23,7 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        val isDealer = dealer.isDealer()
+        val isDealer = dealer.isPlayer()
 
         // then
         assertThat(isDealer).isTrue

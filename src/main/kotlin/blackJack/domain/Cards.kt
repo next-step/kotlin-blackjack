@@ -1,7 +1,6 @@
 package blackJack.domain
 
-@JvmInline
-value class Cards(private val cards: List<Card>) {
+class Cards(private val cards: List<Card>) : List<Card> by cards {
 
     operator fun plus(card: Card): Cards {
         checkDuplicate(card)
@@ -11,10 +10,6 @@ value class Cards(private val cards: List<Card>) {
     operator fun minus(card: Card): Cards {
         return Cards(cards - card)
     }
-
-    fun getSize(): Int = cards.size
-
-    fun toList(): List<Card> = cards
 
     private fun checkDuplicate(card: Card) {
         require(card !in cards) { DUPLICATE_ERROR }

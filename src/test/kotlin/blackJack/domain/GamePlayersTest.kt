@@ -31,7 +31,7 @@ class GamePlayersTest {
         val player = gamePlayers.getPlayers()
 
         // then
-        assertThat(player.toList().size).isEqualTo(3)
+        assertThat(player.size).isEqualTo(3)
     }
 
     @Test

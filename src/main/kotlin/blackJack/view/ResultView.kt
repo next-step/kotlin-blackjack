@@ -7,7 +7,7 @@ import blackJack.dto.GamePlayersDto
 object ResultView {
     fun receiveTwoCard(gamePlayersDto: GamePlayersDto) {
         println("${gamePlayersDto.getPlayerNames()} 에게 2장의 나누었습니다.")
-        gamePlayersDto.toList().map {
+        gamePlayersDto.map {
             println("${it.name} : ${it.cards}")
         }
     }
