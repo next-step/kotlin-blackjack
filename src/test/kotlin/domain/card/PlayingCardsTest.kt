@@ -49,6 +49,20 @@ internal class PlayingCardsTest {
             .isEqualTo(expected)
     }
 
+    @DisplayName("점수가 13 으로 계산되어야 한다.")
+    @Test
+    fun aceKingScore() {
+        val expected = 13
+        val cardList = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.DIAMONDS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS)
+        )
+        assertThat(PlayingCards(cardList).score())
+            .isEqualTo(expected)
+    }
+
     @DisplayName("카드들의 점수의 합이 21 이면 FINISHED 상태이다.")
     @Test
     fun finished() {

@@ -85,7 +85,7 @@ internal class PlayerTest {
     @DisplayName("stay 를 하지 않아도, score 가 21 점을 초과하면 finished 되어야 한다.")
     @Test
     fun bust() {
-        repeat(6) { player.play(true, cardGenerator) }
+        repeat(9) { player.play(true, cardGenerator) }
         assertAll(
             { assertThat(player.isFinished()).isTrue },
             {
