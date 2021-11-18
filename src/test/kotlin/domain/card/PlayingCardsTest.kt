@@ -26,10 +26,10 @@ internal class PlayingCardsTest {
     fun score() {
         val expected = 2 + 3 + 4 + 5
         val cardList = listOf(
-            PlayingCard.of(Suit.SPADES, Denomination.TWO),
-            PlayingCard.of(Suit.CLUBS, Denomination.THREE),
-            PlayingCard.of(Suit.HEARTS, Denomination.FOUR),
-            PlayingCard.of(Suit.DIAMONDS, Denomination.FIVE)
+            PlayingCard.of(Denomination.TWO, Suit.SPADES),
+            PlayingCard.of(Denomination.THREE, Suit.CLUBS),
+            PlayingCard.of(Denomination.FOUR, Suit.HEARTS),
+            PlayingCard.of(Denomination.FIVE, Suit.DIAMONDS)
         )
         assertThat(PlayingCards(cardList).score())
             .isEqualTo(expected)
@@ -40,10 +40,10 @@ internal class PlayingCardsTest {
     fun aceScore() {
         val expected = 1 + 1 + 1 + 11
         val cardList = listOf(
-            PlayingCard.of(Suit.SPADES, Denomination.ACE),
-            PlayingCard.of(Suit.CLUBS, Denomination.ACE),
-            PlayingCard.of(Suit.HEARTS, Denomination.ACE),
-            PlayingCard.of(Suit.DIAMONDS, Denomination.ACE)
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS),
+            PlayingCard.of(Denomination.ACE, Suit.DIAMONDS)
         )
         assertThat(PlayingCards(cardList).score())
             .isEqualTo(expected)
@@ -53,8 +53,8 @@ internal class PlayingCardsTest {
     @Test
     fun finished() {
         val cardList = listOf(
-            PlayingCard.of(Suit.SPADES, Denomination.ACE),
-            PlayingCard.of(Suit.CLUBS, Denomination.KING)
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.KING, Suit.CLUBS)
         )
         assertThat(PlayingCards(cardList).state())
             .isEqualTo(CardState.FINISHED)
@@ -64,8 +64,8 @@ internal class PlayingCardsTest {
     @Test
     fun running() {
         val cardList = listOf(
-            PlayingCard.of(Suit.SPADES, Denomination.ACE),
-            PlayingCard.of(Suit.CLUBS, Denomination.ACE)
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS)
         )
         assertThat(PlayingCards(cardList).state())
             .isEqualTo(CardState.RUNNING)
@@ -75,10 +75,10 @@ internal class PlayingCardsTest {
     @Test
     fun bust() {
         val cardList = listOf(
-            PlayingCard.of(Suit.SPADES, Denomination.ACE),
-            PlayingCard.of(Suit.CLUBS, Denomination.ACE),
-            PlayingCard.of(Suit.HEARTS, Denomination.JACK),
-            PlayingCard.of(Suit.DIAMONDS, Denomination.QUEEN)
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.JACK, Suit.HEARTS),
+            PlayingCard.of(Denomination.QUEEN, Suit.DIAMONDS)
         )
         assertThat(PlayingCards(cardList).state())
             .isEqualTo(CardState.BUST)

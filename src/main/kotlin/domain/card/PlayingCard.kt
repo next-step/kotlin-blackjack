@@ -1,6 +1,6 @@
 package domain.card
 
-data class PlayingCard private constructor(val suit: Suit, val denomination: Denomination) {
+data class PlayingCard private constructor(val denomination: Denomination, val suit: Suit) {
     fun score(accumulatedScore: Int) =
         if (denomination == Denomination.ACE
             && accumulatedScore + ACE_ALTERNATIVE <= BLACKJACK_NUMBER
@@ -8,11 +8,12 @@ data class PlayingCard private constructor(val suit: Suit, val denomination: Den
         else denomination.score
 
     companion object {
-        fun of(suit: Suit, denomination: Denomination) = cards[suit]!![denomination]!!
+        fun of(denomination: Denomination, suit: Suit) = cards[denomination]!![suit]!!
         fun createMutableList() = cards.values.flatMap { it.values }.toMutableList()
         const val BLACKJACK_NUMBER = 21
         private const val ACE_ALTERNATIVE = 11
-        private val cards = Suit.values().associateWith { createCards(it) }
-        private fun createCards(suit: Suit) = Denomination.values().associateWith { PlayingCard(suit, it) }
+        private val cards = Denomination.values().associateWith { createCards(it) }
+        private fun createCards(denomination: Denomination) =
+            Suit.values().associateWith { PlayingCard(denomination, it) }
     }
 }

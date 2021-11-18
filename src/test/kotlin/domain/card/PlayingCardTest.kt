@@ -13,8 +13,8 @@ internal class PlayingCardTest {
     fun constructor() {
         val suit = Suit.CLUBS
         val denomination = Denomination.ACE
-        assertThat(PlayingCard.of(suit, denomination))
-            .isEqualTo(PlayingCard.of(suit, denomination))
+        assertThat(PlayingCard.of(denomination, suit))
+            .isEqualTo(PlayingCard.of(denomination, suit))
     }
 
     @DisplayName("누적된 점수가 10 보다 작거나 같으면 ACE 의 점수는 11이 되어야 한다.")
@@ -22,7 +22,7 @@ internal class PlayingCardTest {
     @ValueSource(ints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     fun aceScoreTen(accumulatedScore: Int) {
         val expected = 11
-        assertAll(Suit.values().map { PlayingCard.of(it, Denomination.ACE) }
+        assertAll(Suit.values().map { PlayingCard.of(Denomination.ACE, it) }
             .map { { assertThat(it.score(accumulatedScore)).isEqualTo(expected) } })
     }
 
@@ -31,7 +31,7 @@ internal class PlayingCardTest {
     @ValueSource(ints = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
     fun aceScoreOne(accumulatedScore: Int) {
         val expected = 1
-        assertAll(Suit.values().map { PlayingCard.of(it, Denomination.ACE) }
+        assertAll(Suit.values().map { PlayingCard.of(Denomination.ACE, it) }
             .map { { assertThat(it.score(accumulatedScore)).isEqualTo(expected) } })
     }
 }
