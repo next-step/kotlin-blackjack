@@ -82,12 +82,29 @@ internal class PlayerTest {
         )
     }
 
-    @DisplayName("stay 를 하지 않아도, score 가 21 점을 초과하면 finished 되어야 한다.")
+    @DisplayName("stay 를 하지 않아도, score 가 21 점이 되면 finished 되어야 한다.")
     @Test
-    fun bust() {
-        repeat(9) { player.play(true, cardGenerator) }
+    fun finished() {
+        val cardList = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS),
+            PlayingCard.of(Denomination.ACE, Suit.SPADES),
+            PlayingCard.of(Denomination.TWO, Suit.CLUBS),
+            PlayingCard.of(Denomination.TWO, Suit.DIAMONDS),
+            PlayingCard.of(Denomination.TWO, Suit.HEARTS),
+            PlayingCard.of(Denomination.TWO, Suit.SPADES),
+            PlayingCard.of(Denomination.THREE, Suit.CLUBS),
+            PlayingCard.of(Denomination.THREE, Suit.DIAMONDS),
+            PlayingCard.of(Denomination.THREE, Suit.HEARTS)
+        )
+        val repeatTime = 4 + 4 + 3 - 2
+        repeat(repeatTime) { player.play(true, cardGenerator) }
+        val cards = player.cards()
         assertAll(
             { assertThat(player.isFinished()).isTrue },
+            { assertThat(cards.score()).isEqualTo(21) },
+            { assertThat(cards).isEqualTo(PlayingCards(cardList)) },
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(true, cardGenerator) }
