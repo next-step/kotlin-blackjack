@@ -68,6 +68,29 @@ class PlayerResultTest {
     }
 
     @Test
+    fun `딜러가 버스터이고 플레이어도 버스터이면 플레이어가 승리`() {
+        // given
+        val player = Player.of("김형준").apply {
+            this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+            this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+            this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+            this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+        }
+        val dealer = Dealer().apply {
+            this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
+            this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+            this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+            this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+        }
+
+        // when
+        val winOrLose = PlayerResult.winOrLose(player, dealer).winDrawLose
+
+        // then
+        assertThat(winOrLose).isEqualTo(WinDrawLose.WIN)
+    }
+
+    @Test
     fun `플레이어가 딜러보다 점수가 낮으면 패배`() {
         // given
         val player = Player.of("김형준").apply {
