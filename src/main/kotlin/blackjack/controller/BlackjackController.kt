@@ -24,7 +24,7 @@ class BlackjackController {
         gamers = drawAll(gamers)
         outputView.printFirstDraw(gamers, FIRST_DRAW_COUNT)
         gamers = drawWhile(gamers) { player -> outputView.printCards(player) }
-        outputView.printResult(gamers)
+        outputView.printResult(gamers.results())
     }
 
     private fun createPlayers(): Gamers {

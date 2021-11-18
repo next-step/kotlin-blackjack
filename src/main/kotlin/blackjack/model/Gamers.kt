@@ -3,9 +3,11 @@ package blackjack.model
 @JvmInline
 value class Gamers private constructor(private val gamers: List<Gamer>) {
 
-    fun filterPlayers(): Gamers = Gamers(gamers.filterIsInstance<Player>())
+    fun players(): List<Player> = gamers.filterIsInstance<Player>()
 
-    fun toNames(): Names = gamers.map { it.name }.let(Names::from)
+    fun dealer(): Dealer? = gamers.filterIsInstance<Dealer>().firstOrNull()
+
+    fun results(): List<GameResult> = GameResult.match(this)
 
     fun toList(): List<Gamer> = gamers
 
@@ -18,7 +20,7 @@ value class Gamers private constructor(private val gamers: List<Gamer>) {
         val limit = Array(gamers.size) { count }
         val hasNext: (Int) -> Boolean = { index -> limit[index]-- > 0 }
         return receiveWhile(
-            next = { index, _ -> takeIf { hasNext(index) }?.let { next() } }
+            next = { index, _ -> if (hasNext(index)) next() else null }
         )
     }
 

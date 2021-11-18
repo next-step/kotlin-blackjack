@@ -2,15 +2,13 @@ package blackjack.model
 
 sealed class Gamer(val name: Name, val cards: Cards) {
 
+    val score: Int get() = cards.sum()
+
     abstract fun canReceive(): Boolean
 
     abstract fun copy(name: Name = this.name, cards: Cards = this.cards): Gamer
 
     fun receive(card: Card): Gamer = if (hasNext(card)) copy(cards = cards + card) else this
-
-    private fun hasNext(card: Card?): Boolean = card != null && canReceive() && !hasCard(card)
-
-    private fun hasCard(card: Card): Boolean = card in cards
 
     fun receiveWhile(next: () -> Card?, onReceive: (Cards) -> Unit = {}): Gamer {
         var result = this
@@ -22,6 +20,10 @@ sealed class Gamer(val name: Name, val cards: Cards) {
         }
         return result
     }
+
+    private fun hasNext(card: Card?): Boolean = card != null && canReceive() && !hasCard(card)
+
+    private fun hasCard(card: Card): Boolean = card in cards
 
     companion object {
         fun player(name: Name): Gamer = Player.from(name, Cards.empty())

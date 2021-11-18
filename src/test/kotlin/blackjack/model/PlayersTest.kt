@@ -7,13 +7,6 @@ import org.junit.jupiter.api.assertAll
 class PlayersTest {
 
     @Test
-    fun `플레이어들을 Names로 변환할 수 있다`() {
-        val names = Names.from("laco")
-        val players = Gamers.players(names)
-        assertThat(players.toNames()).isEqualTo(names)
-    }
-
-    @Test
     fun `플레이어들 모두에게 카드를 줄 수 있다`() {
         // given
         val names = Names.from("laco", "pobi")
