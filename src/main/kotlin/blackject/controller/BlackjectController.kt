@@ -20,7 +20,10 @@ class BlackjectController(
                 OutputView.printCardListOfPerson(it)
             }
         persons
-            .forEach { askMoreCard(InputView.inputAnswerMoreCard(it.name), it) }
+            .forEach {
+                if (!it.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
+                askMoreCard(InputView.inputAnswerMoreCard(it.name), it)
+            }
         persons
             .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER) }
     }
@@ -31,15 +34,15 @@ class BlackjectController(
     }
 
     private fun giveCard(person: Person, cardCount: Int) {
-        person.addCard(CardsDeck.takeCard(cardCount))
+        person.cards.addCard(CardsDeck.takeCard(cardCount))
     }
 
     private fun askMoreCard(answer: String?, person: Person) {
         when (isAnswerYes(answer)) {
             true -> {
-                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
                 giveCard(person, CardsDeck.NUMBER_ONE_TIME)
                 OutputView.printCardListOfPerson(person)
+                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
                 askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
             }
             else -> return
