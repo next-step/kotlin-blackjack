@@ -10,7 +10,7 @@ class DealerTest {
 
     @BeforeEach
     fun setup() {
-        dealer = Dealer.of(Cards.empty())
+        dealer = Dealer.from(name = Name.valueOf("딜러"), Cards.empty())
     }
 
     @Test

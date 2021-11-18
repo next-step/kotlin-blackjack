@@ -9,7 +9,7 @@ class PlayersTest {
     @Test
     fun `플레이어들을 Names로 변환할 수 있다`() {
         val names = Names.from("laco")
-        val players = Players.from(names)
+        val players = Gamers.players(names)
         assertThat(players.toNames()).isEqualTo(names)
     }
 
@@ -17,7 +17,7 @@ class PlayersTest {
     fun `플레이어들 모두에게 카드를 줄 수 있다`() {
         // given
         val names = Names.from("laco", "pobi")
-        val players = Players.from(names)
+        val players = Gamers.players(names)
         val cards = listOf(
             Card(Denomination.TEN, Suit.HEART),
             Card(Denomination.TEN, Suit.SPADE),

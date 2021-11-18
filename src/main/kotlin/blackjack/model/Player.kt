@@ -1,13 +1,8 @@
 package blackjack.model
 
-class Player private constructor(
-    val name: Name,
-    cards: Cards
-) : BlackjackPlayer(cards) {
+class Player private constructor(name: Name, cards: Cards) : Gamer(name, cards) {
 
-    fun copy(name: Name = this.name, cards: Cards): Player = from(name, cards)
-
-    override fun copy(cards: Cards): BlackjackPlayer = copy(name = name, cards = cards)
+    override fun copy(name: Name, cards: Cards): Player = from(name, cards)
 
     override fun canReceive(): Boolean = true
 
