@@ -12,16 +12,18 @@ object ResultView {
         }
     }
 
-    fun receiveCard(playerDto: PlayerDto) {
-        println("${playerDto.name} :${playerDto.cards}")
+    fun receiveCard(playerDto: PlayerDto, isContinue: Boolean) {
+        if (isContinue) {
+            println("${playerDto.name} :${playerDto.cards}")
+        }
     }
 
-    fun receiveCardToDealer(playerDto: PlayerDto) {
-        println("${playerDto.name}는 16이하라 한장의 카드를 더 받았습니다.")
-    }
-
-    fun noReceiveCardToDealer(playerDto: PlayerDto) {
-        println("${playerDto.name}는 17이상이라 카드를 못받습니다.")
+    fun receiveCardToDealer(playerDto: PlayerDto, isContinue: Boolean) {
+        if (isContinue) {
+            println("${playerDto.name}는 16이하라 한장의 카드를 더 받았습니다.")
+        } else {
+            println("${playerDto.name}는 17이상이라 카드를 못받습니다.")
+        }
     }
 
     fun gameResult(playerDto: PlayerDto) {

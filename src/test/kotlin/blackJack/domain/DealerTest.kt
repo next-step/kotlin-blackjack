@@ -18,15 +18,15 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 딜러이다`() {
+    fun `딜러는 플레이어가 아니다`() {
         // given
         val dealer = Dealer()
 
         // when
-        val isDealer = dealer.isPlayer()
+        val isPlayer = dealer.isPlayer()
 
         // then
-        assertThat(isDealer).isTrue
+        assertThat(isPlayer).isFalse
     }
 
     @Test

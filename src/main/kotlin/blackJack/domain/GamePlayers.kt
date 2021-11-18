@@ -6,9 +6,9 @@ import java.util.NoSuchElementException
 class GamePlayers(private val players: List<GamePlayer>) : List<GamePlayer> by players {
 
     fun getDealer(): GamePlayer =
-        players.firstOrNull { it.isPlayer() } ?: throw NoSuchElementException(NOT_FOUND_DEALER)
+        players.firstOrNull { !it.isPlayer() } ?: throw NoSuchElementException(NOT_FOUND_DEALER)
 
-    fun getPlayers(): GamePlayers = GamePlayers(players.filter { !it.isPlayer() })
+    fun getPlayers(): GamePlayers = GamePlayers(players.filter { it.isPlayer() })
 
     fun startBlackJack(playingCard: PlayingCard) {
         players.forEach { player ->

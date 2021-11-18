@@ -128,14 +128,14 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어는 딜러가 아니다`() {
+    fun `플레이어는 플레이어이다`() {
         // given
         val player = Player.of("김형준")
 
         // when
-        val isDealer = player.isPlayer()
+        val isPlayer = player.isPlayer()
 
         // then
-        assertThat(isDealer).isFalse
+        assertThat(isPlayer).isTrue
     }
 }

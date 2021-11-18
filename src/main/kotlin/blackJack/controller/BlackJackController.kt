@@ -24,7 +24,7 @@ class BlackJackController(private val inputView: InputView, private val resultVi
 
     private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {
         startedPlayer.forEach {
-            if (!it.isBlackJackPlayer() && !it.isPlayer()) {
+            if (!it.isBlackJackPlayer() && it.isPlayer()) {
                 continuousPlayerReceiveCard(it, playingCard)
             } else {
                 continuousDealerReceiveCard(it, playingCard)
@@ -32,29 +32,18 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         }
     }
 
-    private fun continuousDealerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
-        if (player.getAbleReceivedCard()) {
-            player.receiveCard(playingCard.drawCard())
-            resultView.receiveCardToDealer(PlayerDto.of(player))
-        } else {
-            resultView.noReceiveCardToDealer(PlayerDto.of(player))
-        }
-    }
-
     private fun continuousPlayerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
         while (player.getAbleReceivedCard()) {
             val isContinue = inputView.doYouWantCardView(PlayerDto.of(player))
-            updatePlayerStatus(isContinue, player, playingCard)
+            player.receiveCard(playingCard.drawCard(), isContinue)
+            resultView.receiveCard(PlayerDto.of(player), isContinue)
         }
     }
 
-    private fun updatePlayerStatus(isContinue: Boolean, player: GamePlayer, playingCard: PlayingCard) {
-        if (isContinue) {
-            player.receiveCard(playingCard.drawCard())
-            resultView.receiveCard(PlayerDto.of(player))
-        } else {
-            player.noReceiveCard()
-        }
+    private fun continuousDealerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
+        val isContinue = player.getAbleReceivedCard()
+        player.receiveCard(playingCard.drawCard(), isContinue)
+        resultView.receiveCardToDealer(PlayerDto.of(player), isContinue)
     }
 
     private fun resultingGame(inGamePlayers: GamePlayers) {

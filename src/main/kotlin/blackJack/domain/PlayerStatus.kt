@@ -6,8 +6,8 @@ interface PlayerStatus {
     fun isBlackJackPlayer(): Boolean
     fun isBustPlayer(): Boolean
     fun getScore(): Int
-    fun noReceiveCard(boolean: Boolean = false)
-    fun receiveCard(card: Card)
+    fun noReceiveCard()
+    fun receiveCard(card: Card, isContinue: Boolean = true)
 }
 
 class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: PlayerDecision = Hit()) : PlayerStatus {
@@ -18,7 +18,7 @@ class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: P
     val decisionStatus: PlayerDecision
         get() = _decisionStatus
 
-    override fun isPlayer(): Boolean = false
+    override fun isPlayer(): Boolean = true
 
     override fun getAbleReceivedCard(): Boolean = _decisionStatus.isContinue()
 
@@ -28,13 +28,17 @@ class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: P
 
     override fun getScore() = _cards.sumCards()
 
-    override fun noReceiveCard(boolean: Boolean) {
-        this._decisionStatus = PlayerDecision.changeDecision(_cards, boolean)
+    override fun noReceiveCard() {
+        this._decisionStatus = PlayerDecision.changeDecision(_cards, false)
     }
 
-    override fun receiveCard(card: Card) {
-        this._cards += card
-        this._decisionStatus = PlayerDecision.changeDecision(_cards)
+    override fun receiveCard(card: Card, isContinue: Boolean) {
+        if (isContinue) {
+            this._cards += card
+            this._decisionStatus = PlayerDecision.changeDecision(_cards)
+        } else {
+            noReceiveCard()
+        }
     }
 
     companion object {
