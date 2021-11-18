@@ -15,10 +15,10 @@ object OutputView {
         println()
     }
 
-    fun gameResult(person: Person, maxNumber: Int) {
+    fun gameResult(person: Person, maxNumber: Int, exceptCard: CardNumber) {
         println(
             "${person.name}카드: ${person.cards.cardList.joinToString { it.cardName }} - 결과: ${
-            person.cards.getResultNumber(maxNumber, exceptCard = CardNumber.ACE)}"
+            person.cards.getResultNumber(maxNumber, exceptCard = exceptCard)}"
         )
     }
 }

@@ -21,11 +21,11 @@ class BlackjectController(
             }
         persons
             .forEach {
-                if (!it.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
+                if (!it.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
                 askMoreCard(InputView.inputAnswerMoreCard(it.name), it)
             }
         persons
-            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER) }
+            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
     }
 
     private fun getParticipant(): List<Person> {
@@ -42,7 +42,7 @@ class BlackjectController(
             true -> {
                 giveCard(person, CardsDeck.NUMBER_ONE_TIME)
                 OutputView.printCardListOfPerson(person)
-                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER)) return
+                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
                 askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
             }
             else -> return

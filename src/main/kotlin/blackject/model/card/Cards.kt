@@ -18,9 +18,8 @@ value class Cards(
         val cardTotal = getTotalMinCount(_cardList)
         val count = _cardList.filter { it.number == exceptCard }.size
         if (count == 0) return cardTotal
-        if (cardTotal >= maxInt) return cardTotal
 
-        val exceptRestNumber = CardNumber.getNumberMinValue(exceptCard) - CardNumber.getNumberMinValue(exceptCard)
+        val exceptRestNumber = CardNumber.getNumberMaxValue(exceptCard) - CardNumber.getNumberMinValue(exceptCard)
         if ((maxInt - cardTotal) < exceptRestNumber) return cardTotal
         return cardTotal.plus(exceptRestNumber)
     }

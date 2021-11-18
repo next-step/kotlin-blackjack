@@ -1,5 +1,6 @@
 package blackject.model
 
+import blackject.model.card.CardNumber
 import blackject.model.card.Cards
 
 /**
@@ -9,7 +10,7 @@ data class Person(
     val name: String,
     val cards: Cards = Cards()
 ) {
-    fun isTakeMoreCard(maxInt: Int): Boolean {
-        return maxInt > Cards.getTotalMinCount(cards.cardList)
+    fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
+        return maxInt > cards.getResultNumber(maxInt, exceptCard)
     }
 }
