@@ -17,7 +17,7 @@ class BlackJack(val players: List<Player>) {
 
     fun drawAnotherCard(player: Player) {
         val card = deck.drawOne()
-        player.takeCards(card)
+        player.takeCards(listOf(card))
     }
 
     companion object {

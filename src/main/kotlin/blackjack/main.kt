@@ -10,17 +10,20 @@ fun main() {
 
     val players = inputView.receivePlayers()
     val blackJack = BlackJack(players)
-    blackJack.drawInitialCards()
-    outputView.printInitialDrawResult(blackJack.players)
 
-    blackJack.players.forEach {
-        while (true) {
-            val receiveCard = inputView.receiveAnotherCard(it)
-            if (receiveCard) {
-                blackJack.drawAnotherCard(it)
-                outputView.printPlayerStatus(it)
-            } else {
-                break
+    blackJack.apply {
+        drawInitialCards()
+        outputView.printInitialDrawResult(players)
+
+        players.forEach {
+            while (it.canTakeCards) {
+                val drawCard = inputView.receiveCardDrawDecision(it)
+                if (drawCard) {
+                    drawAnotherCard(it)
+                    outputView.printPlayerStatus(it)
+                } else {
+                    break
+                }
             }
         }
     }

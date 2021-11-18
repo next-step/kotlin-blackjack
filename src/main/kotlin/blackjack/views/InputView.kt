@@ -14,7 +14,7 @@ class InputView {
             .map { Player(it) }
     }
 
-    fun receiveAnotherCard(player: Player): Boolean {
+    fun receiveCardDrawDecision(player: Player): Boolean {
         println(RECEIVE_ANOTHER_CARD_MSG.format(player.name))
         val input = readLine()
         require(!input.isNullOrBlank()) { EMPTY_STRING_ERROR_MSG }
