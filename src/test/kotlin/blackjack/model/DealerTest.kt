@@ -17,4 +17,13 @@ class DealerTest {
     fun `딜러는 카드들을 가진다`() {
         assertThat(dealer.cards).isEqualTo(Cards.empty())
     }
+
+    @Test
+    fun `딜러는 카드를 받을 수 있다`() {
+        assertThat(
+            dealer
+                .receive(Card(Denomination.ACE, Suit.HEART))
+                .cards
+        ).isEqualTo(Cards(listOf(Card(Denomination.ACE, Suit.HEART))))
+    }
 }
