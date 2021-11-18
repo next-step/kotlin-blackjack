@@ -18,8 +18,8 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         gamePlayers.startBlackJack(playingCard)
         resultView.receiveTwoCard(GamePlayersDto.of(gamePlayers))
         playingGame(gamePlayers, playingCard)
-        val gameOverPlayers = resultingGame(gamePlayers)
-        resultView.winOrLoseView(Results.from(gameOverPlayers))
+        resultingGame(gamePlayers)
+        resultView.winOrLoseView(Results.from(gamePlayers))
     }
 
     private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {
@@ -57,9 +57,9 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         }
     }
 
-    private fun resultingGame(inGamePlayers: GamePlayers): GamePlayers =
-        GamePlayers(inGamePlayers.toList().map {
+    private fun resultingGame(inGamePlayers: GamePlayers) {
+        inGamePlayers.toList().forEach {
             resultView.gameResult(PlayerDto.of(it))
-            return@map it
-        })
+        }
+    }
 }
