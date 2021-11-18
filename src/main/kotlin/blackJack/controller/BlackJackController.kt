@@ -15,21 +15,20 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         val playingCard = PlayingCard.create()
         val inputPlayersNames = inputView.inputPlayersName()
         val gamePlayers = GamePlayers.enterGameRoom(inputPlayersNames)
-        val startedPlayer = gamePlayers.startBlackJack(playingCard)
-        resultView.receiveTwoCard(GamePlayersDto.of(startedPlayer))
-
-        val inGamePlayers = playingGame(startedPlayer, playingCard)
-        val gameOverPlayers = resultingGame(inGamePlayers)
+        gamePlayers.startBlackJack(playingCard)
+        resultView.receiveTwoCard(GamePlayersDto.of(gamePlayers))
+        playingGame(gamePlayers, playingCard)
+        val gameOverPlayers = resultingGame(gamePlayers)
         resultView.winOrLoseView(Results.from(gameOverPlayers))
     }
 
-
-
-    private fun receiveCard(player: GamePlayer, playingCard: PlayingCard) {
-        if (!player.isBlackJackPlayer() && !player.isDealer()) {
-            continuousPlayerReceiveCard(player, playingCard)
-        } else {
-            continuousDealerReceiveCard(player, playingCard)
+    private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {
+        startedPlayer.toList().forEach {
+            if (!it.isBlackJackPlayer() && !it.isDealer()) {
+                continuousPlayerReceiveCard(it, playingCard)
+            } else {
+                continuousDealerReceiveCard(it, playingCard)
+            }
         }
     }
 
@@ -58,16 +57,9 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         }
     }
 
-    private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard): GamePlayers =
-        GamePlayers(startedPlayer.toList().map {
-            receiveCard(it, playingCard)
-            return@map it
-        })
-
     private fun resultingGame(inGamePlayers: GamePlayers): GamePlayers =
         GamePlayers(inGamePlayers.toList().map {
             resultView.gameResult(PlayerDto.of(it))
             return@map it
         })
-
 }

@@ -7,7 +7,9 @@ class PlayerResult(
 
     companion object {
         fun winOrLose(player: GamePlayer, dealer: GamePlayer): PlayerResult =
-            PlayerResult(player.name, winDrawLose(dealer, player))
+            PlayerResult(
+                player.name, winDrawLose(dealer, player)
+            )
 
         private fun winDrawLose(dealer: GamePlayer, player: GamePlayer): WinDrawLose =
             when {

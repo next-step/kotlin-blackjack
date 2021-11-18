@@ -1,7 +1,6 @@
 package blackJack.dto
 
 import blackJack.domain.GamePlayer
-import blackJack.domain.GamePlayerType
 import blackJack.domain.GamePlayers
 
 class GamePlayersDto(private val players: List<PlayerDto>) {

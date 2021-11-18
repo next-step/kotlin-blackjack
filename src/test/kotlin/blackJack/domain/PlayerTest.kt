@@ -6,8 +6,6 @@ import org.junit.jupiter.api.assertAll
 
 class PlayerTest {
 
-
-
     @Test
     fun `플레이어는 이름이 지정되어 있고, 카드를 가지고 있다`() {
         // given

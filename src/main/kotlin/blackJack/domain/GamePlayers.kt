@@ -7,15 +7,15 @@ class GamePlayers(private val players: List<GamePlayer>) {
 
     fun toList(): List<GamePlayer> = players
 
-    fun getDealer(): GamePlayer = players.firstOrNull { it.isDealer() } ?: throw NoSuchElementException(NOT_FOUND_DEALER)
+    fun getDealer(): GamePlayer =
+        players.firstOrNull { it.isDealer() } ?: throw NoSuchElementException(NOT_FOUND_DEALER)
 
     fun getPlayers(): GamePlayers = GamePlayers(players.filter { !it.isDealer() })
 
-    fun startBlackJack(playingCard: PlayingCard): GamePlayers {
-        val players = players.map { player ->
+    fun startBlackJack(playingCard: PlayingCard) {
+        players.forEach { player ->
             factorial(INIT_RECEIVE_CARD_NUMBER, player, playingCard)
         }
-        return GamePlayers(players)
     }
 
     private tailrec fun factorial(n: Int, gamePlayer: GamePlayer, playingCard: PlayingCard): GamePlayer {
