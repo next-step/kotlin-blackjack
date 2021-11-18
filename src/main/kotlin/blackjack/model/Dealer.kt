@@ -9,6 +9,6 @@ class Dealer private constructor(name: Name, cards: Cards) : Gamer(name, cards) 
     companion object {
         private const val RECEIVE_CARD_LIMIT = 16
 
-        fun from(name: Name, cards: Cards): Dealer = Dealer(name, cards)
+        fun from(name: Name, cards: Cards = Cards.empty()): Dealer = Dealer(name, cards)
     }
 }

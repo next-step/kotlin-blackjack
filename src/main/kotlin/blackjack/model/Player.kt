@@ -7,6 +7,6 @@ class Player private constructor(name: Name, cards: Cards) : Gamer(name, cards) 
     override fun canReceive(): Boolean = true
 
     companion object {
-        fun from(name: Name, cards: Cards): Player = Player(name, cards)
+        fun from(name: Name, cards: Cards = Cards.empty()): Player = Player(name, cards)
     }
 }

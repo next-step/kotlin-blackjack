@@ -8,10 +8,10 @@ import blackjack.view.res.getString
 
 class OutputView {
 
-    fun printFirstDraw(players: Gamers, drawCount: Int) {
-        val names = players.players().map { it.name }.toList()
+    fun printFirstDraw(gamers: Gamers, drawCount: Int) {
+        val names = gamers.players().map { it.name }.toList()
         println("딜러와 ${names.joinToString()}에게 ${drawCount}장의 카드를 나누었습니다.")
-        players.toList().forEach { player -> printCards(player, true) }
+        gamers.toList().forEach { player -> printCards(player, true) }
         println()
     }
 

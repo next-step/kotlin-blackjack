@@ -11,8 +11,6 @@ value class Gamers private constructor(private val gamers: List<Gamer>) {
 
     fun toList(): List<Gamer> = gamers
 
-    operator fun plus(player: Gamer): Gamers = Gamers(gamers + player)
-
     fun receiveAll(
         count: Int = Int.MAX_VALUE,
         next: () -> Card?,
@@ -42,8 +40,8 @@ value class Gamers private constructor(private val gamers: List<Gamer>) {
     companion object {
         fun empty(): Gamers = Gamers(emptyList())
 
-        fun players(names: Names): Gamers = names.toList()
-            .map { name -> Gamer.player(name) }
-            .let(::Gamers)
+        fun from(dealer: Dealer, players: List<Player>) = Gamers(players + dealer)
+
+        fun players(players: List<Player>) = Gamers(players)
     }
 }

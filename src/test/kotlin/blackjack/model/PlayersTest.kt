@@ -9,8 +9,10 @@ class PlayersTest {
     @Test
     fun `플레이어들 모두에게 카드를 줄 수 있다`() {
         // given
-        val names = Names.from("laco", "pobi")
-        val players = Gamers.players(names)
+        val players = Names.from("laco", "pobi")
+            .toList()
+            .map { Player.from(it) }
+            .let(Gamers::players)
         val cards = listOf(
             Card(Denomination.TEN, Suit.HEART),
             Card(Denomination.TEN, Suit.SPADE),

@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.Card
+import blackjack.model.Cards
 import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.Gamer
@@ -19,7 +20,7 @@ class BlackjackController {
     private var deck: Deck = Deck.empty()
 
     fun play() {
-        var gamers = createPlayers() + createDealer()
+        var gamers = createGamers()
         deck = Deck.shuffled()
         gamers = drawAll(gamers)
         outputView.printFirstDraw(gamers, FIRST_DRAW_COUNT)
@@ -27,12 +28,12 @@ class BlackjackController {
         outputView.printResult(gamers.results())
     }
 
-    private fun createPlayers(): Gamers {
+    private fun createGamers(): Gamers {
         val names = inputView.getNames() ?: return Gamers.empty()
-        return Gamers.players(names)
+        val players = names.toList().map { Player.from(it) }
+        val dealer = Dealer.from(Name.valueOf("딜러"))
+        return Gamers.from(dealer, players)
     }
-
-    private fun createDealer(): Gamer = Gamer.dealer(Name.valueOf("딜러"))
 
     private fun drawAll(gamers: Gamers): Gamers = gamers.receiveAll(count = FIRST_DRAW_COUNT, next = ::peekAndDraw)
 
