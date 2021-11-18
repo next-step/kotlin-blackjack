@@ -34,10 +34,19 @@ enum class CardNumber (
             return (KING.numberName == numberName) || (QUEEN.numberName == numberName) || (JACK.numberName == numberName)
         }
 
-        fun getNumberValue(number: CardNumber?, isMaxValue: Boolean = false): Int {
+        fun getNumberMinValue(number: CardNumber?): Int {
             return when {
                 number == null -> DEFAULT_NUMBER
-                isAce(number.numberName) -> if (isMaxValue) ACE_MAX_VALUE else ACE_MIN_VALUE
+                isAce(number.numberName) -> ACE_MIN_VALUE
+                isRoyal(number.numberName) -> LOYAL_VALUE
+                else -> number.numberName.toInt()
+            }
+        }
+
+        fun getNumberMaxValue(number: CardNumber?): Int {
+            return when {
+                number == null -> DEFAULT_NUMBER
+                isAce(number.numberName) -> ACE_MAX_VALUE
                 isRoyal(number.numberName) -> LOYAL_VALUE
                 else -> number.numberName.toInt()
             }
