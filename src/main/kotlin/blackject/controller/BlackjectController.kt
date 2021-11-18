@@ -12,8 +12,8 @@ class BlackjectController(
     private val cardsDeck: CardsDeck
 ) {
     fun start() {
-        val persons = getParticipant()
-        OutputView.printGivenCard(persons, cardsDeck.NUMBER_INIT_CARD)
+        val persons = createGame()
+
         persons
             .forEach {
                 giveCard(it, CardsDeck.NUMBER_INIT_CARD)
@@ -26,6 +26,12 @@ class BlackjectController(
             }
         persons
             .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
+    }
+
+    private fun createGame(): List<Person> {
+        val persons = getParticipant()
+        OutputView.printGivenCard(persons, cardsDeck.NUMBER_INIT_CARD)
+        return persons
     }
 
     private fun getParticipant(): List<Person> {
