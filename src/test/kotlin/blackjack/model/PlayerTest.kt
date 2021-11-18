@@ -11,7 +11,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setup() {
-        player = Player(Name.valueOf("laco"), Cards.empty())
+        player = Player.from(Name.valueOf("laco"), Cards.empty())
     }
 
     @Test
@@ -40,7 +40,7 @@ class PlayerTest {
         var count = 0
         assertThat(
             player
-                .receiveWhile(10) { cards.getOrNull(count++) }
+                .receiveWhile(next = { cards.getOrNull(count++) })
                 .cards
         ).isEqualTo(Cards(cards))
     }

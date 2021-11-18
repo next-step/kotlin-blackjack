@@ -1,22 +1,17 @@
 package blackjack.model
 
-data class Player(val name: Name, val cards: Cards) {
+class Player private constructor(
+    val name: Name,
+    cards: Cards
+) : BlackjackPlayer(cards) {
 
-    fun receive(card: Card): Player = if (hasCard(card)) {
-        copy(cards = cards)
-    } else {
-        copy(cards = cards + card)
+    fun copy(name: Name = this.name, cards: Cards): Player = from(name, cards)
+
+    override fun copy(cards: Cards): BlackjackPlayer = copy(name = name, cards = cards)
+
+    override fun canReceive(): Boolean = true
+
+    companion object {
+        fun from(name: Name, cards: Cards): Player = Player(name, cards)
     }
-
-    fun receiveWhile(limit: Int, onDraw: () -> Card?): Player {
-        var result = copy()
-        repeat(limit) {
-            val card = onDraw()
-            if (card == null || hasCard(card)) return result
-            result = result.receive(card)
-        }
-        return result
-    }
-
-    private fun hasCard(card: Card): Boolean = card in cards
 }

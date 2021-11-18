@@ -19,30 +19,30 @@ class BlackjackController {
         val names = inputView.getNames() ?: return
         var players = Players.from(names)
         deck = Deck.shuffled()
-        players = firstDraw(players)
+        players = drawAll(players)
         outputView.printFirstDraw(players, FIRST_DRAW_COUNT)
         players = drawWhileNeeded(players) { player -> outputView.printPlayerCards(player) }
         outputView.printResult(players)
     }
 
-    private fun firstDraw(players: Players): Players = players.receiveWhile(FIRST_DRAW_COUNT) {
-        if (deck.isNotEmpty()) {
-            peekAndDraw()
-        } else {
-            null
-        }
-    }
+    private fun drawAll(players: Players): Players = players.receiveAll(
+        FIRST_DRAW_COUNT,
+        next = ::peekAndDraw,
+    )
 
     private fun drawWhileNeeded(
         players: Players,
-        onDraw: (Player) -> Unit,
-    ): Players = players.receiveWhile { player ->
-        if (deck.isNotEmpty() && askDraw(player)) {
-            peekAndDraw()?.also { onDraw(player) }
-        } else {
-            null
-        }
-    }
+        onReceive: (Player) -> Unit
+    ): Players = players.receiveWhile(
+        next = { player ->
+            if (deck.isNotEmpty() && askDraw(player)) {
+                peekAndDraw()
+            } else {
+                null
+            }
+        },
+        onReceive = onReceive
+    )
 
     private fun askDraw(player: Player): Boolean = inputView.askDraw(player) == DrawAction.YES
 

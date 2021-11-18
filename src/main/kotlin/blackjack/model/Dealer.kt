@@ -1,18 +1,16 @@
 package blackjack.model
 
-data class Dealer(val cards: Cards) {
+class Dealer private constructor(
+    cards: Cards
+) : BlackjackPlayer(cards) {
 
-    val canReceive: Boolean = cards.sum() <= RECEIVE_CARD_LIMIT
+    override fun copy(cards: Cards): BlackjackPlayer = Dealer(cards)
 
-    fun receive(card: Card): Dealer = if (hasCard(card)) {
-        copy(cards = cards)
-    } else {
-        copy(cards = cards + card)
-    }
-
-    private fun hasCard(card: Card): Boolean = card in cards
+    override fun canReceive(): Boolean = cards.sum() <= RECEIVE_CARD_LIMIT
 
     companion object {
         private const val RECEIVE_CARD_LIMIT = 16
+
+        fun of(cards: Cards): Dealer = Dealer(cards)
     }
 }
