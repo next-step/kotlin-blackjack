@@ -1,6 +1,10 @@
 package blackjack.domain
 
+import blackjack.domain.deck.Cards
+import blackjack.domain.deck.Deck
 import blackjack.domain.gamer.Player
+import blackjack.domain.state.Deal
+import blackjack.domain.state.Stand
 import blackjack.exception.InvalidPlayerNameException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -17,7 +21,7 @@ class PlayerTest {
         val name = "tommy"
 
         // Act
-        val sut = Player(name)
+        val sut = Player.of(name, Cards())
 
         // Assert
         assertThat(sut.name).isEqualTo("tommy")
@@ -30,6 +34,52 @@ class PlayerTest {
         val name = ""
 
         // Act, Assert
-        assertThrows<InvalidPlayerNameException> { Player(name) }
+        assertThrows<InvalidPlayerNameException> { Player.of(name, Cards()) }
+    }
+
+    @Test
+    @DisplayName("플레이어가 Deal을 완료한다")
+    fun `sut returns completedDeal`() {
+        // Arrange
+        val player = Player.of("tommy", Cards())
+        val deck = Deck.init()
+
+        // Act
+        val completedDeal = player.completeDeal(deck)
+
+        // Assert
+        assertThat(completedDeal.name).isEqualTo("tommy")
+        assertThat(completedDeal.cards.value).hasSize(2)
+    }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭을 진행한다")
+    fun `sut returns play result`() {
+        // Arrange
+        val player = Player.of("tommy", Cards())
+        val deck = Deck.init()
+        val sut = player.completeDeal(deck)
+
+        // Act
+        val playResult = sut.play(deck)
+
+        // Assert
+        assertThat(playResult.name).isEqualTo("tommy")
+        assertThat(playResult.state).isNotInstanceOf(Deal::class.java)
+    }
+
+    @Test
+    @DisplayName("플레이어의 상태가 stand가 된다")
+    fun `sut returns stand`() {
+        // Arrange
+        val sut = Player.of("tommy", Cards())
+        val deck = Deck.init()
+
+        // Act
+        val stoodPlayer = sut.stand()
+
+        // Assert
+        assertThat(stoodPlayer.name).isEqualTo("tommy")
+        assertThat(stoodPlayer.state).isInstanceOf(Stand::class.java)
     }
 }

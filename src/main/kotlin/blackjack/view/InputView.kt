@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.deck.Cards
 import blackjack.domain.gamer.Player
 
 class InputView {
@@ -12,7 +13,7 @@ class InputView {
         fun inputPlayers(): List<Player> {
             println(INPUT_PLAYER_MESSAGE)
             val playerNames = readLine()!!.split(DELIMITER)
-            return playerNames.map { Player(it.trim()) }
+            return playerNames.map { Player.of(it.trim(), Cards()) }
         }
 
         fun inputCardSign(player: Player): String {

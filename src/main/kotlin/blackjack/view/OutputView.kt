@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.application.BlackjackGame
 import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.Players
 
@@ -22,19 +21,18 @@ class OutputView {
             println("${player.name}카드: ${player.haveCards()}")
         }
 
-        fun printBlackjackResult(blackjackGames: List<BlackjackGame>) {
+        fun printBlackjackResult(players: List<Player>) {
             println()
-            for (blackjackGame in blackjackGames) {
-                val player = blackjackGame.player
-                val blackjackResult = getBlackjackResult(blackjackGame)
+            for (player in players) {
+                val blackjackResult = getBlackjackResult(player)
                 println("${player.name}카드: ${player.haveCards()} - 결과: $blackjackResult")
             }
         }
 
-        private fun getBlackjackResult(blackjackGame: BlackjackGame): String {
-            val totalScore = blackjackGame.player.cards.getTotalScore()
+        private fun getBlackjackResult(player: Player): String {
+            val totalScore = player.cards.getTotalScore()
             return if (totalScore >= 21) {
-                blackjackGame.state.toString()
+                player.state.toString()
             } else {
                 totalScore.toString()
             }

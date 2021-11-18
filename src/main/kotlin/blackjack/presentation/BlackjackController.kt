@@ -1,7 +1,7 @@
 package blackjack.presentation
 
-import blackjack.application.BlackjackGame
 import blackjack.domain.deck.Deck
+import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.Players
 import blackjack.domain.state.State.Companion.FINISHED_SIGN
 import blackjack.view.InputView
@@ -17,38 +17,41 @@ class BlackjackController(
         OutputView.printBlackjackResult(blackjackResult)
     }
 
-    private fun settingTable(players: Players): List<BlackjackGame> {
-        val list = mutableListOf<BlackjackGame>()
-        for (player in players.value) {
-            val blackjackGame = BlackjackGame.create(player)
-            list.add(blackjackGame.completeDeal(deck))
-        }
+    private fun settingTable(players: Players): List<Player> {
+        val completedSettingTable = players.settingTable(deck)
         OutputView.printStartGame(players)
-        return list
+        return completedSettingTable
     }
 
-    private fun play(blackjackGames: List<BlackjackGame>): List<BlackjackGame> {
-        val completedBlackjackGame = mutableListOf<BlackjackGame>()
-        for (blackjackGame in blackjackGames) {
+    private fun play(players: List<Player>): List<Player> {
+        val completedBlackjackPlayers = mutableListOf<Player>()
+        for (player in players) {
             while (true) {
-                val inputCardSign = inputCardSign(blackjackGame)
-                val progressedBlackjack = blackjackGame.play(deck, inputCardSign)
+                val inputCardSign = inputCardSign(player)
+
+                if (player.state.isStand(inputCardSign)) {
+                    player.stand()
+                    OutputView.printPlayerCard(player)
+                    completedBlackjackPlayers.add(player)
+                    break
+                }
+                val progressedBlackjack = player.play(deck)
                 println()
-                OutputView.printPlayerCard(blackjackGame.player)
+                OutputView.printPlayerCard(player)
 
                 if (progressedBlackjack.state.isFinished()) {
-                    completedBlackjackGame.add(progressedBlackjack)
+                    completedBlackjackPlayers.add(progressedBlackjack)
                     break
                 }
             }
         }
-        return completedBlackjackGame
+        return completedBlackjackPlayers
     }
 
-    private fun inputCardSign(blackjackGame: BlackjackGame): String {
-        if (blackjackGame.state.isFinished()) {
+    private fun inputCardSign(player: Player): String {
+        if (player.state.isFinished()) {
             return FINISHED_SIGN
         }
-        return InputView.inputCardSign(blackjackGame.player)
+        return InputView.inputCardSign(player)
     }
 }
