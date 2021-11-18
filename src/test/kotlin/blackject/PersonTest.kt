@@ -5,56 +5,63 @@ import blackject.model.Rule
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
-import org.assertj.core.api.Assertions.assertThat
+import blackject.model.card.Cards
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class PersonTest {
-
     @Test
-    @DisplayName("참가자 카드의 총합 구하는 메소드 확인")
-    fun `check total card number`() {
-        val cards = listOf(
-            Card(CardType.CLOVER, CardNumber.SEVEN),
-            Card(CardType.CLOVER, CardNumber.TWO),
-            Card(CardType.CLOVER, CardNumber.THREE)
+    @DisplayName("참가자의 카드 총합이 21을 넘지 않은 경우 카드를 더 뽑을 수 있는지 확인")
+    fun `check if take more card when person has less than 21`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(CardType.CLOVER, CardNumber.SEVEN),
+                Card(CardType.CLOVER, CardNumber.TWO),
+                Card(CardType.CLOVER, CardNumber.THREE)
+            )
         )
-        val expectedValue = 12
+        val person = Person(name = "이소현", cards = cards)
+        val expectedValue = true
 
-        val total = Person.getTotalCount(cards)
+        val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
 
-        assertThat(total).isEqualTo(expectedValue)
+        Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
 
     @Test
-    @DisplayName("참가자 카드의 총합이 21을 넘기는지 확인")
-    fun `check that exceed max number of total number`() {
-        val cards = listOf(
-            Card(CardType.CLOVER, CardNumber.SEVEN),
-            Card(CardType.CLOVER, CardNumber.TWO),
-            Card(CardType.CLOVER, CardNumber.THREE)
+    @DisplayName("참가자의 카드 총합이 21을 넘는 경우 카드를 더 뽑을 수 있는지 확인")
+    fun `check if take more card when person has more than 21`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(CardType.CLOVER, CardNumber.EIGHT),
+                Card(CardType.CLOVER, CardNumber.SEVEN),
+                Card(CardType.CLOVER, CardNumber.TWO),
+                Card(CardType.CLOVER, CardNumber.JACK)
+            )
         )
+        val person = Person(name = "이소현", cards = cards)
         val expectedValue = false
 
-        val total = Person.getTotalCount(cards)
-        val isExceed = Person.exceedMaximumCardNumber(Rule.MAX_TOTAL_NUMBER, total)
+        val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
 
-        assertThat(isExceed).isEqualTo(expectedValue)
+        Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
 
     @Test
-    @DisplayName("게임이 끝난 후 최종 결과 숫자 확인")
-    fun `check result number of game`() {
-        val cards = mutableListOf(
-            Card(CardType.CLOVER, CardNumber.SEVEN),
-            Card(CardType.CLOVER, CardNumber.TWO),
-            Card(CardType.CLOVER, CardNumber.ACE),
+    @DisplayName("참가자의 카드 총합이 21인 경우 카드를 더 뽑을 수 있는지 확인")
+    fun `check if take more card when person has 21`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(CardType.CLOVER, CardNumber.JACK),
+                Card(CardType.CLOVER, CardNumber.ACE),
+            )
         )
-        val expectedValue = 20
+        val person = Person(name = "이소현", cards = cards)
+        val expectedValue = false
 
-        val person = Person(name = "test", _cardList = cards)
-        val total = person.getResultNumber(Rule.MAX_TOTAL_NUMBER)
+        val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
 
-        assertThat(total).isEqualTo(expectedValue)
+        Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
 }
