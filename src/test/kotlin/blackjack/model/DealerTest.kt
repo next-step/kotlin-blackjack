@@ -26,4 +26,13 @@ class DealerTest {
                 .cards
         ).isEqualTo(Cards(listOf(Card(Denomination.ACE, Suit.HEART))))
     }
+
+    @Test
+    fun `딜러는 카드들의 합이 16이하면 카드를 더 받을 수 있다`() {
+        assertThat(
+            dealer
+                .receive(Card(Denomination.TEN, Suit.HEART))
+                .canReceive
+        ).isTrue
+    }
 }
