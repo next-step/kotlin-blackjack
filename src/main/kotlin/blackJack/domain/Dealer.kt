@@ -1,6 +1,6 @@
 package blackJack.domain
 
-class Dealer : GamePlayer(name = DEALER_NAME, type = GamePlayerType.DEALER) {
+class Dealer : GamePlayer(name = DEALER_NAME) {
 
     override fun getAbleReceivedCard(): Boolean = getScore() < ABLE_MAXIMUM_SUM
 

@@ -3,7 +3,6 @@ package blackJack.domain
 open class GamePlayer(
     val name: String,
     var status: PlayerStatus = PlayerStatus.of(),
-    private val type: GamePlayerType
 ) {
 
     fun receiveCard(card: Card) {
@@ -14,7 +13,7 @@ open class GamePlayer(
         status = status.changeContinueStatus(false)
     }
 
-    fun isDealer(): Boolean = type == GamePlayerType.DEALER
+    fun isDealer(): Boolean = this is Dealer
 
     open fun getAbleReceivedCard(): Boolean = status.ableGetACard()
 
