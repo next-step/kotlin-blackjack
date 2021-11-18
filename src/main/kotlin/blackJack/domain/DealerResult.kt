@@ -10,11 +10,11 @@ class DealerResult(
         fun winOrLose(playerResults: PlayerResults): DealerResult =
             playerResults.toList().groupingBy {
                 it.winDrawLose
-            }.eachCount().let {
+            }.eachCount().run {
                 DealerResult(
-                    it[WinDrawLose.LOSE] ?: 0,
-                    it[WinDrawLose.WIN] ?: 0,
-                    it[WinDrawLose.DRAW] ?: 0,
+                    this[WinDrawLose.LOSE] ?: 0,
+                    this[WinDrawLose.WIN] ?: 0,
+                    this[WinDrawLose.DRAW] ?: 0,
                 )
             }
     }
