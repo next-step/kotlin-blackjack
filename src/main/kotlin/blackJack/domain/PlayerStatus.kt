@@ -10,7 +10,10 @@ interface PlayerStatus {
     fun receiveCard(isContinue: Boolean = true, drawCard: () -> Card)
 }
 
-class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: PlayerDecision = Hit()) : PlayerStatus {
+class PlayerStatusImpl(
+    private var _cards: Cards,
+    private var _decisionStatus: PlayerDecision = Hit(),
+) : PlayerStatus {
 
     val cards: Cards
         get() = _cards
@@ -26,16 +29,16 @@ class PlayerStatusImpl(private var _cards: Cards, private var _decisionStatus: P
 
     override fun isBustPlayer(): Boolean = _decisionStatus is Bust
 
-    override fun getScore() = _cards.sumCards()
+    override fun getScore(): Int = _cards.sumCards(_cards.sumCards())
 
     override fun noReceiveCard() {
-        this._decisionStatus = PlayerDecision.changeDecision(_cards, false)
+        this._decisionStatus = PlayerDecision.changeDecision(getScore(), false)
     }
 
     override fun receiveCard(isContinue: Boolean, drawCard: () -> Card) {
         if (isContinue) {
             this._cards += drawCard.invoke()
-            this._decisionStatus = PlayerDecision.changeDecision(_cards)
+            this._decisionStatus = PlayerDecision.changeDecision(getScore())
         } else {
             noReceiveCard()
         }

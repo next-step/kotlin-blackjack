@@ -13,7 +13,7 @@ class ResultsTest {
                 listOf(
                     Player.of("flamme").apply {
                         this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
+                            Card(Suit.HEARTS, Denomination.ACE)
                         }
                         this.receiveCard() {
                             Card(Suit.SPADES, Denomination.KING)
@@ -29,7 +29,7 @@ class ResultsTest {
                     },
                     Player.of("chacha").apply {
                         this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
+                            Card(Suit.HEARTS, Denomination.NINE)
                         }
                         this.receiveCard() {
                             Card(Suit.SPADES, Denomination.KING)
@@ -37,7 +37,7 @@ class ResultsTest {
                     },
                     Dealer().apply {
                         this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
+                            Card(Suit.HEARTS, Denomination.NINE)
                         }
                         this.receiveCard() {
                             Card(Suit.SPADES, Denomination.KING)

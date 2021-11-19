@@ -18,18 +18,17 @@ class GamePlayersDto(private val players: List<PlayerDto>) : List<PlayerDto> by 
     }
 }
 
-class PlayerDto(val name: String, val cards: String, val score: Int, val isDealer: Boolean) {
+class PlayerDto(val name: String, val cards: String, val score: Int) {
 
     companion object {
         fun of(player: GamePlayer): PlayerDto {
             val name = player.name
             val cards = player.status.cards.joinToString {
-                "${it.denomination.score}${it.suit}"
+                "${it.denomination.score(player.getScore())}${it.suit}"
             }
             val score = player.getScore()
-            val isDealer = player.isPlayer()
 
-            return PlayerDto(name, cards, score, isDealer)
+            return PlayerDto(name, cards, score)
         }
     }
 }

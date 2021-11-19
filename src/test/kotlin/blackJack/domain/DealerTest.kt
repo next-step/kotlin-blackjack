@@ -48,11 +48,11 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러는 17이하이면 카드를 뽑을 수 없다`() {
+    fun `딜러는 17이하이면 카드를 뽑을 수 있다`() {
         // given
         val dealer = Dealer()
         dealer.receiveCard() {
-            Card(Suit.HEARTS, Denomination.ACE)
+            Card(Suit.HEARTS, Denomination.TWO)
         }
         dealer.receiveCard() {
             Card(Suit.SPADES, Denomination.KING)

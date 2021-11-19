@@ -10,7 +10,7 @@ class PlayerResultTest {
         // given
         val player = Player.of("김형준").apply {
             this.receiveCard() {
-                Card(Suit.HEARTS, Denomination.TWO)
+                Card(Suit.HEARTS, Denomination.ACE)
             }
             this.receiveCard() {
                 Card(Suit.SPADES, Denomination.KING)
@@ -18,7 +18,7 @@ class PlayerResultTest {
         }
         val dealer = Dealer().apply {
             this.receiveCard() {
-                Card(Suit.HEARTS, Denomination.ACE)
+                Card(Suit.HEARTS, Denomination.TWO)
             }
             this.receiveCard() {
                 Card(Suit.SPADES, Denomination.KING)
@@ -143,7 +143,7 @@ class PlayerResultTest {
         // given
         val player = Player.of("김형준").apply {
             this.receiveCard() {
-                Card(Suit.HEARTS, Denomination.ACE)
+                Card(Suit.HEARTS, Denomination.TWO)
             }
             this.receiveCard() {
                 Card(Suit.SPADES, Denomination.KING)
@@ -151,7 +151,7 @@ class PlayerResultTest {
         }
         val dealer = Dealer().apply {
             this.receiveCard() {
-                Card(Suit.HEARTS, Denomination.TWO)
+                Card(Suit.HEARTS, Denomination.ACE)
             }
             this.receiveCard() {
                 Card(Suit.SPADES, Denomination.KING)

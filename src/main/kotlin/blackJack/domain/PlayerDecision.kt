@@ -4,12 +4,12 @@ interface PlayerDecision {
     fun isContinue(): Boolean
 
     companion object {
-        fun changeDecision(cards: Cards, isContinue: Boolean = true): PlayerDecision {
+        fun changeDecision(score: Int, isContinue: Boolean = true): PlayerDecision {
             if (!isContinue) {
                 return Stay()
             }
 
-            return when (cards.sumCards()) {
+            return when (score) {
                 in MIN_NUMBER..MAX_NUMBER -> Hit()
                 BLACKJACK -> BlackJack()
                 else -> Bust()

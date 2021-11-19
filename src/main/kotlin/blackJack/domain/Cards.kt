@@ -15,7 +15,9 @@ class Cards(private val cards: List<Card>) : List<Card> by cards {
         require(card !in cards) { DUPLICATE_ERROR }
     }
 
-    fun sumCards() = cards.sumOf { it.denomination.score }
+    fun sumCards(sum: Int = 0): Int {
+        return cards.sumOf { it.denomination.score(sum) }
+    }
 
     fun drawRandomCard() = cards.random()
 

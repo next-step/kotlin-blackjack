@@ -49,7 +49,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어의 현재 점수는 11점이다`() {
+    fun `플레이어의 현재 점수는 21점이다`() {
         // given
         val player = Player.of("김형준")
         player.receiveCard() {
@@ -63,7 +63,7 @@ class PlayerTest {
         val currentScore = player.getScore()
 
         // then
-        assertThat(currentScore).isEqualTo(11)
+        assertThat(currentScore).isEqualTo(21)
     }
 
     @Test
@@ -71,7 +71,7 @@ class PlayerTest {
         // given
         val player = Player.of("김형준")
         player.receiveCard() {
-            Card(Suit.HEARTS, Denomination.ACE)
+            Card(Suit.HEARTS, Denomination.KING)
         }
         player.receiveCard() {
             Card(Suit.SPADES, Denomination.KING)
@@ -121,9 +121,6 @@ class PlayerTest {
         player.receiveCard() {
             Card(Suit.SPADES, Denomination.KING)
         }
-        player.receiveCard() {
-            Card(Suit.DIAMONDS, Denomination.KING)
-        }
 
         // when
         val isContinue = player.getAbleReceivedCard()
@@ -134,6 +131,69 @@ class PlayerTest {
             assertThat(isBlackJack).isEqualTo(true)
             assertThat(isContinue).isEqualTo(false)
         })
+    }
+
+    @Test
+    fun `플레이어가 ACE와 KING을 가지고 있을때, ACE는 11로 적용되서 합은 21이다`() {
+        // given
+        val player = Player.of("김형준")
+        player.receiveCard() {
+            Card(Suit.HEARTS, Denomination.ACE)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.KING)
+        }
+
+        // when
+        val score = player.status.getScore()
+
+        // then
+        assertThat(score).isEqualTo(21)
+    }
+
+    @Test
+    fun `플레이어가 ACE 두개와 KING을 가지고 있을때, ACE는 1로 적용되서 합은 12이다`() {
+        // given
+        val player = Player.of("김형준")
+        player.receiveCard() {
+            Card(Suit.HEARTS, Denomination.ACE)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.ACE)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.KING)
+        }
+
+        // when
+        val score = player.status.getScore()
+
+        // then
+        assertThat(score).isEqualTo(12)
+    }
+
+    @Test
+    fun `플레이어가 ACE와 KING, QUEEN, NINE 가지고 있을때, ACE는 1로 적용되서 합은 30이다`() {
+        // given
+        val player = Player.of("김형준")
+        player.receiveCard() {
+            Card(Suit.HEARTS, Denomination.ACE)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.KING)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.QUEEN)
+        }
+        player.receiveCard() {
+            Card(Suit.SPADES, Denomination.NINE)
+        }
+
+        // when
+        val score = player.status.getScore()
+
+        // then
+        assertThat(score).isEqualTo(30)
     }
 
     @Test

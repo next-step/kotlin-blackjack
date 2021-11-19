@@ -1,17 +1,48 @@
 package blackJack.domain
 
-enum class Denomination(val score: Int) {
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10);
+enum class Denomination : CardScore {
+    ACE {
+        override fun score(sum: Int): Int =
+            if (sum > 21) {
+                1
+            } else {
+                11
+            }
+    },
+    TWO {
+        override fun score(sum: Int): Int = 2
+    },
+    THREE {
+        override fun score(sum: Int): Int = 3
+    },
+    FOUR {
+        override fun score(sum: Int): Int = 4
+    },
+    FIVE {
+        override fun score(sum: Int): Int = 5
+    },
+    SIX {
+        override fun score(sum: Int): Int = 6
+    },
+    SEVEN {
+        override fun score(sum: Int): Int = 7
+    },
+    EIGHT {
+        override fun score(sum: Int): Int = 8
+    },
+    NINE {
+        override fun score(sum: Int): Int = 9
+    },
+    TEN {
+        override fun score(sum: Int): Int = 10
+    },
+    JACK {
+        override fun score(sum: Int): Int = 10
+    },
+    QUEEN {
+        override fun score(sum: Int): Int = 10
+    },
+    KING {
+        override fun score(sum: Int): Int = 10
+    };
 }
