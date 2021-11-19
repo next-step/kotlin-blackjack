@@ -20,7 +20,9 @@ class GamePlayers(private val players: List<GamePlayer>) : List<GamePlayer> by p
         return if (n <= 0) {
             gamePlayer
         } else {
-            gamePlayer.receiveCard(playingCard.drawCard())
+            gamePlayer.receiveCard() {
+                playingCard.drawCard()
+            }
             factorial(n - 1, gamePlayer, playingCard)
         }
     }

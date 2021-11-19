@@ -12,20 +12,36 @@ class ResultsTest {
             GamePlayers(
                 listOf(
                     Player.of("flamme").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.THREE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.THREE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     },
                     Player.of("rain").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.TWO)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.EIGHT)
+                        }
                     },
                     Player.of("chacha").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.ACE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     },
                     Dealer().apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.ACE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     }
                 )
             )
@@ -49,24 +65,48 @@ class ResultsTest {
             GamePlayers(
                 listOf(
                     Player.of("flamme").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.THREE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.THREE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.EIGHT)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.SEVEN)
+                        }
                     },
                     Player.of("rain").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.TWO)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.EIGHT)
+                        }
                     },
                     Player.of("chacha").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.ACE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     },
                     Dealer().apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.SEVEN))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.ACE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.EIGHT)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.SEVEN)
+                        }
                     }
                 )
             )
@@ -90,16 +130,28 @@ class ResultsTest {
             GamePlayers(
                 listOf(
                     Player.of("flamme").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.THREE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.THREE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     },
                     Player.of("rain").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.EIGHT))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.TWO)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.EIGHT)
+                        }
                     },
                     Player.of("chacha").apply {
-                        this.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-                        this.receiveCard(Card(Suit.SPADES, Denomination.KING))
+                        this.receiveCard() {
+                            Card(Suit.HEARTS, Denomination.ACE)
+                        }
+                        this.receiveCard() {
+                            Card(Suit.SPADES, Denomination.KING)
+                        }
                     }
                 )
             )

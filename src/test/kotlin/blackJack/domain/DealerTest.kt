@@ -33,8 +33,12 @@ class DealerTest {
     fun `딜러는 17이상이면 카드를 뽑을 수 없다`() {
         // given
         val dealer = Dealer()
-        dealer.receiveCard(Card(Suit.HEARTS, Denomination.SEVEN))
-        dealer.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        dealer.receiveCard() {
+            Card(Suit.HEARTS, Denomination.SEVEN)
+        }
+        dealer.receiveCard() {
+            Card(Suit.SPADES, Denomination.KING)
+        }
 
         // when
         val ableReceivedCard = dealer.getAbleReceivedCard()
@@ -47,8 +51,12 @@ class DealerTest {
     fun `딜러는 17이하이면 카드를 뽑을 수 없다`() {
         // given
         val dealer = Dealer()
-        dealer.receiveCard(Card(Suit.HEARTS, Denomination.ACE))
-        dealer.receiveCard(Card(Suit.SPADES, Denomination.KING))
+        dealer.receiveCard() {
+            Card(Suit.HEARTS, Denomination.ACE)
+        }
+        dealer.receiveCard() {
+            Card(Suit.SPADES, Denomination.KING)
+        }
 
         // when
         val ableReceivedCard = dealer.getAbleReceivedCard()

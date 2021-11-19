@@ -35,14 +35,18 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     private fun continuousPlayerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
         while (player.getAbleReceivedCard()) {
             val isContinue = inputView.doYouWantCardView(PlayerDto.of(player))
-            player.receiveCard(playingCard.drawCard(), isContinue)
+            player.receiveCard(isContinue) {
+                playingCard.drawCard()
+            }
             resultView.receiveCard(PlayerDto.of(player), isContinue)
         }
     }
 
     private fun continuousDealerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
         val isContinue = player.getAbleReceivedCard()
-        player.receiveCard(playingCard.drawCard(), isContinue)
+        player.receiveCard(isContinue) {
+            playingCard.drawCard()
+        }
         resultView.receiveCardToDealer(PlayerDto.of(player), isContinue)
     }
 
