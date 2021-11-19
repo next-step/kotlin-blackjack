@@ -12,7 +12,10 @@ data class Person(
     val name: String,
     val cards: Cards = Cards()
 ) {
-    fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
+    fun isTakeMoreCard(maxInt: Int, dealerMaxNumber: Int, exceptCard: CardNumber): Boolean {
+        if (type == PersonType.DEALER) {
+            return dealerMaxNumber >= cards.getResultNumber(maxInt, exceptCard)
+        }
         return maxInt > cards.getResultNumber(maxInt, exceptCard)
     }
 

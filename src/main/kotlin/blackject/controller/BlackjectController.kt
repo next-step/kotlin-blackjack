@@ -2,6 +2,7 @@ package blackject.controller
 
 import blackject.model.Participant
 import blackject.model.Person
+import blackject.model.PersonType
 import blackject.model.Rule
 import blackject.model.card.CardsDeck
 import blackject.view.InputView
@@ -12,20 +13,11 @@ class BlackjectController(
     private val cardsDeck: CardsDeck
 ) {
     fun start() {
-        val persons = createGame()
-
-        persons
-            .forEach {
-                giveCard(it, CardsDeck.NUMBER_INIT_CARD)
-                OutputView.printCardListOfPerson(it)
-            }
-        persons
-            .forEach {
-                if (!it.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
-                askMoreCard(InputView.inputAnswerMoreCard(it.name), it)
-            }
-        persons
-            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
+        createGame().let {
+            printCardListOfPerson(it)
+            giveMoreCard(it)
+            printResult(it)
+        }
     }
 
     private fun createGame(): List<Person> {
@@ -34,9 +26,39 @@ class BlackjectController(
         return persons
     }
 
+    private fun printCardListOfPerson(persons: List<Person>) {
+        persons
+            .forEach {
+                giveCard(it, CardsDeck.NUMBER_INIT_CARD)
+                OutputView.printCardListOfPerson(it)
+            }
+        println()
+    }
+
+    private fun giveMoreCard(persons: List<Person>) {
+        persons
+            .forEach {
+                if (!it.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.MAX_NUMBER_DEALER, rule.EXCEPT_NUMBER)) return
+                if (it.type == PersonType.DEALER) {
+                    giveCard(it, CardsDeck.NUMBER_ONE_TIME)
+                    OutputView.printAddedDealerCard(rule.MAX_NUMBER_DEALER)
+                    return@forEach
+                }
+                askMoreCard(InputView.inputAnswerMoreCard(it.name), it)
+            }
+        println()
+    }
+
+    private fun printResult(persons: List<Person>) {
+        println()
+        persons
+            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
+    }
+
     private fun getParticipant(): List<Person> {
-        val names = InputView.inputParticipants()
-        return Participant.addPerson(names).persons
+        InputView.inputParticipants().let {
+            return Participant.addPerson(it).persons
+        }
     }
 
     private fun giveCard(person: Person, cardCount: Int) {
@@ -47,7 +69,7 @@ class BlackjectController(
         if (!isAnswerYes(answer)) return
         giveCard(person, CardsDeck.NUMBER_ONE_TIME)
         OutputView.printCardListOfPerson(person)
-        if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
+        if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.MAX_NUMBER_DEALER, rule.EXCEPT_NUMBER)) return
         askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
     }
 
