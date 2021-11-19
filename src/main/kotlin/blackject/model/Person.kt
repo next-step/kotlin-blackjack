@@ -1,5 +1,6 @@
 package blackject.model
 
+import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.Cards
 
@@ -12,5 +13,9 @@ data class Person(
 ) {
     fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
         return maxInt > cards.getResultNumber(maxInt, exceptCard)
+    }
+
+    fun giveCard(newCards: List<Card>) {
+        cards.addCard(newCards)
     }
 }

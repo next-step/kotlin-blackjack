@@ -40,7 +40,7 @@ class BlackjectController(
     }
 
     private fun giveCard(person: Person, cardCount: Int) {
-        person.cards.addCard(CardsDeck.takeCard(cardCount))
+        person.giveCard(CardsDeck.takeCard(cardCount))
     }
 
     private fun askMoreCard(answer: String?, person: Person) {
