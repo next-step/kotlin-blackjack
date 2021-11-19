@@ -8,6 +8,7 @@ import blackject.model.card.Cards
  * 참가자 정보 관리 클래스
  * */
 data class Person(
+    val type: PersonType,
     val name: String,
     val cards: Cards = Cards()
 ) {
