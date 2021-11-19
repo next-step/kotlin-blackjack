@@ -44,15 +44,11 @@ class BlackjectController(
     }
 
     private fun askMoreCard(answer: String?, person: Person) {
-        when (isAnswerYes(answer)) {
-            true -> {
-                giveCard(person, CardsDeck.NUMBER_ONE_TIME)
-                OutputView.printCardListOfPerson(person)
-                if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
-                askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
-            }
-            else -> return
-        }
+        if (!isAnswerYes(answer)) return
+        giveCard(person, CardsDeck.NUMBER_ONE_TIME)
+        OutputView.printCardListOfPerson(person)
+        if (!person.isTakeMoreCard(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) return
+        askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
     }
 
     companion object {
