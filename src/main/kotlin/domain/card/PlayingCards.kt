@@ -3,7 +3,7 @@ package domain.card
 class PlayingCards(cards: List<PlayingCard>) : List<PlayingCard> by cards {
     constructor(cardGenerator: CardGenerator) : this((1..START_SIZE).map { cardGenerator.getCard() })
 
-    private val cards = cards
+    private val cards = cards.toList()
     operator fun plus(card: PlayingCard) = PlayingCards(this.cards + listOf(card))
     fun state(): CardState = when (score()) {
         BLACKJACK_NUMBER -> CardState.FINISHED

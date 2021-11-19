@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 internal class HitTest {
     private val cardList = listOf(
@@ -26,10 +28,11 @@ internal class HitTest {
     }
 
     @DisplayName("Hit 상태에서는 earningRate 를 알 수 없다.")
-    @Test
-    fun illegalEarning() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun illegalEarning(win: Boolean) {
         Assertions.assertThatExceptionOfType(IllegalEarningRate::class.java)
-            .isThrownBy { hit.earningRate() }
+            .isThrownBy { hit.earningRate(win) }
     }
 
     @DisplayName("Hit 상태에서 score 는 카드 번호의 합이다.")
@@ -45,7 +48,7 @@ internal class HitTest {
     fun stay() {
         val state = hit.stay()
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo(1.0) },
+            { assertThat(state.earningRate(true)).isEqualTo(1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }
@@ -55,7 +58,7 @@ internal class HitTest {
     fun bust() {
         val state = hit.draw(PlayingCard.of(Denomination.TEN, Suit.DIAMONDS))
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo(-1.0) },
+            { assertThat(state.earningRate(true)).isEqualTo(-1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }
@@ -65,7 +68,7 @@ internal class HitTest {
     fun finished() {
         val state = hit.draw(PlayingCard.of(Denomination.NINE, Suit.DIAMONDS))
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo(1.0) },
+            { assertThat(state.earningRate(true)).isEqualTo(1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }

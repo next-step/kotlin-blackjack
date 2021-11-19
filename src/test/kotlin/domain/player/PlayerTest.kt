@@ -128,34 +128,82 @@ internal class PlayerTest {
     @DisplayName("딜러보다 Score 가 높으면 이긴다.")
     @Test
     fun win() {
+        player.play(false, cardGenerator)
         val dealerCards = listOf(
             PlayingCard.of(Denomination.TWO, Suit.CLUBS),
             PlayingCard.of(Denomination.THREE, Suit.HEARTS)
         )
         val dealer = Dealer(PlayingCards(dealerCards))
-        assertThat(player.win(dealer)).isTrue
+        assertAll(
+            { assertThat(player.win(dealer)).isTrue },
+            { assertThat(player.profit(dealer)).isEqualTo(money * 1.0) }
+        )
     }
 
     @DisplayName("딜러보다 Score 가 낮으면 진다.")
     @Test
     fun lose() {
+        player.play(false, cardGenerator)
         val dealerCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.KING, Suit.HEARTS)
         )
         val dealer = Dealer(PlayingCards(dealerCards))
-        assertThat(player.win(dealer)).isFalse
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(money * -1.0) }
+        )
     }
 
     @DisplayName("딜러와 Score 가 같으면 진다.")
     @Test
     fun sameScore() {
+        player.play(false, cardGenerator)
         val dealerCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.ACE, Suit.HEARTS)
         )
         val dealer = Dealer(PlayingCards(dealerCards))
-        assertThat(player.win(dealer)).isFalse
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(money * -1.0) }
+        )
+    }
+
+    @DisplayName("블랙잭이 나와서 딜러를 이기면 1.5배의 수익을 얻는다.")
+    @Test
+    fun blackjack() {
+        player.play(false, cardGenerator)
+        val blackjackCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS)
+        )
+        val player = Player(info, PlayingCards(blackjackCards))
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isTrue },
+            { assertThat(player.profit(dealer)).isEqualTo(money * 1.5) }
+        )
+    }
+
+    @DisplayName("딜러와 플레이어가 동시에 블랙잭이 나오면, 플레이어는 금액을 돌려받는다.")
+    @Test
+    fun sameBlackjack() {
+        player.play(false, cardGenerator)
+        val blackjackCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val player = Player(info, PlayingCards(blackjackCards))
+        val dealer = Dealer(PlayingCards(blackjackCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(0.0) }
+        )
     }
 
     companion object {

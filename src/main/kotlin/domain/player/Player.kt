@@ -14,7 +14,8 @@ open class Player private constructor(private val playerInfo: PlayerInfo, privat
     fun cards(): PlayingCards = playerState.cards
     fun isFinished(): Boolean = playerState.isFinished()
     fun score(): Int = playerState.score()
-    fun win(other: Player): Boolean = score() > other.score()
+    fun win(dealer: Player): Boolean = score() > dealer.score()
+    fun profit(dealer: Player): Double = playerInfo.bet() * playerState.earningRate(win(dealer))
 
     fun play(draw: Boolean, cardGenerator: CardGenerator) {
         if (isFinished()) {

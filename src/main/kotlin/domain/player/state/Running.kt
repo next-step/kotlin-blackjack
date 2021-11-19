@@ -8,7 +8,7 @@ sealed class Running(cards: PlayingCards) : PlayerState(cards) {
     fun cardState(): CardState = cards.state()
     override fun isFinished(): Boolean = false
 
-    override fun earningRate(): Double {
+    override fun earningRate(win: Boolean): Double {
         throw IllegalEarningRate()
     }
 

@@ -9,6 +9,7 @@ import domain.player.PlayerName
 import domain.player.Players
 import dto.PlayerDto
 import dto.PlayersDto
+import dto.ResultDto
 import view.InputView
 import view.OutputView
 
@@ -30,14 +31,14 @@ class BlackjackController {
         return Players(playerInfos.map { Player(it, cardGenerator) })
     }
 
-    private fun printStarted(players: Players) = OutputView.printStarted(PlayersDto.from(players + dealer))
-    private fun printResult(players: Players) = OutputView.printResult(PlayersDto.from(players + dealer))
+    private fun printStarted(players: Players) = OutputView.printStarted(PlayersDto(players + dealer))
+    private fun printResult(players: Players) = OutputView.printResult(ResultDto(players, dealer))
 
     private fun play(player: Player) {
         while (!player.isFinished()) {
             val draw = InputView.askDraw(player.name())
             player.play(draw, cardGenerator)
-            OutputView.printPlayer(PlayerDto.from(player))
+            OutputView.printPlayer(PlayerDto(player))
         }
     }
 

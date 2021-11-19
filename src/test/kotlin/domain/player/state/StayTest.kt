@@ -19,11 +19,20 @@ internal class StayTest {
     )
     private val stay = Stay(Hit(PlayingCards(cardList)))
 
-    @DisplayName("Stay 의 earningRate 는 1이다.")
+    @DisplayName("승리시 Stay 의 earningRate 는 1이다.")
     @Test
-    fun earningRate() {
-        assertThat(stay.earningRate())
+    fun winEarningRate() {
+        val win = true
+        assertThat(stay.earningRate(win))
             .isEqualTo(1.0)
+    }
+
+    @DisplayName("패배시 Stay 의 earningRate 는 -1 이다.")
+    @Test
+    fun loseEarningRate() {
+        val win = false
+        assertThat(stay.earningRate(win))
+            .isEqualTo(-1.0)
     }
 
     @DisplayName("Stay 의 score 는 카드들의 숫자의 합이다.")

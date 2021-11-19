@@ -40,10 +40,11 @@ internal class StartedTest {
     }
 
     @DisplayName("Started 상태에서는 earningRate 를 알 수 없다.")
-    @Test
-    fun illegalEarning() {
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun illegalEarning(win: Boolean) {
         assertThatExceptionOfType(IllegalEarningRate::class.java)
-            .isThrownBy { started.earningRate() }
+            .isThrownBy { started.earningRate(win) }
     }
 
     @DisplayName("Started 상태에서 score 는 카드 번호의 합이다.")
