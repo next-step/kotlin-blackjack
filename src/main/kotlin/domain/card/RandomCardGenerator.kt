@@ -1,6 +1,6 @@
 package domain.card
 
 class RandomCardGenerator : CardGenerator {
-    private val cards = PlayingCard.createMutableList()
-    override fun getCard() = cards.removeAt(cards.indices.random())
+    private val cards: MutableList<PlayingCard> = PlayingCard.createMutableList()
+    override fun getCard(): PlayingCard = cards.removeAt(cards.indices.random())
 }

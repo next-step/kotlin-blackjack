@@ -22,7 +22,7 @@ class Started(cards: PlayingCards) : Running(cards) {
         throw IllegalDrawException("시작할 때는 draw 할 수 없습니다.")
     }
 
-    override fun nextState() = when (cardState()) {
+    override fun nextState(): PlayerState = when (cardState()) {
         CardState.FINISHED -> Blackjack(this)
         else -> Hit(this)
     }

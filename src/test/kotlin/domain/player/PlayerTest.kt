@@ -32,7 +32,7 @@ internal class PlayerTest {
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
         )
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse() },
             { assertThat(player.name()).isEqualTo(name) }
         )
@@ -48,7 +48,7 @@ internal class PlayerTest {
         )
         player.play(true, cardGenerator)
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse },
             { assertThat(player.name()).isEqualTo(name) }
         )
@@ -63,7 +63,7 @@ internal class PlayerTest {
         )
         player.play(false, cardGenerator)
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isTrue },
             { assertThat(player.name()).isEqualTo(name) }
         )
@@ -89,7 +89,7 @@ internal class PlayerTest {
     @DisplayName("stay 를 하지 않아도, score 가 21 점이 되면 finished 되어야 한다.")
     @Test
     fun finished() {
-        val cardList = listOf(
+        val expectedCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
             PlayingCard.of(Denomination.ACE, Suit.HEARTS),
@@ -108,7 +108,7 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.isFinished()).isTrue },
             { assertThat(cards.score()).isEqualTo(21) },
-            { assertThat(cards).isEqualTo(PlayingCards(cardList)) },
+            { assertThat(cards.toList()).isEqualTo(expectedCards) },
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(true, cardGenerator) }

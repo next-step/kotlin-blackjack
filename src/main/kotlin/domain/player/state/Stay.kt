@@ -1,6 +1,6 @@
 package domain.player.state
 
 class Stay(other: PlayerState) : Finished(other) {
-    override fun earningRate() = (1).toDouble()
-    override fun score() = cards.score()
+    override fun earningRate(): Double = (1).toDouble()
+    override fun score(): Int = cards.score()
 }

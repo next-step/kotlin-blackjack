@@ -15,14 +15,18 @@ class BlackjackController {
     private val cardGenerator = RandomCardGenerator()
 
     fun run() {
+        val dealer = Player(dealerInfo, PlayingCards(cardGenerator))
         val players = askPlayers()
-        printStarted(players)
+        printStarted(players + dealer)
         players.forEach { play(it) }
-        printResult(players)
+        printResult(players + dealer)
     }
 
-    private fun askPlayers() = Players(askPlayerInfos().map { Player(it, PlayingCards(cardGenerator)) })
-    private fun askPlayerInfos() = InputView.askPlayerNames().map { PlayerInfo(PlayerName(it)) }
+    private fun askPlayers(): Players {
+        val playerInfos = InputView.askPlayerNames().map { PlayerInfo(PlayerName(it)) }
+        return Players(playerInfos.map { Player(it, PlayingCards(cardGenerator)) })
+    }
+
     private fun printStarted(players: Players) = OutputView.printStarted(PlayersDto.from(players))
     private fun printResult(players: Players) = OutputView.printResult(PlayersDto.from(players))
 
@@ -32,5 +36,10 @@ class BlackjackController {
             player.play(draw, cardGenerator)
             OutputView.printPlayer(PlayerDto.from(player))
         }
+    }
+
+    companion object {
+        private const val DEALER_NAME = "딜러"
+        private val dealerInfo = PlayerInfo(PlayerName(DEALER_NAME))
     }
 }

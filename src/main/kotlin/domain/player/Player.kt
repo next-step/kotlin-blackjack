@@ -9,9 +9,9 @@ import exception.IllegalPlayException
 class Player private constructor(private val playerInfo: PlayerInfo, private var playerState: PlayerState) {
     constructor(playerInfo: PlayerInfo, cards: PlayingCards) : this(playerInfo, Started(cards).nextState())
 
-    fun name() = playerInfo.name()
-    fun cards() = playerState.cards
-    fun isFinished() = playerState.isFinished()
+    fun name(): String = playerInfo.name()
+    fun cards(): PlayingCards = playerState.cards
+    fun isFinished(): Boolean = playerState.isFinished()
 
     fun play(draw: Boolean, cardGenerator: CardGenerator) {
         if (isFinished()) {

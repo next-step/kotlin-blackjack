@@ -5,14 +5,14 @@ import exception.IllegalBetException
 @JvmInline
 value class BetAmount(val money: Int = DEFAULT_MONEY) {
     init {
-        if (money < 1) {
+        if (money < 0) {
             throw IllegalBetException()
         }
     }
 
-    operator fun times(earningRate: Double) = earningRate * money
+    operator fun times(earningRate: Double): Double = earningRate * money
 
     companion object {
-        private const val DEFAULT_MONEY = 1
+        private const val DEFAULT_MONEY = 0
     }
 }
