@@ -23,7 +23,7 @@ internal class StayTest {
     @Test
     fun earningRate() {
         assertThat(stay.earningRate())
-            .isEqualTo((1).toDouble())
+            .isEqualTo(1.0)
     }
 
     @DisplayName("Stay 의 score 는 카드들의 숫자의 합이다.")

@@ -5,7 +5,6 @@ import domain.card.PlayingCard
 import domain.card.PlayingCards
 import domain.card.Suit
 import exception.IllegalEarningRate
-import exception.IllegalScoreException
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -33,19 +32,20 @@ internal class HitTest {
             .isThrownBy { hit.earningRate() }
     }
 
-    @DisplayName("Hit 상태에서는 score 를 알 수 없다.")
+    @DisplayName("Hit 상태에서 score 는 카드 번호의 합이다.")
     @Test
-    fun illegalScore() {
-        Assertions.assertThatExceptionOfType(IllegalScoreException::class.java)
-            .isThrownBy { hit.score() }
+    fun score() {
+        val expectedScore = 12
+        assertThat(hit.score()).isEqualTo(expectedScore)
     }
+
 
     @DisplayName("Hit 에서 stay 하면 Stay 상태로 이동한다.")
     @Test
     fun stay() {
         val state = hit.stay()
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo((1).toDouble()) },
+            { assertThat(state.earningRate()).isEqualTo(1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }
@@ -55,7 +55,7 @@ internal class HitTest {
     fun bust() {
         val state = hit.draw(PlayingCard.of(Denomination.TEN, Suit.DIAMONDS))
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo((-1).toDouble()) },
+            { assertThat(state.earningRate()).isEqualTo(-1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }
@@ -65,7 +65,7 @@ internal class HitTest {
     fun finished() {
         val state = hit.draw(PlayingCard.of(Denomination.NINE, Suit.DIAMONDS))
         assertAll(
-            { assertThat(state.earningRate()).isEqualTo((1).toDouble()) },
+            { assertThat(state.earningRate()).isEqualTo(1.0) },
             { assertThat(state.isFinished()).isTrue }
         )
     }

@@ -21,7 +21,7 @@ internal class PlayerTest {
     @BeforeEach
     fun setUp() {
         cardGenerator = MockedCardGenerator()
-        player = Player(info, PlayingCards(cardGenerator))
+        player = Player(info, cardGenerator)
     }
 
     @DisplayName("초기에는 카드를 2장을 갖고, finished 상태가 아니어야야한다.")
@@ -34,7 +34,8 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse() },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
@@ -50,7 +51,8 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(13) }
         )
     }
 
@@ -65,7 +67,8 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isTrue },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
@@ -82,7 +85,8 @@ internal class PlayerTest {
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(false, cardGenerator) }
-            }
+            },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
@@ -116,8 +120,42 @@ internal class PlayerTest {
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(false, cardGenerator) }
-            }
+            },
+            { assertThat(player.score()).isEqualTo(21) }
         )
+    }
+
+    @DisplayName("딜러보다 Score 가 높으면 이긴다.")
+    @Test
+    fun win() {
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.TWO, Suit.CLUBS),
+            PlayingCard.of(Denomination.THREE, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertThat(player.win(dealer)).isTrue
+    }
+
+    @DisplayName("딜러보다 Score 가 낮으면 진다.")
+    @Test
+    fun lose() {
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertThat(player.win(dealer)).isFalse
+    }
+
+    @DisplayName("딜러와 Score 가 같으면 진다.")
+    @Test
+    fun sameScore() {
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertThat(player.win(dealer)).isFalse
     }
 
     companion object {

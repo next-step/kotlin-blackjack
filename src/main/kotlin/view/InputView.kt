@@ -12,6 +12,11 @@ object InputView {
         return readInput().lowercase() == YES
     }
 
+    fun askBetAmount(name: String): Int {
+        println("\n${name}의 배팅 금액은?")
+        return readInput().toInt()
+    }
+
     private fun readInput(): String {
         val input = readLine()
         require(!input.isNullOrBlank()) { "빈 값을 입력할 수는 없습니다." }

@@ -1,7 +1,8 @@
 package controller
 
-import domain.card.PlayingCards
 import domain.card.RandomCardGenerator
+import domain.player.BetAmount
+import domain.player.Dealer
 import domain.player.Player
 import domain.player.PlayerInfo
 import domain.player.PlayerName
@@ -13,22 +14,24 @@ import view.OutputView
 
 class BlackjackController {
     private val cardGenerator = RandomCardGenerator()
+    private val dealer = Dealer(cardGenerator)
 
     fun run() {
-        val dealer = Player(dealerInfo, PlayingCards(cardGenerator))
         val players = askPlayers()
-        printStarted(players + dealer)
+        printStarted(players)
         players.forEach { play(it) }
-        printResult(players + dealer)
+        playDealer()
+        printResult(players)
     }
 
     private fun askPlayers(): Players {
-        val playerInfos = InputView.askPlayerNames().map { PlayerInfo(PlayerName(it)) }
-        return Players(playerInfos.map { Player(it, PlayingCards(cardGenerator)) })
+        val playerInfos = InputView.askPlayerNames()
+            .map { PlayerInfo(PlayerName(it), BetAmount(InputView.askBetAmount(it))) }
+        return Players(playerInfos.map { Player(it, cardGenerator) })
     }
 
-    private fun printStarted(players: Players) = OutputView.printStarted(PlayersDto.from(players))
-    private fun printResult(players: Players) = OutputView.printResult(PlayersDto.from(players))
+    private fun printStarted(players: Players) = OutputView.printStarted(PlayersDto.from(players + dealer))
+    private fun printResult(players: Players) = OutputView.printResult(PlayersDto.from(players + dealer))
 
     private fun play(player: Player) {
         while (!player.isFinished()) {
@@ -38,8 +41,11 @@ class BlackjackController {
         }
     }
 
-    companion object {
-        private const val DEALER_NAME = "딜러"
-        private val dealerInfo = PlayerInfo(PlayerName(DEALER_NAME))
+    private fun playDealer() {
+        val drawable = dealer.isDrawable()
+        OutputView.printDealerMessage(drawable)
+        if (drawable) {
+            dealer.draw(cardGenerator)
+        }
     }
 }

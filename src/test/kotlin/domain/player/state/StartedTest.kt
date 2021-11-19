@@ -1,7 +1,14 @@
 package domain.player.state
 
-import domain.card.*
-import exception.*
+import domain.card.Denomination
+import domain.card.MockedCardGenerator
+import domain.card.PlayingCard
+import domain.card.PlayingCards
+import domain.card.Suit
+import exception.IllegalDrawException
+import exception.IllegalEarningRate
+import exception.IllegalPlayerStateException
+import exception.IllegalStayException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.BeforeEach
@@ -39,11 +46,11 @@ internal class StartedTest {
             .isThrownBy { started.earningRate() }
     }
 
-    @DisplayName("Started 상태에서는 score 를 알 수 없다.")
+    @DisplayName("Started 상태에서 score 는 카드 번호의 합이다.")
     @Test
-    fun illegalScore() {
-        assertThatExceptionOfType(IllegalScoreException::class.java)
-            .isThrownBy { started.score() }
+    fun score() {
+        val expectedScore = 20
+        assertThat(started.score()).isEqualTo(expectedScore)
     }
 
     @DisplayName("Started 상태에서는 stay 가 불가능하다.")
