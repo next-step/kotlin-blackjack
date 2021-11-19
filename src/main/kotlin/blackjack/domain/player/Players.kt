@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
+import blackjack.application.Game
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Turn
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
     return map {
@@ -14,8 +16,12 @@ data class Players(val players: List<Player>) : List<Player> by players {
         require(players.size >= MINIMUM_GAMER)
     }
 
-    fun receiveCardFromDeck(deck: Deck): Players {
-        return Players(players.map { it.receiveCard(deck.drawCard()) })
+    fun startInitPhase(deck: Deck): Players {
+        var initPhasedPlayers = players
+        repeat(INIT_RECEIVE_CARD_COUNT) {
+            initPhasedPlayers = receiveCardFromDeck(initPhasedPlayers, deck)
+        }
+        return Players(initPhasedPlayers)
     }
 
     fun isAllPlayerTurnOff(): Boolean {
@@ -31,24 +37,43 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(updated.toList())
     }
 
-    fun receiveCards(player: Player, deck: Deck): PlayerResults {
-        val updatedPlayer = player.receiveCard(deck.drawCard())
-        return PlayerResults(updatePlayerStatus(player, updatedPlayer), updatedPlayer)
-    }
-
     fun endPlayerTurn(player: Player): Players {
         return Players(updatePlayerStatus(player, player.turnOff()))
+    }
+
+    fun receiveCards(deck: Deck, turn: Turn): Players {
+        var receivedCardPlayers = players.toList()
+        for (player in players) {
+            var target = player
+            while (turn.isPlayerTurnOff(target)) {
+                val result = receiveCard(target, deck)
+                receivedCardPlayers = result.players.copy()
+                target = result.player
+                Game.showPlayerResult(target)
+            }
+        }
+        return Players(receivedCardPlayers)
+    }
+
+    private fun receiveCardFromDeck(players: List<Player>, deck: Deck): Players {
+        return Players(players.map { it.receiveCard(deck.drawCard()) })
     }
 
     private fun updatePlayerStatus(before: Player, after: Player): Players {
         return Players(players.replace(after) { it == before })
     }
 
+    private fun receiveCard(player: Player, deck: Deck): PlayerResults {
+        val receivedCardPlayer = player.receiveCard(deck.drawCard())
+        return PlayerResults(updatePlayerStatus(player, receivedCardPlayer), receivedCardPlayer)
+    }
+
     companion object {
         private const val MINIMUM_GAMER = 2
+        private const val INIT_RECEIVE_CARD_COUNT = 2
 
         fun createGamers(names: Names): Players {
-            return Players(names.names.map { Gamer(it) })
+            return Players(names.names.map { Gamer(Profile(it)) })
         }
     }
 }

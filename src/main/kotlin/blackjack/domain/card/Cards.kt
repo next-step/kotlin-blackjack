@@ -16,14 +16,13 @@ data class Cards internal constructor(val cards: List<Card>) : List<Card> by car
     }
 
     fun getHighestPoint(): Int {
-        var totalPoint = 0
         if (!hasAce()) {
-            totalPoint = getTotalPoint()
+            return getTotalPoint()
         }
         if (hasAce() && getTotalPointWithAce() <= TARGET_GAME_POINT) {
-            totalPoint = getTotalPointWithAce()
+            return getTotalPointWithAce()
         }
-        return totalPoint
+        return 0
     }
 
     private fun getTotalPoint(): Int {
