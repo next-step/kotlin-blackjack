@@ -24,10 +24,4 @@ sealed class Gamer(val name: Name, val cards: Cards) {
     private fun hasNext(card: Card?): Boolean = card != null && canReceive() && !hasCard(card)
 
     private fun hasCard(card: Card): Boolean = card in cards
-
-    companion object {
-        fun player(name: Name, cards: Cards = Cards.empty()): Gamer = Player.from(name, cards)
-
-        fun dealer(name: Name, cards: Cards = Cards.empty()): Gamer = Dealer.from(name, cards)
-    }
 }

@@ -44,4 +44,49 @@ class PlayerTest {
                 .cards
         ).isEqualTo(Cards(cards))
     }
+
+    @Test
+    fun `점수가 21점보다 크면 패배한다`() {
+        val actual = result(
+            dealerScore = 20,
+            Card(Denomination.TEN, Suit.HEART),
+            Card(Denomination.TEN, Suit.CLOVER),
+            Card(Denomination.FIVE, Suit.CLOVER)
+        )
+        assertThat(actual).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `딜러 점수가 21점보다 크면 승리한다`() {
+        val actual = result(
+            dealerScore = 25,
+            Card(Denomination.TEN, Suit.HEART),
+            Card(Denomination.FIVE, Suit.CLOVER)
+        )
+        assertThat(actual).isEqualTo(Result.WIN)
+    }
+
+    @Test
+    fun `딜러보다 점수가 낮으면 패배한다`() {
+        val actual = result(
+            dealerScore = 20,
+            Card(Denomination.TEN, Suit.HEART),
+            Card(Denomination.FIVE, Suit.CLOVER)
+        )
+        assertThat(actual).isEqualTo(Result.LOSE)
+    }
+
+    @Test
+    fun `딜러와 점수가 같으면 비긴다`() {
+        val actual = result(
+            dealerScore = 15,
+            Card(Denomination.TEN, Suit.HEART),
+            Card(Denomination.FIVE, Suit.CLOVER)
+        )
+        assertThat(actual).isEqualTo(Result.PUSH)
+    }
+
+    private fun result(dealerScore: Int, vararg card: Card): Result = player
+        .copy(cards = Cards(card.toList()))
+        .result(dealerScore)
 }

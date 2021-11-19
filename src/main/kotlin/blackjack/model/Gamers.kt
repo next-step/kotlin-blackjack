@@ -7,8 +7,6 @@ value class Gamers private constructor(private val gamers: List<Gamer>) {
 
     fun dealer(): Dealer? = gamers.filterIsInstance<Dealer>().firstOrNull()
 
-    fun results(): List<GameResult> = GameResult.match(this)
-
     fun toList(): List<Gamer> = gamers
 
     fun receiveAll(

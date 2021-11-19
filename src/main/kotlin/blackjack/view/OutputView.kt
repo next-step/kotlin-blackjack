@@ -1,9 +1,12 @@
 package blackjack.view
 
 import blackjack.model.Dealer
-import blackjack.model.GameResult
 import blackjack.model.Gamer
 import blackjack.model.Gamers
+import blackjack.model.Result
+import blackjack.model.lose
+import blackjack.model.push
+import blackjack.model.win
 import blackjack.view.res.getString
 
 class OutputView {
@@ -31,13 +34,38 @@ class OutputView {
         if (newline) println()
     }
 
-    fun printResult(results: List<GameResult>) {
+    fun printResult(gamers: Gamers) {
+        val dealer = gamers.dealer() ?: return
+        val dealerScore = dealer.score
+        val players = gamers.players()
+        val playerResults = players.map { player -> player.result(dealerScore) }
+
+        // 딜러 카드
         println()
-        results.forEach { result ->
-            printCards(result.gamer, false)
-            println(" - 결과: ${result.gamer.score}")
+        printCards(dealer, false)
+        println(" - 결과: $dealerScore")
+
+        // 플레이어 카드
+        players.forEach { player ->
+            printCards(player, false)
+            println(" - 결과: ${player.score}")
         }
+
+        // 최종 결과
         println("\n## 최종 승패")
-        results.forEach { result -> println(getString(result)) }
+        println(getDealerResult(playerResults))
+        players.zip(playerResults) { player, result -> println("${player.name}: ${getString(result)}") }
+    }
+
+    private fun getDealerResult(playerResults: List<Result>): String = buildString {
+        val win = playerResults.lose()
+        val lose = playerResults.win()
+        val push = playerResults.push()
+
+        append("딜러:")
+        if (win > 0) append(" ${win}승")
+        if (lose > 0) append(" ${lose}패")
+        if (push > 0) append(" ${push}패")
+        appendLine()
     }
 }
