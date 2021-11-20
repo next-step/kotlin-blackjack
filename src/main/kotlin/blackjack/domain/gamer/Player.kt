@@ -8,7 +8,7 @@ import blackjack.domain.state.Stand
 import blackjack.domain.state.State
 import blackjack.exception.InvalidPlayerNameException
 
-class Player(
+class Player private constructor(
     override val name: String,
     override val state: State,
 ) : Gamer {
@@ -22,10 +22,10 @@ class Player(
         }
     }
 
-    override fun completeDeal(deck: Deck): Player {
+    override fun prepare(deck: Deck): Player {
         val completedFirstDraw = draw(deck, state)
-        val completedDeal = draw(deck, completedFirstDraw)
-        return Player(name, completedDeal)
+        val completedSecondDraw = draw(deck, completedFirstDraw)
+        return Player(name, completedSecondDraw)
     }
 
     override fun play(deck: Deck): Player {

@@ -12,15 +12,15 @@ class BlackjackController(
 ) {
     fun run() {
         val players = Players.from(InputView.inputPlayers())
-        val table = settingTable(players)
-        val blackjackResult = play(table)
+        val preparedPlayers = prepare(players)
+        val blackjackResult = play(preparedPlayers)
         OutputView.printBlackjackResult(blackjackResult)
     }
 
-    private fun settingTable(players: Players): List<Player> {
-        val completedSettingTable = players.settingTable(deck)
+    private fun prepare(players: Players): List<Player> {
+        val preparedPlayers = players.prepare(deck)
         OutputView.printStartGame(players)
-        return completedSettingTable
+        return preparedPlayers
     }
 
     private fun play(players: List<Player>): List<Player> {

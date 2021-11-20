@@ -15,7 +15,7 @@ interface Gamer {
 
     fun play(deck: Deck): Gamer
 
-    fun completeDeal(deck: Deck): Gamer
+    fun prepare(deck: Deck): Gamer
 
     fun haveCards(): String
 }

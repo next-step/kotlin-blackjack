@@ -43,8 +43,8 @@ class PlayersTest {
     }
 
     @Test
-    @DisplayName("n명의 플레이어의 테이블 설정을 완료한다")
-    fun `sut returns completed setting table`() {
+    @DisplayName("n명의 플레이어에게 카드 2장을 주고 블랙잭 준비를 완료한다")
+    fun `sut returns prepared players`() {
         // Arrange
         val tommy = Player.of("tommy", Cards())
         val pobi = Player.of("pobi", Cards())
@@ -55,11 +55,11 @@ class PlayersTest {
 
         // Act
         val sut = Players.from(players)
-        val completedSettingTable = sut.settingTable(deck)
+        val preparedPlayers = sut.prepare(deck)
 
         // Assert
-        assertThat(completedSettingTable).hasSize(3)
-        assertThat(completedSettingTable.first().cards.value).hasSize(2)
-        assertThat(completedSettingTable.last().cards.value).hasSize(2)
+        assertThat(preparedPlayers).hasSize(3)
+        assertThat(preparedPlayers.first().cards.value).hasSize(2)
+        assertThat(preparedPlayers.last().cards.value).hasSize(2)
     }
 }

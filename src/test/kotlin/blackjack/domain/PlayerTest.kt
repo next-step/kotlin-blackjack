@@ -38,18 +38,18 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Deal을 완료한다")
-    fun `sut returns completedDeal`() {
+    @DisplayName("플레이어가 카드 2장을 뽑고 준비를 완료한다")
+    fun `sut returns prepared`() {
         // Arrange
         val player = Player.of("tommy", Cards())
         val deck = Deck.init()
 
         // Act
-        val completedDeal = player.completeDeal(deck)
+        val preparedPlayer = player.prepare(deck)
 
         // Assert
-        assertThat(completedDeal.name).isEqualTo("tommy")
-        assertThat(completedDeal.cards.value).hasSize(2)
+        assertThat(preparedPlayer.name).isEqualTo("tommy")
+        assertThat(preparedPlayer.cards.value).hasSize(2)
     }
 
     @Test
@@ -58,7 +58,8 @@ class PlayerTest {
         // Arrange
         val player = Player.of("tommy", Cards())
         val deck = Deck.init()
-        val sut = player.completeDeal(deck)
+
+        val sut = player.prepare(deck)
 
         // Act
         val playResult = sut.play(deck)
