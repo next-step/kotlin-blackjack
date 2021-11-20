@@ -8,4 +8,8 @@ object Game {
     fun showPlayerResult(player: Player) {
         OutputView.printCards(player)
     }
+
+    fun showDealerCardReceived() {
+        OutputView.printDealerCardReceived()
+    }
 }

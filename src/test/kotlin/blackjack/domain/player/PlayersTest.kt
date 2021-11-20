@@ -23,7 +23,7 @@ internal class PlayersTest {
     fun `플레이어 이름을 입력받아 플레이어 목록을 생성할 수 있다`() {
         val givenNames = Names(setOf(Name("player1"), Name("player2")))
 
-        assertThat(Players.createGamers(givenNames)).isNotNull
+        assertThat(Players.createPlayers(givenNames)).isNotNull
     }
 
     @Test
@@ -83,5 +83,20 @@ internal class PlayersTest {
         val actual = updatedPlayers.players.find { it == givenGamer1 }
 
         assertThat(actual?.isBurst()).isFalse
+    }
+
+    @Test
+    fun `플레이어를 추가하면 추가된 플레이어 목록을 리턴한다`() {
+        val profile1 = Profile.from(Name("player1"))
+        val profile2 = Profile.from(Name("player2"))
+        val profile3 = Profile.from(Name("player2"))
+        val givenGamer1 = Gamer(profile1)
+        val givenGamer2 = Gamer(profile2)
+        val givenGamer3 = Gamer(profile3)
+        val players = Players(listOf(givenGamer1, givenGamer2))
+
+        val updatedPlayers = players.addPlayer(givenGamer3)
+
+        assertThat(updatedPlayers.players).hasSize(3)
     }
 }

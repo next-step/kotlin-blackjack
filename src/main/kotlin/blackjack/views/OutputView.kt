@@ -49,6 +49,11 @@ object OutputView {
         return Pair(playerName, cardResult)
     }
 
+    fun printDealerCardReceived() {
+        println(PRINT_DEALER_CARD_RECEIVED)
+    }
+
     private const val PRINT_CARD_INIT_PHASE = "에게 2장을 나누었습니다."
     private const val PRINT_POINT_RESULT = "- 결과:"
+    private const val PRINT_DEALER_CARD_RECEIVED = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 }

@@ -45,15 +45,29 @@ data class Players(val players: List<Player>) : List<Player> by players {
         var receivedCardPlayers = players.toList()
         for (player in players) {
             var target = player
-            while (turn.isPlayerTurnOff(target)) {
+            while (canGamerHit(target, turn)) {
                 val result = receiveCard(receivedCardPlayers, target, deck)
                 receivedCardPlayers = result.players.copy()
                 target = result.player
                 Game.showPlayerResult(target)
             }
+            if (canDealerHit(target)) {
+                val result = receiveCard(receivedCardPlayers, target, deck)
+                receivedCardPlayers = result.players.copy()
+                Game.showDealerCardReceived()
+            }
         }
         return Players(receivedCardPlayers)
     }
+
+    fun addPlayer(player: Player): Players {
+        return Players(players + player)
+    }
+
+    private fun canGamerHit(target: Player, turn: Turn) =
+        target is Gamer && turn.isPlayerTurnOff(target)
+
+    private fun canDealerHit(target: Player) = target is Dealer && target.canReceiveCard()
 
     private fun receiveCardFromDeck(players: List<Player>, deck: Deck): Players {
         return Players(players.map { it.receiveCard(deck.drawCard()) })
@@ -67,11 +81,6 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(players.replace(after) { it == before })
     }
 
-    private fun receiveCard(player: Player, deck: Deck): PlayerResults {
-        val receivedCardPlayer = player.receiveCard(deck.drawCard())
-        return PlayerResults(updatePlayerStatus(player, receivedCardPlayer), receivedCardPlayer)
-    }
-
     private fun receiveCard(players: List<Player>, player: Player, deck: Deck): PlayerResults {
         val receivedCardPlayer = player.receiveCard(deck.drawCard())
         return PlayerResults(updatePlayerStatus(players, player, receivedCardPlayer), receivedCardPlayer)
@@ -81,7 +90,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
         private const val MINIMUM_GAMER = 2
         private const val INIT_RECEIVE_CARD_COUNT = 2
 
-        fun createGamers(names: Names): Players {
+        fun createPlayers(names: Names): Players {
             return Players(names.names.map { Gamer(Profile(it)) })
         }
     }

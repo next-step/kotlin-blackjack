@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.card.Deck
 import blackjack.domain.game.Turn
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Names
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
@@ -10,14 +11,14 @@ import blackjack.views.OutputView
 
 class BlackjackController() {
 
-    var isPlayerTurnOff: Turn = object : Turn {
+    private var isPlayerTurnOff: Turn = object : Turn {
         override fun isPlayerTurnOff(player: Player): Boolean {
             return InputView.askGamerReceiveMoreCard(player) != PLAYER_TURN_OFF_INPUT
         }
     }
 
     fun start() {
-        val players = createGamer()
+        val players = createGamers()
         val deck = Deck()
         val afterInitPhased = players.startInitPhase(deck)
         OutputView.printInitPhase(afterInitPhased)
@@ -25,9 +26,11 @@ class BlackjackController() {
         OutputView.printPlayingPhase(playingPhasedPlayers)
     }
 
-    private fun createGamer(): Players {
+    private fun createGamers(): Players {
         val names = Names.generateNames(InputView.askGamerNames())
-        return Players.createGamers(names)
+        val players = Players.createPlayers(names)
+        val dealer = Dealer.of()
+        return players.addPlayer(dealer)
     }
 
     private fun playingPhase(deck: Deck, players: Players): Players {
