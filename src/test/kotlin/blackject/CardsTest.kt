@@ -1,6 +1,7 @@
 package blackject
 
 import blackject.model.Person
+import blackject.model.PersonType
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
@@ -19,9 +20,9 @@ class CardsTest {
             Card(CardType.CLOVER, CardNumber.TWO),
             Card(CardType.CLOVER, CardNumber.THREE)
         )
-        val person = Person(name = "이소현")
+        val person = Person(name = "이소현", type = PersonType.NORMAL)
 
-        person.cards.addCard(cards)
+        person.giveCard(cards)
 
         assertThat(person.cards.cardList.size).isEqualTo(3)
         assertThat(person.cards.cardList).isEqualTo(cards)
