@@ -46,7 +46,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
         for (player in players) {
             var target = player
             while (turn.isPlayerTurnOff(target)) {
-                val result = receiveCard(target, deck)
+                val result = receiveCard(receivedCardPlayers, target, deck)
                 receivedCardPlayers = result.players.copy()
                 target = result.player
                 Game.showPlayerResult(target)
@@ -63,9 +63,18 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(players.replace(after) { it == before })
     }
 
+    private fun updatePlayerStatus(players: List<Player>, before: Player, after: Player): Players {
+        return Players(players.replace(after) { it == before })
+    }
+
     private fun receiveCard(player: Player, deck: Deck): PlayerResults {
         val receivedCardPlayer = player.receiveCard(deck.drawCard())
         return PlayerResults(updatePlayerStatus(player, receivedCardPlayer), receivedCardPlayer)
+    }
+
+    private fun receiveCard(players: List<Player>, player: Player, deck: Deck): PlayerResults {
+        val receivedCardPlayer = player.receiveCard(deck.drawCard())
+        return PlayerResults(updatePlayerStatus(players, player, receivedCardPlayer), receivedCardPlayer)
     }
 
     companion object {

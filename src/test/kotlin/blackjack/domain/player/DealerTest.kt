@@ -4,17 +4,16 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-internal class GamerTest {
-
+internal class DealerTest {
     @Test
     fun `이름을 입력하여 게이머를 생성할 수 있다`() {
-        val givenName = Name("player1")
+        val givenName = Name("dealer")
         val actual = Gamer(Profile.from(givenName))
 
-        assertThat(actual).isNotNull
+        Assertions.assertThat(actual).isNotNull
     }
 
     @Test
@@ -25,7 +24,7 @@ internal class GamerTest {
 
         val actual = givenGamer.receiveCard(givenCard)
 
-        assertThat(actual.openCards()).contains(givenCard)
+        Assertions.assertThat(actual.openCards()).contains(givenCard)
     }
 
     @Test
@@ -35,7 +34,7 @@ internal class GamerTest {
 
         givenGamer.turnOff()
 
-        assertThat(givenGamer.isBurst()).isFalse
+        Assertions.assertThat(givenGamer.isBurst()).isFalse
     }
 
     @Test
@@ -45,7 +44,7 @@ internal class GamerTest {
 
         val actual = givenGamer.turnOn()
 
-        assertThat(actual.isBurst()).isTrue
+        Assertions.assertThat(actual.isBurst()).isTrue
     }
 
     @Test
@@ -55,6 +54,6 @@ internal class GamerTest {
         val givenCards = Cards.EMPTY
         val givenGamer = Gamer(Profile(givenName, givenStatus), givenCards)
 
-        assertThat(givenGamer.isBurst()).isTrue
+        Assertions.assertThat(givenGamer.isBurst()).isTrue
     }
 }

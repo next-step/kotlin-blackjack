@@ -8,15 +8,15 @@ data class Gamer(
     val cards: Cards = Cards.EMPTY
 ) : Player {
 
-    override fun receiveCard(card: Card): Gamer {
+    override fun receiveCard(card: Card): Player {
         return Gamer(profile, cards.addCards(card))
     }
 
-    override fun turnOff(): Gamer {
+    override fun turnOff(): Player {
         return Gamer(profile.turnOff(), cards)
     }
 
-    override fun turnOn(): Gamer {
+    override fun turnOn(): Player {
         return Gamer(profile.turnOn(), cards)
     }
 

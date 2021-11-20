@@ -15,8 +15,13 @@ data class Profile(val name: Name, val status: PlayerStatus = PlayerStatus.STOP)
     }
 
     companion object {
+        private const val DEALER_NAME = "딜러"
         fun from(name: Name): Profile {
             return Profile(name)
+        }
+
+        fun createDealer(): Profile {
+            return Profile(Name(DEALER_NAME))
         }
     }
 }

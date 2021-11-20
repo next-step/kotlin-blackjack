@@ -22,7 +22,7 @@ data class Cards internal constructor(val cards: List<Card>) : List<Card> by car
         if (hasAce() && getTotalPointWithAce() <= TARGET_GAME_POINT) {
             return getTotalPointWithAce()
         }
-        return 0
+        return getTotalPoint()
     }
 
     private fun getTotalPoint(): Int {
