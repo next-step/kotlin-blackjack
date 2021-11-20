@@ -11,7 +11,7 @@ class Participant(
         private const val DELIMITER_NAME = ","
         fun addPerson(name: String?): Participant {
             require(!name.isNullOrEmpty())
-            val list = mutableListOf(Person(type = PersonType.DEALER, name = PersonType.DEALER.personName)).apply {
+            val list = mutableListOf<Person>(Dealer()).apply {
                 addAll(
                     name
                         .split(DELIMITER_NAME)

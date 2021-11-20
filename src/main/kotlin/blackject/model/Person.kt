@@ -10,16 +10,23 @@ import blackject.model.card.Cards
 open class Person(
     val type: PersonType,
     val name: String,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    var result: ResultType? = null
 ) {
-    open fun isTakeMoreCard(maxInt: Int, dealerMaxNumber: Int, exceptCard: CardNumber): Boolean {
-        if (type == PersonType.DEALER) {
-            return dealerMaxNumber >= cards.getResultNumber(maxInt, exceptCard)
-        }
+
+    open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
+        return cards.getResultNumber(maxInt, exceptCard)
+    }
+
+    open fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
         return maxInt > cards.getResultNumber(maxInt, exceptCard)
     }
 
     open fun giveCard(newCards: List<Card>) {
         cards.addCard(newCards)
+    }
+
+    open fun setGameResult(result: ResultType) {
+        this.result = result
     }
 }

@@ -23,4 +23,12 @@ object OutputView {
             person.cards.getResultNumber(maxNumber, exceptCard = exceptCard)}"
         )
     }
+
+    fun gameWinDefeat(persons: List<Person>) {
+        println("\n## 최종 승패")
+        persons
+            .forEach {
+                println("${it.name}: ${it.result?.string}")
+            }
+    }
 }
