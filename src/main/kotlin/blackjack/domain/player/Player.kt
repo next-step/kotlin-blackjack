@@ -15,12 +15,12 @@ data class Player(
         get() = _name.name
 
     operator fun plus(extraCards: List<Card>): Player {
-        val plusedHands: Hands = hands + extraCards
-        val sumScore = plusedHands.score()
+        val changedHands = hands + extraCards
+        val sumScore = changedHands.score()
         if (sumScore.isOverMaximum()) {
-            return Player(_name, plusedHands, End)
+            return Player(_name, changedHands, End)
         }
-        return Player(_name, plusedHands, playingState)
+        return Player(_name, changedHands, playingState)
     }
 
     fun isFinished(): Boolean = playingState.isFinish()

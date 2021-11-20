@@ -4,7 +4,8 @@ import blackjack.domain.card.Deck
 import blackjack.strategy.assign.AssignCardStrategy
 import blackjack.strategy.split.SplitStrategy
 
-data class Players private constructor(val players: List<Player>) {
+@JvmInline
+value class Players private constructor(val players: List<Player>) {
 
     fun assignCards(deck: Deck, assignCardStrategy: AssignCardStrategy): Players =
         Players(players.map { player -> player + assignCardStrategy.assign(deck) })
