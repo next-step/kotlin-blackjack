@@ -9,6 +9,8 @@ import exception.IllegalStayException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 internal class BustTest {
     private val cardList = listOf(
@@ -19,10 +21,11 @@ internal class BustTest {
     private val bust = Bust(Hit(PlayingCards(cardList)))
 
     @DisplayName("Bust 의 earningRate 는 -1이다.")
-    @Test
-    fun earningRate() {
-        Assertions.assertThat(bust.earningRate())
-            .isEqualTo((-1).toDouble())
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun earningRate(win: Boolean) {
+        Assertions.assertThat(bust.earningRate(win))
+            .isEqualTo(-1.0)
     }
 
     @DisplayName("Bust 의 score 는 최저 점수이다.")

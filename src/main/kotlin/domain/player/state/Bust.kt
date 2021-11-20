@@ -1,6 +1,6 @@
 package domain.player.state
 
 class Bust(other: PlayerState) : Finished(other) {
-    override fun earningRate() = (-1).toDouble()
-    override fun score() = Int.MIN_VALUE
+    override fun earningRate(win: Boolean): Double = -1.0
+    override fun score(): Int = Int.MIN_VALUE
 }

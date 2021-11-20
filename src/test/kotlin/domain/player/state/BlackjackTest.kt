@@ -17,11 +17,20 @@ internal class BlackjackTest {
     )
     private val blackjack = Blackjack(Hit(PlayingCards(cardList)))
 
-    @DisplayName("Blackjack 의 earningRate 는 1.5이다.")
+    @DisplayName("승리시 Blackjack 의 earningRate 는 1.5이다.")
     @Test
-    fun earningRate() {
-        Assertions.assertThat(blackjack.earningRate())
+    fun winEarningRate() {
+        val win = true
+        Assertions.assertThat(blackjack.earningRate(win))
             .isEqualTo(1.5)
+    }
+
+    @DisplayName("패배시 Blackjack 의 earningRate 는 0이다.")
+    @Test
+    fun loseEarningRate() {
+        val win = false
+        Assertions.assertThat(blackjack.earningRate(win))
+            .isEqualTo(0.0)
     }
 
     @DisplayName("Blackjack 의 score 는 최대 점수이다.")

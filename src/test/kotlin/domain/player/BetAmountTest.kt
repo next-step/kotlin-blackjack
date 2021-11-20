@@ -22,6 +22,6 @@ internal class BetAmountTest {
     @Test
     fun times() {
         assertThat(BetAmount(1000) * 1.5)
-            .isEqualTo((1500).toDouble())
+            .isEqualTo(1500.0)
     }
 }

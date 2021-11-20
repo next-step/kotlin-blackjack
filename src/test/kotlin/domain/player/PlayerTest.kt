@@ -21,7 +21,7 @@ internal class PlayerTest {
     @BeforeEach
     fun setUp() {
         cardGenerator = MockedCardGenerator()
-        player = Player(info, PlayingCards(cardGenerator))
+        player = Player(info, cardGenerator)
     }
 
     @DisplayName("초기에는 카드를 2장을 갖고, finished 상태가 아니어야야한다.")
@@ -32,9 +32,10 @@ internal class PlayerTest {
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
         )
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse() },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
@@ -48,9 +49,10 @@ internal class PlayerTest {
         )
         player.play(true, cardGenerator)
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isFalse },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(13) }
         )
     }
 
@@ -63,9 +65,10 @@ internal class PlayerTest {
         )
         player.play(false, cardGenerator)
         assertAll(
-            { assertThat(player.cards()).isEqualTo(PlayingCards(expectedCards)) },
+            { assertThat(player.cards().toList()).isEqualTo(expectedCards) },
             { assertThat(player.isFinished()).isTrue },
-            { assertThat(player.name()).isEqualTo(name) }
+            { assertThat(player.name()).isEqualTo(name) },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
@@ -82,14 +85,15 @@ internal class PlayerTest {
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(false, cardGenerator) }
-            }
+            },
+            { assertThat(player.score()).isEqualTo(12) }
         )
     }
 
     @DisplayName("stay 를 하지 않아도, score 가 21 점이 되면 finished 되어야 한다.")
     @Test
     fun finished() {
-        val cardList = listOf(
+        val expectedCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
             PlayingCard.of(Denomination.ACE, Suit.HEARTS),
@@ -108,7 +112,7 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.isFinished()).isTrue },
             { assertThat(cards.score()).isEqualTo(21) },
-            { assertThat(cards).isEqualTo(PlayingCards(cardList)) },
+            { assertThat(cards.toList()).isEqualTo(expectedCards) },
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(true, cardGenerator) }
@@ -116,7 +120,89 @@ internal class PlayerTest {
             {
                 assertThatExceptionOfType(IllegalPlayException::class.java)
                     .isThrownBy { player.play(false, cardGenerator) }
-            }
+            },
+            { assertThat(player.score()).isEqualTo(21) }
+        )
+    }
+
+    @DisplayName("딜러보다 Score 가 높으면 이긴다.")
+    @Test
+    fun win() {
+        player.play(false, cardGenerator)
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.TWO, Suit.CLUBS),
+            PlayingCard.of(Denomination.THREE, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isTrue },
+            { assertThat(player.profit(dealer)).isEqualTo(money * 1.0) }
+        )
+    }
+
+    @DisplayName("딜러보다 Score 가 낮으면 진다.")
+    @Test
+    fun lose() {
+        player.play(false, cardGenerator)
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(money * -1.0) }
+        )
+    }
+
+    @DisplayName("딜러와 Score 가 같으면 진다.")
+    @Test
+    fun sameScore() {
+        player.play(false, cardGenerator)
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS)
+        )
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(money * -1.0) }
+        )
+    }
+
+    @DisplayName("블랙잭이 나와서 딜러를 이기면 1.5배의 수익을 얻는다.")
+    @Test
+    fun blackjack() {
+        player.play(false, cardGenerator)
+        val blackjackCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val dealerCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.ACE, Suit.HEARTS)
+        )
+        val player = Player(info, PlayingCards(blackjackCards))
+        val dealer = Dealer(PlayingCards(dealerCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isTrue },
+            { assertThat(player.profit(dealer)).isEqualTo(money * 1.5) }
+        )
+    }
+
+    @DisplayName("딜러와 플레이어가 동시에 블랙잭이 나오면, 플레이어는 금액을 돌려받는다.")
+    @Test
+    fun sameBlackjack() {
+        player.play(false, cardGenerator)
+        val blackjackCards = listOf(
+            PlayingCard.of(Denomination.ACE, Suit.CLUBS),
+            PlayingCard.of(Denomination.KING, Suit.HEARTS)
+        )
+        val player = Player(info, PlayingCards(blackjackCards))
+        val dealer = Dealer(PlayingCards(blackjackCards))
+        assertAll(
+            { assertThat(player.win(dealer)).isFalse },
+            { assertThat(player.profit(dealer)).isEqualTo(0.0) }
         )
     }
 
