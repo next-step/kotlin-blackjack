@@ -35,4 +35,12 @@ data class Gamer(
     override fun getHighestPoint(): Int {
         return cards.getHighestPoint()
     }
+
+    override fun canReceiveCard(): Boolean {
+        return getHighestPoint() <= CAN_ACHIEVE_POINT
+    }
+
+    companion object {
+        private const val CAN_ACHIEVE_POINT = 21
+    }
 }

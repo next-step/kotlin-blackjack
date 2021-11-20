@@ -17,4 +17,6 @@ interface Player {
     fun getPlayerName(): Name
 
     fun getHighestPoint(): Int
+
+    fun canReceiveCard(): Boolean
 }

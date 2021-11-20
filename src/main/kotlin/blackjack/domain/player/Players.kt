@@ -43,21 +43,32 @@ data class Players(val players: List<Player>) : List<Player> by players {
 
     fun receiveCards(deck: Deck, turn: Turn): Players {
         var receivedCardPlayers = players.toList()
-        for (player in players) {
-            var target = player
-            while (canGamerHit(target, turn)) {
-                val result = receiveCard(receivedCardPlayers, target, deck)
-                receivedCardPlayers = result.players.copy()
-                target = result.player
-                Game.showPlayerResult(target)
-            }
-            if (canDealerHit(target)) {
-                val result = receiveCard(receivedCardPlayers, target, deck)
-                receivedCardPlayers = result.players.copy()
-                Game.showDealerCardReceived()
-            }
+        players.forEach {
+            receivedCardPlayers = updateReceiveCards(it, turn, receivedCardPlayers, deck)
         }
         return Players(receivedCardPlayers)
+    }
+
+    private fun updateReceiveCards(
+        player: Player,
+        turn: Turn,
+        players: List<Player>,
+        deck: Deck
+    ): List<Player> {
+        var receivedCardPlayers = players
+        var target = player
+        while (canGamerHit(target, turn)) {
+            val result = receiveCard(receivedCardPlayers, target, deck)
+            receivedCardPlayers = result.players.copy()
+            target = result.player
+            Game.showPlayerResult(target)
+        }
+        if (canDealerHit(target)) {
+            val result = receiveCard(receivedCardPlayers, target, deck)
+            receivedCardPlayers = result.players.copy()
+            Game.showDealerCardReceived()
+        }
+        return receivedCardPlayers
     }
 
     fun addPlayer(player: Player): Players {
@@ -65,7 +76,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
     }
 
     private fun canGamerHit(target: Player, turn: Turn) =
-        target is Gamer && turn.isPlayerTurnOff(target)
+        target is Gamer && turn.isPlayerTurnOff(target) && target.canReceiveCard()
 
     private fun canDealerHit(target: Player) = target is Dealer && target.canReceiveCard()
 

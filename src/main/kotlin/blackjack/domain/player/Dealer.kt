@@ -39,12 +39,12 @@ data class Dealer(
         return cards.getHighestPoint()
     }
 
-    fun canReceiveCard(): Boolean {
+    override fun canReceiveCard(): Boolean {
         return getHighestPoint() <= CAN_ACHIEVE_POINT
     }
 
     companion object {
-        private const val CAN_ACHIEVE_POINT = 21
+        private const val CAN_ACHIEVE_POINT = 16
 
         fun of(): Dealer {
             return Dealer(Profile.createDealer())
