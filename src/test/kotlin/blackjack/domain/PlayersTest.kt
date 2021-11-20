@@ -58,8 +58,8 @@ class PlayersTest {
         val preparedPlayers = sut.prepare(deck)
 
         // Assert
-        assertThat(preparedPlayers).hasSize(3)
-        assertThat(preparedPlayers.first().cards.value).hasSize(2)
-        assertThat(preparedPlayers.last().cards.value).hasSize(2)
+        assertThat(preparedPlayers.value).hasSize(3)
+        assertThat(preparedPlayers.value.first().cards.value).hasSize(2)
+        assertThat(preparedPlayers.value.last().cards.value).hasSize(2)
     }
 }

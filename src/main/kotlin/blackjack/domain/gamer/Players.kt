@@ -7,13 +7,13 @@ class Players private constructor(
 ) {
     val value = value.toList()
 
-    fun prepare(deck: Deck): List<Player> {
+    fun prepare(deck: Deck): Players {
         val preparedPlayers = mutableListOf<Player>()
         for (player in value) {
             val preparedPlayer = player.prepare(deck)
             preparedPlayers.add(preparedPlayer)
         }
-        return preparedPlayers
+        return Players(preparedPlayers)
     }
 
     companion object {
