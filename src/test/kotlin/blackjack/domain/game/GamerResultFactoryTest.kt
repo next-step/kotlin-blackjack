@@ -7,7 +7,6 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 @Suppress("NonAsciiCharacters")
 class GamerResultFactoryTest {
@@ -16,73 +15,57 @@ class GamerResultFactoryTest {
     private val bustScore = Score.BLACK_JACK_SCORE.value + 1
 
     @Test
-    fun `플레이어가 bust라면 플레이어는 패배한다`() {
+    fun `플레이어가 bust라면 딜러 결과와는 상관없이 플레이어는 패배, 딜러는 승리한다`() {
         val dealer = Dealer(Hand(bustScore))
         val player = Player(name, Hand(bustScore))
 
-        val result = GamerResultFactory.getPlayerResult(dealer, player)
+        val result = GamerResultFactory.getGamerResult(dealer, player)
 
-        assertThat(result.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.WIN)
     }
 
     @Test
-    fun `Dealer만 bust라면 플레이어는 승리한다`() {
+    fun `딜러만 bust라면 플레이어는 승리, 딜러는 패배한다`() {
         val dealer = Dealer(Hand(bustScore))
         val player = Player(name, Hand(2))
 
-        val result = GamerResultFactory.getPlayerResult(dealer, player)
+        val result = GamerResultFactory.getGamerResult(dealer, player)
 
-        assertThat(result.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.LOSE)
     }
 
     @Test
-    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 높다면 플레이어가 승리한다`() {
+    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 높다면 플레이어는 승리, 딜러는 패배한다`() {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Hand(19))
 
-        val result = GamerResultFactory.getPlayerResult(dealer, player)
+        val result = GamerResultFactory.getGamerResult(dealer, player)
 
-        assertThat(result.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.LOSE)
     }
 
     @Test
-    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 같다면 플레이어는 비긴다`() {
+    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 같다면 플레이어와 딜러는 비긴다`() {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Hand(18))
 
-        val result = GamerResultFactory.getPlayerResult(dealer, player)
+        val result = GamerResultFactory.getGamerResult(dealer, player)
 
-        assertThat(result.result).isEqualTo(GameResult.Type.DRAW)
+        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.DRAW)
+        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.DRAW)
     }
 
     @Test
-    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 낮다면 플레이어는 진다`() {
+    fun `딜러와 플레이어가 bust가 아닐 때 플레이어의 점수가 더 낮다면 플레이어는 패배, 딜러는 승리한다`() {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Hand(17))
 
-        val result = GamerResultFactory.getPlayerResult(dealer, player)
+        val result = GamerResultFactory.getGamerResult(dealer, player)
 
-        assertThat(result.result).isEqualTo(GameResult.Type.LOSE)
-    }
-
-    @Test
-    fun `딜러의 승패는 플레이어들의 승패의 반대이다`() {
-        val player = Player(name)
-        val playerResults = listOf(
-            PlayerResult(GameResult.Type.WIN, player),
-            PlayerResult(GameResult.Type.WIN, player),
-            PlayerResult(GameResult.Type.DRAW, player),
-            PlayerResult(GameResult.Type.DRAW, player),
-            PlayerResult(GameResult.Type.DRAW, player),
-            PlayerResult(GameResult.Type.LOSE, player),
-        )
-
-        val result = GamerResultFactory.getDealerResult(playerResults)
-
-        assertAll(
-            { assertThat(result.win).isEqualTo(1) },
-            { assertThat(result.draw).isEqualTo(3) },
-            { assertThat(result.lose).isEqualTo(2) },
-        )
+        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.WIN)
     }
 }

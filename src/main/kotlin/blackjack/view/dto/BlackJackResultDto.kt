@@ -3,15 +3,15 @@ package blackjack.view.dto
 import blackjack.domain.game.BlackJackResult
 import blackjack.domain.game.DealerResult
 import blackjack.domain.game.GameResult
-import blackjack.domain.game.PlayerResult
+import blackjack.domain.game.GamerResult
 
 data class BlackJackResultDto(
-    val dealerResult: DealerResultDto,
     val playerResults: List<PlayerResultDto>,
+    val dealerResult: DealerResultDto,
 ) {
     constructor(result: BlackJackResult): this(
-        dealerResult = DealerResultDto(result.dealerResult),
-        playerResults = result.playerResults.map(::PlayerResultDto),
+        playerResults = result.playerResult.map(::PlayerResultDto),
+        dealerResult = DealerResultDto(result.getDealerStatistics()),
     )
 }
 
@@ -26,7 +26,7 @@ data class DealerResultDto(val win: Int, val draw: Int, val lost: Int) {
 
 data class PlayerResultDto(val result: String, val name: String) {
 
-    constructor(result: PlayerResult) : this(
+    constructor(result: GamerResult) : this(
         result = result.result.toName(),
         name = result.name.value,
     )
