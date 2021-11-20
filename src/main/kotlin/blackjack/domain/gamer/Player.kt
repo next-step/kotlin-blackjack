@@ -10,9 +10,11 @@ import blackjack.exception.InvalidPlayerNameException
 
 class Player(
     override val name: String,
-    override val cards: Cards,
     override val state: State,
 ) : Gamer {
+
+    override val cards: Cards
+        get() = state.cards
 
     init {
         if (name.isEmpty()) {
@@ -23,19 +25,19 @@ class Player(
     override fun completeDeal(deck: Deck): Player {
         val completedFirstDraw = draw(deck, state)
         val completedDeal = draw(deck, completedFirstDraw)
-        return Player(name, cards, completedDeal)
+        return Player(name, completedDeal)
     }
 
     override fun play(deck: Deck): Player {
-        if (state.currentCards().isBlackjack()) {
-            return Player(name, cards, Blackjack(cards))
+        if (state.cards.isBlackjack()) {
+            return Player(name, Blackjack(cards))
         }
         val currentState = draw(deck, state)
-        return Player(name, cards, currentState)
+        return Player(name, currentState)
     }
 
     override fun stand(): Player {
-        return Player(name, cards, Stand(cards))
+        return Player(name, Stand(cards))
     }
 
     override fun draw(deck: Deck, state: State): State {
@@ -47,8 +49,7 @@ class Player(
 
     companion object {
         fun of(name: String, cards: Cards): Player {
-            val state = FirstDraw(cards)
-            return Player(name, cards, state)
+            return Player(name, FirstDraw(cards))
         }
     }
 }

@@ -5,7 +5,7 @@ import blackjack.domain.deck.Cards
 import blackjack.domain.state.State.Companion.FINISHED_SIGN
 
 class Deal(
-    val cards: Cards,
+    override val cards: Cards,
 ) : Progress() {
     override fun draw(card: Card): State {
         cards.receiveCard(card)
@@ -18,6 +18,4 @@ class Deal(
     override fun isStand(sign: String): Boolean {
         return sign == FINISHED_SIGN
     }
-
-    override fun currentCards(): Cards = cards
 }

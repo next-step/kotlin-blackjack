@@ -73,7 +73,6 @@ class PlayerTest {
     fun `sut returns stand`() {
         // Arrange
         val sut = Player.of("tommy", Cards())
-        val deck = Deck.init()
 
         // Act
         val stoodPlayer = sut.stand()

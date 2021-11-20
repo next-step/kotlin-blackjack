@@ -5,7 +5,7 @@ import blackjack.domain.deck.Cards
 import blackjack.exception.UnsupportedDrawException
 
 class Stand(
-    val cards: Cards,
+    override val cards: Cards,
 ) : Finished() {
 
     override fun draw(card: Card): State {
@@ -13,6 +13,4 @@ class Stand(
     }
 
     override fun toString(): String = "Stand"
-
-    override fun currentCards(): Cards = cards
 }
