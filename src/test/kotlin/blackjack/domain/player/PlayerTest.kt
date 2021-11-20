@@ -66,7 +66,7 @@ internal class PlayerTest {
             Card(Suit.CLUB, Denomination.FIVE),
             Card(Suit.CLUB, Denomination.SIX)
         )
-        val finishedPlayer = player.addPlayingCards(externalPlayingCards)
+        val finishedPlayer = player.plus(externalPlayingCards)
         assertThat(finishedPlayer.isFinished()).isFalse
     }
 
@@ -81,7 +81,7 @@ internal class PlayerTest {
             Card(Suit.CLUB, Denomination.FIVE),
             Card(Suit.CLUB, Denomination.SEVEN)
         )
-        val finishedPlayer = player.addPlayingCards(externalPlayingCards)
+        val finishedPlayer = player.plus(externalPlayingCards)
         assertThat(finishedPlayer.isFinished()).isTrue
     }
 }

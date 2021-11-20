@@ -4,16 +4,17 @@ import blackjack.domain.card.Card
 import blackjack.domain.player.state.End
 import blackjack.domain.player.state.PlayingState
 import blackjack.domain.player.state.Running
+import blackjack.ui.Command
 
-class Player(
+data class Player(
     private val _name: Name,
-    val hands: Hands = Hands.initialize(),
+    val hands: Hands = Hands.EMPTY,
     private val playingState: PlayingState = Running,
 ) {
     val name: String
         get() = _name.name
 
-    fun addPlayingCards(extraCards: List<Card>): Player {
+    operator fun plus(extraCards: List<Card>): Player {
         val addedHands: Hands = hands.plus(extraCards)
         val sumScore = addedHands.score()
         if (sumScore.isOverMaximum()) {

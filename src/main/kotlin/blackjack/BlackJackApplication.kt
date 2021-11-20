@@ -39,7 +39,7 @@ class BlackJackApplication(
                 return nowPlayer
             }
             val playingCard = HitAssignCardStrategy.assign(deck)
-            nowPlayer = nowPlayer.addPlayingCards(playingCard)
+            nowPlayer = nowPlayer.plus(playingCard)
             resultView.showPlayerHands(nowPlayer)
             startGame(nowPlayer, deck)
         } catch (e: Exception) {

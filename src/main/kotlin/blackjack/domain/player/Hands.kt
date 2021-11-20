@@ -15,20 +15,20 @@ value class Hands private constructor(val hands: List<Card>) {
 
     private fun calculateAceScore(sum: Score): Score {
         if (hands.any(Card::hasAce) && sum.canAddExtraAceScore()) {
-            return sum.plus(Score.extraAceScore())
+            return sum + Score.EXTRA_ACE_SCORE
         }
         return sum
     }
 
     operator fun plus(extraCard: List<Card>): Hands {
         if (hands.any(extraCard::contains)) {
-            throw DuplicatePlayingCardException
+            throw DuplicatePlayingCardException()
         }
         return Hands(hands.plus(extraCard))
     }
 
     companion object {
-        fun initialize(): Hands = from(listOf())
+        var EMPTY: Hands = from(listOf())
         fun from(cards: List<Card>): Hands = Hands(cards.toList())
     }
 }

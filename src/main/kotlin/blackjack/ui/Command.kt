@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.ui
 
 import blackjack.error.CommandNotFoundException
 
