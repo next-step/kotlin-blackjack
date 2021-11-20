@@ -45,8 +45,8 @@ class Player private constructor(
         return state.draw(card)
     }
 
-    fun isStand(inputCardSign: String): Boolean {
-        return state.isStand(inputCardSign)
+    fun isStand(playable: Boolean): Boolean {
+        return state.isStand(playable)
     }
 
     fun isFinished(): Boolean {

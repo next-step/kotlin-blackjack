@@ -9,9 +9,12 @@ interface State {
     fun draw(card: Card): State
     fun isFinished(): Boolean
 
-    fun isStand(sign: String): Boolean = false
+    fun isStand(playable: Boolean): Boolean {
+        return !playable
+    }
 
     companion object {
         const val FINISHED_SIGN = "n"
+        const val CAN_PLAY = "y"
     }
 }

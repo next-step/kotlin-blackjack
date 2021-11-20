@@ -3,6 +3,7 @@ package blackjack.presentation
 import blackjack.domain.deck.Deck
 import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.Players
+import blackjack.domain.state.State.Companion.CAN_PLAY
 import blackjack.domain.state.State.Companion.FINISHED_SIGN
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -27,9 +28,9 @@ class BlackjackController(
         val completedBlackjackPlayers = mutableListOf<Player>()
         for (player in players) {
             while (true) {
-                val inputCardSign = inputCardSign(player)
+                val playable = inputPlayable(player)
 
-                if (player.isStand(inputCardSign)) {
+                if (player.isStand(playable)) {
                     player.stand()
                     OutputView.printPlayerCard(player)
                     completedBlackjackPlayers.add(player)
@@ -48,10 +49,14 @@ class BlackjackController(
         return Players.from(completedBlackjackPlayers)
     }
 
-    private fun inputCardSign(player: Player): String {
+    private fun inputPlayable(player: Player): Boolean {
         if (player.isFinished()) {
-            return FINISHED_SIGN
+            return false
         }
-        return InputView.inputCardSign(player)
+        val playable = InputView.inputCardSign(player)
+        if (playable == FINISHED_SIGN) {
+            return false
+        }
+        return playable == CAN_PLAY
     }
 }
