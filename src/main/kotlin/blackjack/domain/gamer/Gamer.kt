@@ -5,10 +5,12 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.state.State
 import blackjack.exception.InvalidPlayerNameException
 
-interface Gamer {
-    val name: String
+abstract class Gamer(
+    val name: String,
+    val state: State,
+) {
     val cards: Cards
-    val state: State
+        get() = state.cards
 
     fun validateName(name: String) {
         if (name.isEmpty()) {
@@ -16,13 +18,28 @@ interface Gamer {
         }
     }
 
-    fun prepare(deck: Deck): Gamer
+    protected fun draw(deck: Deck, state: State): State {
+        val card = deck.takeOut()
+        return state.draw(card)
+    }
 
-    fun play(deck: Deck): Gamer
+    fun isStand(playable: Boolean): Boolean {
+        return state.isStand(playable)
+    }
 
-    fun draw(deck: Deck, state: State): State
+    fun isFinished(): Boolean {
+        return state.isFinished()
+    }
 
-    fun stand(): Gamer
+    fun haveCards(): String {
+        return cards.haveCards()
+    }
 
-    fun haveCards(): String
+    abstract fun prepare(deck: Deck): Gamer
+    abstract fun play(deck: Deck): Gamer
+    abstract fun stand(): Gamer
+
+    companion object {
+        const val BLACKJACK_SCORE = 21
+    }
 }

@@ -3,17 +3,15 @@ package blackjack.domain.gamer
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
 import blackjack.domain.state.Blackjack
+import blackjack.domain.state.Bust
 import blackjack.domain.state.FirstDraw
 import blackjack.domain.state.Stand
 import blackjack.domain.state.State
 
 class Dealer private constructor(
-    override val name: String,
-    override val state: State,
-) : Gamer {
-
-    override val cards: Cards
-        get() = state.cards
+    name: String,
+    state: State,
+) : Gamer(name, state) {
 
     init {
         validateName(name)
@@ -29,37 +27,41 @@ class Dealer private constructor(
         if (state.cards.isBlackjack()) {
             return Dealer(name, Blackjack(cards))
         }
-        if (state.cards.getTotalScore() >= DEALER_DRAW_CONDITION) {
-            return stand()
-        }
         val currentState = draw(deck, state)
         return Dealer(name, currentState)
-    }
-
-    override fun draw(deck: Deck, state: State): State {
-        val card = deck.takeOut()
-        return state.draw(card)
     }
 
     override fun stand(): Dealer {
         return Dealer(name, Stand(cards))
     }
 
-    override fun haveCards(): String {
-        if (cards.value.size == DEALER_CARDS_OPEN_CONDITION) {
-            return cards.value[DEALER_FIRST_CARD].toString()
+    fun meetConditions(currentScore: Int): Dealer {
+        if (currentScore == BLACKJACK_SCORE) {
+            return Dealer(name, Blackjack(cards))
         }
-        return cards.haveCards()
+        if (currentScore > BLACKJACK_SCORE) {
+            return Dealer(name, Bust(cards))
+        }
+        return Dealer(name, Stand(cards))
+    }
+
+    fun preparedCurrentScore(): Int {
+        return cards.getTotalScore()
+    }
+
+    fun currentScore(): Int {
+        return cards.getTotalScore()
     }
 
     companion object {
-        private const val DEALER_DRAW_CONDITION = 17
-        private const val DEALER_CARDS_OPEN_CONDITION = 2
-        private const val DEALER_FIRST_CARD = 0
         private const val DEALER_NAME = "딜러"
 
         fun from(cards: Cards): Dealer {
             return Dealer(DEALER_NAME, FirstDraw(cards))
+        }
+
+        fun init(name: String, state: State): Dealer {
+            return Dealer(name, state)
         }
     }
 }

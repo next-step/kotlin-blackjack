@@ -8,12 +8,9 @@ import blackjack.domain.state.Stand
 import blackjack.domain.state.State
 
 class Player private constructor(
-    override val name: String,
-    override val state: State,
-) : Gamer {
-
-    override val cards: Cards
-        get() = state.cards
+    name: String,
+    state: State,
+) : Gamer(name, state) {
 
     init {
         validateName(name)
@@ -33,28 +30,17 @@ class Player private constructor(
         return Player(name, currentState)
     }
 
-    override fun draw(deck: Deck, state: State): State {
-        val card = deck.takeOut()
-        return state.draw(card)
-    }
-
     override fun stand(): Player {
         return Player(name, Stand(cards))
-    }
-
-    override fun haveCards(): String = cards.haveCards()
-
-    fun isStand(playable: Boolean): Boolean {
-        return state.isStand(playable)
-    }
-
-    fun isFinished(): Boolean {
-        return state.isFinished()
     }
 
     companion object {
         fun of(name: String, cards: Cards): Player {
             return Player(name, FirstDraw(cards))
+        }
+
+        fun init(name: String, state: State): Player {
+            return Player(name, state)
         }
     }
 }

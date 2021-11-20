@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.deck.Cards
+import blackjack.domain.gamer.Gamer
 import blackjack.domain.gamer.Player
 
 class InputView {
@@ -16,8 +17,8 @@ class InputView {
             return playerNames.map { Player.of(it.trim(), Cards()) }
         }
 
-        fun inputCardSign(player: Player): String {
-            println("\n${player.name}$INPUT_CARD_SIGN")
+        fun inputCardSign(gamer: Gamer): String {
+            println("\n${gamer.name}$INPUT_CARD_SIGN")
             return readLine()!!
         }
     }

@@ -1,8 +1,7 @@
-package blackjack.domain
+package blackjack.domain.gamer
 
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
-import blackjack.domain.gamer.Player
 import blackjack.domain.state.Deal
 import blackjack.domain.state.Stand
 import blackjack.exception.InvalidPlayerNameException
