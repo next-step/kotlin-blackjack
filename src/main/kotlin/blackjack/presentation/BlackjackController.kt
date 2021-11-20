@@ -29,7 +29,7 @@ class BlackjackController(
             while (true) {
                 val inputCardSign = inputCardSign(player)
 
-                if (player.state.isStand(inputCardSign)) {
+                if (player.isStand(inputCardSign)) {
                     player.stand()
                     OutputView.printPlayerCard(player)
                     completedBlackjackPlayers.add(player)
@@ -39,7 +39,7 @@ class BlackjackController(
                 println()
                 OutputView.printPlayerCard(player)
 
-                if (progressedBlackjack.state.isFinished()) {
+                if (progressedBlackjack.isFinished()) {
                     completedBlackjackPlayers.add(progressedBlackjack)
                     break
                 }
@@ -49,7 +49,7 @@ class BlackjackController(
     }
 
     private fun inputCardSign(player: Player): String {
-        if (player.state.isFinished()) {
+        if (player.isFinished()) {
             return FINISHED_SIGN
         }
         return InputView.inputCardSign(player)

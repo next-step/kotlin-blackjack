@@ -45,6 +45,14 @@ class Player private constructor(
         return state.draw(card)
     }
 
+    fun isStand(inputCardSign: String): Boolean {
+        return state.isStand(inputCardSign)
+    }
+
+    fun isFinished(): Boolean {
+        return state.isFinished()
+    }
+
     override fun haveCards(): String = cards.haveCards()
 
     companion object {
