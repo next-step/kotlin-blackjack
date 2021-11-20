@@ -43,7 +43,7 @@ class BlackJackApplication(
             resultView.showPlayerHands(nowPlayer)
             startGame(nowPlayer, deck)
         } catch (e: Exception) {
-            errorView.showErrorMessage(e.message)
+            errorView.showErrorMessage(e.message.toString())
             startGame(previousPlayer, deck)
         }
     }
@@ -52,7 +52,7 @@ class BlackJackApplication(
         return try {
             Players.of(inputView.inputParticipantsInformation(), CommaSplitStrategy)
         } catch (e: Exception) {
-            errorView.showErrorMessage(e.message)
+            errorView.showErrorMessage(e.message.toString())
             inputParticipantsInformation()
         }
     }
