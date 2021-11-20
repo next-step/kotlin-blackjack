@@ -1,12 +1,19 @@
 package blackjack.presentation
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDenomination
+import blackjack.domain.card.CardPattern
 import blackjack.domain.card.CardsDeck
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
+import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
 import blackjack.exception.CardExhaustException
 import blackjack.service.DetermineMatch
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -17,8 +24,8 @@ class BlackjackGameTest {
     @Test
     fun `각 플레이어와 딜러는 시작시 2장의 카드를 받는다`() {
         val players = listOf(
-            Player(Participant("one"), 0),
-            Player(Participant("two"), 0)
+            Player(Participant("one"), 0.0),
+            Player(Participant("two"), 0.0)
         )
 
         val actual = blackjackGame.start(
@@ -37,7 +44,7 @@ class BlackjackGameTest {
     @Test
     fun `카드를 더 받는다`() {
         val card = blackjackGame.addCard(
-            Player(Participant("one"), 0).player,
+            Player(Participant("one"), 0.0).player,
             CardsDeck()
         )
 
@@ -52,10 +59,43 @@ class BlackjackGameTest {
 
             repeat(cardCount + 1) {
                 blackjackGame.addCard(
-                    Player(Participant("one"), 0).player,
+                    Player(Participant("one"), 0.0).player,
                     cardsDeck
                 )
             }
         }
+    }
+
+    @Test
+    fun `블랙잭인 인원이 있다면 True`() {
+        val dealer = Dealer(Participant("딜러")).apply {
+            addCard(Card(CardPattern.CLOVER, CardDenomination.TEN))
+            addCard(Card(CardPattern.CLOVER, CardDenomination.ACE))
+        }
+        val players = listOf(Player(Participant("one"), 0.0))
+
+        val participants = Participants(
+            dealer = dealer,
+            players = players,
+        )
+
+        val actual = blackjackGame.existsBlackjack(participants)
+
+        assertTrue(actual)
+    }
+
+    @Test
+    fun `블랙잭인 인원이 없다면 false`() {
+        val dealer = Dealer(Participant("딜러"))
+        val players = listOf(Player(Participant("one"), 0.0))
+
+        val participants = Participants(
+            dealer = dealer,
+            players = players,
+        )
+
+        val actual = blackjackGame.existsBlackjack(participants)
+
+        assertFalse(actual)
     }
 }

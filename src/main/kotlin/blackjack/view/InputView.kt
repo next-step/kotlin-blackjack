@@ -11,10 +11,10 @@ object InputView {
         return readLine() ?: DEFAULT_INPUT
     }
 
-    fun inputBetAmount(name: String): Int {
+    fun inputBetAmount(name: String): Double {
         println("${name}의 배팅 금액은 ?")
 
-        return (readLine() ?: DEFAULT_VET_AMOUNT).toInt()
+        return (readLine() ?: DEFAULT_VET_AMOUNT).toDouble()
     }
 
     fun inputWantMoreCard(name: String): String {

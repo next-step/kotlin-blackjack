@@ -5,9 +5,7 @@ import blackjack.domain.card.CardsDeck
 
 class Dealer(
     val dealer: Participant
-) : CardFunction by dealer {
-
-    private val resultStatuses = mutableListOf<ResultStatus>()
+) : BlackjackFunction by dealer, RevenueFunction by dealer {
 
     fun addCardWhenLessThanStandard(
         cardsDeck: CardsDeck,
@@ -20,16 +18,6 @@ class Dealer(
         addCard(card)
 
         return card
-    }
-
-    fun determineWinOrLose(resultStatus: ResultStatus) {
-        resultStatuses.add(resultStatus)
-    }
-
-    fun getMatchResult(): Map<ResultStatus, Int> {
-        return resultStatuses
-            .groupingBy { it }
-            .eachCount()
     }
 
     companion object {

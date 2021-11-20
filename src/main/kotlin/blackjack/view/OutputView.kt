@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import blackjack.domain.player.ResultStatus
 
 object OutputView {
     fun printStartResult(participants: Participants) {
@@ -38,16 +37,13 @@ object OutputView {
     }
 
     fun printMatchResult(participants: Participants) {
-        val dealer = participants.dealer
-        val guest = participants.players
+        println("### 최종 수익")
 
-        val dealerMatchResult = dealer.getMatchResult()
-
-        println("${dealer.dealer.name}: ${dealerMatchResult[ResultStatus.WIN] ?: 0}승 ${dealerMatchResult[ResultStatus.LOSE] ?: 0}패 ${dealerMatchResult[ResultStatus.TIE] ?: 0}무")
-
-        guest.forEach { player ->
-            println("${player.player.name}: ${player.resultStatus.value}")
-        }
+        participants
+            .getAllPlayers()
+            .forEach { participant ->
+                println("${participant.name}: ${participant.getRevenue()}")
+            }
     }
 
     fun printDealerReceivedCard() {

@@ -2,23 +2,51 @@ package blackjack.service
 
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.ResultStatus
 
 class DetermineMatch {
 
-    fun match(dealer: Dealer, players: List<Player>) {
-        val dealerCardSum = dealer.getCardSum()
+    fun matchWhenFirstCardBlackjack(dealer: Dealer, players: List<Player>) {
+        val isDealerBlackjack = dealer.isBlackjack()
 
-        if (dealerCardSum > DEADLINE) {
-            allLose(dealer, players)
+        players.forEach { player ->
+            val isPlayerBlackjack = player.isBlackjack()
+
+            if (isPlayerBlackjack && !isDealerBlackjack) {
+                val revenue = player.betAmount / 2
+                player.addRevenue(revenue)
+                dealer.minusRevenue(revenue)
+            } else if (!isPlayerBlackjack && isDealerBlackjack) {
+                val revenue = player.betAmount
+
+                player.minusRevenue(revenue)
+                dealer.addRevenue(revenue)
+            }
+        }
+    }
+
+    fun match(dealer: Dealer, players: List<Player>) {
+        val diePlayers = players.filter { player -> player.isOverDeadline() }
+        val alivePlayers = players - diePlayers
+
+        diePlayers(dealer, diePlayers)
+
+        if (dealer.isOverDeadline()) {
+            allLose(dealer, alivePlayers)
             return
         }
 
-        determineWinOrLose(
-            dealer,
-            players,
-            dealerCardSum,
-        )
+        determineWinOrLose(dealer, alivePlayers)
+    }
+
+    private fun diePlayers(
+        dealer: Dealer,
+        diePlayers: List<Player>,
+    ) {
+        diePlayers.forEach { player ->
+            val betAmount = player.betAmount
+            player.minusRevenue(betAmount)
+            dealer.addRevenue(betAmount)
+        }
     }
 
     private fun allLose(
@@ -26,33 +54,29 @@ class DetermineMatch {
         players: List<Player>,
     ) {
         players.forEach { player ->
-            dealer.determineWinOrLose(ResultStatus.LOSE)
-            player.determineWinOrLose(ResultStatus.WIN)
+            val betAmount = player.betAmount
+            player.addRevenue(betAmount)
+            dealer.minusRevenue(betAmount)
         }
     }
 
     private fun determineWinOrLose(
         dealer: Dealer,
         players: List<Player>,
-        dealerCardSum: Int,
     ) {
+        val dealerCardSum = dealer.getCardSum()
+
         players.forEach { player ->
             val playerCardSum = player.getCardSum()
+            val betAmount = player.betAmount
 
             if (playerCardSum > dealerCardSum) {
-                dealer.determineWinOrLose(ResultStatus.LOSE)
-                player.determineWinOrLose(ResultStatus.WIN)
+                dealer.minusRevenue(betAmount)
+                player.addRevenue(betAmount)
             } else if (playerCardSum < dealerCardSum) {
-                dealer.determineWinOrLose(ResultStatus.WIN)
-                player.determineWinOrLose(ResultStatus.LOSE)
-            } else {
-                dealer.determineWinOrLose(ResultStatus.TIE)
-                player.determineWinOrLose(ResultStatus.TIE)
+                dealer.addRevenue(betAmount)
+                player.minusRevenue(betAmount)
             }
         }
-    }
-
-    companion object {
-        private const val DEADLINE = 21
     }
 }

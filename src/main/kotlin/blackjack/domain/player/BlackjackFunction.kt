@@ -2,7 +2,9 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
-interface CardFunction {
+interface BlackjackFunction {
     fun addCard(card: Card)
     fun getCardSum(): Int
+    fun isOverDeadline(): Boolean
+    fun isBlackjack(): Boolean
 }

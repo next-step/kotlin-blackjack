@@ -16,20 +16,25 @@ private val blackjackGame = BlackjackGame(DetermineMatch())
 fun main() {
     val cardsDeck = CardsDeck()
 
-    val players = blackjackGame.start(
+    val participants = blackjackGame.start(
         initPlayers(),
         cardsDeck
     )
 
-    OutputView.printStartResult(players)
+    OutputView.printStartResult(participants)
 
-    divideCards(players.dealer, players.players, cardsDeck)
+    val existsBlackjack = blackjackGame.existsBlackjack(participants)
 
-    OutputView.printDivideResult(players)
+    if (existsBlackjack) {
+        blackjackGame.matchWhenFirstCardBlackjack(participants)
+    } else {
+        divideCards(participants.dealer, participants.players, cardsDeck)
+        OutputView.printDivideResult(participants)
 
-    blackjackGame.match(players)
+        blackjackGame.match(participants)
+    }
 
-    OutputView.printMatchResult(players)
+    OutputView.printMatchResult(participants)
 }
 
 private fun initPlayers(): List<Player> {
