@@ -37,7 +37,12 @@ private fun initPlayers(): List<Player> {
     val playersName = PlayersParserUtil.parse(inputPlayersName)
 
     return playersName.map { playerName ->
-        Player(Participant(playerName))
+        val betAmount = InputView.inputBetAmount(playerName)
+
+        Player(
+            player = Participant(playerName),
+            betAmount = betAmount,
+        )
     }
 }
 

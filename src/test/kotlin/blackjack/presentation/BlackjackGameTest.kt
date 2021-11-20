@@ -17,8 +17,8 @@ class BlackjackGameTest {
     @Test
     fun `각 플레이어와 딜러는 시작시 2장의 카드를 받는다`() {
         val players = listOf(
-            Player(Participant("one")),
-            Player(Participant("two"))
+            Player(Participant("one"), 0),
+            Player(Participant("two"), 0)
         )
 
         val actual = blackjackGame.start(
@@ -37,7 +37,7 @@ class BlackjackGameTest {
     @Test
     fun `카드를 더 받는다`() {
         val card = blackjackGame.addCard(
-            Player(Participant("one")).player,
+            Player(Participant("one"), 0).player,
             CardsDeck()
         )
 
@@ -52,7 +52,7 @@ class BlackjackGameTest {
 
             repeat(cardCount + 1) {
                 blackjackGame.addCard(
-                    Player(Participant("one")).player,
+                    Player(Participant("one"), 0).player,
                     cardsDeck
                 )
             }

@@ -11,8 +11,8 @@ class ParticipantsTest {
         val participants = Participants(
             dealer = Dealer(Participant("딜러")),
             players = listOf(
-                Player(Participant("one")),
-                Player(Participant("two")),
+                Player(Participant("one"), 0),
+                Player(Participant("two"), 0),
             ),
         )
 
@@ -24,8 +24,8 @@ class ParticipantsTest {
     @Test
     fun `build 를 이용해 생성 시 딜러를 포함한 모든 플레이어는 2장의 카드를 받는다`() {
         val dealer = Dealer(Participant("딜러"))
-        val one = Player(Participant("one"))
-        val two = Player(Participant("two"))
+        val one = Player(Participant("one"), 0)
+        val two = Player(Participant("two"), 0)
 
         val participants = Participants.build(
             dealer = dealer,

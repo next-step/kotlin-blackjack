@@ -10,7 +10,7 @@ class ParticipantTest {
     @ParameterizedTest
     fun `참가자 이름 빈값, 공백일때 exception`(name: String) {
         assertThrows<IllegalArgumentException> {
-            Player(Participant(""))
+            Player(Participant(""), 0)
         }
     }
 }

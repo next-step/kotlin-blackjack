@@ -23,8 +23,8 @@ class DetermineMatchTest {
         }
 
         val players = listOf(
-            Player(Participant("one")),
-            Player(Participant("two"))
+            Player(Participant("one"), 0),
+            Player(Participant("two"), 0)
         )
 
         determineMatch.match(dealer, players)
@@ -42,7 +42,7 @@ class DetermineMatchTest {
             addCard(Card(CardPattern.HEART, CardDenomination.KING))
         }
 
-        val players = listOf(Player(Participant("one")))
+        val players = listOf(Player(Participant("one"), 0))
 
         determineMatch.match(dealer, players)
 
@@ -57,7 +57,7 @@ class DetermineMatchTest {
             addCard(Card(CardPattern.DIAMOND, CardDenomination.TWO))
         }
 
-        val player = Player(Participant("one")).apply {
+        val player = Player(Participant("one"), 0).apply {
             addCard(Card(CardPattern.DIAMOND, CardDenomination.THREE))
         }
 
@@ -96,17 +96,17 @@ class DetermineMatchTest {
     }
 
     private fun buildPlayers(): List<Player> {
-        val one = Player(Participant("one")).apply {
+        val one = Player(Participant("one"), 0).apply {
             addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.TEN))
             addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.NINE))
         }
 
-        val two = Player(Participant("one")).apply {
+        val two = Player(Participant("one"), 0).apply {
             addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.TEN))
             addCard(Card(pattern = CardPattern.SPADE, denomination = CardDenomination.SEVEN))
         }
 
-        val three = Player(Participant("one")).apply {
+        val three = Player(Participant("one"), 0).apply {
             addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.TEN))
             addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.EIGHT))
         }

@@ -1,7 +1,8 @@
 package blackjack.domain.player
 
 class Player(
-    val player: Participant
+    val player: Participant,
+    val betAmount: Int,
 ) : CardFunction by player {
 
     var resultStatus = ResultStatus.UNKNOWN
