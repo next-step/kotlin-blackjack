@@ -29,7 +29,7 @@ internal class HandsTest {
         val expected = Hands.from(externalPlayingCards)
 
         val hands = Hands.EMPTY
-        val actual = hands.plus(externalPlayingCards)
+        val actual = hands + externalPlayingCards
 
         assertThat(actual).isEqualTo(expected)
     }
@@ -39,7 +39,7 @@ internal class HandsTest {
         val externalPlayingCards = allPlayingCards()
         val duplicatedPlayingCards = listOf(Card(Suit.CLUB, Denomination.ACE))
         val hands = Hands.from(duplicatedPlayingCards)
-        val exception = assertThrows<DuplicatePlayingCardException> { hands.plus(externalPlayingCards) }
+        val exception = assertThrows<DuplicatePlayingCardException> { hands + externalPlayingCards }
 
         assertThat(exception.message).isEqualTo("이미 덱에 존재하는 카드가 있습니다.")
     }

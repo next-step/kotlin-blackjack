@@ -14,7 +14,7 @@ value class Hands private constructor(val hands: List<Card>) {
         .reduce(Score::plus)
 
     private fun calculateAceScore(sum: Score): Score {
-        if (hands.any(Card::hasAce) && sum.canAddExtraAceScore()) {
+        if (hands.any(Card::hasAce) && sum.canPlusExtraAceScore()) {
             return sum + Score.EXTRA_ACE_SCORE
         }
         return sum
@@ -24,7 +24,7 @@ value class Hands private constructor(val hands: List<Card>) {
         if (hands.any(extraCard::contains)) {
             throw DuplicatePlayingCardException()
         }
-        return Hands(hands.plus(extraCard))
+        return Hands(hands + extraCard)
     }
 
     companion object {

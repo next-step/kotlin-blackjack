@@ -50,6 +50,6 @@ class ScoreTest {
         val secondScore = Score.from(secondScoreInt)
         val expected = Score.from(expectedInt)
 
-        assertThat(firstScore.plus(secondScore)).isEqualTo(expected)
+        assertThat(firstScore + secondScore).isEqualTo(expected)
     }
 }

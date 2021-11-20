@@ -5,7 +5,7 @@ import blackjack.error.ScoreOutOfBoundsException
 @JvmInline
 value class Score private constructor(val score: Int) {
 
-    fun canAddExtraAceScore(): Boolean = ((score + EXTRA_ACE_SCORE_RANGE) <= MAXIMUM_SCORE)
+    fun canPlusExtraAceScore(): Boolean = ((score + EXTRA_ACE_SCORE_RANGE) <= MAXIMUM_SCORE)
 
     fun isOverMaximum(): Boolean = (score > MAXIMUM_SCORE)
 
