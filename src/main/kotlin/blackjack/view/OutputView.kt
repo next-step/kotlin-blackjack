@@ -7,6 +7,7 @@ class OutputView {
 
     companion object {
         private const val PRINT_START_GAME = "에게 2장의 카드를 나누었습니다."
+        private const val BLACKJACK_END_NUMBER = 21
 
         fun printStartGame(players: Players) {
             val playerNames = players.value.joinToString { it.name }
@@ -31,7 +32,7 @@ class OutputView {
 
         private fun getBlackjackResult(player: Player): String {
             val totalScore = player.cards.getTotalScore()
-            return if (totalScore >= 21) {
+            return if (totalScore >= BLACKJACK_END_NUMBER) {
                 player.state.toString()
             } else {
                 totalScore.toString()
