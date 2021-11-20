@@ -1,11 +1,12 @@
 package blackject.view
 
+import blackject.model.Participant
 import blackject.model.Person
 import blackject.model.card.CardNumber
 
 object OutputView {
-    fun printGivenCard(persons: List<Person>, initCardNumber: Int) {
-        val names = persons.joinToString { it.name }
+    fun printGivenCard(persons: Participant, initCardNumber: Int) {
+        val names = persons.getAllPerson().joinToString { it.name }
         println("${names}에게 ${initCardNumber}장의 나누었습니다.")
     }
 
@@ -24,9 +25,10 @@ object OutputView {
         )
     }
 
-    fun gameWinDefeat(persons: List<Person>) {
+    fun gameWinDefeat(persons: Participant) {
         println("\n## 최종 승패")
         persons
+            .getAllPerson()
             .forEach {
                 println("${it.name}: ${it.result?.string}")
             }
