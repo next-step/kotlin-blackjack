@@ -1,22 +1,21 @@
 package blackjack.model
 
-data class Player(val name: Name, val cards: Cards) {
+class Player private constructor(name: Name, cards: Cards) : Gamer(name, cards) {
 
-    fun receive(card: Card): Player = if (hasCard(card)) {
-        copy(cards = cards)
-    } else {
-        copy(cards = cards + card)
+    override fun copy(name: Name, cards: Cards): Player = from(name, cards)
+
+    override fun canReceive(): Boolean = true
+
+    fun result(dealerScore: Int): Result = when {
+        score > TWENTY_ONE -> Result.LOSE
+        dealerScore > TWENTY_ONE -> Result.WIN
+        score < dealerScore -> Result.LOSE
+        else -> Result.PUSH
     }
 
-    fun receiveWhile(limit: Int, onDraw: () -> Card?): Player {
-        var result = copy()
-        repeat(limit) {
-            val card = onDraw()
-            if (card == null || hasCard(card)) return result
-            result = result.receive(card)
-        }
-        return result
-    }
+    companion object {
+        private const val TWENTY_ONE = 21
 
-    private fun hasCard(card: Card): Boolean = card in cards
+        fun from(name: Name, cards: Cards = Cards.empty()): Player = Player(name, cards)
+    }
 }

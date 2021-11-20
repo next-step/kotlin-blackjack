@@ -12,7 +12,7 @@ class InputView {
         val input = readLine() ?: return null
         return input.split(NAME_DELIMITER)
             .map { Name.valueOf(it.trim()) }
-            .let(Names::of)
+            .let(Names::from)
     }
 
     fun askDraw(player: Player): DrawAction {
