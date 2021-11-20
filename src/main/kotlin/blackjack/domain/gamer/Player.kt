@@ -6,7 +6,6 @@ import blackjack.domain.state.Blackjack
 import blackjack.domain.state.FirstDraw
 import blackjack.domain.state.Stand
 import blackjack.domain.state.State
-import blackjack.exception.InvalidPlayerNameException
 
 class Player private constructor(
     override val name: String,
@@ -17,9 +16,7 @@ class Player private constructor(
         get() = state.cards
 
     init {
-        if (name.isEmpty()) {
-            throw InvalidPlayerNameException()
-        }
+        validateName(name)
     }
 
     override fun prepare(deck: Deck): Player {
@@ -36,14 +33,16 @@ class Player private constructor(
         return Player(name, currentState)
     }
 
-    override fun stand(): Player {
-        return Player(name, Stand(cards))
-    }
-
     override fun draw(deck: Deck, state: State): State {
         val card = deck.takeOut()
         return state.draw(card)
     }
+
+    override fun stand(): Player {
+        return Player(name, Stand(cards))
+    }
+
+    override fun haveCards(): String = cards.haveCards()
 
     fun isStand(playable: Boolean): Boolean {
         return state.isStand(playable)
@@ -52,8 +51,6 @@ class Player private constructor(
     fun isFinished(): Boolean {
         return state.isFinished()
     }
-
-    override fun haveCards(): String = cards.haveCards()
 
     companion object {
         fun of(name: String, cards: Cards): Player {
