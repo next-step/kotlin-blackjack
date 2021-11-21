@@ -7,6 +7,6 @@ class Bust(cards: Cards) : Finished(cards) {
     override fun earningRate(): Double = EARNING_RATE
 
     companion object {
-        private const val EARNING_RATE = 0.0
+        private const val EARNING_RATE = -1.0
     }
 }

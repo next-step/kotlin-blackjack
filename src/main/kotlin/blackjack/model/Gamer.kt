@@ -18,6 +18,8 @@ sealed class Gamer(val name: Name, protected val state: State) {
 
     fun isRunning(): Boolean = state is Running
 
+    fun profit(amount: Double): Double = state.profit(amount)
+
     protected abstract fun copy(name: Name = this.name, state: State = this.state): Gamer
 }
 
