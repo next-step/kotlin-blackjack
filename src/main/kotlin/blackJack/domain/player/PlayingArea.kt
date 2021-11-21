@@ -4,6 +4,8 @@ import blackJack.domain.card.Card
 import blackJack.domain.card.Cards
 
 interface PlayingArea {
+    fun toCards(): Cards
+    fun toStrategy(): Strategy
     fun getAbleReceivedCard(): Boolean
     fun isBlackJackPlayer(): Boolean
     fun isBustPlayer(): Boolean
@@ -17,11 +19,15 @@ class PlayingAreaImpl(
     private var _strategy: Strategy = Hit,
 ) : PlayingArea {
 
-    val cards: Cards
+    private val cards: Cards
         get() = _cards
 
-    val strategy: Strategy
+    private val strategy: Strategy
         get() = _strategy
+
+    override fun toCards(): Cards = cards
+
+    override fun toStrategy(): Strategy = strategy
 
     override fun getAbleReceivedCard(): Boolean = _strategy.isContinue()
 
@@ -45,7 +51,7 @@ class PlayingAreaImpl(
     }
 
     companion object {
-        fun of(): PlayingAreaImpl {
+        fun of(): PlayingArea {
             return PlayingAreaImpl(Cards(listOf()), Hit)
         }
     }

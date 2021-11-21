@@ -28,7 +28,7 @@ class PlayerTest {
         // then
         assertAll({
             assertThat(player.name).isEqualTo("김형준")
-            assertThat(player.status.cards.size).isEqualTo(2)
+            assertThat(player.status.toCards().size).isEqualTo(2)
         })
     }
 
@@ -84,7 +84,7 @@ class PlayerTest {
         }
 
         // when
-        val decisionStatus = player.status.strategy
+        val decisionStatus = player.status.toStrategy()
         val isContinue = player.getAbleReceivedCard()
 
         // then
@@ -107,7 +107,7 @@ class PlayerTest {
 
         // when
         player.noReceiveCard()
-        val decisionStatus = player.status.strategy
+        val decisionStatus = player.status.toStrategy()
         val isContinue = player.getAbleReceivedCard()
 
         // then

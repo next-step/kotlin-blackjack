@@ -2,7 +2,7 @@ package blackJack.domain.player
 
 class Dealer(
     val name: String = DEALER_NAME,
-    val status: PlayingAreaImpl = PlayingAreaImpl.of()
+    val status: PlayingArea = PlayingAreaImpl.of()
 ) : PlayingArea by status {
 
     override fun getAbleReceivedCard(): Boolean =

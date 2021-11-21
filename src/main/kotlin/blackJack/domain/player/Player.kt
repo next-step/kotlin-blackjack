@@ -2,7 +2,7 @@ package blackJack.domain.player
 
 class Player(
     val name: String,
-    val status: PlayingAreaImpl = PlayingAreaImpl.of()
+    val status: PlayingArea = PlayingAreaImpl.of()
 ) : PlayingArea by status {
     init {
         require(name.isNotEmpty()) { IS_PLAYER_NAME_BLACK }

@@ -25,7 +25,7 @@ class PlayerDto(val name: String, val cards: String, val score: Int) {
     companion object {
         fun of(player: Player): PlayerDto {
             val name = player.name
-            val cards = player.status.cards.joinToString {
+            val cards = player.status.toCards().joinToString {
                 "${it.denomination.score(player.getScore())}${it.suit}"
             }
             val score = player.getScore()
@@ -39,7 +39,7 @@ class DealerDto(val name: String, val cards: String, val score: Int) {
     companion object {
         fun of(dealer: Dealer): DealerDto {
             val name = dealer.name
-            val cards = dealer.status.cards.joinToString {
+            val cards = dealer.status.toCards().joinToString {
                 "${it.denomination.score(dealer.getScore())}${it.suit}"
             }
             val score = dealer.getScore()

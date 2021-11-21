@@ -17,32 +17,34 @@ class GamePlayersTest {
         // given
         val gamePlayers =
             GamePlayers(
-                Players(listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
+                Players(
+                    listOf(
+                        Player.of("flamme").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.THREE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                        },
+                        Player.of("rain").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.TWO)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.EIGHT)
+                            }
+                        },
+                        Player.of("chacha").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.ACE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
                         }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Player.of("chacha").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    }
-                )),
+                    )
+                ),
                 Dealer()
             )
 
