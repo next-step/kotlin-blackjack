@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-@DisplayName("시작 상태(StartedState)")
+@DisplayName("Hit 상태(Hit)")
 internal class HitTest {
 
     @Test

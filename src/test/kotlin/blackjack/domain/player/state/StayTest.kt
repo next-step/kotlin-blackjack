@@ -12,45 +12,45 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
-@DisplayName("BlackJack 상태(BlackJack)")
-internal class BlackJackTest {
+@DisplayName("Stay 상태(Stay)")
+internal class StayTest {
 
     @Test
-    fun `BlackJack 상태는 비어있지 않다`() {
-        val blackJack = testBlackJack()
-        assertThat(blackJack.isEmpty()).isFalse
+    fun `Stay 상태는 비어있지 않다`() {
+        val stay = testStay()
+        assertThat(stay.isEmpty()).isFalse
     }
 
     @Test
-    fun `BlackJack 상태는 스코어는 0이 아니다`() {
-        val blackJack = testBlackJack()
-        val blackJackHands = blackJackHands()
+    fun `Stay 상태는 스코어는 0이 아니다`() {
+        val stay = testStay()
+        val stayHands = stayHands()
 
         assertAll(
-            { assertThat(blackJack.score()).isNotEqualTo(Score.ZERO) },
-            { assertThat(blackJack.score()).isEqualTo(blackJackHands.score()) },
-            { assertThat(blackJack.score().isMaxiMum()).isTrue },
+            { assertThat(stay.score()).isNotEqualTo(Score.ZERO) },
+            { assertThat(stay.score()).isEqualTo(stayHands.score()) },
+            { assertThat(stay.score().isBust()).isFalse },
         )
     }
 
     @Test
-    fun `BlackJack 상태는 실행이 종료된 상태이다`() {
-        val blackJack = testBlackJack()
+    fun `Stay 상태는 실행이 종료된 상태이다`() {
+        val blackJack = testStay()
 
         assertThat(blackJack.isFinished()).isTrue
     }
 
     @Test
-    fun `BlackJack 상태는 Stay 상태가 될 수 없다`() {
-        val blackJack = testBlackJack()
+    fun `Stay 상태는 Stay 상태가 될 수 없다`() {
+        val blackJack = testStay()
 
         val exception = assertThrows<InvalidMapToStayException> { blackJack.stay() }
         assertThat(exception.message).isEqualTo("'%s' 타입은 Stay 타입으로 전환이 불가능합니다".format(blackJack::class.toString()))
     }
 
     @Test
-    fun `BlackJack 상태는 카드를 추가할 수 없다`() {
-        val blackJack = testBlackJack()
+    fun `Stay 상태는 카드를 추가할 수 없다`() {
+        val blackJack = testStay()
         val extraCards = listOf(Card(Suit.CLUB, Denomination.THREE))
 
         val exception = assertThrows<InvalidAddCardsException> { blackJack.plus(extraCards) }
@@ -58,13 +58,14 @@ internal class BlackJackTest {
     }
 
     companion object {
-        private fun testBlackJack(): BlackJack = BlackJack(blackJackHands())
+        private fun testStay(): Stay = Stay(stayHands())
 
-        private fun blackJackHands(): Hands = Hands.from(blackJackCards())
+        private fun stayHands(): Hands = Hands.from(stayCards())
 
-        private fun blackJackCards(): List<Card> = listOf(
+        private fun stayCards(): List<Card> = listOf(
             Card(Suit.CLUB, Denomination.ACE),
-            Card(Suit.CLUB, Denomination.JACK)
+            Card(Suit.CLUB, Denomination.JACK),
+            Card(Suit.CLUB, Denomination.QUEEN)
         )
     }
 }

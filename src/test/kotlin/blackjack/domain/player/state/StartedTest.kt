@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("시작 상태(StartedState)")
+@DisplayName("시작 상태(Started)")
 internal class StartedTest {
 
     @Test
