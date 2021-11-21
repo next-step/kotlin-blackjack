@@ -13,7 +13,3 @@ interface State {
 
     fun stay(): State
 }
-
-
-
-
