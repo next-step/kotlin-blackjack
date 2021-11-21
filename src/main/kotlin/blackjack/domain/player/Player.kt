@@ -1,30 +1,19 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Score
 
-class Player(val name: PlayerName, val hand: Hand = Hand.createEmpty()) {
+private const val PLAYER_FIRST_OPEN_COUNT = 2
 
-    val score: Score
-        get() = hand.score
+class Player(
+    name: PlayerName,
+    hand: Hand = Hand.createEmpty(),
+    override val afterHitCallBack: AfterHitWhileCallback? = null,
+) : Gamer(name, hand) {
 
-    fun hit(deck: Deck) {
-        check(canHit()) { "카드를 뽑을 수 없습니다." }
-
-        hand.add(deck.drawCard())
+    override fun wantHit(answerProvider: AnswerProvider): Boolean {
+        return (score < Score.BLACK_JACK_SCORE) && answerProvider.getAnswer(this).hit
     }
 
-    fun hit(deck: Deck, answer: PlayerAnswer): DrawResult {
-        if (!answer.hit) {
-            return DrawResult(false)
-        }
-        val success = runCatching { hit(deck) }.isSuccess
-        return DrawResult(success)
-    }
-
-    fun canHit(): Boolean = hand.canHit()
-
-    @JvmInline
-    value class DrawResult(val success: Boolean)
+    override fun firstOpenCardsCount() = PLAYER_FIRST_OPEN_COUNT
 }

@@ -1,85 +1,42 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.*
+import blackjack.Hand
+import blackjack.domain.card.Score.Companion.BLACK_JACK_SCORE
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 @Suppress("NonAsciiCharacters")
 class PlayerTest {
 
     private val name = PlayerName("aaj")
-    private val hitImpossibleHand = Hand(listOf(Card(Symbol.TEN, Type.CLUB), Card(Symbol.ACE, Type.CLUB)))
-    private lateinit var deck: Deck
-    private lateinit var topOfDeck: Card
 
-    @BeforeEach
-    fun setUp() {
-        deck = Deck(
-            listOf(
-                Card(Symbol.TEN, Type.CLUB),
-                Card(Symbol.NINE, Type.CLUB),
-                Card(Symbol.TWO, Type.CLUB),
-                Card(Symbol.ACE, Type.CLUB),
-            )
-        )
-        topOfDeck = deck.cards.first()
+    @Test
+    fun `Player는 스코어가 블랙잭 스코어보다 작다면 hit할 수 있다`() {
+        val underBlackJackHand = Hand(BLACK_JACK_SCORE.value - 1)
+        val player = Player(name, hand = underBlackJackHand)
+
+        val result = player.canHit()
+
+        assertThat(result).isTrue
     }
 
     @Test
-    fun `Player가 Deck에서 카드를 뽑으면 Hand에 카드가 한 장 추가된다`() {
-        val player = Player(name)
+    fun `Player는 스코어가 블랙잭 스코어와 같다면 hit할 수 없다`() {
+        val blackJackScoreHand = Hand(BLACK_JACK_SCORE.value)
+        val player = Player(name, hand = blackJackScoreHand)
 
-        player.hit(deck)
+        val result = player.canHit()
 
-        assertThat(player.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(Hand(listOf(topOfDeck)))
+        assertThat(result).isFalse
     }
 
     @Test
-    fun `Player의 Hand가 hit할 수 없으면 카드를 뽑지 못한다`() {
-        val player = Player(name, hitImpossibleHand)
+    fun `Player는 스코어가 블랙잭 스코어보다 크다면 hit할 수 없다`() {
+        val blackJackScoreHand = Hand(BLACK_JACK_SCORE.value + 1)
+        val player = Player(name, hand = blackJackScoreHand)
 
-        assertThrows<IllegalStateException> {
-            player.hit(deck)
-        }
-    }
+        val result = player.canHit()
 
-    @Test
-    fun `대답이 Yes고, 카드를 뽑으면 성공한다`() {
-        val player = Player(name)
-
-        val result = player.hit(deck, PlayerAnswer.YES)
-
-        assertThat(result.success).isTrue
-        assertThat(player.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(Hand(listOf(topOfDeck)))
-    }
-
-    @Test
-    fun `대답이 Yes지만, 카드를 뽑지 못하면 실패한다`() {
-        val player = Player(name, hitImpossibleHand)
-
-        val result = player.hit(deck, PlayerAnswer.YES)
-
-        assertThat(result.success).isFalse
-        assertThat(player.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(hitImpossibleHand)
-    }
-
-    @Test
-    fun `대답이 No이면, 카드를 뽑지 않고 실패한다`() {
-        val player = Player(name)
-
-        val result = player.hit(deck, PlayerAnswer.NO)
-
-        assertThat(result.success).isFalse
-        assertThat(player.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(Hand.createEmpty())
+        assertThat(result).isFalse
     }
 }
