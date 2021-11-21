@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Rule
 import blackjack.domain.game.Turn
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Names
@@ -20,10 +21,13 @@ class BlackjackController() {
     fun start() {
         val players = createGamers()
         val deck = Deck()
+        val rule = Rule()
         val afterInitPhased = players.startInitPhase(deck)
         OutputView.printInitPhase(afterInitPhased)
         val playingPhasedPlayers = playingPhase(deck, afterInitPhased)
         OutputView.printPlayingPhase(playingPhasedPlayers)
+
+        val result = rule.judge(playingPhasedPlayers)
     }
 
     private fun createGamers(): Players {

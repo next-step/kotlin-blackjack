@@ -75,6 +75,18 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(players + player)
     }
 
+    fun getPlayersByScore(): List<Player> {
+        return players.sortedByDescending { it.getHighestPoint() }
+    }
+
+    fun getDealer(): Player? {
+        return players.find { it is Dealer }
+    }
+
+    fun getGamers(): List<Player> {
+        return players.filterIsInstance<Gamer>()
+    }
+
     private fun canGamerHit(target: Player, turn: Turn) =
         target is Gamer && turn.isPlayerTurnOff(target) && target.canReceiveCard()
 

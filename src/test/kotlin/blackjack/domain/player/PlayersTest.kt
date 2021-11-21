@@ -1,6 +1,10 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -98,5 +102,23 @@ internal class PlayersTest {
         val updatedPlayers = players.addPlayer(givenGamer3)
 
         assertThat(updatedPlayers.players).hasSize(3)
+    }
+
+    @Test
+    fun `플레이어가 가진 점수 순으로 정렬한 목록을 리턴한다`() {
+        val card1 = Card(Suit.HEART, Denomination.FIVE)
+        val card2 = Card(Suit.CLUB, Denomination.SEVEN)
+        val card3 = Card(Suit.DIAMOND, Denomination.KING)
+        val profile1 = Profile.from(Name("player1"))
+        val profile2 = Profile.from(Name("player2"))
+        val profile3 = Profile.from(Name("player2"))
+        val givenGamer1 = Gamer(profile1, Cards(listOf(card1)))
+        val givenGamer2 = Gamer(profile2, Cards(listOf(card2)))
+        val givenGamer3 = Gamer(profile3, Cards(listOf(card3)))
+        val players = Players(listOf(givenGamer1, givenGamer2, givenGamer3))
+
+        val actual = players.getPlayersByScore()
+
+        assertThat(actual).containsExactly(givenGamer3, givenGamer2, givenGamer1)
     }
 }
