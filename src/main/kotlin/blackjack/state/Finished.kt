@@ -7,8 +7,6 @@ abstract class Finished(cards: Cards) : Started(cards) {
 
     override fun draw(card: Card): State = this
 
-    override fun isFinished(): Boolean = true
-
     override fun profit(amount: Double): Double = earningRate() * amount
 
     abstract fun earningRate(): Double

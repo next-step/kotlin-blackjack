@@ -9,8 +9,6 @@ interface State {
 
     fun draw(card: Card): State
 
-    fun isFinished(): Boolean
-
     fun profit(amount: Double): Double
 
     fun stay(): State

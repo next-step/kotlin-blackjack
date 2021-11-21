@@ -4,7 +4,5 @@ import blackjack.model.Cards
 
 abstract class Running(cards: Cards) : Started(cards) {
 
-    override fun isFinished(): Boolean = false
-
     override fun profit(amount: Double): Double = amount
 }

@@ -5,8 +5,6 @@ import blackjack.model.Cards
 
 class Ready(override val cards: Cards = Cards.empty()) : State {
 
-    override fun isFinished(): Boolean = false
-
     override fun profit(amount: Double): Double = amount
 
     override fun draw(card: Card): State {
