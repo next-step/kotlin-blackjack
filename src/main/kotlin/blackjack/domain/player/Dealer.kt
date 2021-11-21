@@ -5,7 +5,7 @@ import blackjack.domain.card.CardsDeck
 
 class Dealer(
     val dealer: Participant
-) : BlackjackFunction by dealer, RevenueFunction by dealer {
+) : BlackjackFunction by dealer {
 
     fun addCardWhenLessThanStandard(
         cardsDeck: CardsDeck,

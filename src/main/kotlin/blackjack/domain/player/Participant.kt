@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 
 class Participant(
     val name: String,
-) : BlackjackFunction, RevenueFunction {
+) : BlackjackFunction {
 
     init {
         require(name.isNotBlank()) { "이름은 공백제외 1글자 이상이어야 합니다." }
