@@ -28,17 +28,17 @@ class DecisionMatch {
         val diePlayers = players.filter { player -> player.isOverDeadline() }
         val alivePlayers = players - diePlayers
 
-        diePlayers(dealer, diePlayers)
+        dealerWins(dealer, diePlayers)
 
         if (dealer.isOverDeadline()) {
-            allLose(dealer, alivePlayers)
+            dealerLose(dealer, alivePlayers)
             return
         }
 
         determineWinOrLose(dealer, alivePlayers)
     }
 
-    private fun diePlayers(
+    private fun dealerWins(
         dealer: Dealer,
         diePlayers: List<Player>,
     ) {
@@ -49,7 +49,7 @@ class DecisionMatch {
         }
     }
 
-    private fun allLose(
+    private fun dealerLose(
         dealer: Dealer,
         players: List<Player>,
     ) {
