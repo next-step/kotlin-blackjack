@@ -12,7 +12,7 @@ class DecisionMatch {
             val isPlayerBlackjack = player.isBlackjack()
 
             if (isPlayerBlackjack && !isDealerBlackjack) {
-                val revenue = player.betAmount / 2
+                val revenue = player.betAmount / HALF
                 player.addRevenue(revenue)
                 dealer.minusRevenue(revenue)
             } else if (!isPlayerBlackjack && isDealerBlackjack) {
@@ -78,5 +78,9 @@ class DecisionMatch {
                 player.minusRevenue(betAmount)
             }
         }
+    }
+
+    companion object {
+        private const val HALF = 2
     }
 }
