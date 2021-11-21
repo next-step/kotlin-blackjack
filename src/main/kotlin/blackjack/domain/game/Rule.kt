@@ -63,7 +63,7 @@ class Rule() {
         result: MutableMap<Player, List<Score>>
     ) {
         val gamerPoint = MAX_SCORE - gamer.getHighestPoint()
-        if (dealerPoint > gamerPoint) {
+        if (gamerPoint in 1 until dealerPoint) {
             result[dealer] = result.getOrDefault(dealer, emptyList()) + Score.LOSE
             result[gamer] = listOf(Score.WIN)
         }
