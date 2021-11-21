@@ -37,6 +37,7 @@ data class PlayerResultDto(val result: String, val name: String) {
                 GameResult.Type.WIN -> "승"
                 GameResult.Type.DRAW -> "무"
                 GameResult.Type.LOSE -> "패"
+                GameResult.Type.BLACK_JACK -> "블랙잭"
             }
         }
     }

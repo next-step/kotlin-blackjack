@@ -1,9 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.Hand
-import blackjack.domain.card.Symbol
-import blackjack.domain.card.Type
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,6 +22,27 @@ class HandTest {
 
         assertThat(hand.cards.size).isEqualTo(1)
         assertThat(hand.cards[0]).isEqualTo(card)
+    }
+
+    @Test
+    fun `점수가 BlackJackScore면서 카드가 2장이면 BlackJack`() {
+        val hand = Hand(listOf(
+            Card(Symbol.ACE, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+        ))
+
+        assertThat(hand.isBlackJack()).isTrue
+    }
+
+    @Test
+    fun `점수가 BlackJackScore지만 카드가 2장이 아니라면 BlackJack이 아님`() {
+        val hand = Hand(listOf(
+            Card(Symbol.ACE, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+            Card(Symbol.TEN, Type.CLUB),
+        ))
+
+        assertThat(hand.isBlackJack()).isFalse
     }
 
     @Test

@@ -17,10 +17,10 @@ class ScoreTest {
     }
 
     @Test
-    fun `점수가 21점이면 BlackJack이다`() {
+    fun `점수가 21점이면 BlackJack이 될 수 있다`() {
         val score = Score.BLACK_JACK_SCORE
 
-        assertThat(score.isBlackJack()).isTrue
+        assertThat(score.canBlackJack()).isTrue
         assertThat(score.isBust()).isFalse
     }
 
@@ -29,7 +29,7 @@ class ScoreTest {
     fun `점수가 21점 초과면 Bust이다`(scoreAsInt: Int) {
         val score = Score(scoreAsInt)
 
-        assertThat(score.isBlackJack()).isFalse
+        assertThat(score.canBlackJack()).isFalse
         assertThat(score.isBust()).isTrue
     }
 
@@ -38,7 +38,7 @@ class ScoreTest {
     fun `점수가 21점 미만이면 Hit이 가능하다`(scoreAsInt: Int) {
         val score = Score(scoreAsInt)
 
-        assertThat(score.isBlackJack()).isFalse
+        assertThat(score.canBlackJack()).isFalse
         assertThat(score.isBust()).isFalse
     }
 

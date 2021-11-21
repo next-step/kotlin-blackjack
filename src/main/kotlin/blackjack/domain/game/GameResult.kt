@@ -13,6 +13,7 @@ sealed interface GameResult {
         WIN,
         DRAW,
         LOSE,
+        BLACK_JACK,
         ;
     }
 }
@@ -35,6 +36,32 @@ object DealerBust : GameResult {
         return GamersResult(
             playerResult = GamerResult(ResultType.WIN, player),
             dealerResult = GamerResult(ResultType.LOSE, dealer),
+        )
+    }
+}
+
+object PlayerBlackJack : GameResult {
+    override fun isApplicableTo(dealer: Dealer, player: Player): Boolean {
+        return player.isBlackJack() && !dealer.isBlackJack()
+    }
+
+    override fun get(dealer: Dealer, player: Player): GamersResult {
+        return GamersResult(
+            playerResult = GamerResult(ResultType.BLACK_JACK, player),
+            dealerResult = GamerResult(ResultType.LOSE, dealer),
+        )
+    }
+}
+
+object DealerBlackJack : GameResult {
+    override fun isApplicableTo(dealer: Dealer, player: Player): Boolean {
+        return dealer.isBlackJack() && !player.isBlackJack()
+    }
+
+    override fun get(dealer: Dealer, player: Player): GamersResult {
+        return GamersResult(
+            playerResult = GamerResult(ResultType.LOSE, player),
+            dealerResult = GamerResult(ResultType.WIN, dealer),
         )
     }
 }

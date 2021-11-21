@@ -8,6 +8,8 @@ object GamerResultFactory {
     private val gameResults = listOf(
         PlayerBust,
         DealerBust,
+        PlayerBlackJack,
+        DealerBlackJack,
         PlayerWin,
         PlayerDraw,
         PlayerLose,

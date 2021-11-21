@@ -12,11 +12,11 @@ private val NINE = Card(Symbol.NINE, Type.CLUB)
 private val TEN = Card(Symbol.TEN, Type.CLUB)
 
 @Suppress("TestFunctionName")
-fun Hand(score: Int): Hand {
-    return Hand(findCards(score))
+fun Hand(score: Int, isBlackJack: Boolean = false): Hand {
+    return Hand(findCards(score, isBlackJack))
 }
 
-private fun findCards(score: Int): List<Card> {
+private fun findCards(score: Int, isBlackJack: Boolean): List<Card> {
     if (score in 2..10) {
         val symbol = Symbol.values().first { it.score.value == score }
         return listOf(Card(symbol, Type.CLUB))
@@ -28,7 +28,10 @@ private fun findCards(score: Int): List<Card> {
         val symbol = Symbol.values().first { it.score.value == score - 10 }
         return listOf(TEN, Card(symbol, Type.CLUB))
     }
-    if (score == 21) {
+    if (score == 21 && isBlackJack) {
+        return listOf(TEN, Card(Symbol.ACE, Type.CLUB))
+    }
+    if (score == 21 && !isBlackJack) {
         return listOf(TWO, NINE, TEN)
     }
     if (score <= 30) {
