@@ -19,6 +19,7 @@ value class Score private constructor(val score: Int) {
         private const val CACHE_LIMIT_SCORE = 32
         private val CACHE: Map<Int, Score> = (MINIMUM_SCORE..CACHE_LIMIT_SCORE).associateWith { Score(it) }
 
+        val ZERO: Score = from(MINIMUM_SCORE)
         val EXTRA_ACE_SCORE: Score = from(EXTRA_ACE_SCORE_RANGE)
         fun from(score: Int): Score = CACHE[score] ?: throw ScoreOutOfBoundsException(score)
     }

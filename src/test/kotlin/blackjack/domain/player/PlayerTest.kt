@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.player.state.Hands
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -45,6 +46,17 @@ internal class PlayerTest {
         val playingPlayer = player.continuePlay("y")
 
         assertThat(playingPlayer.isFinished()).isFalse
+    }
+
+    @Test
+    fun `플레이어는 현재 가지고 있는 패를 반환할 수 있디`() {
+        val temp = Player.fromName("test")
+        val playerCards = listOf(
+            Card(Suit.CLUB, Denomination.ACE),
+            Card(Suit.CLUB, Denomination.TWO)
+        )
+        val player = temp + playerCards
+        assertThat(player.hands).isEqualTo(Hands.from(playerCards))
     }
 
     @Test

@@ -1,33 +1,33 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.player.state.GameState
+import blackjack.domain.player.state.PlayerState
 import blackjack.domain.player.state.Hands
 import blackjack.domain.player.state.Started
 import blackjack.ui.Command
 
 data class Player(
     private val _name: Name,
-    private val gameState: GameState = Started(),
+    private val playerState: PlayerState = Started(),
 ) {
     val name: String
         get() = _name.name
 
     val hands: Hands
-        get() = gameState.hands
+        get() = playerState.hands
 
     operator fun plus(extraCards: List<Card>): Player {
-        return Player(_name, gameState.plus(extraCards))
+        return Player(_name, playerState.plus(extraCards))
     }
 
-    fun isFinished(): Boolean = gameState.isFinished()
+    fun isFinished(): Boolean = playerState.isFinished()
 
     fun continuePlay(commandString: String): Player {
         val command = Command.values(commandString)
         if (command.nextDraw) {
             return this
         }
-        return Player(_name, gameState.stay())
+        return Player(_name, playerState.stay())
     }
 
     companion object {

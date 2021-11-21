@@ -10,7 +10,13 @@ value class Hands private constructor(val hands: List<Card>) {
     fun isEmpty(): Boolean = this == EMPTY
     fun isStart(): Boolean = hands.size == 2
 
-    fun score(): Score = calculateAceScore(sumScore())
+    fun score(): Score {
+        if (isEmpty()) {
+            return Score.ZERO
+        }
+        val sumScore = sumScore()
+        return calculateAceScore(sumScore)
+    }
 
     private fun sumScore() = hands
         .map(Card::score)
