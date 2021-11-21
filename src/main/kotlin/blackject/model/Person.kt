@@ -26,7 +26,7 @@ open class Person(
         cards.addCard(newCards)
     }
 
-    open fun setGameResult(result: ResultType) {
+    open fun changeResultType(result: ResultType) {
         this.result = result
     }
 }

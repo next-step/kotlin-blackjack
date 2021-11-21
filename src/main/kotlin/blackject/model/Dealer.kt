@@ -11,6 +11,8 @@ class Dealer(
         return maxInt >= cards.getResultNumber(maxInt, exceptCard)
     }
 
+    fun isOverMaxInt(maxInt: Int, exceptCard: CardNumber): Boolean = getScore(maxInt, exceptCard) > maxInt
+
     companion object {
         const val NAME = "딜러"
     }

@@ -52,8 +52,8 @@ class BlackjectController(
             .let {
                 if (!it.isTakeMoreCard(rule.getMaxNumber(it.type), rule.EXCEPT_NUMBER)) return
                 giveCard(it, CardsDeck.NUMBER_ONE_TIME)
-                if (it.cards.getResultNumber(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER) {
-                    it.setGameResult(ResultType.BUST)
+                if (it.isOverMaxInt(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) {
+                    it.changeResultType(ResultType.BUST)
                     return
                 }
                 OutputView.printAddedDealerCard(rule.MAX_NUMBER_DEALER)
@@ -81,9 +81,9 @@ class BlackjectController(
             .filterNot { it.result != null }
             .forEach {
                 when {
-                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.setGameResult(ResultType.WIN)
-                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.setGameResult(ResultType.BUST)
-                    else -> it.setGameResult(ResultType.DEFEAT)
+                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
+                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.changeResultType(ResultType.BUST)
+                    else -> it.changeResultType(ResultType.DEFEAT)
                 }
             }
         OutputView.gameWinDefeat(persons)
