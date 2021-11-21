@@ -35,7 +35,9 @@ class PlayingAreaImpl(
 
     override fun isBustPlayer(): Boolean = _strategy is Bust
 
-    override fun getScore(): Int = _cards.sumCards(_cards.sumCards())
+    override fun getScore(): Int {
+        return _cards.sumCards()
+    }
 
     override fun noReceiveCard() {
         this._strategy = Strategy.changeDecision(getScore(), false)
