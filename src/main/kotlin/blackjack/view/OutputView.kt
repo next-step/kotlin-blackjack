@@ -4,19 +4,20 @@ import blackjack.model.Dealer
 import blackjack.model.Gamer
 import blackjack.model.Gamers
 import blackjack.model.Player
+import blackjack.view.res.Resource
 import blackjack.view.res.getString
 
 class OutputView {
 
     fun printStart(gamers: Gamers) {
         val names = gamers.players().map { it.name }.toList()
-        println("딜러와 ${names.joinToString()}에게 2장의 카드를 나누었습니다.")
+        println(Resource.STR_FIRST_DRAW_CARD.format(names.joinToString(), 2))
         gamers.toList().forEach { player -> printCards(player, true) }
         println()
     }
 
     fun printRunning(gamer: Gamer) = when (gamer) {
-        is Dealer -> println("\n딜러는 16이하라 한장의 카드를 더 받았습니다")
+        is Dealer -> println(Resource.STR_RUNNING_DEALER_MORE_CARD)
         is Player -> printCards(gamer, true)
     }
 
@@ -24,29 +25,29 @@ class OutputView {
         val cardsDisplay = gamer.cards.toList().joinToString {
             "${it.denomination.symbol}${getString(it.suit)}"
         }
-        print("${gamer.name}카드: $cardsDisplay")
+        print(Resource.STR_CARDS.format(gamer.name, cardsDisplay))
         if (newline) println()
     }
 
     fun printResult(gamers: Gamers) {
         val dealer = gamers.dealer() ?: return
-        val dealerScore = dealer.score
         val players = gamers.players()
 
         // 딜러 카드
         println()
         printCards(dealer, false)
-        println(" - 결과: $dealerScore")
+        println(Resource.STR_RESULT_SCORE.format(dealer.score))
 
         // 플레이어 카드
         players.forEach { player ->
             printCards(player, false)
-            println(" - 결과: ${player.score}")
+            println(Resource.STR_RESULT_SCORE.format(player.score))
         }
 
         // 최종 수익
-        println("## 최종 수익")
-        println("딜러: ${players.sumOf { -it.profit() }}")
+        println()
+        println(Resource.STR_FINAL_PROFIT)
+        println(Resource.STR_DEALER_PROFIT.format(players.sumOf { -it.profit() }))
         players.forEach { player -> println("${player.name}: ${player.profit()}") }
     }
 }
