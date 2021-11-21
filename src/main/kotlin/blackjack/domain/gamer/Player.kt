@@ -6,6 +6,9 @@ import blackjack.domain.state.Blackjack
 import blackjack.domain.state.FirstDraw
 import blackjack.domain.state.Stand
 import blackjack.domain.state.State
+import blackjack.domain.state.result.Lose
+import blackjack.domain.state.result.Push
+import blackjack.domain.state.result.Win
 
 class Player private constructor(
     name: String,
@@ -33,6 +36,22 @@ class Player private constructor(
     override fun stand(): Player {
         return Player(name, Stand(cards))
     }
+
+    fun win(): Player {
+        return Player(name, Win(cards))
+    }
+
+    fun push(): Player {
+        return Player(name, Push(cards))
+    }
+
+    fun lose(): Player {
+        return Player(name, Lose(cards))
+    }
+
+    fun isBlackjack(): Boolean = cards.isBlackjack()
+
+    fun isTwentyOne(): Boolean = cards.isTwentyOne()
 
     companion object {
         fun of(name: String, cards: Cards): Player {

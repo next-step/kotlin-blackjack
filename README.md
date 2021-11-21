@@ -49,10 +49,13 @@
 - [X] Dealer는 가장 먼저 카드를 받고, 가장 마지막에 카드를 뽑아야 한다.
 - [ ] Dealer의 카드 합이 21을 초과하면 남아있던 Player 들은 승리한다.
 - [ ] 게임 완료 후 승패를 출력한다.
-  - [ ] 게임 결과를 관리하는 Class를 정의한다.
-    - [ ] 각 Gamer의 정보를 전달 받는다.
-  - [ ] Player의 승리 케이스를 정의한다.
-    - [ ] Dealer Bust
-    - [ ] Dealer보다 Player의 결과 값이 클 경우
-    - [ ] Player Blackjack
-    - [ ] Player TwentyOne
+  - [X] Dealer의 스코어를 확인한다.
+  - [X] Dealer의 스코어와 Player의 스코어를 비교한다. 
+  - [X] 게임 결과를 관리하는 Class를 정의한다.
+    - [X] 각 Gamer의 정보를 전달 받는다.
+  - [X] Player의 케이스를 정의한다.
+    - [X] Dealer Bust (Player Win)
+    - [X] Dealer보다 Player의 결과 값이 클 경우 (Player Win)
+    - [X] Dealer와 Player의 결과 값이 같을 경우 (Player Push)
+    - [X] Player Blackjack (Player Win)
+    - [X] Player TwentyOne (Player Win)

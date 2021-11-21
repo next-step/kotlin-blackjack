@@ -1,19 +1,20 @@
 package blackjack.domain.deck
 
-class Cards {
-    private val _value: MutableList<Card> = mutableListOf()
-    val value = _value
+class Cards(
+    value: List<Card> = emptyList(),
+) {
+    val value = value.toMutableList()
 
     fun receiveCard(card: Card) {
-        _value.add(card)
+        value.add(card)
     }
 
     fun isBlackjack(): Boolean {
-        return _value.size == BLACKJACK_DEAL_CARD_COUNT && calculateTotalScore() == BLACKJACK_WINNING_SCORE
+        return value.size == BLACKJACK_DEAL_CARD_COUNT && calculateTotalScore() == BLACKJACK_WINNING_SCORE
     }
 
     fun isTwentyOne(): Boolean {
-        return _value.size > BLACKJACK_DEAL_CARD_COUNT && calculateTotalScore() == BLACKJACK_WINNING_SCORE
+        return value.size > BLACKJACK_DEAL_CARD_COUNT && calculateTotalScore() == BLACKJACK_WINNING_SCORE
     }
 
     fun isBust(): Boolean {
@@ -22,10 +23,10 @@ class Cards {
 
     fun getTotalScore(): Int = calculateTotalScore()
 
-    fun haveCards(): String = _value.joinToString { it.toString() }
+    fun haveCards(): String = value.joinToString { it.toString() }
 
     private fun calculateTotalScore(): Int {
-        val aceCount = _value.count { it.isAce() }
+        val aceCount = value.count { it.isAce() }
         val currentScore = sumOfNotAce()
         return calculateAceCase(aceCount, currentScore)
     }
@@ -47,7 +48,7 @@ class Cards {
     }
 
     private fun sumOfNotAce(): Int {
-        return _value.asSequence()
+        return value.asSequence()
             .filterNot { it.isAce() }
             .sumOf { it.getScore() }
     }

@@ -2,6 +2,7 @@ package blackjack.domain.gamer
 
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
+import blackjack.domain.state.Bust
 import blackjack.domain.state.State
 import blackjack.exception.InvalidPlayerNameException
 
@@ -23,6 +24,10 @@ abstract class Gamer(
         return state.draw(card)
     }
 
+    fun currentScore(): Int {
+        return cards.getTotalScore()
+    }
+
     fun isStand(playable: Boolean): Boolean {
         return state.isStand(playable)
     }
@@ -34,6 +39,8 @@ abstract class Gamer(
     fun haveCards(): String {
         return cards.haveCards()
     }
+
+    fun isBust(): Boolean = state is Bust
 
     abstract fun prepare(deck: Deck): Gamer
     abstract fun play(deck: Deck): Gamer

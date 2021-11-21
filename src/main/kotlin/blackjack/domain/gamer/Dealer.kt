@@ -45,14 +45,6 @@ class Dealer private constructor(
         return Dealer(name, Stand(cards))
     }
 
-    fun preparedCurrentScore(): Int {
-        return cards.getTotalScore()
-    }
-
-    fun currentScore(): Int {
-        return cards.getTotalScore()
-    }
-
     companion object {
         private const val DEALER_NAME = "딜러"
 
