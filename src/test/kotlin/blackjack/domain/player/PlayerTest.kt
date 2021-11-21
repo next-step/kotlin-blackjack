@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `Ace 가 2장일때 Card 의 합은 12`() {
-        val player = Player(Participant("one"), 0.0).player
+        val player = Player(Participant("one")).player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
         player.addCard(Card(CardPattern.DIAMOND, CardDenomination.ACE))
@@ -23,7 +23,7 @@ class PlayerTest {
 
     @Test
     fun `Ace, King 일때 Card 의 합은 21`() {
-        val player = Player(Participant("one"), 0.0).player
+        val player = Player(Participant("one")).player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
         player.addCard(Card(CardPattern.DIAMOND, CardDenomination.KING))
@@ -35,7 +35,7 @@ class PlayerTest {
 
     @Test
     fun `9, ACE, ACE 일때 Card 의 합은 21`() {
-        val player = Player(Participant("one"), 0.0).player
+        val player = Player(Participant("one")).player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
         player.addCard(Card(CardPattern.HEART, CardDenomination.ACE))
@@ -48,7 +48,7 @@ class PlayerTest {
 
     @Test
     fun `카드를 추가하면 카드가 1장 추가된다`() {
-        val player = Player(Participant("one"), 0.0).player
+        val player = Player(Participant("one")).player
 
         player.addCard(Card(CardPattern.HEART, CardDenomination.NINE))
 
@@ -59,7 +59,7 @@ class PlayerTest {
 
     @Test
     fun `가진 카드의합이 21보다 작을때 카드를 받을 수 있다`() {
-        val player = Player(Participant("one"), 0.0)
+        val player = Player(Participant("one"))
 
         val actual = player.isCardReceiveAble()
 
@@ -68,7 +68,7 @@ class PlayerTest {
 
     @Test
     fun `가진 카드의합이 21이상일 때 카드를 받을 수 없다`() {
-        val player = Player(Participant("one"), 0.0).apply {
+        val player = Player(Participant("one")).apply {
             player.addCard(Card(CardPattern.DIAMOND, CardDenomination.TEN))
             player.addCard(Card(CardPattern.HEART, CardDenomination.TEN))
             player.addCard(Card(CardPattern.CLOVER, CardDenomination.TEN))

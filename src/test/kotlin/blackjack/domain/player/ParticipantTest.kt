@@ -17,13 +17,13 @@ class ParticipantTest {
     @ParameterizedTest
     fun `참가자 이름 빈값, 공백일때 exception`(name: String) {
         assertThrows<IllegalArgumentException> {
-            Player(Participant(""), 0.0)
+            Player(Participant(""))
         }
     }
 
     @Test
     fun `카드의 합이 21일때 Blackjack`() {
-        val player = Player(Participant("one"), 0.0).apply {
+        val player = Player(Participant("one")).apply {
             addCard(Card(CardPattern.CLOVER, CardDenomination.TEN))
             addCard(Card(CardPattern.CLOVER, CardDenomination.ACE))
         }
@@ -34,7 +34,7 @@ class ParticipantTest {
 
     @Test
     fun `카드의 합이 21이 아닐때는 Not Blackjack`() {
-        val player = Player(Participant("one"), 0.0).apply {
+        val player = Player(Participant("one")).apply {
             addCard(Card(CardPattern.CLOVER, CardDenomination.TEN))
             addCard(Card(CardPattern.HEART, CardDenomination.TEN))
         }
@@ -45,7 +45,7 @@ class ParticipantTest {
 
     @Test
     fun `수익금에 5000원을 더할시 기존 수익금에 5000 원이 추가된다`() {
-        val player = Player(Participant("one"), 0.0)
+        val player = Player(Participant("one"))
 
         player.addRevenue(5000.0)
 
@@ -54,7 +54,7 @@ class ParticipantTest {
 
     @Test
     fun `수익금에 5000원을 빼면 기존 수익금에 5000 원이 줄어든다`() {
-        val player = Player(Participant("one"), 0.0)
+        val player = Player(Participant("one"))
 
         player.minusRevenue(5000.0)
 
