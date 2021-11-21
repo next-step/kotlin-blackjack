@@ -39,6 +39,7 @@ class Participant(
 
     override fun minusRevenue(loss: Double) {
         this.revenue -= loss
+        println(this.revenue)
     }
 
     override fun getRevenue(): Double = revenue
