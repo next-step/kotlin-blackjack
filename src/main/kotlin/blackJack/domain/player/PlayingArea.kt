@@ -3,7 +3,7 @@ package blackJack.domain.player
 import blackJack.domain.card.Card
 import blackJack.domain.card.Cards
 
-interface PlayingArea {
+sealed interface PlayingArea {
     fun toCards(): Cards
     fun toStrategy(): Strategy
     fun getAbleReceivedCard(): Boolean
