@@ -28,6 +28,7 @@ class BlackjackController() {
         OutputView.printPlayingPhase(playingPhasedPlayers)
 
         val result = rule.judge(playingPhasedPlayers)
+        OutputView.printGameResult(result)
     }
 
     private fun createGamers(): Players {
