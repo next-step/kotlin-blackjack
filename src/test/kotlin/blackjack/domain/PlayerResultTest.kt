@@ -17,7 +17,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@DisplayName("블랙잭 게임 결과 테스트")
+@DisplayName("블랙잭 게임 플레이어 결과 테스트")
 class PlayerResultTest {
 
     @Test
