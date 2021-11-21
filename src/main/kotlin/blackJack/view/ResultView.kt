@@ -1,5 +1,6 @@
 package blackJack.view
 
+import blackJack.domain.player.Dealer
 import blackJack.domain.result.Results
 import blackJack.dto.DealerDto
 import blackJack.dto.PlayerDto
@@ -8,6 +9,8 @@ import blackJack.dto.GamePlayersDto
 object ResultView {
     fun receiveTwoCard(gamePlayersDto: GamePlayersDto) {
         println("${gamePlayersDto.getPlayerNames()} 에게 2장의 나누었습니다.")
+        val dealer = gamePlayersDto.dealer
+        println("${dealer.name} : ${listOf(dealer.cards.first())}")
         gamePlayersDto.map {
             println("${it.name} : ${it.cards}")
         }
@@ -32,7 +35,7 @@ object ResultView {
     }
 
     fun dealerGameResult(dealerDto: DealerDto) {
-        println("${dealerDto.name}카드 :${dealerDto.cards} - 결과: ${dealerDto.score}")
+        println("${dealerDto.name} 카드 :${dealerDto.cards} - 결과: ${dealerDto.score}")
     }
 
     fun winOrLoseView(results: Results) {
@@ -40,9 +43,9 @@ object ResultView {
         val playerResults = results.playerResults
 
         println("## 최종 승패")
-        println("DEALER : 승 : ${dealerResult.win}, 패 :${dealerResult.lose}, 무: ${dealerResult.draw}")
+        println("${Dealer.DEALER_NAME} : 승 : ${dealerResult.win}, 패 :${dealerResult.lose}, 무: ${dealerResult.draw}")
         playerResults.toList().forEach {
-            println("${it.name}: ${it.winDrawLose}")
+            println("${it.name}: ${it.winDrawLose.value}")
         }
     }
 }

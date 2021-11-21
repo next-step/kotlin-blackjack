@@ -9,7 +9,7 @@ class Dealer(
         getScore() < ABLE_MAXIMUM_SUM
 
     companion object {
-        private const val DEALER_NAME = "DEALER"
+        const val DEALER_NAME = "딜러"
         private const val ABLE_MAXIMUM_SUM = 17
     }
 }

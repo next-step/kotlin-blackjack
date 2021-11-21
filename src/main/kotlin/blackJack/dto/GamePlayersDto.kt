@@ -4,7 +4,7 @@ import blackJack.domain.player.Dealer
 import blackJack.domain.player.GamePlayers
 import blackJack.domain.player.Player
 
-class GamePlayersDto(private val players: List<PlayerDto>, private val dealer: DealerDto) : List<PlayerDto> by players {
+class GamePlayersDto(private val players: List<PlayerDto>, val dealer: DealerDto) : List<PlayerDto> by players {
     fun getPlayerNames(): String = players.joinToString {
         it.name
     }
@@ -20,29 +20,27 @@ class GamePlayersDto(private val players: List<PlayerDto>, private val dealer: D
     }
 }
 
-class PlayerDto(val name: String, val cards: String, val score: Int) {
-
+class PlayerDto(val name: String, val cards: List<String>, val score: Int) {
     companion object {
         fun of(player: Player): PlayerDto {
             val name = player.name
-            val cards = player.status.toCards().joinToString {
-                "${it.denomination.score(player.getScore())}${it.suit}"
-            }
             val score = player.getScore()
-
+            val cards = player.status.toCards().map {
+                "${it.denomination.value}${it.suit.value}"
+            }
             return PlayerDto(name, cards, score)
         }
     }
 }
 
-class DealerDto(val name: String, val cards: String, val score: Int) {
+class DealerDto(val name: String, val cards: List<String>, val score: Int) {
     companion object {
         fun of(dealer: Dealer): DealerDto {
             val name = dealer.name
-            val cards = dealer.status.toCards().joinToString {
-                "${it.denomination.score(dealer.getScore())}${it.suit}"
-            }
             val score = dealer.getScore()
+            val cards = dealer.status.toCards().map {
+                "${it.denomination.value}${it.suit.value}"
+            }
 
             return DealerDto(name, cards, score)
         }
