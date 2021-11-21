@@ -9,9 +9,9 @@ import blackjack.domain.player.Player
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class DetermineMatchTest {
+class DecisionMatchTest {
 
-    private val determineMatch = DetermineMatch()
+    private val decisionMatch = DecisionMatch()
 
     @Test
     fun `참가자가 첫 카드가 블랙잭이고 딜러는 블랙잭이 아닐 때 배팅금액의 150% 를 받는다`() {
@@ -21,7 +21,7 @@ class DetermineMatchTest {
             addCard(Card(CardPattern.CLOVER, CardDenomination.ACE))
         }
 
-        determineMatch.matchWhenFirstCardBlackjack(
+        decisionMatch.matchWhenFirstCardBlackjack(
             dealer,
             listOf(player)
         )
@@ -41,7 +41,7 @@ class DetermineMatchTest {
             addCard(Card(CardPattern.CLOVER, CardDenomination.ACE))
         }
 
-        determineMatch.matchWhenFirstCardBlackjack(
+        decisionMatch.matchWhenFirstCardBlackjack(
             dealer,
             listOf(player)
         )
@@ -58,7 +58,7 @@ class DetermineMatchTest {
         }
         val player = Player(Participant("one"), 100.0)
 
-        determineMatch.matchWhenFirstCardBlackjack(
+        decisionMatch.matchWhenFirstCardBlackjack(
             dealer,
             listOf(player)
         )
@@ -79,7 +79,7 @@ class DetermineMatchTest {
         val two = Player(Participant("two"), 150.0)
         val players = listOf(one, two)
 
-        determineMatch.match(dealer, players)
+        decisionMatch.match(dealer, players)
 
         assertEquals(100.0, one.getRevenue())
         assertEquals(150.0, two.getRevenue())
@@ -97,7 +97,7 @@ class DetermineMatchTest {
         val one = Player(Participant("one"), 100.0)
         val players = listOf(one)
 
-        determineMatch.match(dealer, players)
+        decisionMatch.match(dealer, players)
 
         assertEquals(100.0, dealer.getRevenue())
         assertEquals(-100.0, one.getRevenue())
@@ -115,7 +115,7 @@ class DetermineMatchTest {
 
         val players = listOf(player)
 
-        determineMatch.match(dealer, players)
+        decisionMatch.match(dealer, players)
 
         assertEquals(100.0, player.getRevenue())
         assertEquals(-100.0, dealer.getRevenue())
@@ -139,7 +139,7 @@ class DetermineMatchTest {
             addCard(Card(pattern = CardPattern.CLOVER, denomination = CardDenomination.EIGHT))
         }
 
-        determineMatch.match(dealer, listOf(one, two, three))
+        decisionMatch.match(dealer, listOf(one, two, three))
 
         assertEquals(100.0, one.getRevenue())
         assertEquals(-150.0, two.getRevenue())
@@ -156,7 +156,7 @@ class DetermineMatchTest {
             addCard(Card(pattern = CardPattern.DIAMOND, denomination = CardDenomination.TWO))
         }
 
-        determineMatch.match(dealer, listOf(one))
+        decisionMatch.match(dealer, listOf(one))
 
         assertEquals(-100.0, one.getRevenue())
         assertEquals(100.0, dealer.getRevenue())

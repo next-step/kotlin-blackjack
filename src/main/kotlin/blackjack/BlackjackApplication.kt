@@ -6,12 +6,12 @@ import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.extensions.fromYNToBoolean
 import blackjack.presentation.BlackjackGame
-import blackjack.service.DetermineMatch
+import blackjack.service.DecisionMatch
 import blackjack.util.PlayersParserUtil
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-private val blackjackGame = BlackjackGame(DetermineMatch())
+private val blackjackGame = BlackjackGame(DecisionMatch())
 
 fun main() {
     val cardsDeck = CardsDeck()

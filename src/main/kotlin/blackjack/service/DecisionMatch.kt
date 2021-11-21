@@ -3,7 +3,7 @@ package blackjack.service
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
-class DetermineMatch {
+class DecisionMatch {
 
     fun matchWhenFirstCardBlackjack(dealer: Dealer, players: List<Player>) {
         val isDealerBlackjack = dealer.isBlackjack()

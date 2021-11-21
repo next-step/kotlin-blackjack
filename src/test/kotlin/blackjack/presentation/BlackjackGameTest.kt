@@ -9,7 +9,7 @@ import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
 import blackjack.exception.CardExhaustException
-import blackjack.service.DetermineMatch
+import blackjack.service.DecisionMatch
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.assertThrows
 
 class BlackjackGameTest {
 
-    private val blackjackGame = BlackjackGame(DetermineMatch())
+    private val blackjackGame = BlackjackGame(DecisionMatch())
 
     @Test
     fun `각 플레이어와 딜러는 시작시 2장의 카드를 받는다`() {
