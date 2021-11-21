@@ -3,10 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-data class Dealer(
-    val profile: Profile,
-    val cards: Cards = Cards.EMPTY
-) : Player {
+class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
     override fun receiveCard(card: Card): Player {
         if (!canReceiveCard()) {
@@ -21,22 +18,6 @@ data class Dealer(
 
     override fun turnOn(): Player {
         return Dealer(profile.turnOn(), cards)
-    }
-
-    override fun isBurst(): Boolean {
-        return profile.isBurst()
-    }
-
-    override fun openCards(): Cards {
-        return cards
-    }
-
-    override fun getPlayerName(): Name {
-        return profile.name
-    }
-
-    override fun getHighestPoint(): Int {
-        return cards.getHighestPoint()
     }
 
     override fun canReceiveCard(): Boolean {

@@ -3,10 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-data class Gamer(
-    val profile: Profile,
-    val cards: Cards = Cards.EMPTY
-) : Player {
+class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
     override fun receiveCard(card: Card): Player {
         return Gamer(profile, cards.addCards(card))

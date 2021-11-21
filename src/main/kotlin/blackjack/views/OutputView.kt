@@ -36,6 +36,9 @@ object OutputView {
         for (entry in result) {
             val person = entry.key
             printDealer(person, result)
+        }
+        for (entry in result) {
+            val person = entry.key
             printGamer(person, result)
         }
     }
@@ -52,9 +55,8 @@ object OutputView {
     }
 
     private fun printDealerScore(
-        scores: Map<Score, Int>,
-
-        ) {
+        scores: Map<Score, Int>
+    ) {
         val sb = StringBuilder()
         sb.append(DEALER)
         for (score in scores) {

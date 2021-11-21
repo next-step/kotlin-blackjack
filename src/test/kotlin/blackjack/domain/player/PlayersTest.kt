@@ -84,7 +84,7 @@ internal class PlayersTest {
         val players = Players(listOf(givenGamer1, givenGamer2))
 
         val updatedPlayers = players.endPlayerTurn(givenGamer1)
-        val actual = updatedPlayers.players.find { it == givenGamer1 }
+        val actual = updatedPlayers.players.find { it.getPlayerName() == givenGamer1.getPlayerName() }
 
         assertThat(actual?.isBurst()).isFalse
     }
