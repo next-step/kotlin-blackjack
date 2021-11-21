@@ -2,6 +2,8 @@ package blackjack.domain.player.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Score
+import blackjack.error.InvalidAddCardsException
+import blackjack.error.InvalidMapToStayException
 
 sealed class PlayerState(open val hands: Hands) {
     fun isEmpty(): Boolean = hands.isEmpty()
@@ -43,8 +45,8 @@ data class Hit(override val hands: Hands) : Running(hands) {
 
 sealed class Finish(hands: Hands) : PlayerState(hands) {
     override fun isFinished(): Boolean = true
-    override fun stay(): PlayerState = throw IllegalArgumentException()
-    override fun plus(cards: List<Card>): PlayerState = throw IllegalArgumentException()
+    override fun stay(): PlayerState = throw InvalidMapToStayException(this::class.toString())
+    override fun plus(cards: List<Card>): PlayerState = throw InvalidAddCardsException(this::class.toString())
 }
 
 data class BlackJack(override val hands: Hands) : Finish(hands)

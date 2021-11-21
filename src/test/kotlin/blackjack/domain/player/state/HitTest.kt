@@ -13,7 +13,7 @@ import org.junit.jupiter.api.assertAll
 internal class HitTest {
 
     @Test
-    fun `Hit 상태는 비어있다`() {
+    fun `Hit 상태는 비어있지 않다`() {
         val hit = testHit()
         assertThat(hit.isEmpty()).isFalse
     }
