@@ -50,5 +50,12 @@ class OutputView {
                 println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             }
         }
+
+        fun printFinalOutcome(gamers: List<Gamer>) {
+            println("## 최종 승패")
+            for (gamer in gamers) {
+                println("${gamer.name}: ${gamer.result()}")
+            }
+        }
     }
 }

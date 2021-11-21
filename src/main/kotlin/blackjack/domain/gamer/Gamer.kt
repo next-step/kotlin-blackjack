@@ -42,6 +42,8 @@ abstract class Gamer(
 
     fun isBust(): Boolean = state is Bust
 
+    fun result(): String = state.toString()
+
     abstract fun prepare(deck: Deck): Gamer
     abstract fun play(deck: Deck): Gamer
     abstract fun stand(): Gamer

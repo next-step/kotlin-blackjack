@@ -1,5 +1,6 @@
 package blackjack.presentation
 
+import blackjack.domain.GameResult
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
 import blackjack.domain.gamer.Dealer
@@ -16,7 +17,10 @@ class BlackjackController(
 ) {
     fun run() {
         val preparedGamers = prepare()
-        play(preparedGamers)
+        val playedBlackjack = play(preparedGamers)
+        val gameResult = GameResult(playedBlackjack)
+        val playersResult = gameResult.calculatePlayersResult()
+        OutputView.printFinalOutcome(playersResult)
     }
 
     private fun initGamers(): List<Gamer> {
@@ -68,7 +72,7 @@ class BlackjackController(
     }
 
     private fun playDealer(dealer: Dealer): Gamer {
-        val preparedCurrentScore = dealer.preparedCurrentScore()
+        val preparedCurrentScore = dealer.currentScore()
         OutputView.printCurrentDealerScore(preparedCurrentScore)
         while (true) {
             val currentScore = dealer.currentScore()

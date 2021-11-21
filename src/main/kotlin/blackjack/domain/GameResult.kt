@@ -7,6 +7,7 @@ import blackjack.domain.gamer.Player
 class GameResult(
     private val gamers: Gamers,
 ) {
+    val value = gamers.value
 
     fun calculatePlayersResult(): List<Player> {
         val dealer = gamers.getDealer()
@@ -22,6 +23,9 @@ class GameResult(
         }
         if (player.isBlackjack() || player.isTwentyOne()) {
             return player.win()
+        }
+        if (player.isBust()) {
+            return player.lose()
         }
         if (dealer.isBust() && !player.isBust()) {
             return player.win()
