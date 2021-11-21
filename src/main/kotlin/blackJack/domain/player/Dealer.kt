@@ -1,15 +1,12 @@
-package blackJack.domain
+package blackJack.domain.player
 
 class Dealer(
-    name: String = DEALER_NAME,
-) : GamePlayer(name = name) {
+    val name: String = DEALER_NAME,
+    val status: PlayingAreaImpl = PlayingAreaImpl.of()
+) : PlayingArea by status {
 
     override fun getAbleReceivedCard(): Boolean =
         getScore() < ABLE_MAXIMUM_SUM
-
-    override fun isPlayer(): Boolean {
-        return !super.isPlayer()
-    }
 
     companion object {
         private const val DEALER_NAME = "DEALER"

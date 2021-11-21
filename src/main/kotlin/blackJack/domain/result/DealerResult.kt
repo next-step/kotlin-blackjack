@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.result
 
 class DealerResult(
     val win: Int = 0,

@@ -1,4 +1,7 @@
-package blackJack.domain
+package blackJack.domain.result
+
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.Player
 
 class PlayerResult(
     val name: String,
@@ -6,12 +9,12 @@ class PlayerResult(
 ) {
 
     companion object {
-        fun winOrLose(player: GamePlayer, dealer: GamePlayer): PlayerResult =
+        fun winOrLose(player: Player, dealer: Dealer): PlayerResult =
             PlayerResult(
-                player.name, winDrawLose(dealer, player)
+                player.name, winDrawLose(player, dealer)
             )
 
-        private fun winDrawLose(dealer: GamePlayer, player: GamePlayer): WinDrawLose =
+        private fun winDrawLose(player: Player, dealer: Dealer): WinDrawLose =
             when {
                 dealer.isBustPlayer() || !player.isBustPlayer() && player.getScore() > dealer.getScore() -> WinDrawLose.WIN
                 player.getScore() == dealer.getScore() -> WinDrawLose.DRAW

@@ -1,18 +1,18 @@
-package blackJack.domain
+package blackJack.domain.player
 
-interface PlayerDecision {
+interface Strategy {
     fun isContinue(): Boolean
 
     companion object {
-        fun changeDecision(score: Int, isContinue: Boolean = true): PlayerDecision {
+        fun changeDecision(score: Int, isContinue: Boolean = true): Strategy {
             if (!isContinue) {
-                return Stay()
+                return Stay
             }
 
             return when (score) {
-                in MIN_NUMBER..MAX_NUMBER -> Hit()
-                BLACKJACK -> BlackJack()
-                else -> Bust()
+                in MIN_NUMBER..MAX_NUMBER -> Hit
+                BLACKJACK -> BlackJack
+                else -> Bust
             }
         }
 

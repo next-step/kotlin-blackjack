@@ -1,5 +1,11 @@
 package blackJack.domain
 
+import blackJack.domain.card.Card
+import blackJack.domain.card.Denomination
+import blackJack.domain.card.Suit
+import blackJack.domain.player.Hit
+import blackJack.domain.player.Player
+import blackJack.domain.player.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -78,7 +84,7 @@ class PlayerTest {
         }
 
         // when
-        val decisionStatus = player.status.decisionStatus
+        val decisionStatus = player.status.strategy
         val isContinue = player.getAbleReceivedCard()
 
         // then
@@ -101,7 +107,7 @@ class PlayerTest {
 
         // when
         player.noReceiveCard()
-        val decisionStatus = player.status.decisionStatus
+        val decisionStatus = player.status.strategy
         val isContinue = player.getAbleReceivedCard()
 
         // then
@@ -219,17 +225,5 @@ class PlayerTest {
             assertThat(isBust).isEqualTo(true)
             assertThat(isContinue).isEqualTo(false)
         })
-    }
-
-    @Test
-    fun `플레이어는 플레이어이다`() {
-        // given
-        val player = Player.of("김형준")
-
-        // when
-        val isPlayer = player.isPlayer()
-
-        // then
-        assertThat(isPlayer).isTrue
     }
 }

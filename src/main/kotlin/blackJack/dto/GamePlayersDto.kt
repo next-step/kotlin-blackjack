@@ -1,19 +1,21 @@
 package blackJack.dto
 
-import blackJack.domain.GamePlayer
-import blackJack.domain.GamePlayers
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.GamePlayers
+import blackJack.domain.player.Player
 
-class GamePlayersDto(private val players: List<PlayerDto>) : List<PlayerDto> by players {
+class GamePlayersDto(private val players: List<PlayerDto>, private val dealer: DealerDto) : List<PlayerDto> by players {
     fun getPlayerNames(): String = players.joinToString {
         it.name
     }
 
     companion object {
         fun of(gamePlayers: GamePlayers): GamePlayersDto {
-            val value = gamePlayers.map {
+            val playersDto = gamePlayers.getPlayers().map {
                 PlayerDto.of(it)
             }
-            return GamePlayersDto(value)
+            val dealerDto = DealerDto.of(gamePlayers.getDealer())
+            return GamePlayersDto(playersDto, dealerDto)
         }
     }
 }
@@ -21,7 +23,7 @@ class GamePlayersDto(private val players: List<PlayerDto>) : List<PlayerDto> by 
 class PlayerDto(val name: String, val cards: String, val score: Int) {
 
     companion object {
-        fun of(player: GamePlayer): PlayerDto {
+        fun of(player: Player): PlayerDto {
             val name = player.name
             val cards = player.status.cards.joinToString {
                 "${it.denomination.score(player.getScore())}${it.suit}"
@@ -29,6 +31,20 @@ class PlayerDto(val name: String, val cards: String, val score: Int) {
             val score = player.getScore()
 
             return PlayerDto(name, cards, score)
+        }
+    }
+}
+
+class DealerDto(val name: String, val cards: String, val score: Int) {
+    companion object {
+        fun of(dealer: Dealer): DealerDto {
+            val name = dealer.name
+            val cards = dealer.status.cards.joinToString {
+                "${it.denomination.score(dealer.getScore())}${it.suit}"
+            }
+            val score = dealer.getScore()
+
+            return DealerDto(name, cards, score)
         }
     }
 }

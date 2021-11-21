@@ -1,5 +1,13 @@
 package blackJack.domain
 
+import blackJack.domain.card.Card
+import blackJack.domain.card.Denomination
+import blackJack.domain.card.Suit
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.GamePlayers
+import blackJack.domain.player.Player
+import blackJack.domain.player.Players
+import blackJack.domain.result.Results
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -10,40 +18,42 @@ class ResultsTest {
         // given
         val gamePlayers =
             GamePlayers(
-                listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Player.of("chacha").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.NINE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Dealer().apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.NINE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
+                Players(
+                    listOf(
+                        Player.of("flamme").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.ACE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                        },
+                        Player.of("rain").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.TWO)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.EIGHT)
+                            }
+                        },
+                        Player.of("chacha").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.NINE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                        })
+                ),
+                Dealer().apply {
+                    this.receiveCard() {
+                        Card(Suit.HEARTS, Denomination.NINE)
                     }
-                )
+                    this.receiveCard() {
+                        Card(Suit.SPADES, Denomination.KING)
+                    }
+                }
+
             )
 
         // when
@@ -63,52 +73,54 @@ class ResultsTest {
         // given
         val gamePlayers =
             GamePlayers(
-                listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.SEVEN)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Player.of("chacha").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Dealer().apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.SEVEN)
-                        }
+                Players(
+                    listOf(
+                        Player.of("flamme").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.THREE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.EIGHT)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.SEVEN)
+                            }
+                        },
+                        Player.of("rain").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.TWO)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.EIGHT)
+                            }
+                        },
+                        Player.of("chacha").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.ACE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                        })
+                ),
+                Dealer().apply {
+                    this.receiveCard() {
+                        Card(Suit.HEARTS, Denomination.ACE)
                     }
-                )
+                    this.receiveCard() {
+                        Card(Suit.SPADES, Denomination.KING)
+                    }
+                    this.receiveCard() {
+                        Card(Suit.SPADES, Denomination.EIGHT)
+                    }
+                    this.receiveCard() {
+                        Card(Suit.SPADES, Denomination.SEVEN)
+                    }
+                }
+
             )
 
         // when
@@ -121,47 +133,5 @@ class ResultsTest {
             assertThat(dealerResult.lose).isEqualTo(3)
             assertThat(dealerResult.draw).isEqualTo(0)
         })
-    }
-
-    @Test
-    fun `딜러가 없다면 에러`() {
-        // given
-        val gamePlayers =
-            GamePlayers(
-                listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Player.of("chacha").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    }
-                )
-            )
-
-        // when
-        val actual = runCatching {
-            Results.from(gamePlayers)
-        }.exceptionOrNull()
-
-        // then
-        assertThat(actual).hasMessageContaining("딜러가 없습니다.")
     }
 }

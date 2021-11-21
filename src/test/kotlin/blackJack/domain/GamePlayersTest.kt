@@ -1,5 +1,12 @@
 package blackJack.domain
 
+import blackJack.domain.card.Card
+import blackJack.domain.card.Denomination
+import blackJack.domain.card.Suit
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.GamePlayers
+import blackJack.domain.player.Player
+import blackJack.domain.player.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,48 +17,7 @@ class GamePlayersTest {
         // given
         val gamePlayers =
             GamePlayers(
-                listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Player.of("chacha").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.ACE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Dealer()
-                )
-            )
-
-        // when
-        val player = gamePlayers.getPlayers()
-
-        // then
-        assertThat(player.size).isEqualTo(3)
-    }
-
-    @Test
-    fun `게임 플레이어 중에 딜러가 없다면 에러`() {
-        // given
-        val gamePlayers =
-            GamePlayers(
-                listOf(
+                Players(listOf(
                     Player.of("flamme").apply {
                         this.receiveCard() {
                             Card(Suit.HEARTS, Denomination.THREE)
@@ -76,48 +42,14 @@ class GamePlayersTest {
                             Card(Suit.SPADES, Denomination.KING)
                         }
                     }
-                )
+                )),
+                Dealer()
             )
 
         // when
-        val actual = runCatching {
-            gamePlayers.getDealer()
-        }.exceptionOrNull()
+        val player = gamePlayers.getPlayers()
 
         // then
-        assertThat(actual).hasMessageContaining("딜러가 없습니다.")
-    }
-
-    @Test
-    fun `게임 플레이어 중에 딜러가 있다면 딜러를 반환시켜준다`() {
-        // given
-        val gamePlayers =
-            GamePlayers(
-                listOf(
-                    Player.of("flamme").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.THREE)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.KING)
-                        }
-                    },
-                    Player.of("rain").apply {
-                        this.receiveCard() {
-                            Card(Suit.HEARTS, Denomination.TWO)
-                        }
-                        this.receiveCard() {
-                            Card(Suit.SPADES, Denomination.EIGHT)
-                        }
-                    },
-                    Dealer()
-                )
-            )
-
-        // when
-        val dealer = gamePlayers.getDealer()
-
-        // then
-        assertThat(dealer is Dealer).isTrue
+        assertThat(player.size).isEqualTo(3)
     }
 }

@@ -1,6 +1,7 @@
 package blackJack.view
 
-import blackJack.domain.Results
+import blackJack.domain.result.Results
+import blackJack.dto.DealerDto
 import blackJack.dto.PlayerDto
 import blackJack.dto.GamePlayersDto
 
@@ -18,16 +19,20 @@ object ResultView {
         }
     }
 
-    fun receiveCardToDealer(playerDto: PlayerDto, isContinue: Boolean) {
+    fun receiveCardToDealer(dealerDto: DealerDto, isContinue: Boolean) {
         if (isContinue) {
-            println("${playerDto.name}는 16이하라 한장의 카드를 더 받았습니다.")
+            println("${dealerDto.name}는 16이하라 한장의 카드를 더 받았습니다.")
         } else {
-            println("${playerDto.name}는 17이상이라 카드를 못받습니다.")
+            println("${dealerDto.name}는 17이상이라 카드를 못받습니다.")
         }
     }
 
-    fun gameResult(playerDto: PlayerDto) {
+    fun playerGameResult(playerDto: PlayerDto) {
         println("${playerDto.name}카드 :${playerDto.cards} - 결과: ${playerDto.score}")
+    }
+
+    fun dealerGameResult(dealerDto: DealerDto) {
+        println("${dealerDto.name}카드 :${dealerDto.cards} - 결과: ${dealerDto.score}")
     }
 
     fun winOrLoseView(results: Results) {

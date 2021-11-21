@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.card
 
 enum class Denomination : CardScore {
     ACE {

@@ -1,4 +1,6 @@
-package blackJack.domain
+package blackJack.domain.result
+
+import blackJack.domain.player.GamePlayers
 
 class Results(val playerResults: PlayerResults, val dealerResult: DealerResult) {
 

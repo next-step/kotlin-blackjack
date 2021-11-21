@@ -1,5 +1,9 @@
 package blackJack.domain
 
+import blackJack.domain.card.Card
+import blackJack.domain.card.Denomination
+import blackJack.domain.card.Suit
+import blackJack.domain.player.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,18 +19,6 @@ class DealerTest {
 
         // then
         assertThat(dealerName).isEqualTo("DEALER")
-    }
-
-    @Test
-    fun `딜러는 플레이어가 아니다`() {
-        // given
-        val dealer = Dealer()
-
-        // when
-        val isPlayer = dealer.isPlayer()
-
-        // then
-        assertThat(isPlayer).isFalse
     }
 
     @Test

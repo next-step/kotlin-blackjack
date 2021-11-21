@@ -1,9 +1,11 @@
 package blackJack.controller
 
-import blackJack.domain.GamePlayer
-import blackJack.domain.GamePlayers
-import blackJack.domain.PlayingCard
-import blackJack.domain.Results
+import blackJack.domain.player.GamePlayers
+import blackJack.domain.card.PlayingCard
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.Player
+import blackJack.domain.result.Results
+import blackJack.dto.DealerDto
 import blackJack.dto.PlayerDto
 import blackJack.dto.GamePlayersDto
 import blackJack.view.InputView
@@ -23,16 +25,15 @@ class BlackJackController(private val inputView: InputView, private val resultVi
     }
 
     private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {
-        startedPlayer.forEach {
-            if (!it.isBlackJackPlayer() && it.isPlayer()) {
+        startedPlayer.getPlayers().forEach {
+            if (!it.isBlackJackPlayer()) {
                 continuousPlayerReceiveCard(it, playingCard)
-            } else {
-                continuousDealerReceiveCard(it, playingCard)
             }
         }
+        continuousDealerReceiveCard(startedPlayer.getDealer(), playingCard)
     }
 
-    private fun continuousPlayerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
+    private fun continuousPlayerReceiveCard(player: Player, playingCard: PlayingCard) {
         while (player.getAbleReceivedCard()) {
             val isContinue = inputView.doYouWantCardView(PlayerDto.of(player))
             player.receiveCard(isContinue) {
@@ -42,17 +43,18 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         }
     }
 
-    private fun continuousDealerReceiveCard(player: GamePlayer, playingCard: PlayingCard) {
-        val isContinue = player.getAbleReceivedCard()
-        player.receiveCard(isContinue) {
+    private fun continuousDealerReceiveCard(dealer: Dealer, playingCard: PlayingCard) {
+        val isContinue = dealer.getAbleReceivedCard()
+        dealer.receiveCard(isContinue) {
             playingCard.drawCard()
         }
-        resultView.receiveCardToDealer(PlayerDto.of(player), isContinue)
+        resultView.receiveCardToDealer(DealerDto.of(dealer), isContinue)
     }
 
     private fun resultingGame(inGamePlayers: GamePlayers) {
-        inGamePlayers.forEach {
-            resultView.gameResult(PlayerDto.of(it))
+        inGamePlayers.getPlayers().forEach {
+            resultView.playerGameResult(PlayerDto.of(it))
         }
+        resultView.dealerGameResult(DealerDto.of(inGamePlayers.getDealer()))
     }
 }

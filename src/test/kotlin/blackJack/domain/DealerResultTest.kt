@@ -1,5 +1,9 @@
 package blackJack.domain
 
+import blackJack.domain.result.DealerResult
+import blackJack.domain.result.PlayerResult
+import blackJack.domain.result.PlayerResults
+import blackJack.domain.result.WinDrawLose
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

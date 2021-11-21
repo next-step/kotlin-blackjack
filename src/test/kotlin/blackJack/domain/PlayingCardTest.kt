@@ -1,5 +1,7 @@
 package blackJack.domain
 
+import blackJack.domain.card.Card
+import blackJack.domain.card.PlayingCard
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

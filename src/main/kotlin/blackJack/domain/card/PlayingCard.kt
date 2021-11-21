@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.card
 
 class PlayingCard(cards: Cards) {
 
