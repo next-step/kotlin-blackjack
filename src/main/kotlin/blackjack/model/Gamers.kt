@@ -38,7 +38,5 @@ value class Gamers(private val gamers: List<Gamer>) {
         fun empty(): Gamers = Gamers(emptyList())
 
         fun from(dealer: Dealer, players: List<Player>) = Gamers(listOf(dealer) + players)
-
-        fun players(players: List<Player>) = Gamers(players)
     }
 }
