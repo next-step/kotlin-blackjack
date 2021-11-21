@@ -30,4 +30,9 @@ class PlayerTest {
                 .cards
         ).isEqualTo(Cards(listOf(Card(Denomination.ACE, Suit.HEART))))
     }
+
+    @Test
+    fun `플레이어는 배팅 금액을 가진다`() {
+        assertThat(player.bet).isEqualTo(Bet.ZERO)
+    }
 }
