@@ -1,10 +1,10 @@
-package blackjack.domain
+package blackjack.domain.result
 
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.Player
 
-class GameResult(
+class PlayerResult(
     private val gamers: Gamers,
 ) {
     val value = gamers.value
@@ -18,21 +18,13 @@ class GameResult(
     private fun calculatePlayerResult(player: Player, dealer: Dealer): Player {
         val dealerScore = dealer.currentScore()
         val playerScore = player.currentScore()
-        if (dealerScore == playerScore) {
-            return player.push()
+        return when {
+            (dealerScore == playerScore) -> player.push()
+            (player.isBlackjack() || player.isTwentyOne()) -> player.win()
+            (player.isBust()) -> player.lose()
+            (dealer.isBust() && !player.isBust()) -> player.win()
+            (dealerScore < playerScore) -> player.win()
+            else -> player.lose()
         }
-        if (player.isBlackjack() || player.isTwentyOne()) {
-            return player.win()
-        }
-        if (player.isBust()) {
-            return player.lose()
-        }
-        if (dealer.isBust() && !player.isBust()) {
-            return player.win()
-        }
-        if (dealerScore < playerScore) {
-            return player.win()
-        }
-        return player.lose()
     }
 }

@@ -7,6 +7,7 @@ import blackjack.domain.deck.Suit
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.Player
+import blackjack.domain.result.PlayerResult
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Deal
 import blackjack.domain.state.result.Lose
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("블랙잭 게임 결과 테스트")
-class GameResultTest {
+class PlayerResultTest {
 
     @Test
     @DisplayName("블랙잭 종료 시 플레이어와 딜러의 결과가 같으면 무승부")
@@ -30,7 +31,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
@@ -48,7 +49,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
@@ -72,7 +73,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
@@ -101,7 +102,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
@@ -119,7 +120,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
@@ -137,7 +138,7 @@ class GameResultTest {
         val gamers = Gamers.from(listOf(dealer, player))
 
         // Act
-        val sut = GameResult(gamers)
+        val sut = PlayerResult(gamers)
         val playersResult = sut.calculatePlayersResult()
 
         // Assert
