@@ -38,15 +38,15 @@ class Player private constructor(
     }
 
     fun win(): Player {
-        return Player(name, Win(cards))
+        return Player(name, Win)
     }
 
     fun push(): Player {
-        return Player(name, Push(cards))
+        return Player(name, Push)
     }
 
     fun lose(): Player {
-        return Player(name, Lose(cards))
+        return Player(name, Lose)
     }
 
     fun isBlackjack(): Boolean = cards.isBlackjack()

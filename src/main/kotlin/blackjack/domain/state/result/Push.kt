@@ -6,9 +6,9 @@ import blackjack.domain.state.Finished
 import blackjack.domain.state.State
 import blackjack.exception.UnsupportedDrawException
 
-class Push(
-    override val cards: Cards,
-) : Finished() {
+object Push : Finished() {
+    override val cards: Cards = Cards()
+
     override fun draw(card: Card): State {
         throw UnsupportedDrawException()
     }
