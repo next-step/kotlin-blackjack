@@ -1,12 +1,13 @@
 package blackjack.presentation
 
-import blackjack.domain.GameResult
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Gamer
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.Player
+import blackjack.domain.result.DealerResult
+import blackjack.domain.result.PlayerResult
 import blackjack.domain.state.State.Companion.CAN_PLAY
 import blackjack.domain.state.State.Companion.FINISHED_SIGN
 import blackjack.view.InputView
@@ -18,9 +19,11 @@ class BlackjackController(
     fun run() {
         val preparedGamers = prepare()
         val playedBlackjack = play(preparedGamers)
-        val gameResult = GameResult(playedBlackjack)
-        val playersResult = gameResult.calculatePlayersResult()
-        OutputView.printFinalOutcome(playersResult)
+        val playerResult = PlayerResult(playedBlackjack)
+
+        val playersResult = playerResult.calculatePlayersResult()
+        val dealerResult = DealerResult.calculateDealerResult(playersResult)
+        OutputView.printFinalOutcome(dealerResult, playersResult)
     }
 
     private fun initGamers(): List<Gamer> {

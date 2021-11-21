@@ -2,6 +2,8 @@ package blackjack.view
 
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Gamer
+import blackjack.domain.gamer.Player
+import blackjack.domain.result.DealerResult
 
 class OutputView {
 
@@ -51,11 +53,18 @@ class OutputView {
             }
         }
 
-        fun printFinalOutcome(gamers: List<Gamer>) {
-            println("## 최종 승패")
-            for (gamer in gamers) {
-                println("${gamer.name}: ${gamer.result()}")
+        fun printFinalOutcome(dealerResult: DealerResult, players: List<Player>) {
+            println("\n## 최종 승패")
+            println("딜러: ${getDealerResult(dealerResult)}")
+            for (player in players) {
+                println("${player.name}: ${player.result()}")
             }
+        }
+
+        private fun getDealerResult(dealerResult: DealerResult): String {
+            return (if (dealerResult.win > 0) "${dealerResult.win}승 " else "")
+                .plus(if (dealerResult.push > 0) "${dealerResult.push}무 " else "")
+                .plus(if (dealerResult.lose > 0) "${dealerResult.lose}패" else "")
         }
     }
 }
