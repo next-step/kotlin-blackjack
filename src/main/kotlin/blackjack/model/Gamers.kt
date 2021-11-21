@@ -1,7 +1,7 @@
 package blackjack.model
 
 @JvmInline
-value class Gamers private constructor(private val gamers: List<Gamer>) {
+value class Gamers(private val gamers: List<Gamer>) {
 
     fun players(): List<Player> = gamers.filterIsInstance<Player>()
 
@@ -9,36 +9,35 @@ value class Gamers private constructor(private val gamers: List<Gamer>) {
 
     fun toList(): List<Gamer> = gamers
 
-    fun receiveAll(
-        count: Int = Int.MAX_VALUE,
-        next: () -> Card?,
-    ): Gamers {
-        val limit = Array(gamers.size) { count }
-        val hasNext: (Int) -> Boolean = { index -> limit[index]-- > 0 }
-        return receiveWhile(
-            next = { index, _ -> if (hasNext(index)) next() else null }
-        )
-    }
+    fun drawUntilStarted(next: () -> Card?) = gamers
+        .asSequence()
+        .map { gamer ->
+            var result = gamer
+            while (result.isReady()) {
+                val card = next() ?: break
+                result = result.draw(card)
+            }
+            result
+        }
+        .let { Gamers(it.toList()) }
 
-    fun receiveWhile(
-        next: (Gamer) -> Card?,
-        onReceive: (Gamer) -> Unit
-    ): Gamers = receiveWhile(next = { _, gamer -> next(gamer) }, onReceive)
-
-    private fun receiveWhile(
-        next: (Int, Gamer) -> Card?,
-        onReceive: (Gamer) -> Unit = { }
-    ): Gamers = gamers.mapIndexed { index, gamer ->
-        gamer.receiveWhile(
-            next = { next(index, gamer) },
-            onReceive = { cards -> onReceive(gamer.copy(cards = cards)) }
-        )
-    }.let(::Gamers)
+    fun drawWhile(next: (Gamer) -> Card?, onDraw: (Gamer) -> Unit) = gamers
+        .asSequence()
+        .map { gamer ->
+            var result = gamer
+            while (result.isRunning()) {
+                val card = next(result) ?: break
+                result = result.draw(card)
+                onDraw(result)
+            }
+            result.stay()
+        }
+        .let { Gamers(it.toList()) }
 
     companion object {
         fun empty(): Gamers = Gamers(emptyList())
 
-        fun from(dealer: Dealer, players: List<Player>) = Gamers(players + dealer)
+        fun from(dealer: Dealer, players: List<Player>) = Gamers(listOf(dealer) + players)
 
         fun players(players: List<Player>) = Gamers(players)
     }

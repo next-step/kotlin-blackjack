@@ -1,27 +1,23 @@
 package blackjack.model
 
-sealed class Gamer(val name: Name, val cards: Cards) {
+import blackjack.state.Ready
+import blackjack.state.Running
+import blackjack.state.State
 
-    val score: Int get() = cards.sum()
+sealed class Gamer(val name: Name, protected val state: State) {
 
-    abstract fun canReceive(): Boolean
+    val cards: Cards = state.cards
 
-    abstract fun copy(name: Name = this.name, cards: Cards = this.cards): Gamer
+    val score: Int = cards.sum()
 
-    fun receive(card: Card): Gamer = if (hasNext(card)) copy(cards = cards + card) else this
+    fun draw(card: Card): Gamer = copy(state = state.draw(card))
 
-    fun receiveWhile(next: () -> Card?, onReceive: (Cards) -> Unit = {}): Gamer {
-        var result = this
-        var card: Card? = next()
-        while (result.hasNext(card)) {
-            result = result.receive(card!!)
-            onReceive(result.cards)
-            card = next()
-        }
-        return result
-    }
+    fun stay(): Gamer = copy(name, state.stay())
 
-    private fun hasNext(card: Card?): Boolean = card != null && canReceive() && !hasCard(card)
+    fun isReady(): Boolean = state is Ready
 
-    private fun hasCard(card: Card): Boolean = card in cards
+    fun isRunning(): Boolean = state is Running
+
+    protected abstract fun copy(name: Name = this.name, state: State = this.state): Gamer
 }
+
