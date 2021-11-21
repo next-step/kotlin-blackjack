@@ -19,10 +19,11 @@ sealed class Running(hands: Hands) : PlayerState(hands) {
 data class Started(override val hands: Hands = Hands.EMPTY) : Running(hands) {
     override fun plus(cards: List<Card>): PlayerState {
         val newHands = hands + cards
-        if (newHands.isStart() && newHands.score().isMaxiMum()) {
+        val newScore = newHands.score()
+        if (newHands.isStart() && newScore.isMaxiMum()) {
             return BlackJack(newHands)
         }
-        if (newHands.score().isBust()) {
+        if (newScore.isBust()) {
             return Bust(newHands)
         }
         return Hit(newHands)
@@ -32,7 +33,8 @@ data class Started(override val hands: Hands = Hands.EMPTY) : Running(hands) {
 data class Hit(override val hands: Hands) : Running(hands) {
     override fun plus(cards: List<Card>): PlayerState {
         val newHands = hands + cards
-        if (newHands.score().isBust()) {
+        val newScore = newHands.score()
+        if (newScore.isBust()) {
             return Bust(newHands)
         }
         return Hit(newHands)
