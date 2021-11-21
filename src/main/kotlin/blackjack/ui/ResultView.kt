@@ -3,7 +3,7 @@ package blackjack.ui
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.Hands
+import blackjack.domain.player.state.Hands
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.strategy.ui.output.OutputStrategy

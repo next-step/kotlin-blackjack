@@ -7,7 +7,8 @@ value class Score private constructor(val score: Int) {
 
     fun canPlusExtraAceScore(): Boolean = ((score + EXTRA_ACE_SCORE_RANGE) <= MAXIMUM_SCORE)
 
-    fun isOverMaximum(): Boolean = (score > MAXIMUM_SCORE)
+    fun isBust(): Boolean = (score > MAXIMUM_SCORE)
+    fun isMaxiMum(): Boolean = (score == MAXIMUM_SCORE)
 
     operator fun plus(other: Score): Score = from(score + other.score)
 

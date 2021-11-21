@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.player.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Score
@@ -6,6 +6,9 @@ import blackjack.error.DuplicatePlayingCardException
 
 @JvmInline
 value class Hands private constructor(val hands: List<Card>) {
+
+    fun isEmpty(): Boolean = this == EMPTY
+    fun isStart(): Boolean = hands.size == 2
 
     fun score(): Score = calculateAceScore(sumScore())
 
@@ -20,11 +23,11 @@ value class Hands private constructor(val hands: List<Card>) {
         return sum
     }
 
-    operator fun plus(extraCard: List<Card>): Hands {
-        if (hands.any(extraCard::contains)) {
+    operator fun plus(extraCards: List<Card>): Hands {
+        if (hands.any(extraCards::contains)) {
             throw DuplicatePlayingCardException()
         }
-        return Hands(hands + extraCard)
+        return Hands(hands + extraCards)
     }
 
     companion object {
