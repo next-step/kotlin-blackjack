@@ -19,7 +19,7 @@ class BlackjackController() {
     }
 
     fun start() {
-        val players = createGamers()
+        val players = createPlayers()
         val deck = Deck()
         val rule = Rule()
         val afterInitPhased = players.startInitPhase(deck)
@@ -31,7 +31,7 @@ class BlackjackController() {
         OutputView.printGameResult(result)
     }
 
-    private fun createGamers(): Players {
+    private fun createPlayers(): Players {
         val names = Names.generateNames(InputView.askGamerNames())
         val players = Players.createPlayers(names)
         val dealer = Dealer.of()
