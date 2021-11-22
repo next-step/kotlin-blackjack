@@ -157,7 +157,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 ACE 두개와 KING을 가지고 있을때, ACE는 1로 적용되서 합은 12이다`() {
+    fun `플레이어가 ACE 두개와 KING을 가지고 있을때, ACE는 1로 적용되서 합은 22이다`() {
         // given
         val player = Player.of("김형준")
         player.receiveCard() {
@@ -178,7 +178,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 ACE와 KING, QUEEN, NINE 가지고 있을때, ACE는 1로 적용되서 합은 30이다`() {
+    fun `플레이어가 ACE와 KING, QUEEN, NINE 가지고 있을때, ACE는 1로 적용되서 합은 22이다`() {
         // given
         val player = Player.of("김형준")
         player.receiveCard() {

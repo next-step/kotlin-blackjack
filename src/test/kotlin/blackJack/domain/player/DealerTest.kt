@@ -3,7 +3,6 @@ package blackJack.domain.player
 import blackJack.domain.card.Card
 import blackJack.domain.card.Denomination
 import blackJack.domain.card.Suit
-import blackJack.domain.player.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

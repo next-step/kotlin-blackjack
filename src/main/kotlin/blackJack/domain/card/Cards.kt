@@ -16,10 +16,19 @@ class Cards(private val cards: List<Card>) : List<Card> by cards {
     }
 
     fun sumCards(): Int =
-        cards.fold(0) { acc: Int, card: Card ->
-            acc + card.denomination.score(acc)
+        cards.sortedByDescending { it.denomination.orderBy }.fold(0) { acc: Int, card: Card ->
+            if (card.denomination == Denomination.ACE) {
+                val aceScore = card.denomination.score(acc)
+                acc + card.denomination.score(acc + aceScore)
+            } else {
+                acc + card.denomination.score(acc)
+            }
         }.let { sum ->
-            cards.sumOf { it.denomination.score(sum) }
+            if (sum > 21 && cards.map { it.denomination }.contains(Denomination.ACE)) {
+                cards.sumOf { it.denomination.score(sum) }
+            } else {
+                sum
+            }
         }
 
     fun drawRandomCard() = cards.random()
