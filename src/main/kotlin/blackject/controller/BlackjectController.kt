@@ -42,9 +42,8 @@ class BlackjectController(
     private fun giveMoreCard(persons: Participant) {
         persons
             .persons
-            .forEach {
-                if (!it.isTakeMoreCard(rule.getMaxNumber(it.type), rule.EXCEPT_NUMBER)) return@forEach
-                askMoreCard(InputView.inputAnswerMoreCard(it.name), it)
+            .forEach { person ->
+                askMoreCard(person)
             }
 
         persons
@@ -99,12 +98,12 @@ class BlackjectController(
         person.giveCard(CardsDeck.takeCard(cardCount))
     }
 
-    private fun askMoreCard(answer: String?, person: Person) {
-        if (!isAnswerYes(answer)) return
+    private fun askMoreCard(person: Person) {
+        if (!person.isTakeMoreCard(rule.getMaxNumber(person.type), rule.EXCEPT_NUMBER)) return
+        if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
         giveCard(person, CardsDeck.NUMBER_ONE_TIME)
         OutputView.printCardListOfPerson(person)
-        if (!person.isTakeMoreCard(rule.getMaxNumber(person.type), rule.EXCEPT_NUMBER)) return
-        askMoreCard(InputView.inputAnswerMoreCard(person.name), person)
+        askMoreCard(person)
     }
 
     companion object {
