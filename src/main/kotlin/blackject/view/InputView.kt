@@ -14,7 +14,7 @@ object InputView {
         return readLine()
     }
 
-    fun inputBatAmount(person: Person): String? {
+    fun inputBetAmount(person: Person): String? {
         println("${person.name}의 배팅 금액은?")
         return readLine()
     }

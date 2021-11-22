@@ -1,7 +1,6 @@
 package blackject
 
 import blackject.model.Person
-import blackject.model.PersonType
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType

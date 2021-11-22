@@ -1,5 +1,7 @@
 package blackject.model.card
 
+import com.sun.org.apache.xpath.internal.operations.Bool
+
 /**
  * 카드 리스트
  * */
@@ -23,6 +25,10 @@ value class Cards(
         if ((maxInt - cardTotal) < exceptRestNumber) return cardTotal
         return cardTotal.plus(exceptRestNumber)
     }
+
+    // fun isBlackjack(): Boolean =
+    //
+    // fun isBust(): Boolean = sum() > TWENTY_ONE
 
     companion object {
         fun getTotalMinCount(cardList: List<Card>): Int =

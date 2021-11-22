@@ -19,10 +19,10 @@ class Participant(
         }
     }
 
-    fun inputBatAmountByPerson(print: (Person) -> String?) {
+    fun inputBetAmountByPerson(print: (Person) -> String?) {
         persons.forEach {
             val amount = print.invoke(it)
-            it.inputBatMoney(amount?.toIntOrNull())
+            it.inputBetMoney(amount?.toIntOrNull())
         }
     }
 

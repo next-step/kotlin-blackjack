@@ -12,7 +12,7 @@ open class Person(
     val name: String,
     val cards: Cards = Cards(),
 ) {
-    var batMoney: Int? = 0
+    var batMoney: Amount = Amount()
     var result: ResultType? = null
 
     open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
@@ -40,10 +40,10 @@ open class Person(
         print.invoke(this)
     }
 
-    fun inputBatMoney(money: Int?) {
+    fun inputBetMoney(money: Int?) {
         require(money != null)
         require(money > MIN_BAT_MONEY)
-        batMoney = money
+        batMoney = Amount(money.toDouble())
     }
 
     companion object {

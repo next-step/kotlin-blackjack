@@ -16,7 +16,7 @@ class BlackjectController(
 
     fun start() {
         createGame().also {
-            inputBatAmount(it)
+            inputBetAmount(it)
             printCardListOfPerson(it)
             giveMoreCard(it)
             printResultScore(it)
@@ -37,9 +37,9 @@ class BlackjectController(
         println()
     }
 
-    private fun inputBatAmount(persons: Participant) {
-        persons.inputBatAmountByPerson {
-            InputView.inputBatAmount(it)
+    private fun inputBetAmount(persons: Participant) {
+        persons.inputBetAmountByPerson {
+            InputView.inputBetAmount(it)
         }
         println()
     }
