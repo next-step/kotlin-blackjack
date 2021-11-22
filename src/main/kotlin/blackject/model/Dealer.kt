@@ -8,7 +8,7 @@ class Dealer(
 ) : Person(NAME, cards) {
 
     override fun canTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
-        return maxInt >= cards.getResultNumber(maxInt, exceptCard)
+        return MAX_NUMBER_DEALER >= cards.getResultNumber(MAX_NUMBER_DEALER, exceptCard)
     }
 
     override fun isPersonType(): PersonType = PersonType.DEALER
@@ -16,6 +16,7 @@ class Dealer(
     fun isOverMaxInt(maxInt: Int, exceptCard: CardNumber): Boolean = getScore(maxInt, exceptCard) > maxInt
 
     companion object {
+        const val MAX_NUMBER_DEALER = 16
         const val NAME = "딜러"
     }
 }

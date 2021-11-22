@@ -7,8 +7,7 @@ import blackject.model.card.CardNumber
  * */
 object Rule {
     const val MAX_TOTAL_NUMBER = 21
-    const val MAX_NUMBER_DEALER = 16
     val EXCEPT_NUMBER = CardNumber.ACE
 
-    fun getMaxNumber(type: PersonType): Int = if (type == PersonType.DEALER) MAX_NUMBER_DEALER else MAX_TOTAL_NUMBER
+    fun getMaxNumber(type: PersonType): Int = if (type == PersonType.DEALER) Dealer.MAX_NUMBER_DEALER else MAX_TOTAL_NUMBER
 }
