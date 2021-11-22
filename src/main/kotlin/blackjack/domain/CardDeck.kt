@@ -12,7 +12,7 @@ class CardDeck {
     }
 
     fun drawMany(drawCount: Int): List<Card> {
-        return (1..drawCount).map { _cards.removeLast() }
+        return (1..drawCount).map { drawOne() }
     }
 
     private fun setupCards(): MutableList<Card> {
