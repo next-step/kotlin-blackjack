@@ -1,6 +1,6 @@
-package blackJack.domain.player
+package blackJack.domain.card
 
-object Hit : Strategy {
+object Hit : Signal {
     override fun isContinue(): Boolean {
         return true
     }

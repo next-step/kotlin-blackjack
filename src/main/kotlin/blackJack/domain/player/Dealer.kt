@@ -2,8 +2,8 @@ package blackJack.domain.player
 
 class Dealer(
     val name: String = DEALER_NAME,
-    val status: PlayingArea = PlayingAreaImpl.of()
-) : PlayingArea by status {
+    val status: State = StateImpl.of()
+) : State by status {
 
     override fun getAbleReceivedCard(): Boolean =
         getScore() < ABLE_MAXIMUM_SUM

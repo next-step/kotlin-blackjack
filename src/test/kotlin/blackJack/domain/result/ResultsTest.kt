@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.result
 
 import blackJack.domain.card.Card
 import blackJack.domain.card.Denomination
@@ -7,7 +7,6 @@ import blackJack.domain.player.Dealer
 import blackJack.domain.player.GamePlayers
 import blackJack.domain.player.Player
 import blackJack.domain.player.Players
-import blackJack.domain.result.Results
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

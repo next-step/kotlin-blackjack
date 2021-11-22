@@ -1,10 +1,10 @@
-package blackJack.domain.player
+package blackJack.domain.card
 
-interface Strategy {
+interface Signal {
     fun isContinue(): Boolean
 
     companion object {
-        fun changeDecision(score: Int, isContinue: Boolean = true): Strategy {
+        fun changeDecision(score: Int, isContinue: Boolean = true): Signal {
             if (!isContinue) {
                 return Stay
             }

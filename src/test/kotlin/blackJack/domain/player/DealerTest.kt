@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.player
 
 import blackJack.domain.card.Card
 import blackJack.domain.card.Denomination

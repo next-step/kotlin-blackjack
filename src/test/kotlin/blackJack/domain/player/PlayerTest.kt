@@ -1,11 +1,10 @@
-package blackJack.domain
+package blackJack.domain.player
 
 import blackJack.domain.card.Card
 import blackJack.domain.card.Denomination
 import blackJack.domain.card.Suit
-import blackJack.domain.player.Hit
-import blackJack.domain.player.Player
-import blackJack.domain.player.Stay
+import blackJack.domain.card.Hit
+import blackJack.domain.card.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll

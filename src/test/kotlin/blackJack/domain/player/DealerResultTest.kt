@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.player
 
 import blackJack.domain.result.DealerResult
 import blackJack.domain.result.PlayerResult

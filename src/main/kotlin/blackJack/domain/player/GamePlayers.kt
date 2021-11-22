@@ -18,12 +18,12 @@ class GamePlayers(
         receiveInitCards(INIT_RECEIVE_CARD_NUMBER, dealer, playingCard)
     }
 
-    private tailrec fun receiveInitCards(n: Int, playingArea: PlayingArea, playingCard: PlayingCard) {
+    private tailrec fun receiveInitCards(n: Int, state: State, playingCard: PlayingCard) {
         if (n > 0) {
-            playingArea.receiveCard() {
+            state.receiveCard() {
                 playingCard.drawCard()
             }
-            receiveInitCards(n - 1, playingArea, playingCard)
+            receiveInitCards(n - 1, state, playingCard)
         }
     }
 
