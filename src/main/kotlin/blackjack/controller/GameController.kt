@@ -4,6 +4,7 @@ import blackjack.domain.BlackJackManager
 import blackjack.domain.CardDeck
 import blackjack.domain.Players
 import blackjack.view.InputView
+import blackjack.view.OutputView
 
 object GameController {
 
@@ -17,5 +18,8 @@ object GameController {
 
         blackJackManager = BlackJackManager(players)
         blackJackManager.giveInitialCards(cardDeck)
+
+        OutputView.printPlayers(players)
+        OutputView.printPlayersDrawnCards(players)
     }
 }
