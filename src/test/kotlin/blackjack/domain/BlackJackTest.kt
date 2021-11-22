@@ -16,7 +16,7 @@ class BlackJackTest {
         )
 
         assertThat(blackJack.players.size).isEqualTo(2)
-        assertThat(blackJack.deck.cards.size).isEqualTo(52)
+        assertThat(blackJack.deck.cards.size).isEqualTo(48)
     }
 
     @Test
@@ -47,8 +47,6 @@ class BlackJackTest {
             )
         )
 
-        blackJack.drawInitialCards()
-
         assertThat(blackJack.deck.cards.size).isEqualTo(48)
         assertThat(blackJack.players).allMatch { it.cards.size == 2 }
     }
@@ -65,6 +63,6 @@ class BlackJackTest {
 
         blackJack.drawAnotherCard(player)
 
-        assertThat(player.cards.size).isEqualTo(1)
+        assertThat(player.cards.size).isEqualTo(3)
     }
 }

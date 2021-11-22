@@ -12,7 +12,6 @@ fun main() {
     val blackJack = BlackJack(players)
 
     blackJack.apply {
-        drawInitialCards()
         outputView.printInitialDrawResult(players)
 
         players.forEach {

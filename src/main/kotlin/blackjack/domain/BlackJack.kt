@@ -6,9 +6,11 @@ class BlackJack(val players: List<Player>) {
     init {
         require(players.size >= MINIMUM_NUMBER_OF_PLAYERS) { NOT_ENOUGH_PLAYERS_ERROR_MSG }
         require(players.distinctBy { it.name } == this.players) { DUPLICATE_PLAYERS_ERROR_MSG }
+
+        drawInitialCards()
     }
 
-    fun drawInitialCards() {
+    private fun drawInitialCards() {
         players.forEach {
             val cards = deck.drawMany(INITIAL_DRAW_COUNT)
             it.takeCards(cards)
