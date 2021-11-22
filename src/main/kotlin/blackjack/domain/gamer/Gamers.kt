@@ -1,5 +1,6 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
 import blackjack.exception.NotExistDealerException
 
@@ -35,6 +36,13 @@ class Gamers private constructor(
 
     companion object {
         private const val PLAYER_INDEX = 1
+
+        fun init(playerNames: List<String>): Gamers {
+            val dealer = Dealer.from(Cards())
+            val players = playerNames.map { Player.of(it.trim(), Cards()) }
+            val gamers = listOf(dealer).plus(players)
+            return Gamers(gamers)
+        }
 
         fun from(gamers: List<Gamer>): Gamers {
             return Gamers(gamers)

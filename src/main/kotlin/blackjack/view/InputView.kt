@@ -1,8 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.deck.Cards
 import blackjack.domain.gamer.Gamer
-import blackjack.domain.gamer.Player
 
 class InputView {
 
@@ -11,10 +9,9 @@ class InputView {
         private const val INPUT_CARD_SIGN = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
         private const val DELIMITER = ","
 
-        fun inputPlayers(): List<Player> {
+        fun inputPlayers(): List<String> {
             println(INPUT_PLAYER_MESSAGE)
-            val playerNames = readLine()!!.split(DELIMITER)
-            return playerNames.map { Player.of(it.trim(), Cards()) }
+            return readLine()!!.split(DELIMITER)
         }
 
         fun inputCardSign(gamer: Gamer): String {

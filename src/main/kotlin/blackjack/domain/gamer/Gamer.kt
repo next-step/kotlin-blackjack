@@ -13,7 +13,7 @@ abstract class Gamer(
     val cards: Cards
         get() = state.cards
 
-    fun validateName(name: String) {
+    protected fun validateName(name: String) {
         if (name.isEmpty()) {
             throw InvalidPlayerNameException()
         }
