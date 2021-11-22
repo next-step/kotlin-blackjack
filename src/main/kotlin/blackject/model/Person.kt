@@ -12,6 +12,7 @@ open class Person(
     val name: String,
     val cards: Cards = Cards(),
 ) {
+    var batMoney: Int? = 0
     var result: ResultType? = null
 
     open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
@@ -37,5 +38,15 @@ open class Person(
     fun giveCards(cardCount: Int, print: (Person) -> Unit) {
         giveCard(CardsDeck.takeCard(cardCount))
         print.invoke(this)
+    }
+
+    fun inputBatMoney(money: Int?) {
+        require(money != null)
+        require(money > MIN_BAT_MONEY)
+        batMoney = money
+    }
+
+    companion object {
+        const val MIN_BAT_MONEY = 0
     }
 }

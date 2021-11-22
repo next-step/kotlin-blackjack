@@ -19,6 +19,13 @@ class Participant(
         }
     }
 
+    fun inputBatAmountByPerson(print: (Person) -> String?) {
+        persons.forEach {
+            val amount = print.invoke(it)
+            it.inputBatMoney(amount?.toIntOrNull())
+        }
+    }
+
     companion object {
         private const val DELIMITER_NAME = ","
         fun addPerson(name: String?): Participant {

@@ -1,5 +1,7 @@
 package blackject.view
 
+import blackject.model.Person
+
 object InputView {
 
     fun inputParticipants(): String? {
@@ -9,6 +11,11 @@ object InputView {
 
     fun inputAnswerMoreCard(name: String): String? {
         println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return readLine()
+    }
+
+    fun inputBatAmount(person: Person): String? {
+        println("${person.name}의 배팅 금액은?")
         return readLine()
     }
 }
