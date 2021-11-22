@@ -5,7 +5,7 @@ package blackject.model
  * */
 object GameResult {
 
-    fun getWinNumber(maxInt: Int, numbers: List<Int>): Int =
+    fun getWinNumber(limitMaxInt: Int, numbers: List<Int>): Int =
         numbers
-            .filter { it <= maxInt }.maxOrNull()!!
+            .filter { it <= limitMaxInt }.maxOrNull()!!
 }

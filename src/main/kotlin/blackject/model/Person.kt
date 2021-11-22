@@ -29,4 +29,6 @@ open class Person(
     open fun changeResultType(result: ResultType) {
         this.result = result
     }
+
+    open fun hasResult(): Boolean = result != null
 }

@@ -15,7 +15,7 @@ class BlackjectController(
 ) {
 
     fun start() {
-        createGame().let {
+        createGame().also {
             printCardListOfPerson(it)
             giveMoreCard(it)
             printResultScore(it)
@@ -77,7 +77,7 @@ class BlackjectController(
 
         persons
             .getAllPerson()
-            .filterNot { it.result != null }
+            .filterNot { it.hasResult() }
             .forEach {
                 when {
                     it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
