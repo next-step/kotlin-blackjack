@@ -22,7 +22,7 @@ class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러의 카드의 합이 16인 경우 추가적으로 뽑을 수 없다.")
+    @DisplayName("딜러의 카드의 합이 16인 경우 추가적으로 뽑을 수 있다")
     fun `check condition of taking card when dealer has 10`() {
         val cards = Cards(
             mutableListOf(
