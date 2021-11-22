@@ -13,7 +13,8 @@ class InputView {
         ?.toList()
         ?.map { name ->
             println(Resource.STR_ASK_BET.format(name))
-            Player.ready(name, Bet(readInt()))
+            val amount = readInt()
+            Player.ready(name, Bet.valueOf(amount))
         }
         ?: emptyList()
 

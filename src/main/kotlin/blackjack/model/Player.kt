@@ -2,7 +2,6 @@ package blackjack.model
 
 import blackjack.state.Ready
 import blackjack.state.State
-import kotlin.math.roundToInt
 
 class Player private constructor(
     name: Name,
@@ -12,7 +11,7 @@ class Player private constructor(
 
     override fun copy(name: Name, state: State): Gamer = Player(name, bet, state)
 
-    fun profit(): Int = profit(bet.amount.toDouble()).roundToInt()
+    fun profit(): Profit = profit(bet.amount)
 
     companion object {
         fun ready(name: Name, bet: Bet = Bet.ZERO): Player = Player(name, bet, Ready())

@@ -22,9 +22,9 @@ class BlackjackController {
         deck = Deck.shuffled()
 
         createGamers()
+            .ready()
+            .also { outputView.printReady(it) }
             .start()
-            .also { outputView.printStart(it) }
-            .run()
             .also { outputView.printResult(it) }
     }
 
@@ -34,9 +34,9 @@ class BlackjackController {
         return Gamers.from(dealer, players)
     }
 
-    private fun Gamers.start(): Gamers = drawUntilStarted { peekAndDraw() }
+    private fun Gamers.ready(): Gamers = drawUntilStarted { peekAndDraw() }
 
-    private fun Gamers.run(): Gamers = drawWhile(
+    private fun Gamers.start(): Gamers = drawWhile(
         next = { if (askDraw(it)) peekAndDraw() else null },
         onDraw = { outputView.printRunning(it) }
     )

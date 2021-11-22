@@ -1,15 +1,14 @@
 package blackjack.model
 
 @JvmInline
-value class Bet(val amount: Int) {
-
-    init {
-        require(amount >= 0)
-    }
-
-    operator fun times(other: Double): Double = other * amount
+value class Bet private constructor(val amount: Amount) {
 
     companion object {
-        val ZERO = Bet(0)
+        val ZERO = Bet(Amount.ZERO)
+
+        fun valueOf(amount: Int): Bet {
+            require(amount >= 0.0)
+            return Bet(Amount(amount.toDouble()))
+        }
     }
 }

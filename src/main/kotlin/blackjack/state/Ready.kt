@@ -1,11 +1,15 @@
 package blackjack.state
 
+import blackjack.model.Amount
 import blackjack.model.Card
 import blackjack.model.Cards
+import blackjack.model.Profit
 
 class Ready(override val cards: Cards = Cards.empty()) : State {
 
-    override fun profit(amount: Double): Double = amount
+    override fun profit(amount: Amount): Profit {
+        throw UnsupportedOperationException("cannot support profit in ready state")
+    }
 
     override fun draw(card: Card): State {
         val cards = cards + card

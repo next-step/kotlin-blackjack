@@ -7,6 +7,6 @@ class BetTest {
 
     @Test
     fun `배팅 금액은 0보다 작을 수 없다`() {
-        assertThrows<RuntimeException> { Bet(-1) }
+        assertThrows<RuntimeException> { Bet.valueOf(-1) }
     }
 }

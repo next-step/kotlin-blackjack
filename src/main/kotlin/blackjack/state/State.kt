@@ -1,7 +1,9 @@
 package blackjack.state
 
+import blackjack.model.Amount
 import blackjack.model.Card
 import blackjack.model.Cards
+import blackjack.model.Profit
 
 interface State {
 
@@ -9,7 +11,7 @@ interface State {
 
     fun draw(card: Card): State
 
-    fun profit(amount: Double): Double
+    fun profit(amount: Amount): Profit
 
     fun stay(): State
 }
