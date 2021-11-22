@@ -30,12 +30,9 @@ class BlackjectController(
     }
 
     private fun printCardListOfPerson(persons: Participant) {
-        persons
-            .getAllPerson()
-            .forEach {
-                giveCard(it, CardsDeck.NUMBER_INIT_CARD)
-                OutputView.printCardListOfPerson(it)
-            }
+        persons.giveCards(CardsDeck.NUMBER_INIT_CARD) {
+            OutputView.printCardListOfPerson(it)
+        }
         println()
     }
 
@@ -48,15 +45,16 @@ class BlackjectController(
 
         persons
             .dealer
-            .let {
-                if (!it.isTakeMoreCard(rule.getMaxNumber(it.isPersonType()), rule.EXCEPT_NUMBER)) return
-                giveCard(it, CardsDeck.NUMBER_ONE_TIME)
-                if (it.isOverMaxInt(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) {
-                    it.changeResultType(ResultType.BUST)
-                    return
+            .let { dealer ->
+                if (!dealer.isTakeMoreCard(rule.getMaxNumber(dealer.isPersonType()), rule.EXCEPT_NUMBER)) return
+                dealer.giveCards(CardsDeck.NUMBER_ONE_TIME) {
+                    if (dealer.isOverMaxInt(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) {
+                        dealer.changeResultType(ResultType.BUST)
+                        return@giveCards
+                    }
+                    OutputView.printAddedDealerCard(rule.MAX_NUMBER_DEALER)
+                    return@giveCards
                 }
-                OutputView.printAddedDealerCard(rule.MAX_NUMBER_DEALER)
-                return
             }
     }
 
@@ -94,15 +92,12 @@ class BlackjectController(
         }
     }
 
-    private fun giveCard(person: Person, cardCount: Int) {
-        person.giveCard(CardsDeck.takeCard(cardCount))
-    }
-
     private fun askMoreCard(person: Person) {
         if (!person.isTakeMoreCard(rule.getMaxNumber(person.isPersonType()), rule.EXCEPT_NUMBER)) return
         if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
-        giveCard(person, CardsDeck.NUMBER_ONE_TIME)
-        OutputView.printCardListOfPerson(person)
+        person.giveCards(CardsDeck.NUMBER_ONE_TIME) {
+            OutputView.printCardListOfPerson(it)
+        }
         askMoreCard(person)
     }
 

@@ -1,5 +1,7 @@
 package blackject.model
 
+import blackject.model.card.CardsDeck
+
 /**
  * 참가자들 관리 클래스
  * */
@@ -9,6 +11,13 @@ class Participant(
 ) {
 
     fun getAllPerson(): List<Person> = persons.plus(dealer)
+
+    fun giveCards(cardCount: Int, print: (Person) -> Unit) {
+        persons.plus(dealer).forEach {
+            it.giveCard(CardsDeck.takeCard(cardCount))
+            print.invoke(it)
+        }
+    }
 
     companion object {
         private const val DELIMITER_NAME = ","

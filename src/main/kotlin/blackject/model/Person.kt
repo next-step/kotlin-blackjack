@@ -3,6 +3,7 @@ package blackject.model
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.Cards
+import blackject.model.card.CardsDeck
 
 /**
  * 참가자 정보 관리 클래스
@@ -32,4 +33,9 @@ open class Person(
     open fun hasResult(): Boolean = result != null
 
     open fun isPersonType(): PersonType = PersonType.NORMAL
+
+    fun giveCards(cardCount: Int, print: (Person) -> Unit) {
+        giveCard(CardsDeck.takeCard(cardCount))
+        print.invoke(this)
+    }
 }
