@@ -11,8 +11,8 @@ import blackject.model.card.CardsDeck
 open class Person(
     val name: String,
     val cards: Cards = Cards(),
-    var result: ResultType? = null
 ) {
+    var result: ResultType? = null
 
     open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
         return cards.getResultNumber(maxInt, exceptCard)
