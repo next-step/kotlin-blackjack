@@ -43,7 +43,8 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.KING)
                             }
-                        })
+                        }
+                    )
                 ),
                 Dealer().apply {
                     this.receiveCard() {
@@ -104,7 +105,8 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.KING)
                             }
-                        })
+                        }
+                    )
                 ),
                 Dealer().apply {
                     this.receiveCard() {

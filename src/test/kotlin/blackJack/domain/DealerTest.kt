@@ -18,7 +18,7 @@ class DealerTest {
         val dealerName = dealer.name
 
         // then
-        assertThat(dealerName).isEqualTo("DEALER")
+        assertThat(dealerName).isEqualTo(Dealer.DEALER_NAME)
     }
 
     @Test
