@@ -1,52 +1,10 @@
 package blackjack.ui
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.state.Hands
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
 import blackjack.strategy.ui.output.OutputStrategy
-import blackjack.util.FavoriteStringFixture.COMMA_AND_ONE_SPACE
-import blackjack.util.FavoriteStringFixture.NEW_LINE
 
 class ResultView(private val outputStrategy: OutputStrategy) {
-
-    fun noticeAssignCard(players: Players) {
-        outputStrategy.execute(THE_RESULT_MESSAGE_OF_HANDING_OUT_CARDS.format(playerNamesJoinToString(players)))
-        outputStrategy.execute(playerAndHandsJoinToString(players))
-    }
-
-    fun showPlayerHands(player: Player) {
-        outputStrategy.execute(
-            CARDS_HELD_BY_THE_PARTICIPANT_INFORMATIONAL_MESSAGE.format(player.name, handsJoinToString(player.hands))
-        )
-    }
-
-    fun showResult(players: Players) {
-        outputStrategy.execute(playerAndHandsAndScoreJoniToString(players))
-    }
-
-    private fun playerNamesJoinToString(players: Players): String =
-        players.players.joinToString(separator = COMMA_AND_ONE_SPACE) { it.name }
-
-    private fun playerAndHandsJoinToString(players: Players): String = players.players
-        .joinToString(separator = NEW_LINE) {
-            CARDS_HELD_BY_THE_PARTICIPANT_INFORMATIONAL_MESSAGE.format(it.name, handsJoinToString(it.hands))
-        }
-
-    private fun handsJoinToString(hands: Hands): String =
-        hands.hands.joinToString(separator = COMMA_AND_ONE_SPACE) { cardJoinToString(it) }
-
-    private fun cardJoinToString(card: Card): String =
-        denominationName(card.denomination) + suitName(card.suit)
-
-    private fun playerAndHandsAndScoreJoniToString(players: Players): String = players.players
-        .joinToString(separator = NEW_LINE) {
-            RESULT_MESSAGE.format(it.name, handsJoinToString(it.hands), handsScore(it.hands))
-        }
-
-    private fun handsScore(hands: Hands): Int = hands.score().score
 
     private fun denominationName(denomination: Denomination): String {
         return when (denomination) {

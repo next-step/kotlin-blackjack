@@ -2,31 +2,23 @@ package blackjack.domain.player.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
-import blackjack.domain.card.Score
 import blackjack.domain.card.Suit
+import blackjack.domain.player.state.hands.Hands
+import blackjack.error.InvalidCalculateScoreException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 
 @DisplayName("Hit 상태(Hit)")
 internal class HitTest {
 
     @Test
-    fun `Hit 상태는 비어있지 않다`() {
-        val hit = testHit()
-        assertThat(hit.isEmpty()).isFalse
-    }
-
-    @Test
     fun `Hit 상태는 스코어는 0이 아니다`() {
         val hit = testHit()
-        val hitHands = hitHands()
 
-        assertAll(
-            { assertThat(hit.score()).isNotEqualTo(Score.ZERO) },
-            { assertThat(hit.score()).isEqualTo(hitHands.score()) },
-        )
+        val exception = assertThrows<InvalidCalculateScoreException> { hit.score() }
+        assertThat(exception.message).isEqualTo("'%s' 타입은 스코어를 계산할 수 없습니다".format(hit::class.toString()))
     }
 
     @Test
@@ -45,25 +37,25 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 Hit 상태가 될 수 있다`() {
+        val extraCard = Card(Suit.CLUB, Denomination.THREE)
         val hit = testHit()
+            .draw(extraCard)
 
-        val extraCards = listOf(Card(Suit.CLUB, Denomination.THREE))
-        val expectedHands = hitHands() + extraCards
-
-        assertThat(hit.plus(extraCards)).isEqualTo(Hit(expectedHands))
+        assertThat(hit).isEqualTo(Hit(hit.hands))
     }
 
     @Test
     fun `Hit 상태는 Bust 상태가 될 수 있다`() {
-        val hit = testHit()
 
         val extraCards = listOf(
             Card(Suit.CLUB, Denomination.JACK),
             Card(Suit.CLUB, Denomination.QUEEN)
         )
-        val expectedHands = hitHands() + extraCards
+        val hit = testHit()
+            .draw(extraCards[0])
+            .draw(extraCards[1])
 
-        assertThat(hit.plus(extraCards)).isEqualTo(Bust(expectedHands))
+        assertThat(hit).isEqualTo(Bust(hit.hands))
     }
 
     companion object {

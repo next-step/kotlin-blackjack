@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.state.Hands
+import blackjack.domain.player.state.hands.Hands
 import blackjack.error.DuplicatePlayingCardException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
@@ -25,39 +25,44 @@ internal class HandsTest {
     }
 
     @Test
-    fun `카드들에 새로운 카드들이 추가될 수 있다`() {
+    fun `카드들에 새로운 카드가 추가될 수 있다`() {
         val externalPlayingCards = allPlayingCards()
-        val expected = Hands.from(externalPlayingCards)
+        val expected = Hands.from(listOf(externalPlayingCards[0]))
 
         val hands = Hands.EMPTY
-        val actual = hands + externalPlayingCards
+            .draw(externalPlayingCards[0])
 
-        assertThat(actual).isEqualTo(expected)
+        assertThat(hands).isEqualTo(expected)
     }
 
     @Test
     fun `카드들에 새로운 카드들이 추가될 때 중복된 카드가 들어오면 예외를 발생한다`() {
         val externalPlayingCards = allPlayingCards()
-        val duplicatedPlayingCards = listOf(Card(Suit.CLUB, Denomination.ACE))
-        val hands = Hands.from(duplicatedPlayingCards)
-        val exception = assertThrows<DuplicatePlayingCardException> { hands + externalPlayingCards }
+        val hands = Hands.EMPTY
+            .draw(externalPlayingCards[0])
 
+        val exception = assertThrows<DuplicatePlayingCardException> { hands.draw(externalPlayingCards[0]) }
         assertThat(exception.message).isEqualTo("이미 덱에 존재하는 카드가 있습니다.")
     }
 
     @Test
     fun `카드들은 점수의 합을 반환한다`() {
-        val playingCards = Hands.from(
-            listOf(
-                Card(Suit.CLUB, Denomination.TWO),
-                Card(Suit.CLUB, Denomination.THREE),
-                Card(Suit.CLUB, Denomination.FOUR),
-                Card(Suit.CLUB, Denomination.FIVE),
-                Card(Suit.CLUB, Denomination.SIX),
-            )
-        )
-        val score = playingCards.score()
-        assertThat(score.score).isEqualTo(20)
+        val externalPlayingCards = allPlayingCards()
+        val hands = Hands.EMPTY
+            .draw(externalPlayingCards[0])
+            .draw(externalPlayingCards[1])
+            .draw(externalPlayingCards[2])
+            .draw(externalPlayingCards[3])
+            .draw(externalPlayingCards[4])
+            .draw(externalPlayingCards[5])
+
+        val expected = externalPlayingCards
+            .subList(0, 6)
+            .map { it.score() }
+            .reduce { x, y -> x + y }
+
+        val score = hands.score()
+        assertThat(score.score).isEqualTo(expected.score)
     }
 
     @Test

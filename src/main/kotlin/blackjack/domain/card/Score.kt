@@ -5,12 +5,13 @@ import blackjack.error.ScoreOutOfBoundsException
 @JvmInline
 value class Score private constructor(val score: Int) {
 
+    operator fun plus(other: Score): Score = from(score + other.score)
+
     fun canPlusExtraAceScore(): Boolean = ((score + EXTRA_ACE_SCORE_RANGE) <= MAXIMUM_SCORE)
 
     fun isBust(): Boolean = (score > MAXIMUM_SCORE)
-    fun isMaxiMum(): Boolean = (score == MAXIMUM_SCORE)
 
-    operator fun plus(other: Score): Score = from(score + other.score)
+    fun isMaximumScore(): Boolean = (score == MAXIMUM_SCORE)
 
     companion object {
         private const val MINIMUM_SCORE = 0
@@ -21,6 +22,7 @@ value class Score private constructor(val score: Int) {
 
         val ZERO: Score = from(MINIMUM_SCORE)
         val EXTRA_ACE_SCORE: Score = from(EXTRA_ACE_SCORE_RANGE)
+
         fun from(score: Int): Score = CACHE[score] ?: throw ScoreOutOfBoundsException(score)
     }
 }

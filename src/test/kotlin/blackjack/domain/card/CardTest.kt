@@ -17,4 +17,11 @@ internal class CardTest {
             { assertThat(playingCard).isExactlyInstanceOf(Card::class.java) },
         )
     }
+
+    @Test
+    fun `카드는 점수를 반환한다`() {
+        val playingCard = Card(Suit.CLUB, Denomination.ACE)
+
+        assertThat(playingCard.score()).isEqualTo(Score.from(1))
+    }
 }

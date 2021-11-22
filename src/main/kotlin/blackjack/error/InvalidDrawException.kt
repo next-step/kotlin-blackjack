@@ -1,6 +1,6 @@
 package blackjack.error
 
-class InvalidAddCardsException(element: String) : RuntimeException() {
+class InvalidDrawException(element: String) : RuntimeException() {
     override val message = MESSAGE.format(element)
 
     companion object {
