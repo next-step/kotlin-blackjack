@@ -7,36 +7,34 @@ private typealias ResultType = GameResult.Type
 
 sealed interface GameResult {
     fun isApplicableTo(dealer: Dealer, player: Player): Boolean
-    fun get(dealer: Dealer, player: Player): GamersResult
+    fun getPlayerResult(dealer: Dealer, player: Player): Type
 
-    enum class Type {
-        WIN,
-        DRAW,
-        LOSE,
-        BLACK_JACK,
+    enum class Type(private val times: Double) {
+        WIN(1.0),
+        DRAW(0.0),
+        LOSE(-1.0),
+        BLACK_JACK(0.5),
         ;
+
+        fun calculateProfit(money: Money): Profit {
+            return Profit(money.value * times)
+        }
     }
 }
 
 object PlayerBust : GameResult {
     override fun isApplicableTo(dealer: Dealer, player: Player) = player.isBust()
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.LOSE, player),
-            dealerResult = GamerResult(ResultType.WIN, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.LOSE
     }
 }
 
 object DealerBust : GameResult {
     override fun isApplicableTo(dealer: Dealer, player: Player) = dealer.isBust()
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.WIN, player),
-            dealerResult = GamerResult(ResultType.LOSE, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.WIN
     }
 }
 
@@ -45,11 +43,8 @@ object PlayerBlackJack : GameResult {
         return player.isBlackJack() && !dealer.isBlackJack()
     }
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.BLACK_JACK, player),
-            dealerResult = GamerResult(ResultType.LOSE, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.BLACK_JACK
     }
 }
 
@@ -58,43 +53,31 @@ object DealerBlackJack : GameResult {
         return dealer.isBlackJack() && !player.isBlackJack()
     }
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.LOSE, player),
-            dealerResult = GamerResult(ResultType.WIN, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.LOSE
     }
 }
 
 object PlayerWin : GameResult {
     override fun isApplicableTo(dealer: Dealer, player: Player) = (dealer.score < player.score)
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.WIN, player),
-            dealerResult = GamerResult(ResultType.LOSE, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.WIN
     }
 }
 
 object PlayerDraw : GameResult {
     override fun isApplicableTo(dealer: Dealer, player: Player) = (dealer.score == player.score)
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.DRAW, player),
-            dealerResult = GamerResult(ResultType.DRAW, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.DRAW
     }
 }
 
 object PlayerLose : GameResult {
     override fun isApplicableTo(dealer: Dealer, player: Player) = (dealer.score > player.score)
 
-    override fun get(dealer: Dealer, player: Player): GamersResult {
-        return GamersResult(
-            playerResult = GamerResult(ResultType.LOSE, player),
-            dealerResult = GamerResult(ResultType.WIN, dealer),
-        )
+    override fun getPlayerResult(dealer: Dealer, player: Player): ResultType {
+        return ResultType.LOSE
     }
 }

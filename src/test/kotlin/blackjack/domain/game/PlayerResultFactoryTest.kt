@@ -9,20 +9,19 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
-class GamerResultFactoryTest {
+class PlayerResultFactoryTest {
 
     private val name = PlayerName("aaj")
     private val bustScore = BLACK_JACK_SCORE.value + 1
 
     @Test
-    fun `플레이어가 bust라면 딜러 결과와는 상관없이 플레이어는 패배, 딜러는 승리한다`() {
+    fun `플레이어가 bust라면 딜러 결과와는 상관없이 플레이어는 패배한다`() {
         val dealer = Dealer(Hand(bustScore))
         val player = Player(name, Money(1000), Hand(bustScore))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.LOSE)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result).isEqualTo(GameResult.Type.LOSE)
     }
 
     @Test
@@ -30,10 +29,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(bustScore))
         val player = Player(name, Money(1000), Hand(2))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.WIN)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result).isEqualTo(GameResult.Type.WIN)
     }
 
     @Test
@@ -41,10 +39,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(BLACK_JACK_SCORE.value, isBlackJack = false))
         val player = Player(name, Money(1000), Hand(BLACK_JACK_SCORE.value, isBlackJack = true))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.BLACK_JACK)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result).isEqualTo(GameResult.Type.BLACK_JACK)
     }
 
     @Test
@@ -52,10 +49,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(BLACK_JACK_SCORE.value, isBlackJack = true))
         val player = Player(name, Money(1000), Hand(BLACK_JACK_SCORE.value, isBlackJack = false))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.LOSE)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result).isEqualTo(GameResult.Type.LOSE)
     }
 
     @Test
@@ -63,10 +59,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(BLACK_JACK_SCORE.value, isBlackJack = true))
         val player = Player(name, Money(1000), Hand(BLACK_JACK_SCORE.value, isBlackJack = true))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.DRAW)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.DRAW)
+        assertThat(result).isEqualTo(GameResult.Type.DRAW)
     }
 
     @Test
@@ -74,10 +69,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Money(1000), Hand(19))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.WIN)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.LOSE)
+        assertThat(result).isEqualTo(GameResult.Type.WIN)
     }
 
     @Test
@@ -85,10 +79,9 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Money(1000), Hand(18))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.DRAW)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.DRAW)
+        assertThat(result).isEqualTo(GameResult.Type.DRAW)
     }
 
     @Test
@@ -96,9 +89,8 @@ class GamerResultFactoryTest {
         val dealer = Dealer(Hand(18))
         val player = Player(name, Money(1000), Hand(17))
 
-        val result = GamerResultFactory.getGamerResult(dealer, player)
+        val result = PlayerResultFactory.getResult(dealer, player)
 
-        assertThat(result.playerResult.result).isEqualTo(GameResult.Type.LOSE)
-        assertThat(result.dealerResult.result).isEqualTo(GameResult.Type.WIN)
+        assertThat(result).isEqualTo(GameResult.Type.LOSE)
     }
 }
