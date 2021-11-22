@@ -12,6 +12,8 @@ data class Player(val name: String, val cards: Cards = Cards()) {
 
     fun canHit() = cards.getScore() < BLACK_JACK_SCORE
 
+    fun nowScore() = NumberType.getScore(cards)
+
     companion object {
         fun of(name: String, cards: Cards = Cards()): Player {
             return Player(name, cards)
