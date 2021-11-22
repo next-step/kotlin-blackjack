@@ -4,7 +4,7 @@ import blackjack.state.Ready
 import blackjack.state.Running
 import blackjack.state.State
 
-sealed class Gamer(val name: Name, protected val state: State) {
+sealed class Gamer(val name: Name, val state: State) {
 
     val cards: Cards = state.cards
 
@@ -18,7 +18,7 @@ sealed class Gamer(val name: Name, protected val state: State) {
 
     fun isRunning(): Boolean = state is Running
 
-    fun profit(amount: Amount): Profit = state.profit(amount)
+    fun profit(amount: Amount, state: State) = this.state.profit(amount, state)
 
     protected abstract fun copy(name: Name = this.name, state: State = this.state): Gamer
 }

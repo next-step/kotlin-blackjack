@@ -11,7 +11,7 @@ interface State {
 
     fun draw(card: Card): State
 
-    fun profit(amount: Amount): Profit
+    fun profit(amount: Amount, state: State): Profit
 
     fun stay(): State
 }

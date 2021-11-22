@@ -6,7 +6,6 @@ import blackjack.model.Gamers
 import blackjack.model.Player
 import blackjack.view.res.Resource
 import blackjack.view.res.getString
-import kotlin.math.roundToInt
 
 class OutputView {
 
@@ -48,8 +47,10 @@ class OutputView {
         // 최종 수익
         println()
         println(Resource.STR_FINAL_PROFIT)
-        val totalProfit = players.map { -it.profit() }.sumOf { it.amount.roundToInt() }
-        println(Resource.STR_DEALER_PROFIT.format(totalProfit))
-        players.forEach { player -> println("${player.name}: ${player.profit()}") }
+        players
+            .map { it.profit(dealer.state) }
+            .sumOf { -it.amount.roundToInt() }
+            .let { profit -> println(Resource.STR_DEALER_PROFIT.format(profit)) }
+        players.forEach { player -> println("${player.name}: ${player.profit(dealer.state)}") }
     }
 }

@@ -11,7 +11,7 @@ class Player private constructor(
 
     override fun copy(name: Name, state: State): Gamer = Player(name, bet, state)
 
-    fun profit(): Profit = profit(bet.amount)
+    fun profit(state: State): Profit = profit(bet.amount, state)
 
     companion object {
         fun ready(name: Name, bet: Bet = Bet.ZERO): Player = Player(name, bet, Ready())

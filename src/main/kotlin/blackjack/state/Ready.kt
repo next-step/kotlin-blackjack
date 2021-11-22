@@ -7,8 +7,8 @@ import blackjack.model.Profit
 
 class Ready(override val cards: Cards = Cards.empty()) : State {
 
-    override fun profit(amount: Amount): Profit {
-        throw UnsupportedOperationException("cannot support profit in ready state")
+    override fun profit(amount: Amount, state: State): Profit {
+        throw UnsupportedOperationException("cannot support profit in running state")
     }
 
     override fun draw(card: Card): State {
