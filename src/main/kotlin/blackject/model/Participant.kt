@@ -14,15 +14,9 @@ class Participant(
         private const val DELIMITER_NAME = ","
         fun addPerson(name: String?): Participant {
             require(!name.isNullOrEmpty())
-            val list = mutableListOf<Person>().apply {
-                addAll(
-                    name
-                        .split(DELIMITER_NAME)
-                        .map { Person(type = PersonType.NORMAL, name = it) }
-                )
-            }
-
-            return Participant(Dealer(), list)
+            return name.split(DELIMITER_NAME)
+                .map { Person(type = PersonType.NORMAL, name = it) }
+                .let { Participant(Dealer(), it) }
         }
     }
 }
