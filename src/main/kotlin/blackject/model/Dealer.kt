@@ -7,11 +7,11 @@ class Dealer(
     cards: Cards = Cards()
 ) : Person(NAME, cards) {
 
-    override fun canTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
+    override fun isPersonType(): PersonType = PersonType.DEALER
+
+    fun canTakeMoreCard(exceptCard: CardNumber): Boolean {
         return MAX_NUMBER_DEALER >= cards.getResultNumber(MAX_NUMBER_DEALER, exceptCard)
     }
-
-    override fun isPersonType(): PersonType = PersonType.DEALER
 
     fun isOverMaxInt(maxInt: Int, exceptCard: CardNumber): Boolean = getScore(maxInt, exceptCard) > maxInt
 
