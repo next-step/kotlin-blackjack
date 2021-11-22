@@ -1,12 +1,23 @@
 package blackjack.domain
 
-data class CardNumber(val value: Int) {
-    init {
-        require(value in NUMBER_RANGE) { INVALID_NUMBER_ERROR_MSG }
-    }
+enum class CardNumber(val value: Int) {
+    ACE(1),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
+    JACK(10),
+    QUEEN(10),
+    KING(10);
 
     companion object {
-        val NUMBER_RANGE = (1..13)
-        private const val INVALID_NUMBER_ERROR_MSG = "유효하지 않은 번호 입니다."
+        fun fromValue(value: Int): CardNumber {
+            return values().first { it.value == value }
+        }
     }
 }

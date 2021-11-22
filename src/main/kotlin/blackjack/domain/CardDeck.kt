@@ -17,7 +17,7 @@ class CardDeck {
 
     private fun setupCards(): MutableList<Card> {
         val cards = CardSymbol.values().flatMap { symbol ->
-            CardNumber.NUMBER_RANGE.map { Card(symbol, CardNumber(it)) }
+            CardNumber.values().map { Card(symbol, it) }
         }
         return cards
             .shuffled()

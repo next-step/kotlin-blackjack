@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.EnumSource
 
 class PlayerTest {
     @Test
@@ -18,9 +18,9 @@ class PlayerTest {
     fun `플레이어는 카드를 받을 수 있다`() {
         val player = Player(name = "che1")
 
-        player.takeCards(listOf(Card(CardSymbol.CLOVER, CardNumber(1))))
+        player.takeCards(listOf(Card(CardSymbol.CLOVER, CardNumber.ACE)))
 
-        assertThat(player.cards).isEqualTo(listOf(Card(CardSymbol.CLOVER, CardNumber(1))))
+        assertThat(player.cards).isEqualTo(listOf(Card(CardSymbol.CLOVER, CardNumber.ACE)))
     }
 
     @Test
@@ -28,23 +28,23 @@ class PlayerTest {
         val player = Player(name = "che1")
         player.takeCards(
             listOf(
-                Card(CardSymbol.CLOVER, CardNumber(10)),
-                Card(CardSymbol.CLOVER, CardNumber(10)),
-                Card(CardSymbol.CLOVER, CardNumber(1))
+                Card(CardSymbol.CLOVER, CardNumber.JACK),
+                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
+                Card(CardSymbol.CLOVER, CardNumber.ACE)
             )
         )
 
         player.takeCards(
             listOf(
-                Card(CardSymbol.CLOVER, CardNumber(1))
+                Card(CardSymbol.CLOVER, CardNumber.ACE)
             )
         )
 
         assertThat(player.cards).isEqualTo(
             listOf(
-                Card(CardSymbol.CLOVER, CardNumber(10)),
-                Card(CardSymbol.CLOVER, CardNumber(10)),
-                Card(CardSymbol.CLOVER, CardNumber(1))
+                Card(CardSymbol.CLOVER, CardNumber.JACK),
+                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
+                Card(CardSymbol.CLOVER, CardNumber.ACE)
             )
         )
     }
@@ -55,9 +55,9 @@ class PlayerTest {
 
         player.takeCards(
             listOf(
-                Card(CardSymbol.CLOVER, CardNumber(2)),
-                Card(CardSymbol.CLOVER, CardNumber(3)),
-                Card(CardSymbol.CLOVER, CardNumber(4))
+                Card(CardSymbol.CLOVER, CardNumber.TWO),
+                Card(CardSymbol.CLOVER, CardNumber.THREE),
+                Card(CardSymbol.CLOVER, CardNumber.FOUR)
             )
         )
 
@@ -65,10 +65,10 @@ class PlayerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [11, 12, 13])
-    fun `점수 계산 시 코트 카드는 10점으로 계산한다`(cardNumber: Int) {
+    @EnumSource(value = CardNumber::class, names = ["JACK", "QUEEN", "KING"])
+    fun `점수 계산 시 코트 카드는 10점으로 계산한다`(cardNumber: CardNumber) {
         val player = Player("test1")
-        player.takeCards(listOf(Card(CardSymbol.CLOVER, CardNumber(cardNumber))))
+        player.takeCards(listOf(Card(CardSymbol.CLOVER, cardNumber)))
 
         assertThat(player.getTotalScore()).isEqualTo(10)
     }
@@ -80,7 +80,7 @@ class PlayerTest {
         player.takeCards(
             cardNumbers
                 .split(",")
-                .map { Card(CardSymbol.CLOVER, CardNumber(it.toInt())) }
+                .map { Card(CardSymbol.CLOVER, CardNumber.fromValue(it.toInt())) }
         )
 
         assertThat(player.getTotalScore()).isEqualTo(expectedScore)

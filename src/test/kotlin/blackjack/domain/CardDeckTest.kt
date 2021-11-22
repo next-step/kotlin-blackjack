@@ -19,7 +19,7 @@ class CardDeckTest {
     fun `덱은 문양별로 1에서 13번 까지의 카드를 가진다`(symbol: CardSymbol) {
         val cardDeck = CardDeck()
 
-        assertThat(cardDeck.cards).containsAll((1..13).map { Card(symbol, CardNumber(it)) })
+        assertThat(cardDeck.cards).containsAll(CardNumber.values().map { Card(symbol, it) })
     }
 
     @Test
