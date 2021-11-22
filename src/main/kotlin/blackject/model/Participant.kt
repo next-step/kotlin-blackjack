@@ -22,7 +22,7 @@ class Participant(
     fun inputBetAmountByPerson(print: (Person) -> String?) {
         persons.forEach {
             val amount = print.invoke(it)
-            it.inputBetMoney(amount?.toIntOrNull())
+            it.inputBetMoney(amount?.toDoubleOrNull())
         }
     }
 

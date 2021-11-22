@@ -11,8 +11,7 @@ import blackject.model.card.CardsDeck
 open class Person(
     val name: String,
     val cards: Cards = Cards(),
-) {
-    var batMoney: Amount = Amount()
+) : Player() {
     var result: ResultType? = null
 
     open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
@@ -40,11 +39,7 @@ open class Person(
         print.invoke(this)
     }
 
-    fun inputBetMoney(money: Int?) {
-        require(money != null)
-        require(money > MIN_BAT_MONEY)
-        batMoney = Amount(money.toDouble())
-    }
+
 
     companion object {
         const val MIN_BAT_MONEY = 0

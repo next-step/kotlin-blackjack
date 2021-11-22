@@ -1,7 +1,5 @@
 package blackject.model.card
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-
 /**
  * 카드 리스트
  * */

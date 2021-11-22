@@ -64,5 +64,4 @@ class PersonTest {
 
         Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
-
 }
