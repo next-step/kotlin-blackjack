@@ -52,7 +52,7 @@ class BlackjectController(
                         dealer.changeResultType(ResultType.BUST)
                         return@giveCards
                     }
-                    OutputView.printAddedDealerCard(rule.MAX_NUMBER_DEALER)
+                    OutputView.printAddedDealerCard()
                     return@giveCards
                 }
             }
@@ -80,7 +80,7 @@ class BlackjectController(
                 when {
                     it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
                     it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.changeResultType(ResultType.BUST)
-                    else -> it.changeResultType(ResultType.DEFEAT)
+                    else -> it.changeResultType(ResultType.LOSE)
                 }
             }
         OutputView.gameWinDefeat(persons)

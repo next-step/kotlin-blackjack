@@ -1,5 +1,6 @@
 package blackject.view
 
+import blackject.model.Dealer
 import blackject.model.Participant
 import blackject.model.Person
 import blackject.model.card.CardNumber
@@ -14,8 +15,8 @@ object OutputView {
         println("${person.name}카드: ${person.cards.cardList.joinToString { it.cardName }}")
     }
 
-    fun printAddedDealerCard(maxInt: Int) {
-        println("딜러는 ${maxInt}이하라 한장의 카드를 더 받았습니다.\n")
+    fun printAddedDealerCard() {
+        println("딜러는 ${Dealer.MAX_NUMBER_DEALER}이하라 한장의 카드를 더 받았습니다.\n")
     }
 
     fun gameResult(person: Person, maxNumber: Int, exceptCard: CardNumber) {
