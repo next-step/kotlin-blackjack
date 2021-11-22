@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.exceptions.ScoreOverflowException
 import blackjack.domain.extensions.deepCopy
 
 class Player(val name: String) {
@@ -19,7 +20,7 @@ class Player(val name: String) {
 
     fun takeCards(cards: List<Card>) {
         if (!canTakeCards) {
-            return
+            throw ScoreOverflowException(SCORE_OVERFLOW_ERROR_MSG)
         }
 
         cards.forEach {
@@ -35,7 +36,7 @@ class Player(val name: String) {
         var totalScore = 0
         normalCards.forEach { totalScore += it.number.value }
         courtCards.forEach { _ -> totalScore += MAX_NUMBER }
-        aceCards.forEach {
+        aceCards.forEach { _ ->
             totalScore += if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
         }
         return totalScore
@@ -47,5 +48,6 @@ class Player(val name: String) {
         private const val ACE_NUMBER_ALT = 11
         private const val MAX_NUMBER = 10
         private const val INVALID_NAME_ERROR_MSG = "잘못된 이름입니다."
+        private const val SCORE_OVERFLOW_ERROR_MSG = "이미 최대 점수를 넘어섰습니다. 카드를 더이상 받을 수 없습니다."
     }
 }

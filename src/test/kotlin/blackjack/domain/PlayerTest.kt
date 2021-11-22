@@ -1,7 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.exceptions.ScoreOverflowException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.EnumSource
@@ -24,7 +26,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `최대 점수를 넘어서면 카드를 받지 못한다`() {
+    fun `최대 점수를 넘어서면 ScoreOverflowException 을 일으킨다`() {
         val player = Player(name = "che1")
         player.takeCards(
             listOf(
@@ -34,19 +36,13 @@ class PlayerTest {
             )
         )
 
-        player.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.ACE)
+        assertThrows<ScoreOverflowException> {
+            player.takeCards(
+                listOf(
+                    Card(CardSymbol.CLOVER, CardNumber.ACE)
+                )
             )
-        )
-
-        assertThat(player.cards).isEqualTo(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.JACK),
-                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
-                Card(CardSymbol.CLOVER, CardNumber.ACE)
-            )
-        )
+        }
     }
 
     @Test
