@@ -1,3 +1,20 @@
 package blackjack.domain
 
-class Cards
+data class Cards(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
+
+    fun getScore(): Int = cards.sumOf { it.numberType.score }
+
+    fun countAce(): Int {
+        return cards.count { it.numberType == NumberType.ACE }
+    }
+
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
+
+    companion object {
+        fun from(cards: MutableList<Card> = mutableListOf()): Cards {
+            return Cards(cards)
+        }
+    }
+}
