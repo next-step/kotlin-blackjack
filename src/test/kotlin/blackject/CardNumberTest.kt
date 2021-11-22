@@ -20,28 +20,6 @@ class CardNumberTest {
     }
 
     @Test
-    @DisplayName("Ace 카드의 최소 숫자 구하기")
-    fun `check ace number of min`() {
-        val ace = CardNumber.ACE
-        val expectedMinNumber = 1
-
-        val number = CardNumber.getNumberMinValue(ace)
-
-        Assertions.assertThat(number).isEqualTo(expectedMinNumber)
-    }
-
-    @Test
-    @DisplayName("Ace 카드의 최대 숫자 구하기")
-    fun `check ace number of max`() {
-        val ace = CardNumber.ACE
-        val expectedMinNumber = 11
-
-        val number = CardNumber.getNumberMaxValue(ace)
-
-        Assertions.assertThat(number).isEqualTo(expectedMinNumber)
-    }
-
-    @Test
     @DisplayName("킹 카드의 숫자 확인")
     fun `check king card number`() {
         val king = CardNumber.KING
