@@ -10,7 +10,7 @@ class InputView {
         require(!input.isNullOrBlank()) { EMPTY_STRING_ERROR_MSG }
         return input
             .filter { !it.isWhitespace() }
-            .split(",")
+            .split(STRING_SPLIT_DELIMITER)
             .map { Player(it) }
     }
 
@@ -32,5 +32,6 @@ class InputView {
         private const val RECEIVE_ANOTHER_CARD_MSG = "%s 는 한장의 카드를 더 받겠습니까?(예는 $YES, 아니오는 $NO)"
         private const val EMPTY_STRING_ERROR_MSG = "입력이 비어있습니다."
         private const val INVALID_INPUT_ERROR_MSG = "잘못된 입력입니다."
+        private const val STRING_SPLIT_DELIMITER = ","
     }
 }
