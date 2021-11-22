@@ -22,7 +22,7 @@ class PersonTest {
                 Card(CardType.CLOVER, CardNumber.THREE)
             )
         )
-        val person = Person(name = "이소현", cards = cards, type = PersonType.NORMAL)
+        val person = Person(name = "이소현", cards = cards)
         val expectedValue = true
 
         val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
@@ -41,7 +41,7 @@ class PersonTest {
                 Card(CardType.CLOVER, CardNumber.JACK)
             )
         )
-        val person = Person(name = "이소현", cards = cards, type = PersonType.NORMAL)
+        val person = Person(name = "이소현", cards = cards)
         val expectedValue = false
 
         val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
@@ -58,7 +58,7 @@ class PersonTest {
                 Card(CardType.CLOVER, CardNumber.ACE),
             )
         )
-        val person = Person(name = "이소현", cards = cards, type = PersonType.NORMAL)
+        val person = Person(name = "이소현", cards = cards)
         val expectedValue = false
 
         val isTakeMoreCard = person.isTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)

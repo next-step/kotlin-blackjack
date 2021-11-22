@@ -15,7 +15,7 @@ class Participant(
         fun addPerson(name: String?): Participant {
             require(!name.isNullOrEmpty())
             return name.split(DELIMITER_NAME)
-                .map { Person(type = PersonType.NORMAL, name = it) }
+                .map { Person(name = it) }
                 .let { Participant(Dealer(), it) }
         }
     }

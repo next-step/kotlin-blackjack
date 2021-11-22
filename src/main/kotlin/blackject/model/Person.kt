@@ -8,7 +8,6 @@ import blackject.model.card.Cards
  * 참가자 정보 관리 클래스
  * */
 open class Person(
-    val type: PersonType,
     val name: String,
     val cards: Cards = Cards(),
     var result: ResultType? = null
@@ -31,4 +30,6 @@ open class Person(
     }
 
     open fun hasResult(): Boolean = result != null
+
+    open fun isPersonType(): PersonType = PersonType.NORMAL
 }

@@ -20,7 +20,7 @@ class CardsTest {
             Card(CardType.CLOVER, CardNumber.TWO),
             Card(CardType.CLOVER, CardNumber.THREE)
         )
-        val person = Person(name = "이소현", type = PersonType.NORMAL)
+        val person = Person(name = "이소현",)
 
         person.giveCard(cards)
 

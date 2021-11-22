@@ -49,7 +49,7 @@ class BlackjectController(
         persons
             .dealer
             .let {
-                if (!it.isTakeMoreCard(rule.getMaxNumber(it.type), rule.EXCEPT_NUMBER)) return
+                if (!it.isTakeMoreCard(rule.getMaxNumber(it.isPersonType()), rule.EXCEPT_NUMBER)) return
                 giveCard(it, CardsDeck.NUMBER_ONE_TIME)
                 if (it.isOverMaxInt(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) {
                     it.changeResultType(ResultType.BUST)
@@ -99,7 +99,7 @@ class BlackjectController(
     }
 
     private fun askMoreCard(person: Person) {
-        if (!person.isTakeMoreCard(rule.getMaxNumber(person.type), rule.EXCEPT_NUMBER)) return
+        if (!person.isTakeMoreCard(rule.getMaxNumber(person.isPersonType()), rule.EXCEPT_NUMBER)) return
         if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
         giveCard(person, CardsDeck.NUMBER_ONE_TIME)
         OutputView.printCardListOfPerson(person)

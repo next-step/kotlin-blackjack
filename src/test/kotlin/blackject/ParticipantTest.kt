@@ -17,7 +17,7 @@ class ParticipantTest {
     @DisplayName("참가자 리스트 확인")
     fun `check participant list`(name: String) {
         val participant = Participant.addPerson(name)
-        val expectedList = listOf(Person(type = PersonType.NORMAL, name = "sohyun"), Person(type = PersonType.NORMAL, "hiii"))
+        val expectedList = listOf(Person(name = "sohyun"), Person("hiii"))
 
         assertThat(participant.persons.size).isEqualTo(2)
         assertThat(participant.persons).isEqualTo(expectedList)
