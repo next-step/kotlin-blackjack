@@ -1,11 +1,18 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.deck.Deck
+import blackjack.exception.NotExistDealerException
 
 class Gamers private constructor(
     value: List<Gamer>,
 ) {
     val value = value.toList()
+
+    init {
+        if (value.first() !is Dealer) {
+            throw NotExistDealerException()
+        }
+    }
 
     fun prepare(deck: Deck): Gamers {
         val preparedGamers = mutableListOf<Gamer>()
