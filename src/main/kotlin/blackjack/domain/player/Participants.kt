@@ -7,7 +7,34 @@ class Participants(
     val players: List<Player>,
 ) {
 
-    fun getAllPlayers(): List<Participant> {
+    fun existsBlackjack(): Boolean {
+        return getAllPlayers().any { participant -> participant.isBlackjack() }
+    }
+
+    fun getReceiveCardStatistics(): List<ReceiveCardStatistics> {
+        return getAllPlayers().map { participant ->
+            val cardNames = participant.cards.map { card ->
+                "${card.denomination.denomination} ${card.pattern}"
+            }
+
+            ReceiveCardStatistics(
+                playerName = participant.name,
+                cardNames = cardNames,
+                cardSum = participant.getCardSum(),
+            )
+        }
+    }
+
+    fun getRevenueStatistics(): List<RevenueStatistics> {
+        return getAllPlayers().map { participant ->
+            RevenueStatistics(
+                playerName = participant.name,
+                revenue = participant.getRevenue(),
+            )
+        }
+    }
+
+    private fun getAllPlayers(): List<Participant> {
         return listOf(dealer.dealer) + players.map { it.player }
     }
 

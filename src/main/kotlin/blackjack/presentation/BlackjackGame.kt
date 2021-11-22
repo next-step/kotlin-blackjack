@@ -35,9 +35,7 @@ class BlackjackGame(
     }
 
     fun existsBlackjack(participants: Participants): Boolean {
-        return participants
-            .getAllPlayers()
-            .any { participant -> participant.isBlackjack() }
+        return participants.existsBlackjack()
     }
 
     fun match(participants: Participants) {
