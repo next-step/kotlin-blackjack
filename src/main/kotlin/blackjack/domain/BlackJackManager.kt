@@ -9,4 +9,13 @@ class BlackJackManager(
             players.eachAcceptCards(cardDeck)
         }
     }
+
+    fun hitPlayer(question: (Player) -> String, cardDeck: CardDeck, printResult: ((Player) -> Unit)? = null) {
+        players.forEach { player ->
+            while (question(player) == "y" && player.canHit()) {
+                player.hit(cardDeck.next())
+                printResult?.invoke(player)
+            }
+        }
+    }
 }

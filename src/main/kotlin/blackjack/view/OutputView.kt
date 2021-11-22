@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Player
 import blackjack.domain.Players
 
 object OutputView {
@@ -22,6 +23,14 @@ object OutputView {
                 append(player.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
                 append(System.lineSeparator())
             }
+        }
+        println(output)
+    }
+
+    fun printPlayerDrawnCard(player: Player) {
+        val output = buildString {
+            append("${player.name}카드: ")
+            append(player.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
         }
         println(output)
     }
