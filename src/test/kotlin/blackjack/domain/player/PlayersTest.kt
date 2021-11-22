@@ -121,4 +121,12 @@ internal class PlayersTest {
 
         assertThat(actual).containsExactly(givenGamer3, givenGamer2, givenGamer1)
     }
+
+    @Test
+    fun `플레이어 목록에 딜러가 2명이면 예외를 던진다`() {
+        val dealer1 = Dealer.of()
+        val dealer2 = Dealer.of()
+
+        assertThrows<IllegalStateException> { Players(listOf(dealer1, dealer2)) }
+    }
 }

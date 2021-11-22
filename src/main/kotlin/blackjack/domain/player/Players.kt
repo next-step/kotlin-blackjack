@@ -14,6 +14,10 @@ data class Players(val players: List<Player>) : List<Player> by players {
 
     init {
         require(players.size >= MINIMUM_GAMER)
+
+        if (players.count { it is Dealer } > DEALER_COUNT) {
+            throw IllegalStateException(DEALER_ALREADY_EXIST)
+        }
     }
 
     fun startInitPhase(deck: Deck): Players {
@@ -112,6 +116,8 @@ data class Players(val players: List<Player>) : List<Player> by players {
     companion object {
         private const val MINIMUM_GAMER = 2
         private const val INIT_RECEIVE_CARD_COUNT = 2
+        private const val DEALER_COUNT = 1
+        private const val DEALER_ALREADY_EXIST = "딜러는 한 명이상 존재할 수 없습니다"
 
         fun createPlayers(names: Names): Players {
             return Players(names.names.map { Gamer(Profile(it)) })
