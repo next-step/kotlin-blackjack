@@ -7,7 +7,7 @@ class Dealer(
     cards: Cards = Cards()
 ) : Person(NAME, cards) {
 
-    override fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
+    override fun canTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
         return maxInt >= cards.getResultNumber(maxInt, exceptCard)
     }
 

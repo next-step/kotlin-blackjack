@@ -18,7 +18,7 @@ open class Person(
         return cards.getResultNumber(maxInt, exceptCard)
     }
 
-    open fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
+    open fun canTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
         return maxInt > cards.getResultNumber(maxInt, exceptCard)
     }
 

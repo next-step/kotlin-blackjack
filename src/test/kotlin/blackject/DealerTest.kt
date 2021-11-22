@@ -33,7 +33,7 @@ class DealerTest {
         val dealer = Dealer(cards = cards)
         val expectedValue = true
 
-        Assertions.assertThat(dealer.isTakeMoreCard(Rule.MAX_NUMBER_DEALER, Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
+        Assertions.assertThat(dealer.canTakeMoreCard(Rule.MAX_NUMBER_DEALER, Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
     }
 
     @Test
@@ -48,6 +48,6 @@ class DealerTest {
         val dealer = Dealer(cards = cards)
         val expectedValue = false
 
-        Assertions.assertThat(dealer.isTakeMoreCard(Rule.MAX_NUMBER_DEALER, Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
+        Assertions.assertThat(dealer.canTakeMoreCard(Rule.MAX_NUMBER_DEALER, Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
     }
 }
