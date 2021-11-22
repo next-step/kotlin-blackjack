@@ -3,11 +3,10 @@ package blackJack.dto
 import blackJack.domain.player.Dealer
 import blackJack.domain.player.GamePlayers
 import blackJack.domain.player.Player
+import blackJack.utils.StringUtils.Companion.joinToStrings
 
 class GamePlayersDto(private val players: List<PlayerDto>, val dealer: DealerDto) : List<PlayerDto> by players {
-    fun getPlayerNames(): String = players.joinToString {
-        it.name
-    }
+    fun getPlayerNames(): String = joinToStrings(listOf(dealer.name) + players.map { it.name })
 
     companion object {
         fun of(gamePlayers: GamePlayers): GamePlayersDto {

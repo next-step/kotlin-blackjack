@@ -5,20 +5,21 @@ import blackJack.domain.result.Results
 import blackJack.dto.DealerDto
 import blackJack.dto.PlayerDto
 import blackJack.dto.GamePlayersDto
+import blackJack.utils.StringUtils.Companion.joinToStrings
 
 object ResultView {
     fun receiveTwoCard(gamePlayersDto: GamePlayersDto) {
         println("${gamePlayersDto.getPlayerNames()} 에게 2장의 나누었습니다.")
         val dealer = gamePlayersDto.dealer
-        println("${dealer.name} : ${listOf(dealer.cards.first())}")
+        println("${dealer.name} : ${dealer.cards.first()}")
         gamePlayersDto.map {
-            println("${it.name} : ${it.cards}")
+            println("${it.name} : ${joinToStrings(it.cards)}")
         }
     }
 
     fun receiveCard(playerDto: PlayerDto, isContinue: Boolean) {
         if (isContinue) {
-            println("${playerDto.name} :${playerDto.cards}")
+            println("${playerDto.name} :${joinToStrings(playerDto.cards)}")
         }
     }
 
@@ -31,11 +32,11 @@ object ResultView {
     }
 
     fun playerGameResult(playerDto: PlayerDto) {
-        println("${playerDto.name}카드 :${playerDto.cards} - 결과: ${playerDto.score}")
+        println("${playerDto.name}카드 :${joinToStrings(playerDto.cards)} - 결과: ${playerDto.score}")
     }
 
     fun dealerGameResult(dealerDto: DealerDto) {
-        println("${dealerDto.name} 카드 :${dealerDto.cards} - 결과: ${dealerDto.score}")
+        println("${dealerDto.name} 카드 :${joinToStrings(dealerDto.cards)} - 결과: ${dealerDto.score}")
     }
 
     fun winOrLoseView(results: Results) {
