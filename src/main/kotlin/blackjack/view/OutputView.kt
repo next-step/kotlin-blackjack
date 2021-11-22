@@ -34,4 +34,19 @@ object OutputView {
         }
         println(output)
     }
+
+    fun printResult(players: Players) {
+        val output = buildString {
+            append(System.lineSeparator())
+            players.forEach {
+                append("${it.name}카드: ")
+                append(it.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
+                append(" - ")
+                append("결과: ")
+                append("${it.nowScore()}")
+                append(System.lineSeparator())
+            }
+        }
+        println(output)
+    }
 }
