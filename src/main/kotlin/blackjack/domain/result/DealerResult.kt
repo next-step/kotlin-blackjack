@@ -6,9 +6,9 @@ import blackjack.domain.state.result.Push
 import blackjack.domain.state.result.Win
 
 class DealerResult private constructor(
-    var win: Int = 0,
-    var push: Int = 0,
-    var lose: Int = 0,
+    val win: Int = 0,
+    val push: Int = 0,
+    val lose: Int = 0,
 ) {
     companion object {
         private const val DEFAULT = 0
