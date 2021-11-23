@@ -1,13 +1,20 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
+import blackjack.domain.player.state.BlackJack
 import blackjack.domain.player.state.BlackJackTest.Companion.TEST_BLACKJACK
 import blackjack.domain.player.state.BlackJackTest.Companion.blackJackCards
+import blackjack.domain.player.state.Hit
 import blackjack.domain.player.state.HitTest.Companion.TEST_HIT
 import blackjack.domain.player.state.HitTest.Companion.hitCards
 import blackjack.domain.player.state.Ready
+import blackjack.domain.player.state.Stay
 import blackjack.domain.player.state.StayTest.Companion.DEALER_STAY
 import blackjack.domain.player.state.StayTest.Companion.dealerStayCards
+import blackjack.domain.player.state.hands.Hands
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -32,30 +39,56 @@ internal class DealerTest {
         val expected = Dealer(playerState = Ready().draw(extraCard))
 
         val dealer = Dealer().draw(Deck.initialize { it }) { listOf(it.pop()) }
+
         assertThat(dealer).isEqualTo(expected)
     }
 
     @Test
     fun `처음 뽑은 카드들이 21이하면, BlackJack이다`() {
         val expected = Dealer(playerState = TEST_BLACKJACK)
+
         val dealer = Dealer().draw(Deck.initialize { it }) { blackJackCards() }
 
-        assertThat(dealer).isEqualTo(expected)
+        assertAll(
+            { assertThat(dealer.playerState is BlackJack).isTrue },
+            { assertThat(dealer).isEqualTo(expected) },
+        )
     }
 
     @Test
     fun `처음 뽑은 카드들이 16이하면, Hit이다`() {
         val expected = Dealer(playerState = TEST_HIT)
+
         val dealer = Dealer().draw(Deck.initialize { it }) { hitCards() }
 
-        assertThat(dealer).isEqualTo(expected)
+        assertAll(
+            { assertThat(dealer.playerState is Hit).isTrue },
+            { assertThat(dealer).isEqualTo(expected) },
+        )
     }
 
     @Test
     fun `처음 뽑은 카드들이 17이상이면, Stay 이다`() {
         val expected = Dealer(playerState = DEALER_STAY)
+
         val dealer = Dealer().draw(Deck.initialize { it }) { dealerStayCards() }
 
-        assertThat(dealer).isEqualTo(expected)
+        assertAll(
+            { assertThat(dealer.playerState is Stay).isTrue },
+            { assertThat(dealer).isEqualTo(expected) },
+        )
+    }
+
+    @Test
+    fun `나중에 뽑은 카드들까지의 합이 21이하 17이상이면, Stay 이다`() {
+        val expectedStayCards = hitCards() + Card(Suit.CLUB, Denomination.FOUR)
+        val expected = Dealer(playerState = Stay(Hands.from(expectedStayCards)))
+
+        val dealer = Dealer().draw(Deck.initialize { it }) { expectedStayCards }
+
+        assertAll(
+            { assertThat(dealer.playerState is Stay).isTrue },
+            { assertThat(dealer).isEqualTo(expected) },
+        )
     }
 }

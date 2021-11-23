@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.domain.player.Dealer.Companion.DEALER_DRAW_STANDARD
 import blackjack.error.ScoreOutOfBoundsException
 
 @JvmInline
@@ -12,6 +13,8 @@ value class Score private constructor(val score: Int) {
     fun isBust(): Boolean = (score > MAXIMUM_SCORE)
 
     fun isMaximumScore(): Boolean = (score == MAXIMUM_SCORE)
+
+    fun isOverDealerDrawStandard(): Boolean = (score > DEALER_DRAW_STANDARD)
 
     fun compareTo(other: Score): Int = score.compareTo(other.score)
 

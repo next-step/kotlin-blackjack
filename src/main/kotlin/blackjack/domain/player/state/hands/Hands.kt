@@ -20,6 +20,8 @@ value class Hands private constructor(val hands: List<Card>) {
 
     fun isBlackJack(): Boolean = (score().isMaximumScore()) && (hands.size == READY_MAXIMUM_RANGE)
 
+    fun isOverDealerDrawStandard(): Boolean = (score().isOverDealerDrawStandard())
+
     fun score(): Score {
         val sum = hands
             .map(Card::score)
