@@ -11,6 +11,8 @@ data class GamePlayer(
 ) : Player(name, playerState) {
 
     override fun draw(deck: Deck, drawStrategy: DrawStrategy): Player {
-        TODO("Not yet implemented")
+        var nowState = playerState
+        drawStrategy.draw(deck).forEach { nowState = nowState.draw(it) }
+        return GamePlayer(name, nowState)
     }
 }
