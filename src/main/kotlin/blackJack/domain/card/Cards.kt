@@ -1,7 +1,6 @@
-package blackJack.domain
+package blackJack.domain.card
 
-@JvmInline
-value class Cards(private val cards: List<Card>) {
+class Cards(private val cards: List<Card>) : List<Card> by cards {
 
     operator fun plus(card: Card): Cards {
         checkDuplicate(card)
@@ -12,15 +11,25 @@ value class Cards(private val cards: List<Card>) {
         return Cards(cards - card)
     }
 
-    fun getSize(): Int = cards.size
-
-    fun toList(): List<Card> = cards
-
     private fun checkDuplicate(card: Card) {
         require(card !in cards) { DUPLICATE_ERROR }
     }
 
-    fun sumCards() = cards.sumOf { it.denomination.score }
+    fun sumCards(): Int =
+        cards.sortedByDescending { it.denomination.orderBy }.fold(0) { acc: Int, card: Card ->
+            if (card.denomination == Denomination.ACE) {
+                val aceScore = card.denomination.score(acc)
+                acc + card.denomination.score(acc + aceScore)
+            } else {
+                acc + card.denomination.score(acc)
+            }
+        }.let { sum ->
+            if (sum > 21 && cards.map { it.denomination }.contains(Denomination.ACE)) {
+                cards.sumOf { it.denomination.score(sum) }
+            } else {
+                sum
+            }
+        }
 
     fun drawRandomCard() = cards.random()
 

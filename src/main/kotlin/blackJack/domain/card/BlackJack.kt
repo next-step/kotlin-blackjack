@@ -1,6 +1,6 @@
-package blackJack.domain
+package blackJack.domain.card
 
-class Stay : PlayerDecision {
+object BlackJack : Signal {
     override fun isContinue(): Boolean {
         return false
     }
