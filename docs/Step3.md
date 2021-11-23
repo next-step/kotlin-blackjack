@@ -41,48 +41,28 @@ jason: 패
 
 ## 클래스 설계
 
-* [] Players(게임 참가자들)
-    * [] names 를 나누어서 players 생성  
-    * [] 딜러는 넣지 않는다. -> 공수비용 따졌을 때 이게 확장성 높다고 판단    
-* [] Player(게임 참가자)
-    * 공통 인터페이스
-        * [] match(other: Player) : GameResult
-            * [] state.match(other.state) 그대로 호출 
-            * [] State 에 비교 전략 패턴 넣기(Running 익셉션, Finished 호출 가능)
-                * [] 전략패턴 - MatchStrategy.excute(this: PlayerState, state: playerState): GameResult
-                * [] BustMatchStrategy : Bust가 아닌 경우 무조건 Lose 반환 
-                * [] BlackJackMatchStrategy : 블랙잭이 아닌 경우 무조건 WIN 반환 
-                * [] StayMatchStrategy : 블랙잭이면 Lose, Stay인 경우 스코어 비교, Bust인 경우 승리  
-        * [] draw(deck, 카드 뽑기 전략): Player
-            * [] 뽑기 전략으로 처음 뽑기 또는 히트 뽑기 가능
-            * [] 딜러일 경우, 17이상이 되면 stay 이나 bust로 변환 -> Hands.isOverDealerStandard()
-            * [] 유저의 경우, 21이상이 되면 bust() 호출 -> Hands.isOverMaximum()
-        * [] isFinish() : 현재 상태가 끝났는지 반환
-    * [] Dealer :
-        * draw(deck, 카드 뽑기 전략)
-            * [] 카드 뽑기 전략 ->
-            * [] 딜러는 카드를 뽑았을 때 17이상 21이하의 경우 Stay 로 변환
-            * [] 딜러는 카드를 뽑았을 때 21초과인 경우 Bust로 변환
-    * [] GamePlayer :
-        * draw(deck, 카드 뽑기 전략)
-            * [] 커멘드가 true 이면 draw 호출하여 GamePlayer 반환
-            * [] 커멘드가 false 이면 stay 호출하여 GamePlayer 반환
-            * [] 커멘드는 ui 도메인이므로 draw
-    * [] Hands(추가)
-        * [] Hands.isOverDealerStandard() -> Dealer.STANDARD 참조해서 넘는지 파악
-        * [] Hands.isOverMaximum() -> Score.isOverMaximum 그대로 사용하면 될 듯
-* [x] MatchResult : 무승패
-    * WIN, DRAW, LOSE
-    * 승/패 : `Stay vs Bust`, `BlackJack vs Bust`, `BlackJack vs Stay`, `Stay(score) > Stay(score)`
-    * 무 : `Bust vs Bust`, `BlackJack vs BlackJack`, `Stay(score) vs Stay(score)`
-    * 상태 비교후, 동일한 경우 Score 비교  
-* [] MatchResults : 결과들
-
-    
-## 상태 패턴 설계
-
-**상태**
-
+* [x] Players(게임 참가자들)
+    * [x] names 를 나누어서 players 생성
+* [x] Player(참가자)
+    * [x] `match(other: Player): MatchResult` : state.match(other.state)로 호출
+    * [x] `isFinish(): Boolean` : 현재 상태가 끝났는지 반환
+    * [x] `abstract draw(deck, 카드_뽑기_전략): Player` : 반환이 상위이므로 추상 메서드 선언 후 하위에서 구현하는 걸로
+* [x] Dealer(딜러)
+    * [x] `draw(deck, 카드_뽑기_전략): Player` : state.draw() 의 값에 따라 로직 변화 
+        * [x] state.draw() 의 값이고 Hit 이고, 17이상 21이하인 경우 Hit
+        * [x] 버스트, 블랙잭은 state.draw() 의 값으로 알아서 세팅
+* [x] GamePlayer(게임 참가자)
+    * [x] `draw(deck, 카드_뽑기_전략): Player` : 일반 방식대로 동작  
+* [x] Hands(손패, 기존에 추가)
+    * [x] isOverDealerDrawStandard -> 딜러 기준치를 넘는지 반환 
+* [x] MatchResult(승부 결과)
+    * [x] WIN, DRAW, LOSE
+    * [x] 승/패 : `Stay vs Bust`, `BlackJack vs Bust`, `BlackJack vs Stay`, `Stay(score) > Stay(score)`
+    * [x] 무 : `Bust vs Bust`, `BlackJack vs BlackJack`, `Stay(score) vs Stay(score)`
+    * [x] 상태 비교후, 동일한 경우 Score 비교  
+* ~~[] MatchResults : 결과들 -> 만들어도 사용할 일이 없음 -> 다시 빼내서 작업해야함~~
+ 
+### 상태 패턴 적용   
 * [x] Running
     * 공통 기능
         * [x] isFinished : false
