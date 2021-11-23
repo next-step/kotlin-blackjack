@@ -4,7 +4,7 @@ import blackjack.domain.player.name.Name
 import blackjack.strategy.split.SplitStrategy
 
 @JvmInline
-value class Players(private val players: List<Player>) {
+value class Players private constructor(val players: List<Player>) {
 
     companion object {
         fun of(name: String, splitStrategy: SplitStrategy): Players =

@@ -3,6 +3,8 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.player.state.BlackJackTest.Companion.TEST_BLACKJACK
+import blackjack.domain.player.state.StayTest.Companion.MINIMUM_STAY
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -49,8 +51,8 @@ internal class BustTest {
     @Test
     fun `Bust 상태는 Bust 이외의 상태와 매칭시 대해서 패 결과를 얻는다`() {
         val bust = TEST_BUST
-        val stayMatchResult = bust.match(TEST_BUST)
-        val blackJackMatchResult = bust.match(TEST_BUST)
+        val stayMatchResult = bust.match(MINIMUM_STAY)
+        val blackJackMatchResult = bust.match(TEST_BLACKJACK)
 
         assertAll(
             { assertThat(stayMatchResult).isEqualTo(MatchResult.LOSE) },

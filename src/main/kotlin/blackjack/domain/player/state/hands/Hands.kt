@@ -22,12 +22,11 @@ value class Hands private constructor(val hands: List<Card>) {
 
     fun isOverDealerDrawStandard(): Boolean = (score().isOverDealerDrawStandard())
 
-    fun score(): Score {
-        val sum = hands
-            .map(Card::score)
+    fun score(): Score = calculateAceScore(sumScore())
+
+    private fun sumScore(): Score =
+        hands.map(Card::score)
             .reduce(Score::plus)
-        return calculateAceScore(sum)
-    }
 
     private fun calculateAceScore(sum: Score): Score {
         if (hands.any(Card::hasAce) && sum.canPlusExtraAceScore()) {

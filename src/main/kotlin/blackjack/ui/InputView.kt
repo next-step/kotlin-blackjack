@@ -10,7 +10,7 @@ class InputView(private val inputStrategy: InputStrategy, private val outputStra
         return inputStrategy.execute()
     }
 
-    fun askDrawCard(name: String): String {
+    fun askDrawable(name: String): String {
         outputStrategy.execute(ASK_DRAW_CARD_MESSAGE.format(name))
         return inputStrategy.execute()
     }

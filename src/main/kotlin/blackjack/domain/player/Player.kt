@@ -12,5 +12,7 @@ sealed class Player(open val name: Name, open val playerState: PlayerState) {
 
     fun match(other: Player): MatchResult = playerState.match(other.playerState)
 
+    abstract fun stay(): Player
+
     abstract fun draw(deck: Deck, drawStrategy: DrawStrategy): Player
 }

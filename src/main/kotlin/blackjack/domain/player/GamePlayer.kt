@@ -11,6 +11,8 @@ data class GamePlayer(
     override val playerState: PlayerState = Ready(),
 ) : Player(name, playerState) {
 
+    override fun stay(): Player = GamePlayer(name, playerState.stay())
+
     override fun draw(deck: Deck, drawStrategy: DrawStrategy): Player {
         var nowState = playerState
         drawStrategy.draw(deck).forEach { nowState = nowState.draw(it) }
