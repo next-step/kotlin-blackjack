@@ -49,7 +49,7 @@ class BlackjackController() {
     }
 
     private fun receiveCardAllPlayers(deck: Deck, players: Players): Players {
-        return players.receiveCards(deck, isPlayerTurnOff)
+        return players.receiveCards(deck, isPlayerTurnOff, OutputView::printCards, OutputView::printDealerCardReceived)
     }
 
     companion object {

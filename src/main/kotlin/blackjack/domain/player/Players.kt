@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.application.Game
 import blackjack.domain.card.Deck
 import blackjack.domain.game.Turn
 
@@ -45,10 +44,11 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(updatePlayerStatus(player, player.turnOff()))
     }
 
-    fun receiveCards(deck: Deck, turn: Turn): Players {
+    fun receiveCards(deck: Deck, turn: Turn, playerCallback: (Player) -> Unit, dealerCallback: () -> Unit): Players {
         var receivedCardPlayers = players.toList()
         players.forEach {
-            receivedCardPlayers = updateReceiveCards(it, turn, receivedCardPlayers, deck)
+            receivedCardPlayers =
+                updateReceiveCards(it, turn, receivedCardPlayers, deck, playerCallback, dealerCallback)
         }
         return Players(receivedCardPlayers)
     }
@@ -57,7 +57,9 @@ data class Players(val players: List<Player>) : List<Player> by players {
         player: Player,
         turn: Turn,
         players: List<Player>,
-        deck: Deck
+        deck: Deck,
+        playerCallback: (Player) -> Unit,
+        dealerCallback: () -> Unit
     ): List<Player> {
         var receivedCardPlayers = players
         var target = player
@@ -65,12 +67,12 @@ data class Players(val players: List<Player>) : List<Player> by players {
             val result = receiveCard(receivedCardPlayers, target, deck)
             receivedCardPlayers = result.players.copy()
             target = result.player
-            Game.showPlayerResult(target)
+            playerCallback(target)
         }
         if (canDealerHit(target)) {
             val result = receiveCard(receivedCardPlayers, target, deck)
             receivedCardPlayers = result.players.copy()
-            Game.showDealerCardReceived()
+            dealerCallback()
         }
         return receivedCardPlayers
     }
