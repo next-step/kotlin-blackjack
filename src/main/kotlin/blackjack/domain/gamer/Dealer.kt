@@ -31,10 +31,6 @@ class Dealer private constructor(
         return Dealer(name, currentState)
     }
 
-    override fun stand(): Dealer {
-        return Dealer(name, Stand(cards))
-    }
-
     fun meetConditions(currentScore: Int): Dealer {
         if (currentScore == BLACKJACK_SCORE) {
             return Dealer(name, Blackjack(cards))

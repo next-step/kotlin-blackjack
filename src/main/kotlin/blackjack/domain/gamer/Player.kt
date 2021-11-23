@@ -25,16 +25,19 @@ class Player private constructor(
         return Player(name, completedSecondDraw)
     }
 
+    fun progress(playable: Boolean, deck: Deck): Player {
+        if (isStand(playable)) {
+            return Player(name, Stand(cards))
+        }
+        return play(deck)
+    }
+
     override fun play(deck: Deck): Player {
         if (state.cards.isBlackjack()) {
             return Player(name, Blackjack(cards))
         }
         val currentState = draw(deck, state)
         return Player(name, currentState)
-    }
-
-    override fun stand(): Player {
-        return Player(name, Stand(cards))
     }
 
     fun win(): Player {

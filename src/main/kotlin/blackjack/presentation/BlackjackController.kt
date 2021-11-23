@@ -48,18 +48,15 @@ class BlackjackController(
             while (true) {
                 val playable = inputPlayable(player)
 
-                if (player.isStand(playable)) {
-                    player.stand()
-                    OutputView.printGamerCard(player)
+                val progressedBlackjackPlayer = player.progress(playable, deck)
+
+                OutputView.printGamerCard(progressedBlackjackPlayer)
+                if (progressedBlackjackPlayer.isStand()) {
                     completedBlackjackPlayers.add(player)
                     break
                 }
-                val progressedBlackjack = player.play(deck)
-                println()
-                OutputView.printGamerCard(player)
-
-                if (progressedBlackjack.isFinished()) {
-                    completedBlackjackPlayers.add(progressedBlackjack)
+                if (progressedBlackjackPlayer.isFinished()) {
+                    completedBlackjackPlayers.add(progressedBlackjackPlayer)
                     break
                 }
             }
