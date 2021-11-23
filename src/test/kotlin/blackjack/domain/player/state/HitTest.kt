@@ -68,10 +68,16 @@ internal class HitTest {
 
     companion object {
         val TEST_HIT = Hit(Hands.from(hitCards()))
+        val TEST_MAXIMUM_HIT = Hit(Hands.from(maximumHitCards()))
 
         fun hitCards() = listOf(
             Card(Suit.CLUB, Denomination.ACE),
             Card(Suit.CLUB, Denomination.TWO)
+        )
+
+        fun maximumHitCards() = listOf(
+            Card(Suit.CLUB, Denomination.TEN),
+            Card(Suit.CLUB, Denomination.KING)
         )
     }
 }

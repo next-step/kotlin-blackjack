@@ -44,7 +44,7 @@ internal class DealerTest {
     }
 
     @Test
-    fun `처음 뽑은 카드들이 21이하면, BlackJack이다`() {
+    fun `처음 뽑은 카드들이 21이면, BlackJack이다`() {
         val expected = Dealer(playerState = TEST_BLACKJACK)
 
         val dealer = Dealer().draw(Deck.initialize { it }) { blackJackCards() }
