@@ -1,5 +1,6 @@
 package blackject.model
 
+import blackject.model.card.Cards
 import blackject.model.card.CardsDeck
 
 /**
@@ -12,6 +13,11 @@ class Participant(
 
     fun getAllPerson(): List<Person> = persons.plus(dealer)
 
+    fun winnerScore(): Int =
+        persons
+            .map { it.getScore() }
+            .filter { it <= Cards.BLACK_JACK_SUM }.maxOrNull()!!
+
     fun giveCards(cardCount: Int, print: (Person) -> Unit) {
         persons.plus(dealer).forEach {
             it.giveCard(CardsDeck.takeCard(cardCount))
@@ -23,6 +29,12 @@ class Participant(
         persons.forEach {
             val amount = print.invoke(it)
             it.inputBetMoney(amount?.toDoubleOrNull())
+        }
+    }
+
+    fun setGameResult() {
+        persons.forEach {
+
         }
     }
 

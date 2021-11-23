@@ -1,7 +1,6 @@
 package blackject
 
 import blackject.model.Dealer
-import blackject.model.Rule
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
@@ -33,7 +32,7 @@ class DealerTest {
         val dealer = Dealer(cards = cards)
         val expectedValue = true
 
-        Assertions.assertThat(dealer.canTakeMoreCard(Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
+        Assertions.assertThat(dealer.canTakeMoreCard()).isEqualTo(expectedValue)
     }
 
     @Test
@@ -42,12 +41,12 @@ class DealerTest {
         val cards = Cards(
             mutableListOf(
                 Card(CardType.CLOVER, CardNumber.SEVEN),
-                Card(CardType.CLOVER, CardNumber.TWO),
+                Card(CardType.CLOVER, CardNumber.TEN),
             )
         )
         val dealer = Dealer(cards = cards)
         val expectedValue = false
 
-        Assertions.assertThat(dealer.canTakeMoreCard(Rule.EXCEPT_NUMBER)).isEqualTo(expectedValue)
+        Assertions.assertThat(dealer.canTakeMoreCard()).isEqualTo(expectedValue)
     }
 }

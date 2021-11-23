@@ -1,0 +1,3 @@
+package blackject
+
+class AmountTest

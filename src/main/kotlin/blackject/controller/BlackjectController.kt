@@ -1,16 +1,12 @@
 package blackject.controller
 
-import blackject.model.GameResult
 import blackject.model.Participant
 import blackject.model.Person
-import blackject.model.ResultType
-import blackject.model.Rule
 import blackject.model.card.CardsDeck
 import blackject.view.InputView
 import blackject.view.OutputView
 
 class BlackjectController(
-    private val rule: Rule,
     private val cardsDeck: CardsDeck,
 ) {
 
@@ -54,10 +50,10 @@ class BlackjectController(
         persons
             .dealer
             .let { dealer ->
-                if (!dealer.canTakeMoreCard(rule.getMaxNumber(dealer.isPersonType()), rule.EXCEPT_NUMBER)) return
+                if (!dealer.canTakeMoreCard()) return
                 dealer.giveCards(CardsDeck.NUMBER_ONE_TIME) {
-                    if (dealer.isOverMaxInt(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER)) {
-                        dealer.changeResultType(ResultType.BUST)
+                    if (dealer.isOverMaxInt()) {
+                        // dealer.changeResultType(ResultType.BUST)
                         return@giveCards
                     }
                     OutputView.printAddedDealerCard()
@@ -70,28 +66,22 @@ class BlackjectController(
         println()
         persons
             .getAllPerson()
-            .forEach { OutputView.gameResult(it, rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
+            .forEach { OutputView.gameResult(it) }
     }
 
     private fun printResult(persons: Participant) {
-        val winScore = GameResult.getWinNumber(
-            rule.MAX_TOTAL_NUMBER,
-            persons
-                .getAllPerson()
-                .map { it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) }
-        )
+        persons.setGameResult()
 
-        persons
-            .getAllPerson()
-            .filterNot { it.hasResult() }
-            .forEach {
-                when {
-                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
-                    it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.changeResultType(ResultType.BUST)
-                    else -> it.changeResultType(ResultType.LOSE)
-                }
-            }
-        OutputView.gameWinDefeat(persons)
+        // .getAllPerson()
+        // .filterNot { it.hasResult() }
+        // .forEach {
+        //     when {
+        //         it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
+        //         it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.changeResultType(ResultType.BUST)
+        //         else -> it.changeResultType(ResultType.LOSE)
+        //     }
+        // }
+        // OutputView.gameWinDefeat(persons)
     }
 
     private fun getParticipant(): Participant {
@@ -101,7 +91,7 @@ class BlackjectController(
     }
 
     private fun askMoreCard(person: Person) {
-        if (!person.canTakeMoreCard(rule.getMaxNumber(person.isPersonType()), rule.EXCEPT_NUMBER)) return
+        if (!person.canTakeMoreCard()) return
         if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
         person.giveCards(CardsDeck.NUMBER_ONE_TIME) {
             OutputView.printCardListOfPerson(it)

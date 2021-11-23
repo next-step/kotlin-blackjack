@@ -23,6 +23,7 @@ enum class CardNumber(
 
     companion object {
         private const val PLUS_INT_ACE = 10
+        val EXCEPT_NUMBER = ACE
 
         fun isAce(numberName: String): Boolean {
             return ACE.numberName == numberName
@@ -33,6 +34,6 @@ enum class CardNumber(
         }
 
         fun getNumberMinValue(number: CardNumber): Int = number.number
-        fun getNumberMaxValue(card: CardNumber): Int = if (card == ACE) ACE.number + PLUS_INT_ACE else card.number
+        fun getNumberMaxValue(card: CardNumber): Int = if (card == EXCEPT_NUMBER) EXCEPT_NUMBER.number + PLUS_INT_ACE else card.number
     }
 }

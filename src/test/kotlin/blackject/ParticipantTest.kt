@@ -1,7 +1,6 @@
 package blackject
 
 import blackject.model.Participant
-import blackject.model.Person
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.assertThrows
@@ -16,10 +15,10 @@ class ParticipantTest {
     @DisplayName("참가자 리스트 확인")
     fun `check participant list`(name: String) {
         val participant = Participant.addPerson(name)
-        val expectedList = listOf(Person(name = "sohyun"), Person("hiii"))
 
         assertThat(participant.persons.size).isEqualTo(2)
-        assertThat(participant.persons).isEqualTo(expectedList)
+        assertThat(participant.persons[0].name).isEqualTo("sohyun")
+        assertThat(participant.persons[1].name).isEqualTo("hiii")
     }
 
     @ParameterizedTest

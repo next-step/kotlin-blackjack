@@ -1,7 +1,6 @@
 package blackject
 
 import blackject.model.Person
-import blackject.model.Rule
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
@@ -24,7 +23,7 @@ class PersonTest {
         val person = Person(name = "이소현", cards = cards)
         val expectedValue = true
 
-        val isTakeMoreCard = person.canTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
+        val isTakeMoreCard = person.canTakeMoreCard()
 
         Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
@@ -43,7 +42,7 @@ class PersonTest {
         val person = Person(name = "이소현", cards = cards)
         val expectedValue = false
 
-        val isTakeMoreCard = person.canTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
+        val isTakeMoreCard = person.canTakeMoreCard()
 
         Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }
@@ -60,7 +59,7 @@ class PersonTest {
         val person = Person(name = "이소현", cards = cards)
         val expectedValue = false
 
-        val isTakeMoreCard = person.canTakeMoreCard(Rule.MAX_TOTAL_NUMBER, Rule.EXCEPT_NUMBER)
+        val isTakeMoreCard = person.canTakeMoreCard()
 
         Assertions.assertThat(isTakeMoreCard).isEqualTo(expectedValue)
     }

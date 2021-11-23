@@ -1,6 +1,5 @@
 package blackject.model
 
-import blackject.model.card.CardNumber
 import blackject.model.card.Cards
 
 class Dealer(
@@ -9,11 +8,11 @@ class Dealer(
 
     override fun isPersonType(): PersonType = PersonType.DEALER
 
-    fun canTakeMoreCard(exceptCard: CardNumber): Boolean {
-        return MAX_NUMBER_DEALER >= cards.getResultNumber(MAX_NUMBER_DEALER, exceptCard)
+    override fun canTakeMoreCard(): Boolean {
+        return MAX_NUMBER_DEALER >= cards.getResultNumber() // TODO 확인하기
     }
 
-    fun isOverMaxInt(maxInt: Int, exceptCard: CardNumber): Boolean = getScore(maxInt, exceptCard) > maxInt
+    fun isOverMaxInt(): Boolean = getScore() > Cards.BLACK_JACK_SUM
 
     companion object {
         const val MAX_NUMBER_DEALER = 16
