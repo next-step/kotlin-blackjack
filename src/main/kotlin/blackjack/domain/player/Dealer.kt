@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.player.name.Name
 import blackjack.domain.player.state.Hit
 import blackjack.domain.player.state.PlayerState
 import blackjack.domain.player.state.Ready
