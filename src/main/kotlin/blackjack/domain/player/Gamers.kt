@@ -27,12 +27,7 @@ class Gamers(private val players: List<Player>, private val dealer: Dealer) {
 
     companion object {
 
-        fun from(
-            nameWithMoneys: List<PlayerNameWithMoney>,
-            playerAfterHit: AfterHitWhileCallback,
-            dealerAfterHit: AfterHitWhileCallback,
-        ): Gamers {
-            val players = nameWithMoneys.map { Player(it.name, it.money, afterHitCallBack = playerAfterHit) }
+        fun from(players: List<Player>, dealerAfterHit: AfterHitWhileCallback): Gamers {
             val dealer = Dealer(afterHitCallBack = dealerAfterHit)
             return Gamers(players, dealer)
         }

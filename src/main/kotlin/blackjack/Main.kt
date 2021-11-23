@@ -15,11 +15,12 @@ fun main() {
     val betMoneys: List<Money> = names.map {
         Money(ConsoleInputView.getBetMoney(it))
     }
-    val nameWithMoneys = PlayerNameWithMoney.from(names, betMoneys)
+    val playerAfterHit = AfterHitWhileCallback { ConsoleOutputView.printGamer(GamerDto(it)) }
+    val playerDtos = PlayerDto.from(names, betMoneys)
+    val players = playerDtos.map { it.toPlayer(playerAfterHit) }
 
     val gamers = Gamers.from(
-        nameWithMoneys,
-        playerAfterHit = { ConsoleOutputView.printGamer(GamerDto(it)) },
+        players = players,
         dealerAfterHit = { ConsoleOutputView.printDealerHit() },
     )
     val deck = Deck.create()

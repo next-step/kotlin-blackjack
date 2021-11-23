@@ -11,7 +11,7 @@ data class BlackJackResult(val gamerRestuls: List<GamerResult>) {
             val playerResults = players.map {
                 PlayerResultFactory.getPlayerResult(dealer, it)
             }
-            val dealerResult = GamerResult.getDealerFromPlayers(dealer, playerResults)
+            val dealerResult = GamerResult.getDealerResultFromPlayers(dealer, playerResults)
             return BlackJackResult(listOf(dealerResult) + playerResults)
         }
     }

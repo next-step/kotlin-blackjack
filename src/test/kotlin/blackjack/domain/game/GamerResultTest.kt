@@ -18,7 +18,7 @@ class GamerResultTest {
             GamerResult(Profit(-4000), TestGamer(true)),
         )
 
-        val result = GamerResult.getDealerFromPlayers(dealer, playerResults)
+        val result = GamerResult.getDealerResultFromPlayers(dealer, playerResults)
 
         assertThat(result.profit.value).isEqualTo(2000)
     }

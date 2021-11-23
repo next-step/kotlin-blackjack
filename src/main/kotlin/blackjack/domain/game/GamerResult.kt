@@ -13,7 +13,7 @@ data class GamerResult(val profit: Profit, val gamer: Gamer) {
 
     companion object {
 
-        fun getDealerFromPlayers(dealer: Dealer, playerResults: List<GamerResult>): GamerResult {
+        fun getDealerResultFromPlayers(dealer: Dealer, playerResults: List<GamerResult>): GamerResult {
             val dealerProfit = playerResults.map { it.profit }.sum().negative()
             return GamerResult(dealerProfit, dealer)
         }
