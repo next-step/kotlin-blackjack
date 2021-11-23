@@ -1,18 +1,12 @@
 package blackjack.domain.player
 
 class Player(
-    val player: Participant
-) : CardFunction by player {
-
-    var resultStatus = ResultStatus.UNKNOWN
-        private set
+    val player: Participant,
+    val betAmount: Double = 0.0,
+) : BlackjackFunction by player {
 
     fun isCardReceiveAble(): Boolean {
         return player.getCardSum() < DEADLINE
-    }
-
-    fun determineWinOrLose(winOrLose: ResultStatus) {
-        resultStatus = winOrLose
     }
 
     companion object {

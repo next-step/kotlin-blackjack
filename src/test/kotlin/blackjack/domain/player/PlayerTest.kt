@@ -58,33 +58,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `승리로 값을 변경시 승리로 변경된다`() {
-        val player = Player(Participant("one"))
-
-        player.determineWinOrLose(ResultStatus.WIN)
-
-        assertEquals(ResultStatus.WIN, player.resultStatus)
-    }
-
-    @Test
-    fun `패배로 값을 변경시 패배로 변경된다`() {
-        val player = Player(Participant("one"))
-
-        player.determineWinOrLose(ResultStatus.LOSE)
-
-        assertEquals(ResultStatus.LOSE, player.resultStatus)
-    }
-
-    @Test
-    fun `무승부로 값을 변경시 무승부로 변경된다`() {
-        val player = Player(Participant("one"))
-
-        player.determineWinOrLose(ResultStatus.TIE)
-
-        assertEquals(ResultStatus.TIE, player.resultStatus)
-    }
-
-    @Test
     fun `가진 카드의합이 21보다 작을때 카드를 받을 수 있다`() {
         val player = Player(Participant("one"))
 

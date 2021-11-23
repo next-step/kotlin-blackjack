@@ -2,17 +2,19 @@ package blackjack.view
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
-import blackjack.domain.player.ResultStatus
 
 object OutputView {
     fun printStartResult(participants: Participants) {
-        val allPlayers = participants.getAllPlayers()
+        val receiveCardStatisticsCollection = participants.getReceiveCardStatistics()
 
-        val names = allPlayers.joinToString { player -> player.name }
+        val names = receiveCardStatisticsCollection.joinToString { receiveCardStatistics ->
+            receiveCardStatistics.playerName
+        }
+
         println("$names 에게 2장의 카드를 나누어주었습니다.")
 
-        allPlayers.forEach { player ->
-            printPlayerCard(player)
+        receiveCardStatisticsCollection.forEach { receiveCardStatistics ->
+            println("${receiveCardStatistics.playerName}: ${receiveCardStatistics.cardNames}")
         }
     }
 
@@ -27,27 +29,20 @@ object OutputView {
 
     fun printDivideResult(participants: Participants) {
         participants
-            .getAllPlayers()
+            .getReceiveCardStatistics()
             .forEach { player ->
-                val cardNames = player.cards.map { card ->
-                    "${card.denomination.denomination} ${card.pattern}"
-                }
-
-                println("${player.name}카드 $cardNames 합계: ${player.getCardSum()}")
+                println("${player.playerName}카드 ${player.cardNames} 합계: ${player.cardSum}")
             }
     }
 
     fun printMatchResult(participants: Participants) {
-        val dealer = participants.dealer
-        val guest = participants.players
+        println("### 최종 수익")
 
-        val dealerMatchResult = dealer.getMatchResult()
-
-        println("${dealer.dealer.name}: ${dealerMatchResult[ResultStatus.WIN] ?: 0}승 ${dealerMatchResult[ResultStatus.LOSE] ?: 0}패 ${dealerMatchResult[ResultStatus.TIE] ?: 0}무")
-
-        guest.forEach { player ->
-            println("${player.player.name}: ${player.resultStatus.value}")
-        }
+        participants
+            .getRevenueStatistics()
+            .forEach { participant ->
+                println("${participant.playerName}: ${participant.revenue}")
+            }
     }
 
     fun printDealerReceivedCard() {

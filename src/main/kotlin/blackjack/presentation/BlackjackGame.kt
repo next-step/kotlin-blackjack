@@ -5,10 +5,10 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.domain.player.Participants
-import blackjack.service.DetermineMatch
+import blackjack.service.DecisionMatch
 
 class BlackjackGame(
-    private val determineMatch: DetermineMatch
+    private val decisionMatch: DecisionMatch
 ) {
 
     fun start(
@@ -16,7 +16,7 @@ class BlackjackGame(
         cardsDeck: CardsDeck,
     ): Participants {
         val dealer = Dealer(Participant("딜러"))
-        return Participants(
+        return Participants.build(
             dealer = dealer,
             players = players,
             cardsDeck
@@ -34,7 +34,18 @@ class BlackjackGame(
         return player
     }
 
+    fun existsBlackjack(participants: Participants): Boolean {
+        return participants.existsBlackjack()
+    }
+
     fun match(participants: Participants) {
-        determineMatch.match(participants.dealer, participants.players)
+        decisionMatch.match(participants.dealer, participants.players)
+    }
+
+    fun matchWhenFirstCardBlackjack(participants: Participants) {
+        decisionMatch.matchWhenFirstCardBlackjack(
+            participants.dealer,
+            participants.players
+        )
     }
 }

@@ -6,30 +6,35 @@ import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.extensions.fromYNToBoolean
 import blackjack.presentation.BlackjackGame
-import blackjack.service.DetermineMatch
+import blackjack.service.DecisionMatch
 import blackjack.util.PlayersParserUtil
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-private val blackjackGame = BlackjackGame(DetermineMatch())
+private val blackjackGame = BlackjackGame(DecisionMatch())
 
 fun main() {
     val cardsDeck = CardsDeck()
 
-    val players = blackjackGame.start(
+    val participants = blackjackGame.start(
         initPlayers(),
         cardsDeck
     )
 
-    OutputView.printStartResult(players)
+    OutputView.printStartResult(participants)
 
-    divideCards(players.dealer, players.players, cardsDeck)
+    val existsBlackjack = blackjackGame.existsBlackjack(participants)
 
-    OutputView.printDivideResult(players)
+    if (existsBlackjack) {
+        blackjackGame.matchWhenFirstCardBlackjack(participants)
+    } else {
+        divideCards(participants.dealer, participants.players, cardsDeck)
+        OutputView.printDivideResult(participants)
 
-    blackjackGame.match(players)
+        blackjackGame.match(participants)
+    }
 
-    OutputView.printMatchResult(players)
+    OutputView.printMatchResult(participants)
 }
 
 private fun initPlayers(): List<Player> {
@@ -37,7 +42,12 @@ private fun initPlayers(): List<Player> {
     val playersName = PlayersParserUtil.parse(inputPlayersName)
 
     return playersName.map { playerName ->
-        Player(Participant(playerName))
+        val betAmount = InputView.inputBetAmount(playerName)
+
+        Player(
+            player = Participant(playerName),
+            betAmount = betAmount,
+        )
     }
 }
 
