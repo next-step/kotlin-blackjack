@@ -5,7 +5,7 @@ import blackjack.domain.player.state.MatchResult
 import blackjack.domain.player.state.PlayerState
 import blackjack.strategy.draw.DrawStrategy
 
-sealed class Player(val name: Name, val playerState: PlayerState) {
+sealed class Player(open val name: Name, open val playerState: PlayerState) {
 
     fun isFinished(): Boolean = playerState.isFinished()
 
