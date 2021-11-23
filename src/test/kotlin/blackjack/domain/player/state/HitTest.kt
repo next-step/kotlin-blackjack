@@ -5,6 +5,7 @@ import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidCalculateScoreException
+import blackjack.error.InvalidMatchException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.assertThrows
 internal class HitTest {
 
     @Test
-    fun `Hit 상태는 스코어는 0이 아니다`() {
+    fun `Hit 상태는 스코어 계산을 할 수 없다`() {
         val hit = testHit()
 
         val exception = assertThrows<InvalidCalculateScoreException> { hit.score() }
@@ -46,7 +47,6 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 Bust 상태가 될 수 있다`() {
-
         val extraCards = listOf(
             Card(Suit.CLUB, Denomination.JACK),
             Card(Suit.CLUB, Denomination.QUEEN)
@@ -56,6 +56,14 @@ internal class HitTest {
             .draw(extraCards[1])
 
         assertThat(hit).isEqualTo(Bust(hit.hands))
+    }
+
+    @Test
+    fun `Hit 상태는 매칭을 할 수 없다`() {
+        val hit = testHit()
+
+        val exception = assertThrows<InvalidMatchException> { hit.match(testHit()) }
+        assertThat(exception.message).isEqualTo("'%s' 타입은 매칭을 할 수 없다".format(hit::class.toString()))
     }
 
     companion object {

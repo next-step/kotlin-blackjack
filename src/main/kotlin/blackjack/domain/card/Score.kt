@@ -13,6 +13,8 @@ value class Score private constructor(val score: Int) {
 
     fun isMaximumScore(): Boolean = (score == MAXIMUM_SCORE)
 
+    fun compareTo(other: Score): Int = score.compareTo(other.score)
+
     companion object {
         private const val MINIMUM_SCORE = 0
         private const val MAXIMUM_SCORE = 21

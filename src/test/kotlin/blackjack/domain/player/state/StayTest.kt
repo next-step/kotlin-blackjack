@@ -4,6 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Score
 import blackjack.domain.card.Suit
+import blackjack.domain.player.state.BlackJackTest.Companion.testBlackJack
+import blackjack.domain.player.state.BustTest.Companion.testBust
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -52,8 +54,57 @@ internal class StayTest {
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(blackJack::class.toString()))
     }
 
+    @Test
+    fun `Stay 상태는 BlackJack 상태와 매칭시 대해서 패 결과를 얻는다`() {
+        val stay = testStay()
+        val blackJackMatchResult = stay.match(testBlackJack())
+
+        assertThat(blackJackMatchResult).isEqualTo(MatchResult.LOSE)
+    }
+
+    @Test
+    fun `Stay 상태는 Bust 상태와 매칭시 대해서 승 결과를 얻는다`() {
+        val stay = testStay()
+        val bustMatchResult = stay.match(testBust())
+
+        assertThat(bustMatchResult).isEqualTo(MatchResult.WIN)
+    }
+
+    @Test
+    fun `Stay 상태는 동일한 스코어의 Stay 상태와 매칭시 대해서 무승부 결과를 얻는다`() {
+        val stay = testStay()
+        val sameStayMatchResult = stay.match(testStay())
+
+        assertThat(sameStayMatchResult).isEqualTo(MatchResult.DRAW)
+    }
+
+    @Test
+    fun `Stay 상태는 기존보다 스코어가 높은 Stay 상태와 매칭시 대해서 패 결과를 얻는다`() {
+        val stay = minimumStay()
+        val sameStayMatchResult = stay.match(testStay())
+
+        assertThat(sameStayMatchResult).isEqualTo(MatchResult.LOSE)
+    }
+
+    @Test
+    fun `Stay 상태는 기존보다 스코어가 낮은 Stay 상태와 매칭시 대해서 패 결과를 얻는다`() {
+        val stay = testStay()
+        val sameStayMatchResult = stay.match(minimumStay())
+
+        assertThat(sameStayMatchResult).isEqualTo(MatchResult.WIN)
+    }
+
     companion object {
-        private fun testStay(): Stay = Stay(stayHands())
+        fun minimumStay(): Stay = Stay(minimumStayHands())
+
+        private fun minimumStayHands() = Hands.from(minimumStayCards())
+
+        private fun minimumStayCards() = listOf(
+            Card(Suit.CLUB, Denomination.TWO),
+            Card(Suit.CLUB, Denomination.THREE),
+        )
+
+        fun testStay(): Stay = Stay(stayHands())
 
         private fun stayHands(): Hands = Hands.from(stayCards())
 

@@ -5,6 +5,7 @@ import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidCalculateScoreException
+import blackjack.error.InvalidMatchException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -81,5 +82,13 @@ internal class ReadyTest {
             .draw(bustCards[2])
 
         assertThat(bust).isEqualTo(Bust(Hands.from(bustCards)))
+    }
+
+    @Test
+    fun `Ready 상태는 매칭을 할 수 없다`() {
+        val ready = Ready()
+
+        val exception = assertThrows<InvalidMatchException> { ready.match(Ready()) }
+        assertThat(exception.message).isEqualTo("'%s' 타입은 매칭을 할 수 없다".format(ready::class.toString()))
     }
 }

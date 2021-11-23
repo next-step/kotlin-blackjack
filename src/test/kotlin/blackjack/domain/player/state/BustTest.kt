@@ -3,12 +3,15 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.player.state.BlackJackTest.Companion.testBlackJack
+import blackjack.domain.player.state.StayTest.Companion.testStay
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("Bust 상태(Bust)")
@@ -45,8 +48,28 @@ internal class BustTest {
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(bust::class.toString()))
     }
 
+    @Test
+    fun `Bust 상태는 Bust 이외의 상태와 매칭시 대해서 패 결과를 얻는다`() {
+        val bust = testBust()
+        val stayMatchResult = bust.match(testStay())
+        val blackJackMatchResult = bust.match(testBlackJack())
+
+        assertAll(
+            { assertThat(stayMatchResult).isEqualTo(MatchResult.LOSE) },
+            { assertThat(blackJackMatchResult).isEqualTo(MatchResult.LOSE) },
+        )
+    }
+
+    @Test
+    fun `Bust 상태는 Bust 상태와 매칭시 대해서 무승부 결과를 얻는다`() {
+        val bust = testBust()
+        val bustMatchResult = bust.match(testBust())
+
+        assertThat(bustMatchResult).isEqualTo(MatchResult.DRAW)
+    }
+
     companion object {
-        private fun testBust(): Bust = Bust(bustHands())
+        fun testBust(): Bust = Bust(bustHands())
 
         private fun bustHands(): Hands = Hands.from(bustCards())
 

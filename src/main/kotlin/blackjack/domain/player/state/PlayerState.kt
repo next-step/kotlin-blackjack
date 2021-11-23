@@ -6,6 +6,8 @@ import blackjack.domain.player.state.hands.Hands
 
 sealed class PlayerState(open val hands: Hands) {
 
+    abstract fun match(other: PlayerState): MatchResult
+
     abstract fun score(): Score
 
     abstract fun isFinished(): Boolean
