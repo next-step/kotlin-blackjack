@@ -26,7 +26,7 @@ value class Cards(
 
     // fun isBlackjack(): Boolean =
     //
-    // fun isBust(): Boolean = sum() > TWENTY_ONE
+    // fun isBust(): Boolean =
 
     companion object {
         fun getTotalMinCount(cardList: List<Card>): Int =

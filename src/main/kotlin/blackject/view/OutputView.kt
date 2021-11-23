@@ -34,4 +34,13 @@ object OutputView {
                 println("${it.name}: ${it.result?.string}")
             }
     }
+
+    fun printProfit(persons: Participant) {
+        println("\n## 최종 수익")
+        persons
+            .getAllPerson()
+            .forEach {
+                println("${it.name}: ${it.result?.string}")
+            }
+    }
 }
