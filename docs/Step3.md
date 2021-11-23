@@ -71,7 +71,7 @@ jason: 패
     * [] Hands(추가)
         * [] Hands.isOverDealerStandard() -> Dealer.STANDARD 참조해서 넘는지 파악
         * [] Hands.isOverMaximum() -> Score.isOverMaximum 그대로 사용하면 될 듯
-* [] MatchResult : 무승패
+* [x] MatchResult : 무승패
     * WIN, DRAW, LOSE
     * 승/패 : `Stay vs Bust`, `BlackJack vs Bust`, `BlackJack vs Stay`, `Stay(score) > Stay(score)`
     * 무 : `Bust vs Bust`, `BlackJack vs BlackJack`, `Stay(score) vs Stay(score)`

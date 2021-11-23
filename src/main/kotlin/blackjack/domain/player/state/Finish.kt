@@ -8,11 +8,11 @@ import blackjack.error.InvalidMapToPlayStateException
 
 sealed class Finish(hands: Hands) : PlayerState(hands) {
 
-    override fun score(): Score = hands.score()
-
     override fun isFinished(): Boolean = true
 
-    override fun stay(): PlayerState = throw InvalidMapToPlayStateException(this::class.toString())
+    override fun score(): Score = hands.score()
 
     override fun draw(card: Card): PlayerState = throw InvalidDrawException(this::class.toString())
+
+    override fun stay(): PlayerState = throw InvalidMapToPlayStateException(this::class.toString())
 }

@@ -5,6 +5,8 @@ import blackjack.strategy.shuffle.CardsShuffleStrategy
 @JvmInline
 value class Deck private constructor(private val deck: ArrayDeque<Card>) {
 
+    fun pop(): Card = deck.removeLast()
+
     companion object {
         fun initialize(cardsShuffleStrategy: CardsShuffleStrategy): Deck =
             Deck(shuffledCards(cardsShuffleStrategy))
