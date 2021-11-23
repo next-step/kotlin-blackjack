@@ -5,7 +5,7 @@ import blackjack.domain.player.state.PlayerState
 import blackjack.domain.player.state.Ready
 import blackjack.strategy.draw.DrawStrategy
 
-data class GamePlayer(
+data class Dealer(
     override val name: Name = DEFAULT_NAME,
     override val playerState: PlayerState = Ready(),
 ) : Player(name, playerState) {
