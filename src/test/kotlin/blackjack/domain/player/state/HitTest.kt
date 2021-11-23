@@ -16,7 +16,7 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 스코어 계산을 할 수 없다`() {
-        val hit = testHit()
+        val hit = TEST_HIT
 
         val exception = assertThrows<InvalidCalculateScoreException> { hit.score() }
         assertThat(exception.message).isEqualTo("'%s' 타입은 스코어를 계산할 수 없습니다".format(hit::class.toString()))
@@ -24,14 +24,14 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 아직 실행중인 상태이다`() {
-        val hit = testHit()
+        val hit = TEST_HIT
 
         assertThat(hit.isFinished()).isFalse
     }
 
     @Test
     fun `Hit 상태는 Stay 상태가 될 수 있다`() {
-        val hit = testHit()
+        val hit = TEST_HIT
 
         assertThat(hit.stay()).isEqualTo(Stay(hit.hands))
     }
@@ -39,7 +39,7 @@ internal class HitTest {
     @Test
     fun `Hit 상태는 Hit 상태가 될 수 있다`() {
         val extraCard = Card(Suit.CLUB, Denomination.THREE)
-        val hit = testHit()
+        val hit = TEST_HIT
             .draw(extraCard)
 
         assertThat(hit).isEqualTo(Hit(hit.hands))
@@ -51,7 +51,7 @@ internal class HitTest {
             Card(Suit.CLUB, Denomination.JACK),
             Card(Suit.CLUB, Denomination.QUEEN)
         )
-        val hit = testHit()
+        val hit = TEST_HIT
             .draw(extraCards[0])
             .draw(extraCards[1])
 
@@ -60,18 +60,16 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 매칭을 할 수 없다`() {
-        val hit = testHit()
+        val hit = TEST_HIT
 
-        val exception = assertThrows<InvalidMatchException> { hit.match(testHit()) }
+        val exception = assertThrows<InvalidMatchException> { hit.match(TEST_HIT) }
         assertThat(exception.message).isEqualTo("'%s' 타입은 매칭을 할 수 없다".format(hit::class.toString()))
     }
 
     companion object {
-        private fun testHit(): Hit = Hit(hitHands())
+        val TEST_HIT = Hit(Hands.from(hitCards()))
 
-        private fun hitHands() = Hands.from(hitCards())
-
-        private fun hitCards() = listOf(
+        fun hitCards() = listOf(
             Card(Suit.CLUB, Denomination.ACE),
             Card(Suit.CLUB, Denomination.TWO)
         )

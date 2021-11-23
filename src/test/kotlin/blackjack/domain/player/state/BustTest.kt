@@ -3,8 +3,6 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.state.BlackJackTest.Companion.testBlackJack
-import blackjack.domain.player.state.StayTest.Companion.testStay
 import blackjack.domain.player.state.hands.Hands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -19,21 +17,21 @@ internal class BustTest {
 
     @Test
     fun `Bust 상태는 스코어는 21초과다`() {
-        val bust = testBust()
+        val bust = TEST_BUST
 
         assertThat(bust.score().score).isGreaterThan(21)
     }
 
     @Test
     fun `Bust 상태는 실행이 종료된 상태이다`() {
-        val bust = testBust()
+        val bust = TEST_BUST
 
         assertThat(bust.isFinished()).isTrue
     }
 
     @Test
     fun `Bust 상태는 Stay 상태가 될 수 없다`() {
-        val bust = testBust()
+        val bust = TEST_BUST
 
         val exception = assertThrows<InvalidMapToPlayStateException> { bust.stay() }
         assertThat(exception.message).isEqualTo("'%s' 타입은 특정 플레이 상태로 전환이 불가능합니다".format(bust::class.toString()))
@@ -41,7 +39,7 @@ internal class BustTest {
 
     @Test
     fun `Bust 상태는 카드를 추가할 수 없다`() {
-        val bust = testBust()
+        val bust = TEST_BUST
         val extraCard = Card(Suit.CLUB, Denomination.THREE)
 
         val exception = assertThrows<InvalidDrawException> { bust.draw(extraCard) }
@@ -50,9 +48,9 @@ internal class BustTest {
 
     @Test
     fun `Bust 상태는 Bust 이외의 상태와 매칭시 대해서 패 결과를 얻는다`() {
-        val bust = testBust()
-        val stayMatchResult = bust.match(testStay())
-        val blackJackMatchResult = bust.match(testBlackJack())
+        val bust = TEST_BUST
+        val stayMatchResult = bust.match(TEST_BUST)
+        val blackJackMatchResult = bust.match(TEST_BUST)
 
         assertAll(
             { assertThat(stayMatchResult).isEqualTo(MatchResult.LOSE) },
@@ -62,16 +60,14 @@ internal class BustTest {
 
     @Test
     fun `Bust 상태는 Bust 상태와 매칭시 대해서 무승부 결과를 얻는다`() {
-        val bust = testBust()
-        val bustMatchResult = bust.match(testBust())
+        val bust = TEST_BUST
+        val bustMatchResult = bust.match(TEST_BUST)
 
         assertThat(bustMatchResult).isEqualTo(MatchResult.DRAW)
     }
 
     companion object {
-        fun testBust(): Bust = Bust(bustHands())
-
-        private fun bustHands(): Hands = Hands.from(bustCards())
+        val TEST_BUST: Bust = Bust(Hands.from(bustCards()))
 
         private fun bustCards(): List<Card> = listOf(
             Card(Suit.CLUB, Denomination.ACE),
