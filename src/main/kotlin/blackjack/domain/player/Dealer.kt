@@ -11,7 +11,9 @@ data class Dealer(
 ) : Player(name, playerState) {
 
     override fun draw(deck: Deck, drawStrategy: DrawStrategy): Player {
-        TODO("Not yet implemented")
+        var nowState = playerState
+        drawStrategy.draw(deck).forEach { nowState = nowState.draw(it) }
+        return Dealer(name, nowState)
     }
 
     companion object {

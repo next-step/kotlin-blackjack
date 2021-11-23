@@ -7,5 +7,5 @@ object ReadyDrawStrategy : DrawStrategy {
     private const val START = 1
     private const val END = 2
 
-    override fun assign(deck: Deck): List<Card> = (START..END).map { deck.pop() }
+    override fun draw(deck: Deck): List<Card> = (START..END).map { deck.pop() }
 }
