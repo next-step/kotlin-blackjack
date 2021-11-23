@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.Card
-import blackjack.model.Cards
 import blackjack.model.Dealer
 import blackjack.model.Deck
 import blackjack.model.Gamer
@@ -20,38 +19,27 @@ class BlackjackController {
     private var deck: Deck = Deck.empty()
 
     fun play() {
-        var gamers = createGamers()
         deck = Deck.shuffled()
-        gamers = drawAll(gamers)
-        outputView.printFirstDraw(gamers, FIRST_DRAW_COUNT)
-        gamers = drawWhile(gamers) { player -> outputView.printCards(player) }
-        outputView.printResult(gamers)
+
+        createGamers()
+            .ready()
+            .also { outputView.printReady(it) }
+            .start()
+            .also { outputView.printResult(it) }
     }
 
     private fun createGamers(): Gamers {
-        val names = inputView.getNames() ?: return Gamers.empty()
-        val players = names.toList().map { Player.from(it) }
-        val dealer = Dealer.from(Name.valueOf("딜러"))
+        val players = inputView.getPlayers()
+        val dealer = Dealer.ready(Name.valueOf("딜러"))
         return Gamers.from(dealer, players)
     }
 
-    private fun drawAll(gamers: Gamers): Gamers = gamers.receiveAll(count = FIRST_DRAW_COUNT, next = ::peekAndDraw)
+    private fun Gamers.ready(): Gamers = drawUntilStarted { peekAndDraw() }
 
-    private fun drawWhile(gamers: Gamers, onReceive: (Gamer) -> Unit): Gamers = gamers.receiveWhile(
-        next = { gamer ->
-            if (deck.isNotEmpty() && askDraw(gamer)) {
-                peekAndDraw()
-            } else {
-                null
-            }
-        },
-        onReceive = onReceive
+    private fun Gamers.start(): Gamers = drawWhile(
+        next = { if (askDraw(it)) peekAndDraw() else null },
+        onDraw = { outputView.printRunning(it) }
     )
-
-    private fun askDraw(gamer: Gamer): Boolean = when (gamer) {
-        is Player -> inputView.askDraw(gamer) == DrawAction.YES
-        is Dealer -> gamer.canReceive()
-    }
 
     private fun peekAndDraw(): Card? {
         val card = deck.peek() ?: return null
@@ -59,7 +47,8 @@ class BlackjackController {
         return card
     }
 
-    companion object {
-        private const val FIRST_DRAW_COUNT = 2
+    private fun askDraw(gamer: Gamer): Boolean = when (gamer) {
+        is Dealer -> gamer.shouldDraw()
+        is Player -> inputView.askDraw(gamer) == DrawAction.YES
     }
 }

@@ -7,7 +7,5 @@ value class Names private constructor(private val names: List<Name>) {
 
     companion object {
         fun from(names: List<Name>) = Names(names)
-
-        fun from(vararg names: String) = Names(names.map { Name.valueOf(it) })
     }
 }

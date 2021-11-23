@@ -37,6 +37,10 @@ data class Cards(private val cards: List<Card>) {
 
     operator fun contains(card: Card): Boolean = card in cards
 
+    fun isBust(): Boolean = sum() > TWENTY_ONE
+
+    fun isBlackjack(): Boolean = sum() == TWENTY_ONE
+
     companion object {
         private const val TWENTY_ONE = 21
         private const val ACE_BONUS_SCORE = 11

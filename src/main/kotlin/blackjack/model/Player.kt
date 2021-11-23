@@ -1,21 +1,19 @@
 package blackjack.model
 
-class Player private constructor(name: Name, cards: Cards) : Gamer(name, cards) {
+import blackjack.state.Ready
+import blackjack.state.State
 
-    override fun copy(name: Name, cards: Cards): Player = from(name, cards)
+class Player private constructor(
+    name: Name,
+    val bet: Bet,
+    state: State
+) : Gamer(name, state) {
 
-    override fun canReceive(): Boolean = true
+    override fun copy(name: Name, state: State): Gamer = Player(name, bet, state)
 
-    fun result(dealerScore: Int): Result = when {
-        score > TWENTY_ONE -> Result.LOSE
-        dealerScore > TWENTY_ONE -> Result.WIN
-        score < dealerScore -> Result.LOSE
-        else -> Result.PUSH
-    }
+    fun profit(state: State): Profit = profit(bet.amount, state)
 
     companion object {
-        private const val TWENTY_ONE = 21
-
-        fun from(name: Name, cards: Cards = Cards.empty()): Player = Player(name, cards)
+        fun ready(name: Name, bet: Bet = Bet.ZERO): Player = Player(name, bet, Ready())
     }
 }
