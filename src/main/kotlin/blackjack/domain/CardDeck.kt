@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.Card.Companion.CARD_LIST
+import blackjack.domain.Card.Companion.CARD_SET
 import java.util.LinkedList
 import java.util.Queue
 
-data class CardDeck(private val cardQueue: Queue<Card> = LinkedList(CARD_LIST.shuffled())) : Queue<Card> by cardQueue {
+data class CardDeck(private val cardQueue: Queue<Card> = LinkedList(CARD_SET.shuffled())) : Queue<Card> by cardQueue {
 
     fun next(): Card {
         if (cardQueue.isEmpty()) {
@@ -15,6 +15,6 @@ data class CardDeck(private val cardQueue: Queue<Card> = LinkedList(CARD_LIST.sh
 
     private fun resetQueue() {
         cardQueue.clear()
-        cardQueue.addAll(CARD_LIST.shuffled())
+        cardQueue.addAll(CARD_SET.shuffled())
     }
 }
