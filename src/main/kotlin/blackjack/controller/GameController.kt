@@ -8,9 +8,9 @@ import blackjack.view.OutputView
 
 object GameController {
 
-    const val BLACK_JACK_SCORE = 21
     private val cardDeck = CardDeck()
     private lateinit var blackJackManager: BlackJackManager
+    const val BLACK_JACK_SCORE = 21
 
     fun start() {
         val playerNames = InputView.inputPlayerNames()
