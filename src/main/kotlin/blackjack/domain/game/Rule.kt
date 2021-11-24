@@ -1,24 +1,21 @@
 package blackjack.domain.game
 
 import blackjack.domain.player.Player
-import blackjack.domain.player.Players
 
 class Rule() {
 
-    fun judge(players: Players): Map<Player, List<Score>> {
+    fun judge(dealer: Player, gamers: List<Player>): Map<Player, List<Score>> {
         val result = mutableMapOf<Player, List<Score>>()
-        if (checkDealerLose(players, result)) return result.toMap()
-        judgeGamerScore(players, result)
+        if (checkDealerLose(dealer, gamers, result)) return result.toMap()
+        judgeGamerScore(dealer, gamers, result)
         return result.toMap()
     }
 
     private fun judgeGamerScore(
-        players: Players,
+        dealer: Player,
+        gamers: List<Player>,
         result: MutableMap<Player, List<Score>>,
     ) {
-        val dealer = players.getDealer()
-        val gamers = players.getGamers()
-        requireNotNull(dealer)
         require(gamers.isNotEmpty())
         val dealerPoint = MAX_SCORE - dealer.getHighestPoint()
 
@@ -81,13 +78,10 @@ class Rule() {
     }
 
     private fun checkDealerLose(
-        players: Players,
+        dealer: Player,
+        gamers: List<Player>,
         result: MutableMap<Player, List<Score>>
     ): Boolean {
-        val dealer = players.getDealer()
-        val gamers = players.getGamers()
-        requireNotNull(dealer)
-
         if (dealer.getHighestPoint() > MAX_SCORE) {
             return setGamerWin(gamers, dealer, result)
         }

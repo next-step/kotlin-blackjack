@@ -31,10 +31,10 @@ internal class RuleTest {
         val givenGamer1 = Gamer(profile1, Cards(listOf(card1, card2, card3)))
         val givenGamer2 = Gamer(profile2, Cards(listOf(card4, card5)))
         val dealer = Dealer(profile3, Cards(listOf(card6, card7)))
-        val players = Players(listOf(givenGamer1, givenGamer2, dealer))
+        val gamers = Players(listOf(givenGamer1, givenGamer2))
         val rule = Rule()
 
-        val actual = rule.judge(players)
+        val actual = rule.judge(dealer, gamers)
 
         assertAll(
             { assertThat(actual[dealer]).contains(Score.WIN) },

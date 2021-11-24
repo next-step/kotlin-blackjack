@@ -18,11 +18,9 @@ class BlackjackController() {
     }
 
     fun start() {
-        val rule = Rule()
         val blackJackGame = BlackJackGame(Players.of(InputView.askGamerNames()), Deck())
         val players = blackJackGame.play(isPlayerTurnOff, OutputView::printInitPhase, OutputView::printPlayingPhase)
-
-        val result = rule.judge(players)
+        val result = players.checkResult(Rule())
         OutputView.printGameResult(result)
     }
 

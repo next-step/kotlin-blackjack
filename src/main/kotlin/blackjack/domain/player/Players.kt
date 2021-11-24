@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Rule
+import blackjack.domain.game.Score
 import blackjack.domain.game.Turn
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
@@ -85,11 +87,18 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return players.sortedByDescending { it.getHighestPoint() }
     }
 
-    fun getDealer(): Player? {
+    fun checkResult(rule: Rule): Map<Player, List<Score>> {
+        val dealer = getDealer()
+        val gamer = getGamers()
+        requireNotNull(dealer)
+        return dealer.judgeResult(gamer, rule)
+    }
+
+    private fun getDealer(): Player? {
         return players.find { it is Dealer }
     }
 
-    fun getGamers(): List<Player> {
+    private fun getGamers(): List<Player> {
         return players.filterIsInstance<Gamer>()
     }
 

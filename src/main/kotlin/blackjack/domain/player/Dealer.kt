@@ -2,6 +2,8 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.game.Rule
+import blackjack.domain.game.Score
 
 class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
@@ -22,6 +24,10 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(pro
 
     override fun canReceiveCard(): Boolean {
         return getHighestPoint() <= CAN_ACHIEVE_POINT
+    }
+
+    override fun judgeResult(gamer: List<Player>, rule: Rule): Map<Player, List<Score>> {
+        return rule.judge(this, gamer)
     }
 
     companion object {

@@ -2,6 +2,8 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.game.Rule
+import blackjack.domain.game.Score
 
 class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
@@ -37,7 +39,12 @@ class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(prof
         return getHighestPoint() <= CAN_ACHIEVE_POINT
     }
 
+    override fun judgeResult(players: List<Player>, rule: Rule): Map<Player, List<Score>> {
+        throw IllegalStateException(JUDGE_NOT_ALLOWED)
+    }
+
     companion object {
         private const val CAN_ACHIEVE_POINT = 21
+        private const val JUDGE_NOT_ALLOWED = "게이머는 판정을 할 수 없습니다"
     }
 }
