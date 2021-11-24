@@ -10,15 +10,6 @@ class BlackJackManager(
         }
     }
 
-    fun hitPlayer(question: (Player) -> String, cardDeck: CardDeck, printResult: ((Player) -> Unit)? = null) {
-        players.forEach { player ->
-            while (player.canHit() && question(player) == "y") {
-                player.hit(cardDeck.next())
-                printResult?.invoke(player)
-            }
-        }
-    }
-
     companion object {
         private const val INITIAL_CARD_NUM = 2
     }

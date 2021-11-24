@@ -26,12 +26,17 @@ object GameController {
         OutputView.printPlayers(players)
         OutputView.printPlayersDrawnCards(players)
 
-        blackJackManager.hitPlayer(
-            question = InputView::acceptMoreCard,
-            cardDeck = cardDeck,
-            printResult = OutputView::printPlayerDrawnCard
-        )
+        hitPlayer(players)
 
         OutputView.printResult(players)
+    }
+
+    private fun hitPlayer(players: Players) {
+        players.forEach { player ->
+            while (player.canHit() && InputView.acceptMoreCard(player) == "y") {
+                player.hit(cardDeck.next())
+                OutputView.printPlayerDrawnCard(player)
+            }
+        }
     }
 }
