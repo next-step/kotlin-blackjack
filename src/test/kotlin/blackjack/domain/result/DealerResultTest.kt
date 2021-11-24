@@ -21,7 +21,7 @@ class DealerResultTest {
         val players = listOf(tommy, pobi, jason)
 
         // Act
-        val sut = DealerResult.calculateDealerResult(players)
+        val sut = DealerResult.from(players)
 
         // Assert
         assertThat(sut.win).isEqualTo(1)

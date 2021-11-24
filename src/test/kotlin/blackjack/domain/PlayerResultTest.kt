@@ -32,7 +32,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Push::class.java)
@@ -50,7 +50,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Win::class.java)
@@ -74,7 +74,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Win::class.java)
@@ -103,7 +103,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Win::class.java)
@@ -121,7 +121,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Win::class.java)
@@ -139,7 +139,7 @@ class PlayerResultTest {
 
         // Act
         val sut = PlayerResult(gamers)
-        val playersResult = sut.calculatePlayersResult()
+        val playersResult = sut.judgePlayerResult()
 
         // Assert
         assertThat(playersResult.first().state).isInstanceOf(Lose::class.java)

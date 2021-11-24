@@ -1,9 +1,14 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.deck.Card
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
+import blackjack.domain.deck.Denomination
+import blackjack.domain.deck.Suit
+import blackjack.domain.result.DealerResultType
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
+import blackjack.domain.state.Deal
 import blackjack.domain.state.Stand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -99,5 +104,59 @@ class DealerTest {
         // Assert
         assertThat(actual.state).isNotInstanceOf(Dealer::class.java)
         assertThat(actual.cards.value).hasSizeGreaterThanOrEqualTo(3)
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 결과를 토대로 게임 결과를 판단한다 - 딜러의 결과가 더 크면 딜러 승리")
+    fun `sut returns blackjack game result win`() {
+        // Arrange
+        val playerCards = createCardsFixture(Denomination.SIX, Denomination.SIX)
+        val player = Player.init("tommy", Deal(playerCards))
+
+        // Act
+        val sut = Dealer.from(createCardsFixture(Denomination.TEN, Denomination.EIGHT))
+        val actual = sut.judgeGameResult(player)
+
+        // Assert
+        assertThat(actual).isEqualTo(DealerResultType.WIN)
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 결과를 토대로 게임 결과를 판단한다 - 딜러와 플레이어의 합이 같으면 무승부")
+    fun `sut returns blackjack game result push`() {
+        // Arrange
+        val playerCards = createCardsFixture(Denomination.TEN, Denomination.QUEEN)
+        val player = Player.init("tommy", Deal(playerCards))
+
+        // Act
+        val sut = Dealer.from(createCardsFixture(Denomination.TEN, Denomination.KING))
+        val actual = sut.judgeGameResult(player)
+
+        // Assert
+        assertThat(actual).isEqualTo(DealerResultType.PUSH)
+    }
+
+    @Test
+    @DisplayName("딜러의 카드 결과를 토대로 게임 결과를 판단한다 - 딜러의 결과가 더 작으면 딜러 패배")
+    fun `sut returns blackjack game lose`() {
+        // Arrange
+        val playerCards = createCardsFixture(Denomination.TEN, Denomination.ACE)
+        val player = Player.init("tommy", Deal(playerCards))
+
+        // Act
+        val sut = Dealer.from(createCardsFixture(Denomination.TEN, Denomination.EIGHT))
+        val actual = sut.judgeGameResult(player)
+
+        // Assert
+        assertThat(actual).isEqualTo(DealerResultType.LOSE)
+    }
+
+    private fun createCardsFixture(firstDenomination: Denomination, secondDenomination: Denomination): Cards {
+        return Cards(
+            listOf(
+                Card(firstDenomination, Suit.DIAMOND),
+                Card(secondDenomination, Suit.HEART),
+            )
+        )
     }
 }

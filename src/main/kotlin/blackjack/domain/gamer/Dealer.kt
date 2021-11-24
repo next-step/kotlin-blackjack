@@ -2,6 +2,7 @@ package blackjack.domain.gamer
 
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
+import blackjack.domain.result.DealerResultType
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 import blackjack.domain.state.FirstDraw
@@ -43,6 +44,19 @@ class Dealer private constructor(
             return Dealer(name, Bust(cards))
         }
         return Dealer(name, Stand(cards))
+    }
+
+    fun judgeGameResult(player: Player): DealerResultType {
+        val currentScore = this.currentScore()
+        val playerScore = player.currentScore()
+        return when {
+            (currentScore == playerScore) -> DealerResultType.PUSH
+            (player.isBlackjack() || player.isTwentyOne()) -> DealerResultType.LOSE
+            (player.isBust()) -> DealerResultType.WIN
+            (this.isBust() && !player.isBust()) -> DealerResultType.LOSE
+            (currentScore < playerScore) -> DealerResultType.LOSE
+            else -> DealerResultType.WIN
+        }
     }
 
     companion object {

@@ -13,7 +13,7 @@ class DealerResult private constructor(
     companion object {
         private const val DEFAULT = 0
 
-        fun calculateDealerResult(playerResults: List<Player>): DealerResult {
+        fun from(playerResults: List<Player>): DealerResult {
             return playerResults.groupingBy {
                 it.state
             }.eachCount()

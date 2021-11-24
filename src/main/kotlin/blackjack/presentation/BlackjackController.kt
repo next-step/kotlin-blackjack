@@ -20,12 +20,13 @@ class BlackjackController(
         val preparedGamers = gamers.prepare(deck)
         OutputView.printStartGame(preparedGamers.value)
 
-        val playedBlackjack = play(preparedGamers)
-        val playerResult = PlayerResult(playedBlackjack)
+        val playedBlackjackGamers = play(preparedGamers)
 
-        val playersResult = playerResult.calculatePlayersResult()
-        val dealerResult = DealerResult.calculateDealerResult(playersResult)
-        OutputView.printFinalOutcome(dealerResult, playersResult)
+        val playerResult = PlayerResult(playedBlackjackGamers)
+        val judgedPlayerResult = playerResult.judgePlayerResult()
+        val dealerResult = DealerResult.from(judgedPlayerResult)
+
+        OutputView.printFinalOutcome(dealerResult, judgedPlayerResult)
     }
 
     private fun initGamers(): Gamers {
