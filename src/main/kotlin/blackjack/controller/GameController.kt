@@ -14,7 +14,11 @@ object GameController {
 
     fun start() {
         val playerNames = InputView.inputPlayerNames()
-        val players = Players.of(*Players.getPlayerListByNames(playerNames).toTypedArray())
+        val players = Players.of(
+            *Players
+                .getPlayerListByNames(playerNames)
+                .toTypedArray()
+        )
 
         blackJackManager = BlackJackManager(players)
         blackJackManager.giveInitialCards(cardDeck)
