@@ -14,24 +14,24 @@ class PlayerTest {
     @Test
     fun `player의 score가 21점 미만이면 카드를 추가할 수 있다(hit())`() {
         val player = Player.of("seunghwan")
-        val card1 = Card.of(SuitType.SPADE, NumberType.TEN)
-        val card2 = Card.of(SuitType.SPADE, NumberType.TEN)
-        val card3 = Card.of(SuitType.SPADE, NumberType.TWO)
+        val card1 = Card(SuitType.SPADE, NumberType.TEN)
+        val card2 = Card(SuitType.SPADE, NumberType.TEN)
+        val card3 = Card(SuitType.SPADE, NumberType.TWO)
 
         player.hit(card1)
         player.hit(card2)
         player.hit(card3)
 
-        assertThat(player.cards).containsExactlyElementsOf(listOf(Card.of(SuitType.SPADE, NumberType.TEN), Card.of(SuitType.SPADE, NumberType.TEN), Card.of(SuitType.SPADE, NumberType.TWO)))
+        assertThat(player.cards).containsExactlyElementsOf(listOf(Card(SuitType.SPADE, NumberType.TEN), Card(SuitType.SPADE, NumberType.TEN), Card(SuitType.SPADE, NumberType.TWO)))
     }
 
     @DisplayName(value = "player의 score가 21점 이상이면 카드를 추가할 수 없다(canHit())")
     @Test
     fun `player의 score가 21점 이상이면 카드를 추가할 수 없다(canHit())`() {
         val player = Player.of("seunghwan")
-        val card1 = Card.of(SuitType.SPADE, NumberType.TEN)
-        val card2 = Card.of(SuitType.SPADE, NumberType.TEN)
-        val card3 = Card.of(SuitType.SPADE, NumberType.TWO)
+        val card1 = Card(SuitType.SPADE, NumberType.TEN)
+        val card2 = Card(SuitType.SPADE, NumberType.TEN)
+        val card3 = Card(SuitType.SPADE, NumberType.TWO)
 
         player.hit(card1)
         assertThat(player.canHit()).isTrue
@@ -47,9 +47,9 @@ class PlayerTest {
     @Test
     fun `player는 가지고있는 카드들의 점수를 알고있다(nowScore())`() {
         val player = Player.of("seunghwan")
-        val card1 = Card.of(SuitType.SPADE, NumberType.ACE)
-        val card2 = Card.of(SuitType.SPADE, NumberType.ACE)
-        val card3 = Card.of(SuitType.SPADE, NumberType.ACE)
+        val card1 = Card(SuitType.SPADE, NumberType.ACE)
+        val card2 = Card(SuitType.SPADE, NumberType.ACE)
+        val card3 = Card(SuitType.SPADE, NumberType.ACE)
 
         player.hit(card1)
         player.hit(card2)
