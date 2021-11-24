@@ -25,7 +25,9 @@ enum class NumberType(
         private const val MAX_ACE_SCORE = 11
 
         fun getScore(cards: Cards): Int {
-            var sum = cards.filter { it.numberType != ACE }.sumOf { it.numberType.score }
+            var sum = cards
+                .filter { it.numberType != ACE }
+                .sumOf { it.numberType.score }
 
             repeat(cards.countAce()) {
                 sum += getAceScore(sum)
