@@ -1,8 +1,14 @@
 package blackJack.view
 
 import blackJack.dto.PlayerDto
+import java.math.BigDecimal
 
 object InputView {
+
+    fun inputBettingMoney(playerName: String): BigDecimal {
+        println("${playerName}의 배팅 금액은?")
+        return readLine()!!.toBigDecimal()
+    }
 
     fun inputPlayersName(): String {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")

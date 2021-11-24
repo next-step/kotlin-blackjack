@@ -17,6 +17,9 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         val playingCard = PlayingCard.create()
         val inputPlayersNames = inputView.inputPlayersName()
         val gamePlayers = GamePlayers.enterGameRoom(inputPlayersNames)
+        gamePlayers.getPlayers().forEach {
+            it.betting(inputView.inputBettingMoney(it.name))
+        }
         gamePlayers.startBlackJack(playingCard)
         resultView.receiveTwoCard(GamePlayersDto.of(gamePlayers))
         playingGame(gamePlayers, playingCard)
