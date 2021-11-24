@@ -5,7 +5,7 @@ class BlackJackManager(
 ) {
 
     fun giveInitialCards(cardDeck: CardDeck) {
-        repeat(2) {
+        repeat(INITIAL_CARD_NUM) {
             players.eachAcceptCards(cardDeck)
         }
     }
@@ -17,5 +17,9 @@ class BlackJackManager(
                 printResult?.invoke(player)
             }
         }
+    }
+
+    companion object {
+        private const val INITIAL_CARD_NUM = 2
     }
 }
