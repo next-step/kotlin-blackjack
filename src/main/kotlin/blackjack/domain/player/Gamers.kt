@@ -32,5 +32,4 @@ class Gamers(private val players: List<Player>, private val dealer: Dealer) {
             return Gamers(players, dealer)
         }
     }
-
 }

@@ -4,83 +4,83 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
-class HandTest {
+class CardsTest {
 
     @Test
-    fun `빈 Hand 생성`() {
-        val hand = Hand.createEmpty()
+    fun `빈 Cards 생성`() {
+        val cards = Cards.createEmpty()
 
-        assertThat(hand.cards).isEmpty()
+        assertThat(cards.cards).isEmpty()
     }
 
     @Test
-    fun `Hand에 카드 추가`() {
+    fun `Cards에 카드 추가`() {
         val card = Card(Symbol.ACE, Type.CLUB)
-        val hand = Hand.createEmpty()
+        val cards = Cards.createEmpty()
 
-        hand.add(card)
+        cards.add(card)
 
-        assertThat(hand.cards.size).isEqualTo(1)
-        assertThat(hand.cards[0]).isEqualTo(card)
+        assertThat(cards.cards.size).isEqualTo(1)
+        assertThat(cards.cards[0]).isEqualTo(card)
     }
 
     @Test
     fun `점수가 BlackJackScore면서 카드가 2장이면 BlackJack`() {
-        val hand = Hand(listOf(
+        val cards = Cards(listOf(
             Card(Symbol.ACE, Type.CLUB),
             Card(Symbol.TEN, Type.CLUB),
         ))
 
-        assertThat(hand.isBlackJack()).isTrue
+        assertThat(cards.isBlackJack()).isTrue
     }
 
     @Test
     fun `점수가 BlackJackScore지만 카드가 2장이 아니라면 BlackJack이 아님`() {
-        val hand = Hand(listOf(
+        val cards = Cards(listOf(
             Card(Symbol.ACE, Type.CLUB),
             Card(Symbol.TEN, Type.CLUB),
             Card(Symbol.TEN, Type.CLUB),
         ))
 
-        assertThat(hand.isBlackJack()).isFalse
+        assertThat(cards.isBlackJack()).isFalse
     }
 
     @Test
-    fun `Hand의 Score 계산 - Ace가 없을 경우`() {
-        val hand = Hand(listOf(
+    fun `Cards의 Score 계산 - Ace가 없을 경우`() {
+        val cards = Cards(listOf(
             Card(Symbol.TWO, Type.CLUB),
             Card(Symbol.THREE, Type.CLUB),
             Card(Symbol.FOUR, Type.CLUB),
         ))
 
-        val result = hand.score
+        val result = cards.score
 
         assertThat(result.value).isEqualTo(9)
     }
 
     @Test
-    fun `Hand의 Score 계산 - Ace 보정을 받지 않는 경우`() {
-        val hand = Hand(listOf(
+    fun `Cards의 Score 계산 - Ace 보정을 받지 않는 경우`() {
+        val cards = Cards(listOf(
             Card(Symbol.ACE, Type.CLUB),
             Card(Symbol.THREE, Type.CLUB),
             Card(Symbol.FOUR, Type.CLUB),
             Card(Symbol.TEN, Type.CLUB),
         ))
 
-        val result = hand.score
+        val result = cards.score
 
         assertThat(result.value).isEqualTo(18)
     }
 
     @Test
-    fun `Hand의 Score 계산 - Ace 보정을 받는 경우`() {
-        val hand = Hand(listOf(
+    fun `Cards의 Score 계산 - Ace 보정을 받는 경우`() {
+        val cards = Cards(listOf(
             Card(Symbol.ACE, Type.CLUB),
             Card(Symbol.THREE, Type.CLUB),
             Card(Symbol.FOUR, Type.CLUB),
         ))
 
-        val result = hand.score
+        val result = cards.score
 
         assertThat(result.value).isEqualTo(18)
     }

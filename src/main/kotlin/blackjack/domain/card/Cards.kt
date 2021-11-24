@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class Hand(cards: List<Card>) {
+class Cards(cards: List<Card>) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card> = _cards
@@ -18,6 +18,10 @@ class Hand(cards: List<Card>) {
         _cards.add(card)
     }
 
+    fun take(n: Int): List<Card> {
+        return cards.take(n)
+    }
+
     fun isBlackJack() = (score.canBlackJack() && cards.size == BLACK_JACK_SIZE)
 
     fun isBust() = score.isBust()
@@ -32,8 +36,8 @@ class Hand(cards: List<Card>) {
 
         private const val BLACK_JACK_SIZE = 2
 
-        fun createEmpty(): Hand {
-            return Hand(emptyList())
+        fun createEmpty(): Cards {
+            return Cards(emptyList())
         }
     }
 }

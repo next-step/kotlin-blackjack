@@ -12,7 +12,7 @@ value class Profit(val value: Int) {
     }
 
     companion object {
-        private val ZERO = Profit(0)
+        val ZERO = Profit(0)
 
         fun List<Profit>.sum(): Profit {
             return fold(ZERO) { acc, money -> acc + money }

@@ -48,5 +48,5 @@ private fun getGamersAtFirst(gamers: Gamers): GamersDto {
 }
 
 private fun getFirstOpenCards(gamer: Gamer): List<CardDto> {
-    return gamer.firstOpenCards().map { CardDto(it) }
+    return gamer.firstOpenCards.map { CardDto(it) }
 }

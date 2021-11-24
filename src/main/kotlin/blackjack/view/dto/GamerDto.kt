@@ -11,7 +11,7 @@ data class GamersDto(val gamers: List<GamerDto>) : List<GamerDto> by gamers {
 
 data class GamerDto(val name: String, val cards: List<CardDto>, val score: Int) {
 
-    constructor(gamer: Gamer) : this(gamer.name.value, gamer.hand.cards.map(::CardDto), gamer.score.value)
+    constructor(gamer: Gamer) : this(gamer.name.value, gamer.hand.cards.cards.map(::CardDto), gamer.score.value)
 }
 
 data class CardDto(val name: String) {
