@@ -29,4 +29,23 @@ open class Person(
         giveCard(CardsDeck.takeCard(cardCount))
         print.invoke(this)
     }
+
+    fun getBetAmount(): Double = amount.value
+
+    fun isBlackJack(): Boolean = cards.isBlackjack(getScore())
+
+    fun isBust(): Boolean = getScore() > Cards.BLACK_JACK_SUM
+
+    fun hasPlusProfit(): Boolean = EarningRate.isPlusProfit(result.rate())
+
+    open fun calculateGameResult(winScore: Int? = null, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
+        val score = getScore()
+        when {
+            isDealerBust -> changeResultType(ResultType.Win)
+            cards.isBlackjack(score) -> changeResultType(ResultType.BlackJack)
+            cards.isBust(score) -> changeResultType(ResultType.Lose)
+            isDealerBlackJack && cards.isBlackjack(score) || score == winScore -> changeResultType(ResultType.Win)
+            else -> changeResultType(ResultType.Lose)
+        }
+    }
 }

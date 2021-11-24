@@ -1,11 +1,6 @@
 package blackject.model
 
 /**
- * 게임 결과 관리
+ * 게임 결과
  * */
-object GameResult {
-
-    fun getWinNumber(limitMaxInt: Int, numbers: List<Int>): Int =
-        numbers
-            .filter { it <= limitMaxInt }.maxOrNull()!!
-}
+class GameResult(val result: HashMap<Person, Int>)

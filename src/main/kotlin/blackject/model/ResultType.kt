@@ -1,27 +1,43 @@
 package blackject.model
 
-sealed class ResultType : Result {
-    object AllBlackJack : ResultType() {
-        override fun profit(amount: Amount): Double {
-            return amount.value * EarningRate.AllBlackJack.rate
+/**
+ * 게임 결과
+ * */
+enum class ResultType : Result {
+    Bust {
+        override fun rate(): EarningRate {
+            return EarningRate.Bust
         }
-    }
 
-    object BlackJack : ResultType() {
         override fun profit(amount: Amount): Double {
-            return amount.value * EarningRate.BlackJack.rate
+            return EarningRate.Bust.rate
         }
-    }
-
-    object Lose : ResultType() {
-        override fun profit(amount: Amount): Double {
-            return amount.value * EarningRate.Lose.rate
+    },
+    BlackJack {
+        override fun rate(): EarningRate {
+            return EarningRate.BlackJack
         }
-    }
 
-    object Win : ResultType() {
         override fun profit(amount: Amount): Double {
-            return amount.value * EarningRate.Win.rate
+            return amount.value.times(EarningRate.BlackJack.rate)
+        }
+    },
+    Lose {
+        override fun rate(): EarningRate {
+            return EarningRate.Lose
+        }
+
+        override fun profit(amount: Amount): Double {
+            return amount.value.times(EarningRate.Lose.rate)
+        }
+    },
+    Win {
+        override fun rate(): EarningRate {
+            return EarningRate.Win
+        }
+
+        override fun profit(amount: Amount): Double {
+            return amount.value.times(EarningRate.Win.rate)
         }
     }
 }

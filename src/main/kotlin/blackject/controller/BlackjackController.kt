@@ -6,7 +6,7 @@ import blackject.model.card.CardsDeck
 import blackject.view.InputView
 import blackject.view.OutputView
 
-class BlackjectController(
+class BlackjackController(
     private val cardsDeck: CardsDeck,
 ) {
 
@@ -41,47 +41,25 @@ class BlackjectController(
     }
 
     private fun giveMoreCard(persons: Participant) {
-        persons
-            .persons
-            .forEach { person ->
-                askMoreCard(person)
-            }
+        persons.askMoreCard {
+            askMoreCard(it)
+        }
 
-        persons
-            .dealer
-            .let { dealer ->
-                if (!dealer.canTakeMoreCard()) return
-                dealer.giveCards(CardsDeck.NUMBER_ONE_TIME) {
-                    if (dealer.isOverMaxInt()) {
-                        // dealer.changeResultType(ResultType.BUST)
-                        return@giveCards
-                    }
-                    OutputView.printAddedDealerCard()
-                    return@giveCards
-                }
+        persons.isTakeMoreCard { dealer ->
+            dealer.giveCards(CardsDeck.NUMBER_ONE_TIME) {
+                OutputView.printAddedDealerCard()
+                return@giveCards
             }
+        }
     }
 
     private fun printResultScore(persons: Participant) {
         println()
-        persons
-            .getAllPerson()
-            .forEach { OutputView.gameResult(it) }
+        persons.print { OutputView.gameResult(it) }
     }
 
     private fun printResult(persons: Participant) {
-        persons.setGameResult()
-
-        // .getAllPerson()
-        // .filterNot { it.hasResult() }
-        // .forEach {
-        //     when {
-        //         it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) == winScore -> it.changeResultType(ResultType.WIN)
-        //         it.getScore(rule.MAX_TOTAL_NUMBER, rule.EXCEPT_NUMBER) > rule.MAX_TOTAL_NUMBER -> it.changeResultType(ResultType.BUST)
-        //         else -> it.changeResultType(ResultType.LOSE)
-        //     }
-        // }
-        // OutputView.gameWinDefeat(persons)
+        OutputView.printProfit(persons.setGameResult())
     }
 
     private fun getParticipant(): Participant {

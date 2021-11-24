@@ -1,8 +1,8 @@
 package blackject
 
-import blackject.controller.BlackjectController
+import blackject.controller.BlackjackController
 import blackject.model.card.CardsDeck
 
 fun main() {
-    BlackjectController(CardsDeck).start()
+    BlackjackController(CardsDeck).start()
 }

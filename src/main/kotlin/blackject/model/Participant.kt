@@ -8,13 +8,14 @@ import blackject.model.card.CardsDeck
  * */
 class Participant(
     val dealer: Dealer,
-    val persons: List<Person>
+    val persons: List<Person>,
 ) {
-
     fun getAllPerson(): List<Person> = persons.plus(dealer)
 
+    fun sumOfPlusProfit(): Int = persons.filter { it.hasPlusProfit() }.sumOf { it.getProfit() }
+
     fun winnerScore(): Int =
-        persons
+        getAllPerson()
             .map { it.getScore() }
             .filter { it <= Cards.BLACK_JACK_SUM }.maxOrNull()!!
 
@@ -30,12 +31,33 @@ class Participant(
             val amount = print.invoke(it)
             it.inputBetMoney(amount?.toDoubleOrNull())
         }
+        dealer.inputBetMoney(persons.sumOf { it.getBetAmount() })
     }
 
-    fun setGameResult() {
-        persons.forEach {
-
+    fun setGameResult(): GameResult {
+        getAllPerson().forEach {
+            it.calculateGameResult(winnerScore(), dealer.isBust(), dealer.isBlackJack())
         }
+
+        return GameResult(
+            hashMapOf<Person, Int>().apply {
+                putAll(persons.associateWith { it.getProfit() })
+                put(dealer, dealer.calculateProfit(persons.sumOf { it.getBetAmount().toInt() }, sumOfPlusProfit()))
+            }
+        )
+    }
+
+    fun askMoreCard(ask: (Person) -> Unit) {
+        persons.forEach { ask.invoke(it) }
+    }
+
+    fun isTakeMoreCard(ask: (Dealer) -> Unit) {
+        if (!dealer.canTakeMoreCard()) return
+        ask.invoke(dealer)
+    }
+
+    fun print(print: (Person) -> Unit) {
+        getAllPerson().forEach(print)
     }
 
     companion object {

@@ -9,10 +9,25 @@ class Dealer(
     override fun isPersonType(): PersonType = PersonType.DEALER
 
     override fun canTakeMoreCard(): Boolean {
-        return MAX_NUMBER_DEALER >= cards.getResultNumber() // TODO 확인하기
+        return MAX_NUMBER_DEALER >= cards.getResultNumber()
     }
 
-    fun isOverMaxInt(): Boolean = getScore() > Cards.BLACK_JACK_SUM
+    fun calculateProfit(participantAmount: Int, participantProfit: Int): Int {
+        return when (result) {
+            ResultType.Bust -> 0
+            else -> participantAmount.minus(participantProfit)
+        }
+    }
+
+    override fun calculateGameResult(winScore: Int?, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
+        val score = getScore()
+        when {
+            cards.isBlackjack(score) -> changeResultType(ResultType.BlackJack)
+            cards.isBust(score) -> changeResultType(ResultType.Bust)
+            score == winScore -> changeResultType(ResultType.Win)
+            else -> changeResultType(ResultType.Lose)
+        }
+    }
 
     companion object {
         const val MAX_NUMBER_DEALER = 16

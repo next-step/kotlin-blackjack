@@ -26,9 +26,9 @@ value class Cards(
         return cardTotal.plus(exceptRestNumber)
     }
 
-    // fun isBlackjack(): Boolean =
-    //
-    // fun isBust(): Boolean =
+    fun isBlackjack(sum: Int): Boolean = _cardList.size == 2 && sum == BLACK_JACK_SUM
+
+    fun isBust(sum: Int): Boolean = sum > BLACK_JACK_SUM
 
     companion object {
         const val BLACK_JACK_SUM = 21

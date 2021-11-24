@@ -1,6 +1,7 @@
 package blackject.view
 
 import blackject.model.Dealer
+import blackject.model.GameResult
 import blackject.model.Participant
 import blackject.model.Person
 
@@ -25,21 +26,10 @@ object OutputView {
         )
     }
 
-    // fun gameWinDefeat(persons: Participant) {
-    //     println("\n## 최종 승패")
-    //     persons
-    //         .getAllPerson()
-    //         .forEach {
-    //             println("${it.name}: ${it.result?.string}")
-    //         }
-    // }
-    //
-    // fun printProfit(persons: Participant) {
-    //     println("\n## 최종 수익")
-    //     persons
-    //         .getAllPerson()
-    //         .forEach {
-    //             println("${it.name}: ${it.result?.string}")
-    //         }
-    // }
+    fun printProfit(gameResult: GameResult) {
+        println("\n## 최종 수익")
+        gameResult.result.forEach {
+            println("${it.key.name}: ${it.value}")
+        }
+    }
 }
