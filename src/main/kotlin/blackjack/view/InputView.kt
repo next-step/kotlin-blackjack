@@ -10,9 +10,12 @@ object InputView {
 
     fun inputPlayerNames(): List<String> {
         println(GET_PLAYERS_QUESTION)
-        return readLine()?.split(COMMA_DELIMITER)?.map { it.trim() } ?: throw IllegalArgumentException(
-            INVALID_INPUT_MESSAGE
-        )
+        return readLine()
+            ?.split(COMMA_DELIMITER)
+            ?.map { it.trim() }
+            ?: throw IllegalArgumentException(
+                INVALID_INPUT_MESSAGE
+            )
     }
 
     fun acceptMoreCard(player: Player): String {
