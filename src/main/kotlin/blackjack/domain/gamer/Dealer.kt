@@ -23,15 +23,19 @@ class Dealer private constructor(
         return Dealer(name, completedSecondDraw)
     }
 
-    override fun play(deck: Deck): Dealer {
-        if (state.cards.isBlackjack()) {
-            return Dealer(name, Blackjack(cards))
+    fun progress(currentScore: Int, deck: Deck): Dealer {
+        if (currentScore >= DEALER_DRAW_CONDITION) {
+            return meetConditions(currentScore)
         }
+        return play(deck)
+    }
+
+    override fun play(deck: Deck): Dealer {
         val currentState = draw(deck, state)
         return Dealer(name, currentState)
     }
 
-    fun meetConditions(currentScore: Int): Dealer {
+    private fun meetConditions(currentScore: Int): Dealer {
         if (currentScore == BLACKJACK_SCORE) {
             return Dealer(name, Blackjack(cards))
         }
@@ -43,6 +47,7 @@ class Dealer private constructor(
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_DRAW_CONDITION = 17
 
         fun from(cards: Cards): Dealer {
             return Dealer(DEALER_NAME, FirstDraw(cards))

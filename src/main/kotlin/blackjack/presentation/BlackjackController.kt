@@ -47,7 +47,6 @@ class BlackjackController(
         for (player in players) {
             while (true) {
                 val playable = inputPlayable(player)
-
                 val progressedBlackjackPlayer = player.progress(playable, deck)
 
                 OutputView.printGamerCard(progressedBlackjackPlayer)
@@ -69,16 +68,13 @@ class BlackjackController(
         OutputView.printCurrentDealerScore(preparedCurrentScore)
         while (true) {
             val currentScore = dealer.currentScore()
-            if (currentScore >= DEALER_DRAW_CONDITION) {
-                return dealer.meetConditions(currentScore)
-            }
-            val progressedBlackjack = dealer.play(deck)
-            println()
-            OutputView.printGamerCard(dealer)
+            val progressedBlackjackDealer = dealer.progress(currentScore, deck)
 
-            if (progressedBlackjack.isFinished()) {
-                return progressedBlackjack
+            println()
+            if (progressedBlackjackDealer.isFinished()) {
+                return progressedBlackjackDealer
             }
+            OutputView.printGamerCard(progressedBlackjackDealer)
         }
     }
 
@@ -91,9 +87,5 @@ class BlackjackController(
             return false
         }
         return playable == CAN_PLAY
-    }
-
-    companion object {
-        private const val DEALER_DRAW_CONDITION = 17
     }
 }

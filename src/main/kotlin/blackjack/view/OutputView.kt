@@ -8,7 +8,7 @@ import blackjack.domain.result.DealerResult
 class OutputView {
 
     companion object {
-        private const val PRINT_START_GAME = "에게 2장의 카드를 나누었습니다."
+        private const val PRINT_START_GAME = "에게 2장의 카드를 나누었습니다.\n"
         private const val BLACKJACK_END_NUMBER = 21
 
         fun printStartGame(gamers: List<Gamer>) {
