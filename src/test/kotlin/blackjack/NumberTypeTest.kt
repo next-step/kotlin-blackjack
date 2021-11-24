@@ -5,12 +5,10 @@ import blackjack.domain.Cards
 import blackjack.domain.NumberType
 import blackjack.domain.SuitType
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class NumberTypeTest {
 
-    @DisplayName(value = "ACE의 score는 1 혹은 11이 될 수 있다")
     @Test
     fun `ACE의 score는 1 혹은 11이 될 수 있다`() {
         val cards = Cards()
