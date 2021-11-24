@@ -11,10 +11,4 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) : List<
     fun addCard(card: Card) {
         cards.add(card)
     }
-
-    companion object {
-        fun from(cards: MutableList<Card> = mutableListOf()): Cards {
-            return Cards(cards)
-        }
-    }
 }
