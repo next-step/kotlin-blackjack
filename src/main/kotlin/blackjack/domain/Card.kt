@@ -5,11 +5,16 @@ data class Card(val suitType: SuitType, val numberType: NumberType) {
     companion object {
         private const val INVALID_CARD_TYPES_MESSAGE = "올바른 Card 타입들을 입력해주세요"
 
-        private val ALL_CARDS = NumberType.values().flatMap { cardType ->
-            SuitType.values().map { suitType ->
-                suitType to cardType
+        private val ALL_CARDS = NumberType
+            .values()
+            .flatMap { cardType ->
+                SuitType
+                    .values()
+                    .map { suitType ->
+                        suitType to cardType
+                    }
             }
-        }.map { it to Card(it.first, it.second) }.toMap()
+            .associateWith { Card(it.first, it.second) }
 
         val CARD_LIST = ALL_CARDS.values.toList()
 
