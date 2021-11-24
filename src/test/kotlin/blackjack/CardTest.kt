@@ -13,8 +13,8 @@ class CardTest {
 
     @ParameterizedTest(name = "CardType과 NumberType으로 Card를 정의할 수 있다")
     @MethodSource("makeCardTest")
-    fun `CardType과 NumberType으로 Card를 정의할 수 있다`(value1: SuitType, value2: NumberType, expected: Card) {
-        val card = Card(value1, value2)
+    fun `CardType과 NumberType으로 Card를 정의할 수 있다`(suitType: SuitType, numberType: NumberType, expected: Card) {
+        val card = Card(suitType, numberType)
 
         assertThat(card).isEqualTo(expected)
     }
