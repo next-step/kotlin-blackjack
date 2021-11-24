@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Players(private val players: MutableList<Player> = mutableListOf()) : List<Player> by players {
+data class Players(private val players: List<Player> = listOf()) : List<Player> by players {
 
     fun eachAcceptCards(cardDeck: CardDeck) {
         players.forEach {
@@ -14,7 +14,7 @@ data class Players(private val players: MutableList<Player> = mutableListOf()) :
         }
 
         fun of(vararg player: Player): Players {
-            return Players(listOf(*player).toMutableList())
+            return Players(listOf(*player))
         }
     }
 }
