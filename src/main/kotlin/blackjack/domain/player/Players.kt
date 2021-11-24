@@ -121,7 +121,14 @@ data class Players(val players: List<Player>) : List<Player> by players {
         private const val DEALER_COUNT = 1
         private const val DEALER_ALREADY_EXIST = "딜러는 한 명이상 존재할 수 없습니다"
 
-        fun createPlayers(names: Names): Players {
+        fun of(name: String): Players {
+            val names = Names.generateNames(name)
+            val players = createPlayers(names)
+            val dealer = Dealer.of()
+            return players.addPlayer(dealer)
+        }
+
+        private fun createPlayers(names: Names): Players {
             return Players(names.names.map { Gamer(Profile(it)) })
         }
     }

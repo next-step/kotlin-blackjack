@@ -1,10 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.BlackJackGame
 import blackjack.domain.game.Rule
 import blackjack.domain.game.Turn
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Names
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.views.InputView
@@ -19,37 +18,12 @@ class BlackjackController() {
     }
 
     fun start() {
-        val players = createPlayers()
-        val deck = Deck()
         val rule = Rule()
-        val afterInitPhased = players.startInitPhase(deck)
-        OutputView.printInitPhase(afterInitPhased)
-        val playingPhasedPlayers = playingPhase(deck, afterInitPhased)
-        OutputView.printPlayingPhase(playingPhasedPlayers)
+        val blackJackGame = BlackJackGame(Players.of(InputView.askGamerNames()), Deck())
+        val players = blackJackGame.play(isPlayerTurnOff, OutputView::printInitPhase, OutputView::printPlayingPhase)
 
-        val result = rule.judge(playingPhasedPlayers)
+        val result = rule.judge(players)
         OutputView.printGameResult(result)
-    }
-
-    private fun createPlayers(): Players {
-        val names = Names.generateNames(InputView.askGamerNames())
-        val players = Players.createPlayers(names)
-        val dealer = Dealer.of()
-        return players.addPlayer(dealer)
-    }
-
-    private fun playingPhase(deck: Deck, players: Players): Players {
-        lateinit var readyPlayers: Players
-        readyPlayers = players.turnToReady()
-
-        while (!readyPlayers.isAllPlayerTurnOff()) {
-            readyPlayers = receiveCardAllPlayers(deck, players)
-        }
-        return readyPlayers
-    }
-
-    private fun receiveCardAllPlayers(deck: Deck, players: Players): Players {
-        return players.receiveCards(deck, isPlayerTurnOff, OutputView::printCards, OutputView::printDealerCardReceived)
     }
 
     companion object {

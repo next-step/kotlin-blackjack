@@ -25,9 +25,9 @@ internal class PlayersTest {
 
     @Test
     fun `플레이어 이름을 입력받아 플레이어 목록을 생성할 수 있다`() {
-        val givenNames = Names(setOf(Name("player1"), Name("player2")))
+        val givenNames = "player1, player2"
 
-        assertThat(Players.createPlayers(givenNames)).isNotNull
+        assertThat(Players.of(givenNames)).isNotNull
     }
 
     @Test
