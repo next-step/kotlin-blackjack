@@ -3,41 +3,11 @@ package blackject.model
 /**
  * 게임 결과
  * */
-enum class ResultType : Result {
-    Bust {
-        override fun rate(): EarningRate {
-            return EarningRate.Bust
-        }
+fun ResultType.profit(amount: Amount): Double = earningRate.rate.times(amount.value)
 
-        override fun profit(amount: Amount): Double {
-            return EarningRate.Bust.rate
-        }
-    },
-    BlackJack {
-        override fun rate(): EarningRate {
-            return EarningRate.BlackJack
-        }
-
-        override fun profit(amount: Amount): Double {
-            return amount.value.times(EarningRate.BlackJack.rate)
-        }
-    },
-    Lose {
-        override fun rate(): EarningRate {
-            return EarningRate.Lose
-        }
-
-        override fun profit(amount: Amount): Double {
-            return amount.value.times(EarningRate.Lose.rate)
-        }
-    },
-    Win {
-        override fun rate(): EarningRate {
-            return EarningRate.Win
-        }
-
-        override fun profit(amount: Amount): Double {
-            return amount.value.times(EarningRate.Win.rate)
-        }
-    }
+enum class ResultType(val earningRate: EarningRate) {
+    Bust(EarningRate.Bust),
+    BlackJack(EarningRate.BlackJack),
+    Lose(EarningRate.Lose),
+    Win(EarningRate.Win);
 }

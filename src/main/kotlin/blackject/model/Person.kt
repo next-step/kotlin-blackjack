@@ -36,7 +36,7 @@ open class Person(
 
     fun isBust(): Boolean = getScore() > Cards.BLACK_JACK_SUM
 
-    fun hasPlusProfit(): Boolean = EarningRate.isPlusProfit(result.rate())
+    fun hasPlusProfit(): Boolean = EarningRate.isPlusProfit(result.earningRate)
 
     open fun calculateGameResult(winScore: Int? = null, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
         val score = getScore()
