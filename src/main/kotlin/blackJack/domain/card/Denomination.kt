@@ -3,7 +3,7 @@ package blackJack.domain.card
 enum class Denomination(val value: String, val orderBy: Int) : CardScore {
     ACE("A", 1) {
         override fun score(sum: Int): Int =
-            if (sum > 21) {
+            if (sum + 11 > 21) {
                 1
             } else {
                 11
