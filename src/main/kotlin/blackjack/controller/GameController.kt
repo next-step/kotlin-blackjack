@@ -26,7 +26,11 @@ object GameController {
         OutputView.printPlayers(players)
         OutputView.printPlayersDrawnCards(players)
 
-        blackJackManager.hitPlayer(question = InputView::acceptMoreCard, cardDeck = cardDeck, printResult = OutputView::printPlayerDrawnCard)
+        blackJackManager.hitPlayer(
+            question = InputView::acceptMoreCard,
+            cardDeck = cardDeck,
+            printResult = OutputView::printPlayerDrawnCard
+        )
 
         OutputView.printResult(players)
     }
