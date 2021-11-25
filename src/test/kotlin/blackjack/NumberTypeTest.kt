@@ -10,19 +10,31 @@ import org.junit.jupiter.api.Test
 class NumberTypeTest {
 
     @Test
-    fun `ACE의 score는 1 혹은 11이 될 수 있다`() {
+    fun `ACE의 score는 이전 score와 11을 더해서 21을 넘지 않을 경우 11로 사용한다`() {
         val cards = Cards()
 
-        val ace1 = Card(SuitType.SPADE, NumberType.ACE)
-        cards.addCard(ace1)
-        assertThat(NumberType.getScore(cards)).isEqualTo(11)
+        val tenCard = Card(SuitType.SPADE, NumberType.TEN)
+        cards.addCard(tenCard)
 
-        val ace2 = Card(SuitType.SPADE, NumberType.ACE)
-        cards.addCard(ace2)
-        assertThat(NumberType.getScore(cards)).isEqualTo(12)
+        val aceCard = Card(SuitType.SPADE, NumberType.ACE)
+        cards.addCard(aceCard)
 
-        val ace3 = Card(SuitType.SPADE, NumberType.ACE)
-        cards.addCard(ace3)
+        assertThat(NumberType.getScore(cards)).isEqualTo(21)
+    }
+
+    @Test
+    fun `ACE의 score는 이전 score와 11을 더해서 21을 넘을 경우 1로 사용한다`() {
+        val cards = Cards()
+
+        val tenCard = Card(SuitType.SPADE, NumberType.TEN)
+        cards.addCard(tenCard)
+
+        val twoCard = Card(SuitType.SPADE, NumberType.TWO)
+        cards.addCard(twoCard)
+
+        val aceCard = Card(SuitType.SPADE, NumberType.ACE)
+        cards.addCard(aceCard)
+
         assertThat(NumberType.getScore(cards)).isEqualTo(13)
     }
 }
