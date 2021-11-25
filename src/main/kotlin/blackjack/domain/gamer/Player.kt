@@ -6,49 +6,63 @@ import blackjack.domain.state.Blackjack
 import blackjack.domain.state.FirstDraw
 import blackjack.domain.state.Stand
 import blackjack.domain.state.State
-import blackjack.exception.InvalidPlayerNameException
+import blackjack.domain.state.result.Lose
+import blackjack.domain.state.result.Push
+import blackjack.domain.state.result.Win
 
-class Player(
-    override val name: String,
-    override val cards: Cards,
-    override val state: State,
-) : Gamer {
+class Player private constructor(
+    name: String,
+    state: State,
+) : Gamer(name, state) {
 
     init {
-        if (name.isEmpty()) {
-            throw InvalidPlayerNameException()
-        }
+        validateName(name)
     }
 
-    override fun completeDeal(deck: Deck): Player {
+    override fun prepare(deck: Deck): Player {
         val completedFirstDraw = draw(deck, state)
-        val completedDeal = draw(deck, completedFirstDraw)
-        return Player(name, cards, completedDeal)
+        val completedSecondDraw = draw(deck, completedFirstDraw)
+        return Player(name, completedSecondDraw)
+    }
+
+    fun progress(playable: Boolean, deck: Deck): Player {
+        if (isStand(playable)) {
+            return Player(name, Stand(cards))
+        }
+        return play(deck)
     }
 
     override fun play(deck: Deck): Player {
-        if (state.currentCards().isBlackjack()) {
-            return Player(name, cards, Blackjack(cards))
+        if (state.cards.isBlackjack()) {
+            return Player(name, Blackjack(cards))
         }
         val currentState = draw(deck, state)
-        return Player(name, cards, currentState)
+        return Player(name, currentState)
     }
 
-    override fun stand(): Player {
-        return Player(name, cards, Stand(cards))
+    fun win(): Player {
+        return Player(name, Win)
     }
 
-    override fun draw(deck: Deck, state: State): State {
-        val card = deck.takeOut()
-        return state.draw(card)
+    fun push(): Player {
+        return Player(name, Push)
     }
 
-    override fun haveCards(): String = cards.haveCards()
+    fun lose(): Player {
+        return Player(name, Lose)
+    }
+
+    fun isBlackjack(): Boolean = cards.isBlackjack()
+
+    fun isTwentyOne(): Boolean = cards.isTwentyOne()
 
     companion object {
         fun of(name: String, cards: Cards): Player {
-            val state = FirstDraw(cards)
-            return Player(name, cards, state)
+            return Player(name, FirstDraw(cards))
+        }
+
+        fun init(name: String, state: State): Player {
+            return Player(name, state)
         }
     }
 }

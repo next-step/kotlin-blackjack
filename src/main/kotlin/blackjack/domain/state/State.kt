@@ -4,13 +4,17 @@ import blackjack.domain.deck.Card
 import blackjack.domain.deck.Cards
 
 interface State {
+    val cards: Cards
+
     fun draw(card: Card): State
-    fun currentCards(): Cards
     fun isFinished(): Boolean
 
-    fun isStand(sign: String): Boolean = false
+    fun isStand(playable: Boolean): Boolean {
+        return !playable
+    }
 
     companion object {
         const val FINISHED_SIGN = "n"
+        const val CAN_PLAY = "y"
     }
 }

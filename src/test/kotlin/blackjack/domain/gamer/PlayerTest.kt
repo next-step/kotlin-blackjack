@@ -1,8 +1,7 @@
-package blackjack.domain
+package blackjack.domain.gamer
 
 import blackjack.domain.deck.Cards
 import blackjack.domain.deck.Deck
-import blackjack.domain.gamer.Player
 import blackjack.domain.state.Deal
 import blackjack.domain.state.Stand
 import blackjack.exception.InvalidPlayerNameException
@@ -38,18 +37,18 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어가 Deal을 완료한다")
-    fun `sut returns completedDeal`() {
+    @DisplayName("플레이어가 카드 2장을 뽑고 준비를 완료한다")
+    fun `sut returns prepared`() {
         // Arrange
         val player = Player.of("tommy", Cards())
         val deck = Deck.init()
 
         // Act
-        val completedDeal = player.completeDeal(deck)
+        val preparedPlayer = player.prepare(deck)
 
         // Assert
-        assertThat(completedDeal.name).isEqualTo("tommy")
-        assertThat(completedDeal.cards.value).hasSize(2)
+        assertThat(preparedPlayer.name).isEqualTo("tommy")
+        assertThat(preparedPlayer.cards.value).hasSize(2)
     }
 
     @Test
@@ -58,7 +57,8 @@ class PlayerTest {
         // Arrange
         val player = Player.of("tommy", Cards())
         val deck = Deck.init()
-        val sut = player.completeDeal(deck)
+
+        val sut = player.prepare(deck)
 
         // Act
         val playResult = sut.play(deck)
@@ -69,17 +69,36 @@ class PlayerTest {
     }
 
     @Test
-    @DisplayName("플레이어의 상태가 stand가 된다")
-    fun `sut returns stand`() {
+    @DisplayName("플레이어의 진행여부가 true이면 게임을 진행할 수 있다")
+    fun `sut returns progressed player`() {
         // Arrange
-        val sut = Player.of("tommy", Cards())
+        val player = Player.of("tommy", Cards())
         val deck = Deck.init()
+        val playable = true
 
         // Act
-        val stoodPlayer = sut.stand()
+        val sut = player.prepare(deck)
+        val actual = sut.progress(playable, deck)
 
         // Assert
-        assertThat(stoodPlayer.name).isEqualTo("tommy")
-        assertThat(stoodPlayer.state).isInstanceOf(Stand::class.java)
+        assertThat(actual.state).isNotInstanceOf(Deal::class.java)
+        assertThat(actual.cards.value.size).isGreaterThanOrEqualTo(2)
+    }
+
+    @Test
+    @DisplayName("플레이어의 진행여부가 false이면 stand로 게임을 종료한다.")
+    fun `sut returns stand player`() {
+        // Arrange
+        val player = Player.of("tommy", Cards())
+        val deck = Deck.init()
+        val playable = false
+
+        // Act
+        val sut = player.prepare(deck)
+        val actual = sut.progress(playable, deck)
+
+        // Assert
+        assertThat(actual.state).isInstanceOf(Stand::class.java)
+        assertThat(actual.cards.value).hasSize(2)
     }
 }
