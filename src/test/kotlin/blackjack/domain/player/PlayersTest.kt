@@ -127,6 +127,6 @@ internal class PlayersTest {
         val dealer1 = Dealer.of()
         val dealer2 = Dealer.of()
 
-        assertThrows<IllegalStateException> { Players(listOf(dealer1, dealer2)) }
+        assertThrows<IllegalArgumentException> { Players(listOf(dealer1, dealer2)) }
     }
 }

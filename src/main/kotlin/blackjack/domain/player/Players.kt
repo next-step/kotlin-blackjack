@@ -16,9 +16,7 @@ data class Players(val players: List<Player>) : List<Player> by players {
     init {
         require(players.size >= MINIMUM_GAMER)
 
-        if (players.count { it is Dealer } > DEALER_COUNT) {
-            throw IllegalStateException(DEALER_ALREADY_EXIST)
-        }
+        require(players.count { it is Dealer } == DEALER_COUNT)
     }
 
     fun startInitPhase(deck: Deck): Players {
