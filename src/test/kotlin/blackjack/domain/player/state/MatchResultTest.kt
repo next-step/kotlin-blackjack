@@ -11,9 +11,9 @@ internal class MatchResultTest {
     @Test
     fun `숫자에 따라 알맞는 열거형을 반환한다`() {
         assertAll(
-            { assertThat(MatchResult.values(1)).isEqualTo(MatchResult.WIN) },
-            { assertThat(MatchResult.values(0)).isEqualTo(MatchResult.DRAW) },
-            { assertThat(MatchResult.values(-1)).isEqualTo(MatchResult.LOSE) }
+            { assertThat(MatchResult.from(1)).isEqualTo(MatchResult.WIN) },
+            { assertThat(MatchResult.from(0)).isEqualTo(MatchResult.DRAW) },
+            { assertThat(MatchResult.from(-1)).isEqualTo(MatchResult.LOSE) }
         )
     }
 }

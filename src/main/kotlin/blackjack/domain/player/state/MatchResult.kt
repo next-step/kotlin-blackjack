@@ -1,12 +1,23 @@
 package blackjack.domain.player.state
 
-enum class MatchResult(private val compareToValue: Int) {
+enum class MatchResult {
 
-    WIN(1), DRAW(0), LOSE(-1);
+    WIN, DRAW, LOSE;
 
     companion object {
-        fun values(compareToValue: Int): MatchResult = values()
-            .find { it.compareToValue == compareToValue }
-            ?: throw ClassNotFoundException()
+        private const val ZERO = 0;
+
+        fun from(compareToValue: Int): MatchResult {
+            if (compareToValue > ZERO) {
+                return WIN;
+            }
+            if (compareToValue == ZERO) {
+                return DRAW;
+            }
+            if (compareToValue < ZERO) {
+                return LOSE;
+            }
+            throw ClassNotFoundException()
+        }
     }
 }
