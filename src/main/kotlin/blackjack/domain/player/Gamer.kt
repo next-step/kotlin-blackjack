@@ -2,27 +2,25 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.game.Rule
+import blackjack.domain.game.Score
 
-data class Gamer(
-    val name: Name,
-    val playerStatus: PlayerStatus = PlayerStatus.STOP,
-    val cards: Cards = Cards.EMPTY
-) : Player {
+class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
-    override fun receiveCard(card: Card): Gamer {
-        return Gamer(name, playerStatus, cards.addCards(card))
+    override fun receiveCard(card: Card): Player {
+        return Gamer(profile, cards.addCards(card))
     }
 
-    override fun turnOff(): Gamer {
-        return Gamer(name, PlayerStatus.STOP, cards)
+    override fun turnOff(): Player {
+        return Gamer(profile.turnOff(), cards)
     }
 
-    override fun turnOn(): Gamer {
-        return Gamer(name, PlayerStatus.BURST, cards)
+    override fun turnOn(): Player {
+        return Gamer(profile.turnOn(), cards)
     }
 
     override fun isBurst(): Boolean {
-        return playerStatus == PlayerStatus.BURST
+        return profile.isBurst()
     }
 
     override fun openCards(): Cards {
@@ -30,10 +28,23 @@ data class Gamer(
     }
 
     override fun getPlayerName(): Name {
-        return name
+        return profile.name
     }
 
     override fun getHighestPoint(): Int {
         return cards.getHighestPoint()
+    }
+
+    override fun canReceiveCard(): Boolean {
+        return getHighestPoint() <= CAN_ACHIEVE_POINT
+    }
+
+    override fun judgeResult(players: List<Player>, rule: Rule): Map<Player, List<Score>> {
+        throw IllegalStateException(JUDGE_NOT_ALLOWED)
+    }
+
+    companion object {
+        private const val CAN_ACHIEVE_POINT = 21
+        private const val JUDGE_NOT_ALLOWED = "게이머는 판정을 할 수 없습니다"
     }
 }

@@ -7,8 +7,10 @@ internal class PlayerResultsTest {
 
     @Test
     fun `플레이어들의 결과를 생성할 수 있다`() {
-        val givenGamer1 = Gamer(Name("player1"))
-        val givenGamer2 = Gamer(Name("player2"))
+        val profile1 = Profile.from(Name("player1"))
+        val profile2 = Profile.from(Name("player2"))
+        val givenGamer1 = Gamer(profile1)
+        val givenGamer2 = Gamer(profile2)
         val players = Players(listOf(givenGamer1, givenGamer2))
 
         assertThat(PlayerResults(players, givenGamer1)).isNotNull

@@ -1,6 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Rule
+import blackjack.domain.game.Score
+import blackjack.domain.game.Turn
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
     return map {
@@ -12,10 +15,18 @@ data class Players(val players: List<Player>) : List<Player> by players {
 
     init {
         require(players.size >= MINIMUM_GAMER)
+
+        if (players.count { it is Dealer } > DEALER_COUNT) {
+            throw IllegalStateException(DEALER_ALREADY_EXIST)
+        }
     }
 
-    fun receiveCardFromDeck(deck: Deck): Players {
-        return Players(players.map { it.receiveCard(deck.drawCard()) })
+    fun startInitPhase(deck: Deck): Players {
+        var initPhasedPlayers = players
+        repeat(INIT_RECEIVE_CARD_COUNT) {
+            initPhasedPlayers = receiveCardFromDeck(initPhasedPlayers, deck)
+        }
+        return Players(initPhasedPlayers)
     }
 
     fun isAllPlayerTurnOff(): Boolean {
@@ -31,24 +42,103 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return Players(updated.toList())
     }
 
-    fun receiveCards(player: Player, deck: Deck): PlayerResults {
-        val updatedPlayer = player.receiveCard(deck.drawCard())
-        return PlayerResults(updatePlayerStatus(player, updatedPlayer), updatedPlayer)
-    }
-
     fun endPlayerTurn(player: Player): Players {
         return Players(updatePlayerStatus(player, player.turnOff()))
+    }
+
+    fun receiveCards(deck: Deck, turn: Turn, playerCallback: (Player) -> Unit, dealerCallback: () -> Unit): Players {
+        var receivedCardPlayers = players.toList()
+        players.forEach {
+            receivedCardPlayers =
+                updateReceiveCards(it, turn, receivedCardPlayers, deck, playerCallback, dealerCallback)
+        }
+        return Players(receivedCardPlayers)
+    }
+
+    private fun updateReceiveCards(
+        player: Player,
+        turn: Turn,
+        players: List<Player>,
+        deck: Deck,
+        playerCallback: (Player) -> Unit,
+        dealerCallback: () -> Unit
+    ): List<Player> {
+        var receivedCardPlayers = players
+        var target = player
+        while (canGamerHit(target, turn)) {
+            val result = receiveCard(receivedCardPlayers, target, deck)
+            receivedCardPlayers = result.players.copy()
+            target = result.player
+            playerCallback(target)
+        }
+        if (canDealerHit(target)) {
+            val result = receiveCard(receivedCardPlayers, target, deck)
+            receivedCardPlayers = result.players.copy()
+            dealerCallback()
+        }
+        return receivedCardPlayers
+    }
+
+    fun addPlayer(player: Player): Players {
+        return Players(players + player)
+    }
+
+    fun getPlayersByScore(): List<Player> {
+        return players.sortedByDescending { it.getHighestPoint() }
+    }
+
+    fun checkResult(rule: Rule): Map<Player, List<Score>> {
+        val dealer = getDealer()
+        val gamer = getGamers()
+        requireNotNull(dealer)
+        return dealer.judgeResult(gamer, rule)
+    }
+
+    private fun getDealer(): Player? {
+        return players.find { it is Dealer }
+    }
+
+    private fun getGamers(): List<Player> {
+        return players.filterIsInstance<Gamer>()
+    }
+
+    private fun canGamerHit(target: Player, turn: Turn) =
+        target is Gamer && turn.isPlayerTurnOff(target) && target.canReceiveCard()
+
+    private fun canDealerHit(target: Player) = target is Dealer && target.canReceiveCard()
+
+    private fun receiveCardFromDeck(players: List<Player>, deck: Deck): Players {
+        return Players(players.map { it.receiveCard(deck.drawCard()) })
     }
 
     private fun updatePlayerStatus(before: Player, after: Player): Players {
         return Players(players.replace(after) { it == before })
     }
 
+    private fun updatePlayerStatus(players: List<Player>, before: Player, after: Player): Players {
+        return Players(players.replace(after) { it == before })
+    }
+
+    private fun receiveCard(players: List<Player>, player: Player, deck: Deck): PlayerResults {
+        val receivedCardPlayer = player.receiveCard(deck.drawCard())
+        return PlayerResults(updatePlayerStatus(players, player, receivedCardPlayer), receivedCardPlayer)
+    }
+
     companion object {
         private const val MINIMUM_GAMER = 2
+        private const val INIT_RECEIVE_CARD_COUNT = 2
+        private const val DEALER_COUNT = 1
+        private const val DEALER_ALREADY_EXIST = "딜러는 한 명이상 존재할 수 없습니다"
 
-        fun createGamers(names: Names): Players {
-            return Players(names.names.map { Gamer(it) })
+        fun of(name: String): Players {
+            val names = Names.generateNames(name)
+            val players = createPlayers(names)
+            val dealer = Dealer.of()
+            return players.addPlayer(dealer)
+        }
+
+        private fun createPlayers(names: Names): Players {
+            return Players(names.names.map { Gamer(Profile(it)) })
         }
     }
 }
