@@ -42,7 +42,6 @@ internal class HitTest {
         assertThat(hit.score()).isEqualTo(expectedScore)
     }
 
-
     @DisplayName("Hit 에서 stay 하면 Stay 상태로 이동한다.")
     @Test
     fun stay() {
