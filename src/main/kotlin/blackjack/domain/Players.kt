@@ -10,7 +10,7 @@ data class Players(private val players: List<Player> = listOf()) : List<Player> 
 
     companion object {
         fun getPlayerListByNames(names: List<String>): List<Player> {
-            return names.map { Player.of(it) }
+            return names.map { Player.of(Name.from(it)) }
         }
 
         fun of(vararg player: Player): Players {

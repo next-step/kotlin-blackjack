@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.Card
+import blackjack.domain.Name
 import blackjack.domain.NumberType
 import blackjack.domain.Player
 import blackjack.domain.SuitType
@@ -11,7 +12,7 @@ class PlayerTest {
 
     @Test
     fun `player의 score가 21점 미만이면 카드를 추가할 수 있다(hit())`() {
-        val player = Player.of("seunghwan")
+        val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.TEN)
         val card2 = Card(SuitType.SPADE, NumberType.TEN)
         val card3 = Card(SuitType.SPADE, NumberType.TWO)
@@ -31,7 +32,7 @@ class PlayerTest {
 
     @Test
     fun `player의 score가 21점 이상이면 카드를 추가할 수 없다(canHit())`() {
-        val player = Player.of("seunghwan")
+        val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.TEN)
         val card2 = Card(SuitType.SPADE, NumberType.TEN)
         val card3 = Card(SuitType.SPADE, NumberType.TWO)
@@ -48,7 +49,7 @@ class PlayerTest {
 
     @Test
     fun `player는 가지고있는 카드들의 점수를 알고있다(nowScore())`() {
-        val player = Player.of("seunghwan")
+        val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.ACE)
         val card2 = Card(SuitType.SPADE, NumberType.ACE)
         val card3 = Card(SuitType.SPADE, NumberType.ACE)

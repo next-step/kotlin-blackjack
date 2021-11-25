@@ -19,7 +19,7 @@ object InputView {
     }
 
     fun acceptMoreCard(player: Player): String {
-        println("${player.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${player.name.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readLine() ?: throw IllegalArgumentException(INVALID_INPUT_MESSAGE)
     }
 }

@@ -9,7 +9,7 @@ object OutputView {
 
     fun printPlayers(players: Players) {
         val output = buildString {
-            val names = players.joinToString(SEPARATOR) { it.name }
+            val names = players.joinToString(SEPARATOR) { it.name.name }
             append(System.lineSeparator())
             append("${names}에게 2장을 나누었습니다.")
         }
@@ -19,7 +19,7 @@ object OutputView {
     fun printPlayersDrawnCards(players: Players) {
         val output = buildString {
             players.forEach { player ->
-                append("${player.name}카드: ")
+                append("${player.name.name}카드: ")
                 append(player.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
                 append(System.lineSeparator())
             }
@@ -29,7 +29,7 @@ object OutputView {
 
     fun printPlayerDrawnCard(player: Player) {
         val output = buildString {
-            append("${player.name}카드: ")
+            append("${player.name.name}카드: ")
             append(player.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
         }
         println(output)
@@ -39,7 +39,7 @@ object OutputView {
         val output = buildString {
             append(System.lineSeparator())
             players.forEach {
-                append("${it.name}카드: ")
+                append("${it.name.name}카드: ")
                 append(it.cards.joinToString { card -> "${card.numberType.displayName}${card.suitType.displayName}" })
                 append(" - ")
                 append("결과: ")
