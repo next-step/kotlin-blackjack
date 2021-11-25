@@ -13,16 +13,9 @@ class PlayerResult(
 
     companion object {
         fun winOrLose(player: Player, dealer: Dealer): PlayerResult {
-            val playerWinDrawLose = winDrawLose(player, dealer)
+            val playerWinDrawLose = WinDrawLose.from(player, dealer)
             val bettingResult = BettingResult.of(player, dealer, playerWinDrawLose)
             return PlayerResult(player.name, playerWinDrawLose, bettingResult)
         }
-
-        private fun winDrawLose(player: Player, dealer: Dealer): WinDrawLose =
-            when {
-                dealer.isBustPlayer() || (!player.isBustPlayer() && player.getScore() > dealer.getScore()) -> WinDrawLose.WIN
-                player.getScore() == dealer.getScore() -> WinDrawLose.DRAW
-                else -> WinDrawLose.LOSE
-            }
     }
 }
