@@ -41,10 +41,10 @@ open class Person(
     open fun calculateGameResult(winScore: Int? = null, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
         val score = getScore()
         when {
-            isDealerBust -> changeResultType(ResultType.Win)
+            isDealerBust || isDealerBlackJack && cards.isBlackjack(score) -> changeResultType(ResultType.Win)
             cards.isBlackjack(score) -> changeResultType(ResultType.BlackJack)
-            cards.isBust(score) -> changeResultType(ResultType.Lose)
-            isDealerBlackJack && cards.isBlackjack(score) || score == winScore -> changeResultType(ResultType.Win)
+            cards.isBust(score) -> changeResultType(ResultType.Bust)
+            score == winScore -> changeResultType(ResultType.Win)
             else -> changeResultType(ResultType.Lose)
         }
     }
