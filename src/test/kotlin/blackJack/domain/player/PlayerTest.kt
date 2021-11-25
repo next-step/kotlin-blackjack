@@ -8,7 +8,6 @@ import blackJack.domain.card.Stay
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import java.math.BigDecimal
 
 class PlayerTest {
 
@@ -233,10 +232,10 @@ class PlayerTest {
         val player = Player.of("Flamme")
 
         // when
-        player.betting(BigDecimal(10000))
+        player.bet(10000)
 
         // then
-        assertThat(player.bettingMoney.money).isEqualTo(BigDecimal(10000))
+        assertThat(player.bettingMoney.money).isEqualTo(10000)
     }
 
     @Test
@@ -245,6 +244,6 @@ class PlayerTest {
         val player = Player.of("Flamme")
 
         // then
-        assertThat(player.bettingMoney.money).isEqualTo(BigDecimal.ZERO)
+        assertThat(player.bettingMoney.money).isEqualTo(0)
     }
 }

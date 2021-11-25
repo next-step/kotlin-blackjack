@@ -1,21 +1,22 @@
 package blackJack.domain.result
 
-class DealerResult(
-    val win: Int = 0,
-    val lose: Int = 0,
-    val draw: Int = 0
+import kotlin.math.abs
+
+@JvmInline
+value class DealerResult(
+    val profit: Int
 ) {
 
     companion object {
         fun winOrLose(playerResults: PlayerResults): DealerResult =
-            playerResults.toList().groupingBy {
-                it.winDrawLose
-            }.eachCount().run {
-                DealerResult(
-                    this[WinDrawLose.LOSE] ?: 0,
-                    this[WinDrawLose.WIN] ?: 0,
-                    this[WinDrawLose.DRAW] ?: 0,
-                )
+            playerResults.toList().fold(0) { acc, playerResult ->
+                when (playerResult.winDrawLose) {
+                    WinDrawLose.WIN -> acc - playerResult.getProfit()
+                    WinDrawLose.DRAW -> acc
+                    WinDrawLose.LOSE -> acc + abs(playerResult.getProfit())
+                }
+            }.run {
+                DealerResult(this)
             }
     }
 }

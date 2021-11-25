@@ -1,7 +1,5 @@
 package blackJack.domain.player
 
-import java.math.BigDecimal
-
 class Player(
     val name: String,
     val status: State = StateImpl.of(),
@@ -12,7 +10,9 @@ class Player(
         require(name.isNotEmpty()) { IS_PLAYER_NAME_BLACK }
     }
 
-    fun betting(playerMoney: BigDecimal) {
+    fun getBettingMoney(): Int = bettingMoney.money
+
+    fun bet(playerMoney: Int) {
         bettingMoney.inputMoney(playerMoney)
     }
 

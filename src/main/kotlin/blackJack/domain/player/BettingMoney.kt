@@ -1,13 +1,15 @@
 package blackJack.domain.player
 
-import java.math.BigDecimal
+class BettingMoney(private var _money: Int = ZERO) {
 
-class BettingMoney(private var _money: BigDecimal = BigDecimal.ZERO) {
-
-    val money: BigDecimal
+    val money: Int
         get() = _money
 
-    fun inputMoney(money: BigDecimal) {
+    fun inputMoney(money: Int) {
         _money = money
+    }
+
+    companion object {
+        private const val ZERO = 0
     }
 }
