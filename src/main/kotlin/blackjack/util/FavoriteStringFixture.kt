@@ -1,6 +1,7 @@
 package blackjack.util
 
 object FavoriteStringFixture {
+    const val BLANK = ""
     const val COMMA = ","
     const val SPACE = " "
     const val NEW_LINE = "\n"

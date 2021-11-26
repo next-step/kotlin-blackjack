@@ -1,36 +1,18 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
-import blackjack.domain.player.state.End
-import blackjack.domain.player.state.PlayingState
-import blackjack.domain.player.state.Running
-import blackjack.ui.Command
+import blackjack.domain.card.Deck
+import blackjack.domain.player.name.Name
+import blackjack.domain.player.state.MatchResult
+import blackjack.domain.player.state.PlayerState
+import blackjack.strategy.draw.DrawStrategy
 
-data class Player(
-    private val _name: Name,
-    val hands: Hands = Hands.EMPTY,
-    private val playingState: PlayingState = Running,
-) {
-    val name: String
-        get() = _name.name
+sealed class Player(open val name: Name, open val playerState: PlayerState) {
 
-    operator fun plus(extraCards: List<Card>): Player {
-        val changedHands = hands + extraCards
-        val sumScore = changedHands.score()
-        if (sumScore.isOverMaximum()) {
-            return Player(_name, changedHands, End)
-        }
-        return Player(_name, changedHands, playingState)
-    }
+    fun isFinished(): Boolean = playerState.isFinished()
 
-    fun isFinished(): Boolean = playingState.isFinish()
+    fun match(other: Player): MatchResult = playerState.match(other.playerState)
 
-    fun continuePlay(command: String): Player = continuePlay(Command.values(command))
+    abstract fun stay(): Player
 
-    private fun continuePlay(command: Command): Player = Player(_name, hands, PlayingState.of(command.nextDraw))
-
-    companion object {
-        fun fromName(name: String): Player = fromName(Name(name))
-        private fun fromName(name: Name): Player = Player(name)
-    }
+    abstract fun draw(deck: Deck, drawStrategy: DrawStrategy): Player
 }

@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.player.name
 
 import blackjack.error.InvalidPlayerNameException
 

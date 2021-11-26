@@ -1,25 +1,28 @@
 package blackjack.domain.card
 
-import blackjack.strategy.shuffle.DeckShuffleStrategy
+import blackjack.strategy.shuffle.CardsShuffleStrategy
 
 @JvmInline
 value class Deck private constructor(private val deck: ArrayDeque<Card>) {
 
-    fun pop(count: Int = DEFAULT_POP_COUNT): List<Card> = (DEFAULT_POP_COUNT..count).map { deck.removeLast() }
+    fun pop(): Card = deck.removeLast()
 
     companion object {
-        private const val DEFAULT_POP_COUNT = 1
+        fun initialize(cardsShuffleStrategy: CardsShuffleStrategy): Deck =
+            Deck(shuffledCards(cardsShuffleStrategy))
 
-        fun initialize(deckShuffleStrategy: DeckShuffleStrategy): Deck =
-            Deck(
-                deckShuffleStrategy.shuffle(playingCardsAllSuit())
-                    .toCollection(ArrayDeque())
-            )
+        private fun shuffledCards(cardsShuffleStrategy: CardsShuffleStrategy): ArrayDeque<Card> =
+            cardsShuffleStrategy
+                .shuffle(playingCardsAllSuit())
+                .toCollection(ArrayDeque())
 
-        private fun playingCardsAllSuit() = Suit.values()
-            .flatMap(::playingCardsPerSuit)
+        private fun playingCardsAllSuit(): List<Card> =
+            Suit.values()
+                .flatMap(::playingCardsPerSuit)
 
-        private fun playingCardsPerSuit(suit: Suit): List<Card> = Denomination.values()
-            .map { denomination -> Card(suit, denomination) }
+        private fun playingCardsPerSuit(suit: Suit): List<Card> =
+            Denomination
+                .values()
+                .map { denomination -> Card(suit, denomination) }
     }
 }
