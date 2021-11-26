@@ -21,7 +21,7 @@ class Player(
     override fun firstOpenCardsCount() = PLAYER_FIRST_OPEN_COUNT
 
     fun calculateProfitBy(dealer: Dealer): Profit {
-        return result.getProfit(bet, dealer.result)
+        return result.getProfit(bet, dealer)
     }
 }
 

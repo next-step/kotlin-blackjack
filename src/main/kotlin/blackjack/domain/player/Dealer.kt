@@ -20,6 +20,10 @@ class Dealer(
     override fun wantHit(answerProvider: AnswerProvider) = true
 
     override fun firstOpenCardsCount() = DEALER_FIRST_OPEN_COUNT
+
+    fun isBlackJack() = result.isBlackJack()
+
+    fun isBust() = result.isBust()
 }
 
 class DealerHand : PlayingHand() {

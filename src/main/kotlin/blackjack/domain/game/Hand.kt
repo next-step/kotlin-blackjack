@@ -13,7 +13,7 @@ interface Hand {
 
     fun canHit(): Boolean
 
-    fun getResult(): HandResult
+    fun getResult(): GameResult
 
     fun hit(card: Card): Hand
 }

@@ -2,8 +2,9 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.player.Dealer
 
-sealed class HandResult : Hand {
+sealed class HandResult : Hand, GameResult {
 
     final override fun canHit() = false
 
@@ -12,12 +13,6 @@ sealed class HandResult : Hand {
     final override fun hit(card: Card): Hand {
         throw UnsupportedOperationException()
     }
-
-    abstract fun isBlackJack(): Boolean
-
-    abstract fun isBust(): Boolean
-
-    abstract fun getProfit(bet: Money, other: HandResult): Profit
 }
 
 class BlackJack(override val cards: Cards) : HandResult() {
@@ -26,11 +21,15 @@ class BlackJack(override val cards: Cards) : HandResult() {
 
     override fun isBust() = false
 
-    override fun getProfit(bet: Money, other: HandResult): Profit {
-        if (other.isBlackJack()) {
+    override fun getProfit(bet: Money, dealer: Dealer): Profit {
+        if (dealer.isBlackJack()) {
             return Profit.ZERO
         }
-        return Profit(0.5 * bet.value)
+        return Profit(BlackJackProfit * bet.value)
+    }
+
+    companion object {
+        private const val BlackJackProfit = 0.5
     }
 
 }
@@ -41,7 +40,7 @@ class Bust(override val cards: Cards) : HandResult() {
 
     override fun isBust() = true
 
-    override fun getProfit(bet: Money, other: HandResult): Profit {
+    override fun getProfit(bet: Money, dealer: Dealer): Profit {
         return Profit(bet.value).negative()
     }
 
@@ -53,20 +52,17 @@ class Stay(override val cards: Cards) : HandResult() {
 
     override fun isBust() = false
 
-    /**
-     *  주의 : a.getProfit(money, b) != b.getProfit(money, a)
-     */
-    override fun getProfit(bet: Money, other: HandResult): Profit {
-        if (other.isBust()) {
+    override fun getProfit(bet: Money, dealer: Dealer): Profit {
+        if (dealer.isBust()) {
             return Profit(bet.value)
         }
-        if (other.isBlackJack()) {
+        if (dealer.isBlackJack()) {
             return Profit(bet.value).negative()
         }
-        if (score > other.score) {
+        if (score > dealer.score) {
             return Profit(bet.value)
         }
-        if (score == other.score) {
+        if (score == dealer.score) {
             return Profit.ZERO
         }
         return Profit(bet.value).negative()

@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.card.Score
+import blackjack.domain.game.GameResult
 import blackjack.domain.game.Hand
 import blackjack.domain.game.HandResult
 
@@ -23,7 +24,7 @@ abstract class Gamer(val name: PlayerName, hand: Hand) {
     val firstOpenCards: List<Card>
         get() = hand.cards.take(firstOpenCardsCount())
 
-    val result: HandResult
+    val result: GameResult
         get() = hand.getResult()
 
     fun hit(deck: Deck) {
