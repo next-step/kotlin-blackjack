@@ -29,7 +29,7 @@ value class Hands private constructor(val hands: List<Card>) {
             .reduce(Score::plus)
 
     private fun calculateAceScore(sum: Score): Score {
-        if (hands.any(Card::hasAce) && sum.canPlusExtraAceScore()) {
+        if (hands.any(Card::isAce) && sum.canPlusExtraAceScore()) {
             return sum + Score.EXTRA_ACE_SCORE
         }
         return sum

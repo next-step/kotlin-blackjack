@@ -14,4 +14,6 @@ enum class Denomination(val score: Score) {
     JACK(Score.from(10)),
     QUEEN(Score.from(10)),
     KING(Score.from(10));
+
+    fun isAce(): Boolean = (this == ACE)
 }
