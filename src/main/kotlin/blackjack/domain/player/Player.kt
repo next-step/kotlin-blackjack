@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.game.Score
+import blackjack.domain.game.ScoreResult
 
 interface Player {
     fun receiveCard(card: Card): Player
@@ -21,5 +21,5 @@ interface Player {
 
     fun canReceiveCard(): Boolean
 
-    fun judge(players: List<Player>): Map<Player, List<Score>>
+    fun judge(players: List<Player>): ScoreResult
 }
