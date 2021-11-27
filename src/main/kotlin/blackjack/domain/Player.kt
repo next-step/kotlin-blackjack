@@ -31,12 +31,19 @@ open class Player(val name: String) {
     }
 
     fun getTotalScore(): Int {
-        var totalScore = 0
-        normalCards.forEach { totalScore += it.number.value }
+        var totalScore = getNormalCardsScoreSum()
         aceCards.forEach { _ ->
-            totalScore += if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
+            totalScore += getAceCardScore(totalScore)
         }
         return totalScore
+    }
+
+    private fun getNormalCardsScoreSum(): Int {
+        return normalCards.sumOf { it.number.value }
+    }
+
+    protected open fun getAceCardScore(totalScore: Int): Int {
+        return if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
     }
 
     companion object {

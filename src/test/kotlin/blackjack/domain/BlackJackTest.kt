@@ -54,19 +54,4 @@ class BlackJackTest {
         assertThat(blackJack.dealer.cards.size).isEqualTo(2)
         assertThat(blackJack.players).allMatch { it.cards.size == 2 }
     }
-
-    @Test
-    fun `한 플레이어가 새로운 카드 한 장을 받을 수 있다`() {
-        val blackJack = BlackJack(
-            listOf(
-                Player("player1"),
-                Player("player2")
-            )
-        )
-        val player = blackJack.players.first()
-
-        blackJack.drawAnotherCard(player)
-
-        assertThat(player.cards.size).isEqualTo(3)
-    }
 }

@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.exceptions.ScoreOverflowException
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -10,15 +11,16 @@ class DealerTest {
         val dealer = Dealer()
         dealer.takeCards(
             listOf(
-                Card(CardSymbol.SPADE, CardNumber.KING),
-                Card(CardSymbol.SPADE, CardNumber.SEVEN)
+                Card(CardSymbol.SPADE, CardNumber.ACE),
+                Card(CardSymbol.SPADE, CardNumber.SIX)
             )
         )
 
         assertThrows<ScoreOverflowException> {
             dealer.takeCards(
-                listOf(Card(CardSymbol.SPADE, CardNumber.ACE))
+                listOf(Card(CardSymbol.SPADE, CardNumber.TWO))
             )
         }
+        assertThat(dealer.canTakeCards).isEqualTo(false)
     }
 }
