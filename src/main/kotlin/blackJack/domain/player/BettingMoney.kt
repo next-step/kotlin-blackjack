@@ -1,12 +1,14 @@
 package blackJack.domain.player
 
-class BettingMoney(private var _money: Int = ZERO) {
+class BettingMoney {
+
+    private var _money: Int = ZERO
 
     val money: Int
         get() = _money
 
-    fun inputMoney(money: Int) {
-        _money = money
+    fun inputMoney(bettingMoney: Int) {
+        _money = bettingMoney
     }
 
     companion object {
