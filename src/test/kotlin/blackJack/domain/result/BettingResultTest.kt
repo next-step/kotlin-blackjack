@@ -2,7 +2,6 @@ package blackJack.domain.result
 
 import blackJack.domain.card.BlackJack
 import blackJack.domain.card.Cards
-import blackJack.domain.player.BettingMoney
 import blackJack.domain.player.Dealer
 import blackJack.domain.player.Player
 import blackJack.domain.player.StateImpl
@@ -61,7 +60,9 @@ class BettingResultTest {
     @DisplayName("플레이어가 블랙잭인 상태는 배팅 금액의 1.5배를 해준다.")
     fun playerBlackJackProfitTest() {
         // given
-        val player = Player("name", StateImpl(Cards(listOf()), BlackJack), BettingMoney(10000))
+        val player = Player("name", StateImpl(Cards(listOf()), BlackJack)).apply {
+            this.bet(10000)
+        }
         val bettingResult = BettingResult.of(player, Dealer(), WinDrawLose.WIN)
 
         // when
@@ -74,7 +75,9 @@ class BettingResultTest {
     @Test
     fun `플레이어와 딜러가 모두 블랙잭인 상태는 수익금은 없다`() {
         // given
-        val player = Player("name", StateImpl(Cards(listOf()), BlackJack), BettingMoney(10000))
+        val player = Player("name", StateImpl(Cards(listOf()), BlackJack)).apply {
+            this.bet(10000)
+        }
         val bettingResult =
             BettingResult.of(player, Dealer(status = StateImpl(Cards(listOf()), BlackJack)), WinDrawLose.DRAW)
 
