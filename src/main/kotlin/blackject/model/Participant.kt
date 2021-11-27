@@ -7,10 +7,11 @@ import blackject.model.card.CardsDeck
  * 참가자들 관리 클래스
  * */
 class Participant(
-    val dealer: Dealer,
-    val persons: List<Person>,
+    private val dealer: Dealer,
+    private val persons: List<Person>,
 ) {
     fun getAllPerson(): List<Player> = persons.plus(dealer)
+    fun getPerson(): List<Person> = persons
 
     fun sumOfAllPersonAmount(): Int = persons.sumOf { it.getBetAmount().toInt() }
     fun sumOfPlusProfit(): Int = persons.filter { it.hasPlusProfit() }.sumOf { it.getProfit() }

@@ -16,9 +16,9 @@ class ParticipantTest {
     fun `check participant list`(name: String) {
         val participant = Participant.addPerson(name)
 
-        assertThat(participant.persons.size).isEqualTo(2)
-        assertThat(participant.persons[0].name).isEqualTo("sohyun")
-        assertThat(participant.persons[1].name).isEqualTo("hiii")
+        assertThat(participant.getPerson().size).isEqualTo(2)
+        assertThat(participant.getPerson()[0].name).isEqualTo("sohyun")
+        assertThat(participant.getPerson()[1].name).isEqualTo("hiii")
     }
 
     @ParameterizedTest
