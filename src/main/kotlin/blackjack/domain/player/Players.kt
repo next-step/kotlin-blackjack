@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
-import blackjack.domain.game.Rule
 import blackjack.domain.game.Score
 import blackjack.domain.game.Turn
 
@@ -16,7 +15,9 @@ data class Players(val players: List<Player>) : List<Player> by players {
     init {
         require(players.size >= MINIMUM_GAMER)
 
-        require(players.count { it is Dealer } == DEALER_COUNT)
+        if (players.count { it is Dealer } > DEALER_COUNT) {
+            throw IllegalStateException(DEALER_ALREADY_EXIST)
+        }
     }
 
     fun startInitPhase(deck: Deck): Players {
@@ -85,11 +86,11 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return players.sortedByDescending { it.getHighestPoint() }
     }
 
-    fun checkResult(rule: Rule): Map<Player, List<Score>> {
+    fun getResult(): Map<Player, List<Score>> {
         val dealer = getDealer()
-        val gamer = getGamers()
+        val gamers = getGamers()
         requireNotNull(dealer)
-        return dealer.judgeResult(gamer, rule)
+        return dealer.judge(gamers)
     }
 
     private fun getDealer(): Player? {

@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.game.Score
 
 abstract class BlackJackPlayer(
     val profile: Profile,
@@ -30,4 +31,6 @@ abstract class BlackJackPlayer(
     abstract override fun turnOn(): Player
 
     abstract override fun canReceiveCard(): Boolean
+
+    abstract override fun judge(players: List<Player>): Map<Player, List<Score>>
 }

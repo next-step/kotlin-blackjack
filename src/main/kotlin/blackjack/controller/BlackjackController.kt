@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.card.Deck
 import blackjack.domain.game.BlackJackGame
-import blackjack.domain.game.Rule
 import blackjack.domain.game.Turn
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
@@ -19,8 +18,9 @@ class BlackjackController() {
 
     fun start() {
         val blackJackGame = BlackJackGame(Players.of(InputView.askGamerNames()), Deck())
-        val players = blackJackGame.play(isPlayerTurnOff, OutputView::printInitPhase, OutputView::printPlayingPhase)
-        val result = players.checkResult(Rule())
+        blackJackGame.play(isPlayerTurnOff, OutputView::printInitPhase)
+        OutputView.printPlayingPhase(blackJackGame.players)
+        val result = blackJackGame.getResult()
         OutputView.printGameResult(result)
     }
 
