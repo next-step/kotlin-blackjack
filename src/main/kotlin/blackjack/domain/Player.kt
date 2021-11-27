@@ -17,6 +17,9 @@ open class Player(val name: String) {
     open val canTakeCards: Boolean
         get() = getTotalScore() < BLACKJACK_NUMBER
 
+    val isBusted: Boolean
+        get() = getTotalScore() > BLACKJACK_NUMBER
+
     fun takeCards(cards: List<Card>) {
         if (!canTakeCards) {
             throw ScoreOverflowException(SCORE_OVERFLOW_ERROR_MSG)
@@ -44,6 +47,12 @@ open class Player(val name: String) {
 
     protected open fun getAceCardScore(totalScore: Int): Int {
         return if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
+    }
+
+    open infix fun wins(player: Player): Boolean {
+        if (isBusted) return false
+        if (player.isBusted) return true
+        return getTotalScore() >= player.getTotalScore()
     }
 
     companion object {
