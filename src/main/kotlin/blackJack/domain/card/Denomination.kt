@@ -1,12 +1,14 @@
 package blackJack.domain.card
 
+import blackJack.domain.card.Signal.Companion.MAX_NUMBER
+
 enum class Denomination(val value: String, val orderBy: Int) : CardScore {
     ACE("A", 1) {
         override fun score(sum: Int): Int =
-            if (sum + 11 > 21) {
-                1
+            if (sum + DOWN_SCORE_ACE > MAX_NUMBER) {
+                TOP_SCORE_ACE
             } else {
-                11
+                DOWN_SCORE_ACE
             }
     },
     TWO("2", 2) {
@@ -45,4 +47,9 @@ enum class Denomination(val value: String, val orderBy: Int) : CardScore {
     KING("K", 13) {
         override fun score(sum: Int): Int = 10
     };
+
+    companion object {
+        private const val DOWN_SCORE_ACE = 11
+        private const val TOP_SCORE_ACE = 1
+    }
 }

@@ -1,5 +1,7 @@
 package blackJack.domain.card
 
+import blackJack.domain.card.Signal.Companion.MAX_NUMBER
+
 class Cards(private val cards: List<Card>) : List<Card> by cards {
 
     operator fun plus(card: Card): Cards {
@@ -28,7 +30,7 @@ class Cards(private val cards: List<Card>) : List<Card> by cards {
                 }
             }
 
-    private fun isAce(sum: Int) = sum > 21 && cards.map { it.denomination }.contains(Denomination.ACE)
+    private fun isAce(sum: Int) = sum > MAX_NUMBER && cards.map { it.denomination }.contains(Denomination.ACE)
 
     fun drawRandomCard() = cards.random()
 
