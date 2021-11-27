@@ -33,8 +33,6 @@ class Participant(
             val amount = print.invoke(it)
             it.inputBetMoney(amount?.toDoubleOrNull())
         }
-        // FIXME  잘못된 부분
-        // dealer.inputBetMoney(persons.sumOf { it.getBetAmount() })
     }
 
     fun setGameResult(): GameResult {
@@ -57,10 +55,6 @@ class Participant(
     fun isTakeMoreCard(ask: (Dealer) -> Unit) {
         if (!dealer.canTakeMoreCard()) return
         ask.invoke(dealer)
-    }
-
-    fun print(print: (Player) -> Unit) {
-        getAllPerson().forEach(print)
     }
 
     companion object {
