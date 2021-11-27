@@ -9,9 +9,19 @@ enum class WinDrawLose {
     companion object {
         fun from(player: Player, dealer: Dealer): WinDrawLose =
             when {
-                dealer.isBustPlayer() || !player.isBustPlayer() && player.getScore() > dealer.getScore() -> WIN
-                player.getScore() == dealer.getScore() -> DRAW
-                else -> LOSE
+                dealer.isBustPlayer() || playerScoreGraterThenDealerScore(player, dealer) -> WIN
+                playerScoreEqualDealerScore(player, dealer) -> DRAW
+                player.isBustPlayer() || dealerScoreGraterThenPlayerScore(dealer, player) -> LOSE
+                else -> DRAW
             }
+
+        private fun playerScoreGraterThenDealerScore(player: Player, dealer: Dealer) =
+            !player.isBustPlayer() && player.getScore() > dealer.getScore()
+
+        private fun playerScoreEqualDealerScore(player: Player, dealer: Dealer) =
+            player.getScore() == dealer.getScore()
+
+        private fun dealerScoreGraterThenPlayerScore(dealer: Dealer, player: Player) =
+            !dealer.isBustPlayer() && dealer.getScore() > player.getScore()
     }
 }
