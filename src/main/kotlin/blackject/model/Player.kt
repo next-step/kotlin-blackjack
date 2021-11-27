@@ -26,9 +26,8 @@ open class Player(
         cards.addCard(newCards)
     }
 
-    fun giveCards(cardCount: Int, print: (Player) -> Unit) {
+    fun giveCards(cardCount: Int) {
         giveCard(CardsDeck.takeCard(cardCount))
-        print.invoke(this)
     }
 
     fun isBlackJack(): Boolean = cards.isBlackjack(getScore())

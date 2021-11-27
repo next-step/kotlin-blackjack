@@ -27,7 +27,8 @@ class BlackjackController(
     }
 
     private fun printCardListOfPerson(persons: Participant) {
-        persons.giveCards(CardsDeck.NUMBER_INIT_CARD) {
+        persons.getAllPerson().forEach {
+            it.giveCards(CardsDeck.NUMBER_INIT_CARD)
             OutputView.printCardListOfPerson(it)
         }
         println()
@@ -47,10 +48,8 @@ class BlackjackController(
         }
 
         persons.isTakeMoreCard { dealer ->
-            dealer.giveCards(CardsDeck.NUMBER_ONE_TIME) {
-                OutputView.printAddedDealerCard()
-                return@giveCards
-            }
+            dealer.giveCards(CardsDeck.NUMBER_ONE_TIME)
+            OutputView.printAddedDealerCard()
         }
     }
 
@@ -72,9 +71,8 @@ class BlackjackController(
     private fun askMoreCard(person: Player) {
         if (!person.canTakeMoreCard()) return
         if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
-        person.giveCards(CardsDeck.NUMBER_ONE_TIME) {
-            OutputView.printCardListOfPerson(it)
-        }
+        person.giveCards(CardsDeck.NUMBER_ONE_TIME)
+        OutputView.printCardListOfPerson(person)
         askMoreCard(person)
     }
 
