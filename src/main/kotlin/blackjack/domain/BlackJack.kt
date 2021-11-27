@@ -2,6 +2,7 @@ package blackjack.domain
 
 class BlackJack(val players: List<Player>) {
     val deck = CardDeck()
+    val dealer = Dealer()
 
     init {
         require(players.size >= MINIMUM_NUMBER_OF_PLAYERS) { NOT_ENOUGH_PLAYERS_ERROR_MSG }
@@ -11,6 +12,16 @@ class BlackJack(val players: List<Player>) {
     }
 
     private fun drawInitialCards() {
+        drawInitialDealerCards()
+        drawInitialPlayerCards()
+    }
+
+    private fun drawInitialDealerCards() {
+        val cards = deck.drawMany(INITIAL_DRAW_COUNT)
+        dealer.takeCards(cards)
+    }
+
+    private fun drawInitialPlayerCards() {
         players.forEach {
             val cards = deck.drawMany(INITIAL_DRAW_COUNT)
             it.takeCards(cards)

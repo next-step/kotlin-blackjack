@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.exceptions.ScoreOverflowException
 import blackjack.domain.extensions.deepCopy
 
-class Player(val name: String) {
+open class Player(val name: String) {
 
     init {
         require(!name.isNullOrBlank()) { INVALID_NAME_ERROR_MSG }
@@ -15,7 +15,7 @@ class Player(val name: String) {
     val cards: List<Card>
         get() = (normalCards + aceCards + courtCards).deepCopy()
 
-    val canTakeCards: Boolean
+    open val canTakeCards: Boolean
         get() = getTotalScore() < BLACKJACK_NUMBER
 
     fun takeCards(cards: List<Card>) {

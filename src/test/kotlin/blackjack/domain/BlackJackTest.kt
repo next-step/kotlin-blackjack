@@ -7,7 +7,7 @@ import java.lang.IllegalArgumentException
 
 class BlackJackTest {
     @Test
-    fun `블랙잭은 플레이어와 카드 덱을 가진다`() {
+    fun `블랙잭은 딜러, 플레이어와 카드 덱을 가진다`() {
         val blackJack = BlackJack(
             listOf(
                 Player("player1"),
@@ -15,8 +15,11 @@ class BlackJackTest {
             )
         )
 
-        assertThat(blackJack.players.size).isEqualTo(2)
-        assertThat(blackJack.deck.cards.size).isEqualTo(48)
+        assertThat(blackJack.deck).isInstanceOf(CardDeck::class.java)
+        assertThat(blackJack.dealer).isInstanceOf(Dealer::class.java)
+        blackJack.players.forEach {
+            assertThat(it).isInstanceOf(Player::class.java)
+        }
     }
 
     @Test
@@ -39,7 +42,7 @@ class BlackJackTest {
     }
 
     @Test
-    fun `게임을 시작하면 각 플레이어에게 두 장의 카드를 지급한다`() {
+    fun `게임을 시작하면 각 플레이어와 딜러에게 두 장의 카드를 지급한다`() {
         val blackJack = BlackJack(
             listOf(
                 Player("player1"),
@@ -47,7 +50,8 @@ class BlackJackTest {
             )
         )
 
-        assertThat(blackJack.deck.cards.size).isEqualTo(48)
+        assertThat(blackJack.deck.cards.size).isEqualTo(46)
+        assertThat(blackJack.dealer.cards.size).isEqualTo(2)
         assertThat(blackJack.players).allMatch { it.cards.size == 2 }
     }
 
