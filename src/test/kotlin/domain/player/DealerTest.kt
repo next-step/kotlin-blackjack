@@ -4,6 +4,7 @@ import domain.card.CardGenerator
 import domain.card.Denomination
 import domain.card.MockedCardGenerator
 import domain.card.PlayingCard
+import domain.card.PlayingCards
 import domain.card.Suit
 import exception.IllegalDrawException
 import org.assertj.core.api.Assertions.assertThat
@@ -34,20 +35,14 @@ internal class DealerTest {
     @Test
     fun drawable() {
         val expectedScore = 16
-        val dealerCards = mutableListOf(
+        val dealerCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
             PlayingCard.of(Denomination.ACE, Suit.HEARTS),
             PlayingCard.of(Denomination.ACE, Suit.SPADES),
             PlayingCard.of(Denomination.TWO, Suit.CLUBS)
         )
-        val cardGenerator = object : CardGenerator {
-            override fun getCard(): PlayingCard = dealerCards.removeFirst()
-        }
-        val dealer = Dealer(cardGenerator)
-        while (dealerCards.isNotEmpty()) {
-            dealer.play(true, cardGenerator)
-        }
+        val dealer = Dealer(PlayingCards(dealerCards))
         assertAll(
             { assertThat(dealer.isDrawable()).isTrue },
             { assertThat(dealer.score()).isEqualTo(expectedScore) }
@@ -58,7 +53,7 @@ internal class DealerTest {
     @Test
     fun notDrawable() {
         val expectedScore = 18
-        val dealerCards = mutableListOf(
+        val dealerCards = listOf(
             PlayingCard.of(Denomination.ACE, Suit.CLUBS),
             PlayingCard.of(Denomination.ACE, Suit.DIAMONDS),
             PlayingCard.of(Denomination.ACE, Suit.HEARTS),
@@ -66,13 +61,7 @@ internal class DealerTest {
             PlayingCard.of(Denomination.TWO, Suit.CLUBS),
             PlayingCard.of(Denomination.TWO, Suit.DIAMONDS)
         )
-        val cardGenerator = object : CardGenerator {
-            override fun getCard(): PlayingCard = dealerCards.removeFirst()
-        }
-        val dealer = Dealer(cardGenerator)
-        while (dealerCards.isNotEmpty()) {
-            dealer.play(true, cardGenerator)
-        }
+        val dealer = Dealer(PlayingCards(dealerCards))
         assertAll(
             { assertThat(dealer.isDrawable()).isFalse },
             { assertThat(dealer.score()).isEqualTo(expectedScore) },

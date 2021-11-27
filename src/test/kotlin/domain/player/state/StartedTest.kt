@@ -1,13 +1,11 @@
 package domain.player.state
 
 import domain.card.Denomination
-import domain.card.MockedCardGenerator
 import domain.card.PlayingCard
 import domain.card.PlayingCards
 import domain.card.Suit
 import exception.IllegalDrawException
 import exception.IllegalEarningRate
-import exception.IllegalPlayerStateException
 import exception.IllegalStayException
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
@@ -27,16 +25,6 @@ internal class StartedTest {
     @BeforeEach
     fun setUp() {
         started = Started(PlayingCards(cardList))
-    }
-
-    @DisplayName("시작할 때는 반드시 두 장의 카드를 받아야 한다.")
-    @ParameterizedTest
-    @ValueSource(ints = [1, 3, 4, 5, 6, 7])
-    fun constructor(size: Int) {
-        val cardGenerator = MockedCardGenerator()
-        val cards = PlayingCards((1..size).map { cardGenerator.getCard() })
-        assertThatExceptionOfType(IllegalPlayerStateException::class.java)
-            .isThrownBy { Started(cards) }
     }
 
     @DisplayName("Started 상태에서는 earningRate 를 알 수 없다.")
