@@ -10,8 +10,9 @@ class Participant(
     val dealer: Dealer,
     val persons: List<Person>,
 ) {
-    fun getAllPerson(): List<Person> = persons.plus(dealer)
+    fun getAllPerson(): List<Player> = persons.plus(dealer)
 
+    fun sumOfAllPersonAmount(): Int = persons.sumOf { it.getBetAmount().toInt() }
     fun sumOfPlusProfit(): Int = persons.filter { it.hasPlusProfit() }.sumOf { it.getProfit() }
 
     fun winnerScore(): Int =
@@ -19,19 +20,20 @@ class Participant(
             .map { it.getScore() }
             .filter { it <= Cards.BLACK_JACK_SUM }.maxOrNull()!!
 
-    fun giveCards(cardCount: Int, print: (Person) -> Unit) {
+    fun giveCards(cardCount: Int, print: (Player) -> Unit) {
         persons.plus(dealer).forEach {
             it.giveCard(CardsDeck.takeCard(cardCount))
             print.invoke(it)
         }
     }
 
-    fun inputBetAmountByPerson(print: (Person) -> String?) {
+    fun inputBetAmountByPerson(print: (Player) -> String?) {
         persons.forEach {
             val amount = print.invoke(it)
             it.inputBetMoney(amount?.toDoubleOrNull())
         }
-        dealer.inputBetMoney(persons.sumOf { it.getBetAmount() })
+        // FIXME  잘못된 부분
+        // dealer.inputBetMoney(persons.sumOf { it.getBetAmount() })
     }
 
     fun setGameResult(): GameResult {
@@ -40,14 +42,14 @@ class Participant(
         }
 
         return GameResult(
-            hashMapOf<Person, Int>().apply {
+            hashMapOf<Player, Int>().apply {
                 putAll(persons.associateWith { it.getProfit() })
-                put(dealer, dealer.calculateProfit(persons.sumOf { it.getBetAmount().toInt() }, sumOfPlusProfit()))
+                put(dealer, dealer.calculateProfit(sumOfAllPersonAmount(), sumOfPlusProfit()))
             }
         )
     }
 
-    fun askMoreCard(ask: (Person) -> Unit) {
+    fun askMoreCard(ask: (Player) -> Unit) {
         persons.forEach { ask.invoke(it) }
     }
 
@@ -56,7 +58,7 @@ class Participant(
         ask.invoke(dealer)
     }
 
-    fun print(print: (Person) -> Unit) {
+    fun print(print: (Player) -> Unit) {
         getAllPerson().forEach(print)
     }
 

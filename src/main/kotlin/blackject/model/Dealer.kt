@@ -1,12 +1,8 @@
 package blackject.model
 
-import blackject.model.card.Cards
+class Dealer: Player(NAME) {
 
-class Dealer(
-    cards: Cards = Cards()
-) : Person(NAME, cards) {
-
-    override fun isPersonType(): PersonType = PersonType.DEALER
+    override fun isDealer(): Boolean = true
 
     override fun canTakeMoreCard(): Boolean {
         return MAX_NUMBER_DEALER >= cards.getResultNumber()

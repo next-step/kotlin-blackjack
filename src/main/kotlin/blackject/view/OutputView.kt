@@ -4,6 +4,7 @@ import blackject.model.Dealer
 import blackject.model.GameResult
 import blackject.model.Participant
 import blackject.model.Person
+import blackject.model.Player
 
 object OutputView {
     fun printGivenCard(persons: Participant, initCardNumber: Int) {
@@ -11,7 +12,7 @@ object OutputView {
         println("${names}에게 ${initCardNumber}장의 나누었습니다.")
     }
 
-    fun printCardListOfPerson(person: Person) {
+    fun printCardListOfPerson(person: Player) {
         println("${person.name}카드: ${person.cards.cardList.joinToString { it.cardName }}")
     }
 
@@ -19,7 +20,7 @@ object OutputView {
         println("딜러는 ${Dealer.MAX_NUMBER_DEALER}이하라 한장의 카드를 더 받았습니다.\n")
     }
 
-    fun gameResult(person: Person) {
+    fun gameResult(person: Player) {
         println(
             "${person.name}카드: ${person.cards.cardList.joinToString { it.cardName }} - 결과: ${
             person.cards.getResultNumber()}"

@@ -1,29 +1,47 @@
 package blackject.model
 
+import blackject.model.card.Card
+import blackject.model.card.Cards
+import blackject.model.card.CardsDeck
+
 /**
  * 블랙잭 게임에 참가하는 플레이어
  * */
 open class Player(
+    val name: String,
+    val cards: Cards = Cards(),
     private var _result: ResultType? = null,
-    private var _amount: Amount? = null,
 ) {
+    open fun isDealer(): Boolean = false
 
-    val amount: Amount
-        get() = _amount ?: Amount(0.0)
+    open fun getScore(): Int {
+        return cards.getResultNumber()
+    }
+
+    open fun canTakeMoreCard(): Boolean {
+        return Cards.BLACK_JACK_SUM > cards.getResultNumber()
+    }
+
+    open fun giveCard(newCards: List<Card>) {
+        cards.addCard(newCards)
+    }
+
+    fun giveCards(cardCount: Int, print: (Player) -> Unit) {
+        giveCard(CardsDeck.takeCard(cardCount))
+        print.invoke(this)
+    }
+
+    fun isBlackJack(): Boolean = cards.isBlackjack(getScore())
+    fun isBust(): Boolean = getScore() > Cards.BLACK_JACK_SUM
+
+    fun hasPlusProfit(): Boolean = EarningRate.isPlusProfit(result.earningRate)
 
     val result: ResultType
         get() = _result ?: ResultType.Lose
 
-    open fun getProfit(): Int {
-        return result.profit(amount).toInt()
-    }
-
-    open fun inputBetMoney(money: Double?) {
-        require(money != null)
-        _amount = Amount(money)
-    }
-
     fun changeResultType(result: ResultType) {
         this._result = result
     }
+
+    open fun calculateGameResult(winScore: Int? = null, isDealerBust: Boolean, isDealerBlackJack: Boolean) {}
 }

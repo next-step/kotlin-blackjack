@@ -1,6 +1,6 @@
 package blackject.view
 
-import blackject.model.Person
+import blackject.model.Player
 
 object InputView {
 
@@ -14,7 +14,7 @@ object InputView {
         return readLine()
     }
 
-    fun inputBetAmount(person: Person): String? {
+    fun inputBetAmount(person: Player): String? {
         println("${person.name}의 배팅 금액은?")
         return readLine()
     }

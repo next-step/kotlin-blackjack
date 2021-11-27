@@ -1,7 +1,7 @@
 package blackject.controller
 
 import blackject.model.Participant
-import blackject.model.Person
+import blackject.model.Player
 import blackject.model.card.CardsDeck
 import blackject.view.InputView
 import blackject.view.OutputView
@@ -68,7 +68,7 @@ class BlackjackController(
         }
     }
 
-    private fun askMoreCard(person: Person) {
+    private fun askMoreCard(person: Player) {
         if (!person.canTakeMoreCard()) return
         if (!isAnswerYes(InputView.inputAnswerMoreCard(person.name))) return
         person.giveCards(CardsDeck.NUMBER_ONE_TIME) {
