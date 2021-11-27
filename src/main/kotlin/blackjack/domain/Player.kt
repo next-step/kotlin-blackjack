@@ -10,10 +10,9 @@ open class Player(val name: String) {
     }
 
     private val normalCards: MutableList<Card> = mutableListOf()
-    private val courtCards: MutableList<Card> = mutableListOf()
     private val aceCards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
-        get() = (normalCards + aceCards + courtCards).deepCopy()
+        get() = (normalCards + aceCards).deepCopy()
 
     open val canTakeCards: Boolean
         get() = getTotalScore() < BLACKJACK_NUMBER
@@ -24,9 +23,8 @@ open class Player(val name: String) {
         }
 
         cards.forEach {
-            when {
-                it.number.value == ACE_NUMBER -> aceCards.add(it)
-                it.number.value > MAX_NUMBER -> courtCards.add(it)
+            when (it.number.value) {
+                ACE_NUMBER -> aceCards.add(it)
                 else -> normalCards.add(it)
             }
         }
@@ -35,7 +33,6 @@ open class Player(val name: String) {
     fun getTotalScore(): Int {
         var totalScore = 0
         normalCards.forEach { totalScore += it.number.value }
-        courtCards.forEach { _ -> totalScore += MAX_NUMBER }
         aceCards.forEach { _ ->
             totalScore += if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
         }
@@ -43,10 +40,9 @@ open class Player(val name: String) {
     }
 
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        protected const val BLACKJACK_NUMBER = 21
         private const val ACE_NUMBER = 1
         private const val ACE_NUMBER_ALT = 11
-        private const val MAX_NUMBER = 10
         private const val INVALID_NAME_ERROR_MSG = "잘못된 이름입니다."
         private const val SCORE_OVERFLOW_ERROR_MSG = "이미 최대 점수를 넘어섰습니다. 카드를 더이상 받을 수 없습니다."
     }
