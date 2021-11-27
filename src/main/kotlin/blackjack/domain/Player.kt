@@ -33,6 +33,10 @@ open class Player(val name: String) {
         }
     }
 
+    fun takeCards(vararg card: Card) {
+        takeCards(card.toList())
+    }
+
     fun getTotalScore(): Int {
         var totalScore = getNormalCardsScoreSum()
         aceCards.forEach { _ ->

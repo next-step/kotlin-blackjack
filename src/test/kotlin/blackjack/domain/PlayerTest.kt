@@ -20,7 +20,7 @@ class PlayerTest {
     fun `플레이어는 카드를 받을 수 있다`() {
         val player = Player(name = "che1")
 
-        player.takeCards(listOf(Card(CardSymbol.CLOVER, CardNumber.ACE)))
+        player.takeCards(Card(CardSymbol.CLOVER, CardNumber.ACE))
 
         assertThat(player.cards).isEqualTo(listOf(Card(CardSymbol.CLOVER, CardNumber.ACE)))
     }
@@ -29,18 +29,14 @@ class PlayerTest {
     fun `최대 점수를 넘어서면 ScoreOverflowException 을 일으킨다`() {
         val player = Player(name = "che1")
         player.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.JACK),
-                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
-                Card(CardSymbol.CLOVER, CardNumber.ACE)
-            )
+            Card(CardSymbol.CLOVER, CardNumber.JACK),
+            Card(CardSymbol.CLOVER, CardNumber.QUEEN),
+            Card(CardSymbol.CLOVER, CardNumber.ACE)
         )
 
         assertThrows<ScoreOverflowException> {
             player.takeCards(
-                listOf(
-                    Card(CardSymbol.CLOVER, CardNumber.ACE)
-                )
+                Card(CardSymbol.CLOVER, CardNumber.ACE)
             )
         }
     }
@@ -50,11 +46,9 @@ class PlayerTest {
         val player = Player(name = "che1")
 
         player.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.TWO),
-                Card(CardSymbol.CLOVER, CardNumber.THREE),
-                Card(CardSymbol.CLOVER, CardNumber.FOUR)
-            )
+            Card(CardSymbol.CLOVER, CardNumber.TWO),
+            Card(CardSymbol.CLOVER, CardNumber.THREE),
+            Card(CardSymbol.CLOVER, CardNumber.FOUR)
         )
 
         assertThat(player.getTotalScore()).isEqualTo(9)
@@ -64,7 +58,7 @@ class PlayerTest {
     @EnumSource(value = CardNumber::class, names = ["JACK", "QUEEN", "KING"])
     fun `점수 계산 시 코트 카드는 10점으로 계산한다`(cardNumber: CardNumber) {
         val player = Player("test1")
-        player.takeCards(listOf(Card(CardSymbol.CLOVER, cardNumber)))
+        player.takeCards(Card(CardSymbol.CLOVER, cardNumber))
 
         assertThat(player.getTotalScore()).isEqualTo(10)
     }
@@ -86,11 +80,9 @@ class PlayerTest {
     fun `21점을 넘으면 버스트 상태가 된다`() {
         val player = Player("player")
         player.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING),
-                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
-                Card(CardSymbol.CLOVER, CardNumber.TWO)
-            )
+            Card(CardSymbol.CLOVER, CardNumber.KING),
+            Card(CardSymbol.CLOVER, CardNumber.QUEEN),
+            Card(CardSymbol.CLOVER, CardNumber.TWO)
         )
 
         assertThat(player.isBusted).isEqualTo(true)
@@ -99,18 +91,10 @@ class PlayerTest {
     @Test
     fun `상대 플레이어의 점수보다 높으면 승리한다`() {
         val player1 = Player("player1")
-        player1.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING)
-            )
-        )
+        player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
         val player2 = Player("player2")
-        player2.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.NINE)
-            )
-        )
+        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.NINE))
 
         assertThat(player1 wins player2).isEqualTo(true)
     }
@@ -118,18 +102,10 @@ class PlayerTest {
     @Test
     fun `상대 플레이어의 점수와 같으면 둘 다 승리한다`() {
         val player1 = Player("player1")
-        player1.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING)
-            )
-        )
+        player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
         val player2 = Player("player2")
-        player2.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.QUEEN)
-            )
-        )
+        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.QUEEN))
 
         assertThat(player1 wins player2).isEqualTo(true)
         assertThat(player2 wins player1).isEqualTo(true)
@@ -138,18 +114,10 @@ class PlayerTest {
     @Test
     fun `상대 플레이어의 점수보다 낮으면 패한다`() {
         val player1 = Player("player1")
-        player1.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.NINE)
-            )
-        )
+        player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.NINE))
 
         val player2 = Player("player2")
-        player2.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING)
-            )
-        )
+        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
         assertThat(player1 wins player2).isEqualTo(false)
     }
@@ -158,19 +126,13 @@ class PlayerTest {
     fun `버스트인 경우 패한다`() {
         val player1 = Player("player1")
         player1.takeCards(
-            listOf(
-                Card(CardSymbol.SPADE, CardNumber.KING),
-                Card(CardSymbol.SPADE, CardNumber.QUEEN),
-                Card(CardSymbol.SPADE, CardNumber.TWO),
-            )
+            Card(CardSymbol.SPADE, CardNumber.KING),
+            Card(CardSymbol.SPADE, CardNumber.QUEEN),
+            Card(CardSymbol.SPADE, CardNumber.TWO),
         )
 
         val player2 = Player("player2")
-        player2.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING)
-            )
-        )
+        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
         assertThat(player1 wins player2).isEqualTo(false)
     }
@@ -179,18 +141,14 @@ class PlayerTest {
     fun `상대 플레이어가 버스트인 경우 승리한다`() {
         val player1 = Player("player1")
         player1.takeCards(
-            listOf(
-                Card(CardSymbol.SPADE, CardNumber.KING),
-            )
+            Card(CardSymbol.SPADE, CardNumber.KING),
         )
 
         val player2 = Player("player2")
         player2.takeCards(
-            listOf(
-                Card(CardSymbol.CLOVER, CardNumber.KING),
-                Card(CardSymbol.CLOVER, CardNumber.QUEEN),
-                Card(CardSymbol.CLOVER, CardNumber.TWO),
-            )
+            Card(CardSymbol.CLOVER, CardNumber.KING),
+            Card(CardSymbol.CLOVER, CardNumber.QUEEN),
+            Card(CardSymbol.CLOVER, CardNumber.TWO),
         )
 
         assertThat(player1 wins player2).isEqualTo(true)
