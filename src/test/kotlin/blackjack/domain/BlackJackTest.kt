@@ -2,52 +2,13 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 
 class BlackJackTest {
     @Test
-    fun `블랙잭은 딜러, 플레이어와 카드 덱을 가진다`() {
-        val blackJack = BlackJack(
-            listOf(
-                Player("player1"),
-                Player("player2")
-            )
-        )
-
-        assertThat(blackJack.deck).isInstanceOf(CardDeck::class.java)
-        assertThat(blackJack.dealer).isInstanceOf(Dealer::class.java)
-        blackJack.players.forEach {
-            assertThat(it).isInstanceOf(Player::class.java)
-        }
-    }
-
-    @Test
-    fun `동일한 이름의 플레이어를 받으면 에러를 일으킨다`() {
-        assertThrows<IllegalArgumentException> {
-            BlackJack(
-                listOf(
-                    Player("player1"),
-                    Player("player1")
-                )
-            )
-        }
-    }
-
-    @Test
-    fun `최소 두 명 이상의 플레이어를 받지 않으면 에러를 일으킨다`() {
-        assertThrows<IllegalArgumentException> {
-            BlackJack(listOf(Player("player1")))
-        }
-    }
-
-    @Test
     fun `게임을 시작하면 각 플레이어와 딜러에게 두 장의 카드를 지급한다`() {
         val blackJack = BlackJack(
-            listOf(
-                Player("player1"),
-                Player("player2")
-            )
+            Player("player1"),
+            Player("player2")
         )
 
         assertThat(blackJack.deck.cards.size).isEqualTo(46)
