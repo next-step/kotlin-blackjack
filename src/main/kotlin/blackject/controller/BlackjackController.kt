@@ -34,14 +34,15 @@ class BlackjackController(
     }
 
     private fun inputBetAmount(persons: Participant) {
-        persons.inputBetAmountByPerson {
-            InputView.inputBetAmount(it)
+        persons.getPerson().forEach {
+            val amount = InputView.inputBetAmount(it)
+            it.inputBetMoney(amount?.toDoubleOrNull())
         }
         println()
     }
 
     private fun giveMoreCard(persons: Participant) {
-        persons.askMoreCard {
+        persons.getPerson().forEach {
             askMoreCard(it)
         }
 

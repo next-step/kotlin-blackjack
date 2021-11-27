@@ -13,10 +13,10 @@ class Participant(
     fun getAllPerson(): List<Player> = persons.plus(dealer)
     fun getPerson(): List<Person> = persons
 
-    fun sumOfAllPersonAmount(): Int = persons.sumOf { it.getBetAmount().toInt() }
-    fun sumOfPlusProfit(): Int = persons.filter { it.hasPlusProfit() }.sumOf { it.getProfit() }
+    private fun sumOfAllPersonAmount(): Int = persons.sumOf { it.getBetAmount().toInt() }
+    private fun sumOfPlusProfit(): Int = persons.filter { it.hasPlusProfit() }.sumOf { it.getProfit() }
 
-    fun winnerScore(): Int =
+    private fun winnerScore(): Int =
         getAllPerson()
             .map { it.getScore() }
             .filter { it <= Cards.BLACK_JACK_SUM }.maxOrNull()!!
@@ -25,13 +25,6 @@ class Participant(
         persons.plus(dealer).forEach {
             it.giveCard(CardsDeck.takeCard(cardCount))
             print.invoke(it)
-        }
-    }
-
-    fun inputBetAmountByPerson(print: (Player) -> String?) {
-        persons.forEach {
-            val amount = print.invoke(it)
-            it.inputBetMoney(amount?.toDoubleOrNull())
         }
     }
 
@@ -46,10 +39,6 @@ class Participant(
                 put(dealer, dealer.calculateProfit(sumOfAllPersonAmount(), sumOfPlusProfit()))
             }
         )
-    }
-
-    fun askMoreCard(ask: (Player) -> Unit) {
-        persons.forEach { ask.invoke(it) }
     }
 
     fun isTakeMoreCard(ask: (Dealer) -> Unit) {
