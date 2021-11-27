@@ -5,11 +5,11 @@ package blackject.model
  * */
 open class Player(
     private var _result: ResultType? = null,
-    private var _amount: Amount = Amount(0.0)
+    private var _amount: Amount? = null,
 ) {
 
     val amount: Amount
-        get() = _amount
+        get() = _amount ?: Amount(0.0)
 
     val result: ResultType
         get() = _result ?: ResultType.Lose

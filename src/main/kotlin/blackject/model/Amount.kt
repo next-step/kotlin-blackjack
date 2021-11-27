@@ -3,7 +3,7 @@ package blackject.model
 /**
  * 배팅 금액 관리 클래스
  * */
-data class Amount(var value: Double = MIN_AMOUNT) {
+data class Amount(val value: Double = MIN_AMOUNT) {
     init {
         require(value >= MIN_AMOUNT)
     }
