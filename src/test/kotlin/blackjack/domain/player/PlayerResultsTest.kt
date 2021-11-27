@@ -11,7 +11,7 @@ internal class PlayerResultsTest {
         val profile2 = Profile.from(Name("player2"))
         val givenGamer1 = Gamer(profile1)
         val givenGamer2 = Gamer(profile2)
-        val players = Players(listOf(givenGamer1, givenGamer2))
+        val players = Players.from(listOf(givenGamer1, givenGamer2, Dealer.of()))
 
         assertThat(PlayerResults(players, givenGamer1)).isNotNull
     }
