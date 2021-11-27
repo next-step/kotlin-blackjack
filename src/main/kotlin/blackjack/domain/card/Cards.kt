@@ -25,6 +25,10 @@ data class Cards internal constructor(val cards: List<Card>) : List<Card> by car
         return getTotalPoint()
     }
 
+    fun isBlackJack(): Boolean {
+        return cards.size == 2 && getHighestPoint() == 21
+    }
+
     private fun getTotalPoint(): Int {
         return cards.fold(0) { acc, card ->
             acc + card.denomination.point.first
