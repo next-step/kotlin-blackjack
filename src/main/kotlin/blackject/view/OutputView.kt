@@ -3,7 +3,6 @@ package blackject.view
 import blackject.model.Dealer
 import blackject.model.GameResult
 import blackject.model.Participant
-import blackject.model.Person
 import blackject.model.Player
 
 object OutputView {

@@ -17,11 +17,11 @@ value class Cards(
     }
 
     fun getResultNumber(): Int {
-        val cardTotal = getTotalMinCount(_cardList)
+        val cardTotal = sum(_cardList)
         val count = _cardList.filter { it.number == EXCEPT_NUMBER }.size
         if (count == 0) return cardTotal
 
-        val exceptRestNumber = CardNumber.getNumberMaxValue(EXCEPT_NUMBER) - CardNumber.getNumberMinValue(EXCEPT_NUMBER)
+        val exceptRestNumber = CardNumber.getAceMaxNumber() - CardNumber.number(EXCEPT_NUMBER)
         if ((BLACK_JACK_SUM - cardTotal) < exceptRestNumber) return cardTotal
         return cardTotal.plus(exceptRestNumber)
     }
@@ -32,14 +32,9 @@ value class Cards(
 
     companion object {
         const val BLACK_JACK_SUM = 21
-        fun getTotalMinCount(cardList: List<Card>): Int =
+        fun sum(cardList: List<Card>): Int =
             cardList
                 .map { it.number }
-                .sumOf { CardNumber.getNumberMinValue(it) }
-
-        fun getTotalMaxCount(cardList: List<Card>): Int =
-            cardList
-                .map { it.number }
-                .sumOf { CardNumber.getNumberMaxValue(it) }
+                .sumOf { CardNumber.number(it) }
     }
 }

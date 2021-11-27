@@ -37,7 +37,7 @@ class CardsTest {
         )
         val expectedValue = 10
 
-        val sum = Cards.getTotalMinCount(cards)
+        val sum = Cards.sum(cards)
 
         assertThat(sum).isEqualTo(expectedValue)
     }
@@ -52,7 +52,8 @@ class CardsTest {
         )
         val expectedValue = 20
 
-        val sum = Cards.getTotalMaxCount(cards)
+        var sum = Cards.sum(cards)
+        sum = sum + CardNumber.getAceMaxNumber() - CardNumber.number(CardNumber.ACE)
 
         assertThat(sum).isEqualTo(expectedValue)
     }

@@ -33,7 +33,8 @@ enum class CardNumber(
             return (KING.numberName == numberName) || (QUEEN.numberName == numberName) || (JACK.numberName == numberName)
         }
 
-        fun getNumberMinValue(number: CardNumber): Int = number.number
-        fun getNumberMaxValue(card: CardNumber): Int = if (card == EXCEPT_NUMBER) EXCEPT_NUMBER.number + PLUS_INT_ACE else card.number
+        fun number(number: CardNumber): Int = number.number
+
+        fun getAceMaxNumber(): Int = ACE.number.plus(PLUS_INT_ACE)
     }
 }

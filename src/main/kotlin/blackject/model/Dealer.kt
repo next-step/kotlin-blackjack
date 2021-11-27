@@ -1,6 +1,6 @@
 package blackject.model
 
-class Dealer: Player(NAME) {
+class Dealer : Player(NAME) {
 
     override fun isDealer(): Boolean = true
 

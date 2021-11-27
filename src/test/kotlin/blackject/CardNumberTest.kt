@@ -13,7 +13,7 @@ class CardNumberTest {
     @ParameterizedTest
     @DisplayName("카드 숫자 별 값 비교하기")
     fun `check card number`(card: CardNumber) {
-        val cardNumber = CardNumber.getNumberMinValue(card)
+        val cardNumber = CardNumber.number(card)
 
         Assertions.assertThat(cardNumber).isGreaterThanOrEqualTo(1)
         Assertions.assertThat(cardNumber).isLessThanOrEqualTo(11)
@@ -25,7 +25,7 @@ class CardNumberTest {
         val king = CardNumber.KING
         val expectedMinNumber = 10
 
-        val number = CardNumber.getNumberMinValue(king)
+        val number = CardNumber.number(king)
 
         Assertions.assertThat(number).isEqualTo(expectedMinNumber)
     }
@@ -36,7 +36,7 @@ class CardNumberTest {
         val king = CardNumber.JACK
         val expectedMinNumber = 10
 
-        val number = CardNumber.getNumberMinValue(king)
+        val number = CardNumber.number(king)
 
         Assertions.assertThat(number).isEqualTo(expectedMinNumber)
     }
@@ -47,7 +47,7 @@ class CardNumberTest {
         val king = CardNumber.QUEEN
         val expectedMinNumber = 10
 
-        val number = CardNumber.getNumberMinValue(king)
+        val number = CardNumber.number(king)
 
         Assertions.assertThat(number).isEqualTo(expectedMinNumber)
     }
