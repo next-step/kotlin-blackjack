@@ -2,7 +2,7 @@ package blackjack.domain.trump
 
 const val MAX_SUM_OF_CARDS: Int = 21
 
-class Cards(val values: List<Card>) {
+class Cards(val values: List<Card> = listOf()) {
 
     fun score(): Int {
         val sum = sumOf()
