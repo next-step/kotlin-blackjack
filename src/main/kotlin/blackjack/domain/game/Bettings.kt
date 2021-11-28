@@ -12,7 +12,7 @@ fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
 data class Bettings private constructor(val bettings: List<Betting>) {
 
     init {
-        require(bettings.count { it.player is Dealer } == 1)
+        require(bettings.count { it.player is Dealer } == DEALER_COUNT)
     }
 
     fun findBetting(player: Player): Betting? {
@@ -55,6 +55,7 @@ data class Bettings private constructor(val bettings: List<Betting>) {
     }
 
     companion object {
+        private const val DEALER_COUNT = 1
 
         fun from(bettings: List<Betting>): Bettings {
             return Bettings(bettings)
