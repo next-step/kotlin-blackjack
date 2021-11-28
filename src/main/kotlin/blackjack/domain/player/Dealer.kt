@@ -46,30 +46,71 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(pro
         var bet = bettings
 
         gamers.forEach {
-            if (it.getHighestPoint() > MAX_SCORE) {
-                result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
-                result[it] = listOf(Score.LOSE)
-                bet = bet.loseGamer(it)
-            }
             val gamerPoint = MAX_SCORE - it.getHighestPoint()
-            if (gamerPoint in 1 until dealerPoint) {
-                result[this] = result.getOrDefault(this, emptyList()) + Score.LOSE
-                result[it] = listOf(Score.WIN)
-                if (!it.hasBlackJack()) {
-                    bet = bet.winGamer(it)
-                }
-            }
-            if (it.hasBlackJack() && !this.hasBlackJack()) {
-                bet = bet.winBlackJack(it)
-            }
-            if (dealerPoint < gamerPoint) {
-                result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
-                result[it] = listOf(Score.LOSE)
-                bet = bet.loseGamer(it)
-            }
+            bet = putIfGamerOverMaxScore(it, result, bet)
+            bet = putIfDealerLose(gamerPoint, dealerPoint, result, it, bet)
+            bet = putIfBlackJack(it, bet)
+            bet = putIfGamerLose(dealerPoint, gamerPoint, result, it, bet)
             putIfDraw(dealerPoint, it, result)
         }
         return GameResult(ScoreResult(result), bet)
+    }
+
+    private fun putIfGamerLose(
+        dealerPoint: Int,
+        gamerPoint: Int,
+        result: MutableMap<Player, List<Score>>,
+        it: Player,
+        bettings: Bettings
+    ): Bettings {
+        var bet = bettings
+        if (dealerPoint < gamerPoint) {
+            result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
+            result[it] = listOf(Score.LOSE)
+            bet = bet.loseGamer(it)
+        }
+        return bet
+    }
+
+    private fun putIfBlackJack(
+        it: Player,
+        bettings: Bettings
+    ): Bettings {
+        var bet = bettings
+        if (it.hasBlackJack() && !this.hasBlackJack()) {
+            bet = bet.winBlackJack(it)
+        }
+        return bet
+    }
+
+    private fun putIfDealerLose(
+        gamerPoint: Int,
+        dealerPoint: Int,
+        result: MutableMap<Player, List<Score>>,
+        it: Player,
+        bettings: Bettings
+    ): Bettings {
+        var bet = bettings
+        if (gamerPoint in 1 until dealerPoint) {
+            result[this] = result.getOrDefault(this, emptyList()) + Score.LOSE
+            result[it] = listOf(Score.WIN)
+            bet = bet.winGamer(it)
+        }
+        return bet
+    }
+
+    private fun putIfGamerOverMaxScore(
+        it: Player,
+        result: MutableMap<Player, List<Score>>,
+        bettings: Bettings
+    ): Bettings {
+        var bet = bettings
+        if (it.getHighestPoint() > MAX_SCORE) {
+            result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
+            result[it] = listOf(Score.LOSE)
+            bet = bet.loseGamer(it)
+        }
+        return bet
     }
 
     private fun setGamerWin(
@@ -95,43 +136,6 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(pro
         if (dealerPoint == gamerPoint) {
             result[this] = result.getOrDefault(this, emptyList()) + Score.DRAW
             result[gamer] = listOf(Score.DRAW)
-        }
-    }
-
-    private fun putIfDealerWin(
-        dealerPoint: Int,
-        gamer: Player,
-        result: MutableMap<Player, List<Score>>
-    ) {
-        val gamerPoint = MAX_SCORE - gamer.getHighestPoint()
-        if (dealerPoint < gamerPoint) {
-            result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
-            result[gamer] = listOf(Score.LOSE)
-        }
-    }
-
-    private fun putIfGamerWin(
-        dealerPoint: Int,
-        gamer: Player,
-        result: MutableMap<Player, List<Score>>
-    ): MutableMap<Player, List<Score>> {
-        val gamerPoint = MAX_SCORE - gamer.getHighestPoint()
-        if (gamerPoint in 1 until dealerPoint) {
-            result[this] = result.getOrDefault(this, emptyList()) + Score.LOSE
-            result[gamer] = listOf(Score.WIN)
-        }
-
-        return result
-    }
-
-    private fun putIfOverMaxScore(
-        gamer: Player,
-        result: MutableMap<Player, List<Score>>
-    ) {
-
-        if (gamer.getHighestPoint() > MAX_SCORE) {
-            result[this] = result.getOrDefault(this, emptyList()) + Score.WIN
-            result[gamer] = listOf(Score.LOSE)
         }
     }
 
