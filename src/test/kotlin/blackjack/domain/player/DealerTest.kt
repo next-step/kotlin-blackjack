@@ -121,8 +121,8 @@ internal class DealerTest {
         val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
 
         assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(-100))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(-100))
+        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(0))
+        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(0))
     }
 
     @Test
@@ -172,8 +172,8 @@ internal class DealerTest {
         val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
 
         assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(-100))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(-100))
+        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(0))
+        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(0))
     }
 
     @Test
