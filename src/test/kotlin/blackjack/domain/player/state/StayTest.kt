@@ -1,9 +1,12 @@
 package blackjack.domain.player.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Score
 import blackjack.domain.card.Suit
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
 import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -54,5 +57,55 @@ internal class StayTest {
         val exception = assertThrows<InvalidDrawException> { minimumStay.draw(extraCard) }
 
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(minimumStay::class.toString()))
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 BlakJack일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(maximumStay.earningsRate(HEART_BLACKJACK)).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 Bust일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(minimumStay.earningsRate(HEART_MINIMUM_BUST)).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신보다 큰 Stay일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(minimumStay.earningsRate(maximumStay)).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신보다 작은 Stay일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(maximumStay.earningsRate(minimumStay)).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신과 동일한 Stay일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(maximumStay.earningsRate(maximumStay)).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 BlakJack일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(maximumStay.profit(HEART_BLACKJACK, Money(10))).isEqualTo(-10.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 Bust일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(minimumStay.profit(HEART_MINIMUM_BUST, Money(10))).isEqualTo(10.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신보다 큰 Stay일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(minimumStay.profit(maximumStay, Money(10))).isEqualTo(-10.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신보다 작은 Stay일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(maximumStay.profit(minimumStay, Money(10))).isEqualTo(10.0)
+    }
+
+    @Test
+    fun `Stay 상태는 상대가 자신과 동일한 Stay일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(maximumStay.profit(maximumStay, Money(10))).isEqualTo(0.0)
     }
 }
