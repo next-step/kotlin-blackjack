@@ -26,8 +26,8 @@ class BlackJackApplication(
 ) {
     fun run() {
         val deck = Deck.initialize(CardsRandomShuffleStrategy)
-        val players = players()
-        val dealer = Dealer()
+        var players = players()
+        var dealer = Dealer()
         val bets = bettingBoard(players)
 
         val readiedPlayers = readiedPlayers(players, deck, ReadyDrawStrategy)
@@ -37,6 +37,8 @@ class BlackJackApplication(
         val endedGamePlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
         val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
         resultView.showEndedPlayers(endedDealer, endedGamePlayers)
+
+
     }
 
     private fun players(): Players =

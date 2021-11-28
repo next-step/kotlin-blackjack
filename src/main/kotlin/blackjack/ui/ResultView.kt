@@ -97,8 +97,8 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val HANDS_INFORMATION = "%s카드: %s"
         private const val HANDS_INFORMATION_AND_SCORE = "%s카드: %s - 결과: %s"
         private const val DEALER_DRAW_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val PLAYERS_MATCH_RESULT_INTRODUCE = "## 최종 승패"
-        private const val PLAYER_MATCH_RESULT = "%s: %s"
+        private const val PLAYERS_PROFIT_RESULT_INTRODUCE = "## 최종 수익"
+        private const val PLAYER_PROFIT_RESULT = "%s: %s"
         private const val MATCH_RESULT = "%s%s "
     }
 }
