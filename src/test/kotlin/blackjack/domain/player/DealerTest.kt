@@ -4,11 +4,13 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.player.name.Name
 import blackjack.domain.player.state.BlackJack
 import blackjack.domain.player.state.Hit
+import blackjack.domain.player.state.MatchResult
 import blackjack.domain.player.state.Ready
 import blackjack.domain.player.state.Stay
-import blackjack.domain.player.state.hands.Hands
+import blackjack.domain.util.PlayerStateTestFixture
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
@@ -39,46 +41,55 @@ internal class DealerTest {
 
     @Test
     fun `처음 뽑은 카드들이 21이면, BlackJack이다`() {
-        val blackJack = BlackJack(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.JACK))
-        )
-        val dealer = Dealer(playerState = blackJack)
+        val dealer = Dealer()
+            .draw(Deck.initialize { it }) {
+                listOf(
+                    Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK))
+            }
 
-        assertThat(dealer.playerState is BlackJack).isTrue
+        assertThat(dealer.playerState).isExactlyInstanceOf(BlackJack::class.java)
     }
 
     @Test
     fun `처음 뽑은 카드들이 16이하면, Hit이다`() {
-        val hit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TWO))
-        )
-        val dealer = Dealer(playerState = hit)
+        val dealer = Dealer()
+            .draw(Deck.initialize { it }) {
+                listOf(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.TWO))
+            }
 
-        assertThat(dealer.playerState is Hit).isTrue
+        assertThat(dealer.playerState).isExactlyInstanceOf(Hit::class.java)
     }
 
     @Test
     fun `처음 뽑은 카드들이 17이상이면, Stay 이다`() {
-        val dealerStay = Stay(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.TEN))
-            .draw(Card(Suit.CLUB, Denomination.SEVEN))
-        )
-        val dealer = Dealer(playerState = dealerStay)
+        val dealer = Dealer()
+            .draw(Deck.initialize { it }) {
+                listOf(Card(Suit.CLUB, Denomination.TEN), Card(Suit.CLUB, Denomination.SEVEN))
+            }
 
-        assertThat(dealer.playerState is Stay).isTrue
+        assertThat(dealer.playerState).isExactlyInstanceOf(Stay::class.java)
     }
 
     @Test
     fun `나중에 뽑은 카드들까지의 합이 21이하 17이상이면, Stay 이다`() {
-        val hit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.TEN))
-            .draw(Card(Suit.CLUB, Denomination.SIX)))
+        val hit = Hit(PlayerStateTestFixture.createHands(Suit.CLUB, Denomination.TEN, Denomination.SIX))
 
         val dealer = Dealer(playerState = hit)
             .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.ACE)) }
 
-        assertThat(dealer.playerState is Stay).isTrue
+        assertThat(dealer.playerState).isExactlyInstanceOf(Stay::class.java)
+    }
+
+    @Test
+    fun `딜러가 버스트면, 딜러는 무조건 패한다`() {
+        val hit = Hit(PlayerStateTestFixture.createHands(Suit.CLUB, Denomination.TEN, Denomination.SIX))
+
+        val dealer = Dealer(playerState = hit)
+            .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.JACK)) }
+
+        val gamePlayer = GamePlayer(Name("user"), hit)
+            .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.JACK)) }
+
+        assertThat(dealer.match(gamePlayer)).isEqualTo(MatchResult.LOSE)
     }
 }

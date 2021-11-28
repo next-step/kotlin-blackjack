@@ -10,7 +10,7 @@ sealed class Player(open val name: Name, open val playerState: PlayerState) {
 
     fun isFinished(): Boolean = playerState.isFinished()
 
-    fun match(other: Player): MatchResult = playerState.match(other.playerState)
+    abstract fun match(other: Player): MatchResult
 
     abstract fun stay(): Player
 

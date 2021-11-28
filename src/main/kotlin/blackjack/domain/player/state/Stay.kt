@@ -5,11 +5,12 @@ import blackjack.domain.player.state.hands.Hands
 data class Stay(override val hands: Hands) : Finish(hands) {
 
     override fun match(other: PlayerState): MatchResult {
-        val hands = other.hands
-        return when {
-            hands.isBlackJack() -> MatchResult.LOSE
-            hands.isBust() -> MatchResult.WIN
-            else -> MatchResult.from(score().compareTo(other.score()))
+        return when (other) {
+            is BlackJack -> MatchResult.LOSE
+            is Bust -> MatchResult.WIN
+            is Stay,
+            is Hit,
+            is Ready -> MatchResult.from(score().compareTo(other.score()))
         }
     }
 }

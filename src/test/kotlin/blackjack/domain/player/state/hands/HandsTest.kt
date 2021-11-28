@@ -46,20 +46,14 @@ internal class HandsTest {
 
     @Test
     fun `카드들은 점수의 합을 반환한다`() {
-        val firstExtraCard = Card(Suit.CLUB, Denomination.ACE)
-        val secondExtraCard = Card(Suit.CLUB, Denomination.TWO)
-        val thirdExtraCard = Card(Suit.CLUB, Denomination.THREE)
-        val fourthExtraCard = Card(Suit.CLUB, Denomination.FOUR)
-        val fifthExtraCard = Card(Suit.CLUB, Denomination.FIVE)
-        val sixExtraCard = Card(Suit.CLUB, Denomination.SIX)
-
-        val hands = Hands.EMPTY
-            .draw(firstExtraCard)
-            .draw(secondExtraCard)
-            .draw(thirdExtraCard)
-            .draw(fourthExtraCard)
-            .draw(fifthExtraCard)
-            .draw(sixExtraCard)
+        val hands = createHands(
+            Denomination.ACE,
+            Denomination.TWO,
+            Denomination.THREE,
+            Denomination.FOUR,
+            Denomination.FIVE,
+            Denomination.SIX
+        )
 
         val score = hands.score()
         assertThat(score.score).isEqualTo(21)
@@ -67,11 +61,15 @@ internal class HandsTest {
 
     @Test
     fun `ACE 는 21애 가까운 수가 되도록 11을 반환한다`() {
-        val playingCards = Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TEN))
+        val playingCards = createHands(Denomination.ACE, Denomination.TEN)
 
         val score = playingCards.score()
         assertThat(score.score).isEqualTo(21)
+    }
+
+    private fun createHands(vararg denominations: Denomination): Hands {
+        return denominations.fold(Hands.EMPTY) { fixtureHands: Hands, denomination: Denomination ->
+            fixtureHands.draw(Card(Suit.CLUB, denomination))
+        }
     }
 }

@@ -2,6 +2,8 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.name.Name
+import blackjack.domain.player.state.Bust
+import blackjack.domain.player.state.MatchResult
 import blackjack.domain.player.state.PlayerState
 import blackjack.domain.player.state.Ready
 import blackjack.strategy.draw.DrawStrategy
@@ -10,6 +12,13 @@ data class GamePlayer(
     override val name: Name,
     override val playerState: PlayerState = Ready(),
 ) : Player(name, playerState) {
+
+    override fun match(other: Player): MatchResult {
+        if (other.playerState is Bust) {
+            return MatchResult.WIN
+        }
+        return playerState.match(other.playerState)
+    }
 
     override fun stay(): Player = GamePlayer(name, playerState.stay())
 

@@ -3,7 +3,8 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.state.hands.Hands
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.CLUB_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidCalculateScoreException
 import blackjack.error.InvalidMatchException
 import org.assertj.core.api.Assertions.assertThat
@@ -19,15 +20,13 @@ internal class HitTest {
 
     @BeforeEach
     internal fun setUp() {
-        hit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TWO))
-        )
+        hit = Hit(createHands(Suit.CLUB, Denomination.ACE, Denomination.TWO))
     }
 
     @Test
     fun `Hit 상태는 스코어 계산을 할 수 없다`() {
         val exception = assertThrows<InvalidCalculateScoreException> { hit.score() }
+
         assertThat(exception.message).isEqualTo("'%s' 타입은 스코어를 계산할 수 없습니다".format(hit::class.toString()))
     }
 
@@ -60,12 +59,8 @@ internal class HitTest {
 
     @Test
     fun `Hit 상태는 매칭을 할 수 없다`() {
-        val otherState = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.TEN))
-            .draw(Card(Suit.CLUB, Denomination.KING))
-        )
+        val exception = assertThrows<InvalidMatchException> { hit.match(CLUB_BLACKJACK) }
 
-        val exception = assertThrows<InvalidMatchException> { hit.match(otherState) }
         assertThat(exception.message).isEqualTo("'%s' 타입은 매칭을 할 수 없다".format(hit::class.toString()))
     }
 }

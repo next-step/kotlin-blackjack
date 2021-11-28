@@ -3,7 +3,10 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.player.state.hands.Hands
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MINIMUM_STAY
+import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
 import org.assertj.core.api.Assertions.assertThat
@@ -20,13 +23,7 @@ internal class BustTest {
 
     @BeforeEach
     internal fun setUp() {
-        bust = Bust(
-            Hands.EMPTY
-                .draw(Card(Suit.CLUB, Denomination.ACE))
-                .draw(Card(Suit.CLUB, Denomination.TWO))
-                .draw(Card(Suit.CLUB, Denomination.JACK))
-                .draw(Card(Suit.CLUB, Denomination.QUEEN))
-        )
+        bust = Bust(createHands(Suit.CLUB, Denomination.ACE, Denomination.TWO, Denomination.JACK, Denomination.QUEEN))
     }
 
     @Test
@@ -42,6 +39,7 @@ internal class BustTest {
     @Test
     fun `Bust 상태는 Stay 상태가 될 수 없다`() {
         val exception = assertThrows<InvalidMapToPlayStateException> { bust.stay() }
+
         assertThat(exception.message).isEqualTo("'%s' 타입은 특정 플레이 상태로 전환이 불가능합니다".format(bust::class.toString()))
     }
 
@@ -50,24 +48,14 @@ internal class BustTest {
         val extraCard = Card(Suit.CLUB, Denomination.THREE)
 
         val exception = assertThrows<InvalidDrawException> { bust.draw(extraCard) }
+
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(bust::class.toString()))
     }
 
     @Test
     fun `Bust 상태는 Bust 이외의 상태와 매칭시 대해서 패 결과를 얻는다`() {
-        val blackJack = BlackJack(
-            Hands.EMPTY
-                .draw(Card(Suit.CLUB, Denomination.ACE))
-                .draw(Card(Suit.CLUB, Denomination.JACK))
-        )
-        val minimumStay = Stay(
-            Hands.EMPTY
-                .draw(Card(Suit.CLUB, Denomination.TWO))
-                .draw(Card(Suit.CLUB, Denomination.THREE))
-        )
-
-        val stayMatchResult = bust.match(minimumStay)
-        val blackJackMatchResult = bust.match(blackJack)
+        val stayMatchResult = bust.match(HEART_MINIMUM_STAY)
+        val blackJackMatchResult = bust.match(HEART_BLACKJACK)
 
         assertAll(
             { assertThat(stayMatchResult).isEqualTo(MatchResult.LOSE) },
@@ -77,15 +65,7 @@ internal class BustTest {
 
     @Test
     fun `Bust 상태는 Bust 상태와 매칭시 대해서 무승부 결과를 얻는다`() {
-        val other = Bust(
-            Hands.EMPTY
-                .draw(Card(Suit.CLUB, Denomination.ACE))
-                .draw(Card(Suit.CLUB, Denomination.TWO))
-                .draw(Card(Suit.CLUB, Denomination.JACK))
-                .draw(Card(Suit.CLUB, Denomination.QUEEN))
-        )
-
-        val bustMatchResult = bust.match(other)
+        val bustMatchResult = bust.match(HEART_MINIMUM_BUST)
 
         assertThat(bustMatchResult).isEqualTo(MatchResult.DRAW)
     }

@@ -8,9 +8,11 @@ import blackjack.domain.player.name.Name
 import blackjack.domain.player.state.BlackJack
 import blackjack.domain.player.state.Bust
 import blackjack.domain.player.state.Hit
+import blackjack.domain.player.state.MatchResult
 import blackjack.domain.player.state.Ready
 import blackjack.domain.player.state.hands.Hands
-import org.assertj.core.api.AssertionsForClassTypes
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.CLUB_MINIMUM_BUST
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,8 +25,8 @@ internal class GamePlayerTest {
         val gamePlayer = GamePlayer(Name("김우재"))
 
         assertAll(
-            { AssertionsForClassTypes.assertThat(gamePlayer).isNotNull },
-            { AssertionsForClassTypes.assertThat(gamePlayer).isExactlyInstanceOf(GamePlayer::class.java) }
+            { assertThat(gamePlayer).isNotNull },
+            { assertThat(gamePlayer).isExactlyInstanceOf(GamePlayer::class.java) }
         )
     }
 
@@ -35,29 +37,25 @@ internal class GamePlayerTest {
 
         val dealer = GamePlayer(Name("김우재")).draw(Deck.initialize { it }) { listOf(it.pop()) }
 
-        AssertionsForClassTypes.assertThat(dealer).isEqualTo(expected)
+        assertThat(dealer).isEqualTo(expected)
     }
 
     @Test
     fun `처음 뽑은 카드들이 21이면, BlackJack이다`() {
-        val blackJack = BlackJack(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.JACK))
-        )
-        val gamePlayer = GamePlayer(Name("김우재"), blackJack)
+        val gamePlayer = GamePlayer(Name("김우재")).draw(Deck.initialize { it }) {
+            listOf(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK))
+        }
 
-        AssertionsForClassTypes.assertThat(gamePlayer.playerState is BlackJack).isTrue
+        assertThat(gamePlayer.playerState).isExactlyInstanceOf(BlackJack::class.java)
     }
 
     @Test
     fun `처음 뽑은 카드들이 21미만이면, Hit이다`() {
-        val maximumHit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TWO))
-        )
-        val gamePlayer = GamePlayer(Name("김우재"), maximumHit)
+        val gamePlayer = GamePlayer(Name("김우재")).draw(Deck.initialize { it }) {
+            listOf(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.TWO))
+        }
 
-        AssertionsForClassTypes.assertThat(gamePlayer.playerState is Hit).isTrue
+        assertThat(gamePlayer.playerState).isExactlyInstanceOf(Hit::class.java)
     }
 
     @Test
@@ -66,20 +64,34 @@ internal class GamePlayerTest {
             .draw(Card(Suit.CLUB, Denomination.ACE))
             .draw(Card(Suit.CLUB, Denomination.TWO))
         )
-        val gamePlayer = GamePlayer(Name("김우재"), maximumHit
-            .draw(Card(Suit.CLUB, Denomination.EIGHT)))
+        val gamePlayer = GamePlayer(Name("김우재"), maximumHit)
+            .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.EIGHT)) }
 
-        AssertionsForClassTypes.assertThat(gamePlayer.playerState is Hit).isTrue
+        assertThat(gamePlayer.playerState).isExactlyInstanceOf(Hit::class.java)
     }
 
     @Test
     fun `나중에 뽑은 카드들까지의 합이 21초과면, Bust 이다`() {
-        val maximumHit = Hit(Hands.EMPTY
+        val hit = Hit(Hands.EMPTY
             .draw(Card(Suit.CLUB, Denomination.TEN))
             .draw(Card(Suit.CLUB, Denomination.JACK))
         )
-        val gamePlayer = GamePlayer(Name("김우재"), maximumHit.draw(Card(Suit.CLUB, Denomination.TWO)))
+        val gamePlayer = GamePlayer(Name("김우재"), hit)
+            .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.TWO)) }
 
-        AssertionsForClassTypes.assertThat(gamePlayer.playerState is Bust).isTrue
+        assertThat(gamePlayer.playerState).isExactlyInstanceOf(Bust::class.java)
+    }
+
+    @Test
+    fun `딜러가 버스트인 경우, 버스트여도 무조건 승리한다`() {
+        val hit = Hit(Hands.EMPTY
+            .draw(Card(Suit.CLUB, Denomination.TEN))
+            .draw(Card(Suit.CLUB, Denomination.JACK))
+        )
+        val gamePlayer = GamePlayer(Name("김우재"), hit)
+            .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.TWO)) }
+        val dealer = Dealer(playerState = CLUB_MINIMUM_BUST)
+
+        assertThat(gamePlayer.match(dealer)).isEqualTo(MatchResult.WIN)
     }
 }

@@ -5,17 +5,17 @@ enum class MatchResult {
     WIN, DRAW, LOSE;
 
     companion object {
-        private const val ZERO = 0;
+        private const val ZERO = 0
 
         fun from(compareToValue: Int): MatchResult {
             if (compareToValue > ZERO) {
-                return WIN;
+                return WIN
             }
             if (compareToValue == ZERO) {
-                return DRAW;
+                return DRAW
             }
             if (compareToValue < ZERO) {
-                return LOSE;
+                return LOSE
             }
             throw ClassNotFoundException()
         }
