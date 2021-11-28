@@ -4,9 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Score
 import blackjack.domain.card.Suit
-import blackjack.domain.card.Suit.HEART
-import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
-import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
 import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -57,41 +54,5 @@ internal class StayTest {
         val exception = assertThrows<InvalidDrawException> { minimumStay.draw(extraCard) }
 
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(minimumStay::class.toString()))
-    }
-
-    @Test
-    fun `Stay 상태는 BlackJack 상태와 매칭시 대해서 패 결과를 얻는다`() {
-        val blackJackMatchResult = maximumStay.match(HEART_BLACKJACK)
-
-        assertThat(blackJackMatchResult).isEqualTo(MatchResult.LOSE)
-    }
-
-    @Test
-    fun `Stay 상태는 Bust 상태와 매칭시 대해서 승 결과를 얻는다`() {
-        val bustMatchResult = minimumStay.match(HEART_MINIMUM_BUST)
-
-        assertThat(bustMatchResult).isEqualTo(MatchResult.WIN)
-    }
-
-    @Test
-    fun `Stay 상태는 동일한 스코어의 Stay 상태와 매칭시 대해서 무승부 결과를 얻는다`() {
-        val other = Stay(createHands(HEART, Denomination.TWO, Denomination.THREE))
-        val sameStayMatchResult = minimumStay.match(other)
-
-        assertThat(sameStayMatchResult).isEqualTo(MatchResult.DRAW)
-    }
-
-    @Test
-    fun `Stay 상태는 기존보다 스코어가 높은 Stay 상태와 매칭시 대해서 패 결과를 얻는다`() {
-        val sameStayMatchResult = minimumStay.match(maximumStay)
-
-        assertThat(sameStayMatchResult).isEqualTo(MatchResult.LOSE)
-    }
-
-    @Test
-    fun `Stay 상태는 기존보다 스코어가 낮은 Stay 상태와 매칭시 대해서 패 결과를 얻는다`() {
-        val sameStayMatchResult = maximumStay.match(minimumStay)
-
-        assertThat(sameStayMatchResult).isEqualTo(MatchResult.WIN)
     }
 }

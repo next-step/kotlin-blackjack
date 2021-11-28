@@ -1,10 +1,11 @@
 package blackjack
 
 import blackjack.domain.card.Deck
-import blackjack.domain.player.BetAmount
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Money
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.player.name.Name
 import blackjack.strategy.draw.DrawStrategy
 import blackjack.strategy.draw.HitDrawStrategy
 import blackjack.strategy.draw.ReadyDrawStrategy
@@ -23,30 +24,18 @@ class BlackJackApplication(
     private val errorView: ErrorView,
 ) {
     fun run() {
-        val readyDrawStrategy = ReadyDrawStrategy
-        val hitDrawStrategy = HitDrawStrategy
-
         val deck = Deck.initialize(CardsRandomShuffleStrategy)
         val players = players()
         val dealer = Dealer()
         val betBoard = bettingBoard(players)
 
-        val readiedPlayers = readiedPlayers(players, deck, readyDrawStrategy)
-        val readiedDealer = readiedDealer(dealer, deck, readyDrawStrategy)
+        val readiedPlayers = readiedPlayers(players, deck, ReadyDrawStrategy)
+        val readiedDealer = readiedDealer(dealer, deck, ReadyDrawStrategy)
         resultView.showReadiedPlayers(dealer, readiedPlayers)
 
         val endedGamePlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
         val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
         resultView.showEndedPlayers(endedDealer, endedGamePlayers)
-
-        // val result = endedGamePlayers.players
-        //     .associateWith { it.match(endedDealer) }
-        //     .map { betBoard[it.key].winBet(it.value.rate)  }
-
-        val dealerProfit = endedGamePlayers.players
-            .associateWith { endedDealer.match(it) }
-            .map { betBoard.getValue(it.key) }
-            .reduce(BetAmount::plus)
     }
 
     private fun players(): Players =
@@ -57,17 +46,18 @@ class BlackJackApplication(
             players()
         }
 
-    private fun bettingBoard(players: Players): Map<Player, BetAmount> {
+    private fun bettingBoard(players: Players): Map<Name, Money> {
         return players.players
-            .associateWith { BetAmount(betAmountPerPlayer(it)) }
+            .map { it.name }
+            .associateWith { Money(betMoney(it)) }
     }
 
-    private fun betAmountPerPlayer(it: Player): Int =
+    private fun betMoney(it: Name): Int =
         try {
-            inputView.askPlayerBetAmount(it.name.name)
+            inputView.askPlayersBetMoney(it.name)
         } catch (e: Exception) {
             errorView.showErrorMessage(e.message.toString())
-            betAmountPerPlayer(it)
+            betMoney(it)
         }
 
     private fun readiedDealer(dealer: Dealer, deck: Deck, drawStrategy: ReadyDrawStrategy): Player =

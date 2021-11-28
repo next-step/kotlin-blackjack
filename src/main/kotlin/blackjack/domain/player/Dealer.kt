@@ -2,29 +2,20 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.name.Name
-import blackjack.domain.player.state.Bust
 import blackjack.domain.player.state.Hit
-import blackjack.domain.player.state.MatchResult
-import blackjack.domain.player.state.PlayerState
 import blackjack.domain.player.state.Ready
+import blackjack.domain.player.state.State
 import blackjack.strategy.draw.DrawStrategy
 
 data class Dealer(
     override val name: Name = DEFAULT_NAME,
-    override val playerState: PlayerState = Ready(),
-) : Player(name, playerState) {
+    override val state: State = Ready(),
+) : Player(name, state) {
 
-    override fun match(other: Player): MatchResult {
-        if (playerState is Bust) {
-            return MatchResult.LOSE
-        }
-        return playerState.match(other.playerState)
-    }
-
-    override fun stay(): Player = Dealer(name, playerState.stay())
+    override fun stay(): Player = Dealer(name, state.stay())
 
     override fun draw(deck: Deck, drawStrategy: DrawStrategy): Player {
-        var nowState = playerState
+        var nowState = state
         drawStrategy.draw(deck).forEach { nowState = nowState.draw(it) }
         if (nowState is Hit && nowState.hands.isOverDealerDrawStandard()) {
             return Dealer(name, nowState.stay())

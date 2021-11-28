@@ -5,7 +5,6 @@ import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
-import blackjack.domain.player.state.MatchResult
 import blackjack.domain.player.state.hands.Hands
 import blackjack.strategy.ui.output.OutputStrategy
 import blackjack.util.FavoriteStringFixture.BLANK
@@ -31,13 +30,13 @@ class ResultView(private val outputStrategy: OutputStrategy) {
 
     fun showPlayerHands(player: Player) {
         outputStrategy.execute(
-            HANDS_INFORMATION.format(player.name.name, handsJoinToString(player.playerState.hands))
+            HANDS_INFORMATION.format(player.name.name, handsJoinToString(player.state.hands))
         )
         outputStrategy.execute(BLANK)
     }
 
     private fun formatPlayerHandsInformation(player: Player) =
-        HANDS_INFORMATION.format(player.name.name, handsJoinToString(player.playerState.hands))
+        HANDS_INFORMATION.format(player.name.name, handsJoinToString(player.state.hands))
 
     private fun handsJoinToString(hands: Hands): String =
         hands.hands.joinToString(COMMA_AND_ONE_SPACE) { cardJoinToString(it) }
@@ -62,35 +61,9 @@ class ResultView(private val outputStrategy: OutputStrategy) {
     private fun formatHandsInformationAndScore(player: Player): String =
         HANDS_INFORMATION_AND_SCORE.format(
             player.name.name,
-            handsJoinToString(player.playerState.hands),
-            player.playerState.hands.score().score
+            handsJoinToString(player.state.hands),
+            player.state.hands.score().score
         )
-
-    fun showMatchResult(endedDealer: Player, endedGamePlayer: Players) {
-        outputStrategy.execute(PLAYERS_MATCH_RESULT_INTRODUCE)
-        outputStrategy.execute(
-            PLAYER_MATCH_RESULT.format(
-                endedDealer.name.name,
-                dealerMatchResultJoinToString(endedGamePlayer, endedDealer)
-            )
-        )
-        outputStrategy.execute(gamePlayersMatchResultJoinToString(endedGamePlayer, endedDealer))
-        outputStrategy.execute(BLANK)
-    }
-
-    private fun gamePlayersMatchResultJoinToString(endedGamePlayer: Players, endedDealer: Player) =
-        endedGamePlayer.players
-            .associateWith { it.match(endedDealer) }
-            .toList()
-            .joinToString(NEW_LINE) { PLAYER_MATCH_RESULT.format(it.first.name.name, matchResultName(it.second)) }
-
-    private fun dealerMatchResultJoinToString(endedGamePlayer: Players, endedDealer: Player) =
-        endedGamePlayer.players
-            .map { endedDealer.match(it) }
-            .groupingBy { it }
-            .eachCount()
-            .toList()
-            .joinToString { MATCH_RESULT.format(it.second, matchResultName(it.first)) }
 
     private fun denominationName(denomination: Denomination): String {
         return when (denomination) {
@@ -116,14 +89,6 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             Suit.DIAMOND -> "다이아몬드"
             Suit.HEART -> "하트"
             Suit.SPADE -> "스페이드"
-        }
-    }
-
-    private fun matchResultName(matchResult: MatchResult): String {
-        return when (matchResult) {
-            MatchResult.WIN -> "승"
-            MatchResult.DRAW -> "무"
-            MatchResult.LOSE -> "패"
         }
     }
 

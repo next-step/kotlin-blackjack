@@ -3,10 +3,8 @@ package blackjack.domain.player.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.CLUB_BLACKJACK
 import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidCalculateScoreException
-import blackjack.error.InvalidMatchException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -55,12 +53,5 @@ internal class HitTest {
             .draw(Card(Suit.CLUB, Denomination.QUEEN))
 
         assertThat(nextState).isEqualTo(Bust(nextState.hands))
-    }
-
-    @Test
-    fun `Hit 상태는 매칭을 할 수 없다`() {
-        val exception = assertThrows<InvalidMatchException> { hit.match(CLUB_BLACKJACK) }
-
-        assertThat(exception.message).isEqualTo("'%s' 타입은 매칭을 할 수 없다".format(hit::class.toString()))
     }
 }
