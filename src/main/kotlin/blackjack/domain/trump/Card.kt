@@ -1,6 +1,5 @@
 package blackjack.domain.trump
 
-
 data class Card(val pattern: Pattern, val number: Number) {
 
     fun isAce(): Boolean {

@@ -10,7 +10,7 @@ object BlackJackOutputView {
     }
 
     fun showGameResult(players: List<Player>) {
-        players.forEach {println("${getPlayersCards(it)} - 결과: ${it.score()}")}
+        players.forEach { println("${getPlayersCards(it)} - 결과: ${it.score()}") }
     }
 
     private fun getPlayersCards(player: Player): String {

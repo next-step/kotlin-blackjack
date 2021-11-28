@@ -47,5 +47,4 @@ class BlackJackApplication(
 
     private fun play(player: Player) =
         if (!player.finished) machine.play(inputView.askIntentionToPlay(player), player) else player
-
 }

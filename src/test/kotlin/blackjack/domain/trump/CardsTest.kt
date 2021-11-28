@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 
 class CardsTest {
 
-
     @Test
     fun `ACE를 포함한 카드덱의 점수 총합이 11점 이하면 ACE를 11점으로 계산한다`() {
         // given
@@ -48,8 +47,8 @@ class CardsTest {
         // then
         assertAll(
             { assertThat(before.values.size).isLessThan(after.values.size) },
-            { assertThat (after.values).contains(DIAMOND_KING, HEART_ACE, SPADE_THREE, CLUB_FOUR)},
-            { assertThat (before.values).isNotIn(DIAMOND_KING)}
+            { assertThat(after.values).contains(DIAMOND_KING, HEART_ACE, SPADE_THREE, CLUB_FOUR) },
+            { assertThat(before.values).isNotIn(DIAMOND_KING) }
         )
     }
 }

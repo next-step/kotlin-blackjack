@@ -3,9 +3,10 @@ package blackjack.domain
 import blackjack.domain.player.Player
 import blackjack.domain.trump.Card
 import blackjack.domain.trump.Cards
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
 
-class BlackJackMachine (private val cards: Queue<Card> = LinkedList(Card.TRUMP_CARDS.shuffled())) {
+class BlackJackMachine(private val cards: Queue<Card> = LinkedList(Card.TRUMP_CARDS.shuffled())) {
 
     fun play(play: Boolean, player: Player): Player {
         if (player.finished || !play) return player.death()

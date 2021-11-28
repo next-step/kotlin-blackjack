@@ -20,5 +20,4 @@ object BlackJackInputView {
         val intention = inputString()
         return "y" == intention || "Y" == intention
     }
-
 }

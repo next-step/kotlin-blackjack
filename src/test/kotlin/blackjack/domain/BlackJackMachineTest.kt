@@ -2,13 +2,12 @@ package blackjack.domain
 
 import blackjack.fixture.CardFixture
 import blackjack.fixture.PlayerFixture
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.assertj.core.api.ThrowableAssert
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.LinkedList
 
 class BlackJackMachineTest {
 
