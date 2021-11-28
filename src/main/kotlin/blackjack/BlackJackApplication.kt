@@ -34,11 +34,11 @@ class BlackJackApplication(
         val readiedDealer = readiedDealer(dealer, deck, ReadyDrawStrategy)
         resultView.showReadiedPlayers(readiedDealer, readiedPlayers)
 
-        val endedGamePlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
+        val endedPlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
         val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
-        resultView.showEndedPlayers(endedDealer, endedGamePlayers)
+        resultView.showEndedPlayers(endedDealer, endedPlayers)
 
-        resultView.showProfitResult(endedDealer, endedGamePlayers, bets)
+        resultView.showProfitResult(endedDealer, endedPlayers, bets)
     }
 
     private fun players(): Players =
@@ -53,16 +53,16 @@ class BlackJackApplication(
         return Bets.of(
             players.players
                 .map { it.name }
-                .associateWith { Money(betMoney(it)) }
+                .associateWith { betMoney(it) }
         )
     }
 
-    private fun betMoney(it: Name): Int =
+    private fun betMoney(name: Name): Money =
         try {
-            inputView.askPlayersBetMoney(it.name)
+            Money(inputView.askPlayersBetMoney(name.name))
         } catch (e: Exception) {
             errorView.showErrorMessage(e.message.toString())
-            betMoney(it)
+            betMoney(name)
         }
 
     private fun readiedDealer(dealer: Dealer, deck: Deck, drawStrategy: ReadyDrawStrategy): Player =
@@ -73,8 +73,8 @@ class BlackJackApplication(
             .map { it.draw(deck, drawStrategy) }
             .let { Players.from(it) }
 
-    private fun startGameOnGamePlayer(gamePlayer: Players, deck: Deck, drawStrategy: DrawStrategy): Players =
-        gamePlayer.players
+    private fun startGameOnGamePlayer(players: Players, deck: Deck, drawStrategy: DrawStrategy): Players =
+        players.players
             .map { drawOrStay(it, deck, drawStrategy) }
             .let { Players.from(it) }
 

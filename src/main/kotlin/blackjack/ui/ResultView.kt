@@ -14,17 +14,17 @@ import blackjack.util.FavoriteStringFixture.NEW_LINE
 
 class ResultView(private val outputStrategy: OutputStrategy) {
 
-    fun showReadiedPlayers(readiedDealer: Player, readiedGamePlayer: Players) {
+    fun showReadiedPlayers(dealer: Player, players: Players) {
         outputStrategy.execute(
-            READIED_PLAYERS_INFORMATION.format(readiedDealer.name.name, playerNameJoinToString(readiedGamePlayer))
+            READIED_PLAYERS_INFORMATION.format(dealer.name.name, playerNameJoinToString(players))
         )
-        outputStrategy.execute(formatPlayerHandsInformation(readiedDealer))
-        outputStrategy.execute(playerAndHandsJoinToString(readiedGamePlayer))
+        outputStrategy.execute(formatPlayerHandsInformation(dealer))
+        outputStrategy.execute(playerAndHandsJoinToString(players))
         outputStrategy.execute(BLANK)
     }
 
-    private fun playerNameJoinToString(gamePlayers: Players): String =
-        gamePlayers.players.joinToString(COMMA_AND_ONE_SPACE) { it.name.name }
+    private fun playerNameJoinToString(players: Players): String =
+        players.players.joinToString(COMMA_AND_ONE_SPACE) { it.name.name }
 
     private fun playerAndHandsJoinToString(players: Players): String =
         players.players.joinToString(NEW_LINE) { formatPlayerHandsInformation(it) }
@@ -50,9 +50,9 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         outputStrategy.execute(BLANK)
     }
 
-    fun showEndedPlayers(endedDealer: Player, endedGamePlayer: Players) {
-        outputStrategy.execute(formatHandsInformationAndScore(endedDealer))
-        outputStrategy.execute(handsInformationAndScoreJoinToString(endedGamePlayer))
+    fun showEndedPlayers(dealer: Player, players: Players) {
+        outputStrategy.execute(formatHandsInformationAndScore(dealer))
+        outputStrategy.execute(handsInformationAndScoreJoinToString(players))
         outputStrategy.execute(BLANK)
     }
 
@@ -66,15 +66,15 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             player.state.hands.score().score
         )
 
-    fun showProfitResult(endedDealer: Player, endedGamePlayer: Players, bets: Bets) {
+    fun showProfitResult(dealer: Player, players: Players, bets: Bets) {
         outputStrategy.execute(PLAYERS_PROFIT_RESULT_INTRODUCE)
         outputStrategy.execute(
             PLAYER_PROFIT_RESULT.format(
-                endedDealer.name.name,
-                dealerMatchResultJoinToString(endedGamePlayer, endedDealer, bets)
+                dealer.name.name,
+                dealerMatchResultJoinToString(players, dealer, bets)
             )
         )
-        outputStrategy.execute(gamePlayersMatchResultJoinToString(endedGamePlayer, endedDealer, bets))
+        outputStrategy.execute(gamePlayersMatchResultJoinToString(players, dealer, bets))
         outputStrategy.execute(BLANK)
     }
 
