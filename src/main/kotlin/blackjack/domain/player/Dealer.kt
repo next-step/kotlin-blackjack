@@ -21,9 +21,9 @@ class Dealer(
 
     override fun firstOpenCardsCount() = DEALER_FIRST_OPEN_COUNT
 
-    fun isBlackJack() = result.isBlackJack()
+    fun isBlackJack() = hand.cards.isBlackJack()
 
-    fun isBust() = result.isBust()
+    fun isBust() = hand.cards.isBust()
 }
 
 class DealerHand : PlayingHand() {
