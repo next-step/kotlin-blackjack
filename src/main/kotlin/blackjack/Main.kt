@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Money
 import blackjack.domain.player.*
 import blackjack.view.ConsoleInputView
 import blackjack.view.ConsoleOutputView
@@ -11,9 +12,15 @@ import blackjack.view.dto.GamersDto
 
 fun main() {
     val names: List<PlayerName> = PlayerName.from(ConsoleInputView.getNames())
+    val betMoneys: List<Money> = names.map {
+        Money(ConsoleInputView.getBetMoney(it))
+    }
+    val playerAfterHit = AfterHitWhileCallback { ConsoleOutputView.printGamer(GamerDto(it)) }
+    val playerDtos = PlayerDto.from(names, betMoneys)
+    val players = playerDtos.map { it.toPlayer(playerAfterHit) }
+
     val gamers = Gamers.from(
-        names,
-        playerAfterHit = { ConsoleOutputView.printGamer(GamerDto(it)) },
+        players = players,
         dealerAfterHit = { ConsoleOutputView.printDealerHit() },
     )
     val deck = Deck.create()
@@ -41,5 +48,5 @@ private fun getGamersAtFirst(gamers: Gamers): GamersDto {
 }
 
 private fun getFirstOpenCards(gamer: Gamer): List<CardDto> {
-    return gamer.firstOpenCards().map { CardDto(it) }
+    return gamer.firstOpenCards.map { CardDto(it) }
 }

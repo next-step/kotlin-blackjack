@@ -35,12 +35,9 @@ object ConsoleOutputView {
     }
 
     fun printBlackJackResult(result: BlackJackResultDto) {
-        println("### 최종 승패")
-        with(result.dealerResult) {
-            println("딜러: ${win}승 ${draw}무 ${lost}패")
-        }
-        result.playerResults.forEach {
-            println("${it.name}: ${it.result}")
+        println("### 최종 수익")
+        result.gamerResults.forEach {
+            println("${it.name}: ${it.profit}")
         }
     }
 }

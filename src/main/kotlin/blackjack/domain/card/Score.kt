@@ -7,7 +7,7 @@ value class Score(val value: Int) : Comparable<Score> {
         require(value >= MIN_SCORE) { "점수는 $MIN_SCORE 이상이어야 합니다.." }
     }
 
-    fun isBlackJack(): Boolean {
+    fun canBlackJack(): Boolean {
         return value == BLACK_JACK
     }
 

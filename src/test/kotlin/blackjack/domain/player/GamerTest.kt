@@ -1,6 +1,10 @@
 package blackjack.domain.player
 
+import blackjack.AnswerYesThird
+import blackjack.FinishedHand
+import blackjack.NotFinishHand
 import blackjack.domain.card.*
+import blackjack.domain.game.Hand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,19 +29,8 @@ class GamerTest {
     }
 
     @Test
-    fun `Gamer가 Deck에서 카드를 뽑으면 Hand에 카드가 한 장 추가된다`() {
-        val gamer = TestGamer(canHit = true)
-
-        gamer.hit(deck)
-
-        assertThat(gamer.hand)
-            .usingRecursiveComparison()
-            .isEqualTo(Hand(listOf(topOfDeck)))
-    }
-
-    @Test
-    fun `Gamer의 Hand가 hit할 수 없으면 카드를 뽑지 못한다`() {
-        val gamer = TestGamer(canHit = false)
+    fun `Gamer의 Hand가 finish 되었다면면 카드를 뽑지 못한다`() {
+        val gamer = TestGamer(FinishedHand)
 
         assertThrows<IllegalStateException> {
             gamer.hit(deck)
@@ -46,47 +39,31 @@ class GamerTest {
 
     @Test
     fun `카드를 뽑을 수 있다면 대답이 No일때까지 카드를 뽑는다`() {
-        val player = TestGamer(canHit = true)
+        val hand = NotFinishHand()
+        val player = TestGamer(hand)
 
         player.hitWhileWant(deck, AnswerYesThird())
 
-        assertThat(player.hand.cards).hasSize(AnswerYesThird.YES_COUNT)
+        assertThat(hand.drawCount).isEqualTo(AnswerYesThird.YES_COUNT)
     }
 
     @Test
     fun `대답이 No이면, 카드를 뽑지 않는다`() {
-        val player = TestGamer(canHit = true)
+        val player = TestGamer(NotFinishHand())
 
         player.hitWhileWant(deck) { PlayerAnswer.NO }
 
-        assertThat(player.hand.cards).isEmpty()
+        assertThat(player.hand.cards)
+            .usingRecursiveComparison()
+            .isEqualTo(Cards.createEmpty())
     }
 }
 
-class TestGamer(private val canHit: Boolean) : Gamer(PlayerName("test"), Hand.createEmpty()) {
+class TestGamer(hand: Hand) : Gamer(PlayerName("test"), hand) {
 
-    override fun wantHit(answerProvider: AnswerProvider) = canHit && answerProvider.getAnswer(this).hit
+    override fun wantHit(answerProvider: AnswerProvider) = answerProvider.getAnswer(this).hit
 
     override val afterHitCallBack: AfterHitWhileCallback? = null
 
-    override fun firstOpenCardsCount(): Int {
-        throw UnsupportedOperationException()
-    }
-}
-
-class AnswerYesThird : AnswerProvider {
-
-    private var count = YES_COUNT
-
-    override fun getAnswer(gamer: Gamer): PlayerAnswer {
-        if (count > 0) {
-            count--
-            return PlayerAnswer.YES
-        }
-        return PlayerAnswer.NO
-    }
-
-    companion object {
-        const val YES_COUNT = 3
-    }
+    override fun firstOpenCardsCount(): Int = Int.MAX_VALUE
 }
