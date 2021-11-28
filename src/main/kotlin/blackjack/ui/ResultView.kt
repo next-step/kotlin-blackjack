@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.bet.Bets
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
@@ -65,6 +66,30 @@ class ResultView(private val outputStrategy: OutputStrategy) {
             player.state.hands.score().score
         )
 
+    fun showProfitResult(endedDealer: Player, endedGamePlayer: Players, bets: Bets) {
+        outputStrategy.execute(PLAYERS_PROFIT_RESULT_INTRODUCE)
+        outputStrategy.execute(
+            PLAYER_PROFIT_RESULT.format(
+                endedDealer.name.name,
+                dealerMatchResultJoinToString(endedGamePlayer, endedDealer, bets)
+            )
+        )
+        outputStrategy.execute(gamePlayersMatchResultJoinToString(endedGamePlayer, endedDealer, bets))
+        outputStrategy.execute(BLANK)
+    }
+
+    private fun gamePlayersMatchResultJoinToString(gamers: Players, dealer: Player, bets: Bets): String =
+        gamers.players
+            .associateWith { it.profit(dealer, bets.betMoney(it.name)) }
+            .toList()
+            .joinToString(NEW_LINE) { PLAYER_PROFIT_RESULT.format(it.first.name.name, it.second.toInt()) }
+
+    private fun dealerMatchResultJoinToString(gamers: Players, dealer: Player, bets: Bets): Int =
+        gamers.players
+            .map { dealer.profit(it, bets.betMoney(it.name)) }
+            .reduce(Double::plus)
+            .toInt()
+
     private fun denominationName(denomination: Denomination): String {
         return when (denomination) {
             Denomination.ACE -> "A"
@@ -99,6 +124,5 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         private const val DEALER_DRAW_CARD = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val PLAYERS_PROFIT_RESULT_INTRODUCE = "## 최종 수익"
         private const val PLAYER_PROFIT_RESULT = "%s: %s"
-        private const val MATCH_RESULT = "%s%s "
     }
 }

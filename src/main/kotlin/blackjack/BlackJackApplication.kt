@@ -38,7 +38,7 @@ class BlackJackApplication(
         val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
         resultView.showEndedPlayers(endedDealer, endedGamePlayers)
 
-
+        resultView.showProfitResult(endedDealer, endedGamePlayers, bets)
     }
 
     private fun players(): Players =
