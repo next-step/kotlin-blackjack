@@ -4,7 +4,6 @@ import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.util.PlayerStateTestFixture
 import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
 import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
 import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MAXIMUM_STAY

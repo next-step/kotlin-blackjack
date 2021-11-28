@@ -6,14 +6,14 @@ data class BlackJack(override val hands: Hands) : Finish(hands) {
 
     override fun earningsRate(otherState: State): Double =
         when (otherState as Finish) {
-            is Bust -> BUST_RATE
-            is Stay -> STAY_RATE
-            is BlackJack -> BLACKJACK_RATE
+            is BlackJack -> DRAW_RATE
+            is Bust -> WIN_RATE
+            is Stay -> WIN_RATE
+            else -> 0.0
         }
 
     companion object {
-        private const val BUST_RATE = 1.5
-        private const val STAY_RATE = 1.5
-        private const val BLACKJACK_RATE = 0.0
+        private const val WIN_RATE = 1.5
+        private const val DRAW_RATE = 0.0
     }
 }
