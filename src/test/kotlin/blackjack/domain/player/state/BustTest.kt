@@ -1,8 +1,13 @@
 package blackjack.domain.player.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.util.PlayerStateTestFixture
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MAXIMUM_STAY
 import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidDrawException
 import blackjack.error.InvalidMapToPlayStateException
@@ -46,5 +51,35 @@ internal class BustTest {
         val exception = assertThrows<InvalidDrawException> { bust.draw(extraCard) }
 
         assertThat(exception.message).isEqualTo("'%s' 타입은 카드를 추가할 수 없습니다".format(bust::class.toString()))
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 BlakJack일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(bust.earningsRate(HEART_BLACKJACK)).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 Bust일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(bust.earningsRate(HEART_MINIMUM_BUST)).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 Stay일 경우의 수익률을 반환할 수 있다`() {
+        assertThat(bust.earningsRate(HEART_MAXIMUM_STAY)).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 BlakJack일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(bust.profit(HEART_BLACKJACK, Money(10))).isEqualTo(-10.0)
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 Bust일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(bust.profit(HEART_MINIMUM_BUST, Money(10))).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Bust 상태는 상대가 Stay일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(bust.profit(HEART_MAXIMUM_STAY, Money(10))).isEqualTo(-10.0)
     }
 }
