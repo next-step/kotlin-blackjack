@@ -1,3 +1,10 @@
 package blackjack.domain.player
 
-class Money
+@JvmInline
+value class Money(private val money: Int = 0) {
+    init {
+        if (money < 0) {
+            throw IllegalArgumentException()
+        }
+    }
+}
