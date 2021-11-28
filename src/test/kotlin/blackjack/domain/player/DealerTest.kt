@@ -44,7 +44,8 @@ internal class DealerTest {
         val dealer = Dealer()
             .draw(Deck.initialize { it }) {
                 listOf(
-                    Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK))
+                    Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.JACK)
+                )
             }
 
         assertThat(dealer.playerState).isExactlyInstanceOf(BlackJack::class.java)

@@ -1,10 +1,16 @@
 package blackjack.domain.player
 
+import blackjack.error.InvalidMoneyRangeException
+
 @JvmInline
-value class Money(private val money: Int = 0) {
+value class Money(private val money: Int = MINIMUM_MONEY) {
     init {
-        if (money < 0) {
-            throw IllegalArgumentException()
+        if (money < MINIMUM_MONEY) {
+            throw InvalidMoneyRangeException(money)
         }
+    }
+
+    companion object {
+        private const val MINIMUM_MONEY = 0
     }
 }

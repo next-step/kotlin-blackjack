@@ -60,9 +60,10 @@ internal class GamePlayerTest {
 
     @Test
     fun `나중에 뽑은 카드들까지의 합이 21이하면, Hit 이다`() {
-        val maximumHit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TWO))
+        val maximumHit = Hit(
+            Hands.EMPTY
+                .draw(Card(Suit.CLUB, Denomination.ACE))
+                .draw(Card(Suit.CLUB, Denomination.TWO))
         )
         val gamePlayer = GamePlayer(Name("김우재"), maximumHit)
             .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.EIGHT)) }
@@ -72,9 +73,10 @@ internal class GamePlayerTest {
 
     @Test
     fun `나중에 뽑은 카드들까지의 합이 21초과면, Bust 이다`() {
-        val hit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.TEN))
-            .draw(Card(Suit.CLUB, Denomination.JACK))
+        val hit = Hit(
+            Hands.EMPTY
+                .draw(Card(Suit.CLUB, Denomination.TEN))
+                .draw(Card(Suit.CLUB, Denomination.JACK))
         )
         val gamePlayer = GamePlayer(Name("김우재"), hit)
             .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.TWO)) }
@@ -84,9 +86,10 @@ internal class GamePlayerTest {
 
     @Test
     fun `딜러가 버스트인 경우, 버스트여도 무조건 승리한다`() {
-        val hit = Hit(Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.TEN))
-            .draw(Card(Suit.CLUB, Denomination.JACK))
+        val hit = Hit(
+            Hands.EMPTY
+                .draw(Card(Suit.CLUB, Denomination.TEN))
+                .draw(Card(Suit.CLUB, Denomination.JACK))
         )
         val gamePlayer = GamePlayer(Name("김우재"), hit)
             .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.TWO)) }
