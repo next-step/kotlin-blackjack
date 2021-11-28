@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.error.InvalidMoneyRangeException
 
 @JvmInline
-value class Money(private val money: Int = MINIMUM_MONEY) {
+value class BettingMoney(private val money: Int = MINIMUM_MONEY) {
     init {
         if (money < MINIMUM_MONEY) {
             throw InvalidMoneyRangeException(money)
