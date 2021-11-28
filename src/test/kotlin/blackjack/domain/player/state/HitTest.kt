@@ -1,10 +1,12 @@
 package blackjack.domain.player.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.InvalidCalculateScoreException
+import blackjack.error.InvalidProfitException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -53,5 +55,11 @@ internal class HitTest {
             .draw(Card(Suit.CLUB, Denomination.QUEEN))
 
         assertThat(nextState).isEqualTo(Bust(nextState.hands))
+    }
+
+    @Test
+    fun `Hit 상태는 이윤을 구할 수 없다`() {
+        val exception = assertThrows<InvalidProfitException> { hit.profit(Ready(), Money()) }
+        assertThat(exception.message).isEqualTo("'%s' 타입은 이윤을 구할 수 없다".format(hit::class.toString()))
     }
 }

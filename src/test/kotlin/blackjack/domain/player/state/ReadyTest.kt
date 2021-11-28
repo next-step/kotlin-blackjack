@@ -1,9 +1,11 @@
 package blackjack.domain.player.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
 import blackjack.error.InvalidCalculateScoreException
+import blackjack.error.InvalidProfitException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -67,5 +69,11 @@ internal class ReadyTest {
             .draw(Card(Suit.CLUB, Denomination.KING))
 
         assertThat(bust).isExactlyInstanceOf(Bust::class.java)
+    }
+
+    @Test
+    fun `Ready 상태는 이윤을 구할 수 없다`() {
+        val exception = assertThrows<InvalidProfitException> { ready.profit(Ready(), Money()) }
+        assertThat(exception.message).isEqualTo("'%s' 타입은 이윤을 구할 수 없다".format(ready::class.toString()))
     }
 }
