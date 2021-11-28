@@ -1,19 +1,32 @@
 package blackject.model
 
-import blackject.model.card.CardNumber
-import blackject.model.card.Cards
+class Dealer : Player(NAME) {
 
-class Dealer(
-    cards: Cards = Cards()
-) : Person(PersonType.DEALER, NAME, cards) {
+    override fun isDealer(): Boolean = true
 
-    override fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
-        return maxInt >= cards.getResultNumber(maxInt, exceptCard)
+    override fun canTakeMoreCard(): Boolean {
+        return MAX_NUMBER_DEALER >= cards.getResultNumber()
     }
 
-    fun isOverMaxInt(maxInt: Int, exceptCard: CardNumber): Boolean = getScore(maxInt, exceptCard) > maxInt
+    fun calculateProfit(participantAmount: Int, participantProfit: Int): Int {
+        return when (result) {
+            ResultType.Bust -> 0
+            else -> participantAmount.minus(participantProfit)
+        }
+    }
+
+    override fun calculateGameResult(winScore: Int?, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
+        val score = getScore()
+        when {
+            cards.isBlackjack(score) -> changeResultType(ResultType.BlackJack)
+            cards.isBust(score) -> changeResultType(ResultType.Bust)
+            score == winScore -> changeResultType(ResultType.Win)
+            else -> changeResultType(ResultType.Lose)
+        }
+    }
 
     companion object {
+        const val MAX_NUMBER_DEALER = 16
         const val NAME = "딜러"
     }
 }

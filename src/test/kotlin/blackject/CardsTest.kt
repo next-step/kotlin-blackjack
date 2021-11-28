@@ -1,7 +1,6 @@
 package blackject
 
 import blackject.model.Person
-import blackject.model.PersonType
 import blackject.model.card.Card
 import blackject.model.card.CardNumber
 import blackject.model.card.CardType
@@ -20,7 +19,7 @@ class CardsTest {
             Card(CardType.CLOVER, CardNumber.TWO),
             Card(CardType.CLOVER, CardNumber.THREE)
         )
-        val person = Person(name = "이소현", type = PersonType.NORMAL)
+        val person = Person(name = "이소현",)
 
         person.giveCard(cards)
 
@@ -38,7 +37,7 @@ class CardsTest {
         )
         val expectedValue = 10
 
-        val sum = Cards.getTotalMinCount(cards)
+        val sum = Cards.sum(cards)
 
         assertThat(sum).isEqualTo(expectedValue)
     }
@@ -53,7 +52,8 @@ class CardsTest {
         )
         val expectedValue = 20
 
-        val sum = Cards.getTotalMaxCount(cards)
+        var sum = Cards.sum(cards)
+        sum = sum + CardNumber.getAceMaxNumber() - CardNumber.number(CardNumber.ACE)
 
         assertThat(sum).isEqualTo(expectedValue)
     }

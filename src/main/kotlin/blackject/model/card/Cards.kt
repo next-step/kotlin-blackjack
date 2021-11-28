@@ -1,5 +1,7 @@
 package blackject.model.card
 
+import blackject.model.card.CardNumber.Companion.EXCEPT_NUMBER
+
 /**
  * 카드 리스트
  * */
@@ -14,25 +16,25 @@ value class Cards(
         _cardList.addAll(0, cards)
     }
 
-    fun getResultNumber(maxInt: Int, exceptCard: CardNumber): Int {
-        val cardTotal = getTotalMinCount(_cardList)
-        val count = _cardList.filter { it.number == exceptCard }.size
+    fun getResultNumber(): Int {
+        val cardTotal = sum(_cardList)
+        val count = _cardList.filter { it.number == EXCEPT_NUMBER }.size
         if (count == 0) return cardTotal
 
-        val exceptRestNumber = CardNumber.getNumberMaxValue(exceptCard) - CardNumber.getNumberMinValue(exceptCard)
-        if ((maxInt - cardTotal) < exceptRestNumber) return cardTotal
+        val exceptRestNumber = CardNumber.getAceMaxNumber() - CardNumber.number(EXCEPT_NUMBER)
+        if ((BLACK_JACK_SUM - cardTotal) < exceptRestNumber) return cardTotal
         return cardTotal.plus(exceptRestNumber)
     }
 
-    companion object {
-        fun getTotalMinCount(cardList: List<Card>): Int =
-            cardList
-                .map { it.number }
-                .sumOf { CardNumber.getNumberMinValue(it) }
+    fun isBlackjack(sum: Int): Boolean = _cardList.size == 2 && sum == BLACK_JACK_SUM
 
-        fun getTotalMaxCount(cardList: List<Card>): Int =
+    fun isBust(sum: Int): Boolean = sum > BLACK_JACK_SUM
+
+    companion object {
+        const val BLACK_JACK_SUM = 21
+        fun sum(cardList: List<Card>): Int =
             cardList
                 .map { it.number }
-                .sumOf { CardNumber.getNumberMaxValue(it) }
+                .sumOf { CardNumber.number(it) }
     }
 }

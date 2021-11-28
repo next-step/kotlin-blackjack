@@ -1,32 +1,34 @@
 package blackject.model
 
-import blackject.model.card.Card
-import blackject.model.card.CardNumber
-import blackject.model.card.Cards
-
 /**
  * 참가자 정보 관리 클래스
  * */
 open class Person(
-    val type: PersonType,
-    val name: String,
-    val cards: Cards = Cards(),
-    var result: ResultType? = null
-) {
+    name: String,
+    private var _amount: Amount? = null,
+) : Player(name) {
+    val amount: Amount
+        get() = _amount ?: Amount(0.0)
 
-    open fun getScore(maxInt: Int, exceptCard: CardNumber): Int {
-        return cards.getResultNumber(maxInt, exceptCard)
+    fun inputBetMoney(money: Double?) {
+        require(money != null)
+        _amount = Amount(money)
     }
 
-    open fun isTakeMoreCard(maxInt: Int, exceptCard: CardNumber): Boolean {
-        return maxInt > cards.getResultNumber(maxInt, exceptCard)
+    fun getProfit(): Int {
+        return result.profit(amount).toInt()
     }
 
-    open fun giveCard(newCards: List<Card>) {
-        cards.addCard(newCards)
-    }
+    fun getBetAmount(): Double = amount.value
 
-    open fun changeResultType(result: ResultType) {
-        this.result = result
+    override fun calculateGameResult(winScore: Int?, isDealerBust: Boolean, isDealerBlackJack: Boolean) {
+        val score = getScore()
+        when {
+            isDealerBust || isDealerBlackJack && cards.isBlackjack(score) -> changeResultType(ResultType.Win)
+            cards.isBlackjack(score) -> changeResultType(ResultType.BlackJack)
+            cards.isBust(score) -> changeResultType(ResultType.Bust)
+            score == winScore -> changeResultType(ResultType.Win)
+            else -> changeResultType(ResultType.Lose)
+        }
     }
 }

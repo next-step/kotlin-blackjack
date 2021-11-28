@@ -5,10 +5,9 @@ package blackject.model.card
  * */
 enum class CardNumber(
     val numberName: String,
-    val minNumber: Int,
-    val maxNumber: Int = minNumber,
+    val number: Int,
 ) {
-    ACE("A", 1, 11),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -23,6 +22,9 @@ enum class CardNumber(
     JACK("J", 10);
 
     companion object {
+        private const val PLUS_INT_ACE = 10
+        val EXCEPT_NUMBER = ACE
+
         fun isAce(numberName: String): Boolean {
             return ACE.numberName == numberName
         }
@@ -31,7 +33,8 @@ enum class CardNumber(
             return (KING.numberName == numberName) || (QUEEN.numberName == numberName) || (JACK.numberName == numberName)
         }
 
-        fun getNumberMinValue(number: CardNumber): Int = number.minNumber
-        fun getNumberMaxValue(number: CardNumber): Int = number.maxNumber
+        fun number(number: CardNumber): Int = number.number
+
+        fun getAceMaxNumber(): Int = ACE.number.plus(PLUS_INT_ACE)
     }
 }
