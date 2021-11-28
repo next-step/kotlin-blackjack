@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Money
+import blackjack.domain.bet.Money
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.player.name.Name
@@ -27,6 +27,8 @@ class BlackJackApplication(
         val deck = Deck.initialize(CardsRandomShuffleStrategy)
         val players = players()
         val dealer = Dealer()
+
+        //
         val betBoard = bettingBoard(players)
 
         val readiedPlayers = readiedPlayers(players, deck, ReadyDrawStrategy)

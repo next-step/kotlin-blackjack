@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.bet
 
 import blackjack.error.InvalidMoneyRangeException
 import org.assertj.core.api.Assertions.assertThat
