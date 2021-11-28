@@ -4,13 +4,13 @@ import blackjack.domain.player.state.hands.Hands
 
 data class BlackJack(override val hands: Hands) : Finish(hands) {
 
-    override fun earningsRate(otherState: State): Double =
-        when (otherState as Finish) {
+    override fun earningsRate(otherState: State): Double {
+        return when (otherState as Finish) {
             is BlackJack -> DRAW_RATE
             is Bust -> WIN_RATE
             is Stay -> WIN_RATE
-            else -> 0.0
         }
+    }
 
     companion object {
         private const val WIN_RATE = 1.5

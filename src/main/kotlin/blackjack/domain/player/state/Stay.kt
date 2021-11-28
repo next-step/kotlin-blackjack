@@ -4,13 +4,13 @@ import blackjack.domain.player.state.hands.Hands
 
 data class Stay(override val hands: Hands) : Finish(hands) {
 
-    override fun earningsRate(otherState: State): Double =
-        when (otherState as Finish) {
+    override fun earningsRate(otherState: State): Double {
+        return when (otherState as Finish) {
             is BlackJack -> LOSE_RATE
             is Bust -> WIN_RATE
             is Stay -> calculateRate(otherState)
-            else -> 0.0
         }
+    }
 
     private fun calculateRate(otherState: Finish): Double {
         val compareValue = hands.score().compareTo(otherState.score())
