@@ -42,11 +42,11 @@ class BlackJackApplication(
         // val result = endedGamePlayers.players
         //     .associateWith { it.match(endedDealer) }
         //     .map { betBoard[it.key].winBet(it.value.rate)  }
-        //
-        // val result2 = endedGamePlayers.players
-        //     .associateWith { endedDealer.match(it) }
-        //     .map { betBoard[it.key] }
-        //     .reduce(BettingMoney::plus)
+
+        val dealerProfit = endedGamePlayers.players
+            .associateWith { endedDealer.match(it) }
+            .map { betBoard.getValue(it.key) }
+            .reduce(BetAmount::plus)
     }
 
     private fun players(): Players =

@@ -11,6 +11,8 @@ value class BetAmount(val amount: Int = MINIMUM_MONEY) {
         }
     }
 
+    operator fun plus(other: BetAmount): BetAmount = BetAmount(amount + other.amount)
+
     fun winBet(resultRate: Double): BetAmount {
         return BetAmount(floor(amount * resultRate).toInt())
     }
