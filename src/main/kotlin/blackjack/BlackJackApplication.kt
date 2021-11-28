@@ -1,8 +1,9 @@
 package blackjack
 
+import blackjack.domain.bet.Bets
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
-import blackjack.domain.bet.Money
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.player.name.Name
@@ -27,13 +28,11 @@ class BlackJackApplication(
         val deck = Deck.initialize(CardsRandomShuffleStrategy)
         val players = players()
         val dealer = Dealer()
-
-        //
-        val betBoard = bettingBoard(players)
+        val bets = bettingBoard(players)
 
         val readiedPlayers = readiedPlayers(players, deck, ReadyDrawStrategy)
         val readiedDealer = readiedDealer(dealer, deck, ReadyDrawStrategy)
-        resultView.showReadiedPlayers(dealer, readiedPlayers)
+        resultView.showReadiedPlayers(readiedDealer, readiedPlayers)
 
         val endedGamePlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
         val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
@@ -48,10 +47,10 @@ class BlackJackApplication(
             players()
         }
 
-    private fun bettingBoard(players: Players): Map<Name, Money> {
-        return players.players
+    private fun bettingBoard(players: Players): Bets {
+        return Bets.of(players.players
             .map { it.name }
-            .associateWith { Money(betMoney(it)) }
+            .associateWith { Money(betMoney(it)) })
     }
 
     private fun betMoney(it: Name): Int =

@@ -13,7 +13,7 @@ internal class BetsTest {
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["woo:0", "ji:1000", "json:10000"], delimiter = ':')
     fun `이름과 돈으로 배팅을 만들 수 있다`(name: String, money: Int) {
-        val bets = Bets.from(mapOf(Pair(Name(name), Money(money))))
+        val bets = Bets.of(mapOf(Pair(Name(name), Money(money))))
 
         assertAll(
             { assertThat(bets).isNotNull },
