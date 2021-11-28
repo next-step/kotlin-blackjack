@@ -1,7 +1,11 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
-import blackjack.domain.game.Score
+import blackjack.domain.game.Bet
+import blackjack.domain.game.Betting
+import blackjack.domain.game.Bettings
+import blackjack.domain.game.Credit
+import blackjack.domain.game.GameResult
 import blackjack.domain.game.Turn
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
@@ -51,6 +55,12 @@ data class Players private constructor(val players: List<Player>) : List<Player>
         return Players(receivedCardPlayers)
     }
 
+    fun getBettings(bet: Bet): List<Betting> {
+        val gammers = getGamers().map { Betting(it, Credit.from(bet.getPlayerBetting(it))) }
+        val dealer = Betting(getDealer()!!, Credit.from(0))
+        return gammers + dealer
+    }
+
     private fun updateReceiveCards(
         player: Player,
         turn: Turn,
@@ -75,19 +85,11 @@ data class Players private constructor(val players: List<Player>) : List<Player>
         return receivedCardPlayers
     }
 
-    fun addPlayer(player: Player): Players {
-        return Players(players + player)
-    }
-
-    fun getPlayersByScore(): List<Player> {
-        return players.sortedByDescending { it.getHighestPoint() }
-    }
-
-    fun getResult(): Map<Player, List<Score>> {
+    fun getResult(bettings: Bettings): GameResult {
         val dealer = getDealer()
         val gamers = getGamers()
         requireNotNull(dealer)
-        return dealer.judge(gamers)
+        return dealer.judge(bettings, gamers)
     }
 
     private fun getDealer(): Player? {

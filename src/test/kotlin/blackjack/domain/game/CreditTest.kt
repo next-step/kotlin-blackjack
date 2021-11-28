@@ -24,15 +24,6 @@ internal class CreditTest {
     }
 
     @Test
-    fun `금액을 차감하면 차감된 값을 리턴한다`() {
-        val givenCredit = Credit.from(1000)
-
-        val actual = givenCredit.subtract(500)
-
-        assertThat(actual.value).isEqualTo(BigDecimal.valueOf(500))
-    }
-
-    @Test
     fun `금액을 주어진 값으로 곱한 값을 리턴한다`() {
         val givenCredit = Credit.from(1000)
 

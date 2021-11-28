@@ -2,7 +2,8 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.game.ScoreResult
+import blackjack.domain.game.Bettings
+import blackjack.domain.game.GameResult
 
 abstract class BlackJackPlayer(
     val profile: Profile,
@@ -24,6 +25,10 @@ abstract class BlackJackPlayer(
         return cards.getHighestPoint()
     }
 
+    override fun hasBlackJack(): Boolean {
+        return cards.isBlackJack()
+    }
+
     abstract override fun receiveCard(card: Card): Player
 
     abstract override fun turnOff(): Player
@@ -32,5 +37,5 @@ abstract class BlackJackPlayer(
 
     abstract override fun canReceiveCard(): Boolean
 
-    abstract override fun judge(players: List<Player>): ScoreResult
+    abstract override fun judge(bettings: Bettings, players: List<Player>): GameResult
 }
