@@ -33,10 +33,10 @@ internal class BettingMoneyTest {
 
     @ParameterizedTest(name = "입력 값 : {0}")
     @CsvSource(value = ["0:1.5:0", "1:1.5:1", "10:1.5:15", "100:1.5:150"], delimiter = ':')
-    fun `비율이 들어오면, 계산 후 배팅 금액(정수)을 반환한다`(moneyInt: Int, betRate: Int, expected: Int) {
-        val bettingMoney = BettingMoney()
+    fun `비율이 들어오면, 계산 후 배팅 금액(정수)을 반환한다`(moneyInt: Int, betRate: Double, expected: Int) {
+        val bettingMoney = BettingMoney(moneyInt)
 
         val earningMoney = bettingMoney.winBet(betRate)
-        asertThat(earningMoney.money).isEqualTo(expected)
+        assertThat(earningMoney.money).isEqualTo(expected)
     }
 }
