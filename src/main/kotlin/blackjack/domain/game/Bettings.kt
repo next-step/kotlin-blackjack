@@ -20,12 +20,37 @@ data class Bettings private constructor(val bettings: List<Betting>) {
     }
 
     fun winGamer(player: Player): Bettings {
-        val player = findBetting(player)!!
+        val (player, dealer) = findPlayers(player)
+
         val winResult = player.winBetting()
         val playerResult = updateBetting(player, winResult)
-        val dealer = getDealer()
         val after = dealer.loseDealerBetting(player.credit)
         return playerResult.updateBetting(dealer, after)
+    }
+
+    fun loseGamer(player: Player): Bettings {
+        val (player, dealer) = findPlayers(player)
+
+        val loseResult = player.loseBetting()
+        val playerResult = updateBetting(player, loseResult)
+
+        val afterBetting = dealer.winDealerBetting(player.credit)
+        return playerResult.updateBetting(dealer, afterBetting)
+    }
+
+    fun winBlackJack(player: Player): Bettings {
+        val (player, dealer) = findPlayers(player)
+
+        val winResult = player.winBlackJackBetting()
+        val playerResult = updateBetting(player, winResult)
+        val afterBetting = dealer.loseBlackJackBetting(player.credit)
+        return playerResult.updateBetting(dealer, afterBetting)
+    }
+
+    private fun findPlayers(player: Player): Pair<Betting, Betting> {
+        val player = findBetting(player)!!
+        val dealer = getDealer()
+        return Pair(player, dealer)
     }
 
     private fun updateBetting(before: Betting, after: Betting): Bettings {
@@ -34,24 +59,6 @@ data class Bettings private constructor(val bettings: List<Betting>) {
 
     private fun getDealer(): Betting {
         return bettings.find { it.player is Dealer }!!
-    }
-
-    fun loseGamer(player: Player): Bettings {
-        val player = findBetting(player)!!
-        val loseResult = player.loseBetting()
-        val playerResult = updateBetting(player, loseResult)
-        val dealer = getDealer()
-        val after = dealer.winDealerBetting(player.credit)
-        return playerResult.updateBetting(dealer, after)
-    }
-
-    fun winBlackJack(player: Player): Bettings {
-        val player = findBetting(player)!!
-        val winResult = player.winBlackJackBetting()
-        val playerResult = updateBetting(player, winResult)
-        val dealer = getDealer()
-        val after = dealer.loseBlackJackBetting(player.credit)
-        return playerResult.updateBetting(dealer, after)
     }
 
     companion object {
