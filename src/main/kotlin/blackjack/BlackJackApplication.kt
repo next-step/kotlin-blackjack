@@ -48,9 +48,11 @@ class BlackJackApplication(
         }
 
     private fun bettingBoard(players: Players): Bets {
-        return Bets.of(players.players
-            .map { it.name }
-            .associateWith { Money(betMoney(it)) })
+        return Bets.of(
+            players.players
+                .map { it.name }
+                .associateWith { Money(betMoney(it)) }
+        )
     }
 
     private fun betMoney(it: Name): Int =
