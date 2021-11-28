@@ -24,7 +24,7 @@ data class Bettings private constructor(val bettings: List<Betting>) {
         val winResult = player.winBetting()
         val playerResult = updateBetting(player, winResult)
         val dealer = getDealer()
-        val after = dealer.lostDealerBetting(player.credit)
+        val after = dealer.loseDealerBetting(player.credit)
         return playerResult.updateBetting(dealer, after)
     }
 

@@ -8,8 +8,8 @@ data class Betting(val player: Player, val credit: Credit) {
         return Betting(player, this.credit.subtract(credit))
     }
 
-    fun lostDealerBetting(credit: Credit): Betting {
-        return Betting(player, this.credit.subtractDealerCredit(credit))
+    fun loseDealerBetting(credit: Credit): Betting {
+        return Betting(player, this.credit.subtract(credit))
     }
 
     fun winBetting(): Betting {
@@ -25,6 +25,6 @@ data class Betting(val player: Player, val credit: Credit) {
     }
 
     fun loseBlackJackBetting(credit: Credit): Betting {
-        return Betting(player, this.credit.subtractBlackJackDealer(credit))
+        return Betting(player, this.credit.subtractBlackJack(credit))
     }
 }

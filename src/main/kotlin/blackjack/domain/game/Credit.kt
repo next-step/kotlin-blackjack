@@ -5,32 +5,24 @@ import java.math.BigDecimal
 @JvmInline
 value class Credit(val value: BigDecimal) {
 
-    fun add(value: Int): Credit {
-        return Credit(this.value.add(BigDecimal(value)))
-    }
-
-    fun subtractDealerCredit(credit: Credit): Credit {
-        return Credit(this.value.subtract((credit.value)))
-    }
-
     fun subtract(credit: Credit): Credit {
-        return Credit(this.value.subtract(credit.value.times(BigDecimal.valueOf(2))))
+        return Credit(this.value.subtract(credit.value))
     }
 
     fun receiveBlackJackCredit(): Credit {
-        return Credit(this.value.multiply(BigDecimal.valueOf(1.5)).setScale(0))
+        return Credit(this.value.multiply(BigDecimal.valueOf(BLACK_JACK_RATE)).setScale(ROUND_SCALE))
     }
 
     fun receiveCredit(): Credit {
         return Credit(this.value.add(this.value))
     }
 
-    fun subtractBlackJackDealer(credit: Credit): Credit {
-        return Credit(this.value.subtract(credit.value.times(BigDecimal.valueOf(1.5)).setScale(0)))
-    }
-
-    fun multiply(value: Double): Credit {
-        return Credit(this.value.times(BigDecimal(value)))
+    fun subtractBlackJack(credit: Credit): Credit {
+        return Credit(
+            this.value.subtract(
+                credit.value.times(BigDecimal.valueOf(BLACK_JACK_RATE)).setScale(ROUND_SCALE)
+            )
+        )
     }
 
     fun receiveCredit(credit: Credit): Credit {
@@ -38,6 +30,9 @@ value class Credit(val value: BigDecimal) {
     }
 
     companion object {
+        private const val BLACK_JACK_RATE = 1.5
+        private const val ROUND_SCALE = 0
+
         fun from(value: Int): Credit {
             return Credit(BigDecimal(value))
         }
