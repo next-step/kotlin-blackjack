@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.bet.Bets
 import blackjack.domain.bet.Money
 import blackjack.domain.card.Deck
 import blackjack.domain.player.name.Name
@@ -13,11 +12,7 @@ data class Gamer(
     override val state: State = Ready(),
 ) : Player(name, state) {
 
-    override fun profit(other: Player, bets: Bets): Double {
-        TODO("Not yet implemented")
-    }
-
-    fun profit(other: Player, money: Money): Double = state.profit(other.state, money)
+    override fun profit(other: Player, money: Money): Double = state.profit(other.state, money)
 
     override fun stay(): Player = Gamer(name, state.stay())
 

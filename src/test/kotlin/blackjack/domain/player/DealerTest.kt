@@ -1,18 +1,31 @@
 package blackjack.domain.player
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.player.name.Name
 import blackjack.domain.player.state.BlackJack
 import blackjack.domain.player.state.Hit
 import blackjack.domain.player.state.Ready
 import blackjack.domain.player.state.Stay
 import blackjack.domain.util.PlayerStateTestFixture
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.CLUB_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.BlackJackFixture.HEART_BLACKJACK
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.CLUB_MINIMUM_BUST
+import blackjack.domain.util.PlayerStateTestFixture.BustFixture.HEART_MINIMUM_BUST
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.CLUB_MAXIMUM_STAY
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.CLUB_MINIMUM_STAY
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MAXIMUM_STAY
+import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MINIMUM_STAY
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 @DisplayName("딜러(Dealer)")
 internal class DealerTest {
@@ -77,5 +90,115 @@ internal class DealerTest {
             .draw(Deck.initialize { it }) { listOf(Card(Suit.CLUB, Denomination.ACE)) }
 
         assertThat(dealer.state).isExactlyInstanceOf(Stay::class.java)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
+    fun `BlackJack 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_BLACKJACK)
+        val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
+    fun `BlackJack 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_BLACKJACK)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
+    fun `BlackJack 상태이고, 상대가 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_BLACKJACK)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:-15.0", "100:-150.0", "1000:-1500.0"], delimiter = ':')
+    fun `Bust 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_BUST)
+        val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
+    fun `Bust 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_BUST)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:-10.0", "100:-100.0", "1000:-1000.0"], delimiter = ':')
+    fun `Bust 상태이고, 상대가 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_BUST)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:-15.0", "100:-150.0", "1000:-1500.0"], delimiter = ':')
+    fun `Stay 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_STAY)
+        val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
+    fun `Stay 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_STAY)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:-10.0", "100:-100.0", "1000:-1000.0"], delimiter = ':')
+    fun `Stay 상태이고, 상대가 자신보다 큰 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_STAY)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
+    fun `Stay 상태이고, 상대가 자신과 동일한 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val dealer = Dealer(state = CLUB_MINIMUM_STAY)
+        val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_STAY)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest(name = "입력 값: {0}")
+    @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
+    fun `Stay 상태이고, 상대가 자신보다 작은 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+        val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_STAY)
+        val dealer = Dealer(state = CLUB_MAXIMUM_STAY)
+
+        val actual = dealer.profit(gamePlayer, Money(amount))
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 }
