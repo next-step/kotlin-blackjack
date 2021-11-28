@@ -1,5 +1,6 @@
 package blackjack.domain.player.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Score
@@ -65,5 +66,21 @@ internal class BlackJackTest {
     @Test
     fun `BlackJack 상태는 상대가 Stay일 경우의 수익률을 반환할 수 있다`() {
         assertThat(blackJack.earningsRate(HEART_MAXIMUM_STAY)).isEqualTo(1.5)
+    }
+
+
+    @Test
+    fun `BlackJack 상태는 상대가 BlakJack일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(blackJack.profit(HEART_BLACKJACK, Money(10))).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `BlackJack 상태는 상대가 Bust일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(blackJack.profit(HEART_MINIMUM_BUST, Money(10))).isEqualTo(15.0)
+    }
+
+    @Test
+    fun `BlackJack 상태는 상대가 Stay일 경우의 이윤을 반환할 수 있다`() {
+        assertThat(blackJack.profit(HEART_MAXIMUM_STAY, Money(10))).isEqualTo(15.0)
     }
 }
