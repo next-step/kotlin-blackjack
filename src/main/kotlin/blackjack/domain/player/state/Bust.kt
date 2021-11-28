@@ -12,8 +12,8 @@ data class Bust(override val hands: Hands) : Finish(hands) {
         }
 
     companion object {
-        private const val BUST_RATE = 1.5
-        private const val STAY_RATE = 1.5
-        private const val BLACKJACK_RATE = 1.0
+        private const val BUST_RATE = 0.0
+        private const val STAY_RATE = -1.0
+        private const val BLACKJACK_RATE = -1.0
     }
 }
