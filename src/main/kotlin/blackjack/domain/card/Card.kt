@@ -1,9 +1,25 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.emblem.CardEmblem
+import blackjack.domain.card.suit.CardSuit
 
-data class Card(val emblem: CardEmblem, val cardNumber: Int) {
+data class Card(val suit: CardSuit, val cardNumber: Int) {
+    private val cardName: String
+    val cardValue: Int
+
     init {
-        require(cardNumber in 1..13)
+        require(cardNumber in CARD_NUMBER_RANGE)
+        cardName = when (cardNumber) {
+            11 -> "J"
+            12 -> "Q"
+            13 -> "K"
+            else -> cardNumber.toString()
+        }
+        cardValue = cardNumber % 11
+    }
+
+    override fun toString(): String = "$suit$cardName"
+
+    companion object {
+        private val CARD_NUMBER_RANGE = 1..13
     }
 }

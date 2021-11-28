@@ -5,7 +5,7 @@
 ### 기능 구현 목록
 
 - [X] CardList, Deck 구현
-- [ ] User 구현
+- [X] User 구현
 - [ ] 진행을 위한 Game 구현
 
 ## 기능 요구사항

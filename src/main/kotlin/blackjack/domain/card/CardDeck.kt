@@ -1,8 +1,8 @@
 package blackjack.domain.card
 
 import blackjack.domain.ExceptionTypes.WRONG_CARD_SIZE
-import blackjack.domain.card.emblem.CardEmblem
-import blackjack.domain.card.emblem.EmblemTypes
+import blackjack.domain.card.suit.CardSuit
+import blackjack.domain.card.suit.SuitTypes
 
 object CardDeck {
     private val cardList: List<Card>
@@ -10,7 +10,7 @@ object CardDeck {
 
     init {
         val newCardList: MutableList<Card> = mutableListOf()
-        EmblemTypes.values()
+        SuitTypes.values()
             .map { createCards(it.types) }
             .forEach(newCardList::addAll)
         require(newCardList.size == FULL_SIZE_OF_DECK) { WRONG_CARD_SIZE }
@@ -21,5 +21,5 @@ object CardDeck {
 
     private fun getShuffledCards() = cardList.toMutableList().shuffled()
 
-    private fun createCards(emblem: CardEmblem) = (1..13).map { Card(emblem, it) }
+    private fun createCards(emblem: CardSuit) = (1..13).map { Card(emblem, it) }
 }

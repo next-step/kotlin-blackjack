@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.emblem.Spade
+import blackjack.domain.card.suit.Spade
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.assertj.core.api.Assertions.assertThatNoException
 import org.junit.jupiter.api.Test

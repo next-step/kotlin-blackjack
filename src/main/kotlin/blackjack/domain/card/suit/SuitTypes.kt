@@ -1,6 +1,6 @@
-package blackjack.domain.card.emblem
+package blackjack.domain.card.suit
 
-enum class EmblemTypes(val types: CardEmblem) {
+enum class SuitTypes(val types: CardSuit) {
     Clover(Clover()),
     Spade(Spade()),
     Heart(Heart()),
