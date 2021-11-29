@@ -2,7 +2,6 @@ package blackJack.domain.result
 
 import blackJack.domain.card.BlackJack
 import blackJack.domain.card.Cards
-import blackJack.domain.player.Dealer
 import blackJack.domain.player.Player
 import blackJack.domain.player.StateImpl
 import org.assertj.core.api.Assertions.assertThat
