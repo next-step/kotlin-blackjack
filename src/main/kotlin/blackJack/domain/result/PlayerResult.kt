@@ -14,7 +14,7 @@ class PlayerResult(
     companion object {
         fun winOrLose(player: Player, dealer: Dealer): PlayerResult {
             val playerWinDrawLose = WinDrawLose.from(player, dealer)
-            val bettingResult = BettingResult.of(player, dealer, playerWinDrawLose)
+            val bettingResult = BettingResult.of(player, playerWinDrawLose)
             return PlayerResult(player.name, playerWinDrawLose, bettingResult)
         }
     }

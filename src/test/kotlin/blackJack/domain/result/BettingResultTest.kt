@@ -17,7 +17,7 @@ class BettingResultTest {
         val player = Player.of("name").apply {
             this.bet(10000)
         }
-        val bettingResult = BettingResult.of(player, Dealer(), WinDrawLose.WIN)
+        val bettingResult = BettingResult.of(player, WinDrawLose.WIN)
 
         // when
         val profit = bettingResult.profit
@@ -32,7 +32,7 @@ class BettingResultTest {
         val player = Player.of("name").apply {
             this.bet(10000)
         }
-        val bettingResult = BettingResult.of(player, Dealer(), WinDrawLose.DRAW)
+        val bettingResult = BettingResult.of(player, WinDrawLose.DRAW)
 
         // when
         val profit = bettingResult.profit
@@ -47,7 +47,7 @@ class BettingResultTest {
         val player = Player.of("name").apply {
             this.bet(10000)
         }
-        val bettingResult = BettingResult.of(player, Dealer(), WinDrawLose.LOSE)
+        val bettingResult = BettingResult.of(player, WinDrawLose.LOSE)
 
         // when
         val profit = bettingResult.profit
@@ -63,28 +63,12 @@ class BettingResultTest {
         val player = Player("name", StateImpl(Cards(listOf()), BlackJack)).apply {
             this.bet(10000)
         }
-        val bettingResult = BettingResult.of(player, Dealer(), WinDrawLose.WIN)
+        val bettingResult = BettingResult.of(player, WinDrawLose.WIN)
 
         // when
         val profit = bettingResult.profit
 
         // then
         assertThat(profit).isEqualTo(15000)
-    }
-
-    @Test
-    fun `플레이어와 딜러가 모두 블랙잭인 상태는 수익금은 없다`() {
-        // given
-        val player = Player("name", StateImpl(Cards(listOf()), BlackJack)).apply {
-            this.bet(10000)
-        }
-        val bettingResult =
-            BettingResult.of(player, Dealer(status = StateImpl(Cards(listOf()), BlackJack)), WinDrawLose.DRAW)
-
-        // when
-        val profit = bettingResult.profit
-
-        // then
-        assertThat(profit).isEqualTo(0)
     }
 }
