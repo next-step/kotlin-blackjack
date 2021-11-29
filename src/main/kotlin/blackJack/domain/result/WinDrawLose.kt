@@ -16,12 +16,12 @@ enum class WinDrawLose {
             }
 
         private fun playerScoreGraterThenDealerScore(player: Player, dealer: Dealer) =
-            !player.isBustPlayer() && player.getScore() > dealer.getScore()
+            !player.isBustPlayer() && (player.getScore() > dealer.getScore())
 
         private fun playerScoreEqualDealerScore(player: Player, dealer: Dealer) =
             player.getScore() == dealer.getScore()
 
         private fun dealerScoreGraterThenPlayerScore(dealer: Dealer, player: Player) =
-            !dealer.isBustPlayer() && dealer.getScore() > player.getScore()
+            !dealer.isBustPlayer() && (dealer.getScore() > player.getScore())
     }
 }
