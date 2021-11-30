@@ -2,8 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.game.Bettings
-import blackjack.domain.game.GameResult
 
 class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(profile, cards) {
 
@@ -37,10 +35,6 @@ class Gamer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(prof
 
     override fun canReceiveCard(): Boolean {
         return getHighestPoint() <= CAN_ACHIEVE_POINT
-    }
-
-    override fun judge(bettings: Bettings, players: List<Player>): GameResult {
-        throw IllegalStateException(JUDGE_NOT_ALLOWED)
     }
 
     companion object {

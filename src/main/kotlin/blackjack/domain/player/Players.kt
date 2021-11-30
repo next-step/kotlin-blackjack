@@ -86,9 +86,8 @@ data class Players private constructor(val players: List<Player>) : List<Player>
     }
 
     fun getResult(bettings: Bettings): GameResult {
-        val dealer = getDealer()
+        val dealer = getDealer() as Dealer
         val gamers = getGamers()
-        requireNotNull(dealer)
         return dealer.judge(bettings, gamers)
     }
 

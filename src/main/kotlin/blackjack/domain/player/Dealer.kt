@@ -28,7 +28,7 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY) : BlackJackPlayer(pro
         return getHighestPoint() <= CAN_ACHIEVE_POINT
     }
 
-    override fun judge(bettings: Bettings, gamers: List<Player>): GameResult {
+    fun judge(bettings: Bettings, gamers: List<Player>): GameResult {
         val result = mutableMapOf<Player, List<Score>>()
         if (getHighestPoint() > MAX_SCORE) {
             return setGamerWin(gamers, bettings, result)
