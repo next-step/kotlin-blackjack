@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Hand
 import blackjack.domain.card.suit.Diamond
 import blackjack.domain.user.User
 import org.assertj.core.api.Assertions.assertThat
@@ -17,6 +16,7 @@ class UserTest {
         val actualName = user.name
         assertThat(actualName).isEqualTo(predictedName)
     }
+
     @Test
     fun `유저가 가지고 있는 카드 목록을 가져 올 수 있다`() {
         val user = User("player")
@@ -26,6 +26,20 @@ class UserTest {
         }
         val actualResult = user.getCards()
         assertThat(actualResult).contains(Card(Diamond(), 1), Card(Diamond(), 9))
+    }
+
+    @Test
+    fun `유저가 가지고 있는 카드값 합을 가져 올 수 있다`() {
+        val user = User("player")
+        with(user) {
+            addCardToHand(Card(Diamond(), 1))
+            addCardToHand(Card(Diamond(), 9))
+        }
+        val predictedResult = 10
+        assertThat(user.getHandValue()).isEqualTo(predictedResult)
+        user.addCardToHand(Card(Diamond(), 1))
+        val predictedBlackjackResult = 21
+        assertThat(user.getHandValue()).isEqualTo(predictedBlackjackResult)
     }
 
     @Test

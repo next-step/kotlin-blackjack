@@ -3,8 +3,8 @@ package blackjack.domain.card
 import blackjack.domain.card.suit.CardSuit
 
 data class Card(val suit: CardSuit, val cardNumber: Int) {
-    private val cardName: String
     val cardValue: Int
+    val cardName: String
 
     init {
         require(cardNumber in CARD_NUMBER_RANGE)
@@ -14,12 +14,11 @@ data class Card(val suit: CardSuit, val cardNumber: Int) {
             13 -> "K"
             else -> cardNumber.toString()
         }
-        cardValue = cardNumber % 11
+        cardValue = cardNumber.coerceAtMost(MAXIMUM_VALUE_OF_CARD)
     }
-
-    override fun toString(): String = "$suit$cardName"
 
     companion object {
         private val CARD_NUMBER_RANGE = 1..13
+        private const val MAXIMUM_VALUE_OF_CARD = 10
     }
 }

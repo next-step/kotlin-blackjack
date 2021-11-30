@@ -5,8 +5,8 @@ import blackjack.domain.card.suit.CardSuit
 import blackjack.domain.card.suit.SuitTypes
 
 object CardDeck {
-    private val cardList: List<Card>
     private const val FULL_SIZE_OF_DECK = 52
+    private val cardList: List<Card>
 
     init {
         val newCardList: MutableList<Card> = mutableListOf()

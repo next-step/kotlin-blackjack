@@ -11,4 +11,6 @@ class User(val name: String) {
     fun isHandAddable() = hand.isAddAble()
 
     fun getCards() = hand.getCards()
+
+    fun getHandValue() = hand.getValue()
 }

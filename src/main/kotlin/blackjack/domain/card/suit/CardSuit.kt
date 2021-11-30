@@ -7,4 +7,8 @@ sealed class CardSuit(val suit: String) {
             return suit == other.suit
         return false
     }
+
+    override fun hashCode(): Int {
+        return suit.hashCode()
+    }
 }
