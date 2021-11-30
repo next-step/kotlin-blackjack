@@ -5,7 +5,7 @@ import java.math.BigDecimal
 @JvmInline
 value class Credit(val value: BigDecimal) {
 
-    fun subtract(credit: Credit): Credit {
+    operator fun minus(credit: Credit): Credit {
         return Credit(this.value.subtract(credit.value))
     }
 

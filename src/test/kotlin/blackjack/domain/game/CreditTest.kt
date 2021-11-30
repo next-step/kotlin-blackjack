@@ -17,7 +17,7 @@ internal class CreditTest {
     fun `금액을 감소하면 줄어든 금액을 리턴한다`() {
         val givenCredit = Credit.from(1000)
 
-        val actual = givenCredit.subtract(Credit.from(500))
+        val actual = givenCredit.minus(Credit.from(500))
 
         assertThat(actual).isEqualTo(Credit.from(500))
     }
