@@ -1,7 +1,9 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.user.User
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerList
+import blackjack.domain.player.PlayerName
 import blackjack.ui.InputView.readInputForMoreCard
 import blackjack.ui.InputView.readInputForPlayer
 import blackjack.ui.ResultView
@@ -14,13 +16,13 @@ fun main() {
     blackjackGame.getPlayerList().forEach(ResultView::printPlayerResult)
 }
 
-fun getPlayerNameList(): List<String> {
+fun getPlayerNameList(): List<PlayerName> {
     ResultView.printRequestPlayerNames()
     return readInputForPlayer()
 }
 
-fun initBlackjackGame(playerNameList: List<String>): BlackjackGame {
-    val blackjackGame = BlackjackGame(playerNameList)
+fun initBlackjackGame(playerNameList: List<PlayerName>): BlackjackGame {
+    val blackjackGame = BlackjackGame(PlayerList.createPlayerList(playerNameList))
     ResultView.printAddCardsForInit(playerNameList.joinToString(", "))
     blackjackGame.getPlayerList()
         .forEach(ResultView::printPlayerHand)
@@ -33,18 +35,18 @@ fun playBlackjackGame(blackjackGame: BlackjackGame) {
         .forEach(blackjackGame::checkUserCardAddable)
 }
 
-fun BlackjackGame.checkUserCardAddable(user: User) {
-    if (user.isHandAddable())
-        takeMoreCard(user)
+fun BlackjackGame.checkUserCardAddable(player: Player) {
+    if (player.isHandAddable())
+        takeMoreCard(player)
 }
 
-fun BlackjackGame.takeMoreCard(user: User) {
-    printAskTakeMoreCard(user)
+fun BlackjackGame.takeMoreCard(player: Player) {
+    printAskTakeMoreCard(player)
     val result = readInputForMoreCard()
     if (result) {
-        addCardToPlayer(user)
-        ResultView.printPlayerHand(user)
-        return checkUserCardAddable(user)
+        addCardToPlayer(player)
+        ResultView.printPlayerHand(player)
+        return checkUserCardAddable(player)
     }
-    ResultView.printPlayerHand(user)
+    ResultView.printPlayerHand(player)
 }

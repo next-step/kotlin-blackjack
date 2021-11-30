@@ -1,9 +1,9 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 
-class User(val name: String) {
+class Player(val name: PlayerName) {
     private val hand = Hand()
 
     fun addCardToHand(card: Card) = hand.addCardToHand(card)
@@ -12,5 +12,5 @@ class User(val name: String) {
 
     fun getCards() = hand.getCards()
 
-    fun getHandValue() = hand.getValue()
+    fun getHandValues() = hand.getValues()
 }

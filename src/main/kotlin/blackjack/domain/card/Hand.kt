@@ -12,16 +12,17 @@ class Hand {
     fun isAddAble(): Boolean = minValueOfHand() < VALUE_OF_WIN && !isBlackJackHand()
 
     fun getCards() = cardList.toList()
-    fun getValue(): Int {
+
+    fun getValues(): List<Int> {
         if (isBlackJackHand())
-            return VALUE_OF_WIN
+            return listOf(VALUE_OF_WIN)
         val numberOfAces = getNumberOfAceCards()
         val valueWithoutAces = getCardsWithoutAce().sumOf { it.cardValue }
         val ableValues = (numberOfAces downTo 0)
             .map { ACE_VALUE * it + ACE_VALUE_ALTERNATIVE * (numberOfAces - it) }
             .map { it + valueWithoutAces }
             .toHashSet()
-        return ableValues.minOrNull() ?: 0
+        return ableValues.toList()
     }
 
     private fun minValueOfHand(): Int = cardList.sumOf { it.cardValue }
@@ -41,7 +42,7 @@ class Hand {
     private fun getNumberOfAceCards() = cardList.filter { it.cardValue == ACE_VALUE }.size
 
     companion object {
-        private const val VALUE_OF_WIN = 21
+        const val VALUE_OF_WIN = 21
         private const val ACE_VALUE = 1
         private const val ACE_VALUE_ALTERNATIVE = 11
     }
