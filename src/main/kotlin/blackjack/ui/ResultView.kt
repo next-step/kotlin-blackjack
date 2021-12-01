@@ -71,24 +71,24 @@ class ResultView(private val outputStrategy: OutputStrategy) {
         outputStrategy.execute(
             PLAYER_PROFIT_RESULT.format(
                 dealer.name.name,
-                dealerMatchResultJoinToString(players, dealer, bets)
+                dealerProfit(players, dealer, bets)
             )
         )
-        outputStrategy.execute(gamePlayersMatchResultJoinToString(players, dealer, bets))
+        outputStrategy.execute(gamersProfitJoinToString(players, dealer, bets))
         outputStrategy.execute(BLANK)
     }
 
-    private fun gamePlayersMatchResultJoinToString(gamers: Players, dealer: Player, bets: Bets): String =
-        gamers.players
-            .associateWith { it.profit(dealer, bets.betMoney(it.name)) }
-            .toList()
-            .joinToString(NEW_LINE) { PLAYER_PROFIT_RESULT.format(it.first.name.name, it.second.toInt()) }
-
-    private fun dealerMatchResultJoinToString(gamers: Players, dealer: Player, bets: Bets): Int =
+    private fun dealerProfit(gamers: Players, dealer: Player, bets: Bets): Int =
         gamers.players
             .map { dealer.profit(it, bets.betMoney(it.name)) }
             .reduce(Double::plus)
             .toInt()
+
+    private fun gamersProfitJoinToString(gamers: Players, dealer: Player, bets: Bets): String =
+        gamers.players
+            .associateWith { it.profit(dealer, bets.betMoney(it.name)) }
+            .toList()
+            .joinToString(NEW_LINE) { PLAYER_PROFIT_RESULT.format(it.first.name.name, it.second.toInt()) }
 
     private fun denominationName(denomination: Denomination): String {
         return when (denomination) {
