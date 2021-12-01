@@ -33,7 +33,7 @@ object GameController {
 
     private fun hitPlayer(players: Players) {
         players.forEach { player ->
-            while (player.canHit() && InputView.acceptMoreCard(player) == "y") {
+            while (player.canHit() && InputView.acceptMoreCard(player)) {
                 player.hit(cardDeck.next())
                 OutputView.printPlayerDrawnCard(player)
             }
