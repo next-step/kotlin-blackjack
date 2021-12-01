@@ -5,7 +5,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) : List<
     fun getScore(): Int = NumberType.getScore(this)
 
     fun countAce(): Int {
-        return cards.count { it.hasAce() }
+        return cards.count(Card::hasAce)
     }
 
     fun addCard(card: Card) {
