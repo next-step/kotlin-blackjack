@@ -13,9 +13,7 @@ object InputView {
         return readLine()
             ?.split(COMMA_DELIMITER)
             ?.map { it.trim() }
-            ?: throw IllegalArgumentException(
-                INVALID_INPUT_MESSAGE
-            )
+            ?: throw IllegalArgumentException(INVALID_INPUT_MESSAGE)
     }
 
     fun acceptMoreCard(player: Player): String {
