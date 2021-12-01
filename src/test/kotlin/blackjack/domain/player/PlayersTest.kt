@@ -12,7 +12,7 @@ internal class PlayersTest {
     @ParameterizedTest(name = "입력 값 : {0}")
     @ValueSource(strings = ["a", "a,b", "a,b,c"])
     fun `이름과 분리 전략을 사용해서 플레이어들을 생성할 수 있다`(names: String) {
-        val expectedGamePlayers = names.split(",").map { GamePlayer(Name(it)) }
+        val expectedGamePlayers = names.split(",").map { Gamer(Name(it)) }
         val expected = Players.from(expectedGamePlayers)
 
         val players = Players.of(names) { it.split(",") }

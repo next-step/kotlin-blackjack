@@ -5,7 +5,7 @@ import blackjack.domain.player.state.hands.Hands
 
 data class Ready(override val hands: Hands = Hands.EMPTY) : Running(hands) {
 
-    override fun draw(card: Card): PlayerState {
+    override fun draw(card: Card): State {
         val hands = hands.draw(card)
         return when {
             hands.isReady() -> Ready(hands)

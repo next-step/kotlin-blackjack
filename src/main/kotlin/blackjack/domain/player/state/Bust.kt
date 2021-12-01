@@ -4,10 +4,16 @@ import blackjack.domain.player.state.hands.Hands
 
 data class Bust(override val hands: Hands) : Finish(hands) {
 
-    override fun match(other: PlayerState): MatchResult {
-        if (other.hands.isBust()) {
-            return MatchResult.DRAW
+    override fun earningsRate(otherState: State): Double {
+        return when (otherState as Finish) {
+            is BlackJack -> LOSE_RATE
+            is Bust -> DRAW_RATE
+            is Stay -> LOSE_RATE
         }
-        return MatchResult.LOSE
+    }
+
+    companion object {
+        private const val DRAW_RATE = 0.0
+        private const val LOSE_RATE = -1.0
     }
 }

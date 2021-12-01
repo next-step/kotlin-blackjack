@@ -3,6 +3,7 @@ package blackjack.domain.player.state.hands
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
+import blackjack.domain.util.PlayerStateTestFixture.createHands
 import blackjack.error.DuplicatePlayingCardException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertAll
@@ -10,11 +11,11 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-@DisplayName("카드들(Cards)")
+@DisplayName("패(Hands)")
 internal class HandsTest {
 
     @Test
-    fun `카드들에는 빈값이 들어올 수 있다`() {
+    fun `비어있을 수 있다`() {
         val hands = Hands.EMPTY
 
         assertAll(
@@ -24,7 +25,7 @@ internal class HandsTest {
     }
 
     @Test
-    fun `카드들에 새로운 카드가 추가될 수 있다`() {
+    fun `새로운 카드를 추가할 수 있다`() {
         val extraCard = Card(Suit.CLUB, Denomination.ACE)
         val expected = Hands.from(listOf(extraCard))
 
@@ -35,7 +36,7 @@ internal class HandsTest {
     }
 
     @Test
-    fun `카드들에 새로운 카드들이 추가될 때 중복된 카드가 들어오면 예외를 발생한다`() {
+    fun `새로운 카드를 추가할 때 중복된 카드는 들어올 수 없다`() {
         val extraCard = Card(Suit.CLUB, Denomination.ACE)
         val hands = Hands.EMPTY
             .draw(extraCard)
@@ -45,31 +46,24 @@ internal class HandsTest {
     }
 
     @Test
-    fun `카드들은 점수의 합을 반환한다`() {
-        val firstExtraCard = Card(Suit.CLUB, Denomination.ACE)
-        val secondExtraCard = Card(Suit.CLUB, Denomination.TWO)
-        val thirdExtraCard = Card(Suit.CLUB, Denomination.THREE)
-        val fourthExtraCard = Card(Suit.CLUB, Denomination.FOUR)
-        val fifthExtraCard = Card(Suit.CLUB, Denomination.FIVE)
-        val sixExtraCard = Card(Suit.CLUB, Denomination.SIX)
-
-        val hands = Hands.EMPTY
-            .draw(firstExtraCard)
-            .draw(secondExtraCard)
-            .draw(thirdExtraCard)
-            .draw(fourthExtraCard)
-            .draw(fifthExtraCard)
-            .draw(sixExtraCard)
+    fun `카드들의 점수 합을 반환한다`() {
+        val hands = createHands(
+            Suit.CLUB,
+            Denomination.ACE,
+            Denomination.TWO,
+            Denomination.THREE,
+            Denomination.FOUR,
+            Denomination.FIVE,
+            Denomination.SIX
+        )
 
         val score = hands.score()
         assertThat(score.score).isEqualTo(21)
     }
 
     @Test
-    fun `ACE 는 21애 가까운 수가 되도록 11을 반환한다`() {
-        val playingCards = Hands.EMPTY
-            .draw(Card(Suit.CLUB, Denomination.ACE))
-            .draw(Card(Suit.CLUB, Denomination.TEN))
+    fun `패에 ACE가 있고 나머지 점수가 10이하라면 21에 가까운 수를 반환한다`() {
+        val playingCards = createHands(Suit.CLUB, Denomination.ACE, Denomination.TEN)
 
         val score = playingCards.score()
         assertThat(score.score).isEqualTo(21)

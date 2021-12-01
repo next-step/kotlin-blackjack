@@ -4,7 +4,7 @@ import blackjack.domain.player.Dealer.Companion.DEALER_DRAW_STANDARD
 import blackjack.error.ScoreOutOfBoundsException
 
 @JvmInline
-value class Score private constructor(val score: Int) {
+value class Score private constructor(val score: Int): Comparable<Score> {
 
     operator fun plus(other: Score): Score = from(score + other.score)
 
@@ -16,7 +16,7 @@ value class Score private constructor(val score: Int) {
 
     fun isOverDealerDrawStandard(): Boolean = (score > DEALER_DRAW_STANDARD)
 
-    fun compareTo(other: Score): Int = score.compareTo(other.score)
+    override fun compareTo(other: Score): Int = score.compareTo(other.score)
 
     companion object {
         private const val MINIMUM_SCORE = 0

@@ -1,9 +1,12 @@
 package blackjack
 
+import blackjack.domain.bet.Bets
+import blackjack.domain.bet.Money
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.player.name.Name
 import blackjack.strategy.draw.DrawStrategy
 import blackjack.strategy.draw.HitDrawStrategy
 import blackjack.strategy.draw.ReadyDrawStrategy
@@ -23,56 +26,73 @@ class BlackJackApplication(
 ) {
     fun run() {
         val deck = Deck.initialize(CardsRandomShuffleStrategy)
-        val dealer = readyDealer(deck, ReadyDrawStrategy)
-        val gamePlayer = readyGamePlayer(deck, ReadyDrawStrategy)
-        resultView.showReadiedPlayers(dealer, gamePlayer)
+        var players = players()
+        var dealer = Dealer()
+        val bets = bettingBoard(players)
 
-        val endedGamePlayer = gamePlayerStartGame(gamePlayer, deck, HitDrawStrategy)
-        val endedDealer = dealerStartGame(dealer, deck, HitDrawStrategy)
-        resultView.showEndedPlayers(endedDealer, endedGamePlayer)
+        val readiedPlayers = readiedPlayers(players, deck, ReadyDrawStrategy)
+        val readiedDealer = readiedDealer(dealer, deck, ReadyDrawStrategy)
+        resultView.showReadiedPlayers(readiedDealer, readiedPlayers)
 
-        resultView.showMatchResult(endedDealer, endedGamePlayer)
+        val endedPlayers = startGameOnGamePlayer(readiedPlayers, deck, HitDrawStrategy)
+        val endedDealer = startGameOneDealer(readiedDealer, deck, HitDrawStrategy)
+        resultView.showEndedPlayers(endedDealer, endedPlayers)
+
+        resultView.showProfitResult(endedDealer, endedPlayers, bets)
     }
 
-    private fun readyDealer(deck: Deck, drawStrategy: DrawStrategy): Player =
-        Dealer().draw(deck, drawStrategy)
-
-    private fun readyGamePlayer(deck: Deck, drawStrategy: DrawStrategy): Players =
-        players().players
-            .map { it.draw(deck, drawStrategy) }
-            .let { Players.from(it) }
-
-    private fun players(): Players {
-        return try {
-            Players.of(inputView.askPlayerInformation(), SingleCommaSplitStrategy)
+    private fun players(): Players =
+        try {
+            Players.of(inputView.askPlayersInformation(), SingleCommaSplitStrategy)
         } catch (e: Exception) {
             errorView.showErrorMessage(e.message.toString())
             players()
         }
+
+    private fun bettingBoard(players: Players): Bets {
+        return Bets.of(
+            players.players
+                .map { it.name }
+                .associateWith { betMoney(it) }
+        )
     }
 
-    private fun gamePlayerStartGame(gamePlayer: Players, deck: Deck, drawStrategy: DrawStrategy) =
-        gamePlayer.players
+    private fun betMoney(name: Name): Money =
+        try {
+            Money(inputView.askPlayersBetMoney(name.name))
+        } catch (e: Exception) {
+            errorView.showErrorMessage(e.message.toString())
+            betMoney(name)
+        }
+
+    private fun readiedDealer(dealer: Dealer, deck: Deck, drawStrategy: ReadyDrawStrategy): Player =
+        dealer.draw(deck, drawStrategy)
+
+    private fun readiedPlayers(players: Players, deck: Deck, drawStrategy: ReadyDrawStrategy): Players =
+        players.players
+            .map { it.draw(deck, drawStrategy) }
+            .let { Players.from(it) }
+
+    private fun startGameOnGamePlayer(players: Players, deck: Deck, drawStrategy: DrawStrategy): Players =
+        players.players
             .map { drawOrStay(it, deck, drawStrategy) }
             .let { Players.from(it) }
 
-    private fun drawOrStay(player: Player, deck: Deck, drawStrategy: DrawStrategy): Player {
-        return when {
+    private fun drawOrStay(player: Player, deck: Deck, drawStrategy: DrawStrategy): Player =
+        when {
             player.isFinished() -> player
             !askDrawable(player) -> player.stay()
             else -> draw(player, deck, drawStrategy)
         }
-    }
 
-    private fun askDrawable(player: Player): Boolean {
-        return try {
+    private fun askDrawable(player: Player): Boolean =
+        try {
             val command = Command.values(inputView.askDrawable(player.name.name))
-            return command.isDrawable
+            command.isDrawable
         } catch (e: Exception) {
             errorView.showErrorMessage(e.message.toString())
             askDrawable(player)
         }
-    }
 
     private fun draw(player: Player, deck: Deck, drawStrategy: DrawStrategy): Player {
         val nowPlayer = player.draw(deck, drawStrategy)
@@ -80,7 +100,7 @@ class BlackJackApplication(
         return drawOrStay(nowPlayer, deck, drawStrategy)
     }
 
-    private fun dealerStartGame(dealer: Player, deck: Deck, hitDrawStrategy: HitDrawStrategy): Player {
+    private fun startGameOneDealer(dealer: Player, deck: Deck, hitDrawStrategy: HitDrawStrategy): Player {
         var nowDealer = dealer
         while (!nowDealer.isFinished()) {
             resultView.noticeDealerDraw()
