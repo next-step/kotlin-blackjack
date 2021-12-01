@@ -28,24 +28,28 @@ internal class BlackJackTest {
     }
 
     @Test
-    fun `BlackJack 상태는 스코어는 21이다`() {
-        assertThat(blackJack.score()).isEqualTo(Score.from(21))
+    fun `블랙잭일 때의 점수는 21이다`() {
+        val actual = blackJack.score()
+
+        assertThat(actual).isEqualTo(Score.from(21))
     }
 
     @Test
-    fun `BlackJack 상태는 실행이 종료된 상태이다`() {
-        assertThat(blackJack.isFinished()).isTrue
+    fun `블랙잭일 때는 실행이 종료된 상태이다`() {
+        val actual = blackJack.isFinished()
+
+        assertThat(actual).isTrue
     }
 
     @Test
-    fun `BlackJack 상태는 Stay 상태가 될 수 없다`() {
+    fun `블랙잭일 때는 스테이 상태가 될 수 없다`() {
         val exception = assertThrows<InvalidMapToPlayStateException> { blackJack.stay() }
 
         assertThat(exception.message).isEqualTo("'%s' 타입은 특정 플레이 상태로 전환이 불가능합니다".format(blackJack::class.toString()))
     }
 
     @Test
-    fun `BlackJack 상태는 카드를 추가할 수 없다`() {
+    fun `블랙잭일 때는 카드를 추가할 수 없다`() {
         val extraCard = Card(Suit.CLUB, Denomination.THREE)
         val exception = assertThrows<InvalidDrawException> { blackJack.draw(extraCard) }
 
@@ -53,32 +57,59 @@ internal class BlackJackTest {
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 BlakJack일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(blackJack.earningsRate(HEART_BLACKJACK)).isEqualTo(0.0)
+    fun `상대도 블랙잭일 때 수익률은 0이다`() {
+        val otherState = HEART_BLACKJACK
+
+        val actual = blackJack.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(0.0)
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 Bust일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(blackJack.earningsRate(HEART_MINIMUM_BUST)).isEqualTo(1.5)
+    fun `상대가 버스트일 때 수익률은 1배 반이다`() {
+        val otherState = HEART_MINIMUM_BUST
+
+        val actual = blackJack.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(1.5)
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 Stay일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(blackJack.earningsRate(HEART_MAXIMUM_STAY)).isEqualTo(1.5)
+    fun `상대가 스테이일 때 수익률은 1배 반이다`() {
+        val otherState = HEART_MAXIMUM_STAY
+
+        val actual = blackJack.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(1.5)
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 BlakJack일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(blackJack.profit(HEART_BLACKJACK, Money(10))).isEqualTo(0.0)
+    fun `상대도 블랙잭일 때는 배팅 금액을 모두 돌려받는다`() {
+        val otherState = HEART_BLACKJACK
+        val betMoney = Money(10)
+
+        val actual = blackJack.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(0.0)
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 Bust일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(blackJack.profit(HEART_MINIMUM_BUST, Money(10))).isEqualTo(15.0)
+    fun `상대가 버스트일 때는 배팅 금액과 1배 반을 받는다`() {
+        val otherState = HEART_MINIMUM_BUST
+        val betMoney = Money(10)
+
+        val actual = blackJack.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(15.0)
     }
 
     @Test
-    fun `BlackJack 상태는 상대가 Stay일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(blackJack.profit(HEART_MAXIMUM_STAY, Money(10))).isEqualTo(15.0)
+    fun `상대가 스테이일 때는 배팅 금액과 1배 반을 받는다`() {
+        val otherState = HEART_MAXIMUM_STAY
+        val betMoney = Money(10)
+
+        val actual = blackJack.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(15.0)
     }
 }

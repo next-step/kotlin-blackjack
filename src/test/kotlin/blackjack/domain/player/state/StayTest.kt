@@ -31,7 +31,7 @@ internal class StayTest {
     }
 
     @Test
-    fun `Stay 상태는 스코어는 0이 아니다`() {
+    fun `스테이 상태의 점수는 0이 아니다`() {
         assertAll(
             { assertThat(minimumStay.score()).isNotEqualTo(Score.ZERO) },
             { assertThat(minimumStay.score().isBust()).isFalse },
@@ -39,19 +39,21 @@ internal class StayTest {
     }
 
     @Test
-    fun `Stay 상태는 실행이 종료된 상태이다`() {
-        assertThat(minimumStay.isFinished()).isTrue
+    fun `실행이 종료된 상태이다`() {
+        val actual = minimumStay.isFinished()
+
+        assertThat(actual).isTrue
     }
 
     @Test
-    fun `Stay 상태는 Stay 상태가 될 수 없다`() {
+    fun `다른 스테이 상태가 될 수 없다`() {
         val exception = assertThrows<InvalidMapToPlayStateException> { minimumStay.stay() }
 
         assertThat(exception.message).isEqualTo("'%s' 타입은 특정 플레이 상태로 전환이 불가능합니다".format(minimumStay::class.toString()))
     }
 
     @Test
-    fun `Stay 상태는 카드를 추가할 수 없다`() {
+    fun `카드를 추가할 수 없다`() {
         val extraCard = Card(Suit.CLUB, Denomination.THREE)
 
         val exception = assertThrows<InvalidDrawException> { minimumStay.draw(extraCard) }
@@ -60,52 +62,97 @@ internal class StayTest {
     }
 
     @Test
-    fun `Stay 상태는 상대가 BlakJack일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(maximumStay.earningsRate(HEART_BLACKJACK)).isEqualTo(-1.0)
+    fun `상대가 블랙잭일 때 수익률은 1배 손실이다`() {
+        val otherState = HEART_BLACKJACK
+
+        val actual = maximumStay.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(-1.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 Bust일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(minimumStay.earningsRate(HEART_MINIMUM_BUST)).isEqualTo(1.0)
+    fun `상대가 버스트일 때 수익률은 1배다`() {
+        val otherState = HEART_MINIMUM_BUST
+
+        val actual = maximumStay.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(1.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신보다 큰 Stay일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(minimumStay.earningsRate(maximumStay)).isEqualTo(-1.0)
+    fun `상대가 자신보다 점수가 큰 스테이일 때 수익률은 1배 손실이다`() {
+        val otherState = maximumStay
+
+        val actual = minimumStay.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(-1.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신보다 작은 Stay일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(maximumStay.earningsRate(minimumStay)).isEqualTo(1.0)
+    fun `상대가 자신보다 작은 스테이일 때 수익률은 1배다`() {
+        val otherState = minimumStay
+
+        val actual = maximumStay.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(1.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신과 동일한 Stay일 경우의 수익률을 반환할 수 있다`() {
-        assertThat(maximumStay.earningsRate(maximumStay)).isEqualTo(0.0)
+    fun `상대가 자신과 동일한 스테이일 때 수익률은 0이다`() {
+        val otherState = maximumStay
+
+        val actual = maximumStay.earningsRate(otherState)
+
+        assertThat(actual).isEqualTo(0.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 BlakJack일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(maximumStay.profit(HEART_BLACKJACK, Money(10))).isEqualTo(-10.0)
+    fun `상대가 블랙잭일 때는 배팅 금액을 모두 잃는다`() {
+        val otherState = HEART_BLACKJACK
+        val betMoney = Money(10)
+
+        val actual = maximumStay.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(-10.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 Bust일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(minimumStay.profit(HEART_MINIMUM_BUST, Money(10))).isEqualTo(10.0)
+    fun `상대가 버스트일 때 배팅 금액과 1배를 받는다`() {
+        val otherState = HEART_MINIMUM_BUST
+        val betMoney = Money(10)
+
+        val actual = minimumStay.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(10.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신보다 큰 Stay일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(minimumStay.profit(maximumStay, Money(10))).isEqualTo(-10.0)
+    fun `상대가 자신보다 큰 스테이일 때 배팅 금액을 모두 잃는다`() {
+        val otherState = maximumStay
+        val betMoney = Money(10)
+
+        val actual = minimumStay.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(-10.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신보다 작은 Stay일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(maximumStay.profit(minimumStay, Money(10))).isEqualTo(10.0)
+    fun `상대가 자신보다 작은 스테이일 때 배팅 금액과 1배를 받는다`() {
+        val otherState = minimumStay
+        val betMoney = Money(10)
+
+        val actual = maximumStay.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(10.0)
     }
 
     @Test
-    fun `Stay 상태는 상대가 자신과 동일한 Stay일 경우의 이윤을 반환할 수 있다`() {
-        assertThat(maximumStay.profit(maximumStay, Money(10))).isEqualTo(0.0)
+    fun `상대가 자신과 동일한 스테이일 때 배팅 금액을 모두 돌려받는다`() {
+        val otherState = maximumStay
+        val betMoney = Money(10)
+
+        val actual = maximumStay.profit(otherState, betMoney)
+
+        assertThat(actual).isEqualTo(0.0)
     }
 }

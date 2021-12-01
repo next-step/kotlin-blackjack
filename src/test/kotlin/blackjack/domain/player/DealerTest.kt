@@ -21,7 +21,6 @@ import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MAXIMUM_ST
 import blackjack.domain.util.PlayerStateTestFixture.StayFixture.HEART_MINIMUM_STAY
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
-import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -31,17 +30,7 @@ import org.junit.jupiter.params.provider.CsvSource
 internal class DealerTest {
 
     @Test
-    fun `디폴트 이름과 상태로 생성가능하다`() {
-        val dealer = Dealer()
-
-        assertAll(
-            { assertThat(dealer).isNotNull },
-            { assertThat(dealer).isExactlyInstanceOf(Dealer::class.java) }
-        )
-    }
-
-    @Test
-    fun `카드 전략에 따라 드로우를 할 수 있다`() {
+    fun `드로우 전략에 맞추어 카드를 드로우할 수 있다`() {
         val extraCard = Deck.initialize { it }.pop()
         val expected = Dealer(state = Ready().draw(extraCard))
 
@@ -51,7 +40,7 @@ internal class DealerTest {
     }
 
     @Test
-    fun `처음 뽑은 카드들이 21이면, BlackJack이다`() {
+    fun `처음 뽑은 카드들이 21이면, 블랙잭 상태이다`() {
         val dealer = Dealer()
             .draw(Deck.initialize { it }) {
                 listOf(
@@ -63,7 +52,7 @@ internal class DealerTest {
     }
 
     @Test
-    fun `처음 뽑은 카드들이 16이하면, Hit이다`() {
+    fun `처음 뽑은 카드들이 16이하면, 히트 상태이다`() {
         val dealer = Dealer()
             .draw(Deck.initialize { it }) {
                 listOf(Card(Suit.CLUB, Denomination.ACE), Card(Suit.CLUB, Denomination.TWO))
@@ -73,7 +62,7 @@ internal class DealerTest {
     }
 
     @Test
-    fun `처음 뽑은 카드들이 17이상이면, Stay 이다`() {
+    fun `처음 뽑은 카드들이 17이상이면, 스테이 상태 이다`() {
         val dealer = Dealer()
             .draw(Deck.initialize { it }) {
                 listOf(Card(Suit.CLUB, Denomination.TEN), Card(Suit.CLUB, Denomination.SEVEN))
@@ -94,7 +83,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
-    fun `BlackJack 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 블랙잭이고, 상대도 블랙잭 상태면 상대의 배팅 금액을 받지 못한다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_BLACKJACK)
         val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
 
@@ -104,7 +93,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
-    fun `BlackJack 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 블랙잭이고, 상대가 버스트 상태면 상대의 배팅 금액을 받는다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_BLACKJACK)
         val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
 
@@ -114,7 +103,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
-    fun `BlackJack 상태이고, 상대가 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 블랙잭이고, 상대가 스테이 상태면 상대의 배팅 금액을 받는다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_BLACKJACK)
         val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
 
@@ -124,7 +113,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:-15.0", "100:-150.0", "1000:-1500.0"], delimiter = ':')
-    fun `Bust 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 버스트이고, 상대가 블랙잭 상태면 상대의 배팅 금액의 1배와 반을 준다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_BUST)
         val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
 
@@ -134,7 +123,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
-    fun `Bust 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 버스트이고, 상대도 버스트 상태면 배팅 금액을 받지 못한다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_BUST)
         val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
 
@@ -144,7 +133,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:-10.0", "100:-100.0", "1000:-1000.0"], delimiter = ':')
-    fun `Bust 상태이고, 상대가 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 버스트이고, 상대가 스테이 상태면 배팅 금액만큼 준다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_BUST)
         val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
 
@@ -154,7 +143,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:-15.0", "100:-150.0", "1000:-1500.0"], delimiter = ':')
-    fun `Stay 상태이고, 상대가 BlackJack 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 스테이이고, 상대가 블랙잭 상태면 상대의 배팅 금액의 1배와 반을 준다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_STAY)
         val gamePlayer = Gamer(Name("김우재"), HEART_BLACKJACK)
 
@@ -164,7 +153,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
-    fun `Stay 상태이고, 상대가 Bust 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 스테이이고, 상대가 버스트상태면 상대의 배팅 금액으 받는다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_STAY)
         val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_BUST)
 
@@ -174,7 +163,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:-10.0", "100:-100.0", "1000:-1000.0"], delimiter = ':')
-    fun `Stay 상태이고, 상대가 자신보다 큰 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 스테이이고, 상대가 자신보다 큰 스테이 상태면 배팅 금액만큼 준다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_STAY)
         val gamePlayer = Gamer(Name("김우재"), HEART_MAXIMUM_STAY)
 
@@ -184,7 +173,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:0.0", "100:0.0", "1000:0.0"], delimiter = ':')
-    fun `Stay 상태이고, 상대가 자신과 동일한 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 스테이이고, 상대가 자신과 동일한 스테이 상태면 배팅 금액을 받지 못한다`(amount: Int, expected: Double) {
         val dealer = Dealer(state = CLUB_MINIMUM_STAY)
         val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_STAY)
 
@@ -194,7 +183,7 @@ internal class DealerTest {
 
     @ParameterizedTest(name = "입력 값: {0}")
     @CsvSource(value = ["10:10.0", "100:100.0", "1000:1000.0"], delimiter = ':')
-    fun `Stay 상태이고, 상대가 자신보다 작은 Stay 상태의 수익률을 반환한다`(amount: Int, expected: Double) {
+    fun `딜러가 스테이이고, 상대가 자신보다 작은 스테이 상태면 배팅 금액을 받는다`(amount: Int, expected: Double) {
         val gamePlayer = Gamer(Name("김우재"), HEART_MINIMUM_STAY)
         val dealer = Dealer(state = CLUB_MAXIMUM_STAY)
 

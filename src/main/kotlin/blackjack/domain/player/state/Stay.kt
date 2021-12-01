@@ -13,16 +13,14 @@ data class Stay(override val hands: Hands) : Finish(hands) {
     }
 
     private fun calculateRate(otherState: Finish): Double {
-        val compareValue = hands.score().compareTo(otherState.score())
         return when {
-            compareValue > COMPARE_CONDITION -> WIN_RATE
-            compareValue == COMPARE_CONDITION -> DRAW_RATE
+            hands.score() > otherState.score() -> WIN_RATE
+            hands.score() == otherState.score() -> DRAW_RATE
             else -> LOSE_RATE
         }
     }
 
     companion object {
-        private const val COMPARE_CONDITION = 0
         private const val WIN_RATE = 1.0
         private const val DRAW_RATE = 0.0
         private const val LOSE_RATE = -1.0
