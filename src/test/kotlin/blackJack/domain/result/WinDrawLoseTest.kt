@@ -31,7 +31,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(winOrLose).isEqualTo(WinDrawLose.WIN)
@@ -64,7 +64,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(player.isBustPlayer()).isTrue
@@ -98,7 +98,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(winOrLose).isEqualTo(WinDrawLose.WIN)
@@ -137,7 +137,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(winOrLose).isEqualTo(WinDrawLose.WIN)
@@ -164,7 +164,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(winOrLose).isEqualTo(WinDrawLose.LOSE)
@@ -191,7 +191,7 @@ internal class WinDrawLoseTest {
         }
 
         // when
-        val winOrLose = WinDrawLose.from(player,dealer)
+        val winOrLose = WinDrawLose.from(player, dealer)
 
         // then
         Assertions.assertThat(winOrLose).isEqualTo(WinDrawLose.DRAW)
