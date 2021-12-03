@@ -1,3 +1,3 @@
-package step1
+package resume
 
 sealed class Skill

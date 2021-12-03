@@ -1,4 +1,4 @@
-package step1
+package resume
 
 class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Skill> by skills {
     fun hard(name: String) {
