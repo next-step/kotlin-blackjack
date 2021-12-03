@@ -2,8 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import blackjack.domain.game.Bet
-import blackjack.domain.game.Betting
-import blackjack.domain.game.Credit
 import blackjack.domain.game.GameResult
 import blackjack.domain.game.Turn
 
@@ -56,12 +54,6 @@ data class Players private constructor(val players: List<Player>) : List<Player>
                 updateReceiveCards(it, turn, receivedCardPlayers, deck, playerCallback, dealerCallback)
         }
         return Players(receivedCardPlayers)
-    }
-
-    fun getBettings(bet: Bet): List<Betting> {
-        val gammers = getGamers().map { Betting(it, Credit.from(bet.getPlayerBetting(it))) }
-        val dealer = Betting(getDealer()!!, Credit.from(0))
-        return gammers + dealer
     }
 
     private fun updateReceiveCards(

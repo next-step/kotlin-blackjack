@@ -78,6 +78,5 @@ class Gamer(profile: Profile, cards: Cards = Cards.EMPTY, credit: Credit = Credi
 
     companion object {
         private const val CAN_ACHIEVE_POINT = 21
-        private const val JUDGE_NOT_ALLOWED = "게이머는 판정을 할 수 없습니다"
     }
 }

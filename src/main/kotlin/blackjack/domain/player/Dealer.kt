@@ -148,7 +148,6 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY, credit: Credit = Cred
         if (gamer.getHighestPoint() > MAX_SCORE) {
             scoreResult[this] = scoreResult.getOrDefault(this, emptyList()) + Score.WIN
             scoreResult[gamer] = listOf(Score.LOSE)
-
             betting = betting + gamer.loseBetting()
             betting = updateDealerWin(betting, gamer)
         }
@@ -156,7 +155,7 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY, credit: Credit = Cred
     }
 
     private fun updateDealerWin(players: List<Player>, gamer: Player): List<Player> {
-        var playersList = players.toMutableList()
+        val playersList = players.toMutableList()
         playersList.find { it is Dealer }?.let { it ->
             playersList.remove(it)
             playersList.add(it.winBetting(gamer))
@@ -165,7 +164,7 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY, credit: Credit = Cred
     }
 
     private fun updateDealerLose(players: List<Player>, gamer: Player): List<Player> {
-        var playersList = players.toMutableList()
+        val playersList = players.toMutableList()
         playersList.find { it is Dealer }?.let { it ->
             playersList.remove(it)
             playersList.add(it.loseBetting(gamer))
@@ -174,7 +173,7 @@ class Dealer(profile: Profile, cards: Cards = Cards.EMPTY, credit: Credit = Cred
     }
 
     private fun updateDealerBlackJackLose(players: List<Player>, gamer: Player): List<Player> {
-        var playersList = players.toMutableList()
+        val playersList = players.toMutableList()
         playersList.find { it is Dealer }?.let { it ->
             playersList.remove(it)
             playersList.add(it.loseBlackJack(gamer))
