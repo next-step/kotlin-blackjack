@@ -3,7 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.card.Deck
 import blackjack.domain.game.Bet
 import blackjack.domain.game.Betting
-import blackjack.domain.game.Bettings
 import blackjack.domain.game.Credit
 import blackjack.domain.game.GameResult
 import blackjack.domain.game.Turn
@@ -21,12 +20,16 @@ data class Players private constructor(val players: List<Player>) : List<Player>
         require(players.count { it is Dealer } == DEALER_COUNT)
     }
 
-    fun startInitPhase(deck: Deck): Players {
-        var initPhasedPlayers = players
+    fun startInitPhase(deck: Deck, getPlayerBetting: Bet): Players {
+        var initPhasedPlayers = holdBettings(getPlayerBetting)
         repeat(INIT_RECEIVE_CARD_COUNT) {
             initPhasedPlayers = receiveCardFromDeck(initPhasedPlayers, deck)
         }
         return Players(initPhasedPlayers)
+    }
+
+    private fun holdBettings(getPlayerBetting: Bet): List<Player> {
+        return players.map { it.holdBetting(getPlayerBetting) }.toList()
     }
 
     fun isAllPlayerTurnOff(): Boolean {
@@ -85,17 +88,21 @@ data class Players private constructor(val players: List<Player>) : List<Player>
         return receivedCardPlayers
     }
 
-    fun getResult(bettings: Bettings): GameResult {
+    fun getResult(): GameResult {
         val dealer = getDealer() as Dealer
         val gamers = getGamers()
-        return dealer.judge(bettings, gamers)
+        return dealer.judge(gamers)
     }
 
-    private fun getDealer(): Player? {
+    fun getDealer(): Player? {
         return players.find { it is Dealer }
     }
 
-    private fun getGamers(): List<Player> {
+    fun getPlayer(player: Player): Player? {
+        return players.find { it.getPlayerName() == player.getPlayerName() }
+    }
+
+    fun getGamers(): List<Player> {
         return players.filterIsInstance<Gamer>()
     }
 

@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Deck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -31,20 +30,6 @@ internal class PlayersTest {
         val givenGamer1 = Gamer(Profile.from(Name("player1")))
 
         assertThrows<IllegalArgumentException> { Players.from(listOf(givenGamer1)) }
-    }
-
-    @Test
-    fun `플레이어의 첫 시작단계에서 카드를 받을 수 있다`() {
-        val profile1 = Profile.from(Name("player1"))
-        val profile2 = Profile.from(Name("player2"))
-        val givenDeck = Deck()
-        val givenGamer1 = Gamer(profile1)
-        val givenGamer2 = Gamer(profile2)
-        val players = Players.from(listOf(givenGamer1, givenGamer2, Dealer.of()))
-
-        val actual = players.startInitPhase(givenDeck)
-
-        assertThat(actual).allMatch { !it.openCards().isEmpty() }
     }
 
     @Test

@@ -1,6 +1,5 @@
 package blackjack.views
 
-import blackjack.domain.game.Bettings
 import blackjack.domain.game.Score
 import blackjack.domain.game.ScoreResult
 import blackjack.domain.player.Dealer
@@ -45,10 +44,10 @@ object OutputView {
         }
     }
 
-    fun printProfit(bettings: Bettings) {
+    fun printProfit(bettings: Players) {
         println(FINAL_PROFIT)
-        for (betting in bettings.bettings) {
-            println("${betting.player.getPlayerName()}: ${betting.credit.value}")
+        for (betting in bettings.players) {
+            println("${betting.getPlayerName()}: ${betting.getPlayerCredit().value}")
         }
     }
 

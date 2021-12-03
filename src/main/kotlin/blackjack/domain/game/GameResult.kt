@@ -1,3 +1,5 @@
 package blackjack.domain.game
 
-data class GameResult(val scoreResult: ScoreResult, val bettings: Bettings)
+import blackjack.domain.player.Players
+
+data class GameResult(val scoreResult: ScoreResult, val players: Players)

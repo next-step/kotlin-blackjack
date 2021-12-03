@@ -29,7 +29,7 @@ class BlackjackController() {
         OutputView.printPlayingPhase(blackJackGame.players)
         val result = blackJackGame.getResult()
         OutputView.printGameResult(result.scoreResult)
-        OutputView.printProfit(result.bettings)
+        OutputView.printProfit(result.players)
     }
 
     companion object {

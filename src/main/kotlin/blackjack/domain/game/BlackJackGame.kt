@@ -5,15 +5,13 @@ import blackjack.domain.player.Players
 import blackjack.views.OutputView
 
 class BlackJackGame(var players: Players, private val deck: Deck) {
-    private lateinit var bettings: Bettings
 
     fun play(
         getPlayerBetting: Bet,
         isPlayerTurnOff: Turn,
         initCallback: (Players) -> Unit
     ) {
-        bettings = Bettings.from(players.getBettings(getPlayerBetting))
-        val afterInitPhased = players.startInitPhase(deck)
+        val afterInitPhased = players.startInitPhase(deck, getPlayerBetting)
         initCallback(afterInitPhased)
         this.players = playingPhase(isPlayerTurnOff, deck, afterInitPhased)
     }
@@ -33,6 +31,6 @@ class BlackJackGame(var players: Players, private val deck: Deck) {
     }
 
     fun getResult(): GameResult {
-        return players.getResult(bettings)
+        return players.getResult()
     }
 }

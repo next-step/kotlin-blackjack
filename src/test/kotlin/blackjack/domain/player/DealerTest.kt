@@ -4,8 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Suit
-import blackjack.domain.game.Betting
-import blackjack.domain.game.Bettings
 import blackjack.domain.game.Credit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -84,19 +82,14 @@ internal class DealerTest {
         val card3 = Card(Suit.DIAMOND, Denomination.TWO)
         val givenCards = Cards.from(listOf(card1, card2, card3))
         val dealer = Dealer(Profile(givenName, givenStatus), givenCards)
-        val givenGamer1 = Gamer(profile1)
-        val givenGamer2 = Gamer(profile2)
+        val givenGamer1 = Gamer(profile1, Cards.EMPTY, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, Cards.EMPTY, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(-200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(-200))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(200))
     }
 
     @Test
@@ -110,19 +103,14 @@ internal class DealerTest {
         val card3 = Card(Suit.DIAMOND, Denomination.TWO)
         val givenCards = Cards.from(listOf(card1, card2, card3))
         val dealer = Dealer(Profile(givenName, givenStatus))
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(0))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(0))
     }
 
     @Test
@@ -135,19 +123,14 @@ internal class DealerTest {
         val card2 = Card(Suit.CLUB, Denomination.KING)
         val givenCards = Cards.from(listOf(card1, card2))
         val dealer = Dealer(Profile(givenName, givenStatus))
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(-200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(-200))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(200))
     }
 
     @Test
@@ -161,19 +144,14 @@ internal class DealerTest {
         val card3 = Card(Suit.DIAMOND, Denomination.TWO)
         val givenCards = Cards.from(listOf(card1, card2))
         val dealer = Dealer(Profile(givenName, givenStatus), Cards.from(listOf(card1, card2, card3)))
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(200))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(0))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(200))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(0))
     }
 
     @Test
@@ -186,19 +164,14 @@ internal class DealerTest {
         val card2 = Card(Suit.CLUB, Denomination.NINE)
         val givenCards = Cards.from(listOf(card1, card2))
         val dealer = Dealer(Profile(givenName, givenStatus), givenCards)
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(0))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(100))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(100))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(100))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(100))
     }
 
     @Test
@@ -212,19 +185,14 @@ internal class DealerTest {
         val card3 = Card(Suit.CLUB, Denomination.THREE)
         val givenCards = Cards.from(listOf(card1, card2))
         val dealer = Dealer(Profile(givenName, givenStatus), Cards.from(listOf(card1, card3)))
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(-300))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(150))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(150))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(-300))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(150))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(150))
     }
 
     @Test
@@ -237,18 +205,13 @@ internal class DealerTest {
         val card2 = Card(Suit.CLUB, Denomination.ACE)
         val givenCards = Cards.from(listOf(card1, card2))
         val dealer = Dealer(Profile(givenName, givenStatus), givenCards)
-        val givenGamer1 = Gamer(profile1, givenCards)
-        val givenGamer2 = Gamer(profile2, givenCards)
+        val givenGamer1 = Gamer(profile1, givenCards, Credit.from(100))
+        val givenGamer2 = Gamer(profile2, givenCards, Credit.from(100))
 
-        val betting1 = Betting(givenGamer1, Credit.from(100))
-        val betting2 = Betting(givenGamer2, Credit.from(100))
-        val betting3 = Betting(dealer, Credit.from(0))
-        val bettings = Bettings.from(listOf(betting1, betting2, betting3))
+        val actual = dealer.judge(listOf(givenGamer1, givenGamer2))
 
-        val actual = dealer.judge(bettings, listOf(givenGamer1, givenGamer2))
-
-        assertThat(actual.bettings.findBetting(dealer)?.credit).isEqualTo(Credit.from(0))
-        assertThat(actual.bettings.findBetting(givenGamer1)?.credit).isEqualTo(Credit.from(100))
-        assertThat(actual.bettings.findBetting(givenGamer2)?.credit).isEqualTo(Credit.from(100))
+        assertThat(actual.players.getDealer()?.getPlayerCredit()).isEqualTo(Credit.from(0))
+        assertThat(actual.players.getPlayer(givenGamer1)?.getPlayerCredit()).isEqualTo(Credit.from(100))
+        assertThat(actual.players.getPlayer(givenGamer2)?.getPlayerCredit()).isEqualTo(Credit.from(100))
     }
 }
