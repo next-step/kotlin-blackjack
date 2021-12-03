@@ -1,22 +1,13 @@
 package blackJack.domain.result
 
-import kotlin.math.abs
-
-@JvmInline
-value class DealerResult(
-    val profit: Int
+class DealerResult(
+    private var _profit: Int = 0
 ) {
 
-    companion object {
-        fun winOrLose(playerResults: PlayerResults): DealerResult =
-            playerResults.toList().fold(0) { acc, playerResult ->
-                when (playerResult.winDrawLose) {
-                    WinDrawLose.WIN -> acc - playerResult.getProfit()
-                    WinDrawLose.DRAW -> acc
-                    WinDrawLose.LOSE -> acc + abs(playerResult.getProfit())
-                }
-            }.run {
-                DealerResult(this)
-            }
+    val profit: Int
+        get() = _profit
+
+    fun sumProfit(profit: Int) {
+        _profit += -profit
     }
 }
