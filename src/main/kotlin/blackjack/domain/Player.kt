@@ -4,10 +4,10 @@ import blackjack.controller.GameController.BLACK_JACK_SCORE
 
 open class Player(open val name: Name, open val cards: Cards = Cards.from(emptyList())) {
 
-    val score: Int
+    val score: Score
         get() = cards.getScore()
 
-    fun isBust(): Boolean = cards.getScore() > BLACK_JACK_SCORE
+    fun isBust(): Boolean = cards.getScore().isBust()
 
     fun hit(card: Card) {
         if (canHit()) {
@@ -33,7 +33,7 @@ open class Player(open val name: Name, open val cards: Cards = Cards.from(emptyL
         }
     }
 
-    open fun canHit() = cards.getScore() < BLACK_JACK_SCORE
+    open fun canHit() = cards.getScore() < Score.from(BLACK_JACK_SCORE)
 
     override fun toString(): String {
         return "Player(name=$name, cards=$cards)"

@@ -67,7 +67,7 @@ object OutputView {
                     )
                 )
                 append(" - ")
-                append(PLAYER_SCORE_OUTPUT_MESSAGE.format(it.score))
+                append(PLAYER_SCORE_OUTPUT_MESSAGE.format(it.score.score))
                 append(System.lineSeparator())
             }
         }

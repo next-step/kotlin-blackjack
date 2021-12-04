@@ -6,7 +6,7 @@ value class Cards private constructor(private val _cards: MutableList<Card>) {
     val cards: List<Card>
         get() = _cards.map { it.copy() }
 
-    fun getScore(): Int = NumberType.getScore(this)
+    fun getScore(): Score = NumberType.getScore(this)
 
     fun countAce(): Int {
         return _cards.count(Card::hasAce)

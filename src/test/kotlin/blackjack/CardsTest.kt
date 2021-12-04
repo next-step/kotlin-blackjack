@@ -26,6 +26,6 @@ class CardsTest {
         cards.addCard(Card(suitType = SuitType.SPADE, numberType = NumberType.FOUR))
         cards.addCard(Card(suitType = SuitType.SPADE, numberType = NumberType.THREE))
 
-        assertThat(cards.getScore()).isEqualTo(15)
+        assertThat(cards.getScore().score).isEqualTo(15)
     }
 }

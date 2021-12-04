@@ -48,7 +48,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `player는 가지고있는 카드들의 점수를 알고있다(nowScore())`() {
+    fun `player는 가지고있는 카드들의 점수를 알고있다`() {
         val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.ACE)
         val card2 = Card(SuitType.SPADE, NumberType.ACE)
@@ -57,7 +57,7 @@ class PlayerTest {
         player.hit(card1)
         player.hit(card2)
         player.hit(card3)
-        assertThat(player.score).isEqualTo(13)
+        assertThat(player.score.score).isEqualTo(13)
     }
 
     @Test

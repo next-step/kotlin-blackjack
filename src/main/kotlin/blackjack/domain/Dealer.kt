@@ -14,7 +14,7 @@ data class Dealer(override val name: Name = Name.from(DEALER_NAME), override val
     }
 
     override fun canHit(): Boolean {
-        return cards.getScore() <= DEALER_ACCEPT_CRITERIA
+        return cards.getScore() <= Score.from(DEALER_ACCEPT_CRITERIA_SCORE)
     }
 
     override fun result(other: Player): GameResultState {
@@ -35,6 +35,6 @@ data class Dealer(override val name: Name = Name.from(DEALER_NAME), override val
 
     companion object {
         const val DEALER_NAME = "딜러"
-        const val DEALER_ACCEPT_CRITERIA = 16
+        const val DEALER_ACCEPT_CRITERIA_SCORE = 16
     }
 }

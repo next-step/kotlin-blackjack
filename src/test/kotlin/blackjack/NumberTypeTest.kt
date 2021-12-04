@@ -19,7 +19,7 @@ class NumberTypeTest {
         val aceCard = Card(SuitType.SPADE, NumberType.ACE)
         cards.addCard(aceCard)
 
-        assertThat(NumberType.getScore(cards)).isEqualTo(21)
+        assertThat(NumberType.getScore(cards).score).isEqualTo(21)
     }
 
     @Test
@@ -35,6 +35,6 @@ class NumberTypeTest {
         val aceCard = Card(SuitType.SPADE, NumberType.ACE)
         cards.addCard(aceCard)
 
-        assertThat(NumberType.getScore(cards)).isEqualTo(13)
+        assertThat(NumberType.getScore(cards).score).isEqualTo(13)
     }
 }
