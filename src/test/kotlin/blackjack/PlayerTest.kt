@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
 
     @Test
-    fun `player의 score가 21점 미만이면 카드를 추가할 수 있다(hit())`() {
+    fun `player의 score가 21점 미만이면 카드를 추가할 수 있다`() {
         val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.TEN)
         val card2 = Card(SuitType.SPADE, NumberType.TEN)
@@ -21,7 +21,7 @@ class PlayerTest {
         player.hit(card2)
         player.hit(card3)
 
-        assertThat(player.cards).containsExactlyElementsOf(
+        assertThat(player.cards.cards).containsExactlyElementsOf(
             listOf(
                 Card(SuitType.SPADE, NumberType.TEN),
                 Card(SuitType.SPADE, NumberType.TEN),
@@ -31,7 +31,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `player의 score가 21점 이상이면 카드를 추가할 수 없다(canHit())`() {
+    fun `player의 score가 21점 이상이면 카드를 추가할 수 없다`() {
         val player = Player.of(Name.from("seunghwan"))
         val card1 = Card(SuitType.SPADE, NumberType.TEN)
         val card2 = Card(SuitType.SPADE, NumberType.TEN)
@@ -57,6 +57,16 @@ class PlayerTest {
         player.hit(card1)
         player.hit(card2)
         player.hit(card3)
-        assertThat(player.nowScore()).isEqualTo(13)
+        assertThat(player.score).isEqualTo(13)
+    }
+
+    @Test
+    fun `Player는 Bust 되었는지 알 수 있다`() {
+        val player = Player.of(name = Name.from("player"))
+        player.hit(Card(SuitType.SPADE, NumberType.TEN))
+        player.hit(Card(SuitType.SPADE, NumberType.TEN))
+        player.hit(Card(SuitType.SPADE, NumberType.TEN))
+
+        assertThat(player.isBust()).isTrue
     }
 }
