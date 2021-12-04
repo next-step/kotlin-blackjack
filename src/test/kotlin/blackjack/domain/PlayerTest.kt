@@ -89,37 +89,37 @@ class PlayerTest {
     }
 
     @Test
-    fun `상대 플레이어의 점수보다 높으면 승리한다`() {
+    fun `딜러의 점수보다 높으면 승리한다`() {
         val player1 = Player("player1")
         player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
-        val player2 = Player("player2")
-        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.NINE))
+        val dealer = Dealer()
+        dealer.takeCards(Card(CardSymbol.CLOVER, CardNumber.NINE))
 
-        assertThat(player1 wins player2).isEqualTo(true)
+        assertThat(player1 wins dealer).isEqualTo(true)
     }
 
     @Test
-    fun `상대 플레이어의 점수와 같으면 둘 다 승리한다`() {
+    fun `딜러의 점수와 같으면 승리한다`() {
         val player1 = Player("player1")
         player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
-        val player2 = Player("player2")
-        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.QUEEN))
+        val dealer = Dealer()
+        dealer.takeCards(Card(CardSymbol.CLOVER, CardNumber.QUEEN))
 
-        assertThat(player1 wins player2).isEqualTo(true)
-        assertThat(player2 wins player1).isEqualTo(true)
+        assertThat(player1 wins dealer).isEqualTo(true)
+        assertThat(dealer wins player1).isEqualTo(false)
     }
 
     @Test
-    fun `상대 플레이어의 점수보다 낮으면 패한다`() {
+    fun `딜러의 점수보다 낮으면 패한다`() {
         val player1 = Player("player1")
         player1.takeCards(Card(CardSymbol.CLOVER, CardNumber.NINE))
 
-        val player2 = Player("player2")
-        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
+        val dealer = Dealer()
+        dealer.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
-        assertThat(player1 wins player2).isEqualTo(false)
+        assertThat(player1 wins dealer).isEqualTo(false)
     }
 
     @Test
@@ -131,26 +131,26 @@ class PlayerTest {
             Card(CardSymbol.SPADE, CardNumber.TWO),
         )
 
-        val player2 = Player("player2")
-        player2.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
+        val dealer = Dealer()
+        dealer.takeCards(Card(CardSymbol.CLOVER, CardNumber.KING))
 
-        assertThat(player1 wins player2).isEqualTo(false)
+        assertThat(player1 wins dealer).isEqualTo(false)
     }
 
     @Test
-    fun `상대 플레이어가 버스트인 경우 승리한다`() {
+    fun `딜러가 버스트인 경우 승리한다`() {
         val player1 = Player("player1")
         player1.takeCards(
             Card(CardSymbol.SPADE, CardNumber.KING),
         )
 
-        val player2 = Player("player2")
-        player2.takeCards(
+        val dealer = Dealer()
+        dealer.takeCards(
             Card(CardSymbol.CLOVER, CardNumber.KING),
             Card(CardSymbol.CLOVER, CardNumber.QUEEN),
             Card(CardSymbol.CLOVER, CardNumber.TWO),
         )
 
-        assertThat(player1 wins player2).isEqualTo(true)
+        assertThat(player1 wins dealer).isEqualTo(true)
     }
 }
