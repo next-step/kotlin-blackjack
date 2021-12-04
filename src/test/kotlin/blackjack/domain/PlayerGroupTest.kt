@@ -20,6 +20,17 @@ class PlayerGroupTest {
     }
 
     @Test
+    fun `딜러는 플레이어로 참여할 수 없다`() {
+        assertThrows<IllegalArgumentException> {
+            PlayerGroup(
+                Player("player1"),
+                Player("player2"),
+                Dealer()
+            )
+        }
+    }
+
+    @Test
     fun `동일한 이름의 플레이어를 받으면 에러를 일으킨다`() {
         assertThrows<IllegalArgumentException> {
             PlayerGroup(
