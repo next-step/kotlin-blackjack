@@ -71,18 +71,9 @@ class OutputView {
         println()
         println(WIN_LOSE_RESULT_TITLE)
         blackJack.apply {
-            val winners = getWinners() ?: return
-            var dealerWinCount = 0
-            var dealerLoseCount = 0
-
-            players.forEach {
-                if (dealer wins it) {
-                    dealerWinCount++
-                } else {
-                    dealerLoseCount++
-                }
-            }
-            println(DEALER_WIN_LOSE_MSG.format(dealerWinCount, dealerLoseCount))
+            val winners = getWinners()
+            val dealerWinLoseCount = getDealerWinLoseCount()
+            println(DEALER_WIN_LOSE_MSG.format(dealerWinLoseCount.winCount, dealerWinLoseCount.loseCount))
 
             players.forEach {
                 if (it in winners) {
@@ -109,7 +100,7 @@ class OutputView {
         private const val SPADE = "스페이드"
         private const val CARD_OUTPUT_TEMPLATE = "[%s-%s]"
         private const val WIN_LOSE_RESULT_TITLE = "## 최종 승패 ##"
-        private const val DEALER_WIN_LOSE_MSG = "딜러: %s 승 %s패"
+        private const val DEALER_WIN_LOSE_MSG = "딜러: %s승 %s패"
         private const val PLAYER_WIN_MSG = "%s: 승"
         private const val PLAYER_LOSE_MSG = "%s: 패"
     }

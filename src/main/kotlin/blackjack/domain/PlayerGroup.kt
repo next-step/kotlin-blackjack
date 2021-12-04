@@ -8,7 +8,7 @@ class PlayerGroup(val players: List<Player>) {
     init {
         require(players.size >= MINIMUM_NUMBER_OF_PLAYERS) { NOT_ENOUGH_PLAYERS_ERROR_MSG }
         require(players.distinctBy { it.name } == this.players) { DUPLICATE_PLAYERS_ERROR_MSG }
-        require(players.count { it is Dealer } == 0 ) { DEALER_IN_PLAYERS_ERROR_MSG }
+        require(players.count { it is Dealer } == 0) { DEALER_IN_PLAYERS_ERROR_MSG }
     }
 
     fun getWinners(): List<Player> {

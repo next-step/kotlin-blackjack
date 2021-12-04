@@ -39,7 +39,23 @@ class BlackJack(players: List<Player>) {
         return playerGroup.getWinners()
     }
 
+    fun getDealerWinLoseCount(): DealerWinLoseCount {
+        var dealerWinCount = 0
+        var dealerLoseCount = 0
+        players.forEach {
+            if (dealer wins it) {
+                dealerWinCount++
+            } else {
+                dealerLoseCount++
+            }
+        }
+
+        return DealerWinLoseCount(dealerWinCount, dealerLoseCount)
+    }
+
     companion object {
         private const val INITIAL_DRAW_COUNT = 2
     }
 }
+
+data class DealerWinLoseCount(val winCount: Int, val loseCount: Int)
