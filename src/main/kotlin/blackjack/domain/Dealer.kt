@@ -16,11 +16,8 @@ class Dealer private constructor(cards: Cards) {
     companion object {
         private const val TWO = 2
         fun makeUpGame(): Dealer {
-            val cards = Suit.values()
-                .flatMap { suit ->
-                    Denomination.values()
-                        .map { Card(suit, it) }
-                }
+            val cards = Denomination.values().sliceArray((0..12))
+                .flatMap { denomination -> Suit.values().map { Card(it, denomination) } }
                 .shuffled()
                 .toMutableList()
 

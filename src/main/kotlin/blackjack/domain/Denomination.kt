@@ -13,5 +13,6 @@ enum class Denomination(val score: Score, val shape: String) {
     TEN(Score.of(10), "10"),
     JACK(Score.of(10), "10"),
     QUEEN(Score.of(10), "10"),
-    KING(Score.of(10), "10");
+    KING(Score.of(10), "10"),
+    ACE_ELEVEN(Score.of(11), "A");
 }
