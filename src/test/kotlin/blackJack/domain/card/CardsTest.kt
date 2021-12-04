@@ -3,8 +3,7 @@ package blackJack.domain.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.CsvSource
 
 class CardsTest {
 
@@ -109,7 +108,7 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @MethodSource("sumProvider")
+    @CsvSource("SEVEN, 21", "KING, 14", "SIX, 20", "EIGHT, 12")
     fun `에이스가 네개 일 때 총합이 일치하는지 테스트`(denomination: Denomination, sum: Int) {
         // given
         val cards = Cards(
@@ -127,15 +126,5 @@ class CardsTest {
 
         // then
         assertThat(sumCards).isEqualTo(sum)
-    }
-
-    companion object {
-        @JvmStatic
-        fun sumProvider(): List<Arguments> = listOf(
-            Arguments.of(Denomination.SEVEN, 21),
-            Arguments.of(Denomination.KING, 14),
-            Arguments.of(Denomination.SIX, 20),
-            Arguments.of(Denomination.EIGHT, 12)
-        )
     }
 }

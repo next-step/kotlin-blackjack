@@ -225,4 +225,25 @@ class PlayerTest {
             assertThat(isContinue).isEqualTo(false)
         })
     }
+
+    @Test
+    fun `플레이어는 돈을 베팅할 수 있다`() {
+        // given
+        val player = Player.of("Flamme")
+
+        // when
+        player.bet(10000)
+
+        // then
+        assertThat(player.bettingMoney.money).isEqualTo(10000)
+    }
+
+    @Test
+    fun `플레이어의 베팅하기 전 베팅머니는 0이다`() {
+        // given
+        val player = Player.of("Flamme")
+
+        // then
+        assertThat(player.bettingMoney.money).isEqualTo(0)
+    }
 }

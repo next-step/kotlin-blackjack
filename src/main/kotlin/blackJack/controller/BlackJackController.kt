@@ -17,11 +17,14 @@ class BlackJackController(private val inputView: InputView, private val resultVi
         val playingCard = PlayingCard.create()
         val inputPlayersNames = inputView.inputPlayersName()
         val gamePlayers = GamePlayers.enterGameRoom(inputPlayersNames)
+        gamePlayers.getPlayers().forEach {
+            it.bet(inputView.inputBettingMoney(it.name))
+        }
         gamePlayers.startBlackJack(playingCard)
         resultView.receiveTwoCard(GamePlayersDto.of(gamePlayers))
         playingGame(gamePlayers, playingCard)
         resultingGame(gamePlayers)
-        resultView.winOrLoseView(Results.from(gamePlayers))
+        resultView.bettingResultView(Results.from(gamePlayers))
     }
 
     private fun playingGame(startedPlayer: GamePlayers, playingCard: PlayingCard) {

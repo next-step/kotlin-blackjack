@@ -4,6 +4,11 @@ import blackJack.dto.PlayerDto
 
 object InputView {
 
+    fun inputBettingMoney(playerName: String): Int {
+        println("${playerName}의 배팅 금액은?")
+        return readLine()!!.toInt()
+    }
+
     fun inputPlayersName(): String {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readLine()!!

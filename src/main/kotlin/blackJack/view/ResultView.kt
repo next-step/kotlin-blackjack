@@ -39,14 +39,14 @@ object ResultView {
         println("${dealerDto.name} 카드 :${joinToStrings(dealerDto.cards)} - 결과: ${dealerDto.score}")
     }
 
-    fun winOrLoseView(results: Results) {
+    fun bettingResultView(results: Results) {
         val dealerResult = results.dealerResult
         val playerResults = results.playerResults
 
-        println("## 최종 승패")
-        println("${Dealer.DEALER_NAME} : 승 : ${dealerResult.win}, 패 :${dealerResult.lose}, 무: ${dealerResult.draw}")
+        println("## 최종 수익")
+        println("${Dealer.DEALER_NAME}: ${dealerResult.profit}")
         playerResults.toList().forEach {
-            println("${it.name}: ${it.winDrawLose.value}")
+            println("${it.name}: ${it.getProfit()}")
         }
     }
 }

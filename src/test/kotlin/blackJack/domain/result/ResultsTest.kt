@@ -9,7 +9,6 @@ import blackJack.domain.player.Player
 import blackJack.domain.player.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 class ResultsTest {
     @Test
@@ -26,6 +25,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.KING)
                             }
+                            this.bet(10000)
                         },
                         Player.of("rain").apply {
                             this.receiveCard() {
@@ -34,6 +34,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.EIGHT)
                             }
+                            this.bet(1000)
                         },
                         Player.of("chacha").apply {
                             this.receiveCard() {
@@ -42,6 +43,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.KING)
                             }
+                            this.bet(1000)
                         }
                     )
                 ),
@@ -61,11 +63,7 @@ class ResultsTest {
         val dealerResult = results.dealerResult
 
         // then
-        assertAll({
-            assertThat(dealerResult.win).isEqualTo(1)
-            assertThat(dealerResult.lose).isEqualTo(1)
-            assertThat(dealerResult.draw).isEqualTo(1)
-        })
+        assertThat(dealerResult.profit).isEqualTo(-14000)
     }
 
     @Test
@@ -88,6 +86,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.SEVEN)
                             }
+                            this.bet(10000)
                         },
                         Player.of("rain").apply {
                             this.receiveCard() {
@@ -96,6 +95,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.EIGHT)
                             }
+                            this.bet(10000)
                         },
                         Player.of("chacha").apply {
                             this.receiveCard() {
@@ -104,6 +104,7 @@ class ResultsTest {
                             this.receiveCard() {
                                 Card(Suit.SPADES, Denomination.KING)
                             }
+                            this.bet(10000)
                         }
                     )
                 ),
@@ -129,10 +130,45 @@ class ResultsTest {
         val dealerResult = results.dealerResult
 
         // then
-        assertAll({
-            assertThat(dealerResult.win).isEqualTo(0)
-            assertThat(dealerResult.lose).isEqualTo(3)
-            assertThat(dealerResult.draw).isEqualTo(0)
-        })
+        assertThat(dealerResult.profit).isEqualTo(-35000)
+    }
+
+    @Test
+    fun `딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다`() {
+        // given
+        val gamePlayers =
+            GamePlayers(
+                Players(
+                    listOf(
+                        Player.of("flamme").apply {
+                            this.receiveCard() {
+                                Card(Suit.HEARTS, Denomination.ACE)
+                            }
+                            this.receiveCard() {
+                                Card(Suit.SPADES, Denomination.KING)
+                            }
+                            this.bet(10000)
+                        },
+                    )
+                ),
+                Dealer().apply {
+                    this.receiveCard() {
+                        Card(Suit.HEARTS, Denomination.ACE)
+                    }
+                    this.receiveCard() {
+                        Card(Suit.SPADES, Denomination.KING)
+                    }
+                }
+
+            )
+
+        // when
+        val results = Results.from(gamePlayers)
+        val dealerResult = results.dealerResult
+        val playerResult = results.playerResults.toList()[0]
+
+        // then
+        assertThat(playerResult.getProfit()).isEqualTo(0)
+        assertThat(dealerResult.profit).isEqualTo(0)
     }
 }

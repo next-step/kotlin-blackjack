@@ -2,10 +2,18 @@ package blackJack.domain.player
 
 class Player(
     val name: String,
-    val status: State = StateImpl.of()
+    val status: State = StateImpl.of(),
+    val bettingMoney: BettingMoney = BettingMoney()
 ) : State by status {
+
     init {
         require(name.isNotEmpty()) { IS_PLAYER_NAME_BLACK }
+    }
+
+    fun getBettingMoney(): Int = bettingMoney.money
+
+    fun bet(playerMoney: Int) {
+        bettingMoney.inputMoney(playerMoney)
     }
 
     companion object {

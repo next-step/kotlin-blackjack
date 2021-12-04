@@ -1,5 +1,8 @@
 package blackJack.domain.card
 
+import blackJack.domain.card.Denomination.Companion.ACE_BONUS_NUMBER
+import blackJack.domain.card.Signal.Companion.MAX_NUMBER
+
 class Cards(private val cards: List<Card>) : List<Card> by cards {
 
     operator fun plus(card: Card): Cards {
@@ -15,21 +18,28 @@ class Cards(private val cards: List<Card>) : List<Card> by cards {
         require(card !in cards) { DUPLICATE_ERROR }
     }
 
-    fun sumCards(): Int =
-        cards.sortedByDescending { it.denomination.orderBy }.fold(0) { acc: Int, card: Card ->
-            if (card.denomination == Denomination.ACE) {
-                val aceScore = card.denomination.score(acc)
-                acc + card.denomination.score(acc + aceScore)
-            } else {
-                acc + card.denomination.score(acc)
-            }
-        }.let { sum ->
-            if (sum > 21 && cards.map { it.denomination }.contains(Denomination.ACE)) {
-                cards.sumOf { it.denomination.score(sum) }
-            } else {
-                sum
-            }
+    fun sumCards(): Int {
+        val total = cards.sumOf { it.denomination.number }
+        return sumBonus(total)
+    }
+
+    private fun sumBonus(total: Int): Int =
+        if (isAce()) {
+            addAceBonus(total)
+        } else {
+            total
         }
+
+    private fun isAce() = cards.map { it.denomination }.contains(Denomination.ACE)
+
+    private fun addAceBonus(total: Int): Int {
+        val aceBonusTotal = total + ACE_BONUS_NUMBER
+        return if (aceBonusTotal <= MAX_NUMBER) {
+            aceBonusTotal
+        } else {
+            total
+        }
+    }
 
     fun drawRandomCard() = cards.random()
 
