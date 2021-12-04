@@ -4,12 +4,14 @@ package blackjack.domain
 value class Players private constructor(private val _players: MutableList<Player> = mutableListOf()) {
 
     val players: List<Player>
-        get() = _players.sortedWith(compareBy {
-            when (it) {
-                is Dealer -> -1
-                else -> 0
+        get() = _players.sortedWith(
+            compareBy {
+                when (it) {
+                    is Dealer -> -1
+                    else -> 0
+                }
             }
-        }).map { it.copy() }
+        ).map { it.copy() }
 
     val playersExceptedDealer: List<Player>
         get() = _players.filter { it !is Dealer }.map { it.copy() }
