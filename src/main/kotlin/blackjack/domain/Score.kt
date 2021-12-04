@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Score private constructor(val value: Int) {
+data class Score private constructor(val value: Int) {
     override fun toString(): String {
         return "$value"
     }
