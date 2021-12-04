@@ -11,7 +11,7 @@ class NumberTypeTest {
 
     @Test
     fun `ACE의 score는 이전 score와 11을 더해서 21을 넘지 않을 경우 11로 사용한다`() {
-        val cards = Cards()
+        val cards = Cards.from(emptyList())
 
         val tenCard = Card(SuitType.SPADE, NumberType.TEN)
         cards.addCard(tenCard)
@@ -24,7 +24,7 @@ class NumberTypeTest {
 
     @Test
     fun `ACE의 score는 이전 score와 11을 더해서 21을 넘을 경우 1로 사용한다`() {
-        val cards = Cards()
+        val cards = Cards.from(emptyList())
 
         val tenCard = Card(SuitType.SPADE, NumberType.TEN)
         cards.addCard(tenCard)
