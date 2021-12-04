@@ -1,14 +1,24 @@
 package blackjack.domain
 
-data class Cards(private val cards: MutableList<Card> = mutableListOf()) : List<Card> by cards {
+@JvmInline
+value class Cards private constructor(private val _cards: MutableList<Card>) {
+
+    val cards: List<Card>
+        get() = _cards.map { it.copy() }
 
     fun getScore(): Int = NumberType.getScore(this)
 
     fun countAce(): Int {
-        return cards.count(Card::hasAce)
+        return _cards.count(Card::hasAce)
     }
 
     fun addCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
+    }
+
+    companion object {
+        fun from(cardList: List<Card> = listOf()): Cards {
+            return Cards(cardList.toMutableList())
+        }
     }
 }
