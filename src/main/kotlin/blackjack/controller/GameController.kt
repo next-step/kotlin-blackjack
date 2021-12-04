@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.domain.BlackJackManager
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -9,33 +9,63 @@ import blackjack.view.OutputView
 object GameController {
 
     private val cardDeck = CardDeck()
-    private lateinit var blackJackManager: BlackJackManager
+    private const val INITIAL_CARD_NUM = 2
     const val BLACK_JACK_SCORE = 21
 
     fun start() {
+        val dealer = Dealer()
         val playerNames = InputView.inputPlayerNames()
-        val players = Players.of(
-            *Players
-                .getPlayerListByNames(playerNames)
-                .toTypedArray()
-        )
-
-        blackJackManager = BlackJackManager(players)
-        blackJackManager.giveInitialCards(cardDeck)
+        var players = Players.from(Players.getPlayerListByNames(playerNames))
+        players += dealer
+        acceptInitialCards(players)
 
         OutputView.printPlayers(players)
         OutputView.printPlayersDrawnCards(players)
 
-        hitPlayer(players)
+        hitPlayers(players)
 
-        OutputView.printResult(players)
+        hitDealer(dealer)
+
+        OutputView.printScoreResult(players)
+        printDealerResults(players)
+        printPlayersResults(players)
     }
 
-    private fun hitPlayer(players: Players) {
-        players.forEach { player ->
+    private fun acceptInitialCards(players: Players) {
+        repeat(INITIAL_CARD_NUM) {
+            players.eachAcceptCards(cardDeck)
+        }
+    }
+
+    private fun hitPlayers(players: Players) {
+        players.playersExceptedDealer.forEach { player ->
             while (player.canHit() && InputView.acceptMoreCard(player)) {
                 player.hit(cardDeck.next())
                 OutputView.printPlayerDrawnCard(player)
+            }
+        }
+    }
+
+    private fun hitDealer(dealer: Dealer) {
+        if (dealer.canHit()) {
+            OutputView.printDealerDraw()
+            dealer.hit(cardDeck.next())
+        }
+    }
+
+    private fun printDealerResults(players: Players) {
+        if (players.dealer != null) {
+            players.dealer!!.makeDealerGameResult(players)
+                .also {
+                    OutputView.printDealerResult(it)
+                }
+        }
+    }
+
+    private fun printPlayersResults(players: Players) {
+        if (players.dealer != null) {
+            players.playersExceptedDealer.forEach {
+                OutputView.printPlayerResult(it, it.result(players.dealer!!))
             }
         }
     }

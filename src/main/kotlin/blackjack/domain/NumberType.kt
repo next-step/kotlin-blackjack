@@ -4,7 +4,6 @@ import blackjack.controller.GameController.BLACK_JACK_SCORE
 
 enum class NumberType(
     val score: Int,
-    val displayName: String = score.toString(),
 ) {
     TWO(2),
     THREE(3),
@@ -15,17 +14,17 @@ enum class NumberType(
     EIGHT(8),
     NINE(9),
     TEN(10),
-    ACE(1, "A"),
-    KING(10, "K"),
-    QUEEN(10, "Q"),
-    JACK(10, "J");
+    ACE(1),
+    KING(10),
+    QUEEN(10),
+    JACK(10);
 
     companion object {
         private const val MIN_ACE_SCORE = 1
         private const val MAX_ACE_SCORE = 11
 
         fun getScore(cards: Cards): Int {
-            var sum = cards
+            var sum = cards.cards
                 .filter { it.numberType != ACE }
                 .sumOf { it.numberType.score }
 
