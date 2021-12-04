@@ -87,7 +87,7 @@ object OutputView {
     }
 
     fun printPlayerResult(player: Player, resultState: GameResultState) {
-        println("${player.name.name}: ")
+        println("${player.name.name}: ${resultState.toDisplayName()}")
     }
 
     private fun GameResultState.toDisplayName(): String {
