@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
-import blackjack.domain.game.Rule
-import blackjack.domain.game.Score
+import blackjack.domain.game.Bet
+import blackjack.domain.game.GameResult
 import blackjack.domain.game.Turn
 
 fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
@@ -11,22 +11,23 @@ fun <T> List<T>.replace(newValue: T, block: (T) -> Boolean): List<T> {
     }
 }
 
-data class Players(val players: List<Player>) : List<Player> by players {
+data class Players private constructor(val players: List<Player>) : List<Player> by players {
 
     init {
         require(players.size >= MINIMUM_GAMER)
-
-        if (players.count { it is Dealer } > DEALER_COUNT) {
-            throw IllegalStateException(DEALER_ALREADY_EXIST)
-        }
+        require(players.count { it is Dealer } == DEALER_COUNT)
     }
 
-    fun startInitPhase(deck: Deck): Players {
-        var initPhasedPlayers = players
+    fun startInitPhase(deck: Deck, getPlayerBetting: Bet): Players {
+        var initPhasedPlayers = holdBettings(getPlayerBetting)
         repeat(INIT_RECEIVE_CARD_COUNT) {
             initPhasedPlayers = receiveCardFromDeck(initPhasedPlayers, deck)
         }
         return Players(initPhasedPlayers)
+    }
+
+    private fun holdBettings(getPlayerBetting: Bet): List<Player> {
+        return players.map { it.holdBetting(getPlayerBetting) }.toList()
     }
 
     fun isAllPlayerTurnOff(): Boolean {
@@ -79,26 +80,21 @@ data class Players(val players: List<Player>) : List<Player> by players {
         return receivedCardPlayers
     }
 
-    fun addPlayer(player: Player): Players {
-        return Players(players + player)
+    fun getResult(): GameResult {
+        val dealer = getDealer() as Dealer
+        val gamers = getGamers()
+        return dealer.judge(gamers)
     }
 
-    fun getPlayersByScore(): List<Player> {
-        return players.sortedByDescending { it.getHighestPoint() }
-    }
-
-    fun checkResult(rule: Rule): Map<Player, List<Score>> {
-        val dealer = getDealer()
-        val gamer = getGamers()
-        requireNotNull(dealer)
-        return dealer.judgeResult(gamer, rule)
-    }
-
-    private fun getDealer(): Player? {
+    fun getDealer(): Player? {
         return players.find { it is Dealer }
     }
 
-    private fun getGamers(): List<Player> {
+    fun getPlayer(player: Player): Player? {
+        return players.find { it.getPlayerName() == player.getPlayerName() }
+    }
+
+    fun getGamers(): List<Player> {
         return players.filterIsInstance<Gamer>()
     }
 
@@ -128,17 +124,19 @@ data class Players(val players: List<Player>) : List<Player> by players {
         private const val MINIMUM_GAMER = 2
         private const val INIT_RECEIVE_CARD_COUNT = 2
         private const val DEALER_COUNT = 1
-        private const val DEALER_ALREADY_EXIST = "딜러는 한 명이상 존재할 수 없습니다"
 
-        fun of(name: String): Players {
+        fun from(name: String): Players {
             val names = Names.generateNames(name)
-            val players = createPlayers(names)
-            val dealer = Dealer.of()
-            return players.addPlayer(dealer)
+            val players = createGamers(names) + Dealer.of()
+            return Players(players)
         }
 
-        private fun createPlayers(names: Names): Players {
-            return Players(names.names.map { Gamer(Profile(it)) })
+        fun from(players: List<Player>): Players {
+            return Players(players)
+        }
+
+        private fun createGamers(names: Names): List<Player> {
+            return names.names.map { Gamer(Profile(it)) }
         }
     }
 }

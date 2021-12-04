@@ -53,4 +53,13 @@ internal class CardsTest {
 
         assertThat(cards.getHighestPoint()).isEqualTo(15)
     }
+
+    @Test
+    fun `초기 카드가 2장이면서 합이 21이면 블랙잭이다`() {
+        val card1 = Card(Suit.HEART, Denomination.ACE)
+        val card2 = Card(Suit.CLUB, Denomination.KING)
+        val cards = Cards.from(listOf(card1, card2))
+
+        assertThat(cards.isBlackJack()).isTrue
+    }
 }

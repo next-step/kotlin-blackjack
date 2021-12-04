@@ -25,6 +25,10 @@ data class Cards internal constructor(val cards: List<Card>) : List<Card> by car
         return getTotalPoint()
     }
 
+    fun isBlackJack(): Boolean {
+        return cards.size == INIT_CARD_SIZE && getHighestPoint() == TARGET_GAME_POINT
+    }
+
     private fun getTotalPoint(): Int {
         return cards.fold(0) { acc, card ->
             acc + card.denomination.point.first
@@ -37,6 +41,7 @@ data class Cards internal constructor(val cards: List<Card>) : List<Card> by car
         private const val CARDS_DUPLICATED = "카드가 중복되었습니다."
         private const val ACE_APPLY_POINT = 10
         private const val TARGET_GAME_POINT = 21
+        private const val INIT_CARD_SIZE = 2
 
         val EMPTY = Cards(emptyList())
 

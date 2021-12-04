@@ -4,18 +4,16 @@ import blackjack.domain.card.Deck
 import blackjack.domain.player.Players
 import blackjack.views.OutputView
 
-class BlackJackGame(private val players: Players, private val deck: Deck) {
+class BlackJackGame(var players: Players, private val deck: Deck) {
 
     fun play(
+        getPlayerBetting: Bet,
         isPlayerTurnOff: Turn,
-        initCallback: (Players) -> Unit,
-        playingCallback: (Players) -> Unit,
-    ): Players {
-        val afterInitPhased = players.startInitPhase(deck)
+        initCallback: (Players) -> Unit
+    ) {
+        val afterInitPhased = players.startInitPhase(deck, getPlayerBetting)
         initCallback(afterInitPhased)
-        val playingPhasedPlayers = playingPhase(isPlayerTurnOff, deck, afterInitPhased)
-        playingCallback(playingPhasedPlayers)
-        return playingPhasedPlayers
+        this.players = playingPhase(isPlayerTurnOff, deck, afterInitPhased)
     }
 
     private fun playingPhase(isPlayerTurnOff: Turn, deck: Deck, players: Players): Players {
@@ -30,5 +28,9 @@ class BlackJackGame(private val players: Players, private val deck: Deck) {
 
     private fun receiveCardAllPlayers(isPlayerTurnOff: Turn, deck: Deck, players: Players): Players {
         return players.receiveCards(deck, isPlayerTurnOff, OutputView::printCards, OutputView::printDealerCardReceived)
+    }
+
+    fun getResult(): GameResult {
+        return players.getResult()
     }
 }

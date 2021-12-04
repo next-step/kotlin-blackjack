@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.card.Deck
+import blackjack.domain.game.Bet
 import blackjack.domain.game.BlackJackGame
-import blackjack.domain.game.Rule
 import blackjack.domain.game.Turn
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
@@ -17,11 +17,19 @@ class BlackjackController() {
         }
     }
 
+    private var getPlayerBetting: Bet = object : Bet {
+        override fun getPlayerBetting(player: Player): Int {
+            return InputView.askGamerBetting(player)
+        }
+    }
+
     fun start() {
-        val blackJackGame = BlackJackGame(Players.of(InputView.askGamerNames()), Deck())
-        val players = blackJackGame.play(isPlayerTurnOff, OutputView::printInitPhase, OutputView::printPlayingPhase)
-        val result = players.checkResult(Rule())
-        OutputView.printGameResult(result)
+        val blackJackGame = BlackJackGame(Players.from(InputView.askGamerNames()), Deck())
+        blackJackGame.play(getPlayerBetting, isPlayerTurnOff, OutputView::printInitPhase)
+        OutputView.printPlayingPhase(blackJackGame.players)
+        val result = blackJackGame.getResult()
+        OutputView.printGameResult(result.scoreResult)
+        OutputView.printProfit(result.players)
     }
 
     companion object {
