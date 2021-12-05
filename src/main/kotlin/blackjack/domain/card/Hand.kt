@@ -1,7 +1,6 @@
 package blackjack.domain.card
 
-class Hand {
-    private val cardList = mutableListOf<Card>()
+class Hand(private val cardList: MutableList<Card> = mutableListOf()) {
 
     fun addCardToHand(card: Card): Boolean {
         if (isAddAble())
@@ -11,9 +10,9 @@ class Hand {
 
     fun isAddAble(): Boolean = minValueOfHand() < VALUE_OF_WIN && !isBlackJackHand()
 
-    fun getCards() = cardList.toList()
+    fun getCardListInHand() = cardList.toList()
 
-    fun getValues(): List<Int> {
+    fun getMakeableValues(): List<Int> {
         if (isBlackJackHand())
             return listOf(VALUE_OF_WIN)
         val numberOfAces = getNumberOfAceCards()

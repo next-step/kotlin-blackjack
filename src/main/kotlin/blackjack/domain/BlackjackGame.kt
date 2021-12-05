@@ -1,23 +1,20 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.ShuffledCardDeck
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerList
 
 class BlackjackGame(private val playerList: PlayerList) {
-    private val shuffledCardDeck: ShuffledCardDeck = CardDeck.getShuffledCardDeck()
+    private val cardDeck: CardDeck = CardDeck()
 
     init {
-        playerList.forEach {
-            addCardToPlayer(it, INITIAL_CARDS_NUMBER)
-        }
+        playerList.getList().forEach { addCardToPlayer(it, INITIAL_CARDS_NUMBER) }
     }
 
-    fun getPlayerList() = playerList.toList()
+    fun getPlayerList() = playerList.getList()
 
     fun addCardToPlayer(player: Player, numberOfCards: Int = 1) =
-        repeat(numberOfCards) { player.addCardToHand(shuffledCardDeck.getNextCard()) }
+        repeat(numberOfCards) { player.addCardToHand(cardDeck.getNextCard()) }
 
     companion object {
         private const val INITIAL_CARDS_NUMBER = 2

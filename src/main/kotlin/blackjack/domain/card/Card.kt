@@ -1,8 +1,8 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.suit.CardSuit
+import blackjack.domain.card.suit.SuitTypes
 
-data class Card(val suit: CardSuit, val cardNumber: Int) {
+class Card(val suit: SuitTypes, cardNumber: Int) {
     val cardValue: Int
     val cardName: String
 
@@ -15,6 +15,19 @@ data class Card(val suit: CardSuit, val cardNumber: Int) {
             else -> cardNumber.toString()
         }
         cardValue = cardNumber.coerceAtMost(MAXIMUM_VALUE_OF_CARD)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is Card)
+            return other.suit == suit && other.cardName == cardName
+        return false
+    }
+
+    override fun hashCode(): Int {
+        var result = suit.hashCode()
+        result = 31 * result + cardValue
+        result = 31 * result + cardName.hashCode()
+        return result
     }
 
     companion object {

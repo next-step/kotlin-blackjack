@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class BlackjackGameTest {
     @Test
-    fun `BlackjackGame에서 참가자 목록을 받아 올 수 있다`() {
+    fun `BlackjackGame생성시에 추가한 참가자 목록을 이후에 받아 올 수 있다`() {
         val player1Name = PlayerName("player1")
         val player2Name = PlayerName("player2")
         val game = BlackjackGame(PlayerList.createPlayerList(listOf(player1Name, player2Name)))
@@ -20,17 +20,17 @@ class BlackjackGameTest {
     }
 
     @Test
-    fun `BlackjackGame 생성시 참가자에게 2장씩 카드를 나누어 준다`() {
+    fun `BlackjackGame 생성시 참가자에게 2장씩 카드를 나누어 주고 갯수를 확인 할 수 있다`() {
         val player1Name = PlayerName("player1")
         val player2Name = PlayerName("player2")
         val game = BlackjackGame(PlayerList.createPlayerList(listOf(player1Name, player2Name)))
         val player1 = game.getPlayerList().find { it.name == player1Name }
         val player2 = game.getPlayerList().find { it.name == player2Name }
-        require(player1 != null)
-        require(player2 != null)
+        assertThat(player1).isNotNull
+        assertThat(player2).isNotNull
         val predictedNumberOfCard = 2
-        assertThat(player1.getCards().size).isEqualTo(predictedNumberOfCard)
-        assertThat(player2.getCards().size).isEqualTo(predictedNumberOfCard)
+        assertThat(player1!!.getCards().size).isEqualTo(predictedNumberOfCard)
+        assertThat(player2!!.getCards().size).isEqualTo(predictedNumberOfCard)
     }
 
     @Test
