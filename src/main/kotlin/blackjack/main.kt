@@ -12,7 +12,7 @@ fun main() {
     val blackJack = BlackJack(players)
 
     blackJack.apply {
-        outputView.printInitialDrawResult(players)
+        outputView.printInitialDrawResult(this)
 
         players.forEach {
             while (it.canTakeCards) {
@@ -25,7 +25,14 @@ fun main() {
                 }
             }
         }
+
+        dealer.apply {
+            while (canTakeCards) {
+                outputView.printDealerDraw()
+                drawAnotherCard(this)
+            }
+        }
     }
 
-    outputView.printResult(blackJack.players)
+    outputView.printResult(blackJack)
 }

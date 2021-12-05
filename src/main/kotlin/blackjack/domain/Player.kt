@@ -3,20 +3,22 @@ package blackjack.domain
 import blackjack.domain.exceptions.ScoreOverflowException
 import blackjack.domain.extensions.deepCopy
 
-class Player(val name: String) {
+open class Player(val name: String) {
 
     init {
         require(!name.isNullOrBlank()) { INVALID_NAME_ERROR_MSG }
     }
 
     private val normalCards: MutableList<Card> = mutableListOf()
-    private val courtCards: MutableList<Card> = mutableListOf()
     private val aceCards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
-        get() = (normalCards + aceCards + courtCards).deepCopy()
+        get() = (normalCards + aceCards).deepCopy()
 
-    val canTakeCards: Boolean
+    open val canTakeCards: Boolean
         get() = getTotalScore() < BLACKJACK_NUMBER
+
+    val isBusted: Boolean
+        get() = getTotalScore() > BLACKJACK_NUMBER
 
     fun takeCards(cards: List<Card>) {
         if (!canTakeCards) {
@@ -24,29 +26,43 @@ class Player(val name: String) {
         }
 
         cards.forEach {
-            when {
-                it.number.value == ACE_NUMBER -> aceCards.add(it)
-                it.number.value > MAX_NUMBER -> courtCards.add(it)
+            when (it.number.value) {
+                ACE_NUMBER -> aceCards.add(it)
                 else -> normalCards.add(it)
             }
         }
     }
 
+    fun takeCards(vararg card: Card) {
+        takeCards(card.toList())
+    }
+
     fun getTotalScore(): Int {
-        var totalScore = 0
-        normalCards.forEach { totalScore += it.number.value }
-        courtCards.forEach { _ -> totalScore += MAX_NUMBER }
+        var totalScore = getNormalCardsScoreSum()
         aceCards.forEach { _ ->
-            totalScore += if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
+            totalScore += getAceCardScore(totalScore)
         }
         return totalScore
     }
 
+    private fun getNormalCardsScoreSum(): Int {
+        return normalCards.sumOf { it.number.value }
+    }
+
+    protected open fun getAceCardScore(totalScore: Int): Int {
+        return if (totalScore + ACE_NUMBER_ALT > BLACKJACK_NUMBER) ACE_NUMBER else ACE_NUMBER_ALT
+    }
+
+    open infix fun wins(player: Player): Boolean {
+        if (isBusted) return false
+        if (player.isBusted) return true
+        return getTotalScore() >= player.getTotalScore()
+    }
+
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        protected const val BLACKJACK_NUMBER = 21
         private const val ACE_NUMBER = 1
         private const val ACE_NUMBER_ALT = 11
-        private const val MAX_NUMBER = 10
         private const val INVALID_NAME_ERROR_MSG = "잘못된 이름입니다."
         private const val SCORE_OVERFLOW_ERROR_MSG = "이미 최대 점수를 넘어섰습니다. 카드를 더이상 받을 수 없습니다."
     }
