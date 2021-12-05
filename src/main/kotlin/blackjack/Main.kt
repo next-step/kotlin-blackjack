@@ -8,12 +8,16 @@ import blackjack.ui.InputView.readInputForMoreCard
 import blackjack.ui.InputView.readInputForPlayer
 import blackjack.ui.ResultView
 import blackjack.ui.ResultView.printAskTakeMoreCard
+import blackjack.ui.ResultView.printDealerHitResult
+import blackjack.ui.ResultView.printPlayerHand
+import blackjack.ui.ResultView.printPlayerResult
+import blackjack.ui.ResultView.printTotalResultByPlayerResult
 
 fun main() {
     val playerNameList = getPlayerNameList()
     val blackjackGame = initBlackjackGame(playerNameList)
     playBlackjackGame(blackjackGame)
-    blackjackGame.getPlayerList().forEach(ResultView::printPlayerResult)
+    endBlackjackGame(blackjackGame)
 }
 
 fun getPlayerNameList(): List<PlayerName> {
@@ -24,8 +28,9 @@ fun getPlayerNameList(): List<PlayerName> {
 fun initBlackjackGame(playerNameList: List<PlayerName>): BlackjackGame {
     val blackjackGame = BlackjackGame(PlayerList.createPlayerList(playerNameList))
     ResultView.printAddCardsForInit(playerNameList.joinToString(", "))
+    printPlayerHand(blackjackGame.getDealer())
     blackjackGame.getPlayerList()
-        .forEach(ResultView::printPlayerHand)
+        .forEach(::printPlayerHand)
     return blackjackGame
 }
 
@@ -33,6 +38,18 @@ fun playBlackjackGame(blackjackGame: BlackjackGame) {
     blackjackGame
         .getPlayerList()
         .forEach(blackjackGame::checkUserCardAddable)
+    blackjackGame.playDealerTurn()
+    printPlayResult(blackjackGame)
+}
+
+fun endBlackjackGame(blackjackGame: BlackjackGame) {
+    val playerList = blackjackGame.getResults()
+    printTotalResultByPlayerResult(playerList)
+}
+
+fun printPlayResult(blackjackGame: BlackjackGame) {
+    printPlayerResult(blackjackGame.getDealer())
+    blackjackGame.getPlayerList().forEach(::printPlayerResult)
 }
 
 fun BlackjackGame.checkUserCardAddable(player: Player) {
@@ -40,13 +57,23 @@ fun BlackjackGame.checkUserCardAddable(player: Player) {
         takeMoreCard(player)
 }
 
+fun BlackjackGame.playDealerTurn() {
+    var hitCount = 0
+    while (isDealerCardAddable()) {
+        hitCount++
+        addCardToDealer()
+    }
+    if (hitCount > 0)
+        printDealerHitResult(hitCount)
+}
+
 fun BlackjackGame.takeMoreCard(player: Player) {
     printAskTakeMoreCard(player)
     val result = readInputForMoreCard()
     if (result) {
         addCardToPlayer(player)
-        ResultView.printPlayerHand(player)
+        printPlayerHand(player)
         return checkUserCardAddable(player)
     }
-    ResultView.printPlayerHand(player)
+    printPlayerHand(player)
 }

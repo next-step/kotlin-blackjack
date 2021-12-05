@@ -21,8 +21,15 @@ class Hand(private val cardList: MutableList<Card> = mutableListOf()) {
             .map { ACE_VALUE * it + ACE_VALUE_ALTERNATIVE * (numberOfAces - it) }
             .map { it + valueWithoutAces }
             .toHashSet()
-        return ableValues.toList()
+        return ableValues.toList().filter { it <= VALUE_OF_WIN }
     }
+    fun getMaxValue(): Int {
+        val numberOfAces = getNumberOfAceCards()
+        val valueWithoutAces = getCardsWithoutAce().sumOf { it.cardValue }
+        return valueWithoutAces + ACE_VALUE_ALTERNATIVE * numberOfAces
+    }
+
+    fun isBusted() = (getMakeableValues().minOrNull() ?: Int.MAX_VALUE) > VALUE_OF_WIN
 
     private fun minValueOfHand(): Int = cardList.sumOf { it.cardValue }
 
