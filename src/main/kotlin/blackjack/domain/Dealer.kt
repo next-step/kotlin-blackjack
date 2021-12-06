@@ -34,7 +34,7 @@ data class Dealer(override val name: Name = Name.from(DEALER_NAME), override val
     }
 
     companion object {
-        const val DEALER_NAME = "딜러"
-        const val DEALER_ACCEPT_CRITERIA_SCORE = 16
+        private const val DEALER_NAME = "딜러"
+        private const val DEALER_ACCEPT_CRITERIA_SCORE = 16
     }
 }
