@@ -20,9 +20,9 @@ class CardTest {
     }
 
     @ParameterizedTest(name = "Card는 Ace를 가지고 있는지 알 수 있다")
-    @MethodSource("hasAceTest")
-    fun `Card는 Ace를 가지고 있는지 알 수 있다`(card: Card, expected: Boolean) {
-        assertThat(card.hasAce()).isEqualTo(expected)
+    @MethodSource("isAceTest")
+    fun `Card는 Ace인지 알 수 있다`(card: Card, expected: Boolean) {
+        assertThat(card.isAce()).isEqualTo(expected)
     }
 
     companion object {
@@ -36,7 +36,7 @@ class CardTest {
         }
 
         @JvmStatic
-        fun hasAceTest(): Stream<Arguments> {
+        fun isAceTest(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(Card(SuitType.DIAMOND, Denomination.KING), false),
                 Arguments.of(Card(SuitType.HEART, Denomination.JACK), false),
