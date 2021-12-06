@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Card(val suitType: SuitType, val numberType: NumberType) {
+data class Card(val suitType: SuitType, val denomination: Denomination) {
 
-    fun hasAce(): Boolean = numberType == NumberType.ACE
+    fun hasAce(): Boolean = denomination == Denomination.ACE
 }

@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.Card
-import blackjack.domain.NumberType
+import blackjack.domain.Denomination
 import blackjack.domain.SuitType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -13,8 +13,8 @@ class CardTest {
 
     @ParameterizedTest(name = "CardType과 NumberType으로 Card를 정의할 수 있다")
     @MethodSource("makeCardTest")
-    fun `CardType과 NumberType으로 Card를 정의할 수 있다`(suitType: SuitType, numberType: NumberType, expected: Card) {
-        val card = Card(suitType, numberType)
+    fun `CardType과 NumberType으로 Card를 정의할 수 있다`(suitType: SuitType, denomination: Denomination, expected: Card) {
+        val card = Card(suitType, denomination)
 
         assertThat(card).isEqualTo(expected)
     }
@@ -29,18 +29,18 @@ class CardTest {
         @JvmStatic
         fun makeCardTest(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(SuitType.DIAMOND, NumberType.KING, Card(SuitType.DIAMOND, NumberType.KING)),
-                Arguments.of(SuitType.HEART, NumberType.JACK, Card(SuitType.HEART, NumberType.JACK)),
-                Arguments.of(SuitType.SPADE, NumberType.ACE, Card(SuitType.SPADE, NumberType.ACE))
+                Arguments.of(SuitType.DIAMOND, Denomination.KING, Card(SuitType.DIAMOND, Denomination.KING)),
+                Arguments.of(SuitType.HEART, Denomination.JACK, Card(SuitType.HEART, Denomination.JACK)),
+                Arguments.of(SuitType.SPADE, Denomination.ACE, Card(SuitType.SPADE, Denomination.ACE))
             )
         }
 
         @JvmStatic
         fun hasAceTest(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(Card(SuitType.DIAMOND, NumberType.KING), false),
-                Arguments.of(Card(SuitType.HEART, NumberType.JACK), false),
-                Arguments.of(Card(SuitType.SPADE, NumberType.ACE), true)
+                Arguments.of(Card(SuitType.DIAMOND, Denomination.KING), false),
+                Arguments.of(Card(SuitType.HEART, Denomination.JACK), false),
+                Arguments.of(Card(SuitType.SPADE, Denomination.ACE), true)
             )
         }
     }
