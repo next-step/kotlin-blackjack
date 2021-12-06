@@ -9,6 +9,7 @@ class Player(val name: String) {
 
     fun takeOneMoreCard(card: Card) = _cards.add(card)
     fun takeFirstTwoCard(cards: Cards) = cards.forEach(_cards::add)
-
+    fun checkHaveAnAce() = _cards.haveAnAce()
+    fun changeAceToEleven() = _cards.changeAceToEleven()
     override fun toString() = "$name"
 }

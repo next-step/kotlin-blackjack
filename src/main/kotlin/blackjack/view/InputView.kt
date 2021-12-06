@@ -11,18 +11,16 @@ private fun getStringData() = (readLine() ?: throw IllegalArgumentException())
 
 fun getOrderFrom(player: Player): Boolean =
     println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)").run {
-        when (getStringData()) {
-            "y" -> true
-            "n" -> false
-            else -> throw IllegalArgumentException()
-        }
+        getAnswerFromUser()
     }
 
-fun askAceIsEleven(): Boolean =
-    println("플레이어께서 Ace를 가지고 계십니다. Ace를 11로 환산하시겠습니까?(예는 y, 아니오는 n)").run {
-        when (getStringData()) {
-            "y" -> true
-            "n" -> false
-            else -> throw IllegalArgumentException()
-        }
+fun askAceIsEleven(player: Player): Boolean =
+    println("${player}께서 Ace를 가지고 계십니다. Ace를 11로 환산하시겠습니까?(예는 y, 아니오는 n)").run {
+        getAnswerFromUser()
     }
+
+private fun getAnswerFromUser() = when (getStringData()) {
+    "y" -> true
+    "n" -> false
+    else -> throw IllegalArgumentException()
+}

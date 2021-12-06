@@ -11,7 +11,7 @@ value class Score private constructor(val value: Int) : Comparable<Score> {
 
     companion object {
         private val numbers = mutableMapOf<Int, Score>()
-        val TWENTY_ONE = of(21)
+        val BLACKJACK_SCORE = of(21)
 
         fun of(value: Int): Score {
             return numbers[value] ?: Score(value).also { numbers[value] = it }
