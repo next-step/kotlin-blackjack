@@ -1,7 +1,6 @@
 package blackjack.domain.card
 
-class Hand {
-    private val cardList = mutableListOf<Card>()
+class Hand(private val cardList: MutableList<Card> = mutableListOf()) {
 
     fun addCardToHand(card: Card): Boolean {
         if (isAddAble())
@@ -11,9 +10,9 @@ class Hand {
 
     fun isAddAble(): Boolean = minValueOfHand() < VALUE_OF_WIN && !isBlackJackHand()
 
-    fun getCards() = cardList.toList()
+    fun getCardListInHand() = cardList.toList()
 
-    fun getValues(): List<Int> {
+    fun getMakeableValues(): List<Int> {
         if (isBlackJackHand())
             return listOf(VALUE_OF_WIN)
         val numberOfAces = getNumberOfAceCards()
@@ -22,8 +21,15 @@ class Hand {
             .map { ACE_VALUE * it + ACE_VALUE_ALTERNATIVE * (numberOfAces - it) }
             .map { it + valueWithoutAces }
             .toHashSet()
-        return ableValues.toList()
+        return ableValues.toList().filter { it <= VALUE_OF_WIN }
     }
+    fun getMaxValue(): Int {
+        val numberOfAces = getNumberOfAceCards()
+        val valueWithoutAces = getCardsWithoutAce().sumOf { it.cardValue }
+        return valueWithoutAces + ACE_VALUE_ALTERNATIVE * numberOfAces
+    }
+
+    fun isBusted() = (getMakeableValues().minOrNull() ?: Int.MAX_VALUE) > VALUE_OF_WIN
 
     private fun minValueOfHand(): Int = cardList.sumOf { it.cardValue }
 
