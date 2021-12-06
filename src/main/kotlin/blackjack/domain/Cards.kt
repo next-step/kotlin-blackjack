@@ -5,10 +5,20 @@ data class Cards(private val _cards: MutableList<Card>) {
     val cards: List<Card>
         get() = _cards.map { it.copy() }
 
-    fun getScore(): Score = Denomination.getScore(this)
+    fun getScore(): Score {
+        var sum = _cards
+            .filter { it.denomination != Denomination.ACE }
+            .sumOf { it.denomination.score.score }
+            .let { Score.from(it) }
 
-    fun countAce(): Int {
-        return _cards.count(Card::hasAce)
+        repeat(countAce()) {
+            sum += Score.getAceScore(sum)
+        }
+        return sum
+    }
+
+    private fun countAce(): Int {
+        return _cards.count(Card::isAce)
     }
 
     fun addCard(card: Card) {
