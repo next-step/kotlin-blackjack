@@ -3,13 +3,13 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 
-open class Player(name: PlayerName, protected val hand: Hand = Hand()) {
+abstract class Player(name: PlayerName, protected val hand: Hand = Hand()) {
     var status: Status = Status(name)
         private set
 
-    open fun addCardToHand(card: Card) = hand.addCardToHand(card)
+    abstract fun addCardToHand(card: Card): Boolean
 
-    open fun isHandAddable() = hand.isAddAble()
+    abstract fun isHandAddable(): Boolean
 
     fun getName() = status.name
 
@@ -47,7 +47,7 @@ open class Player(name: PlayerName, protected val hand: Hand = Hand()) {
 
     fun getMaxHandValue() = hand.getMaxValue()
 
-    fun getMakeableValues(): List<Int> = hand.getMakeableValues()
+    fun getMakeableValues(): List<Int> = hand.getMakeableScores()
 
     fun isBusted() = hand.isBusted()
 }

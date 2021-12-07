@@ -29,27 +29,27 @@ fun initBlackjackGame(playerNameList: List<PlayerName>): BlackjackGame {
     val blackjackGame = BlackjackGame(PlayerList.createPlayerList(playerNameList))
     ResultView.printAddCardsForInit(playerNameList.joinToString(", "))
     printPlayerHand(blackjackGame.getDealer())
-    blackjackGame.getPlayerList()
+    blackjackGame.getGamerList()
         .forEach(::printPlayerHand)
     return blackjackGame
 }
 
 fun playBlackjackGame(blackjackGame: BlackjackGame) {
     blackjackGame
-        .getPlayerList()
+        .getGamerList()
         .forEach(blackjackGame::checkUserCardAddable)
     blackjackGame.playDealerTurn()
     printPlayResult(blackjackGame)
 }
 
 fun endBlackjackGame(blackjackGame: BlackjackGame) {
-    val playerList = blackjackGame.getResults()
+    val playerList = blackjackGame.getGameResultList()
     printTotalResultByPlayerResult(playerList)
 }
 
 fun printPlayResult(blackjackGame: BlackjackGame) {
     printPlayerResult(blackjackGame.getDealer())
-    blackjackGame.getPlayerList().forEach(::printPlayerResult)
+    blackjackGame.getGamerList().forEach(::printPlayerResult)
 }
 
 fun BlackjackGame.checkUserCardAddable(player: Player) {

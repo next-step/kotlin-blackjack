@@ -13,7 +13,7 @@ class BlackjackGameTest {
         val player2Name = PlayerName("player2")
         val game = BlackjackGame(PlayerList.createPlayerList(listOf(player1Name, player2Name)))
         val predictedNumberOfPlayers = 2
-        val playerList = game.getPlayerList()
+        val playerList = game.getGamerList()
         assertThat(playerList.size).isEqualTo(predictedNumberOfPlayers)
         val nameList = playerList.map { it.getName() }
         assertThat(nameList).contains(player1Name, player2Name)
@@ -24,8 +24,8 @@ class BlackjackGameTest {
         val player1Name = PlayerName("player1")
         val player2Name = PlayerName("player2")
         val game = BlackjackGame(PlayerList.createPlayerList(listOf(player1Name, player2Name)))
-        val player1 = game.getPlayerList().find { it.getName() == player1Name }
-        val player2 = game.getPlayerList().find { it.getName() == player2Name }
+        val player1 = game.getGamerList().find { it.getName() == player1Name }
+        val player2 = game.getGamerList().find { it.getName() == player2Name }
         assertThat(player1).isNotNull
         assertThat(player2).isNotNull
         val predictedNumberOfCard = 2
@@ -37,9 +37,9 @@ class BlackjackGameTest {
     fun `BlackjackGame을 통해 참가자에게 랜덤한 카드를 추가 할 수 있다`() {
         val player1Name = PlayerName("player1")
         val game = BlackjackGame(PlayerList.createPlayerList(listOf(player1Name)))
-        val player1 = game.getPlayerList().find { it.getName() == player1Name }
+        val player1 = game.getGamerList().find { it.getName() == player1Name }
         require(player1 != null)
-        game.getPlayerList().forEach { game.addCardToPlayer(it) }
+        game.getGamerList().forEach { game.addCardToPlayer(it) }
         val predictedNumberOfCard = 3
         assertThat(player1.getCards().size).isEqualTo(predictedNumberOfCard)
     }
