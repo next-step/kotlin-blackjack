@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.suit.SuitTypes
+import blackjack.domain.player.Bet
 import blackjack.domain.player.Dealer
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -16,7 +17,7 @@ class DealerTest {
             addCardToHand(Card(SuitTypes.Diamond, 10))
             addCardToHand(Card(SuitTypes.Diamond, 6))
         }
-        val dealer = Dealer(hand = hand)
+        val dealer = Dealer(hand = hand, bet = Bet(0))
         val actualResult = dealer.isHandAddable()
         Assertions.assertThat(actualResult).isTrue
     }
@@ -27,7 +28,7 @@ class DealerTest {
             addCardToHand(Card(SuitTypes.Diamond, 7))
             addCardToHand(Card(SuitTypes.Diamond, 10))
         }
-        val dealer = Dealer(hand = hand)
+        val dealer = Dealer(hand = hand, bet = Bet(0))
         val actualResult = dealer.isHandAddable()
         Assertions.assertThat(actualResult).isFalse
     }

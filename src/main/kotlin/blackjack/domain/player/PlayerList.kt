@@ -44,9 +44,12 @@ class PlayerList private constructor(private val gamerList: List<Player>, val de
     }
 
     companion object {
-        fun createPlayerList(playerNames: List<PlayerName>) = createPlayerList(playerNames, Dealer())
+        fun createPlayerList(playerNames: List<PlayerName>, bets: List<Bet>) =
+            createPlayerList(playerNames, bets, Dealer())
 
-        fun createPlayerList(playerNames: List<PlayerName>, dealer: Dealer) =
-            PlayerList(playerNames.map { Gamer(it) }, dealer)
+        fun createPlayerList(playerNames: List<PlayerName>, bets: List<Bet>, dealer: Dealer): PlayerList {
+            val gamerList = playerNames.zip(bets).map { (name, bet) -> Gamer(name, bet = bet) }
+            return PlayerList(gamerList, dealer)
+        }
     }
 }

@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
+import blackjack.domain.player.Bet
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerList
 import blackjack.domain.player.PlayerName
@@ -25,8 +26,8 @@ fun getPlayerNameList(): List<PlayerName> {
     return readInputForPlayer()
 }
 
-fun initBlackjackGame(playerNameList: List<PlayerName>): BlackjackGame {
-    val blackjackGame = BlackjackGame(PlayerList.createPlayerList(playerNameList))
+fun initBlackjackGame(playerNameList: List<PlayerName>, betList: List<Bet>): BlackjackGame {
+    val blackjackGame = BlackjackGame(PlayerList.createPlayerList(playerNameList, betList))
     ResultView.printAddCardsForInit(playerNameList.joinToString(", "))
     printPlayerHand(blackjackGame.getDealer())
     blackjackGame.getGamerList()
