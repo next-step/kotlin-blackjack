@@ -59,7 +59,7 @@ class DealerTest {
             )
         )
 
-        assertThat(dealer.makeDealerGameResult(players)).isEqualTo(
+        assertThat(dealer.makeDealerGameResult(players.players)).isEqualTo(
             GameResult.from(
                 listOf(
                     GameResultState.Win,

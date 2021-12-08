@@ -1,10 +1,25 @@
 package blackjack.domain
 
-@JvmInline
-value class Players private constructor(private val _players: MutableList<Player> = mutableListOf()) {
+class Players private constructor(players: List<Player>) {
 
+    private val _players: MutableList<Player> = players.toMutableList()
     val players: List<Player>
-        get() = _players.sortedWith(
+        get() = _players
+            .map {
+                it.copy()
+            }
+
+    val dealer: Dealer?
+        get() = _players
+            .filterIsInstance(Dealer::class.java)
+            .firstOrNull()
+
+    fun isContainDealer(): Boolean {
+        return dealer != null
+    }
+
+    fun sortedDealerFirst(): List<Player> = players
+        .sortedWith(
             compareBy {
                 when (it) {
                     is Dealer -> -1
@@ -13,14 +28,12 @@ value class Players private constructor(private val _players: MutableList<Player
             }
         ).map { it.copy() }
 
-    val playersExceptedDealer: List<Player>
-        get() = _players.filter { it !is Dealer }.map { it.copy() }
-
-    val dealer: Dealer?
-        get() = _players.filterIsInstance(Dealer::class.java).firstOrNull()
-
-    fun isContainDealer(): Boolean {
-        return dealer != null
+    fun filteredExceptedDealer(): List<Player> {
+        return players.filter {
+            it !is Dealer
+        }.map {
+            it.copy()
+        }
     }
 
     fun eachAcceptCards(cardDeck: CardDeck) {
@@ -38,7 +51,7 @@ value class Players private constructor(private val _players: MutableList<Player
         }
 
         fun from(list: List<Player>): Players {
-            return Players(list.toMutableList())
+            return Players(list)
         }
     }
 }

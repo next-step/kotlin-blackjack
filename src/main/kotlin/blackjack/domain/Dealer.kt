@@ -1,10 +1,12 @@
 package blackjack.domain
 
-data class Dealer(override val name: Name = Name.from(DEALER_NAME), override val cards: Cards = Cards.from(emptyList())) :
-    Player(name, cards) {
+class Dealer(
+    override val name: Name = Name.from(DEALER_NAME),
+    override val cards: Cards = Cards.from(emptyList())
+) : Player(name, cards) {
 
-    fun makeDealerGameResult(players: Players): GameResult {
-        return players.playersExceptedDealer
+    fun makeDealerGameResult(playerList: List<Player>): GameResult {
+        return playerList
             .map {
                 result(it)
             }
@@ -32,6 +34,8 @@ data class Dealer(override val name: Name = Name.from(DEALER_NAME), override val
             }
         }
     }
+
+    override fun copy(): Dealer = Dealer(name, cards)
 
     companion object {
         private const val DEALER_NAME = "딜러"

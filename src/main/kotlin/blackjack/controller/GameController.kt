@@ -38,7 +38,7 @@ object GameController {
     }
 
     private fun hitPlayers(players: Players) {
-        players.playersExceptedDealer.forEach { player ->
+        players.filteredExceptedDealer().forEach { player ->
             while (player.canHit() && InputView.acceptMoreCard(player)) {
                 player.hit(cardDeck.next())
                 OutputView.printPlayerDrawnCard(player)
@@ -55,7 +55,7 @@ object GameController {
 
     private fun printDealerResults(players: Players) {
         if (players.dealer != null) {
-            players.dealer!!.makeDealerGameResult(players)
+            players.dealer!!.makeDealerGameResult(players.filteredExceptedDealer())
                 .also {
                     OutputView.printDealerResult(it)
                 }
@@ -64,7 +64,7 @@ object GameController {
 
     private fun printPlayersResults(players: Players) {
         if (players.dealer != null) {
-            players.playersExceptedDealer.forEach {
+            players.filteredExceptedDealer().forEach {
                 OutputView.printPlayerResult(it, it.result(players.dealer!!))
             }
         }

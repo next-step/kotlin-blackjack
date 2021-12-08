@@ -2,10 +2,8 @@ package blackjack.view
 
 import blackjack.domain.GameResult
 import blackjack.domain.GameResultState
-import blackjack.domain.Denomination
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.SuitType
 
 object OutputView {
 
@@ -23,14 +21,14 @@ object OutputView {
             if (players.isContainDealer()) {
                 append(DEALER_MESSAGE.format(players.dealer?.name?.name))
             }
-            append(DRAW_MESSAGE.format(players.playersExceptedDealer.joinToString(SEPARATOR) { it.name.name }))
+            append(DRAW_MESSAGE.format(players.filteredExceptedDealer().joinToString(SEPARATOR) { it.name.name }))
         }
         println(output)
     }
 
     fun printPlayersDrawnCards(players: Players) {
         val output = buildString {
-            players.players.forEach { player ->
+            players.sortedDealerFirst().forEach { player ->
                 append("${player.name.name}카드: ")
                 append(player.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
                 append(System.lineSeparator())
@@ -55,7 +53,7 @@ object OutputView {
     fun printScoreResult(players: Players) {
         val output = buildString {
             append(System.lineSeparator())
-            players.players.forEach {
+            players.sortedDealerFirst().forEach {
                 append(
                     PLAYER_CARD_OUTPUT_MESSAGE.format(
                         it.name.name,

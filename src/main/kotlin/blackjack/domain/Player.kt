@@ -15,7 +15,7 @@ open class Player(open val name: Name, open val cards: Cards = Cards.from(emptyL
         }
     }
 
-    fun copy() = Player(name, cards)
+    open fun copy() = Player(name, cards)
 
     open fun result(other: Player): GameResultState {
         if (other.isBust()) return GameResultState.Win
