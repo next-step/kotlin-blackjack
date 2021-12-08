@@ -1,3 +1,3 @@
-package step1
+package resume
 
 data class Person(val name: String, val company: String? = null, val skills: Skills, val languages: Languages)

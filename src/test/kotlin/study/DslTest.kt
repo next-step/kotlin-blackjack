@@ -15,11 +15,6 @@ class DslTest {
     }
 
     @Test
-    fun pair() {
-        val pair = 1 to "one"
-    }
-
-    @Test
     fun operator() {
         val point = Point(0, 1) + (Point(1, 2))
         assertThat(point).isEqualTo(Point(1, 3))

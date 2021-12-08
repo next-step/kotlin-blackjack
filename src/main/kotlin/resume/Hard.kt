@@ -1,3 +1,3 @@
-package step1
+package resume
 
 data class Hard(val name: String) : Skill()
