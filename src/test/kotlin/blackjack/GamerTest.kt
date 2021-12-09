@@ -33,6 +33,21 @@ class GamerTest {
     }
 
     @Test
+    fun `참가자의 hand 값이 blackjack인지 확인 할 수 있다`() {
+        val gamer = Gamer("gamer".toPlayerName(), bet = Bet(0))
+        with(gamer) {
+            addCardToHand(Card(Diamond, 1))
+            addCardToHand(Card(Diamond, 9))
+        }
+        val actualNotBlackJackResult = gamer.isBlackJackHand()
+        assertThat(actualNotBlackJackResult).isFalse
+
+        gamer.addCardToHand(Card(Diamond, 1))
+        val actualBlackJackResult = gamer.isBlackJackHand()
+        assertThat(actualBlackJackResult).isTrue
+    }
+
+    @Test
     fun `참가자가 가지고 있는 카드값 합들을 가져 올 수 있다`() {
         val hand = Hand().apply {
             addCardToHand(Card(Diamond, 1))

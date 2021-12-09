@@ -32,6 +32,7 @@ abstract class Player(name: PlayerName, protected val hand: Hand = Hand(), bet: 
         countUpLose()
         return isWin
     }
+    fun isBlackJackHand() = hand.isBlackJackHand()
 
     fun countUpWin(wins: Int = 1) {
         status = Status(status.name, status.gameStatus.bet, WinStatus(status.getWin() + wins, status.getLose()))

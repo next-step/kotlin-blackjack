@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-data class PlayerResult(val playerStatus: Status) {
+data class PlayerResult(val betResult: BetResult, val playerStatus: Status) {
 
     fun getName() = playerStatus.name
 

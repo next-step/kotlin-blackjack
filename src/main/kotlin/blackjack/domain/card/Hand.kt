@@ -23,6 +23,7 @@ class Hand(private val cardList: MutableList<Card> = mutableListOf()) {
             .toHashSet()
         return ableValues.toList().filter { it <= VALUE_OF_WIN }
     }
+
     fun getMaxValue(): Int {
         val numberOfAces = getNumberOfAceCards()
         val valueWithoutAces = getCardsWithoutAce().sumOf { it.cardValue }
@@ -33,7 +34,7 @@ class Hand(private val cardList: MutableList<Card> = mutableListOf()) {
 
     private fun minValueOfHand(): Int = cardList.sumOf { it.cardValue }
 
-    private fun isBlackJackHand(): Boolean {
+    fun isBlackJackHand(): Boolean {
         val numberOfAces = getNumberOfAceCards()
         val sumOfCardWithoutAce = getCardsWithoutAce().sumOf { it.cardValue }
 
