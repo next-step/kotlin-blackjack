@@ -4,7 +4,7 @@
 ### step4 balckjack - Bet
 
 ## 기능 구현 목록
-- [ ] 베팅 금액 입력 구현
+- [x] 베팅 금액 입력 구현
 - [ ] playerStaus - 구현
 - [x] bet 구현
 - [ ] 베팅 결과 출력

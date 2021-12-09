@@ -9,6 +9,7 @@ object ResultView {
     private const val REQUEST_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입하세요.(쉼표 기준으로 분리)"
     private const val RESULT_FOR_INIT_CARDS = "에게 2장을 나누었습니다."
     private const val ASK_TAKE_MORE_CARD = "는 한장의 카드를 더 받겠습니까?(예 y, 아니오는 n)"
+    private const val ASK_AMOUNT_OF_BET = "의 배팅 금액은?"
     private const val PLAYER_RESULT_FORMAT = "%s카드: %s - 결과: %s"
     private const val PLAYER_HAND_FORMAT = "%s카드: %s"
     private const val USER_NAME_SEPARATOR = ", "
@@ -25,7 +26,9 @@ object ResultView {
 
     fun printAskTakeMoreCard(player: Player) = println("${player.getName()}$ASK_TAKE_MORE_CARD")
 
-    fun printAddCardsForInit(names: String) = println("$names$RESULT_FOR_INIT_CARDS")
+    fun printAddCardsForInit(name: String) = println("$name$RESULT_FOR_INIT_CARDS")
+
+    fun printAskAmountOfBet(name: PlayerName) = println("$name$ASK_AMOUNT_OF_BET")
 
     fun printPlayerHand(player: Player) = println(
         PLAYER_HAND_FORMAT.format(
