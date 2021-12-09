@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
-class PlayerList private constructor(private val gamerList: List<Player>, val dealer: Dealer = Dealer()) {
+class PlayerList(private val gamerList: List<Player>, val dealer: Dealer = Dealer()) {
 
     fun getGamerList() = gamerList.toList()
 
@@ -46,7 +46,7 @@ class PlayerList private constructor(private val gamerList: List<Player>, val de
     ): Double {
         if (playerBlackJack && playerWin && handSize == 2)
             return FIRST_HAND_BLACK_JACK_AND_WIN_RATIO
-        if (playerBlackJack && sameHandValue)
+        if (playerBlackJack && sameHandValue && handSize == 2)
             return FIRST_HAND_BLACK_JACK_DRAW_RATIO
         if (dealerBusted || playerWin)
             return WIN_BET_RATIO

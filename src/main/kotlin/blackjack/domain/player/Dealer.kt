@@ -3,8 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 
-class Dealer(name: PlayerName = PlayerName(DEAFAULT_DEALER_NAME), hand: Hand = Hand(), bet: Bet = Bet(0)) :
-    Player(name, hand, bet) {
+class Dealer(
+    name: PlayerName = PlayerName(DEAFAULT_DEALER_NAME),
+    hand: Hand = Hand(),
+    bet: Bet = Bet(0)
+) : Player(name, hand, bet) {
     override fun isHandAddable() = getMaxHandValue() <= DEALER_MIN_HAND_VALUE
 
     override fun addCardToHand(card: Card): Boolean {
