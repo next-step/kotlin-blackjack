@@ -8,5 +8,4 @@ class Skills(private val skills: MutableList<Skill> = mutableListOf()) : List<Sk
     fun hard(name: String) {
         skills.add(Hard(name))
     }
-
 }

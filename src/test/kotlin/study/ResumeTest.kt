@@ -9,7 +9,7 @@ class ResumeTest {
     fun name() {
         val person = introduce {
             name("조재현")
-       }
+        }
         assertThat(person.name).isEqualTo("조재현")
     }
 
@@ -51,20 +51,4 @@ class ResumeTest {
         assertThat(person.languages).contains(Language("Korean", 5))
         assertThat(person.languages).contains(Language("English", 3))
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

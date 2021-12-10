@@ -23,5 +23,4 @@ class PersonBuilder {
     }
 
     fun build(): Person = Person(name, company, skills, languages)
-
 }
