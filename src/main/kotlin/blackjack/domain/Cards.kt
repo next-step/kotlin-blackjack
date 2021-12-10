@@ -8,11 +8,11 @@ data class Cards(private val _cards: MutableList<Card>) {
     fun getScore(): Score {
         var sum = _cards
             .filter { it.denomination != Denomination.ACE }
-            .sumOf { it.denomination.score.score }
-            .let { Score.from(it) }
+            .sumOf { it.score.score }
+            .let { Score(it) }
 
         repeat(countAce()) {
-            sum += Score.getAceScore(sum)
+            sum += sum.getAceScore()
         }
         return sum
     }

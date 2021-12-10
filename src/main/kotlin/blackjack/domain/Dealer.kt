@@ -16,7 +16,7 @@ class Dealer(
     }
 
     override fun canHit(): Boolean {
-        return cards.getScore() <= Score.from(DEALER_ACCEPT_CRITERIA_SCORE)
+        return cards.getScore() <= Score(DEALER_ACCEPT_CRITERIA_SCORE)
     }
 
     override fun result(other: Player): GameResultState {

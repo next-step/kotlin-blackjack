@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Players private constructor(players: List<Player>) {
 
-    private val _players: MutableList<Player> = players.toMutableList()
+    private val _players = players.map { it.copy() }
     val players: List<Player>
         get() = _players
             .map {
@@ -18,7 +18,7 @@ class Players private constructor(players: List<Player>) {
         return dealer != null
     }
 
-    fun sortedDealerFirst(): List<Player> = players
+    fun sortedDealerFirst(): List<Player> = _players
         .sortedWith(
             compareBy {
                 when (it) {
@@ -29,7 +29,7 @@ class Players private constructor(players: List<Player>) {
         ).map { it.copy() }
 
     fun filteredExceptedDealer(): List<Player> {
-        return players.filter {
+        return _players.filter {
             it !is Dealer
         }.map {
             it.copy()

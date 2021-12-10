@@ -41,7 +41,7 @@ class CardsTest {
         cards.addCard(aceCard)
 
         cards.getScore()
-        assertThat(cards.getScore()).isEqualTo(Score.from(21))
+        assertThat(cards.getScore()).isEqualTo(Score(21))
     }
 
     @Test
@@ -57,6 +57,6 @@ class CardsTest {
         val aceCard = Card(SuitType.SPADE, Denomination.ACE)
         cards.addCard(aceCard)
 
-        assertThat(cards.getScore()).isEqualTo(Score.from(13))
+        assertThat(cards.getScore()).isEqualTo(Score(13))
     }
 }

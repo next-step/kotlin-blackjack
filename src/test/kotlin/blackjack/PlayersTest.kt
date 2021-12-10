@@ -24,17 +24,22 @@ class PlayersTest {
 
     @Test
     fun `Players는 + 연산자를 통해 플레이어를 추가할 수 있다`() {
-        var players = Players.from(listOf(Player.of(Name.from("player1")), Player.of(Name.from("player2"))))
+        var players = Players.from(
+            listOf(
+                Player.of(Name.from("player1")),
+                Player.of(Name.from("player2"))
+            )
+        )
         players += Player.of(name = Name.from("player3"))
 
-        assertThat(players).isEqualTo(
+        assertThat(players.players).isEqualTo(
             Players.from(
                 listOf(
                     Player.of(Name.from("player1")),
                     Player.of(Name.from("player2")),
-                    Player.of(name = Name.from("player3"))
+                    Player.of(Name.from("player3"))
                 )
-            )
+            ).players
         )
     }
 
