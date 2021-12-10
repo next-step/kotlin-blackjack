@@ -3,13 +3,13 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 
-open class Player(name: PlayerName, protected val hand: Hand = Hand()) {
-    var status: Status = Status(name)
+abstract class Player(name: PlayerName, protected val hand: Hand = Hand(), bet: Bet) {
+    var status: Status = Status(name, bet)
         private set
 
-    open fun addCardToHand(card: Card) = hand.addCardToHand(card)
+    abstract fun addCardToHand(card: Card): Boolean
 
-    open fun isHandAddable() = hand.isAddAble()
+    abstract fun isHandAddable(): Boolean
 
     fun getName() = status.name
 
@@ -32,22 +32,23 @@ open class Player(name: PlayerName, protected val hand: Hand = Hand()) {
         countUpLose()
         return isWin
     }
+    fun isBlackJackHand() = hand.isBlackJackHand()
 
     fun countUpWin(wins: Int = 1) {
-        status = Status(status.name, WinStatus(status.winStatus.win + wins, status.winStatus.lose))
+        status = Status(status.name, status.gameStatus.bet, WinStatus(status.getWin() + wins, status.getLose()))
     }
 
     fun countUpLose(lose: Int = 1) {
-        status = Status(status.name, WinStatus(status.winStatus.win, status.winStatus.lose + lose))
+        status = Status(status.name, status.gameStatus.bet, WinStatus(status.getWin(), status.getLose() + lose))
     }
 
-    fun getWins() = status.winStatus.win
+    fun getWins() = status.getWin()
 
-    fun getLoses() = status.winStatus.lose
+    fun getLoses() = status.getLose()
 
     fun getMaxHandValue() = hand.getMaxValue()
 
-    fun getMakeableValues(): List<Int> = hand.getMakeableValues()
+    fun getMakeableValues(): List<Int> = hand.getMakeableScores()
 
     fun isBusted() = hand.isBusted()
 }

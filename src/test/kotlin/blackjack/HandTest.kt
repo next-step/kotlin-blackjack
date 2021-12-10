@@ -89,10 +89,10 @@ class HandTest {
             addCardToHand(Card(Diamond, 9))
         }
         val predicted = listOf(20, 10)
-        assertThat(hand.getMakeableValues()).isEqualTo(predicted)
+        assertThat(hand.getMakeableScores()).isEqualTo(predicted)
         hand.addCardToHand(Card(Diamond, 1))
         val predictedBlackJackHand = listOf(21)
-        assertThat(hand.getMakeableValues()).isEqualTo(predictedBlackJackHand)
+        assertThat(hand.getMakeableScores()).isEqualTo(predictedBlackJackHand)
     }
     @Test
     fun `Hand에 포함된 카드들이 승리 조건 값을 초과 했는지 확인 가능 하다`() {
