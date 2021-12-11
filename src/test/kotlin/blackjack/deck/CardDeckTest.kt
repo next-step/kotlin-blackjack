@@ -17,11 +17,11 @@ class CardDeckTest {
     }
 
     @Test
-    fun `카드 덱에서 카드를 전부 발급 받으면 Illegalargumentexception 에러가 발생한다`() {
+    fun `카드 덱에서 카드를 전부 발급 받으면 RuntimeException 에러가 발생한다`() {
         (0 until CARD_DECK_SIZE)
             .forEach { _ -> CardDeck.draw() }
 
-        assertThrows<IllegalArgumentException> { CardDeck.draw() }
+        assertThrows<RuntimeException> { CardDeck.draw() }
     }
 
     companion object {
