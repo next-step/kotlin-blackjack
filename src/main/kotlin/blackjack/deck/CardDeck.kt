@@ -22,4 +22,14 @@ object CardDeck {
 
         _cards.shuffle()
     }
+
+    fun draw(): Card {
+        require(cards.isNotEmpty()) { "더이상 발급 받을 수 있는 카드가 없습니다." }
+
+        val card = _cards.random()
+        _cards.remove(card)
+
+        return card
+    }
+
 }

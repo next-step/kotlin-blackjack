@@ -40,7 +40,7 @@ class PlayerTest {
         val drawCard = Card(Suit.SPADE, Denomination.FIVE)
 
         // then
-        player.draw(drawCard)
+        player.hits(drawCard)
 
         assertThat(player.cards).contains(drawCard)
     }

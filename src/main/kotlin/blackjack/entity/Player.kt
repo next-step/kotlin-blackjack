@@ -5,7 +5,7 @@ class Player(
     val cards: MutableList<Card> = mutableListOf()
 ) {
 
-    fun draw(card: Card) {
+    fun hits(card: Card) {
         cards.add(card)
     }
 
