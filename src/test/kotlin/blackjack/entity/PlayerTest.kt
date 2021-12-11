@@ -1,5 +1,7 @@
 package blackjack.entity
 
+import blackjack.entity.enums.Denomination
+import blackjack.entity.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -10,8 +12,8 @@ class PlayerTest {
 
         // given
         val cards = mutableListOf(
-            Card("SPADES", 9),
-            Card("SPADES", 1)
+            Card(Suit.SPADE, Denomination.NINE),
+            Card(Suit.SPADE, Denomination.ACE)
         )
         val name = "King"
 
@@ -29,13 +31,13 @@ class PlayerTest {
 
         // given
         val cards = mutableListOf(
-            Card("SPADES", 9),
-            Card("SPADES", 1)
+            Card(Suit.SPADE, Denomination.NINE),
+            Card(Suit.SPADE, Denomination.ACE)
         )
         val name = "King"
         val player = Player(name, cards)
 
-        val drawCard = Card("SPADES", 5)
+        val drawCard = Card(Suit.SPADE, Denomination.FIVE)
 
         // then
         player.draw(drawCard)
@@ -48,8 +50,8 @@ class PlayerTest {
 
         // given
         val cards = mutableListOf(
-            Card("SPADES", 9),
-            Card("SPADES", 1)
+            Card(Suit.SPADE, Denomination.NINE),
+            Card(Suit.SPADE, Denomination.ACE)
         )
         val name = "King"
         val player = Player(name, cards)

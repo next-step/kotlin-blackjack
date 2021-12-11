@@ -1,16 +1,16 @@
 package blackjack.entity
 
+import blackjack.entity.enums.Denomination
+import blackjack.entity.enums.Suit
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.api.Test
 
 class CardTest {
 
-    @ParameterizedTest
-    @CsvSource(value = ["SPADES|10", "HEARTS|8"], delimiterString = "|")
-    fun `원하는 카드가 생성되는지 확인한다`(suit: String, denomination: Int) {
-        val card = Card(suit, denomination)
-        assertThat(card.suit).isEqualTo(suit)
-        assertThat(card.denomination).isEqualTo(denomination)
+    @Test
+    fun `원하는 카드가 생성되는지 확인한다`() {
+        val card = Card(Suit.SPADE, Denomination.FIVE)
+        assertThat(card.suit).isEqualTo(Suit.SPADE)
+        assertThat(card.denomination).isEqualTo(Denomination.FIVE)
     }
 }

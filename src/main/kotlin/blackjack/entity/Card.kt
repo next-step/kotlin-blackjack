@@ -1,3 +1,6 @@
 package blackjack.entity
 
-data class Card(val suit: String, val denomination: Int)
+import blackjack.entity.enums.Denomination
+import blackjack.entity.enums.Suit
+
+data class Card(val suit: Suit, val denomination: Denomination)
