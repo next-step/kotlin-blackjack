@@ -18,5 +18,4 @@ class GamePlayUsers(
             Controller.playing(player)
         }
     }
-
 }

@@ -27,7 +27,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 draw 행위를 할떄 카드 리스트에 카드가 추가되는지 확인한다`() {
+    fun `플레이어가 hits 행위를 할떄 카드 리스트에 카드가 추가되는지 확인한다`() {
 
         // given
         val cards = mutableListOf(
@@ -37,28 +37,11 @@ class PlayerTest {
         val name = "King"
         val player = Player(name, cards)
 
-        val drawCard = Card(Suit.SPADE, Denomination.FIVE)
+        val beforeCardSize = cards.size
 
         // then
-        player.hits(drawCard)
+        player.hits()
 
-        assertThat(player.cards).contains(drawCard)
-    }
-
-    @Test
-    fun `플레이어가 stay 행위를 할때 기존 카드가 유지되는지 확인한다`() {
-
-        // given
-        val cards = mutableListOf(
-            Card(Suit.SPADE, Denomination.NINE),
-            Card(Suit.SPADE, Denomination.ACE)
-        )
-        val name = "King"
-        val player = Player(name, cards)
-
-        // then
-        player.stay()
-
-        assertThat(player.cards).isEqualTo(cards)
+        assertThat(player.cards.size).isEqualTo(beforeCardSize + 1)
     }
 }

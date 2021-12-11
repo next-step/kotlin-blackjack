@@ -1,7 +1,7 @@
 package blackjack.entity.enums
 
 enum class Denomination(val cardNumber: Int) {
-    ACE(1),
+    ACE(11),
     TWO(2),
     THREE(3),
     FOUR(4),
