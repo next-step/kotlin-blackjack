@@ -1,15 +1,17 @@
 package blackjack.entity
 
+import blackjack.deck.CardDeck
+
 class Player(
     val name: String,
-    val cards: MutableList<Card> = mutableListOf()
+    val cards: MutableList<Card> = mutableListOf(),
 ) {
 
-    fun hits(card: Card) {
-        cards.add(card)
+    override fun toString(): String {
+        return name
     }
 
-    // TODO: 어떤 행위를 하면 좋을지 생각해보기 아무것도 없으면 의미가 없는 함수
-    fun stay() {
+    fun hits() {
+        cards.add(CardDeck.draw())
     }
 }

@@ -15,7 +15,7 @@ class GamePlayUsers(
 
     fun playing() {
         for (player in playUsers) {
-            Play.playing(player)
+            Controller.playing(player)
         }
     }
 
