@@ -3,6 +3,8 @@ package blackjack.deck
 import blackjack.entity.Card
 import blackjack.entity.enums.Denomination
 import blackjack.entity.enums.Suit
+import blackjack.exception.BizException
+import blackjack.exception.enums.CardDeckError
 
 object CardDeck {
 
@@ -24,7 +26,7 @@ object CardDeck {
     }
 
     fun draw(): Card {
-        require(cards.isNotEmpty()) { "더이상 발급 받을 수 있는 카드가 없습니다." }
+        require(cards.isNotEmpty()) { throw BizException(CardDeckError.CARD_EMPTY) }
 
         val card = _cards.random()
         _cards.remove(card)
