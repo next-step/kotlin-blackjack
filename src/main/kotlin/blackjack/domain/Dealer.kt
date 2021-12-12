@@ -1,44 +1,36 @@
 package blackjack.domain
 
-class Dealer(
+import blackjack.domain.card.CardDeck
+import blackjack.domain.state.Hit
+import blackjack.domain.state.Initial
+import blackjack.domain.state.State
+import blackjack.domain.state.Stay
+import blackjack.domain.strategy.draw.DrawStrategy
+import blackjack.domain.strategy.hittable.DealerHittableStrategy
+
+data class Dealer(
     override val name: Name = Name.from(DEALER_NAME),
-    override val cards: Cards = Cards.from(emptyList())
-) : Player(name, cards) {
+    override var state: State = Initial()
+) : Player() {
 
-    fun makeDealerGameResult(playerList: List<Player>): GameResult {
-        return playerList
-            .map {
-                result(it)
-            }
-            .groupingBy { it }
-            .eachCount()
-            .let { GameResult.from(it) }
-    }
-
-    override fun canHit(): Boolean {
-        return cards.getScore() <= Score(DEALER_ACCEPT_CRITERIA_SCORE)
-    }
-
-    override fun result(other: Player): GameResultState {
-        if (isBust()) return GameResultState.Lose
-        if (other.isBust()) return GameResultState.Win
-        return when {
-            score > other.score -> {
-                GameResultState.Win
-            }
-            score < other.score -> {
-                GameResultState.Lose
-            }
-            else -> {
-                GameResultState.Draw
-            }
+    override fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Dealer {
+        if (state is Hit && !canHit()) {
+            return Dealer(name, state.stay())
         }
+        var state = state
+        drawStrategy.draw(cardDeck).forEach {
+            state = state.draw(it)
+        }
+        return Dealer(name, state)
     }
 
-    override fun copy(): Dealer = Dealer(name, cards)
+    override fun stay(): Dealer = Dealer(name, Stay(cards))
+
+    override fun copy(): Dealer = Dealer(name, state)
+
+    override fun canHit(): Boolean = score.canHitScore(DealerHittableStrategy)
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val DEALER_ACCEPT_CRITERIA_SCORE = 16
     }
 }

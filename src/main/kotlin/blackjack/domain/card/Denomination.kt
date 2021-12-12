@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.Score
 
 enum class Denomination(
     val score: Score,

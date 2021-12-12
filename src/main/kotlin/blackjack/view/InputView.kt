@@ -17,7 +17,7 @@ object InputView {
             ?: throw IllegalArgumentException(INVALID_INPUT_MESSAGE)
     }
 
-    fun acceptMoreCard(player: Player): Boolean {
+    fun askPlayerWantsToDraw(player: Player): Boolean {
         println("${player.name.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readLine().equals(INPUT_YES)
     }

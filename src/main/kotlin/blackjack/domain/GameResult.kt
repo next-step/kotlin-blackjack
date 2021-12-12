@@ -1,12 +1,22 @@
 package blackjack.domain
 
-@JvmInline
-value class GameResult private constructor(private val _gameResultMap: Map<GameResultState, Int>) {
+import blackjack.domain.state.GameResultState
 
-    val gameResultMap: Map<GameResultState, Int>
-        get() = _gameResultMap.toMap()
+@JvmInline
+value class GameResult private constructor(val gameResultMap: Map<GameResultState, Int>) {
 
     companion object {
+
+        fun makeGameResult(dealer: Dealer, players: Players): GameResult {
+            return players.players
+                .map {
+                    dealer.match(it)
+                }
+                .groupingBy { it }
+                .eachCount()
+                .let { from(it) }
+        }
+
         fun from(resultMap: Map<GameResultState, Int>): GameResult {
             return GameResult(resultMap.toMap())
         }

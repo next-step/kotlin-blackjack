@@ -1,9 +1,10 @@
 package blackjack.view
 
+import blackjack.domain.Dealer
 import blackjack.domain.GameResult
-import blackjack.domain.GameResultState
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.state.GameResultState
 
 object OutputView {
 
@@ -15,20 +16,21 @@ object OutputView {
     private const val PLAYER_SCORE_OUTPUT_MESSAGE = "결과: %s"
     private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
 
-    fun printPlayers(players: Players) {
+    fun printHowManyCardsPlayerDrawn(dealer: Dealer, players: Players) {
         val output = buildString {
             append(System.lineSeparator())
-            if (players.isContainDealer()) {
-                append(DEALER_MESSAGE.format(players.dealer?.name?.name))
-            }
-            append(DRAW_MESSAGE.format(players.filteredExceptedDealer().joinToString(SEPARATOR) { it.name.name }))
+            append(DEALER_MESSAGE.format(dealer.name.name))
+            append(DRAW_MESSAGE.format(players.players.joinToString(SEPARATOR) { it.name.name }))
         }
         println(output)
     }
 
-    fun printPlayersDrawnCards(players: Players) {
+    fun printPlayersDrawnCards(dealer: Dealer, players: Players) {
         val output = buildString {
-            players.sortedDealerFirst().forEach { player ->
+            append("${dealer.name.name}카드: ")
+            append(dealer.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
+            append(System.lineSeparator())
+            players.players.forEach { player ->
                 append("${player.name.name}카드: ")
                 append(player.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
                 append(System.lineSeparator())
@@ -50,10 +52,19 @@ object OutputView {
         println(DEALER_DRAW_MESSAGE)
     }
 
-    fun printScoreResult(players: Players) {
+    fun printScoreResult(dealer: Dealer, players: Players) {
         val output = buildString {
             append(System.lineSeparator())
-            players.sortedDealerFirst().forEach {
+            append(
+                PLAYER_CARD_OUTPUT_MESSAGE.format(
+                    dealer.name.name,
+                    dealer.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" }
+                )
+            )
+            append(" - ")
+            append(PLAYER_SCORE_OUTPUT_MESSAGE.format(dealer.score.score))
+            append(System.lineSeparator())
+            players.players.forEach {
                 append(
                     PLAYER_CARD_OUTPUT_MESSAGE.format(
                         it.name.name,

@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardDeck
+import blackjack.domain.strategy.draw.DrawStrategy
+
 class Players private constructor(players: List<Player>) {
 
     private val _players = players.map { it.copy() }
@@ -9,45 +12,18 @@ class Players private constructor(players: List<Player>) {
                 it.copy()
             }
 
-    val dealer: Dealer?
-        get() = _players
-            .filterIsInstance(Dealer::class.java)
-            .firstOrNull()
-
-    fun isContainDealer(): Boolean {
-        return dealer != null
-    }
-
-    fun sortedDealerFirst(): List<Player> = _players
-        .sortedWith(
-            compareBy {
-                when (it) {
-                    is Dealer -> -1
-                    else -> 0
-                }
-            }
-        ).map { it.copy() }
-
-    fun filteredExceptedDealer(): List<Player> {
-        return _players.filter {
-            it !is Dealer
-        }.map {
-            it.copy()
+    fun drawCardEachPlayer(cardDeck: CardDeck, drawStrategy: DrawStrategy): Players {
+        return _players.map {
+            it.draw(cardDeck, drawStrategy)
+        }.let {
+            Players(it)
         }
     }
-
-    fun eachAcceptCards(cardDeck: CardDeck) {
-        _players.forEach {
-            it.hit(cardDeck.next())
-        }
-    }
-
-    operator fun plus(other: Player): Players = from(_players + other)
 
     companion object {
 
-        fun getPlayerListByNames(names: List<String>): List<Player> {
-            return names.map { Player.of(Name.from(it)) }
+        fun getPlayerListByNames(names: List<String>): List<GamePlayer> {
+            return names.map { GamePlayer(Name.from(it)) }
         }
 
         fun from(list: List<Player>): Players {

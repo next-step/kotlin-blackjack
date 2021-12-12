@@ -1,65 +1,32 @@
 package blackjack.domain
 
-import blackjack.controller.GameController.BLACK_JACK_SCORE
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
+import blackjack.domain.state.GameResultState
+import blackjack.domain.state.State
+import blackjack.domain.strategy.draw.DrawStrategy
 
-open class Player(open val name: Name, open val cards: Cards = Cards.from(emptyList())) {
+abstract class Player {
+
+    abstract val name: Name
+    abstract val state: State
+
+    val cards: Cards
+        get() = state.cards
 
     val score: Score
-        get() = cards.getScore()
+        get() = state.score
 
-    fun isBust(): Boolean = cards.getScore().isBust
+    val isFinished: Boolean
+        get() = state.isFinished()
 
-    fun hit(card: Card) {
-        if (canHit()) {
-            cards.addCard(card)
-        }
-    }
+    val isBust: Boolean
+        get() = cards.getScore().isBust
 
-    open fun copy() = Player(name, cards)
+    abstract fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Player
+    abstract fun stay(): Player
+    abstract fun copy(): Player
+    abstract fun canHit(): Boolean
 
-    open fun result(other: Player): GameResultState {
-        if (other.isBust()) return GameResultState.Win
-        if (isBust()) return GameResultState.Lose
-        return when {
-            score > other.score -> {
-                GameResultState.Win
-            }
-            score < other.score -> {
-                GameResultState.Lose
-            }
-            else -> {
-                GameResultState.Draw
-            }
-        }
-    }
-
-    open fun canHit() = cards.getScore() < Score(BLACK_JACK_SCORE)
-
-    override fun toString(): String {
-        return "Player(name=$name, cards=$cards)"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Player
-
-        if (name != other.name) return false
-        if (cards != other.cards) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode() + cards.hashCode()
-        result *= 31
-        return result
-    }
-
-    companion object {
-        fun of(name: Name, cards: Cards = Cards.from(emptyList())): Player {
-            return Player(name, cards)
-        }
-    }
+    fun match(other: Player): GameResultState = state.match(other.state)
 }
