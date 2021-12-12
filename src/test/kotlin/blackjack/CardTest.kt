@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.Denomination
-import blackjack.domain.SuitType
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.SuitType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments

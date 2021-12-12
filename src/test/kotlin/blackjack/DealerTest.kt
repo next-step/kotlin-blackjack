@@ -1,15 +1,15 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
 import blackjack.domain.Dealer
-import blackjack.domain.GameResult
-import blackjack.domain.GameResultState
-import blackjack.domain.Name
-import blackjack.domain.Denomination
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.domain.SuitType
+import blackjack.domain.state.Hit
+import blackjack.domain.state.Stay
+import blackjack.domain.strategy.draw.HitDrawStrategy
+import blackjack.state.CARD_HEART_EIGHT
+import blackjack.state.CARD_HEART_KING
+import blackjack.state.CARD_HEART_TEN
+import blackjack.state.CARD_HEART_TWO
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,97 +17,47 @@ class DealerTest {
 
     @Test
     fun `딜러는 16점을 초과하면 카드를 받을 수 없다`() {
-        val dealer = Dealer()
-        val card1 = Card(SuitType.HEART, Denomination.TEN)
+        val cards1 = Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN))
+        val hit1 = Hit(cards1)
+        val dealer1 = Dealer(state = hit1)
+        assertThat(dealer1.canHit()).isFalse
 
-        dealer.hit(card1)
-        assertThat(dealer.canHit()).isTrue
-
-        val card2 = Card(SuitType.HEART, Denomination.SEVEN)
-        dealer.hit(card2)
-        assertThat(dealer.canHit()).isFalse
+        val cards2 = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
+        val hit2 = Hit(cards2)
+        val dealer2 = Dealer(state = hit2)
+        assertThat(dealer2.canHit()).isTrue
     }
 
     @Test
-    fun `딜러는 플레이어들과의 점수를 비교한 GameResult를 만들 수 있다`() {
-        val cards1 = Cards.from(
-            listOf(
-                Card(suitType = SuitType.HEART, denomination = Denomination.QUEEN),
-                Card(suitType = SuitType.HEART, denomination = Denomination.SEVEN)
-            )
-        )
-        val dealer = Dealer(cards = cards1)
+    fun `딜러가 처음에 뽑은 두장의 카드가 16이하이면 카드를 받을 수 있다`() {
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
+        val hit = Hit(cards)
 
-        val cards2 = Cards.from(
-            listOf(
-                Card(suitType = SuitType.HEART, denomination = Denomination.TWO),
-                Card(suitType = SuitType.HEART, denomination = Denomination.THREE)
-            )
-        )
+        val dealer = Dealer(state = hit)
+            .draw(CardDeck(), HitDrawStrategy)
 
-        val cards3 = Cards.from(
-            listOf(
-                Card(suitType = SuitType.HEART, denomination = Denomination.TEN),
-                Card(suitType = SuitType.HEART, denomination = Denomination.TEN)
-            )
-        )
-
-        val players = Players.from(
-            listOf(
-                Player.of(name = Name.from("player1"), cards2),
-                Player.of(name = Name.from("player2"), cards3)
-            )
-        )
-
-        assertThat(dealer.makeDealerGameResult(players.players)).isEqualTo(
-            GameResult.from(
-                listOf(
-                    GameResultState.Win,
-                    GameResultState.Lose
-                ).associateWith { 1 }
-            )
-        )
+        assertThat(dealer.cards.cards.size).isEqualTo(3)
     }
 
     @Test
-    fun `딜러가 플레이어보다 점수가 높으면 승리한다`() {
-        val dealer = Dealer()
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
+    fun `딜러가 처음에 뽑은 두장의 카드가 16이상 21미만이면 Stay 상태이다`() {
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_EIGHT))
+        val hit = Hit(cards)
 
-        val player = Player.of(name = Name.from("플레이어"))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
-        player.hit(Card(SuitType.HEART, Denomination.TWO))
+        val dealer = Dealer(state = hit)
+            .draw(CardDeck(), HitDrawStrategy)
 
-        assertThat(dealer.result(player)).isEqualTo(GameResultState.Win)
+        assertThat(dealer.state).isInstanceOf(Stay::class.java)
     }
 
     @Test
-    fun `딜러와 플레이어가 점수가 같으면 무승부이다`() {
-        val dealer = Dealer()
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
+    fun `딜러가 처음에 뽑은 두장의 카드가 16이상 21미만이면 카드를 받을 수 없다`() {
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_EIGHT))
+        val hit = Hit(cards)
 
-        val player = Player.of(name = Name.from("플레이어"))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
+        val dealer = Dealer(state = hit)
+            .draw(CardDeck(), HitDrawStrategy)
 
-        assertThat(dealer.result(player)).isEqualTo(GameResultState.Draw)
-    }
-
-    @Test
-    fun `딜러가 Bust면 다른 플레이어가 Bust라도 무조건 패배한다`() {
-        val dealer = Dealer()
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
-        dealer.hit(Card(SuitType.HEART, Denomination.SIX))
-        dealer.hit(Card(SuitType.HEART, Denomination.TEN))
-
-        val player = Player.of(name = Name.from("플레이어"))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
-        player.hit(Card(SuitType.HEART, Denomination.TEN))
-
-        assertThat(dealer.result(player)).isEqualTo(GameResultState.Lose)
-        assertThat(player.result(dealer)).isEqualTo(GameResultState.Win)
+        assertThat(dealer.cards.cards.size).isEqualTo(2)
     }
 }
