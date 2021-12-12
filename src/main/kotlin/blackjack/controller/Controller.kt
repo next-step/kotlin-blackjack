@@ -23,7 +23,7 @@ class Controller(
     }
 
     fun playing(player: Player) {
-        while (InputView.hitsAndStay(player.name) && player.scoreCalculation() < 20) {
+        while (InputView.hitsAndStay(player.name) && player.scoreCalculation() < BLACK_JACK_SCORE) {
             player.hits(cardDeck.draw())
             OutputView.printPlayCard(player)
         }
@@ -31,5 +31,9 @@ class Controller(
 
     fun gameEnd(gamePlayUsers: GamePlayUsers) {
         OutputView.gameEnd(gamePlayUsers.playUsers)
+    }
+
+    companion object {
+        private const val BLACK_JACK_SCORE = 21
     }
 }
