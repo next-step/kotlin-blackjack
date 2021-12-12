@@ -1,8 +1,8 @@
-package blackjack.deck
+package blackjack.domain.deck
 
-import blackjack.entity.Card
-import blackjack.exception.BizException
-import blackjack.exception.enums.CardDeckError
+import blackjack.domain.entity.Card
+import blackjack.domain.exception.BizException
+import blackjack.domain.exception.enums.CardDeckError
 
 object CardDeck {
 

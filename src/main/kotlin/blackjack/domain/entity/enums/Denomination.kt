@@ -1,4 +1,4 @@
-package blackjack.entity.enums
+package blackjack.domain.entity.enums
 
 enum class Denomination(val cardNumber: Int) {
     ACE(11),

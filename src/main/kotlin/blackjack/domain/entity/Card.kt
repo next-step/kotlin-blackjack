@@ -1,7 +1,7 @@
-package blackjack.entity
+package blackjack.domain.entity
 
-import blackjack.entity.enums.Denomination
-import blackjack.entity.enums.Suit
+import blackjack.domain.entity.enums.Denomination
+import blackjack.domain.entity.enums.Suit
 
 data class Card(val suit: Suit, val denomination: Denomination) {
     override fun toString(): String {

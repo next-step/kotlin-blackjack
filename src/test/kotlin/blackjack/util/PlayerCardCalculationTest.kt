@@ -1,9 +1,10 @@
 package blackjack.util
 
-import blackjack.entity.Card
-import blackjack.entity.Player
-import blackjack.entity.enums.Denomination
-import blackjack.entity.enums.Suit
+import blackjack.domain.entity.Card
+import blackjack.domain.entity.Player
+import blackjack.domain.entity.enums.Denomination
+import blackjack.domain.entity.enums.Suit
+import blackjack.domain.util.PlayerCardCalculation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

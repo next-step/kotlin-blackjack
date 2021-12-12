@@ -1,6 +1,6 @@
-package blackjack.exception.enums
+package blackjack.domain.exception.enums
 
-import blackjack.exception.ErrorStatus
+import blackjack.domain.exception.ErrorStatus
 
 enum class InputError(private val errorMessage: String) : ErrorStatus {
 

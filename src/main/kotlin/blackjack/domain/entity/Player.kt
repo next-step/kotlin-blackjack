@@ -1,6 +1,6 @@
-package blackjack.entity
+package blackjack.domain.entity
 
-import blackjack.deck.CardDeck
+import blackjack.domain.deck.CardDeck
 
 class Player(
     val name: String,

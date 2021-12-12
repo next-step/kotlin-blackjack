@@ -1,7 +1,7 @@
-package blackjack.setup
+package blackjack.domain.setup
 
-import blackjack.deck.CardDeck
-import blackjack.entity.Player
+import blackjack.domain.deck.CardDeck
+import blackjack.domain.entity.Player
 
 object GameStartSetting {
 

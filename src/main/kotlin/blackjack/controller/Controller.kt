@@ -1,8 +1,9 @@
-package blackjack.play
+package blackjack.controller
 
-import blackjack.entity.Player
-import blackjack.setup.GameStartSetting
-import blackjack.util.PlayerCardCalculation
+import blackjack.domain.GamePlayUsers
+import blackjack.domain.entity.Player
+import blackjack.domain.setup.GameStartSetting
+import blackjack.domain.util.PlayerCardCalculation
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

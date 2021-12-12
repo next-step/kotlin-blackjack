@@ -1,7 +1,7 @@
-package blackjack.util
+package blackjack.domain.util
 
-import blackjack.entity.Player
-import blackjack.entity.enums.Denomination
+import blackjack.domain.entity.Player
+import blackjack.domain.entity.enums.Denomination
 
 object PlayerCardCalculation {
 

@@ -1,8 +1,8 @@
-package blackjack.deck
+package blackjack.domain.deck
 
-import blackjack.entity.Card
-import blackjack.entity.enums.Denomination
-import blackjack.entity.enums.Suit
+import blackjack.domain.entity.Card
+import blackjack.domain.entity.enums.Denomination
+import blackjack.domain.entity.enums.Suit
 
 object GeneratorCardDeck {
 

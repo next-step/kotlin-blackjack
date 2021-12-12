@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.exception.BizException
-import blackjack.exception.enums.InputError
+import blackjack.domain.exception.BizException
+import blackjack.domain.exception.enums.InputError
 
 object InputView {
 

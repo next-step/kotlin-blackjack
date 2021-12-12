@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.entity.Player
-import blackjack.util.PlayerCardCalculation
+import blackjack.domain.entity.Player
+import blackjack.domain.util.PlayerCardCalculation
 
 object OutputView {
 

@@ -1,4 +1,4 @@
-package blackjack.exception
+package blackjack.domain.exception
 
 class BizException(
     errorStatus: ErrorStatus

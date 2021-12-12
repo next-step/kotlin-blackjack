@@ -1,6 +1,7 @@
-package blackjack.play
+package blackjack.domain
 
-import blackjack.entity.Player
+import blackjack.controller.Controller
+import blackjack.domain.entity.Player
 
 class GamePlayUsers(
     players: List<Player>
