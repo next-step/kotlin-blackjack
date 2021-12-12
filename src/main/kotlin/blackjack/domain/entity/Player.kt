@@ -1,6 +1,7 @@
 package blackjack.domain.entity
 
 import blackjack.domain.deck.CardDeck
+import blackjack.domain.entity.enums.Denomination
 
 class Player(
     val name: String,
@@ -13,5 +14,25 @@ class Player(
 
     fun hits() {
         cards.add(CardDeck.draw())
+    }
+
+    fun scoreCalculation(): Int {
+
+        var score = this
+            .cards
+            .sumOf { it.denomination.cardNumber }
+
+        if (score > BLACK_JACK) {
+            val aceCount = this
+                .cards
+                .count { it.denomination == Denomination.ACE }
+
+            score = score - (Denomination.ACE.cardNumber * aceCount) + (1 * aceCount)
+        }
+
+        return score
+    }
+    companion object {
+        private const val BLACK_JACK = 21
     }
 }

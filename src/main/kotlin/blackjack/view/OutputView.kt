@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.entity.Player
-import blackjack.domain.util.PlayerCardCalculation
 
 object OutputView {
 
@@ -18,6 +17,6 @@ object OutputView {
     }
 
     fun gameEnd(players: List<Player>) {
-        players.forEach { println("${it.name}카드: ${it.cards} - 결과: ${PlayerCardCalculation.calculation(it)}") }
+        players.forEach { println("${it.name}카드: ${it.cards} - 결과: ${it.scoreCalculation()}") }
     }
 }

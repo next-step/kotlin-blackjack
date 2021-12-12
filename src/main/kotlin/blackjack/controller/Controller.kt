@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.GamePlayUsers
 import blackjack.domain.entity.Player
 import blackjack.domain.setup.GameStartSetting
-import blackjack.domain.util.PlayerCardCalculation
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -21,7 +20,7 @@ object Controller {
     }
 
     fun playing(player: Player) {
-        while (InputView.hitsAndStay(player.name) && PlayerCardCalculation.calculation(player) < 20) {
+        while (InputView.hitsAndStay(player.name) && player.scoreCalculation() < 20) {
             player.hits()
             OutputView.printPlayCard(player)
         }
