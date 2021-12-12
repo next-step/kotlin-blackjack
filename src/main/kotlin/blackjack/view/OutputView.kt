@@ -27,13 +27,9 @@ object OutputView {
 
     fun printPlayersDrawnCards(dealer: Dealer, players: Players) {
         val output = buildString {
-            append("${dealer.name.name}카드: ")
-            append(dealer.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
-            append(System.lineSeparator())
+            dealer.printPlayersDrawn()
             players.players.forEach { player ->
-                append("${player.name.name}카드: ")
-                append(player.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
-                append(System.lineSeparator())
+                player.printPlayersDrawn()
             }
         }
         println(output)
@@ -42,7 +38,7 @@ object OutputView {
     fun printPlayerDrawnCard(player: Player) {
         val output = buildString {
             append("${player.name.name}카드: ")
-            append(player.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" })
+            append(player.cardToString())
         }
         println(output)
     }
@@ -58,7 +54,7 @@ object OutputView {
             append(
                 PLAYER_CARD_OUTPUT_MESSAGE.format(
                     dealer.name.name,
-                    dealer.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" }
+                    dealer.cardToString()
                 )
             )
             append(" - ")
@@ -68,7 +64,7 @@ object OutputView {
                 append(
                     PLAYER_CARD_OUTPUT_MESSAGE.format(
                         it.name.name,
-                        it.cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" }
+                        it.cardToString()
                     )
                 )
                 append(" - ")
@@ -93,5 +89,17 @@ object OutputView {
 
     fun printPlayerResult(player: Player, resultState: GameResultState) {
         println("${player.name.name}: ${resultState.displayName}")
+    }
+
+    private fun Player.cardToString(): String {
+        return cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" }
+    }
+
+    private fun Player.printPlayersDrawn(): StringBuilder {
+        return StringBuilder().apply {
+            append("${name.name}카드: ")
+            append(cardToString())
+            append(System.lineSeparator())
+        }
     }
 }
