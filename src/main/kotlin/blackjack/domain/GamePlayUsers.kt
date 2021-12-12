@@ -12,10 +12,4 @@ class GamePlayUsers(
     override fun toString(): String {
         return "$playUsers"
     }
-
-    // fun playing() {
-    //     for (player in playUsers) {
-    //         Controller.playing(player)
-    //     }
-    // }
 }
