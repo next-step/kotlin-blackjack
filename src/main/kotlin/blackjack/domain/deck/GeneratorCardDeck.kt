@@ -6,21 +6,11 @@ import blackjack.domain.entity.enums.Suit
 
 object GeneratorCardDeck {
 
-    fun generatorCardDeck(): MutableList<Card> {
-
-        val cards = mutableListOf<Card>()
-
-        Suit
-            .values()
-            .forEach { suit ->
-                Denomination
-                    .values()
-                    .forEach { denomination ->
-                        cards.add(Card(suit, denomination))
-                    }
-            }
-
-        cards.shuffle()
-        return cards
-    }
+    fun generatorCardDeck(): List<Card> = Suit.values()
+        .flatMap {
+            Denomination
+                .values()
+                .map { denomination -> Card(it, denomination = denomination) }
+        }
+        .shuffled()
 }

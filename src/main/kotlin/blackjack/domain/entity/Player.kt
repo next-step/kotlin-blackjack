@@ -1,6 +1,5 @@
 package blackjack.domain.entity
 
-import blackjack.domain.deck.CardDeck
 import blackjack.domain.entity.enums.Denomination
 
 class Player(
@@ -12,8 +11,8 @@ class Player(
         return name
     }
 
-    fun hits() {
-        cards.add(CardDeck.draw())
+    fun hits(card: Card) {
+        cards.add(card)
     }
 
     fun scoreCalculation(): Int {

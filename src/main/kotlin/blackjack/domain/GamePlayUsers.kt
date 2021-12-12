@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.controller.Controller
 import blackjack.domain.entity.Player
 
 class GamePlayUsers(
@@ -14,9 +13,9 @@ class GamePlayUsers(
         return "$playUsers"
     }
 
-    fun playing() {
-        for (player in playUsers) {
-            Controller.playing(player)
-        }
-    }
+    // fun playing() {
+    //     for (player in playUsers) {
+    //         Controller.playing(player)
+    //     }
+    // }
 }
