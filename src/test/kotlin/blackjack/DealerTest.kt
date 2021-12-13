@@ -60,4 +60,16 @@ class DealerTest {
 
         assertThat(dealer.cards.cards.size).isEqualTo(2)
     }
+
+    @Test
+    fun `딜러는 stay()할 수 있다`() {
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_EIGHT))
+        val hit = Hit(cards)
+
+        val dealer = Dealer(state = hit)
+            .draw(CardDeck(), HitDrawStrategy)
+            .stay()
+
+        assertThat(dealer.state).isInstanceOf(Stay::class.java)
+    }
 }

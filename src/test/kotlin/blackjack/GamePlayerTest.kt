@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.GamePlayer
 import blackjack.domain.Name
 import blackjack.domain.state.Hit
+import blackjack.domain.state.Stay
 import blackjack.domain.strategy.draw.HitDrawStrategy
 import blackjack.state.CARD_HEART_ACE
 import blackjack.state.CARD_HEART_KING
@@ -32,9 +33,21 @@ class GamePlayerTest {
         val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
         val hit = Hit(cards)
 
-        val dealer = GamePlayer(name = Name.from("sh"), state = hit)
+        val gamePlayer = GamePlayer(name = Name.from("sh"), state = hit)
             .draw(CardDeck(), HitDrawStrategy)
 
-        assertThat(dealer.cards.cards.size).isEqualTo(3)
+        assertThat(gamePlayer.cards.cards.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `GamePlayer는 stay()할 수 있다`() {
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
+        val hit = Hit(cards)
+
+        val gamePlayer = GamePlayer(name = Name.from("sh"), state = hit)
+            .draw(CardDeck(), HitDrawStrategy)
+            .stay()
+
+        assertThat(gamePlayer.state).isInstanceOf(Stay::class.java)
     }
 }
