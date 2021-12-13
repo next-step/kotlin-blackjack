@@ -18,9 +18,11 @@ data class Dealer(
             return Dealer(name, state.stay())
         }
         var state = state
-        drawStrategy.draw(cardDeck).forEach {
-            state = state.draw(it)
-        }
+        drawStrategy
+            .draw(cardDeck)
+            .forEach {
+                state = state.draw(it)
+            }
         return Dealer(name, state)
     }
 
