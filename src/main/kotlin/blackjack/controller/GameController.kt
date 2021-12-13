@@ -94,7 +94,7 @@ object GameController {
     private fun printDealerResults(dealer: Dealer, players: Players) {
         GameResult
             .makeGameResult(dealer, players)
-            .also {
+            .let {
                 OutputView.printDealerResult(it)
             }
     }
