@@ -10,7 +10,7 @@ import blackjack.domain.strategy.hittable.DealerHittableStrategy
 
 data class Dealer(
     override val name: Name = Name.from(DEALER_NAME),
-    override var state: State = Initial()
+    override val state: State = Initial()
 ) : Player() {
 
     override fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Dealer {
