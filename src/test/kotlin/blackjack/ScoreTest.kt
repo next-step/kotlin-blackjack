@@ -2,6 +2,8 @@ package blackjack
 
 import blackjack.domain.Score
 import blackjack.domain.Score.Companion.SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE
+import blackjack.domain.strategy.hittable.DealerHittableStrategy
+import blackjack.domain.strategy.hittable.GamePlayerHittableStrategy
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -66,5 +68,31 @@ class ScoreTest {
         val aceScore = score.getAceScore()
 
         assertThat(aceScore).isEqualTo(Score(11))
+    }
+
+    @Test
+    fun `Score의 canHitScore()가 dealerHittableStrategy를 따르면 16이하일 경우 canHit이다`() {
+        val dealerHittableStrategy = DealerHittableStrategy
+
+        val dealerCanNotHitScore = Score(17)
+        val canHit1: Boolean = dealerCanNotHitScore.canHit(dealerHittableStrategy)
+        assertThat(canHit1).isFalse
+
+        val dealerCanHitScore = Score(16)
+        val canHit2: Boolean = dealerCanHitScore.canHit(dealerHittableStrategy)
+        assertThat(canHit2).isTrue
+    }
+
+    @Test
+    fun `Score의 canHitScore()가 gamePlayerHittableStrategy를 따르면 21미만일 경우 canHit이다`() {
+        val gamePlayerHittableStrategy = GamePlayerHittableStrategy
+
+        val gamePlayerCanNotHitScore = Score(21)
+        val canHit1: Boolean = gamePlayerCanNotHitScore.canHit(gamePlayerHittableStrategy)
+        assertThat(canHit1).isFalse
+
+        val gamePlayerCanHitScore = Score(16)
+        val canHit2: Boolean = gamePlayerCanHitScore.canHit(gamePlayerHittableStrategy)
+        assertThat(canHit2).isTrue
     }
 }

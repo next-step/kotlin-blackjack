@@ -18,7 +18,7 @@ data class Score(val score: Int) {
             Score(MAX_ACE_SCORE)
         }
 
-    fun canHitScore(hittableStrategy: HittableStrategy): Boolean = hittableStrategy.canHit(score)
+    fun canHit(hittableStrategy: HittableStrategy): Boolean = hittableStrategy.canHit(score)
 
     operator fun plus(other: Score) = Score(score + other.score)
 

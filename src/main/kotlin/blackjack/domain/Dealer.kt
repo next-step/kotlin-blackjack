@@ -30,7 +30,7 @@ data class Dealer(
 
     override fun copy(): Dealer = Dealer(name, state)
 
-    override fun canHit(): Boolean = score.canHitScore(DealerHittableStrategy)
+    override fun canHit(): Boolean = score.canHit(DealerHittableStrategy)
 
     companion object {
         private const val DEALER_NAME = "딜러"
