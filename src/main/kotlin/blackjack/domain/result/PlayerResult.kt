@@ -1,5 +1,7 @@
-package blackjack.domain
+package blackjack.domain.result
 
+import blackjack.domain.Dealer
+import blackjack.domain.Players
 import blackjack.domain.state.GameResultState
 
 @JvmInline

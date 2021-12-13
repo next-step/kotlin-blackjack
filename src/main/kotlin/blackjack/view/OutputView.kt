@@ -2,9 +2,9 @@ package blackjack.view
 
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.PlayerResult
+import blackjack.domain.result.PlayerResult
 import blackjack.domain.Players
-import blackjack.domain.PlayersResult
+import blackjack.domain.result.PlayersResult
 
 object OutputView {
 
