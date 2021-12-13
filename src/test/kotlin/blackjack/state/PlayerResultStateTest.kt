@@ -5,7 +5,7 @@ import blackjack.domain.state.GameResultState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameResultStateTest {
+class PlayerResultStateTest {
 
     @Test
     fun `comparedValue가 0이면 무승부이다`() {

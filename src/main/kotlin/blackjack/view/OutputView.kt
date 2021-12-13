@@ -1,10 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
-import blackjack.domain.GameResult
 import blackjack.domain.Player
+import blackjack.domain.PlayerResult
 import blackjack.domain.Players
-import blackjack.domain.state.GameResultState
+import blackjack.domain.PlayersResult
 
 object OutputView {
 
@@ -75,20 +75,22 @@ object OutputView {
         println(output)
     }
 
-    fun printDealerResult(gameResult: GameResult) {
+    fun printDealerResult(playerResult: PlayerResult) {
         val output = buildString {
             append(FINAL_RESULT_MESSAGE)
             append(System.lineSeparator())
             append("딜러: ")
-            gameResult.gameResultMap.keys.forEach {
-                append("${gameResult.gameResultMap[it]}${it.displayName} ")
+            playerResult.playerResultMap.keys.forEach {
+                append("${playerResult.playerResultMap[it]}${it.displayName} ")
             }
         }
         println(output)
     }
 
-    fun printPlayerResult(player: Player, resultState: GameResultState) {
-        println("${player.name.name}: ${resultState.displayName}")
+    fun printPlayersResult(playersResult: PlayersResult) {
+        playersResult.playersResultMap.entries.forEach { (name, result) ->
+            println("${name.name}: ${result.displayName}")
+        }
     }
 
     private fun Player.cardToString(): String {

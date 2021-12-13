@@ -1,9 +1,10 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
-import blackjack.domain.GameResult
+import blackjack.domain.PlayerResult
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.PlayersResult
 import blackjack.domain.card.CardDeck
 import blackjack.domain.strategy.draw.DrawStrategy
 import blackjack.domain.strategy.draw.HitDrawStrategy
@@ -92,7 +93,7 @@ object GameController {
     }
 
     private fun printDealerResults(dealer: Dealer, players: Players) {
-        GameResult
+        PlayerResult
             .makeGameResult(dealer, players)
             .let {
                 OutputView.printDealerResult(it)
@@ -100,8 +101,7 @@ object GameController {
     }
 
     private fun printPlayersResults(dealer: Dealer, players: Players) {
-        players.players.forEach {
-            OutputView.printPlayerResult(it, it.match(dealer))
-        }
+        val result = PlayersResult.makePlayersResult(dealer, players)
+        OutputView.printPlayersResult(result)
     }
 }
