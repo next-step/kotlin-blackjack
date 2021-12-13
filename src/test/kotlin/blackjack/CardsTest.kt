@@ -88,17 +88,23 @@ class CardsTest {
     }
 
     @Test
-    fun `Cards의 갯수가 0 혹은 1이면 isInitial은 true이다`() {
-        val cards1 = Cards.from(emptyList())
-        val isInitial1 = cards1.isInitial
-        assertThat(isInitial1).isTrue
+    fun `Cards의 갯수가 0이면 isInitial은 true이다`() {
+        val emptyCards = Cards.from(emptyList())
+        val isInitial = emptyCards.isInitial
+        assertThat(isInitial).isTrue
+    }
 
-        val cards2 = Cards.from(listOf(CARD_HEART_TEN))
-        val isInitial2 = cards2.isInitial
-        assertThat(isInitial2).isTrue
+    @Test
+    fun `Cards의 갯수가 1이면 isInitial은 true이다`() {
+        val oneCards = Cards.from(listOf(CARD_HEART_TEN))
+        val isInitial = oneCards.isInitial
+        assertThat(isInitial).isTrue
+    }
 
-        val cards3 = Cards.from(listOf(CARD_HEART_TEN, CARD_HEART_ACE))
-        val isInitial3 = cards3.isInitial
-        assertThat(isInitial3).isFalse
+    @Test
+    fun `Cards의 갯수가 2이면 isInitial은 false이다`() {
+        val twoCards = Cards.from(listOf(CARD_HEART_TEN, CARD_HEART_ACE))
+        val isInitial = twoCards.isInitial
+        assertThat(isInitial).isFalse
     }
 }

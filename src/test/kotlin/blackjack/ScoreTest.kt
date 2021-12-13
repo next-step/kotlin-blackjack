@@ -43,7 +43,7 @@ class ScoreTest {
     }
 
     @Test
-    fun `Score는 0미만일 수 없다`() {
+    fun `Score는 음수일 수 없다`() {
         Assertions
             .assertThatExceptionOfType(IllegalArgumentException::class.java)
             .isThrownBy {

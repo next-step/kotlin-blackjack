@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class GamePlayerHittableStrategyTest {
 
     @Test
-    fun `GamePlayerHittableStrategy의 canHit()조건은 21이하이다`() {
+    fun `GamePlayerHittableStrategy의 canHit()조건은 21 미만이다`() {
         val gamePlayerHittableStrategy: HittableStrategy = GamePlayerHittableStrategy
 
         val canHit1 = gamePlayerHittableStrategy.canHit(19)

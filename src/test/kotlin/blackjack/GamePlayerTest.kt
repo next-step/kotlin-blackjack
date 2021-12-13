@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test
 class GamePlayerTest {
 
     @Test
-    fun `GamePlayer는 21점을 이상이면 카드를 받을 수 없다`() {
-        val cards1 = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
-        val hit1 = Hit(cards1)
+    fun `GamePlayer는 21점 이상이면 카드를 받을 수 없다`() {
+        val below21Cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
+        val hit1 = Hit(below21Cards)
         val gamePlayer1 = GamePlayer(name = Name.from("sh1"), state = hit1)
         assertThat(gamePlayer1.canHit()).isTrue
 
@@ -29,7 +29,7 @@ class GamePlayerTest {
     }
 
     @Test
-    fun `GamePlayer가 처음에 뽑은 두장의 카드가 21이하이면 카드를 받을 수 있다`() {
+    fun `GamePlayer가 처음에 뽑은 두장의 카드가 21 미만이면 카드를 받을 수 있다`() {
         val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
         val hit = Hit(cards)
 

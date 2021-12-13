@@ -21,7 +21,7 @@ class HitTest {
     }
 
     @Test
-    fun `Hit상태에서 3장의 카드의 점수가 21이하면 state는 Hit이다`() {
+    fun `Hit상태에서 3장의 카드의 점수가 21 미만이면 state는 Hit이다`() {
         val state = hit.draw(CARD_HEART_ACE)
 
         assertThat(state).isInstanceOf(Hit::class.java)

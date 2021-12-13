@@ -17,15 +17,18 @@ class DealerTest {
 
     @Test
     fun `딜러는 16점을 초과하면 카드를 받을 수 없다`() {
-        val cards1 = Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN))
-        val hit1 = Hit(cards1)
-        val dealer1 = Dealer(state = hit1)
-        assertThat(dealer1.canHit()).isFalse
+        val overSixteenCards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN))
+        val hit = Hit(overSixteenCards)
+        val dealer = Dealer(state = hit)
+        assertThat(dealer.canHit()).isFalse
+    }
 
-        val cards2 = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
-        val hit2 = Hit(cards2)
-        val dealer2 = Dealer(state = hit2)
-        assertThat(dealer2.canHit()).isTrue
+    @Test
+    fun `딜러는 16점 이하이면 카드를 받을 수 있다`() {
+        val belowSixteenCards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
+        val hit = Hit(belowSixteenCards)
+        val dealer = Dealer(state = hit)
+        assertThat(dealer.canHit()).isTrue
     }
 
     @Test
