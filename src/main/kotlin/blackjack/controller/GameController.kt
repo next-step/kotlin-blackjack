@@ -1,10 +1,10 @@
 package blackjack.controller
 
-import blackjack.domain.card.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.card.CardDeck
 import blackjack.domain.strategy.draw.DrawStrategy
 import blackjack.domain.strategy.draw.HitDrawStrategy
 import blackjack.domain.strategy.draw.InitialDrawStrategy
@@ -52,28 +52,42 @@ object GameController {
     ): Player {
         var nowPlayer = player
         while (!nowPlayer.isFinished) {
-            nowPlayer = if (InputView.askPlayerWantsToDraw(player)) {
-                nowPlayer.draw(cardDeck, drawStrategy).also {
-                    OutputView.printPlayerDrawnCard(it)
-                }
-            } else {
-                nowPlayer.stay()
-            }
+            nowPlayer = askDrawOrStay(nowPlayer, cardDeck, drawStrategy)
         }
         return nowPlayer
+    }
+
+    private fun askDrawOrStay(
+        player: Player,
+        cardDeck: CardDeck,
+        drawStrategy: DrawStrategy
+    ): Player {
+        if (InputView.askPlayerWantsToDraw(player)) {
+            return player.draw(cardDeck, drawStrategy).also {
+                OutputView.printPlayerDrawnCard(it)
+            }
+        }
+        return player.stay()
     }
 
     private fun drawDealer(dealer: Dealer, drawStrategy: DrawStrategy): Dealer {
         return if (dealer.canHit()) {
             OutputView.printDealerDraw()
-            val state = dealer.draw(cardDeck, drawStrategy)
-            if (!state.isBust) {
-                state.stay()
-            } else {
-                state
-            }
+            drawAndCheckBust(dealer, drawStrategy)
         } else {
             dealer.stay()
+        }
+    }
+
+    private fun drawAndCheckBust(
+        dealer: Dealer,
+        drawStrategy: DrawStrategy
+    ): Dealer {
+        val state = dealer.draw(cardDeck, drawStrategy)
+        return if (!state.isBust) {
+            state.stay()
+        } else {
+            state
         }
     }
 
