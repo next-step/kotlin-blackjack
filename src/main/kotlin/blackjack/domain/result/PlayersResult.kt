@@ -13,8 +13,7 @@ value class PlayersResult(val playersResultMap: Map<Name, GameResultState>) {
         fun makePlayersResult(dealer: Dealer, players: Players): PlayersResult {
             return players
                 .players
-                .map { it.name to dealer.match(it) }
-                .toMap()
+                .associate { it.name to dealer.match(it) }
                 .let { from(it) }
         }
 
