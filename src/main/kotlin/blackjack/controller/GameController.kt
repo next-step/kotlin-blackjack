@@ -1,42 +1,107 @@
 package blackjack.controller
 
-import blackjack.domain.BlackJackManager
-import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
+import blackjack.domain.result.PlayerResult
+import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.result.PlayersResult
+import blackjack.domain.card.CardDeck
+import blackjack.domain.strategy.draw.DrawStrategy
+import blackjack.domain.strategy.draw.HitDrawStrategy
+import blackjack.domain.strategy.draw.InitialDrawStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 object GameController {
 
     private val cardDeck = CardDeck()
-    private lateinit var blackJackManager: BlackJackManager
-    const val BLACK_JACK_SCORE = 21
 
     fun start() {
+        var dealer = Dealer()
         val playerNames = InputView.inputPlayerNames()
-        val players = Players.of(
-            *Players
-                .getPlayerListByNames(playerNames)
-                .toTypedArray()
-        )
+        var players = Players.from(Players.getPlayerListByNames(playerNames))
+        dealer = dealer.draw(cardDeck, InitialDrawStrategy)
+        players = players.drawCardEachPlayer(cardDeck, InitialDrawStrategy)
 
-        blackJackManager = BlackJackManager(players)
-        blackJackManager.giveInitialCards(cardDeck)
+        OutputView.printHowManyCardsPlayerDrawn(dealer, players)
+        OutputView.printPlayersDrawnCards(dealer, players)
 
-        OutputView.printPlayers(players)
-        OutputView.printPlayersDrawnCards(players)
+        players = players.drawIfAskPlayerWantsToDraw(cardDeck, HitDrawStrategy)
 
-        hitPlayer(players)
+        dealer = drawDealer(dealer, HitDrawStrategy)
 
-        OutputView.printResult(players)
+        OutputView.printScoreResult(dealer, players)
+        printDealerResults(dealer, players)
+        printPlayersResults(dealer, players)
     }
 
-    private fun hitPlayer(players: Players) {
-        players.forEach { player ->
-            while (player.canHit() && InputView.acceptMoreCard(player) == "y") {
-                player.hit(cardDeck.next())
-                OutputView.printPlayerDrawnCard(player)
+    private fun Players.drawIfAskPlayerWantsToDraw(
+        cardDeck: CardDeck,
+        drawStrategy: DrawStrategy
+    ): Players {
+        return players
+            .map {
+                drawOrStay(it, cardDeck, drawStrategy)
+            }
+            .let { Players.from(it) }
+    }
+
+    private fun drawOrStay(
+        player: Player,
+        cardDeck: CardDeck,
+        drawStrategy: DrawStrategy
+    ): Player {
+        var nowPlayer = player
+        while (!nowPlayer.isFinished) {
+            nowPlayer = askDrawOrStay(nowPlayer, cardDeck, drawStrategy)
+        }
+        return nowPlayer
+    }
+
+    private fun askDrawOrStay(
+        player: Player,
+        cardDeck: CardDeck,
+        drawStrategy: DrawStrategy
+    ): Player {
+        if (InputView.askPlayerWantsToDraw(player)) {
+            return player.draw(cardDeck, drawStrategy).also {
+                OutputView.printPlayerDrawnCard(it)
             }
         }
+        return player.stay()
+    }
+
+    private fun drawDealer(dealer: Dealer, drawStrategy: DrawStrategy): Dealer {
+        return if (dealer.canHit()) {
+            OutputView.printDealerDraw()
+            drawAndCheckBust(dealer, drawStrategy)
+        } else {
+            dealer.stay()
+        }
+    }
+
+    private fun drawAndCheckBust(
+        dealer: Dealer,
+        drawStrategy: DrawStrategy
+    ): Dealer {
+        val state = dealer.draw(cardDeck, drawStrategy)
+        return if (!state.isBust) {
+            state.stay()
+        } else {
+            state
+        }
+    }
+
+    private fun printDealerResults(dealer: Dealer, players: Players) {
+        PlayerResult
+            .makeGameResult(dealer, players)
+            .let {
+                OutputView.printDealerResult(it)
+            }
+    }
+
+    private fun printPlayersResults(dealer: Dealer, players: Players) {
+        val result = PlayersResult.makePlayersResult(dealer, players)
+        OutputView.printPlayersResult(result)
     }
 }

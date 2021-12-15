@@ -1,22 +1,32 @@
 package blackjack.domain
 
-import blackjack.controller.GameController.BLACK_JACK_SCORE
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
+import blackjack.domain.state.GameResultState
+import blackjack.domain.state.State
+import blackjack.domain.strategy.draw.DrawStrategy
 
-data class Player(val name: Name, val cards: Cards = Cards()) {
+abstract class Player {
 
-    fun hit(card: Card) {
-        if (canHit()) {
-            cards.addCard(card)
-        }
-    }
+    abstract val name: Name
+    abstract val state: State
 
-    fun canHit() = cards.getScore() < BLACK_JACK_SCORE
+    val cards: Cards
+        get() = state.cards
 
-    fun nowScore() = cards.getScore()
+    val score: Score
+        get() = state.score
 
-    companion object {
-        fun of(name: Name, cards: Cards = Cards()): Player {
-            return Player(name, cards)
-        }
-    }
+    val isFinished: Boolean
+        get() = state.isFinished()
+
+    val isBust: Boolean
+        get() = cards.getScore().isBust
+
+    abstract fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Player
+    abstract fun stay(): Player
+    abstract fun copy(): Player
+    abstract fun canHit(): Boolean
+
+    fun match(other: Player): GameResultState = state.match(other.state)
 }

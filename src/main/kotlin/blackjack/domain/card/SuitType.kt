@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class SuitType(val displayName: String) {
     CLOVER("클로버"),

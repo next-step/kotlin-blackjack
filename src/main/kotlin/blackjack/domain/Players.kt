@@ -1,20 +1,28 @@
 package blackjack.domain
 
-data class Players(private val players: List<Player> = listOf()) : List<Player> by players {
+import blackjack.domain.card.CardDeck
+import blackjack.domain.strategy.draw.DrawStrategy
 
-    fun eachAcceptCards(cardDeck: CardDeck) {
-        players.forEach {
-            it.hit(cardDeck.next())
+class Players private constructor(players: List<Player>) {
+
+    val players = players.map { it.copy() }
+
+    fun drawCardEachPlayer(cardDeck: CardDeck, drawStrategy: DrawStrategy): Players {
+        return players.map {
+            it.draw(cardDeck, drawStrategy)
+        }.let {
+            Players(it)
         }
     }
 
     companion object {
-        fun getPlayerListByNames(names: List<String>): List<Player> {
-            return names.map { Player.of(Name.from(it)) }
+
+        fun getPlayerListByNames(names: List<String>): List<GamePlayer> {
+            return names.map { GamePlayer(Name.from(it)) }
         }
 
-        fun of(vararg player: Player): Players {
-            return Players(listOf(*player))
+        fun from(list: List<Player>): Players {
+            return Players(list)
         }
     }
 }
