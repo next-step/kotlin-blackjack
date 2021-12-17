@@ -8,16 +8,16 @@ data class Initial(
 ) : Running(cards) {
 
     override fun draw(card: Card): State {
-        val cards = cards + card
+        val drawnCards = cards + card
         return when {
-            cards.isBlackjack -> {
-                Blackjack(cards)
+            drawnCards.isBlackjack -> {
+                Blackjack(drawnCards)
             }
-            cards.isInitial -> {
-                Initial(cards)
+            drawnCards.isInitial -> {
+                Initial(drawnCards)
             }
             else -> {
-                Hit(cards)
+                Hit(drawnCards)
             }
         }
     }
