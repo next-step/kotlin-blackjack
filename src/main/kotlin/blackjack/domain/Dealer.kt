@@ -28,8 +28,6 @@ data class Dealer(
 
     override fun stay(): Dealer = Dealer(name, Stay(cards))
 
-    override fun copy(): Dealer = Dealer(name, state)
-
     override fun canHit(): Boolean = score.canHit(DealerHittableStrategy)
 
     companion object {

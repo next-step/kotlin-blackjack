@@ -25,7 +25,6 @@ abstract class Player {
 
     abstract fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Player
     abstract fun stay(): Player
-    abstract fun copy(): Player
     abstract fun canHit(): Boolean
 
     fun match(other: Player): GameResultState = state.match(other.state)

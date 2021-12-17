@@ -23,6 +23,4 @@ data class GamePlayer(
     override fun stay() = GamePlayer(name, Stay(cards))
 
     override fun canHit(): Boolean = score.canHit(GamePlayerHittableStrategy)
-
-    override fun copy(): GamePlayer = GamePlayer(name, state)
 }
