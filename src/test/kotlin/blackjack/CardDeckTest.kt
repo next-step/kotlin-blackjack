@@ -13,15 +13,4 @@ class CardDeckTest {
 
         assertThat(cardDeck.next()).isInstanceOf(Card::class.java)
     }
-
-    @Test
-    fun `CardDeck으로 부터 받은 Card는 서로 다른 Card이다`() {
-        val cardDeck = CardDeck()
-
-        val card1 = cardDeck.next()
-        val card2 = cardDeck.next()
-
-        println("card1 == $card1, card2 == $card2")
-        assertThat(card1).isNotEqualTo(card2)
-    }
 }
