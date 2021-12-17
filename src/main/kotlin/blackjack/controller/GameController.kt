@@ -1,11 +1,11 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
-import blackjack.domain.result.PlayerResult
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.result.PlayersResult
 import blackjack.domain.card.CardDeck
+import blackjack.domain.result.PlayerResult
+import blackjack.domain.result.PlayersResult
 import blackjack.domain.strategy.draw.DrawStrategy
 import blackjack.domain.strategy.draw.HitDrawStrategy
 import blackjack.domain.strategy.draw.InitialDrawStrategy
@@ -72,12 +72,11 @@ object GameController {
     }
 
     private fun drawDealer(dealer: Dealer, drawStrategy: DrawStrategy): Dealer {
-        return if (dealer.canHit()) {
+        if (dealer.canHit()) {
             OutputView.printDealerDraw()
-            drawAndCheckBust(dealer, drawStrategy)
-        } else {
-            dealer.stay()
+            return drawAndCheckBust(dealer, drawStrategy)
         }
+        return dealer.stay()
     }
 
     private fun drawAndCheckBust(
@@ -85,11 +84,10 @@ object GameController {
         drawStrategy: DrawStrategy
     ): Dealer {
         val state = dealer.draw(cardDeck, drawStrategy)
-        return if (!state.isBust) {
-            state.stay()
-        } else {
-            state
+        if (!state.isBust) {
+            return state.stay()
         }
+        return state
     }
 
     private fun printDealerResults(dealer: Dealer, players: Players) {
