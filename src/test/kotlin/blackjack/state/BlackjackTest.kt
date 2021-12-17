@@ -32,10 +32,11 @@ class BlackjackTest {
     }
 
     @Test
-    fun `Blackjack 상태이면 Blackjack 이외의 상태와의 match()에서 승리한다`() {
+    fun `Blackjack 상태이면 bust상태와의 match()에서 승리한다`() {
         var bust: State = Initial()
-        bust = bust.draw(CARD_HEART_ACE)
         bust = bust.draw(CARD_HEART_KING)
+            .draw(CARD_HEART_KING)
+            .draw(CARD_HEART_KING)
 
         val match: GameResultState = blackjack.match(bust)
 

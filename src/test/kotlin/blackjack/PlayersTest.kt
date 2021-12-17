@@ -1,10 +1,9 @@
 package blackjack
 
-import blackjack.domain.card.CardDeck
 import blackjack.domain.GamePlayer
 import blackjack.domain.Name
-import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.card.CardDeck
 import blackjack.domain.strategy.draw.HitDrawStrategy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -17,10 +16,10 @@ class PlayersTest {
 
     @ParameterizedTest(name = "이름 List를 통해 Player List를 만들 수 있다")
     @MethodSource("makePlayerListByStringListTest")
-    fun `이름 List를 통해 Player List를 만들 수 있다`(nameList: List<String>, expected: List<Player>) {
+    fun `이름 List를 통해 Players를 만들 수 있다`(nameList: List<String>, expected: Players) {
         val playerList = Players.getPlayerListByNames(nameList)
-        println(playerList == expected)
-        assertThat(playerList).isEqualTo(expected)
+
+        assertThat(playerList.map { it.name }).isEqualTo(expected.players.map { it.name })
     }
 
     @Test
@@ -38,10 +37,13 @@ class PlayersTest {
         @JvmStatic
         fun makePlayerListByStringListTest(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(listOf("pobi", "jason"), listOf(GamePlayer(Name.from("pobi")), GamePlayer(Name.from("jason")))),
+                Arguments.of(
+                    listOf("pobi", "jason"),
+                    Players.from(listOf(GamePlayer(Name.from("pobi")), GamePlayer(Name.from("jason"))))
+                ),
                 Arguments.of(
                     listOf("seunghwan", "seo"),
-                    listOf(GamePlayer(Name.from("seunghwan")), GamePlayer(Name.from("seo")))
+                    Players.from(listOf(GamePlayer(Name.from("seunghwan")), GamePlayer(Name.from("seo"))))
                 )
             )
         }

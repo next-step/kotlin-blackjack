@@ -42,27 +42,27 @@ class StayTest {
 
     @Test
     fun `Stay상태와 Stay상태가 match()하면 점수가 높으면 승리한다`() {
-        val blackjack = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
+        val stayState = Stay(Cards(listOf(CARD_HEART_TWO, CARD_HEART_FOUR)))
 
-        val match = stay.match(blackjack)
+        val match = stay.match(stayState)
 
-        assertThat(match).isEqualTo(GameResultState.Lose)
+        assertThat(match).isEqualTo(GameResultState.Win)
     }
 
     @Test
     fun `Stay상태와 Stay상태가 match()하면 점수가 같으면 무승부이다`() {
-        val blackjack = Stay(Cards(listOf(CARD_HEART_TEN, CARD_HEART_FOUR)))
+        val stayState = Stay(Cards(listOf(CARD_HEART_TEN, CARD_HEART_FOUR)))
 
-        val match = stay.match(blackjack)
+        val match = stay.match(stayState)
 
         assertThat(match).isEqualTo(GameResultState.Draw)
     }
 
     @Test
     fun `Stay상태와 Stay상태가 match()하면 점수가 낮으면 패배한다`() {
-        val blackjack = Stay(Cards(listOf(CARD_HEART_TEN, CARD_HEART_KING)))
+        val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN)))
 
-        val match = stay.match(blackjack)
+        val match = stay.match(stayState)
 
         assertThat(match).isEqualTo(GameResultState.Lose)
     }

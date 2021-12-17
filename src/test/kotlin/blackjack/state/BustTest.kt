@@ -31,16 +31,19 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Bust이외 상태와의 match()에서 항상 진다`() {
+    fun `Bust 상태이면 stay상태와의 match()에서 진다`() {
+        val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
+        val match: GameResultState = bust.match(stay)
+
+        assertThat(match).isEqualTo(GameResultState.Lose)
+    }
+
+    @Test
+    fun `Bust 상태이면 Blackjack 상태와의 match()에서 진다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
         val match1: GameResultState = bust.match(blackjack)
 
         assertThat(match1).isEqualTo(GameResultState.Lose)
-
-        val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
-        val match2: GameResultState = bust.match(stay)
-
-        assertThat(match2).isEqualTo(GameResultState.Lose)
     }
 
     @Test

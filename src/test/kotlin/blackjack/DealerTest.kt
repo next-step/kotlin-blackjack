@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
-import blackjack.domain.Dealer
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Stay
 import blackjack.domain.strategy.draw.HitDrawStrategy
@@ -32,7 +32,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 처음에 뽑은 두장의 카드가 16이하이면 카드를 받을 수 있다`() {
+    fun `딜러가 처음에 뽑은 두장의 카드가 16이하이면 카드를 받을 수 있고, Stay 상태이다`() {
         val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
         val hit = Hit(cards)
 
@@ -40,16 +40,6 @@ class DealerTest {
             .draw(CardDeck(), HitDrawStrategy)
 
         assertThat(dealer.cards.cards.size).isEqualTo(3)
-    }
-
-    @Test
-    fun `딜러가 처음에 뽑은 두장의 카드가 16이상 21미만이면 Stay 상태이다`() {
-        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_EIGHT))
-        val hit = Hit(cards)
-
-        val dealer = Dealer(state = hit)
-            .draw(CardDeck(), HitDrawStrategy)
-
         assertThat(dealer.state).isInstanceOf(Stay::class.java)
     }
 

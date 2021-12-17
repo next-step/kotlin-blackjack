@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.Score
-import blackjack.domain.Score.Companion.SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE
 import blackjack.domain.strategy.hittable.DealerHittableStrategy
 import blackjack.domain.strategy.hittable.GamePlayerHittableStrategy
 import org.assertj.core.api.Assertions
@@ -9,7 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import java.lang.IllegalArgumentException
 
 class ScoreTest {
 
@@ -49,7 +47,6 @@ class ScoreTest {
             .isThrownBy {
                 Score(-2)
             }
-            .withMessage(SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE)
     }
 
     @Test
