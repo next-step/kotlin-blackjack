@@ -8,7 +8,7 @@ data class Score(val score: Int) {
     val isBust: Boolean = score > BLACK_JACK_SCORE
 
     init {
-        require(score >= 0) { SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE }
+        require(score >= 0) { SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE.format(score) }
     }
 
     fun getAceScore(): Score =
@@ -28,6 +28,6 @@ data class Score(val score: Int) {
         private const val BLACK_JACK_SCORE = 21
         private const val MIN_ACE_SCORE = 1
         private const val MAX_ACE_SCORE = 11
-        const val SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE = "점수는 0이상이어야 합니다."
+        const val SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE = "점수는 0이상이어야 합니다. 현재 입력한 점수 == %s"
     }
 }
