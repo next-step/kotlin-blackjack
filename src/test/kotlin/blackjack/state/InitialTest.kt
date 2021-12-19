@@ -1,13 +1,15 @@
 package blackjack.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Cards
 import blackjack.domain.Score
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Initial
-import blackjack.domain.state.Running.Companion.UNSUPPORTED_MATCH_METHOD
+import blackjack.domain.state.Running.Companion.UNSUPPORTED_PROFIT_METHOD
 import blackjack.domain.state.State
 import blackjack.domain.state.Stay
+import blackjack.domain.strategy.hittable.DealerHittableStrategy
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -52,7 +54,7 @@ class InitialTest {
     }
 
     @Test
-    fun `Initial은 match()할 수 없다`() {
+    fun `Initial은 profit()을 계산할 수 없다`() {
         val state: State = Initial()
             .draw(CARD_HEART_ACE)
             .draw(CARD_HEART_TWO)
@@ -62,9 +64,9 @@ class InitialTest {
         Assertions
             .assertThatExceptionOfType(UnsupportedOperationException::class.java)
             .isThrownBy {
-                state.match(stay)
+                state.profit(stay, Money.from("3000"))
             }
-            .withMessage(UNSUPPORTED_MATCH_METHOD)
+            .withMessage(UNSUPPORTED_PROFIT_METHOD)
     }
 
     @Test
@@ -73,5 +75,13 @@ class InitialTest {
             .draw(CARD_HEART_ACE)
 
         assertThat(state.score).isEqualTo(Score(11))
+    }
+
+    @Test
+    fun `Initial의 canHit()은 True이다`() {
+        val initial: State = Initial()
+            .draw(CARD_HEART_ACE)
+
+        assertThat(initial.canHit(DealerHittableStrategy)).isTrue
     }
 }
