@@ -1,11 +1,11 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
+import blackjack.domain.Money
 import blackjack.domain.Player
+import blackjack.domain.PlayerBettings
 import blackjack.domain.Players
 import blackjack.domain.card.CardDeck
-import blackjack.domain.result.PlayerResult
-import blackjack.domain.result.PlayersResult
 import blackjack.domain.strategy.draw.DrawStrategy
 import blackjack.domain.strategy.draw.HitDrawStrategy
 import blackjack.domain.strategy.draw.InitialDrawStrategy
@@ -20,6 +20,9 @@ object GameController {
         var dealer = Dealer()
         val playerNames = InputView.inputPlayerNames()
         var players = Players.from(Players.getPlayerListByNames(playerNames))
+
+        val playerBettings = players.askPlayersBettingMoney()
+
         dealer = dealer.draw(cardDeck, InitialDrawStrategy)
         players = players.drawCardEachPlayer(cardDeck, InitialDrawStrategy)
 
@@ -31,8 +34,8 @@ object GameController {
         dealer = drawDealer(dealer, HitDrawStrategy)
 
         OutputView.printScoreResult(dealer, players)
-        printDealerResults(dealer, players)
-        printPlayersResults(dealer, players)
+        printDealerResults(dealer, players, playerBettings)
+        printPlayersResults(dealer, players, playerBettings)
     }
 
     private fun Players.drawIfAskPlayerWantsToDraw(
@@ -74,32 +77,24 @@ object GameController {
     private fun drawDealer(dealer: Dealer, drawStrategy: DrawStrategy): Dealer {
         if (dealer.canHit()) {
             OutputView.printDealerDraw()
-            return drawAndCheckBust(dealer, drawStrategy)
+            return dealer.draw(cardDeck, drawStrategy)
         }
         return dealer.stay()
     }
 
-    private fun drawAndCheckBust(
-        dealer: Dealer,
-        drawStrategy: DrawStrategy
-    ): Dealer {
-        val state = dealer.draw(cardDeck, drawStrategy)
-        if (!state.isBust) {
-            return state.stay()
-        }
-        return state
+    private fun printDealerResults(dealer: Dealer, players: Players, bettings: PlayerBettings) {
+        val dealerProfit = bettings.calculateDealerProfit(dealer, players)
+        OutputView.printDealerResult(dealerProfit)
     }
 
-    private fun printDealerResults(dealer: Dealer, players: Players) {
-        PlayerResult
-            .makeGameResult(dealer, players)
-            .let {
-                OutputView.printDealerResult(it)
-            }
-    }
-
-    private fun printPlayersResults(dealer: Dealer, players: Players) {
-        val result = PlayersResult.makePlayersResult(dealer, players)
+    private fun printPlayersResults(dealer: Dealer, players: Players, playerBettings: PlayerBettings) {
+        val result = playerBettings.calculatePlayersProfit(dealer, players)
         OutputView.printPlayersResult(result)
+    }
+
+    private fun Players.askPlayersBettingMoney(): PlayerBettings {
+        return players
+            .associate { it.name to Money.from(InputView.askPlayerBetMoney(it)) }
+            .let { PlayerBettings.from(it) }
     }
 }

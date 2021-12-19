@@ -1,8 +1,10 @@
 package blackjack.domain.state
 
+import blackjack.domain.Money
+import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.Score
+import blackjack.domain.strategy.hittable.HittableStrategy
 
 interface State {
 
@@ -12,6 +14,7 @@ interface State {
 
     fun isFinished(): Boolean
     fun draw(card: Card): State
-    fun match(other: State): GameResultState
     fun stay(): State
+    fun profit(other: State, money: Money): Double
+    fun canHit(hittableStrategy: HittableStrategy): Boolean
 }

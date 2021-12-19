@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.CardDeck
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Initial
+import blackjack.domain.state.Running
 import blackjack.domain.state.State
 import blackjack.domain.state.Stay
 import blackjack.domain.strategy.draw.DrawStrategy
@@ -14,21 +15,23 @@ data class Dealer(
 ) : Player() {
 
     override fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Dealer {
-        if (state is Hit && !canHit()) {
-            return Dealer(name, state.stay())
-        }
-        var state = state
+        var drawState = state
         drawStrategy
             .draw(cardDeck)
             .forEach {
-                state = state.draw(it)
+                drawState = drawState.draw(it)
             }
-        return Dealer(name, state)
+        if (drawState is Hit && !(drawState as Running).canHit(DealerHittableStrategy)) {
+            return Dealer(name, drawState.stay())
+        }
+        return Dealer(name, drawState)
     }
+
+    fun canHit(): Boolean = state.score.canHit(DealerHittableStrategy)
 
     override fun stay(): Dealer = Dealer(name, Stay(cards))
 
-    override fun canHit(): Boolean = score.canHit(DealerHittableStrategy)
+    override fun profit(other: Player, money: Money): Int = -other.profit(this, money)
 
     companion object {
         private const val DEALER_NAME = "딜러"

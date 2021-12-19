@@ -6,10 +6,19 @@ class Bust(
     override val cards: Cards
 ) : Finished(cards) {
 
-    override fun match(other: State): GameResultState {
-        if (other is Bust) {
-            return GameResultState.Draw
+    override fun earningRate(other: State): Double {
+        return when (other) {
+            is Bust -> {
+                DRAW_EARNING_RATE
+            }
+            else -> {
+                LOSE_EARNING_RATE
+            }
         }
-        return GameResultState.Lose
+    }
+
+    companion object {
+        private const val DRAW_EARNING_RATE = 0.0
+        private const val LOSE_EARNING_RATE = -1.0
     }
 }

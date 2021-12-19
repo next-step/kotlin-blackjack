@@ -1,11 +1,13 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.state.Hit
 import blackjack.domain.state.Initial
 import blackjack.domain.state.State
 import blackjack.domain.state.Stay
 import blackjack.domain.strategy.draw.DrawStrategy
 import blackjack.domain.strategy.hittable.GamePlayerHittableStrategy
+import kotlin.math.roundToInt
 
 data class GamePlayer(
     override val name: Name,
@@ -13,14 +15,17 @@ data class GamePlayer(
 ) : Player() {
 
     override fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Player {
-        var state = state
+        var drawState = state
         drawStrategy.draw(cardDeck).forEach {
-            state = state.draw(it)
+            drawState = drawState.draw(it)
         }
-        return GamePlayer(name, state)
+        if (drawState is Hit && !drawState.score.canHit(GamePlayerHittableStrategy)) {
+            GamePlayer(name, drawState.stay())
+        }
+        return GamePlayer(name, drawState)
     }
 
     override fun stay() = GamePlayer(name, Stay(cards))
 
-    override fun canHit(): Boolean = score.canHit(GamePlayerHittableStrategy)
+    override fun profit(other: Player, money: Money): Int = state.profit(other.state, money).roundToInt()
 }
