@@ -1,7 +1,7 @@
 package blackjack.domain
 
 @JvmInline
-value class PlayerBettings(val bettingsMap: Map<Name, Money>) {
+value class PlayerBettings private constructor(val bettingsMap: Map<Name, Money>) {
 
     private fun getMoney(name: Name) = bettingsMap[name]
         ?: throw NullPointerException(BETTINGS_MAP_NULL_POINTER_EXCEPTION_MESSAGE)
@@ -18,10 +18,10 @@ value class PlayerBettings(val bettingsMap: Map<Name, Money>) {
     }
 
     companion object {
-        const val BETTINGS_MAP_NULL_POINTER_EXCEPTION_MESSAGE = "입력한 Player의 배팅정보가 없습니다."
+        private const val BETTINGS_MAP_NULL_POINTER_EXCEPTION_MESSAGE = "입력한 Player의 배팅정보가 없습니다."
 
         fun from(bettingMoneys: Map<Name, Money>): PlayerBettings {
-            return PlayerBettings(bettingMoneys)
+            return PlayerBettings(bettingMoneys.toMap())
         }
     }
 }
