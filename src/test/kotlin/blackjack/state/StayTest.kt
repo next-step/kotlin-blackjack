@@ -24,7 +24,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Bust의 profit()은 1배 곱해진다`() {
+    fun `Stay상태와 Bust와의 매칭시 배팅금액의 1배가 된다`() {
         val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO, CARD_HEART_TEN)))
 
         val match = stay.profit(bust, Money.from("3000"))
@@ -33,7 +33,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Blackjack이 profit()은 -1배 곱해진다`() {
+    fun `Stay상태와 Blackjack와의 매칭시 배팅금액의 -1배가 된다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_ACE, CARD_HEART_KING)))
 
         val match = stay.profit(blackjack, Money.from("3000"))
@@ -42,7 +42,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태가 profit()은 점수가 높으면 1배 곱해진다`() {
+    fun `Stay상태와 Stay상태가 매칭시 배팅금액의 1배가 된다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_TWO, CARD_HEART_FOUR)))
 
         val match = stay.profit(stayState, Money.from("3000"))
@@ -51,7 +51,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태가 profit()하면 점수가 같으면 0배 곱해진다`() {
+    fun `Stay상태와 Stay상태가 매칭시 점수가 같으면 배팅금액의 0배가 된다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_TEN, CARD_HEART_FOUR)))
 
         val match = stay.profit(stayState, Money.from("3000"))
@@ -60,7 +60,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태가 profit()하면 점수가 낮으면 -1배이다`() {
+    fun `Stay상태와 Stay상태가 매칭시 점수가 낮으면 배팅금액의 -1배가 된다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN)))
 
         val match = stay.profit(stayState, Money.from("3000"))
@@ -69,7 +69,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Blackjack상태의 earningRate는 -1이다`() {
+    fun `Stay상태와 Blackjack상태와의 매칭시 배당률은 -1이다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_ACE, CARD_HEART_KING)))
 
         val earningRate = stay.earningRate(blackjack)
@@ -78,7 +78,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Bust상태의 earningRate는 1이다`() {
+    fun `Stay상태와 Bust상태가 매칭시 배당률은 1이다`() {
         val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO, CARD_HEART_TEN)))
 
         val earningRate = stay.earningRate(bust)
@@ -87,7 +87,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태의 earningRate는 이길 경우 1이다`() {
+    fun `Stay상태와 Stay상태가 매칭시 이길 경우 배당률은 1이다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_TWO, CARD_HEART_TWO)))
 
         val earningRate = stay.earningRate(stayState)
@@ -96,7 +96,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태의 earningRate는 비길 경우 0이다`() {
+    fun `Stay상태와 Stay상태가 매칭시 비길 경우 배당률은 0이다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_FOUR)))
 
         val earningRate = stay.earningRate(stayState)
@@ -105,7 +105,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태의 earnngRate는 질 경우 -1이다`() {
+    fun `Stay상태와 Stay상태가 매칭시 배당률은 질 경우 -1이다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN)))
 
         val earningRate = stay.earningRate(stayState)

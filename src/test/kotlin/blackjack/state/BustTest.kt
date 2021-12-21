@@ -23,7 +23,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Bust와의 profit()에서 0배 곱해진다`() {
+    fun `Bust상태이면 Bust와의 매칭시 배팅금액의 0배가 된다`() {
         val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN, CARD_HEART_KING)))
 
         val profit: Double = this.bust.profit(bust, Money.from("3000"))
@@ -32,7 +32,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 stay상태와의 profit()에서 -1배 곱해진다`() {
+    fun `Bust상태이면 stay상태와의 매칭시 배팅금액의 -1배가 된다`() {
         val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
         val profit: Double = bust.profit(stay, Money.from("3000"))
 
@@ -40,7 +40,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Blackjack 상태와의 profit()에서 -1배 곱해진다`() {
+    fun `Bust상태이면 Blackjack 상태와의 매칭시 배팅금액의 -1배가 된다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
         val profit: Double = bust.profit(blackjack, Money.from("3000"))
 
@@ -48,7 +48,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Bust와의 earningRate는 0이다`() {
+    fun `Bust상태이면 Bust와의 매칭시 배당률은 0이다`() {
         val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN, CARD_HEART_KING)))
 
         val earningRate: Double = this.bust.earningRate(bust)
@@ -57,7 +57,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Stay와의 earningRate는 -1이다`() {
+    fun `Bust상태이면 Stay와의 매칭시 배당률은 -1이다`() {
         val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
 
         val earningRate: Double = this.bust.earningRate(stay)
@@ -66,7 +66,7 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Blackjack과의 earningRate는 -1이다`() {
+    fun `Bust상태이면 Blackjack과의 매칭시 배당률은 -1이다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
 
         val earningRate: Double = this.bust.earningRate(blackjack)
