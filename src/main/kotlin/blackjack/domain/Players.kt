@@ -5,7 +5,7 @@ import blackjack.domain.strategy.draw.DrawStrategy
 
 class Players private constructor(players: List<Player>) {
 
-    val players = players.map { it.copy() }
+    val players = players.toList()
 
     fun drawCardEachPlayer(cardDeck: CardDeck, drawStrategy: DrawStrategy): Players {
         return players.map {

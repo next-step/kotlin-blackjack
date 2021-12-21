@@ -1,11 +1,13 @@
 package blackjack.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Cards
 import blackjack.domain.Score
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
-import blackjack.domain.state.Running.Companion.UNSUPPORTED_MATCH_METHOD
+import blackjack.domain.state.Running.Companion.UNSUPPORTED_PROFIT_METHOD
 import blackjack.domain.state.Stay
+import blackjack.domain.strategy.hittable.DealerHittableStrategy
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -49,19 +51,24 @@ class HitTest {
     }
 
     @Test
-    fun `Hit상태에서는 match()할 수 없다`() {
+    fun `Hit상태에서는 profit()을 계산할 할 수 없다`() {
         val stay = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO)))
 
         Assertions
             .assertThatExceptionOfType(UnsupportedOperationException::class.java)
             .isThrownBy {
-                hit.match(stay)
+                hit.profit(stay, Money.from("3000"))
             }
-            .withMessage(UNSUPPORTED_MATCH_METHOD)
+            .withMessage(UNSUPPORTED_PROFIT_METHOD)
     }
 
     @Test
     fun `Hit을 통해 score를 가져올 수 있다`() {
         assertThat(hit.score).isEqualTo(Score(12))
+    }
+
+    @Test
+    fun `Hit의 canHit()은 True이다`() {
+        assertThat(hit.canHit(DealerHittableStrategy)).isTrue
     }
 }

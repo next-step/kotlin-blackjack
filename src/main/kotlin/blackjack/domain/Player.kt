@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
-import blackjack.domain.state.GameResultState
 import blackjack.domain.state.State
 import blackjack.domain.strategy.draw.DrawStrategy
 
@@ -25,8 +24,5 @@ abstract class Player {
 
     abstract fun draw(cardDeck: CardDeck, drawStrategy: DrawStrategy): Player
     abstract fun stay(): Player
-    abstract fun copy(): Player
-    abstract fun canHit(): Boolean
-
-    fun match(other: Player): GameResultState = state.match(other.state)
+    abstract fun profit(other: Player, money: Money): Int
 }

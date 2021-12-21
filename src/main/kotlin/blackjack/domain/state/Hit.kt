@@ -8,10 +8,10 @@ class Hit(
 ) : Running(cards) {
 
     override fun draw(card: Card): State {
-        val cards = cards + card
-        if (cards.isBust) {
-            return Bust(cards)
+        val drawnCards = cards + card
+        if (drawnCards.isBust) {
+            return Bust(drawnCards)
         }
-        return Hit(cards)
+        return Hit(drawnCards)
     }
 }

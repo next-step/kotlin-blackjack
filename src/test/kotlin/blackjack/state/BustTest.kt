@@ -1,12 +1,13 @@
 package blackjack.state
 
+import blackjack.domain.Money
 import blackjack.domain.card.Cards
 import blackjack.domain.Score
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Finished
-import blackjack.domain.state.GameResultState
 import blackjack.domain.state.Stay
+import blackjack.domain.strategy.hittable.DealerHittableStrategy
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -22,25 +23,55 @@ class BustTest {
     }
 
     @Test
-    fun `Bust 상태이면 Bust와의 match()에서 무승부이다`() {
-        val bust2 = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN, CARD_HEART_KING)))
+    fun `Bust상태이면 Bust와의 매칭시 배팅금액의 0배가 된다`() {
+        val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN, CARD_HEART_KING)))
 
-        val match: GameResultState = bust.match(bust2)
+        val profit: Double = this.bust.profit(bust, Money.from("3000"))
 
-        assertThat(match).isEqualTo(GameResultState.Draw)
+        assertThat(profit).isEqualTo(0.0)
     }
 
     @Test
-    fun `Bust 상태이면 Bust이외 상태와의 match()에서 항상 진다`() {
-        val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
-        val match1: GameResultState = bust.match(blackjack)
-
-        assertThat(match1).isEqualTo(GameResultState.Lose)
-
+    fun `Bust상태이면 stay상태와의 매칭시 배팅금액의 -1배가 된다`() {
         val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
-        val match2: GameResultState = bust.match(stay)
+        val profit: Double = bust.profit(stay, Money.from("3000"))
 
-        assertThat(match2).isEqualTo(GameResultState.Lose)
+        assertThat(profit).isEqualTo(-3000.0)
+    }
+
+    @Test
+    fun `Bust상태이면 Blackjack 상태와의 매칭시 배팅금액의 -1배가 된다`() {
+        val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
+        val profit: Double = bust.profit(blackjack, Money.from("3000"))
+
+        assertThat(profit).isEqualTo(-3000.0)
+    }
+
+    @Test
+    fun `Bust상태이면 Bust와의 매칭시 배당률은 0이다`() {
+        val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN, CARD_HEART_KING)))
+
+        val earningRate: Double = this.bust.earningRate(bust)
+
+        assertThat(earningRate).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Bust상태이면 Stay와의 매칭시 배당률은 -1이다`() {
+        val stay = Stay(Cards(listOf(CARD_HEART_ACE, CARD_HEART_TWO)))
+
+        val earningRate: Double = this.bust.earningRate(stay)
+
+        assertThat(earningRate).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Bust상태이면 Blackjack과의 매칭시 배당률은 -1이다`() {
+        val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
+
+        val earningRate: Double = this.bust.earningRate(blackjack)
+
+        assertThat(earningRate).isEqualTo(-1.0)
     }
 
     @Test
@@ -69,5 +100,10 @@ class BustTest {
     @Test
     fun `Bust된 score를 알 수 있다`() {
         assertThat(bust.score).isEqualTo(Score(30))
+    }
+
+    @Test
+    fun `Bust의 canHit()은 False이다`() {
+        assertThat(bust.canHit(DealerHittableStrategy)).isFalse
     }
 }

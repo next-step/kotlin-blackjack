@@ -20,15 +20,14 @@ data class CardDeck(private val cardQueue: Queue<Card> = LinkedList(CARD_SET.shu
     companion object {
         private val ALL_CARDS = Denomination
             .values()
-            .flatMap(Companion::generateSuitNumberPair)
-            .associateWith { Card(it.first, it.second) }
+            .flatMap(::generateSuitNumberPair)
 
-        private fun generateSuitNumberPair(denomination: Denomination): List<Pair<SuitType, Denomination>> = SuitType
+        private fun generateSuitNumberPair(denomination: Denomination): List<Card> = SuitType
             .values()
             .map { suitType ->
-                suitType to denomination
+                Card(suitType, denomination)
             }
 
-        val CARD_SET = ALL_CARDS.values.toSet()
+        val CARD_SET = ALL_CARDS.toSet()
     }
 }

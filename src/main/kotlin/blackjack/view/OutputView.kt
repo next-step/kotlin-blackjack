@@ -1,10 +1,9 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
+import blackjack.domain.Name
 import blackjack.domain.Player
-import blackjack.domain.result.PlayerResult
 import blackjack.domain.Players
-import blackjack.domain.result.PlayersResult
 
 object OutputView {
 
@@ -14,7 +13,8 @@ object OutputView {
     private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val PLAYER_CARD_OUTPUT_MESSAGE = "%s 카드: %s"
     private const val PLAYER_SCORE_OUTPUT_MESSAGE = "결과: %s"
-    private const val FINAL_RESULT_MESSAGE = "## 최종 승패"
+    private const val FINAL_RESULT_MESSAGE = "## 최종 수익"
+    private const val DEALER_RESULT_MESSAGE = "딜러: %s"
 
     fun printHowManyCardsPlayerDrawn(dealer: Dealer, players: Players) {
         val output = buildString {
@@ -27,9 +27,9 @@ object OutputView {
 
     fun printPlayersDrawnCards(dealer: Dealer, players: Players) {
         val output = buildString {
-            dealer.printPlayersDrawn()
+            append(dealer.printPlayerDrawn())
             players.players.forEach { player ->
-                player.printPlayersDrawn()
+                append(player.printPlayerDrawn())
             }
         }
         println(output)
@@ -75,21 +75,18 @@ object OutputView {
         println(output)
     }
 
-    fun printDealerResult(playerResult: PlayerResult) {
+    fun printDealerResult(dealerProfit: Int) {
         val output = buildString {
             append(FINAL_RESULT_MESSAGE)
             append(System.lineSeparator())
-            append("딜러: ")
-            playerResult.playerResultMap.keys.forEach {
-                append("${playerResult.playerResultMap[it]}${it.displayName} ")
-            }
+            append(DEALER_RESULT_MESSAGE.format(dealerProfit))
         }
         println(output)
     }
 
-    fun printPlayersResult(playersResult: PlayersResult) {
-        playersResult.playersResultMap.entries.forEach { (name, result) ->
-            println("${name.name}: ${result.displayName}")
+    fun printPlayersResult(resultMap: Map<Name, Int>) {
+        resultMap.entries.forEach { (name, result) ->
+            println("${name.name}: $result")
         }
     }
 
@@ -97,7 +94,7 @@ object OutputView {
         return cards.cards.joinToString { card -> "${card.denomination.displayName}${card.suitType.displayName}" }
     }
 
-    private fun Player.printPlayersDrawn(): StringBuilder {
+    private fun Player.printPlayerDrawn(): StringBuilder {
         return StringBuilder().apply {
             append("${name.name}카드: ")
             append(cardToString())

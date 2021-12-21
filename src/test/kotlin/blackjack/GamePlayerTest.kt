@@ -7,6 +7,7 @@ import blackjack.domain.Name
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Stay
 import blackjack.domain.strategy.draw.HitDrawStrategy
+import blackjack.domain.strategy.hittable.GamePlayerHittableStrategy
 import blackjack.state.CARD_HEART_ACE
 import blackjack.state.CARD_HEART_KING
 import blackjack.state.CARD_HEART_TWO
@@ -17,15 +18,10 @@ class GamePlayerTest {
 
     @Test
     fun `GamePlayer는 21점 이상이면 카드를 받을 수 없다`() {
-        val below21Cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO))
-        val hit1 = Hit(below21Cards)
-        val gamePlayer1 = GamePlayer(name = Name.from("sh1"), state = hit1)
-        assertThat(gamePlayer1.canHit()).isTrue
-
-        val cards2 = Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE))
-        val hit2 = Hit(cards2)
-        val gamePlayer2 = GamePlayer(name = Name.from("sh2"), state = hit2)
-        assertThat(gamePlayer2.canHit()).isFalse
+        val cards = Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE))
+        val hit = Hit(cards)
+        val gamePlayer = GamePlayer(name = Name.from("sh2"), state = hit)
+        assertThat(gamePlayer.state.canHit(GamePlayerHittableStrategy)).isFalse
     }
 
     @Test
