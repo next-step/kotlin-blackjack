@@ -11,6 +11,8 @@ data class Score(val score: Int) : Comparable<Score> {
         require(score >= 0) { SCORE_MUST_BE_ZERO_OR_MORE_EXCEPTION_MESSAGE.format(score) }
     }
 
+    override operator fun compareTo(other: Score) = score.compareTo(other.score)
+
     fun getAceScore(): Score =
         if (MAX_ACE_SCORE + score > BLACK_JACK_SCORE) {
             Score(MIN_ACE_SCORE)
@@ -21,8 +23,6 @@ data class Score(val score: Int) : Comparable<Score> {
     fun canHit(hittableStrategy: HittableStrategy): Boolean = hittableStrategy.canHit(score)
 
     operator fun plus(other: Score) = Score(score + other.score)
-
-    override operator fun compareTo(other: Score) = score.compareTo(other.score)
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
