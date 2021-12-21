@@ -24,7 +24,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Bust의 profit()은 1배이다`() {
+    fun `Stay상태와 Bust의 profit()은 1배 곱해진다`() {
         val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO, CARD_HEART_TEN)))
 
         val match = stay.profit(bust, Money.from("3000"))
@@ -33,7 +33,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Blackjack이 profit()은 -1배이다`() {
+    fun `Stay상태와 Blackjack이 profit()은 -1배 곱해진다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_ACE, CARD_HEART_KING)))
 
         val match = stay.profit(blackjack, Money.from("3000"))
@@ -42,7 +42,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태가 profit()은 점수가 높은쪽이 1배이다`() {
+    fun `Stay상태와 Stay상태가 profit()은 점수가 높으면 1배 곱해진다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_TWO, CARD_HEART_FOUR)))
 
         val match = stay.profit(stayState, Money.from("3000"))
@@ -51,7 +51,7 @@ class StayTest {
     }
 
     @Test
-    fun `Stay상태와 Stay상태가 profit()하면 점수가 같으면 0배이다`() {
+    fun `Stay상태와 Stay상태가 profit()하면 점수가 같으면 0배 곱해진다`() {
         val stayState = Stay(Cards(listOf(CARD_HEART_TEN, CARD_HEART_FOUR)))
 
         val match = stay.profit(stayState, Money.from("3000"))
@@ -66,6 +66,51 @@ class StayTest {
         val match = stay.profit(stayState, Money.from("3000"))
 
         assertThat(match).isEqualTo(-3000.0)
+    }
+
+    @Test
+    fun `Stay상태와 Blackjack상태의 earningRate는 -1이다`() {
+        val blackjack = Blackjack(Cards(listOf(CARD_HEART_ACE, CARD_HEART_KING)))
+
+        val earningRate = stay.earningRate(blackjack)
+
+        assertThat(earningRate).isEqualTo(-1.0)
+    }
+
+    @Test
+    fun `Stay상태와 Bust상태의 earningRate는 1이다`() {
+        val bust = Bust(Cards(listOf(CARD_HEART_KING, CARD_HEART_TWO, CARD_HEART_TEN)))
+
+        val earningRate = stay.earningRate(bust)
+
+        assertThat(earningRate).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `Stay상태와 Stay상태의 earningRate는 이길 경우 1이다`() {
+        val stayState = Stay(Cards(listOf(CARD_HEART_TWO, CARD_HEART_TWO)))
+
+        val earningRate = stay.earningRate(stayState)
+
+        assertThat(earningRate).isEqualTo(1.0)
+    }
+
+    @Test
+    fun `Stay상태와 Stay상태의 earningRate는 비길 경우 0이다`() {
+        val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_FOUR)))
+
+        val earningRate = stay.earningRate(stayState)
+
+        assertThat(earningRate).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Stay상태와 Stay상태의 earnngRate는 질 경우 -1이다`() {
+        val stayState = Stay(Cards(listOf(CARD_HEART_KING, CARD_HEART_TEN)))
+
+        val earningRate = stay.earningRate(stayState)
+
+        assertThat(earningRate).isEqualTo(-1.0)
     }
 
     @Test

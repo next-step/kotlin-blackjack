@@ -24,7 +24,7 @@ class BlackjackTest {
     }
 
     @Test
-    fun `Blackjack 상태이면 Blackjack과의 profit()은 0배이다`() {
+    fun `Blackjack 상태이면 Blackjack과의 profit()은 0이 곱해진다`() {
         val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
 
         val profit: Double = this.blackjack.profit(blackjack, Money.from("3000"))
@@ -33,7 +33,7 @@ class BlackjackTest {
     }
 
     @Test
-    fun `Blackjack 상태이면 bust상태와의 match()에서 승리하고 1쩜5배의 수익금을 얻는다`() {
+    fun `Blackjack 상태이면 bust상태와의 profit()에서 1쩜5배가 곱해진다`() {
         var bust: State = Initial()
         bust = bust.draw(CARD_HEART_KING)
             .draw(CARD_HEART_KING)
@@ -42,6 +42,27 @@ class BlackjackTest {
         val match: Double = blackjack.profit(bust, Money.from("3000"))
 
         assertThat(match).isEqualTo(4500.0)
+    }
+
+    @Test
+    fun `Blackjack 상태이면 Blackjack상태와의 earningRate는 0이다`() {
+        val blackjack = Blackjack(Cards(listOf(CARD_HEART_KING, CARD_HEART_ACE)))
+
+        val earningRate: Double = blackjack.earningRate(blackjack)
+
+        assertThat(earningRate).isEqualTo(0.0)
+    }
+
+    @Test
+    fun `Blackjack 상태이면 bust상태와의 earningRate는 1쩜5이다`() {
+        var bust: State = Initial()
+        bust = bust.draw(CARD_HEART_KING)
+            .draw(CARD_HEART_KING)
+            .draw(CARD_HEART_KING)
+
+        val earningRate: Double = blackjack.earningRate(bust)
+
+        assertThat(earningRate).isEqualTo(1.5)
     }
 
     @Test
