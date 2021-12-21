@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.card.Cards
 import blackjack.util.exhaustive
 
-class Stay(
+data class Stay(
     override val cards: Cards
 ) : Finished(cards) {
 

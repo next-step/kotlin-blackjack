@@ -2,7 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Cards
 
-class Blackjack(override val cards: Cards) : Finished(cards) {
+data class Blackjack(override val cards: Cards) : Finished(cards) {
 
     override fun earningRate(other: State): Double {
         return when (other) {

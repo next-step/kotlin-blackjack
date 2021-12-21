@@ -2,7 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Cards
 
-class Bust(
+data class Bust(
     override val cards: Cards
 ) : Finished(cards) {
 
