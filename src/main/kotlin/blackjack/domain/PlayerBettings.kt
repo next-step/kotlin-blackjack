@@ -9,7 +9,7 @@ value class PlayerBettings private constructor(val bettingsMap: Map<Name, Money>
     fun calculateDealerProfit(dealer: Dealer, players: Players): Int {
         return players.players
             .map { dealer.profit(it, getMoney(it.name)) }
-            .fold(0) { acc: Int, profit: Int -> acc + profit }
+            .reduce { acc: Int, profit: Int -> acc + profit }
     }
 
     fun calculatePlayersProfit(dealer: Dealer, players: Players): Map<Name, Int> {
