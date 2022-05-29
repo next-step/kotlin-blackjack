@@ -1,8 +1,10 @@
 package blackjack.domain
 
 @JvmInline
-value class Hand(private val cards: List<Card>) {
+value class Hand(val cards: List<Card>) {
 
     val count: Int
         get() = cards.size
+
+    fun addCard(newCard: Card) = Hand(cards + newCard)
 }
