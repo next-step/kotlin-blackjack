@@ -1,10 +1,13 @@
 package blackjack.domain
 
-class Deck(private val cards: List<Card>) {
+import java.util.LinkedList
+import java.util.Queue
+
+class Deck(cards: List<Card>) {
+    private val cards: Queue<Card> = LinkedList(cards)
+
     val count: Int
         get() = cards.size
 
-    fun draw(): Card {
-        return Card(Suite.HEARTS, Denomination.TEN)
-    }
+    fun draw(): Card = cards.poll() ?: throw IllegalStateException("남아있는 카드가 없습니다")
 }
