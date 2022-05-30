@@ -1,13 +1,13 @@
 package blackjack.domain
 
 @JvmInline
-value class Score(val cards: List<Card>) {
+value class Score(private val cards: List<Card>) {
 
     val isBlackjack: Boolean
-        get() = sum == BLACKJACK
+        get() = sum == BLACKJACK_SUM
 
     val isBust: Boolean
-        get() = sum > BLACKJACK
+        get() = sum > BLACKJACK_SUM
 
     val sum: Int
         get() {
@@ -17,8 +17,8 @@ value class Score(val cards: List<Card>) {
             }
             val outcomes = possibleOutcome(aces.size).map { it + remainingSum }
 
-            if (outcomes.contains(BLACKJACK)) {
-                return BLACKJACK
+            if (outcomes.contains(BLACKJACK_SUM)) {
+                return BLACKJACK_SUM
             }
 
             return outcomes.minOrNull() ?: 0
@@ -32,7 +32,7 @@ value class Score(val cards: List<Card>) {
         }
 
     companion object {
-        private const val BLACKJACK = 21
+        private const val BLACKJACK_SUM = 21
         private val SCORE_MAP = mapOf(
             Denomination.TWO to 2,
             Denomination.THREE to 3,
