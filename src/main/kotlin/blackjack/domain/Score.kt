@@ -21,7 +21,7 @@ value class Score(val cards: List<Card>) {
                 return BLACKJACK
             }
 
-            return outcomes.minOf { it }
+            return outcomes.minOrNull() ?: 0
         }
 
     private fun possibleOutcome(aceCount: Int): List<Int> =

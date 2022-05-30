@@ -134,4 +134,9 @@ internal class ScoreTest : FreeSpec({
             }
         }
     }
+
+    "카드가 없는 경우 합은 0이다" {
+        val score = Score(emptyList())
+        score.sum shouldBe 0
+    }
 })
