@@ -12,9 +12,7 @@ value class Score(private val cards: List<Card>) {
     val sum: Int
         get() {
             val (aces, remaining) = cards.partition { it.isAce }
-            val remainingSum = remaining.sumOf {
-                SCORE_MAP.getOrDefault(it.denomination, 0)
-            }
+            val remainingSum = remaining.sum()
             val outcomes = possibleOutcome(aces.size).map { it + remainingSum }
 
             if (outcomes.contains(BLACKJACK_SUM)) {
@@ -23,6 +21,10 @@ value class Score(private val cards: List<Card>) {
 
             return outcomes.minOrNull() ?: 0
         }
+
+    private fun List<Card>.sum(): Int = sumOf {
+        SCORE_MAP.getOrDefault(it.denomination, 0)
+    }
 
     private fun possibleOutcome(aceCount: Int): List<Int> =
         when (aceCount) {
