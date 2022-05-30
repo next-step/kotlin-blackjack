@@ -4,18 +4,32 @@ package blackjack.domain
 value class Score(val cards: List<Card>) {
 
     val isBlackjack: Boolean
-        get() = sum() == BLACKJACK
+        get() = sum == BLACKJACK
 
     val isBust: Boolean
-        get() = sum() > BLACKJACK
+        get() = sum > BLACKJACK
 
-    private fun sum(): Int {
-        val (aces, remaining) = cards.partition { it.isAce }
+    val sum: Int
+        get() {
+            val (aces, remaining) = cards.partition { it.isAce }
+            val remainingSum = remaining.sumOf {
+                SCORE_MAP.getOrDefault(it.denomination, 0)
+            }
+            val outcomes = possibleOutcome(aces.size).map { it + remainingSum }
 
-        return remaining.sumOf {
-            SCORE_MAP.getOrDefault(it.denomination, 0)
+            if (outcomes.contains(BLACKJACK)) {
+                return BLACKJACK
+            }
+
+            return outcomes.minOf { it }
         }
-    }
+
+    private fun possibleOutcome(aceCount: Int): List<Int> =
+        when (aceCount) {
+            1 -> listOf(1, 11)
+            2 -> listOf(2, 12)
+            else -> listOf(aceCount)
+        }
 
     companion object {
         private const val BLACKJACK = 21
