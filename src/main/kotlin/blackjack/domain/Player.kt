@@ -1,11 +1,15 @@
 package blackjack.domain
 
-data class Player(val name: String, val hand: Hand) {
+class Player(val name: String, hand: Hand) {
+    private var _hand = hand
 
-    val score: Int
-        get() = TODO()
+    val score: Score
+        get() = Score(_hand.cards)
+
+    val hand: Hand
+        get() = _hand
 
     fun addCard(card: Card) {
-        TODO("Not yet implemented")
+        _hand = hand.addCard(card)
     }
 }
