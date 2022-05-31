@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import step1.skill.Skill
+import step1.skill.SkillLevel
+import step1.skill.Skills
 
 class DslTest {
     @Test
@@ -32,5 +35,30 @@ class DslTest {
         }
 
         assertThat(person.company).isEqualTo(company)
+    }
+
+    @Test
+    fun skills() {
+        val softSkill1 = "A passion for problem solving"
+        val softSKill2 = "Good communication skills"
+        val hardSkill1 = "Kotlin"
+
+        val person = introduce {
+            skills {
+                soft(softSkill1)
+                soft(softSKill2)
+                hard(hardSkill1)
+            }
+        }
+
+        val expectedSkills = Skills(
+            listOf(
+                Skill(SkillLevel.SOFT, softSkill1),
+                Skill(SkillLevel.SOFT, softSKill2),
+                Skill(SkillLevel.HARD, hardSkill1)
+            )
+        )
+
+        assertThat(person.skills.list).isEqualTo(expectedSkills.list)
     }
 }
