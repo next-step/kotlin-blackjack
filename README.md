@@ -25,9 +25,9 @@ introduce {
 * 모든 기능을 TDD로 구현해 단위 테스트가 존재해야 한다.
 
 ### 체크 리스트
-* [ ] Resume + ResumeBuilder 구현
-* [ ] introduce 함수 구현
-* [ ] name 속성 추가
+* [x] Resume + ResumeBuilder 구현
+* [x] introduce 함수 구현
+* [x] name 속성 추가
 * [ ] company 속성 추가
 * [ ] Skills + SkillsBuilder 구현
 * [ ] skills 함수 구현
