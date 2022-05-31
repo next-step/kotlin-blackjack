@@ -2,8 +2,6 @@ package step1
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 import step1.language.Language
 import step1.language.Languages
 import step1.skill.Skill
@@ -12,7 +10,7 @@ import step1.skill.Skills
 
 class DslTest {
     @Test
-    fun introduce() {
+    fun `introduce 함수에 아무것도 주어지지 않을 경우 기본 값을 가진 Person 이 반환된다`() {
         val person = introduce { }
 
         assertThat(person.name).isEqualTo(PersonBuilder.DEFAULT_NAME)
@@ -21,18 +19,19 @@ class DslTest {
         assertThat(person.languages.list).hasSize(0)
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["배수정", "Vivian"])
-    fun name(value: String) {
+    @Test
+    fun `name 함수에 이름이 주어질 경우 해당 이름을 가진 Person 이 반환된다`() {
+        val name = "배수정"
+
         val person = introduce {
-            name(value)
+            name(name)
         }
 
-        assertThat(person.name).isEqualTo(value)
+        assertThat(person.name).isEqualTo(name)
     }
 
     @Test
-    fun company() {
+    fun `company 함수에 회사 이름이 주어질 경우 해당 회사 이름을 가진 Person 이 반환된다`() {
         val company = "카카오"
 
         val person = introduce {
@@ -43,7 +42,7 @@ class DslTest {
     }
 
     @Test
-    fun skills() {
+    fun `skills 함수에 스킬셋이 주어질 경우 해당 스킬셋을 가진 Person 이 반환된다`() {
         val softSkill1 = "A passion for problem solving"
         val softSKill2 = "Good communication skills"
         val hardSkill1 = "Kotlin"
@@ -68,7 +67,7 @@ class DslTest {
     }
 
     @Test
-    fun languages() {
+    fun `languages 함수에 언어셋이 주어질 경우 해당 언어셋을 가진 Person 이 반환된다`() {
         val koreanText = "Korean"
         val koreanLevel = 5
         val englishText = "English"
