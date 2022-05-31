@@ -45,3 +45,10 @@ class SkillsBuilder {
         return Skills(soft, hard)
     }
 }
+
+class Languages()
+class LanguagesBuilder {
+    fun build(): Languages {
+        return Languages()
+    }
+}
