@@ -2,65 +2,34 @@ package study
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.params.provider.CsvSource
 
-/*
-introduce {
-    name("박재성")
-    company("우아한형제들")
-    skills {
-        soft("A passion for problem solving")
-        soft("Good communication skills")
-        hard("Kotlin")
-    }
-    languages {
-        "Korean" level 5
-        "English" level 3
-    }
-}
-*/
 class DslTest {
     @ParameterizedTest
-    @ValueSource(strings = ["제이드", "고유식"])
-    internal fun introduce(value: String) {
+    @CsvSource(
+        "jade,kakao,Kotlin,Korean,5",
+        "sehee,woowa,Java,Spanish,6",
+    )
+    internal fun introduce(name: String, company: String, skill: String, lang: String, level: Int) {
         val person: Person = introduce {
-            name(value)
+            name(name)
+            company(company)
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard(skill)
+            }
+            languages {
+                "Korean" level 5
+                lang level level
+            }
         }
 
-        assertThat(person.name).isEqualTo(value)
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["카카오", "티몬"])
-    internal fun company(value: String) {
-        val person: Person = introduce {
-            name("고유식")
-            company(value)
-        }
-
-        assertThat(person.company).isEqualTo(value)
+        println(person)
+        assertThat(person.name).isEqualTo(name)
+        assertThat(person.company).isEqualTo(company)
+        assertThat(person.skills.last().desc).isEqualTo(skill)
+        assertThat(person.languages.last().name).isEqualTo(lang)
+        assertThat(person.languages.last().level).isEqualTo(level)
     }
 }
-
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String = ""
-
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun build(): Person {
-        return Person(name, company)
-    }
-}
-
-data class Person(val name: String, val company: String)

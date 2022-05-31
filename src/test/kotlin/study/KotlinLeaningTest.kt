@@ -47,6 +47,11 @@ internal class KotlinLeaningTest {
             append("No")
         }
     }
+
+    @Test
+    internal fun `infix 테스트`() {
+        assertThat("test" level 10).isEqualTo("test::10")
+    }
 }
 
 data class Point(val x: Int, val y: Int) {
@@ -55,4 +60,8 @@ data class Point(val x: Int, val y: Int) {
 
 fun String.lastChar(): Char {
     return get(length - 1)
+}
+
+infix fun String.level(level: Int): String {
+    return "$this::$level"
 }
