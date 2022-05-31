@@ -6,7 +6,7 @@ class ResumeBuilder {
     var name: String = ""
     var company: String = ""
     var skills: Skills = Skills(emptyList(), emptyList())
-    var languages: Languages = Languages()
+    var languages: Languages = Languages(emptyMap())
 
     fun name(name: String) {
         this.name = name
@@ -51,9 +51,15 @@ class SkillsBuilder {
     }
 }
 
-class Languages()
+class Languages(levels: Map<String, Int>) : Map<String, Int> by levels
 class LanguagesBuilder {
+    val levels = mutableMapOf<String, Int>()
+
+    fun String.level(level: Int) {
+        levels[this] = level
+    }
+
     fun build(): Languages {
-        return Languages()
+        return Languages(levels)
     }
 }

@@ -34,5 +34,5 @@ introduce {
 * [x] Sort, Hard List 속성 추가
 * [x] Languages + LanguagesBuilder 구현
 * [x] languages 함수 구현
-* [ ] 언어, Level(Int) 속성 추가
+* [x] 언어, Level(Int) 속성 추가
 * [ ] level 함수를 중위 함수로 변경
