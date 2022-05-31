@@ -57,7 +57,7 @@ class ResumeTest : StringSpec({
         val expectedSoftSkills = listOf("잠자기", "숨시기")
         val expectedHardSkills = listOf("먹기")
         val expectedKoreanLevel = "한국어" to 5
-        val expectedEnglishLeve = "영어" to -3
+        val expectedEnglishLevel = "영어" to -3
 
         val resume: Resume = introduce {
             name("김해중")
@@ -77,7 +77,7 @@ class ResumeTest : StringSpec({
         resume.company shouldBe expectedCompany
         resume.skills.soft shouldContainExactly expectedSoftSkills
         resume.skills.hard shouldContainExactly expectedHardSkills
-        resume.languages["한국어"] shouldBe 5
-        resume.languages["영어"] shouldBe -3
+        resume.languages[expectedKoreanLevel.first] shouldBe expectedKoreanLevel.second
+        resume.languages[expectedEnglishLevel.first] shouldBe expectedEnglishLevel.second
     }
 })

@@ -55,7 +55,7 @@ class Languages(levels: Map<String, Int>) : Map<String, Int> by levels
 class LanguagesBuilder {
     val levels = mutableMapOf<String, Int>()
 
-    fun String.level(level: Int) {
+    infix fun String.level(level: Int) {
         levels[this] = level
     }
 
