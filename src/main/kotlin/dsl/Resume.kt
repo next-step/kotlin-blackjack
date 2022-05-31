@@ -33,7 +33,7 @@ fun introduce(block: ResumeBuilder.() -> Unit): Resume {
     return ResumeBuilder().apply(block).build()
 }
 
-class Skills(val soft: List<String>, val hard: List<String>)
+data class Skills(val soft: List<String>, val hard: List<String>)
 class SkillsBuilder {
     private val soft = mutableListOf<String>()
     private val hard = mutableListOf<String>()
@@ -51,7 +51,7 @@ class SkillsBuilder {
     }
 }
 
-class Languages(levels: Map<String, Int>) : Map<String, Int> by levels
+data class Languages(private val levels: Map<String, Int>) : Map<String, Int> by levels
 class LanguagesBuilder {
     private val levels = mutableMapOf<String, Int>()
 
