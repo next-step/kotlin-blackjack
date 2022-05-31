@@ -12,4 +12,17 @@ class ResumeTest : StringSpec({
         }
         resume.name shouldBe expected
     }
+
+    "내 이름과 회사 이름을 포함한 이력서를 만든다" {
+        val expectedName = "김해중"
+        val expectedCompany = "오리백숙집"
+
+        val resume: Resume = introduce {
+            name("김해중")
+            company("오리백숙집")
+        }
+
+        resume.name shouldBe expectedName
+        resume.company shouldBe expectedCompany
+    }
 })
