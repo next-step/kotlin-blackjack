@@ -27,4 +27,22 @@ class ResumeTest : StringSpec({
         resume.name shouldBe expectedName
         resume.company shouldBe expectedCompany
     }
+
+    "내 이름, 회사, 기술을 포함한 이력서를 만든다" {
+        val expectedName = "김해중"
+        val expectedCompany = "오리백숙집"
+
+        val resume: Resume = introduce {
+            name("김해중")
+            company("오리백숙집")
+            skills {
+                soft("잠자기")
+                soft("숨시기")
+                hard("먹기")
+            }
+        }
+
+        resume.name shouldBe expectedName
+        resume.company shouldBe expectedCompany
+    }
 })
