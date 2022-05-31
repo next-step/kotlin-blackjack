@@ -36,39 +36,3 @@ class ResumeBuilder {
 fun introduce(block: ResumeBuilder.() -> Unit): Resume {
     return ResumeBuilder().apply(block).build()
 }
-
-data class Skills(val soft: List<String>?, val hard: List<String>?)
-
-class SkillsBuilder {
-    private var soft: MutableList<String>? = null
-    private var hard: MutableList<String>? = null
-
-    fun soft(skill: String) {
-        if (soft == null) soft = mutableListOf()
-        soft?.add(skill)
-    }
-
-    fun hard(skill: String) {
-        if (hard == null) hard = mutableListOf()
-        hard?.add(skill)
-    }
-
-    fun build(): Skills {
-        return Skills(soft, hard)
-    }
-}
-
-data class Languages(private val levels: Map<String, Int>) : Map<String, Int> by levels
-
-class LanguagesBuilder {
-    private var levels: MutableMap<String, Int>? = null
-
-    infix fun String.level(level: Int) {
-        if (levels == null) levels = mutableMapOf()
-        levels?.put(this, level)
-    }
-
-    fun build(): Languages {
-        return Languages(levels ?: emptyMap())
-    }
-}
