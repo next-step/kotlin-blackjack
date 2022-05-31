@@ -4,6 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import step1.language.Language
+import step1.language.Languages
 import step1.skill.Skill
 import step1.skill.SkillLevel
 import step1.skill.Skills
@@ -60,5 +62,29 @@ class DslTest {
         )
 
         assertThat(person.skills.list).isEqualTo(expectedSkills.list)
+    }
+
+    @Test
+    fun languages() {
+        val koreanText = "Korean"
+        val koreanLevel = 5
+        val englishText = "English"
+        val englishLevel = 3
+
+        val person: Person = introduce {
+            languages {
+                koreanText level koreanLevel
+                englishText level englishLevel
+            }
+        }
+
+        val expectedLanguages = Languages(
+            listOf(
+                Language(koreanText, koreanLevel),
+                Language(englishText, englishLevel)
+            )
+        )
+
+        assertThat(person.languages.list).isEqualTo(expectedLanguages.list)
     }
 }
