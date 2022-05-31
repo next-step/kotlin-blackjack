@@ -29,8 +29,8 @@ introduce {
 * [x] introduce 함수 구현
 * [x] name 속성 추가
 * [x] company 속성 추가
-* [ ] Skills + SkillsBuilder 구현
-* [ ] skills 함수 구현
+* [x] Skills + SkillsBuilder 구현
+* [x] skills 함수 구현
 * [ ] Sort, Hard List 속성 추가
 * [ ] Languages + LanguagesBuilder 구현
 * [ ] 언어, Level(Int) 속성 추가
