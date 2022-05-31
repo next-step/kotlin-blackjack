@@ -2,6 +2,7 @@ package dsl
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 
 class ResumeTest : StringSpec({
@@ -47,8 +48,9 @@ class ResumeTest : StringSpec({
 
         resume.name shouldBe expectedName
         resume.company shouldBe expectedCompany
-        resume.skills.soft shouldContainExactly expectedSoftSkills
-        resume.skills.hard shouldContainExactly expectedHardSkills
+        resume.skills.shouldNotBeNull()
+        resume.skills?.soft shouldContainExactly expectedSoftSkills
+        resume.skills?.hard shouldContainExactly expectedHardSkills
     }
 
     "내 이름, 회사, 기술, 언어를 포함한 이력서를 만든다" {
@@ -75,9 +77,11 @@ class ResumeTest : StringSpec({
 
         resume.name shouldBe expectedName
         resume.company shouldBe expectedCompany
-        resume.skills.soft shouldContainExactly expectedSoftSkills
-        resume.skills.hard shouldContainExactly expectedHardSkills
-        resume.languages[expectedKoreanLevel.first] shouldBe expectedKoreanLevel.second
-        resume.languages[expectedEnglishLevel.first] shouldBe expectedEnglishLevel.second
+        resume.skills.shouldNotBeNull()
+        resume.skills?.soft shouldContainExactly expectedSoftSkills
+        resume.skills?.hard shouldContainExactly expectedHardSkills
+        resume.languages.shouldNotBeNull()
+        resume.languages?.get(expectedKoreanLevel.first) shouldBe expectedKoreanLevel.second
+        resume.languages?.get(expectedEnglishLevel.first) shouldBe expectedEnglishLevel.second
     }
 })

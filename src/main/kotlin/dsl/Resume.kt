@@ -1,12 +1,12 @@
 package dsl
 
-data class Resume(val name: String, val company: String, val skills: Skills, val languages: Languages)
+data class Resume(val name: String, val company: String?, val skills: Skills?, val languages: Languages?)
 
 class ResumeBuilder {
-    private var name: String = ""
-    private var company: String = ""
-    private var skills: Skills = Skills(emptyList(), emptyList())
-    private var languages: Languages = Languages(emptyMap())
+    private var name: String = NO_NAME
+    private var company: String? = null
+    private var skills: Skills? = null
+    private var languages: Languages? = null
 
     fun name(name: String) {
         this.name = name
@@ -27,23 +27,30 @@ class ResumeBuilder {
     fun build(): Resume {
         return Resume(name, company, skills, languages)
     }
+
+    companion object {
+        const val NO_NAME = ""
+    }
 }
 
 fun introduce(block: ResumeBuilder.() -> Unit): Resume {
     return ResumeBuilder().apply(block).build()
 }
 
-data class Skills(val soft: List<String>, val hard: List<String>)
+data class Skills(val soft: List<String>?, val hard: List<String>?)
+
 class SkillsBuilder {
-    private val soft = mutableListOf<String>()
-    private val hard = mutableListOf<String>()
+    private var soft: MutableList<String>? = null
+    private var hard: MutableList<String>? = null
 
     fun soft(skill: String) {
-        soft.add(skill)
+        if (soft == null) soft = mutableListOf()
+        soft?.add(skill)
     }
 
     fun hard(skill: String) {
-        hard.add(skill)
+        if (hard == null) hard = mutableListOf()
+        hard?.add(skill)
     }
 
     fun build(): Skills {
@@ -52,14 +59,16 @@ class SkillsBuilder {
 }
 
 data class Languages(private val levels: Map<String, Int>) : Map<String, Int> by levels
+
 class LanguagesBuilder {
-    private val levels = mutableMapOf<String, Int>()
+    private var levels: MutableMap<String, Int>? = null
 
     infix fun String.level(level: Int) {
-        levels[this] = level
+        if (levels == null) levels = mutableMapOf()
+        levels?.put(this, level)
     }
 
     fun build(): Languages {
-        return Languages(levels)
+        return Languages(levels ?: emptyMap())
     }
 }
