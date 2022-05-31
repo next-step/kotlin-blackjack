@@ -1,11 +1,12 @@
 package dsl
 
-data class Resume(val name: String, val company: String, val skills: Skills)
+data class Resume(val name: String, val company: String, val skills: Skills, val languages: Languages)
 
 class ResumeBuilder {
     var name: String = ""
     var company: String = ""
     var skills: Skills = Skills(emptyList(), emptyList())
+    var languages: Languages = Languages()
 
     fun name(name: String) {
         this.name = name
@@ -19,8 +20,12 @@ class ResumeBuilder {
         skills = SkillsBuilder().apply(block).build()
     }
 
+    fun languages(block: LanguagesBuilder.() -> Unit) {
+        languages = LanguagesBuilder().apply(block).build()
+    }
+
     fun build(): Resume {
-        return Resume(name, company, skills)
+        return Resume(name, company, skills, languages)
     }
 }
 
