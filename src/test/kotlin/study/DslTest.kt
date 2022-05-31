@@ -4,8 +4,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import step1.language.Language
 import step1.person.Person
 import step1.person.introduce
+import step1.skill.Level
+import step1.skill.Skill
 
 // introduce {
 //     name("최준규")
@@ -53,6 +56,12 @@ class DslTest {
             }
         }
         assertThat(person.skills.values).hasSize(3)
+        assertThat(person.skills.values)
+            .containsOnly(
+                Skill(Level.SOFT, "A passion for problem solving"),
+                Skill(Level.SOFT, "Good communication skills"),
+                Skill(Level.HARD, "Kotlin")
+            )
     }
 
     @Test
@@ -71,5 +80,10 @@ class DslTest {
             }
         }
         assertThat(person.languages.values).hasSize(2)
+        assertThat(person.languages.values)
+            .containsOnly(
+                Language("Korean", 5),
+                Language("English", 3)
+            )
     }
 }
