@@ -22,4 +22,15 @@ class DslTest {
 
         assertThat(person.name).isEqualTo(value)
     }
+
+    @Test
+    fun company() {
+        val company = "카카오"
+
+        val person = introduce {
+            company(company)
+        }
+
+        assertThat(person.company).isEqualTo(company)
+    }
 }
