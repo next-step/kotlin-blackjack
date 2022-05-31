@@ -16,6 +16,9 @@ class DslTest {
         val person = introduce { }
 
         assertThat(person.name).isEqualTo(PersonBuilder.DEFAULT_NAME)
+        assertThat(person.company).isEqualTo(PersonBuilder.DEFAULT_COMPANY)
+        assertThat(person.skills.list).hasSize(0)
+        assertThat(person.languages.list).hasSize(0)
     }
 
     @ParameterizedTest
