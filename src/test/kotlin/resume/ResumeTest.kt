@@ -1,10 +1,9 @@
+package resume
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import resume.Language
-import resume.Person
 import resume.Skill.Hard
 import resume.Skill.Soft
-import resume.introduce
 
 class ResumeTest {
 

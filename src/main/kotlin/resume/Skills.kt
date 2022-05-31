@@ -1,5 +1,12 @@
 package resume
 
+sealed interface Skill {
+    val name: String
+
+    data class Hard(override val name: String) : Skill
+    data class Soft(override val name: String) : Skill
+}
+
 data class Skills(private val skill: MutableList<Skill> = mutableListOf()) : MutableList<Skill> by skill {
 
     fun soft(name: String) {
