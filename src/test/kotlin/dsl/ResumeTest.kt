@@ -1,6 +1,7 @@
 package dsl
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class ResumeTest : StringSpec({
@@ -31,6 +32,8 @@ class ResumeTest : StringSpec({
     "내 이름, 회사, 기술을 포함한 이력서를 만든다" {
         val expectedName = "김해중"
         val expectedCompany = "오리백숙집"
+        val expectedSoftSkills = listOf("잠자기", "숨시기")
+        val expectedHardSkills = listOf("먹기")
 
         val resume: Resume = introduce {
             name("김해중")
@@ -44,5 +47,7 @@ class ResumeTest : StringSpec({
 
         resume.name shouldBe expectedName
         resume.company shouldBe expectedCompany
+        resume.skills.soft shouldContainExactly expectedSoftSkills
+        resume.skills.hard shouldContainExactly expectedHardSkills
     }
 })
