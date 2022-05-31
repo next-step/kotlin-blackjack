@@ -3,10 +3,10 @@ package dsl
 data class Resume(val name: String, val company: String, val skills: Skills, val languages: Languages)
 
 class ResumeBuilder {
-    var name: String = ""
-    var company: String = ""
-    var skills: Skills = Skills(emptyList(), emptyList())
-    var languages: Languages = Languages(emptyMap())
+    private var name: String = ""
+    private var company: String = ""
+    private var skills: Skills = Skills(emptyList(), emptyList())
+    private var languages: Languages = Languages(emptyMap())
 
     fun name(name: String) {
         this.name = name
@@ -35,8 +35,8 @@ fun introduce(block: ResumeBuilder.() -> Unit): Resume {
 
 class Skills(val soft: List<String>, val hard: List<String>)
 class SkillsBuilder {
-    val soft = mutableListOf<String>()
-    val hard = mutableListOf<String>()
+    private val soft = mutableListOf<String>()
+    private val hard = mutableListOf<String>()
 
     fun soft(skill: String) {
         soft.add(skill)
@@ -53,7 +53,7 @@ class SkillsBuilder {
 
 class Languages(levels: Map<String, Int>) : Map<String, Int> by levels
 class LanguagesBuilder {
-    val levels = mutableMapOf<String, Int>()
+    private val levels = mutableMapOf<String, Int>()
 
     infix fun String.level(level: Int) {
         levels[this] = level
