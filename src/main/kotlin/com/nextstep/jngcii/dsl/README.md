@@ -18,7 +18,7 @@ introduce {
 ```
 
 ### TODO-LIST
-- [ ] Person Test
+- [x] Person Test
 - [ ] Person 구현
 - [ ] Company Test
 - [ ] Company 구현
