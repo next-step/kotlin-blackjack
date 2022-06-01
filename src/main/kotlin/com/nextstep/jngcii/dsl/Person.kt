@@ -5,17 +5,24 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 }
 
 class Person(
-    val name: String
+    val name: String,
+    val company: String
 )
 
 class PersonBuilder {
     var name: String = ""
+    var company: String? = null
 
     fun name(value: String) {
         name = value
     }
 
+    fun company(value: String) {
+        company = value
+    }
+
     fun build() = Person(
-        name = name
+        name = name,
+        company = company ?: "무직"
     )
 }
