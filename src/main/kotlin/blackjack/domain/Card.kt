@@ -10,7 +10,8 @@ class Card private constructor(
     }
 
     companion object {
-        private val availableCard: Map<Pair<Denomination, Suit>, Card> = init()
+        private val cardsByDenominationAndSuit: Map<Pair<Denomination, Suit>, Card> = init()
+        internal val entireCards: List<Card> = cardsByDenominationAndSuit.values.toList()
         private fun init(): Map<Pair<Denomination, Suit>, Card> {
             val map = mutableMapOf<Pair<Denomination, Suit>, Card>()
             Denomination.values().forEach { denomination ->
@@ -22,7 +23,7 @@ class Card private constructor(
         }
 
         fun from(denomination: Denomination, suit: Suit): Card {
-            return availableCard[denomination to suit] ?: throw IllegalArgumentException()
+            return cardsByDenominationAndSuit[denomination to suit] ?: throw IllegalArgumentException()
         }
     }
 }
