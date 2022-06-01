@@ -3,6 +3,8 @@ package study
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import study.resume.introduce
+import study.resume.skill.Skill
+import study.resume.skill.SkillType
 
 /*
 introduce {
@@ -25,13 +27,15 @@ class ResumeTest {
         val introduce = introduce {
             name("pang")
             company("kakao")
-//            skills {
-//                soft("kotlin")
-//                hard("playing")
-//            }
+            skills {
+                soft("kotlin")
+                hard("playing")
+            }
         }
         assertThat(introduce.name).isEqualTo("pang")
         assertThat(introduce.company).isEqualTo("kakao")
+        assertThat(introduce.skills).contains(Skill(SkillType.SOFT, "kotlin"))
+        assertThat(introduce.skills).contains(Skill(SkillType.HARD, "playing"))
 
     }
 }
