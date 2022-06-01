@@ -68,8 +68,8 @@ class DslTest {
                 hard("kotlin")
             }
             languages {
-                "Korean" level 5
-                "English" level 3
+                Language.Kind.KOREAN level Language.Level.FIVE
+                Language.Kind.ENGLISH level Language.Level.THREE
             }
         }
 

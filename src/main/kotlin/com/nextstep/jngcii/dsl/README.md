@@ -25,4 +25,4 @@ introduce {
 - [x] Skill Test
 - [x] Skill 구현
 - [x] Language Test
-- [ ] Language 구현
+- [x] Language 구현
