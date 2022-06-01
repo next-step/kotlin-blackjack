@@ -6,6 +6,9 @@ data class HardSkill(val description: String) : Skill()
 
 data class SoftSkill(val description: String) : Skill()
 
+@JvmInline
+value class Skills(private val skills: List<Skill> = emptyList())
+
 class SkillBuilder {
     private var skills = mutableListOf<Skill>()
 
@@ -17,5 +20,5 @@ class SkillBuilder {
         skills.add(HardSkill(value))
     }
 
-    fun build(): List<Skill> = skills
+    fun build(): Skills = Skills(skills)
 }

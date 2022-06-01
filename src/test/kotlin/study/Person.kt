@@ -3,12 +3,10 @@ package study
 data class Person(
     val name: String,
     val company: String,
-    val skills: List<Skill>,
+    val skills: Skills,
     val languages: Languages,
 ) {
-
     companion object {
-
         inline fun introduce(block: PersonBuilder.() -> Unit): Person =
             PersonBuilder()
                 .apply(block)
@@ -17,7 +15,7 @@ data class Person(
         class PersonBuilder {
             private lateinit var name: String
             private var company = ""
-            private var skills = listOf<Skill>()
+            private var skills = Skills()
             private var languages = Languages()
 
             fun name(value: String) {

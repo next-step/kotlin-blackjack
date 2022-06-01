@@ -33,10 +33,12 @@ class DslTest : StringSpec({
             }
         }
 
-        person.skills shouldBe listOf(
-            SoftSkill("A passion for problem solving"),
-            SoftSkill("Good communication skills"),
-            HardSkill("Kotlin")
+        person.skills shouldBe Skills(
+            listOf(
+                SoftSkill("A passion for problem solving"),
+                SoftSkill("Good communication skills"),
+                HardSkill("Kotlin")
+            )
         )
     }
 
