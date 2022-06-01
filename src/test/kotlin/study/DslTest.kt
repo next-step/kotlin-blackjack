@@ -1,11 +1,11 @@
-//package study
+// package study
 //
-//import org.assertj.core.api.Assertions.assertThat
-//import org.junit.jupiter.api.Test
-//import org.junit.jupiter.params.ParameterizedTest
-//import org.junit.jupiter.params.provider.ValueSource
+// import org.assertj.core.api.Assertions.assertThat
+// import org.junit.jupiter.api.Test
+// import org.junit.jupiter.params.ParameterizedTest
+// import org.junit.jupiter.params.provider.ValueSource
 //
-//class DslTest {
+// class DslTest {
 //    @ParameterizedTest
 //    @ValueSource(strings = ["팡, 팡팡"])
 //    fun introduce(name: String) {
@@ -27,13 +27,13 @@
 //        assertThat(person.company).isEqualTo("깍오")
 //
 //    }
-//}
+// }
 //
-//fun introduce(block: PersonBuilder.() -> Unit): Person {
+// fun introduce(block: PersonBuilder.() -> Unit): Person {
 //    return PersonBuilder().apply { this.block() }.build()
-//}
+// }
 //
-//class PersonBuilder {
+// class PersonBuilder {
 //    private var name: String = ""
 //    private var company: String = ""
 //    fun name(value: String) {
@@ -47,6 +47,6 @@
 //    fun build(): Person {
 //        return Person(name, company)
 //    }
-//}
+// }
 //
-//data class Person(val name: String, val company: String)
+// data class Person(val name: String, val company: String)

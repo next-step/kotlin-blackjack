@@ -36,6 +36,5 @@ class ResumeTest {
         assertThat(introduce.company).isEqualTo("kakao")
         assertThat(introduce.skills).contains(Skill(SkillType.SOFT, "kotlin"))
         assertThat(introduce.skills).contains(Skill(SkillType.HARD, "playing"))
-
     }
 }

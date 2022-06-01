@@ -1,4 +1,3 @@
 package study
 
-class ExtensionFunctionTest {
-}
+class ExtensionFunctionTest
