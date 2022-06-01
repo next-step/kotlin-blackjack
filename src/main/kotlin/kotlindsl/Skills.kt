@@ -3,8 +3,11 @@ package kotlindsl
 import kotlindsl.util.AddOnlyMutableList
 
 sealed class Skill {
-    data class Soft(val value: String) : Skill()
-    data class Hard(val value: String) : Skill()
+
+    open val value: String = ""
+
+    data class Soft(override val value: String) : Skill()
+    data class Hard(override val value: String) : Skill()
 }
 
 class Skills : AddOnlyMutableList<Skill>() {
