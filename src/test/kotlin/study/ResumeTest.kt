@@ -1,6 +1,8 @@
 package study
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import study.resume.introduce
 
 /*
 introduce {
@@ -19,11 +21,17 @@ introduce {
 class ResumeTest {
 
     @Test
-    internal fun resume() {
-        introduce {
+    fun resume() {
+        val introduce = introduce {
             name("pang")
             company("kakao")
+//            skills {
+//                soft("kotlin")
+//                hard("playing")
+//            }
         }
+        assertThat(introduce.name).isEqualTo("pang")
+        assertThat(introduce.company).isEqualTo("kakao")
 
     }
 }

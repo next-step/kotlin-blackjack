@@ -1,10 +1,10 @@
-package study
+package study.resume
 
 data class Resume(
     val name: String,
     val company: String,
-    val skills: List<String>,
-    val language: List<String>
+//    val skills: List<Skill>,
+//    val language: List<String>
 ) {
 }
 
@@ -12,16 +12,16 @@ fun introduce(block: ResumeBuilder.() -> Unit): Resume {
     return ResumeBuilder().apply(block).build()
 }
 
-class ResumeBuilder(
-    private var name: String,
-    private var company: String
-) {
+class ResumeBuilder{
+    private lateinit var name: String
+    private lateinit var company: String
+//    private lateinit var skills: List<Skill>
+
+
     fun build(): Resume {
         return Resume(
             name,
             company,
-            skills,
-            languege
         )
     }
 
