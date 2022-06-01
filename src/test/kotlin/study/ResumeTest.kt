@@ -3,6 +3,7 @@ package study
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import study.resume.introduce
+import study.resume.language.LanguageSkill
 import study.resume.skill.Skill
 import study.resume.skill.SkillType
 
@@ -31,10 +32,16 @@ class ResumeTest {
                 soft("kotlin")
                 hard("playing")
             }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         assertThat(introduce.name).isEqualTo("pang")
         assertThat(introduce.company).isEqualTo("kakao")
         assertThat(introduce.skills).contains(Skill(SkillType.SOFT, "kotlin"))
         assertThat(introduce.skills).contains(Skill(SkillType.HARD, "playing"))
+        assertThat(introduce.language).contains(LanguageSkill("Korean", 5))
+        assertThat(introduce.language).contains(LanguageSkill("English", 3))
     }
 }
