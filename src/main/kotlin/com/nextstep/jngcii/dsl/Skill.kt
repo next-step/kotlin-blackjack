@@ -20,8 +20,8 @@ enum class HardSkill {
 }
 
 class SkillBuilder {
-    val softSkills = mutableListOf<SoftSkill>()
-    val hardSkills = mutableListOf<HardSkill>()
+    private val softSkills = mutableListOf<SoftSkill>()
+    private val hardSkills = mutableListOf<HardSkill>()
 
     fun soft(value: String) {
         softSkills.add(SoftSkill(value))

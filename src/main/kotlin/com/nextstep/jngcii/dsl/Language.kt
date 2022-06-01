@@ -18,7 +18,7 @@ data class Language(
 }
 
 class LanguageBuilder {
-    val languages = mutableListOf<Language>()
+    private val languages = mutableListOf<Language>()
 
     infix fun Language.Kind.level(level: Language.Level) {
         languages.add(Language(this, level))

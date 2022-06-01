@@ -13,11 +13,11 @@ class Person(
 )
 
 class PersonBuilder {
-    var name: String = ""
-    var company: String? = null
-    var softSkills: List<SoftSkill> = emptyList()
-    var hardSkills: List<HardSkill> = emptyList()
-    var languages: List<Language> = emptyList()
+    private var name: String = ""
+    private var company: String? = null
+    private var softSkills: List<SoftSkill> = emptyList()
+    private var hardSkills: List<HardSkill> = emptyList()
+    private var languages: List<Language> = emptyList()
 
     fun name(value: String) {
         name = value
