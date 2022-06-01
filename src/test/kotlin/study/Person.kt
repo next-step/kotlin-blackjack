@@ -5,36 +5,34 @@ data class Person(
     val company: String,
     val skills: Skills,
     val languages: Languages,
-) {
-    companion object {
-        inline fun introduce(block: PersonBuilder.() -> Unit): Person =
-            PersonBuilder()
-                .apply(block)
-                .build()
+)
 
-        class PersonBuilder {
-            private lateinit var name: String
-            private var company = ""
-            private var skills = Skills()
-            private var languages = Languages()
+inline fun introduce(block: PersonBuilder.() -> Unit): Person =
+    PersonBuilder()
+        .apply(block)
+        .build()
 
-            fun name(value: String) {
-                name = value
-            }
+class PersonBuilder {
+    private lateinit var name: String
+    private var company = ""
+    private var skills = Skills()
+    private var languages = Languages()
 
-            fun company(value: String) {
-                company = value
-            }
-
-            fun skills(block: SkillBuilder.() -> Unit) {
-                skills = (SkillBuilder().apply(block).build())
-            }
-
-            fun languages(block: LanguageBuilder.() -> Unit) {
-                languages = (LanguageBuilder().apply(block).build())
-            }
-
-            fun build() = Person(name, company, skills, languages)
-        }
+    fun name(value: String) {
+        name = value
     }
+
+    fun company(value: String) {
+        company = value
+    }
+
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skills = (SkillBuilder().apply(block).build())
+    }
+
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        languages = (LanguageBuilder().apply(block).build())
+    }
+
+    fun build() = Person(name, company, skills, languages)
 }
