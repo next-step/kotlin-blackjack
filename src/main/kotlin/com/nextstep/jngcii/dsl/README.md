@@ -24,5 +24,5 @@ introduce {
 - [x] Company 구현
 - [x] Skill Test
 - [x] Skill 구현
-- [ ] Language Test
+- [x] Language Test
 - [ ] Language 구현
