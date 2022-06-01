@@ -1,12 +1,12 @@
 package blackjack.domain
 
 data class Card(
-    val number: CardNumber,
+    val denomination: Denomination,
     private val suit: Suit
 ) {
 
     override fun toString(): String {
-        return "${number.displayedName}${suit.type}"
+        return "${denomination.displayedName}${suit.type}"
     }
 }
 
@@ -19,7 +19,7 @@ enum class Suit(
     DIAMOND("다이아")
 }
 
-enum class CardNumber(
+enum class Denomination(
     val minValue: Int,
     val maxValue: Int,
     val displayedName: String
