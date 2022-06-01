@@ -1,6 +1,7 @@
 package blackjack.domain.card
 
 import io.kotest.assertions.throwables.shouldNotThrow
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
 class CardDeckTest : StringSpec({
@@ -11,6 +12,18 @@ class CardDeckTest : StringSpec({
                 diamond()
                 heart()
                 club()
+            }
+        }
+    }
+
+    "중복되는 카드가 존재하면 Exception을 던진다." {
+        shouldThrow<IllegalArgumentException> {
+            setupCardDeck {
+                spade()
+                diamond()
+                heart()
+                heart()
+                heart()
             }
         }
     }

@@ -9,7 +9,7 @@ class ScoreTest : StringSpec({
         shouldNotThrow<Throwable> { Score(1) }
     }
 
-    "1 미만의 점수는 생성할수 없다." {
-        shouldThrow<IllegalArgumentException> { Score(0) }
+    "음수 점수는 생성할수 없다." {
+        shouldThrow<IllegalArgumentException> { Score(-1) }
     }
 })

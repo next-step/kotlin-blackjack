@@ -2,21 +2,38 @@ package blackjack.domain.card.type
 
 import blackjack.domain.Score
 
-enum class Denomination(
+sealed class Denomination(
     val description: String,
-    val score: List<Score>
-) {
-    ACE("A", listOf(Score(1), Score(11))),
-    TWO("2", listOf(Score(2))),
-    THREE("3", listOf(Score(3))),
-    FOUR("4", listOf(Score(4))),
-    FIVE("5", listOf(Score(5))),
-    SIX("6", listOf(Score(6))),
-    SEVEN("7", listOf(Score(7))),
-    EIGHT("8", listOf(Score(8))),
-    NINE("9", listOf(Score(9))),
-    TEN("10", listOf(Score(10))),
-    JACK("J", listOf(Score(10))),
-    QUEEN("Q", listOf(Score(10))),
-    KING("K", listOf(Score(10)));
+    val score: Score
+) : Comparable<Denomination> {
+    override fun compareTo(other: Denomination): Int = score.value - other.score.value
 }
+
+class Ace : Denomination("A", Score(1)) {
+    val aceScore: Score
+        get() = Score(11)
+}
+
+class Two : Denomination("2", Score(2))
+
+class Three : Denomination("3", Score(3))
+
+class Four : Denomination("4", Score(4))
+
+class Five : Denomination("5", Score(5))
+
+class Six : Denomination("6", Score(6))
+
+class Seven : Denomination("7", Score(7))
+
+class Eight : Denomination("8", Score(8))
+
+class Nine : Denomination("9", Score(9))
+
+class Ten : Denomination("10", Score(10))
+
+class Jack : Denomination("J", Score(10))
+
+class Queen : Denomination("Q", Score(10))
+
+class King : Denomination("K", Score(10))
