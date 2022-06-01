@@ -2,8 +2,6 @@ package study
 
 import kotlindsl.Language
 import kotlindsl.Skill
-import kotlindsl.SkillType.HARD
-import kotlindsl.SkillType.SOFT
 import kotlindsl.introduce
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertAll
@@ -19,9 +17,9 @@ class DslTest {
     fun introduceTest(expectedName: String, expectedCompany: String) {
 
         val expectedSkills = listOf(
-            Skill("A passion for problem solving", SOFT),
-            Skill("Good communication skills", SOFT),
-            Skill("Kotlin", HARD)
+            Skill.Soft("A passion for problem solving"),
+            Skill.Soft("Good communication skills"),
+            Skill.Hard("Kotlin")
         )
 
         val expectedLanguages = listOf(
