@@ -13,4 +13,13 @@ class DslTest : StringSpec({
 
         person.name shouldBe "손재빈"
     }
+
+    "company" {
+        val person: Person = introduce {
+            name("손재빈")
+            company("인프랩")
+        }
+
+        person.company shouldBe "인프랩"
+    }
 })

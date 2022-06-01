@@ -1,6 +1,9 @@
 package study
 
-data class Person(val name: String) {
+data class Person(
+    val name: String,
+    val company: String,
+) {
 
     companion object {
 
@@ -11,12 +14,17 @@ data class Person(val name: String) {
 
         class PersonBuilder {
             private lateinit var name: String
+            private lateinit var company: String
 
             fun name(value: String) {
                 name = value
             }
 
-            fun build() = Person(name)
+            fun company(value: String) {
+                company = value
+            }
+
+            fun build() = Person(name, company)
         }
     }
 }
