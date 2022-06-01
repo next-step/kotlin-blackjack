@@ -9,7 +9,7 @@ data class HardSkill(val text: String) : Skill()
 value class Skills(private val skills: List<Skill> = emptyList())
 
 class SkillBuilder {
-    val skills = mutableListOf<Skill>()
+    private val skills = mutableListOf<Skill>()
 
     fun soft(text: String) {
         skills.add(SoftSkill(text))

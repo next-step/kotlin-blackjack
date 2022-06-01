@@ -1,23 +1,19 @@
 package dsl
 
-class Person(
+data class Person(
     val name: String,
     val company: String,
     val skills: Skills,
-    val languages: List<Language>
+    val languages: Languages
 )
 
 fun introduce(block: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(block).build()
 
-@DslMarker
-annotation class PersonMaker
-
-@PersonMaker
 class PersonBuilder {
     private lateinit var name: String
     private var company: String = ""
     private var skills: Skills = Skills()
-    private var languages: List<Language> = emptyList()
+    private var languages: Languages = Languages()
 
     fun name(value: String) {
         name = value
@@ -32,7 +28,7 @@ class PersonBuilder {
     }
 
     fun languages(block: LanguageBuilder.() -> Unit) {
-        languages = LanguageBuilder().apply(block).languages.toList()
+        languages = LanguageBuilder().apply(block).build()
     }
 
     fun build(): Person {

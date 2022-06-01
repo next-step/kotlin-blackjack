@@ -68,9 +68,11 @@ class DslTest : FunSpec({
                 HardSkill("Kotlin")
             )
         )
-        person.languages[0].language shouldBe "Korean"
-        person.languages[0].level shouldBe 5
-        person.languages[1].language shouldBe "English"
-        person.languages[1].level shouldBe 3
+        person.languages shouldBe Languages(
+            listOf(
+                Language("Korean", 5),
+                Language("English", 3)
+            )
+        )
     }
 })
