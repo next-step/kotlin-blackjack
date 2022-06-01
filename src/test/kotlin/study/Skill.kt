@@ -1,26 +1,21 @@
 package study
 
-enum class SkillType {
-    SOFT,
-    HARD,
-}
+sealed class Skill
 
-data class Skill(val type: SkillType, val description: String) {
+data class HardSkill(val description: String) : Skill()
 
-    companion object {
+data class SoftSkill(val description: String) : Skill()
 
-        class SkillBuilder {
-            private var skills = mutableListOf<Skill>()
+class SkillBuilder {
+    private var skills = mutableListOf<Skill>()
 
-            fun soft(value: String) {
-                skills.add(Skill(SkillType.SOFT, value))
-            }
-
-            fun hard(value: String) {
-                skills.add(Skill(SkillType.HARD, value))
-            }
-
-            fun build(): List<Skill> = skills
-        }
+    fun soft(value: String) {
+        skills.add(SoftSkill(value))
     }
+
+    fun hard(value: String) {
+        skills.add(HardSkill(value))
+    }
+
+    fun build(): List<Skill> = skills
 }

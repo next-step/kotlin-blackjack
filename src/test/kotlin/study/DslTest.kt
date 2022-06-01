@@ -34,9 +34,9 @@ class DslTest : StringSpec({
         }
 
         person.skills shouldBe listOf(
-            Skill(SkillType.SOFT, "A passion for problem solving"),
-            Skill(SkillType.SOFT, "Good communication skills"),
-            Skill(SkillType.HARD, "Kotlin")
+            SoftSkill("A passion for problem solving"),
+            SoftSkill("Good communication skills"),
+            HardSkill("Kotlin")
         )
     }
 

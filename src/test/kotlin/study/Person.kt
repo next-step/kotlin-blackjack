@@ -28,8 +28,8 @@ data class Person(
                 company = value
             }
 
-            fun skills(block: Skill.Companion.SkillBuilder.() -> Unit) {
-                skills = (Skill.Companion.SkillBuilder().apply(block).build())
+            fun skills(block: SkillBuilder.() -> Unit) {
+                skills = (SkillBuilder().apply(block).build())
             }
 
             fun languages(block: Language.Companion.LanguageBuilder.() -> Unit) {
