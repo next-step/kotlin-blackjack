@@ -4,6 +4,7 @@ data class Person(
     val name: String,
     val company: String,
     val skills: List<Skill>,
+    val languages: List<Language>,
 ) {
 
     companion object {
@@ -17,6 +18,7 @@ data class Person(
             private lateinit var name: String
             private var company = ""
             private var skills = listOf<Skill>()
+            private var languages = listOf<Language>()
 
             fun name(value: String) {
                 name = value
@@ -30,7 +32,11 @@ data class Person(
                 skills = (Skill.Companion.SkillBuilder().apply(block).build())
             }
 
-            fun build() = Person(name, company, skills)
+            fun languages(block: Language.Companion.LanguageBuilder.() -> Unit) {
+                languages = (Language.Companion.LanguageBuilder().apply(block).build())
+            }
+
+            fun build() = Person(name, company, skills, languages)
         }
     }
 }
