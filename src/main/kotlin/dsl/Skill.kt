@@ -1,15 +1,15 @@
 package dsl
 
-interface Skill
+sealed class Skill
+
+data class SoftSkill(val text: String) : Skill()
+data class HardSkill(val text: String) : Skill()
 
 @JvmInline
-value class SoftSkill(val text: String) : Skill
-
-@JvmInline
-value class HardSkill(val text: String) : Skill
+value class Skills(private val skills: List<Skill> = emptyList())
 
 class SkillBuilder {
-    val skills = arrayListOf<Skill>()
+    val skills = mutableListOf<Skill>()
 
     fun soft(text: String) {
         skills.add(SoftSkill(text))
@@ -17,5 +17,9 @@ class SkillBuilder {
 
     fun hard(text: String) {
         skills.add(HardSkill(text))
+    }
+
+    fun build(): Skills {
+        return Skills(skills)
     }
 }

@@ -1,7 +1,6 @@
 package dsl
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 class DslTest : FunSpec({
@@ -36,10 +35,12 @@ class DslTest : FunSpec({
 
         person.name shouldBe "로빈"
         person.company shouldBe "카카오"
-        person.skills shouldContainAll listOf(
-            SoftSkill("A passion for problem solving"),
-            SoftSkill("Good communication skills"),
-            HardSkill("Kotlin")
+        person.skills shouldBe Skills(
+            listOf(
+                SoftSkill("A passion for problem solving"),
+                SoftSkill("Good communication skills"),
+                HardSkill("Kotlin")
+            )
         )
     }
 
@@ -60,10 +61,12 @@ class DslTest : FunSpec({
 
         person.name shouldBe "로빈"
         person.company shouldBe "카카오"
-        person.skills shouldContainAll listOf(
-            SoftSkill("A passion for problem solving"),
-            SoftSkill("Good communication skills"),
-            HardSkill("Kotlin")
+        person.skills shouldBe Skills(
+            listOf(
+                SoftSkill("A passion for problem solving"),
+                SoftSkill("Good communication skills"),
+                HardSkill("Kotlin")
+            )
         )
         person.languages[0].language shouldBe "Korean"
         person.languages[0].level shouldBe 5
