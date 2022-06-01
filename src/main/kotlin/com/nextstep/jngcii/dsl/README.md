@@ -22,7 +22,7 @@ introduce {
 - [x] Person 구현
 - [x] Company Test
 - [x] Company 구현
-- [ ] Skill Test
+- [x] Skill Test
 - [ ] Skill 구현
 - [ ] Language Test
 - [ ] Language 구현

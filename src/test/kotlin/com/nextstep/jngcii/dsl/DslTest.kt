@@ -31,4 +31,29 @@ class DslTest {
 
         assertThat(person.company).isEqualTo("무직")
     }
+
+    @Test
+    fun skill() {
+        val person = introduce {
+            name("peter")
+            company("kakao")
+            skills {
+                soft("a passion for problem solving")
+                soft("good communication skills")
+                hard("kotlin")
+            }
+        }
+
+        val softSkills = listOf(
+            SoftSkill("a passion for problem solving"),
+            SoftSkill("good communication skills"),
+        )
+
+        val hardSkills = listOf(
+            HardSkill.KOTLIN
+        )
+
+        assertThat(person.softSkills).isEqualTo(softSkills)
+        assertThat(person.hardSkills).isEqualTo(hardSkills)
+    }
 }
