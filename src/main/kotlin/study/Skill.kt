@@ -1,22 +1,19 @@
 package study
 
-data class Skill(val name: String, val type: SkillType) {
+sealed interface Skill
 
-    enum class SkillType {
-        SOFT,
-        HARD
-    }
-}
+data class SoftSkill(val name: String) : Skill
+data class HardSkill(val name: String) : Skill
 
 class SkillBuilder {
     private val skills: MutableList<Skill> = mutableListOf()
 
     fun soft(name: String) {
-        skills.add(Skill(name, Skill.SkillType.SOFT))
+        skills.add(SoftSkill(name))
     }
 
     fun hard(name: String) {
-        skills.add(Skill(name, Skill.SkillType.HARD))
+        skills.add(HardSkill(name))
     }
 
     fun build(): List<Skill> {

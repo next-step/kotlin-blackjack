@@ -26,9 +26,9 @@ class DslTest {
         assertThat(resume.name).isEqualTo("이요한")
         assertThat(resume.company).isEqualTo("카카오")
         assertThat(resume.skills).containsExactly(
-            Skill("A passion for problem solving", Skill.SkillType.SOFT),
-            Skill("Good communication skills", Skill.SkillType.SOFT),
-            Skill("Kotlin", Skill.SkillType.HARD),
+            SoftSkill("A passion for problem solving"),
+            SoftSkill("Good communication skills"),
+            HardSkill("Kotlin"),
         )
         assertThat(resume.languages).containsExactly(
             Language("Korean", 5),
@@ -69,9 +69,9 @@ class DslTest {
         }
 
         assertThat(resume.skills).containsExactly(
-            Skill("A passion for problem solving", Skill.SkillType.SOFT),
-            Skill("Good communication skills", Skill.SkillType.SOFT),
-            Skill("Kotlin", Skill.SkillType.HARD),
+            SoftSkill("A passion for problem solving"),
+            SoftSkill("Good communication skills"),
+            HardSkill("Kotlin"),
         )
     }
 
