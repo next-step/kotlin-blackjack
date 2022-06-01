@@ -1,17 +1,16 @@
 package study
 
-data class Language(val type: String, val level: Int) {
+@JvmInline
+value class Languages(private val languages: List<Language> = emptyList())
 
-    companion object {
+data class Language(val type: String, val level: Int)
 
-        class LanguageBuilder {
-            private var languages = mutableListOf<Language>()
+class LanguageBuilder {
+    private var languages = mutableListOf<Language>()
 
-            infix fun String.level(level: Int) {
-                languages.add(Language(this, level))
-            }
-
-            fun build(): List<Language> = languages
-        }
+    infix fun String.level(level: Int) {
+        languages.add(Language(this, level))
     }
+
+    fun build(): Languages = Languages(languages)
 }

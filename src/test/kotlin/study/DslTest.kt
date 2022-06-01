@@ -49,9 +49,11 @@ class DslTest : StringSpec({
             }
         }
 
-        person.languages shouldBe listOf(
-            Language("Korean", 5),
-            Language("English", 3)
+        person.languages shouldBe Languages(
+            listOf(
+                Language("Korean", 5),
+                Language("English", 3),
+            )
         )
     }
 })
