@@ -35,10 +35,10 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 ### 카드(Card)
 - 카드는 `카드 숫자(CardNumber)`와 `무늬(Suit)`를 가진다.
 
-#### 카드 무늬
+#### 카드 무늬(Suit)
 - 카드 무늬는 Spade, Heart, Clover, Diamond 4가지로 구성된다
 
-#### 카드 숫자
+#### 카드 숫자(CardNumber)
 - 카드 숫자의 종류는 Ace와 2~10, 그리고 Jack, Queen, King 으로 총 13가지다.
 - 카드 숫자별 점수는 카드 숫자를 기본으로 하며, 예외로 Ace는 1 또는 11의 점수를 가질 수 있으며, King, Queen, Jack은 각각 10의 점수를 가진다
 
