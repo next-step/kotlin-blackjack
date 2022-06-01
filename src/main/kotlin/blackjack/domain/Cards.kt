@@ -6,11 +6,7 @@ import java.lang.Integer.max
 class Cards(
     cards: List<Card>
 ) {
-    private val _cards: MutableList<Card> = mutableListOf()
-
-    init {
-        _cards.addAll(cards)
-    }
+    private val _cards: MutableList<Card> = cards.toMutableList()
 
     val point: Int
         get() {
@@ -19,8 +15,7 @@ class Cards(
                 .fold(0) { sum, card ->
                     sum + card.denomination.maxValue
                 }
-            val minPoint = sumOfNotAce + numberOfAce
-            return (0..numberOfAce).fold(minPoint) { point, i ->
+            return (0..numberOfAce).fold(sumOfNotAce + numberOfAce) { point, i ->
                 val sum = ACE.run {
                     minValue * i + maxValue * (numberOfAce - i) + sumOfNotAce
                 }
