@@ -2,8 +2,9 @@ package study
 
 data class Skill(val desc: String, val rank: Rank)
 
-enum class Rank {
-    SOFT, HARD
+sealed class Rank {
+    object SOFT : Rank()
+    object HARD : Rank()
 }
 
 class SkillBuilder {

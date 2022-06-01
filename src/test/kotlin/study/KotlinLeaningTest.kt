@@ -52,6 +52,21 @@ internal class KotlinLeaningTest {
     internal fun `infix 테스트`() {
         assertThat("test" level 10).isEqualTo("test::10")
     }
+
+    @Test
+    internal fun `sealed 클래스`() {
+        val fatDog = Animal.Dog("fat dog", 20)
+        val slimDog = Animal.Dog("slim dog", 10)
+        val cat = Animal.Cat("navi")
+        val pig = Animal.Pig(50)
+
+        assertThat(fatDog.myName()).isEqualTo("dog:fat dog")
+        assertThat(slimDog.myName()).isEqualTo("dog:slim dog")
+        assertThat(slimDog.weight).isEqualTo(10)
+        assertThat(cat.name).isEqualTo("navi")
+        assertThat(pig.myName()).isEqualTo("pig:none")
+        assertThat(pig.weight).isEqualTo(50)
+    }
 }
 
 data class Point(val x: Int, val y: Int) {
@@ -64,4 +79,25 @@ fun String.lastChar(): Char {
 
 infix fun String.level(level: Int): String {
     return "$this::$level"
+}
+
+sealed class Animal(open val name: String) {
+
+    constructor() : this("none")
+
+    data class Dog(override val name: String, val weight: Int) : Animal(name)
+    data class Cat(override val name: String) : Animal(name)
+    data class Pig(val weight: Int) : Animal()
+
+    fun myName() = when (this) {
+        is Dog -> {
+            "dog:$name"
+        }
+        is Cat -> {
+            "cat:$name"
+        }
+        is Pig -> {
+            "pig:$name"
+        }
+    }
 }
