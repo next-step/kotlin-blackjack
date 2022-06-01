@@ -11,25 +11,27 @@ class DslTest {
         "sehee,woowa,Java,Spanish,6",
     )
     internal fun introduce(name: String, company: String, skill: String, lang: String, level: Int) {
+        val skillDesc = "A passion for problem solving"
+        val language = "English"
+
         val person: Person = introduce {
             name(name)
             company(company)
             skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
+                soft(skillDesc)
                 hard(skill)
             }
             languages {
-                "Korean" level 5
+                language level 5
                 lang level level
             }
         }
 
-        println(person)
         assertThat(person.name).isEqualTo(name)
         assertThat(person.company).isEqualTo(company)
-        assertThat(person.skills.last().desc).isEqualTo(skill)
-        assertThat(person.languages.last().name).isEqualTo(lang)
-        assertThat(person.languages.last().level).isEqualTo(level)
+        assertThat(person.company).contains(company)
+        assertThat(person.skills.map { it.desc }).containsExactlyInAnyOrder(skill, skillDesc)
+        assertThat(person.languages.map { it.name }).containsExactlyInAnyOrder(lang, language)
+        assertThat(person.languages.map { it.level }).contains(level)
     }
 }
