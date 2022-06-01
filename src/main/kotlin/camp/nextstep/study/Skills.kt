@@ -9,5 +9,4 @@ data class Skills(val skills: List<Skill>) {
     fun size() = skills.size
 
     fun contains(skill: Skill) = skills.contains(skill)
-
 }

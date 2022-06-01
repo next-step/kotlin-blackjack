@@ -74,4 +74,3 @@ internal class DslTest {
         assertThat(person.languages["English"]!!.level).isEqualTo(3)
     }
 }
-
