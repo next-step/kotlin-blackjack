@@ -3,6 +3,7 @@ package study
 data class Person(
     val name: String,
     val company: String,
+    val skills: List<Skill>,
 ) {
 
     companion object {
@@ -14,7 +15,8 @@ data class Person(
 
         class PersonBuilder {
             private lateinit var name: String
-            private lateinit var company: String
+            private var company = ""
+            private var skills = listOf<Skill>()
 
             fun name(value: String) {
                 name = value
@@ -24,7 +26,11 @@ data class Person(
                 company = value
             }
 
-            fun build() = Person(name, company)
+            fun skills(block: Skill.Companion.SkillBuilder.() -> Unit) {
+                skills = (Skill.Companion.SkillBuilder().apply(block).build())
+            }
+
+            fun build() = Person(name, company, skills)
         }
     }
 }

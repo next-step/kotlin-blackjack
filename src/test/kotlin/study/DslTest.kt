@@ -22,4 +22,21 @@ class DslTest : StringSpec({
 
         person.company shouldBe "인프랩"
     }
+
+    "skills" {
+        val person: Person = introduce {
+            name("손재빈")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        person.skills shouldBe listOf(
+            Skill(SkillType.SOFT, "A passion for problem solving"),
+            Skill(SkillType.SOFT, "Good communication skills"),
+            Skill(SkillType.HARD, "Kotlin")
+        )
+    }
 })
