@@ -1,3 +1,0 @@
-package study
-
-class ExtensionFunctionTest
