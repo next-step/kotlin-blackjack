@@ -23,29 +23,29 @@ introduce {
 ### 구현 목록
 
 - 최상위 함수
-  - [ ] introduce 함수 구현
+  - [X] introduce 함수 구현
   
 - `이력서(Resume)`
   - 이름, 회사, 스킬 목록, 언어 목록을 상태로 가진다
 
 - `이력서 빌더(ResumeBuilder)`
-  - [ ] name 함수 구현
-  - [ ] company 함수 구현
-  - [ ] skills 함수 구현
-  - [ ] languages 함수 구현
+  - [X] name 함수 구현
+  - [X] company 함수 구현
+  - [X] skills 함수 구현
+  - [X] languages 함수 구현
 
 - `스킬(Skill)`
   - 스킬 타입과 이름을 상태로 가진다
 
 - `스킬 빌더(SkillBuilder)`
-  - [ ] soft 함수 구현
-  - [ ] hard 함수 구현 
+  - [X] soft 함수 구현
+  - [X] hard 함수 구현 
 
 - `언어(Language)`
   - 이름과 단계를 상태로 가진다
 
 - `언어 빌더(LanguageBuilder)`
-  - [ ] 중위 표기 구현 
+  - [X] 중위 표기 구현 
   
 
 
