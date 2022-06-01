@@ -19,7 +19,7 @@ introduce {
 
 ### TODO-LIST
 - [x] Person Test
-- [ ] Person 구현
+- [x] Person 구현
 - [ ] Company Test
 - [ ] Company 구현
 - [ ] Skill Test
