@@ -6,9 +6,9 @@ fun introduce(block: PersonBuilder.() -> Unit): Person { // PersonBuilder 내부
 
 class PersonBuilder {
     private lateinit var name: String
-    private lateinit var company: String
-    private lateinit var skills: Skills
-    private lateinit var languages: Languages
+    private var company: String = ""
+    private var skills: Skills = Skills(emptyList(), "")
+    private var languages: Languages = Languages(emptyMap())
 
     fun name(value: String) {
         name = value
