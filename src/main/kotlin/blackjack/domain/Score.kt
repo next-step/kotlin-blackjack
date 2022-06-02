@@ -18,7 +18,6 @@ value class Score(
 
     operator fun plus(other: Score): Score = Score(value.plus(other.value))
 
-
     companion object {
         val BLACK_JACK = Score(21)
     }

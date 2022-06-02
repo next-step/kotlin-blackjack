@@ -51,7 +51,6 @@ class CardDeckTest : StringSpec({
 
         shouldThrow<IllegalArgumentException> { cardDeck.draw() }
     }
-
 }) {
     companion object {
         fun cardDeck(): CardDeck = setupCardDeck {
