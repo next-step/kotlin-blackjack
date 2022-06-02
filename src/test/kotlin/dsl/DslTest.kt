@@ -57,4 +57,25 @@ class DslTest {
         assertThat(person.skills?.soft?.get(1)?.title).isEqualTo("Good communication skills")
         assertThat(person.skills?.hard?.get(0)?.title).isEqualTo("Kotlin")
     }
+
+    @Test
+    fun `language`() {
+        val person = introduce {
+            name("안경무")
+            company("카카오")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        assertThat(person.languages?.languages?.get(0)?.name).isEqualTo("Korean")
+        assertThat(person.languages?.languages?.get(0)?.level).isEqualTo(5)
+        assertThat(person.languages?.languages?.get(1)?.name).isEqualTo("English")
+        assertThat(person.languages?.languages?.get(1)?.level).isEqualTo(3)
+    }
 }
