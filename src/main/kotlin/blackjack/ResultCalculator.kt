@@ -3,7 +3,7 @@ package blackjack
 import java.lang.Integer.max
 
 class ResultCalculator {
-    var result = 0
+    private var result = 0
 
     fun calculateRecursive(cards: List<Card>, idx: Int = 0, sum: Int = 0): Int {
         if (idx == cards.size) {
