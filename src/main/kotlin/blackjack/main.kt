@@ -18,7 +18,7 @@ fun proceedGame(players: List<Player>) {
         players.forEach {
             PrintView.askOneMoreCard(it.name)
 
-            when(InputView.getYorN()) {
+            when (InputView.getYorN()) {
                 YES -> {
                     val servedCard = Dealer.popOneCard()
 
@@ -26,12 +26,10 @@ fun proceedGame(players: List<Player>) {
                     PrintView.printOfferedCardsWithName(it.name, it.cards)
                 }
 
-                NO -> {
-                    noCount++
-                }
+                NO -> noCount++
             }
         }
-    } while(noCount != players.size)
+    } while (noCount != players.size)
 }
 
 fun getPlayers(): List<Player> {
