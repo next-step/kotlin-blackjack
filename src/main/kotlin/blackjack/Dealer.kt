@@ -1,7 +1,7 @@
 package blackjack
 
 object Dealer {
-    private val cards = makeAllCards().toMutableList()
+    private val cards = makeAllCards().shuffled().toMutableList()
 
     fun popOneCard(): Card {
         return cards.removeLast()
