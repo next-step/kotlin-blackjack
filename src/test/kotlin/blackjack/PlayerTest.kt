@@ -13,7 +13,7 @@ class PlayerTest {
 
         assertThat(player.cards).hasSize(1)
 
-        val found = player.cards.firstOrNull {it == card }
+        val found = player.cards.firstOrNull { it == card }
         assertThat(found).isNotNull
     }
 
