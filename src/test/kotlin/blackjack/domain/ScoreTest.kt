@@ -40,8 +40,8 @@ class ScoreTest : StringSpec({
     }
 }) {
     companion object {
-        val TEN = Score(10)
-        val NINE = Score(9)
-        val EIGHT = Score(8)
+        val TEN = Score.of(10)
+        val NINE = Score.of(9)
+        val EIGHT = Score.of(8)
     }
 }

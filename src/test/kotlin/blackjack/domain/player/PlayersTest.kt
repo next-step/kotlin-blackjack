@@ -4,7 +4,6 @@ import blackjack.domain.card.CardDeckTest
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 

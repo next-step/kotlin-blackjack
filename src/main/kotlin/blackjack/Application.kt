@@ -13,15 +13,16 @@ fun main() {
         .map { Player.sit(Name(it)) }
         .let(::Players)
     val blackJack = BlackJack.setup(players)
-
     blackJack.ready()
-    OutputView.printGameReady(blackJack.statuses.map { it.name })
 
-    blackJack.statuses.forEach { OutputView.printStatus(it) }
+    OutputView.printGameReady(blackJack.statuses.map { it.name })
+    OutputView.printStatuses(blackJack.statuses)
+
     while (!players.allStay) {
         hitPlayers(players, blackJack)
     }
-    blackJack.statuses.forEach { OutputView.printResult(it) }
+
+    OutputView.printResults(blackJack.statuses)
 }
 
 private fun hitPlayers(players: Players, blackJack: BlackJack) {

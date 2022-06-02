@@ -1,6 +1,9 @@
 package blackjack.domain
 
 private const val MIN_VALUE = -1
+private const val ZERO = 0
+private const val ELEVEN = 11
+private const val BLACKJACK = 21
 
 @JvmInline
 value class Score(
@@ -19,6 +22,11 @@ value class Score(
     operator fun plus(other: Score): Score = Score(value.plus(other.value))
 
     companion object {
-        val BLACK_JACK = Score(21)
+        val BLACKJACK = Score(blackjack.domain.BLACKJACK)
+        val SCORE_CACHE = (ZERO..ELEVEN).associateWith { Score(it) }
+
+        fun of(value: Int): Score = SCORE_CACHE[value] ?: Score(value)
+
+        fun zero(): Score = SCORE_CACHE[ZERO] ?: Score(ZERO)
     }
 }
