@@ -1,19 +1,19 @@
 package blackjack.model
 
-class CardDeck private constructor(private var cards: Set<PlayingCard>) {
-    fun draw(count: Int): Set<PlayingCard> {
-        return take(count).andPutRemainingCards()
-    }
+class CardDeck private constructor(cards: List<PlayingCard>) {
+    private val _cards: MutableList<PlayingCard> = cards.toMutableList()
+    private val cards: List<PlayingCard>
+        get() = _cards
 
-    private fun take(count: Int): Set<PlayingCard> = cards.take(count).toSet()
-
-    private fun Set<PlayingCard>.andPutRemainingCards(): Set<PlayingCard> = also { drawnCards ->
-        cards = cards subtract drawnCards
+    fun draw(count: Int): List<PlayingCard> {
+        return cards.take(count).also { drawnCards ->
+            _cards.removeAll(drawnCards)
+        }
     }
 
     companion object {
-        fun create(): CardDeck {
-            return CardDeck(PlayingCard.all().shuffled().toSet())
+        fun from(cards: List<PlayingCard>): CardDeck {
+            return CardDeck(cards.distinct().shuffled())
         }
     }
 }
