@@ -7,15 +7,10 @@ data class Person(
     val languages: List<Language> = emptyList()
 )
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder(private val name: String) {
     private var company: String? = null
     private var skills = emptyList<Skill>()
     private var languages = emptyList<Language>()
-
-    fun name(value: String) {
-        name = value
-    }
 
     fun company(value: String) {
         company = value

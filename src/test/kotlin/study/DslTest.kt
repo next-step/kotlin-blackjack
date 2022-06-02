@@ -7,8 +7,7 @@ class DslTest {
 
     @Test
     fun introduce() {
-        val person = introduce {
-            name("신동윤")
+        val person = introduce("신동윤") {
             company("kakao")
             skills {
                 soft("JPA")
@@ -21,7 +20,7 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo("신동윤")
         assertThat(person.company).isEqualTo("kakao")
-        assertThat(person.skills).contains(Skill("JPA", SkillType.SOFT))
+        assertThat(person.skills).contains(Skill.Soft("JPA"))
         assertThat(person.languages).contains(Language("English", 3))
     }
 }
