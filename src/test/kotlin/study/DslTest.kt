@@ -42,12 +42,11 @@ class DslTest {
             }
         }
         assertThat(person.skills.values).hasSize(3)
-        assertThat(person.skills.values)
-            .containsOnly(
-                Skill(Level.SOFT, "A passion for problem solving"),
-                Skill(Level.SOFT, "Good communication skills"),
-                Skill(Level.HARD, "Kotlin")
-            )
+        assertThat(person.skills.values).containsOnly(
+            Skill(Level.SOFT, "A passion for problem solving"),
+            Skill(Level.SOFT, "Good communication skills"),
+            Skill(Level.HARD, "Kotlin")
+        )
     }
 
     @Test
@@ -66,10 +65,8 @@ class DslTest {
             }
         }
         assertThat(person.languages.values).hasSize(2)
-        assertThat(person.languages.values)
-            .containsOnly(
-                Language("Korean", 5),
-                Language("English", 3)
-            )
+        assertThat(person.languages.values).containsOnly(
+            Language("Korean", 5), Language("English", 3)
+        )
     }
 }
