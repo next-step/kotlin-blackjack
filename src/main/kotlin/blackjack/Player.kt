@@ -1,9 +1,15 @@
 package blackjack
 
 class Player(val name: String) {
-    private val cards = mutableListOf<Card>()
+    private val _cards = mutableListOf<Card>()
+    val cards
+        get() = _cards.toList()
 
     fun offer(card: Card) {
-        cards.add(card)
+        _cards.add(card)
+    }
+
+    fun offer(servedCards: List<Card>) {
+        _cards.addAll(servedCards)
     }
 }
