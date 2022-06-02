@@ -1,6 +1,6 @@
 package blackjack.application
 
-import blackjack.domain.player.Name
+import blackjack.domain.player.vo.Name
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import io.kotest.assertions.throwables.shouldNotThrow

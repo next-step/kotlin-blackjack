@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.Score
 import blackjack.domain.card.CardDeck
+import blackjack.domain.player.vo.Name
 
 class Player private constructor(
     val name: Name,

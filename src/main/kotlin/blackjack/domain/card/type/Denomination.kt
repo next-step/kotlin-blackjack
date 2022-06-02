@@ -36,4 +36,4 @@ class Jack : Denomination("J", Score.of(10))
 
 class Queen : Denomination("Q", Score.of(10))
 
-class King : Denomination("K", Score(10))
+class King : Denomination("K", Score.of(10))

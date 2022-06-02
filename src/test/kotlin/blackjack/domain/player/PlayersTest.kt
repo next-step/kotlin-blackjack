@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardDeckTest
+import blackjack.domain.player.vo.Name
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec

@@ -5,6 +5,7 @@ import blackjack.domain.card.CardDeckTest
 import blackjack.domain.card.type.Ace
 import blackjack.domain.card.type.Suit
 import blackjack.domain.card.type.Ten
+import blackjack.domain.player.vo.Name
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec

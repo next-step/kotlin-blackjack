@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.player.Name
+import blackjack.domain.player.vo.Name
 import blackjack.ui.dto.PlayerStatus
 
 object OutputView {
