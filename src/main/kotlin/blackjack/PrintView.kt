@@ -16,11 +16,19 @@ object PrintView {
         println("$namesFormat$OFFER_INITIAL_CARDS_POSTFIX")
     }
 
-    fun printOfferedCardsWithName(name: String, cards: List<Card>) {
+    private fun printName(name: String) {
         val nameMessage = OFFERED_CARD_NAME_FORMAT.format(name)
         print(nameMessage)
+    }
 
+    private fun printCards(cards: List<Card>) {
         val cardJoint = cards.joinToString(separator = SEPARATOR)
         println(cardJoint)
+    }
+
+    fun printOfferedCardsWithName(name: String, cards: List<Card>) {
+        printName(name)
+
+        printCards(cards)
     }
 }
