@@ -12,4 +12,8 @@ class Player(val name: String) {
     fun offer(servedCards: List<Card>) {
         _cards.addAll(servedCards)
     }
+
+    fun getCardSum(): Int {
+        return ResultCalculator().calculateRecursive(cards)
+    }
 }

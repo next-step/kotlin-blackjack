@@ -3,12 +3,23 @@ package blackjack
 const val START_CARD_NUM = 2
 const val YES = "y"
 const val NO = "n"
+
 fun main() {
     val players = getPlayers()
 
     offerInitialCards(players)
 
     proceedGame(players)
+
+    gameEnd(players)
+}
+
+fun gameEnd(players: List<Player>) {
+    players.forEach {
+        PrintView.printHaveCardsWithName(it.name, it.cards, false)
+
+        PrintView.printResultSum(it.getCardSum())
+    }
 }
 
 fun proceedGame(players: List<Player>) {
@@ -23,7 +34,7 @@ fun proceedGame(players: List<Player>) {
                     val servedCard = Dealer.popOneCard()
 
                     it.offer(servedCard)
-                    PrintView.printOfferedCardsWithName(it.name, it.cards)
+                    PrintView.printHaveCardsWithName(it.name, it.cards)
                 }
 
                 NO -> noCount++
@@ -45,7 +56,7 @@ fun offerInitialCards(players: List<Player>) {
     players.forEach { player ->
         val servedCards = List(START_CARD_NUM) { Dealer.popOneCard() }
 
-        PrintView.printOfferedCardsWithName(player.name, servedCards)
+        PrintView.printHaveCardsWithName(player.name, servedCards)
 
         player.offer(servedCards)
     }

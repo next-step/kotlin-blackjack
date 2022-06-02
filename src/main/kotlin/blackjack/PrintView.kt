@@ -5,6 +5,8 @@ object PrintView {
     private const val OFFER_INITIAL_CARDS_POSTFIX = "에게 $START_CARD_NUM 장 나누었습니다."
     private const val SEPARATOR = ", "
     private const val OFFERED_CARD_NAME_FORMAT = "%s카드: "
+    private const val RESULT_FORMAT = " - 결과: %d"
+    private const val ASK_ONE_MORE_CARD_FORMAT = "%s 은 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
 
     fun printInputUserNamesDesc() {
         println(INPUT_USER_DESC)
@@ -21,18 +23,23 @@ object PrintView {
         print(nameMessage)
     }
 
-    private fun printCards(cards: List<Card>) {
+    private fun printCards(cards: List<Card>, lineFeed: Boolean) {
         val cardJoint = cards.joinToString(separator = SEPARATOR)
-        println(cardJoint)
+        print(cardJoint)
+        if (lineFeed) println()
     }
 
-    fun printOfferedCardsWithName(name: String, cards: List<Card>) {
+    fun printHaveCardsWithName(name: String, cards: List<Card>, lineFeed: Boolean = true) {
         printName(name)
 
-        printCards(cards)
+        printCards(cards, lineFeed)
     }
 
     fun askOneMoreCard(name: String) {
-        println("$name 은 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        println(ASK_ONE_MORE_CARD_FORMAT.format(name))
+    }
+
+    fun printResultSum(sum: Int) {
+        println(RESULT_FORMAT.format(sum))
     }
 }
