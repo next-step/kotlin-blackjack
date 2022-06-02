@@ -1,5 +1,7 @@
 package dsl
 
+import dsl.vo.Language
+import dsl.vo.Level
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.assertj.core.api.MapAssert
@@ -67,6 +69,9 @@ class DslTest {
         assertThat(resume.company).isEqualTo("kakao")
         assertThat(resume.skills).extracting("soft").isEqualTo(listOf("Problem Solving", "Communication"))
         assertThat(resume.skills).extracting("hard").isEqualTo(listOf("Kotlin"))
-        MapAssert(resume.languages?.list).contains(entry("Korean", 5), entry("English", 3))
+        MapAssert(resume.languages?.list).contains(
+            entry(Language("Korean"), Level(5)),
+            entry(Language("English"), Level(3))
+        )
     }
 }

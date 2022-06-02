@@ -1,10 +1,13 @@
 package dsl
 
+import dsl.vo.Language
+import dsl.vo.Level
+
 class LanguageBuilder {
-    private val map = mutableMapOf<String, Int>()
+    private val map = mutableMapOf<Language, Level>()
 
     infix fun String.level(value: Int) {
-        map[this] = value
+        map[Language(this)] = Level(value)
     }
 
     fun build(): Languages {
