@@ -1,10 +1,11 @@
-package blackjack.domain
+package blackjack.application
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
-class BlackJackGame private constructor(
+class BlackJack private constructor(
     private val players: Players,
     private val cardDeck: CardDeck
 ) {
@@ -13,19 +14,19 @@ class BlackJackGame private constructor(
         players.ready(cardDeck)
     }
 
-    fun hit() {
-
+    fun play(player: Player) {
+        player.hit(cardDeck)
     }
 
     companion object {
-        fun setup(players: Players): BlackJackGame {
+        fun setup(players: Players): BlackJack {
             val cardDeck = setupCardDeck {
                 spade()
                 diamond()
                 heart()
                 club()
             }
-            return BlackJackGame(players, cardDeck)
+            return BlackJack(players, cardDeck)
         }
     }
 }
