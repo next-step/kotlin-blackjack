@@ -3,7 +3,9 @@ package blackjack.domain
 @JvmInline
 value class Dealer(private val deck: Deck) {
 
-    fun checkUserHand(player: Player): Boolean {
-        TODO("Not yet implemented")
+    fun checkCardDrawable(player: Player): Boolean {
+        val score = player.score
+
+        return !score.isBlackjack && !score.isBust
     }
 }
