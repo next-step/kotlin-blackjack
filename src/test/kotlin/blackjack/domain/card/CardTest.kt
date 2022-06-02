@@ -1,7 +1,6 @@
 package blackjack.domain.card
 
 import blackjack.domain.card.type.Ace
-import blackjack.domain.card.type.Denomination
 import blackjack.domain.card.type.Suit
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec

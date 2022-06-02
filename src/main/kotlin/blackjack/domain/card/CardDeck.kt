@@ -19,12 +19,20 @@ private const val CARD_SIZE = 52
 private const val SUIT_SIZE = 4
 
 class CardDeck(
-    private val cards: Set<Card>
+    cards: List<Card>
 ) {
+    private val _cards: MutableList<Card>
+    val cards: List<Card>
+        get() = _cards.toList()
+
     init {
         require(cards.size == CARD_SIZE) { "블랙젝을 위한 카드는 52장이 필요합니다." }
         require(cards.groupBy(Card::suit).keys.size == SUIT_SIZE) { "게임을 진행하기 위해선 4가지 문양이 모두 필요합니다." }
+
+        _cards = cards.toMutableList()
     }
+
+    fun draw(): Card = _cards.removeFirstOrNull() ?: throw IllegalArgumentException("더이상 남은 카드가 없어 게임을 진행할수 없습니다.")
 }
 
 fun setupCardDeck(block: CardDeckBuilder.() -> Unit): CardDeck {
@@ -51,7 +59,7 @@ class CardDeckBuilder {
     }
 
     fun build(): CardDeck {
-        return CardDeck(cards.shuffled().toSet())
+        return CardDeck(cards.shuffled())
     }
 
     companion object {

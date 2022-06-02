@@ -6,10 +6,13 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.type.Ace
 
 class CardsInHand(
-    private val cards: List<Card>
+    cards: List<Card>
 ) {
-    fun calculateScore(): Score
-    = cards.map { it.denomination }
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val cards: List<Card>
+        get() = _cards.toList()
+
+    fun calculateScore(): Score = _cards.map { it.denomination }
         .sortedDescending()
         .fold(Score(0)) { acc, denomination ->
             if (denomination is Ace && acc.plus(denomination.aceScore).isLessThan(BLACK_JACK)) {
@@ -18,4 +21,8 @@ class CardsInHand(
                 acc + denomination.score
             }
         }
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
 }

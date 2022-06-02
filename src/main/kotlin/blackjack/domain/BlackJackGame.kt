@@ -5,9 +5,18 @@ import blackjack.domain.card.setupCardDeck
 import blackjack.domain.player.Players
 
 class BlackJackGame private constructor(
-    val players: Players,
-    val cardDeck: CardDeck
+    private val players: Players,
+    private val cardDeck: CardDeck
 ) {
+
+    fun ready() {
+        players.ready(cardDeck)
+    }
+
+    fun hit() {
+
+    }
+
     companion object {
         fun setup(players: Players): BlackJackGame {
             val cardDeck = setupCardDeck {

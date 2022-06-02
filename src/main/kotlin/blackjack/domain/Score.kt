@@ -7,7 +7,7 @@ value class Score(
     val value: Int
 ) {
     init {
-        require(value > MIN_VALUE) { "점수 객체는 $MIN_VALUE 보다 커야합니다." }
+        require(value > MIN_VALUE) { "점수는 $MIN_VALUE 보다 커야합니다." }
     }
 
     fun isLessThan(other: Score): Boolean = value <= other.value
