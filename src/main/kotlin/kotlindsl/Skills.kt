@@ -4,7 +4,7 @@ import kotlindsl.util.AddOnlyMutableList
 
 sealed interface Skill {
 
-    open val value: String
+    val value: String
 
     data class Soft(override val value: String) : Skill
     data class Hard(override val value: String) : Skill
