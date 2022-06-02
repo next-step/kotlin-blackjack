@@ -8,4 +8,8 @@ value class Dealer(private val deck: Deck) {
 
         return !score.isBlackjack && !score.isBust
     }
+
+    fun giveCard(player: Player) {
+        TODO("Not yet implemented")
+    }
 }
