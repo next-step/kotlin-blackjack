@@ -10,20 +10,6 @@ import step1.person.introduce
 import step1.skill.Level
 import step1.skill.Skill
 
-// introduce {
-//     name("최준규")
-//     company("카카오")
-//     skills {
-//         soft("A passion for problem solving")
-//         soft("Good communication skills")
-//         hard("Kotlin")
-//     }
-//     languages {
-//         "Korean" level 5
-//         "English" level 3
-//     }
-// }
-
 class DslTest {
 
     @ValueSource(strings = ["최준규", "퍼그"])
