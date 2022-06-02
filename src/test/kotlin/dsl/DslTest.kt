@@ -41,4 +41,20 @@ class DslTest {
         assertThat(person.name).isEqualTo("안경무")
         assertThat(person.company).isEqualTo("카카오")
     }
+
+    @Test
+    fun `skill`() {
+        val person: Person = introduce {
+            name("안경무")
+            company("카카오")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        assertThat(person.skills?.soft?.get(0)?.title).isEqualTo("A passion for problem solving")
+        assertThat(person.skills?.soft?.get(1)?.title).isEqualTo("Good communication skills")
+        assertThat(person.skills?.hard?.get(0)?.title).isEqualTo("Kotlin")
+    }
 }
