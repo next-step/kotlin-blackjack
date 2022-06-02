@@ -1,7 +1,6 @@
 import dsl.Language
 import dsl.Person
 import dsl.Skill
-import dsl.SkillType
 import dsl.introduce
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FreeSpec
@@ -25,9 +24,9 @@ class ResumeKoTest : FreeSpec({
     val expectedName = "윤도현"
     val expectedCompany = "카카오"
     val expectedSkillSet = listOf(
-        Skill("A passion for problem solving", SkillType.Soft),
-        Skill("Good communication skills", SkillType.Soft),
-        Skill("Kotlin", SkillType.Hard),
+        Skill.Soft("A passion for problem solving"),
+        Skill.Soft("Good communication skills"),
+        Skill.Hard("Kotlin"),
     )
 
     val expectedLanguageSet = listOf(

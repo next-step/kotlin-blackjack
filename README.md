@@ -28,4 +28,4 @@ introduce {
 ### 할일
 - 코드리뷰 반영
   - [x] list 의 기본값을 사용해보기 ([review](https://github.com/next-step/kotlin-blackjack/pull/185#discussion_r886323018))
-  - [ ] selaed class 활용 ([review](https://github.com/next-step/kotlin-blackjack/pull/185#discussion_r886325117))
+  - [x] selaed class 활용 ([review](https://github.com/next-step/kotlin-blackjack/pull/185#discussion_r886325117))
