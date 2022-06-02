@@ -1,18 +1,17 @@
 package study
 
 class SkillsBuilder {
-    private var soft: MutableList<String> = mutableListOf()
-    private lateinit var hard: String
+    private val skills: MutableList<Skill> = mutableListOf()
 
     fun soft(value: String) {
-        soft.add(value)
+        skills.add(Soft(value))
     }
 
     fun hard(value: String) {
-        hard = value
+        skills.add(Hard(value))
     }
 
     fun build(): Skills {
-        return Skills(soft.toList(), hard)
+        return Skills(skills)
     }
 }
