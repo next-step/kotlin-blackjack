@@ -1,6 +1,6 @@
 package balckjack
 
-class NumberCard(
+data class NumberCard(
     override val pattern: CardPattern,
     private val number: Int
 ) : Card {
