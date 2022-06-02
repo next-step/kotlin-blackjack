@@ -87,9 +87,9 @@ pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
   
 - `카드(Card)`
   - 카드 숫자를 반환한다.
-    - [ ] 카드 숫자는 숫자 그대로 반화한다. - NumberCard
-    - [ ] Ace는 1 또는 11로 반환한다. - PictureCard
-    - [ ] King, Queen, Jack은 각각 10으로 반환한다. - PictureCard
+    - [X] 카드 숫자는 숫자 그대로 반화한다. - NumberCard
+    - [X] Ace는 1 또는 11로 반환한다. - PictureCard
+    - [X] King, Queen, Jack은 각각 10으로 반환한다. - PictureCard
 
 - `카드 숫자(CardCount)`
   - 긱 카드의 반환되는 숫자를 의미한다.
