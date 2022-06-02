@@ -10,8 +10,8 @@ class PersonBuilder {
     // 2차
     private lateinit var name: String
     private var company: String? = null
-    private var skills: List<Skill>? = null
-    private var languages: List<Language>? = null
+    private var skills: List<Skill> = emptyList()
+    private var languages: List<Language> = emptyList()
 
     fun name(value: String) {
         name = value
