@@ -34,7 +34,6 @@ class DslTest {
     fun skills() {
         val person = introduce {
             name("박재성")
-            company("우아한형제들")
             skills {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
@@ -42,12 +41,23 @@ class DslTest {
             }
         }
         assertThat(person.name).isEqualTo("박재성")
-        assertThat(person.company).isEqualTo("우아한형제들")
-        assertThat(person.skills?.softs?.firstOrNull()).isEqualTo("A passion for problem solving")
+        assertThat(person.skills?.softs?.firstOrNull()?.name).isEqualTo("A passion for problem solving")
     }
 
     @Test
     fun languages() {
+        val person = introduce {
+            name("박재성")
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        assertThat(person.languages?.languages?.firstOrNull()?.name).isEqualTo("Korean")
+    }
+
+    @Test
+    fun fullTest() {
         val person = introduce {
             name("박재성")
             company("우아한형제들")
@@ -63,7 +73,7 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo("박재성")
         assertThat(person.company).isEqualTo("우아한형제들")
-        assertThat(person.skills?.softs?.firstOrNull()).isEqualTo("A passion for problem solving")
+        assertThat(person.skills?.softs?.firstOrNull()?.name).isEqualTo("A passion for problem solving")
         assertThat(person.languages?.languages?.firstOrNull()?.name).isEqualTo("Korean")
     }
 }

@@ -4,18 +4,17 @@ package dsl.domain
  * Created by Jaesungchi on 2022.06.03..
  */
 class SkillBuilder {
-    private var softs: MutableList<String> = mutableListOf()
-    private var hards: MutableList<String> = mutableListOf()
+    private val skills: Skills = Skills()
 
     fun soft(value: String) {
-        softs.add(value)
+        skills.addSoft(Skill(value))
     }
 
     fun hard(value: String) {
-        hards.add(value)
+        skills.addHard(Skill(value))
     }
 
-    fun build(): Skill {
-        return Skill(softs, hards)
+    fun build(): Skills {
+        return skills
     }
 }

@@ -6,7 +6,7 @@ package dsl.domain
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skills: Skill? = null
+    private var skills: Skills? = null
     private var languages: Languages? = null
 
     fun name(value: String) {
