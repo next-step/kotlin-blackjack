@@ -4,8 +4,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import study.resume.introduce
 import study.resume.language.LanguageSkill
-import study.resume.skill.Skill
-import study.resume.skill.SkillType
+import study.resume.skill.HardSkill
+import study.resume.skill.SoftSkill
 
 /*
 introduce {
@@ -39,8 +39,8 @@ class ResumeTest {
         }
         assertThat(introduce.name).isEqualTo("pang")
         assertThat(introduce.company).isEqualTo("kakao")
-        assertThat(introduce.skills).contains(Skill(SkillType.SOFT, "kotlin"))
-        assertThat(introduce.skills).contains(Skill(SkillType.HARD, "playing"))
+        assertThat(introduce.skills).contains(SoftSkill("kotlin"))
+        assertThat(introduce.skills).contains(HardSkill("playing"))
         assertThat(introduce.language).contains(LanguageSkill("Korean", 5))
         assertThat(introduce.language).contains(LanguageSkill("English", 3))
     }

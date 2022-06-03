@@ -1,22 +1,19 @@
 package study.resume.skill
 
-data class Skill(
-    private val type: SkillType,
-    private val desc: String
-)
+sealed class Skill
 
-enum class SkillType {
-    SOFT, HARD
-}
+data class SoftSkill(val desc: String) : Skill()
+
+data class HardSkill(val desc: String) : Skill()
 
 class SkillBuilder {
     private val skills: MutableList<Skill> = mutableListOf()
     fun soft(desc: String) {
-        skills.add(Skill(SkillType.SOFT, desc))
+        skills.add(SoftSkill(desc))
     }
 
     fun hard(desc: String) {
-        skills.add(Skill(SkillType.HARD, desc))
+        skills.add(HardSkill(desc))
     }
 
     fun build(): List<Skill> {
