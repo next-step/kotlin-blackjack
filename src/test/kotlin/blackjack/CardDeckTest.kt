@@ -40,11 +40,11 @@ class CardDeckTest : DescribeSpec({
         }
     }
 
-    describe("draw") {
+    describe("pop") {
         context("가장 위에 있는 카드가 하트 A 라면") {
             it("하트 A 를 리턴하고 덱에서 제거한다.") {
                 val deck = CardDeck(listOf(AceCard(Symbol.Heart)))
-                deck.draw() shouldBe AceCard(Symbol.Heart)
+                deck.pop() shouldBe AceCard(Symbol.Heart)
                 deck.count() shouldBe 0
             }
         }

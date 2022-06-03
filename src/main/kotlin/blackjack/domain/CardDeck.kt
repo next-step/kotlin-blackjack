@@ -8,7 +8,7 @@ class CardDeck(deck: List<Card>) {
     }
 
     fun count(): Int = deck.size
-    fun draw(): Card = deck.removeAt(0)
+    fun pop(): Card = deck.removeAt(0)
 
     companion object {
         private val NUMBER_CARD_RANGE = (2..10)

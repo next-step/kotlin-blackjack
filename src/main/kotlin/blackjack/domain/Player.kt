@@ -4,8 +4,8 @@ data class Player(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card> get() = _cards
 
-    fun addCard(card: Card) {
-        _cards.add(card)
+    fun draw(cardDeck: CardDeck) {
+        _cards.add(cardDeck.pop())
     }
 
     fun cardCount() = _cards.size
