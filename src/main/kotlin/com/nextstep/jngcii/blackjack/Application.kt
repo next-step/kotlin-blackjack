@@ -1,6 +1,7 @@
 package com.nextstep.jngcii.blackjack
 
 import com.nextstep.jngcii.blackjack.domain.CardDeck
+import com.nextstep.jngcii.blackjack.domain.GameRunner
 import com.nextstep.jngcii.blackjack.domain.PlayerBoard
 import com.nextstep.jngcii.blackjack.view.InputView
 
@@ -9,4 +10,8 @@ fun main() {
 
     val cardDeck = CardDeck()
     val boards = names.map { PlayerBoard(it) }
+
+    boards.forEach {
+        while (GameRunner.run(cardDeck, it, InputView.getMoreable(it.playerName, ::readLine)));
+    }
 }
