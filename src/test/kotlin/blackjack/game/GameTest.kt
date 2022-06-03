@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.game
 
 import org.junit.jupiter.api.Test
 
