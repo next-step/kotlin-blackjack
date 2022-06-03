@@ -31,4 +31,11 @@ class InputValidatorTest {
 
         assertThat(names).isEqualTo(listOf("1", "2"))
     }
+
+    @Test
+    fun `이름이 Blank인 경우 확인`() {
+        val names = InputValidator.parseNames(", 2")
+
+        assertThat(names).isNull()
+    }
 }
