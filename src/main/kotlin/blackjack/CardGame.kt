@@ -13,8 +13,12 @@ object CardGame {
 
         playFirstTurn(players, cardDeck)
 
-        players.list.forEach {
+        players.forEach {
             playTurn(it, cardDeck)
+        }
+
+        players.forEach {
+            UI.drawResult(it)
         }
     }
 
@@ -29,11 +33,10 @@ object CardGame {
     }
 
     private fun playTurn(player: Player, cardDeck: CardDeck) {
-        do {
-            val isDrawCard = player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)
+        while (player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)) {
             player.draw(cardDeck)
             UI.drawCardList(player)
-        } while (isDrawCard)
+        }
     }
 }
 

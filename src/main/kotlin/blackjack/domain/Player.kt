@@ -2,6 +2,7 @@ package blackjack.domain
 
 data class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
     val cardCount: Int get() = playerCards.size
+    val score: Int get() = playerCards.score
     fun draw(cardDeck: CardDeck) {
         playerCards.addCard(cardDeck.pop())
     }
