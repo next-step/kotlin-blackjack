@@ -62,5 +62,13 @@ class CardKoTest : DescribeSpec({
                 }
             }
         }
+
+        context("Jack, Queen, King 인 경우") {
+            it("10을 리턴한다") {
+                listOf(JackCard(Symbol.Heart), QueenCard(Symbol.Heart), KingCard(Symbol.Heart)).forEach {
+                    it.score() shouldBe 10
+                }
+            }
+        }
     }
 })

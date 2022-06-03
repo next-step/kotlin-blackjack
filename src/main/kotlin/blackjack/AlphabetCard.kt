@@ -1,21 +1,15 @@
 package blackjack
 
 data class JackCard(override val symbol: Symbol) : Card {
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = 10
 }
 
 data class QueenCard(override val symbol: Symbol) : Card {
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = 10
 }
 
 data class KingCard(override val symbol: Symbol) : Card {
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = 10
 }
 
 data class AceCard(override val symbol: Symbol) : Card {
