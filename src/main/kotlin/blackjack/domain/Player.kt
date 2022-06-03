@@ -1,10 +1,11 @@
 package blackjack.domain
 
 class Player(
+    val name: String,
     val hand: Hand = Hand.EMPTY
 ) {
-    fun initialize(pair: Pair<Card, Card>) {
-        with(pair) {
+    fun initialize(initialCards: Pair<Card, Card>) {
+        with(initialCards) {
             hand.add(first)
             hand.add(second)
         }

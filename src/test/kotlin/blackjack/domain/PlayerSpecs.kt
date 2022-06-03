@@ -14,11 +14,11 @@ class PlayerSpecs : DescribeSpec({
     describe("플레이어는") {
         it("카드 패를 가질 수 있다") {
             val hand = hand(KING to CLOVER, ACE to SPADE)
-            shouldNotThrowAny { Player(hand) }
+            shouldNotThrowAny { Player("js", hand) }
         }
 
         it("카드 2장을 받아 자신의 카드 패에 추가할 수 있다") {
-            val player = Player()
+            val player = Player("name")
             val card1 = Card.from(KING, CLOVER)
             val card2 = Card.from(ACE, SPADE)
             player.initialize(card1 to card2)
@@ -26,14 +26,14 @@ class PlayerSpecs : DescribeSpec({
         }
 
         it("카드 1장을 받아 자신의 카드 패에 추가할 수 있다") {
-            val player = Player()
+            val player = Player("name")
             val card = Card.from(KING, CLOVER)
             player.hit(card)
             player.hand shouldBeEqualToComparingFields Hand(listOf(card))
         }
 
         it("자신이 지닌 카드 패의 점수를 계산할 수 있다") {
-            val player = Player(hand(KING to CLOVER, ACE to SPADE))
+            val player = Player("name", hand(KING to CLOVER, ACE to SPADE))
             player.calculate() shouldBe 21
         }
     }
