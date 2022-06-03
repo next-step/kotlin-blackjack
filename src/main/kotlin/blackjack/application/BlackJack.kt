@@ -2,12 +2,12 @@ package blackjack.application
 
 import blackjack.application.dto.PlayerResult
 import blackjack.application.dto.PlayerResults
+import blackjack.application.dto.PlayerStatus
+import blackjack.application.dto.PlayerStatuses
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
-import blackjack.application.dto.PlayerStatus
-import blackjack.application.dto.PlayerStatuses
 
 private fun Players.getPlayerStatuses(): PlayerStatuses =
     players.map { PlayerStatus(it.name, it.cardsInHand.cards) }.let(::PlayerStatuses)
