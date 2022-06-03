@@ -1,4 +1,4 @@
-package step1.language
+package dsl.language
 
 class Languages(languages: List<Language> = listOf()) {
     private var _languages: MutableList<Language> = languages.toMutableList()

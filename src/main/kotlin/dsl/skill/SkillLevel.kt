@@ -1,4 +1,4 @@
-package step1.skill
+package dsl.skill
 
 sealed class SkillLevel {
     object SOFT : SkillLevel()

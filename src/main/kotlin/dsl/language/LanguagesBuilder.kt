@@ -1,4 +1,4 @@
-package step1.language
+package dsl.language
 
 class LanguagesBuilder {
     private var languages: Languages = Languages()

@@ -1,12 +1,12 @@
-package step1
+package dsl
 
+import dsl.language.Language
+import dsl.language.Languages
+import dsl.skill.Skill
+import dsl.skill.SkillLevel
+import dsl.skill.Skills
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import step1.language.Language
-import step1.language.Languages
-import step1.skill.Skill
-import step1.skill.SkillLevel
-import step1.skill.Skills
 
 class DslTest {
     @Test

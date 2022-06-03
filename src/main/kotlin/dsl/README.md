@@ -26,3 +26,8 @@ introduce {
 - [x] skills 함수가 작동해야 한다
 - [x] languages 함수가 작동해야 한다
 - [x] 리팩토링
+
+## 리뷰 반영
+1. enum 대신 sealed class 사용하기
+2. 패키지 명 dsl 로 바꾸기
+3. 리스트를 비교할 때에는 isEqualTo 보다는 containsExactly... 메소드를 활용하기

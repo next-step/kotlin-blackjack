@@ -1,7 +1,7 @@
-package step1
+package dsl
 
-import step1.language.Languages
-import step1.skill.Skills
+import dsl.language.Languages
+import dsl.skill.Skills
 
 data class Person(
     val name: String,

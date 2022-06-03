@@ -1,4 +1,4 @@
-package step1.skill
+package dsl.skill
 
 class Skills(skills: List<Skill> = listOf()) {
     private var _skills: MutableList<Skill> = skills.toMutableList()

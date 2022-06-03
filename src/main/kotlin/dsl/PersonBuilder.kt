@@ -1,9 +1,9 @@
-package step1
+package dsl
 
-import step1.language.Languages
-import step1.language.LanguagesBuilder
-import step1.skill.Skills
-import step1.skill.SkillsBuilder
+import dsl.language.Languages
+import dsl.language.LanguagesBuilder
+import dsl.skill.Skills
+import dsl.skill.SkillsBuilder
 
 class PersonBuilder {
     private var name: String = DEFAULT_NAME

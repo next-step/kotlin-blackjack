@@ -1,4 +1,4 @@
-package step1.skill
+package dsl.skill
 
 class SkillsBuilder {
     private var skills: Skills = Skills()
