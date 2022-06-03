@@ -9,15 +9,22 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class PlayerBoardTest {
     @Test
+    fun `각 플레이어보드는 유저 이름과 함께 초기화된다`() {
+        val playerBoard = PlayerBoard("peter")
+
+        assertThat(playerBoard.playerName).isEqualTo("peter")
+    }
+
+    @Test
     fun `첫 리스트는 비어있다`() {
-        val cards: List<Card> = PlayerBoard().cards
+        val cards: List<Card> = PlayerBoard("peter").cards
 
         assertThat(cards).isEmpty()
     }
 
     @Test
     fun `같은 카드가 들어오면 예외를 발생한다`() {
-        val playerBoard = PlayerBoard()
+        val playerBoard = PlayerBoard("peter")
 
         val spadeTwo = Card(Card.Shape.SPADE, Card.SYMBOL.TWO)
 
@@ -30,7 +37,7 @@ class PlayerBoardTest {
 
     @Test
     fun `들어온 카드 확인`() {
-        val playerBoard = PlayerBoard()
+        val playerBoard = PlayerBoard("peter")
 
         val cards = listOf(
             Card(Card.Shape.SPADE, Card.SYMBOL.TWO),
@@ -46,7 +53,7 @@ class PlayerBoardTest {
     @ParameterizedTest
     @MethodSource("cardsAndSum")
     fun `카드의 합 확인 테스트`(cards: List<Card>, sum: Int) {
-        val playerBoard = PlayerBoard()
+        val playerBoard = PlayerBoard("peter")
 
         cards.forEach { playerBoard.addCard(it) }
 
