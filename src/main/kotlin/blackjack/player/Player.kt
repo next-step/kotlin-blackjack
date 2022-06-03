@@ -14,6 +14,10 @@ data class Player(
         checkBust()
     }
 
+    fun score(): Int {
+        return hand.score()
+    }
+
     private fun checkBust() {
         val score = hand.score()
         if (score > COUNT_THRESHOLD) {
@@ -22,6 +26,6 @@ data class Player(
     }
 
     override fun toString(): String {
-        return "$name 카드: $hand (${status})"
+        return "$name 카드: $hand"
     }
 }
