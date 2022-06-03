@@ -1,12 +1,14 @@
 package blackjack.domain
 
-class CardDeck(private val deck: List<Card>) {
+class CardDeck(deck: List<Card>) {
+    private val deck = deck.toMutableList()
 
     init {
         require(deck.toSet().size == deck.size) { "중복된 카드는 포함될 수 없습니다." }
     }
 
     fun count(): Int = deck.size
+    fun draw(): Card = deck.removeAt(0)
 
     companion object {
         private val NUMBER_CARD_RANGE = (2..10)

@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.AceCard
 import blackjack.domain.CardDeck
 import blackjack.domain.NumberCard
 import blackjack.domain.Symbol
@@ -35,6 +36,16 @@ class CardDeckTest : DescribeSpec({
         context("새로만들어진 덱은") {
             it("52장의 카드를 가진다") {
                 CardDeck.new().count() shouldBe 52
+            }
+        }
+    }
+
+    describe("draw") {
+        context("가장 위에 있는 카드가 하트 A 라면") {
+            it("하트 A 를 리턴하고 덱에서 제거한다.") {
+                val deck = CardDeck(listOf(AceCard(Symbol.Heart)))
+                deck.draw() shouldBe AceCard(Symbol.Heart)
+                deck.count() shouldBe 0
             }
         }
     }

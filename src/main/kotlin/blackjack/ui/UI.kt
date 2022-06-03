@@ -4,7 +4,8 @@ import blackjack.domain.Players
 
 object UI {
 
-    fun drawPlayers(players: Players) {
-        println(players.list.joinToString(",") { it.name })
+    fun drawCardDistributeMessage(players: Players, count :Int) {
+        val players = players.list.joinToString(",") { it.name }
+        println("${players}에게 각자 ${count}장을 나누었습니다.")
     }
 }
