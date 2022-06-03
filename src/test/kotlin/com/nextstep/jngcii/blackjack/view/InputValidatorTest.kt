@@ -38,4 +38,34 @@ class InputValidatorTest {
 
         assertThat(names).isNull()
     }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "y", "Y"
+        ]
+    )
+    fun `카드 추가 여부가 y 이면 true 반환`(input: String?) {
+        assertThat(InputValidator.parseMoreable(input)).isTrue
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "n", "N"
+        ]
+    )
+    fun `카드 추가 여부가 n 이면 false 반환`(input: String?) {
+        assertThat(InputValidator.parseMoreable(input)).isFalse
+    }
+
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "", " ", "a", "1"
+        ]
+    )
+    fun `카드 추가 여부가 y, n 모두 아니면 null 반환`(input: String?) {
+        assertThat(InputValidator.parseMoreable(input)).isNull()
+    }
 }
