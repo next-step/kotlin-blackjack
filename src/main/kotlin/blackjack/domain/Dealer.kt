@@ -21,9 +21,4 @@ class Dealer(
         }
         player.hit(deck.draw())
     }
-
-    companion object {
-        private const val SIZE_OF_DISTRIBUTION = 2
-        private const val SIZE_OF_HIT = 1
-    }
 }

@@ -1,5 +1,7 @@
 package blackjack.ui
 
+import blackjack.domain.MAX_PLAYER_NUMBER
+import blackjack.domain.MIN_PLAYER_NUMBER
 import blackjack.domain.Player
 
 object InputView {
@@ -7,10 +9,10 @@ object InputView {
     tailrec fun readPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val names = readln().split(",")
-        return when (names.size >= 2) {
+        return when (names.size in MIN_PLAYER_NUMBER..MAX_PLAYER_NUMBER) {
             true -> names
             false -> {
-                println("블랙잭을 진행하기 위해선 최소 2명의 플레이어가 필요합니다")
+                println("블랙잭을 진행하기 위한 적정 인원은 $MIN_PLAYER_NUMBER ~ $MAX_PLAYER_NUMBER 명 입니다")
                 return readPlayerNames()
             }
         }
