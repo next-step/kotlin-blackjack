@@ -1,5 +1,5 @@
 package blackjack.domain.card
 
-enum class CardType {
-    ACE, BASIC, JACK, QUEEN, KING
+enum class CardType(val description: String) {
+    ACE("A"), BASIC("B"), JACK("J"), QUEEN("Q"), KING("K")
 }
