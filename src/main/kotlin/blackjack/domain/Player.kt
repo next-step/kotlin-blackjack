@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    val hand: Hand = Hand.EMPTY
+    val hand: Hand = Hand.empty()
 ) {
     fun initialize(initialCards: Pair<Card, Card>) {
         with(initialCards) {

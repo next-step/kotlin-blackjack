@@ -35,6 +35,6 @@ class Hand(
     }
 
     companion object {
-        val EMPTY: Hand = Hand(emptyList())
+        fun empty(): Hand = Hand(emptyList())
     }
 }
