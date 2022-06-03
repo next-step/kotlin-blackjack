@@ -10,4 +10,9 @@ object InputReceiver {
         val names = readln().replace(" ", "").split(",")
         return Players(names.map(::Player))
     }
+
+    fun receiverWhetherDrawCard(player: Player): Boolean {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return readln().lowercase() == "y"
+    }
 }

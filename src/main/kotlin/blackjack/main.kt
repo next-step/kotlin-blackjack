@@ -16,4 +16,6 @@ fun main() {
     players.list.forEach {
         UI.drawCardList(it)
     }
+
+    InputReceiver.receiverWhetherDrawCard(players.list[0])
 }
