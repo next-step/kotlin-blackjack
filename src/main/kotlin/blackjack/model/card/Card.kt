@@ -26,7 +26,7 @@ class Card private constructor(val denomination: Denomination, val shape: CardSh
     }
 }
 
-data class Cards(private val cardList: List<Card> = listOf()) : List<Card> by cardList {
+open class Cards(private val cardList: List<Card> = listOf()) : List<Card> by cardList {
 
     companion object {
 

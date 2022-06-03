@@ -11,8 +11,8 @@
 ## Function list
 - [X] 모양(SPADES, DIAMONDS, HEARTS, CLUBS)과 숫자( A,1,2...10,J,Q,K ) 를 갖는 카드 13*4 (52자) 구성
 - [X] 52장의 카드를 랜덤하게 섞는 기능 
-- [] 각 참여자에게 2장씩 배분 
-- [] Hit ,Stay 에 따라 카드 배분
+- [X] 각 참여자에게 2장씩 배분 
+- [X] Hit ,Stay 에 따라 카드 배분
 - [] 점수 계산
 - [] Bust, BlackJack, Win /Lost 결정 
 - [] 참여자 이름 입력
