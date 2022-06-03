@@ -14,4 +14,14 @@ internal class PersonTest {
 
         assertThat(person.name).isEqualTo(name)
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["카카오", "kakao"])
+    fun `Person은 company 정보를 갖으며 DSL로 생성한다`(company: String) {
+        val person: Person = introduce {
+            company(company)
+        }
+
+        assertThat(person.company).isEqualTo(company)
+    }
 }
