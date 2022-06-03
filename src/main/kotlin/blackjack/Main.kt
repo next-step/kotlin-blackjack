@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.card.CardDeck
 import blackjack.domain.game.BlackJackGame
 import blackjack.domain.game.TakeMore
-import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerMaker
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -20,5 +19,4 @@ fun main() {
     val blackJackGame = BlackJackGame(cardDeck, players, takeMore, resultView)
 
     blackJackGame.start()
-
 }

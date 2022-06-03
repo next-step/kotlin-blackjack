@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-
 class CardDeck {
     private val _cards: MutableList<Card>
 
