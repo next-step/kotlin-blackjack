@@ -22,8 +22,9 @@ value class Score(
     operator fun plus(other: Score): Score = Score(value.plus(other.value))
 
     companion object {
+        private val SCORE_CACHE = (ZERO..ELEVEN).associateWith { Score(it) }
+
         val BLACKJACK = Score(blackjack.domain.BLACKJACK)
-        val SCORE_CACHE = (ZERO..ELEVEN).associateWith { Score(it) }
 
         fun of(value: Int): Score = SCORE_CACHE[value] ?: Score(value)
 
