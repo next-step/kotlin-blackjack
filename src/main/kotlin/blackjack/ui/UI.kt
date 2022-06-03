@@ -11,12 +11,14 @@ object UI {
     }
 
     fun drawCardList(player: Player) {
-        println()
         println("${player.name}카드: ${player.currentCards().joinToString(", ") { it.toString() }}")
     }
 
     fun drawResult(player: Player) {
-        println()
         println("${player.name}카드: ${player.currentCards().joinToString(", ") { it.toString() }} - ${player.score}")
+    }
+
+    fun drawDivider() {
+        println()
     }
 }

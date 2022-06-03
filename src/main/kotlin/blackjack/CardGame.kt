@@ -3,20 +3,21 @@ package blackjack
 import blackjack.domain.CardDeck
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.RandomShuffleStrategy
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
 object CardGame {
     fun run() {
         val players = InputReceiver.receiverPlayers()
-        val cardDeck = CardDeck.new()
+        val cardDeck = CardDeck.new(RandomShuffleStrategy)
 
         playFirstTurn(players, cardDeck)
-
+        UI.drawDivider()
         players.forEach {
             playTurn(it, cardDeck)
         }
-
+        UI.drawDivider()
         players.forEach {
             UI.drawResult(it)
         }

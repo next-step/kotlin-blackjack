@@ -14,12 +14,12 @@ class CardDeck(deck: List<Card>) {
         private val NUMBER_CARD_RANGE = (2..10)
         private val ALPHABET_CARDS = listOf('A', 'J', 'K', 'Q')
 
-        fun new(): CardDeck {
+        fun new(shuffleStrategy: ShuffleStrategy = RandomShuffleStrategy): CardDeck {
             val allCards = Symbol.values().map { symbol ->
                 NUMBER_CARD_RANGE.map { NumberCard(symbol, it) } + ALPHABET_CARDS.map { AlphabetCard(symbol, it) }
             }.flatten()
 
-            return CardDeck(allCards)
+            return CardDeck(shuffleStrategy.shuffle(allCards))
         }
     }
 }
