@@ -1,12 +1,25 @@
 package blackjack
 
+import blackjack.game.Game
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class GameTest {
 
+    private val game = Game()
+
     @Test
-    fun `게임을 시작하면 플레이어는 두 장의 카드를 지급 받는다`() {
-        TODO()
+    fun `플레이어는 (,)로 구분하여 여러명이 게임에 참여할 수 있다`() {
+        // given
+        val playerRequest = "pug,jason,pobi"
+
+        // when
+        val result = game.enrollPlayers(playerRequest)
+
+        // then
+        assertThat(result.players).hasSize(3)
+        assertThat(result.players).extracting("name")
+            .containsExactly("pug", "jason", "pobi")
     }
 
     @Test
