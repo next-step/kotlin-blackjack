@@ -5,10 +5,20 @@ class PlayerBoard(val playerName: String) {
     val cards get() = _cards.toList()
     val total get() = cards.sumOf { it.symbol.value }
 
+    fun ready(deck: CardDeck) {
+        repeat(INITIAL_COUNT) {
+            addCard(deck.pop())
+        }
+    }
+
     fun addCard(card: Card) {
         if (_cards.contains(card)) {
             throw IllegalArgumentException("이미 존재하는 카드입니다")
         }
         _cards.add(card)
+    }
+
+    companion object {
+        private const val INITIAL_COUNT = 2
     }
 }
