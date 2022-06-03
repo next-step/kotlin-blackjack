@@ -1,22 +1,17 @@
 package dsl
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 internal class PersonTest {
-
-    @Test
-    fun `Person 객체를 생성한다`() {
-        val person = Person()
-        assertThat(person).isNotNull
-    }
-
-    @Test
-    fun `Person은 name 정보를 갖으며 DSL로 생성한다`() {
+    @ParameterizedTest
+    @ValueSource(strings = ["김승갑", "justin"])
+    fun `Person은 name 정보를 갖으며 DSL로 생성한다`(name: String) {
         val person: Person = introduce {
-            name = "김승갑"
+            name(name)
         }
 
-        assertThat(person.name).isEqualTo("김승갑")
+        assertThat(person.name).isEqualTo(name)
     }
 }

@@ -1,3 +1,5 @@
 package dsl
 
-class Person
+data class Person(
+    val name: String
+)
