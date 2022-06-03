@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.SingleScore
+import blackjack.domain.Score
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 
@@ -10,7 +10,7 @@ class ScoreTest : DescribeSpec({
         context("점수가 0보다 작다면") {
             it("IllegalArgumentException 예외가 발생한다.") {
                 shouldThrow<IllegalArgumentException> {
-                    SingleScore(-1)
+                    Score(-1)
                 }
             }
         }

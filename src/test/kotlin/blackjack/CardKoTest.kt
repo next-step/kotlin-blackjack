@@ -6,8 +6,7 @@ import blackjack.domain.JackCard
 import blackjack.domain.KingCard
 import blackjack.domain.NumberCard
 import blackjack.domain.QueenCard
-import blackjack.domain.SelectableScore
-import blackjack.domain.SingleScore
+import blackjack.domain.Score
 import blackjack.domain.Symbol
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -67,7 +66,7 @@ class CardKoTest : DescribeSpec({
         context("NumberCard 인 경우") {
             it("숫자를 점수로 리턴한다") {
                 (2..10).forEach {
-                    NumberCard(Symbol.Heart, it).score() shouldBe SingleScore(it)
+                    NumberCard(Symbol.Heart, it).score shouldBe Score(it)
                 }
             }
         }
@@ -75,15 +74,15 @@ class CardKoTest : DescribeSpec({
         context("Jack, Queen, King 인 경우") {
             it("10을 리턴한다") {
                 listOf(JackCard(Symbol.Heart), QueenCard(Symbol.Heart), KingCard(Symbol.Heart)).forEach {
-                    it.score() shouldBe SingleScore(10)
+                    it.score shouldBe Score(10)
                 }
             }
         }
 
         context("Ace 인 경우") {
-            it("1 or 11 선택할 수 있다") {
+            it("1을 리턴한다.") {
                 listOf(AceCard(Symbol.Heart)).forEach {
-                    it.score() shouldBe SelectableScore(listOf(SingleScore(1), SingleScore(11)))
+                    it.score shouldBe Score(1)
                 }
             }
         }

@@ -23,13 +23,16 @@ object CardGame {
             players.drawAllPlayer(cardDeck)
         }
         UI.drawFirstTurnMessage(players)
-        UI.drawCardList(players)
+        players.list.forEach {
+            UI.drawCardList(it)
+        }
     }
 
     private fun playTurn(player: Player, cardDeck: CardDeck) {
         do {
-            val isDrawCard = InputReceiver.receiverWhetherDrawCard(player)
+            val isDrawCard = player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)
             player.draw(cardDeck)
+            UI.drawCardList(player)
         } while (isDrawCard)
     }
 }

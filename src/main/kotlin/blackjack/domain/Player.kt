@@ -1,12 +1,16 @@
 package blackjack.domain
 
-data class Player(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards
-
+data class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
+    val cardCount: Int get() = playerCards.size
     fun draw(cardDeck: CardDeck) {
-        _cards.add(cardDeck.pop())
+        playerCards.addCard(cardDeck.pop())
     }
 
-    fun cardCount() = _cards.size
+    fun canDraw(): Boolean = playerCards.score < CARD_DRAW_THRESHOLD
+
+    fun currentCards() = playerCards.cards
+
+    companion object {
+        private const val CARD_DRAW_THRESHOLD = 21
+    }
 }
