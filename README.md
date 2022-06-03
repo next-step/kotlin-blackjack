@@ -19,7 +19,7 @@ introduce {
 ```
 
 ### 구현 목록
-- [ ] Person 객체를 생성한다.
+- [x] Person 객체를 생성한다.
 - [ ] Person은 name 정보를 갖으며 DSL로 생성한다.
 - [ ] Person은 company 정보를 갖으며 DSL로 생성한다.
 - [ ] Person은 skills 정보를 갖으며 DSL로 생성한다.
