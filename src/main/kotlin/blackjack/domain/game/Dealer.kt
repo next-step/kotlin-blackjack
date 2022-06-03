@@ -1,10 +1,9 @@
-package blackjack.game
+package blackjack.domain.game
 
-import blackjack.card.Card
+import blackjack.domain.card.Card
 import blackjack.util.ALL_CARDS
 
 class Dealer {
-
     private val deck: Deck = shuffleNewDeck()
 
     fun drawCards(num: Int): List<Card> {

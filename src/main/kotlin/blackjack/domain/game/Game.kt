@@ -1,7 +1,7 @@
-package blackjack.game
+package blackjack.domain.game
 
-import blackjack.player.Player
-import blackjack.player.PlayerStatus
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import blackjack.util.inputPlayerHitDecision
 
 class Game(playerNames: String) {
@@ -21,7 +21,6 @@ class Game(playerNames: String) {
         while (playable) {
             playable = play()
         }
-        // println(players.joinToString("\n"))
         end()
     }
 

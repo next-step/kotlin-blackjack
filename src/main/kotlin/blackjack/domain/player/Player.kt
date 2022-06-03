@@ -1,6 +1,6 @@
-package blackjack.player
+package blackjack.domain.player
 
-import blackjack.card.Card
+import blackjack.domain.card.Card
 import blackjack.util.COUNT_THRESHOLD
 
 data class Player(

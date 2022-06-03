@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 enum class CardSuit(val displayName: String) {
     SPADE("스페이드"),

@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 import blackjack.util.ACE_MAX_NUMBER
 import blackjack.util.ACE_MIN_NUMBER

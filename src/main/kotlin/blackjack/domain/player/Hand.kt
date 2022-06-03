@@ -1,10 +1,9 @@
-package blackjack.player
+package blackjack.domain.player
 
-import blackjack.card.Card
+import blackjack.domain.card.Card
 
 data class Hand(
     val cards: MutableList<Card> = mutableListOf()
-
 ) {
 
     fun add(card: Card): Hand {

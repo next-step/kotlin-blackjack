@@ -1,8 +1,8 @@
 package blackjack.util
 
-import blackjack.card.Card
-import blackjack.card.CardSuit
-import blackjack.card.CardSymbol
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardSuit
+import blackjack.domain.card.CardSymbol
 
 const val COUNT_THRESHOLD: Int = 21
 const val ACE_MIN_NUMBER: Int = 1

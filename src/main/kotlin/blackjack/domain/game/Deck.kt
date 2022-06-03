@@ -1,9 +1,8 @@
-package blackjack.game
+package blackjack.domain.game
 
-import blackjack.card.Card
+import blackjack.domain.card.Card
 
-class Deck (cards: List<Card>) {
-
+class Deck(cards: List<Card>) {
     private val cards = cards.toMutableList()
 
     fun draw(): Card {

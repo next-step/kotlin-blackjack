@@ -1,8 +1,10 @@
-package blackjack.player
+package blackjack.domain.player
 
-import blackjack.card.Card
-import blackjack.card.CardSuit
-import blackjack.card.CardSymbol
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardSuit
+import blackjack.domain.card.CardSymbol
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
