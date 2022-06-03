@@ -18,17 +18,10 @@ fun main() {
     ResultView.printReady(boards)
 
     boards.forEach {
-        runGame(cardDeck, it)
+        GameRunner.run(cardDeck, it, InputView::getMoreable, ResultView::printPlayerState)
     }
 
     ResultView.printResult(boards)
-}
-
-private fun runGame(deck: CardDeck, board: PlayerBoard) {
-    do {
-        val moreable = GameRunner.run(deck, board, InputView.getMoreable(board.playerName, ::readLine))
-        ResultView.printPlayerState(board)
-    } while (moreable)
 }
 
 const val INITIAL_COUNT = 2
