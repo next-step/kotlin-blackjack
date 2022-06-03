@@ -24,5 +24,5 @@ introduce {
 - [x] Person은 company 정보를 갖으며 DSL로 생성한다.
 - [x] Person은 skills 정보를 갖으며 DSL로 생성한다.
     - [x] Skill에는 hard, soft 정보로 구성하며 DSL로 생성한다.
-- [ ] Person은 languages 정보를 갖으며 DSL로 생성한다.
-    - [ ] languages는 operator로 Subject, Level 정보를 추가한다.
+- [x] Person은 languages 정보를 갖으며 DSL로 생성한다.
+    - [x] languages는 operator로 Subject, Level 정보를 추가한다.

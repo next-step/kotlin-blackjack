@@ -50,9 +50,9 @@ internal class PersonTest {
             }
         }
 
-        assertThat(person.languages[0].name).isEqualTo("Korean")
-        assertThat(person.languages[0].level).isEqualTo(5)
-        assertThat(person.languages[1].name).isEqualTo("English")
-        assertThat(person.languages[1].level).isEqualTo(3)
+        assertThat(person.languages.languages[0].name).isEqualTo("Korean")
+        assertThat(person.languages.languages[0].level).isEqualTo(5)
+        assertThat(person.languages.languages[1].name).isEqualTo("English")
+        assertThat(person.languages.languages[1].level).isEqualTo(3)
     }
 }
