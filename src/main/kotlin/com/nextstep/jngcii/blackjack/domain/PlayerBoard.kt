@@ -3,6 +3,7 @@ package com.nextstep.jngcii.blackjack.domain
 class PlayerBoard {
     private val _cards = mutableListOf<Card>()
     val cards get() = _cards.toList()
+    val total get() = cards.sumOf { it.symbol.value }
 
     fun addCard(card: Card) {
         if (_cards.contains(card)) {
