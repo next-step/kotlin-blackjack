@@ -1,8 +1,8 @@
 package blackjack.card
 
-import blackjack.game.ACE_MAX_NUMBER
-import blackjack.game.ACE_MIN_NUMBER
-import blackjack.game.COUNT_THRESHOLD
+import blackjack.util.ACE_MAX_NUMBER
+import blackjack.util.ACE_MIN_NUMBER
+import blackjack.util.COUNT_THRESHOLD
 
 enum class CardSymbol(val displayName: String, private val value: Int) {
     TWO("2", 2),
@@ -18,8 +18,8 @@ enum class CardSymbol(val displayName: String, private val value: Int) {
     QUEEN("Q", 10),
     KING("K", 10),
     ACE("A", ACE_MAX_NUMBER) {
-        override fun count(otherNumbers: Int): Int {
-            return if (otherNumbers + super.count(0) > COUNT_THRESHOLD) {
+        override fun count(sumOfOthers: Int): Int {
+            return if (sumOfOthers + super.count(0) > COUNT_THRESHOLD) {
                 ACE_MIN_NUMBER
             } else {
                 ACE_MAX_NUMBER
@@ -27,7 +27,7 @@ enum class CardSymbol(val displayName: String, private val value: Int) {
         }
     };
 
-    open fun count(otherNumbers: Int = 0): Int {
+    open fun count(sumOfOthers: Int = 0): Int {
         return this.value
     }
 }
