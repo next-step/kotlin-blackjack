@@ -44,4 +44,20 @@ class ResumeTest {
         assertThat(introduce.language).contains(LanguageSkill("Korean", 5))
         assertThat(introduce.language).contains(LanguageSkill("English", 3))
     }
+
+    @Test
+    fun `company는 null을 허용한다`() {
+        val resume = introduce {
+            name("pang")
+            skills {
+                soft("kotlin")
+                hard("playing")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        assertThat(resume.company).isNull()
+    }
 }
