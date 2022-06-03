@@ -25,6 +25,12 @@ class BlackJack private constructor(
     val results: PlayerResults
         get() = players.getPlayerResults()
 
+    val isEnd: Boolean
+        get() = players.allStay
+
+    val hittablePlayers: List<Player>
+        get() = players.hittable
+
     fun ready() {
         players.ready(cardDeck)
     }

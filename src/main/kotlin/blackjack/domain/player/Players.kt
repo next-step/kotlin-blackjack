@@ -15,6 +15,9 @@ class Players(
     val names: List<Name>
         get() = players.map { it.name }
 
+    val hittable: List<Player>
+        get() = players.filterNot { it.isStay }
+
     init {
         require(players.size >= MIN_PLAYER_SIZE) { "플레이어는 최소 $MIN_PLAYER_SIZE 명 이상이어야 합니다." }
     }

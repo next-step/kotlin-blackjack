@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.application.BlackJack
-import blackjack.domain.player.vo.Name
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.player.vo.Name
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 import blackjack.ui.dto.Continue
@@ -18,15 +18,15 @@ fun main() {
     OutputView.printGameReady(players.names)
     OutputView.printStatuses(blackJack.statuses)
 
-    while (!players.allStay) {
-        hitPlayers(players, blackJack)
+    while (!blackJack.isEnd) {
+        hitPlayers(blackJack)
     }
 
     OutputView.printResults(blackJack.results)
 }
 
-private fun hitPlayers(players: Players, blackJack: BlackJack) {
-    players.players.filterNot { it.isStay }
+private fun hitPlayers(blackJack: BlackJack) {
+    blackJack.hittablePlayers
         .forEach {
             when (InputView.inputHitContinue(it.name.value)) {
                 Continue.TRUE -> OutputView.printStatus(blackJack.play(it))
