@@ -1,12 +1,21 @@
 package blackjack.game
 
 import blackjack.card.Card
+import blackjack.util.ALL_CARDS
 
 class Dealer {
 
     private val deck: Deck = shuffleNewDeck()
 
-    fun drawCard(): Card {
+    fun drawCards(num: Int): List<Card> {
+        val cards = mutableListOf<Card>()
+        repeat(num) {
+            cards.add(deck.draw())
+        }
+        return cards.toList()
+    }
+
+    fun drawOneCard(): Card {
         return deck.draw()
     }
 

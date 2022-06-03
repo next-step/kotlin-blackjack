@@ -20,7 +20,7 @@ internal class DealerTest {
         val dealer = Dealer()
 
         // when
-        val card = dealer.drawCard()
+        val card = dealer.drawOneCard()
 
         // then
         assertThat(card).isInstanceOf(Card::class.java)
