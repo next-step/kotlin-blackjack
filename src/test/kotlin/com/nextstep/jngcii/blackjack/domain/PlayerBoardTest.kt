@@ -23,6 +23,15 @@ class PlayerBoardTest {
     }
 
     @Test
+    fun `ready 호출 후 2장 할당 확인`() {
+        val playerBoard = PlayerBoard("peter")
+        playerBoard.ready(CardDeck())
+        val cards: List<Card> = playerBoard.cards
+
+        assertThat(cards.size).isEqualTo(2)
+    }
+
+    @Test
     fun `같은 카드가 들어오면 예외를 발생한다`() {
         val playerBoard = PlayerBoard("peter")
 
