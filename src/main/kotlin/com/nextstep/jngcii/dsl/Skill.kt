@@ -1,40 +1,22 @@
 package com.nextstep.jngcii.dsl
 
-data class Skills(
-    val softs: List<SoftSkill>,
-    val hards: List<HardSkill>
-)
+sealed class Skill {
 
-data class SoftSkill(val description: String)
+    data class Soft(val description: String) : Skill()
 
-enum class HardSkill {
-    KOTLIN;
-
-    companion object {
-        fun of(value: String): HardSkill? {
-            return values().find {
-                it.name.lowercase() == value.lowercase()
-            }
-        }
-    }
+    object Kotlin : Skill()
 }
 
 class SkillBuilder {
-    private val softSkills = mutableListOf<SoftSkill>()
-    private val hardSkills = mutableListOf<HardSkill>()
+    private val skills = mutableListOf<Skill>()
 
     fun soft(value: String) {
-        softSkills.add(SoftSkill(value))
+        skills.add(Skill.Soft(value))
     }
 
-    fun hard(value: String) {
-        HardSkill.of(value)?.let {
-            hardSkills.add(it)
-        }
+    fun hard(skill: Skill) {
+        skills.add(skill)
     }
 
-    fun build() = Skills(
-        softSkills.toList(),
-        hardSkills.toList()
-    )
+    fun build() = skills
 }

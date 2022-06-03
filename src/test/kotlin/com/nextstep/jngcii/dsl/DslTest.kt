@@ -40,21 +40,17 @@ class DslTest {
             skills {
                 soft("a passion for problem solving")
                 soft("good communication skills")
-                hard("kotlin")
+                hard(Skill.Kotlin)
             }
         }
 
-        val softSkills = listOf(
-            SoftSkill("a passion for problem solving"),
-            SoftSkill("good communication skills"),
+        val expected = listOf(
+            Skill.Soft("a passion for problem solving"),
+            Skill.Soft("good communication skills"),
+            Skill.Kotlin
         )
 
-        val hardSkills = listOf(
-            HardSkill.KOTLIN
-        )
-
-        assertThat(person.softSkills).isEqualTo(softSkills)
-        assertThat(person.hardSkills).isEqualTo(hardSkills)
+        assertThat(person.skills).isEqualTo(expected)
     }
 
     @Test
@@ -65,7 +61,7 @@ class DslTest {
             skills {
                 soft("a passion for problem solving")
                 soft("good communication skills")
-                hard("kotlin")
+                hard(Skill.Kotlin)
             }
             languages {
                 Language.Kind.KOREAN level Language.Level.FIVE
