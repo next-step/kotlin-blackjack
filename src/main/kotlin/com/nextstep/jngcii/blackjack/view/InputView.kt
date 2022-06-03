@@ -10,4 +10,14 @@ object InputView {
         }
         return names
     }
+
+    fun getMoreable(name: String, read: () -> String?): Boolean {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val moreable = InputValidator.parseMoreable(read())
+        if (moreable == null) {
+            println("다시 입력해주세요.")
+            return getMoreable(name, ::readLine)
+        }
+        return moreable
+    }
 }
