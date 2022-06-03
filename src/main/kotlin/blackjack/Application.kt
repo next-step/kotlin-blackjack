@@ -15,14 +15,14 @@ fun main() {
     val blackJack = BlackJack.setup(players)
     blackJack.ready()
 
-    OutputView.printGameReady(blackJack.statuses.map { it.name })
+    OutputView.printGameReady(players.names)
     OutputView.printStatuses(blackJack.statuses)
 
     while (!players.allStay) {
         hitPlayers(players, blackJack)
     }
 
-    OutputView.printResults(blackJack.statuses)
+    OutputView.printResults(blackJack.results)
 }
 
 private fun hitPlayers(players: Players, blackJack: BlackJack) {
