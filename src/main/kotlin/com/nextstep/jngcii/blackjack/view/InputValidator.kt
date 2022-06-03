@@ -12,6 +12,8 @@ object InputValidator {
 
         if (names.size != 2) return null
 
+        if (names.any { it.isBlank() }) return null
+
         return names
     }
 }
