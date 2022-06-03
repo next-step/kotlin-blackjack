@@ -28,7 +28,7 @@ class HandSpecs : DescribeSpec({
                 THREE to CLOVER,
                 TEN to SPADE
             )
-            cards.point shouldBe 25
+            cards.calculate() shouldBe 25
         }
 
         it("새로운 카드를 추가할 수 있다") {
@@ -37,7 +37,7 @@ class HandSpecs : DescribeSpec({
             )
             val card = Card.from(KING, CLOVER)
             cards.add(card)
-            cards.point shouldBe 20
+            cards.calculate() shouldBe 20
         }
 
         context("카드 패에 끗수가 ACE인 카드가 포함된 경우") {
@@ -53,7 +53,7 @@ class HandSpecs : DescribeSpec({
                         row(hand(ACE to SPADE, KING to HEART, TEN to CLOVER), 21),
                     )
                 ) { cards, point ->
-                    cards.point shouldBe point
+                    cards.calculate() shouldBe point
                 }
             }
 
@@ -64,7 +64,7 @@ class HandSpecs : DescribeSpec({
                     TEN to CLOVER,
                     TWO to CLOVER,
                 )
-                cards.point shouldBe 23
+                cards.calculate() shouldBe 23
             }
         }
     }

@@ -34,7 +34,7 @@ class PlayerSpecs : DescribeSpec({
 
         it("자신이 지닌 카드 패의 점수를 계산할 수 있다") {
             val player = Player("name", hand(KING to CLOVER, ACE to SPADE))
-            player.calculate() shouldBe 21
+            player.calculateHand() shouldBe 21
         }
     }
 })

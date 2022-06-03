@@ -19,7 +19,7 @@ object OutputView {
     fun showResult(players: List<Player>) {
         println()
         players.forEach {
-            println("${it.name}카드: ${it.hand} - 결과: ${it.calculate()}")
+            println("${it.name}카드: ${it.hand} - 결과: ${it.calculateHand()}")
         }
     }
 }

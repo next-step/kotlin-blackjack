@@ -15,7 +15,7 @@ fun main() {
     OutputView.showDistribution(players)
 
     players.forEach { player ->
-        while (InputView.askHit(player) || player.calculate() < BLACKJACK_POINT) {
+        while (InputView.askHit(player) || player.calculateHand() < BLACKJACK_POINT) {
             dealer.deal(player)
             OutputView.showHand(player)
         }

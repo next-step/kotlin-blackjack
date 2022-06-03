@@ -15,5 +15,5 @@ class Player(
         hand.add(card)
     }
 
-    fun calculate(): Int = hand.point
+    fun calculateHand(): Int = hand.calculate()
 }
