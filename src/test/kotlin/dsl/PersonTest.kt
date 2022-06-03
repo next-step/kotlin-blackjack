@@ -24,4 +24,18 @@ internal class PersonTest {
 
         assertThat(person.company).isEqualTo(company)
     }
+
+    fun `Person은 skills 정보를 갖으며 DSL로 생성한다`(company: String) {
+        val person: Person = introduce {
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        assertThat(person.skills.soft.get(0).title).isEqualTo("A passion for problem solving")
+        assertThat(person.skills.soft.get(1).title).isEqualTo("Good communication skills")
+        assertThat(person.skills.hard.get(0).title).isEqualTo("Kotlin")
+    }
 }
