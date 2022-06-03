@@ -1,5 +1,7 @@
 package com.nextstep.jngcii.blackjack.domain
 
+import com.nextstep.jngcii.blackjack.INITIAL_COUNT
+
 class PlayerBoard(val playerName: String) {
     private val _cards = mutableListOf<Card>()
     val cards get() = _cards.toList()
@@ -16,9 +18,5 @@ class PlayerBoard(val playerName: String) {
             throw IllegalArgumentException("이미 존재하는 카드입니다")
         }
         _cards.add(card)
-    }
-
-    companion object {
-        private const val INITIAL_COUNT = 2
     }
 }
