@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class NumberCard(override val symbol: Symbol, val number: Int) : Card {
     init {

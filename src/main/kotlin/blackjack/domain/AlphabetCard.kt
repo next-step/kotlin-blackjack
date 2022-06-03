@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class JackCard(override val symbol: Symbol) : Card {
     override fun score(): Score = SingleScore(10)
