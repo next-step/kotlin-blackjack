@@ -3,6 +3,9 @@ package com.nextstep.jngcii.blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class PlayerBoardTest {
     @Test
@@ -38,5 +41,45 @@ class PlayerBoardTest {
         cards.forEach { playerBoard.addCard(it) }
 
         assertThat(playerBoard.cards).isEqualTo(cards)
+    }
+
+    @ParameterizedTest
+    @MethodSource("cardsAndSum")
+    fun `카드의 합 확인 테스트`(cards: List<Card>, sum: Int) {
+        val playerBoard = PlayerBoard()
+
+        cards.forEach { playerBoard.addCard(it) }
+
+        assertThat(playerBoard.total).isEqualTo(sum)
+    }
+
+    companion object {
+        @JvmStatic
+        fun cardsAndSum() = listOf(
+            Arguments.of(
+                listOf(
+                    Card(Card.Shape.SPADE, Card.SYMBOL.TWO),
+                    Card(Card.Shape.CLOVER, Card.SYMBOL.TEN),
+                    Card(Card.Shape.HEART, Card.SYMBOL.ACE)
+                ),
+                23
+            ),
+            Arguments.of(
+                listOf(
+                    Card(Card.Shape.SPADE, Card.SYMBOL.TWO),
+                    Card(Card.Shape.CLOVER, Card.SYMBOL.THREE),
+                    Card(Card.Shape.HEART, Card.SYMBOL.FOUR),
+                    Card(Card.Shape.HEART, Card.SYMBOL.FIVE),
+                ),
+                14
+            ),
+            Arguments.of(
+                listOf(
+                    Card(Card.Shape.SPADE, Card.SYMBOL.NINE),
+                    Card(Card.Shape.CLOVER, Card.SYMBOL.KING),
+                ),
+                19
+            ),
+        )
     }
 }
