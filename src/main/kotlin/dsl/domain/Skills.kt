@@ -1,7 +1,6 @@
 package dsl.domain
 
 /**
- * 클래스에 대한 설명을 적어주세요.
  * Created by Jaesungchi on 2022.06.03..
  */
 class Skills(
