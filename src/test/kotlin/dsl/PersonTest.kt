@@ -40,4 +40,19 @@ internal class PersonTest {
         assertThat(person.skills.soft[1].title).isEqualTo("Good communication skills")
         assertThat(person.skills.hard[0].title).isEqualTo("Kotlin")
     }
+
+    @Test
+    fun `Person은 languages 정보를 갖으며 DSL로 생성한다`() {
+        val person: Person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        assertThat(person.languages[0].name).isEqualTo("Korean")
+        assertThat(person.languages[0].level).isEqualTo(5)
+        assertThat(person.languages[1].name).isEqualTo("English")
+        assertThat(person.languages[1].level).isEqualTo(3)
+    }
 }
