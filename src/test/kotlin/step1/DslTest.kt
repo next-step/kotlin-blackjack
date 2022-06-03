@@ -63,7 +63,7 @@ class DslTest {
             )
         )
 
-        assertThat(person.skills.list).isEqualTo(expectedSkills.list)
+        assertThat(person.skills.list).containsExactlyInAnyOrderElementsOf(expectedSkills.list)
     }
 
     @Test
@@ -87,6 +87,6 @@ class DslTest {
             )
         )
 
-        assertThat(person.languages.list).isEqualTo(expectedLanguages.list)
+        assertThat(person.languages.list).containsExactlyInAnyOrderElementsOf(expectedLanguages.list)
     }
 }
