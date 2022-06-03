@@ -1,6 +1,7 @@
 package dsl
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -25,7 +26,8 @@ internal class PersonTest {
         assertThat(person.company).isEqualTo(company)
     }
 
-    fun `Person은 skills 정보를 갖으며 DSL로 생성한다`(company: String) {
+    @Test
+    fun `Person은 skills 정보를 갖으며 DSL로 생성한다`() {
         val person: Person = introduce {
             skills {
                 soft("A passion for problem solving")
@@ -34,8 +36,8 @@ internal class PersonTest {
             }
         }
 
-        assertThat(person.skills.soft.get(0).title).isEqualTo("A passion for problem solving")
-        assertThat(person.skills.soft.get(1).title).isEqualTo("Good communication skills")
-        assertThat(person.skills.hard.get(0).title).isEqualTo("Kotlin")
+        assertThat(person.skills.soft[0].title).isEqualTo("A passion for problem solving")
+        assertThat(person.skills.soft[1].title).isEqualTo("Good communication skills")
+        assertThat(person.skills.hard[0].title).isEqualTo("Kotlin")
     }
 }

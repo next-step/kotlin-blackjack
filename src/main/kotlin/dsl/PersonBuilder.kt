@@ -1,8 +1,9 @@
 package dsl
 
 class PersonBuilder {
-    var name: String = ""
-    var company: String = ""
+    private var name: String = ""
+    private var company: String = ""
+    private var skills: Skills = Skills()
 
     fun name(value: String) {
         name = value
@@ -12,10 +13,17 @@ class PersonBuilder {
         company = value
     }
 
+    fun skills(block: SkillsBuilder.() -> Unit) {
+        skills = SkillsBuilder().apply(block)
+            .build()
+    }
+
+
     fun build(): Person {
         return Person(
             name = name,
-            company = company
+            company = company,
+            skills = skills
         )
     }
 }
