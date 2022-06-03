@@ -1,5 +1,6 @@
 package step1.skill
 
-enum class SkillLevel {
-    SOFT, HARD
+sealed class SkillLevel {
+    object SOFT : SkillLevel()
+    object HARD : SkillLevel()
 }
