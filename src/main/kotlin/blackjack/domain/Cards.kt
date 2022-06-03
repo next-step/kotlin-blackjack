@@ -23,4 +23,12 @@ class Cards(
                 else point
             }
         }
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
+
+    override fun toString(): String {
+        return _cards.joinToString { ", " }
+    }
 }

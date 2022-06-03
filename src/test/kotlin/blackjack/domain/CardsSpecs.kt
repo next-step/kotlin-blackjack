@@ -20,6 +20,7 @@ import io.kotest.matchers.shouldBe
 class CardsSpecs : DescribeSpec({
 
     describe("카드 패는") {
+
         it("가지고 있는 모든 카드의 점수를 계산할 수 있다") {
             val cards = cards(
                 KING to HEART,
@@ -28,6 +29,15 @@ class CardsSpecs : DescribeSpec({
                 TEN to SPADE
             )
             cards.point shouldBe 25
+        }
+
+        it("새로운 카드를 추가할 수 있다") {
+            val cards = cards(
+                KING to HEART,
+            )
+            val card = Card.from(KING, CLOVER)
+            cards.add(card)
+            cards.point shouldBe 20
         }
 
         context("카드 패에 끗수가 ACE인 카드가 포함된 경우") {
