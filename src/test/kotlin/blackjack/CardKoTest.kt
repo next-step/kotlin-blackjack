@@ -58,7 +58,7 @@ class CardKoTest : DescribeSpec({
         context("NumberCard 인 경우") {
             it("숫자를 점수로 리턴한다") {
                 (2..10).forEach {
-                    NumberCard(Symbol.Heart, it).score() shouldBe it
+                    NumberCard(Symbol.Heart, it).score() shouldBe SingleScore(it)
                 }
             }
         }
@@ -66,7 +66,15 @@ class CardKoTest : DescribeSpec({
         context("Jack, Queen, King 인 경우") {
             it("10을 리턴한다") {
                 listOf(JackCard(Symbol.Heart), QueenCard(Symbol.Heart), KingCard(Symbol.Heart)).forEach {
-                    it.score() shouldBe 10
+                    it.score() shouldBe SingleScore(10)
+                }
+            }
+        }
+
+        context("Ace 인 경우") {
+            it("1 or 11 선택할 수 있다") {
+                listOf(AceCard(Symbol.Heart)).forEach {
+                    it.score() shouldBe SelectableScore(listOf(SingleScore(1), SingleScore(11)))
                 }
             }
         }
