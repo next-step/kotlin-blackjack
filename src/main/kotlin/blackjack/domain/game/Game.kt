@@ -2,7 +2,7 @@ package blackjack.domain.game
 
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerStatus
-import blackjack.util.inputPlayerHitDecision
+import blackjack.util.FIRST_DRAW_NUMBER
 
 class Game(playerNames: String) {
     private val players: List<Player>
@@ -16,44 +16,40 @@ class Game(playerNames: String) {
         playable = true
     }
 
-    fun start() {
-        mulligan()
+    fun start(
+        printFirstTurn: (players: List<Player>) -> Unit,
+        inputHitDecision: (player: Player) -> Boolean,
+        printResult: (players: List<Player>) -> Unit
+    ) {
+        firstTurn()
+        printFirstTurn(players)
         while (playable) {
-            playable = play()
+            playable = play(inputHitDecision)
         }
-        end()
+        printResult(players)
     }
 
-    private fun mulligan() {
+    fun firstTurn() {
         players.forEach { player ->
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
         }
-        println()
-        println("${players.joinToString { it.name }} 에게 $FIRST_DRAW_NUMBER 장의 카드를 나누었습니다.")
-        println(players.joinToString("\n"))
-        println()
     }
 
-    private fun play(): Boolean {
+    private fun play(inputHitDecision: (player: Player) -> Boolean): Boolean {
         if (!playable) {
             return false
         }
-        players.forEach { player -> player.turn() }
+        players.forEach { player -> player.turn(inputHitDecision) }
         return players.any { player -> player.status == PlayerStatus.HIT }
     }
 
-    private fun end() {
-        println()
-        players.forEach { player -> println("$player - 결과: ${player.score()}") }
-    }
-
-    private fun Player.turn() {
+    private fun Player.turn(inputHitDecision: (player: Player) -> Boolean) {
         if (status != PlayerStatus.HIT) {
             return
         }
 
-        val isHit = inputPlayerHitDecision(this)
+        val isHit = inputHitDecision(this)
         if (isHit) {
             val card = dealer.drawOneCard()
             addCards(card)
@@ -64,7 +60,6 @@ class Game(playerNames: String) {
     }
 
     companion object {
-        private const val FIRST_DRAW_NUMBER = 2
         private const val PLAYER_INPUT_DELIMITER = ","
     }
 }
