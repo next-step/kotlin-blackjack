@@ -6,4 +6,6 @@ data class NumberCard(override val symbol: Symbol, val number: Int) : Card {
     }
 
     override fun score(): Score = SingleScore(number)
+
+    override fun toString(): String = "$number${symbol.title}"
 }

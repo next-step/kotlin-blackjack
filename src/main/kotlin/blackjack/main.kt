@@ -13,5 +13,7 @@ fun main() {
     cardGame.distribute(2)
     UI.drawCardDistributeMessage(players, 2)
 
-
+    players.list.forEach {
+        UI.drawCardList(it)
+    }
 }
