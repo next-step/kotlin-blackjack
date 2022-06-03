@@ -1,8 +1,11 @@
 package blackjack.model.card
 
+import blackjack.dummy.toCardSet
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 internal class CardTest {
 
@@ -36,6 +39,37 @@ internal class CardTest {
             { assertThat(shuffledCards.distinct()).hasSize(NUMBER_OF_CARDS_ONE_SET) }, // 중복없음
             { assertThat(shuffledCards.filter { it.shape == CardShape.SPADES }).hasSize(Denomination.count) },
             { assertThat(shuffledCards.filter { it.denomination == Denomination.ACE }).hasSize(CardShape.count) }
+        )
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        // cardList, scoreList, maxScoreNotBust,isBust,isBlackJack
+        "'AS,AC,2H','4,14,24',14,false,false",
+        "'2S,3D,2H,3C','10',10,false,false",
+        "'JS,QD,AH,AC','22,32,42',0,true,false",
+        "'AS,AD,AH,AC','4,14,24,34,44',14,false,false",
+        "'AS,JD','11,21',21,false,true",
+        "'AS,QH','11,21',21,false,true",
+        "'AS,KC','11,21',21,false,true"
+    )
+    fun `카드 점수 테스트`(
+        cardListString: String,
+        scoreListString: String,
+        maxScoreNotBust: Int,
+        isBust: Boolean,
+        isBlackJack: Boolean
+    ) {
+        val cardSet = cardListString.toCardSet()
+        val scoreList = scoreListString.split(",").map { it.toInt() }
+
+        assertAll(
+            { assertThat(cardSet.scoreList.size).isEqualTo(scoreList.size) },
+            { assertThat(cardSet.minScore).isEqualTo(scoreList.minOrNull() ?: 0) },
+            { assertThat(cardSet.maxCore).isEqualTo(scoreList.maxOrNull() ?: 0) },
+            { assertThat(cardSet.maxScoreNotBust).isEqualTo(maxScoreNotBust) },
+            { assertThat(cardSet.isBust).isEqualTo(isBust) },
+            { assertThat(cardSet.isBlackJack).isEqualTo(isBlackJack) }
         )
     }
 

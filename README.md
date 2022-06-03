@@ -13,7 +13,7 @@
 - [X] 52장의 카드를 랜덤하게 섞는 기능 
 - [X] 각 참여자에게 2장씩 배분 
 - [X] Hit ,Stay 에 따라 카드 배분
-- [] 점수 계산
-- [] Bust, BlackJack, Win /Lost 결정 
+- [X] 점수 계산
+- [X] Bust, BlackJack, Win /Lost 결정 
 - [] 참여자 이름 입력
 - [] 결과 출력
