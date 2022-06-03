@@ -17,12 +17,12 @@ import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
-class CardsSpecs : DescribeSpec({
+class HandSpecs : DescribeSpec({
 
     describe("카드 패는") {
 
         it("가지고 있는 모든 카드의 점수를 계산할 수 있다") {
-            val cards = cards(
+            val cards = hand(
                 KING to HEART,
                 TWO to DIAMOND,
                 THREE to CLOVER,
@@ -32,7 +32,7 @@ class CardsSpecs : DescribeSpec({
         }
 
         it("새로운 카드를 추가할 수 있다") {
-            val cards = cards(
+            val cards = hand(
                 KING to HEART,
             )
             val card = Card.from(KING, CLOVER)
@@ -48,9 +48,9 @@ class CardsSpecs : DescribeSpec({
                 io.kotest.data.forAll(
                     table(
                         headers("카드 패", "기대 점수"),
-                        row(cards(ACE to SPADE, KING to HEART), 21),
-                        row(cards(ACE to SPADE, SEVEN to HEART, SIX to CLOVER), 14),
-                        row(cards(ACE to SPADE, KING to HEART, TEN to CLOVER), 21),
+                        row(hand(ACE to SPADE, KING to HEART), 21),
+                        row(hand(ACE to SPADE, SEVEN to HEART, SIX to CLOVER), 14),
+                        row(hand(ACE to SPADE, KING to HEART, TEN to CLOVER), 21),
                     )
                 ) { cards, point ->
                     cards.point shouldBe point
@@ -58,7 +58,7 @@ class CardsSpecs : DescribeSpec({
             }
 
             it("ACE를 제외한 모든 카드의 점수 합이 21이 넘는 경우 그 중에서 가장 작은 값을 선택한다.") {
-                val cards = cards(
+                val cards = hand(
                     ACE to SPADE,
                     KING to HEART,
                     TEN to CLOVER,

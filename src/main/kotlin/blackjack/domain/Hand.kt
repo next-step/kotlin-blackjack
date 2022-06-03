@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Denomination.ACE
 import java.lang.Integer.max
 
-class Cards(
+class Hand(
     cards: List<Card>
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
