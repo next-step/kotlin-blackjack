@@ -29,6 +29,12 @@ class Hand(
     }
 
     override fun toString(): String {
-        return _cards.joinToString { ", " }
+        return _cards.joinToString(", ") {
+            it.toString()
+        }
+    }
+
+    companion object {
+        val EMPTY: Hand = Hand(emptyList())
     }
 }
