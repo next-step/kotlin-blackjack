@@ -1,6 +1,6 @@
 package com.nextstep.jngcii.blackjack.domain
 
-class PlayerBoard {
+class PlayerBoard(val playerName: String) {
     private val _cards = mutableListOf<Card>()
     val cards get() = _cards.toList()
     val total get() = cards.sumOf { it.symbol.value }
