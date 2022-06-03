@@ -1,7 +1,7 @@
 package blackjack.card
 
-import blackjack.game.ACE_MAX_NUMBER
-import blackjack.game.ACE_MIN_NUMBER
+import blackjack.util.ACE_MAX_NUMBER
+import blackjack.util.ACE_MIN_NUMBER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

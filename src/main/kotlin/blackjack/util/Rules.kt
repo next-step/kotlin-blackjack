@@ -1,4 +1,4 @@
-package blackjack.game
+package blackjack.util
 
 import blackjack.card.Card
 import blackjack.card.CardSuit
