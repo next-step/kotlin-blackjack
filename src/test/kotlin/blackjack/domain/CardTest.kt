@@ -24,14 +24,14 @@ class CardTest {
     fun `ACE can be the one or the eleven`() {
         val value = Value.ACE
 
-        assertThat(value).hasFieldOrPropertyWithValue("first", 1)
-            .hasFieldOrPropertyWithValue("second", 11)
+        assertThat(value).hasFieldOrPropertyWithValue("origin", 1)
+            .hasFieldOrPropertyWithValue("alternative", 11)
     }
 
     @ParameterizedTest
     @EnumSource(value = Value::class, names = ["KING", "QUEEN", "JACK"])
     fun `King, queen, jack could be the ten`(value: Value) {
 
-        assertThat(value).hasFieldOrPropertyWithValue("first", 10)
+        assertThat(value).hasFieldOrPropertyWithValue("origin", 10)
     }
 }
