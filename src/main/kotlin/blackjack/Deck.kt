@@ -1,12 +1,10 @@
 package blackjack
 
-class Deck(cards: List<Card> = Cards.getCards()) {
-    private val _cards: MutableList<Card> = cards.toMutableList()
+class Deck(cardShuffle: CardShuffle) {
+    private val _cards: MutableList<Card> = cardShuffle.getCards().toMutableList()
 
-    fun deal(cardShape: CardShape, cardNumber: CardNumber): Card {
-        val card = Card(cardShape, cardNumber)
-        _cards.remove(card)
-        return card
+    fun deal(): Card {
+        return _cards.removeFirst()
     }
 
     val cards: List<Card>
