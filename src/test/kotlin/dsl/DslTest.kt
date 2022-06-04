@@ -2,6 +2,7 @@ package dsl
 
 import dsl.vo.Language
 import dsl.vo.Level
+import dsl.vo.Skill
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.entry
 import org.assertj.core.api.MapAssert
@@ -45,8 +46,14 @@ class DslTest {
 
         assertThat(resume.name).isEqualTo("qyu")
         assertThat(resume.company).isEqualTo("kakao")
-        assertThat(resume.skills).extracting("soft").isEqualTo(listOf("Problem Solving", "Communication"))
-        assertThat(resume.skills).extracting("hard").isEqualTo(listOf("Kotlin"))
+        assertThat(resume.skills).extracting("list")
+            .isEqualTo(
+                listOf(
+                    Skill("Problem Solving"),
+                    Skill("Communication"),
+                    Skill("Kotlin")
+                )
+            )
     }
 
     @Test
@@ -67,8 +74,14 @@ class DslTest {
 
         assertThat(resume.name).isEqualTo("qyu")
         assertThat(resume.company).isEqualTo("kakao")
-        assertThat(resume.skills).extracting("soft").isEqualTo(listOf("Problem Solving", "Communication"))
-        assertThat(resume.skills).extracting("hard").isEqualTo(listOf("Kotlin"))
+        assertThat(resume.skills).extracting("list")
+            .isEqualTo(
+                listOf(
+                    Skill("Problem Solving"),
+                    Skill("Communication"),
+                    Skill("Kotlin")
+                )
+            )
         MapAssert(resume.languages?.list).contains(
             entry(Language("Korean"), Level(5)),
             entry(Language("English"), Level(3))
