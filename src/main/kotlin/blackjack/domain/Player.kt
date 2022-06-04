@@ -12,6 +12,9 @@ class Player(
     }
 
     fun hit(card: Card) {
+        check(calculateHand() < BLACKJACK_POINT) {
+            "플레이어의 점수가 이미 $BLACKJACK_POINT 이상입니다"
+        }
         hand.add(card)
     }
 
