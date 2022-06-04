@@ -2,8 +2,6 @@ package dsl
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 /*
 introduce {
@@ -23,18 +21,27 @@ introduce {
 
 class DslTest {
 
-    @ValueSource(strings = ["최현구", "현구막"])
-    @ParameterizedTest
-    fun introduce(value: String) {
+    @Test
+    fun `지금부터 내 소개를 시작하지`() {
         val person: Person = introduce {
-            name(value)
+            name("최현구")
+            company("맘편한세상")
+            languages {
+                "Kotlin" level 1
+                "Java" level 99
+            }
         }
 
-        assertThat(person.name).isEqualTo(value)
+        assertThat(person.name).isEqualTo("최현구")
+        assertThat(person.company).isEqualTo("맘편한세상")
+        assertThat(person.languages.values[0].name).isEqualTo("Kotlin")
+        assertThat(person.languages.values[0].level).isEqualTo(1)
+        assertThat(person.languages.values[1].name).isEqualTo("Java")
+        assertThat(person.languages.values[1].level).isEqualTo(99)
     }
 
     @Test
-    fun company() {
+    fun nameAndCompany() {
         val person: Person = introduce {
             name("최현구")
             company("맘편한세상")
@@ -43,8 +50,25 @@ class DslTest {
         assertThat(person.name).isEqualTo("최현구")
         assertThat(person.company).isEqualTo("맘편한세상")
     }
+
+    @Test
+    fun language() {
+        val person: Person = introduce {
+            languages {
+                "Kotlin" level 1
+                "Java" level 99
+            }
+        }
+
+        assertThat(person.languages.values[0].name).isEqualTo("Kotlin")
+        assertThat(person.languages.values[0].level).isEqualTo(1)
+        assertThat(person.languages.values[1].name).isEqualTo("Java")
+        assertThat(person.languages.values[1].level).isEqualTo(99)
+    }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
+    return PersonBuilder()
+        .apply(block)
+        .build()
 }
