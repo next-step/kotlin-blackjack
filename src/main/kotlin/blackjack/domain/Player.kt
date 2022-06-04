@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String, hand: Hand) {
+class Player(val name: String, hand: Hand = Hand(emptyList())) {
     private var _hand = hand
 
     val score: Score
