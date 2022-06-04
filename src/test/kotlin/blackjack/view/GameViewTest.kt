@@ -76,6 +76,31 @@ class GameViewTest : FreeSpec({
         )
         player.hand.count shouldBe 3
     }
+
+    "유효하지 않는 입력을 제공하면 다시 입력받는다" {
+        val dealer = createDealer(Card(Suite.CLUBS, Denomination.ACE))
+        val player = createPlayer(
+            "player",
+            Card(Suite.HEARTS, Denomination.TWO),
+            Card(Suite.SPADES, Denomination.EIGHT),
+        )
+        val io = StubIO()
+        val gameView = GameView(io, dealer, listOf(player))
+        io.addInput("")
+        io.addInput("yn")
+        io.addInput("invalid")
+        io.addInput("  n  ")
+
+        gameView.run()
+
+        io.printed shouldBe listOf(
+            "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
+            "잘못된 입력입니다. 다시 입력해주세요.",
+            "잘못된 입력입니다. 다시 입력해주세요.",
+            "잘못된 입력입니다. 다시 입력해주세요.",
+            "",
+        )
+    }
 })
 
 fun createDealer(vararg cards: Card): Dealer = Dealer(Deck(cards.toList()))
