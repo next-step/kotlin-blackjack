@@ -2,6 +2,7 @@ package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 internal class DeckTest : StringSpec({
@@ -30,6 +31,16 @@ internal class DeckTest : StringSpec({
 
         shouldThrow<IllegalStateException> {
             deck.draw()
+        }
+    }
+
+    "트럼프 카드 한 벌을 생성한다" {
+        val trump = Deck.shuffled().drawAll()
+        val cardGroup = trump.groupBy { it.suite }
+
+        cardGroup.size shouldBe 4
+        cardGroup.values.forAll {
+            it.distinctBy(Card::denomination).size shouldBe 13
         }
     }
 })

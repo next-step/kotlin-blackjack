@@ -10,4 +10,11 @@ class Deck(cards: List<Card>) {
         get() = cards.size
 
     fun draw(): Card = cards.poll() ?: throw IllegalStateException("남아있는 카드가 없습니다")
+
+    companion object {
+
+        fun shuffled(): Deck {
+            TODO()
+        }
+    }
 }
