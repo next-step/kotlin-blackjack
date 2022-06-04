@@ -76,6 +76,14 @@ class DealerSpecs : DescribeSpec({
             }
         }
 
+        context("플레이어가 hit을 선택하지 않았으면") {
+            val dealer = Dealer()
+            val player = Player("name") { false }
+            it("카드를 거래하지 않는다") {
+                dealer.dealWith(player) shouldBe false
+            }
+        }
+
         context("거래할 카드가 부족하다면") {
             val deck = CustomDeck(emptyList())
             val dealer = Dealer(deck)
