@@ -13,11 +13,11 @@ fun main() {
     dealer.distribute(players)
     OutputView.showDistribution(players)
 
-    players.forEach { player ->
-        // while (dealer.dealWith(player)) {
-        //     OutputView.showHand(player)
-        // }
-    }
+    // players.forEach { player ->
+    //     while (dealer.dealWith(player)) {
+    //         OutputView.showHand(player)
+    //     }
+    // }
 
     OutputView.showResult(players)
 }
