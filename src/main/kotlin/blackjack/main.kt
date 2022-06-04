@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.domain.BLACKJACK_POINT
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.ui.InputView
@@ -15,10 +14,9 @@ fun main() {
     OutputView.showDistribution(players)
 
     players.forEach { player ->
-        while (InputView.askHit(player) || player.calculateHand() < BLACKJACK_POINT) {
-            dealer.deal(player)
-            OutputView.showHand(player)
-        }
+        // while (dealer.dealWith(player)) {
+        //     OutputView.showHand(player)
+        // }
     }
 
     OutputView.showResult(players)

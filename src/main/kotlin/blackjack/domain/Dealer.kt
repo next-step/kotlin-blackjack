@@ -15,7 +15,7 @@ class Dealer(
         }
     }
 
-    fun deal(player: Player) {
+    fun dealWith(player: Player) {
         check(deck.sizeOfRemaining() >= SIZE_OF_HIT) {
             "플레이어와 거래할 카드가 부족합니다"
         }

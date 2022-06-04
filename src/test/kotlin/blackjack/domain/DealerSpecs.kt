@@ -60,7 +60,7 @@ class DealerSpecs : DescribeSpec({
             val dealer = Dealer(deck)
             val player = Player("js")
             it("해당 플레이어와 카드를 거래한다") {
-                dealer.deal(player)
+                dealer.dealWith(player)
                 deck.sizeOfRemaining() shouldBe 1
                 player.hand shouldBeEqualToComparingFields hand(KING to SPADE)
             }
@@ -70,7 +70,7 @@ class DealerSpecs : DescribeSpec({
             val dealer = Dealer(deck)
             val player = Player("js")
             it("카드를 거래할 수 없다") {
-                shouldThrowExactly<IllegalStateException> { dealer.deal(player) }
+                shouldThrowExactly<IllegalStateException> { dealer.dealWith(player) }
             }
         }
     }
