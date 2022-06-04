@@ -3,8 +3,8 @@ package dsl
 class PersonBuilder {
     private var name = ""
     private var company = ""
-    private var skills = Skills(emptyList())
-    private var languages = Languages(emptyList())
+    private var skills = Skills()
+    private var languages = Languages()
 
     fun name(value: String) {
         name = value

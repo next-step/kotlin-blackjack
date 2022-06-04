@@ -1,7 +1,7 @@
 package dsl
 
 class SkillsBuilder {
-    private var skills = Skills(emptyList())
+    private var skills = Skills()
 
     fun soft(skill: String) {
         skills.add(Skill.Soft(skill))

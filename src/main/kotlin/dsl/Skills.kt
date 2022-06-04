@@ -1,6 +1,8 @@
 package dsl
 
-class Skills(skills: List<Skill>) {
+class Skills(
+    skills: List<Skill> = emptyList()
+) {
     private val _skills = skills.toMutableList()
     private val skills
         get() = _skills.toList()

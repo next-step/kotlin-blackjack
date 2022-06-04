@@ -1,7 +1,7 @@
 package dsl
 
 class Languages(
-    languages: List<Language>
+    languages: List<Language> = emptyList()
 ) {
 
     private val _languages = languages.toMutableList()
