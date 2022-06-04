@@ -10,6 +10,13 @@ class GameView(
 ) {
 
     fun run() {
-        TODO()
+        players.forEach(::play)
+        io.print("")
+    }
+
+    private fun play(player: Player) {
+        if (!dealer.checkCardDrawable(player)) {
+            return
+        }
     }
 }
