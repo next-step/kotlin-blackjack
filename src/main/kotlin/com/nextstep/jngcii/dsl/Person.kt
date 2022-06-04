@@ -7,16 +7,14 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 class Person(
     val name: String,
     val company: String,
-    val softSkills: List<SoftSkill>,
-    val hardSkills: List<HardSkill>,
+    val skills: List<Skill>,
     val languages: List<Language>
 )
 
 class PersonBuilder {
     private var name: String = ""
     private var company: String? = null
-    private var softSkills: List<SoftSkill> = emptyList()
-    private var hardSkills: List<HardSkill> = emptyList()
+    private var skills: List<Skill> = emptyList()
     private var languages: List<Language> = emptyList()
 
     fun name(value: String) {
@@ -28,9 +26,7 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillBuilder.() -> Unit) {
-        val skills = SkillBuilder().apply(block).build()
-        softSkills = skills.softs
-        hardSkills = skills.hards
+        skills = SkillBuilder().apply(block).build()
     }
 
     fun languages(block: LanguageBuilder.() -> Unit) {
@@ -40,8 +36,7 @@ class PersonBuilder {
     fun build() = Person(
         name = name,
         company = company ?: "무직",
-        softSkills = softSkills,
-        hardSkills = hardSkills,
+        skills = skills,
         languages = languages
     )
 }
