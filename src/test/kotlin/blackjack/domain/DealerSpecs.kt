@@ -22,7 +22,7 @@ class DealerSpecs : DescribeSpec({
                 cards(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
             val dealer = Dealer(deck)
-            val players = listOf(Player("1"), Player("2"))
+            val players = listOf(Player("1") { true }, Player("2") { true })
             it("모든 플레이어에게 카드를 2장 분배한다") {
                 dealer.distribute(players)
                 deck.sizeOfRemaining() shouldBe 0
@@ -47,7 +47,7 @@ class DealerSpecs : DescribeSpec({
         context("분배할 카드가 부족하다면") {
             val emptyDeck = CustomDeck(emptyList())
             val dealer = Dealer(emptyDeck)
-            val players = listOf(Player("1"), Player("2"))
+            val players = listOf(Player("1") { true }, Player("2") { true })
             it("카드를 분배할 수 없다") {
                 shouldThrowExactly<IllegalStateException> {
                     dealer.distribute(players)
@@ -87,7 +87,7 @@ class DealerSpecs : DescribeSpec({
         context("거래할 카드가 부족하다면") {
             val deck = CustomDeck(emptyList())
             val dealer = Dealer(deck)
-            val player = Player("js")
+            val player = Player("js") { true }
             it("카드를 거래할 수 없다") {
                 shouldThrowExactly<IllegalStateException> { dealer.dealWith(player) }
             }

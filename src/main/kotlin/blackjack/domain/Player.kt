@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     val name: String,
     val hand: Hand = Hand.empty(),
-    val selectHit: () -> Boolean = { true }
+    val selectHit: () -> Boolean
 ) {
     fun initialize(initialCards: Pair<Card, Card>) {
         with(initialCards) {
