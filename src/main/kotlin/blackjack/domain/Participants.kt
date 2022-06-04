@@ -1,27 +1,25 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
 
-
-data class Participant(
-    val name: String,
-    val playerCards: List<Card> = emptyList()
+data class Participants(
+    val players: List<Participant>,
+    private val deck: Deck
 ) {
-    private val _playerCards = ArrayList<Card>()
-
-    val cards: List<Card>
-        get() = _playerCards.toList()
-
-    fun score() = playerCards.sumOf { it.score.point }
-
-    fun addCard(card: Card) {
-        _playerCards.add(card)
+    fun giveCardFirstTime() {
+        players.forEach { participant ->
+            repeat(INITIAL_GIVE_CARD_COUNT) { participant.addCard() }
+        }
     }
 
     companion object {
-        fun of(playerName: String): Participant {
-            return Participant(playerName)
+        fun of(playerNames: List<String>, deck: Deck): Participants {
+            return Participants(
+                playerNames.map { Participant.of(it, deck) }, deck
+            )
         }
+
+        private const val INITIAL_GIVE_CARD_COUNT = 2
+        private const val ADD_CARD_COUNT = 1
     }
 }
-
