@@ -56,6 +56,13 @@ class DealerTest : FreeSpec({
             }
         }
     }
+
+    "참가자 이름을 받아 카드 2장을 가진 참가자를 생성한다" {
+        val player = dealer.makePlayer("user")
+
+        player.name shouldBe "user"
+        player.hand.count shouldBe 2
+    }
 })
 
 fun createPlayer(vararg cards: Card): Player = Player("player", Hand(cards.toList()))

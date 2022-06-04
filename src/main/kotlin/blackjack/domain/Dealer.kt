@@ -14,4 +14,8 @@ value class Dealer(private val deck: Deck) {
 
         player.addCard(deck.draw())
     }
+
+    fun makePlayer(s: String): Player {
+        TODO()
+    }
 }
