@@ -15,7 +15,12 @@ value class Dealer(private val deck: Deck) {
         player.addCard(deck.draw())
     }
 
-    fun makePlayer(s: String): Player {
-        TODO()
+    fun makePlayer(name: String): Player =
+        Player(name).apply {
+            repeat(INIT_CARD_COUNT) { giveCard(this) }
+        }
+
+    companion object {
+        private const val INIT_CARD_COUNT = 2
     }
 }

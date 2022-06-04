@@ -7,8 +7,6 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
 class DealerTest : FreeSpec({
-    val deck = Deck(listOf(Card(Suite.SPADES, Denomination.FIVE)))
-    val dealer = Dealer(deck)
 
     "주어진 참가자의 손패가 패를 추가할 수 있는 상태인지 판별한다" - {
         "추가할 수 없는 경우" {
@@ -17,7 +15,7 @@ class DealerTest : FreeSpec({
                 Card(Suite.HEARTS, Denomination.ACE)
             )
 
-            val canDraw = dealer.checkCardDrawable(player)
+            val canDraw = createDealer().checkCardDrawable(player)
 
             canDraw.shouldBeFalse()
         }
@@ -27,7 +25,7 @@ class DealerTest : FreeSpec({
                 Card(Suite.HEARTS, Denomination.QUEEN)
             )
 
-            val canDraw = dealer.checkCardDrawable(player)
+            val canDraw = createDealer().checkCardDrawable(player)
 
             canDraw.shouldBeTrue()
         }
@@ -39,7 +37,7 @@ class DealerTest : FreeSpec({
                 Card(Suite.HEARTS, Denomination.FOUR),
             )
 
-            dealer.giveCard(player)
+            createDealer().giveCard(player)
 
             player.hand.count shouldBe 2
         }
@@ -52,17 +50,31 @@ class DealerTest : FreeSpec({
             )
 
             shouldThrow<IllegalStateException> {
-                dealer.giveCard(player)
+                createDealer().giveCard(player)
             }
         }
     }
 
     "참가자 이름을 받아 카드 2장을 가진 참가자를 생성한다" {
-        val player = dealer.makePlayer("user")
+        val player = createDealer().makePlayer("user")
 
         player.name shouldBe "user"
-        player.hand.count shouldBe 2
+        player.hand shouldBe Hand(
+            listOf(
+                Card(Suite.SPADES, Denomination.FIVE),
+                Card(Suite.SPADES, Denomination.FOUR),
+            )
+        )
     }
 })
+
+fun createDealer(): Dealer = Dealer(
+    Deck(
+        listOf(
+            Card(Suite.SPADES, Denomination.FIVE),
+            Card(Suite.SPADES, Denomination.FOUR),
+        )
+    )
+)
 
 fun createPlayer(vararg cards: Card): Player = Player("player", Hand(cards.toList()))
