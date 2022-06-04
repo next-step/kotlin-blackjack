@@ -1,4 +1,4 @@
-package study
+package dsl
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -22,32 +22,5 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo("이동욱")
         assertThat(person.company).isEqualTo("인프랩")
-    }
-}
-
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-class PersonBuilder {
-    private var name: String = ""
-    private var company: String = ""
-    fun name(value: String) {
-        name = value
-    }
-    fun company(value: String) {
-        company = value
-    }
-    fun build(): Person {
-        return Person(name, company)
-    }
-}
-
-data class Person(var name: String, var company: String) {
-    fun name(value: String) {
-        name = value
-    }
-    fun company(value: String) {
-        company = value
     }
 }
