@@ -1,22 +1,24 @@
 package blackjack
 
-import blackjack.domain.Participants
-import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
+import blackjack.domain.BlackJackGame
+import blackjack.domain.Card
+import blackjack.domain.CardDeck
 import blackjack.view.GameView
 import blackjack.view.InputView
 
 fun main() {
-    val deck = Deck(Card.createDeck())
+    val cardDeck = CardDeck(Card.createDeck())
     val playerNames = InputView.createParticipants()
-    val participants = Participants.of(playerNames, deck)
-    GameView.giveCard(participants)
-    participants.giveCardFirstTime()
-    GameView.displayInitialCard(participants)
-    participants.players.forEach {
+    val blackJackGame = BlackJackGame.of(playerNames, cardDeck)
+    GameView.giveCard(blackJackGame)
+    blackJackGame.firstCardDistribution()
+    GameView.displayInitialCard(blackJackGame)
+    blackJackGame.players.forEach {
         while (InputView.needMoreCard(it)) {
             it.addCard()
             GameView.displayPlayerCard(it)
         }
     }
+
+    GameView.displayResult(blackJackGame)
 }
