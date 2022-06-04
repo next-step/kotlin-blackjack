@@ -1,8 +1,8 @@
 package blackjack.enums
 
-enum class Type(name: String) {
-    SPADE("Spade"),
-    CLUB("Club"),
-    DIAMOND("Diamond"),
-    HEART("Heart")
+enum class Type(val title: String, val number: Int) {
+    SPADE("Spade", 0),
+    CLUB("Club", 1),
+    DIAMOND("Diamond", 2),
+    HEART("Heart", 3)
 }
