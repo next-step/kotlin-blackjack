@@ -13,8 +13,13 @@ class Deck(cards: List<Card>) {
 
     companion object {
 
-        fun shuffled(): Deck {
-            TODO()
-        }
+        fun shuffled(): Deck =
+            Suite
+                .values()
+                .flatMap { suite ->
+                    Denomination.values().map { Card(suite, it) }
+                }
+                .shuffled()
+                .let(::Deck)
     }
 }
