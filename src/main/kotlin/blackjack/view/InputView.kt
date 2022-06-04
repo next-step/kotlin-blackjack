@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Participant
+import blackjack.exception.InvalidInputValueException
 
 object InputView {
 
@@ -17,14 +18,12 @@ object InputView {
 
     private fun String.toBoolean(): Boolean {
         return when (uppercase()) {
-            "Y" -> {
-                true
-            }
-            "N" -> {
-                false
-            }
-            else -> throw IllegalArgumentException("입력이 올바르지 않습니다")
+            YES -> true
+            NO -> false
+            else -> throw InvalidInputValueException()
         }
-
     }
+
+    private const val YES = "Y"
+    private const val NO = "N"
 }
