@@ -15,10 +15,16 @@ class Dealer(
         }
     }
 
-    fun dealWith(player: Player) {
-        check(deck.sizeOfRemaining() >= SIZE_OF_HIT) {
-            "플레이어와 거래할 카드가 부족합니다"
+    fun dealWith(player: Player): Boolean {
+        return when (player.canHit() && player.selectHit()) {
+            true -> {
+                check(deck.sizeOfRemaining() >= SIZE_OF_HIT) {
+                    "플레이어와 거래할 카드가 부족합니다"
+                }
+                player.hit(deck.draw())
+                true
+            }
+            false -> false
         }
-        player.hit(deck.draw())
     }
 }

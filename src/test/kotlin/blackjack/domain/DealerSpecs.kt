@@ -3,7 +3,9 @@ package blackjack.domain
 import blackjack.domain.Denomination.ACE
 import blackjack.domain.Denomination.EIGHT
 import blackjack.domain.Denomination.KING
+import blackjack.domain.Denomination.SEVEN
 import blackjack.domain.Denomination.SIX
+import blackjack.domain.Denomination.TWO
 import blackjack.domain.Suit.DIAMOND
 import blackjack.domain.Suit.HEART
 import blackjack.domain.Suit.SPADE
@@ -53,18 +55,19 @@ class DealerSpecs : DescribeSpec({
             }
         }
 
-        context("카드를 거래할 플레이어가 있다면") {
+        context("플레이어의 현재 점수가 21보다 낮고, 플레이어가 hit을 선택했으면") {
             val deck = CustomDeck(
-                cards(KING to SPADE, ACE to SPADE)
+                cards(TWO to SPADE)
             )
             val dealer = Dealer(deck)
-            val player = Player("js")
-            it("해당 플레이어와 카드를 거래한다") {
-                dealer.dealWith(player)
-                deck.sizeOfRemaining() shouldBe 1
-                player.hand shouldBeEqualToComparingFields hand(KING to SPADE)
+            val player = Player("name", hand(SIX to HEART, SEVEN to DIAMOND)) { true }
+            it("카드 한 장을 거래한다") {
+                dealer.dealWith(player) shouldBe true
+                player.hand shouldBeEqualToComparingFields hand(TWO to SPADE)
+                player.calculateHand() shouldBe 15
             }
         }
+
         context("거래할 카드가 부족하다면") {
             val deck = CustomDeck(emptyList())
             val dealer = Dealer(deck)
