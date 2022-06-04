@@ -7,7 +7,7 @@ import com.nextstep.jngcii.blackjack.view.InputView
 import com.nextstep.jngcii.blackjack.view.ResultView
 
 fun main() {
-    val names = InputView.getNames(::readLine)
+    val names = InputView.getNames()
 
     val cardDeck = CardDeck()
     val boards = names.map { PlayerBoard(it) }
