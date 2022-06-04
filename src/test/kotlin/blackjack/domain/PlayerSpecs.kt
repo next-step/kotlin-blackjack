@@ -9,6 +9,9 @@ import blackjack.domain.Suit.SPADE
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.data.headers
+import io.kotest.data.row
+import io.kotest.data.table
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
@@ -26,6 +29,18 @@ class PlayerSpecs : DescribeSpec({
             val card2 = Card.from(ACE, SPADE)
             player.initialize(card1 to card2)
             player.hand shouldBeEqualToComparingFields Hand(listOf(card1, card2))
+        }
+
+        it("hit을 선택할 수 있다") {
+            io.kotest.data.forAll(
+                table(
+                    headers("플레이어", "hit 선택 여부"),
+                    row(Player("name") { true }, true),
+                    row(Player("name") { false }, false),
+                )
+            ) { player, result ->
+                player.selectHit() shouldBe result
+            }
         }
 
         it("카드 1장을 자신의 카드 패에 추가할 수 있다") {
