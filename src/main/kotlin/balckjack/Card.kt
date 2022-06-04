@@ -3,7 +3,7 @@ package balckjack
 sealed interface Card {
     val pattern: CardPattern
 
-    fun count(): CardCount
+    fun score(): Score
 }
 
 enum class CardPattern {

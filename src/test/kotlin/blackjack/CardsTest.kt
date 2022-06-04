@@ -3,11 +3,11 @@ package blackjack
 import balckjack.Ace
 import balckjack.Card
 import balckjack.CardPattern
-import balckjack.DoubleCount
+import balckjack.DoubleScore
 import balckjack.Jack
 import balckjack.NumberCard
 import balckjack.Queen
-import balckjack.SingleCount
+import balckjack.SingleScore
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -51,9 +51,9 @@ class CardsTest : DescribeSpec({
         }
     }
 
-    describe("count") {
+    describe("score") {
         context("Ace 카드가 아닌 카드들이 주어졌을 때 ") {
-            it("카드들의 카드 숫자를 합산할 수 있다") {
+            it("카드들의 카드 점수를 합산할 수 있다") {
                 val cards = Cards(
                     listOf(
                         NumberCard(CardPattern.DIAMOND, 4),
@@ -63,7 +63,7 @@ class CardsTest : DescribeSpec({
                     )
                 )
 
-                cards.count() shouldBe 31
+                cards.score() shouldBe 31
             }
         }
 
@@ -77,7 +77,7 @@ class CardsTest : DescribeSpec({
                     )
                 )
 
-                cards.count() shouldBe 12
+                cards.score() shouldBe 12
             }
 
             it("Ace 카드를 제외한 숫자가 10이 이하이면 10으로 계산하여 더한다") {
@@ -88,7 +88,7 @@ class CardsTest : DescribeSpec({
                     )
                 )
 
-                cards.count() shouldBe 21
+                cards.score() shouldBe 21
             }
         }
 
@@ -102,7 +102,7 @@ class CardsTest : DescribeSpec({
                     )
                 )
 
-                cards.count() shouldBe 13
+                cards.score() shouldBe 13
             }
         }
     }
@@ -116,14 +116,14 @@ class Cards(cards: List<Card>) {
         _cards.add(card)
     }
 
-    fun count(): Int {
-        return sumOfDoubleCount(sumOfSingleCount())
+    fun score(): Int {
+        return sumOfDoubleCount(sumOfSingleScore())
     }
 
-    private fun sumOfSingleCount(): Int {
-        return cards.filter { it.count() is SingleCount }
+    private fun sumOfSingleScore(): Int {
+        return cards.filter { it.score() is SingleScore }
             .sumOf {
-                val count = it.count() as SingleCount
+                val count = it.score() as SingleScore
                 count.number
             }
     }
@@ -131,9 +131,9 @@ class Cards(cards: List<Card>) {
     private fun sumOfDoubleCount(base: Int): Int {
         var sum = base
 
-        cards.filter { it.count() is DoubleCount }
+        cards.filter { it.score() is DoubleScore }
             .forEach {
-                val doubleCount = it.count() as DoubleCount
+                val doubleCount = it.score() as DoubleScore
                 sum = doubleCount.sum(sum, LIMIT)
             }
 

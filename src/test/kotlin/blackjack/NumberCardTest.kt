@@ -2,7 +2,7 @@ package blackjack
 
 import balckjack.CardPattern
 import balckjack.NumberCard
-import balckjack.SingleCount
+import balckjack.SingleScore
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
@@ -34,7 +34,7 @@ class NumberCardTest : DescribeSpec({
                 NumberCard(CardPattern.HEART, 1) to 1,
                 NumberCard(CardPattern.CLOVER, 10) to 10,
             ).forAll { (numberCard, expectedCount) ->
-                numberCard.count() shouldBe SingleCount(expectedCount)
+                numberCard.score() shouldBe SingleScore(expectedCount)
             }
         }
     }

@@ -2,11 +2,11 @@ package blackjack
 
 import balckjack.Ace
 import balckjack.CardPattern
-import balckjack.DoubleCount
+import balckjack.DoubleScore
 import balckjack.Jack
 import balckjack.King
 import balckjack.Queen
-import balckjack.SingleCount
+import balckjack.SingleScore
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -35,7 +35,7 @@ class PictureCardTest : DescribeSpec({
                     Queen(CardPattern.CLOVER),
                     Jack(CardPattern.SPADE),
                 ).forAll {
-                    it.count() shouldBe SingleCount(10)
+                    it.score() shouldBe SingleScore(10)
                 }
             }
         }
@@ -47,7 +47,7 @@ class PictureCardTest : DescribeSpec({
                     Ace(CardPattern.CLOVER),
                     Ace(CardPattern.DIAMOND),
                 ).forAll {
-                    it.count() shouldBe DoubleCount(1, 11)
+                    it.score() shouldBe DoubleScore(1, 11)
                 }
             }
         }

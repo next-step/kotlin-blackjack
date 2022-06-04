@@ -11,7 +11,7 @@ data class NumberCard(
         }
     }
 
-    override fun count(): CardCount {
-        return SingleCount(number)
+    override fun score(): Score {
+        return SingleScore(number)
     }
 }
