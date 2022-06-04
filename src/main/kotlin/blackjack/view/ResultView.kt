@@ -8,6 +8,8 @@ class ResultView(
 ) {
 
     fun run() {
-        TODO()
+        players.forEach {
+            io.print("${it.text()} - 결과: ${it.score.sum}")
+        }
     }
 }
