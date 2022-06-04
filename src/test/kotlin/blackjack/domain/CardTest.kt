@@ -5,14 +5,8 @@ import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun `덱 카드 뽑기 테스트`() {
-        val cardDeck = CardDeck(Card.createDeck())
-        assertThat(cardDeck.draw()).isInstanceOf(Card::class.java)
-    }
-
-    @Test
-    fun `카드 뽑기 테스트`() {
-        val cardDeck = MockCardDeck().draw()
-        assertThat(cardDeck).isEqualTo(Card(Card.CardPattern.CLUBS, Card.CardDisplayValue.EIGHT))
+    internal fun `덱에 들어갈 카드 생성 테스트`() {
+        val cards = Card.createDeck()
+        assertThat(cards.count()).isEqualTo(52)
     }
 }

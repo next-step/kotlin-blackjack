@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.Participant
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Participant
 
 object GameView {
     fun giveCard(participants: BlackJackGame) {
