@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class DslTest {
-    
     @ValueSource(strings = ["이동욱", "jojoldu"])
     @ParameterizedTest
     fun introduce(value: String) {
@@ -15,7 +14,6 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo(value)
     }
-    
     @Test
     fun company() {
         val person: Person = introduce {
@@ -34,15 +32,12 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 class PersonBuilder {
     private var name: String = ""
     private var company: String = ""
-    
     fun name(value: String) {
         name = value
     }
-    
     fun company(value: String) {
         company = value
     }
-    
     fun build(): Person {
         return Person(name, company)
     }
@@ -52,7 +47,6 @@ data class Person(var name: String, var company: String) {
     fun name(value: String) {
         name = value
     }
-    
     fun company(value: String) {
         company = value
     }
