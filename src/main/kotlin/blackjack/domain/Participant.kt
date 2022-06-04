@@ -9,7 +9,8 @@ data class Participant(
 ) {
     private val _playerCards = ArrayList<Card>()
 
-    val cards: List<Card> = _playerCards.toList()
+    val cards: List<Card>
+        get() = _playerCards.toList()
 
     fun score(): Int {
         val score = cards.sumOf { it.score.point }
