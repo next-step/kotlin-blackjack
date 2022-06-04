@@ -9,18 +9,20 @@ data class Participant(
 ) {
     private val _playerCards = ArrayList<Card>()
 
-    val cards: List<Card>
-        get() = _playerCards.toList()
+    val cards: List<Card> = _playerCards.toList()
 
     fun score(): Int {
         val score = cards.sumOf { it.score.point }
-        if (cards.hasAceCard()) {
-            val containAcePoint = score - Card.CardDisplayValue.ACE.point + CUSTOM_ACE_POINT
-            return if (abs(BLACK_JACK - containAcePoint) > abs(BLACK_JACK - score)) {
-                score
-            } else containAcePoint
-        }
-        return score
+        return if (cards.hasAceCard()) {
+            compareAbsoluteValue(score)
+        } else score
+    }
+
+    private fun compareAbsoluteValue(score: Int): Int {
+        val scoreContainBigValueOfAce = score - Card.CardDisplayValue.ACE.point + BIG_VALUE_OF_ACE
+        return if (abs(BLACK_JACK - scoreContainBigValueOfAce) > abs(BLACK_JACK - score)) {
+            score
+        } else scoreContainBigValueOfAce
     }
 
     fun getCardDisplayName() = _playerCards.joinToString { "${it.score.displayName}${it.pattern.displayName}" }
@@ -39,6 +41,6 @@ data class Participant(
         }
 
         const val BLACK_JACK = 21
-        const val CUSTOM_ACE_POINT = 11
+        const val BIG_VALUE_OF_ACE = 11
     }
 }
