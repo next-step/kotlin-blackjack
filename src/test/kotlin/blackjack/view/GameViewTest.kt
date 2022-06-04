@@ -8,7 +8,6 @@ import blackjack.domain.Hand
 import blackjack.domain.Player
 import blackjack.domain.Suite
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 
 class GameViewTest : FreeSpec({
@@ -33,8 +32,49 @@ class GameViewTest : FreeSpec({
 
         gameView.run()
 
-        io.printed.shouldBeEmpty()
+        io.printed shouldBe listOf("")
         players.map { it.hand.count } shouldBe listOf(2, 3)
+    }
+
+    "카드를 받을 수 있지만 거절하는 경우 손패가 그대로 유지된다" {
+        val dealer = createDealer()
+        val player = createPlayer(
+            "player",
+            Card(Suite.CLUBS, Denomination.NINE),
+            Card(Suite.CLUBS, Denomination.ACE),
+        )
+        val io = StubIO()
+        val gameView = GameView(io, dealer, listOf(player))
+        io.addInput("n")
+
+        gameView.run()
+
+        io.printed shouldBe listOf(
+            "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
+            "",
+        )
+        player.hand.count shouldBe 2
+    }
+
+    "카드를 받을 수 있고 수락하는 경우 손패에 카드가 추가된다" {
+        val dealer = createDealer(Card(Suite.CLUBS, Denomination.ACE))
+        val player = createPlayer(
+            "player",
+            Card(Suite.HEARTS, Denomination.TWO),
+            Card(Suite.SPADES, Denomination.EIGHT),
+        )
+        val io = StubIO()
+        val gameView = GameView(io, dealer, listOf(player))
+        io.addInput("y")
+
+        gameView.run()
+
+        io.printed shouldBe listOf(
+            "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
+            "player카드: 2하트, 8스페이드, A클로버",
+            "",
+        )
+        player.hand.count shouldBe 3
     }
 })
 
