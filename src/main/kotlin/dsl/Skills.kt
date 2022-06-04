@@ -10,4 +10,8 @@ class Skills(
     fun add(skill: Skill) {
         _skills.add(skill)
     }
+
+    operator fun get(index: Int): Skill {
+        return skills[index]
+    }
 }
