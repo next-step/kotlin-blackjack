@@ -44,6 +44,21 @@ class PersonTest {
         assertEquals(person.skills[2], Skill.Hard("Programming"))
     }
 
+    @Test
+    fun languagesTest() {
+        // given, when
+        val person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        // then
+        assertEquals(person.languages[0], Language("Korean", 5))
+        assertEquals(person.languages[1], Language("English", 3))
+    }
+
     private fun introduce(block: PersonBuilder.() -> Unit): Person {
         return PersonBuilder().apply(block).build()
     }

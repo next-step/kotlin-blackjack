@@ -11,4 +11,8 @@ class Languages(
     fun add(language: Language) {
         _languages.add(language)
     }
+
+    operator fun get(index: Int): Language {
+        return languages[index]
+    }
 }
