@@ -6,7 +6,7 @@ data class Participant(
     val name: String,
     private val cardDeck: Deck
 ) {
-    private val _playerCards = ArrayList<Card>()
+    private val _playerCards = mutableListOf<Card>()
 
     val cards: List<Card>
         get() = _playerCards.toList()
