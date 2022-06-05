@@ -15,7 +15,7 @@ class GameView(
     }
 
     private tailrec fun play(player: Player) {
-        if (!dealer.checkCardDrawable(player)) {
+        if (!player.canDrawCard) {
             return
         }
 
