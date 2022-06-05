@@ -27,6 +27,10 @@ class Cards(cards: List<Card>) {
     }
 
     companion object {
-        private val WINNING_SCORE = Score(21)
+        val WINNING_SCORE = Score(21)
+
+        fun empty(): Cards {
+            return Cards(emptyList())
+        }
     }
 }
