@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.converter.ConvertWith
-import org.junit.jupiter.params.converter.SimpleArgumentConverter
 import org.junit.jupiter.params.provider.CsvSource
+import util.StringArrayConverter
 
 class GameTest {
 
@@ -29,18 +29,5 @@ class GameTest {
         val players = Game(playerNames).players
 
         assertThat(players).allMatch { it.numberOfCards() == 2 }
-    }
-
-    class StringArrayConverter : SimpleArgumentConverter() {
-        override fun convert(source: Any, targetType: Class<*>): Any {
-            return if (source is String && Array<String>::class.java.isAssignableFrom(targetType)) {
-                source.split("\\s*;\\s*".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            } else {
-                throw IllegalArgumentException(
-                    "Conversion from " + source.javaClass + " to " +
-                        targetType + " not supported."
-                )
-            }
-        }
     }
 }
