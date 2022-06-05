@@ -28,6 +28,10 @@ data class Participant(
         _playerCards.add(cardDeck.draw())
     }
 
+    fun addFirstCard() {
+        repeat(FIRST_DISTRIBUTION_CARD_COUNT) { _playerCards.add(cardDeck.draw()) }
+    }
+
     private fun List<Card>.hasAceCard(): Boolean {
         return this.map { it.denomination }.contains(Card.Denomination.ACE)
     }
@@ -38,5 +42,6 @@ data class Participant(
         }
 
         private const val BIG_VALUE_OF_ACE = 11
+        private const val FIRST_DISTRIBUTION_CARD_COUNT = 2
     }
 }

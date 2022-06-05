@@ -14,12 +14,7 @@ class BlackjackApplication {
         GameView.giveCard(blackJackGame)
         blackJackGame.firstCardDistribution()
         GameView.displayInitialCard(blackJackGame)
-        blackJackGame.players.forEach {
-            while (InputView.needMoreCard(it)) {
-                it.addCard()
-                GameView.displayPlayerCard(it)
-            }
-        }
+        blackJackGame.suggestMoreCardToEachPlayer()
 
         GameView.displayResult(blackJackGame)
     }
