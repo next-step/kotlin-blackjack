@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Participant
-import blackjack.exception.CustomException
+import blackjack.exception.InvalidInputValueException
 
 object InputView {
 
@@ -20,7 +20,7 @@ object InputView {
         return when (uppercase()) {
             YES -> true
             NO -> false
-            else -> throw CustomException.InvalidInputError()
+            else -> throw InvalidInputValueException()
         }
     }
 
