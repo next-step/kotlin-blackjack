@@ -13,13 +13,13 @@ inline fun introduce(block: PersonBuilder.() -> Unit): Person =
         .build()
 
 class PersonBuilder {
-    private lateinit var name: String
+    private lateinit var _name: String
     private var company = ""
     private var skills = Skills()
     private var languages = Languages()
 
     fun name(value: String) {
-        name = value
+        _name = value
     }
 
     fun company(value: String) {
@@ -34,5 +34,9 @@ class PersonBuilder {
         languages = (LanguageBuilder().apply(block).build())
     }
 
-    fun build() = Person(name, company, skills, languages)
+    fun build(): Person {
+        require(::_name.isInitialized) { "이름을 입력해주세요" }
+
+        return Person(_name, company, skills, languages)
+    }
 }

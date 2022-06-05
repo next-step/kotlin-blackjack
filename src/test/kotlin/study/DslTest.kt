@@ -1,5 +1,6 @@
 package study
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -56,5 +57,14 @@ class DslTest : StringSpec({
                 Language("English", 3),
             )
         )
+    }
+
+    "error" {
+        val exception = shouldThrow<IllegalArgumentException> {
+            introduce {
+            }
+        }
+
+        exception.message shouldBe "이름을 입력해주세요"
     }
 })
