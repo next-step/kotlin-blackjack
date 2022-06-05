@@ -4,7 +4,6 @@ import kotlin.math.abs
 
 data class Participant(
     val name: String,
-    private val playerCards: List<Card> = emptyList(),
     private val cardDeck: Deck
 ) {
     private val _playerCards = ArrayList<Card>()
@@ -25,7 +24,6 @@ data class Participant(
             score
         } else scoreContainBigValueOfAce
     }
-
 
     fun addCard() {
         _playerCards.add(cardDeck.draw())
