@@ -28,12 +28,14 @@ value class Score(private val cards: List<Card>) {
 
     private fun possibleOutcome(aceCount: Int): List<Int> =
         when (aceCount) {
-            1 -> listOf(1, 11)
-            2 -> listOf(2, 12)
+            1 -> POSSIBLE_SCORES_ACE_ONE
+            2 -> POSSIBLE_SCORES_ACE_TWO
             else -> listOf(aceCount)
         }
 
     companion object {
+        private val POSSIBLE_SCORES_ACE_ONE = listOf(1, 11)
+        private val POSSIBLE_SCORES_ACE_TWO = listOf(2, 12)
         private const val BLACKJACK_SUM = 21
         private val SCORE_MAP = mapOf(
             Denomination.TWO to 2,
