@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import kotlin.math.abs
-
 data class Score(val origin: Int, val alternative: Int) {
 
     fun couldGetMoreCard(): Boolean {
@@ -9,7 +7,11 @@ data class Score(val origin: Int, val alternative: Int) {
     }
 
     fun max(): Int {
-        return if (abs(BLACKJACK - origin) > abs(BLACKJACK - alternative)) {
+        return if (origin > BLACKJACK) {
+            alternative
+        } else if (alternative > BLACKJACK) {
+            origin
+        } else if (origin > alternative) {
             origin
         } else {
             alternative
