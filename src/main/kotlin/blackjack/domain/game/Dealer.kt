@@ -23,6 +23,6 @@ class Dealer {
     }
 
     companion object {
-        val STANDARD_52_CARD_DECK: Deck = Deck(ALL_CARDS)
+        private val STANDARD_52_CARD_DECK: Deck = Deck(ALL_CARDS)
     }
 }
