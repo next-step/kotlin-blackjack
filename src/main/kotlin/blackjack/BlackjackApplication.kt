@@ -8,9 +8,8 @@ import blackjack.view.InputView
 
 class BlackjackApplication {
     fun playGame() {
-        val cardDeck = CardDeck(Card.createDeck())
         val playerNames = InputView.createParticipants()
-        val blackJackGame = BlackJackGame.of(playerNames, cardDeck)
+        val blackJackGame = BlackJackGame.of(playerNames)
         GameView.giveCard(blackJackGame)
         blackJackGame.firstCardDistribution()
         GameView.displayInitialCard(blackJackGame)

@@ -4,8 +4,7 @@ import blackjack.view.GameView
 import blackjack.view.InputView
 
 data class BlackJackGame(
-    val players: List<Participant>,
-    private val cardDeck: Deck
+    val players: List<Participant>
 ) {
     fun firstCardDistribution() {
         players.forEach { participant ->
@@ -24,9 +23,10 @@ data class BlackJackGame(
 
 
     companion object {
-        fun of(playerNames: List<String>, cardDeck: Deck): BlackJackGame {
+        fun of(playerNames: List<String>): BlackJackGame {
+            val cardDeck = CardDeck(Card.createDeck())
             return BlackJackGame(
-                playerNames.map { Participant.of(it, cardDeck) }, cardDeck
+                playerNames.map { Participant.of(it, cardDeck) }
             )
         }
     }
