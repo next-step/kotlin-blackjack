@@ -1,8 +1,8 @@
 package blackjack.domain.card
 
+import blackjack.domain.player.Hand
 import blackjack.util.ACE_MAX_NUMBER
 import blackjack.util.ACE_MIN_NUMBER
-import blackjack.util.COUNT_THRESHOLD
 
 enum class CardSymbol(val displayName: String, private val value: Int) {
     TWO("2", 2),
@@ -19,7 +19,7 @@ enum class CardSymbol(val displayName: String, private val value: Int) {
     KING("K", 10),
     ACE("A", ACE_MAX_NUMBER) {
         override fun count(sumOfOthers: Int): Int {
-            return if (sumOfOthers + super.count(0) > COUNT_THRESHOLD) {
+            return if (sumOfOthers + super.count(0) > Hand.BUST_THRESHOLD) {
                 ACE_MIN_NUMBER
             } else {
                 ACE_MAX_NUMBER

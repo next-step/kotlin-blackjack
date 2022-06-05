@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.util.COUNT_THRESHOLD
 
 data class Player(
     val name: String
@@ -12,7 +11,9 @@ data class Player(
 
     fun addCards(vararg cards: Card) {
         cards.forEach { hand.add(it) }
-        checkBust()
+        if (hand.isBust()) {
+            changeStatus(PlayerStatus.BUST)
+        }
     }
 
     fun score(): Int {
@@ -21,12 +22,5 @@ data class Player(
 
     fun changeStatus(status: PlayerStatus) {
         this.status = status
-    }
-
-    private fun checkBust() {
-        val score = hand.score()
-        if (score > COUNT_THRESHOLD) {
-            status = PlayerStatus.BUST
-        }
     }
 }

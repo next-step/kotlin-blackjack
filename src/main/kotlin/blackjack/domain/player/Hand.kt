@@ -18,4 +18,12 @@ data class Hand(
             .sortedBy { it.symbol }
             .fold(0) { acc, card -> acc + card.count(acc) }
     }
+
+    fun isBust(): Boolean {
+        return score() > BUST_THRESHOLD
+    }
+
+    companion object {
+        const val BUST_THRESHOLD: Int = 21
+    }
 }
