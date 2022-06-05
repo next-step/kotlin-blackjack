@@ -8,7 +8,15 @@ value class Score(val value: Int) {
         }
     }
 
+    operator fun plus(other: Score): Score {
+        return Score(value + other.value)
+    }
+
     operator fun compareTo(other: Score): Int {
         return value - other.value
+    }
+
+    companion object {
+        val ZERO = Score(0)
     }
 }

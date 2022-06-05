@@ -23,6 +23,16 @@ class ScoreTest : DescribeSpec({
         }
     }
 
+    describe("plus") {
+        context("두 점수가 주어지면") {
+            it("두 점수를 더할 수 있다") {
+                assertSoftly {
+                    Score(1) + Score(2) shouldBe Score(3)
+                }
+            }
+        }
+    }
+
     describe("compareTo") {
         context("두 점수가 주어지면") {
             it("점수를 비교할 수 있다") {
