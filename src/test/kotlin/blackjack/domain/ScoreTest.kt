@@ -79,4 +79,11 @@ class ScoreTest {
 
         assertThat(zeroScore.value).isZero
     }
+
+    @Test
+    fun `isZero를 통해 0점인지 확인할 수 있다`() {
+        val zeroScore = Score.zero()
+
+        assertThat(zeroScore.isZero()).isTrue
+    }
 }
