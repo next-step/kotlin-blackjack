@@ -1,7 +1,7 @@
 package study
 
 class SkillsBuilder {
-    private var values: MutableList<Skill> = mutableListOf()
+    private val values: MutableList<Skill> = mutableListOf()
 
     fun soft(value: String) {
         values.add(Soft(value))
