@@ -72,4 +72,11 @@ class ScoreTest {
 
         assertThat(Score.from(playingCards).canAddMore()).isTrue
     }
+
+    @Test
+    fun `zero를 이용해 0점짜리 Score를 얻을 수 있다`() {
+        val zeroScore = Score.zero()
+
+        assertThat(zeroScore.value).isZero
+    }
 }
