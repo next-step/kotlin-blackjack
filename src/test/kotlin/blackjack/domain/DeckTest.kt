@@ -31,9 +31,11 @@ class DeckTest {
     fun `number of default drawn cards is 2`() {
         val deck = Deck(cards)
         val defaultDrawnCardCount = 2
+        val expectedCards = listOf(Card(Type.SPADE, Value.ACE), Card(Type.SPADE, Value.TWO))
 
         val defaultDrawnCards = deck.draw()
 
         assertThat(defaultDrawnCards).hasSize(defaultDrawnCardCount)
+        assertThat(defaultDrawnCards).isEqualTo(expectedCards)
     }
 }

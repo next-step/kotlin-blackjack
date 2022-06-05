@@ -36,6 +36,6 @@ class Game(playerNames: List<String>) {
         private val types = Type.values()
         private val values = Value.values()
         private val cards = (0..51).map { Card(types[it / 13], values[it % 13]) }
-        private val deck = Deck(cards)
+        private val deck = Deck(cards.shuffled())
     }
 }

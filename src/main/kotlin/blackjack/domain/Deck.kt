@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Deck(cards: List<Card>) {
-    private val cards: MutableList<Card> = cards.shuffled().toMutableList()
+    private val cards: MutableList<Card> = cards.toMutableList()
 
     init {
         require(cards.size in MINIMUM_CARDS_COUNT..MAXIMUM_CARDS_COUNT) {
