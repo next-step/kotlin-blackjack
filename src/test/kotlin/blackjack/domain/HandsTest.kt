@@ -51,6 +51,6 @@ class HandsTest {
         )
         val hands = Hands(cards)
 
-        assertThat(hands.score().value).isEqualTo(20)
+        assertThat(hands.score.value).isEqualTo(20)
     }
 }

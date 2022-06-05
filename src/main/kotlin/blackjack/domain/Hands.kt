@@ -1,8 +1,9 @@
 package blackjack.domain
 
-@JvmInline
-value class Hands(val value: PlayingCards) {
-    fun score(): Score = Score.from(value)
+class Hands(val value: PlayingCards) {
+    val score: Score by lazy {
+        Score.from(value)
+    }
 
     operator fun plus(additionalCards: PlayingCards): Hands {
         return Hands(value + additionalCards)
