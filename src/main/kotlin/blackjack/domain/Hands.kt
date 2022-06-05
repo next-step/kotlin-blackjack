@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.domain
 
 @JvmInline
 value class Hands(val value: PlayingCards) {

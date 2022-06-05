@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.domain
 
 class CardDeck private constructor(private var cards: PlayingCards) {
     fun draw(count: Int): PlayingCards {

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.domain
 
 class PlayingCard private constructor(
     val suit: Suit,
