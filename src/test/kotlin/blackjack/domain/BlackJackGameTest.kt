@@ -12,6 +12,6 @@ class BlackJackGameTest {
         val blackJackGame = BlackJackGame.of(players, deck)
         blackJackGame.firstCardDistribution()
 
-        assertThat(blackJackGame.players[0].score()).isEqualTo(16)
+        assertThat(blackJackGame.players[0].cards.score()).isEqualTo(16)
     }
 }

@@ -26,11 +26,11 @@ object GameView {
         participants.players.forEach {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
-            println("결과 : ${it.score()}")
+            println("결과 : ${it.cards.score()}")
         }
     }
 
     private fun getCardDisplayName(player: Participant): String {
-        return player.cards.joinToString { "${it.denomination.displayName}${it.pattern.displayName}" }
+        return player.cards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.displayName}" }
     }
 }
