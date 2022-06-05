@@ -28,18 +28,16 @@ data class Card(
 
         companion object {
             fun of(pattern: CardPattern): List<Card> {
-                return Denomination.values().map { Card(pattern, it) }
+                return values().map { Card(pattern, it) }
             }
         }
     }
 
     companion object {
         fun createDeck(): List<Card> {
-            return ArrayList<Card>().apply {
-                CardPattern.values().forEach {
-                    this.addAll(Denomination.of(it))
-                }
-            }.shuffled().toList()
+            return CardPattern.values()
+                .flatMap { Denomination.of(it) }
+                .shuffled()
         }
     }
 }
