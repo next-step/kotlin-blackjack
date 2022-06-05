@@ -18,13 +18,14 @@ class Game(playerNames: String) {
 
     fun start(
         printFirstTurn: (players: List<Player>) -> Unit,
+        printPlayerInfo: (player: Player) -> Unit,
         inputHitDecision: (player: Player) -> Boolean,
         printResult: (players: List<Player>) -> Unit
     ) {
         firstTurn()
         printFirstTurn(players)
         while (playable) {
-            playable = play(inputHitDecision)
+            playable = play(printPlayerInfo, inputHitDecision)
         }
         printResult(players)
     }
@@ -36,15 +37,21 @@ class Game(playerNames: String) {
         }
     }
 
-    private fun play(inputHitDecision: (player: Player) -> Boolean): Boolean {
+    private fun play(
+        printPlayerInfo: (player: Player) -> Unit,
+        inputHitDecision: (player: Player) -> Boolean
+    ): Boolean {
         if (!playable) {
             return false
         }
-        players.forEach { player -> player.turn(inputHitDecision) }
+        players.forEach { player -> player.turn(printPlayerInfo, inputHitDecision) }
         return players.any { player -> player.status == PlayerStatus.HIT }
     }
 
-    private fun Player.turn(inputHitDecision: (player: Player) -> Boolean) {
+    private fun Player.turn(
+        printPlayerInfo: (player: Player) -> Unit,
+        inputHitDecision: (player: Player) -> Boolean
+    ) {
         if (status != PlayerStatus.HIT) {
             return
         }
@@ -56,7 +63,7 @@ class Game(playerNames: String) {
         } else {
             status = PlayerStatus.STAND
         }
-        println(this)
+        printPlayerInfo(this)
     }
 
     companion object {

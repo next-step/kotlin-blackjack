@@ -5,6 +5,6 @@ import blackjack.domain.player.Player
 object ResultView {
     fun printResult(players: List<Player>) {
         println()
-        players.forEach { player -> println("$player - 결과: ${player.score()}") }
+        players.forEach { player -> println("${PlayerView.parsePlayerInfoToString(player)} - 결과: ${player.score()}") }
     }
 }

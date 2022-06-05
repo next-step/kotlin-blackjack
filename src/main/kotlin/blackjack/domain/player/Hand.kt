@@ -16,8 +16,4 @@ data class Hand(
             .sortedBy { it.symbol }
             .fold(0) { acc, card -> acc + card.count(acc) }
     }
-
-    override fun toString(): String {
-        return cards.joinToString()
-    }
 }

@@ -10,6 +10,7 @@ fun main() {
     val game = Game(inputPlayers())
     game.start(
         printFirstTurn = PlayerView::printFirstTurn,
+        printPlayerInfo = PlayerView::printPlayerInfo,
         inputHitDecision = InputView::inputPlayerHitDecision,
         printResult = ResultView::printResult
     )
