@@ -9,7 +9,7 @@ import blackjack.view.ResultView
 fun main() {
     val game = Game(inputPlayers())
     game.start(
-        printFirstTurn = PlayerView::printFirstTurn,
+        printInitialHand = PlayerView::printInitialHand,
         printPlayerInfo = PlayerView::printPlayerInfo,
         decideHitDecision = InputView::decidePlayerHitDecision,
         printResult = ResultView::printResult

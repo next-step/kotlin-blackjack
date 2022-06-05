@@ -17,24 +17,24 @@ class Game(playerNames: String) {
     }
 
     fun start(
-        printFirstTurn: (players: List<Player>) -> Unit,
+        printInitialHand: (players: List<Player>) -> Unit,
         printPlayerInfo: (player: Player) -> Unit,
         decideHitDecision: (player: Player) -> Boolean,
         printResult: (players: List<Player>) -> Unit
     ) {
-        firstTurn()
-        printFirstTurn(players)
+        initialHand(printInitialHand)
         while (playable) {
             playable = play(printPlayerInfo, decideHitDecision)
         }
         printResult(players)
     }
 
-    private fun firstTurn() {
+    private fun initialHand(printFirstTurn: (players: List<Player>) -> Unit) {
         players.forEach { player ->
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
         }
+        printFirstTurn(players)
     }
 
     private fun play(
