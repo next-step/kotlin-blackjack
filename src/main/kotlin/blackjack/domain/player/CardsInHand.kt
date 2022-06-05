@@ -15,7 +15,7 @@ class CardsInHand(
     fun calculateScore(): Score = _cards.map { it.denomination }
         .sortedDescending()
         .fold(Score.zero()) { acc, denomination ->
-            if (denomination is Ace && acc.plus(denomination.aceScore).isLessThan(BLACKJACK)) {
+            if (denomination is Ace && acc.plus(denomination.aceScore) <= BLACKJACK) {
                 acc + denomination.aceScore
             } else {
                 acc + denomination.score
