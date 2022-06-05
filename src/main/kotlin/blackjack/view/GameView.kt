@@ -12,21 +12,25 @@ object GameView {
 
     fun displayInitialCard(participants: BlackJackGame) {
         participants.players.forEach {
-            println("${it.name}카드 : ${it.getCardDisplayName()}")
+            println("${it.name}카드 : ${getCardDisplayName(it)}")
         }
     }
 
     fun displayPlayerCard(participant: Participant) {
         participant.also {
-            println("${it.name}카드 : ${it.getCardDisplayName()}")
+            println("${it.name}카드 : ${getCardDisplayName(it)}")
         }
     }
 
     fun displayResult(participants: BlackJackGame) {
         participants.players.forEach {
-            print("${it.name}카드 : ${it.getCardDisplayName()}")
+            print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
             println("결과 : ${it.score()}")
         }
+    }
+
+    private fun getCardDisplayName(player: Participant): String {
+        return player.cards.joinToString { "${it.score.displayName}${it.pattern.displayName}" }
     }
 }

@@ -26,7 +26,6 @@ data class Participant(
         } else scoreContainBigValueOfAce
     }
 
-    fun getCardDisplayName() = _playerCards.joinToString { "${it.score.displayName}${it.pattern.displayName}" }
 
     fun addCard() {
         _playerCards.add(cardDeck.draw())
