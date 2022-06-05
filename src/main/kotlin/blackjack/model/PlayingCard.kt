@@ -13,8 +13,8 @@ data class PlayingCard(
             }
         }
 
-        fun all(): List<PlayingCard> {
-            return PLAYING_CARDS
+        fun all(): PlayingCards {
+            return PlayingCards.from(PLAYING_CARDS)
         }
     }
 }

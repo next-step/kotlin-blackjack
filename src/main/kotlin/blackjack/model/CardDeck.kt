@@ -1,20 +1,19 @@
 package blackjack.model
 
-class CardDeck private constructor(cards: List<PlayingCard>) {
-    private val _cards: MutableList<PlayingCard> = cards.toMutableList()
-    private val cards: List<PlayingCard>
-        get() = _cards
+class CardDeck private constructor(private var cards: PlayingCards) {
+    fun draw(count: Int): PlayingCards {
+        val drawnCards = cards.take(count)
+        cards = PlayingCards.from(cards.drop(count))
 
-    fun draw(count: Int): List<PlayingCard> {
-        return cards.take(count).also { drawnCards ->
-            _cards.removeAll(drawnCards)
-        }
+        return PlayingCards.from(drawnCards)
     }
 
     companion object {
-        fun from(cards: List<PlayingCard>): CardDeck {
+        fun from(cards: PlayingCards): CardDeck {
             // Todo : distinct와 shuffled는 외부에서 하는 것으로
-            return CardDeck(cards.distinct().shuffled())
+            return CardDeck(
+                PlayingCards.from(cards.distinct().shuffled())
+            )
         }
     }
 }
