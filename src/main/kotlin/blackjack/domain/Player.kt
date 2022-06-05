@@ -1,18 +1,19 @@
 package blackjack.domain
 
-class Player(val name: String, hand: Hand = Hand(emptyList())) {
-    private var _hand = hand
+class Player(
+    val name: String,
+    hand: Hand = Hand(emptyList())
+) {
+    var hand = hand
+        private set
 
     val score: Score
-        get() = Score(_hand.cards)
-
-    val hand: Hand
-        get() = _hand
+        get() = Score(hand.cards)
 
     val canDrawCard: Boolean
         get() = !score.isBlackjack && !score.isBust
 
     fun addCard(card: Card) {
-        _hand = hand.addCard(card)
+        hand = hand.addCard(card)
     }
 }
