@@ -30,7 +30,7 @@ class Game(playerNames: String) {
         printResult(players)
     }
 
-    fun firstTurn() {
+    private fun firstTurn() {
         players.forEach { player ->
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
