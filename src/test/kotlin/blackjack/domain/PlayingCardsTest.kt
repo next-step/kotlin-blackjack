@@ -16,6 +16,11 @@ class PlayingCardsTest {
     }
 
     @Test
+    fun `empty를 통해 빈 PlayingCards를 얻을 수 있다`() {
+        assertThat(PlayingCards.empty()).isEmpty()
+    }
+
+    @Test
     fun `더하기 연산자를 사용하여 새로운 PlayingCards를 얻을 수 있다`() {
         val cards1 = listOf(
             PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
