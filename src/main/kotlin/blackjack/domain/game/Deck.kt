@@ -6,7 +6,7 @@ class Deck(cards: List<Card>) {
     private val cards = cards.toMutableList()
 
     fun draw(): Card {
-        return cards.removeAt(0)
+        return cards.removeFirst()
     }
 
     fun shuffle(): Deck {
