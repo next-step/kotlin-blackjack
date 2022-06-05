@@ -19,13 +19,13 @@ class Game(playerNames: String) {
     fun start(
         printFirstTurn: (players: List<Player>) -> Unit,
         printPlayerInfo: (player: Player) -> Unit,
-        inputHitDecision: (player: Player) -> Boolean,
+        decideHitDecision: (player: Player) -> Boolean,
         printResult: (players: List<Player>) -> Unit
     ) {
         firstTurn()
         printFirstTurn(players)
         while (playable) {
-            playable = play(printPlayerInfo, inputHitDecision)
+            playable = play(printPlayerInfo, decideHitDecision)
         }
         printResult(players)
     }

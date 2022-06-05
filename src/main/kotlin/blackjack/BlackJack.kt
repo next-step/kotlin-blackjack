@@ -11,7 +11,7 @@ fun main() {
     game.start(
         printFirstTurn = PlayerView::printFirstTurn,
         printPlayerInfo = PlayerView::printPlayerInfo,
-        inputHitDecision = InputView::inputPlayerHitDecision,
+        decideHitDecision = InputView::decidePlayerHitDecision,
         printResult = ResultView::printResult
     )
 }

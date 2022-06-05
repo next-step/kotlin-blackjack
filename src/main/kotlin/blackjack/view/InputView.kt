@@ -8,7 +8,7 @@ object InputView {
         return requireNotNull(readlnOrNull())
     }
 
-    fun inputPlayerHitDecision(player: Player): Boolean {
+    fun decidePlayerHitDecision(player: Player): Boolean {
         println("${player.name}은(는) 한장의 카드를 더 받겠습니까? (y, n)")
         return when (readlnOrNull()) {
             "y" -> true
