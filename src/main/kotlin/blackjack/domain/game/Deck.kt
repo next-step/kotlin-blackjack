@@ -10,7 +10,12 @@ class Deck(cards: List<Card>) {
     }
 
     fun shuffle(): Deck {
-        return Deck(cards.shuffled())
+        val shuffledCards = cards.shuffled()
+        return if (cards != shuffledCards) {
+            Deck(shuffledCards)
+        } else {
+            shuffle()
+        }
     }
 
     fun size(): Int {
