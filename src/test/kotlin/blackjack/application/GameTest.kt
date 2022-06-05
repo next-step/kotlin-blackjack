@@ -1,6 +1,5 @@
-package application
+package blackjack.application
 
-import blackjack.application.Game
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
