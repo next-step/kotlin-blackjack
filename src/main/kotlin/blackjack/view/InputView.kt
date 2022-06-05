@@ -13,7 +13,7 @@ object InputView {
         return when (readlnOrNull()) {
             "y" -> true
             "n" -> false
-            else -> throw IllegalArgumentException()
+            else -> throw IllegalArgumentException("잘못된 값을 입력했습니다. y 또는 n 으로 선택해주세요.")
         }
     }
 }

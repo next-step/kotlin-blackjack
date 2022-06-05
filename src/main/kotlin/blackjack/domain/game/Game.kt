@@ -12,7 +12,7 @@ class Game(playerNames: String) {
     private var playable: Boolean
 
     init {
-        require(playerNames.isNotBlank())
+        require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
         players = playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
         dealer = Dealer()
         playable = true
