@@ -1,8 +1,10 @@
 package blackjack.domain.game
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardSuit
+import blackjack.domain.card.CardSymbol
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerStatus
-import blackjack.util.FIRST_DRAW_NUMBER
 
 class Game(playerNames: String) {
     private val players: List<Player>
@@ -68,5 +70,13 @@ class Game(playerNames: String) {
 
     companion object {
         private const val PLAYER_INPUT_DELIMITER = ","
+        const val ACE_MIN_NUMBER: Int = 1
+        const val ACE_MAX_NUMBER: Int = 11
+        const val FIRST_DRAW_NUMBER = 2
+        val ALL_CARDS = CardSuit.values().flatMap { suit ->
+            CardSymbol.values().map { symbol ->
+                Card(suit, symbol)
+            }
+        }
     }
 }

@@ -1,8 +1,7 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.CardSymbol
-import blackjack.util.ACE_MAX_NUMBER
-import blackjack.util.ACE_MIN_NUMBER
+import blackjack.domain.game.Game.Companion.ACE_MAX_NUMBER
+import blackjack.domain.game.Game.Companion.ACE_MIN_NUMBER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -57,11 +56,8 @@ internal class CardSymbolTest {
         // given
         val ace = CardSymbol.ACE
 
-        // when
-        val sumOfOtherCards = NUMBER_OF_LEAST_THRESHOLD_WITH_ACE
-
         // when, then
-        assertThat(ace.count()).isEqualTo(ACE_MAX_NUMBER)
+        assertThat(ace.count(NUMBER_OF_LEAST_THRESHOLD_WITH_ACE)).isEqualTo(ACE_MAX_NUMBER)
     }
 
     companion object {

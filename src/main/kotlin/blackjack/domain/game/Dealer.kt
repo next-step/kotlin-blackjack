@@ -1,7 +1,6 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.util.ALL_CARDS
 
 class Dealer {
     private val deck: Deck = shuffleNewDeck()
@@ -23,6 +22,6 @@ class Dealer {
     }
 
     companion object {
-        private val STANDARD_52_CARD_DECK: Deck = Deck(ALL_CARDS)
+        private val STANDARD_52_CARD_DECK: Deck = Deck(Game.ALL_CARDS)
     }
 }

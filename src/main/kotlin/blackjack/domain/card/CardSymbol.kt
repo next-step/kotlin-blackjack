@@ -1,8 +1,8 @@
 package blackjack.domain.card
 
+import blackjack.domain.game.Game.Companion.ACE_MAX_NUMBER
+import blackjack.domain.game.Game.Companion.ACE_MIN_NUMBER
 import blackjack.domain.player.Hand
-import blackjack.util.ACE_MAX_NUMBER
-import blackjack.util.ACE_MIN_NUMBER
 
 enum class CardSymbol(val displayName: String, private val value: Int) {
     TWO("2", 2),
