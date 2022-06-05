@@ -3,6 +3,10 @@ package blackjack.domain
 sealed class PlayerState(val score: Score) {
     abstract fun isFinished(): Boolean
 
+    class Start(score: Score) : PlayerState(score) {
+        override fun isFinished(): Boolean = false
+    }
+
     class Hit(score: Score) : PlayerState(score) {
         override fun isFinished(): Boolean = false
     }
@@ -22,6 +26,7 @@ sealed class PlayerState(val score: Score) {
     companion object {
         fun of(score: Score, isRunning: Boolean = true): PlayerState {
             return when {
+                score.isZero() -> Start(score)
                 score.isBlackjack() -> Blackjack(score)
                 score.isBust() -> Bust(score)
                 isRunning -> Hit(score)
