@@ -40,4 +40,17 @@ class HandsTest {
             { assertThat(newHands.value.takeLast(2)).isEqualTo(additionalCards) }
         )
     }
+
+    @Test
+    fun `score를 통해 현재 손패의 점수를 구할 수 있다`() {
+        val cards = PlayingCards.from(
+            listOf(
+                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+            )
+        )
+        val hands = Hands(cards)
+
+        assertThat(hands.score().value).isEqualTo(20)
+    }
 }
