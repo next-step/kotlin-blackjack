@@ -6,6 +6,8 @@ class PlayingCard private constructor(
 ) {
     val text: String = "${number.text}${suit.text}"
 
+    fun isCardOf(number: CardNumber): Boolean = this.number == number
+
     companion object {
         private val ALL_PLAYING_CARDS: List<PlayingCard> = Suit.values().flatMap { suit ->
             CardNumber.values().map { number ->

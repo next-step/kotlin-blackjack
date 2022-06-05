@@ -2,6 +2,7 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PlayingCardTest {
     @Test
@@ -37,5 +38,18 @@ class PlayingCardTest {
                 assertThat(playingCards).contains(playingCard)
             }
         }
+    }
+
+    @Test
+    fun `isCardOf를 통해 PlayingCard가 특정 번호의 카드인지 확인할 수 있다`() {
+        val playingCard = PlayingCard.of(
+            suit = Suit.DIAMONDS,
+            number = CardNumber.ACE
+        )
+
+        assertAll(
+            { assertThat(playingCard.isCardOf(CardNumber.ACE)).isTrue },
+            { assertThat(playingCard.isCardOf(CardNumber.KING)).isFalse }
+        )
     }
 }
