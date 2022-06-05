@@ -17,7 +17,6 @@ class Game(playerNames: List<String>) {
         }
     }
 
-    // TODO 분리해서 테스트 가능하게 만들어보기
     fun start() {
         players.forEach { player ->
             while (BlackjackInputView.queryTakeCard(player) == "y") {
