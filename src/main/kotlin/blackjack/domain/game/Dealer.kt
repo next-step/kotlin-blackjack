@@ -18,10 +18,6 @@ class Dealer {
         return deck.draw()
     }
 
-    fun getNumOfRemainCards(): Int {
-        return deck.size()
-    }
-
     private fun shuffleNewDeck(): Deck {
         return STANDARD_52_CARD_DECK.shuffle()
     }
