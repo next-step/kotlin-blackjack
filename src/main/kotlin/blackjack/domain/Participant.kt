@@ -1,8 +1,7 @@
 package blackjack.domain
 
 data class Participant(
-    val name: String,
-    private val cardDeck: Deck
+    val name: String
 ) {
     private val _playerCards = mutableListOf<Card>()
 
@@ -24,12 +23,8 @@ data class Participant(
         } else score
     }
 
-    fun addCard() {
-        _playerCards.add(cardDeck.draw())
-    }
-
-    fun addFirstCard() {
-        repeat(FIRST_DISTRIBUTION_CARD_COUNT) { _playerCards.add(cardDeck.draw()) }
+    fun addCard(card: Card) {
+        _playerCards.add(card)
     }
 
     private fun List<Card>.hasAceCard(): Boolean {
@@ -37,11 +32,10 @@ data class Participant(
     }
 
     companion object {
-        fun of(playerName: String, cardDeck: Deck): Participant {
-            return Participant(playerName, cardDeck = cardDeck)
+        fun of(playerName: String): Participant {
+            return Participant(playerName)
         }
 
         private const val BIG_VALUE_OF_ACE = 11
-        private const val FIRST_DISTRIBUTION_CARD_COUNT = 2
     }
 }

@@ -4,7 +4,8 @@ import blackjack.view.GameView
 import blackjack.view.InputView
 
 data class BlackJackGame(
-    val players: List<Participant>
+    val players: List<Participant>,
+    val cardDeck: Deck
 ) {
     fun firstCardDistribution() {
         players.forEach { participant ->
@@ -15,19 +16,25 @@ data class BlackJackGame(
     fun suggestMoreCardToEachPlayer() {
         players.forEach {
             while (InputView.needMoreCard(it)) {
-                it.addCard()
+                it.addCard(cardDeck.draw())
                 GameView.displayPlayerCard(it)
             }
         }
     }
 
+    private fun Participant.addFirstCard() {
+        repeat(FIRST_DISTRIBUTION_CARD_COUNT) {
+            addCard(cardDeck.draw())
+        }
+    }
 
     companion object {
-        fun of(playerNames: List<String>): BlackJackGame {
-            val cardDeck = CardDeck(Card.createDeck())
+        fun of(playerNames: List<String>, deck: Deck): BlackJackGame {
             return BlackJackGame(
-                playerNames.map { Participant.of(it, cardDeck) }
+                playerNames.map { Participant.of(it) }, deck
             )
         }
+
+        private const val FIRST_DISTRIBUTION_CARD_COUNT = 2
     }
 }
