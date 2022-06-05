@@ -1,6 +1,6 @@
 package blackjack.enums
 
-enum class Value(val first: Int, val second: Int = 0) {
+enum class Value(val origin: Int, val alternative: Int = 0) {
     ACE(1, 11),
     TWO(2),
     THREE(3),
