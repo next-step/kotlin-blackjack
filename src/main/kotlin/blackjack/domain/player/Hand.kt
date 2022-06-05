@@ -3,16 +3,18 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 
 data class Hand(
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
 ) {
+    val cards: List<Card>
+        get() = _cards.toList()
 
     fun add(card: Card): Hand {
-        cards.add(card)
+        _cards.add(card)
         return this
     }
 
     fun score(): Int {
-        return cards
+        return _cards
             .sortedBy { it.symbol }
             .fold(0) { acc, card -> acc + card.count(acc) }
     }
