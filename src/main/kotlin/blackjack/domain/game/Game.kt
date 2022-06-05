@@ -61,7 +61,7 @@ class Game(playerNames: String) {
             val card = dealer.drawOneCard()
             addCards(card)
         } else {
-            status = PlayerStatus.STAND
+            changeStatus(PlayerStatus.STAND)
         }
         printPlayerInfo(this)
     }

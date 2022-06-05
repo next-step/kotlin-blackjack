@@ -4,10 +4,11 @@ import blackjack.domain.card.Card
 import blackjack.util.COUNT_THRESHOLD
 
 data class Player(
-    val name: String,
-    var status: PlayerStatus = PlayerStatus.HIT,
-    val hand: Hand = Hand()
+    val name: String
 ) {
+    val hand: Hand = Hand()
+    var status: PlayerStatus = PlayerStatus.HIT
+        private set
 
     fun addCards(vararg cards: Card) {
         cards.forEach { hand.add(it) }
@@ -16,6 +17,10 @@ data class Player(
 
     fun score(): Int {
         return hand.score()
+    }
+
+    fun changeStatus(status: PlayerStatus) {
+        this.status = status
     }
 
     private fun checkBust() {
