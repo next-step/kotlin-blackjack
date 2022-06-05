@@ -9,8 +9,8 @@ class HandsTest {
     fun `Hands는 플레이어가 손패에 보관하고 있는 카드 목록을 나타낸다`() {
         val cards = PlayingCards.from(
             listOf(
-                PlayingCard(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard(Suit.HEARTS, CardNumber.ACE)
+                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
             )
         )
         val hands = Hands(cards)
@@ -22,15 +22,15 @@ class HandsTest {
     fun `더하기 연산자를 이용하여 새 카드들을 손패에 추가할 수 있다`() {
         val cards = PlayingCards.from(
             listOf(
-                PlayingCard(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard(Suit.HEARTS, CardNumber.ACE)
+                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
             )
         )
         val hands = Hands(cards)
         val additionalCards = PlayingCards.from(
             listOf(
-                PlayingCard(Suit.DIAMONDS, CardNumber.KING),
-                PlayingCard(Suit.SPADES, CardNumber.JACK)
+                PlayingCard.of(Suit.DIAMONDS, CardNumber.KING),
+                PlayingCard.of(Suit.SPADES, CardNumber.JACK)
             )
         )
         val newHands = hands + additionalCards

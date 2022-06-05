@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class PlayingCardTest {
     @Test
     fun `PlayingCard는 카드 모양과 카드 번호로 구성된다`() {
-        val playingCard = PlayingCard(
+        val playingCard = PlayingCard.of(
             suit = Suit.CLUBS,
             number = CardNumber.ACE
         )
@@ -17,7 +17,7 @@ class PlayingCardTest {
 
     @Test
     fun `text를 통해 문자로 표현된 카드를 가져올 수 있다`() {
-        val playingCard = PlayingCard(
+        val playingCard = PlayingCard.of(
             suit = Suit.CLUBS,
             number = CardNumber.ACE
         )
@@ -32,7 +32,7 @@ class PlayingCardTest {
 
         Suit.values().forEach { suit ->
             CardNumber.values().forEach { number ->
-                val playingCard = PlayingCard(suit, number)
+                val playingCard = PlayingCard.of(suit, number)
 
                 assertThat(playingCards).contains(playingCard)
             }
