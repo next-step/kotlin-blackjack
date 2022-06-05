@@ -31,6 +31,6 @@ object GameView {
     }
 
     private fun getCardDisplayName(player: Participant): String {
-        return player.cards.joinToString { "${it.score.displayName}${it.pattern.displayName}" }
+        return player.cards.joinToString { "${it.denomination.displayName}${it.pattern.displayName}" }
     }
 }

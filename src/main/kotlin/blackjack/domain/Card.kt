@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class Card(
     val pattern: CardPattern,
-    val score: CardDisplayValue
+    val denomination: Denomination
 ) {
     enum class CardPattern(val displayName: String) {
         SPADES("스페이드"),
@@ -11,7 +11,7 @@ data class Card(
         CLUBS("클로버");
     }
 
-    enum class CardDisplayValue(val displayName: String, val point: Int) {
+    enum class Denomination(val displayName: String, val point: Int) {
         ACE("A", 1),
         TWO("2", 2),
         THREE("3", 3),
@@ -28,7 +28,7 @@ data class Card(
 
         companion object {
             fun of(pattern: CardPattern): List<Card> {
-                return CardDisplayValue.values().map { Card(pattern, it) }
+                return Denomination.values().map { Card(pattern, it) }
             }
         }
     }
@@ -37,7 +37,7 @@ data class Card(
         fun createDeck(): List<Card> {
             return ArrayList<Card>().apply {
                 CardPattern.values().forEach {
-                    this.addAll(CardDisplayValue.of(it))
+                    this.addAll(Denomination.of(it))
                 }
             }.shuffled().toList()
         }

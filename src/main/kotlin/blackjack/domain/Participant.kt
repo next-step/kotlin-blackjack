@@ -13,14 +13,14 @@ data class Participant(
         get() = _playerCards.toList()
 
     fun score(): Int {
-        val score = cards.sumOf { it.score.point }
+        val score = cards.sumOf { it.denomination.point }
         return if (cards.hasAceCard()) {
             compareAbsoluteValue(score)
         } else score
     }
 
     private fun compareAbsoluteValue(score: Int): Int {
-        val scoreContainBigValueOfAce = score - Card.CardDisplayValue.ACE.point + BIG_VALUE_OF_ACE
+        val scoreContainBigValueOfAce = score - Card.Denomination.ACE.point + BIG_VALUE_OF_ACE
         return if (abs(BLACK_JACK - scoreContainBigValueOfAce) > abs(BLACK_JACK - score)) {
             score
         } else scoreContainBigValueOfAce
@@ -32,7 +32,7 @@ data class Participant(
     }
 
     private fun List<Card>.hasAceCard(): Boolean {
-        return this.map { it.score }.contains(Card.CardDisplayValue.ACE)
+        return this.map { it.denomination }.contains(Card.Denomination.ACE)
     }
 
     companion object {

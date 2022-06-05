@@ -13,6 +13,6 @@ class CardDeckTest {
     @Test
     fun `카드 뽑기 테스트`() {
         val cardDeck = MockCardDeck().draw()
-        assertThat(cardDeck).isEqualTo(Card(Card.CardPattern.CLUBS, Card.CardDisplayValue.EIGHT))
+        assertThat(cardDeck).isEqualTo(Card(Card.CardPattern.CLUBS, Card.Denomination.EIGHT))
     }
 }
