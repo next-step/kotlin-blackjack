@@ -2,6 +2,12 @@ package blackjack.domain
 
 @JvmInline
 value class Score private constructor(val value: Int) {
+    fun isBlackjack(): Boolean = value == BLACKJACK_SCORE
+
+    fun isBust(): Boolean = value > BLACKJACK_SCORE
+
+    fun canAddMore(): Boolean = value < BLACKJACK_SCORE
+
     companion object {
         private const val BLACKJACK_SCORE = 21
         private const val ADDITIONAL_SCORE_OF_ACE = 10
