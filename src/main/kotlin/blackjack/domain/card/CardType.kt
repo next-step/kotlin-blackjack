@@ -41,5 +41,6 @@ class NumberCard(number: Int) : CardType(number.toString(), Score(number)) {
 
     companion object {
         private val CARD_NUMBER_RANGE = 2..10
+        val NUMBER_CARDS: List<NumberCard> = CARD_NUMBER_RANGE.map(::NumberCard)
     }
 }
