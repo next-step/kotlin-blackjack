@@ -29,7 +29,7 @@ open class Cards(private val cardList: List<Card> = listOf()) : List<Card> by ca
         get() {
             val basicScore = this.cardList.sumOf { it.denomination.score }
             val countOfAce = this.cardList.count { it.denomination == Denomination.ACE }
-            return (0..countOfAce).map { it * 10 + basicScore }.sorted()
+            return (0..countOfAce).map { it * THE_OTHER_SCORE_OF_ACE_CARD + basicScore }.sorted()
         }
 
     val resultScore: Int
@@ -63,5 +63,6 @@ open class Cards(private val cardList: List<Card> = listOf()) : List<Card> by ca
             get() = Cards(Card.cardList.shuffled())
 
         private const val BLACK_JACK_SCORE = 21
+        private const val THE_OTHER_SCORE_OF_ACE_CARD = 10
     }
 }
