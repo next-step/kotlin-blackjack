@@ -11,7 +11,7 @@ class ParticipantTest {
     fun `참가자는 이름을 가진다`(input: String) {
         val players = input.split(",")
         val participants = players.map { Participant(it) }
-        assertThat(participants.count()).isEqualTo(2)
+        assertThat(participants.size).isEqualTo(2)
     }
 
     @ParameterizedTest
