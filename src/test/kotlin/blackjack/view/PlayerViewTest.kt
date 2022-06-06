@@ -10,8 +10,11 @@ internal class PlayerViewTest : StringSpec({
 
     "딜러와 참가자 현황을 출력한다" {
         val io = StubIO()
-        val dealer = createDealer(Card(Suite.DIAMONDS, Denomination.THREE))
-        dealer.giveCard(dealer)
+        val dealer = createDealer(
+            Card(Suite.DIAMONDS, Denomination.THREE),
+            Card(Suite.SPADES, Denomination.FOUR),
+        )
+        repeat(2) { dealer.giveCard(dealer) }
         val players = listOf(
             createPlayer(
                 "pobi",
