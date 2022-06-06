@@ -8,6 +8,7 @@ import blackjack.view.PlayerGameView
 import blackjack.view.PlayerNameInputView
 import blackjack.view.PlayerView
 import blackjack.view.ResultView
+import blackjack.view.WinnerView
 
 fun main() {
     val deck = Deck.shuffled()
@@ -22,4 +23,5 @@ fun main() {
     PlayerGameView(console, dealer, players).run()
     DealerGameView(console, dealer).run()
     ResultView(console, dealer, players).run()
+    WinnerView(console, dealer, players).run()
 }

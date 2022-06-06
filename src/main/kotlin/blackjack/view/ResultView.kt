@@ -10,7 +10,7 @@ class ResultView(
 ) {
 
     fun run() {
-        io.print(dealer.text())
+        io.print("${dealer.text()} - 결과: ${dealer.score.sum}")
         players.forEach {
             io.print("${it.text()} - 결과: ${it.score.sum}")
         }
