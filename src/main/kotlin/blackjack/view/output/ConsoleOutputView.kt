@@ -16,7 +16,7 @@ class ConsoleOutputView : OutputView {
         print("${player.name} 카드: ")
         print(player.cards.joinToString(", ") { it.displayName })
         if (withScore) {
-            print("  - 결과 : :${player.cards.resultScore}")
+            print("  - 결과 : :${player.score.finalScore}")
         }
         println()
     }

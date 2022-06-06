@@ -61,15 +61,16 @@ internal class CardTest {
         isBlackJack: Boolean
     ) {
         val cardSet = cardListString.toCardSet()
-        val scoreList = scoreListString.split(",").map { it.toInt() }
+        val expectedScoreList = scoreListString.split(",").map { it.toInt() }
+        val score = Score(cardSet)
 
         assertAll(
-            { assertThat(cardSet.scoreList.size).isEqualTo(scoreList.size) },
-            { assertThat(cardSet.minScore).isEqualTo(scoreList.minOrNull() ?: 0) },
-            { assertThat(cardSet.maxCore).isEqualTo(scoreList.maxOrNull() ?: 0) },
-            { assertThat(cardSet.maxScoreNotBust).isEqualTo(maxScoreNotBust) },
-            { assertThat(cardSet.isBust).isEqualTo(isBust) },
-            { assertThat(cardSet.isBlackJack).isEqualTo(isBlackJack) }
+            { assertThat(score.scoreList.size).isEqualTo(expectedScoreList.size) },
+            { assertThat(score.minScore).isEqualTo(expectedScoreList.minOrNull() ?: 0) },
+            { assertThat(score.maxCore).isEqualTo(expectedScoreList.maxOrNull() ?: 0) },
+            { assertThat(score.maxScoreNotBust).isEqualTo(maxScoreNotBust) },
+            { assertThat(score.isBust).isEqualTo(isBust) },
+            { assertThat(score.isBlackJack).isEqualTo(isBlackJack) }
         )
     }
 
