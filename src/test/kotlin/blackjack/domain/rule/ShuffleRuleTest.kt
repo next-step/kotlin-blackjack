@@ -19,6 +19,6 @@ class ShuffleRuleTest {
             )
         )
 
-        assertThat(ShuffleRule.apply(playingCards)).containsAll(playingCards)
+        assertThat(ShuffleRule.applyTo(playingCards)).containsAll(playingCards)
     }
 }

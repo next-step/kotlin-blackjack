@@ -19,7 +19,7 @@ class PlayingCardsRuleTest {
             )
         )
         val playingCardsRule = object : PlayingCardsRule {
-            override fun apply(playingCards: PlayingCards): PlayingCards {
+            override fun applyTo(playingCards: PlayingCards): PlayingCards {
                 val cards = playingCards.filterNot { playingCard ->
                     playingCard.suit == Suit.CLUBS
                 }
@@ -27,7 +27,7 @@ class PlayingCardsRuleTest {
             }
         }
 
-        assertThat(playingCardsRule.apply(playingCards))
+        assertThat(playingCardsRule.applyTo(playingCards))
             .doesNotContain(PlayingCard.of(Suit.CLUBS, CardNumber.NINE))
             .containsAll(
                 listOf(

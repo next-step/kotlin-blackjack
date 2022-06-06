@@ -19,6 +19,6 @@ class DistinctRuleTest {
             )
         )
 
-        assertThat(DistinctRule.apply(playingCards)).containsOnlyOnce(PlayingCard.of(Suit.CLUBS, CardNumber.NINE))
+        assertThat(DistinctRule.applyTo(playingCards)).containsOnlyOnce(PlayingCard.of(Suit.CLUBS, CardNumber.NINE))
     }
 }
