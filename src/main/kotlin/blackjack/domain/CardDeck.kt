@@ -15,5 +15,8 @@ class CardDeck private constructor(private var cards: PlayingCards) {
                 PlayingCards.from(cards.distinct().shuffled())
             )
         }
+
+        fun of(cards: PlayingCards) {
+        }
     }
 }
