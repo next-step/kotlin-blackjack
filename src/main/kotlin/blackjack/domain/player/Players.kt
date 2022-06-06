@@ -22,4 +22,12 @@ class Players(
     }
 
     fun ready(cardDeck: CardDeck): Unit = players.forEach { it.ready(cardDeck) }
+
+    fun score() {
+        players.forEach { it.score(players) }
+    }
+
+    fun winToDealerBust() {
+        players.forEach { it.winToDealerBust() }
+    }
 }

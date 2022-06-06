@@ -18,19 +18,24 @@ fun main() {
     OutputView.printGameReady(blackJack.names)
     OutputView.printStatuses(blackJack.statuses)
 
-    while (!blackJack.isPlayerAllStay) {
-        hit(blackJack)
-    }
-
-    while (!blackJack.isDealerStay) {
-        blackJack.hitDealer { OutputView.printDealerHit() }
-    }
+    playBlackJack(blackJack)
 
     OutputView.printResults(blackJack.results)
+    OutputView.printBlackJackResult(blackJack.rounds)
 }
 
-private fun hit(blackJack: BlackJack) {
-    blackJack.hit {
+private fun playBlackJack(blackJack: BlackJack) {
+    while (!blackJack.isPlayerAllStay) {
+        playerHit(blackJack)
+    }
+
+    while (!blackJack.isDealerStay && !blackJack.dealerBust) {
+        blackJack.hitDealer { OutputView.printDealerHit() }
+    }
+}
+
+private fun playerHit(blackJack: BlackJack) {
+    blackJack.playerHit {
         when (InputView.inputHitContinue(it.name.value)) {
             Continue.TRUE -> OutputView.printStatus(blackJack.play(it))
             Continue.FALSE -> it.stay()
