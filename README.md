@@ -3,8 +3,13 @@
 ## 블랙잭
 
 ### 기능 목록
+- CardNumber
+  - [x] Enum 으로 Ace, Two ~ Ten, Jack, Queen, King 이 있다.
+  - [x] 각각 값은 대응되는 숫자를 가지며 A는 1, 11 두 숫자에 대응, K, Q, J는 10이다.
+- Suit
+  - [ ] Enum 으로 Spade, Hart, Diamond, Club이 있다.
 - Card
-  - [ ] 카드는 Number와 Suit 을 속성으로 갖는다.
+  - [ ] 카드는 CardNumber와 Suit 을 속성으로 갖는다.
 - Cards
   - [ ] 카드들을 속성으로 갖는다.
   - [ ] 지급받은 카드들의 숫자 합을 반환한다. (A는 1, 11로 대응된다.)
