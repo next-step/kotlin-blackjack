@@ -31,7 +31,7 @@ data class BlackJackGame(
     companion object {
         fun of(playerNames: List<String>, deck: Deck): BlackJackGame {
             return BlackJackGame(
-                playerNames.map { Participant.of(it) }, deck
+                playerNames.map { Participant(it) }, deck
             )
         }
 

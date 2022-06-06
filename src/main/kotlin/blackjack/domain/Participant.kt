@@ -11,11 +11,4 @@ data class Participant(
     fun addCard(card: Card) {
         _playerCards.add(card)
     }
-
-    companion object {
-        fun of(playerName: String): Participant {
-            return Participant(playerName)
-        }
-
-    }
 }
