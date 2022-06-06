@@ -14,6 +14,7 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo(value)
     }
+
     @Test
     fun company() {
         val person: Person = introduce {
@@ -22,5 +23,20 @@ class DslTest {
         }
         assertThat(person.name).isEqualTo("이동욱")
         assertThat(person.company).isEqualTo("인프랩")
+    }
+
+    @Test
+    fun language() {
+        val person: Person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        assertThat(person.languages!!.get(0).name).isEqualTo("Korean")
+        assertThat(person.languages!!.get(0).level).isEqualTo(5)
+        assertThat(person.languages!!.get(1).name).isEqualTo("English")
+        assertThat(person.languages!!.get(1).level).isEqualTo(3)
     }
 }

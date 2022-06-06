@@ -1,11 +1,5 @@
 package dsl
 
-data class Person(var name: String, var company: String) {
-    fun name(value: String) {
-        name = value
-    }
+import dsl.language.Languages
 
-    fun company(value: String) {
-        company = value
-    }
-}
+data class Person(val name: String, val company: String?, val languages: Languages?)
