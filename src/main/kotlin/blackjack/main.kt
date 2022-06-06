@@ -15,7 +15,7 @@ fun main() {
 
     val playerNames = PlayerNameInputView(console).run()
 
-    val players = playerNames.map(dealer::makePlayer)
+    val players = dealer.startGame(playerNames)
 
     PlayerView(console, players).run()
 
