@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.view.Console
+import blackjack.view.DealerGameView
 import blackjack.view.PlayerGameView
 import blackjack.view.PlayerNameInputView
 import blackjack.view.PlayerView
@@ -18,8 +19,7 @@ fun main() {
     val players = dealer.startGame(playerNames)
 
     PlayerView(console, dealer, players).run()
-
     PlayerGameView(console, dealer, players).run()
-
-    ResultView(console, players).run()
+    DealerGameView(console, dealer).run()
+    ResultView(console, dealer, players).run()
 }
