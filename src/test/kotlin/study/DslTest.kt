@@ -3,6 +3,7 @@ package study
 import kotlindsl.Resume
 import kotlindsl.introduce
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -55,8 +56,10 @@ class DslTest {
         assertThat(resume.name).isEqualTo("나윤지")
         assertNotNull(resume.skills)
         assertThat(resume.skills!!.soft.softSkills.size).isEqualTo(2)
-        assertThat(resume.skills!!.soft.softSkills[0]).isEqualTo("A passion for problem solving")
-        assertThat(resume.skills!!.soft.softSkills[1]).isEqualTo("Good communication skills")
+        assertEquals(
+            resume.skills!!.soft.softSkills,
+            listOf("A passion for problem solving", "Good communication skills")
+        )
     }
 
     @Test
@@ -73,9 +76,11 @@ class DslTest {
         assertNotNull(resume.skills)
         assertThat(resume.skills!!.soft.softSkills.size).isEqualTo(2)
         assertThat(resume.skills!!.hard.hardSkills.size).isEqualTo(1)
-        assertThat(resume.skills!!.soft.softSkills[0]).isEqualTo("A passion for problem solving")
-        assertThat(resume.skills!!.soft.softSkills[1]).isEqualTo("Good communication skills")
-        assertThat(resume.skills!!.hard.hardSkills[0]).isEqualTo("Kotlin")
+        assertEquals(
+            resume.skills!!.soft.softSkills,
+            listOf("A passion for problem solving", "Good communication skills")
+        )
+        assertEquals(resume.skills!!.hard.hardSkills, listOf("Kotlin"))
     }
 
     @Test
@@ -90,11 +95,9 @@ class DslTest {
         assertThat(resume.name).isEqualTo("나윤지")
         assertNotNull(resume.languages)
         assertThat(resume.languages!!.levelMap.size).isEqualTo(2)
-        assertThat(resume.languages!!.levelMap).isEqualTo(
-            mapOf(
-                "Korean" to 5,
-                "English" to 3
-            )
+        assertEquals(
+            resume.languages!!.levelMap,
+            mapOf("Korean" to 5, "English" to 3)
         )
     }
 }
