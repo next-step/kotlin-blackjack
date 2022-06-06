@@ -9,7 +9,7 @@
 - Suit
   - [x] Enum 으로 Spade, Heart, Diamond, Club이 있다.
 - Card
-  - [ ] 카드는 CardNumber와 Suit 을 속성으로 갖는다.
+  - [x] 카드는 CardNumber와 Suit 을 속성으로 갖는다.
 - Cards
   - [ ] 카드들을 속성으로 갖는다.
   - [ ] 지급받은 카드들의 숫자 합을 반환한다. (A는 1, 11로 대응된다.)
