@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class DenominationTest {
 
     @Test
-    fun `단순 계산`() {
+    fun `단순 합 계산`() {
         val ranks = listOf(Denomination.TEN, Denomination.TWO, Denomination.JACK)
         val score = Denomination.score(ranks)
         assertThat(score).isEqualTo(22)
