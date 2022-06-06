@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Card
 import blackjack.domain.Participant
 
 object GameView {
@@ -31,6 +32,15 @@ object GameView {
     }
 
     private fun getCardDisplayName(player: Participant): String {
-        return player.cards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.displayName}" }
+        return player.cards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
+    }
+
+    private fun Card.CardPattern.toDisplayName(): String {
+        return when (this) {
+            Card.CardPattern.CLUBS -> "클로버"
+            Card.CardPattern.SPADES -> "스페이드"
+            Card.CardPattern.HEARTS -> "하트"
+            Card.CardPattern.DIAMONDS -> "다이아몬드"
+        }
     }
 }

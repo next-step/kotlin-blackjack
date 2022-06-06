@@ -4,11 +4,11 @@ data class Card(
     val pattern: CardPattern,
     val denomination: Denomination
 ) {
-    enum class CardPattern(val displayName: String) {
-        SPADES("스페이드"),
-        DIAMONDS("다이아몬드"),
-        HEARTS("하트"),
-        CLUBS("클로버");
+    enum class CardPattern {
+        SPADES,
+        DIAMONDS,
+        HEARTS,
+        CLUBS;
     }
 
     enum class Denomination(val displayName: String, val point: Int) {

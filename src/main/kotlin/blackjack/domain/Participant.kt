@@ -3,12 +3,12 @@ package blackjack.domain
 data class Participant(
     val name: String
 ) {
-    private val _playerCards = Cards()
+    private val playerCards = Cards()
 
     val cards: Cards
-        get() = _playerCards
+        get() = playerCards
 
     fun addCard(card: Card) {
-        _playerCards.addCard(card)
+        playerCards.addCard(card)
     }
 }
