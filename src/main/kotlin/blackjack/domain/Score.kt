@@ -1,7 +1,6 @@
 package blackjack.domain
 
-@JvmInline
-value class Score(private val cards: List<Card>) {
+data class Score(private val cards: List<Card>) {
 
     val isBlackjack: Boolean
         get() = sum == BLACKJACK_SUM
