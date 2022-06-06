@@ -8,8 +8,10 @@ import io.kotest.matchers.shouldBe
 
 internal class PlayerViewTest : StringSpec({
 
-    "참가자 현황을 출력한다" {
+    "딜러와 참가자 현황을 출력한다" {
         val io = StubIO()
+        val dealer = createDealer(Card(Suite.DIAMONDS, Denomination.THREE))
+        dealer.giveCard(dealer)
         val players = listOf(
             createPlayer(
                 "pobi",
@@ -22,12 +24,13 @@ internal class PlayerViewTest : StringSpec({
                 Card(Suite.SPADES, Denomination.KING),
             ),
         )
-        val playerView = PlayerView(io, players)
+        val playerView = PlayerView(io, dealer, players)
 
         playerView.run()
 
         io.printed shouldBe listOf(
-            "pobi, jason에게 2장의 나누었습니다.",
+            "딜러와 pobi, jason에게 2장의 나누었습니다.",
+            "딜러카드: 3다이아몬드",
             "pobi카드: 2하트, 8스페이드",
             "jason카드: 7클로버, K스페이드",
             "",

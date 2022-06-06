@@ -17,7 +17,7 @@ fun main() {
 
     val players = dealer.startGame(playerNames)
 
-    PlayerView(console, players).run()
+    PlayerView(console, dealer, players).run()
 
     GameView(console, dealer, players).run()
 
