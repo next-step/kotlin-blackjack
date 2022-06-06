@@ -1,5 +1,6 @@
 package blackjack.view.output
 
+import blackjack.model.card.Card
 import blackjack.model.player.Player
 import blackjack.model.player.Players
 
@@ -18,5 +19,10 @@ class ConsoleOutputView : OutputView {
             print("  - 결과 : :${player.cards.resultScore}")
         }
         println()
+    }
+
+    companion object {
+        val Card.displayName: String
+            get() = "${denomination.displayName}${shape.displayName}"
     }
 }

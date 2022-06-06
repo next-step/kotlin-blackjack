@@ -5,9 +5,6 @@ class Card private constructor(val denomination: Denomination, val shape: CardSh
     val cardId: Int
         get() = cardIdOf(denomination, shape)
 
-    val displayName: String
-        get() = "${denomination.displayName}${shape.displayName}"
-
     private constructor(cardId: Int) : this(denomination = denominationOf(cardId), shape = shapeOf(cardId))
 
     companion object {
