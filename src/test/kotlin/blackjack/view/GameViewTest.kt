@@ -28,9 +28,9 @@ class GameViewTest : FreeSpec({
             ),
         )
         val io = StubIO()
-        val gameView = GameView(io, dealer, players)
+        val playerGameView = PlayerGameView(io, dealer, players)
 
-        gameView.run()
+        playerGameView.run()
 
         io.printed shouldBe listOf("")
         players.map { it.hand.count } shouldBe listOf(2, 3)
@@ -44,10 +44,10 @@ class GameViewTest : FreeSpec({
             Card(Suite.CLUBS, Denomination.ACE),
         )
         val io = StubIO()
-        val gameView = GameView(io, dealer, listOf(player))
+        val playerGameView = PlayerGameView(io, dealer, listOf(player))
         io.addInput("n")
 
-        gameView.run()
+        playerGameView.run()
 
         io.printed shouldBe listOf(
             "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
@@ -64,10 +64,10 @@ class GameViewTest : FreeSpec({
             Card(Suite.SPADES, Denomination.EIGHT),
         )
         val io = StubIO()
-        val gameView = GameView(io, dealer, listOf(player))
+        val playerGameView = PlayerGameView(io, dealer, listOf(player))
         io.addInput("y")
 
-        gameView.run()
+        playerGameView.run()
 
         io.printed shouldBe listOf(
             "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",
@@ -85,13 +85,13 @@ class GameViewTest : FreeSpec({
             Card(Suite.SPADES, Denomination.EIGHT),
         )
         val io = StubIO()
-        val gameView = GameView(io, dealer, listOf(player))
+        val playerGameView = PlayerGameView(io, dealer, listOf(player))
         io.addInput("")
         io.addInput("yn")
         io.addInput("invalid")
         io.addInput("  n  ")
 
-        gameView.run()
+        playerGameView.run()
 
         io.printed shouldBe listOf(
             "player는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)",

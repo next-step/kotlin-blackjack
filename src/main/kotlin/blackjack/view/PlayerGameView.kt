@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 
-class GameView(
+class PlayerGameView(
     private val io: IO,
     private val dealer: Dealer,
     private val players: List<Player>,
@@ -11,7 +11,6 @@ class GameView(
 
     fun run() {
         players.forEach(::play)
-        playDealer()
         io.print("")
     }
 
@@ -38,14 +37,4 @@ class GameView(
                 getDrawChoice()
             }
         }
-
-    private tailrec fun playDealer() {
-        if (!dealer.shouldDraw) {
-            return
-        }
-
-        dealer.drawSelf()
-        io.print("딜러는 ${Dealer.DRAW_THRESHOLD}이하라 한장의 카드를 더 받았습니다.")
-        playDealer()
-    }
 }
