@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.view.GameView
-import blackjack.view.InputView
-
 data class BlackJackGame(
     val players: List<Participant>,
     val cardDeck: Deck
@@ -13,13 +10,8 @@ data class BlackJackGame(
         }
     }
 
-    fun suggestMoreCardToEachPlayer() {
-        players.forEach {
-            while (InputView.needMoreCard(it)) {
-                it.addCard(cardDeck.draw())
-                GameView.displayPlayerCard(it)
-            }
-        }
+    fun giveMoreCard(player: Participant) {
+        players.first { it == player }.addCard(cardDeck.draw())
     }
 
     private fun Participant.addFirstCard() {
