@@ -35,4 +35,11 @@ class Player(
     fun score(): Score {
         return cards.score()
     }
+
+    companion object {
+        fun ofList(value: String, delimiter: String = ","): List<Player> {
+            val names = value.split(delimiter)
+            return names.map(::Player)
+        }
+    }
 }

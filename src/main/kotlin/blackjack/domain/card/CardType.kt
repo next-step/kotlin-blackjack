@@ -22,15 +22,15 @@ sealed class CardType(val name: String, val score: Score) {
     }
 }
 
-class Ace : CardType("에이스", Score(1)) {
+class Ace : CardType("A", Score(1)) {
     val maxScore: Score = Score(11)
 }
 
-class King : CardType("킹", Score(10))
+class King : CardType("K", Score(10))
 
-class Queen : CardType("퀸", Score(10))
+class Queen : CardType("Q", Score(10))
 
-class Jack : CardType("잭", Score(10))
+class Jack : CardType("J", Score(10))
 
 class NumberCard(number: Int) : CardType(number.toString(), Score(number)) {
     init {
