@@ -5,21 +5,20 @@ class Player(
     val hand: Hand = Hand.empty(),
     val selectHit: () -> Boolean
 ) {
-    fun initialize(initialCards: Pair<Card, Card>) {
-        with(initialCards) {
-            hand.add(first)
-            hand.add(second)
-        }
+    fun initialize(distributedCards: DistributedCards) {
+        val (firstCard, secondCard) = distributedCards
+        hand.add(firstCard)
+        hand.add(secondCard)
     }
 
     fun hit(card: Card) {
         check(canHit()) {
-            "플레이어의 점수가 이미 $BLACKJACK_POINT 이상입니다"
+            "플레이어의 점수가 이미 ${Hand.BLACKJACK_POINT} 이상입니다"
         }
         hand.add(card)
     }
 
     fun calculateHand(): Int = hand.calculate()
 
-    fun canHit(): Boolean = calculateHand() < BLACKJACK_POINT
+    fun canHit(): Boolean = calculateHand() < Hand.BLACKJACK_POINT
 }

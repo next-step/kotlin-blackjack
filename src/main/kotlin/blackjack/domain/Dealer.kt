@@ -10,8 +10,7 @@ class Dealer(
             "플레이어에게 분배할 카드가 부족합니다"
         }
         players.forEach {
-            val initialCards = deck.draw() to deck.draw()
-            it.initialize(initialCards)
+            it.initialize(DistributedCards(deck.draw(), deck.draw()))
         }
     }
 
@@ -26,5 +25,10 @@ class Dealer(
             }
             false -> false
         }
+    }
+
+    companion object {
+        const val SIZE_OF_HIT = 1
+        const val SIZE_OF_DISTRIBUTION = 2
     }
 }

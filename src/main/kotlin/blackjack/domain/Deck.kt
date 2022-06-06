@@ -15,7 +15,7 @@ class ShuffledDeck : Deck {
     }
 
     override fun draw(): Card {
-        check(cards.isNotEmpty())
+        check(cards.isNotEmpty()) { "뽑을 수 있는 카드가 없습니다" }
         return cards.removeFirst()
     }
 }

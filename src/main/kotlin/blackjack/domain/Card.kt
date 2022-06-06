@@ -4,23 +4,25 @@ class Card private constructor(
     val denomination: Denomination,
     private val suit: Suit
 ) {
+    val defaultPoint: Int = denomination.minValue
 
     override fun toString(): String {
         return "${denomination.displayedName}${suit.type}"
     }
 
     companion object {
-        private val cardsByDenominationAndSuit: Map<Pair<Denomination, Suit>, Card> = init()
-        internal val entireCards: List<Card> = cardsByDenominationAndSuit.values.toList()
-        private fun init(): Map<Pair<Denomination, Suit>, Card> {
-            val map = mutableMapOf<Pair<Denomination, Suit>, Card>()
-            Denomination.values().forEach { denomination ->
-                Suit.values().forEach { suit ->
-                    map[denomination to suit] = Card(denomination, suit)
+        private val cardsByDenominationAndSuit: Map<Pair<Denomination, Suit>, Card> = Denomination.values()
+            .flatMap { combine(it) }
+            .associateBy { it.denomination to it.suit }
+
+        private fun combine(denomination: Denomination): List<Card> {
+            return Suit.values()
+                .map { suit ->
+                    Card(denomination, suit)
                 }
-            }
-            return map.toMap()
         }
+
+        val entireCards: List<Card> = cardsByDenominationAndSuit.values.toList()
 
         fun from(denomination: Denomination, suit: Suit): Card {
             return cardsByDenominationAndSuit[denomination to suit] ?: throw IllegalArgumentException()
@@ -42,7 +44,7 @@ enum class Denomination(
     val maxValue: Int,
     val displayedName: String
 ) {
-    ACE(1, 11, "1"),
+    ACE(1, 11, "A"),
     TWO(2, 2, "2"),
     THREE(3, 3, "3"),
     FOUR(4, 4, "4"),

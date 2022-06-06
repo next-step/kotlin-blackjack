@@ -27,7 +27,7 @@ class PlayerSpecs : DescribeSpec({
             val player = Player("name") { true }
             val card1 = Card.from(KING, CLOVER)
             val card2 = Card.from(ACE, SPADE)
-            player.initialize(card1 to card2)
+            player.initialize(DistributedCards(card1, card2))
             player.hand shouldBeEqualToComparingFields Hand(listOf(card1, card2))
         }
 

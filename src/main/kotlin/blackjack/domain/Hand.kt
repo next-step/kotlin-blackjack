@@ -12,7 +12,7 @@ class Hand(
         val numberOfAce = _cards.count { it.denomination == ACE }
         val sumOfNotAce = _cards.filterNot { it.denomination == ACE }
             .fold(0) { sum, card ->
-                sum + card.denomination.maxValue
+                sum + card.defaultPoint
             }
         return (0..numberOfAce).fold(sumOfNotAce + numberOfAce) { point, i ->
             val sum = ACE.run {
@@ -28,12 +28,13 @@ class Hand(
     }
 
     override fun toString(): String {
-        return _cards.joinToString(", ") {
+        return _cards.joinToString {
             it.toString()
         }
     }
 
     companion object {
+        const val BLACKJACK_POINT = 21
         fun empty(): Hand = Hand(emptyList())
     }
 }
