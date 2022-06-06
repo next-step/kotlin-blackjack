@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.rule.PlayingCardsRule
+
 class CardDeck private constructor(private var cards: PlayingCards) {
     fun draw(count: Int): PlayingCards {
         val drawnCards = cards.take(count)
@@ -10,13 +12,15 @@ class CardDeck private constructor(private var cards: PlayingCards) {
 
     companion object {
         fun from(cards: PlayingCards): CardDeck {
-            // Todo : distinct와 shuffled는 외부에서 하는 것으로
-            return CardDeck(
-                PlayingCards.from(cards.distinct().shuffled())
-            )
+            return CardDeck(cards)
         }
 
-        fun of(cards: PlayingCards) {
+        fun of(cards: PlayingCards, vararg rules: PlayingCardsRule): CardDeck {
+            val ruleAppliedCards = rules.fold(cards) { acc, playingCardsRule ->
+                playingCardsRule.applyTo(acc)
+            }
+
+            return CardDeck(PlayingCards.from(ruleAppliedCards))
         }
     }
 }
