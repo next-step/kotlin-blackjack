@@ -26,7 +26,9 @@ data class ParticipantCard(
     private fun compareContainedAceScore(score: Int): Int {
         return if (score < BIG_VALUE_OF_ACE) {
             score + (BIG_VALUE_OF_ACE - Card.Denomination.ACE.point)
-        } else score
+        } else {
+            score
+        }
     }
 
     companion object {
