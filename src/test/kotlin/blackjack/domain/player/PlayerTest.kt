@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.FixtureBuilder.Companion.TakeMoreDealerFixture
 import blackjack.domain.card.Card.AceCard
 import blackjack.domain.card.Card.BasicCard
 import blackjack.domain.card.CardSuit
@@ -10,7 +11,8 @@ class PlayerTest {
 
     @Test
     fun `딜러가 추가되었는지 테스트`() {
-        val players = Players(listOf("플레이어"))
+        val dealer = Dealer(TakeMoreDealerFixture(15))
+        val players = Players(listOf("플레이어"), dealer)
 
         assertThat(players.players.filterIsInstance<Dealer>().first().name).isEqualTo("딜러")
     }

@@ -2,6 +2,8 @@ package blackjack
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.game.BlackJackGame
+import blackjack.domain.game.TakeMoreDealer
+import blackjack.domain.player.Dealer
 import blackjack.view.TakeMore
 import blackjack.domain.player.Players
 import blackjack.view.InputView
@@ -14,7 +16,7 @@ fun main() {
     val playerNames = inputView.enterPlayerName()
     val cardDeck = CardDeck()
     val takeMore = TakeMore()
-    val players = Players(playerNames)
+    val players = Players(playerNames, Dealer(TakeMoreDealer()))
 
     val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
     resultView.printInitDistributed(blackJackGame.players)
@@ -29,5 +31,6 @@ fun main() {
             resultView.printCardsByPlayer(it, false)
         }
 
+    blackJackGame.playDealer()
     resultView.printCardsByPlayers(blackJackGame.players, true)
 }

@@ -1,6 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
@@ -22,7 +23,9 @@ class BlackJackGame(
     }
 
     fun playersToPlay(): List<Player> {
-        return _playerList.players.filter { it.canMoreGame() }
+        return _playerList.players
+            .filter { it !is Dealer }
+            .filter { it.canMoreGame() }
     }
 
     fun moreGamesByPlayer(player: Player) {
@@ -40,5 +43,13 @@ class BlackJackGame(
 
     private fun pickCardByPlayer(player: Player) {
         player.receivedCards.add(cardDeck.pickCard())
+    }
+
+    fun playDealer() {
+        val dealer = _playerList.players.filterIsInstance<Dealer>().first()
+
+        while (dealer.canBeTakeOneCard()) {
+            pickCardByPlayer(dealer)
+        }
     }
 }
