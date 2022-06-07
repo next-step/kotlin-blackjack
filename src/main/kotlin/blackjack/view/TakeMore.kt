@@ -1,5 +1,6 @@
-package blackjack.domain.game
+package blackjack.view
 
+import blackjack.domain.game.TakeMoreStrategy
 import blackjack.domain.player.Player
 
 class TakeMore : TakeMoreStrategy {
