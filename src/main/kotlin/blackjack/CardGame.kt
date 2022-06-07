@@ -29,6 +29,8 @@ object CardGame {
         players.forEach {
             UI.drawResult(it)
         }
+
+        dealer.checkWinners(players)
     }
 
     private fun playFirstTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) {
