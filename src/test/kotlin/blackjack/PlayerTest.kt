@@ -43,6 +43,21 @@ class PlayerTest : DescribeSpec({
             }
         }
     }
+
+    describe("isBust") {
+        context("카드 점수의 합이 21초과이면") {
+            it("true 를 리턴한다.") {
+                val player = Player("name", PlayerCards(Card(4), Card(9), Card('J')))
+                player.isBust() shouldBe true
+            }
+        }
+        context("카드의 점수 합이 21이하이면 ") {
+            it("false 를 리턴한다.") {
+                val player = Player("name", PlayerCards(Card('Q'), Card('K')))
+                player.isBust() shouldBe false
+            }
+        }
+    }
 })
 
 private fun PlayerCards(vararg cards: Card) = blackjack.domain.PlayerCards(cards.toList())

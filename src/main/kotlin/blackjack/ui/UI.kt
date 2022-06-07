@@ -7,7 +7,7 @@ object UI {
 
     fun drawFirstTurnMessage(players: Players) {
         val playerNames = players.list.joinToString(",") { it.name }
-        println("${playerNames}에게 각자 2장을 나누었습니다.")
+        println("딜러와 ${playerNames}에게 각자 2장을 나누었습니다.")
     }
 
     fun drawCardList(player: Player) {
