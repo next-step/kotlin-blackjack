@@ -14,14 +14,14 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
-class DealerSpecs : DescribeSpec({
+class CroupierSpecs : DescribeSpec({
 
-    describe("딜러는") {
+    describe("크루피어는") {
         context("카드를 분배할 플레이어가 있고 분배할 카드가 충분하다면") {
             val deck = CustomDeck(
                 listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
-            val dealer = Croupier(deck)
+            val dealer = Croupier(deck = deck)
             val players = listOf(NormalPlayer("1") { true }, NormalPlayer("2") { true })
             it("모든 플레이어에게 카드를 2장 분배한다") {
                 dealer.distribute(players)
@@ -55,7 +55,7 @@ class DealerSpecs : DescribeSpec({
             }
         }
 
-        context("플레이어의 현재 점수가 21보다 낮고, 플레이어가 hit을 선택했으면") {
+        context("hit 할 수 있는 플레이어가 hit을 선택했으면") {
             val deck = CustomDeck(
                 listOf(TWO to SPADE)
             )
@@ -68,7 +68,7 @@ class DealerSpecs : DescribeSpec({
             }
         }
 
-        context("플레이어의 현재 점수가 21보다 크다면") {
+        context("플레이어가 hit 할 수 없다면") {
             val dealer = Croupier()
             val player = NormalPlayer("name", hand(KING to HEART, ACE to DIAMOND)) { true }
             it("카드를 거래하지 않는다") {
@@ -91,6 +91,11 @@ class DealerSpecs : DescribeSpec({
             it("카드를 거래할 수 없다") {
                 shouldThrowExactly<IllegalStateException> { dealer.dealWith(player) }
             }
+        }
+
+        it("항상 hit을 선택한다") {
+            val dealer = Croupier()
+            dealer.selectHit() shouldBe true
         }
     }
 })
