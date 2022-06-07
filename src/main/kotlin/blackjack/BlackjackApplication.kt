@@ -36,14 +36,18 @@ class BlackjackApplication {
     }
 
     private fun drawDealerCard(blackJackGame: BlackJackGame) {
-        var isDealerNeedCard = blackJackGame.dealer.score() <= 16
+        var isDealerNeedCard = blackJackGame.dealer.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
         do {
             if (isDealerNeedCard) {
                 blackJackGame.drawTo(DEALER)
                 GameView.dealerDrawCard()
-                isDealerNeedCard = blackJackGame.dealer.score() <= 16
+                isDealerNeedCard = blackJackGame.dealer.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
             }
         } while (isDealerNeedCard)
+    }
+
+    companion object {
+        private const val SCORE_TO_REQUEST_A_CARD_FOR_DEALER = 16
     }
 }
 
