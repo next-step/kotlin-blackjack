@@ -19,7 +19,6 @@ fun main() {
     val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
     resultView.printInitDistributed(blackJackGame.players)
 
-    blackJackGame.start()
     blackJackGame.playersToPlay()
         .map {
             while (it.canMoreGame() && blackJackGame.wantToTake(it)) {

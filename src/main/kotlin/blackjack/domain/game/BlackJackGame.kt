@@ -22,10 +22,6 @@ class BlackJackGame(
         _players = players
     }
 
-    fun start() {
-        calculateScore()
-    }
-
     fun playersToPlay(): List<Player> {
         return _players.filter { it.canMoreGame() }
     }
@@ -37,10 +33,6 @@ class BlackJackGame(
 
     fun wantToTake(player: Player): Boolean {
         return this.takeMore.wantToTake(player)
-    }
-
-    private fun calculateScore() {
-        _players.map { calculateScoreByPlayer(it) }
     }
 
     private fun calculateScoreByPlayer(player: Player) {

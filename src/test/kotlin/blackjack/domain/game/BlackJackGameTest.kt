@@ -18,8 +18,6 @@ class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
 
-        blackJackGame.start()
-
         Assertions.assertThat(blackJackGame.players).hasSize(2)
     }
 
@@ -32,7 +30,6 @@ class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
 
-        blackJackGame.start()
 
         Assertions.assertThat(blackJackGame.players[0].receivedCards).hasSize(2)
         Assertions.assertThat(blackJackGame.players[1].receivedCards).hasSize(2)
