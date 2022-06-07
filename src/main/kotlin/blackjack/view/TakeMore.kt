@@ -14,12 +14,14 @@ class TakeMore : TakeMoreStrategy {
     }
 
     private fun validateYerOrNo(toCheck: String) {
-        if (!(toCheck == "Y" || toCheck == "y" || toCheck == "N" || toCheck == "n")) {
-            throw IllegalArgumentException("입력은 Y or N로 해야 합니다.")
-        }
+        require(YES_NO_STRING.contains(toCheck.uppercase())) { "입력은 Y or N으로 해야 합니다." }
     }
 
     private fun judgeYesOrNo(toCheck: String): Boolean {
-        return toCheck == "Y" || toCheck == "y"
+        return toCheck.uppercase() == "Y"
+    }
+
+    companion object {
+        val YES_NO_STRING = listOf("Y", "N")
     }
 }
