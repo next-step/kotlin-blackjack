@@ -22,7 +22,9 @@ internal class DefaultCardDistributorTest {
             }
         }
 
-        val defaultCardDistributor = DefaultCardDistributor()
+        val defaultCardDistributor = DefaultCardDistributor().apply {
+            this.resetCardSet()
+        }
         val countOfCardToDistribute = 2
 
         // When
@@ -50,7 +52,9 @@ internal class DefaultCardDistributorTest {
         val player2 = Player("이", dummyHitDecisionMaker)
         val players = listOf(player1, player2).toPlayers()
 
-        val defaultCardDistributor = DefaultCardDistributor()
+        val defaultCardDistributor = DefaultCardDistributor().apply {
+            this.resetCardSet()
+        }
 
         // When : hit 할 수 있을 말큼 hit
         while (players.find { it.canHit } != null) {

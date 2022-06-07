@@ -6,10 +6,6 @@ import blackjack.model.player.CardRecipient
 class DefaultCardDistributor : CardDistributor {
     private lateinit var playingCardSet: PlayingCards
 
-    init {
-        this.resetCardSet()
-    }
-
     override fun resetCardSet() {
         this.playingCardSet = PlayingCards.createNew()
     }
