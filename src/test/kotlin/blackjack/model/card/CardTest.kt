@@ -1,6 +1,7 @@
 package blackjack.model.card
 
 import blackjack.dummy.toCardSet
+import blackjack.model.card.State.Companion.toScoreList
 import blackjack.model.card.State.Running
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -57,9 +58,10 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
+        val actualScoreList = cardSet.toScoreList()
 
         assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
+            { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
             { assertThat(state.finalScore).isEqualTo(finalScore) },
             { assertThat(state).isInstanceOf(State.BlackJack::class.java) }
         )
@@ -78,9 +80,10 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
+        val actualScoreList = cardSet.toScoreList()
 
         assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
+            { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
             { assertThat(state.finalScore).isEqualTo(finalScore) },
             { assertThat(state).isInstanceOf(State.Bust::class.java) }
         )
@@ -100,9 +103,10 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
+        val actualScoreList = cardSet.toScoreList()
 
         assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
+            { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
             { assertThat(state.finalScore).isEqualTo(finalScore) },
             { assertThat(state).isInstanceOf(Running::class.java) }
         )
