@@ -1,21 +1,84 @@
 package blackjack.domain.game
 
-import org.junit.jupiter.api.Test
+import blackjack.domain.CLUB_KING
+import blackjack.domain.DIAMOND_ACE
+import blackjack.domain.HEART_TWO
+import blackjack.domain.SPADE_FIVE
+import blackjack.domain.SPADE_TEN
+import blackjack.domain.card.Card
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 internal class GameTest {
 
-    @Test
-    fun `플레이어는 가진 패의 합계가 21을 넘지 않는 경우 얼마든지 카드를 계속 뽑을 수 있다`() {
+    @ParameterizedTest
+    @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 높은 케이스")
+    fun `플레이어가 가진 패의 합계가 21을 넘지 않으면서 딜러보다 높으면 플레이어가 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
+        // given
+        val player = Player("pug")
+        val dealer = Dealer()
+
+        // when
+        player.addCards(*playerCards)
+        dealer.addCards(*dealerCards)
+
+        // then
         TODO()
     }
 
-    @Test
-    fun `플레이어가 가진 패의 합계가 21을 넘지 않으면서 딜러보다 높으면 승리한다`() {
+    @ParameterizedTest
+    @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 낮은 케이스")
+    fun `플레이어가 가진 패의 합계보다 딜러의 패의 합계가 높은 경우 플레이어가 패배한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
+        // given
+        val player = Player("pug")
+        val dealer = Dealer()
+
+        // when
+        player.addCards(*playerCards)
+        dealer.addCards(*dealerCards)
+
+        // then
         TODO()
     }
 
-    @Test
-    fun `딜러가 가진 패의 합계가 21을 초과하면 플레이어들은 가진 패에 상관없이 승리한다`() {
+    @ParameterizedTest
+    @MethodSource("딜러가 가진 패의 합계가 21을 초과하는 케이스")
+    fun `딜러가 가진 패의 합계가 21을 초과하면 플레이어들은 가진 패에 상관없이 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
+        // given
+        val player = Player("pug")
+        val dealer = Dealer()
+
+        // when
+        player.addCards(*playerCards)
+        dealer.addCards(*dealerCards)
+
+        // then
         TODO()
+    }
+
+    companion object {
+        @JvmStatic
+        fun `플레이어 패의 합계가 21을 넘지 않고 딜러보다 높은 케이스`() = Stream.of(
+            Arguments.of(arrayOf(SPADE_TEN, CLUB_KING, DIAMOND_ACE), arrayOf(SPADE_TEN, CLUB_KING)),
+            Arguments.of(arrayOf(SPADE_TEN, CLUB_KING), arrayOf(SPADE_TEN, SPADE_FIVE, HEART_TWO))
+        )
+
+        @JvmStatic
+        fun `플레이어 패의 합계가 21을 넘지 않고 딜러보다 낮은 케이스`() = Stream.of(
+            Arguments.of(arrayOf(SPADE_TEN, CLUB_KING), arrayOf(SPADE_TEN, CLUB_KING, DIAMOND_ACE)),
+            Arguments.of(arrayOf(SPADE_TEN, HEART_TWO), arrayOf(SPADE_TEN, SPADE_FIVE, HEART_TWO))
+        )
+
+        @JvmStatic
+        fun `딜러가 가진 패의 합계가 21을 초과하는 케이스`() = Stream.of(
+            Arguments.of(arrayOf(SPADE_FIVE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE)),
+            Arguments.of(arrayOf(SPADE_TEN, CLUB_KING, DIAMOND_ACE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE)),
+            Arguments.of(arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE))
+
+        )
     }
 }
