@@ -15,12 +15,16 @@ class BlackJackGame(
     private val players = playerProvider.createPlayers()
 
     fun run() {
-        val playRoom = PlayRoom(cardDistributor, players)
+        val playRoom = PlayRoom(cardDistributor, players, INITIAL_CARD_COUNT_OF_PLAYER)
         playRoom.startNewGame()
         outputView?.printInitialMessage(this.players)
         playRoom.playGame { player ->
             outputView?.printCardsOfPlayer(player, withScore = false)
         }
         outputView?.printCardsOfPlayer(players, withScore = true)
+    }
+
+    companion object {
+        const val INITIAL_CARD_COUNT_OF_PLAYER = 2
     }
 }
