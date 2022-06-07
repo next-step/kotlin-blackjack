@@ -10,11 +10,7 @@ open class Player(val name: String, private val playerCards: PlayerCards = Playe
 
     fun currentCards() = playerCards.cards
 
-    open fun canDraw(): Boolean = playerCards.score < CARD_BUST_THRESHOLD
+    open fun canDraw(): Boolean = !isBust()
 
-    fun isBust(): Boolean = playerCards.score > CARD_BUST_THRESHOLD
-
-    companion object {
-        private const val CARD_BUST_THRESHOLD = 21
-    }
+    fun isBust(): Boolean = playerCards.isBust()
 }

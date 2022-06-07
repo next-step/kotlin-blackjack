@@ -11,6 +11,8 @@ class PlayerCards(list: List<Card> = emptyList()) {
         _cards.add(card)
     }
 
+    fun isBust(): Boolean = score > CARD_BUST_THRESHOLD
+
     private fun calculateScore(): Int {
         var sum = _cards.sumOf { it.score.value }
         if (hasAceCard() && sum <= ACE_INCREASE_THRESHOLD) {
@@ -24,5 +26,7 @@ class PlayerCards(list: List<Card> = emptyList()) {
     companion object {
         private const val ACE_INCREASE_SCORE = 10
         private const val ACE_INCREASE_THRESHOLD = 11
+
+        private const val CARD_BUST_THRESHOLD = 21
     }
 }
