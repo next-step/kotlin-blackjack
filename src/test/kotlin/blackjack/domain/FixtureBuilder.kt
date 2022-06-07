@@ -1,14 +1,14 @@
 package blackjack.domain
 
 import blackjack.domain.game.TakeMoreDealerStrategy
-import blackjack.domain.game.TakeMoreStrategy
+import blackjack.domain.game.TakeMorePlayerStrategy
 import blackjack.domain.player.Player
 
 class FixtureBuilder {
 
     companion object {
 
-        class TakeMoreFixture(private val boolean: Boolean) : TakeMoreStrategy {
+        class TakeMorePlayerFixture(private val boolean: Boolean) : TakeMorePlayerStrategy {
             override fun wantToTake(player: Player): Boolean {
                 return boolean
             }

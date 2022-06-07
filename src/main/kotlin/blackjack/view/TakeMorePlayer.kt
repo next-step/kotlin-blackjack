@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.game.TakeMoreStrategy
+import blackjack.domain.game.TakeMorePlayerStrategy
 import blackjack.domain.player.Player
 
-class TakeMore : TakeMoreStrategy {
+class TakeMorePlayer : TakeMorePlayerStrategy {
     override fun wantToTake(player: Player): Boolean {
         println("${player.name}은(는) 한장의 카드를 더 받겠습니까? (예는 Y, 아니오는 N)")
 

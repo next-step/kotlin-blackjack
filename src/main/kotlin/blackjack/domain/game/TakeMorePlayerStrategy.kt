@@ -2,6 +2,6 @@ package blackjack.domain.game
 
 import blackjack.domain.player.Player
 
-interface TakeMoreStrategy {
+interface TakeMorePlayerStrategy {
     fun wantToTake(player: Player): Boolean
 }

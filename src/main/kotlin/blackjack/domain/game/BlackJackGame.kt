@@ -8,7 +8,7 @@ import blackjack.domain.player.Players
 class BlackJackGame(
     private var cardDeck: CardDeck,
     private var _playerList: Players,
-    private val takeMore: TakeMoreStrategy
+    private val takeMorePlayer: TakeMorePlayerStrategy
 ) {
 
     val players: List<Player>
@@ -34,7 +34,7 @@ class BlackJackGame(
     }
 
     fun wantToTake(player: Player): Boolean {
-        return this.takeMore.wantToTake(player)
+        return this.takeMorePlayer.wantToTake(player)
     }
 
     private fun calculateScoreByPlayer(player: Player) {
