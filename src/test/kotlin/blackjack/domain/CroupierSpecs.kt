@@ -48,7 +48,7 @@ class CroupierSpecs : DescribeSpec({
         context("분배할 카드가 부족하다면") {
             val emptyDeck = CustomDeck(emptyList())
             val dealer = Croupier(emptyDeck)
-            val players = listOf(NormalPlayer("1") { true }, NormalPlayer("2") { true })
+            val players = listOf(NormalPlayer("1"), NormalPlayer("2"))
             it("카드를 분배할 수 없다") {
                 shouldThrowExactly<IllegalStateException> {
                     dealer.distribute(players)
@@ -88,7 +88,7 @@ class CroupierSpecs : DescribeSpec({
         context("거래할 카드가 부족하다면") {
             val deck = CustomDeck(emptyList())
             val dealer = Croupier(deck)
-            val player = NormalPlayer("js") { true }
+            val player = NormalPlayer("js")
             it("카드를 거래할 수 없다") {
                 shouldThrowExactly<IllegalStateException> { dealer.dealWith(player) }
             }
@@ -108,7 +108,7 @@ class CroupierSpecs : DescribeSpec({
 
         context("카드 패의 점수가 16보다 같거나 낮다면") {
             val hand = hand(TWO to CLOVER, ACE to SPADE)
-            val dealer = Croupier(hand = hand)
+            val dealer = Croupier(player = NormalPlayer("딜러", hand))
             it("카드 1장을 자신의 카드 패에 추가할 수 있다") {
                 dealer.hit(Card(KING, HEART))
                 dealer.hand shouldBeEqualToComparingFields hand(TWO to CLOVER, ACE to SPADE, KING to HEART)
@@ -117,7 +117,7 @@ class CroupierSpecs : DescribeSpec({
 
         context("카드 패의 점수가 16보다 높다면") {
             val hand = hand(SIX to CLOVER, ACE to SPADE)
-            val dealer = Croupier(hand = hand)
+            val dealer = Croupier(player = NormalPlayer("딜러", hand))
             it("자신의 카드 패에 새로운 카드를 추가할 수 없다") {
                 shouldThrowExactly<IllegalStateException> { dealer.hit(Card(KING, HEART)) }
             }

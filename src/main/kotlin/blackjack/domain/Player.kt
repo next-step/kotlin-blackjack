@@ -14,7 +14,7 @@ interface Player {
 class NormalPlayer(
     override val name: String,
     override val hand: Hand = Hand.empty(),
-    override val selectHit: () -> Boolean
+    override val selectHit: () -> Boolean = { true }
 ) : Player {
 
     override fun initialize(distributedCards: DistributedCards) {

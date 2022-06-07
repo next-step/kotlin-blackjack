@@ -7,9 +7,8 @@ interface Dealer {
 
 class Croupier(
     private val deck: Deck = ShuffledDeck(),
-    override val name: String = DEALER_NAME,
-    override val hand: Hand = Hand.empty(),
-) : Player, Dealer {
+    private val player: Player = NormalPlayer(DEALER_NAME)
+) : Dealer, Player by player {
 
     override val selectHit: () -> Boolean = { true }
 
@@ -36,13 +35,6 @@ class Croupier(
         }
     }
 
-    override fun initialize(distributedCards: DistributedCards) {
-        with(distributedCards) {
-            hand.add(firstCard)
-            hand.add(secondCard)
-        }
-    }
-
     override fun hit(card: Card) {
         check(canHit()) { "딜러의 점수가 이미 $HITTABLE_UPPERBOUND 이상입니다." }
         hand.add(card)
@@ -54,6 +46,6 @@ class Croupier(
         private const val DEALER_NAME = "딜러"
         private const val SIZE_OF_HIT = 1
         private const val SIZE_OF_DISTRIBUTION = 2
-        private const val HITTABLE_UPPERBOUND = 16
+        const val HITTABLE_UPPERBOUND = 16
     }
 }
