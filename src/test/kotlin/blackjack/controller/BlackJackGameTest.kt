@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class BlackJackGameTest {
 
     @Test
-    fun `한게임테스트`() {
+    fun `BlackJack 게임 로직 통합 테스트`() {
 
         // given
         val playerNames = listOf("AA", "BB", "CC")
