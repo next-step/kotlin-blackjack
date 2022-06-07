@@ -11,13 +11,12 @@ class BlackJackGameTest {
 
     @Test
     fun `블랙잭 게임을 2인이 조인했을 때 인원 수 체크`() {
-        val resultView = ResultView()
         val cardDeck = CardDeck()
         val takeMore = TakeMoreFixture(false)
         val playerMaker = PlayerMaker()
         val players = playerMaker.createPlayerByName(listOf("A", "B"))
 
-        val blackJackGame = BlackJackGame(cardDeck, players, takeMore, resultView)
+        val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
 
         blackJackGame.start()
 
@@ -26,13 +25,12 @@ class BlackJackGameTest {
 
     @Test
     fun `블랙잭 게임을 2인이 조인했을 때 초기 카드 갯수 체크`() {
-        val resultView = ResultView()
         val cardDeck = CardDeck()
         val takeMore = TakeMoreFixture(false)
         val playerMaker = PlayerMaker()
         val players = playerMaker.createPlayerByName(listOf("A", "B"))
 
-        val blackJackGame = BlackJackGame(cardDeck, players, takeMore, resultView)
+        val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
 
         blackJackGame.start()
 

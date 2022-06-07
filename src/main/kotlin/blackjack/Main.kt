@@ -16,7 +16,19 @@ fun main() {
     val takeMore = TakeMore()
     val playerMaker = PlayerMaker()
     val players = playerMaker.createPlayerByName(playerNames)
-    val blackJackGame = BlackJackGame(cardDeck, players, takeMore, resultView)
+    val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
+    resultView.printInitDistributed(blackJackGame.players)
 
     blackJackGame.start()
+    blackJackGame.playersToPlay()
+        .map {
+            while (it.canMoreGame() && blackJackGame.wantToTake(it)) {
+                blackJackGame.moreGamesByPlayer(it)
+                resultView.printCardsByPlayer(it, false)
+            }
+
+            resultView.printCardsByPlayer(it, false)
+        }
+
+    resultView.printCardsByPlayers(blackJackGame.players, true)
 }

@@ -12,6 +12,7 @@ class ResultView {
     }
 
     fun printCardsByPlayers(player: List<Player>, withScore: Boolean) {
+        println("")
         player.map {
             printCardsByPlayer(it, withScore)
         }

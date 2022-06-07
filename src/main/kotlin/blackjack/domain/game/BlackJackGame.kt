@@ -2,13 +2,11 @@ package blackjack.domain.game
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
-import blackjack.view.ResultView
 
 class BlackJackGame(
     cardDeck: CardDeck,
     players: List<Player>,
-    private val takeMore: TakeMoreStrategy,
-    private val resultView: ResultView
+    private val takeMore: TakeMoreStrategy
 ) {
     private var cardDeck: CardDeck
     private var _players: List<Player>
@@ -25,12 +23,23 @@ class BlackJackGame(
         }
 
         _players = players
-        resultView.printInitDistributed(_players)
     }
 
     fun start() {
         calculateScore()
-        moreGames()
+    }
+
+    fun playersToPlay(): List<Player> {
+        return _players.filter { it.canMoreGame() }
+    }
+
+    fun moreGamesByPlayer(player: Player) {
+        pickCardByPlayer(player)
+        calculateScoreByPlayer(player)
+    }
+
+    fun wantToTake(player: Player): Boolean {
+        return this.takeMore.wantToTake(player)
     }
 
     private fun calculateScore() {
@@ -39,21 +48,6 @@ class BlackJackGame(
 
     private fun calculateScoreByPlayer(player: Player) {
         player.calculateScore()
-    }
-
-    private fun moreGames() {
-        _players.filter { it.canMoreGame() }
-            .map { moreGamesByPlayer(it) }
-
-        resultView.printCardsByPlayers(_players, true)
-    }
-
-    private fun moreGamesByPlayer(player: Player) {
-        while (player.canMoreGame() && takeMore.wantToTake(player)) {
-            pickCardByPlayer(player)
-            calculateScoreByPlayer(player)
-            resultView.printCardsByPlayer(player, false)
-        }
     }
 
     private fun pickCardByPlayer(player: Player) {
