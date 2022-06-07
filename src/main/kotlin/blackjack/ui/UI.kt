@@ -15,7 +15,7 @@ object UI {
     }
 
     fun drawResult(player: Player) {
-        println("${player.name}카드: ${player.currentCards().joinToString(", ") { it.toString() }} - ${player.score}")
+        println("${player.name}카드: ${player.currentCards().joinToString(", ") { it.toString() }} - ${player.score.value}")
     }
 
     fun drawDivider() {
