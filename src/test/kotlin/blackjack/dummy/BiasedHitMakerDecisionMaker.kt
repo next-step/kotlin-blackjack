@@ -1,5 +1,6 @@
 package blackjack.dummy
 
+import blackjack.model.card.State.Running
 import blackjack.model.player.HitDecisionMaker
 import blackjack.model.player.Player
 
@@ -8,6 +9,6 @@ class BiasedHitMakerDecisionMaker(potentialWinnerName: String) :
     BiasedEnvironment(potentialWinnerName),
     HitDecisionMaker {
     override fun doYouWantToHit(player: Player): Boolean {
-        return (player.isPotentialWinner() && !player.score.isBustOrBlackJack)
+        return (player.isPotentialWinner() && (player.state is Running))
     }
 }

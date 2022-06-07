@@ -38,7 +38,7 @@ class BiasedCardDistributor(potentialWinnerName: String) :
             }
             else -> { // 4번째 장 이후: 특정 플레이어가  blackJack이 되도록 배분.
                 if (player.isPotentialWinner()) {
-                    val needScore = player.score.scoreList.filter { it < 21 }
+                    val needScore = player.state.scoreList.filter { it < 21 }
                         .map { 21 - it }.first { it in 2..10 }
 
                     val needCard = tempCardSet.find { it.denomination.score == needScore } ?: return

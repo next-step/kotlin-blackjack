@@ -3,18 +3,20 @@ package blackjack.model.player
 import blackjack.model.CardDistributor
 import blackjack.model.card.Card
 import blackjack.model.card.Cards
-import blackjack.model.card.Score
+import blackjack.model.card.State
+import blackjack.model.card.State.BlackJack
+import blackjack.model.card.State.Running
 
 class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
     CardRecipient {
 
     private val cardList = mutableListOf<Card>()
 
-    val score: Score
-        get() = Score.of(this.cardList)
+    val state: State
+        get() = State.of(this.cardList)
 
     val canHit: Boolean
-        get() = !this.score.isBustOrBlackJack && hitDecisionMaker.doYouWantToHit(this)
+        get() = (this.state is Running) && hitDecisionMaker.doYouWantToHit(this)
 
     val cards: Cards
         get() = Cards(this.cardList.toList())
@@ -41,7 +43,7 @@ class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
 class Players(playerList: List<Player>) : List<Player> by playerList {
 
     val blackJackPlayer: Player?
-        get() = this.find { it.score is Score.BlackJack }
+        get() = this.find { it.state is BlackJack }
 
     fun clearCard() {
         this.forEach { it.clearCard() }
