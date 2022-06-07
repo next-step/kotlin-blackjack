@@ -26,6 +26,25 @@ class DslTest {
     }
 
     @Test
+    fun skill() {
+        val expectSoft1 = "A passion for problem solving"
+        val expectSoft2 = "Good communication skills"
+        val expectHard = "Kotlin"
+
+        val person: Person = introduce {
+            skills {
+                soft(expectSoft1)
+                soft(expectSoft2)
+                hard(expectHard)
+            }
+        }
+
+        assertThat(person.skills!!.getSoft(0).title).isEqualTo(expectSoft1)
+        assertThat(person.skills!!.getSoft(1).title).isEqualTo(expectSoft2)
+        assertThat(person.skills!!.getHard(0).title).isEqualTo(expectHard)
+    }
+
+    @Test
     fun language() {
         val person: Person = introduce {
             languages {
