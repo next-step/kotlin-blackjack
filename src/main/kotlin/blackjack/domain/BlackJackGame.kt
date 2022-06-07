@@ -1,18 +1,23 @@
 package blackjack.domain
 
+const val DEALER = "딜러"
+
 data class BlackJackGame(
     val players: List<Participant>,
     val cardDeck: Deck
 ) {
     private val playerMap = players.associate { it.name to it.playerCards }
+    val normalPlayer = players.filter { it.name != DEALER }
+    val dealer = playerMap[DEALER]!!
+
     fun firstCardDistribution() {
         players.forEach { participant ->
             participant.addFirstCard()
         }
     }
 
-    fun drawTo(player: Participant) {
-        playerMap[player.name]!!.addCard(cardDeck.draw())
+    fun drawTo(playerName: String) {
+        playerMap[playerName]!!.addCard(cardDeck.draw())
     }
 
     private fun Participant.addFirstCard() {

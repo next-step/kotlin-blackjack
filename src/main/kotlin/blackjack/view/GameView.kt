@@ -5,7 +5,7 @@ import blackjack.domain.Card
 import blackjack.domain.Participant
 
 object GameView {
-    fun giveCard(participants: BlackJackGame) {
+    fun drawFirstCardDistribution(participants: BlackJackGame) {
         participants.players.joinToString { it.name }.also {
             println("${it}에게 2장을 나눠주었습니다.")
         }
@@ -28,6 +28,18 @@ object GameView {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
             println("결과 : ${it.playerCards.score()}")
+        }
+    }
+
+    fun dealerDrawCard() {
+        println()
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun gameResult(blackJackGame: BlackJackGame) {
+        println("### 최종 승패")
+        blackJackGame.players.forEach {
+
         }
     }
 
