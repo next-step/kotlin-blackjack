@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.AlphabetCard
 import blackjack.domain.Card
+import blackjack.domain.CardDeck
 import blackjack.domain.NumberCard
 import blackjack.domain.Player
 import blackjack.domain.Symbol
@@ -14,7 +15,10 @@ class PlayerTest : DescribeSpec({
     describe("draw") {
         context("카드 덱이 비어있지 않다면") {
             it("호출 횟수 만큼 카드를 가져간다.") {
-                val player = Player("name", PlayerCards(Card(2), Card(3)))
+                val player = Player("name")
+                val cardDeck = CardDeck(2, 3, 4)
+                player.draw(cardDeck)
+                player.draw(cardDeck)
                 player.cardCount shouldBe 2
             }
         }
@@ -63,3 +67,4 @@ class PlayerTest : DescribeSpec({
 private fun PlayerCards(vararg cards: Card) = blackjack.domain.PlayerCards(cards.toList())
 private fun Card(number: Int) = NumberCard(Symbol.Diamond, number)
 private fun Card(char: Char) = AlphabetCard(Symbol.Diamond, char)
+private fun CardDeck(vararg numbers: Int) = CardDeck(numbers.map { Card((it)) })
