@@ -10,7 +10,8 @@ class Card private constructor(val denomination: Denomination, val shape: CardSh
     companion object {
 
         private val COUNT_OF_CARD_FULL_SET = Denomination.count * CardShape.count
-        val cardList = (0 until COUNT_OF_CARD_FULL_SET).map { Card(cardId = it) }
+        val cardList = (0 until COUNT_OF_CARD_FULL_SET).map(::Card)
+
         fun of(denomination: Denomination, shape: CardShape): Card = cardList[cardIdOf(denomination, shape)]
 
         fun of(cardId: Int): Card = cardList[cardId]
