@@ -43,25 +43,11 @@ class Players(playerList: List<Player>) : List<Player> by playerList {
     val blackJackPlayer: Player?
         get() = this.find { it.score is Score.BlackJack }
 
-    fun startNewGame(cardDistributor: CardDistributor) {
-        cardDistributor.resetCardSet()
-        this.clearCard()
-        cardDistributor.giveCardsTo(this, 2)
-    }
-
-    fun playGame(cardDistributor: CardDistributor, progress: ((Player) -> Unit)? = null) {
-        this.forEach { player ->
-            this.blackJackPlayer?.let { return@forEach }
-            player.hitWhileWants(cardDistributor, progress)
-        }
-    }
-
     fun clearCard() {
         this.forEach { it.clearCard() }
     }
 
     companion object {
         fun List<Player>.toPlayers() = Players(this)
-        fun Player.toPlayers() = Players(listOf(this))
     }
 }
