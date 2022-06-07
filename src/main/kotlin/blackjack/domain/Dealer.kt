@@ -41,7 +41,8 @@ class Croupier(
     }
 
     override fun hit(card: Card) {
-        TODO()
+        check(canHit()) { "딜러의 점수가 이미 $HITTABLE_UPPERBOUND 이상입니다." }
+        hand.add(card)
     }
 
     override fun canHit(): Boolean = hand.calculate() <= HITTABLE_UPPERBOUND

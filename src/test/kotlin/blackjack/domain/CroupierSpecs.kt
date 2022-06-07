@@ -6,6 +6,7 @@ import blackjack.domain.Denomination.KING
 import blackjack.domain.Denomination.SEVEN
 import blackjack.domain.Denomination.SIX
 import blackjack.domain.Denomination.TWO
+import blackjack.domain.Suit.CLOVER
 import blackjack.domain.Suit.DIAMOND
 import blackjack.domain.Suit.HEART
 import blackjack.domain.Suit.SPADE
@@ -96,6 +97,15 @@ class CroupierSpecs : DescribeSpec({
         it("항상 hit을 선택한다") {
             val dealer = Croupier()
             dealer.selectHit() shouldBe true
+        }
+
+        context("카드 패의 점수가 16보다 같거나 낮다면") {
+            val hand = hand(TWO to CLOVER, ACE to SPADE)
+            val dealer = Croupier(hand = hand)
+            it("카드 1장을 자신의 카드 패에 추가할 수 있다") {
+                dealer.hit(Card(KING, HEART))
+                dealer.hand shouldBeEqualToComparingFields hand(TWO to CLOVER, ACE to SPADE, KING to HEART)
+            }
         }
     }
 })
