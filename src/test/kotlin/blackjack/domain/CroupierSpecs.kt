@@ -99,6 +99,13 @@ class CroupierSpecs : DescribeSpec({
             dealer.selectHit() shouldBe true
         }
 
+        it("분배된 카드를 자신의 카드 패에 추가할 수 있다") {
+            val pair = DistributedCards(Card(KING, SPADE), Card(ACE, HEART))
+            val dealer = Croupier()
+            dealer.initialize(pair)
+            dealer.hand shouldBeEqualToComparingFields hand(KING to SPADE, ACE to HEART)
+        }
+
         context("카드 패의 점수가 16보다 같거나 낮다면") {
             val hand = hand(TWO to CLOVER, ACE to SPADE)
             val dealer = Croupier(hand = hand)

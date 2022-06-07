@@ -37,7 +37,10 @@ class Croupier(
     }
 
     override fun initialize(distributedCards: DistributedCards) {
-        TODO()
+        with(distributedCards) {
+            hand.add(firstCard)
+            hand.add(secondCard)
+        }
     }
 
     override fun hit(card: Card) {
