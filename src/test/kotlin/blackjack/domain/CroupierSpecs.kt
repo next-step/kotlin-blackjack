@@ -107,5 +107,13 @@ class CroupierSpecs : DescribeSpec({
                 dealer.hand shouldBeEqualToComparingFields hand(TWO to CLOVER, ACE to SPADE, KING to HEART)
             }
         }
+
+        context("카드 패의 점수가 16보다 높다면") {
+            val hand = hand(SIX to CLOVER, ACE to SPADE)
+            val dealer = Croupier(hand = hand)
+            it("자신의 카드 패에 새로운 카드를 추가할 수 없다") {
+                shouldThrowExactly<IllegalStateException> { dealer.hit(Card(KING, HEART)) }
+            }
+        }
     }
 })
