@@ -16,7 +16,7 @@ class BlackjackViewModelTest {
             Player.from(name)
         }
     private val viewModel: BlackjackViewModel
-        get() = BlackjackViewModel(
+        get() = BlackjackViewModel.of(
             players = players,
             cardDeck = CardDeck.from(PlayingCard.all())
         )
@@ -37,7 +37,7 @@ class BlackjackViewModelTest {
 
     @Test
     fun `BlackJackViewModel을 생성할 때 카드를 뽑을 수 있는 첫 번째 사람이 턴을 얻게 된다`() {
-        val viewModel = BlackjackViewModel(
+        val viewModel = BlackjackViewModel.of(
             players = players,
             cardDeck = CardDeck.from(
                 PlayingCards.from(
@@ -84,7 +84,7 @@ class BlackjackViewModelTest {
 
     @Test
     fun `nextTurn을 호출하여 카드를 받을 수 있는 플레이어에게 턴을 넘길 수 있다`() {
-        val viewModel = BlackjackViewModel(
+        val viewModel = BlackjackViewModel.of(
             players = players,
             cardDeck = CardDeck.from(
                 PlayingCards.from(

@@ -3,8 +3,11 @@ package blackjack.viewmodel
 import blackjack.domain.CardDeck
 import blackjack.domain.Observable
 import blackjack.domain.Player
+import blackjack.domain.PlayingCard
+import blackjack.domain.rule.DistinctRule
+import blackjack.domain.rule.ShuffleRule
 
-class BlackjackViewModel(
+class BlackjackViewModel private constructor(
     players: List<Player>,
     private val cardDeck: CardDeck
 ) {
@@ -36,5 +39,17 @@ class BlackjackViewModel(
     companion object {
         const val START_CARD_COUNT = 2
         private const val HIT_CARD_COUNT = 1
+
+        fun from(players: List<Player>): BlackjackViewModel {
+            val cardDeck = CardDeck.of(
+                PlayingCard.all(),
+                DistinctRule, ShuffleRule
+            )
+            return BlackjackViewModel(players, cardDeck)
+        }
+
+        fun of(players: List<Player>, cardDeck: CardDeck): BlackjackViewModel {
+            return BlackjackViewModel(players, cardDeck)
+        }
     }
 }
