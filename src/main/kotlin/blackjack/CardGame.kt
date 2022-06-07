@@ -24,13 +24,27 @@ object CardGame {
         UI.drawDivider()
         playDealerTurn(dealer, cardDeck)
 
+        drawResult(dealer, players)
+
+        dealer.checkWinners(players)
+        drawRecord(dealer, players)
+    }
+
+    private fun drawResult(dealer: Dealer, players: Players) {
         UI.drawDivider()
         UI.drawResult(dealer)
         players.forEach {
             UI.drawResult(it)
         }
+    }
 
-        dealer.checkWinners(players)
+    private fun drawRecord(dealer: Dealer, players: Players) {
+        UI.drawDivider()
+        UI.drawRecordTitle()
+        UI.drawRecord(dealer)
+        players.forEach {
+            UI.drawRecord(it)
+        }
     }
 
     private fun playFirstTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) {
@@ -39,7 +53,7 @@ object CardGame {
             players.drawAllPlayer(cardDeck)
         }
 
-        UI.drawFirstTurnMessage(players)
+        UI.drawFirstTurnMessage(dealer, players)
 
         UI.drawCardList(dealer)
         players.list.forEach {
@@ -55,7 +69,10 @@ object CardGame {
     }
 
     private fun playDealerTurn(dealer: Dealer, cardDeck: CardDeck) {
-        if (dealer.canDraw()) dealer.draw(cardDeck)
+        if (dealer.canDraw()) {
+            dealer.draw(cardDeck)
+            UI.drawDealerDrawMessage(dealer)
+        }
     }
 }
 
