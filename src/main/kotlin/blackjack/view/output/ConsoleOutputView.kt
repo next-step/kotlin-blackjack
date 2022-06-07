@@ -2,6 +2,7 @@ package blackjack.view.output
 
 import blackjack.controller.BlackJackGame
 import blackjack.model.card.Card
+import blackjack.model.card.CardShape
 import blackjack.model.player.Player
 import blackjack.model.player.Players
 
@@ -23,6 +24,14 @@ class ConsoleOutputView : OutputView {
     }
 
     companion object {
+        private val CardShape.displayName: String
+            get() = when (this) {
+                CardShape.SPADES -> "스페이드"
+                CardShape.DIAMONDS -> "다이아몬드"
+                CardShape.HEARTS -> "하트"
+                CardShape.CLUBS -> "클로버"
+            }
+
         val Card.displayName: String
             get() = "${denomination.displayName}${shape.displayName}"
     }
