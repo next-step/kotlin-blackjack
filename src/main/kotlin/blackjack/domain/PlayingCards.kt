@@ -5,17 +5,11 @@ class PlayingCards private constructor(private val cards: List<PlayingCard>) : L
         playingCard.isCardOf(number)
     }
 
-    operator fun plus(other: PlayingCards): PlayingCards {
-        return from(cards + other.cards)
-    }
+    operator fun plus(other: PlayingCards): PlayingCards = from(cards + other.cards)
 
     companion object {
-        fun from(cards: List<PlayingCard>): PlayingCards {
-            return PlayingCards(cards)
-        }
+        fun from(cards: List<PlayingCard>): PlayingCards = PlayingCards(cards)
 
-        fun empty(): PlayingCards {
-            return PlayingCards(emptyList())
-        }
+        fun empty(): PlayingCards = PlayingCards(emptyList())
     }
 }

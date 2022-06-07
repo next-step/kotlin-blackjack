@@ -21,8 +21,6 @@ class Player private constructor(val name: String) {
     fun isReceivable(): Boolean = !state.isFinished()
 
     companion object {
-        fun from(name: String): Player {
-            return Player(name)
-        }
+        fun from(name: String): Player = Player(name)
     }
 }

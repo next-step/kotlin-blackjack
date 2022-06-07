@@ -10,8 +10,6 @@ class Hands private constructor(val cards: PlayingCards) {
     }
 
     companion object {
-        fun from(cards: PlayingCards): Hands {
-            return Hands(cards)
-        }
+        fun from(cards: PlayingCards): Hands = Hands(cards)
     }
 }

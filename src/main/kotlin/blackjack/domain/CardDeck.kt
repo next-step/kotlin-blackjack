@@ -11,9 +11,7 @@ class CardDeck private constructor(private var cards: PlayingCards) {
     }
 
     companion object {
-        fun from(cards: PlayingCards): CardDeck {
-            return CardDeck(cards)
-        }
+        fun from(cards: PlayingCards): CardDeck = CardDeck(cards)
 
         fun of(cards: PlayingCards, vararg rules: PlayingCardsRule): CardDeck {
             val ruleAppliedCards = rules.fold(cards) { acc, playingCardsRule ->
