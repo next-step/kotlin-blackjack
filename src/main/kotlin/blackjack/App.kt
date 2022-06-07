@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack
 
+import blackjack.domain.BlackJack
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
