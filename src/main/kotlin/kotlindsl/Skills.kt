@@ -2,12 +2,12 @@ package kotlindsl
 
 import kotlindsl.util.AddOnlyMutableList
 
-sealed class Skill {
+sealed interface Skill {
 
-    open val value: String = ""
+    val value: String
 
-    data class Soft(override val value: String) : Skill()
-    data class Hard(override val value: String) : Skill()
+    data class Soft(override val value: String) : Skill
+    data class Hard(override val value: String) : Skill
 }
 
 class Skills : AddOnlyMutableList<Skill>() {
