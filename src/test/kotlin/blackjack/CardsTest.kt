@@ -31,7 +31,7 @@ class CardsTest {
         val cardList = listOf(cardNumber1, cardNumber2, cardNumber3)
             .filterNotNull()
             .map { Card(it, Suit.Heart) }
-        val scores = listOf(score1, score2).filterNotNull()
+        val scores = listOf(score1, score2).filterNotNull().map { Score(it) }
         assertThat(Cards(cardList).scores).isEqualTo(scores)
     }
 }

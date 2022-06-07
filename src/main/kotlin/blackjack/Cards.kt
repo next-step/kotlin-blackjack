@@ -1,9 +1,9 @@
 package blackjack
 
 class Cards(val values: List<Card>) {
-    val scores: List<Int> = values
+    val scores: List<Score> = values
         .map { it.cardNumber.scores }
-        .reduce { n1: List<Int>, n2: List<Int> ->
+        .reduce { n1: List<Score>, n2: List<Score> ->
             n1.flatMap { i1 ->
                 n2.map { i2 ->
                     i1 + i2

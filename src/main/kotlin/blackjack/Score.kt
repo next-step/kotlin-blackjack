@@ -13,6 +13,10 @@ value class Score(val value: Int) {
         return value > MAX_SCORE_CRITERIA
     }
 
+    operator fun plus(that: Score): Score {
+        return Score(value + that.value)
+    }
+
     companion object {
         private const val MAX_SCORE_CRITERIA = 21
     }

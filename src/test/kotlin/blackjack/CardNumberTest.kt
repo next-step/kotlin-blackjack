@@ -17,6 +17,6 @@ class CardNumberTest {
     @ParameterizedTest
     @CsvSource("Ace,1,11", "Two,2,", "Ten,10,", "Jack,10,", "Queen,10,", "King,10,")
     fun `각각 값은 대응되는 숫자를 가지며 A는 1, 11 두 숫자에 대응, K, Q, J는 10이다`(cardNumber: CardNumber, score1: Int, score2: Int?) {
-        assertThat(cardNumber.scores).isEqualTo(listOf(score1, score2).filterNotNull())
+        assertThat(cardNumber.scores).isEqualTo(listOf(score1, score2).filterNotNull().map { Score(it) })
     }
 }
