@@ -3,7 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.card.Card.AceCard
 import blackjack.domain.card.Card.BasicCard
 import blackjack.domain.card.CardSuit
-import blackjack.domain.card.CardType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,7 +12,9 @@ class PlayerTest {
     fun `게임을 더 할 수 있는(기본(10)=10) 경우에 대한 테스트`() {
         val player = Player(
             "name",
-            mutableSetOf(BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 10))
+            mutableSetOf(
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10)
+            )
         )
 
         assertThat(player.calculateScore()).isEqualTo(10)
@@ -25,9 +26,9 @@ class PlayerTest {
         val player = Player(
             "name",
             mutableSetOf(
-                BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 10),
-                BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 9),
-                BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 8)
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 9),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 8)
             )
         )
 
@@ -40,8 +41,8 @@ class PlayerTest {
         val player = Player(
             "name",
             mutableSetOf(
-                AceCard(cardSuit = CardSuit.CLUB, cardType = CardType.ACE, 11),
-                AceCard(cardSuit = CardSuit.SPADE, cardType = CardType.ACE, 11),
+                AceCard(cardSuit = CardSuit.CLUB, number = 1),
+                AceCard(cardSuit = CardSuit.SPADE, number = 1)
             )
         )
 
@@ -54,9 +55,9 @@ class PlayerTest {
         val player = Player(
             "name",
             mutableSetOf(
-                BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 10),
-                AceCard(cardSuit = CardSuit.CLUB, cardType = CardType.ACE, 11),
-                AceCard(cardSuit = CardSuit.SPADE, cardType = CardType.ACE, 11),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10),
+                AceCard(cardSuit = CardSuit.CLUB, number = 11),
+                AceCard(cardSuit = CardSuit.SPADE, number = 11)
             )
         )
 
@@ -69,8 +70,8 @@ class PlayerTest {
         val player = Player(
             "name",
             mutableSetOf(
-                BasicCard(cardSuit = CardSuit.CLUB, cardType = CardType.BASIC, 10),
-                AceCard(cardSuit = CardSuit.SPADE, cardType = CardType.ACE, 11),
+                BasicCard(cardSuit = CardSuit.CLUB, number= 10),
+                AceCard(cardSuit = CardSuit.SPADE, number = 11)
             )
         )
 

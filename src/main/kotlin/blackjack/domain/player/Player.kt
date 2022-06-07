@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardType
+import blackjack.domain.card.Card.AceCard
 
 data class Player(
     private val _name: String,
@@ -18,9 +18,8 @@ data class Player(
         var score = receivedCards.sumOf { it.number }
 
         if (score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards.count {
-                it.cardType == CardType.ACE
-            }
+            val aceCount = receivedCards
+                .count { it is AceCard }
 
             score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
         }

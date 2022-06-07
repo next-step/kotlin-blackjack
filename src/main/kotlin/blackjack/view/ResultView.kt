@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardType
 import blackjack.domain.player.Player
 
 class ResultView {
@@ -28,11 +27,6 @@ class ResultView {
     }
 
     private fun extractCardDescription(card: Card): String {
-        return when (card.cardType) {
-            CardType.ACE, CardType.JACK, CardType.QUEEN, CardType.KING
-            -> "${card.cardType.description}${card.cardSuit.description}"
-            CardType.BASIC
-            -> "${card.number}${card.cardSuit.description}"
-        }
+        return card.description
     }
 }
