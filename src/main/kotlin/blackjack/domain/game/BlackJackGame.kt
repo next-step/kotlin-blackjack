@@ -4,19 +4,16 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
 
 class BlackJackGame(
-    cardDeck: CardDeck,
+    private var cardDeck: CardDeck,
     players: List<Player>,
     private val takeMore: TakeMoreStrategy
 ) {
-    private var cardDeck: CardDeck
     private var _players: List<Player>
 
     val players: List<Player>
         get() = _players
 
     init {
-        this.cardDeck = cardDeck
-
         players.map {
             it.receivedCards.add(cardDeck.pickCard())
             it.receivedCards.add(cardDeck.pickCard())
