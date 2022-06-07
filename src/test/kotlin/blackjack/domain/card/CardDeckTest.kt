@@ -8,7 +8,7 @@ class CardDeckTest {
     fun `카드 꾸러미(덱)의 사이즈가 52개로 초기화 되었는지 테스트`() {
         val cardDeck = CardDeck()
 
-        assertThat(cardDeck.cards).hasSize(52)
+        assertThat(cardDeck.getCurrentCardSize()).isEqualTo(52)
     }
 
     @Test
@@ -16,7 +16,7 @@ class CardDeckTest {
         val cardDeck = CardDeck()
         val pickedCard = cardDeck.pickCard()
 
-        assertThat(cardDeck.cards).hasSize(51)
-        assertThat(cardDeck.cards).doesNotContain(pickedCard)
+        assertThat(cardDeck.getCurrentCardSize()).isEqualTo(51)
+        assertThat(cardDeck.isContains(pickedCard)).isFalse
     }
 }
