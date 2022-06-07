@@ -17,7 +17,7 @@ sealed class State(val scoreList: List<Int>, val finalScore: Int) {
 
             val minScore = scoreList.minOrNull() ?: 0
             val maxScoreNotBust = scoreList.filter { it <= BLACK_JACK_SCORE }.maxOrNull() ?: 0
-            val isBlackJack = scoreList.any { it == BLACK_JACK_SCORE }
+            val isBlackJack = maxScoreNotBust == BLACK_JACK_SCORE
             val isBust = minScore > BLACK_JACK_SCORE
 
             return when {
