@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.model.CardDistributor
 import blackjack.model.DefaultCardDistributor
-import blackjack.model.player.Player
 import blackjack.model.player.PlayerProvider
 import blackjack.view.output.OutputView
 
@@ -15,35 +14,11 @@ class BlackJackGame(
     private val players = playerProvider.createPlayers()
 
     fun run() {
-        this.resetGame()
-        this.giveTwoCardsToAll()
-
+        this.players.startNewGame(cardDistributor)
         outputView?.printInitialMessage(this.players)
-
-        this.players.forEach { player ->
-            players.blackJackPlayer?.let { return@forEach }
-            hitOrStay(player)
+        this.players.playGame(cardDistributor) { player ->
+            outputView?.printCardsOfPlayer(player, withScore = false)
         }
         outputView?.printCardsOfPlayer(players, withScore = true)
-    }
-
-    private fun hitOrStay(player: Player) {
-        while (player.canHit) {
-            hit(player)
-            outputView?.printCardsOfPlayer(player)
-        }
-    }
-
-    private fun hit(player: Player) {
-        this.cardDistributor.giveCardsTo(player)
-    }
-
-    private fun giveTwoCardsToAll() {
-        this.cardDistributor.giveCardsTo(this.players, 2)
-    }
-
-    private fun resetGame() {
-        this.cardDistributor.resetCardSet()
-        this.players.clearCard()
     }
 }
