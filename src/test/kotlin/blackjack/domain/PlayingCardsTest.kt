@@ -39,21 +39,22 @@ class PlayingCardsTest {
     }
 
     @Test
-    fun `hasCardOf를 통해 해당 번호를 가진 PlayingCard가 있는지 확인할 수 있다`() {
+    fun `countOf를 통해 해당 번호를 가진 PlayingCard가 몇 개 있는지 확인할 수 있다`() {
         val cards = listOf(
             PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
             PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
+            PlayingCard.of(Suit.CLUBS, CardNumber.ACE),
             PlayingCard.of(Suit.DIAMONDS, CardNumber.TEN),
             PlayingCard.of(Suit.SPADES, CardNumber.KING)
         )
         val playingCards = PlayingCards.from(cards)
 
         assertAll(
-            { assertThat(playingCards.hasCardOf(CardNumber.NINE)).isTrue },
-            { assertThat(playingCards.hasCardOf(CardNumber.ACE)).isTrue },
-            { assertThat(playingCards.hasCardOf(CardNumber.TEN)).isTrue },
-            { assertThat(playingCards.hasCardOf(CardNumber.KING)).isTrue },
-            { assertThat(playingCards.hasCardOf(CardNumber.EIGHT)).isFalse }
+            { assertThat(playingCards.countOf(CardNumber.NINE)).isOne },
+            { assertThat(playingCards.countOf(CardNumber.ACE)).isEqualTo(2) },
+            { assertThat(playingCards.countOf(CardNumber.TEN)).isOne },
+            { assertThat(playingCards.countOf(CardNumber.KING)).isOne },
+            { assertThat(playingCards.countOf(CardNumber.EIGHT)).isZero }
         )
     }
 }
