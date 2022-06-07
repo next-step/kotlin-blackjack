@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.Users
 import blackjack.view.InputView
 
 /**
@@ -8,6 +9,6 @@ import blackjack.view.InputView
  */
 object BlackjackController {
     fun playGame() {
-        val playersName = InputView.getPlayersName()
+        val players = Users.of(InputView.getPlayersName())
     }
 }

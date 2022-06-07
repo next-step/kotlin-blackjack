@@ -10,4 +10,5 @@ object Messages {
 
 object ErrorMessages {
     const val INPUT_IS_NULL_OR_BLANK = "입력은 빈칸이거나 NULL일 수 없습니다."
+    const val NAME_IS_EMPTY = "이름은 빈칸일 수 없습니다."
 }
