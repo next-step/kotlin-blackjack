@@ -42,24 +42,24 @@ class Game(playerNames: String) {
 
     private fun play(
         printPlayerInfo: (player: Player) -> Unit,
-        inputHitDecision: (player: Player) -> Boolean
+        decideHitDecision: (player: Player) -> Boolean
     ): Boolean {
         if (!playable) {
             return false
         }
-        players.forEach { player -> player.turn(printPlayerInfo, inputHitDecision) }
+        players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
         return players.any { it.isDrawable() }
     }
 
     private fun Player.turn(
         printPlayerInfo: (player: Player) -> Unit,
-        inputHitDecision: (player: Player) -> Boolean
+        decideHitDecision: (player: Player) -> Boolean
     ) {
         if (isDrawable()) {
             return
         }
 
-        val isHit = inputHitDecision(this)
+        val isHit = decideHitDecision(this)
         if (isHit) {
             val card = dealer.drawOneCard()
             addCards(card)
