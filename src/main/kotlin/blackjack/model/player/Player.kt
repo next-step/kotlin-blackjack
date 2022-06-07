@@ -4,16 +4,13 @@ import blackjack.model.card.Card
 import blackjack.model.card.Cards
 import blackjack.model.card.Score
 
-class Player(
-    val name: String,
-    private val hitDecisionMaker: HitDecisionMaker,
-    cardList: List<Card> = listOf()
-) : CardRecipient {
+class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
+    CardRecipient {
 
-    private val cardList = MutableList(cardList.size) { cardList[it] }
+    private val cardList = mutableListOf<Card>()
 
-    var score = Score(this.cardList)
-        private set
+    val score: Score
+        get() = Score.of(this.cardList)
 
     val canHit: Boolean
         get() = !this.score.isBustOrBlackJack && hitDecisionMaker.doYouWantToHit(this)
@@ -26,7 +23,6 @@ class Player(
 
     override fun addCard(card: Card) {
         this.cardList.add(card)
-        this.score = Score(this.cardList)
     }
 
     fun clearCard() {
@@ -37,7 +33,7 @@ class Player(
 class Players(playerList: List<Player>) : List<Player> by playerList {
 
     val blackJackPlayer: Player?
-        get() = this.find { it.score.isBlackJack }
+        get() = this.find { it.score is Score.BlackJack }
 
     fun clearCard() {
         this.forEach { it.clearCard() }

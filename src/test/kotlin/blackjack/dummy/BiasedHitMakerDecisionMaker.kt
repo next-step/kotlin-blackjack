@@ -8,6 +8,6 @@ class BiasedHitMakerDecisionMaker(potentialWinnerName: String) :
     BiasedEnvironment(potentialWinnerName),
     HitDecisionMaker {
     override fun doYouWantToHit(player: Player): Boolean {
-        return (player.isPotentialWinner() && !player.score.isBlackJack && !player.score.isBust)
+        return (player.isPotentialWinner() && !player.score.isBustOrBlackJack)
     }
 }

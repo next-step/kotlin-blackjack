@@ -44,33 +44,66 @@ internal class CardTest {
 
     @ParameterizedTest
     @CsvSource(
-        // cardList, scoreList, maxScoreNotBust,isBust,isBlackJack
-        "'AS,AC,2H','4,14,24',14,false,false",
-        "'2S,3D,2H,3C','10',10,false,false",
-        "'JS,QD,AH,AC','22,32,42',0,true,false",
-        "'AS,AD,AH,AC','4,14,24,34,44',14,false,false",
-        "'AS,JD','11,21',21,false,true",
-        "'AS,QH','11,21',21,false,true",
-        "'AS,KC','11,21',21,false,true"
+        "'AS,JD','11,21',21",
+        "'AS,QH','11,21',21",
+        "'AS,KC','11,21',21"
     )
-    fun `카드 점수 테스트`(
+    fun `블랙잭 점수 테스트`(
         cardListString: String,
         scoreListString: String,
-        maxScoreNotBust: Int,
-        isBust: Boolean,
-        isBlackJack: Boolean
+        finalScore: Int
     ) {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
-        val score = Score(cardSet)
+        val score = Score.of(cardSet)
 
         assertAll(
             { assertThat(score.scoreList.size).isEqualTo(expectedScoreList.size) },
-            { assertThat(score.minScore).isEqualTo(expectedScoreList.minOrNull() ?: 0) },
-            { assertThat(score.maxCore).isEqualTo(expectedScoreList.maxOrNull() ?: 0) },
-            { assertThat(score.maxScoreNotBust).isEqualTo(maxScoreNotBust) },
-            { assertThat(score.isBust).isEqualTo(isBust) },
-            { assertThat(score.isBlackJack).isEqualTo(isBlackJack) }
+            { assertThat(score.finalScore).isEqualTo(finalScore) },
+            { assertThat(score).isInstanceOf(Score.BlackJack::class.java) }
+        )
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "'JS,QD,AH,AC','22,32,42',22",
+        "'JS,QD,AH,2C','23,33',23",
+    )
+    fun `버스트 점수 테스트`(
+        cardListString: String,
+        scoreListString: String,
+        finalScore: Int,
+    ) {
+        val cardSet = cardListString.toCardSet()
+        val expectedScoreList = scoreListString.split(",").map { it.toInt() }
+        val score = Score.of(cardSet)
+
+        assertAll(
+            { assertThat(score.scoreList.size).isEqualTo(expectedScoreList.size) },
+            { assertThat(score.finalScore).isEqualTo(finalScore) },
+            { assertThat(score).isInstanceOf(Score.Bust::class.java) }
+        )
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "'AS,AC,2H','4,14,24',14",
+        "'2S,3D,2H,3C','10',10",
+        "'AS,AD,AH,AC','4,14,24,34,44',14",
+    )
+    fun `러닝 점수 테스트`(
+        cardListString: String,
+        scoreListString: String,
+        finalScore: Int,
+    ) {
+        val cardSet = cardListString.toCardSet()
+        val expectedScoreList = scoreListString.split(",").map { it.toInt() }
+        val score = Score.of(cardSet)
+
+        assertAll(
+            { assertThat(score.scoreList.size).isEqualTo(expectedScoreList.size) },
+            { assertThat(score.finalScore).isEqualTo(finalScore) },
+            { assertThat(score).isInstanceOf(Score.Running::class.java) }
         )
     }
 
