@@ -1,6 +1,8 @@
 package blackjack
 
 class Cards(val values: List<Card>) {
+    constructor(vararg values: Card) : this(values.asList())
+
     val scores: List<Score> = values
         .map { it.cardNumber.scores }
         .reduce { n1: List<Score>, n2: List<Score> ->
