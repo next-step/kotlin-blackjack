@@ -34,9 +34,13 @@ class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
 
     fun hitWhileWants(cardDistributor: CardDistributor, progress: ((Player) -> Unit)? = null) {
         while (this.canHit) {
-            cardDistributor.giveCardsTo(this) // hit
+            this.hit(cardDistributor)
             progress?.invoke(this)
         }
+    }
+
+    private fun hit(cardDistributor: CardDistributor) {
+        cardDistributor.giveCardsTo(this)
     }
 }
 
