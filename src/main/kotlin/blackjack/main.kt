@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.NormalPlayer
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 
@@ -15,17 +15,17 @@ fun main() {
     OutputView.showResult(players)
 }
 
-private fun participate(): List<Player> {
+private fun participate(): List<NormalPlayer> {
     val names = InputView.readPlayerNames()
-    return names.map { Player(it) { InputView.askHit(it) } }
+    return names.map { NormalPlayer(it) { InputView.askHit(it) } }
 }
 
-private fun distribution(dealer: Dealer, players: List<Player>) {
+private fun distribution(dealer: Dealer, players: List<NormalPlayer>) {
     dealer.distribute(players)
     OutputView.showDistribution(players)
 }
 
-private fun deal(dealer: Dealer, players: List<Player>) {
+private fun deal(dealer: Dealer, players: List<NormalPlayer>) {
     players.forEach { player ->
         while (dealer.dealWith(player)) {
             OutputView.showHand(player)

@@ -4,7 +4,7 @@ class Dealer(
     private val deck: Deck = ShuffledDeck(),
 ) {
 
-    fun distribute(players: List<Player>) {
+    fun distribute(players: List<NormalPlayer>) {
         require(players.isNotEmpty()) { "카드를 분배할 플레이어가 없습니다" }
         check(deck.sizeOfRemaining() >= players.size * SIZE_OF_DISTRIBUTION) {
             "플레이어에게 분배할 카드가 부족합니다"
@@ -14,7 +14,7 @@ class Dealer(
         }
     }
 
-    fun dealWith(player: Player): Boolean {
+    fun dealWith(player: NormalPlayer): Boolean {
         return when (player.canHit() && player.selectHit()) {
             true -> {
                 check(deck.sizeOfRemaining() >= SIZE_OF_HIT) {

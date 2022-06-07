@@ -22,7 +22,7 @@ class DealerSpecs : DescribeSpec({
                 listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
             val dealer = Dealer(deck)
-            val players = listOf(Player("1") { true }, Player("2") { true })
+            val players = listOf(NormalPlayer("1") { true }, NormalPlayer("2") { true })
             it("모든 플레이어에게 카드를 2장 분배한다") {
                 dealer.distribute(players)
                 deck.sizeOfRemaining() shouldBe 0
@@ -36,7 +36,7 @@ class DealerSpecs : DescribeSpec({
                 listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
             val dealer = Dealer(deck)
-            val players = emptyList<Player>()
+            val players = emptyList<NormalPlayer>()
             it("카드를 분배할 수 없다") {
                 shouldThrowExactly<IllegalArgumentException> {
                     dealer.distribute(players)
@@ -47,7 +47,7 @@ class DealerSpecs : DescribeSpec({
         context("분배할 카드가 부족하다면") {
             val emptyDeck = CustomDeck(emptyList())
             val dealer = Dealer(emptyDeck)
-            val players = listOf(Player("1") { true }, Player("2") { true })
+            val players = listOf(NormalPlayer("1") { true }, NormalPlayer("2") { true })
             it("카드를 분배할 수 없다") {
                 shouldThrowExactly<IllegalStateException> {
                     dealer.distribute(players)
@@ -60,7 +60,7 @@ class DealerSpecs : DescribeSpec({
                 listOf(TWO to SPADE)
             )
             val dealer = Dealer(deck)
-            val player = Player("name", hand(SIX to HEART, SEVEN to DIAMOND)) { true }
+            val player = NormalPlayer("name", hand(SIX to HEART, SEVEN to DIAMOND)) { true }
             it("카드 한 장을 거래한다") {
                 dealer.dealWith(player) shouldBe true
                 player.hand shouldBeEqualToComparingFields hand(TWO to SPADE)
@@ -70,7 +70,7 @@ class DealerSpecs : DescribeSpec({
 
         context("플레이어의 현재 점수가 21보다 크다면") {
             val dealer = Dealer()
-            val player = Player("name", hand(KING to HEART, ACE to DIAMOND)) { true }
+            val player = NormalPlayer("name", hand(KING to HEART, ACE to DIAMOND)) { true }
             it("카드를 거래하지 않는다") {
                 dealer.dealWith(player) shouldBe false
             }
@@ -78,7 +78,7 @@ class DealerSpecs : DescribeSpec({
 
         context("플레이어가 hit을 선택하지 않았으면") {
             val dealer = Dealer()
-            val player = Player("name") { false }
+            val player = NormalPlayer("name") { false }
             it("카드를 거래하지 않는다") {
                 dealer.dealWith(player) shouldBe false
             }
@@ -87,7 +87,7 @@ class DealerSpecs : DescribeSpec({
         context("거래할 카드가 부족하다면") {
             val deck = CustomDeck(emptyList())
             val dealer = Dealer(deck)
-            val player = Player("js") { true }
+            val player = NormalPlayer("js") { true }
             it("카드를 거래할 수 없다") {
                 shouldThrowExactly<IllegalStateException> { dealer.dealWith(player) }
             }
