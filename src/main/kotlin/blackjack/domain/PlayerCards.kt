@@ -21,7 +21,7 @@ class PlayerCards(list: List<Card> = emptyList()) {
         return sum
     }
 
-    private fun hasAceCard() = _cards.any { it is AceCard }
+    private fun hasAceCard() = _cards.any { it.isAceCard() }
 
     companion object {
         private val ACE_INCREASE_SCORE = Score(10)

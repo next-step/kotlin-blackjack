@@ -19,7 +19,7 @@ class WinningRecordTest : DescribeSpec({
         }
         context("인자가 false 인 경우") {
             it("loseCount 가 +1 상승한다.") {
-                record.updateRecord(isWin = true)
+                record.updateRecord(isWin = false)
                 record.loseCount shouldBe 1
             }
         }
