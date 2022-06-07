@@ -18,13 +18,13 @@ class ParticipantTest {
     @ValueSource(strings = ["molly"])
     fun `참가자 최초 생성 시 스코어는 0점`(input: String) {
         val participant = Participant(input)
-        assertThat(participant.cards.score()).isEqualTo(0)
+        assertThat(participant.playerCards.score()).isEqualTo(0)
     }
 
     @ParameterizedTest
     @ValueSource(strings = ["molly"])
     fun `참가자 생성 직구 카드 갯수 0개`(input: String) {
         val participant = Participant(input)
-        assertThat(participant.cards.playerCards.size).isEqualTo(0)
+        assertThat(participant.playerCards.playerCards.size).isEqualTo(0)
     }
 }

@@ -25,7 +25,7 @@ class BlackjackApplication {
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {
         var isNeed = InputView.needMoreCard(participant)
         do if (isNeed) {
-            blackJackGame.giveMoreCard(participant)
+            blackJackGame.drawTo(participant)
             GameView.displayPlayerCard(participant)
             isNeed = InputView.needMoreCard(participant)
         }

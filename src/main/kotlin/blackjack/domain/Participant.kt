@@ -1,14 +1,10 @@
 package blackjack.domain
 
 data class Participant(
-    val name: String
+    val name: String,
+    val playerCards: Cards = Cards()
 ) {
-    private val playerCards = Cards()
-
-    val cards: Cards
-        get() = playerCards
-
     fun addCard(card: Card) {
-        playerCards.addCard(card)
+        this.playerCards.addCard(card)
     }
 }

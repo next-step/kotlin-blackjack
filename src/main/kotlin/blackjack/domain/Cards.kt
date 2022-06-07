@@ -1,7 +1,7 @@
 package blackjack.domain
 
-data class Cards(
-    private val cards: List<Card> = emptyList()
+class Cards(
+    cards: List<Card> = emptyList()
 ) {
     val playerCards: List<Card>
         get() = _playerCards.toList()

@@ -4,14 +4,15 @@ data class BlackJackGame(
     val players: List<Participant>,
     val cardDeck: Deck
 ) {
+    private val playerMap = players.associate { it.name to it.playerCards }
     fun firstCardDistribution() {
         players.forEach { participant ->
             participant.addFirstCard()
         }
     }
 
-    fun giveMoreCard(player: Participant) {
-        players.first { it == player }.addCard(cardDeck.draw())
+    fun drawTo(player: Participant) {
+        playerMap[player.name]!!.addCard(cardDeck.draw())
     }
 
     private fun Participant.addFirstCard() {
