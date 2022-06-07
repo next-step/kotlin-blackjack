@@ -13,7 +13,7 @@ object OutputView {
     }
 
     private fun getNames(players: List<Player>): String {
-        return players.joinToString(", ") { it.name }
+        return players.joinToString { it.name }
     }
 
     fun showHand(player: Player) {

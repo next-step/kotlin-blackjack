@@ -6,9 +6,17 @@ interface Deck {
 }
 
 class ShuffledDeck : Deck {
-    private val cards: MutableList<Card> = Card.entireCards
+    private val cards: MutableList<Card> = Denomination.values()
+        .flatMap { combine(it) }
         .shuffled()
         .toMutableList()
+
+    private fun combine(denomination: Denomination): List<Card> {
+        return Suit.values()
+            .map { suit ->
+                Card(denomination, suit)
+            }
+    }
 
     override fun sizeOfRemaining(): Int {
         return cards.size

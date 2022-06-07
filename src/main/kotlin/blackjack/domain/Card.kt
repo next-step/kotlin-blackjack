@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Card private constructor(
+data class Card(
     val denomination: Denomination,
     private val suit: Suit
 ) {
@@ -8,25 +8,6 @@ class Card private constructor(
 
     override fun toString(): String {
         return "${denomination.displayedName}${suit.type}"
-    }
-
-    companion object {
-        private val cardsByDenominationAndSuit: Map<Pair<Denomination, Suit>, Card> = Denomination.values()
-            .flatMap { combine(it) }
-            .associateBy { it.denomination to it.suit }
-
-        private fun combine(denomination: Denomination): List<Card> {
-            return Suit.values()
-                .map { suit ->
-                    Card(denomination, suit)
-                }
-        }
-
-        val entireCards: List<Card> = cardsByDenominationAndSuit.values.toList()
-
-        fun from(denomination: Denomination, suit: Suit): Card {
-            return cardsByDenominationAndSuit[denomination to suit] ?: throw IllegalArgumentException()
-        }
     }
 }
 

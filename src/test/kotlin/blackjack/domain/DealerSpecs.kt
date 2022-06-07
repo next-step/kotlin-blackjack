@@ -19,7 +19,7 @@ class DealerSpecs : DescribeSpec({
     describe("딜러는") {
         context("카드를 분배할 플레이어가 있고 분배할 카드가 충분하다면") {
             val deck = CustomDeck(
-                cards(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
+                listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
             val dealer = Dealer(deck)
             val players = listOf(Player("1") { true }, Player("2") { true })
@@ -33,7 +33,7 @@ class DealerSpecs : DescribeSpec({
 
         context("카드를 분배할 플레이어가 없다면") {
             val deck = CustomDeck(
-                cards(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
+                listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
             )
             val dealer = Dealer(deck)
             val players = emptyList<Player>()
@@ -57,7 +57,7 @@ class DealerSpecs : DescribeSpec({
 
         context("플레이어의 현재 점수가 21보다 낮고, 플레이어가 hit을 선택했으면") {
             val deck = CustomDeck(
-                cards(TWO to SPADE)
+                listOf(TWO to SPADE)
             )
             val dealer = Dealer(deck)
             val player = Player("name", hand(SIX to HEART, SEVEN to DIAMOND)) { true }

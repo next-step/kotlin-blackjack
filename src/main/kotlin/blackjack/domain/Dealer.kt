@@ -28,7 +28,7 @@ class Dealer(
     }
 
     companion object {
-        const val SIZE_OF_HIT = 1
-        const val SIZE_OF_DISTRIBUTION = 2
+        private const val SIZE_OF_HIT = 1
+        private const val SIZE_OF_DISTRIBUTION = 2
     }
 }

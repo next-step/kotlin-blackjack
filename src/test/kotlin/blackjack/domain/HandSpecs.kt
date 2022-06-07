@@ -35,7 +35,7 @@ class HandSpecs : DescribeSpec({
             val cards = hand(
                 KING to HEART,
             )
-            val card = Card.from(KING, CLOVER)
+            val card = Card(KING, CLOVER)
             cards.add(card)
             cards.calculate() shouldBe 20
         }

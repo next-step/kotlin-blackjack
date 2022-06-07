@@ -25,8 +25,8 @@ class PlayerSpecs : DescribeSpec({
 
         it("카드 2장을 자신의 카드 패에 추가할 수 있다") {
             val player = Player("name") { true }
-            val card1 = Card.from(KING, CLOVER)
-            val card2 = Card.from(ACE, SPADE)
+            val card1 = Card(KING, CLOVER)
+            val card2 = Card(ACE, SPADE)
             player.initialize(DistributedCards(card1, card2))
             player.hand shouldBeEqualToComparingFields Hand(listOf(card1, card2))
         }
@@ -45,7 +45,7 @@ class PlayerSpecs : DescribeSpec({
 
         it("카드 1장을 자신의 카드 패에 추가할 수 있다") {
             val player = Player("name") { true }
-            val card = Card.from(KING, CLOVER)
+            val card = Card(KING, CLOVER)
             player.hit(card)
             player.hand shouldBeEqualToComparingFields Hand(listOf(card))
         }
@@ -59,7 +59,7 @@ class PlayerSpecs : DescribeSpec({
             val player = Player("name", hand(KING to CLOVER, ACE to SPADE)) { true }
             it("자신의 카드 패에 새로운 카드를 추가할 수 없다") {
                 shouldThrowExactly<IllegalStateException> {
-                    player.hit(Card.from(TEN, HEART))
+                    player.hit(Card(TEN, HEART))
                 }
             }
         }
