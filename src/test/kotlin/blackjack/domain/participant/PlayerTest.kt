@@ -1,10 +1,8 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.CardSymbol
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerStatus
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -19,7 +17,7 @@ internal class PlayerTest {
         player.addCards(DIAMOND_ACE, CLUB_KING, SPADE_TEN, HEART_TWO)
 
         // then
-        assertThat(player.status).isEqualTo(PlayerStatus.BUST)
+        assertThat(player.status).isEqualTo(ParticipantStatus.BUST)
     }
 
     @Test
@@ -31,7 +29,7 @@ internal class PlayerTest {
         player.addCards(DIAMOND_ACE, CLUB_KING, SPADE_TEN)
 
         // then
-        assertThat(player.status).isNotEqualTo(PlayerStatus.BUST)
+        assertThat(player.status).isNotEqualTo(ParticipantStatus.BUST)
     }
 
     companion object {

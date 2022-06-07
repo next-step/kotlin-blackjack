@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.game.Game.Companion.FIRST_DRAW_NUMBER
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Player
 
 object PlayerView {
     fun printInitialHand(players: List<Player>) {

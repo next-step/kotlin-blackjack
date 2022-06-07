@@ -3,8 +3,9 @@ package blackjack.domain.game
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.CardSymbol
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerStatus
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.ParticipantStatus
 
 class Game(playerNames: String) {
     private val players: List<Player>
@@ -47,14 +48,14 @@ class Game(playerNames: String) {
             return false
         }
         players.forEach { player -> player.turn(printPlayerInfo, inputHitDecision) }
-        return players.any { player -> player.status == PlayerStatus.HIT }
+        return players.any { it.isDrawable() }
     }
 
     private fun Player.turn(
         printPlayerInfo: (player: Player) -> Unit,
         inputHitDecision: (player: Player) -> Boolean
     ) {
-        if (status != PlayerStatus.HIT) {
+        if (isDrawable()) {
             return
         }
 
@@ -63,7 +64,7 @@ class Game(playerNames: String) {
             val card = dealer.drawOneCard()
             addCards(card)
         } else {
-            changeStatus(PlayerStatus.STAND)
+            changeStatus(ParticipantStatus.STAND)
         }
         printPlayerInfo(this)
     }
