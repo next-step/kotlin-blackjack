@@ -1,10 +1,15 @@
 package blackjack.domain
 
-class Dealer(
-    private val deck: Deck = ShuffledDeck(),
-) {
+interface Dealer {
+    fun distribute(players: List<Player>)
+    fun dealWith(player: Player): Boolean
+}
 
-    fun distribute(players: List<NormalPlayer>) {
+class Croupier(
+    private val deck: Deck = ShuffledDeck(),
+) : Dealer {
+
+    override fun distribute(players: List<Player>) {
         require(players.isNotEmpty()) { "카드를 분배할 플레이어가 없습니다" }
         check(deck.sizeOfRemaining() >= players.size * SIZE_OF_DISTRIBUTION) {
             "플레이어에게 분배할 카드가 부족합니다"
@@ -14,7 +19,7 @@ class Dealer(
         }
     }
 
-    fun dealWith(player: NormalPlayer): Boolean {
+    override fun dealWith(player: Player): Boolean {
         return when (player.canHit() && player.selectHit()) {
             true -> {
                 check(deck.sizeOfRemaining() >= SIZE_OF_HIT) {

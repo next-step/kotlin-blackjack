@@ -1,19 +1,22 @@
 package blackjack.domain
 
 interface Player {
+    val name: String
+    val hand: Hand
     val selectHit: () -> Boolean
 
     fun initialize(distributedCards: DistributedCards)
     fun hit(card: Card)
-    fun calculateHand(): Int
     fun canHit(): Boolean
+    fun calculateHand(): Int = hand.calculate()
 }
 
 class NormalPlayer(
-    val name: String,
-    val hand: Hand = Hand.empty(),
+    override val name: String,
+    override val hand: Hand = Hand.empty(),
     override val selectHit: () -> Boolean
 ) : Player {
+
     override fun initialize(distributedCards: DistributedCards) {
         val (firstCard, secondCard) = distributedCards
         hand.add(firstCard)
@@ -26,8 +29,6 @@ class NormalPlayer(
         }
         hand.add(card)
     }
-
-    override fun calculateHand(): Int = hand.calculate()
 
     override fun canHit(): Boolean = calculateHand() < Hand.BLACKJACK_POINT
 }
