@@ -11,8 +11,8 @@ class CardTest : DescribeSpec({
         context("같은 카드 문양과 같은 유형이 주어지면") {
             it("두 카드는 동일한 카드이다") {
                 assertSoftly {
-                    Card(CardPattern.CLOVER, Ace()) shouldBe Card(CardPattern.CLOVER, Ace())
-                    Card(CardPattern.HEART, NumberCard(5)) shouldBe Card(CardPattern.HEART, NumberCard(5))
+                    Card(Suit.CLOVER, Ace()) shouldBe Card(Suit.CLOVER, Ace())
+                    Card(Suit.HEART, NumberCard(5)) shouldBe Card(Suit.HEART, NumberCard(5))
                 }
             }
         }
@@ -20,8 +20,8 @@ class CardTest : DescribeSpec({
         context("다른 문양과 다른 유형의 카드가 주어지면") {
             it("두 카드는 동일하지 않은 카드이다") {
                 assertSoftly {
-                    Card(CardPattern.CLOVER, Ace()) shouldNotBe Card(CardPattern.HEART, Ace())
-                    Card(CardPattern.HEART, NumberCard(5)) shouldNotBe Card(CardPattern.SPADE, NumberCard(5))
+                    Card(Suit.CLOVER, Ace()) shouldNotBe Card(Suit.HEART, Ace())
+                    Card(Suit.HEART, NumberCard(5)) shouldNotBe Card(Suit.SPADE, NumberCard(5))
                 }
             }
         }
@@ -29,8 +29,8 @@ class CardTest : DescribeSpec({
         context("같은 문양과 다른 유형의 카드가 주어지면") {
             it("두 카드는 동일하지 않은 카드이다") {
                 assertSoftly {
-                    Card(CardPattern.CLOVER, Ace()) shouldNotBe Card(CardPattern.CLOVER, Queen())
-                    Card(CardPattern.HEART, NumberCard(5)) shouldNotBe Card(CardPattern.CLOVER, NumberCard(10))
+                    Card(Suit.CLOVER, Ace()) shouldNotBe Card(Suit.CLOVER, Queen())
+                    Card(Suit.HEART, NumberCard(5)) shouldNotBe Card(Suit.CLOVER, NumberCard(10))
                 }
             }
         }

@@ -29,6 +29,6 @@ object ResultView {
 
     private fun printPlayerWithCards(name: String, cards: List<Card>) {
         println()
-        print("${name}카드: ${cards.joinToString(", ") { "${it.type.name}${it.pattern.description}" }}")
+        print("${name}카드: ${cards.joinToString(", ") { "${it.denomination.name}${it.suit.description}" }}")
     }
 }

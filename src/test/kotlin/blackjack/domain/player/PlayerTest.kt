@@ -3,11 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.Score
 import blackjack.domain.card.Ace
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Jack
 import blackjack.domain.card.NumberCard
 import blackjack.domain.card.Queen
+import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -30,21 +30,21 @@ class PlayerTest : DescribeSpec({
                     name = "요한",
                     cards = Cards(
                         listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(9)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     )
                 )
 
-                player.hit(Card(CardPattern.DIAMOND, NumberCard(10)))
+                player.hit(Card(Suit.DIAMOND, NumberCard(10)))
 
                 player.cards.cards shouldBe
                     listOf(
-                        Card(CardPattern.DIAMOND, Queen()),
-                        Card(CardPattern.DIAMOND, NumberCard(9)),
-                        Card(CardPattern.DIAMOND, NumberCard(2)),
-                        Card(CardPattern.DIAMOND, NumberCard(10)),
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(9)),
+                        Card(Suit.DIAMOND, NumberCard(2)),
+                        Card(Suit.DIAMOND, NumberCard(10)),
                     )
             }
         }
@@ -55,15 +55,15 @@ class PlayerTest : DescribeSpec({
                     name = "요한",
                     cards = Cards(
                         listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(10)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(10)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     )
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.hit(Card(CardPattern.DIAMOND, NumberCard(2)))
+                    player.hit(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
@@ -76,7 +76,7 @@ class PlayerTest : DescribeSpec({
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.hit(Card(CardPattern.DIAMOND, NumberCard(2)))
+                    player.hit(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
@@ -99,9 +99,9 @@ class PlayerTest : DescribeSpec({
                     name = "요한",
                     cards = Cards(
                         listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(9)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     ),
                     stay = false
@@ -116,9 +116,9 @@ class PlayerTest : DescribeSpec({
                         name = "요한",
                         cards = Cards(
                             listOf(
-                                Card(CardPattern.DIAMOND, Queen()),
-                                Card(CardPattern.DIAMOND, NumberCard(9)),
-                                Card(CardPattern.DIAMOND, NumberCard(3)),
+                                Card(Suit.DIAMOND, Queen()),
+                                Card(Suit.DIAMOND, NumberCard(9)),
+                                Card(Suit.DIAMOND, NumberCard(3)),
                             )
                         ),
                         stay = false
@@ -148,9 +148,9 @@ class PlayerTest : DescribeSpec({
                 name = "요한",
                 cards = Cards(
                     listOf(
-                        Card(CardPattern.DIAMOND, Ace()),
-                        Card(CardPattern.DIAMOND, Jack()),
-                        Card(CardPattern.DIAMOND, NumberCard(5)),
+                        Card(Suit.DIAMOND, Ace()),
+                        Card(Suit.DIAMOND, Jack()),
+                        Card(Suit.DIAMOND, NumberCard(5)),
                     )
                 )
             )

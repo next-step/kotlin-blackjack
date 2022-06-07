@@ -11,12 +11,12 @@ class Cards(cards: List<Card>) {
     }
 
     fun score(): Score {
-        val (aces, normalCards) = cards.partition { it.type is Ace }
+        val (aces, normalCards) = cards.partition { it.denomination is Ace }
 
-        val normalScores = normalCards.map { it.type.score }
+        val normalScores = normalCards.map { it.denomination.score }
             .fold(Score.ZERO) { acc, score -> acc + score }
 
-        return aces.map { it.type as Ace }
+        return aces.map { it.denomination as Ace }
             .fold(normalScores) { acc, ace ->
                 if (acc + ace.maxScore <= WINNING_SCORE) {
                     acc + ace.maxScore

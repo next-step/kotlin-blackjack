@@ -8,7 +8,7 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
-class CardTypeTest : DescribeSpec({
+class DenominationTest : DescribeSpec({
 
     describe("constructor") {
         context("2~10 사이의 숫자가 주어지면") {
