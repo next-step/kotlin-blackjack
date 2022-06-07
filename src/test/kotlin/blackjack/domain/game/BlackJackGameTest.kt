@@ -16,7 +16,7 @@ class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
 
-        Assertions.assertThat(blackJackGame.players).hasSize(2)
+        Assertions.assertThat(blackJackGame.players).hasSize(3)
     }
 
     @Test

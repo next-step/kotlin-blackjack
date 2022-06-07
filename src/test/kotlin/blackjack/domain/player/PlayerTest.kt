@@ -9,6 +9,13 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
 
     @Test
+    fun `딜러가 추가되었는지 테스트`() {
+        val players = Players(listOf("플레이어"))
+
+        assertThat(players.players.filterIsInstance<Dealer>().first().name).isEqualTo("딜러")
+    }
+
+    @Test
     fun `게임을 더 할 수 있는(기본(10)=10) 경우에 대한 테스트`() {
         val player = Player(
             "name",

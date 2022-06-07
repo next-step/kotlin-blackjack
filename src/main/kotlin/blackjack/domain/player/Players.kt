@@ -5,8 +5,7 @@ class Players(playerNames: List<String>) {
     val players: List<Player>
 
     init {
-        players = playerNames.map {
-            Player(it, mutableSetOf())
-        }
+        players = playerNames.map(::Player).toMutableList()
+        players.add(Dealer())
     }
 }

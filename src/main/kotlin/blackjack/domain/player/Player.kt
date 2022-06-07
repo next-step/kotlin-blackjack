@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Card.AceCard
 
-data class Player(
+open class Player(
     private val _name: String,
     val receivedCards: MutableSet<Card> = mutableSetOf()
 ) {
