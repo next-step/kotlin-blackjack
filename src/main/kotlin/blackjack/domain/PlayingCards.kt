@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class PlayingCards private constructor(private val cards: List<PlayingCard>) : List<PlayingCard> by cards {
-    fun countOf(number: CardNumber): Int = count { playingCard ->
+    fun hasCardOf(number: CardNumber): Boolean = any { playingCard ->
         playingCard.isCardOf(number)
     }
 
