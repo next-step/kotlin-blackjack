@@ -4,11 +4,11 @@ class SkillsBuilder {
     private var skills: Skills = Skills()
 
     fun soft(value: String) {
-        skills.add(Skill(SkillLevel.SOFT, value))
+        skills.add(Skill.Soft(value))
     }
 
     fun hard(value: String) {
-        skills.add(Skill(SkillLevel.HARD, value))
+        skills.add(Skill.Hard(value))
     }
 
     fun build(): Skills {

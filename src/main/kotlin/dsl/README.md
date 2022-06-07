@@ -31,3 +31,4 @@ introduce {
 1. enum 대신 sealed class 사용하기
 2. 패키지 명 dsl 로 바꾸기
 3. 리스트를 비교할 때에는 isEqualTo 보다는 containsExactly... 메소드를 활용하기
+4. SkillLevel 을 따로 구현하지 않도록 Skill 을 sealed interface 로 구현하기

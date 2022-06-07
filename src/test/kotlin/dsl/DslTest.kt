@@ -3,7 +3,6 @@ package dsl
 import dsl.language.Language
 import dsl.language.Languages
 import dsl.skill.Skill
-import dsl.skill.SkillLevel
 import dsl.skill.Skills
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -57,9 +56,9 @@ class DslTest {
 
         val expectedSkills = Skills(
             listOf(
-                Skill(SkillLevel.SOFT, softSkill1),
-                Skill(SkillLevel.SOFT, softSKill2),
-                Skill(SkillLevel.HARD, hardSkill1)
+                Skill.Soft(softSkill1),
+                Skill.Soft(softSKill2),
+                Skill.Hard(hardSkill1)
             )
         )
 
