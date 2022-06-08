@@ -11,12 +11,14 @@ class Game(playerNames: String) {
     private val players: List<Player>
     private val dealer: Dealer
     private var playable: Boolean
+    private val result: Result
 
     init {
         require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
         players = playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
         dealer = Dealer()
         playable = true
+        result = Result()
     }
 
     fun start(

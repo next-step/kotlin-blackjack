@@ -8,56 +8,69 @@ import blackjack.domain.SPADE_TEN
 import blackjack.domain.card.Card
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-internal class GameTest {
+internal class ResultTest {
 
     @ParameterizedTest
     @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 높은 케이스")
     fun `플레이어가 가진 패의 합계가 21을 넘지 않으면서 딜러보다 높으면 플레이어가 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
+        val result = Result()
         val player = Player("pug")
         val dealer = Dealer()
 
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
+        result.check(dealer, player)
 
         // then
-        TODO()
+        Assertions.assertThat(result.score)
+            .doesNotContainKey(dealer)
+            .containsEntry(player, 1)
     }
 
     @ParameterizedTest
     @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 낮은 케이스")
     fun `플레이어가 가진 패의 합계보다 딜러의 패의 합계가 높은 경우 플레이어가 패배한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
+        val result = Result()
         val player = Player("pug")
         val dealer = Dealer()
 
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
+        result.check(dealer, player)
 
         // then
-        TODO()
+        Assertions.assertThat(result.score)
+            .doesNotContainKey(player)
+            .containsEntry(dealer, 1)
     }
 
     @ParameterizedTest
     @MethodSource("딜러가 가진 패의 합계가 21을 초과하는 케이스")
-    fun `딜러가 가진 패의 합계가 21을 초과하면 플레이어들은 가진 패에 상관없이 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
+    fun `딜러가 가진 패의 합계가 21을 초과하면 플레이어는 가진 패에 상관없이 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
+        val result = Result()
         val player = Player("pug")
         val dealer = Dealer()
 
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
+        result.check(dealer, player)
 
         // then
-        TODO()
+        Assertions.assertThat(result.score)
+            .doesNotContainKey(dealer)
+            .containsEntry(player, 1)
     }
 
     companion object {
@@ -78,7 +91,6 @@ internal class GameTest {
             Arguments.of(arrayOf(SPADE_FIVE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE)),
             Arguments.of(arrayOf(SPADE_TEN, CLUB_KING, DIAMOND_ACE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE)),
             Arguments.of(arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE), arrayOf(SPADE_TEN, CLUB_KING, SPADE_FIVE))
-
         )
     }
 }
