@@ -16,15 +16,15 @@ fun main() {
     val playerNames = inputView.enterPlayerName()
     val cardDeck = CardDeck()
     val takeMore = TakeMorePlayer()
-    val players = Players(playerNames, Dealer(TakeMoreDealer()))
+    val players = Players(playerNames, takeMore, Dealer(TakeMoreDealer()))
 
-    val blackJackGame = BlackJackGame(cardDeck, players, takeMore)
+    val blackJackGame = BlackJackGame(cardDeck, players)
     resultView.printInitDistributed(blackJackGame.players)
 
-    blackJackGame.playersToPlay()
+    players.playersToPlay()
         .map {
-            while (it.canMoreGame() && blackJackGame.wantToTake(it)) {
-                blackJackGame.moreGamesByPlayer(it)
+            while (it.canMoreGame() && it.wantToTake()) {
+                it.addCard(cardDeck.pickCard())
                 resultView.printCardsByPlayer(it, false)
             }
 

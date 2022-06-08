@@ -7,8 +7,7 @@ import blackjack.domain.player.Players
 
 class BlackJackGame(
     private var cardDeck: CardDeck,
-    private var _playerList: Players,
-    private val takeMorePlayer: TakeMorePlayerStrategy
+    private var _playerList: Players
 ) {
 
     val players: List<Player>
@@ -22,34 +21,11 @@ class BlackJackGame(
             }
     }
 
-    fun playersToPlay(): List<Player> {
-        return _playerList.players
-            .filter { it !is Dealer }
-            .filter { it.canMoreGame() }
-    }
-
-    fun moreGamesByPlayer(player: Player) {
-        pickCardByPlayer(player)
-        calculateScoreByPlayer(player)
-    }
-
-    fun wantToTake(player: Player): Boolean {
-        return this.takeMorePlayer.wantToTake(player)
-    }
-
-    private fun calculateScoreByPlayer(player: Player) {
-        player.calculateScore()
-    }
-
-    private fun pickCardByPlayer(player: Player) {
-        player.receivedCards.add(cardDeck.pickCard())
-    }
-
     fun playDealer() {
         val dealer = _playerList.players.filterIsInstance<Dealer>().first()
 
         while (dealer.canBeTakeOneCard()) {
-            pickCardByPlayer(dealer)
+            dealer.addCard(cardDeck.pickCard())
         }
     }
 

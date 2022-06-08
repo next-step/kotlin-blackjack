@@ -15,8 +15,8 @@ class BlackJackGameTest {
         val cardDeck = CardDeck()
         val dealer = Dealer(TakeMoreDealerFixture(15))
         val takeMorePlayer = TakeMorePlayerFixture(false)
-        val players = Players(listOf("A", "B"), dealer)
-        val blackJackGame = BlackJackGame(cardDeck, players, takeMorePlayer)
+        val players = Players(listOf("A", "B"), takeMorePlayer, dealer)
+        val blackJackGame = BlackJackGame(cardDeck, players)
 
         Assertions.assertThat(blackJackGame.players).hasSize(3)
     }
@@ -26,8 +26,8 @@ class BlackJackGameTest {
         val cardDeck = CardDeck()
         val dealer = Dealer(TakeMoreDealerFixture(15))
         val takeMorePlayer = TakeMorePlayerFixture(false)
-        val players = Players(listOf("A", "B"), dealer)
-        val blackJackGame = BlackJackGame(cardDeck, players, takeMorePlayer)
+        val players = Players(listOf("A", "B"), takeMorePlayer, dealer)
+        val blackJackGame = BlackJackGame(cardDeck, players)
 
         Assertions.assertThat(blackJackGame.players[0].receivedCards).hasSize(2)
         Assertions.assertThat(blackJackGame.players[1].receivedCards).hasSize(2)

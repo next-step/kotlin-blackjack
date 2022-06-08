@@ -2,9 +2,11 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Card.AceCard
+import blackjack.domain.game.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
+    val takeMorePlayerStrategy: TakeMorePlayerStrategy,
     val receivedCards: MutableSet<Card> = mutableSetOf()
 ) {
 
@@ -31,6 +33,14 @@ open class Player(
 
     fun canMoreGame(): Boolean {
         return calculateScore() != BLACKJACK_SCORE && calculateScore() < BLACKJACK_SCORE
+    }
+
+    fun addCard(card: Card) {
+        receivedCards.add(card)
+    }
+
+    fun wantToTake(): Boolean {
+        return takeMorePlayerStrategy.wantToTake(this)
     }
 
     companion object {

@@ -1,14 +1,14 @@
 package blackjack.domain.player
 
-import blackjack.domain.game.TakeMoreDealerStrategy
+import blackjack.domain.game.TakeMorePlayerStrategy
 
-class Dealer(private val takeMoreDealerStrategy: TakeMoreDealerStrategy) : Player(_name = DEALER_NAME) {
+class Dealer(takeMoreDealerStrategy: TakeMorePlayerStrategy) : Player(_name = DEALER_NAME, takeMoreDealerStrategy) {
 
     var win : Int = 0
     var lose : Int = 0
 
     fun canBeTakeOneCard(): Boolean {
-        return takeMoreDealerStrategy.canBeTakeOneCard(this.score)
+        return takeMorePlayerStrategy.canBeTakeOneCard(this.score)
     }
 
     companion object {

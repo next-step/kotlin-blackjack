@@ -1,6 +1,6 @@
 package blackjack.domain.game
 
-class TakeMoreDealer : TakeMoreDealerStrategy {
+class TakeMoreDealer : TakeMorePlayerStrategy {
 
     override fun canBeTakeOneCard(score: Int): Boolean {
         return score <= DEALER_TAKE_ONE_CARD_POLICY
