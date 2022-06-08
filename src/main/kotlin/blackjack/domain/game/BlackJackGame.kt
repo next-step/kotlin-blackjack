@@ -33,14 +33,37 @@ class BlackJackGame(
         val dealer = _playerList.players.filterIsInstance<Dealer>().first()
         val players = _playerList.players.filter { it !is Dealer }
 
-        if (dealer.score > BLACKJACK_SCORE) {
-            players.map { it.isWinner = true }
-            dealer.lose = players.size
-            return
+        players.forEach {
+            judge(it, dealer)
+        }
+    }
+
+    private fun judge(player: Player, dealer: Dealer) {
+        if (checkPlayerWin(player, dealer)) {
+            player.isWinner = true
+            dealer.lose++
         }
 
-        dealer.lose = players.filter { it.score > dealer.score }.map { it.isWinner = true }.count()
-        dealer.win = players.filter { it.score < dealer.score }.map { it.isWinner = false }.count()
+        if (checkDealerWin(player, dealer)) {
+            player.isWinner = false
+            dealer.win++
+        }
+    }
+
+    private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {
+        if (player.score > BLACKJACK_SCORE) {
+            return false
+        }
+
+        return dealer.score > BLACKJACK_SCORE || player.score > dealer.score || player.score == BLACKJACK_SCORE
+    }
+
+    private fun checkDealerWin(player: Player, dealer: Dealer): Boolean {
+        if (dealer.score > BLACKJACK_SCORE) {
+            return false
+        }
+
+        return player.score > BLACKJACK_SCORE || player.score < dealer.score || dealer.score == BLACKJACK_SCORE
     }
 
     companion object {

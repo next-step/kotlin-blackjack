@@ -34,4 +34,5 @@ fun main() {
     blackJackGame.playDealer()
     blackJackGame.calculateWinner()
     resultView.printCardsByPlayers(blackJackGame.players, true)
+    resultView.printFinalResult(blackJackGame.players)
 }
