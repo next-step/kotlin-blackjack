@@ -7,14 +7,11 @@ data class Score(val origin: Int, val alternative: Int) {
     }
 
     fun max(): Int {
-        return if (origin > BLACKJACK) {
-            alternative
-        } else if (alternative > BLACKJACK) {
-            origin
-        } else if (origin > alternative) {
-            origin
-        } else {
-            alternative
+        return when {
+            origin > BLACKJACK -> alternative
+            alternative > BLACKJACK -> origin
+            origin > alternative -> origin
+            else -> alternative
         }
     }
 
