@@ -1,7 +1,7 @@
 package blackjack
 
 object CardDeck {
-    fun makeAllCards(): List<Card> {
+    fun makeShuffledCard(): List<Card> {
         val numbers = CardNumber.values()
         val shapes = CardShape.values()
         val allCards = mutableListOf<Card>()
@@ -12,6 +12,6 @@ object CardDeck {
             }
         }
 
-        return allCards
+        return allCards.shuffled()
     }
 }
