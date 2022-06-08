@@ -9,8 +9,8 @@ object ResultView {
         players.forEach { player -> println("${ParticipantView.parseParticipantInfoToString(player)} - 결과: ${player.score()}") }
 
         println("\n## 최종 승패")
-        result.score.forEach { (participant, winCount) ->
-            println("${participant.name}: $winCount")
+        result.scoreMap.forEach { (participant, score) ->
+            println("${participant.name}: ${score.win}승 ${score.lose}패")
         }
     }
 }

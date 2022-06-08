@@ -9,6 +9,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -30,9 +31,9 @@ internal class ResultTest {
         result.check(dealer, player)
 
         // then
-        Assertions.assertThat(result.score)
-            .doesNotContainKey(dealer)
-            .containsEntry(player, 1)
+        Assertions.assertThat(result.scoreMap)
+            .containsEntry(dealer, Score(win = 0, lose = 1))
+            .containsEntry(player, Score(win = 1, lose = 0))
     }
 
     @ParameterizedTest
@@ -49,9 +50,9 @@ internal class ResultTest {
         result.check(dealer, player)
 
         // then
-        Assertions.assertThat(result.score)
-            .doesNotContainKey(player)
-            .containsEntry(dealer, 1)
+        Assertions.assertThat(result.scoreMap)
+            .containsEntry(dealer, Score(win = 1, lose = 0))
+            .containsEntry(player, Score(win = 0, lose = 1))
     }
 
     @ParameterizedTest
@@ -68,9 +69,26 @@ internal class ResultTest {
         result.check(dealer, player)
 
         // then
-        Assertions.assertThat(result.score)
-            .doesNotContainKey(dealer)
-            .containsEntry(player, 1)
+        Assertions.assertThat(result.scoreMap)
+            .containsEntry(dealer, Score(win = 0, lose = 1))
+            .containsEntry(player, Score(win = 1, lose = 0))
+    }
+
+    @Test
+    fun `딜러와 플레이어가 가진 패의 합계가 같은 경우 비긴다`() {
+        // given
+        val result = Result()
+        val player = Player("pug")
+        val dealer = Dealer()
+
+        // when
+        player.addCards(SPADE_TEN, DIAMOND_ACE)
+        dealer.addCards(DIAMOND_ACE, CLUB_KING)
+        result.check(dealer, player)
+
+        // then
+        Assertions.assertThat(result.scoreMap)
+            .doesNotContainKeys(dealer, player)
     }
 
     companion object {
