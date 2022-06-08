@@ -21,6 +21,7 @@ object ResultView {
     }
 
     fun printResult(result: BlackJackResult) {
+        println()
         result.playerResults.forEach {
             printPlayerWithCards(it.playerName, it.cards)
             println(" - 결과: ${it.score.value}")
@@ -28,7 +29,6 @@ object ResultView {
     }
 
     private fun printPlayerWithCards(name: String, cards: List<Card>) {
-        println()
         print("${name}카드: ${cards.joinToString(", ") { "${it.denomination.name}${it.suit.description}" }}")
     }
 }

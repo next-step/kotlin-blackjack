@@ -7,20 +7,14 @@ class BlackJack(
     private val deck: Deck = Deck.default(),
     val players: List<Player>
 ) {
-    val isEnd: Boolean
-        get() {
-            return players.all { !it.hittable() }
-        }
+    val isEnd: Boolean get() = players.all { !it.hittable }
 
     init {
         require(players.isNotEmpty()) {
             "플레이어는 한 명 이상이어야 합니다."
         }
 
-        players.forEach { player ->
-            val twoCards = listOf(deck.draw(), deck.draw())
-            twoCards.forEach { player.hit(it) }
-        }
+        players.forEach { player -> player.initHandOut(listOf(deck.draw(), deck.draw())) }
     }
 
     fun hittablePlayers(): List<Player> {
@@ -29,7 +23,7 @@ class BlackJack(
 
     fun hit(player: Player) {
         hittablePlayers().find { it == player }
-            ?.hit(deck.draw())
+            ?.handOut(deck.draw())
             ?: throw IllegalArgumentException("존재하지 않는 참가자입니다")
     }
 

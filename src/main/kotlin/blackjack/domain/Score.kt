@@ -18,5 +18,6 @@ value class Score(val value: Int) {
 
     companion object {
         val ZERO = Score(0)
+        val BLACKJACK = Score(21)
     }
 }

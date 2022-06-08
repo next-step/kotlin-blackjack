@@ -29,7 +29,7 @@ class BlackJackTest : DescribeSpec({
                 )
 
                 blackJack.players.forAll {
-                    it.cards.cards.size shouldBe 2
+                    it.cards.size shouldBe 2
                 }
             }
         }
@@ -55,7 +55,7 @@ class BlackJackTest : DescribeSpec({
                 val player = hittablePlayers.first()
                 blackJack.hit(player)
 
-                player.cards.cards.size shouldBe 3
+                player.cards.size shouldBe 3
             }
         }
 

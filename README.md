@@ -96,14 +96,21 @@ jason카드: 7클로버, K스페이드 - 결과: 17
     - [X] 게임이 종료되지 않았으면 IllegalStateException 이 발생한다
 
 - `게임 참가자(Player)`
-  - 이름, 카드들, 상태를 가진다
-  - [X] 카드를 추가할 수 있다.
-    - [X] 이미 카드들의 점수의 합이 21을 초과하는 경우 IllegalStateException 이 발생한다.
-    - [X] 카드를 추가하지 않기로 한 경우 IllegalStateException 이 발생한다.
-  - [X] 카드를 추가 하지 않기로 할 수 있다.
+  - [X] 카드를 받지 않은 초기에 카드를 추가할 수 있다.
+    - 참가자 상태가 초기가 아니라면 IllegalStateException 이 발생한다.
+  - [X] 카드를 추가(HIT)하기로 할 수 있다.
+    - READY 상태가 아닌 경우 IllegalStateException 이 발생한다.
+    - BUST 인 경우 IllegalStateException 이 발생한다.
+  - [X] 카드를 추가 하지 않기(STAY)로 할 수 있다.
+    - BUST 인 경우 IllegalStateException 이 발생한다.
   - [X] 카드를 추가 할 수 있는지 확인할 수 있다.
+    - HIT 상태일 때 카드를 추가할 수 있다.
     - 카드들의 합이 21을 초과하면 카드를 추가 할 수 없다.
     - 카드를 받지 않기로 하였다면 카드를 추가 할 수 없다.
+  - [X] 카드를 추가할 수 있다.
+    - HIT 상태가 아닌 경우 IllegalStateException 이 발생한다.
+    - 카드들의 점수의 합이 21을 초과하는 경우 IllegalStateException 이 발생한다.
+    - 카드를 추가한 후 READY 상태로 변경된다.
   - [X] 카드들의 점수의 합을 구할 수 있다.
 
 - `덱(Deck)` 
