@@ -17,11 +17,22 @@ object BlackJackGame {
         gameEnd(players)
     }
 
-    private fun gameEnd(players: List<Player>) {
-        players.forEach {
-            PrintView.printHaveCardsWithName(it.name, it.cards, false)
+    private fun getPlayers(): List<Player> {
+        PrintView.printInputUserNamesDesc()
+        val userNames = InputView.getUserNames()
 
-            PrintView.printResultSum(it.getMaxSumLessThan21())
+        return userNames.map { Player(it) }
+    }
+
+    private fun offerInitialCards(players: List<Player>) {
+        PrintView.printOfferInitialCardsWithNames(players.map { it.name })
+
+        players.forEach { player ->
+            val servedCards = List(START_CARD_NUM) { Dealer.popOneCard() }
+
+            PrintView.printHaveCardsWithName(player.name, servedCards)
+
+            player.offer(servedCards)
         }
     }
 
@@ -61,22 +72,11 @@ object BlackJackGame {
         }
     }
 
-    private fun getPlayers(): List<Player> {
-        PrintView.printInputUserNamesDesc()
-        val userNames = InputView.getUserNames()
+    private fun gameEnd(players: List<Player>) {
+        players.forEach {
+            PrintView.printHaveCardsWithName(it.name, it.cards, false)
 
-        return userNames.map { Player(it) }
-    }
-
-    private fun offerInitialCards(players: List<Player>) {
-        PrintView.printOfferInitialCardsWithNames(players.map { it.name })
-
-        players.forEach { player ->
-            val servedCards = List(START_CARD_NUM) { Dealer.popOneCard() }
-
-            PrintView.printHaveCardsWithName(player.name, servedCards)
-
-            player.offer(servedCards)
+            PrintView.printResultSum(it.getMaxSumLessThan21())
         }
     }
 }

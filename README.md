@@ -45,6 +45,6 @@
 - [x] checkResultCandidate네이밍 변경
 - [x] YES, NO 를 객체로 표현하고 내부에 검증
 - [x] 생성자 파라미터 개수 3개이상일때 컨벤션 고려
-- [ ] offerInitialCards, proceedGame 등 연관된 메서드끼리 가까이 위치
+- [x] offerInitialCards, proceedGame 등 연관된 메서드끼리 가까이 위치
 - [ ] 메서드에 파라미터를 넘기는게 변경되는 것 보다, 변경 된 객체를 리턴받는 방식으
 - [ ] 카드 toString 제거 고려하기
