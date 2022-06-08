@@ -9,7 +9,7 @@ data class Result(
     val scoreMap: MutableMap<Participant, Score> = mutableMapOf(),
 ) {
 
-    fun check(dealer: Dealer, player: Player) {
+    fun checkWinner(dealer: Dealer, player: Player) {
         if (dealer.status == ParticipantStatus.BUST) {
             win(player)
             lose(dealer)

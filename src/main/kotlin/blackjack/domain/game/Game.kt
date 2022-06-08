@@ -49,7 +49,7 @@ class Game(playerNames: String) {
         players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
         dealer.turn(printDealerDrawOneCard)
 
-        players.forEach { player -> result.check(dealer, player) }
+        players.forEach { player -> result.checkWinner(dealer, player) }
     }
 
     private fun Player.turn(
