@@ -21,4 +21,8 @@ class Players(val players: List<Player>) {
     fun isEnd(): Boolean {
         return players.all(Player::isEnd)
     }
+
+    fun contains(player: Player): Boolean {
+        return players.contains(player)
+    }
 }

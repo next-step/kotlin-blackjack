@@ -184,7 +184,7 @@ class PlayerTest : DescribeSpec({
                             Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     ),
-                    playerStatus = PlayerStatus.HIT
+                    playerStatus = PlayerStatus.READY
                 )
 
                 player.hittable shouldBe true

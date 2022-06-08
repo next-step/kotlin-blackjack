@@ -13,12 +13,10 @@ fun main() {
     ResultView.printlnBlackJackInit(players)
     ResultView.printlnPlayersWithCards(players)
 
-    while (!blackJack.isEnd) {
-        val hittablePlayers = blackJack.hittablePlayers
-        val player = hittablePlayers.first()
-        when (InputView.isHit(player)) {
-            true -> hit(blackJack, player)
-            false -> player.stay()
+    val hittablePlayers = blackJack.hittablePlayers
+    hittablePlayers.forEach {
+        while (!it.isEnd) {
+            hitOrStay(blackJack, it, InputView.isHit(it))
         }
     }
 
@@ -26,8 +24,12 @@ fun main() {
     ResultView.printResult(result)
 }
 
-fun hit(blackJack: BlackJack, player: Player) {
-    player.hit()
-    blackJack.hit(player)
-        .also { ResultView.printlnPlayerWithCards(player.name, player.cards) }
+fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
+    if (hit) {
+        player.hit()
+        blackJack.handOut(player)
+            .also { ResultView.printlnPlayerWithCards(player.name, player.cards) }
+    } else {
+        player.stay()
+    }
 }

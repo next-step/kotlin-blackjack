@@ -34,25 +34,25 @@ class BlackJackTest : DescribeSpec({
 
     describe("hittablePlayers") {
         it("카드를 추가할 수 있는 참가자를 조회한다") {
-            val yohan = Player("yohan")
+            val yohan = Player(name = "yohan")
             val pang = Player("pang")
             val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-            yohan.hit()
+            pang.stay()
 
             blackJack.hittablePlayers shouldContainExactly listOf(yohan)
         }
     }
 
-    describe("hit") {
+    describe("handOut") {
         context("카드를 추가할 수 있는 참가자가 주어지면") {
             it("카드를 지급한다") {
-                val yohan = Player("yohan")
+                val yohan = Player(name = "yohan")
                 val blackJack = BlackJack(
                     players = Players(listOf(yohan))
                 )
 
                 yohan.hit()
-                blackJack.hit(yohan)
+                blackJack.handOut(yohan)
 
                 yohan.cards.size shouldBe 3
             }
@@ -64,7 +64,7 @@ class BlackJackTest : DescribeSpec({
                 val blackJack = BlackJack(players = Players(listOf(target, Player("pang"))))
                 target.stay()
 
-                shouldThrow<IllegalArgumentException> { blackJack.hit(target) }
+                shouldThrow<IllegalStateException> { blackJack.handOut(target) }
             }
         }
     }

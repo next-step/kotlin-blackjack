@@ -15,10 +15,12 @@ class BlackJack(
         players.handOutTwoCard(deck)
     }
 
-    fun hit(player: Player) {
-        hittablePlayers.find { it == player }
-            ?.handOut(deck.draw())
-            ?: throw IllegalArgumentException("존재하지 않는 참가자입니다")
+    fun handOut(player: Player) {
+        require(players.contains(player)) {
+            "존재하지 않는 참가자입니다"
+        }
+
+        player.handOut(deck.draw())
     }
 
     fun result(): BlackJackResult {

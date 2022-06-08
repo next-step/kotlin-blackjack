@@ -21,7 +21,7 @@ class Cards(cards: List<Card>) {
     }
 
     private fun aceScore(ace: Ace, acc: Score): Score {
-        return if (acc + ace.maxScore <= WINNING_SCORE) {
+        return if (acc + ace.maxScore <= Score.BLACKJACK) {
             ace.maxScore
         } else {
             ace.score
@@ -29,8 +29,6 @@ class Cards(cards: List<Card>) {
     }
 
     companion object {
-        val WINNING_SCORE = Score(21)
-
         fun empty(): Cards {
             return Cards(emptyList())
         }
