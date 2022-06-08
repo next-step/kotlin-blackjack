@@ -32,7 +32,7 @@ open class Player(
     }
 
     fun canMoreGame(): Boolean {
-        return calculateScore() != BLACKJACK_SCORE && calculateScore() < BLACKJACK_SCORE
+        return calculateScore() < BLACKJACK_SCORE
     }
 
     fun addCard(card: Card) {
