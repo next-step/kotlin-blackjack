@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-import java.util.*
+import java.util.Stack
 
 class Deck {
     private val _cards: Stack<Card> = Stack()
@@ -16,8 +16,7 @@ class Deck {
         _cards.addAll(cards.shuffled())
     }
 
-    fun takeCard(): Card {
+    fun draw(): Card {
         return _cards.pop()
     }
-
 }

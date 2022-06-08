@@ -19,7 +19,7 @@ internal class DeckTest {
         val deck = Deck()
 
         repeat(expected) {
-            deck.takeCard()
+            deck.draw()
         }
 
         Assertions.assertThat(deck.cards).hasSize(52 - expected)
