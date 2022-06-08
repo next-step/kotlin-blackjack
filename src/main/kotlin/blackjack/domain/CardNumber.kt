@@ -1,6 +1,11 @@
 package blackjack.domain
 
-enum class CardNumber(val cardName: String, val number: Int, val isMultiple: Boolean, val multiNumbers: List<Int>?) {
+enum class CardNumber(
+    val cardName: String,
+    val number: Int,
+    val isMultiple: Boolean,
+    val multiNumbers: List<Int>?
+) {
     ACE("Ace", 1, true, listOf(1, 10)),
     TWO("2", 2, false, null),
     THREE("3", 3, false, null),
