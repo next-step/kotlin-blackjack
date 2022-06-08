@@ -17,6 +17,10 @@ fun main() {
     val inputPlayers = inputView.inputPlayers()
     resultView.players(inputPlayers)
 
+    startBlackJack(inputView, resultView, inputPlayers)
+}
+
+fun startBlackJack(inputView: InputView, resultView: ResultView, inputPlayers: List<String>) {
     val dto: BlackJackRequest = BlackJackRequest.of(inputPlayers)
     val cardDeck: CardDeck = CardDeckImpl()
     val blackJack = BlackJack(dto, cardDeck)
@@ -26,6 +30,10 @@ fun main() {
     gameView.firstRoundState()
     gameView.run()
 
+    score(resultView, players)
+}
+
+fun score(resultView: ResultView, players: List<Player>) {
     val score = Score(players)
     score.run()
     resultView.score(score.playerScore)
