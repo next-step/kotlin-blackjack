@@ -14,19 +14,4 @@ enum class Denomination(val symbol: String, val score: Int) {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
-    ;
-
-    companion object {
-
-        private const val BLACKJACK_SCORE = 21
-        private const val ACE_EXTRA_SCORE = 10
-
-        fun score(ranks: List<Denomination>): Int {
-            var total = ranks.sumOf { it.score }
-            total += if (ranks.contains(ACE) && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0
-            return total
-        }
-
-        fun isBust(score: Int): Boolean = score > BLACKJACK_SCORE
-    }
 }

@@ -4,5 +4,4 @@ enum class Status {
     HIT,
     STAY,
     BUST,
-    ;
 }

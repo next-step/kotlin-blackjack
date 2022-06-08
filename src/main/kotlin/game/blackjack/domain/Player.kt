@@ -20,8 +20,8 @@ class Player(val name: String) {
 
     fun receive(card: Card): Int {
         _cards.add(card)
-        val score = Denomination.score(_cards.map { it.denomination })
-        if (Denomination.isBust(score)) {
+        val score = Card.score(_cards)
+        if (Card.isBust(score)) {
             status = Status.BUST
         }
         return score

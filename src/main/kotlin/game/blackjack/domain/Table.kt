@@ -1,7 +1,7 @@
 package game.blackjack.domain
 
 class Table(
-    val players: List<Player>,
+    private val players: List<Player>,
     val getAction: (name: String) -> String,
     val showPlayerCard: (player: Player) -> Unit,
 ) {
