@@ -7,19 +7,11 @@ class ResultCalculator {
 
     fun calculateRecursive(cards: List<Card>, idx: Int = 0, sum: Int = 0): Int {
         if (idx == cards.size) {
-            val candidate = if (sum > TARGET_NUMBER) {
-                0
-            } else {
-                sum
-            }
-
-            result = max(candidate, result)
-
+            checkResultCandidate(sum)
             return result
         }
 
         val card = cards[idx]
-
         if (card.cardNumber.isMultiple) {
             card.cardNumber.multiNumbers?.forEach {
                 calculateRecursive(cards, idx + 1, sum + it)
@@ -29,6 +21,16 @@ class ResultCalculator {
         }
 
         return result
+    }
+
+    private fun checkResultCandidate(sum: Int) {
+        val candidate = if (sum > TARGET_NUMBER) {
+            0
+        } else {
+            sum
+        }
+
+        result = max(candidate, result)
     }
 
     companion object {
