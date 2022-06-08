@@ -27,7 +27,7 @@ object PrintView {
     }
 
     private fun printCards(cards: List<Card>, lineFeed: Boolean) {
-        val cardJoint = cards.joinToString(separator = SEPARATOR)
+        val cardJoint = cards.joinToString { "${it.cardNumber.cardName}${it.cardShape}$SEPARATOR" }
         print(cardJoint)
         if (lineFeed) println()
     }
