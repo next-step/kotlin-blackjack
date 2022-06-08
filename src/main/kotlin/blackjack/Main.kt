@@ -4,10 +4,10 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.game.BlackJackGame
 import blackjack.domain.game.TakeMoreDealer
 import blackjack.domain.player.Dealer
-import blackjack.view.TakeMorePlayer
 import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
+import blackjack.view.TakeMorePlayer
 
 fun main() {
 

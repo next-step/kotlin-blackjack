@@ -89,7 +89,7 @@ class PlayerTest {
             "name",
             takeMorePlayer,
             mutableSetOf(
-                BasicCard(cardSuit = CardSuit.CLUB, number= 10),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10),
                 AceCard(cardSuit = CardSuit.SPADE, number = 11)
             )
         )
