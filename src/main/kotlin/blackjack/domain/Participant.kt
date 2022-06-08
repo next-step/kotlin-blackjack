@@ -1,6 +1,5 @@
 package blackjack.domain
 
-
 data class Participant(
     val name: String,
     val playerCards: Cards = Cards()
