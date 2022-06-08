@@ -32,5 +32,6 @@ fun main() {
         }
 
     blackJackGame.playDealer()
+    blackJackGame.calculateWinner()
     resultView.printCardsByPlayers(blackJackGame.players, true)
 }

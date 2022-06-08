@@ -8,6 +8,8 @@ open class Player(
     val receivedCards: MutableSet<Card> = mutableSetOf()
 ) {
 
+    var isWinner: Boolean = false
+
     val score: Int
         get() = calculateScore()
 
