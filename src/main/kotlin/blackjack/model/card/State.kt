@@ -10,24 +10,27 @@ sealed class State(val finalScore: Int) {
         private const val BLACK_JACK_SCORE = 21
         private const val THE_OTHER_SCORE_OF_ACE_CARD = 10
 
-        fun List<Card>.toScoreList(): List<Int> {
+        fun List<Card>.toSortedScoreList(): List<Int> {
             val basicScore = this.sumOf { it.denomination.score }
             val countOfAce = this.count { it.denomination == Denomination.ACE }
-            return (0..countOfAce).map { it * THE_OTHER_SCORE_OF_ACE_CARD + basicScore }.sorted()
+            return List(countOfAce + 1) { it * THE_OTHER_SCORE_OF_ACE_CARD + basicScore }
         }
 
         fun of(cardList: List<Card>): State {
-            val scoreList = cardList.toScoreList()
-            val minScore = scoreList.minOrNull() ?: 0
-            val maxScoreNotBust = scoreList.filter { it <= BLACK_JACK_SCORE }.maxOrNull() ?: 0
-            val isBlackJack = maxScoreNotBust == BLACK_JACK_SCORE
-            val isBust = minScore > BLACK_JACK_SCORE
+            val scoreList = cardList.toSortedScoreList()
+            return bustOrNull(scoreList[0]) ?: blackJackOrRunning(scoreList)
+        }
 
-            return when {
-                isBlackJack -> BlackJack()
-                isBust -> Bust(minScore)
-                else -> Running(maxScoreNotBust)
-            }
+        private fun bustOrNull(minScore: Int): State? = when {
+            minScore > BLACK_JACK_SCORE -> Bust(minScore)
+            else -> null
+        }
+
+        private fun blackJackOrRunning(sortedScoreList: List<Int>): State = when (
+            val maxScoreNotBust = sortedScoreList.filter { it <= BLACK_JACK_SCORE }.maxOrNull() ?: 0
+        ) {
+            BLACK_JACK_SCORE -> BlackJack()
+            else -> Running(maxScoreNotBust)
         }
     }
 }

@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 import blackjack.dummy.toCardSet
-import blackjack.model.card.State.Companion.toScoreList
+import blackjack.model.card.State.Companion.toSortedScoreList
 import blackjack.model.card.State.Running
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -58,7 +58,7 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
-        val actualScoreList = cardSet.toScoreList()
+        val actualScoreList = cardSet.toSortedScoreList()
 
         assertAll(
             { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
@@ -80,7 +80,7 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
-        val actualScoreList = cardSet.toScoreList()
+        val actualScoreList = cardSet.toSortedScoreList()
 
         assertAll(
             { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
@@ -103,7 +103,7 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
-        val actualScoreList = cardSet.toScoreList()
+        val actualScoreList = cardSet.toSortedScoreList()
 
         assertAll(
             { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
