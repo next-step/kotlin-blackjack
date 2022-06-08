@@ -17,13 +17,15 @@ class Cards(cards: List<Card>) {
             .fold(Score.ZERO) { acc, score -> acc + score }
 
         return aces.map { it.denomination as Ace }
-            .fold(normalScores) { acc, ace ->
-                if (acc + ace.maxScore <= WINNING_SCORE) {
-                    acc + ace.maxScore
-                } else {
-                    acc + ace.score
-                }
-            }
+            .fold(normalScores) { acc, ace -> acc + aceScore(ace, acc) }
+    }
+
+    private fun aceScore(ace: Ace, acc: Score): Score {
+        return if (acc + ace.maxScore <= WINNING_SCORE) {
+            ace.maxScore
+        } else {
+            ace.score
+        }
     }
 
     companion object {
