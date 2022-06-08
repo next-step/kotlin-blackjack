@@ -7,16 +7,11 @@ import game.blackjack.view.ResultView
 
 fun main() {
     val inputView = InputView()
-    val resultView = ResultView()
-    val players = inputView.readNames().map { Player(it) }
     val table = Table(
-        players,
-        { inputView.readPlayerAction(it) },
-        { resultView.printPlayerCard(it) }
+        inputView.readNames().map { Player(it) },
+        inputView,
+        ResultView()
     )
 
     table.start()
-    resultView.printAllPlayerCard(players)
-    table.distribute()
-    resultView.printResult(players)
 }
