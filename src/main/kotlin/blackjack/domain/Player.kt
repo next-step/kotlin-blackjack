@@ -13,7 +13,13 @@ class Player(val name: String) {
         _cards.addAll(servedCards)
     }
 
-    fun getCardSum(): Int {
-        return ResultCalculator().calculateRecursive(cards)
+    fun getMaxSumLessThan21(): Int {
+        return ResultCalculator().getAllPossibleResults(cards)
+            .filter { it < BLACKJACK_LIMIT }
+            .maxOf { it }
+    }
+
+    companion object {
+        private const val BLACKJACK_LIMIT = 21
     }
 }

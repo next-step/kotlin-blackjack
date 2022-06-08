@@ -23,7 +23,7 @@ object BlackJackGame {
         players.forEach {
             PrintView.printHaveCardsWithName(it.name, it.cards, false)
 
-            PrintView.printResultSum(it.getCardSum())
+            PrintView.printResultSum(it.getMaxSumLessThan21())
         }
     }
 

@@ -32,7 +32,7 @@ class PlayerTest {
         val player = Player("name")
         player.offer(cards)
 
-        val answer = player.getCardSum()
+        val answer = player.getMaxSumLessThan21()
         val expected = 14
 
         assertThat(answer).isEqualTo(expected)
