@@ -1,9 +1,6 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardShape
-import blackjack.domain.Player
+import blackjack.domain.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,9 +12,9 @@ class PlayerTest {
 
         player.offer(card)
 
-        assertThat(player.cards).hasSize(1)
+        assertThat(player.cards.cards).hasSize(1)
 
-        val found = player.cards.firstOrNull { it == card }
+        val found = player.cards.cards.firstOrNull { it == card }
         assertThat(found).isNotNull
     }
 
@@ -30,7 +27,7 @@ class PlayerTest {
         )
 
         val player = Player("name")
-        player.offer(cards)
+        player.offer(Cards(cards))
 
         val answer = player.getMaxSumLessThan21()
         val expected = 14

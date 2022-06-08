@@ -1,20 +1,18 @@
 package blackjack.domain
 
 class Player(val name: String) {
-    private val _cards = mutableListOf<Card>()
-    val cards
-        get() = _cards.toList()
+    val cards = Cards()
 
     fun offer(card: Card) {
-        _cards.add(card)
+        cards.add(card)
     }
 
-    fun offer(servedCards: List<Card>) {
-        _cards.addAll(servedCards)
+    fun offer(servedCards: Cards) {
+        cards.addAll(servedCards)
     }
 
     fun getMaxSumLessThan21(): Int {
-        return ResultCalculator().getAllPossibleResults(cards)
+        return cards.possibleResults
             .filter { it < BLACKJACK_LIMIT }
             .maxOf { it }
     }

@@ -32,7 +32,7 @@ object BlackJackGame {
 
             PrintView.printHaveCardsWithName(player.name, servedCards)
 
-            player.offer(servedCards)
+            player.offer(Cards(servedCards))
         }
     }
 
@@ -61,7 +61,7 @@ object BlackJackGame {
         if (yes) {
             val servedCard = Dealer.popOneCard()
             player.offer(servedCard)
-            PrintView.printHaveCardsWithName(player.name, player.cards)
+            PrintView.printHaveCardsWithName(player.name, player.cards.cards)
         }
     }
 
@@ -74,7 +74,7 @@ object BlackJackGame {
 
     private fun gameEnd(players: List<Player>) {
         players.forEach {
-            PrintView.printHaveCardsWithName(it.name, it.cards, false)
+            PrintView.printHaveCardsWithName(it.name, it.cards.cards, false)
 
             PrintView.printResultSum(it.getMaxSumLessThan21())
         }
