@@ -32,4 +32,23 @@ class BlackJackGameTest {
         Assertions.assertThat(blackJackGame.players[0].receivedCards).hasSize(2)
         Assertions.assertThat(blackJackGame.players[1].receivedCards).hasSize(2)
     }
+
+
+    @Test
+    fun `딜러가 21 초과이기 때문에, 참가자 모두 이기는 게임 체크`() {
+        val cardDeck = CardDeck()
+        val dealer = Dealer(TakeMoreDealerFixture(30))
+        val takeMorePlayer = TakeMorePlayerFixture(false)
+        val players = Players(listOf("A", "B"), takeMorePlayer, dealer)
+        val blackJackGame = BlackJackGame(cardDeck, players)
+
+        while (dealer.score <= 21) {
+            dealer.addCard(cardDeck.pickCard())
+        }
+
+        blackJackGame.calculateWinner()
+
+        Assertions.assertThat(blackJackGame.players[0].isWinner).isTrue
+        Assertions.assertThat(blackJackGame.players[1].isWinner).isTrue
+    }
 }
