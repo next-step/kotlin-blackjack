@@ -24,23 +24,39 @@ fun gameEnd(players: List<Player>) {
 
 fun proceedGame(players: List<Player>) {
     do {
-        var noCount = 0
-
-        players.forEach {
-            PrintView.askOneMoreCard(it.name)
-
-            when (InputView.getYorN()) {
-                YES -> {
-                    val servedCard = Dealer.popOneCard()
-
-                    it.offer(servedCard)
-                    PrintView.printHaveCardsWithName(it.name, it.cards)
-                }
-
-                NO -> noCount++
-            }
-        }
+        val noCount = askPlayerGetNoCount(players)
     } while (noCount != players.size)
+}
+
+fun askPlayerGetNoCount(players: List<Player>): Int {
+    var noCount = 0
+
+    players.forEach {
+        PrintView.askOneMoreCard(it.name)
+
+        val sayYes = askPlayerNewCard()
+
+        offerNewCardIfSayYes(it, sayYes)
+
+        if (!sayYes) noCount++
+    }
+    return noCount
+}
+
+fun offerNewCardIfSayYes(player: Player, yes: Boolean) {
+    if (yes) {
+        val servedCard = Dealer.popOneCard()
+        player.offer(servedCard)
+        PrintView.printHaveCardsWithName(player.name, player.cards)
+    }
+}
+
+fun askPlayerNewCard(): Boolean {
+    return when (InputView.getYorN()) {
+        YES -> true
+        NO -> false
+        else -> false
+    }
 }
 
 fun getPlayers(): List<Player> {
