@@ -28,7 +28,10 @@ class ResultView {
     }
 
     fun printFinalResult(players: List<Player>) {
-        val dealer = players.filterIsInstance<Dealer>().first()
+        val dealer = players
+            .filterIsInstance<Dealer>()
+            .first()
+
         println("${dealer.name}: ${dealer.win}승 ${dealer.lose}패")
 
         players.filter { it !is Dealer }.map {

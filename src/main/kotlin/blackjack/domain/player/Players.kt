@@ -6,7 +6,10 @@ class Players(playerNames: List<String>, takeMore: TakeMorePlayerStrategy, deale
     val players: List<Player>
 
     init {
-        players = playerNames.map { Player(it, takeMore) }.toMutableList()
+        players = playerNames
+            .map { Player(it, takeMore) }
+            .toMutableList()
+
         players.add(dealer)
     }
 

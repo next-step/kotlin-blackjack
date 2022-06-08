@@ -22,7 +22,9 @@ class BlackJackGame(
     }
 
     fun playDealer() {
-        val dealer = _playerList.players.filterIsInstance<Dealer>().first()
+        val dealer = _playerList.players
+            .filterIsInstance<Dealer>()
+            .first()
 
         while (dealer.canBeTakeOneCard()) {
             dealer.addCard(cardDeck.pickCard())
@@ -30,8 +32,12 @@ class BlackJackGame(
     }
 
     fun calculateWinner() {
-        val dealer = _playerList.players.filterIsInstance<Dealer>().first()
-        val players = _playerList.players.filter { it !is Dealer }
+        val dealer = _playerList.players
+            .filterIsInstance<Dealer>()
+            .first()
+
+        val players = _playerList.players
+            .filter { it !is Dealer }
 
         players.forEach {
             judge(it, dealer)
