@@ -3,9 +3,9 @@ package blackjack.domain
 interface CardDeck {
     fun getOne(): Card
 
-    class Fake(private val card: Card) : CardDeck {
+    class Fake(private val cards: MutableList<Card>) : CardDeck {
         override fun getOne(): Card {
-            return card
+            return cards.removeFirst()
         }
     }
 }
