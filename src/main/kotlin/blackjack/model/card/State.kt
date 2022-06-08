@@ -1,10 +1,11 @@
 package blackjack.model.card
 
-sealed class State(val finalScore: Int) {
+sealed interface State {
+    val finalScore: Int
 
-    class Bust(finalScore: Int) : State(finalScore)
-    class BlackJack() : State(BLACK_JACK_SCORE)
-    class Running(finalScore: Int) : State(finalScore)
+    data class Bust(override val finalScore: Int) : State
+    data class BlackJack(override val finalScore: Int = BLACK_JACK_SCORE) : State
+    data class Running(override val finalScore: Int) : State
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
