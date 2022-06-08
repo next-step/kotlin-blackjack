@@ -12,9 +12,10 @@ fun main() {
     val players = participate()
 
     distribution(dealer, players)
+
     dealWithPlayer(dealer, players)
 
-    OutputView.showResult(players)
+    OutputView.showResult(listOf(dealer) + players)
 }
 
 private fun participate(): List<Player> {
@@ -34,7 +35,7 @@ private fun dealWithPlayer(dealer: Croupier, players: List<Player>) {
     players.forEach { player ->
         dealing(dealer, player) { OutputView.showHand(player) }
     }
-    dealing(dealer, dealer) { OutputView.showHand(dealer) }
+    dealing(dealer, dealer) { OutputView.showDealerHit() }
 }
 
 private fun dealing(dealer: Dealer, player: Player, showHand: (Player) -> Unit) {

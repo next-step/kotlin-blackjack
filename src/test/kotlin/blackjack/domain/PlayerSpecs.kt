@@ -55,6 +55,12 @@ class PlayerSpecs : DescribeSpec({
             player.calculateHand() shouldBe 21
         }
 
+        it("자신의 카드 패를 공개할 수 있다") {
+            val hand = hand(KING to CLOVER, ACE to SPADE)
+            val player = NormalPlayer("name", hand)
+            player.openHand() shouldBe hand
+        }
+
         context("자신이 지닌 카드 패의 점수가 21 이상이면") {
             val player = NormalPlayer("name", hand(KING to CLOVER, ACE to SPADE)) { true }
             it("자신의 카드 패에 새로운 카드를 추가할 수 없다") {

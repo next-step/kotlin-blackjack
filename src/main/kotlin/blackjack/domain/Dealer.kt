@@ -37,6 +37,10 @@ class Croupier(
 
     override fun canHit(): Boolean = hand.calculate() <= HITTABLE_UPPERBOUND
 
+    override fun openHand(): Hand {
+        return Hand(listOf(hand.first()))
+    }
+
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val SIZE_OF_HIT = 1

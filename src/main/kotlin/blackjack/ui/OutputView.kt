@@ -18,7 +18,11 @@ object OutputView {
     }
 
     fun showHand(player: Player) {
-        println("${player.name}카드: ${player.hand}")
+        println("${player.name}카드: ${player.openHand()}")
+    }
+
+    fun showDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun showResult(players: List<Player>) {

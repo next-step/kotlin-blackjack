@@ -103,5 +103,11 @@ class CroupierSpecs : DescribeSpec({
                 shouldThrowExactly<IllegalStateException> { dealer.hit(Card(KING, HEART)) }
             }
         }
+
+        it("자신의 카드 패를 공개할 때, 첫 번째 카드만 공개한다") {
+            val hand = hand(SIX to CLOVER, ACE to SPADE)
+            val dealer = Croupier(player = NormalPlayer("딜러", hand))
+            dealer.openHand() shouldBe hand(SIX to CLOVER)
+        }
     }
 })

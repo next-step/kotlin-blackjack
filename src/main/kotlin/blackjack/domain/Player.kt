@@ -9,6 +9,7 @@ interface Player {
     fun hit(card: Card)
     fun canHit(): Boolean
     fun calculateHand(): Int = hand.calculate()
+    fun openHand(): Hand = hand
 }
 
 class NormalPlayer(
