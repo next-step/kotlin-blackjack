@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.domain
+
+import blackjack.NO
+import blackjack.YES
 
 object InputValidator {
     fun checkYorN(input: String) {

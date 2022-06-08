@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 object Dealer {
     private val cards = CardDeck.makeShuffledCard().toMutableList()

@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.view
+
+import blackjack.domain.InputValidator
 
 object InputView {
     private const val INVALID_YES_OR_NO = "y나 n만 입력해주세요"

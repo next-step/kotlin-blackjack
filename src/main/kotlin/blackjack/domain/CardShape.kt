@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class CardShape(val shapeName: String) {
     HEART("하트"),
