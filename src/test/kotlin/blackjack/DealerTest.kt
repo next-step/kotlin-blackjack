@@ -1,6 +1,7 @@
 package blackjack
 
-import blackjack.domain.*
+import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

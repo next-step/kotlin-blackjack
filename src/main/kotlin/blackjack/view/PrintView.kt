@@ -1,6 +1,5 @@
 package blackjack.view
 
-
 import blackjack.domain.Card
 import blackjack.domain.START_CARD_NUM
 
