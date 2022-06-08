@@ -4,8 +4,6 @@ import blackjack.view.InputView
 import blackjack.view.PrintView
 
 const val START_CARD_NUM = 2
-const val YES = "y"
-const val NO = "n"
 
 object BlackJackGame {
 
@@ -57,10 +55,9 @@ object BlackJackGame {
     }
 
     private fun askPlayerNewCard(): Boolean {
-        return when (InputView.getYorN()) {
-            YES -> true
-            NO -> false
-            else -> false
+        return when (UserAnswer.getUserAnswer(InputView.getYorN())) {
+            UserAnswer.YES -> true
+            UserAnswer.NO -> false
         }
     }
 
