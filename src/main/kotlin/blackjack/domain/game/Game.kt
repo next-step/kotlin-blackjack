@@ -24,11 +24,11 @@ class Game(playerNames: String) {
         printPlayerInfo: (player: Player) -> Unit,
         decideHitDecision: (player: Player) -> Boolean,
         printDealerDrawOneCard: () -> Unit,
-        printResult: (players: List<Player>) -> Unit
+        printResult: (dealer: Dealer, players: List<Player>, result: Result) -> Unit
     ) {
         initialHand(printInitialHand)
         play(printPlayerInfo, decideHitDecision, printDealerDrawOneCard)
-        printResult(players)
+        printResult(dealer, players, result)
     }
 
     private fun initialHand(printFirstTurn: (dealer: Dealer, players: List<Player>) -> Unit) {
@@ -48,6 +48,8 @@ class Game(playerNames: String) {
     ) {
         players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
         dealer.turn(printDealerDrawOneCard)
+
+        players.forEach { player -> result.check(dealer, player) }
     }
 
     private fun Player.turn(
@@ -67,7 +69,7 @@ class Game(playerNames: String) {
     }
 
     private fun Dealer.turn(printDealerDrawOneCard: () -> Unit) {
-        if (isDrawable()) {
+        while (isDrawable()) {
             val card = dealer.drawOneCard()
             dealer.addCards(card)
             printDealerDrawOneCard()
