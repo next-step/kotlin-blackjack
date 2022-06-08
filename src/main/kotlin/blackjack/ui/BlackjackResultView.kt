@@ -17,7 +17,7 @@ object BlackjackResultView {
 
     fun resultOfGame(players: List<Player>) {
         players.forEach { player ->
-            println("$player - score: ${player.score().max()}")
+            println("$player - score: ${player.result()}")
         }
     }
 }

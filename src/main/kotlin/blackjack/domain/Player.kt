@@ -1,22 +1,22 @@
 package blackjack.domain
 
-class Player(val name: String, cards: List<Card>) {
-    private val cards: MutableList<Card> = cards.toMutableList()
+class Player(val name: String, private var cards: Cards) {
+    private val score = cards.score()
 
-    fun score(): Score {
-        val originScore = cards.fold(0) { acc, card -> acc + card.value.origin }
-        val alternativeScore = cards.fold(0) { acc, card ->
-            if (card.value.alternative != 0) {
-                acc + card.value.alternative
-            } else {
-                acc + card.value.origin
-            }
-        }
-
-        return Score(originScore, alternativeScore)
+    fun couldGetMoreCard(): Boolean {
+        return score.origin < BLACKJACK || score.alternative < BLACKJACK
     }
 
-    infix fun take(newCard: List<Card>) {
+    fun result(): Int {
+        return when {
+            score.origin > BLACKJACK -> score.alternative
+            score.alternative > BLACKJACK -> score.origin
+            score.origin > score.alternative -> score.origin
+            else -> score.alternative
+        }
+    }
+
+    infix fun take(newCard: Cards) {
         cards += newCard
     }
 
@@ -26,5 +26,9 @@ class Player(val name: String, cards: List<Card>) {
 
     override fun toString(): String {
         return "$name cards : $cards"
+    }
+
+    companion object {
+        private const val BLACKJACK = 21
     }
 }

@@ -12,7 +12,7 @@ class DeckTest {
 
     private val types = Type.values()
     private val values = Value.values()
-    private val cards = (0..51).map { Card(types[it / 13], values[it % 13]) }
+    private val cards = Cards((0..51).map { Card(types[it / 13], values[it % 13]) })
 
     @Test
     fun `the deck of cards can have fewer than 52 cards`() {
@@ -35,7 +35,7 @@ class DeckTest {
 
         val defaultDrawnCards = deck.draw()
 
-        assertThat(defaultDrawnCards).hasSize(defaultDrawnCardCount)
-        assertThat(defaultDrawnCards).isEqualTo(expectedCards)
+        assertThat(defaultDrawnCards).extracting("size").isEqualTo(defaultDrawnCardCount)
+        assertThat(defaultDrawnCards).extracting("elements").isEqualTo(expectedCards)
     }
 }

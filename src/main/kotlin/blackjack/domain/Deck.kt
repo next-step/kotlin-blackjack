@@ -1,7 +1,6 @@
 package blackjack.domain
 
-class Deck(cards: List<Card>) {
-    private val cards: MutableList<Card> = cards.toMutableList()
+class Deck(private var cards: Cards) {
 
     init {
         require(cards.size in MINIMUM_CARDS_COUNT..MAXIMUM_CARDS_COUNT) {
@@ -9,13 +8,13 @@ class Deck(cards: List<Card>) {
         }
     }
 
-    fun draw(count: Int = INITIAL_DRAW_CARD_COUNT): List<Card> {
+    fun draw(count: Int = INITIAL_DRAW_CARD_COUNT): Cards {
         require(count in MINIMUM_DRAW_CARD_COUNT..INITIAL_DRAW_CARD_COUNT) {
             "you can draw number of cards only 1 or 2"
         }
 
         val drawnCards = cards.take(count)
-        cards.removeAll(drawnCards)
+        cards = cards.removeAll(drawnCards)
 
         return drawnCards
     }
