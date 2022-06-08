@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
-data class Card(val shape: String, val number: String) {
+data class Card(val pattern: String, val number: String) {
     override fun toString(): String {
-        return number + shape
+        return number + pattern
     }
 }

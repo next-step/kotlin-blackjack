@@ -34,7 +34,7 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
 }
 
 fun score(resultView: ResultView, players: List<Player>) {
-    val score = Score(players)
-    score.run()
+    val score = Score()
+    score.run(players)
     resultView.score(score.playerScore)
 }

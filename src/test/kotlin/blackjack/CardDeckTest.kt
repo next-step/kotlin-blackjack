@@ -1,14 +1,16 @@
 package blackjack
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardDeckImpl
+import blackjack.domain.card.CardDeckImpl.Companion.DIAMOND
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-class CardGeneratorTest : FreeSpec({
+class CardDeckTest : FreeSpec({
 
-    "getOne" - {
+    "CardDeckImpl" - {
 
         "랜덤한 카드 한 장이 나와야한다." {
             val cardDeckImpl = CardDeckImpl()
@@ -23,6 +25,19 @@ class CardGeneratorTest : FreeSpec({
             }
 
             cards.distinct().size shouldBe 48
+        }
+    }
+
+    "Fake" - {
+
+        "입력한 카드 리스트의 첫번째 카드가 나와야한다." {
+            val cards = mutableListOf(
+                Card(DIAMOND, "2"),
+                Card(DIAMOND, "3")
+            )
+            val cardDeckFake = CardDeck.Fake(cards)
+
+            cardDeckFake.getOne() shouldBe Card(CardDeckImpl.DIAMOND, "2")
         }
     }
 })

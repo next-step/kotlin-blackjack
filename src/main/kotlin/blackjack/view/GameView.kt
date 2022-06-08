@@ -17,17 +17,17 @@ class GameView(
 
     fun run() {
         println()
-        players.forEach { choiceCard(it) }
+        players.forEach { hitCard(it) }
     }
 
-    private fun choiceCard(player: Player) {
+    private fun hitCard(player: Player) {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val input = readlnOrNull() ?: throw IllegalArgumentException()
         when (input) {
             "y" -> {
                 blackJack.giveCard(player)
                 playerCards(player)
-                choiceCard(player)
+                hitCard(player)
             }
             "n" -> {
                 playerCards(player)
@@ -35,7 +35,7 @@ class GameView(
             }
             else -> {
                 println("다시 입력해주세요. (예는 y, 아니오는 n)")
-                choiceCard(player)
+                hitCard(player)
             }
         }
     }
