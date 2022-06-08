@@ -16,7 +16,7 @@ fun main() {
         val player = hittablePlayers.first()
         when (InputView.isHit(player)) {
             true -> blackJack.hit(player)
-                .also { ResultView.printlnPlayerWithCards(player.name, player.cards.cards) }
+                .also { ResultView.printlnPlayerWithCards(player.name, player.cards) }
             false -> player.stay()
         }
     }

@@ -24,8 +24,8 @@ data class PlayerResult(
         fun of(player: Player): PlayerResult {
             return PlayerResult(
                 playerName = player.name,
-                cards = player.cards.cards,
-                score = player.cards.score()
+                cards = player.cards,
+                score = player.score
             )
         }
     }
