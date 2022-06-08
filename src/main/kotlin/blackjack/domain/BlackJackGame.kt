@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.PrintView
 

@@ -1,7 +1,8 @@
 package blackjack.view
 
-import blackjack.START_CARD_NUM
+
 import blackjack.domain.Card
+import blackjack.domain.START_CARD_NUM
 
 object PrintView {
     private const val INPUT_USER_DESC = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)"
