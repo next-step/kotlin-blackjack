@@ -1,6 +1,6 @@
 package blackjack.dto
 
-import blackjack.domain.Player
+import blackjack.domain.player.Player
 
 class BlackJackRequest(val players: List<Player>) {
     companion object {

@@ -1,5 +1,7 @@
-package blackjack.domain
+package blackjack.domain.game
 
+import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Player
 import blackjack.dto.BlackJackRequest
 
 class BlackJack(dto: BlackJackRequest, private val cardDeck: CardDeck) {

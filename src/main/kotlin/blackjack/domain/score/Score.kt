@@ -1,9 +1,11 @@
-package blackjack.domain
+package blackjack.domain.score
 
-import blackjack.domain.CardDeckImpl.Companion.ACE
-import blackjack.domain.CardDeckImpl.Companion.JACK
-import blackjack.domain.CardDeckImpl.Companion.KING
-import blackjack.domain.CardDeckImpl.Companion.QUEEN
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeckImpl.Companion.ACE
+import blackjack.domain.card.CardDeckImpl.Companion.JACK
+import blackjack.domain.card.CardDeckImpl.Companion.KING
+import blackjack.domain.card.CardDeckImpl.Companion.QUEEN
+import blackjack.domain.player.Player
 
 class Score(private val players: List<Player>) {
     private var _playerScores: MutableList<PlayerScore> = mutableListOf()

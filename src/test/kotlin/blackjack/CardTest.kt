@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Card
+import blackjack.domain.card.Card
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 

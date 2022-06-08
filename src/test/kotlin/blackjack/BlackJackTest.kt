@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.domain.BlackJack
-import blackjack.domain.Card
-import blackjack.domain.CardDeck
-import blackjack.domain.CardDeckImpl
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardDeckImpl
+import blackjack.domain.game.BlackJack
 import blackjack.dto.BlackJackRequest
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

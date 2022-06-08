@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Card(val shape: String, val number: String) {
     override fun toString(): String {

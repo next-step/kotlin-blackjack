@@ -1,10 +1,10 @@
 package blackjack
 
-import blackjack.domain.BlackJack
-import blackjack.domain.CardDeck
-import blackjack.domain.CardDeckImpl
-import blackjack.domain.Player
-import blackjack.domain.Score
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardDeckImpl
+import blackjack.domain.game.BlackJack
+import blackjack.domain.player.Player
+import blackjack.domain.score.Score
 import blackjack.dto.BlackJackRequest
 import blackjack.view.GameView
 import blackjack.view.InputView
@@ -17,16 +17,16 @@ fun main() {
     val inputPlayers = inputView.inputPlayers()
     resultView.players(inputPlayers)
 
-    startBlackJack(inputView, resultView, inputPlayers)
+    startBlackJack(resultView, inputPlayers)
 }
 
-fun startBlackJack(inputView: InputView, resultView: ResultView, inputPlayers: List<String>) {
+fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
     val dto: BlackJackRequest = BlackJackRequest.of(inputPlayers)
     val cardDeck: CardDeck = CardDeckImpl()
     val blackJack = BlackJack(dto, cardDeck)
 
     val players: List<Player> = dto.players
-    val gameView = GameView(inputView, blackJack, players)
+    val gameView = GameView(blackJack, players)
     gameView.firstRoundState()
     gameView.run()
 

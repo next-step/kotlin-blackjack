@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.PlayerScore
+import blackjack.domain.score.PlayerScore
 
 class ResultView {
 

@@ -1,10 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.BlackJack
-import blackjack.domain.Player
+import blackjack.domain.game.BlackJack
+import blackjack.domain.player.Player
 
 class GameView(
-    private val inputView: InputView,
     private val blackJack: BlackJack,
     private val players: List<Player>,
 ) {
