@@ -4,9 +4,10 @@ import blackjack.domain.Player
 
 object OutputView {
 
-    fun showDistribution(players: List<Player>) {
+    fun showDistribution(dealer: Player, players: List<Player>) {
         val names = getNames(players)
-        println("$names 에게 2장의 카드를 나누었습니다.")
+        println("${dealer.name}와 ${names}에게 2장의 카드를 나누었습니다.")
+        showHand(dealer)
         players.forEach {
             showHand(it)
         }

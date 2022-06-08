@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.Denomination.ACE
-import blackjack.domain.Denomination.EIGHT
 import blackjack.domain.Denomination.KING
 import blackjack.domain.Denomination.SEVEN
 import blackjack.domain.Denomination.SIX
@@ -18,40 +17,22 @@ import io.kotest.matchers.shouldBe
 class CroupierSpecs : DescribeSpec({
 
     describe("크루피어는") {
-        context("카드를 분배할 플레이어가 있고 분배할 카드가 충분하다면") {
-            val deck = CustomDeck(
-                listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
-            )
+        context("분배할 카드가 충분하다면") {
+            val cards = listOf(KING to SPADE, ACE to SPADE)
+            val deck = CustomDeck(cards)
             val dealer = Croupier(deck = deck)
-            val players = listOf(NormalPlayer("1") { true }, NormalPlayer("2") { true })
-            it("모든 플레이어에게 카드를 2장 분배한다") {
-                dealer.distribute(players)
+            it("카드를 2장 분배할 수 있다") {
+                dealer.distribute() shouldBe DistributedCards(cards[0], cards[1])
                 deck.sizeOfRemaining() shouldBe 0
-                players[0].hand shouldBeEqualToComparingFields hand(KING to SPADE, ACE to SPADE)
-                players[1].hand shouldBeEqualToComparingFields hand(SIX to HEART, EIGHT to DIAMOND)
-            }
-        }
-
-        context("카드를 분배할 플레이어가 없다면") {
-            val deck = CustomDeck(
-                listOf(KING to SPADE, ACE to SPADE, SIX to HEART, EIGHT to DIAMOND)
-            )
-            val dealer = Croupier(deck)
-            val players = emptyList<NormalPlayer>()
-            it("카드를 분배할 수 없다") {
-                shouldThrowExactly<IllegalArgumentException> {
-                    dealer.distribute(players)
-                }
             }
         }
 
         context("분배할 카드가 부족하다면") {
             val emptyDeck = CustomDeck(emptyList())
             val dealer = Croupier(emptyDeck)
-            val players = listOf(NormalPlayer("1"), NormalPlayer("2"))
             it("카드를 분배할 수 없다") {
                 shouldThrowExactly<IllegalStateException> {
-                    dealer.distribute(players)
+                    dealer.distribute()
                 }
             }
         }

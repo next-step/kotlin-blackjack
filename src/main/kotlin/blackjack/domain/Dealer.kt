@@ -1,7 +1,7 @@
 package blackjack.domain
 
 interface Dealer {
-    fun distribute(players: List<Player>)
+    fun distribute(): DistributedCards
     fun dealWith(player: Player): Boolean
 }
 
@@ -12,14 +12,9 @@ class Croupier(
 
     override val selectHit: () -> Boolean = { true }
 
-    override fun distribute(players: List<Player>) {
-        require(players.isNotEmpty()) { "카드를 분배할 플레이어가 없습니다" }
-        check(deck.sizeOfRemaining() >= players.size * SIZE_OF_DISTRIBUTION) {
-            "플레이어에게 분배할 카드가 부족합니다"
-        }
-        players.forEach {
-            it.initialize(DistributedCards(deck.draw(), deck.draw()))
-        }
+    override fun distribute(): DistributedCards {
+        check(deck.sizeOfRemaining() >= SIZE_OF_DISTRIBUTION) { "분배할 카드가 부족합니다" }
+        return DistributedCards(deck.draw(), deck.draw())
     }
 
     override fun dealWith(player: Player): Boolean {
