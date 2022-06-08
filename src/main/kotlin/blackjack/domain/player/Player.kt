@@ -13,6 +13,7 @@ class Player(
     val cards get() = _cards.cards.toList()
     val score get() = _cards.score()
     val hittable get() = playerStatus == PlayerStatus.HIT && cardStatus != CardStatus.BUST
+    val isEnd get() = playerStatus == PlayerStatus.STAY || cardStatus == CardStatus.BUST
 
     fun initHandOut(cards: List<Card>) {
         check(playerStatus == PlayerStatus.INIT) {

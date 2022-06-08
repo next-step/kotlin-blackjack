@@ -2,27 +2,21 @@ package blackjack.domain
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 class BlackJack(
     private val deck: Deck = Deck.default(),
-    val players: List<Player>
+    private val players: Players
 ) {
-    val isEnd: Boolean get() = players.all { !it.hittable }
+    val hittablePlayers get() = players.hittablePlayers()
+    val isEnd: Boolean get() = players.isEnd()
 
     init {
-        require(players.isNotEmpty()) {
-            "플레이어는 한 명 이상이어야 합니다."
-        }
-
-        players.forEach { player -> player.initHandOut(listOf(deck.draw(), deck.draw())) }
-    }
-
-    fun hittablePlayers(): List<Player> {
-        return players.filter(Player::hittable)
+        players.handOutTwoCard(deck)
     }
 
     fun hit(player: Player) {
-        hittablePlayers().find { it == player }
+        hittablePlayers.find { it == player }
             ?.handOut(deck.draw())
             ?: throw IllegalArgumentException("존재하지 않는 참가자입니다")
     }
@@ -31,6 +25,7 @@ class BlackJack(
         check(isEnd) {
             "게임이 종료되어야 결과를 확인할 수 있습니다"
         }
-        return BlackJackResult.of(players)
+
+        return BlackJackResult.of(players.players)
     }
 }

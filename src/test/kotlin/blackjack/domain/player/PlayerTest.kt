@@ -238,4 +238,49 @@ class PlayerTest : DescribeSpec({
             player.score shouldBe Score(16)
         }
     }
+
+    describe("isEnd") {
+        it("STAY 이면 참가자의 참여가 종료된다") {
+            val yohan = Player(name = "yohan", playerStatus = PlayerStatus.STAY)
+
+            yohan.isEnd shouldBe true
+        }
+
+        it("다른 참가자 상태이면 참여가 종료되지 않는다") {
+            PlayerStatus.values()
+                .filterNot { it == PlayerStatus.STAY }
+                .forAll { Player(name = "yohan", playerStatus = it).isEnd shouldBe false }
+        }
+
+        it("BUST 이면 참가자의 참여가 종료된다") {
+            val yohan = Player(
+                name = "yohan",
+                cards = Cards(
+                    listOf(
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(9)),
+                        Card(Suit.DIAMOND, NumberCard(3)),
+                    )
+                ),
+                playerStatus = PlayerStatus.READY
+            )
+
+            yohan.isEnd shouldBe true
+        }
+
+        it("BUST 가 아니면 참가자의 참여가 종료되지 않는다") {
+            val yohan = Player(
+                name = "yohan",
+                cards = Cards(
+                    listOf(
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(9)),
+                    )
+                ),
+                playerStatus = PlayerStatus.READY
+            )
+
+            yohan.isEnd shouldBe false
+        }
+    }
 })
