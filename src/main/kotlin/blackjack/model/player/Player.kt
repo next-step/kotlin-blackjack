@@ -7,8 +7,11 @@ import blackjack.model.card.State
 import blackjack.model.card.State.BlackJack
 import blackjack.model.card.State.Running
 
-class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
+sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
     CardRecipient {
+
+    class Guest(name: String, hitDecisionMaker: HitDecisionMaker) : Player(name, hitDecisionMaker)
+    class Dealer(name: String) : Player(name, DealerHitDecisionMaker())
 
     private val cardList = mutableListOf<Card>()
 

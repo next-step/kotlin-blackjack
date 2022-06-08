@@ -22,7 +22,7 @@ internal class BlackJackGameTest {
         val hitDecisionMaker = BiasedHitMakerDecisionMaker(expectedWinnerName)
 
         // (2) 플레이어 구성
-        val players = playerNames.map { Player(it, hitDecisionMaker) }.toPlayers()
+        val players = playerNames.map { Player.Guest(it, hitDecisionMaker) }.toPlayers()
         val expectedWinner = players.find { it.name == expectedWinnerName }
         val playerProvider = TestPlayerProvider(players)
 

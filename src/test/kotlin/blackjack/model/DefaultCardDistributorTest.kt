@@ -48,8 +48,8 @@ internal class DefaultCardDistributorTest {
             }
         }
 
-        val player1 = Player("김", dummyHitDecisionMaker)
-        val player2 = Player("이", dummyHitDecisionMaker)
+        val player1 = Player.Guest("김", dummyHitDecisionMaker)
+        val player2 = Player.Guest("이", dummyHitDecisionMaker)
         val players = listOf(player1, player2).toPlayers()
 
         val defaultCardDistributor = DefaultCardDistributor().apply {

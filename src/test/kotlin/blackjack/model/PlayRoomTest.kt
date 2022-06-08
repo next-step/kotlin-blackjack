@@ -42,10 +42,10 @@ internal class PlayRoomTest {
             this.resetCardSet()
         }
         val players = listOf(
-            Player("a", alwaysHitDecisionMaker),
-            Player("b", alwaysHitDecisionMaker),
-            Player("c", alwaysHitDecisionMaker),
-            Player("d", alwaysHitDecisionMaker),
+            Player.Guest("a", alwaysHitDecisionMaker),
+            Player.Guest("b", alwaysHitDecisionMaker),
+            Player.Guest("c", alwaysHitDecisionMaker),
+            Player.Guest("d", alwaysHitDecisionMaker),
         ).toPlayers()
             .onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 

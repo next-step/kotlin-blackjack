@@ -41,7 +41,7 @@ internal class PlayerTest {
         val scoreOfAce = 11
 
         // when
-        val player = Player("aa", alwaysHitDecisionMaker)
+        val player = Player.Guest("aa", alwaysHitDecisionMaker)
         if (player.canHit) {
             player.addCard(cardAceClubs)
         }
@@ -60,7 +60,7 @@ internal class PlayerTest {
 
         // given
         val cardAceClubs = Card.of(Denomination.ACE, CardShape.CLUBS)
-        val player = Player("aa", alwaysHitDecisionMaker)
+        val player = Player.Guest("aa", alwaysHitDecisionMaker)
         if (player.canHit) {
             player.addCard(cardAceClubs)
         }
@@ -80,7 +80,7 @@ internal class PlayerTest {
     fun `player hit Test`() {
 
         // given
-        val player = Player("aa", alwaysHitDecisionMaker)
+        val player = Player.Guest("aa", alwaysHitDecisionMaker)
         val cardDistributor = sequentialCardDistributor.apply {
             this.resetCardSet()
         }

@@ -40,10 +40,10 @@ internal class PlayersTest {
             this.resetCardSet()
         }
         val players = listOf(
-            Player("a", alwaysHitDecisionMaker),
-            Player("b", alwaysHitDecisionMaker),
-            Player("c", alwaysHitDecisionMaker),
-            Player("d", alwaysHitDecisionMaker),
+            Player.Guest("a", alwaysHitDecisionMaker),
+            Player.Guest("b", alwaysHitDecisionMaker),
+            Player.Guest("c", alwaysHitDecisionMaker),
+            Player.Guest("d", alwaysHitDecisionMaker),
         ).toPlayers()
             .onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 
@@ -61,7 +61,7 @@ internal class PlayersTest {
     fun `players blackJackPlayer Test`() {
 
         // given
-        val players = listOf(Player("aa", alwaysHitDecisionMaker)).toPlayers()
+        val players = listOf(Player.Guest("aa", alwaysHitDecisionMaker)).toPlayers()
         val cardDistributor = sequentialCardDistributor.apply {
             this.resetCardSet()
         }
