@@ -11,6 +11,12 @@ object BlackjackInputView {
 
     fun queryTakeCard(player: Player): String {
         println("Does ${player.name} want to take the card?[y/n]")
-        return readln().take(1).lowercase()
+        val answer = readln().take(1).lowercase()
+
+        check("yn".contains(answer)) {
+            "you can only answer y or n"
+        }
+
+        return answer
     }
 }
