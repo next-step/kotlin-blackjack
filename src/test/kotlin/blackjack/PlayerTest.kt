@@ -23,4 +23,10 @@ class PlayerTest {
         assertThat(player.gameOver).isFalse()
         assertThat(player.gameOver().gameOver).isTrue()
     }
+
+    @Test
+    fun `플레이어에게 카드를 지급한다`() {
+        val newPlayer = player.addCards(listOf(Card(CardNumber.Five, Suit.Heart), Card(CardNumber.Six, Suit.Heart)))
+        assertThat(newPlayer.cards.values.size).isEqualTo(4)
+    }
 }

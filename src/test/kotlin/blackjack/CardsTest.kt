@@ -34,4 +34,17 @@ class CardsTest {
         val scores = listOf(score1, score2).filterNotNull().map { Score(it) }
         assertThat(Cards(cardList).scores).isEqualTo(scores)
     }
+
+    @Test
+    fun `카드를 추출한다`() {
+        val initCards = Cards(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Two, Suit.Heart)))
+        val (extracted, newCards) = initCards.pollCards(1)
+        assertThat(initCards.pollCards(1)).isEqualTo(
+            Pair(listOf(Card(CardNumber.Ace, Suit.Club)), Cards(listOf(Card(CardNumber.Two, Suit.Heart))))
+        )
+
+        assertThat(initCards.pollCards(2)).isEqualTo(
+            Pair(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Two, Suit.Heart)), Cards.emptyCards())
+        )
+    }
 }
