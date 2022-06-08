@@ -20,30 +20,34 @@ class Game(playerNames: String) {
     }
 
     fun start(
-        printInitialHand: (players: List<Player>) -> Unit,
+        printInitialHand: (dealer: Dealer, players: List<Player>) -> Unit,
         printPlayerInfo: (player: Player) -> Unit,
         decideHitDecision: (player: Player) -> Boolean,
+        printDealerDrawOneCard: () -> Unit,
         printResult: (players: List<Player>) -> Unit
     ) {
         initialHand(printInitialHand)
-        play(printPlayerInfo, decideHitDecision)
+        play(printPlayerInfo, decideHitDecision, printDealerDrawOneCard)
         printResult(players)
     }
 
-    private fun initialHand(printFirstTurn: (players: List<Player>) -> Unit) {
+    private fun initialHand(printFirstTurn: (dealer: Dealer, players: List<Player>) -> Unit) {
+        val dealerCards = dealer.drawCards(FIRST_DRAW_NUMBER)
+        dealer.addCards(*dealerCards.toTypedArray())
         players.forEach { player ->
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
         }
-        printFirstTurn(players)
+        printFirstTurn(dealer, players)
     }
 
     private fun play(
         printPlayerInfo: (player: Player) -> Unit,
-        decideHitDecision: (player: Player) -> Boolean
+        decideHitDecision: (player: Player) -> Boolean,
+        printDealerDrawOneCard: () -> Unit
     ) {
         players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
-        return players.any { it.isDrawable() }
+        dealer.turn(printDealerDrawOneCard)
     }
 
     private fun Player.turn(
@@ -60,6 +64,14 @@ class Game(playerNames: String) {
             }
             printPlayerInfo(this)
         } while (isDrawable())
+    }
+
+    private fun Dealer.turn(printDealerDrawOneCard: () -> Unit) {
+        if (isDrawable()) {
+            val card = dealer.drawOneCard()
+            dealer.addCards(card)
+            printDealerDrawOneCard()
+        }
     }
 
     companion object {

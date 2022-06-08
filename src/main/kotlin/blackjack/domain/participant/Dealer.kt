@@ -5,6 +5,7 @@ import blackjack.domain.game.Deck
 import blackjack.domain.game.Game
 
 class Dealer : Participant() {
+    override val name = DEALER_NAME
     private val deck: Deck = shuffleNewDeck()
 
     override fun isDrawable(): Boolean {
@@ -30,5 +31,6 @@ class Dealer : Participant() {
     companion object {
         private val STANDARD_52_CARD_DECK: Deck = Deck(Game.ALL_CARDS)
         private const val DEALER_DRAWABLE_SCORE_LIMIT = 16
+        private const val DEALER_NAME = "딜러"
     }
 }
