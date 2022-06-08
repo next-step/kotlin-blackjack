@@ -35,10 +35,10 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
         this.cardList.clear()
     }
 
-    fun hitWhileWants(cardDistributor: CardDistributor, progress: ((Player) -> Unit)? = null) {
+    fun hitWhileWants(cardDistributor: CardDistributor, onHitBlock: ((Player) -> Unit)? = null) {
         while (this.canHit) {
             this.hit(cardDistributor)
-            progress?.invoke(this)
+            onHitBlock?.invoke(this)
         }
     }
 

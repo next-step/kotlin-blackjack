@@ -9,9 +9,9 @@
 ## Function list
 
 - [X] Dealer 용 HitDecisionMaker (처음받은 2장의 합계 <=16 이면 true)
-- [] 딜러가 21 초과시 게임종료
-- [] 게임 결과 리턴 기능 
-- [] 누적 승패 기록  - Record 기능 
+- [X] 딜러가 21 초과시 게임종료
+- [X] 게임 결과 리턴 기능 
+
 
 
 
