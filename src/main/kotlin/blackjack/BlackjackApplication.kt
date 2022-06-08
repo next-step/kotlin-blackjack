@@ -7,6 +7,7 @@ import blackjack.domain.DEALER
 import blackjack.domain.Participant
 import blackjack.view.GameView
 import blackjack.view.InputView
+import blackjack.view.ResultView
 
 class BlackjackApplication {
     fun playGame() {
@@ -22,6 +23,7 @@ class BlackjackApplication {
         drawDealerCard(blackJackGame)
 
         GameView.displayResult(blackJackGame)
+        ResultView.gameResult(blackJackGame)
     }
 
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {
@@ -36,12 +38,12 @@ class BlackjackApplication {
     }
 
     private fun drawDealerCard(blackJackGame: BlackJackGame) {
-        var isDealerNeedCard = blackJackGame.dealer.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
+        var isDealerNeedCard = blackJackGame.dealerCards.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
         do {
             if (isDealerNeedCard) {
                 blackJackGame.drawTo(DEALER)
                 GameView.dealerDrawCard()
-                isDealerNeedCard = blackJackGame.dealer.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
+                isDealerNeedCard = blackJackGame.dealerCards.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
             }
         } while (isDealerNeedCard)
     }

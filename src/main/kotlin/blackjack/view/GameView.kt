@@ -36,13 +36,6 @@ object GameView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun gameResult(blackJackGame: BlackJackGame) {
-        println("### 최종 승패")
-        blackJackGame.players.forEach {
-
-        }
-    }
-
     private fun getCardDisplayName(player: Participant): String {
         return player.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
     }

@@ -27,4 +27,12 @@ class ParticipantTest {
         val participant = Participant(input)
         assertThat(participant.playerCards.playerCards.size).isEqualTo(0)
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["molly"])
+    fun `참가자 게임 결과 세팅이 가능하다`(input: String) {
+        val participant = Participant(input)
+        participant.addStatus(listOf(GameResult.WIN))
+        assertThat(participant.status.first()).isEqualTo(GameResult.WIN)
+    }
 }
