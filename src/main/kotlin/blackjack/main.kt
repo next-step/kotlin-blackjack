@@ -17,8 +17,10 @@ fun main() {
 
     val dto: BlackJackRequest = BlackJackRequest.of(inputPlayers)
     val cardDeck: CardDeck = CardDeckImpl()
-    BlackJack(dto, cardDeck)
+    val blackJack = BlackJack(dto, cardDeck)
 
     val players: List<Player> = dto.players
-    resultView.firstRoundState(players)
+    val gameView = GameView(inputView, blackJack, players)
+    gameView.firstRoundState()
+    gameView.run()
 }

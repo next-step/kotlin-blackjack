@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.BlackJack
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.CardDeckImpl
 import blackjack.dto.BlackJackRequest
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
@@ -21,6 +22,19 @@ class BlackJackTest : FreeSpec({
             player.cards.size shouldBe 2
             player.cards[0] shouldBe Card("다이아몬드", "2")
             player.cards[1] shouldBe Card("다이아몬드", "3")
+        }
+    }
+
+    "giveCard" - {
+        "카드 한장을 줘야한다." {
+            val dto = BlackJackRequest.of(listOf("uju"))
+            val cardDeck = CardDeckImpl()
+            val blackJack = BlackJack(dto, cardDeck)
+            val player = dto.players[0]
+
+            blackJack.giveCard(player)
+
+            player.cards.size shouldBe 3
         }
     }
 })

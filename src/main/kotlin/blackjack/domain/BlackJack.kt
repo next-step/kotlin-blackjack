@@ -12,6 +12,10 @@ class BlackJack(dto: BlackJackRequest, private val cardDeck: CardDeck) {
         }
     }
 
+    fun giveCard(player: Player) {
+        player.addCard(cardDeck.getOne())
+    }
+
     companion object {
         const val FIRST_TURN = 2
     }
