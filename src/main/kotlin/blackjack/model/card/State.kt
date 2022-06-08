@@ -8,12 +8,12 @@ sealed class State(val finalScore: Int) {
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
-        private const val THE_OTHER_SCORE_OF_ACE_CARD = 10
+        private const val THE_OTHER_SCORE_OF_ACE_CARD = 11
 
         fun List<Card>.toSortedScoreList(): List<Int> {
             val basicScore = this.sumOf { it.denomination.score }
             val countOfAce = this.count { it.denomination == Denomination.ACE }
-            return List(countOfAce + 1) { it * THE_OTHER_SCORE_OF_ACE_CARD + basicScore }
+            return List(countOfAce + 1) { it * (THE_OTHER_SCORE_OF_ACE_CARD - 1) + basicScore }
         }
 
         fun of(cardList: List<Card>): State {
