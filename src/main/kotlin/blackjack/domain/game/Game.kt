@@ -10,14 +10,12 @@ import blackjack.domain.participant.ParticipantStatus
 class Game(playerNames: String) {
     private val players: List<Player>
     private val dealer: Dealer
-    private var playable: Boolean
     private val result: Result
 
     init {
         require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
         players = playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
         dealer = Dealer()
-        playable = true
         result = Result()
     }
 
@@ -28,9 +26,7 @@ class Game(playerNames: String) {
         printResult: (players: List<Player>) -> Unit
     ) {
         initialHand(printInitialHand)
-        while (playable) {
-            playable = play(printPlayerInfo, decideHitDecision)
-        }
+        play(printPlayerInfo, decideHitDecision)
         printResult(players)
     }
 
@@ -45,10 +41,7 @@ class Game(playerNames: String) {
     private fun play(
         printPlayerInfo: (player: Player) -> Unit,
         decideHitDecision: (player: Player) -> Boolean
-    ): Boolean {
-        if (!playable) {
-            return false
-        }
+    ) {
         players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
         return players.any { it.isDrawable() }
     }
@@ -57,18 +50,16 @@ class Game(playerNames: String) {
         printPlayerInfo: (player: Player) -> Unit,
         decideHitDecision: (player: Player) -> Boolean
     ) {
-        if (isDrawable()) {
-            return
-        }
-
-        val isHit = decideHitDecision(this)
-        if (isHit) {
-            val card = dealer.drawOneCard()
-            addCards(card)
-        } else {
-            changeStatus(ParticipantStatus.STAND)
-        }
-        printPlayerInfo(this)
+        do {
+            val isHit = decideHitDecision(this)
+            if (isHit) {
+                val card = dealer.drawOneCard()
+                addCards(card)
+            } else {
+                changeStatus(ParticipantStatus.STAND)
+            }
+            printPlayerInfo(this)
+        } while (isDrawable())
     }
 
     companion object {
