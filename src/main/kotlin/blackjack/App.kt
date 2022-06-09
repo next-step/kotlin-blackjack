@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.blackjack.BlackJack
+import blackjack.domain.blackjack.BlackJack.Companion.BASE_CARD_COUNT
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerStatus
@@ -48,5 +49,5 @@ private fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
 
 private fun playDealer(blackJack: BlackJack, dealer: Dealer) {
     blackJack.playDealer()
-    ResultView.printDealerPlay(dealer.cards.size - 2)
+    ResultView.printDealerPlay(dealer.cards.size - BASE_CARD_COUNT)
 }

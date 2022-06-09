@@ -13,7 +13,7 @@ class BlackJack(
 
     init {
         players.addTwoCard(dealer)
-        repeat(2) { dealer.addCard() }
+        repeat(BASE_CARD_COUNT) { dealer.addCard() }
     }
 
     fun giveCard(player: Player) {
@@ -32,5 +32,9 @@ class BlackJack(
         check(isEnd) { "게임이 종료되어야 결과를 확인할 수 있습니다" }
 
         return BlackJackResult.of(players.players, dealer)
+    }
+
+    companion object {
+        const val BASE_CARD_COUNT = 2
     }
 }
