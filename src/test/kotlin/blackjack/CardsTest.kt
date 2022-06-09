@@ -7,7 +7,7 @@ import blackjack.domain.ResultCalculator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResultCalculatorTest {
+class CardsTest {
     @Test
     fun `카드의 합계를 모든 경우의수가 결과가 맞는지 테스트`() {
         val cards = listOf(

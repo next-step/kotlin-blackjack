@@ -51,7 +51,7 @@
 - [x] 카드뭉치를 가지는 일급컬렉션에서 현 상태를 공개
 
 ### todo list 4
-- [ ] 더이상 사용하지 않는 운영코드 제거 (ResultCalculatorTest)
+- [x] 더이상 사용하지 않는 운영코드 제거 (ResultCalculatorTest)
 - [ ] Cards 테스트 추가
 - [ ] UserAction 테스트 추가
 - [ ] validAnswer 판단로직 간소화
