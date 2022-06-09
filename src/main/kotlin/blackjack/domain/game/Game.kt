@@ -6,65 +6,56 @@ import blackjack.domain.card.CardSymbol
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.ParticipantStatus
+import blackjack.view.ViewResolver
 
-class Game(private val players: List<Player>) {
+class Game(
+    private val players: List<Player>,
+    private val viewResolver: ViewResolver
+) {
     private val dealer: Dealer = Dealer()
     private val result: Result = Result()
 
-    fun start(
-        printInitialHand: (dealer: Dealer, players: List<Player>) -> Unit,
-        printPlayerInfo: (player: Player) -> Unit,
-        decideHitDecision: (player: Player) -> Boolean,
-        printDealerDrawOneCard: () -> Unit,
-        printResult: (dealer: Dealer, players: List<Player>, result: Result) -> Unit
-    ) {
-        initialHand(printInitialHand)
-        play(printPlayerInfo, decideHitDecision, printDealerDrawOneCard)
-        printResult(dealer, players, result)
+    fun start() {
+        initialHand()
+        play()
+        viewResolver.resultView.printResult(dealer, players, result)
     }
 
-    private fun initialHand(printFirstTurn: (dealer: Dealer, players: List<Player>) -> Unit) {
+    private fun initialHand() {
         val dealerCards = dealer.drawCards(FIRST_DRAW_NUMBER)
         dealer.addCards(*dealerCards.toTypedArray())
         players.forEach { player ->
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
         }
-        printFirstTurn(dealer, players)
+        viewResolver.participantView.printInitialHand(dealer, players)
     }
 
-    private fun play(
-        printPlayerInfo: (player: Player) -> Unit,
-        decideHitDecision: (player: Player) -> Boolean,
-        printDealerDrawOneCard: () -> Unit
-    ) {
-        players.forEach { player -> player.turn(printPlayerInfo, decideHitDecision) }
-        dealer.turn(printDealerDrawOneCard)
+    private fun play() {
+        players.forEach { player -> player.turn() }
+        dealer.turn()
 
         players.forEach { player -> result.checkWinner(dealer, player) }
     }
 
-    private fun Player.turn(
-        printPlayerInfo: (player: Player) -> Unit,
-        decideHitDecision: (player: Player) -> Boolean
-    ) {
+    private fun Player.turn() {
         do {
-            val isHit = decideHitDecision(this)
+            val isHit = viewResolver.inputView.decidePlayerHitDecision(this)
             if (isHit) {
                 val card = dealer.drawOneCard()
                 addCards(card)
             } else {
                 changeStatus(ParticipantStatus.STAND)
             }
-            printPlayerInfo(this)
+            viewResolver.participantView.printParticipantInfo(this)
         } while (isDrawable())
     }
 
-    private fun Dealer.turn(printDealerDrawOneCard: () -> Unit) {
+    private fun Dealer.turn() {
         while (isDrawable()) {
             val card = dealer.drawOneCard()
             dealer.addCards(card)
-            printDealerDrawOneCard()
+            viewResolver.participantView.printDealerDrawOneCard()
         }
     }
 

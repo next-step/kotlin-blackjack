@@ -5,14 +5,12 @@ import blackjack.view.InputView
 import blackjack.view.InputView.inputPlayers
 import blackjack.view.ParticipantView
 import blackjack.view.ResultView
+import blackjack.view.ViewResolver
 
 fun main() {
-    val game = Game(inputPlayers())
-    game.start(
-        printInitialHand = ParticipantView::printInitialHand,
-        printPlayerInfo = ParticipantView::printParticipantInfo,
-        decideHitDecision = InputView::decidePlayerHitDecision,
-        printDealerDrawOneCard = ParticipantView::printDealerDrawOneCard,
-        printResult = ResultView::printResult
+    val game = Game(
+        players = inputPlayers(),
+        viewResolver = ViewResolver(InputView, ParticipantView, ResultView)
     )
+    game.start()
 }
