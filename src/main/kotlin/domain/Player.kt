@@ -2,16 +2,17 @@ package domain
 
 class Player(val name: String) {
     private val holdingCard = mutableListOf<Card>()
-
     val cards
         get() = holdingCard.toList()
 
-    fun offer(card: Card) {
-        if(holdingCard.contains(card)) {
-            throw IllegalArgumentException()
-        }
+    fun offer(cards: List<Card>) {
+        cards.forEach {
+            if (holdingCard.contains(it)) {
+                throw IllegalArgumentException()
+            }
 
-        holdingCard.add(card)
+            holdingCard.add(it)
+        }
     }
 
     fun cardSum(): Int {

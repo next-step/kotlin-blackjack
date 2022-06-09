@@ -3,9 +3,12 @@ package domain
 object CardDeck {
     private val allCards = Card.issueAllCards().toMutableList()
 
-    fun pop(count: Int) {
+    fun pop(count: Int): MutableList<Card> {
+        val cards = mutableListOf<Card>()
         repeat(count) {
-            allCards.removeLast()
+            cards.add(allCards.removeLast())
         }
+
+        return cards
     }
 }

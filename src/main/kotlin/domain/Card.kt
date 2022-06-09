@@ -25,6 +25,10 @@ data class Card(val pattern: CardPattern, val score: CardValue) {
         KING("K", 10);
     }
 
+    override fun toString(): String {
+        return "${pattern.patternName}${score.valueName}"
+    }
+
     companion object {
         fun issueAllCards(): Set<Card> {
             return ArrayList<Card>().apply {
