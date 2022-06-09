@@ -5,7 +5,7 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardShape
 import blackjack.model.card.Denomination
 import blackjack.model.card.PlayingCards
-import blackjack.model.card.State.Companion.toSortedScoreList
+import blackjack.model.card.Scores
 import blackjack.model.player.CardRecipient
 import blackjack.model.player.Player
 
@@ -45,8 +45,8 @@ class BiasedCardDistributor(potentialWinnerName: String) :
             }
             else -> { // 4번째 장 이후: 특정 플레이어가  blackJack이 되도록 배분.
                 if (player.isPotentialWinner()) {
-                    val scoreList = player.cards.toSortedScoreList()
-                    val needScore = scoreList.filter { it < 21 }
+                    val scores = Scores.of(player.cards)
+                    val needScore = scores.filter { it < 21 }
                         .map { 21 - it }.first { it in 2..10 }
 
                     val needDenomination = Denomination.values().find { it.score == needScore } ?: return
