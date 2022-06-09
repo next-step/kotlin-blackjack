@@ -7,9 +7,9 @@ data class BlackJackGame(
     val cardDeck: Deck
 ) {
     private val playerMap = players.associate { it.name to it.playerCards }
-    val normalPlayer = players.filter { it.name != DEALER }
-    val dealer = players.first { it.name == DEALER }
-    val dealerCards = playerMap[DEALER]!!
+    val normalPlayer = players.filter { !it.isDealer }
+    val dealer = players.first { it.isDealer }
+    val dealerCards = dealer.playerCards
 
     fun firstCardDistribution() {
         players.forEach { participant ->
