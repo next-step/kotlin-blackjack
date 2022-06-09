@@ -18,7 +18,7 @@ class Game(
     fun start() {
         initialHand()
         play()
-        viewResolver.resultView.printResult(dealer, players, result)
+        viewResolver.printResult(dealer, players, result)
     }
 
     private fun initialHand() {
@@ -28,26 +28,25 @@ class Game(
             val cards = dealer.drawCards(FIRST_DRAW_NUMBER)
             player.addCards(*cards.toTypedArray())
         }
-        viewResolver.participantView.printInitialHand(dealer, players)
+        viewResolver.printInitialHand(dealer, players)
     }
 
     private fun play() {
         players.forEach { player -> player.turn() }
         dealer.turn()
-
         players.forEach { player -> result.decideWinner(dealer, player) }
     }
 
     private fun Player.turn() {
         do {
-            val isHit = viewResolver.inputView.decidePlayerHitDecision(this)
+            val isHit = viewResolver.decidePlayerHitDecision(this)
             if (isHit) {
                 val card = dealer.drawOneCard()
                 addCards(card)
             } else {
                 changeStatus(ParticipantStatus.STAND)
             }
-            viewResolver.participantView.printParticipantInfo(this)
+            viewResolver.printParticipantInfo(this)
         } while (isDrawable())
     }
 
@@ -55,7 +54,7 @@ class Game(
         while (isDrawable()) {
             val card = dealer.drawOneCard()
             dealer.addCards(card)
-            viewResolver.participantView.printDealerDrawOneCard()
+            viewResolver.printDealerDrawOneCard()
         }
     }
 
