@@ -16,9 +16,9 @@ object ResultView {
 
     private fun printResult(participant: Participant) {
         var result = ""
-        GameResult.values().forEach { enum ->
-            participant.gameResults.count { it == enum }.takeIf { it != ZERO }
-                ?.let { result = "$result$it${enum.getDisplayName()} " }
+        GameResult.values().forEach { gameResult ->
+            participant.gameResults.count { it == gameResult }.takeIf { it != ZERO }
+                ?.let { result = "$result$it${gameResult.getDisplayName()} " }
         }
         println("${participant.name} : $result")
     }
