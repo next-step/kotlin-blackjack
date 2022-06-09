@@ -30,7 +30,7 @@ class Cards(initialCards: List<Card> = emptyList()) {
     }
 
     private fun calculateRecursive(cards: List<Card>, results: MutableList<Int>, idx: Int = 0, sum: Int = 0) {
-        if (idx == cards.size) {
+        if (idx > cards.lastIndex) {
             results.add(sum)
             return
         }
