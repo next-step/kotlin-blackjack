@@ -6,10 +6,10 @@ import blackjack.domain.participant.ParticipantStatus
 import blackjack.domain.participant.Player
 
 data class Result(
-    private val _scoreMap: MutableMap<Participant, Score> = mutableMapOf(),
+    private val _scoreByParticipant: MutableMap<Participant, Score> = mutableMapOf(),
 ) {
-    val scoreMap: Map<Participant, Score>
-        get() = _scoreMap.map { it.key to it.value.copy() }.toMap()
+    val scoreByParticipant: Map<Participant, Score>
+        get() = _scoreByParticipant.map { it.key to it.value.copy() }.toMap()
 
     fun checkWinner(dealer: Dealer, player: Player) {
         if (dealer.status == ParticipantStatus.BUST) {
@@ -34,12 +34,12 @@ data class Result(
     }
 
     private fun win(participant: Participant) {
-        val score = _scoreMap.getOrPut(participant) { Score() }
+        val score = _scoreByParticipant.getOrPut(participant) { Score() }
         score.win += 1
     }
 
     private fun lose(participant: Participant) {
-        val score = _scoreMap.getOrPut(participant) { Score() }
+        val score = _scoreByParticipant.getOrPut(participant) { Score() }
         score.lose += 1
     }
 }

@@ -31,7 +31,7 @@ internal class ResultTest {
         result.checkWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreMap)
+        Assertions.assertThat(result.scoreByParticipant)
             .containsEntry(dealer, Score(win = 0, lose = 1))
             .containsEntry(player, Score(win = 1, lose = 0))
     }
@@ -50,7 +50,7 @@ internal class ResultTest {
         result.checkWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreMap)
+        Assertions.assertThat(result.scoreByParticipant)
             .containsEntry(dealer, Score(win = 1, lose = 0))
             .containsEntry(player, Score(win = 0, lose = 1))
     }
@@ -69,7 +69,7 @@ internal class ResultTest {
         result.checkWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreMap)
+        Assertions.assertThat(result.scoreByParticipant)
             .containsEntry(dealer, Score(win = 0, lose = 1))
             .containsEntry(player, Score(win = 1, lose = 0))
     }
@@ -87,7 +87,7 @@ internal class ResultTest {
         result.checkWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreMap)
+        Assertions.assertThat(result.scoreByParticipant)
             .doesNotContainKeys(dealer, player)
     }
 
