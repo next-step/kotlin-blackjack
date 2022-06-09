@@ -3,12 +3,11 @@ package blackjack.view
 import blackjack.domain.BlackJackGame
 import blackjack.domain.GameResult
 import blackjack.domain.Participant
-import blackjack.domain.Result
 
 object ResultView {
     fun gameResult(blackJackGame: BlackJackGame) {
         println()
-        val gameResult = Result(blackJackGame).getGameResult()
+        val gameResult = blackJackGame.getGameResult()
         println("### 최종 승패")
         gameResult.forEach {
             printResult(it)

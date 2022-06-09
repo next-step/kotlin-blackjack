@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import kotlin.math.abs
+
 const val DEALER = "딜러"
 
 data class BlackJackGame(
@@ -7,9 +9,10 @@ data class BlackJackGame(
     val cardDeck: Deck
 ) {
     private val playerMap = players.associate { it.name to it.playerCards }
+    private val dealer = players.first { it.isDealer }
     val normalPlayer = players.filter { !it.isDealer }
-    val dealer = players.first { it.isDealer }
     val dealerCards = dealer.playerCards
+    private val dealerScore = dealerCards.score()
 
     fun firstCardDistribution() {
         players.forEach { participant ->
@@ -19,6 +22,45 @@ data class BlackJackGame(
 
     fun drawTo(playerName: String) {
         playerMap[playerName]!!.addCard(cardDeck.draw())
+    }
+
+    fun getGameResult(): List<Participant> {
+        if (dealerScore > BLACK_JACK_SCORE) {
+            setDealerWinGameResult()
+        } else {
+            setGameResult()
+        }
+        return players
+    }
+
+    private fun setDealerWinGameResult() {
+        dealer.addGameResult(List(normalPlayer.size) { GameResult.WIN })
+        normalPlayer.forEach {
+            it.setLose()
+        }
+    }
+
+    private fun setGameResult() {
+        normalPlayer.forEach {
+            it.setGameResult()
+        }
+    }
+
+    private fun Participant.setLose() {
+        addGameResult(listOf(GameResult.LOSE))
+    }
+
+    private fun Participant.setGameResult() {
+        if (abs(BLACK_JACK_SCORE - playerCards.score()) < BLACK_JACK_SCORE - dealerScore) {
+            addGameResult(listOf(GameResult.WIN))
+            dealer.addGameResult(listOf(GameResult.LOSE))
+        } else if (playerCards.score() == dealerScore) {
+            addGameResult(listOf(GameResult.DRAW))
+            dealer.addGameResult(listOf(GameResult.DRAW))
+        } else {
+            addGameResult(listOf(GameResult.LOSE))
+            dealer.addGameResult(listOf(GameResult.WIN))
+        }
     }
 
     private fun Participant.addFirstCard() {
@@ -34,6 +76,7 @@ data class BlackJackGame(
             )
         }
 
+        private const val BLACK_JACK_SCORE = 21
         private const val FIRST_DISTRIBUTION_CARD_COUNT = 2
     }
 }
