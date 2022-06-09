@@ -7,17 +7,9 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.ParticipantStatus
 
-class Game(playerNames: String) {
-    private val players: List<Player>
-    private val dealer: Dealer
-    private val result: Result
-
-    init {
-        require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
-        players = playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
-        dealer = Dealer()
-        result = Result()
-    }
+class Game(private val players: List<Player>) {
+    private val dealer: Dealer = Dealer()
+    private val result: Result = Result()
 
     fun start(
         printInitialHand: (dealer: Dealer, players: List<Player>) -> Unit,
@@ -77,7 +69,6 @@ class Game(playerNames: String) {
     }
 
     companion object {
-        private const val PLAYER_INPUT_DELIMITER = ","
         const val ACE_MIN_NUMBER: Int = 1
         const val ACE_MAX_NUMBER: Int = 11
         const val FIRST_DRAW_NUMBER = 2
