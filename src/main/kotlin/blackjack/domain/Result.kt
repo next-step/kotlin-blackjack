@@ -17,7 +17,7 @@ class Result(private val blackJackGame: BlackJackGame) {
     }
 
     private fun setDealerWinGameResult() {
-        dealer.addStatus(List(normalPlayer.size) { GameResult.WIN })
+        dealer.addGameResult(List(normalPlayer.size) { GameResult.WIN })
         normalPlayer.forEach {
             it.setLose()
         }
@@ -30,19 +30,19 @@ class Result(private val blackJackGame: BlackJackGame) {
     }
 
     private fun Participant.setLose() {
-        addStatus(listOf(GameResult.LOSE))
+        addGameResult(listOf(GameResult.LOSE))
     }
 
     private fun Participant.setResult() {
         if (abs(BLACK_JACK_SCORE - playerCards.score()) < BLACK_JACK_SCORE - dealerScore) {
-            addStatus(listOf(GameResult.WIN))
-            dealer.addStatus(listOf(GameResult.LOSE))
+            addGameResult(listOf(GameResult.WIN))
+            dealer.addGameResult(listOf(GameResult.LOSE))
         } else if (playerCards.score() == dealerScore) {
-            addStatus(listOf(GameResult.DRAW))
-            dealer.addStatus(listOf(GameResult.DRAW))
+            addGameResult(listOf(GameResult.DRAW))
+            dealer.addGameResult(listOf(GameResult.DRAW))
         } else {
-            addStatus(listOf(GameResult.LOSE))
-            dealer.addStatus(listOf(GameResult.WIN))
+            addGameResult(listOf(GameResult.LOSE))
+            dealer.addGameResult(listOf(GameResult.WIN))
         }
     }
 

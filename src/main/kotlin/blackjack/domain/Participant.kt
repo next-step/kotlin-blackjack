@@ -5,12 +5,12 @@ data class Participant(
     val playerCards: Cards = Cards(),
     val isDealer: Boolean = false
 ) {
-    val status: List<GameResult>
-        get() = _status.toList()
+    private val _gameResults: MutableList<GameResult> = mutableListOf()
 
-    private val _status: MutableList<GameResult> = mutableListOf()
+    val gameResults: List<GameResult>
+        get() = _gameResults.toList()
 
-    fun addStatus(isWin: List<GameResult>) = this._status.addAll(isWin)
+    fun addGameResult(isWin: List<GameResult>) = this._gameResults.addAll(isWin)
     fun addCard(card: Card) {
         this.playerCards.addCard(card)
     }
