@@ -81,11 +81,11 @@ class BlackJack private constructor(
 
     fun ready() {
         dealer.ready(cardDeck)
+        players.ready(cardDeck)
         if (dealer.isBust) {
             players.winToDealerBust()
             return
         }
-        players.ready(cardDeck)
     }
 
     fun play(player: Player): BlackJackStatus {
@@ -101,6 +101,7 @@ class BlackJack private constructor(
         dealer.hit(cardDeck)
         hitAfterAction()
         if (dealer.isBust) {
+            dealer.loseToBust()
             players.winToDealerBust()
         }
     }

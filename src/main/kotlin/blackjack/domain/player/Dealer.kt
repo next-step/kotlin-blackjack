@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.Lose
 import blackjack.domain.Score
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.vo.Name
@@ -15,7 +16,18 @@ class Dealer(cardsInHand: CardsInHand) : Player(PlayerStatus(Name("딜러")), ca
         super.ready(cardDeck)
 
         if (cardsInHand.calculateScore() <= DEALER_SCORE) {
-            cardsInHand.add(cardDeck.draw())
+            drawOneCard(cardDeck)
+        }
+    }
+
+    private fun drawOneCard(cardDeck: CardDeck) {
+        cardsInHand.add(cardDeck.draw())
+        loseToBust()
+    }
+
+    fun loseToBust() {
+        if (isBust) {
+            roundResults.add(Lose)
         }
     }
 

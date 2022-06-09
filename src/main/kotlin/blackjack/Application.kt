@@ -19,13 +19,16 @@ fun main() {
     OutputView.printStatuses(blackJack.statuses)
 
     playBlackJack(blackJack)
-
+    if (blackJack.dealerBust) {
+        OutputView.printDealerBust(blackJack.rounds)
+        return
+    }
     OutputView.printResults(blackJack.results)
     OutputView.printBlackJackResult(blackJack.rounds)
 }
 
 private fun playBlackJack(blackJack: BlackJack) {
-    while (!blackJack.isPlayerAllStay) {
+    while (!blackJack.isPlayerAllStay && !blackJack.dealerBust) {
         playerHit(blackJack)
     }
 

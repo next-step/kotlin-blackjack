@@ -28,7 +28,6 @@ open class Player constructor(
     open fun score(players: List<Player>): RoundResults {
         players.filterNot { it === this }
             .forEach {
-                println(it.name.value + "  : " + name.value)
                 val playerScore = cardsInHand.calculateScore()
                 roundResults = roundResults.add(RoundResult.valueOf(playerScore.compareTo(it.cardsInHand.calculateScore())))
             }
