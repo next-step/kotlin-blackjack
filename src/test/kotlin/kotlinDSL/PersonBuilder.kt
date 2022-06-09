@@ -1,7 +1,5 @@
 package kotlinDSL
 
-data class Person(val name : String, val company : String, val skills : Skills?, val languages : Languages?)
-
 class PersonBuilder {
     private lateinit var name: String
     private var company: String = ""
