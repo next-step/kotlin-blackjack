@@ -13,7 +13,7 @@ class Game(
     private val viewResolver: ViewResolver
 ) {
     private val dealer: Dealer = Dealer()
-    private val result: Result = Result()
+    private val result: Result = Result(dealer, players)
 
     fun start() {
         initialHand()
