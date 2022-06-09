@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.Score
 import blackjack.domain.card.Ace
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
@@ -8,10 +7,9 @@ import blackjack.domain.card.Jack
 import blackjack.domain.card.NumberCard
 import blackjack.domain.card.Queen
 import blackjack.domain.card.Suit
+import blackjack.domain.score.Score
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.inspectors.forAll
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
@@ -25,66 +23,20 @@ class PlayerTest : DescribeSpec({
         }
     }
 
-    describe("initHandOut") {
-        context("참가자가 카드를 받지 않은 초기 상태에 카드 목록이 주어지면") {
-            it("카드를 추가할 수 있다") {
-                val player = Player("yohan")
-                val diamondQueen = Card(Suit.DIAMOND, Queen())
-                val diamondNine = Card(Suit.DIAMOND, NumberCard(9))
-
-                player.initHandOut(listOf(diamondQueen, diamondNine))
-
-                player.cards shouldContainExactly listOf(diamondQueen, diamondNine)
-            }
-        }
-
-        context("참가자 카드를 받지 않은 초기 상태가 아닐 때 카드를 추가하면") {
-            it("IllegalStateException 이 발생한다") {
-                val player = Player(name = "yohan", playerStatus = PlayerStatus.READY)
-
-                shouldThrow<IllegalStateException> {
-                    player.initHandOut(listOf(Card(Suit.DIAMOND, NumberCard(9))))
-                }
-            }
-        }
-    }
-
-    describe("hit, stay") {
-        context("READY 상태인 경우") {
+    describe("changeStatus") {
+        context("STAY 또는 BUST가 아닌 경우") {
             it("카드를 추가하기로 할 수 있다") {
-                val player = Player(name = "요한", playerStatus = PlayerStatus.READY)
-                player.hit()
+                val player = Player(name = "요한")
+                player.changeStatus(PlayerStatus.HIT)
             }
 
             it("카드를 추가하지 않기로 할 수 있다") {
-                val player = Player(name = "요한", playerStatus = PlayerStatus.READY)
-                player.stay()
+                val player = Player(name = "요한")
+                player.changeStatus(PlayerStatus.STAY)
             }
         }
 
-        context("READY 상태가 아닌 경우") {
-            val players = PlayerStatus.values()
-                .filterNot { it == PlayerStatus.READY }
-                .map { Player(name = "요한", playerStatus = it) }
-
-            it("카드를 추가하기로 하면 IllegalStateException 이 발생한다") {
-                players.forAll {
-                    shouldThrow<IllegalStateException> {
-                        it.hit()
-                    }
-                }
-            }
-
-            it("카드를 추가하지 않기로 하면 IllegalStateException 이 발생한다") {
-                players.forAll {
-                    shouldThrow<IllegalStateException> {
-                        it.stay()
-                    }
-                }
-            }
-        }
-
-        context("카드들의 합이 21을 넘을 때") {
+        context("BUST 인 경우") {
             val player = Player(
                 name = "요한",
                 cards = Cards(
@@ -93,26 +45,25 @@ class PlayerTest : DescribeSpec({
                         Card(Suit.DIAMOND, NumberCard(10)),
                         Card(Suit.DIAMOND, NumberCard(2)),
                     )
-                ),
-                playerStatus = PlayerStatus.READY
+                )
             )
 
             it("카드를 추가하기로 하면 IllegalStateException 이 발생한다") {
                 shouldThrow<IllegalStateException> {
-                    player.hit()
+                    player.changeStatus(PlayerStatus.HIT)
                 }
             }
 
             it("카드를 추가히지 않기로 하면 IllegalStateException 이 발생한다") {
                 shouldThrow<IllegalStateException> {
-                    player.stay()
+                    player.changeStatus(PlayerStatus.STAY)
                 }
             }
         }
     }
 
-    describe("handOut") {
-        context("가지고 있는 카드들의 합이 21을 넘지 않으면") {
+    describe("addCard") {
+        context("STAY 또는 BUST 가 아닌 경우") {
             it("카드를 추가할 수 있다") {
                 val player = Player(
                     name = "요한",
@@ -122,11 +73,10 @@ class PlayerTest : DescribeSpec({
                             Card(Suit.DIAMOND, NumberCard(9)),
                             Card(Suit.DIAMOND, NumberCard(2)),
                         )
-                    ),
-                    playerStatus = PlayerStatus.HIT
+                    )
                 )
 
-                player.handOut(Card(Suit.DIAMOND, NumberCard(10)))
+                player.addCard(Card(Suit.DIAMOND, NumberCard(10)))
 
                 player.cards shouldBe
                     listOf(
@@ -138,7 +88,7 @@ class PlayerTest : DescribeSpec({
             }
         }
 
-        context("카드들의 합이 21을 넘으면") {
+        context("BUST 인 경우") {
             it("IllegalStateException 이 발생한다") {
                 val player = Player(
                     name = "요한",
@@ -148,17 +98,16 @@ class PlayerTest : DescribeSpec({
                             Card(Suit.DIAMOND, NumberCard(10)),
                             Card(Suit.DIAMOND, NumberCard(2)),
                         )
-                    ),
-                    playerStatus = PlayerStatus.HIT
+                    )
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.handOut(Card(Suit.DIAMOND, NumberCard(2)))
+                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
 
-        context("카드를 받지 않기로 한 경우") {
+        context("STAY 인 경우") {
             it("IllegalStateException 이 발생한다") {
                 val player = Player(
                     name = "요한",
@@ -166,57 +115,7 @@ class PlayerTest : DescribeSpec({
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.handOut(Card(Suit.DIAMOND, NumberCard(2)))
-                }
-            }
-        }
-    }
-
-    describe("hittable") {
-        context("카드들의 합이 21을 초과하지 않고 HIT 상태라면") {
-            it("카드를 추가할 수 있다") {
-                val player = Player(
-                    name = "요한",
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(9)),
-                            Card(Suit.DIAMOND, NumberCard(2)),
-                        )
-                    ),
-                    playerStatus = PlayerStatus.READY
-                )
-
-                player.hittable shouldBe true
-            }
-
-            context("카드들의 합이 21을 초과하면") {
-                it("카드를 추가할 수 없다") {
-                    val player = Player(
-                        name = "요한",
-                        cards = Cards(
-                            listOf(
-                                Card(Suit.DIAMOND, Queen()),
-                                Card(Suit.DIAMOND, NumberCard(9)),
-                                Card(Suit.DIAMOND, NumberCard(3)),
-                            )
-                        ),
-                        playerStatus = PlayerStatus.READY
-                    )
-
-                    player.hittable shouldBe false
-                }
-            }
-
-            context("카드를 추가하지 않기로 하였다면") {
-                it("카드를 추가할 수 없다") {
-                    val player = Player(
-                        name = "요한",
-                        cards = Cards.empty(),
-                        playerStatus = PlayerStatus.STAY
-                    )
-
-                    player.hittable shouldBe false
+                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
@@ -240,20 +139,20 @@ class PlayerTest : DescribeSpec({
     }
 
     describe("isEnd") {
-        it("STAY 이면 참가자의 참여가 종료된다") {
-            val yohan = Player(name = "yohan", playerStatus = PlayerStatus.STAY)
+        it("BUST 이거나 STAY 가 아니면 참여가 종료되지 않는다") {
+            val player = Player(name = "yohan")
 
-            yohan.isEnd shouldBe true
+            player.isEnd shouldBe false
         }
 
-        it("다른 참가자 상태이면 참여가 종료되지 않는다") {
-            PlayerStatus.values()
-                .filterNot { it == PlayerStatus.STAY }
-                .forAll { Player(name = "yohan", playerStatus = it).isEnd shouldBe false }
+        it("STAY 이면 참가자의 참여가 종료된다") {
+            val player = Player(name = "yohan", playerStatus = PlayerStatus.STAY)
+
+            player.isEnd shouldBe true
         }
 
         it("BUST 이면 참가자의 참여가 종료된다") {
-            val yohan = Player(
+            val player = Player(
                 name = "yohan",
                 cards = Cards(
                     listOf(
@@ -261,26 +160,10 @@ class PlayerTest : DescribeSpec({
                         Card(Suit.DIAMOND, NumberCard(9)),
                         Card(Suit.DIAMOND, NumberCard(3)),
                     )
-                ),
-                playerStatus = PlayerStatus.READY
+                )
             )
 
-            yohan.isEnd shouldBe true
-        }
-
-        it("BUST 가 아니면 참가자의 참여가 종료되지 않는다") {
-            val yohan = Player(
-                name = "yohan",
-                cards = Cards(
-                    listOf(
-                        Card(Suit.DIAMOND, Queen()),
-                        Card(Suit.DIAMOND, NumberCard(9)),
-                    )
-                ),
-                playerStatus = PlayerStatus.READY
-            )
-
-            yohan.isEnd shouldBe false
+            player.isEnd shouldBe true
         }
     }
 })

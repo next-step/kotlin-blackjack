@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.Score
+import blackjack.domain.score.Score
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.blackjack
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Player
@@ -12,15 +12,15 @@ class BlackJack(
     val isEnd: Boolean get() = players.isEnd()
 
     init {
-        players.handOutTwoCard(deck)
+        players.addTwoCard(deck)
     }
 
-    fun handOut(player: Player) {
+    fun giveCard(player: Player) {
         require(players.contains(player)) {
             "존재하지 않는 참가자입니다"
         }
 
-        player.handOut(deck.draw())
+        player.addCard(deck.draw())
     }
 
     fun result(): BlackJackResult {

@@ -1,7 +1,8 @@
 package blackjack
 
-import blackjack.domain.BlackJack
+import blackjack.domain.blackjack.BlackJack
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -26,10 +27,10 @@ fun main() {
 
 fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
     if (hit) {
-        player.hit()
-        blackJack.handOut(player)
+        player.changeStatus(PlayerStatus.HIT)
+        blackJack.giveCard(player)
             .also { ResultView.printlnPlayerWithCards(player.name, player.cards) }
     } else {
-        player.stay()
+        player.changeStatus(PlayerStatus.STAY)
     }
 }

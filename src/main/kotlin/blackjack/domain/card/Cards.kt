@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.Score
+import blackjack.domain.score.Score
 
 class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()

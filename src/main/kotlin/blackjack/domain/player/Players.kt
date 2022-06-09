@@ -10,12 +10,14 @@ class Players(val players: List<Player>) {
         }
     }
 
-    fun handOutTwoCard(deck: Deck) {
-        players.forEach { player -> player.initHandOut(listOf(deck.draw(), deck.draw())) }
+    fun addTwoCard(deck: Deck) {
+        players.forEach { player ->
+            repeat(2) { player.addCard(deck.draw()) }
+        }
     }
 
     fun hittablePlayers(): List<Player> {
-        return players.filter(Player::hittable)
+        return players.filterNot(Player::isEnd)
     }
 
     fun isEnd(): Boolean {

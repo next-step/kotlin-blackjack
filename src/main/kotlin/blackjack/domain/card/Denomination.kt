@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.Score
+import blackjack.domain.score.Score
 
 sealed class Denomination(val name: String, val score: Score) {
     override fun equals(other: Any?): Boolean {

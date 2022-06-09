@@ -1,7 +1,8 @@
-package blackjack.domain
+package blackjack.domain.blackjack
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import blackjack.domain.player.Players
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -37,7 +38,7 @@ class BlackJackTest : DescribeSpec({
             val yohan = Player(name = "yohan")
             val pang = Player("pang")
             val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-            pang.stay()
+            pang.changeStatus(PlayerStatus.STAY)
 
             blackJack.hittablePlayers shouldContainExactly listOf(yohan)
         }
@@ -51,8 +52,7 @@ class BlackJackTest : DescribeSpec({
                     players = Players(listOf(yohan))
                 )
 
-                yohan.hit()
-                blackJack.handOut(yohan)
+                blackJack.giveCard(yohan)
 
                 yohan.cards.size shouldBe 3
             }
@@ -62,9 +62,9 @@ class BlackJackTest : DescribeSpec({
             it("IllegalArgumentException 이 발생한다") {
                 val target = Player("yohan")
                 val blackJack = BlackJack(players = Players(listOf(target, Player("pang"))))
-                target.stay()
+                target.changeStatus(PlayerStatus.STAY)
 
-                shouldThrow<IllegalStateException> { blackJack.handOut(target) }
+                shouldThrow<IllegalStateException> { blackJack.giveCard(target) }
             }
         }
     }
@@ -75,9 +75,8 @@ class BlackJackTest : DescribeSpec({
                 val yohan = Player("yohan")
                 val pang = Player("pang")
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-
-                yohan.stay()
-                pang.stay()
+                yohan.changeStatus(PlayerStatus.STAY)
+                pang.changeStatus(PlayerStatus.STAY)
 
                 blackJack.isEnd shouldBe true
             }
@@ -88,7 +87,7 @@ class BlackJackTest : DescribeSpec({
                 val yohan = Player("yohan")
                 val pang = Player("pang")
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-                yohan.stay()
+                yohan.changeStatus(PlayerStatus.STAY)
 
                 blackJack.isEnd shouldBe false
             }
@@ -101,9 +100,8 @@ class BlackJackTest : DescribeSpec({
                 val yohan = Player("yohan")
                 val pang = Player("pang")
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-
-                yohan.stay()
-                pang.stay()
+                yohan.changeStatus(PlayerStatus.STAY)
+                pang.changeStatus(PlayerStatus.STAY)
 
                 blackJack.result() shouldNotBe null
             }
@@ -114,8 +112,7 @@ class BlackJackTest : DescribeSpec({
                 val yohan = Player("yohan")
                 val pang = Player("pang")
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
-
-                yohan.stay()
+                yohan.changeStatus(PlayerStatus.STAY)
 
                 shouldThrow<IllegalStateException> { blackJack.result() }
             }

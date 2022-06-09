@@ -1,8 +1,6 @@
-package blackjack.domain.player
+package blackjack.domain.score
 
-import blackjack.domain.Score
-
-enum class CardStatus(
+enum class CardScore(
     private val condition: (Score) -> Boolean
 ) {
     NORMAL({ score -> score < Score.BLACKJACK }),
@@ -10,8 +8,8 @@ enum class CardStatus(
     BUST({ score -> score > Score.BLACKJACK });
 
     companion object {
-        fun of(score: Score): CardStatus {
-            return CardStatus.values()
+        fun of(score: Score): CardScore {
+            return CardScore.values()
                 .find { it.condition(score) }
                 ?: throw IllegalStateException("판별할 수 없는 카드 상태입니다. ($score)")
         }

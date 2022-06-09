@@ -1,7 +1,8 @@
-package blackjack.domain
+package blackjack.domain.blackjack
 
 import blackjack.domain.card.Card
 import blackjack.domain.player.Player
+import blackjack.domain.score.Score
 
 data class BlackJackResult(
     val playerResults: List<PlayerResult>
@@ -9,7 +10,7 @@ data class BlackJackResult(
 
     companion object {
         fun of(players: List<Player>): BlackJackResult {
-            return BlackJackResult(players.map(PlayerResult::of))
+            return BlackJackResult(players.map(PlayerResult.Companion::of))
         }
     }
 }
