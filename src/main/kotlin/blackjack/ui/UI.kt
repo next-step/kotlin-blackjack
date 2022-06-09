@@ -1,26 +1,26 @@
 package blackjack.ui
 
-import blackjack.domain.Dealer
+import blackjack.domain.DealerRule
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.WinningResult
 
 object UI {
 
-    fun drawFirstTurnMessage(dealer: Dealer, players: Players) {
+    fun drawFirstTurnMessage(dealer: Player, players: Players) {
         val playerNames = players.list.joinToString(",") { it.name }
         println("${dealer.name}와 ${playerNames}에게 각자 2장을 나누었습니다.")
     }
 
     fun drawCardList(player: Player) {
-        val playerCards = when (player) {
-            is Dealer -> player.currentCards().first().toString()
+        val playerCards = when (player.rule) {
+            is DealerRule -> player.currentCards().first().toString()
             else -> player.currentCards().joinToString(", ") { it.toString() }
         }
         println("${player.name}카드: $playerCards")
     }
 
-    fun drawDealerDrawMessage(dealer: Dealer) {
+    fun drawDealerDrawMessage(dealer: Player) {
         println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
@@ -34,8 +34,8 @@ object UI {
     }
 
     fun drawRecord(result: WinningResult) {
-        val recordString = when (result.player) {
-            is Dealer -> {
+        val recordString = when (result.player.rule) {
+            is DealerRule -> {
                 buildString {
                     if (result.winCount > 0) append("${result.winCount}승")
                     if (result.loseCount > 0) append("${result.loseCount}패")

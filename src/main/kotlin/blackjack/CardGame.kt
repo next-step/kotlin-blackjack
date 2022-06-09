@@ -1,8 +1,9 @@
 package blackjack
 
 import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
+import blackjack.domain.DealerRule
 import blackjack.domain.Player
+import blackjack.domain.PlayerRule
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
 import blackjack.domain.WinningDiscriminator
@@ -12,7 +13,7 @@ import blackjack.ui.UI
 
 object CardGame {
     fun run() {
-        val dealer = Dealer()
+        val dealer = Player("딜러", rule = DealerRule)
         val players = InputReceiver.receiverPlayers()
         val cardDeck = CardDeck.new(RandomShuffleStrategy)
 
@@ -20,11 +21,11 @@ object CardGame {
 
         UI.drawDivider()
         players.forEach {
-            playPlayerTurn(it, cardDeck)
+            playTurn(it, cardDeck)
         }
 
         UI.drawDivider()
-        playDealerTurn(dealer, cardDeck)
+        playTurn(dealer, cardDeck)
 
         drawResult(dealer, players)
 
@@ -32,7 +33,7 @@ object CardGame {
         drawRecord(results)
     }
 
-    private fun drawResult(dealer: Dealer, players: Players) {
+    private fun drawResult(dealer: Player, players: Players) {
         UI.drawDivider()
         UI.drawResult(dealer)
         players.forEach {
@@ -48,7 +49,7 @@ object CardGame {
         }
     }
 
-    private fun playFirstTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) {
+    private fun playFirstTurn(dealer: Player, players: Players, cardDeck: CardDeck) {
         repeat(2) {
             dealer.draw(cardDeck)
             players.drawAllPlayer(cardDeck)
@@ -62,17 +63,16 @@ object CardGame {
         }
     }
 
-    private fun playPlayerTurn(player: Player, cardDeck: CardDeck) {
-        while (player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)) {
-            player.draw(cardDeck)
-            UI.drawCardList(player)
-        }
-    }
-
-    private fun playDealerTurn(dealer: Dealer, cardDeck: CardDeck) {
-        if (dealer.canDraw()) {
-            dealer.draw(cardDeck)
-            UI.drawDealerDrawMessage(dealer)
+    private fun playTurn(player: Player, cardDeck: CardDeck) {
+        when (player.rule) {
+            DealerRule -> if (player.canDraw()) {
+                player.draw(cardDeck)
+                UI.drawDealerDrawMessage(player)
+            }
+            PlayerRule -> while (player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)) {
+                player.draw(cardDeck)
+                UI.drawCardList(player)
+            }
         }
     }
 }

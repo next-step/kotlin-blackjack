@@ -1,8 +1,11 @@
 package blackjack
 
+import blackjack.domain.Card
 import blackjack.domain.CardNumber
-import blackjack.domain.Dealer
+import blackjack.domain.DealerRule
 import blackjack.domain.Player
+import blackjack.domain.PlayerCards
+import blackjack.domain.Players
 import blackjack.domain.Symbol
 import blackjack.domain.WinningDiscriminator
 import io.kotest.core.spec.style.DescribeSpec
@@ -81,6 +84,7 @@ class WinningDiscriminatorTest : DescribeSpec({
     }
 })
 
-private fun PlayerCards(vararg cards: CardNumber) = blackjack.domain.PlayerCards(cards.toList().map { Card(it) })
-private fun Players(vararg player: Player) = blackjack.domain.Players(player.toList())
-private fun Card(number: CardNumber) = blackjack.domain.Card(Symbol.Diamond, number)
+private fun PlayerCards(vararg cards: CardNumber) = PlayerCards(cards.toList().map { Card(it) })
+private fun Players(vararg player: Player) = Players(player.toList())
+private fun Dealer(card: PlayerCards) = Player("딜러", card, DealerRule)
+private fun Card(number: CardNumber) = Card(Symbol.Diamond, number)
