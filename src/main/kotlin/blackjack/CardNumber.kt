@@ -1,6 +1,6 @@
 package blackjack
 
-data class CardNumber(private val number: Int) {
+data class CardNumber(val number: Int) {
     init {
         validate(number)
     }
