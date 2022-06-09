@@ -20,7 +20,7 @@ class ConsoleOutputView : OutputView {
     override fun onPlayerHit(player: Player) {
         when (player) {
             is Player.Guest -> printCardsOfGuest(player, false)
-            is Player.Dealer -> println("${player.name}는 ${Config.MAX_SCORE_FOR_DEALER_CAN_HIT}이하라 한장의 카다를 더 받았습니다.")
+            is Player.Dealer -> println("${player.name}는 ${Config.MAX_SCORE_FOR_DEALER_CAN_HIT}이하라 한장의 카드를 더 받았습니다.")
         }
     }
 
