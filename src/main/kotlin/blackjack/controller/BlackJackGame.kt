@@ -28,7 +28,7 @@ class BlackJackGame(
         val records = playRoom.playGame { player ->
             outputView?.onPlayerHit(player)
         }
-        outputView?.printCardsOfPlayer(playRoom, withScore = true)
+        outputView?.printCardsOfPlayer(playRoom, isGameOver = true)
         outputView?.printPlayerRecords(records)
     }
 }

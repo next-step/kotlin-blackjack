@@ -24,10 +24,10 @@ class ConsoleOutputView : OutputView {
         }
     }
 
-    override fun printCardsOfPlayer(player: Player, withScore: Boolean) {
+    override fun printCardsOfPlayer(player: Player, isGameOver: Boolean) {
         when (player) {
-            is Player.Guest -> printCardsOfGuest(player, withScore)
-            is Player.Dealer -> printCardsOfDealer(player, withScore)
+            is Player.Guest -> printCardsOfGuest(player, isGameOver)
+            is Player.Dealer -> printCardsOfDealer(player, isGameOver = isGameOver)
         }
     }
 
@@ -66,26 +66,29 @@ class ConsoleOutputView : OutputView {
         }
     }
 
-    private fun printCardsOfGuest(player: Player, withScore: Boolean) {
+    private fun printCardsOfGuest(player: Player, isGameOver: Boolean) {
+        printAllCardsPlayer(player, withScore = isGameOver)
+    }
+
+    private fun printCardsOfDealer(player: Player.Dealer, isGameOver: Boolean) {
+        if (isGameOver) {
+            printAllCardsPlayer(player, withScore = true)
+            return
+        }
+
+        print("${player.name}: ")
+        val firstCard = player.cards.first()
+        val cardsExceptFirst = player.cards.filter { it != firstCard }
+        print(cardsExceptFirst.joinToString(", ") { it.displayName })
+        println()
+    }
+
+    private fun printAllCardsPlayer(player: Player, withScore: Boolean) {
         print("${player.name} 카드: ")
         print(player.cards.joinToString(", ") { it.displayName })
         if (withScore) {
             print("  - 결과 : :${player.state.finalScore}")
         }
-        println()
-    }
-
-    private fun printCardsOfDealer(player: Player.Dealer, withScore: Boolean) {
-        if (withScore) {
-            printCardsOfGuest(player, true)
-            return
-        }
-
-        print("${player.name}: ")
-
-        val firstCard = player.cards.first()
-        val cardsExceptFirst = player.cards.filter { it != firstCard }
-        print(cardsExceptFirst.joinToString(", ") { it.displayName })
         println()
     }
 

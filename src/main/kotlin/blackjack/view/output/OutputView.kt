@@ -9,11 +9,11 @@ interface OutputView {
 
     fun onPlayerHit(player: Player)
 
-    fun printCardsOfPlayer(player: Player, withScore: Boolean = false)
+    fun printCardsOfPlayer(player: Player, isGameOver: Boolean = false)
 
-    fun printCardsOfPlayer(playRoom: PlayRoom, withScore: Boolean = false) {
-        this.printCardsOfPlayer(playRoom.dealer, withScore)
-        playRoom.guests.forEach { this.printCardsOfPlayer(it, withScore) }
+    fun printCardsOfPlayer(playRoom: PlayRoom, isGameOver: Boolean = false) {
+        this.printCardsOfPlayer(playRoom.dealer, isGameOver)
+        playRoom.guests.forEach { this.printCardsOfPlayer(it, isGameOver) }
     }
 
     fun printPlayerRecords(playerRecords: PlayerRecords)
