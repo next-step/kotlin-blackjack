@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Card(val cardNumber: CardNumber, val suit: Suit) {
     override fun equals(other: Any?): Boolean {

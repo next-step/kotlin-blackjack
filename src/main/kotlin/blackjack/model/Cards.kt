@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Cards(val values: List<Card>) {
     constructor(vararg values: Card) : this(values.asList())

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class BlackjackState(val players: Players, private val cards: Cards = createShuffledCards()) {
 

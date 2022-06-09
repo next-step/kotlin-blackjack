@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Player(val name: String, val cards: Cards, val gameOver: Boolean = false) {
     fun scores(): List<Score> {

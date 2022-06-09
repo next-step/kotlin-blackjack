@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 enum class CardNumber(val scores: List<Score>) {
     Ace(listOf(Score(1), Score(11))),

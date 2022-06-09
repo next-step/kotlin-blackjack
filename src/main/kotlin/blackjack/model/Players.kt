@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 class Players(val values: List<Player>) {
     fun findNotOver(): List<Player> {

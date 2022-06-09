@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -38,7 +38,6 @@ class CardsTest {
     @Test
     fun `카드를 추출한다`() {
         val initCards = Cards(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Two, Suit.Heart)))
-        val (extracted, newCards) = initCards.pollCards(1)
         assertThat(initCards.pollCards(1)).isEqualTo(
             Pair(listOf(Card(CardNumber.Ace, Suit.Club)), Cards(listOf(Card(CardNumber.Two, Suit.Heart))))
         )
