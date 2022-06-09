@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Cards(initialCards: List<Card> = emptyList()) {
     val possibleResults
-        get() = getAllPossibleResults(cards)
+        get() = getAllPossibleResults()
 
     private val _cards = mutableListOf<Card>()
     val cards
@@ -22,7 +22,7 @@ class Cards(initialCards: List<Card> = emptyList()) {
         _cards.addAll(servedCards.cards)
     }
 
-    private fun getAllPossibleResults(cards: List<Card>): List<Int> {
+    private fun getAllPossibleResults(): List<Int> {
         val results = mutableListOf<Int>()
         calculateRecursive(cards, results)
 
