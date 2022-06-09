@@ -11,7 +11,7 @@ data class Result(
     val scoreByParticipant: Map<Participant, Score>
         get() = _scoreByParticipant.map { it.key to it.value.copy() }.toMap()
 
-    fun checkWinner(dealer: Dealer, player: Player) {
+    fun decideWinner(dealer: Dealer, player: Player) {
         if (dealer.status == ParticipantStatus.BUST) {
             win(player)
             lose(dealer)

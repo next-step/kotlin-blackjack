@@ -28,7 +28,7 @@ internal class ResultTest {
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
-        result.checkWinner(dealer, player)
+        result.decideWinner(dealer, player)
 
         // then
         Assertions.assertThat(result.scoreByParticipant)
@@ -47,7 +47,7 @@ internal class ResultTest {
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
-        result.checkWinner(dealer, player)
+        result.decideWinner(dealer, player)
 
         // then
         Assertions.assertThat(result.scoreByParticipant)
@@ -66,7 +66,7 @@ internal class ResultTest {
         // when
         player.addCards(*playerCards)
         dealer.addCards(*dealerCards)
-        result.checkWinner(dealer, player)
+        result.decideWinner(dealer, player)
 
         // then
         Assertions.assertThat(result.scoreByParticipant)
@@ -84,7 +84,7 @@ internal class ResultTest {
         // when
         player.addCards(SPADE_TEN, DIAMOND_ACE)
         dealer.addCards(DIAMOND_ACE, CLUB_KING)
-        result.checkWinner(dealer, player)
+        result.decideWinner(dealer, player)
 
         // then
         Assertions.assertThat(result.scoreByParticipant)

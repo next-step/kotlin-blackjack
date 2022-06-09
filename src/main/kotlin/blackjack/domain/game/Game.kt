@@ -35,7 +35,7 @@ class Game(
         players.forEach { player -> player.turn() }
         dealer.turn()
 
-        players.forEach { player -> result.checkWinner(dealer, player) }
+        players.forEach { player -> result.decideWinner(dealer, player) }
     }
 
     private fun Player.turn() {
