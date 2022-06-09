@@ -15,6 +15,10 @@ class BlackjackState(val players: Players, private val cards: Cards = createShuf
         return players.findNotOver()
     }
 
+    fun findNotOverPlayer(): Player {
+        return players.findNotOver().first()
+    }
+
     fun setGameOver(player: Player): BlackjackState {
         return BlackjackState(players.setGameOver(player), cards)
     }
@@ -26,6 +30,10 @@ class BlackjackState(val players: Players, private val cards: Cards = createShuf
 
     fun isAllPlayersGameOver(): Boolean {
         return players.isAllOver()
+    }
+
+    fun findPlayer(name: String): Player {
+        return players.find(name)!!
     }
 
     companion object {

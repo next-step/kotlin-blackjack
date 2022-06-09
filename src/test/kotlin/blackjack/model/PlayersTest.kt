@@ -16,4 +16,10 @@ class PlayersTest {
         assertThat(Players(playerList).findNotOver()).isEqualTo(playerList)
         assertThat(Players(playerList.map { it.gameOver() }).findNotOver()).isEmpty()
     }
+
+    @Test
+    fun `이름으로 플레이어를 찾는다`() {
+        assertThat(Players(playerList).find("jason")).isNotNull
+        assertThat(Players(playerList).find("jinwoo")).isNull()
+    }
 }

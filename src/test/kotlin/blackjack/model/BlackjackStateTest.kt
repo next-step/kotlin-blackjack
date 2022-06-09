@@ -39,6 +39,20 @@ class BlackjackStateTest {
     }
 
     @Test
+    fun `아직 종료되지 않은 플레이어를 반환한다`() {
+        val state = BlackjackState(players)
+        assertThat(state.findNotOverPlayer()).isEqualTo(players.values[0])
+
+        val newState = state.setGameOver(players.values[0])
+        assertThat(newState.findNotOverPlayer()).isEqualTo(players.values[1])
+
+        val finalState = newState.setGameOver(players.values[1])
+        org.junit.jupiter.api.assertThrows<NoSuchElementException> {
+            finalState.findNotOverPlayer()
+        }
+    }
+
+    @Test
     fun `특정 플레이어에게 카드를 지급한다`() {
         val state = BlackjackState(players)
         assertThat(state.players.values[0].cards.values).hasSize(0)
@@ -55,5 +69,14 @@ class BlackjackStateTest {
 
         val newState = players.values.fold(state) { currState, player -> currState.setGameOver(player) }
         assertThat(newState.isAllPlayersGameOver()).isTrue()
+    }
+
+    @Test
+    fun `이름으로 플레이어를 찾는다`() {
+        val state = BlackjackState(players)
+        assertThat(state.findPlayer("jason")).isNotNull
+        org.junit.jupiter.api.assertThrows<NullPointerException> {
+            state.findPlayer("notExists")
+        }
     }
 }

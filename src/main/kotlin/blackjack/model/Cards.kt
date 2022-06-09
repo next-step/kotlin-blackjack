@@ -43,6 +43,14 @@ class Cards(val values: List<Card>) {
         return result
     }
 
+    fun optimalScore(): Score {
+        val notLoseScores = scores.filter { !it.isLose() }
+        if (notLoseScores.isNotEmpty()) {
+            return notLoseScores.maxByOrNull { it.value }!!
+        }
+        return scores.minByOrNull { it.value }!!
+    }
+
     init {
         require(values.distinct().size == values.size) {
             "카드는 중복을 허용하지 않습니다."

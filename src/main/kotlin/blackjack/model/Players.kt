@@ -32,4 +32,8 @@ class Players(val values: List<Player>) {
     fun isAllOver(): Boolean {
         return values.all { it.gameOver }
     }
+
+    fun find(name: String): Player? {
+        return values.find { it.name == name }
+    }
 }

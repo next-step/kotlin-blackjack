@@ -46,4 +46,13 @@ class CardsTest {
             Pair(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Two, Suit.Heart)), Cards.emptyCards())
         )
     }
+
+    @Test
+    fun `최적의 score를 계사한다`() {
+        val should21 = Cards(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Ten, Suit.Heart)))
+        assertThat(should21.optimalScore()).isEqualTo(Score(21))
+
+        val should12 = Cards(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Ace, Suit.Heart)))
+        assertThat(should12.optimalScore()).isEqualTo(Score(12))
+    }
 }
