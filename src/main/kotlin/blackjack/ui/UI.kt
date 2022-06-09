@@ -13,7 +13,10 @@ object UI {
     }
 
     fun drawCardList(player: Player) {
-        val playerCards = player.currentCards().joinToString(", ") { it.toString() }
+        val playerCards = when (player) {
+            is Dealer -> player.currentCards().first().toString()
+            else -> player.currentCards().joinToString(", ") { it.toString() }
+        }
         println("${player.name}카드: $playerCards")
     }
 
@@ -33,7 +36,11 @@ object UI {
     fun drawRecord(result: WinningResult) {
         val recordString = when (result.player) {
             is Dealer -> {
-                "${result.winCount}승 ${result.loseCount}패 ${result.drawCount}무"
+                buildString {
+                    if (result.winCount > 0) append("${result.winCount}승")
+                    if (result.loseCount > 0) append("${result.loseCount}패")
+                    if (result.drawCount > 0) append("${result.drawCount}무")
+                }
             }
             else -> when {
                 result.winCount == 1 -> "승"
