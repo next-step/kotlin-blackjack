@@ -1,7 +1,6 @@
 package blackjack.domain
 
 open class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
-    val winningRecord = WinningRecord()
     val cardCount: Int get() = playerCards.size
     val score: Score get() = playerCards.score
 
@@ -14,8 +13,4 @@ open class Player(val name: String, private val playerCards: PlayerCards = Playe
     open fun canDraw(): Boolean = !isBust()
 
     fun isBust(): Boolean = playerCards.isBust()
-
-    fun updateWinRecord(isWin: Boolean) {
-        winningRecord.updateRecord(isWin)
-    }
 }

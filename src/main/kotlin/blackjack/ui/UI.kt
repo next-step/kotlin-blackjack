@@ -3,6 +3,7 @@ package blackjack.ui
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.WinningResult
 
 object UI {
 
@@ -29,20 +30,20 @@ object UI {
         println("## 최종 승패")
     }
 
-    fun drawRecord(player: Player) {
-        var recordString = ""
-
-        when {
-            player.winningRecord.winCount == 1 -> recordString += "승 "
-            player.winningRecord.winCount > 1 -> recordString += "${player.winningRecord.winCount}승 "
+    fun drawRecord(result: WinningResult) {
+        val recordString = when (result.player) {
+            is Dealer -> {
+                "${result.winCount}승 ${result.loseCount}패 ${result.drawCount}무"
+            }
+            else -> when {
+                result.winCount == 1 -> "승"
+                result.loseCount == 1 -> "패"
+                result.drawCount == 1 -> "무"
+                else -> "무"
+            }
         }
 
-        when {
-            player.winningRecord.loseCount == 1 -> recordString += "패 "
-            player.winningRecord.loseCount > 1 -> recordString += "${player.winningRecord.loseCount}패 "
-        }
-
-        println("${player.name}: $recordString")
+        println("${result.player.name}: $recordString")
     }
 
     fun drawDivider() {

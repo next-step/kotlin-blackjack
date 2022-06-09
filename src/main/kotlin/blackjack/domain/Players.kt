@@ -6,4 +6,5 @@ class Players(val list: List<Player>) {
     }
 
     fun forEach(action: (Player) -> Unit) = list.forEach(action)
+    fun <T> map(mapper: (Player) -> T) = list.map(mapper)
 }

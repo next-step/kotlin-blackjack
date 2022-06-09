@@ -5,6 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
+import blackjack.domain.WinningDiscriminator
+import blackjack.domain.WinningResult
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
@@ -26,8 +28,8 @@ object CardGame {
 
         drawResult(dealer, players)
 
-        dealer.checkWinners(players)
-        drawRecord(dealer, players)
+        val results = WinningDiscriminator.discrimination(dealer, players)
+        drawRecord(results)
     }
 
     private fun drawResult(dealer: Dealer, players: Players) {
@@ -38,11 +40,10 @@ object CardGame {
         }
     }
 
-    private fun drawRecord(dealer: Dealer, players: Players) {
+    private fun drawRecord(results: List<WinningResult>) {
         UI.drawDivider()
         UI.drawRecordTitle()
-        UI.drawRecord(dealer)
-        players.forEach {
+        results.forEach {
             UI.drawRecord(it)
         }
     }
