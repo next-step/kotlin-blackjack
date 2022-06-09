@@ -1,6 +1,7 @@
 package domain.card
 
-import domain.player.WIN_SCORE
+import domain.player.Player.Companion.WIN_SCORE
+
 
 data class Card(val symbol: Symbol, val suit: Suit) {
 
@@ -24,7 +25,7 @@ data class Card(val symbol: Symbol, val suit: Suit) {
         ACE("A", 11);
 
         fun isAce(): Boolean = this == ACE
-        fun decideAceScore(score: Int): Int = if (score > WIN_SCORE) score - ACE_VALUE_GAP else score
+        fun reCalculateAce(score: Int): Int = if (score > WIN_SCORE) score - AMOUNT_TO_LOW else score
     }
 
     enum class Suit(val suitName: String) {
@@ -35,9 +36,9 @@ data class Card(val symbol: Symbol, val suit: Suit) {
     }
 
     companion object {
-        private const val ACE_VALUE_1 = 1
-        private const val ACE_VALUE_11 = 11
-        const val ACE_VALUE_GAP = ACE_VALUE_11 - ACE_VALUE_1
+        private const val ACE_VALUE_LOW = 1
+        private const val ACE_VALUE_HIGH = 11
+        const val AMOUNT_TO_LOW = ACE_VALUE_HIGH - ACE_VALUE_LOW
     }
 }
 

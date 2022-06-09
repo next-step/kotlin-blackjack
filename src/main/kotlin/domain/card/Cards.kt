@@ -13,22 +13,18 @@ class Cards(cards: List<Card>) {
         }
     }
 
-    fun remove(card: Card) {
-        cards.remove(card)
-    }
-
-    fun draw(): Card {
-        return cards.first()
-    }
-
     fun shuffle() {
         cards.shuffle()
     }
 
+    fun draw(): Card {
+        return cards.first().apply { cards.remove(this) }
+    }
+
     fun score(): Int {
-        var sum = cards.sumOf { card -> card.symbol.score }
+        val sum = cards.sumOf { card -> card.symbol.score }
         return cards.filter { card -> card.symbol.isAce() }
-            .fold(sum) { acc, aceCard -> aceCard.symbol.decideAceScore(acc) }
+            .fold(sum) { acc, aceCard -> aceCard.symbol.reCalculateAce(acc) }
     }
 
     operator fun get(index: Int): Card {

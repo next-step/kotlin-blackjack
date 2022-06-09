@@ -10,14 +10,15 @@ object InputView {
         return readln().split(PLAYER_NAME_DELIMITERS)
     }
 
-    fun askToDraw(name:String) : Boolean {
-        println("${name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return when(readln()){
+    fun askToDraw(player: Player): Boolean {
+        println("${player.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return when (readln()) {
             "y" -> true
             "n" -> false
-            else -> throw IllegalArgumentException()
+            else -> {
+                println("y나 n을 입력하십시오")
+                askToDraw(player)
+            }
         }
     }
-
-
 }

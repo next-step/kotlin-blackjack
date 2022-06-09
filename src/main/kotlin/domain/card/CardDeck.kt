@@ -1,21 +1,19 @@
 package domain.card
 
 class CardDeck {
-    lateinit var cards: Cards
+    private val cards: Cards = initDeck()
 
-    init {
+    fun draw(): Card {
+        return cards.draw()
+    }
+
+    private fun initDeck(): Cards {
+        val myCards = Cards(mutableListOf())
+
         Card.Suit.values().forEach { suit ->
-            Card.Symbol.values().forEach { symbol -> cards.add(Card(symbol, suit)) }
+            Card.Symbol.values().forEach { symbol -> myCards.add(Card(symbol, suit)) }
         }
-    }
-
-    fun drawCard(): Card {
-        return cards.draw().apply {
-            cards.remove(this)
-        }
-    }
-
-    fun shuffle(){
-        cards.shuffle()
+        myCards.shuffle()
+        return myCards
     }
 }
