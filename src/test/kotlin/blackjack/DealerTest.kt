@@ -14,13 +14,13 @@ class DealerTest : DescribeSpec({
     describe("canDraw") {
         context("카드의 점수 합이 16이하이면 ") {
             it("true 를 리턴한다.") {
-                val player = Dealer(PlayerCards(CardNumber.Num4, CardNumber.Jack))
+                val player = Dealer(PlayerCards(CardNumber.Num6, CardNumber.Num10))
                 player.canDraw() shouldBe true
             }
         }
         context("카드의 점수 합이 17이상이면 ") {
             it("false 를 리턴한다.") {
-                val player = Dealer(PlayerCards(CardNumber.Queen, CardNumber.King))
+                val player = Dealer(PlayerCards(CardNumber.Num7, CardNumber.Num10))
                 player.canDraw() shouldBe false
             }
         }
