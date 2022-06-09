@@ -180,8 +180,8 @@ class DealerTest : DescribeSpec({
             }
         }
 
-        context("딜러의 스코어가") {
-            it("플레이어의 스코어보다 높으면 승리한다") {
+        context("딜러가 BUST, BLACKJACK 이 아닐 때 ") {
+            it("플레이어도 버스트나 블랙잭이 아니면서 스코어가 높으면 승리한다") {
                 val dealer = Dealer(
                     cards = Cards(
                         listOf(
@@ -196,6 +196,54 @@ class DealerTest : DescribeSpec({
                     cards = Cards(
                         listOf(
                             Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                        )
+                    )
+                )
+
+                dealer.match(player) shouldBe Match.WIN
+            }
+
+            it("플레이어가 블랙잭이면 패배한다") {
+                val dealer = Dealer(
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
+                        )
+                    )
+                )
+
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, Ace()),
+                        )
+                    )
+                )
+
+                dealer.match(player) shouldBe Match.LOSE
+            }
+
+            it("플레이어가 버스트이면 승리한다") {
+                val dealer = Dealer(
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, Jack()),
+                        )
+                    )
+                )
+
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
                             Card(Suit.DIAMOND, NumberCard(9)),
                         )
                     )

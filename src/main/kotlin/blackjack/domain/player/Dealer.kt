@@ -33,7 +33,7 @@ class Dealer(
         return when (cardScore) {
             CardScore.BUST -> matchBust(other)
             CardScore.BLACKJACK -> matchBlackJack(other)
-            CardScore.NORMAL -> matchScore(other)
+            CardScore.NORMAL -> matchNormal(other)
         }
     }
 
@@ -53,9 +53,19 @@ class Dealer(
         }
     }
 
+    private fun matchNormal(other: Player): Match {
+        return when (other.cardScore) {
+            CardScore.BUST -> Match.WIN
+            CardScore.BLACKJACK -> Match.LOSE
+            CardScore.NORMAL -> matchScore(other)
+        }
+    }
+
     private fun matchScore(other: Player): Match {
         return if (score > other.score) {
             Match.WIN
+        } else if (score == other.score) {
+            Match.DRAW
         } else {
             Match.LOSE
         }
