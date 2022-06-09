@@ -10,11 +10,11 @@ object BlackJackGame {
     fun run() {
         val players = getPlayers()
 
-        offerInitialCards(players)
+        val servedInitialPlayers = offerInitialCards(players)
 
-        proceedGame(players)
+        val gameEndPlayers = proceedGame(servedInitialPlayers)
 
-        gameEnd(players)
+        gameEnd(gameEndPlayers)
     }
 
     private fun getPlayers(): List<Player> {
@@ -24,22 +24,28 @@ object BlackJackGame {
         return userNames.map { Player(it) }
     }
 
-    private fun offerInitialCards(players: List<Player>) {
-        PrintView.printOfferInitialCardsWithNames(players.map { it.name })
+    private fun offerInitialCards(players: List<Player>): List<Player> {
+        val servedInitialPlayers = List(players.size) { players[it] }
 
-        players.forEach { player ->
+        PrintView.printOfferInitialCardsWithNames(servedInitialPlayers.map { it.name })
+
+        servedInitialPlayers.forEach { player ->
             val servedCards = List(START_CARD_NUM) { Dealer.popOneCard() }
 
             PrintView.printHaveCardsWithName(player.name, servedCards)
 
             player.offer(Cards(servedCards))
         }
+
+        return servedInitialPlayers
     }
 
-    private fun proceedGame(players: List<Player>) {
+    private fun proceedGame(players: List<Player>): List<Player> {
+        val endPlayers = List(players.size) { players[it] }
         do {
-            val noCount = askPlayerGetNoCount(players)
+            val noCount = askPlayerGetNoCount(endPlayers)
         } while (noCount != players.size)
+        return endPlayers
     }
 
     private fun askPlayerGetNoCount(players: List<Player>): Int {
