@@ -104,9 +104,9 @@ internal class PlayRoomTest {
         // then
         assertAll(
             { assertThat(dealerRecord?.win).isEqualTo(0) },
-            { assertThat(dealerRecord?.lost).isEqualTo(bustPlayers.count()) },
+            { assertThat(dealerRecord?.lose).isEqualTo(bustPlayers.count()) },
             { assertThat(dealerRecord?.draw).isEqualTo(0) },
-            { assertThat(playerRecords.filter { it.win == 1 && it.lost == 0 && it.draw == 0 }).hasSize(bustPlayers.count()) }
+            { assertThat(playerRecords.filter { it.win == 1 && it.lose == 0 && it.draw == 0 }).hasSize(bustPlayers.count()) }
 
         )
     }
@@ -161,23 +161,23 @@ internal class PlayRoomTest {
         // then
         assertAll(
             { assertThat(dealerRecord?.win).isEqualTo(2) },
-            { assertThat(dealerRecord?.lost).isEqualTo(1) },
+            { assertThat(dealerRecord?.lose).isEqualTo(1) },
             { assertThat(dealerRecord?.draw).isEqualTo(1) },
 
             { assertThat(bustPlayerRecord?.win).isEqualTo(0) },
-            { assertThat(bustPlayerRecord?.lost).isEqualTo(1) },
+            { assertThat(bustPlayerRecord?.lose).isEqualTo(1) },
             { assertThat(bustPlayerRecord?.draw).isEqualTo(0) },
 
             { assertThat(loserRecord?.win).isEqualTo(0) },
-            { assertThat(loserRecord?.lost).isEqualTo(1) },
+            { assertThat(loserRecord?.lose).isEqualTo(1) },
             { assertThat(loserRecord?.draw).isEqualTo(0) },
 
             { assertThat(winnerRecord?.win).isEqualTo(1) },
-            { assertThat(winnerRecord?.lost).isEqualTo(0) },
+            { assertThat(winnerRecord?.lose).isEqualTo(0) },
             { assertThat(winnerRecord?.draw).isEqualTo(0) },
 
             { assertThat(drawRecord?.win).isEqualTo(0) },
-            { assertThat(drawRecord?.lost).isEqualTo(0) },
+            { assertThat(drawRecord?.lose).isEqualTo(0) },
             { assertThat(drawRecord?.draw).isEqualTo(1) }
         )
     }

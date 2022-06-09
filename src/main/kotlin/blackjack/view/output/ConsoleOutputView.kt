@@ -47,11 +47,11 @@ class ConsoleOutputView : OutputView {
         if (playerRecord.win != 0) {
             recordString.append("${playerRecord.win}승 ")
         }
-        if (playerRecord.lost != 0) {
-            recordString.append("${playerRecord.lost}패 ")
+        if (playerRecord.lose != 0) {
+            recordString.append("${playerRecord.lose}패 ")
         }
         if (playerRecord.draw != 0) {
-            recordString.append("${playerRecord.lost}무 ")
+            recordString.append("${playerRecord.lose}무 ")
         }
 
         println("${playerRecord.player.name} : $recordString")
@@ -61,7 +61,7 @@ class ConsoleOutputView : OutputView {
         print("${playerRecord.player.name} : ")
         when {
             playerRecord.win != 0 -> println("승")
-            playerRecord.lost != 0 -> println("패")
+            playerRecord.lose != 0 -> println("패")
             playerRecord.draw != 0 -> println("무")
         }
     }
