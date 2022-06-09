@@ -6,7 +6,7 @@ enum class UserAnswer(val answer: String) {
 
     companion object {
         fun isValidAnswer(input: String): Boolean {
-            return values().map { it.answer }.contains(input)
+            return values().find { it.answer == input } != null
         }
 
         fun getUserAnswer(input: String): UserAnswer {
