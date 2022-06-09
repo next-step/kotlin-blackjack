@@ -52,10 +52,10 @@
 
 ### todo list 4
 - [x] 더이상 사용하지 않는 운영코드 제거 (ResultCalculatorTest)
-- [ ] Cards 테스트 추가
+- [x] Cards 테스트 추가
 - [ ] UserAction 테스트 추가
 - [ ] validAnswer 판단로직 간소화
 - [ ] getAllPossibleResults 를 프로퍼티로 처리가능한지?
 - [ ] 마지막인덱스를 비교할지, 사이즈를 비교할지 선택
 - [ ] 카드합계 테스트의 테스트케이스 추가
-- [ ] 지난리뷰의 테스트코드 반영
+- [ ] 지난리뷰의 테스트코드 반
