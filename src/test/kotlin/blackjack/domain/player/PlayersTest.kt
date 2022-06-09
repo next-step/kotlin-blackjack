@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.blackjack.BlackJack
-import blackjack.domain.card.Deck
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
@@ -13,7 +12,7 @@ class PlayersTest : DescribeSpec({
         it("각 플레이어에게 카드를 두장 씩 나누어준다") {
             val players = listOf(Player("yohan"), Player("pang"))
 
-            Players(players).addTwoCard(Deck.default())
+            Players(players).addTwoCard(Dealer())
 
             players.forAll { it.cards.size shouldBe 2 }
         }

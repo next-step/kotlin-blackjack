@@ -1,7 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Deck
-
 class Players(val players: List<Player>) {
 
     init {
@@ -10,9 +8,9 @@ class Players(val players: List<Player>) {
         }
     }
 
-    fun addTwoCard(deck: Deck) {
+    fun addTwoCard(dealer: Dealer) {
         players.forEach { player ->
-            repeat(2) { player.addCard(deck.draw()) }
+            repeat(2) { dealer.giveCard(player) }
         }
     }
 
