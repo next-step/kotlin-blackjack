@@ -1,21 +1,26 @@
 package blackjack.domain.card
 
 class CardDeck {
-    private val _cards: MutableList<Card>
-
-    val cards
-        get() = _cards.toList()
+    private val cards: MutableList<Card>
 
     init {
-        _cards = CardSuit.values()
+        cards = CardSuit.values()
             .map { makeCard(it) }
             .flatten()
             .toMutableList()
     }
 
+    fun getCurrentCardSize(): Int {
+        return cards.size
+    }
+
+    fun isContains(card: Card): Boolean {
+        return cards.contains(card)
+    }
+
     fun pickCard(): Card {
-        val randomIndex = (0 until _cards.size).random()
-        return _cards.removeAt(randomIndex)
+        val randomIndex = (0 until cards.size).random()
+        return cards.removeAt(randomIndex)
     }
 
     private fun makeCard(cardSuit: CardSuit): List<Card> {

@@ -1,36 +1,46 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardType
+import blackjack.domain.card.Card.AceCard
+import blackjack.domain.game.TakeMorePlayerStrategy
 
-data class Player(
+open class Player(
     private val _name: String,
-    val receivedCards: MutableSet<Card> = mutableSetOf(),
-    private var _score: Int = 0
+    val takeMorePlayerStrategy: TakeMorePlayerStrategy,
+    val receivedCards: MutableSet<Card> = mutableSetOf()
 ) {
 
+    var isWinner: Boolean = false
+
     val score: Int
-        get() = _score
+        get() = calculateScore()
 
     val name: String
         get() = _name
 
     fun calculateScore(): Int {
-        _score = receivedCards.sumOf { it.number }
+        var score = receivedCards.sumOf { it.number }
 
-        if (_score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards.count {
-                it.cardType == CardType.ACE
-            }
+        if (score > BLACKJACK_SCORE) {
+            val aceCount = receivedCards
+                .count { it is AceCard }
 
-            _score = _score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
+            score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
         }
 
-        return _score
+        return score
     }
 
     fun canMoreGame(): Boolean {
-        return _score != BLACKJACK_SCORE && _score < BLACKJACK_SCORE
+        return calculateScore() < BLACKJACK_SCORE
+    }
+
+    fun addCard(card: Card) {
+        receivedCards.add(card)
+    }
+
+    fun wantToTake(): Boolean {
+        return takeMorePlayerStrategy.wantToTake(this)
     }
 
     companion object {

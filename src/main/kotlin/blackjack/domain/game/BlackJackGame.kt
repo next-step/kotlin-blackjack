@@ -1,62 +1,78 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.view.ResultView
+import blackjack.domain.player.Players
 
 class BlackJackGame(
-    cardDeck: CardDeck,
-    players: List<Player>,
-    private val takeMore: TakeMoreStrategy,
-    private val resultView: ResultView
+    private var cardDeck: CardDeck,
+    private var _playerList: Players
 ) {
-    private var cardDeck: CardDeck
-    private var _players: List<Player>
 
     val players: List<Player>
-        get() = _players
+        get() = _playerList.players
 
     init {
-        this.cardDeck = cardDeck
-
-        players.map {
-            it.receivedCards.add(cardDeck.pickCard())
-            it.receivedCards.add(cardDeck.pickCard())
-        }
-
-        _players = players
-        resultView.printInitDistributed(_players)
+        _playerList.players
+            .map {
+                it.receivedCards.add(cardDeck.pickCard())
+                it.receivedCards.add(cardDeck.pickCard())
+            }
     }
 
-    fun start() {
-        calculateScore()
-        moreGames()
-    }
+    fun playDealer() {
+        val dealer = _playerList.players
+            .filterIsInstance<Dealer>()
+            .first()
 
-    private fun calculateScore() {
-        _players.map { calculateScoreByPlayer(it) }
-    }
-
-    private fun calculateScoreByPlayer(player: Player) {
-        player.calculateScore()
-    }
-
-    private fun moreGames() {
-        _players.filter { it.canMoreGame() }
-            .map { moreGamesByPlayer(it) }
-
-        resultView.printCardsByPlayers(_players, true)
-    }
-
-    private fun moreGamesByPlayer(player: Player) {
-        while (player.canMoreGame() && takeMore.wantToTake(player)) {
-            pickCardByPlayer(player)
-            calculateScoreByPlayer(player)
-            resultView.printCardsByPlayer(player, false)
+        while (dealer.canBeTakeOneCard()) {
+            dealer.addCard(cardDeck.pickCard())
         }
     }
 
-    private fun pickCardByPlayer(player: Player) {
-        player.receivedCards.add(cardDeck.pickCard())
+    fun calculateWinner() {
+        val dealer = _playerList.players
+            .filterIsInstance<Dealer>()
+            .first()
+
+        val players = _playerList.players
+            .filter { it !is Dealer }
+
+        players.forEach {
+            judge(it, dealer)
+        }
+    }
+
+    private fun judge(player: Player, dealer: Dealer) {
+        if (checkPlayerWin(player, dealer)) {
+            player.isWinner = true
+            dealer.lose++
+        }
+
+        if (checkDealerWin(player, dealer)) {
+            player.isWinner = false
+            dealer.win++
+        }
+    }
+
+    private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {
+        if (player.score > BLACKJACK_SCORE) {
+            return false
+        }
+
+        return dealer.score > BLACKJACK_SCORE || player.score > dealer.score || player.score == BLACKJACK_SCORE
+    }
+
+    private fun checkDealerWin(player: Player, dealer: Dealer): Boolean {
+        if (dealer.score > BLACKJACK_SCORE) {
+            return false
+        }
+
+        return player.score > BLACKJACK_SCORE || player.score < dealer.score || dealer.score == BLACKJACK_SCORE
+    }
+
+    companion object {
+        private const val BLACKJACK_SCORE = 21
     }
 }

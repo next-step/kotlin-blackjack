@@ -2,37 +2,37 @@ package blackjack.domain.card
 
 sealed interface Card {
     val cardSuit: CardSuit
-    val cardType: CardType
-    val number: Int
+    val description: String
+    var number: Int
 
     data class BasicCard(
         override val cardSuit: CardSuit,
-        override val cardType: CardType = CardType.BASIC,
-        override val number: Int
+        override val description: String = buildString { append(number).append(cardSuit.description) },
+        override var number: Int = 0
     ) : Card
 
     data class AceCard(
         override val cardSuit: CardSuit,
-        override val cardType: CardType = CardType.ACE,
-        override val number: Int = 11
+        override val description: String = buildString { append("A").append(cardSuit.description) },
+        override var number: Int = 11
     ) : Card
 
     data class JackCard(
         override val cardSuit: CardSuit,
-        override val cardType: CardType = CardType.JACK,
-        override val number: Int = 10
+        override val description: String = buildString { append("J").append(cardSuit.description) },
+        override var number: Int = 10
     ) : Card
 
     data class QueenCard(
         override val cardSuit: CardSuit,
-        override val cardType: CardType = CardType.QUEEN,
-        override val number: Int = 10
+        override val description: String = buildString { append("Q").append(cardSuit.description) },
+        override var number: Int = 10
     ) : Card
 
     data class KingCard(
         override val cardSuit: CardSuit,
-        override val cardType: CardType = CardType.KING,
-        override val number: Int = 10
+        override val description: String = buildString { append("K").append(cardSuit.description) },
+        override var number: Int = 10
     ) : Card
 
     companion object {
