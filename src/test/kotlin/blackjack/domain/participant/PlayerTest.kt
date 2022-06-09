@@ -1,11 +1,11 @@
 package blackjack.domain.participant
 
-import blackjack.domain.CLUB_KING
-import blackjack.domain.DIAMOND_ACE
-import blackjack.domain.HEART_SIX
-import blackjack.domain.HEART_TWO
-import blackjack.domain.SPADE_FIVE
-import blackjack.domain.SPADE_TEN
+import blackjack.CardFixtures.CLUB_KING
+import blackjack.CardFixtures.DIAMOND_ACE
+import blackjack.CardFixtures.HEART_SIX
+import blackjack.CardFixtures.HEART_TWO
+import blackjack.CardFixtures.SPADE_FIVE
+import blackjack.CardFixtures.SPADE_TEN
 import blackjack.domain.card.Card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest

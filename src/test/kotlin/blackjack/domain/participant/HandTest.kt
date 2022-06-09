@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
-import blackjack.domain.CLUB_KING
-import blackjack.domain.DIAMOND_ACE
-import blackjack.domain.SPADE_TEN
+import blackjack.CardFixtures.CLUB_KING
+import blackjack.CardFixtures.DIAMOND_ACE
+import blackjack.CardFixtures.SPADE_TEN
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
