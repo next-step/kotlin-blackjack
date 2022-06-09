@@ -17,7 +17,12 @@ class BlackJackGame(
     private val dealer = playerProvider.createDealer()
 
     fun run() {
-        val playRoom = PlayRoom(cardDistributor, dealer, players, Config.INITIAL_CARD_COUNT_OF_PLAYER)
+        val playRoom = PlayRoom(
+            cardDistributor = cardDistributor,
+            dealer = dealer,
+            guests = players,
+            initialCardCountOfPlayer = Config.INITIAL_CARD_COUNT_OF_PLAYER
+        )
         playRoom.startNewGame()
         outputView?.printInitialMessage(playRoom)
         val records = playRoom.playGame { player ->
