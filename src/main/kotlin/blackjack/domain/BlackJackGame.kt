@@ -28,9 +28,9 @@ data class BlackJackGame(
     }
 
     companion object {
-        fun of(playerNames: List<String>, deck: Deck): BlackJackGame {
+        fun of(players: List<Participant>, deck: Deck): BlackJackGame {
             return BlackJackGame(
-                playerNames.map { Participant(it) }, deck
+                players, deck
             )
         }
 

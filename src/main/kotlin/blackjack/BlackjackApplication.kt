@@ -27,14 +27,14 @@ class BlackjackApplication {
     }
 
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {
-        var isNeed = InputView.needMoreCard(participant)
+        var isHit = InputView.needMoreCard(participant)
         do {
-            if (isNeed) {
+            if (isHit) {
                 blackJackGame.drawTo(participant.name)
                 GameView.displayPlayerCard(participant)
-                isNeed = InputView.needMoreCard(participant)
+                isHit = InputView.needMoreCard(participant)
             }
-        } while (isNeed)
+        } while (isHit)
     }
 
     private fun drawDealerCard(blackJackGame: BlackJackGame) {

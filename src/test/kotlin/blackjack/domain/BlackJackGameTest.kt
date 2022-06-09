@@ -8,7 +8,7 @@ class BlackJackGameTest {
     @Test
     fun `블랙잭 게임 카드분배 테스트`() {
         val deck = MockCardDeck(Card(Card.CardPattern.CLUBS, Card.Denomination.EIGHT))
-        val players = listOf("딜러", "jayce")
+        val players = listOf("딜러", "jayce").map { Participant(it) }
         val blackJackGame = BlackJackGame.of(players, deck)
         blackJackGame.firstCardDistribution()
 

@@ -2,7 +2,8 @@ package blackjack.domain
 
 data class Participant(
     val name: String,
-    val playerCards: Cards = Cards()
+    val playerCards: Cards = Cards(),
+    val isDealer: Boolean = false
 ) {
     val status: List<GameResult>
         get() = _status.toList()
