@@ -2,14 +2,12 @@ package blackjack.domain
 
 import kotlin.math.abs
 
-const val DEALER = "딜러"
-
 data class BlackJackGame(
     val players: List<Participant>,
     val cardDeck: Deck
 ) {
     private val playerMap = players.associate { it.name to it.playerCards }
-    private val dealer = players.first { it.isDealer }
+    val dealer = players.first { it.isDealer }
     val normalPlayer = players.filter { !it.isDealer }
     val dealerCards = dealer.playerCards
     private val dealerScore = dealerCards.score()
@@ -22,6 +20,10 @@ data class BlackJackGame(
 
     fun drawTo(playerName: String) {
         playerMap[playerName]!!.addCard(cardDeck.draw())
+    }
+
+    fun drawToDealer() {
+        dealer.addCard(cardDeck.draw())
     }
 
     fun getGameResult(): List<Participant> {

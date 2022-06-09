@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.DEALER
 import blackjack.domain.Participant
 import blackjack.exception.InvalidInputValueException
 
@@ -31,4 +30,5 @@ object InputView {
 
     private const val YES = "Y"
     private const val NO = "N"
+    private const val DEALER = "딜러"
 }

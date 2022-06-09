@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
-import blackjack.domain.DEALER
 import blackjack.domain.Participant
 import blackjack.view.GameView
 import blackjack.view.InputView
@@ -38,18 +37,14 @@ class BlackjackApplication {
     }
 
     private fun drawDealerCard(blackJackGame: BlackJackGame) {
-        var isDealerNeedCard = blackJackGame.dealerCards.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
+        var isHit = blackJackGame.dealerCards.isDealerHit()
         do {
-            if (isDealerNeedCard) {
-                blackJackGame.drawTo(DEALER)
+            if (isHit) {
+                blackJackGame.drawToDealer()
                 GameView.dealerDrawCard()
-                isDealerNeedCard = blackJackGame.dealerCards.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
+                isHit = blackJackGame.dealerCards.isDealerHit()
             }
-        } while (isDealerNeedCard)
-    }
-
-    companion object {
-        private const val SCORE_TO_REQUEST_A_CARD_FOR_DEALER = 16
+        } while (isHit)
     }
 }
 

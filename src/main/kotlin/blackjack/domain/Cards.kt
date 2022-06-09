@@ -20,6 +20,10 @@ class Cards(
         }
     }
 
+    fun isDealerHit(): Boolean {
+        return score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
+    }
+
     private fun List<Card>.hasAceCard(): Boolean {
         return this.map { it.denomination }.contains(Card.Denomination.ACE)
     }
@@ -34,5 +38,6 @@ class Cards(
 
     companion object {
         private const val BIG_VALUE_OF_ACE = 11
+        private const val SCORE_TO_REQUEST_A_CARD_FOR_DEALER = 16
     }
 }
