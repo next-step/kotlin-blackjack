@@ -5,8 +5,9 @@ import blackjack.domain.score.CardScore
 
 class Player(
     name: String,
+    cards: Cards = Cards.empty(),
     private var playerStatus: PlayerStatus? = null
-) : Participant(name, Cards.empty()) {
+) : Participant(name, cards) {
 
     override val isEnd
         get() = playerStatus == PlayerStatus.STAY || cardScore == CardScore.BUST
