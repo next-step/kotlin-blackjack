@@ -1,13 +1,12 @@
 package blackjack
 
-import blackjack.domain.game.Game
 import blackjack.view.InputView.inputPlayers
 import blackjack.view.ViewResolver
 
 fun main() {
-    val game = Game(
+    val gameController = GameController(
         players = inputPlayers(),
         viewResolver = ViewResolver()
     )
-    game.start()
+    gameController.start()
 }

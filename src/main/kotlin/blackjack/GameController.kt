@@ -1,16 +1,15 @@
-package blackjack.domain.game
+package blackjack
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardSuit
-import blackjack.domain.card.CardSymbol
+import blackjack.domain.game.Result
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Dealer.Companion.FIRST_DRAW_NUMBER
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.ParticipantStatus
 import blackjack.view.ViewResolver
 
-class Game(
+class GameController(
     private val players: List<Player>,
-    private val viewResolver: ViewResolver
+    private val viewResolver: ViewResolver,
 ) {
     private val dealer: Dealer = Dealer()
     private val result: Result = Result(dealer, players)
@@ -55,15 +54,6 @@ class Game(
             val card = dealer.drawOneCard()
             dealer.addCards(card)
             viewResolver.printDealerDrawOneCard()
-        }
-    }
-
-    companion object {
-        const val FIRST_DRAW_NUMBER = 2
-        val ALL_CARDS = CardSuit.values().flatMap { suit ->
-            CardSymbol.values().map { symbol ->
-                Card(suit, symbol)
-            }
         }
     }
 }

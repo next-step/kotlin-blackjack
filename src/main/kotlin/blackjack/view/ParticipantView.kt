@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.game.Game.Companion.FIRST_DRAW_NUMBER
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Dealer.Companion.FIRST_DRAW_NUMBER
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 

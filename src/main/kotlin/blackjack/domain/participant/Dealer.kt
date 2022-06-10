@@ -1,8 +1,9 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardSuit
+import blackjack.domain.card.CardSymbol
 import blackjack.domain.game.Deck
-import blackjack.domain.game.Game
 
 class Dealer : Participant() {
     override val name = DEALER_NAME
@@ -29,7 +30,13 @@ class Dealer : Participant() {
     }
 
     companion object {
-        private val STANDARD_52_CARD_DECK: Deck = Deck(Game.ALL_CARDS)
+        val ALL_CARDS = CardSuit.values().flatMap { suit ->
+            CardSymbol.values().map { symbol ->
+                Card(suit, symbol)
+            }
+        }
+        const val FIRST_DRAW_NUMBER = 2
+        private val STANDARD_52_CARD_DECK: Deck = Deck(ALL_CARDS)
         private const val DEALER_DRAWABLE_SCORE_LIMIT = 16
         private const val DEALER_NAME = "딜러"
     }
