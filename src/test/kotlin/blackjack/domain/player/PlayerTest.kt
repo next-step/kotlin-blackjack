@@ -56,8 +56,8 @@ class PlayerTest {
             "name",
             takeMorePlayer,
             mutableSetOf(
-                AceCard(cardSuit = CardSuit.CLUB, number = 1),
-                AceCard(cardSuit = CardSuit.SPADE, number = 1)
+                AceCard(cardSuit = CardSuit.CLUB),
+                AceCard(cardSuit = CardSuit.SPADE)
             )
         )
 
@@ -73,8 +73,8 @@ class PlayerTest {
             takeMorePlayer,
             mutableSetOf(
                 BasicCard(cardSuit = CardSuit.CLUB, number = 10),
-                AceCard(cardSuit = CardSuit.CLUB, number = 11),
-                AceCard(cardSuit = CardSuit.SPADE, number = 11)
+                AceCard(cardSuit = CardSuit.CLUB),
+                AceCard(cardSuit = CardSuit.SPADE)
             )
         )
 
@@ -90,7 +90,7 @@ class PlayerTest {
             takeMorePlayer,
             mutableSetOf(
                 BasicCard(cardSuit = CardSuit.CLUB, number = 10),
-                AceCard(cardSuit = CardSuit.SPADE, number = 11)
+                AceCard(cardSuit = CardSuit.SPADE)
             )
         )
 
