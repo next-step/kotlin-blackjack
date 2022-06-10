@@ -10,9 +10,8 @@ data class PlayerRecords(val playerRecordList: List<PlayerRecord>) : List<Player
 
             val guestRecords = guests.map { createGuestRecord(dealer.state, it) }
             val dealerRecord = createDealerRecord(dealer, guestRecords)
-            return PlayerRecords(
-                mutableListOf(dealerRecord).apply { this.addAll(guestRecords) }
-            )
+
+            return PlayerRecords(listOf(dealerRecord) + (guestRecords))
         }
 
         private fun createDealerRecord(dealer: Player.Dealer, guestRecords: List<PlayerRecord>): PlayerRecord {
