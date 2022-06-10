@@ -1,7 +1,7 @@
 package balckjac.domain
 
 class Player(
-    val name: Card,
+    val name: String,
     cards: List<Card> = emptyList()
 ) {
 
