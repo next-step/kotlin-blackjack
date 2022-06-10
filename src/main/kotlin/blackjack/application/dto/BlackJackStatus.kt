@@ -1,7 +1,7 @@
 package blackjack.application.dto
 
 import blackjack.domain.card.Card
-import blackjack.domain.player.vo.Name
+import blackjack.domain.participant.vo.Name
 
 data class BlackJackStatus(
     val name: Name,

@@ -1,40 +1,35 @@
 package blackjack.application
 
-import blackjack.application.dto.BlackJackResult
-import blackjack.application.dto.BlackJackRoundResult
-import blackjack.application.dto.BlackJackRoundResults
-import blackjack.application.dto.BlackjackResults
+import blackjack.application.dto.BlackJackScore
+import blackjack.application.dto.BlackJackWinningResult
+import blackjack.application.dto.BlackJackWinningResults
+import blackjack.application.dto.BlackjackScores
 import blackjack.application.dto.BlackJackStatus
 import blackjack.application.dto.BlackJackStatuses
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
-import blackjack.domain.player.vo.Name
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import blackjack.domain.participant.vo.Name
 
-private fun Dealer.getPlayerStatus(): BlackJackStatus = BlackJackStatus(this.name, listOf(this.cardsInHand.cards.first()))
+private fun Dealer.status(): BlackJackStatus = BlackJackStatus(this.name, listOf(this.cardsInHand.cards.first()))
 
-private fun Players.getPlayerStatuses(): List<BlackJackStatus> =
+private fun Players.statuses(): List<BlackJackStatus> =
     players.map { BlackJackStatus(it.name, it.cardsInHand.cards) }
 
-private fun Dealer.getPlayerResult(): BlackJackResult =
-    BlackJackResult(this.name, this.cardsInHand.cards, this.cardsInHand.calculateScore())
+private fun Dealer.score(): BlackJackScore =
+    BlackJackScore(this.name, this.cardsInHand.cards, this.cardsInHand.calculateScore())
 
-private fun Players.getPlayerResults(): List<BlackJackResult> {
-    return players.map { BlackJackResult(it.name, it.cardsInHand.cards, it.cardsInHand.calculateScore()) }
+private fun Players.scores(): List<BlackJackScore> {
+    return players.map { BlackJackScore(it.name, it.cardsInHand.cards, it.cardsInHand.calculateScore()) }
 }
 
-private fun Dealer.getRoundResult(players: List<Player>): BlackJackRoundResult =
-    BlackJackRoundResult(this.name, this.score(players))
+private fun Dealer.winningResult(): BlackJackWinningResult =
+    BlackJackWinningResult(this.name, this.winningScores)
 
-private fun Players.getRoundResults(dealer: Dealer): List<BlackJackRoundResult> {
-    val gamers = buildList {
-        addAll(players)
-        add(dealer)
-    }
-    return players.map { BlackJackRoundResult(it.name, it.score(gamers)) }
-}
+private fun Players.winningResults(): List<BlackJackWinningResult> =
+    players.map { BlackJackWinningResult(it.name, it.winningScores) }
 
 class BlackJack private constructor(
     private val dealer: Dealer,
@@ -44,31 +39,32 @@ class BlackJack private constructor(
     val statuses: BlackJackStatuses
         get() = BlackJackStatuses(
             buildList {
-                add(dealer.getPlayerStatus())
-                addAll(players.getPlayerStatuses())
+                add(dealer.status())
+                addAll(players.statuses())
             }
         )
 
-    val results: BlackjackResults
-        get() = BlackjackResults(
+    private val winningResults: BlackJackWinningResults
+        get() = BlackJackWinningResults(
             buildList {
-                add(dealer.getPlayerResult())
-                addAll(players.getPlayerResults())
+                add(dealer.winningResult())
+                addAll(players.winningResults())
             }
         )
-    val rounds: BlackJackRoundResults
-        get() = BlackJackRoundResults(
+
+    val scores: BlackjackScores
+        get() = BlackjackScores(
             buildList {
-                add(dealer.getRoundResult(players.players))
-                addAll(players.getRoundResults(dealer))
+                add(dealer.score())
+                addAll(players.scores())
             }
         )
 
-    val isPlayerAllStay: Boolean
-        get() = players.allStay
+    val hasMorePlayablePlayer: Boolean
+        get() = players.playable.isEmpty()
 
-    val isDealerStay: Boolean
-        get() = dealer.isStay()
+    val isDealerDrawMoreCard: Boolean
+        get() = dealer.isDealerDrawMoreCard
 
     val names: List<Name>
         get() = buildList {
@@ -76,16 +72,12 @@ class BlackJack private constructor(
             addAll(players.names)
         }
 
-    val dealerBust: Boolean
-        get() = dealer.isBust
+    val isDealerBust: Boolean
+        get() = dealer.participantInformation.isBust()
 
     fun ready() {
         dealer.ready(cardDeck)
         players.ready(cardDeck)
-        if (dealer.isBust) {
-            players.winToDealerBust()
-            return
-        }
     }
 
     fun play(player: Player): BlackJackStatus {
@@ -93,17 +85,30 @@ class BlackJack private constructor(
         return BlackJackStatus(player.name, player.cardsInHand.cards)
     }
 
-    fun playerHit(hit: (Player) -> Unit) {
-        players.hittable.forEach { hit(it) }
+    fun hitPlayers(hitAction: (Player) -> Unit) {
+        players.hit(hitAction)
     }
 
-    fun hitDealer(hitAfterAction: () -> Unit) {
+    fun hitDealer() {
         dealer.hit(cardDeck)
-        hitAfterAction()
-        if (dealer.isBust) {
-            dealer.loseToBust()
-            players.winToDealerBust()
+    }
+
+    fun winningResults(): BlackJackWinningResults {
+        if (isDealerBust) {
+            return dealerBustWinningResults()
         }
+
+        dealer.score(players.players)
+        players.score(dealer)
+
+        return winningResults
+    }
+
+    private fun dealerBustWinningResults(): BlackJackWinningResults {
+        dealer.loseToBust(players.notBustCount)
+        players.winToDealerBust()
+
+        return winningResults
     }
 
     companion object {

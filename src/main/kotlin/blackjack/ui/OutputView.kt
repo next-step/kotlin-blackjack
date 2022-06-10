@@ -1,11 +1,11 @@
 package blackjack.ui
 
-import blackjack.application.dto.BlackJackResult
-import blackjack.application.dto.BlackJackRoundResults
-import blackjack.application.dto.BlackjackResults
+import blackjack.application.dto.BlackJackScore
 import blackjack.application.dto.BlackJackStatus
 import blackjack.application.dto.BlackJackStatuses
-import blackjack.domain.player.vo.Name
+import blackjack.application.dto.BlackJackWinningResults
+import blackjack.application.dto.BlackjackScores
+import blackjack.domain.participant.vo.Name
 
 object OutputView {
     fun printGameReady(names: List<Name>) {
@@ -24,11 +24,12 @@ object OutputView {
         )
     }
 
-    fun printResults(blackjackResults: BlackjackResults) {
-        blackjackResults.results.forEach { printResult(it) }
+    fun printResults(blackjackScores: BlackjackScores) {
+        blackjackScores.scores.forEach { printResult(it) }
+        newline()
     }
 
-    private fun printResult(playerStatus: BlackJackResult) {
+    private fun printResult(playerStatus: BlackJackScore) {
         println(
             "${playerStatus.name.value}카드: " +
                 "${playerStatus.cards.joinToString { it.denomination.description + it.suit.description }} " +
@@ -36,8 +37,13 @@ object OutputView {
         )
     }
 
-    fun printBlackJackResult(blackJackRoundResults: BlackJackRoundResults) {
-        blackJackRoundResults.blackJackRoundResults.forEach { println("${it.name.value}카드: ${it.roundResults}") }
+    fun printBlackJackResult(blackJackWinningResults: BlackJackWinningResults) {
+        blackJackWinningResults.blackJackWinningResults.forEach {
+            println(
+                "${it.name.value}카드: ${it.winningScores.winCount} 승 " +
+                    "${it.winningScores.loseCount} 패 ${it.winningScores.drawCount} 무"
+            )
+        }
         newline()
     }
 
@@ -46,9 +52,14 @@ object OutputView {
         newline()
     }
 
-    fun printDealerBust(blackJackRoundResults: BlackJackRoundResults) {
-        println("딜러의 점수가 21점을 넘어 모든 플레이어가 승리했습니다.")
-        blackJackRoundResults.blackJackRoundResults.forEach { println("${it.name.value}카드: ${it.roundResults}") }
+    fun printDealerBust(blackJackWinningResults: BlackJackWinningResults) {
+        println("딜러의 점수가 21점을 넘어 남아있는 플레이어가 승리했습니다.")
+        blackJackWinningResults.blackJackWinningResults.forEach {
+            println(
+                "${it.name.value}카드: ${it.winningScores.winCount} 승 " +
+                    "${it.winningScores.loseCount} 패 ${it.winningScores.drawCount} 무"
+            )
+        }
         newline()
     }
 
