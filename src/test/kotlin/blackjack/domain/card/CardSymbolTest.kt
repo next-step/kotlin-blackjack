@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
-import blackjack.domain.game.Game.Companion.ACE_MAX_NUMBER
-import blackjack.domain.game.Game.Companion.ACE_MIN_NUMBER
+import blackjack.domain.card.CardSymbol.Companion.ACE_MAX_NUMBER
+import blackjack.domain.card.CardSymbol.Companion.ACE_MIN_NUMBER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
