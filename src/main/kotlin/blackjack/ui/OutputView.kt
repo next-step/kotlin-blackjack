@@ -6,6 +6,7 @@ import blackjack.application.dto.BlackJackStatuses
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.participant.vo.Name
+import blackjack.domain.participant.vo.WinningScore
 
 object OutputView {
     fun printGameReady(names: List<Name>) {
@@ -39,12 +40,20 @@ object OutputView {
 
     fun printBlackJackResult(blackJackWinningResults: BlackJackWinningResults) {
         blackJackWinningResults.blackJackWinningResults.forEach {
-            println(
-                "${it.name.value}카드: ${it.winningScores.winCount} 승 " +
-                    "${it.winningScores.loseCount} 패 ${it.winningScores.drawCount} 무"
-            )
+            val winningScoreString =
+                WinningScore.values()
+                    .joinToString(" ") { winningScore -> winningScoreFormat(it.winningScores.values, winningScore) }
+
+            println("${it.name.value}카드: $winningScoreString")
         }
         newline()
+    }
+
+    private fun winningScoreFormat(values: List<WinningScore>, type: WinningScore): String {
+        if (values.count { it == type } > 0) {
+            return "${values.count { it == type }} ${type.description}"
+        }
+        return ""
     }
 
     fun printDealerHit() {
@@ -54,13 +63,7 @@ object OutputView {
 
     fun printDealerBust(blackJackWinningResults: BlackJackWinningResults) {
         println("딜러의 점수가 21점을 넘어 남아있는 플레이어가 승리했습니다.")
-        blackJackWinningResults.blackJackWinningResults.forEach {
-            println(
-                "${it.name.value}카드: ${it.winningScores.winCount} 승 " +
-                    "${it.winningScores.loseCount} 패 ${it.winningScores.drawCount} 무"
-            )
-        }
-        newline()
+        printBlackJackResult(blackJackWinningResults)
     }
 
     private fun newline(): Unit = println()

@@ -1,11 +1,11 @@
 package blackjack.application
 
 import blackjack.application.dto.BlackJackScore
+import blackjack.application.dto.BlackJackStatus
+import blackjack.application.dto.BlackJackStatuses
 import blackjack.application.dto.BlackJackWinningResult
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
-import blackjack.application.dto.BlackJackStatus
-import blackjack.application.dto.BlackJackStatuses
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
 import blackjack.domain.participant.Dealer
@@ -94,19 +94,8 @@ class BlackJack private constructor(
     }
 
     fun winningResults(): BlackJackWinningResults {
-        if (isDealerBust) {
-            return dealerBustWinningResults()
-        }
-
         dealer.score(players.players)
         players.score(dealer)
-
-        return winningResults
-    }
-
-    private fun dealerBustWinningResults(): BlackJackWinningResults {
-        dealer.loseToBust(players.notBustCount)
-        players.winToDealerBust()
 
         return winningResults
     }

@@ -18,7 +18,8 @@ abstract class Participant(
 
     val cardsInHand: CardsInHand
 
-    var winningScores: WinningScores
+    var winningScores = WinningScores(emptyList())
+        protected set
 
     val name: Name
         get() = participantInformation.name
@@ -29,7 +30,6 @@ abstract class Participant(
     init {
         this.participantInformation = participantInformation
         this.cardsInHand = CardsInHand()
-        this.winningScores = WinningScores()
     }
 
     open fun ready(cardDeck: CardDeck) = repeat(READY_CARD_COUNT) { cardsInHand.add(cardDeck.draw()) }
@@ -48,12 +48,12 @@ abstract class Participant(
         participantInformation = participantInformation.changeStatus(score)
     }
 
-    fun score(participants: List<Participant>) = participants.filterNot { it === this }
-        .forEach {
-            winningScores = when {
-                participantInformation.isBust() -> winningScores.add(WinningScore.LOSE)
-                it.participantInformation.isBust() -> winningScores.add(WinningScore.WIN)
-                else -> winningScores.add(WinningScore.valueOf(score.compareTo(it.score)))
-            }
+    fun score(participants: List<Participant>) = participants.map {
+        when {
+            participantInformation.isBust() -> WinningScore.LOSE
+            it.participantInformation.isBust() ->WinningScore.WIN
+            else -> WinningScore.valueOf(score.compareTo(it.score))
         }
+    }.let { winningScores = WinningScores(it) }
+
 }

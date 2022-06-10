@@ -1,22 +1,13 @@
 package blackjack.domain.participant.vo
 
 data class WinningScores(
-    val winCount: Int = 0,
-    val loseCount: Int = 0,
-    val drawCount: Int = 0
-) {
-    fun add(winningScore: WinningScore): WinningScores = when(winningScore) {
-        WinningScore.WIN -> this.copy(winCount = winCount.inc())
-        WinningScore.LOSE -> this.copy(loseCount = loseCount.inc())
-        WinningScore.DRAW -> this.copy(drawCount = drawCount.inc())
-    }
-}
+    val values: List<WinningScore>
+)
 
-
-enum class WinningScore(val value: Int) {
-    WIN(1),
-    LOSE(-1),
-    DRAW(0);
+enum class WinningScore(val value: Int, val description: String) {
+    WIN(1, "승"),
+    LOSE(-1, "패"),
+    DRAW(0, "무");
 
     companion object {
         fun valueOf(value: Int): WinningScore = when(value) {

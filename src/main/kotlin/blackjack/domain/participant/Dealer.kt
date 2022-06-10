@@ -1,13 +1,13 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Score
-import blackjack.domain.WinningScore
 import blackjack.domain.card.CardDeck
 import blackjack.domain.participant.type.Status
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
 
 class Dealer : Participant(ParticipantInformation(Name.dealer(), Status.PLAY)) {
+
     val isDealerDrawMoreCard: Boolean
         get() = score <= DEALER_SCORE
 
@@ -29,12 +29,6 @@ class Dealer : Participant(ParticipantInformation(Name.dealer(), Status.PLAY)) {
             return
         }
         participantInformation = participantInformation.changeStatus(cardsInHand.calculateScore())
-    }
-
-    fun loseToBust(playablePlayerCount: Int) {
-        if (participantInformation.isBust()) {
-            repeat(playablePlayerCount) { winningScores = winningScores.add(WinningScore.LOSE) }
-        }
     }
 
     companion object {
