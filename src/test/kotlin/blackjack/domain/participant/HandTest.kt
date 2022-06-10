@@ -1,9 +1,8 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardSuit
-import blackjack.domain.card.CardSymbol
-import blackjack.domain.player.Hand
+import blackjack.CardFixtures.CLUB_KING
+import blackjack.CardFixtures.DIAMOND_ACE
+import blackjack.CardFixtures.SPADE_TEN
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -37,11 +36,5 @@ internal class HandTest {
 
         // then
         assertThat(score).isEqualTo(21)
-    }
-
-    companion object {
-        val DIAMOND_ACE = Card(CardSuit.DIAMOND, CardSymbol.ACE)
-        val CLUB_KING = Card(CardSuit.CLUB, CardSymbol.KING)
-        val SPADE_TEN = Card(CardSuit.SPADE, CardSymbol.TEN)
     }
 }

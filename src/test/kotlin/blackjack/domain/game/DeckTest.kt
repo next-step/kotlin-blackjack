@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.game.Game.Companion.ALL_CARDS
+import blackjack.domain.participant.Dealer.Companion.ALL_CARDS
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

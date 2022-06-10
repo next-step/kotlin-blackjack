@@ -1,39 +1,25 @@
 package blackjack.domain.card
 
-import blackjack.domain.game.Game.Companion.ACE_MAX_NUMBER
-import blackjack.domain.game.Game.Companion.ACE_MIN_NUMBER
+import blackjack.domain.card.CardSymbol.Companion.ACE_MAX_NUMBER
+import blackjack.domain.card.CardSymbol.Companion.ACE_MIN_NUMBER
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 internal class CardSymbolTest {
 
     @ParameterizedTest
-    @CsvSource(
-        // given
-        "TWO, 2",
-        "THREE, 3",
-        "FOUR, 4",
-        "FIVE, 5",
-        "SIX, 6",
-        "SEVEN, 7",
-        "EIGHT, 8",
-        "NINE, 9",
-        "TEN, 10",
-    )
-    fun `2~9 까지의 숫자의 값은 카드 숫자를 기본으로 한다`(symbol: CardSymbol, value: Int) {
+    @MethodSource("숫자 심볼을 가지는 카드들과 예상 값")
+    fun `숫자 심볼을 가지는 카드 값은 카드 숫자를 기본으로 한다`(symbol: CardSymbol, value: Int) {
         // when, then
         assertThat(symbol.count()).isEqualTo(value)
     }
 
     @ParameterizedTest
-    @CsvSource(
-        // given
-        "KING, 10",
-        "QUEEN, 10",
-        "JACK, 10",
-    )
+    @MethodSource("등급 심볼을 가지는 카드들과 예상 값")
     fun `King, Queen, Jack 의 값은 각각 10으로 계산한다`(symbol: CardSymbol, value: Int) {
         // when, then
         assertThat(symbol.count()).isEqualTo(value)
@@ -63,5 +49,29 @@ internal class CardSymbolTest {
     companion object {
         private const val NUMBER_OF_EXCEED_THRESHOLD_WITH_ACE = 11
         private const val NUMBER_OF_LEAST_THRESHOLD_WITH_ACE = 10
+
+        @JvmStatic
+        fun `숫자 심볼을 가지는 카드들과 예상 값`() = Stream.of(
+            Arguments.of(CardSymbol.TWO, 2),
+            Arguments.of(CardSymbol.THREE, 3),
+            Arguments.of(CardSymbol.FOUR, 4),
+            Arguments.of(CardSymbol.FIVE, 5),
+            Arguments.of(CardSymbol.SIX, 6),
+            Arguments.of(CardSymbol.SEVEN, 7),
+            Arguments.of(CardSymbol.EIGHT, 8),
+            Arguments.of(CardSymbol.NINE, 9),
+            Arguments.of(CardSymbol.TEN, 10)
+        )
+
+        @JvmStatic
+        fun `등급 심볼을 가지는 카드들과 예상 값`() = Stream.of(
+            Arguments.of(CardSymbol.KING, 10),
+            Arguments.of(CardSymbol.QUEEN, 10),
+            Arguments.of(CardSymbol.JACK, 10)
+        )
+
+
+
+
     }
 }

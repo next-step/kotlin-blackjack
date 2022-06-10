@@ -1,11 +1,14 @@
 package blackjack.view
 
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Player
 
 object InputView {
-    fun inputPlayers(): String {
+    fun inputPlayers(): List<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return requireNotNull(readlnOrNull())
+        val playerNames = requireNotNull(readlnOrNull())
+
+        require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
+        return playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
     }
 
     fun decidePlayerHitDecision(player: Player): Boolean {
@@ -16,4 +19,6 @@ object InputView {
             else -> throw IllegalArgumentException("잘못된 값을 입력했습니다. y 또는 n 으로 선택해주세요.")
         }
     }
+
+    private const val PLAYER_INPUT_DELIMITER = ","
 }

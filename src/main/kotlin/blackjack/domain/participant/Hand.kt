@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 
@@ -15,7 +15,7 @@ data class Hand(
 
     fun score(): Int {
         return _cards
-            .sortedBy { it.symbol }
+            .sortedBy { it.symbol.value }
             .fold(0) { acc, card -> acc + card.count(acc) }
     }
 

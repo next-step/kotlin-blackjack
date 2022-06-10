@@ -1,10 +1,17 @@
 package blackjack.view
 
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.game.Result
 
 object ResultView {
-    fun printResult(players: List<Player>) {
-        println()
-        players.forEach { player -> println("${PlayerView.parsePlayerInfoToString(player)} - 결과: ${player.score()}") }
+    fun printResult(dealer: Dealer, players: List<Player>, result: Result) {
+        println("\n${ParticipantView.parseParticipantInfoToString(dealer)} - 결과: ${dealer.score()}")
+        players.forEach { player -> println("${ParticipantView.parseParticipantInfoToString(player)} - 결과: ${player.score()}") }
+
+        println("\n## 최종 승패")
+        result.scoreByParticipant.forEach { (participant, score) ->
+            println("${participant.name}: ${score.win}승 ${score.lose}패")
+        }
     }
 }

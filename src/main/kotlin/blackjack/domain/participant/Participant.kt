@@ -1,18 +1,19 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 
-data class Player(
-    val name: String
-) {
+abstract class Participant {
+    abstract val name: String
     val hand: Hand = Hand()
-    var status: PlayerStatus = PlayerStatus.HIT
+    var status: ParticipantStatus = ParticipantStatus.HIT
         private set
+
+    abstract fun isDrawable(): Boolean
 
     fun addCards(vararg cards: Card) {
         cards.forEach { hand.add(it) }
         if (hand.isBust()) {
-            changeStatus(PlayerStatus.BUST)
+            changeStatus(ParticipantStatus.BUST)
         }
     }
 
@@ -20,7 +21,7 @@ data class Player(
         return hand.score()
     }
 
-    fun changeStatus(status: PlayerStatus) {
+    fun changeStatus(status: ParticipantStatus) {
         this.status = status
     }
 }
