@@ -3,7 +3,7 @@ package balckjac.domain
 import balckjac.domain.GameRule.TOTAL_CARD_COUNT
 
 class Deck(
-    cards: List<Card> = CARD_LIST
+    cards: Set<Card> = CARD_LIST
 ) {
     private val _cards = cards.toMutableList()
     val cards: List<Card> get() = _cards.toList()
@@ -25,10 +25,10 @@ class Deck(
     }
 
     companion object {
-        val CARD_LIST: List<Card> = Suit.values().map { character ->
+        val CARD_LIST: Set<Card> = Suit.values().map { character ->
             Denomination.values().map { number ->
                 Card(suit = character, denomination = number)
             }
-        }.flatten().shuffled()
+        }.flatten().shuffled().toSet()
     }
 }
