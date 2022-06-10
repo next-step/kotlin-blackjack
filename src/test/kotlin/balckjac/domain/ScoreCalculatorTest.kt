@@ -17,4 +17,11 @@ internal class ScoreCalculatorTest {
             )
         ).isEqualTo(18)
     }
+
+    @Test
+    fun `King, Queen, Jack은  10으로 계산한다`() {
+        assertThat(ScoreCalculator.calculate(listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.KING)))).isEqualTo(15)
+        assertThat(ScoreCalculator.calculate(listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.QUEEN)))).isEqualTo(15)
+        assertThat(ScoreCalculator.calculate(listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.JACK)))).isEqualTo(15)
+    }
 }
