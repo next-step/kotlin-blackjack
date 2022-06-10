@@ -9,7 +9,7 @@ internal class PlayerTest {
     fun `플레이어는 이름과 카드 정보를 갖는다`() {
         Player(
             name = "justin",
-            cards = listOf("justin")
+            cards = listOf(Card(Suit.SPADE, Denomination.ACE))
         )
     }
 
@@ -17,10 +17,10 @@ internal class PlayerTest {
     fun `플레이어는 카드 정보를 추가할 수 있다`() {
         val player = Player(
             name = "justin",
-            cards = listOf("card")
+            cards = listOf(Card(Suit.SPADE, Denomination.ACE))
         )
-        player.addCard(listOf("newCard"))
+        player.addCard(listOf(Card(Suit.SPADE, Denomination.ACE)))
 
-        assertThat(player.cards).contains("newCard")
+        assertThat(player.cards).contains(Card(Suit.SPADE, Denomination.ACE))
     }
 }

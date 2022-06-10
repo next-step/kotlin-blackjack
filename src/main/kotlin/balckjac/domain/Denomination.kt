@@ -14,6 +14,7 @@ enum class Denomination(
     SEVEN("7", 7, 0),
     EIGHT("8", 8, 0),
     NINE("9", 9, 0),
+    TEN("10", 10, 0),
     JACK("Jack", 10, 0),
     QUEEN("Queen", 10, 0),
     KING("King", 10, 0)

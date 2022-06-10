@@ -28,4 +28,11 @@ internal class DeckTest {
         deck.draw()
         assertThat(deck.cards.size).isEqualTo(51)
     }
+
+
+    @Test
+    fun `자동 생성되는 Deck 은 52개의 카드로 구성되어야 한다`() {
+        val deck = Deck()
+        assertThat(deck.cards.size).isEqualTo(52)
+    }
 }
