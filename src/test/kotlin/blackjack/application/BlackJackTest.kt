@@ -1,8 +1,8 @@
 package blackjack.application
 
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
-import blackjack.domain.player.vo.Name
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import blackjack.domain.participant.vo.Name
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -23,22 +23,19 @@ class BlackJackTest : StringSpec({
         }
     }
 
-    "블랙젝에 참가한 플레이어들의 현재 상태값을 전달 받을수 있다." {
-        val setupBlackJackStatus = blackJack().statuses
-        val playerStatuses = setupBlackJackStatus.statuses
+    "딜러가 카드를 뽑을수 있다." {
+        shouldNotThrow<Throwable> { blackJack().hitDealer() }
+    }
 
-        playerStatuses.size shouldBe 2
-
-        playerStatuses.forAll {
-            it.cards.size shouldBe 0
-        }
+    "최종 결과를 전달 받을수 있다." {
+        shouldNotThrow<Throwable> { blackJack().winningResults() }
     }
 
     "블랙젝에 참가한 플레이어들의 결과를 알수 있다." {
-        val setupBlackJackResults = blackJack().results
-        val playerResults = setupBlackJackResults.results
+        val setupBlackJackResults = blackJack().scores
+        val playerResults = setupBlackJackResults.scores
 
-        playerResults.size shouldBe 2
+        playerResults.size shouldBe 3
 
         playerResults.forAll {
             it.score.value shouldBe 0

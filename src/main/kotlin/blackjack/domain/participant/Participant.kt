@@ -32,7 +32,10 @@ abstract class Participant(
         this.cardsInHand = CardsInHand()
     }
 
-    open fun ready(cardDeck: CardDeck) = repeat(READY_CARD_COUNT) { cardsInHand.add(cardDeck.draw()) }
+    open fun ready(cardDeck: CardDeck) = repeat(READY_CARD_COUNT) {
+        cardsInHand.add(cardDeck.draw())
+        changeStatus()
+    }
 
     fun hit(cardDeck: CardDeck) {
         validateHitRules()
@@ -51,9 +54,8 @@ abstract class Participant(
     fun score(participants: List<Participant>) = participants.map {
         when {
             participantInformation.isBust() -> WinningScore.LOSE
-            it.participantInformation.isBust() ->WinningScore.WIN
+            it.participantInformation.isBust() -> WinningScore.WIN
             else -> WinningScore.valueOf(score.compareTo(it.score))
         }
     }.let { winningScores = WinningScores(it) }
-
 }

@@ -4,8 +4,6 @@ import blackjack.domain.Score
 import blackjack.domain.participant.type.Status
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
-import blackjack.domain.participant.vo.WinningScore
-import blackjack.domain.participant.vo.WinningScores
 
 class Player(
     participantInformation: ParticipantInformation
@@ -20,10 +18,6 @@ class Player(
 
     fun stay() {
         participantInformation = participantInformation.stay()
-    }
-
-    fun winToDealerBust() {
-        winningScores = WinningScores(listOf(WinningScore.WIN))
     }
 
     companion object {

@@ -59,5 +59,10 @@ class CardDeckTest : StringSpec({
             heart()
             club()
         }
+
+        fun sortedCardDeck(): CardDeck {
+            val cards = cardDeck().cards.sortedBy { card -> card.denomination }
+            return CardDeck(cards)
+        }
     }
 }
