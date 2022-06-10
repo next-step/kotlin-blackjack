@@ -22,6 +22,5 @@ internal class PlayerTest {
         player.addCard(listOf("newCard"))
 
         assertThat(player.cards).contains("newCard")
-
     }
 }

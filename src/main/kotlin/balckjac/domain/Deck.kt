@@ -2,7 +2,6 @@ package balckjac.domain
 
 import balckjac.domain.GameRule.TOTAL_CARD_COUNT
 
-
 class Deck(
     cards: List<Card> = CARD_LIST
 ) {
@@ -14,7 +13,6 @@ class Deck(
             "카드는 ${TOTAL_CARD_COUNT}으로 구성되어야 합니다."
         }
     }
-
 
     fun draw(): Card {
         require(cards.isNotEmpty()) {

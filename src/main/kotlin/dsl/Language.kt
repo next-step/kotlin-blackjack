@@ -7,11 +7,9 @@ class Languages(languages: List<Language> = emptyList()) {
     fun add(language: Language) {
         _languages.add(language)
     }
-
 }
 
 data class Language(
     val name: String,
     val level: Int
 )
-

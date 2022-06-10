@@ -48,6 +48,6 @@ internal class ScoreCalculatorTest {
 
     @Test
     fun `누적 점수 + Ace 합이 21을 넘지 않을 경우 Ace는 11로 계산한다`() {
-        assertThat(ScoreCalculator.calculate(listOf(Card(Suit.DIA, Denomination.KING),  Card(Suit.DIA, Denomination.ACE)))).isEqualTo(21)
+        assertThat(ScoreCalculator.calculate(listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.ACE)))).isEqualTo(21)
     }
 }
