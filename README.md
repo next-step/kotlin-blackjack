@@ -66,7 +66,7 @@ introduce {
 - [x] 플레이어 1급 콜렉션은 다수의 플레이어 정보를 갖는다.
 - [x] Denomination 은 카드 이름과 스코어를 갖는다.
 - [x] Suit 는 카드이름을 갖는다.
-- [ ] 카드는 suit, denomination 정보를 갖는다.
+- [x] 카드는 suit, denomination 정보를 갖는다.
 - [ ] 카드는 suit, denomination 을 조합하여 실제 카드 이름을 생성한다.
 - [ ] Deck 은 52개의 카드로 구성되어야 한다.
 - [ ] Deck 은 카드를 분배할 수 있으며 분배된 카드는 Deck 에서 제거된다.
