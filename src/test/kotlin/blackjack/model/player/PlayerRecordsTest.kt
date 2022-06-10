@@ -1,6 +1,7 @@
 package blackjack.model.player
 
 import blackjack.dummy.toCardSet
+import blackjack.model.CardDistributor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,7 +12,7 @@ internal class PlayerRecordsTest {
 
         // given
         val alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player) = true
+            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
         }
 
         val dealer = Player.Dealer("딜러").apply {

@@ -11,15 +11,13 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
     CardRecipient {
 
     class Guest(name: String, hitDecisionMaker: HitDecisionMaker) : Player(name, hitDecisionMaker)
-    class Dealer(name: String) : Player(name, DealerHitDecisionMaker())
+    class Dealer(name: String, hitDecisionMaker: HitDecisionMaker = DealerHitDecisionMaker) :
+        Player(name, hitDecisionMaker)
 
     private val cardList = mutableListOf<Card>()
 
     val state: State
         get() = State.of(this.cardList)
-
-    val canHit: Boolean
-        get() = (this.state is Running) && hitDecisionMaker.shouldHit(this)
 
     val cards: Cards
         get() = Cards(this.cardList.toList())
@@ -36,10 +34,17 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
     }
 
     fun hitWhileWants(cardDistributor: CardDistributor, onHitBlock: ((Player) -> Unit)? = null) {
-        while (this.canHit) {
+        while (this.canHit(cardDistributor)) {
             this.hit(cardDistributor)
             onHitBlock?.invoke(this)
         }
+    }
+
+    fun canHit(cardDistributor: CardDistributor): Boolean {
+        return (this.state is Running) && hitDecisionMaker.shouldHit(
+            player = this,
+            cardDistributor = cardDistributor
+        )
     }
 
     private fun hit(cardDistributor: CardDistributor) {

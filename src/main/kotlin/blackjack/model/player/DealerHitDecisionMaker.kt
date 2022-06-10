@@ -1,11 +1,13 @@
 package blackjack.model.player
 
-import blackjack.model.Config
+import blackjack.model.CardDistributor
 
-class DealerHitDecisionMaker : HitDecisionMaker {
-    override fun shouldHit(player: Player): Boolean {
+object DealerHitDecisionMaker : HitDecisionMaker {
+    override fun shouldHit(player: Player, cardDistributor: CardDistributor): Boolean {
         val cardCount = player.cardCount
         val score = player.state.finalScore
-        return (cardCount <= Config.INITIAL_CARD_COUNT_OF_PLAYER && score <= Config.MAX_SCORE_FOR_DEALER_CAN_HIT)
+        return (cardCount <= cardDistributor.initialCardCountForEachPlayer && score <= MAX_SCORE_FOR_DEALER_CAN_HIT)
     }
+
+    const val MAX_SCORE_FOR_DEALER_CAN_HIT = 16
 }

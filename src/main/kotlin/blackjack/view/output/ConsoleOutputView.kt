@@ -1,9 +1,9 @@
 package blackjack.view.output
 
-import blackjack.model.Config
 import blackjack.model.PlayRoom
 import blackjack.model.card.Card
 import blackjack.model.card.CardShape
+import blackjack.model.player.DealerHitDecisionMaker
 import blackjack.model.player.Player
 import blackjack.model.player.PlayerRecord
 import blackjack.model.player.PlayerRecords
@@ -13,14 +13,16 @@ class ConsoleOutputView : OutputView {
     override fun printInitialMessage(playRoom: PlayRoom) {
         val dealerName = playRoom.dealer.name
         val playerNames = playRoom.guests.joinToString(",") { it.name }
-        println("${dealerName}와 ${playerNames}에게 ${Config.INITIAL_CARD_COUNT_OF_PLAYER}장씩 카드를 나누었습니다.")
+        val initialCardCountForEachPlayer = playRoom.cardDistributor.initialCardCountForEachPlayer
+
+        println("${dealerName}와 ${playerNames}에게 ${initialCardCountForEachPlayer}장씩 카드를 나누었습니다.")
         this.printCardsOfPlayRoom(playRoom, isGameOver = false)
     }
 
     override fun onPlayerHit(player: Player) {
         when (player) {
             is Player.Guest -> printCardsOfGuest(player, isGameOver = false)
-            is Player.Dealer -> println("${player.name}는 ${Config.MAX_SCORE_FOR_DEALER_CAN_HIT}이하라 한장의 카드를 더 받았습니다.")
+            is Player.Dealer -> println("${player.name}는 ${DealerHitDecisionMaker.MAX_SCORE_FOR_DEALER_CAN_HIT}이하라 한장의 카드를 더 받았습니다.")
         }
     }
 

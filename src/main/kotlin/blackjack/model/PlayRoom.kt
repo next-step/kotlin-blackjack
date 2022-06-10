@@ -6,10 +6,9 @@ import blackjack.model.player.Players
 import blackjack.model.player.Players.Companion.toPlayers
 
 class PlayRoom(
-    private val cardDistributor: CardDistributor,
+    val cardDistributor: CardDistributor,
     val dealer: Player.Dealer,
-    val guests: Players,
-    private val initialCardCountOfPlayer: Int
+    val guests: Players
 ) {
 
     private val players: Players by lazy {
@@ -21,7 +20,7 @@ class PlayRoom(
     fun startNewGame() {
         this.cardDistributor.resetCardSet()
         this.players.clearCard()
-        this.cardDistributor.giveCardsTo(this.players, initialCardCountOfPlayer)
+        this.cardDistributor.giveInitialCardsTo(this.players)
     }
 
     fun playGame(onHitBlock: ((Player) -> Unit)? = null): PlayerRecords {

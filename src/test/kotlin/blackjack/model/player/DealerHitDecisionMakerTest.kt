@@ -1,13 +1,25 @@
 package blackjack.model.player
 
 import blackjack.dummy.toCardSet
+import blackjack.model.CardDistributor
+import blackjack.model.DefaultCardDistributor
 import blackjack.model.card.State
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
 internal class DealerHitDecisionMakerTest {
+
+    private lateinit var dealerHitDecisionMaker: DealerHitDecisionMaker
+    private lateinit var cardDistributor: CardDistributor
+
+    @BeforeEach
+    fun setUp() {
+        this.dealerHitDecisionMaker = DealerHitDecisionMaker
+        this.cardDistributor = DefaultCardDistributor()
+    }
 
     @ParameterizedTest
     @CsvSource(
@@ -20,17 +32,17 @@ internal class DealerHitDecisionMakerTest {
         val finalScore = State.of(cardSet).finalScore
 
         // given
-        val dealerHitDecisionMaker = DealerHitDecisionMaker()
+        val dealerHitDecisionMaker = this.dealerHitDecisionMaker
 
         // when
-        val player = Player.Guest("a", dealerHitDecisionMaker)
+        val player = Player.Dealer("a")
         cardSet.forEach { card -> player.addCard(card) }
 
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isTrue },
-            { assertThat(player.canHit).isTrue }
+            { assertThat(dealerHitDecisionMaker.shouldHit(player, this.cardDistributor)).isTrue },
+            { assertThat(player.canHit(this.cardDistributor)).isTrue }
         )
     }
 
@@ -46,17 +58,18 @@ internal class DealerHitDecisionMakerTest {
         val finalScore = State.of(cardSet).finalScore
 
         // given
-        val dealerHitDecisionMaker = DealerHitDecisionMaker()
+        val dealerHitDecisionMaker = this.dealerHitDecisionMaker
+        val cardDistributor = DefaultCardDistributor()
 
         // when
-        val player = Player.Guest("a", dealerHitDecisionMaker)
+        val player = Player.Dealer("a", dealerHitDecisionMaker)
         cardSet.forEach { card -> player.addCard(card) }
 
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
-            { assertThat(player.canHit).isFalse }
+            { assertThat(dealerHitDecisionMaker.shouldHit(player, cardDistributor)).isFalse },
+            { assertThat(player.canHit(cardDistributor)).isFalse }
         )
     }
 
@@ -71,17 +84,17 @@ internal class DealerHitDecisionMakerTest {
         val finalScore = State.of(cardSet).finalScore
 
         // given
-        val dealerHitDecisionMaker = DealerHitDecisionMaker()
+        val dealerHitDecisionMaker = this.dealerHitDecisionMaker
 
         // when
-        val player = Player.Guest("a", dealerHitDecisionMaker)
+        val player = Player.Dealer("a", dealerHitDecisionMaker)
         cardSet.forEach { card -> player.addCard(card) }
 
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
-            { assertThat(player.canHit).isFalse }
+            { assertThat(dealerHitDecisionMaker.shouldHit(player, cardDistributor)).isFalse },
+            { assertThat(player.canHit(cardDistributor)).isFalse }
         )
     }
 
@@ -96,17 +109,17 @@ internal class DealerHitDecisionMakerTest {
         val finalScore = State.of(cardSet).finalScore
 
         // given
-        val dealerHitDecisionMaker = DealerHitDecisionMaker()
+        val dealerHitDecisionMaker = this.dealerHitDecisionMaker
 
         // when
-        val player = Player.Guest("a", dealerHitDecisionMaker)
+        val player = Player.Dealer("a", dealerHitDecisionMaker)
         cardSet.forEach { card -> player.addCard(card) }
 
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
-            { assertThat(player.canHit).isFalse }
+            { assertThat(dealerHitDecisionMaker.shouldHit(player, cardDistributor)).isFalse },
+            { assertThat(player.canHit(cardDistributor)).isFalse }
         )
     }
 }

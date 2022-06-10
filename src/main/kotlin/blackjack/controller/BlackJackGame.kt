@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.model.CardDistributor
-import blackjack.model.Config
 import blackjack.model.DefaultCardDistributor
 import blackjack.model.PlayRoom
 import blackjack.model.player.PlayerProvider
@@ -20,8 +19,7 @@ class BlackJackGame(
         val playRoom = PlayRoom(
             cardDistributor = cardDistributor,
             dealer = dealer,
-            guests = players,
-            initialCardCountOfPlayer = Config.INITIAL_CARD_COUNT_OF_PLAYER
+            guests = players
         )
         playRoom.startNewGame()
         outputView?.printInitialMessage(playRoom)

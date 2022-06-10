@@ -1,6 +1,7 @@
 package blackjack.model.player
 
 import blackjack.model.CardDistributor
+import blackjack.model.DefaultCardDistributor
 import blackjack.model.card.Card
 import blackjack.model.card.CardShape
 import blackjack.model.card.Denomination
@@ -18,7 +19,7 @@ internal class PlayerTest {
     @BeforeEach
     fun setUp() {
         this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player) = true
+            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
         }
 
         this.sequentialCardDistributor = object : CardDistributor {
@@ -39,10 +40,10 @@ internal class PlayerTest {
         // given
         val cardAceClubs = Card.of(Denomination.ACE, CardShape.CLUBS)
         val scoreOfAce = 11
-
+        val cardDistributor = DefaultCardDistributor()
         // when
         val player = Player.Guest("aa", alwaysHitDecisionMaker)
-        if (player.canHit) {
+        if (player.canHit(cardDistributor)) {
             player.addCard(cardAceClubs)
         }
 
@@ -59,9 +60,10 @@ internal class PlayerTest {
     fun `player clear Card Test`() {
 
         // given
+        val cardDistributor = DefaultCardDistributor()
         val cardAceClubs = Card.of(Denomination.ACE, CardShape.CLUBS)
         val player = Player.Guest("aa", alwaysHitDecisionMaker)
-        if (player.canHit) {
+        if (player.canHit(cardDistributor)) {
             player.addCard(cardAceClubs)
         }
 

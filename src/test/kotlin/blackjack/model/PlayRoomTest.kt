@@ -23,13 +23,12 @@ internal class PlayRoomTest {
     @BeforeEach
     fun setUp() {
 
-        this.dealer = Player.Dealer("딜러")
         this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player) = true
+            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
         }
 
         this.alwaysStayDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player) = false
+            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = false
         }
 
         this.sequentialCardDistributor = object : CardDistributor {
@@ -42,6 +41,8 @@ internal class PlayRoomTest {
                 repeat(count) { recipient.addCard(Card.of(offset++)) }
             }
         }
+
+        this.dealer = Player.Dealer("딜러")
     }
 
     @Test
@@ -59,9 +60,8 @@ internal class PlayRoomTest {
         ).toPlayers()
             .onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 
-        val initialCardCountOfEachPlayer = 2
-        val playRoom = PlayRoom(cardDistributor, dealer, players, initialCardCountOfEachPlayer)
-
+        val playRoom = PlayRoom(cardDistributor, dealer, players)
+        val initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
         // when
         playRoom.startNewGame()
 
@@ -69,7 +69,7 @@ internal class PlayRoomTest {
         assertAll(
             {
                 assertThat(players.map { it.cardCount }.distinct())
-                    .containsOnly(initialCardCountOfEachPlayer)
+                    .containsOnly(initialCardCountForEachPlayer)
             },
             { assertThat(players[0].state).isEqualTo(State.Running(12)) },
             { assertThat(players[1].state).isEqualTo(State.Running(12)) },
@@ -95,8 +95,7 @@ internal class PlayRoomTest {
             cardForBust.forEach(this::addCard)
         }
 
-        val initialCardCountOfEachPlayer = 2
-        val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayers, initialCardCountOfEachPlayer)
+        val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayers)
 
         val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, lose = bustPlayers.count())
         // when
@@ -147,8 +146,7 @@ internal class PlayRoomTest {
         }
 
         val guests = listOf(bustPlayer, loser, winner, drawPlayer).toPlayers()
-        val initialCardCountOfEachPlayer = 2
-        val playRoom = PlayRoom(cardDistributor, dealer, guests, initialCardCountOfEachPlayer)
+        val playRoom = PlayRoom(cardDistributor, dealer, guests)
 
         // when
         val playerRecords = playRoom.playGame()
