@@ -7,7 +7,6 @@ sealed interface PlayerRecord {
 
     data class GuestWin(override val player: Player.Guest) : PlayerRecord
     data class GuestLose(override val player: Player.Guest) : PlayerRecord
-
     data class GuestDraw(override val player: Player.Guest) : PlayerRecord
 
     data class DealerRecord(
