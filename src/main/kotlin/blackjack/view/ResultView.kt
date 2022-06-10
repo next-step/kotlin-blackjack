@@ -1,6 +1,11 @@
 package blackjack.view
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Card.AceCard
+import blackjack.domain.card.Card.BasicCard
+import blackjack.domain.card.Card.JackCard
+import blackjack.domain.card.Card.KingCard
+import blackjack.domain.card.Card.QueenCard
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
@@ -40,7 +45,13 @@ class ResultView {
     }
 
     private fun extractCardDescription(card: Card): String {
-        return card.description
+        return when (card) {
+            is AceCard -> "A${card.cardSuit.description}"
+            is JackCard -> "J${card.cardSuit.description}"
+            is QueenCard -> "Q${card.cardSuit.description}"
+            is KingCard -> "K${card.cardSuit.description}"
+            is BasicCard -> "${card.number}${card.cardSuit.description}"
+        }
     }
 
     private fun convertWinOrLose(toConvert: Boolean): String {
