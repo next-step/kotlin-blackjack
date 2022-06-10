@@ -9,9 +9,11 @@ import blackjack.view.OutputView
  * Created by Jaesungchi on 2022.06.07..
  */
 object BlackjackController {
-    fun playGame() {
+    fun startGame() {
         val players = Users.of(InputView.getPlayersName())
         OutputView.printHandOutMessage(players)
         OutputView.printUsersCard(players)
+
+        // 카드 받는 부분.
     }
 }

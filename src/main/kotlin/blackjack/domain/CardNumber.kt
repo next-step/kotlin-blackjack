@@ -6,8 +6,8 @@ import kotlin.random.Random
  * 카드 숫자를 저장하는 클래스
  * Created by Jaesungchi on 2022.06.07..
  */
-enum class CardNumber(val title: String, val score: Int) {
-    ACE("A", 1),
+enum class CardNumber(val title: String, val lowScore: Int, val highScore: Int = lowScore) {
+    ACE("A", 1, 11),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
