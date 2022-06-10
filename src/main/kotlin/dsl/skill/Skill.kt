@@ -1,3 +1,6 @@
 package dsl.skill
 
-data class Skill(val skill: String)
+sealed class Skill
+
+data class Hard(val skill: String) : Skill()
+data class Soft(val skill: String) : Skill()

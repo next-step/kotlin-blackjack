@@ -5,11 +5,11 @@ class SkillsBuilder {
     private val hard: ArrayList<Skill> = ArrayList()
 
     fun soft(skill: String) {
-        soft.add(Skill(skill))
+        soft.add(Soft(skill))
     }
 
-    fun hard(value: String) {
-        hard.add(Skill(value))
+    fun hard(skill: String) {
+        hard.add(Hard(skill))
     }
 
     fun build(): Skills {
