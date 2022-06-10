@@ -19,6 +19,8 @@ object BlackjackController {
         players.users.forEach { user ->
             hitStage(user)
         }
+
+        OutputView.printResult(players)
     }
 
     private fun hitStage(user: User) {

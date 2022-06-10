@@ -10,6 +10,7 @@ import blackjack.domain.Users
  */
 object OutputView {
     fun printHandOutMessage(users: Users) {
+        println()
         println(Messages.HAND_OUT_CARD.format(users.users.joinToString(", ") { it.name }))
     }
 
@@ -17,6 +18,7 @@ object OutputView {
         users.users.forEach {
             printUserCard(it)
         }
+        println()
     }
 
     fun printUserCard(user: User) {
@@ -25,5 +27,16 @@ object OutputView {
 
     fun printMoreCard(user: User) {
         println(Messages.WANT_MORE_CARD.format(user.name))
+    }
+
+    fun printResult(users: Users) {
+        println()
+        users.users.forEach {
+            printCardAndScore(it)
+        }
+    }
+
+    private fun printCardAndScore(user: User) {
+        println(Messages.PRINT_CARDS_AND_SCORE.format(user.name, user.cards, user.cards.getScore()))
     }
 }

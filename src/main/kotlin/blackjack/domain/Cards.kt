@@ -13,16 +13,24 @@ class Cards {
         _cards.add(Card.take())
     }
 
-    fun getHighScore(): Int {
+    fun getScore(): Int {
+        return if (getHighScore() <= 21) {
+            getHighScore()
+        } else {
+            getLowScore()
+        }
+    }
+
+    private fun getHighScore(): Int {
         return _cards.sumOf { it.number.lowScore }
     }
 
-    fun getLowScore(): Int {
+    private fun getLowScore(): Int {
         return _cards.sumOf { it.number.highScore }
     }
 
     fun isOverScore(): Boolean {
-        return getLowScore() > 21
+        return getScore() > 21
     }
 
     override fun toString(): String {

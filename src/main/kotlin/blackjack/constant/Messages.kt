@@ -9,6 +9,7 @@ object Messages {
     const val HAND_OUT_CARD = "%s에게 2장의 카드를 나누었습니다."
     const val PRINT_HAVE_CARDS = "%s카드: "
     const val WANT_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+    const val PRINT_CARDS_AND_SCORE = "%s카드: %s - 결과: %s"
 }
 
 object ErrorMessages {
