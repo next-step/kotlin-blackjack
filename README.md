@@ -64,7 +64,7 @@ introduce {
 - [x] 플레이어는 이름과 카드 정보를 갖는다.
 - [x] 플레이어는 카드 정보를 추가할 수 있다.
 - [x] 플레이어 1급 콜렉션은 다수의 플레이어 정보를 갖는다.
-- [ ] Denomination 은 카드 이름과 스코어를 갖는다.
+- [x] Denomination 은 카드 이름과 스코어를 갖는다.
 - [ ] Suit 는 카드이름을 갖는다.
 - [ ] 카드는 suit, denomination 정보를 갖는다.
 - [ ] 카드는 suit, denomination 을 조합하여 실제 카드 이름을 생성한다.
