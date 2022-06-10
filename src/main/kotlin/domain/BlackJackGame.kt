@@ -6,15 +6,15 @@ import view.InputView.isYesOrNo
 
 object BlackJackGame {
 
-    fun initialIssue(): MutableList<Card> {
+    private fun initialIssue(): MutableList<Card> {
         return CardDeck.pop(2)
     }
 
-    fun issue(): MutableList<Card> {
+    private fun issue(): MutableList<Card> {
         return CardDeck.pop(1)
     }
 
-    fun execute(players: List<Player>) {
+    fun startGame(players: List<Player>) {
         displayCardDivide(players.joinToString { it.name }, "2")
         players.forEach {
             val cards = initialIssue()

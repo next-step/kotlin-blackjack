@@ -1,15 +1,15 @@
 package domain
 
-data class Card(val pattern: CardPattern, val score: CardValue) {
+data class Card(val suit: CardSuit, val denomination: CardDenomination) {
 
-    enum class CardPattern(val patternName: String) {
+    enum class CardSuit(val suitName: String) {
         SPADE("스페이드"),
         DIAMOND("다이아몬드"),
         HEART("하트"),
         CLUB("클로버");
     }
 
-    enum class CardValue(val valueName: String, val point: Int) {
+    enum class CardDenomination(val denominationName: String, val point: Int) {
         ACE("A", 1),
         TWO("2", 2),
         THREE("3", 3),
@@ -26,14 +26,14 @@ data class Card(val pattern: CardPattern, val score: CardValue) {
     }
 
     override fun toString(): String {
-        return "${pattern.patternName}${score.valueName}"
+        return "${suit.suitName}${denomination.denominationName}"
     }
 
     companion object {
         fun issueAllCards(): Set<Card> {
             return ArrayList<Card>().apply {
-                CardPattern.values().forEach { p ->
-                    this.addAll(CardValue.values().map { Card(p, it) })
+                CardSuit.values().forEach { p ->
+                    this.addAll(CardDenomination.values().map { Card(p, it) })
                 }
             }.shuffled().toHashSet()
         }

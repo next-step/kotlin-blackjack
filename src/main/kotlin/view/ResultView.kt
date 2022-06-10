@@ -9,7 +9,7 @@ object ResultView {
         players.forEach {
             displayHaveCard(it)
             print(" - ")
-            println("결과 : ${it.cardSum()}")
+            println("결과 : ${it.getSumOfCards()}")
         }
     }
 }

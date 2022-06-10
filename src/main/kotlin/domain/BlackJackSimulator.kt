@@ -1,11 +1,11 @@
 package domain
 
-import domain.BlackJackGame.execute
+import domain.BlackJackGame.startGame
 import view.InputView
 import view.ResultView
 
 fun main() {
     val players = InputView.getUserName()
-    execute(players)
+    startGame(players)
     ResultView.displayResult(players)
 }
