@@ -21,4 +21,11 @@ internal class DeckTest {
             Deck(cards = (0..53).toList().map { Card(Suit.DIA, Denomination.FIVE) })
         }
     }
+
+    @Test
+    fun `Deck 은 카드를 분배할 수 있으며 분배된 카드는 Deck 에서 제거된다`() {
+        val deck = Deck(cards = (0..51).toList().map { Card(Suit.DIA, Denomination.FIVE) })
+        deck.draw()
+        assertThat(deck.cards.size).isEqualTo(51)
+    }
 }
