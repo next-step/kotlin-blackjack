@@ -1,8 +1,8 @@
-package blackjack.interfaces
+package blackjack.domain.interfaces
 
-import blackjack.Card
-import blackjack.enums.CardPoint
-import blackjack.enums.CardShape
+import blackjack.domain.Card
+import blackjack.domain.enums.CardPoint
+import blackjack.domain.enums.CardShape
 
 class FixedCardFactory(private val shape: CardShape, private val point: CardPoint) : CardFactory {
     override fun create(): Card {

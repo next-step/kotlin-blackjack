@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.interfaces.CardFactory
+import blackjack.domain.interfaces.CardFactory
 
 class Dealer() {
     fun give(cardFactory: CardFactory): Card {

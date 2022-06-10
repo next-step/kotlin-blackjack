@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.enums.CardPoint
-import blackjack.enums.CardShape
+import blackjack.domain.enums.CardPoint
+import blackjack.domain.enums.CardShape
 
 class Card private constructor(val shape: CardShape, val point: CardPoint) {
     companion object {

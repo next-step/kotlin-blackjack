@@ -1,8 +1,8 @@
-package blackjack.enums
+package blackjack.domain.enums
 
 import kotlin.random.Random
 
-enum class CardPoint(name: String, point: Int) {
+enum class CardPoint(val cardName: String, val point: Int) {
     ONE("A", 1),
     TWO("2", 2),
     THREE("3", 3),

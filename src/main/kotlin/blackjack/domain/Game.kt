@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.interfaces.RandomCardFactory
+import blackjack.domain.interfaces.RandomCardFactory
 
 class Game() {
     fun enter(input: String): List<Player> {

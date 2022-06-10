@@ -1,8 +1,8 @@
-package blackjack.enums
+package blackjack.domain.enums
 
 import kotlin.random.Random
 
-enum class CardShape(name: String) {
+enum class CardShape(val shapeName: String) {
     HEART("하트"),
     CLOVER("클로버"),
     DIAMOND("다이아"),

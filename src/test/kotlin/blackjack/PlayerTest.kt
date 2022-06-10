@@ -1,8 +1,9 @@
 package blackjack
 
-import blackjack.enums.CardPoint
-import blackjack.enums.CardShape
-import blackjack.interfaces.FixedCardFactory
+import blackjack.domain.Player
+import blackjack.domain.enums.CardPoint
+import blackjack.domain.enums.CardShape
+import blackjack.domain.interfaces.FixedCardFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
