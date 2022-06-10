@@ -1,14 +1,14 @@
 package balckjac.domain
 
 class Player(
-    val name: String,
-    cards: List<String> = emptyList()
+    val name: Card,
+    cards: List<Card> = emptyList()
 ) {
 
     private val _cards = cards.toMutableList()
-    val cards: List<String> get() = _cards.toList()
+    val cards: List<Card> get() = _cards.toList()
 
-    fun addCard(newCards: List<String>) {
+    fun addCard(newCards: List<Card>) {
         _cards.addAll(newCards)
     }
 }
