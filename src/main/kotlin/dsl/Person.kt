@@ -1,6 +1,9 @@
 package dsl
 
+import dsl.skill.Skills
+
 data class Person(
     val name: String,
-    val company: String
+    val company: String,
+    val skills: Skills,
     )
