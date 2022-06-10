@@ -8,7 +8,7 @@ import blackjack.model.player.Player
 class BiasedHitMakerDecisionMaker(potentialWinnerName: String) :
     BiasedEnvironment(potentialWinnerName),
     HitDecisionMaker {
-    override fun doYouWantToHit(player: Player): Boolean {
+    override fun shouldHit(player: Player): Boolean {
         return (player.isPotentialWinner() && (player.state is Running))
     }
 }

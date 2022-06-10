@@ -19,7 +19,7 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
         get() = State.of(this.cardList)
 
     val canHit: Boolean
-        get() = (this.state is Running) && hitDecisionMaker.doYouWantToHit(this)
+        get() = (this.state is Running) && hitDecisionMaker.shouldHit(this)
 
     val cards: Cards
         get() = Cards(this.cardList.toList())

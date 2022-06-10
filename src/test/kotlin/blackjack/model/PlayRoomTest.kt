@@ -24,11 +24,11 @@ internal class PlayRoomTest {
 
         this.dealer = Player.Dealer("딜러")
         this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun doYouWantToHit(player: Player) = true
+            override fun shouldHit(player: Player) = true
         }
 
         this.alwaysStayDecisionMaker = object : HitDecisionMaker {
-            override fun doYouWantToHit(player: Player) = false
+            override fun shouldHit(player: Player) = false
         }
 
         this.sequentialCardDistributor = object : CardDistributor {

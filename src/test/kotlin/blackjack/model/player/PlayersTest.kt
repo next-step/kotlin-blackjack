@@ -17,7 +17,7 @@ internal class PlayersTest {
     @BeforeEach
     fun setUp() {
         this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun doYouWantToHit(player: Player) = true
+            override fun shouldHit(player: Player) = true
         }
 
         this.sequentialCardDistributor = object : CardDistributor {

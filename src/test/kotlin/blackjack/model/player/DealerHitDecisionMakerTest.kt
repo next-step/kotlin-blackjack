@@ -29,7 +29,7 @@ internal class DealerHitDecisionMakerTest {
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.doYouWantToHit(player)).isTrue },
+            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isTrue },
             { assertThat(player.canHit).isTrue }
         )
     }
@@ -55,7 +55,7 @@ internal class DealerHitDecisionMakerTest {
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.doYouWantToHit(player)).isFalse },
+            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
             { assertThat(player.canHit).isFalse }
         )
     }
@@ -80,7 +80,7 @@ internal class DealerHitDecisionMakerTest {
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.doYouWantToHit(player)).isFalse },
+            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
             { assertThat(player.canHit).isFalse }
         )
     }
@@ -105,7 +105,7 @@ internal class DealerHitDecisionMakerTest {
         // then
         assertAll(
             { assertThat(finalScore).isEqualTo(expectFinalScore) },
-            { assertThat(dealerHitDecisionMaker.doYouWantToHit(player)).isFalse },
+            { assertThat(dealerHitDecisionMaker.shouldHit(player)).isFalse },
             { assertThat(player.canHit).isFalse }
         )
     }
