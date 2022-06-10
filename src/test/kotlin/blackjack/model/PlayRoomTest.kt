@@ -6,6 +6,7 @@ import blackjack.model.card.State
 import blackjack.model.player.CardRecipient
 import blackjack.model.player.HitDecisionMaker
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerRecord
 import blackjack.model.player.Players.Companion.toPlayers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -97,16 +98,15 @@ internal class PlayRoomTest {
         val initialCardCountOfEachPlayer = 2
         val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayers, initialCardCountOfEachPlayer)
 
+        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, lose = bustPlayers.count())
         // when
         val playerRecords = playRoom.playGame()
         val dealerRecord = playerRecords.playerRecordList.find { it.player is Player.Dealer }
 
         // then
         assertAll(
-            { assertThat(dealerRecord?.win).isEqualTo(0) },
-            { assertThat(dealerRecord?.lose).isEqualTo(bustPlayers.count()) },
-            { assertThat(dealerRecord?.draw).isEqualTo(0) },
-            { assertThat(playerRecords.filter { it.win == 1 && it.lose == 0 && it.draw == 0 }).hasSize(bustPlayers.count()) }
+            { assertThat(dealerRecord).isEqualTo(expectedDealerRecord) },
+            { assertThat(playerRecords.filterIsInstance<PlayerRecord.GuestWin>()).hasSize(bustPlayers.count()) }
 
         )
     }
@@ -152,33 +152,20 @@ internal class PlayRoomTest {
 
         // when
         val playerRecords = playRoom.playGame()
-        val dealerRecord = playerRecords.playerRecordList.find { it.player === dealer }
+        val dealerRecord = playerRecords.playerRecordList.find { it is PlayerRecord.DealerRecord }
         val bustPlayerRecord = playerRecords.playerRecordList.find { it.player === bustPlayer }
         val loserRecord = playerRecords.playerRecordList.find { it.player === loser }
         val winnerRecord = playerRecords.playerRecordList.find { it.player === winner }
         val drawRecord = playerRecords.playerRecordList.find { it.player === drawPlayer }
 
+        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, win = 2, lose = 1, draw = 1)
         // then
         assertAll(
-            { assertThat(dealerRecord?.win).isEqualTo(2) },
-            { assertThat(dealerRecord?.lose).isEqualTo(1) },
-            { assertThat(dealerRecord?.draw).isEqualTo(1) },
-
-            { assertThat(bustPlayerRecord?.win).isEqualTo(0) },
-            { assertThat(bustPlayerRecord?.lose).isEqualTo(1) },
-            { assertThat(bustPlayerRecord?.draw).isEqualTo(0) },
-
-            { assertThat(loserRecord?.win).isEqualTo(0) },
-            { assertThat(loserRecord?.lose).isEqualTo(1) },
-            { assertThat(loserRecord?.draw).isEqualTo(0) },
-
-            { assertThat(winnerRecord?.win).isEqualTo(1) },
-            { assertThat(winnerRecord?.lose).isEqualTo(0) },
-            { assertThat(winnerRecord?.draw).isEqualTo(0) },
-
-            { assertThat(drawRecord?.win).isEqualTo(0) },
-            { assertThat(drawRecord?.lose).isEqualTo(0) },
-            { assertThat(drawRecord?.draw).isEqualTo(1) }
+            { assertThat(dealerRecord).isEqualTo(expectedDealerRecord) },
+            { assertThat(bustPlayerRecord).isInstanceOf(PlayerRecord.GuestLose::class.java) },
+            { assertThat(loserRecord).isInstanceOf(PlayerRecord.GuestLose::class.java) },
+            { assertThat(winnerRecord).isInstanceOf(PlayerRecord.GuestWin::class.java) },
+            { assertThat(drawRecord).isInstanceOf(PlayerRecord.GuestDraw::class.java) }
         )
     }
 }

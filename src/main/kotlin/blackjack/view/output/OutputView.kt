@@ -11,7 +11,7 @@ interface OutputView {
 
     fun printCardsOfPlayer(player: Player, isGameOver: Boolean = false)
 
-    fun printCardsOfPlayer(playRoom: PlayRoom, isGameOver: Boolean = false) {
+    fun printCardsOfPlayRoom(playRoom: PlayRoom, isGameOver: Boolean = false) {
         this.printCardsOfPlayer(playRoom.dealer, isGameOver)
         playRoom.guests.forEach { this.printCardsOfPlayer(it, isGameOver) }
     }

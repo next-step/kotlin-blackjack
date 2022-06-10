@@ -34,7 +34,7 @@ internal class PlayerRecordsTest {
         val playerRecords = PlayerRecords.of(dealer, guests)
 
         // then
-        val expectedDealerRecord = PlayerRecord(dealer, win = 1, lose = 2, draw = 0)
+        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0)
         assertThat(playerRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord)
     }
 }

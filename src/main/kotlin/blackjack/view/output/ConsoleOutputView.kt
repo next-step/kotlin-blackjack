@@ -14,65 +14,39 @@ class ConsoleOutputView : OutputView {
         val dealerName = playRoom.dealer.name
         val playerNames = playRoom.guests.joinToString(",") { it.name }
         println("${dealerName}와 ${playerNames}에게 ${Config.INITIAL_CARD_COUNT_OF_PLAYER}장씩 카드를 나누었습니다.")
-        this.printCardsOfPlayer(playRoom)
+        this.printCardsOfPlayRoom(playRoom, isGameOver = false)
     }
 
     override fun onPlayerHit(player: Player) {
         when (player) {
-            is Player.Guest -> printCardsOfGuest(player, false)
+            is Player.Guest -> printCardsOfGuest(player, isGameOver = false)
             is Player.Dealer -> println("${player.name}는 ${Config.MAX_SCORE_FOR_DEALER_CAN_HIT}이하라 한장의 카드를 더 받았습니다.")
         }
     }
 
     override fun printCardsOfPlayer(player: Player, isGameOver: Boolean) {
         when (player) {
-            is Player.Guest -> printCardsOfGuest(player, isGameOver)
+            is Player.Guest -> printCardsOfGuest(player, isGameOver = isGameOver)
             is Player.Dealer -> printCardsOfDealer(player, isGameOver = isGameOver)
         }
     }
 
     override fun printPlayerRecords(playerRecords: PlayerRecords) {
-        val dealerRecord = playerRecords.find { it.player is Player.Dealer } ?: return
-        val guestsRecord = playerRecords.filter { it.player is Player.Guest }
-
         println("## 최종 승패 ")
-        printDealerRecord(dealerRecord)
-        guestsRecord.forEach {
-            printGuestRecord(it)
-        }
+        playerRecords.forEach(this::printPlayerRecord)
     }
 
-    private fun printDealerRecord(playerRecord: PlayerRecord) {
-        val recordString = StringBuilder()
-        if (playerRecord.win != 0) {
-            recordString.append("${playerRecord.win}승 ")
-        }
-        if (playerRecord.lose != 0) {
-            recordString.append("${playerRecord.lose}패 ")
-        }
-        if (playerRecord.draw != 0) {
-            recordString.append("${playerRecord.lose}무 ")
-        }
-
-        println("${playerRecord.player.name} : $recordString")
-    }
-
-    private fun printGuestRecord(playerRecord: PlayerRecord) {
-        print("${playerRecord.player.name} : ")
-        when {
-            playerRecord.win != 0 -> println("승")
-            playerRecord.lose != 0 -> println("패")
-            playerRecord.draw != 0 -> println("무")
-        }
+    private fun printPlayerRecord(playerRecord: PlayerRecord) {
+        println("${playerRecord.player.name} :  ${playerRecord.toDisplayString()}")
     }
 
     private fun printCardsOfGuest(player: Player, isGameOver: Boolean) {
-        printAllCardsPlayer(player, withScore = isGameOver)
+        printAllCardsOfPlayer(player, withScore = isGameOver)
     }
 
-    private fun printCardsOfDealer(player: Player.Dealer, isGameOver: Boolean) {
+    private fun printCardsOfDealer(player: Player, isGameOver: Boolean) {
         if (isGameOver) {
-            printAllCardsPlayer(player, withScore = true)
+            printAllCardsOfPlayer(player, withScore = true)
             return
         }
 
@@ -83,7 +57,7 @@ class ConsoleOutputView : OutputView {
         println()
     }
 
-    private fun printAllCardsPlayer(player: Player, withScore: Boolean) {
+    private fun printAllCardsOfPlayer(player: Player, withScore: Boolean) {
         print("${player.name} 카드: ")
         print(player.cards.joinToString(", ") { it.displayName })
         if (withScore) {
@@ -103,5 +77,24 @@ class ConsoleOutputView : OutputView {
 
         val Card.displayName: String
             get() = "${denomination.displayName}${shape.displayName}"
+
+        private fun PlayerRecord.toDisplayString(): String = when (this) {
+            is PlayerRecord.GuestWin -> ("승")
+            is PlayerRecord.GuestLose -> ("패")
+            is PlayerRecord.GuestDraw -> ("무")
+            is PlayerRecord.DealerRecord -> {
+                val recordString = StringBuilder()
+                if (this.win != 0) {
+                    recordString.append("${this.win}승 ")
+                }
+                if (this.lose != 0) {
+                    recordString.append("${this.lose}패 ")
+                }
+                if (this.draw != 0) {
+                    recordString.append("${this.lose}무 ")
+                }
+                recordString.toString()
+            }
+        }
     }
 }
