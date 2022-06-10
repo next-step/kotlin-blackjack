@@ -22,7 +22,7 @@ class Cards {
     }
 
     fun isOverScore(): Boolean {
-        return getLowScore() >= 21
+        return getLowScore() > 21
     }
 
     override fun toString(): String {

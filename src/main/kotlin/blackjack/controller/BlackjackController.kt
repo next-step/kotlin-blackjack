@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.User
 import blackjack.domain.Users
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -15,5 +16,17 @@ object BlackjackController {
         OutputView.printUsersCard(players)
 
         // 카드 받는 부분.
+        players.users.forEach { user ->
+            hitStage(user)
+        }
+    }
+
+    private fun hitStage(user: User) {
+        while (!user.cards.isOverScore()) {
+            OutputView.printMoreCard(user)
+            if (!InputView.getYesOrNo()) return
+            user.cards.addCard()
+            OutputView.printUserCard(user)
+        }
     }
 }

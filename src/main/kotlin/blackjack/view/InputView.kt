@@ -14,4 +14,11 @@ object InputView {
         require(!input.isNullOrBlank()) { ErrorMessages.INPUT_IS_NULL_OR_BLANK }
         return input
     }
+
+    fun getYesOrNo(readStringValue: () -> String? = { readlnOrNull() }): Boolean {
+        val input = readStringValue()?.lowercase()
+        require(!input.isNullOrBlank()) { ErrorMessages.INPUT_IS_NULL_OR_BLANK }
+        require(input == "y" || input == "n") { ErrorMessages.INPUT_IS_NOT_YES_OR_NO }
+        return input == "y"
+    }
 }

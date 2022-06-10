@@ -22,4 +22,8 @@ object OutputView {
     fun printUserCard(user: User) {
         println(Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards)
     }
+
+    fun printMoreCard(user: User) {
+        println(Messages.WANT_MORE_CARD.format(user.name))
+    }
 }
