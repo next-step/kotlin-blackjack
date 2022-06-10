@@ -6,7 +6,6 @@ import blackjack.domain.game.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
-    val takeMorePlayerStrategy: TakeMorePlayerStrategy,
     val receivedCards: MutableSet<Card> = mutableSetOf()
 ) {
 
@@ -39,7 +38,7 @@ open class Player(
         receivedCards.add(card)
     }
 
-    fun wantToTake(): Boolean {
+    fun wantToTake(takeMorePlayerStrategy: TakeMorePlayerStrategy): Boolean {
         return takeMorePlayerStrategy.wantToTake(this)
     }
 

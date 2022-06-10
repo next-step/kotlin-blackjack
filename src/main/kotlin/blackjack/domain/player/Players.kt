@@ -1,13 +1,11 @@
 package blackjack.domain.player
 
-import blackjack.domain.game.TakeMorePlayerStrategy
-
-class Players(playerNames: List<String>, takeMore: TakeMorePlayerStrategy, dealer: Dealer) {
+class Players(playerNames: List<String>, dealer: Dealer) {
     val players: List<Player>
 
     init {
         players = playerNames
-            .map { Player(it, takeMore) }
+            .map { Player(it) }
             .toMutableList()
 
         players.add(dealer)

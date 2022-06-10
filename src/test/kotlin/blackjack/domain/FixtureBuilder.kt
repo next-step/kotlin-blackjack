@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.game.TakeMoreDealerStrategy
 import blackjack.domain.game.TakeMorePlayerStrategy
 import blackjack.domain.player.Player
 
@@ -13,7 +14,7 @@ class FixtureBuilder {
             }
         }
 
-        class TakeMoreDealerFixture(private val score: Int) : TakeMorePlayerStrategy {
+        class TakeMoreDealerFixture(private val score: Int) : TakeMoreDealerStrategy {
             override fun canBeTakeOneCard(score: Int): Boolean {
                 return this.score <= DEALER_TAKE_ONE_CARD_POLICY
             }

@@ -12,19 +12,16 @@ class PlayerTest {
 
     @Test
     fun `딜러가 추가되었는지 테스트`() {
-        val dealer = Dealer(TakeMoreDealerFixture(15))
-        val takeMorePlayer = TakeMorePlayerFixture(false)
-        val players = Players(listOf("플레이어"), takeMorePlayer, dealer)
+        val dealer = Dealer()
+        val players = Players(listOf("플레이어"), dealer)
 
         assertThat(players.players.filterIsInstance<Dealer>().first().name).isEqualTo("딜러")
     }
 
     @Test
     fun `게임을 더 할 수 있는(기본(10)=10) 경우에 대한 테스트`() {
-        val takeMorePlayer = TakeMorePlayerFixture(false)
         val player = Player(
             "name",
-            takeMorePlayer,
             mutableSetOf(BasicCard(cardSuit = CardSuit.CLUB, number = 10))
         )
 
@@ -34,10 +31,8 @@ class PlayerTest {
 
     @Test
     fun `게임을 더 할 수 없는(기본(10)+기본(9)+기본(8)=27) 경우에 대한 테스트`() {
-        val takeMorePlayer = TakeMorePlayerFixture(false)
         val player = Player(
             "name",
-            takeMorePlayer,
             mutableSetOf(
                 BasicCard(cardSuit = CardSuit.CLUB, number = 10),
                 BasicCard(cardSuit = CardSuit.CLUB, number = 9),
@@ -51,10 +46,8 @@ class PlayerTest {
 
     @Test
     fun `게임을 더 할 수 있는 (에이스(1)+에이스(1)=2) 경우에 대한 테스트`() {
-        val takeMorePlayer = TakeMorePlayerFixture(false)
         val player = Player(
             "name",
-            takeMorePlayer,
             mutableSetOf(
                 AceCard(cardSuit = CardSuit.CLUB),
                 AceCard(cardSuit = CardSuit.SPADE)
@@ -67,10 +60,8 @@ class PlayerTest {
 
     @Test
     fun `게임을 더 할 수 있는 (기본(10)+에이스(1)+에이스(1)=12) 경우에 대한 테스트`() {
-        val takeMorePlayer = TakeMorePlayerFixture(false)
         val player = Player(
             "name",
-            takeMorePlayer,
             mutableSetOf(
                 BasicCard(cardSuit = CardSuit.CLUB, number = 10),
                 AceCard(cardSuit = CardSuit.CLUB),
@@ -84,10 +75,8 @@ class PlayerTest {
 
     @Test
     fun `게임을 더 할 수 없는 (기본(10)+에이스(11)=21) 경우에 대한 테스트`() {
-        val takeMorePlayer = TakeMorePlayerFixture(false)
         val player = Player(
             "name",
-            takeMorePlayer,
             mutableSetOf(
                 BasicCard(cardSuit = CardSuit.CLUB, number = 10),
                 AceCard(cardSuit = CardSuit.SPADE)

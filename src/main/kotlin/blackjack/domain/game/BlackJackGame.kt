@@ -21,12 +21,12 @@ class BlackJackGame(
             }
     }
 
-    fun playDealer() {
+    fun playDealer(takeMoreDealerStrategy: TakeMoreDealerStrategy) {
         val dealer = _players.players
             .filterIsInstance<Dealer>()
             .first()
 
-        while (dealer.canBeTakeOneCard()) {
+        while (dealer.canBeTakeOneCard(takeMoreDealerStrategy)) {
             dealer.addCard(cardDeck.pickCard())
         }
     }
