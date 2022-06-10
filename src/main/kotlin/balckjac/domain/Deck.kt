@@ -5,8 +5,8 @@ import balckjac.domain.GameRule.TOTAL_CARD_COUNT
 class Deck(
     cards: Set<Card> = CARD_LIST
 ) {
-    private val _cards = cards.toMutableList()
-    val cards: List<Card> get() = _cards.toList()
+    private val _cards = cards.toMutableSet()
+    val cards: Set<Card> get() = _cards.toSet()
 
     init {
         require(cards.size == TOTAL_CARD_COUNT) {
