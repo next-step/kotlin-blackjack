@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.application.BlackJack
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
-import blackjack.domain.player.vo.Name
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import blackjack.domain.participant.vo.Name
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 import blackjack.ui.dto.Continue
@@ -19,26 +19,28 @@ fun main() {
     OutputView.printStatuses(blackJack.statuses)
 
     playBlackJack(blackJack)
-    if (blackJack.dealerBust) {
-        OutputView.printDealerBust(blackJack.rounds)
+    if (blackJack.isDealerBust) {
+        OutputView.printDealerBust(blackJack.winningResults())
         return
     }
-    OutputView.printResults(blackJack.results)
-    OutputView.printBlackJackResult(blackJack.rounds)
+
+    OutputView.printResults(blackJack.scores)
+    OutputView.printBlackJackResult(blackJack.winningResults())
 }
 
 private fun playBlackJack(blackJack: BlackJack) {
-    while (!blackJack.isPlayerAllStay && !blackJack.dealerBust) {
+    while (!blackJack.hasMorePlayablePlayer && !blackJack.isDealerBust) {
         playerHit(blackJack)
     }
 
-    while (!blackJack.isDealerStay && !blackJack.dealerBust) {
-        blackJack.hitDealer { OutputView.printDealerHit() }
+    while (blackJack.isDealerDrawMoreCard && !blackJack.isDealerBust) {
+        blackJack.hitDealer()
+        OutputView.printDealerHit()
     }
 }
 
 private fun playerHit(blackJack: BlackJack) {
-    blackJack.playerHit {
+    blackJack.hitPlayers {
         when (InputView.inputHitContinue(it.name.value)) {
             Continue.TRUE -> OutputView.printStatus(blackJack.play(it))
             Continue.FALSE -> it.stay()

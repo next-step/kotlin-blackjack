@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant.vo
 
 import blackjack.domain.Score
 import blackjack.domain.Score.Companion.BLACKJACK
@@ -6,7 +6,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.type.Ace
 
 class CardsInHand(
-    cards: List<Card>
+    cards: List<Card> = emptyList()
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
     val cards: List<Card>
