@@ -9,6 +9,6 @@ internal class DenominationTest {
     fun `Denomination 은 카드 이름과 스코어를 갖는다`() {
         assertThat(Denomination.ACE.cardName).isEqualTo("Ace")
         assertThat(Denomination.ACE.score).isEqualTo(1)
-        assertThat(Denomination.ACE.multipleScore).isEqualTo(listOf(1, 11))
+        assertThat(Denomination.ACE.anotherScore).isEqualTo(listOf(1, 11))
     }
 }
