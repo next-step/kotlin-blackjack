@@ -70,4 +70,4 @@ introduce {
 - [x] 카드는 suit, denomination 을 조합하여 실제 카드 이름을 생성한다.
 - [x] Deck 은 52개의 카드로 구성되어야 한다.
 - [x] Deck 은 카드를 분배할 수 있으며 분배된 카드는 Deck 에서 제거된다.
-- [ ] ScoreCalculator 는 카드 목록을 전달 받아 total 점수를 계산한다.
+- [x] ScoreCalculator 는 카드 목록을 전달 받아 total 점수를 계산한다.
