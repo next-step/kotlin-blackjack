@@ -27,8 +27,6 @@ fun main() {
                 it.addCard(cardDeck.pickCard())
                 resultView.printCardsByPlayer(it, false)
             }
-
-            resultView.printCardsByPlayer(it, false)
         }
 
     blackJackGame.playDealer()
