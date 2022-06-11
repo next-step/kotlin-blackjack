@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -12,8 +11,7 @@ class PlayerTest {
 
         assertAll(
             { assertThat(player.name).isEqualTo("이름") },
-            { assertThat(player.hands.cards).isEmpty() },
-            { assertThat(player.state).isA<PlayerState.Start>() }
+            { assertThat(player.hands.cards).isEmpty() }
         )
     }
 
@@ -30,13 +28,12 @@ class PlayerTest {
         )
 
         assertAll(
-            { assertThat(player.hands.cards).hasSize(2) },
-            { assertThat(player.state).isA<PlayerState.Blackjack>() }
+            { assertThat(player.hands.cards).hasSize(2) }
         )
     }
 
     @Test
-    fun `finish를 통해 더 이상 카드를 받지 않겠다는 의사를 나타낼 수 있다`() {
+    fun `stay를 통해 더 이상 카드를 받지 않겠다는 의사를 나타낼 수 있다`() {
         val player = Player("이름").apply {
             receive(
                 PlayingCards.from(
@@ -47,14 +44,14 @@ class PlayerTest {
                 )
             )
         }
-        player.finish()
+        player.stay()
 
-        assertThat(player.state).isA<PlayerState.Stay>()
+        assertThat(player.isReceivable()).isFalse
     }
 
     @Test
     fun `isReceivable을 통해 플레이어가 카드를 받을 수 있는 상태인지 알 수 있다`() {
-        val player = Player("이름").apply {
+        val receivablePlayer = Player("이름").apply {
             receive(
                 PlayingCards.from(
                     listOf(
@@ -64,11 +61,18 @@ class PlayerTest {
                 )
             )
         }
+        assertThat(receivablePlayer.isReceivable()).isTrue
 
-        assertThat(player.isReceivable()).isTrue
-
-        player.finish()
-
-        assertThat(player.isReceivable()).isFalse
+        val nonReceivablePlayer = Player("이름").apply {
+            receive(
+                PlayingCards.from(
+                    listOf(
+                        PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
+                        PlayingCard.of(Suit.CLUBS, CardNumber.ACE)
+                    )
+                )
+            )
+        }
+        assertThat(nonReceivablePlayer.isReceivable()).isFalse
     }
 }

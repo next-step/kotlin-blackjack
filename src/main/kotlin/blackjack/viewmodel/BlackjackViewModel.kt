@@ -29,7 +29,7 @@ class BlackjackViewModel private constructor(
 
     fun stay() {
         val currentPlayer = currentTurn.value
-        currentPlayer?.finish()
+        currentPlayer?.stay()
     }
 
     fun nextTurn() {
