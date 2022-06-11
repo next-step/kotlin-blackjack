@@ -8,9 +8,9 @@ class Players(val players: List<Player>) {
         }
     }
 
-    fun addTwoCard(dealer: Dealer) {
+    fun addBaseCards(dealer: Dealer, baseCount: Int) {
         players.forEach { player ->
-            repeat(2) { dealer.giveCard(player) }
+            repeat(baseCount) { dealer.giveCard(player) }
         }
     }
 

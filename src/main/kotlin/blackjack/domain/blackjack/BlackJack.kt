@@ -12,7 +12,7 @@ class BlackJack(
     val isEnd: Boolean get() = players.isEnd() && dealer.isEnd
 
     init {
-        players.addTwoCard(dealer)
+        players.addBaseCards(dealer, BASE_CARD_COUNT)
         dealer.addBaseCards(BASE_CARD_COUNT)
     }
 

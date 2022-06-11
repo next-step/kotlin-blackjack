@@ -8,11 +8,11 @@ import io.kotest.matchers.shouldBe
 
 class PlayersTest : DescribeSpec({
 
-    describe("handOutTwoCard") {
-        it("각 플레이어에게 카드를 두장 씩 나누어준다") {
+    describe("addBaseCards") {
+        it("각 플레이어에게 카드를 초기 개수만큼 나누어준다") {
             val players = listOf(Player("yohan"), Player("pang"))
 
-            Players(players).addTwoCard(Dealer())
+            Players(players).addBaseCards(Dealer(), 2)
 
             players.forAll { it.cards.size shouldBe 2 }
         }
