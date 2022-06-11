@@ -28,4 +28,35 @@ internal class BlackJackGameTest {
 
         assertThat(players.size).isEqualTo(2)
     }
+
+    @DisplayName("게임이 시작되면 카드 뭉치를 섞는다.")
+    @Test
+    fun shuffleDeckWhenStartGame() {
+        val blackJackGame = BlackJackGame.new()
+        val beforeCards = blackJackGame.cardDeck.cards
+
+        blackJackGame.start()
+
+        val afterCards = blackJackGame.cardDeck.cards
+
+        assertThat(afterCards).isNotEqualTo(beforeCards)
+    }
+
+    @DisplayName("게임이 시작되면 각 플레이어에게 카드 뭉치에서 카드를 2장씩 제공(Serving)한다.")
+    @Test
+    fun servingCardsWhenStartGame() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        val playerTom = Player("tom")
+        blackJackGame.participate(playerTim)
+        blackJackGame.participate(playerTom)
+        blackJackGame.start()
+
+        val afterCards = blackJackGame.cardDeck.cards
+
+        assertThat(afterCards.size).isEqualTo(52 - (2 * 2))
+        assertThat(playerTim.cards.size).isEqualTo(2)
+        assertThat(playerTom.cards.size).isEqualTo(2)
+    }
 }
