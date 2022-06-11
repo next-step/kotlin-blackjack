@@ -33,15 +33,17 @@ class ResultView {
     }
 
     fun printFinalResult(players: List<Player>) {
-        val dealer = players
-            .filterIsInstance<Dealer>()
-            .first()
+        println("")
+        println(getDealerResult(players.filterIsInstance<Dealer>().first()))
+        println(getPlayerResult(players.filter { it !is Dealer }))
+    }
 
-        println("${dealer.name}: ${dealer.win}승 ${dealer.lose}패")
+    private fun getDealerResult(dealer: Dealer): String {
+        return "${dealer.name}: ${dealer.win}승 ${dealer.lose}패"
+    }
 
-        players.filter { it !is Dealer }.map {
-            println("${it.name}: ${convertWinOrLose((it.isWinner))}")
-        }
+    private fun getPlayerResult(players: List<Player>): String {
+        return players.joinToString("\n") { "${it.name}: ${convertWinOrLose((it.isWinner))}" }
     }
 
     private fun convertWinOrLose(toConvert: Boolean): String {
