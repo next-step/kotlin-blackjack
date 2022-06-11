@@ -25,11 +25,11 @@ class ResultView {
 
     fun printCardsByPlayer(player: Player, withScore: Boolean) {
         if (withScore) {
-            println("${player.name}카드: ${player.receivedCards.map { extractCardDescription(it) }} - 결과: ${player.score}")
+            println("${player.name}카드: ${player.receivedCards.getCardDescription()} - 결과: ${player.score}")
             return
         }
 
-        println("${player.name}카드: ${player.receivedCards.map { extractCardDescription(it) }}")
+        println("${player.name}카드: ${player.receivedCards.getCardDescription()}")
     }
 
     fun printFinalResult(players: List<Player>) {
@@ -41,16 +41,6 @@ class ResultView {
 
         players.filter { it !is Dealer }.map {
             println("${it.name}: ${convertWinOrLose((it.isWinner))}")
-        }
-    }
-
-    private fun extractCardDescription(card: Card): String {
-        return when (card) {
-            is AceCard -> "A${card.cardSuit.description}"
-            is JackCard -> "J${card.cardSuit.description}"
-            is QueenCard -> "Q${card.cardSuit.description}"
-            is KingCard -> "K${card.cardSuit.description}"
-            is BasicCard -> "${card.number}${card.cardSuit.description}"
         }
     }
 

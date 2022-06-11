@@ -1,12 +1,12 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Card.AceCard
+import blackjack.domain.card.ReceivedCards
 import blackjack.domain.game.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
-    val receivedCards: MutableSet<Card> = mutableSetOf()
+    private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf())
 ) {
 
     var isWinner: Boolean = false
@@ -17,12 +17,14 @@ open class Player(
     val name: String
         get() = _name
 
+    val receivedCards: ReceivedCards
+        get() = _receivedCards
+
     fun calculateScore(): Int {
-        var score = receivedCards.sumOf { it.number }
+        var score = receivedCards.sumOfCards()
 
         if (score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards
-                .count { it is AceCard }
+            val aceCount = receivedCards.countOfAceCard()
 
             score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
         }
@@ -35,7 +37,7 @@ open class Player(
     }
 
     fun addCard(card: Card) {
-        receivedCards.add(card)
+        receivedCards.addCard(card)
     }
 
     fun wantToTake(takeMorePlayerStrategy: TakeMorePlayerStrategy): Boolean {

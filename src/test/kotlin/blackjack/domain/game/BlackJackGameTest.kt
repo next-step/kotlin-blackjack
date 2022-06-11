@@ -25,8 +25,8 @@ class BlackJackGameTest {
         val players = Players(listOf("A", "B"))
         val blackJackGame = BlackJackGame(cardDeck, players, dealer)
 
-        Assertions.assertThat(blackJackGame.players[0].receivedCards).hasSize(2)
-        Assertions.assertThat(blackJackGame.players[1].receivedCards).hasSize(2)
+        Assertions.assertThat(blackJackGame.players[0].receivedCards.count()).isEqualTo(2)
+        Assertions.assertThat(blackJackGame.players[1].receivedCards.count()).isEqualTo(2)
     }
 
     @Test
