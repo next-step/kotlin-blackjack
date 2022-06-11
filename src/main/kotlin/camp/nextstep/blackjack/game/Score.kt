@@ -1,4 +1,4 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.game
 
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardNumber
