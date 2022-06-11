@@ -26,7 +26,7 @@ private fun deal(dealer: Dealer, participants: List<Participant>) {
 }
 
 private tailrec fun dealerHit(dealer: Dealer) {
-    if (!dealer.state.canPlay || !dealer.saidHit()) {
+    if (!dealer.playable() || !dealer.saidHit()) {
         return
     }
     dealer.receive(dealer.draw())
@@ -35,7 +35,7 @@ private tailrec fun dealerHit(dealer: Dealer) {
 }
 
 private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
-    if (!participant.state.canPlay || !participant.saidHit()) {
+    if (!participant.playable() || !participant.saidHit()) {
         return
     }
     participant.receive(dealer.draw())

@@ -4,10 +4,6 @@ import blackjack.domain.Denomination.FIVE
 import blackjack.domain.Denomination.FOUR
 import blackjack.domain.Denomination.KING
 import blackjack.domain.Denomination.SIX
-import blackjack.domain.State.BLACKJACK
-import blackjack.domain.State.BUST
-import blackjack.domain.State.HITTABLE
-import blackjack.domain.State.STAY
 import blackjack.domain.Suit.DIAMOND
 import blackjack.domain.Suit.HEART
 import blackjack.domain.Suit.SPADE
@@ -22,10 +18,10 @@ class PlayerSpecs : DescribeSpec({
     describe("플레이어는") {
         it("최초 상태로 Hittable 상태를 가진다") {
             val player = Player("이름")
-            player.state shouldBe HITTABLE
+            player.state shouldBe Hittable
         }
         context("Hittable 상태라면") {
-            val player = Player("이름", state = HITTABLE)
+            val player = Player("이름", state = Hittable)
             it("카드를 받을 수 있다") {
                 val card = Card(KING, SPADE)
                 player.receive(card)
@@ -35,8 +31,7 @@ class PlayerSpecs : DescribeSpec({
 
         context("Hittable 이 아닌 상태라면") {
             it("카드를 받을 수 없다") {
-                State.values()
-                    .filterNot { it == HITTABLE }
+                listOf(Bust, BlackJack, Stay(Point(10)))
                     .forAll {
                         val player = Player("이름", state = it)
                         val card = Card(KING, SPADE)
@@ -51,7 +46,7 @@ class PlayerSpecs : DescribeSpec({
             val player = Player("이름") { false }
             it("`Stay` 상태가 된다") {
                 player.saidHit()
-                player.state shouldBe STAY
+                player.state shouldBe Stay(player.point())
             }
         }
 
@@ -60,19 +55,19 @@ class PlayerSpecs : DescribeSpec({
                 val hand = hand(KING to HEART, SIX to DIAMOND)
                 val player = Player("name", hand = hand)
                 player.receive(Card(FIVE, SPADE))
-                player.state shouldBe BLACKJACK
+                player.state shouldBe BlackJack
             }
             it("카드 패의 점수가 21점을 초과하면 `Bust` 상태가 된다") {
                 val hand = hand(KING to HEART, SIX to DIAMOND)
                 val player = Player("name", hand = hand)
                 player.receive(Card(SIX, SPADE))
-                player.state shouldBe BUST
+                player.state shouldBe Bust
             }
             it("카드 패의 점수가 21점 미만이면 현재 상태를 유지한다") {
                 val hand = hand(KING to HEART, SIX to DIAMOND)
                 val player = Player("name", hand = hand)
                 player.receive(Card(FOUR, SPADE))
-                player.state shouldBe HITTABLE
+                player.state shouldBe Hittable
             }
         }
     }

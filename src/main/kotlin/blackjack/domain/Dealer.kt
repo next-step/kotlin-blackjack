@@ -10,7 +10,7 @@ class Dealer(
 
     override var state = participant.state
         get() =
-            if (field == State.STAY) field
+            if (field is Stay) field
             else participant.state
         private set
 
@@ -33,7 +33,7 @@ class Dealer(
     private fun changeState() {
         val point = hand.calculate()
         if (point >= STAY_POINT && point < Point.BLACKJACK) {
-            state = State.STAY
+            state = Stay(point)
         }
     }
 

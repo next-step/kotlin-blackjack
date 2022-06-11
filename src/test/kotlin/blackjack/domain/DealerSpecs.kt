@@ -5,9 +5,6 @@ import blackjack.domain.Denomination.KING
 import blackjack.domain.Denomination.SEVEN
 import blackjack.domain.Denomination.SIX
 import blackjack.domain.Denomination.TWO
-import blackjack.domain.State.BLACKJACK
-import blackjack.domain.State.BUST
-import blackjack.domain.State.STAY
 import blackjack.domain.Suit.DIAMOND
 import blackjack.domain.Suit.HEART
 import blackjack.domain.Suit.SPADE
@@ -39,19 +36,19 @@ class DealerSpecs : DescribeSpec({
                 val hand = hand(KING to SPADE, SIX to DIAMOND)
                 val dealer = Dealer(hand = hand)
                 dealer.receive(Card(FIVE, HEART))
-                dealer.state shouldBe BLACKJACK
+                dealer.state shouldBe BlackJack
             }
             it("카드 패의 점수가 21을 초과하면 `Bust` 상태가 된다") {
                 val hand = hand(KING to SPADE, SIX to DIAMOND)
                 val dealer = Dealer(hand = hand)
                 dealer.receive(Card(SEVEN, HEART))
-                dealer.state shouldBe BUST
+                dealer.state shouldBe Bust
             }
             it("카드 패의 점수가 17 이상이면 `Stay` 상태가 된다.") {
                 val hand = hand(KING to SPADE, SIX to DIAMOND)
                 val dealer = Dealer(hand = hand)
                 dealer.receive(Card(TWO, HEART))
-                dealer.state shouldBe STAY
+                dealer.state shouldBe Stay(dealer.point())
             }
         }
 
