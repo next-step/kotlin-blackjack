@@ -12,8 +12,8 @@ class CardsTest {
         val secondCard = Card.King(CardSuit.SPADE)
         val cards = Cards(listOf(firstCard, secondCard))
 
-        assertThat(cards.getCardAt(0)).isSameAs(firstCard)
-        assertThat(cards.getCardAt(1)).isSameAs(secondCard)
+        assertThat(cards[0]).isSameAs(firstCard)
+        assertThat(cards[1]).isSameAs(secondCard)
     }
 
     @Test
@@ -38,9 +38,9 @@ class CardsTest {
 
         val expectedTotal = 10 + 10 + 10
 
-        assertThat(cards.getCardAt(0)).isSameAs(firstCard)
-        assertThat(cards.getCardAt(1)).isSameAs(secondCard)
-        assertThat(cards.getCardAt(2)).isSameAs(additionalCard)
+        assertThat(cards[0]).isSameAs(firstCard)
+        assertThat(cards[1]).isSameAs(secondCard)
+        assertThat(cards[2]).isSameAs(additionalCard)
         assertThat(cards.total.value).isEqualTo(expectedTotal)
     }
 
@@ -65,8 +65,8 @@ class CardsTest {
         val totalNumberOfPlayingCards = 52
 
         assertThatNoException()
-            .isThrownBy { allCards.getCardAt(totalNumberOfPlayingCards - 1) }
+            .isThrownBy { allCards[totalNumberOfPlayingCards - 1] }
         assertThatExceptionOfType(IndexOutOfBoundsException::class.java)
-            .isThrownBy { allCards.getCardAt(totalNumberOfPlayingCards) }
+            .isThrownBy { allCards[totalNumberOfPlayingCards] }
     }
 }

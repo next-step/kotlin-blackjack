@@ -10,9 +10,9 @@ class Cards(cardList: List<Card> = emptyList()) {
         cardList.shuffle()
     }
 
-    fun getCardAt(index: Int): Card = cardList[index]
-
     fun getNames(): List<String> = cardList.map { it.getName() }
+
+    operator fun get(index: Int): Card = cardList[index]
 
     operator fun plusAssign(card: Card) {
         cardList.add(card)

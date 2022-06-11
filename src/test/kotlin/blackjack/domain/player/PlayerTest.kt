@@ -27,7 +27,7 @@ class PlayerTest {
             player.addCardToHand(secondCard)
         }
 
-        assertThat(player.cards.getCardAt(0)).isSameAs(firstCard)
-        assertThat(player.cards.getCardAt(1)).isSameAs(secondCard)
+        assertThat(player.cards[0]).isSameAs(firstCard)
+        assertThat(player.cards[1]).isSameAs(secondCard)
     }
 }
