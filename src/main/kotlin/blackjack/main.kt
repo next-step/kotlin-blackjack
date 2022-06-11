@@ -3,8 +3,10 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
-import blackjack.ui.InputView
-import blackjack.ui.OutputView
+import blackjack.ui.input.InputView
+import blackjack.ui.input.ParticipantView
+import blackjack.ui.output.PlayingView
+import blackjack.ui.output.ResultView
 
 fun main() {
     val dealer = Dealer()
@@ -16,7 +18,7 @@ fun main() {
 
     dealerHit(dealer)
 
-    OutputView.showResult(listOf(dealer) + participants)
+    ResultView.showResult(listOf(dealer) + participants)
 }
 
 private fun deal(dealer: Dealer, participants: List<Participant>) {
@@ -30,7 +32,7 @@ private tailrec fun dealerHit(dealer: Dealer) {
         return
     }
     dealer.receive(dealer.draw())
-    OutputView.showDealerHit()
+    PlayingView.showDealerHit()
     dealerHit(dealer)
 }
 
@@ -39,14 +41,14 @@ private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
         return
     }
     participant.receive(dealer.draw())
-    OutputView.showHand(participant)
+    PlayingView.showOpenHand(participant)
     dealWith(dealer, participant)
 }
 
 private fun participate(): List<Participant> {
     return InputView.readPlayerNames()
         .map { name ->
-            Player(name) { InputView.askHit(name) }
+            Player(name) { ParticipantView.askHit(name) }
         }
 }
 
@@ -57,5 +59,5 @@ private fun distribute(dealer: Dealer, participants: List<Participant>) {
     }
     dealer.receive(dealer.draw())
     dealer.receive(dealer.draw())
-    OutputView.showDistribution(dealer, participants)
+    PlayingView.showDistribution(dealer, participants)
 }

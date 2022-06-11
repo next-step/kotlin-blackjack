@@ -1,4 +1,4 @@
-package blackjack.ui
+package blackjack.ui.input
 
 object InputView {
 
@@ -13,18 +13,6 @@ object InputView {
             false -> {
                 println("블랙잭을 진행하기 위한 적정 인원은 $MIN_PLAYER_NUMBER ~ $MAX_PLAYER_NUMBER 명 입니다")
                 return readPlayerNames()
-            }
-        }
-    }
-
-    tailrec fun askHit(playerName: String): Boolean {
-        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return when (readln()) {
-            "y" -> true
-            "n" -> false
-            else -> {
-                println("y 또는 n을 입력해 주세요")
-                askHit(playerName)
             }
         }
     }
