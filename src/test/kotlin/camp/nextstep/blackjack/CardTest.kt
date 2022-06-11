@@ -33,7 +33,7 @@ internal class CardTest {
     fun cardCombinationNumberTest() {
         val allCombinationsOfCards = Card.ofCombinations()
 
-        assertThat(allCombinationsOfCards.size).isEqualTo(52)
+        assertThat(allCombinationsOfCards.size).isEqualTo(CardSuit.CARD_SUIT_NUMBERS * CardNumber.CARD_NUMBERS)
     }
 
     @DisplayName("카드 조합 테스트")
