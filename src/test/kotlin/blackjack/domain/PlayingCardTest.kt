@@ -14,14 +14,6 @@ class PlayingCardTest {
     }
 
     @Test
-    fun `text를 통해 문자로 표현된 카드를 가져올 수 있다`() {
-        val playingCard = PlayingCard.of(Suit.CLUBS, CardNumber.ACE)
-        val expected = "${CardNumber.ACE.text}${Suit.CLUBS.text}"
-
-        assertThat(playingCard.text).isEqualTo(expected)
-    }
-
-    @Test
     fun `all을 통해 모든 카드 목록을 가져올 수 있다`() {
         val playingCards = PlayingCard.all()
 

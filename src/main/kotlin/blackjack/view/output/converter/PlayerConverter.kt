@@ -10,7 +10,7 @@ object PlayerConverter : OutputConverter<Player> {
 
     private fun Hands.toPrintableText(): String {
         return cards.joinToString(", ") { playingCard ->
-            "${playingCard.number.text}${playingCard.suit.text}"
+            "${CardNumberConverter.convert(playingCard.number)}${SuitConverter.convert(playingCard.suit)}"
         }
     }
 }
