@@ -13,4 +13,19 @@ internal class BlackJackGameTest {
 
         assertThat(newGame.cardDeck.isNotEmpty).isTrue
     }
+
+    @DisplayName("플레이어(Player)를 게임에 참여시킬 수 있다.")
+    @Test
+    fun participantPlayer() {
+        val blackJackGame = BlackJackGame.new()
+        val playerTim = Player("tim")
+        val playerTom = Player("tom")
+
+        blackJackGame.participate(playerTim)
+        blackJackGame.participate(playerTom)
+
+        val players = blackJackGame.participants
+
+        assertThat(players.size).isEqualTo(2)
+    }
 }
