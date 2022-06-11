@@ -4,21 +4,21 @@ import blackjack.card.Card
 
 const val POINT_LIMIT = 21
 
-class PlayerCardDeck {
-    private val cards = mutableListOf<Card>()
+class PlayerDeck {
+    val cards = mutableListOf<Card>()
     var pointSum = 0
         private set
 
     companion object {
-        fun of(cards: List<Card>): PlayerCardDeck {
-            val deck = PlayerCardDeck()
+        fun of(cards: List<Card>): PlayerDeck {
+            val deck = PlayerDeck()
             cards.forEach { deck.add(it) }
 
             return deck
         }
 
-        fun of(pointSum: Int): PlayerCardDeck {
-            val deck = PlayerCardDeck()
+        fun of(pointSum: Int): PlayerDeck {
+            val deck = PlayerDeck()
             deck.pointSum = pointSum
             return deck
         }

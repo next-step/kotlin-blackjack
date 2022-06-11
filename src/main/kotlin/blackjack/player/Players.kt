@@ -1,8 +1,12 @@
 package blackjack.player
 
-class Players(private val players: List<Player>) {
+class Players(val players: List<Player>) {
 
-    fun playerNames(): String {
+    fun names(): String {
         return this.players.joinToString(", ") { it.playerName }
+    }
+
+    fun size(): Int {
+        return this.players.size
     }
 }

@@ -13,7 +13,7 @@ class PlayersTest : AnnotationSpec() {
             )
         )
 
-        val result = sut.playerNames()
+        val result = sut.names()
 
         result shouldBe "pobi, jason"
     }
