@@ -12,6 +12,6 @@ class UsersTest {
     @ParameterizedTest
     @ValueSource(strings = ["jason,link", "james, link"])
     fun `입력받은 이름들을 쉼표로 잘 나눈다`(source: String) {
-        assertThat(Users.of(source).getSize()).isEqualTo(2)
+        assertThat(Users.of(source).users).hasSize(2)
     }
 }

@@ -6,8 +6,6 @@ package blackjack.domain
  */
 class Users(val users: List<User>) {
 
-    fun getSize() = users.size
-
     companion object {
         fun of(usersName: String): Users {
             return Users(usersName.split(",").map { User(it) })
