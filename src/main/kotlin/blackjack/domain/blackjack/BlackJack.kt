@@ -17,7 +17,7 @@ class BlackJack(
     }
 
     fun giveCard(player: Player) {
-        require(players.contains(player)) { "존재하지 않는 참가자입니다" }
+        require(player in players) { "존재하지 않는 참가자입니다" }
 
         dealer.giveCard(player)
     }

@@ -22,7 +22,7 @@ class Players(val players: List<Player>) {
         return players.all(Player::isEnd)
     }
 
-    fun contains(player: Player): Boolean {
+    operator fun contains(player: Player): Boolean {
         return players.contains(player)
     }
 }
