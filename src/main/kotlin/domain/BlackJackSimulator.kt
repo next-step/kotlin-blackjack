@@ -20,11 +20,8 @@ fun main() {
 
         players.forEach {
             val enableToIssue = InputView.isYesOrNo(it.name)
+            BlackJackGame.issue(it, enableToIssue)
 
-            if (enableToIssue) {
-                val cards = BlackJackGame.issue()
-                it.offer(cards)
-            }
             InputView.displayHaveCard(it)
             println()
             println()

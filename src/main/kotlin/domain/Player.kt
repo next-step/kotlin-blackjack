@@ -6,8 +6,10 @@ class Player(val name: String) {
         get() = holdingCards.toList()
 
     fun offer(cards: List<Card>) {
-        require(cards.all { !holdingCards.contains(it) }) { SAME_CARD_MESSAGE }
-        holdingCards += cards
+        if (cards.isNotEmpty()) {
+            require(cards.all { !holdingCards.contains(it) }) { SAME_CARD_MESSAGE }
+            holdingCards += cards
+        }
     }
 
     fun getSumOfCards(): Int {
