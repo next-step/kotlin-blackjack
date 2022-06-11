@@ -37,8 +37,8 @@ object ResultView {
     }
 
     private fun printParticipantWithScore(participantResult: ParticipantResult) {
-        printPlayerWithCards(participantResult.name, participantResult.cards)
-        println(" - 결과: ${participantResult.score.value}")
+        printPlayerWithCards(participantResult.name, participantResult.cards.cards)
+        println(" - 결과: ${participantResult.cards.score().value}")
     }
 
     fun printMatch(result: BlackJackResult) {

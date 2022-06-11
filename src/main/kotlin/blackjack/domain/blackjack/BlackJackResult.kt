@@ -1,11 +1,10 @@
 package blackjack.domain.blackjack
 
-import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.domain.score.Match
-import blackjack.domain.score.Score
 
 data class BlackJackResult(
     val playerResults: List<PlayerResult>,
@@ -25,15 +24,13 @@ data class BlackJackResult(
 
 data class ParticipantResult(
     val name: String,
-    val cards: List<Card>,
-    val score: Score,
+    val cards: Cards,
 ) {
     companion object {
         fun of(participant: Participant): ParticipantResult {
             return ParticipantResult(
                 name = participant.name,
-                cards = participant.cards.cards,
-                score = participant.cards.score()
+                cards = participant.cards,
             )
         }
     }
