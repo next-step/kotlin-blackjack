@@ -10,7 +10,8 @@ class Dealer(
     name: String = "딜러",
     cards: Cards = Cards.empty(),
     private val deck: Deck = Deck.default()
-) : Participant(name, cards) {
+) :
+    Participant(name, cards) {
 
     override val isEnd: Boolean
         get() = score >= PLAY_END_STANDARD
@@ -62,12 +63,10 @@ class Dealer(
     }
 
     private fun matchScore(other: Player): Match {
-        return if (score > other.score) {
-            Match.WIN
-        } else if (score == other.score) {
-            Match.DRAW
-        } else {
-            Match.LOSE
+        return when {
+            score > other.score -> Match.WIN
+            score == other.score -> Match.DRAW
+            else -> Match.LOSE
         }
     }
 
