@@ -26,7 +26,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
     fun initialize() {
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
-        repeat(2) {
+        repeat(INIT_CARD_NUMBER) {
             for (player in _participants) {
                 serve(player, _cardDeck.draw())
             }
@@ -77,6 +77,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
     }
 
     companion object {
+        const val INIT_CARD_NUMBER = 2
+
         fun new(): BlackJackGame {
             return BlackJackGame(CardDeck.new())
         }
