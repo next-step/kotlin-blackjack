@@ -4,10 +4,43 @@ import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.ui.InputView
+import blackjack.ui.OutputView
 
 fun main() {
     val dealer = Dealer()
-    val players = participate()
+    val participants = participate()
+
+    distribute(dealer, participants)
+
+    deal(dealer, participants)
+
+    dealerHit(dealer)
+
+    OutputView.showResult(listOf(dealer) + participants)
+}
+
+private fun deal(dealer: Dealer, participants: List<Participant>) {
+    participants.forEach { participant ->
+        dealWith(dealer, participant)
+    }
+}
+
+private tailrec fun dealerHit(dealer: Dealer) {
+    if (!dealer.state.canPlay || !dealer.saidHit()) {
+        return
+    }
+    dealer.receive(dealer.draw())
+    OutputView.showDealerHit()
+    dealerHit(dealer)
+}
+
+private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
+    if (!participant.state.canPlay || !participant.saidHit()) {
+        return
+    }
+    participant.receive(dealer.draw())
+    OutputView.showHand(participant)
+    dealWith(dealer, participant)
 }
 
 private fun participate(): List<Participant> {
@@ -17,12 +50,12 @@ private fun participate(): List<Participant> {
         }
 }
 
-private fun distribute(dealer: Dealer, players: List<Participant>) {
-    players.forEach { player ->
-        player.receive(dealer.draw())
-        player.receive(dealer.draw())
+private fun distribute(dealer: Dealer, participants: List<Participant>) {
+    participants.forEach { participant ->
+        participant.receive(dealer.draw())
+        participant.receive(dealer.draw())
     }
-
     dealer.receive(dealer.draw())
     dealer.receive(dealer.draw())
+    OutputView.showDistribution(dealer, participants)
 }

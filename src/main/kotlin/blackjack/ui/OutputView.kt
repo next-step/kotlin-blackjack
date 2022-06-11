@@ -22,15 +22,14 @@ object OutputView {
         println("${participant.name}카드: ${participant.open()}")
     }
 
-    //
-    // fun showDealerHit() {
-    //     println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-    // }
-    //
-    // fun showResult(players: List<Player>) {
-    //     println()
-    //     players.forEach {
-    //         println("${it.name}카드: ${it.hand} - 결과: ${it.calculateHand()}")
-    //     }
-    // }
+    fun showDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun showResult(participants: List<Participant>) {
+        println()
+        participants.forEach {
+            println("${it.name}카드: ${it.hand} - 결과: ${it.hand.calculate()}")
+        }
+    }
 }

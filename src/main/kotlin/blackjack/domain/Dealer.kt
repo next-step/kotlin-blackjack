@@ -23,7 +23,7 @@ class Dealer(
         return Hand(listOf(hand.first()))
     }
 
-    override fun isHit(): Boolean = true
+    override fun saidHit(): Boolean = true
 
     override fun receive(card: Card) {
         participant.receive(card)

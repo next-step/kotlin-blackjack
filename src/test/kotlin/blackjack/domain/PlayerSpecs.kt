@@ -50,7 +50,7 @@ class PlayerSpecs : DescribeSpec({
         context("hit을 선택하지 않으면") {
             val player = Player("이름") { false }
             it("`Stay` 상태가 된다") {
-                player.isHit()
+                player.saidHit()
                 player.state shouldBe STAY
             }
         }

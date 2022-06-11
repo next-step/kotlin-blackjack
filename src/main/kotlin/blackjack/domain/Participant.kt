@@ -5,7 +5,7 @@ interface Participant {
     val hand: Hand
     val state: State
 
-    fun isHit(): Boolean
+    fun saidHit(): Boolean
     fun receive(card: Card)
     fun open(): Hand = hand
 }

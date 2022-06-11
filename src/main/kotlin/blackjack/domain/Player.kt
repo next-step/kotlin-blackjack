@@ -15,7 +15,7 @@ class Player(
     override var state: State = state
         private set
 
-    override fun isHit(): Boolean {
+    override fun saidHit(): Boolean {
         val isHit = selectHit(name)
         if (!isHit) {
             state = STAY
