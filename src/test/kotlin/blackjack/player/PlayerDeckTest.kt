@@ -11,7 +11,7 @@ class PlayerDeckTest : AnnotationSpec() {
     @Test
     fun `CardPoint의 합이 반환된다`() {
         val sut = PlayerCardDeck.of(
-            mutableListOf(
+            listOf(
                 Card(CardNumber.TWO, CardShape.CLOVER),
                 Card(CardNumber.EIGHT, CardShape.HEART),
             )
@@ -25,7 +25,7 @@ class PlayerDeckTest : AnnotationSpec() {
     @Test
     fun `CardPoint의 합이 21을 초과하지 않으면 Ace는 11으로 계산된다`() {
         val sut = PlayerCardDeck.of(
-            mutableListOf(
+            listOf(
                 Card(CardNumber.ACE, CardShape.CLOVER),
             )
         )

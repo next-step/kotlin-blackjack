@@ -10,7 +10,7 @@ class PlayerCardDeck {
         private set
 
     companion object {
-        fun of(cards: MutableList<Card>): PlayerCardDeck {
+        fun of(cards: List<Card>): PlayerCardDeck {
             val deck = PlayerCardDeck()
             cards.forEach { deck.add(it) }
 
