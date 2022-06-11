@@ -32,8 +32,8 @@ data class ParticipantResult(
         fun of(participant: Participant): ParticipantResult {
             return ParticipantResult(
                 name = participant.name,
-                cards = participant.cards,
-                score = participant.score
+                cards = participant.cards.cards,
+                score = participant.cards.score()
             )
         }
     }

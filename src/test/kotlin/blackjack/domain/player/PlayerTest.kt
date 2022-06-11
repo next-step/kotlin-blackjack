@@ -78,7 +78,7 @@ class PlayerTest : DescribeSpec({
 
                 player.addCard(Card(Suit.DIAMOND, NumberCard(10)))
 
-                player.cards shouldBe
+                player.cards.cards shouldBe
                     listOf(
                         Card(Suit.DIAMOND, Queen()),
                         Card(Suit.DIAMOND, NumberCard(9)),
@@ -134,7 +134,7 @@ class PlayerTest : DescribeSpec({
                 )
             )
 
-            player.score shouldBe Score(16)
+            player.cards.score() shouldBe Score(16)
         }
     }
 
@@ -142,13 +142,13 @@ class PlayerTest : DescribeSpec({
         it("BUST 이거나 STAY 가 아니면 참여가 종료되지 않는다") {
             val player = Player(name = "yohan")
 
-            player.isEnd shouldBe false
+            player.isEnd() shouldBe false
         }
 
         it("STAY 이면 참가자의 참여가 종료된다") {
             val player = Player(name = "yohan", playerStatus = PlayerStatus.STAY)
 
-            player.isEnd shouldBe true
+            player.isEnd() shouldBe true
         }
 
         it("BUST 이면 참가자의 참여가 종료된다") {
@@ -163,7 +163,7 @@ class PlayerTest : DescribeSpec({
                 )
             )
 
-            player.isEnd shouldBe true
+            player.isEnd() shouldBe true
         }
     }
 })

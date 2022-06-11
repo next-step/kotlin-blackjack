@@ -9,7 +9,7 @@ class BlackJack(
     private val players: Players
 ) {
     val hittablePlayers get() = players.hittablePlayers()
-    val isEnd: Boolean get() = players.isEnd() && dealer.isEnd
+    val isEnd: Boolean get() = players.isEnd() && dealer.isEnd()
 
     init {
         players.addBaseCards(dealer, BASE_CARD_COUNT)

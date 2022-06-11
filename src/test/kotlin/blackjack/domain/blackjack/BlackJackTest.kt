@@ -31,8 +31,8 @@ class BlackJackTest : DescribeSpec({
                 BlackJack(dealer = dealer, players = Players(players))
 
                 assertSoftly {
-                    players.forAll { it.cards.size shouldBe 2 }
-                    dealer.cards.size shouldBe 2
+                    players.forAll { it.cards.cards.size shouldBe 2 }
+                    dealer.cards.cards.size shouldBe 2
                 }
             }
         }
@@ -59,7 +59,7 @@ class BlackJackTest : DescribeSpec({
 
                 blackJack.giveCard(yohan)
 
-                yohan.cards.size shouldBe 3
+                yohan.cards.cards.size shouldBe 3
             }
         }
 

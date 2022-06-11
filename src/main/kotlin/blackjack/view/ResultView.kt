@@ -17,9 +17,9 @@ object ResultView {
     }
 
     fun printlnPlayersWithCards(players: List<Player>, dealer: Dealer) {
-        printlnPlayerWithCards(dealer.name, dealer.cards.take(1))
+        printlnPlayerWithCards(dealer.name, dealer.cards.cards.take(1))
         players.forEach { player ->
-            printlnPlayerWithCards(player.name, player.cards)
+            printlnPlayerWithCards(player.name, player.cards.cards)
         }.also { println() }
     }
 

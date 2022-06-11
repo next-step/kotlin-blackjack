@@ -31,7 +31,7 @@ private fun playPlayers(
     hittablePlayers: List<Player>
 ) {
     hittablePlayers.forEach {
-        while (!it.isEnd) {
+        while (!it.isEnd()) {
             hitOrStay(blackJack, it, InputView.isHit(it))
         }
     }
@@ -41,7 +41,7 @@ private fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
     if (hit) {
         player.changeStatus(PlayerStatus.HIT)
         blackJack.giveCard(player)
-            .also { ResultView.printlnPlayerWithCards(player.name, player.cards) }
+            .also { ResultView.printlnPlayerWithCards(player.name, player.cards.cards) }
     } else {
         player.changeStatus(PlayerStatus.STAY)
     }
@@ -49,5 +49,5 @@ private fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
 
 private fun playDealer(blackJack: BlackJack, dealer: Dealer) {
     blackJack.playDealer()
-    ResultView.printDealerPlay(dealer.cards.size - BASE_CARD_COUNT)
+    ResultView.printDealerPlay(dealer.cards.cards.size - BASE_CARD_COUNT)
 }

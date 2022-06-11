@@ -26,7 +26,7 @@ class DealerTest : DescribeSpec({
                     )
                 )
 
-                dealer.isEnd shouldBe true
+                dealer.isEnd() shouldBe true
             }
         }
 
@@ -41,7 +41,7 @@ class DealerTest : DescribeSpec({
                     )
                 )
 
-                dealer.isEnd shouldBe false
+                dealer.isEnd() shouldBe false
             }
         }
     }
@@ -54,7 +54,7 @@ class DealerTest : DescribeSpec({
 
                 dealer.giveCard(player)
 
-                player.cards.size shouldBe 1
+                player.cards.cards.size shouldBe 1
             }
         }
 
@@ -76,7 +76,7 @@ class DealerTest : DescribeSpec({
 
             dealer.addBaseCards(2)
 
-            dealer.cards.size shouldBe 2
+            dealer.cards.cards.size shouldBe 2
         }
     }
 
@@ -94,7 +94,7 @@ class DealerTest : DescribeSpec({
 
                 dealer.addCard()
 
-                dealer.cards.size shouldBe 3
+                dealer.cards.cards.size shouldBe 3
             }
         }
 
@@ -111,7 +111,7 @@ class DealerTest : DescribeSpec({
 
                 dealer.addCard()
 
-                dealer.cards.size shouldBe 2
+                dealer.cards.cards.size shouldBe 2
             }
         }
     }

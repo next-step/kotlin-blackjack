@@ -10,14 +10,14 @@ class Dealer(
     name: String = "딜러",
     cards: Cards = Cards.empty(),
     private val deck: Deck = Deck.default()
-) :
-    Participant(name, cards) {
+) : Participant(name, cards) {
 
-    override val isEnd: Boolean
-        get() = score >= PLAY_END_STANDARD
+    override fun isEnd(): Boolean {
+        return cards.score() >= PLAY_END_STANDARD
+    }
 
     fun giveCard(player: Player) {
-        require(!player.isEnd) {
+        require(!player.isEnd()) {
             "플레이가 종료된 참가자입니다"
         }
 
@@ -29,13 +29,13 @@ class Dealer(
     }
 
     fun addCard() {
-        while (!isEnd) {
+        while (!isEnd()) {
             addCard(deck.draw())
         }
     }
 
     fun match(other: Player): Match {
-        return when (cardScore) {
+        return when (cards.cardScore()) {
             CardScore.BUST -> matchBust(other)
             CardScore.BLACKJACK -> matchBlackJack(other)
             CardScore.NORMAL -> matchNormal(other)
@@ -43,7 +43,7 @@ class Dealer(
     }
 
     private fun matchBust(other: Player): Match {
-        return if (other.cardScore == CardScore.BUST) {
+        return if (other.cards.cardScore() == CardScore.BUST) {
             Match.WIN
         } else {
             Match.LOSE
@@ -51,7 +51,7 @@ class Dealer(
     }
 
     private fun matchBlackJack(other: Player): Match {
-        return if (other.cardScore == CardScore.BLACKJACK) {
+        return if (other.cards.cardScore() == CardScore.BLACKJACK) {
             Match.DRAW
         } else {
             Match.WIN
@@ -59,7 +59,7 @@ class Dealer(
     }
 
     private fun matchNormal(other: Player): Match {
-        return when (other.cardScore) {
+        return when (other.cards.cardScore()) {
             CardScore.BUST -> Match.WIN
             CardScore.BLACKJACK -> Match.LOSE
             CardScore.NORMAL -> matchScore(other)
@@ -68,8 +68,8 @@ class Dealer(
 
     private fun matchScore(other: Player): Match {
         return when {
-            score > other.score -> Match.WIN
-            score == other.score -> Match.DRAW
+            cards.score() > other.cards.score() -> Match.WIN
+            cards.score() == other.cards.score() -> Match.DRAW
             else -> Match.LOSE
         }
     }

@@ -14,7 +14,7 @@ class PlayersTest : DescribeSpec({
 
             Players(players).addBaseCards(Dealer(), 2)
 
-            players.forAll { it.cards.size shouldBe 2 }
+            players.forAll { it.cards.cards.size shouldBe 2 }
         }
     }
 

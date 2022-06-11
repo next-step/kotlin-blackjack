@@ -9,11 +9,12 @@ class Player(
     private var playerStatus: PlayerStatus = PlayerStatus.HIT
 ) : Participant(name, cards) {
 
-    override val isEnd
-        get() = playerStatus == PlayerStatus.STAY || cardScore == CardScore.BUST
+    override fun isEnd(): Boolean {
+        return playerStatus == PlayerStatus.STAY || cards.cardScore() == CardScore.BUST
+    }
 
     fun changeStatus(status: PlayerStatus) {
-        check(!isEnd) {
+        check(!isEnd()) {
             "게임이 종료된 이후에는 상태를 변경할 수 없습니다."
         }
 

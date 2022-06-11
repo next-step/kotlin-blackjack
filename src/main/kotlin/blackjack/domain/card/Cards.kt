@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.domain.score.CardScore
 import blackjack.domain.score.Score
 
 class Cards(cards: List<Card>) {
@@ -8,6 +9,10 @@ class Cards(cards: List<Card>) {
 
     fun add(card: Card) {
         _cards.add(card)
+    }
+
+    fun cardScore(): CardScore {
+        return CardScore.of(score(), cards.size)
     }
 
     fun score(): Score {
