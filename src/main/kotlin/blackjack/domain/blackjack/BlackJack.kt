@@ -13,7 +13,7 @@ class BlackJack(
 
     init {
         players.addTwoCard(dealer)
-        repeat(BASE_CARD_COUNT) { dealer.addCard() }
+        dealer.addBaseCards(BASE_CARD_COUNT)
     }
 
     fun giveCard(player: Player) {
@@ -23,9 +23,7 @@ class BlackJack(
     }
 
     fun playDealer() {
-        while (!dealer.isEnd) {
-            dealer.addCard()
-        }
+        dealer.addCard()
     }
 
     fun result(): BlackJackResult {

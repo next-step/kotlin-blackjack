@@ -24,10 +24,14 @@ class Dealer(
         player.addCard(deck.draw())
     }
 
-    fun addCard() {
-        check(!isEnd)
+    fun addBaseCards(baseCount: Int) {
+        repeat(baseCount) { addCard(deck.draw()) }
+    }
 
-        addCard(deck.draw())
+    fun addCard() {
+        while (!isEnd) {
+            addCard(deck.draw())
+        }
     }
 
     fun match(other: Player): Match {

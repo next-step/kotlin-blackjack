@@ -70,6 +70,16 @@ class DealerTest : DescribeSpec({
         }
     }
 
+    describe("addBaseCard") {
+        it("카드를 초기 숫자 만큼 추가한다") {
+            val dealer = Dealer()
+
+            dealer.addBaseCards(2)
+
+            dealer.cards.size shouldBe 2
+        }
+    }
+
     describe("addCard") {
         context("처음에 받은 2장의 합계가 16이하이면") {
             it("카드를 추가한다") {
@@ -77,7 +87,7 @@ class DealerTest : DescribeSpec({
                     cards = Cards(
                         listOf(
                             Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(5)),
+                            Card(Suit.DIAMOND, NumberCard(6)),
                         )
                     )
                 )
@@ -99,9 +109,9 @@ class DealerTest : DescribeSpec({
                     )
                 )
 
-                shouldThrow<IllegalStateException> {
-                    dealer.addCard()
-                }
+                dealer.addCard()
+
+                dealer.cards.size shouldBe 2
             }
         }
     }
