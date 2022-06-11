@@ -1,8 +1,11 @@
 package blackjack.domain
 
 class Player(val name: String) {
-    var hands = Hands(PlayingCards.empty())
-        private set
+    private var hands = Hands(PlayingCards.empty())
+    val cardsOfHands: PlayingCards
+        get() = hands.cards
+    val score: Score
+        get() = hands.score
 
     fun receive(playingCards: PlayingCards) {
         hands += playingCards
