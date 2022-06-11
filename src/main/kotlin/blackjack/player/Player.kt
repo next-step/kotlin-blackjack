@@ -16,11 +16,19 @@ class Player(val playerName: String) {
         }
     }
 
+    fun addAll(cards: List<Card>) {
+        cards.forEach { this.add(it) }
+    }
+
     fun add(card: Card) {
         this.deck.add(card)
     }
 
     fun cardNames(): String {
         return this.deck.cards.joinToString(", ") { it.fullName() }
+    }
+
+    fun sumPoint(): Int {
+        return this.deck.pointSum
     }
 }

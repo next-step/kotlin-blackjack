@@ -18,4 +18,8 @@ class OutputView(private val output: Output) {
     }
 
     private fun playerMessage(player: Player) = "${player.playerName}카드: ${player.cardNames()}"
+
+    fun end(players: Players) {
+        output.print(players.players.joinToString("\n") { "${playerMessage(it)} - 결과: ${it.sumPoint()}" })
+    }
 }
