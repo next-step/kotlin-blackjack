@@ -21,4 +21,27 @@ class PlayerCardDeckTest : AnnotationSpec() {
 
         result shouldBe 10
     }
+
+    @Test
+    fun `CardPoint의 합이 21을 초과하지 않으면 Ace는 10으로 계산된다`() {
+        val sut = PlayerCardDeck.of(
+            mutableListOf(
+                Card(CardNumber.ACE, CardShape.CLOVER),
+            )
+        )
+
+        val result = sut.pointSum
+
+        result shouldBe 10
+    }
+
+    @Test
+    fun `CardPoint의 합이 21을 초과하면 Ace는 1로 계산된다`() {
+        val sut = PlayerCardDeck.of(20)
+        sut.add(Card(CardNumber.ACE, CardShape.CLOVER))
+
+        val result = sut.pointSum
+
+        result shouldBe 21
+    }
 }

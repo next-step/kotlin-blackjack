@@ -16,6 +16,12 @@ class PlayerCardDeck {
 
             return deck
         }
+
+        fun of(pointSum: Int): PlayerCardDeck {
+            val deck = PlayerCardDeck()
+            deck.pointSum = pointSum
+            return deck
+        }
     }
 
     fun add(card: Card) {
