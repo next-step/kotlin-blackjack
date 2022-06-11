@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -12,7 +13,7 @@ class PlayerTest {
         assertAll(
             { assertThat(player.name).isEqualTo("이름") },
             { assertThat(player.hands.cards).isEmpty() },
-            { assertThat(player.state).isInstanceOf(PlayerState.Start::class.java) }
+            { assertThat(player.state).isA<PlayerState.Start>() }
         )
     }
 
@@ -30,7 +31,7 @@ class PlayerTest {
 
         assertAll(
             { assertThat(player.hands.cards).hasSize(2) },
-            { assertThat(player.state).isInstanceOf(PlayerState.Blackjack::class.java) }
+            { assertThat(player.state).isA<PlayerState.Blackjack>() }
         )
     }
 
@@ -48,7 +49,7 @@ class PlayerTest {
         }
         player.finish()
 
-        assertThat(player.state).isInstanceOf(PlayerState.Stay::class.java)
+        assertThat(player.state).isA<PlayerState.Stay>()
     }
 
     @Test

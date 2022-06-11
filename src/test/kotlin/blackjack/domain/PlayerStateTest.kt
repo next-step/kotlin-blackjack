@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -8,10 +9,10 @@ class PlayerStateTest {
     @Test
     fun `PlayerState는 점수와 진행 의지에 따른 현재 플레이어의 상태를 나타낸다`() {
         assertAll(
-            { assertThat(hitState()).isInstanceOf(PlayerState.Hit::class.java) },
-            { assertThat(stayState()).isInstanceOf(PlayerState.Stay::class.java) },
-            { assertThat(blackjackState()).isInstanceOf(PlayerState.Blackjack::class.java) },
-            { assertThat(bustState()).isInstanceOf(PlayerState.Bust::class.java) },
+            { assertThat(hitState()).isA<PlayerState.Hit>() },
+            { assertThat(stayState()).isA<PlayerState.Stay>() },
+            { assertThat(blackjackState()).isA<PlayerState.Blackjack>() },
+            { assertThat(bustState()).isA<PlayerState.Bust>() },
         )
     }
 
