@@ -5,44 +5,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class PlayerStateTest {
-    private val hitOrStayScore = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
-            )
-        )
-    )
-    private val blackjackScore = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
-                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
-            )
-        )
-    )
-    private val bustScore = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
-                PlayingCard.of(Suit.HEARTS, CardNumber.QUEEN),
-                PlayingCard.of(Suit.HEARTS, CardNumber.JACK)
-            )
-        )
-    )
-
-    private val hitState = PlayerState.of(hitOrStayScore, true)
-    private val stayState = PlayerState.of(hitOrStayScore, false)
-    private val blackjackState = PlayerState.of(blackjackScore)
-    private val bustState = PlayerState.of(bustScore)
-
     @Test
     fun `PlayerState는 점수와 진행 의지에 따른 현재 플레이어의 상태를 나타낸다`() {
         assertAll(
-            { assertThat(hitState).isInstanceOf(PlayerState.Hit::class.java) },
-            { assertThat(stayState).isInstanceOf(PlayerState.Stay::class.java) },
-            { assertThat(blackjackState).isInstanceOf(PlayerState.Blackjack::class.java) },
-            { assertThat(bustState).isInstanceOf(PlayerState.Bust::class.java) },
+            { assertThat(hitState()).isInstanceOf(PlayerState.Hit::class.java) },
+            { assertThat(stayState()).isInstanceOf(PlayerState.Stay::class.java) },
+            { assertThat(blackjackState()).isInstanceOf(PlayerState.Blackjack::class.java) },
+            { assertThat(bustState()).isInstanceOf(PlayerState.Bust::class.java) },
         )
     }
 
@@ -63,10 +32,43 @@ class PlayerStateTest {
     @Test
     fun `isFinished를 통해 플레이어가 게임이 종료된 상태인지 알 수 있다`() {
         assertAll(
-            { assertThat(hitState.isFinished()).isFalse },
-            { assertThat(stayState.isFinished()).isTrue },
-            { assertThat(blackjackState.isFinished()).isTrue },
-            { assertThat(bustState.isFinished()).isTrue },
+            { assertThat(hitState().isFinished()).isFalse },
+            { assertThat(stayState().isFinished()).isTrue },
+            { assertThat(blackjackState().isFinished()).isTrue },
+            { assertThat(bustState().isFinished()).isTrue },
         )
     }
+
+    private fun hitState(): PlayerState = PlayerState.of(hitOrStayScore(), true)
+    private fun stayState(): PlayerState = PlayerState.of(hitOrStayScore(), false)
+    private fun blackjackState(): PlayerState = PlayerState.of(blackjackScore())
+    private fun bustState(): PlayerState = PlayerState.of(bustScore())
+
+    private fun hitOrStayScore(): Score = Score.from(
+        PlayingCards.from(
+            listOf(
+                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+            )
+        )
+    )
+
+    private fun blackjackScore(): Score = Score.from(
+        PlayingCards.from(
+            listOf(
+                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
+                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+            )
+        )
+    )
+
+    private fun bustScore(): Score = Score.from(
+        PlayingCards.from(
+            listOf(
+                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
+                PlayingCard.of(Suit.HEARTS, CardNumber.QUEEN),
+                PlayingCard.of(Suit.HEARTS, CardNumber.JACK)
+            )
+        )
+    )
 }
