@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participant
 
+import blackjack.domain.CustomDeck
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination.KING
 import blackjack.domain.card.Suit.SPADE
-import blackjack.domain.participant.Deck
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

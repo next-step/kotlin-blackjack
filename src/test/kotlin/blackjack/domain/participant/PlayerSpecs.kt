@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination.FIVE
@@ -9,11 +9,8 @@ import blackjack.domain.card.Point
 import blackjack.domain.card.Suit.DIAMOND
 import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
-import blackjack.domain.participant.BlackJack
-import blackjack.domain.participant.Bust
-import blackjack.domain.participant.Hittable
-import blackjack.domain.participant.Player
-import blackjack.domain.participant.Stay
+import blackjack.domain.hand
+import blackjack.domain.to
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll

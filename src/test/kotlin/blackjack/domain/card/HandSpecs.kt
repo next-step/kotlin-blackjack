@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination.ACE
 import blackjack.domain.card.Denomination.KING
 import blackjack.domain.card.Denomination.SEVEN
@@ -8,11 +7,12 @@ import blackjack.domain.card.Denomination.SIX
 import blackjack.domain.card.Denomination.TEN
 import blackjack.domain.card.Denomination.THREE
 import blackjack.domain.card.Denomination.TWO
-import blackjack.domain.card.Point
 import blackjack.domain.card.Suit.CLOVER
 import blackjack.domain.card.Suit.DIAMOND
 import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
+import blackjack.domain.hand
+import blackjack.domain.to
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.data.headers
 import io.kotest.data.row

@@ -9,10 +9,10 @@ import blackjack.domain.result.PlayerResult
 object ResultView {
 
     fun showResultHand(participants: List<Participant>) {
-        println()
         participants.forEach {
             println(it.display())
         }
+        println()
     }
 
     private fun Participant.display(): String {
