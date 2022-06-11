@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.constant.ErrorMessages
 import kotlin.random.Random
 
 /**
@@ -13,8 +14,11 @@ enum class CardType(val title: String) {
     DIAMOND("다이아");
 
     companion object {
-        // 나중에 테스트 가능하게 변경
-        fun pick(): CardType {
+        fun pick(title: String? = null): CardType {
+            title?.let {
+                return CardType.values().find { it.title == title }
+                    ?: throw IllegalArgumentException(ErrorMessages.NOT_CARD_TYPE)
+            }
             val random = Random.nextInt(CardType.values().size)
             return CardType.values()[random]
         }

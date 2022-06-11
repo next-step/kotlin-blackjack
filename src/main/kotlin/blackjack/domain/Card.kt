@@ -10,8 +10,8 @@ data class Card(val type: CardType, val number: CardNumber) {
     }
 
     companion object {
-        fun take(): Card {
-            return Card(CardType.pick(), CardNumber.pick())
+        fun take(type: String? = null, number: String? = null): Card {
+            return Card(CardType.pick(type), CardNumber.pick(number))
         }
     }
 }

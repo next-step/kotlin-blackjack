@@ -8,8 +8,26 @@ import org.junit.jupiter.api.Test
  */
 class CardsTest {
     @Test
-    internal fun `카드 추가시 추가가 잘 된다`() {
+    fun `카드 추가시 추가가 잘 된다`() {
         val cards = Cards().apply { addCard() }
         assertThat(cards.cards).hasSize(1)
+    }
+
+    @Test
+    fun `A스페이드와 8하트 카드를 갖고 있는경우 점수는 19점이다`() {
+        val cards = Cards().apply {
+            addCard("스페이드", "A")
+            addCard("하트", "8")
+        }
+        assertThat(cards.getScore()).isEqualTo(19)
+    }
+
+    @Test
+    fun `A다이아와 K하트 카드를 갖고 있는경우 점수는 21점이다`() {
+        val cards = Cards().apply {
+            addCard("다이아", "A")
+            addCard("하트", "K")
+        }
+        assertThat(cards.getScore()).isEqualTo(21)
     }
 }

@@ -6,11 +6,11 @@ package blackjack.domain
  */
 class Cards {
     private val _cards = mutableListOf<Card>()
-    val cards: List<Card>
+    val cards: List<Card> // TODO 이건 없어도 될듯?
         get() = _cards.toList()
 
-    fun addCard() {
-        _cards.add(Card.take())
+    fun addCard(type: String? = null, number: String? = null) {
+        _cards.add(Card.take(type, number))
     }
 
     fun getScore(): Int {
@@ -22,11 +22,11 @@ class Cards {
     }
 
     private fun getHighScore(): Int {
-        return _cards.sumOf { it.number.lowScore }
+        return _cards.sumOf { it.number.highScore }
     }
 
     private fun getLowScore(): Int {
-        return _cards.sumOf { it.number.highScore }
+        return _cards.sumOf { it.number.lowScore }
     }
 
     fun isOverScore(): Boolean {
@@ -34,6 +34,6 @@ class Cards {
     }
 
     override fun toString(): String {
-        return cards.joinToString(", ")
+        return _cards.joinToString(", ")
     }
 }
