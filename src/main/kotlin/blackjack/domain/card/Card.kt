@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 sealed class Card(val suit: CardSuit, val text: String, val value: Int, val bonusValue: Int = 0) {
     class Two(suit: CardSuit) : Card(suit, "2", 2)

@@ -1,4 +1,4 @@
-package blackjack.card
+package blackjack.domain.card
 
 enum class CardSuit(val text: String) {
     DIAMOND("다이아몬드"),

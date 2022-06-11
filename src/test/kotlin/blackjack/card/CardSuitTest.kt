@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.card
 
-import blackjack.card.CardSuit
+import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
