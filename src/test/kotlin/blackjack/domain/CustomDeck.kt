@@ -5,8 +5,8 @@ class CustomDeck(
 ) : Deck {
     private val cards: MutableList<Card> = cards.toMutableList()
 
-    override fun sizeOfRemaining(): Int {
-        return cards.size
+    override fun isEmpty(): Boolean {
+        return cards.isEmpty()
     }
 
     override fun draw(): Card {

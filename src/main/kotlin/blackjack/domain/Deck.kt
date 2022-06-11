@@ -1,7 +1,8 @@
 package blackjack.domain
 
 interface Deck {
-    fun sizeOfRemaining(): Int
+    fun isEmpty(): Boolean
+    fun isNotEmpty(): Boolean = !isEmpty()
     fun draw(): Card
 }
 
@@ -18,8 +19,8 @@ class ShuffledDeck : Deck {
             }
     }
 
-    override fun sizeOfRemaining(): Int {
-        return cards.size
+    override fun isEmpty(): Boolean {
+        return cards.isEmpty()
     }
 
     override fun draw(): Card {
