@@ -40,7 +40,7 @@ class BlackJackGameTest {
             dealer.addCard(cardDeck.pickCard())
         }
 
-        blackJackGame.calculateWinner()
+        WinnerJudge(blackJackGame.players, blackJackGame.dealer)
 
         Assertions.assertThat(blackJackGame.players[0].isWinner).isTrue
         Assertions.assertThat(blackJackGame.players[1].isWinner).isTrue

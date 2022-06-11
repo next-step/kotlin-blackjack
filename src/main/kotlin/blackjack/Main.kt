@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.card.CardDeck
 import blackjack.domain.game.BlackJackGame
 import blackjack.domain.game.TakeMoreDealer
+import blackjack.domain.game.WinnerJudge
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Players
 import blackjack.view.InputView
@@ -34,7 +35,8 @@ fun main() {
         }
 
     dealer.play(cardDeck, takeMoreDealer)
-    blackJackGame.calculateWinner()
+    WinnerJudge(blackJackGame.players, blackJackGame.dealer)
+
     resultView.printCardsByPlayers(blackJackGamer, true)
     resultView.printFinalResult(blackJackGamer)
 }
