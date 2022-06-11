@@ -14,6 +14,8 @@ class Player(
     override var state: State = state
         private set
 
+    override fun playable(): Boolean = state is Hittable
+
     override fun saidHit(): Boolean {
         val isHit = selectHit(name)
         if (!isHit) {

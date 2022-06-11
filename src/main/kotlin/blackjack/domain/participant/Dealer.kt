@@ -7,15 +7,13 @@ import blackjack.domain.card.Point
 class Dealer(
     private val deck: Deck = ShuffledDeck(),
     hand: Hand = Hand.empty(),
-    private val participant: Participant = Player(DEALER_NAME, hand)
+    state: State = Hittable,
+    private val participant: Participant = Player(DEALER_NAME, hand, state)
 ) : Participant by participant {
 
     override val name: String = DEALER_NAME
 
-    override var state = participant.state
-        get() =
-            if (field is Stay) field
-            else participant.state
+    override var state: State = participant.state
         private set
 
     fun draw(): Card {
@@ -27,6 +25,8 @@ class Dealer(
         return Hand(listOf(hand.first()))
     }
 
+    override fun playable(): Boolean = state is Hittable
+
     override fun saidHit(): Boolean = true
 
     override fun receive(card: Card) {
@@ -36,6 +36,7 @@ class Dealer(
 
     private fun changeState() {
         val point = hand.calculate()
+        state = participant.state
         if (point >= STAY_POINT && point < Point.BLACKJACK) {
             state = Stay(point)
         }
