@@ -19,6 +19,10 @@ class Card private constructor(val suit: CardSuit, val number: CardNumber) {
             return requireNotNull(CARDS[key(suit, number)]) { "잘못된 카드 모양과 숫자입니다." }
         }
 
+        fun ofCombinations(): Set<Card> {
+            return CARDS.values.toSet()
+        }
+
         private fun key(suit: CardSuit, number: CardNumber): String {
             return suit.name + number.name
         }

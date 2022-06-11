@@ -28,6 +28,14 @@ internal class CardTest {
         assertThat(spadeAce1).isEqualTo(spadeAce2)
     }
 
+    @DisplayName("카드 조합은 총 52가지이다.")
+    @Test
+    fun cardCombinationNumberTest() {
+        val allCombinationsOfCards = Card.ofCombinations()
+
+        assertThat(allCombinationsOfCards.size).isEqualTo(52)
+    }
+
     @DisplayName("카드 조합 테스트")
     @ParameterizedTest
     @CsvSource(
@@ -39,10 +47,13 @@ internal class CardTest {
             "CLUB,ACE", "CLUB,TWO", "CLUB,THREE", "CLUB,FOUR", "CLUB,FIVE", "CLUB,SIX", "CLUB,SEVEN", "CLUB,EIGHT", "CLUB,NINE", "CLUB,TEN", "CLUB,JACK", "CLUB,QUEEN", "CLUB,KING",
         ]
     )
-    fun cardsTest(suit: String, number: String) {
+    fun getCardTest(suit: String, number: String) {
+        val actualCardCombinations = Card.ofCombinations()
+
         val cardSuit = CardSuit.valueOf(suit)
         val cardNumber = CardNumber.valueOf(number)
-        val card = Card.of(cardSuit, cardNumber)
-        assertThat(card).isNotNull
+        val expectedCard = Card.of(cardSuit, cardNumber)
+
+        assertThat(actualCardCombinations.contains(expectedCard)).isTrue
     }
 }
