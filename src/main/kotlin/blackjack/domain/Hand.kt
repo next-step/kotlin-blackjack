@@ -4,7 +4,7 @@ import blackjack.domain.Denomination.ACE
 import java.lang.Integer.max
 
 data class Hand(
-    private val cards: List<Card> = emptyList()
+    private val cards: List<Card> = emptyList(),
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
