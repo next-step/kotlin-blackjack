@@ -23,7 +23,7 @@ object BlackjackController {
     }
 
     private fun hitStage(user: User) {
-        while (!user.cards.isOverScore()) {
+        while (!user.cards.isBust()) {
             OutputView.printMoreCard(user)
             if (!InputView.getYesOrNo()) return
             user.cards.addCard()

@@ -11,7 +11,7 @@ import blackjack.domain.Users
 object OutputView {
     fun printHandOutMessage(users: Users) {
         println()
-        println(Messages.HAND_OUT_CARD.format(users.users.joinToString(", ") { it.name }))
+        println(Messages.HAND_OUT_CARD.format(users.names().joinToString()))
     }
 
     fun printUsersCard(users: Users) {

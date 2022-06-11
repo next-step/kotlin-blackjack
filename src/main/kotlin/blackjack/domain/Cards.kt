@@ -28,7 +28,7 @@ class Cards {
             CardNumber.ACE.highScore
     }
 
-    fun isOverScore(): Boolean {
+    fun isBust(): Boolean {
         return getScore() > BLACKJACK_SCORE
     }
 
