@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-sealed class Card(val suit: CardSuit, val text: String, val value: Int, val bonusValue: Int = 0) {
+sealed class Card(val suit: CardSuit, private val text: String, val value: Int, val bonusValue: Int = 0) {
     class Two(suit: CardSuit) : Card(suit, "2", 2)
     class Three(suit: CardSuit) : Card(suit, "3", 3)
     class Four(suit: CardSuit) : Card(suit, "4", 4)
@@ -14,4 +14,6 @@ sealed class Card(val suit: CardSuit, val text: String, val value: Int, val bonu
     class Queen(suit: CardSuit) : Card(suit, "Q", 10)
     class King(suit: CardSuit) : Card(suit, "K", 10)
     class Ace(suit: CardSuit) : Card(suit, "A", 1, 10)
+
+    fun getName(): String = "${text}${suit.text}"
 }
