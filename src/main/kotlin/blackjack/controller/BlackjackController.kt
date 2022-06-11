@@ -15,7 +15,6 @@ object BlackjackController {
         OutputView.printHandOutMessage(players)
         OutputView.printUsersCard(players)
 
-        // 카드 받는 부분.
         players.users.forEach { user ->
             hitStage(user)
         }

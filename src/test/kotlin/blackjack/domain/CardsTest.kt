@@ -30,4 +30,23 @@ class CardsTest {
         }
         assertThat(cards.getScore()).isEqualTo(21)
     }
+
+    @Test
+    fun `A다이아와 A클로버 카드를 갖고 있는경우 점수는 12점이다`() {
+        val cards = Cards().apply {
+            addCard("다이아", "A")
+            addCard("클로버", "A")
+        }
+        assertThat(cards.getScore()).isEqualTo(12)
+    }
+
+    @Test
+    fun `A다이아와 A클로버 A하트 카드를 갖고 있는경우 점수는 13점이다`() {
+        val cards = Cards().apply {
+            addCard("다이아", "A")
+            addCard("클로버", "A")
+            addCard("하트", "A")
+        }
+        assertThat(cards.getScore()).isEqualTo(13)
+    }
 }

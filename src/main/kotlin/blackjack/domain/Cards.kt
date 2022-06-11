@@ -14,23 +14,22 @@ class Cards {
     fun getSize() = hands.size
 
     fun getScore(): Int {
-        return if (getHighScore() <= BLACKJACK_SCORE) {
-            getHighScore()
-        } else {
-            getLowScore()
+        var score = hands.filter { it.number != CardNumber.ACE }.sumOf { it.number.score }
+        repeat(hands.count { it.number == CardNumber.ACE }) {
+            score += processAce(score)
         }
+        return score
     }
 
-    private fun getHighScore(): Int {
-        return hands.sumOf { it.number.highScore }
-    }
-
-    private fun getLowScore(): Int {
-        return hands.sumOf { it.number.lowScore }
+    private fun processAce(score: Int): Int {
+        return if (score > BLACKJACK_SCORE - CardNumber.ACE.highScore)
+            CardNumber.ACE.score
+        else
+            CardNumber.ACE.highScore
     }
 
     fun isOverScore(): Boolean {
-        return getScore() > 21
+        return getScore() > BLACKJACK_SCORE
     }
 
     override fun toString(): String {

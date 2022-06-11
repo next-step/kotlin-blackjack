@@ -7,7 +7,7 @@ import kotlin.random.Random
  * 카드 숫자를 저장하는 클래스
  * Created by Jaesungchi on 2022.06.07..
  */
-enum class CardNumber(val title: String, val lowScore: Int, val highScore: Int = lowScore) {
+enum class CardNumber(val title: String, val score: Int, val highScore: Int = 0) {
     ACE("A", 1, 11),
     TWO("2", 2),
     THREE("3", 3),
