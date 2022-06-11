@@ -1,19 +1,15 @@
 package blackjack.domain.player
 
-class Players(playerNames: List<String>, dealer: Dealer) {
+class Players(playerNames: List<String>) {
     val players: List<Player>
 
     init {
         players = playerNames
             .map { Player(it) }
             .toMutableList()
-
-        players.add(dealer)
     }
 
     fun playersToPlay(): List<Player> {
-        return players
-            .filter { it !is Dealer }
-            .filter { it.canMoreGame() }
+        return players.filter { it.canMoreGame() }
     }
 }

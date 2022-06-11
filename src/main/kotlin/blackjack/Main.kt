@@ -18,10 +18,12 @@ fun main() {
     val takeMorePlayer = TakeMorePlayer()
     val takeMoreDealer = TakeMoreDealer()
     val dealer = Dealer()
-    val players = Players(playerNames, dealer)
+    val players = Players(playerNames)
 
-    val blackJackGame = BlackJackGame(cardDeck, players)
-    resultView.printInitDistributed(blackJackGame.players)
+    val blackJackGame = BlackJackGame(cardDeck, players, dealer)
+    val blackJackGamer = blackJackGame.players + blackJackGame.dealer
+
+    resultView.printInitDistributed(blackJackGamer)
 
     players.playersToPlay()
         .map {
@@ -31,8 +33,8 @@ fun main() {
             }
         }
 
-    blackJackGame.playDealer(takeMoreDealer)
+    dealer.play(cardDeck, takeMoreDealer)
     blackJackGame.calculateWinner()
-    resultView.printCardsByPlayers(blackJackGame.players, true)
-    resultView.printFinalResult(blackJackGame.players)
+    resultView.printCardsByPlayers(blackJackGamer, true)
+    resultView.printFinalResult(blackJackGamer)
 }

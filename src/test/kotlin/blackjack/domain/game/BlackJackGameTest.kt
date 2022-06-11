@@ -1,7 +1,5 @@
 package blackjack.domain.game
 
-import blackjack.domain.FixtureBuilder.Companion.TakeMoreDealerFixture
-import blackjack.domain.FixtureBuilder.Companion.TakeMorePlayerFixture
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Players
@@ -14,18 +12,18 @@ class BlackJackGameTest {
     fun `블랙잭 게임을 2인이 조인했을 때 인원 수 체크`() {
         val cardDeck = CardDeck()
         val dealer = Dealer()
-        val players = Players(listOf("A", "B"), dealer)
-        val blackJackGame = BlackJackGame(cardDeck, players)
+        val players = Players(listOf("A", "B"))
+        val blackJackGame = BlackJackGame(cardDeck, players, dealer)
 
-        Assertions.assertThat(blackJackGame.players).hasSize(3)
+        Assertions.assertThat(blackJackGame.players+dealer).hasSize(3)
     }
 
     @Test
     fun `블랙잭 게임을 2인이 조인했을 때 초기 카드 갯수 체크`() {
         val cardDeck = CardDeck()
         val dealer = Dealer()
-        val players = Players(listOf("A", "B"), dealer)
-        val blackJackGame = BlackJackGame(cardDeck, players)
+        val players = Players(listOf("A", "B"))
+        val blackJackGame = BlackJackGame(cardDeck, players, dealer)
 
         Assertions.assertThat(blackJackGame.players[0].receivedCards).hasSize(2)
         Assertions.assertThat(blackJackGame.players[1].receivedCards).hasSize(2)
@@ -35,8 +33,8 @@ class BlackJackGameTest {
     fun `딜러가 21 초과이기 때문에, 참가자 모두 이기는 게임 체크`() {
         val cardDeck = CardDeck()
         val dealer = Dealer()
-        val players = Players(listOf("A", "B"), dealer)
-        val blackJackGame = BlackJackGame(cardDeck, players)
+        val players = Players(listOf("A", "B"))
+        val blackJackGame = BlackJackGame(cardDeck, players, dealer)
 
         while (dealer.score <= 21) {
             dealer.addCard(cardDeck.pickCard())

@@ -6,42 +6,33 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 class BlackJackGame(
-    private var cardDeck: CardDeck,
-    private var _players: Players
+    cardDeck: CardDeck,
+    private val _players: Players,
+    private val _dealer: Dealer
 ) {
 
     val players: List<Player>
         get() = _players.players
 
+    val dealer: Dealer
+        get() = _dealer
+
     init {
-        _players.players
-            .map {
-                it.receivedCards.add(cardDeck.pickCard())
-                it.receivedCards.add(cardDeck.pickCard())
-            }
+        firstDeal(cardDeck)
     }
 
-    fun playDealer(takeMoreDealerStrategy: TakeMoreDealerStrategy) {
-        val dealer = _players.players
-            .filterIsInstance<Dealer>()
-            .first()
-
-        while (dealer.canBeTakeOneCard(takeMoreDealerStrategy)) {
-            dealer.addCard(cardDeck.pickCard())
+    private fun firstDeal(cardDeck: CardDeck) {
+        (players + dealer).map {
+            it.addCard(cardDeck.pickCard())
+            it.addCard(cardDeck.pickCard())
         }
     }
 
     fun calculateWinner() {
-        val dealer = _players.players
-            .filterIsInstance<Dealer>()
-            .first()
-
-        val players = _players.players
-            .filter { it !is Dealer }
-
-        players.forEach {
-            judge(it, dealer)
-        }
+        _players.players
+            .forEach {
+                judge(it, _dealer)
+            }
     }
 
     private fun judge(player: Player, dealer: Dealer) {

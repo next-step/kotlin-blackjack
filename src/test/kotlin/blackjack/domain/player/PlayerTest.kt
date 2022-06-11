@@ -1,10 +1,10 @@
 package blackjack.domain.player
 
-import blackjack.domain.FixtureBuilder.Companion.TakeMoreDealerFixture
-import blackjack.domain.FixtureBuilder.Companion.TakeMorePlayerFixture
 import blackjack.domain.card.Card.AceCard
 import blackjack.domain.card.Card.BasicCard
+import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardSuit
+import blackjack.domain.game.BlackJackGame
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,10 +12,12 @@ class PlayerTest {
 
     @Test
     fun `딜러가 추가되었는지 테스트`() {
+        val cardDeck = CardDeck()
+        val players = Players(listOf("플레이어"))
         val dealer = Dealer()
-        val players = Players(listOf("플레이어"), dealer)
+        val blackJackGame = BlackJackGame(cardDeck, players, dealer)
 
-        assertThat(players.players.filterIsInstance<Dealer>().first().name).isEqualTo("딜러")
+        assertThat(blackJackGame.dealer.name).isEqualTo("딜러")
     }
 
     @Test
