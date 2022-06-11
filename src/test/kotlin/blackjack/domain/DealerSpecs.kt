@@ -13,6 +13,7 @@ import blackjack.domain.Suit.HEART
 import blackjack.domain.Suit.SPADE
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
 class DealerSpecs : DescribeSpec({
@@ -52,6 +53,12 @@ class DealerSpecs : DescribeSpec({
                 dealer.receive(Card(TWO, HEART))
                 dealer.state shouldBe STAY
             }
+        }
+
+        it("카드 패를 공개할 때 첫번째 카드만 공개한다") {
+            val hand = hand(KING to SPADE, SIX to DIAMOND)
+            val dealer = Dealer(hand = hand)
+            dealer.open() shouldBeEqualToComparingFields hand(KING to SPADE)
         }
     }
 })

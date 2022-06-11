@@ -7,6 +7,7 @@ interface Participant {
 
     fun isHit(): Boolean
     fun receive(card: Card)
+    fun open(): Hand = hand
 }
 
 enum class State(

@@ -19,6 +19,10 @@ class Dealer(
         return deck.draw()
     }
 
+    override fun open(): Hand {
+        return Hand(listOf(hand.first()))
+    }
+
     override fun isHit(): Boolean = true
 
     override fun receive(card: Card) {
