@@ -83,4 +83,22 @@ class PlayerStateTest {
         val newPlayerState = (playerState as PlayerState.Playing).hit(additionalCard)
         assertThat(newPlayerState).isExactlyInstanceOf(PlayerState.Done::class.java)
     }
+
+    @Test
+    fun `사용자가 게임을 진행할 수 있는 상태이고 stand 를 했을 경우 게임 불가 상태가 된다`() {
+        val player = Player("vivian")
+
+        val cards = listOf(
+            Card.Six(CardSuit.CLOVER),
+            Card.Six(CardSuit.HEART),
+        )
+
+        cards.forEach { player.addCardToHand(it) }
+
+        val playerState = PlayerState.of(player)
+        assertThat(playerState).isExactlyInstanceOf(PlayerState.Playing::class.java)
+
+        val newPlayerState = (playerState as PlayerState.Playing).stand()
+        assertThat(newPlayerState).isExactlyInstanceOf(PlayerState.Done::class.java)
+    }
 }
