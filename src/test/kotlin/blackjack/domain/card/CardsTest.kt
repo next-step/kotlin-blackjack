@@ -1,8 +1,5 @@
-package blackjack.card
+package blackjack.domain.card
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardSuit
-import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.assertj.core.api.Assertions.assertThatNoException

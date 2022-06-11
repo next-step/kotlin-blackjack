@@ -1,6 +1,5 @@
-package blackjack.card
+package blackjack.domain.card
 
-import blackjack.domain.card.CardDeck
 import io.kotest.matchers.collections.shouldNotContainDuplicates
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.assertj.core.api.Assertions.assertThatNoException
