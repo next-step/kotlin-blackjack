@@ -24,7 +24,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
     }
 
     private fun serve(to: Player, card: Card) {
-        to.take(card)
+        to.receive(card)
     }
 
     companion object {
