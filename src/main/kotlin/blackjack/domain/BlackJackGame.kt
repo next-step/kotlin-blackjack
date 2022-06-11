@@ -1,19 +1,17 @@
 package blackjack.domain
 
-import kotlin.math.abs
-
 data class BlackJackGame(
+    val dealer: Dealer,
     val players: List<Participant>,
     val cardDeck: Deck
 ) {
-    private val playerMap = players.associate { it.name to it.playerCards }
-    val dealer = players.first { it.isDealer }
-    val normalPlayer = players.filter { !it.isDealer }
-    val dealerCards = dealer.playerCards
-    private val dealerScore = dealerCards.score()
+
+    val participants = listOf(dealer) + players
+    val participantsSortByPlayer = players + listOf(dealer)
+    private val playerMap = participants.associate { it.name to it.playerCards }
 
     fun firstCardDistribution() {
-        players.forEach { participant ->
+        participants.forEach { participant ->
             participant.addFirstCard()
         }
     }
@@ -22,46 +20,12 @@ data class BlackJackGame(
         playerMap[playerName]!!.addCard(cardDeck.draw())
     }
 
-    fun drawToDealer() {
-        dealer.addCard(cardDeck.draw())
-    }
-
-    fun getGameResult(): List<Participant> {
-        if (dealerScore > BLACK_JACK_SCORE) {
-            setDealerWinGameResult()
+    fun match() {
+        val gameResult = GameResult(dealer, players)
+        if (dealer.isBust) {
+            gameResult.setDealerIsWin()
         } else {
-            setGameResult()
-        }
-        return players
-    }
-
-    private fun setDealerWinGameResult() {
-        dealer.addGameResult(List(normalPlayer.size) { GameResult.WIN })
-        normalPlayer.forEach {
-            it.setLose()
-        }
-    }
-
-    private fun setGameResult() {
-        normalPlayer.forEach {
-            it.setGameResult()
-        }
-    }
-
-    private fun Participant.setLose() {
-        addGameResult(listOf(GameResult.LOSE))
-    }
-
-    private fun Participant.setGameResult() {
-        if (abs(BLACK_JACK_SCORE - playerCards.score()) < BLACK_JACK_SCORE - dealerScore) {
-            addGameResult(listOf(GameResult.WIN))
-            dealer.addGameResult(listOf(GameResult.LOSE))
-        } else if (playerCards.score() == dealerScore) {
-            addGameResult(listOf(GameResult.DRAW))
-            dealer.addGameResult(listOf(GameResult.DRAW))
-        } else {
-            addGameResult(listOf(GameResult.LOSE))
-            dealer.addGameResult(listOf(GameResult.WIN))
+            gameResult.decideWinner()
         }
     }
 
@@ -72,13 +36,12 @@ data class BlackJackGame(
     }
 
     companion object {
-        fun of(players: List<Participant>, deck: Deck): BlackJackGame {
+        fun of(dealer: Dealer, players: List<Participant>, deck: Deck): BlackJackGame {
             return BlackJackGame(
-                players, deck
+                dealer, players, deck
             )
         }
 
-        private const val BLACK_JACK_SCORE = 21
         private const val FIRST_DISTRIBUTION_CARD_COUNT = 2
     }
 }

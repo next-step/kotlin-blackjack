@@ -1,34 +1,34 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.GameResult
+import blackjack.domain.GameScore
 import blackjack.domain.Participant
 
 object ResultView {
     fun gameResult(blackJackGame: BlackJackGame) {
         println()
-        val gameResult = blackJackGame.getGameResult()
         println("### 최종 승패")
-        gameResult.forEach {
+        blackJackGame.participants.forEach {
             printResult(it)
         }
     }
 
     private fun printResult(participant: Participant) {
-        var result = ""
-        GameResult.values().forEach { gameResult ->
-            participant.gameResults.count { it == gameResult }.takeIf { it != ZERO }
-                ?.let { result = "$result$it${gameResult.getDisplayName()} " }
-        }
-        println("${participant.name} : $result")
+        println("${participant.name} : ${makeResult(participant.gameScore)}")
     }
 
-    private fun GameResult.getDisplayName(): String {
-        return when (this) {
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.DRAW -> "무"
+    private fun makeResult(gameScore: GameScore): String {
+        val result = StringBuilder()
+        if (gameScore.win != ZERO) {
+            result.append("${gameScore.win}승")
         }
+        if (gameScore.draw != ZERO) {
+            result.append("${gameScore.draw}무")
+        }
+        if (gameScore.lose != ZERO) {
+            result.append("${gameScore.lose}패")
+        }
+        return result.toString()
     }
 
     private const val ZERO = 0

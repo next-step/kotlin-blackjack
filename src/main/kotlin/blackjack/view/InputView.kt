@@ -1,21 +1,28 @@
 package blackjack.view
 
+import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.exception.InvalidInputValueException
 
 object InputView {
 
-    fun createParticipants(): List<Participant> {
+    fun createDealer(): Dealer {
         println("딜러 이름을 입력해주세요. (미입력시 이름은 딜러가 됩니다.)")
         val dealer = readlnOrNull()
-        val dealerPlayer = Participant(name = dealer ?: DEALER, isDealer = true)
+        val dealerName = if (dealer.isNullOrEmpty()) {
+            DEALER
+        } else dealer
+        return Dealer(name = dealerName)
+    }
+
+    fun createParticipants(): List<Participant> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val participants = readln().split(",")
-        val normalPlayer = participants.map { Participant(it) }
-        return listOf(dealerPlayer) + normalPlayer
+        return participants.map { Participant(it) }
     }
 
     fun needMoreCard(player: Participant): Boolean {
+        println()
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln().toBoolean()
     }
