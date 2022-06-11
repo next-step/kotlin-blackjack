@@ -13,7 +13,7 @@ class HandsTest {
                 PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
             )
         )
-        val hands = Hands.from(cards)
+        val hands = Hands(cards)
 
         assertThat(hands.cards).isEqualTo(cards)
     }
@@ -26,7 +26,7 @@ class HandsTest {
                 PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
             )
         )
-        val hands = Hands.from(cards)
+        val hands = Hands(cards)
         val additionalCards = PlayingCards.from(
             listOf(
                 PlayingCard.of(Suit.DIAMONDS, CardNumber.KING),
@@ -49,7 +49,7 @@ class HandsTest {
                 PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
             )
         )
-        val hands = Hands.from(cards)
+        val hands = Hands(cards)
 
         assertThat(hands.score.value).isEqualTo(20)
     }

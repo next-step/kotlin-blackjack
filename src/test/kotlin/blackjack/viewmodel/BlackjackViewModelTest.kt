@@ -13,7 +13,7 @@ class BlackjackViewModelTest {
     private val names = listOf("Spade", "Diamond")
     private val players: List<Player>
         get() = names.map { name ->
-            Player.from(name)
+            Player(name)
         }
     private val viewModel: BlackjackViewModel
         get() = BlackjackViewModel.of(

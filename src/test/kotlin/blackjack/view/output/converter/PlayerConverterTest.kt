@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class PlayerConverterTest {
     @Test
     fun `PlayerConverter는 Player를 출력을 위한 문자열로 변환해 반환한다`() {
-        val player = Player.from("joker").apply {
+        val player = Player("joker").apply {
             receive(
                 PlayingCards.from(
                     listOf(

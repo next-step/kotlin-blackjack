@@ -7,7 +7,7 @@ object PlayersConverter : InputConverter<List<Player>> {
 
     override fun convert(input: String): List<Player> {
         return input.split(DELIMITER).map { name ->
-            Player.from(name.trim())
+            Player(name.trim())
         }
     }
 }

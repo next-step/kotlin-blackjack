@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class EndOfGameConverterTest {
     @Test
     fun `EndOfGameConverter는 게임의 결과를 출력을 위한 문자열로 변환해 반환한다`() {
-        val player1 = Player.from("panther").apply {
+        val player1 = Player("panther").apply {
             receive(
                 PlayingCards.from(
                     listOf(
@@ -22,7 +22,7 @@ class EndOfGameConverterTest {
                 )
             )
         }
-        val player2 = Player.from("fox").apply {
+        val player2 = Player("fox").apply {
             receive(
                 PlayingCards.from(
                     listOf(

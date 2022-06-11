@@ -1,7 +1,7 @@
 package blackjack.domain
 
-class Player private constructor(val name: String) {
-    var hands = Hands.from(PlayingCards.empty())
+class Player(val name: String) {
+    var hands = Hands(PlayingCards.empty())
         private set
     var state = PlayerState.of(hands.score)
         private set
@@ -19,8 +19,4 @@ class Player private constructor(val name: String) {
     }
 
     fun isReceivable(): Boolean = !state.isFinished()
-
-    companion object {
-        fun from(name: String): Player = Player(name)
-    }
 }
