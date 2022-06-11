@@ -1,4 +1,4 @@
-package dsl_study
+package dslstudy
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()

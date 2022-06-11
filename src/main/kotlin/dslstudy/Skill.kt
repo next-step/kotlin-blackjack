@@ -1,4 +1,4 @@
-package dsl_study
+package dslstudy
 
 data class Skill(
     val type: Type,

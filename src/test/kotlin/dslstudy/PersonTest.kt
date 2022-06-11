@@ -1,4 +1,4 @@
-package dsl_study
+package dslstudy
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
