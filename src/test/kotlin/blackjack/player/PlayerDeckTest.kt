@@ -6,7 +6,7 @@ import blackjack.card.CardShape
 import io.kotest.core.spec.style.AnnotationSpec
 import io.kotest.matchers.shouldBe
 
-class PlayerCardDeckTest : AnnotationSpec() {
+class PlayerDeckTest : AnnotationSpec() {
 
     @Test
     fun `CardPoint의 합이 반환된다`() {
