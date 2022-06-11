@@ -5,16 +5,16 @@ package blackjack.domain
  * Created by Jaesungchi on 2022.06.07..
  */
 class Cards {
-    private val _cards = mutableListOf<Card>()
-    val cards: List<Card> // TODO 이건 없어도 될듯?
-        get() = _cards.toList()
+    private val hands = mutableListOf<Card>()
 
     fun addCard(type: String? = null, number: String? = null) {
-        _cards.add(Card.take(type, number))
+        hands.add(Card.take(type, number))
     }
 
+    fun getSize() = hands.size
+
     fun getScore(): Int {
-        return if (getHighScore() <= 21) {
+        return if (getHighScore() <= BLACKJACK_SCORE) {
             getHighScore()
         } else {
             getLowScore()
@@ -22,11 +22,11 @@ class Cards {
     }
 
     private fun getHighScore(): Int {
-        return _cards.sumOf { it.number.highScore }
+        return hands.sumOf { it.number.highScore }
     }
 
     private fun getLowScore(): Int {
-        return _cards.sumOf { it.number.lowScore }
+        return hands.sumOf { it.number.lowScore }
     }
 
     fun isOverScore(): Boolean {
@@ -34,6 +34,10 @@ class Cards {
     }
 
     override fun toString(): String {
-        return _cards.joinToString(", ")
+        return hands.joinToString(", ")
+    }
+
+    companion object {
+        const val BLACKJACK_SCORE = 21
     }
 }

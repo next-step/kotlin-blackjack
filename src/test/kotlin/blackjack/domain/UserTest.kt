@@ -20,6 +20,6 @@ class UserTest {
 
     @Test
     internal fun `게임 시작시 카드를 2장씩 받는다`() {
-        assertThat(User("name").cards.cards).hasSize(2)
+        assertThat(User("name").cards.getSize()).isEqualTo(2)
     }
 }

@@ -10,7 +10,7 @@ class CardsTest {
     @Test
     fun `카드 추가시 추가가 잘 된다`() {
         val cards = Cards().apply { addCard() }
-        assertThat(cards.cards).hasSize(1)
+        assertThat(cards.getSize()).isEqualTo(1)
     }
 
     @Test
