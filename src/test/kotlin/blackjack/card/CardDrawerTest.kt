@@ -3,6 +3,7 @@ package blackjack.card
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDrawer
 import blackjack.domain.card.CardSuit
+import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,7 +16,7 @@ class CardDrawerTest {
         val fourthCard = Card.Two(CardSuit.SPADE)
         val listOfCards = listOf(firstCard, secondCard, thirdCard, fourthCard)
 
-        val cardDrawer = CardDrawer(listOfCards)
+        val cardDrawer = CardDrawer(Cards(listOfCards))
 
         assertThat(cardDrawer.draw()).isSameAs(firstCard)
         assertThat(cardDrawer.draw()).isSameAs(secondCard)
@@ -31,7 +32,7 @@ class CardDrawerTest {
         val fourthCard = Card.Two(CardSuit.SPADE)
         val listOfCards = listOf(firstCard, secondCard, thirdCard, fourthCard)
 
-        val cardDrawer = CardDrawer(listOfCards)
+        val cardDrawer = CardDrawer(Cards(listOfCards))
 
         repeat(4) {
             assertThat(cardDrawer.draw()).isNotNull
