@@ -10,7 +10,7 @@ internal class CardSuitTest {
 
     @DisplayName("카드 모양은 4개이다.")
     @Test
-    fun countOfCardSuitTest() {
+    fun countOfCardSuit() {
         assertThat(CardSuit.CARD_SUIT_NUMBERS).isEqualTo(4)
     }
 
@@ -25,7 +25,7 @@ internal class CardSuitTest {
             "CLUB.♣",
         ]
     )
-    fun cardSuitTest(suit: String, shape: String) {
+    fun cardSuit(suit: String, shape: String) {
         assertThat(CardSuit.valueOf(suit)).isNotNull
     }
 }

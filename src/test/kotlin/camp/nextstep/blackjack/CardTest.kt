@@ -10,7 +10,7 @@ internal class CardTest {
 
     @DisplayName("카드는 모양과 숫자로 이루어져있다.")
     @Test
-    fun cardPropertiesTest() {
+    fun cardProperties() {
         val spadeAce = Card.of(CardSuit.SPADE, CardNumber.ACE)
 
         val (suit, cardNumber) = spadeAce
@@ -21,7 +21,7 @@ internal class CardTest {
 
     @DisplayName("카드 모양과 숫자가 같으면 같은 카드이다.")
     @Test
-    fun cardEqualityTest() {
+    fun cardEquality() {
         val spadeAce1 = Card.of(CardSuit.SPADE, CardNumber.ACE)
         val spadeAce2 = Card.of(CardSuit.SPADE, CardNumber.ACE)
 
@@ -30,7 +30,7 @@ internal class CardTest {
 
     @DisplayName("카드 조합은 총 52가지이다.")
     @Test
-    fun cardCombinationNumberTest() {
+    fun cardCombinationNumber() {
         val allCombinationsOfCards = Card.ofCombinations()
 
         assertThat(allCombinationsOfCards.size).isEqualTo(CardSuit.CARD_SUIT_NUMBERS * CardNumber.CARD_NUMBERS)
@@ -47,7 +47,7 @@ internal class CardTest {
             "CLUB,ACE", "CLUB,TWO", "CLUB,THREE", "CLUB,FOUR", "CLUB,FIVE", "CLUB,SIX", "CLUB,SEVEN", "CLUB,EIGHT", "CLUB,NINE", "CLUB,TEN", "CLUB,JACK", "CLUB,QUEEN", "CLUB,KING",
         ]
     )
-    fun getCardTest(suit: String, number: String) {
+    fun getCard(suit: String, number: String) {
         val actualCardCombinations = Card.ofCombinations()
 
         val cardSuit = CardSuit.valueOf(suit)

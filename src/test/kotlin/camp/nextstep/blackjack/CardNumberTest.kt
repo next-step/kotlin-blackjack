@@ -10,7 +10,7 @@ internal class CardNumberTest {
 
     @DisplayName("카드 숫자는 모두 13개이다.")
     @Test
-    fun countOfCardNumberTest() {
+    fun countOfCardNumber() {
         assertThat(CardNumber.CARD_NUMBERS).isEqualTo(13)
     }
 
@@ -25,7 +25,7 @@ internal class CardNumberTest {
             "TEN", "JACK", "QUEEN", "KING",
         ]
     )
-    fun cardNumberTwoToTenTest(number: String) {
+    fun cardNumberTwoToTen(number: String) {
         assertThat(CardNumber.valueOf(number)).isNotNull
     }
 }
