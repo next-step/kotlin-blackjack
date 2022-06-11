@@ -1,6 +1,4 @@
-package camp.nextstep.blackjack
-
-import camp.nextstep.blackjack.card.CardDeck
+package camp.nextstep.blackjack.card
 
 object CardShuffler {
 

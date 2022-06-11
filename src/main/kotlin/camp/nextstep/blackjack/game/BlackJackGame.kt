@@ -1,8 +1,8 @@
 package camp.nextstep.blackjack.game
 
-import camp.nextstep.blackjack.CardShuffler
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardDeck
+import camp.nextstep.blackjack.card.CardShuffler
 import camp.nextstep.blackjack.player.Player
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
