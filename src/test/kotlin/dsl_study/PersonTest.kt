@@ -43,4 +43,24 @@ class PersonTest : StringSpec({
         person.skills[2].type shouldBe Skill.Type.HARD
         person.skills[2].name shouldBe "Kotlin"
     }
+
+    "languages" {
+        val person = introduce {
+            name("김경록")
+            company("맘편한세상")
+            skills {
+                soft("White lie")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages[0].name shouldBe "Korean"
+        person.languages[0].level shouldBe 5
+        person.languages[1].name shouldBe "English"
+        person.languages[1].level shouldBe 3
+    }
 })
