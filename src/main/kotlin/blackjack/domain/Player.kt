@@ -10,5 +10,7 @@ class Player(
 ) : Participant {
 
     override fun receive(card: Card) {
+        check(state.canPlay) { "카드를 더 이상 받을 수 없는 상태입니다." }
+        hand.add(card)
     }
 }
