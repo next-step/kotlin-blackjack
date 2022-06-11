@@ -1,11 +1,13 @@
 package blackjack.domain.player
 
-class Players(playerNames: List<String>) {
+import blackjack.domain.card.CardDeck
+
+class Players(playerNames: List<String>, cardDeck: CardDeck) {
     val players: List<Player>
 
     init {
         players = playerNames
-            .map { Player(it) }
+            .map { Player(it, cardDeck) }
             .toMutableList()
     }
 

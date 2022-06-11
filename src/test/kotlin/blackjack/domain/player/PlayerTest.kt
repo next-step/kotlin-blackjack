@@ -5,7 +5,6 @@ import blackjack.domain.card.Card.BasicCard
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.ReceivedCards
-import blackjack.domain.game.BlackJackGame
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -14,11 +13,10 @@ class PlayerTest {
     @Test
     fun `딜러가 추가되었는지 테스트`() {
         val cardDeck = CardDeck()
-        val players = Players(listOf("플레이어"))
-        val dealer = Dealer()
-        val blackJackGame = BlackJackGame(cardDeck, players, dealer)
+        val players = Players(listOf("플레이어"), cardDeck)
+        val dealer = Dealer(cardDeck)
 
-        assertThat(blackJackGame.dealer.name).isEqualTo("딜러")
+        assertThat(dealer.name).isEqualTo("딜러")
     }
 
     @Test

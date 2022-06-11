@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.CardDeck
 import blackjack.domain.game.TakeMoreDealerStrategy
 
-class Dealer : Player(_name = DEALER_NAME) {
+class Dealer(cardDeck: CardDeck) : Player(name = DEALER_NAME, cardDeck) {
 
     var win: Int = 0
     var lose: Int = 0

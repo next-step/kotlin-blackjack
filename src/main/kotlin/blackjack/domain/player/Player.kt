@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
 import blackjack.domain.card.ReceivedCards
 import blackjack.domain.game.TakeMorePlayerStrategy
 
@@ -8,6 +9,10 @@ open class Player(
     private val _name: String,
     private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf())
 ) {
+    constructor(name: String, cardDeck: CardDeck) : this(_name = name) {
+        _receivedCards.addCard(cardDeck.pickCard())
+        _receivedCards.addCard(cardDeck.pickCard())
+    }
 
     var isWinner: Boolean = false
 
