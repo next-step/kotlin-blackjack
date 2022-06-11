@@ -1,5 +1,8 @@
 package camp.nextstep.blackjack
 
+import camp.nextstep.blackjack.card.Card
+import camp.nextstep.blackjack.card.CardDeck
+
 class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
 
     private val _participants = mutableListOf<Player>()

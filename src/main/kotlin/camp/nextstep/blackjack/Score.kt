@@ -1,5 +1,8 @@
 package camp.nextstep.blackjack
 
+import camp.nextstep.blackjack.card.Card
+import camp.nextstep.blackjack.card.CardNumber
+
 data class Score(val value: Int) : Comparable<Score> {
 
     val isBlackJack: Boolean = value == BLACK_JACK_SCORE

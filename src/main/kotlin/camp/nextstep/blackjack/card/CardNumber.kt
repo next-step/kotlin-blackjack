@@ -1,4 +1,4 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.card
 
 enum class CardNumber(val value: Int) {
     ACE(1),

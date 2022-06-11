@@ -1,4 +1,4 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.card
 
 class Card private constructor(val suit: CardSuit, val number: CardNumber) {
 

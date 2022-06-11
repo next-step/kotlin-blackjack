@@ -1,5 +1,8 @@
 package camp.nextstep.blackjack
 
+import camp.nextstep.blackjack.card.Card
+import camp.nextstep.blackjack.card.CardNumber
+import camp.nextstep.blackjack.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

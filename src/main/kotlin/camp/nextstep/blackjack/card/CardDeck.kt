@@ -1,4 +1,4 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.card
 
 class CardDeck private constructor(private val _cards: MutableList<Card>) {
 
