@@ -23,8 +23,8 @@ class PlayerTest {
         val secondCard = Card.Ace(CardSuit.SPADE)
 
         assertThatNoException().isThrownBy {
-            player.addCard(firstCard)
-            player.addCard(secondCard)
+            player.addCardToHand(firstCard)
+            player.addCardToHand(secondCard)
         }
 
         assertThat(player.cards.getCardAt(0)).isSameAs(firstCard)
