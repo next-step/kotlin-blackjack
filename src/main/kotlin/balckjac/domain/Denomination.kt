@@ -1,9 +1,9 @@
 package balckjac.domain
 
 enum class Denomination(
-    val cardName: String,
+    val label: String,
     val score: Int,
-    val anotherScore: Int
+    val extraScore: Int
 ) {
     ACE("Ace", 1, 11),
     TWO("2", 2, 0),
@@ -20,5 +20,5 @@ enum class Denomination(
     KING("King", 10, 0)
     ;
 
-    val isSingleScore = anotherScore == 0
+    val isSingleScore = extraScore == 0
 }

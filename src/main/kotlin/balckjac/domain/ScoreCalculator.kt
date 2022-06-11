@@ -5,8 +5,8 @@ import balckjac.domain.GameRule.BLACKJACK_SCORE
 object ScoreCalculator {
 
     private fun aceScore(total: Int): Int {
-        return if (total + (Denomination.ACE.anotherScore) <= BLACKJACK_SCORE)
-            Denomination.ACE.anotherScore
+        return if (total + (Denomination.ACE.extraScore) <= BLACKJACK_SCORE)
+            Denomination.ACE.extraScore
         else Denomination.ACE.score
     }
 
