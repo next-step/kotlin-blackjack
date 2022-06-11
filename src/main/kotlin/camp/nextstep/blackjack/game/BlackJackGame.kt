@@ -9,6 +9,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
 
     private val _participants = mutableListOf<Player>()
 
+    private var isInitialized = false
+
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
     val participants get() = _participants.toList()
@@ -25,10 +27,39 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
                 serve(player, _cardDeck.draw())
             }
         }
+
+        isInitialized = true
+    }
+
+    fun turns(): List<Turn> {
+        check(isInitialized) { "게임이 초기화되지 않았습니다." }
+        return _participants.map { Turn(it) }
+    }
+
+    private fun play(turn: Turn, action: Action) {
+        if (action == Action.HIT) {
+            serve(turn.player, _cardDeck.draw())
+        }
+
+        val playerScore = Score.of(turn.player.cards)
+        if (playerScore.isBust || action == Action.STAY) {
+            turn.isDone = true
+        }
     }
 
     private fun serve(to: Player, card: Card) {
         to.receive(card)
+    }
+
+    inner class Turn(val player: Player) {
+
+        var isDone = false
+            internal set
+
+        fun applyToGame(action: Action) {
+            check(!isDone) { "턴이 종료되었습니다." }
+            play(this, action)
+        }
     }
 
     companion object {

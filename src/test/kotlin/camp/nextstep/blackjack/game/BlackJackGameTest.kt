@@ -4,6 +4,8 @@ import camp.nextstep.blackjack.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalStateException
 
 internal class BlackJackGameTest {
 
@@ -59,5 +61,95 @@ internal class BlackJackGameTest {
         assertThat(afterCards.size).isEqualTo(52 - (2 * 2))
         assertThat(playerTim.cards.size).isEqualTo(2)
         assertThat(playerTom.cards.size).isEqualTo(2)
+    }
+
+    @DisplayName("게임이 초기화되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
+    @Test
+    fun turns() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        val playerTom = Player("tom")
+        blackJackGame.participate(playerTim)
+        blackJackGame.participate(playerTom)
+        blackJackGame.initialize()
+
+        val timsTurn = blackJackGame.turns()[0]
+        val tomsTurn = blackJackGame.turns()[1]
+
+        assertThat(timsTurn.player).isEqualTo(playerTim)
+        assertThat(tomsTurn.player).isEqualTo(playerTom)
+    }
+
+    @DisplayName("게임이 초기화되기 전에는 Turn 을 확인할 수 없다.")
+    @Test
+    fun cannotGetTurnsBeforeInitialize() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        val playerTom = Player("tom")
+        blackJackGame.participate(playerTim)
+        blackJackGame.participate(playerTom)
+
+        assertThrows<IllegalStateException> {
+            blackJackGame.turns()
+        }
+    }
+
+    @DisplayName("플레이어는 카드를 더 받을 수 있다. Hit")
+    @Test
+    fun playerCanHit() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        blackJackGame.participate(playerTim)
+        blackJackGame.initialize()
+
+        val turn = blackJackGame.turns()[0]
+
+        val beforeCards = playerTim.cards
+        turn.applyToGame(Action.HIT)
+
+        val afterCards = playerTim.cards
+        assertThat(afterCards.size).isEqualTo(beforeCards.size + 1)
+    }
+
+    @DisplayName("플레이어는 카드를 더 받지 않을 수 있다. STAY")
+    @Test
+    fun playerCanStay() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        blackJackGame.participate(playerTim)
+        blackJackGame.initialize()
+
+        val turn = blackJackGame.turns()[0]
+
+        val beforeCards = playerTim.cards
+        turn.applyToGame(Action.STAY)
+
+        val afterCards = playerTim.cards
+        assertThat(afterCards.size).isEqualTo(beforeCards.size)
+    }
+
+    @DisplayName("플레이어 카드가 Bust 이면 카드를 더 받을 수 없다.")
+    @Test
+    fun playerCannotHitWhenBusted() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        blackJackGame.participate(playerTim)
+        blackJackGame.initialize()
+
+        val turn = blackJackGame.turns()[0]
+        assertThat(turn.player).isEqualTo(playerTim)
+
+        while (Score.of(playerTim.cards).isNotBust) {
+            turn.applyToGame(Action.HIT)
+        }
+
+        assertThrows<IllegalStateException> {
+            turn.applyToGame(Action.HIT)
+        }
     }
 }

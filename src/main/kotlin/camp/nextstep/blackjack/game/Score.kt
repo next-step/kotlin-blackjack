@@ -9,6 +9,8 @@ data class Score(val value: Int) : Comparable<Score> {
 
     val isBust: Boolean = value > BLACK_JACK_SCORE
 
+    val isNotBust: Boolean = !isBust
+
     override fun compareTo(other: Score): Int {
         return this.value.compareTo(other.value)
     }
