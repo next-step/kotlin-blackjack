@@ -1,5 +1,6 @@
 package domain
 
+import domain.BlackJackGame.endCheck
 import domain.BlackJackGame.setInitialCards
 import view.InputView
 import view.ResultView
@@ -17,18 +18,21 @@ fun main() {
 
     do {
         var noCnt = 0
+        var continueGame = false
 
         players.forEach {
             val enableToIssue = InputView.isYesOrNo(it.name)
-            BlackJackGame.issue(it, enableToIssue)
+            if (!enableToIssue) noCnt++
+
+            val exceed21 = BlackJackGame.issueAndCheck(it, enableToIssue)
 
             InputView.displayHaveCard(it)
             println()
             println()
 
-            if (!enableToIssue) noCnt++
+            continueGame = endCheck(noCnt, players.size, exceed21)
         }
-    } while (noCnt != players.size)
+    } while (continueGame)
 
     ResultView.displayResult(players)
 }

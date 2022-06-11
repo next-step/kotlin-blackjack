@@ -1,6 +1,7 @@
 package domain
 
-import domain.BlackJackGame.issue
+import domain.BlackJackGame.endCheck
+import domain.BlackJackGame.issueAndCheck
 import io.kotest.matchers.collections.shouldNotContainAll
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -24,8 +25,23 @@ internal class BlackJackGameTest {
     fun `플레이어는 카드를 안받기로 선택하면 카드를 받지 않는다`() {
         val player = Player("keira")
 
-        issue(player, false)
+        issueAndCheck(player, false)
 
         assertThat(player.cards).isEmpty()
+    }
+
+    @Test
+    fun `플레이어가 가진 카드의 합계가 21이상이면 즉시 종료한다`() {
+        val player = Player("keira")
+
+        val cards = listOf(
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.JACK),
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.KING),
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.TEN)
+            )
+        player.offer(cards)
+
+        val isExceed21 = issueAndCheck(player, true)
+        assertThat(endCheck(1, 1, isExceed21)).isFalse()
     }
 }

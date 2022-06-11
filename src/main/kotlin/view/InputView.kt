@@ -36,7 +36,7 @@ object InputView {
             return input.equals(YES)
         } catch (e: IllegalArgumentException) {
             println(YES_NO_INVALID_MESSAGE)
-            false
+            return false
         }
     }
 

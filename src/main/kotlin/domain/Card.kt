@@ -27,11 +27,9 @@ data class Card(val suit: CardSuit, val denomination: CardDenomination) {
 
     companion object {
         fun issueAllCards(): Set<Card> {
-            return ArrayList<Card>().apply {
-                CardSuit.values().forEach { p ->
-                    this.addAll(CardDenomination.values().map { Card(p, it) })
-                }
-            }.shuffled().toHashSet()
+            return CardSuit.values().flatMap { p ->
+                CardDenomination.values().map { Card(p, it) }
+            }.toHashSet()
         }
     }
 }
