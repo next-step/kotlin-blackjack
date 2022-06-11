@@ -5,6 +5,7 @@ interface Participant {
     val hand: Hand
     val state: State
 
+    fun isHit(): Boolean
     fun receive(card: Card)
 }
 
@@ -14,5 +15,5 @@ enum class State(
     HITTABLE(true),
     STAY(false),
     BUST(false),
-    BLACKJACK(false),
+    BLACKJACK(false);
 }

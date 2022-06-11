@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.Denomination.KING
 import blackjack.domain.State.HITTABLE
+import blackjack.domain.State.STAY
 import blackjack.domain.Suit.SPADE
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
@@ -36,6 +37,14 @@ class PlayerSpecs : DescribeSpec({
                             player.receive(card)
                         }
                     }
+            }
+        }
+
+        context("hit을 선택하지 않으면") {
+            val player = Player("이름") { false }
+            it("`Stay` 상태다") {
+                player.isHit()
+                player.state shouldBe STAY
             }
         }
     }
