@@ -10,7 +10,6 @@ data class BlackJackResult(
     val playerResults: List<PlayerResult>,
     val dealerResult: DealerResult
 ) {
-
     companion object {
         fun of(players: List<Player>, dealer: Dealer): BlackJackResult {
             val matchByPlayer = players.associateWith { !dealer.match(it) }
@@ -40,7 +39,6 @@ data class PlayerResult(
     val participantResult: ParticipantResult,
     val match: Match
 ) {
-
     companion object {
         fun of(player: Player, match: Match): PlayerResult {
             return PlayerResult(
