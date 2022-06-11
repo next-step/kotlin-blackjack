@@ -14,18 +14,10 @@ class Cards {
     fun getSize() = hands.size
 
     fun getScore(): Int {
-        var score = hands.filter { it.number != CardNumber.ACE }.sumOf { it.number.score }
-        repeat(hands.count { it.number == CardNumber.ACE }) {
-            score += processAce(score)
-        }
+        var score = hands.sumOf { it.number.score }
+        if (hands.any { it.number == CardNumber.ACE } && score + ACE_SUB_SCORE <= BLACKJACK_SCORE)
+            score += ACE_SUB_SCORE
         return score
-    }
-
-    private fun processAce(score: Int): Int {
-        return if (score > BLACKJACK_SCORE - CardNumber.ACE.highScore)
-            CardNumber.ACE.score
-        else
-            CardNumber.ACE.highScore
     }
 
     fun isBust(): Boolean {
@@ -38,5 +30,6 @@ class Cards {
 
     companion object {
         const val BLACKJACK_SCORE = 21
+        const val ACE_SUB_SCORE = 10
     }
 }
