@@ -36,7 +36,7 @@ internal class BlackJackGameTest {
         val blackJackGame = BlackJackGame.new()
         val beforeCards = blackJackGame.cardDeck.cards
 
-        blackJackGame.start()
+        blackJackGame.initialize()
 
         val afterCards = blackJackGame.cardDeck.cards
 
@@ -52,7 +52,7 @@ internal class BlackJackGameTest {
         val playerTom = Player("tom")
         blackJackGame.participate(playerTim)
         blackJackGame.participate(playerTom)
-        blackJackGame.start()
+        blackJackGame.initialize()
 
         val afterCards = blackJackGame.cardDeck.cards
 

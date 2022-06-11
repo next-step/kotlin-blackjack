@@ -17,13 +17,12 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
         _participants.add(player)
     }
 
-    fun start() {
+    fun initialize() {
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
         repeat(2) {
             for (player in _participants) {
-                val drewCard = _cardDeck.draw()
-                serve(player, drewCard)
+                serve(player, _cardDeck.draw())
             }
         }
     }
