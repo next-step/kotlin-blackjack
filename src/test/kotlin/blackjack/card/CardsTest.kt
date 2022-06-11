@@ -4,6 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
+import org.assertj.core.api.Assertions.assertThatNoException
 import org.junit.jupiter.api.Test
 
 class CardsTest {
@@ -58,5 +60,16 @@ class CardsTest {
         val expectedNames = listOfCardsWithNames.map { it.second }
 
         assertThat(cards.getNames()).containsExactlyElementsOf(expectedNames)
+    }
+
+    @Test
+    fun `모든 플레잉 카드를 가져올 수 있다`() {
+        val allCards = Cards.getAll()
+        val totalNumberOfPlayingCards = 52
+
+        assertThatNoException()
+            .isThrownBy { allCards.getCardAt(totalNumberOfPlayingCards - 1) }
+        assertThatExceptionOfType(IndexOutOfBoundsException::class.java)
+            .isThrownBy { allCards.getCardAt(totalNumberOfPlayingCards) }
     }
 }
