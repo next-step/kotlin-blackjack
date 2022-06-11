@@ -1,5 +1,6 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.game
 
+import camp.nextstep.blackjack.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

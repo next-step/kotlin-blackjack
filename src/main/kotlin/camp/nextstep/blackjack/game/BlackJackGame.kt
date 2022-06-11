@@ -1,5 +1,7 @@
-package camp.nextstep.blackjack
+package camp.nextstep.blackjack.game
 
+import camp.nextstep.blackjack.CardShuffler
+import camp.nextstep.blackjack.Player
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardDeck
 
