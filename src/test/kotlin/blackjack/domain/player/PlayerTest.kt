@@ -13,7 +13,6 @@ class PlayerTest {
     @Test
     fun `딜러가 추가되었는지 테스트`() {
         val cardDeck = CardDeck()
-        val players = Players(listOf("플레이어"), cardDeck)
         val dealer = Dealer(cardDeck)
 
         assertThat(dealer.name).isEqualTo("딜러")
@@ -63,7 +62,7 @@ class PlayerTest {
         )
         val player = Player(
             _name = "name",
-            _receivedCards =  receivedCards
+            _receivedCards = receivedCards
         )
 
         assertThat(player.calculateScore()).isEqualTo(2)

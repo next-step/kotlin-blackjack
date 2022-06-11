@@ -1,11 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.Card.AceCard
-import blackjack.domain.card.Card.BasicCard
-import blackjack.domain.card.Card.JackCard
-import blackjack.domain.card.Card.KingCard
-import blackjack.domain.card.Card.QueenCard
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
