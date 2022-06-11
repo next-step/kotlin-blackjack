@@ -15,14 +15,3 @@ class LanguagesBuilder(
 
     fun build(): List<Language> = languages.toList()
 }
-
-class A {
-    val a = 10
-}
-
-class B {
-    val a = 20
-    val b = 30
-
-    fun A.aTest() = a + b + this@B.a
-}
