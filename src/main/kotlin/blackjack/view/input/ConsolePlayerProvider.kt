@@ -13,7 +13,7 @@ class ConsolePlayerProvider : PlayerProvider {
 
     override fun createPlayers(): Players =
         ConsoleReader.read(MESSAGE_INPUT_PLAYERS, playNamesInputParser)
-            .map { name -> Player(name, hitDecisionMaker) }
+            .map { name -> Player.Guest(name, hitDecisionMaker) }
             .toPlayers()
 
     companion object {

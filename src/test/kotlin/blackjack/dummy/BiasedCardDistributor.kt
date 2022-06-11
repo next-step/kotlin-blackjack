@@ -2,8 +2,10 @@ package blackjack.dummy
 
 import blackjack.model.CardDistributor
 import blackjack.model.card.Card
+import blackjack.model.card.CardShape
 import blackjack.model.card.Denomination
 import blackjack.model.card.PlayingCards
+import blackjack.model.card.Scores
 import blackjack.model.player.CardRecipient
 import blackjack.model.player.Player
 
@@ -15,7 +17,7 @@ class BiasedCardDistributor(potentialWinnerName: String) :
 
     override fun resetCardSet() {
         this.tempCardSet = PlayingCards.createNew()
-            .filter { it.denomination != Denomination.ACE } // 유리한 카드는 빼 놓음.
+            .filter { it.denomination != Denomination.ACE && it.denomination != Denomination.TWO } // 유리한 카드는 빼 놓음.
             .sortedBy { it.denomination.score } // 숫자별로 정열하여 유리한 카드를 줄 수 있게 함.
             .toMutableList()
     }
@@ -30,19 +32,25 @@ class BiasedCardDistributor(potentialWinnerName: String) :
                     tempCardSet.removeFirst()
                 }
             }
-            2 -> { // 3번째 장:  특정 플레이어에게 Ace Spade 카드 제공
+            2 -> { // 3번째 장:  특정 플레이어에게 Ace Spade 카드 제공, 그외  Bust가 되도록
                 if (player.isPotentialWinner()) {
                     val aSpadeCard = "AS".parseToCard() ?: return
                     recipient.addCard(aSpadeCard)
+                } else {
+                    val jSpadeCard = "JS".parseToCard() ?: return
+                    val qSpadeCard = "QS".parseToCard() ?: return
+                    recipient.addCard(jSpadeCard)
+                    recipient.addCard(qSpadeCard)
                 }
             }
             else -> { // 4번째 장 이후: 특정 플레이어가  blackJack이 되도록 배분.
                 if (player.isPotentialWinner()) {
-                    val needScore = player.state.scoreList.filter { it < 21 }
+                    val scores = Scores.of(player.cards)
+                    val needScore = scores.filter { it < 21 }
                         .map { 21 - it }.first { it in 2..10 }
 
-                    val needCard = tempCardSet.find { it.denomination.score == needScore } ?: return
-                    recipient.addCard(needCard)
+                    val needDenomination = Denomination.values().find { it.score == needScore } ?: return
+                    recipient.addCard(Card.of(needDenomination, CardShape.CLUBS))
                 }
             }
         }

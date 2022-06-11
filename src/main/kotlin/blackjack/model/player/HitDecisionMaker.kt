@@ -1,5 +1,7 @@
 package blackjack.model.player
 
+import blackjack.model.CardDistributor
+
 interface HitDecisionMaker {
-    fun doYouWantToHit(player: Player): Boolean
+    fun shouldHit(player: Player, cardDistributor: CardDistributor): Boolean
 }

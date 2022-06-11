@@ -7,16 +7,17 @@ import blackjack.model.card.State
 import blackjack.model.card.State.BlackJack
 import blackjack.model.card.State.Running
 
-class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
+sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
     CardRecipient {
+
+    class Guest(name: String, hitDecisionMaker: HitDecisionMaker) : Player(name, hitDecisionMaker)
+    class Dealer(name: String, hitDecisionMaker: HitDecisionMaker = DealerHitDecisionMaker) :
+        Player(name, hitDecisionMaker)
 
     private val cardList = mutableListOf<Card>()
 
     val state: State
         get() = State.of(this.cardList)
-
-    val canHit: Boolean
-        get() = (this.state is Running) && hitDecisionMaker.doYouWantToHit(this)
 
     val cards: Cards
         get() = Cards(this.cardList.toList())
@@ -32,11 +33,22 @@ class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
         this.cardList.clear()
     }
 
-    fun hitWhileWants(cardDistributor: CardDistributor, progress: ((Player) -> Unit)? = null) {
-        while (this.canHit) {
-            cardDistributor.giveCardsTo(this) // hit
-            progress?.invoke(this)
+    fun hitWhileWants(cardDistributor: CardDistributor, onHitBlock: ((Player) -> Unit)? = null) {
+        while (this.canHit(cardDistributor)) {
+            this.hit(cardDistributor)
+            onHitBlock?.invoke(this)
         }
+    }
+
+    fun canHit(cardDistributor: CardDistributor): Boolean {
+        return (this.state is Running) && hitDecisionMaker.shouldHit(
+            player = this,
+            cardDistributor = cardDistributor
+        )
+    }
+
+    private fun hit(cardDistributor: CardDistributor) {
+        cardDistributor.giveCardsTo(this)
     }
 }
 

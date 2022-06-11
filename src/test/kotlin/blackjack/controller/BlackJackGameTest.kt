@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 internal class BlackJackGameTest {
 
     @Test
-    fun `한게임테스트`() {
+    fun `BlackJack 게임 로직 통합 테스트`() {
 
         // given
         val playerNames = listOf("AA", "BB", "CC")
@@ -22,7 +22,7 @@ internal class BlackJackGameTest {
         val hitDecisionMaker = BiasedHitMakerDecisionMaker(expectedWinnerName)
 
         // (2) 플레이어 구성
-        val players = playerNames.map { Player(it, hitDecisionMaker) }.toPlayers()
+        val players = playerNames.map { Player.Guest(it, hitDecisionMaker) }.toPlayers()
         val expectedWinner = players.find { it.name == expectedWinnerName }
         val playerProvider = TestPlayerProvider(players)
 

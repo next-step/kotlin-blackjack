@@ -1,12 +1,20 @@
 package blackjack.view.output
 
+import blackjack.model.PlayRoom
 import blackjack.model.player.Player
-import blackjack.model.player.Players
+import blackjack.model.player.PlayerRecords
 
 interface OutputView {
-    fun printInitialMessage(players: Players)
-    fun printCardsOfPlayer(player: Player, withScore: Boolean = false)
-    fun printCardsOfPlayer(players: Players, withScore: Boolean = false) {
-        players.forEach { this.printCardsOfPlayer(it, withScore) }
+    fun printInitialMessage(playRoom: PlayRoom)
+
+    fun onPlayerHit(player: Player)
+
+    fun printCardsOfPlayer(player: Player, isGameOver: Boolean = false)
+
+    fun printCardsOfPlayRoom(playRoom: PlayRoom, isGameOver: Boolean = false) {
+        this.printCardsOfPlayer(playRoom.dealer, isGameOver)
+        playRoom.guests.forEach { this.printCardsOfPlayer(it, isGameOver) }
     }
+
+    fun printPlayerRecords(playerRecords: PlayerRecords)
 }

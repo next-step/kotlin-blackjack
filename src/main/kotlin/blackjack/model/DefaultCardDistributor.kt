@@ -4,17 +4,20 @@ import blackjack.model.card.PlayingCards
 import blackjack.model.player.CardRecipient
 
 class DefaultCardDistributor : CardDistributor {
-    private lateinit var playingCardSet: PlayingCards
-
-    init {
-        this.resetCardSet()
-    }
+    private var playingCardSet: PlayingCards? = null
 
     override fun resetCardSet() {
-        this.playingCardSet = PlayingCards.createNew()
+        createNewPlayingCards()
     }
 
     override fun giveCardsTo(recipient: CardRecipient, count: Int) {
-        repeat(count) { recipient.addCard(this.playingCardSet.next()) }
+        val playingCardSet = this.playingCardSet ?: createNewPlayingCards()
+        repeat(count) { recipient.addCard(playingCardSet.next()) }
+    }
+
+    private fun createNewPlayingCards(): PlayingCards {
+        val newPlayCardSet = PlayingCards.createNew()
+        this.playingCardSet = newPlayCardSet
+        return newPlayCardSet
     }
 }

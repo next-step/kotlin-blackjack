@@ -1,21 +1,32 @@
 package blackjack.model
 
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerRecords
 import blackjack.model.player.Players
+import blackjack.model.player.Players.Companion.toPlayers
 
-class PlayRoom(private val cardDistributor: CardDistributor, private val players: Players) {
+class PlayRoom(
+    val cardDistributor: CardDistributor,
+    val dealer: Player.Dealer,
+    val guests: Players
+) {
+
+    private val players: Players by lazy {
+        this.guests.toMutableList()
+            .apply { this.add(dealer) }
+            .toPlayers()
+    }
 
     fun startNewGame() {
         this.cardDistributor.resetCardSet()
         this.players.clearCard()
-        this.cardDistributor.giveCardsTo(this.players, 2)
+        this.cardDistributor.giveInitialCardsTo(this.players)
     }
 
-    fun playGame(progress: ((Player) -> Unit)? = null) {
-        val players = this.players
-        players.forEach { player ->
-            players.blackJackPlayer?.let { return }
-            player.hitWhileWants(cardDistributor, progress)
+    fun playGame(onHitBlock: ((Player) -> Unit)? = null): PlayerRecords {
+        this.players.forEach { player ->
+            player.hitWhileWants(cardDistributor, onHitBlock)
         }
+        return PlayerRecords.of(dealer, guests)
     }
 }

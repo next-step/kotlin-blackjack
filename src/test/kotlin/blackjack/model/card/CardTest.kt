@@ -1,7 +1,6 @@
 package blackjack.model.card
 
 import blackjack.dummy.toCardSet
-import blackjack.model.card.State.Running
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -57,54 +56,12 @@ internal class CardTest {
         val cardSet = cardListString.toCardSet()
         val expectedScoreList = scoreListString.split(",").map { it.toInt() }
         val state = State.of(cardSet)
+        val actualScoreList = Scores.of(cardSet).toList()
 
         assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
+            { assertThat(actualScoreList).isEqualTo(expectedScoreList) },
             { assertThat(state.finalScore).isEqualTo(finalScore) },
             { assertThat(state).isInstanceOf(State.BlackJack::class.java) }
-        )
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "'JS,QD,AH,AC','22,32,42',22",
-        "'JS,QD,AH,2C','23,33',23",
-    )
-    fun `버스트 점수 테스트`(
-        cardListString: String,
-        scoreListString: String,
-        finalScore: Int,
-    ) {
-        val cardSet = cardListString.toCardSet()
-        val expectedScoreList = scoreListString.split(",").map { it.toInt() }
-        val state = State.of(cardSet)
-
-        assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
-            { assertThat(state.finalScore).isEqualTo(finalScore) },
-            { assertThat(state).isInstanceOf(State.Bust::class.java) }
-        )
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        "'AS,AC,2H','4,14,24',14",
-        "'2S,3D,2H,3C','10',10",
-        "'AS,AD,AH,AC','4,14,24,34,44',14",
-    )
-    fun `러닝 점수 테스트`(
-        cardListString: String,
-        scoreListString: String,
-        finalScore: Int,
-    ) {
-        val cardSet = cardListString.toCardSet()
-        val expectedScoreList = scoreListString.split(",").map { it.toInt() }
-        val state = State.of(cardSet)
-
-        assertAll(
-            { assertThat(state.scoreList).isEqualTo(expectedScoreList) },
-            { assertThat(state.finalScore).isEqualTo(finalScore) },
-            { assertThat(state).isInstanceOf(Running::class.java) }
         )
     }
 

@@ -13,14 +13,20 @@ class BlackJackGame(
 ) {
 
     private val players = playerProvider.createPlayers()
+    private val dealer = playerProvider.createDealer()
 
     fun run() {
-        val playRoom = PlayRoom(cardDistributor, players)
+        val playRoom = PlayRoom(
+            cardDistributor = cardDistributor,
+            dealer = dealer,
+            guests = players
+        )
         playRoom.startNewGame()
-        outputView?.printInitialMessage(this.players)
-        playRoom.playGame { player ->
-            outputView?.printCardsOfPlayer(player, withScore = false)
+        outputView?.printInitialMessage(playRoom)
+        val records = playRoom.playGame { player ->
+            outputView?.onPlayerHit(player)
         }
-        outputView?.printCardsOfPlayer(players, withScore = true)
+        outputView?.printCardsOfPlayRoom(playRoom, isGameOver = true)
+        outputView?.printPlayerRecords(records)
     }
 }

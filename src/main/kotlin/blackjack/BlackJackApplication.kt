@@ -10,12 +10,10 @@ import blackjack.view.output.ConsoleOutputView
 class BlackJackApplication {
 
     fun run() {
-        var isGameRunning = true
         val blackJackGame = createGame()
-        while (isGameRunning) {
+        do {
             blackJackGame.run()
-            isGameRunning = ConsoleReader.read("한번 더 하시겠습니까?", YesNoInputParser())
-        }
+        } while (ConsoleReader.read("한번 더 하시겠습니까?", YesNoInputParser()))
     }
 
     private fun createGame() = BlackJackGame(
