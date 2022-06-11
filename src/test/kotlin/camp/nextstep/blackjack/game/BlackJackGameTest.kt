@@ -152,4 +152,23 @@ internal class BlackJackGameTest {
             turn.applyToGame(Action.HIT)
         }
     }
+
+    @DisplayName("각 플레이어별 점수를 확인할 수 있다.")
+    @Test
+    fun gameResult() {
+        val blackJackGame = BlackJackGame.new()
+
+        val playerTim = Player("tim")
+        blackJackGame.participate(playerTim)
+        blackJackGame.initialize()
+
+        blackJackGame.turns().forEach { it.applyToGame(Action.STAY) }
+
+        val result = blackJackGame.result()
+
+        assertThat(result.playerScores.size).isEqualTo(1)
+
+        val timsScore = Score.of(playerTim.cards)
+        assertThat(result.playerScores.find { it.player == playerTim }!!.score).isEqualTo(timsScore)
+    }
 }

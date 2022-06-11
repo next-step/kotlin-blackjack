@@ -9,7 +9,11 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
 
     private val _participants = mutableListOf<Player>()
 
+    private lateinit var turns: List<Turn>
+
     private var isInitialized = false
+
+    private var isEnded = false
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
@@ -29,11 +33,19 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
         }
 
         isInitialized = true
+        turns = _participants.map { Turn(it) }
     }
 
     fun turns(): List<Turn> {
         check(isInitialized) { "게임이 초기화되지 않았습니다." }
-        return _participants.map { Turn(it) }
+        return turns
+    }
+
+    fun result(): GameResult {
+        check(isEnded) { "게임이 종료되지 않았습니다." }
+        return GameResult(
+            _participants.map { PlayerScore(it, Score.of(it.cards)) }
+        )
     }
 
     private fun play(turn: Turn, action: Action) {
@@ -45,6 +57,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
         if (playerScore.isBust || action == Action.STAY) {
             turn.isDone = true
         }
+
+        if (turns.all { it.isDone }) isEnded = true
     }
 
     private fun serve(to: Player, card: Card) {
