@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.Denomination.ACE
+import blackjack.domain.card.Denomination.ACE
 
 data class Hand(
     private val cards: List<Card> = emptyList(),

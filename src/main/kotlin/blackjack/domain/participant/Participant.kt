@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Hand
+import blackjack.domain.card.Point
 
 interface Participant {
     val name: String

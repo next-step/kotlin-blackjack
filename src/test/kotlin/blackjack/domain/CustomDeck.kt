@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.participant.Deck
+
 class CustomDeck(
     cards: List<Card>
 ) : Deck {

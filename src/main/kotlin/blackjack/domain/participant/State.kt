@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Point
 
 sealed class State {
     abstract fun compare(other: State): Match

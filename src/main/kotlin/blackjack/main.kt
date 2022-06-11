@@ -1,8 +1,9 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
-import blackjack.domain.Player
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.result.BlackJackManager
 import blackjack.ui.input.InputView
 import blackjack.ui.input.ParticipantView
 import blackjack.ui.output.PlayingView
@@ -18,7 +19,12 @@ fun main() {
 
     dealerHit(dealer)
 
-    ResultView.showResult(listOf(dealer) + participants)
+    ResultView.showResultHand(listOf(dealer) + participants)
+
+    val manager = BlackJackManager(dealer, participants)
+    val result = manager.matching()
+
+    ResultView.showBlackJackResult(result)
 }
 
 private fun deal(dealer: Dealer, participants: List<Participant>) {

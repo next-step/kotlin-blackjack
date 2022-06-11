@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.participant
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Suit
 
 interface Deck {
     fun isEmpty(): Boolean
