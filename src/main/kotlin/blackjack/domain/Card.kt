@@ -4,7 +4,7 @@ data class Card(
     val denomination: Denomination,
     private val suit: Suit
 ) {
-    val defaultPoint: Int = denomination.minValue
+    val defaultPoint: Point = Point(denomination.minValue)
 
     override fun toString(): String {
         return "${denomination.displayedName}${suit.type}"

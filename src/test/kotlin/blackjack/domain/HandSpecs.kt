@@ -28,7 +28,7 @@ class HandSpecs : DescribeSpec({
                 THREE to CLOVER,
                 TEN to SPADE
             )
-            cards.calculate() shouldBe 25
+            cards.calculate() shouldBe Point(25)
         }
 
         it("새로운 카드를 추가할 수 있다") {
@@ -37,7 +37,7 @@ class HandSpecs : DescribeSpec({
             )
             val card = Card(KING, CLOVER)
             cards.add(card)
-            cards.calculate() shouldBe 20
+            cards.calculate() shouldBe Point(20)
         }
 
         context("카드 패에 끗수가 ACE인 카드가 포함된 경우") {
@@ -48,9 +48,9 @@ class HandSpecs : DescribeSpec({
                 io.kotest.data.forAll(
                     table(
                         headers("카드 패", "기대 점수"),
-                        row(hand(ACE to SPADE, KING to HEART), 21),
-                        row(hand(ACE to SPADE, SEVEN to HEART, SIX to CLOVER), 14),
-                        row(hand(ACE to SPADE, KING to HEART, TEN to CLOVER), 21),
+                        row(hand(ACE to SPADE, KING to HEART), Point(21)),
+                        row(hand(ACE to SPADE, SEVEN to HEART, SIX to CLOVER), Point(14)),
+                        row(hand(ACE to SPADE, KING to HEART, TEN to CLOVER), Point(21)),
                     )
                 ) { cards, point ->
                     cards.calculate() shouldBe point
@@ -64,7 +64,7 @@ class HandSpecs : DescribeSpec({
                     TEN to CLOVER,
                     TWO to CLOVER,
                 )
-                cards.calculate() shouldBe 23
+                cards.calculate() shouldBe Point(23)
             }
         }
     }
