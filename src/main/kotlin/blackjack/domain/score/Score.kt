@@ -1,17 +1,24 @@
 package blackjack.domain.score
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeckImpl.Companion.ACE
-import blackjack.domain.card.CardDeckImpl.Companion.JACK
-import blackjack.domain.card.CardDeckImpl.Companion.KING
-import blackjack.domain.card.CardDeckImpl.Companion.QUEEN
+import blackjack.domain.card.Card.Companion.ACE_DEFAULT_SCORE
+import blackjack.domain.card.Card.Companion.ACE_SCORE
+import blackjack.domain.card.Card.Companion.BLACK_JACK_SCORE
+import blackjack.domain.card.Card.Companion.JACK_SCORE
+import blackjack.domain.card.Card.Companion.KING_SCORE
+import blackjack.domain.card.Card.Companion.QUEEN_SCORE
+import blackjack.domain.card.RandomCardDeck.Companion.ACE
+import blackjack.domain.card.RandomCardDeck.Companion.JACK
+import blackjack.domain.card.RandomCardDeck.Companion.KING
+import blackjack.domain.card.RandomCardDeck.Companion.QUEEN
 import blackjack.domain.player.Player
 
 class Score {
     private var _playerScores: MutableList<PlayerScore> = mutableListOf()
-    val playerScore: List<PlayerScore> = _playerScores
+    val playerScore: List<PlayerScore>
+        get() = _playerScores.toList()
 
-    fun run(players: List<Player>) {
+    fun calculate(players: List<Player>) {
         players.forEach { player ->
             val sum = sum(player.cards)
             _playerScores.add(PlayerScore(player, sum))
@@ -38,20 +45,11 @@ class Score {
     }
 
     private fun isBurst(score: Int): Boolean {
-        if (score > BLACK_JACK) return true
+        if (score > BLACK_JACK_SCORE) return true
         return false
     }
 
     private fun containAce(cards: List<Card>): Boolean {
         return cards.any { it.number === ACE }
-    }
-
-    companion object {
-        const val BLACK_JACK = 21
-        const val ACE_DEFAULT_SCORE = 11
-        const val ACE_SCORE = 1
-        const val JACK_SCORE = 10
-        const val QUEEN_SCORE = 10
-        const val KING_SCORE = 10
     }
 }

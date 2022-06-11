@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.score.PlayerScore
+import blackjack.view.CardView.cardsToString
 
 class ResultView {
 
@@ -12,7 +13,7 @@ class ResultView {
     fun score(playerScores: List<PlayerScore>) {
         println()
         playerScores.forEach {
-            println("${it.player.name}카드: ${it.player.cards.joinToString(", ")} - 결과: ${it.score}")
+            println("${it.player.name}카드: ${cardsToString(it.player.cards).joinToString(", ")} - 결과: ${it.score}")
         }
     }
 }

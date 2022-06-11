@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.CardDeckImpl
+import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.game.BlackJack
 import blackjack.domain.player.Player
 import blackjack.domain.score.Score
@@ -22,7 +22,7 @@ fun main() {
 
 fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
     val dto: BlackJackRequest = BlackJackRequest.of(inputPlayers)
-    val cardDeck: CardDeck = CardDeckImpl()
+    val cardDeck: CardDeck = RandomCardDeck()
     val blackJack = BlackJack(dto, cardDeck)
 
     val players: List<Player> = dto.players
@@ -30,11 +30,11 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
     gameView.firstRoundState()
     gameView.run()
 
-    score(resultView, players)
+    calculateScore(resultView, players)
 }
 
-fun score(resultView: ResultView, players: List<Player>) {
+fun calculateScore(resultView: ResultView, players: List<Player>) {
     val score = Score()
-    score.run(players)
+    score.calculate(players)
     resultView.score(score.playerScore)
 }

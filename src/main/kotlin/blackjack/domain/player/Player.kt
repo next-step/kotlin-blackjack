@@ -3,9 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 
 class Player(val name: String) {
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
+    val cards: List<Card>
+        get() = _cards.toList()
 
     fun addCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 }

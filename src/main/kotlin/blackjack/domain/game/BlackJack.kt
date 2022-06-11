@@ -4,13 +4,13 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
 import blackjack.dto.BlackJackRequest
 
-class BlackJack(dto: BlackJackRequest, private val cardDeck: CardDeck) {
+class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDeck) {
 
-    private val players = dto.players
+    private val players = blackJackRequest.players
 
     init {
         for (player in players) {
-            repeat(FIRST_TURN) { player.addCard(cardDeck.getOne()) }
+            repeat(FIRST_DEAL) { player.addCard(cardDeck.getOne()) }
         }
     }
 
@@ -19,6 +19,6 @@ class BlackJack(dto: BlackJackRequest, private val cardDeck: CardDeck) {
     }
 
     companion object {
-        const val FIRST_TURN = 2
+        const val FIRST_DEAL = 2
     }
 }

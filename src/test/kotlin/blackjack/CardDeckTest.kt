@@ -1,25 +1,25 @@
 package blackjack
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
-import blackjack.domain.card.CardDeckImpl
-import blackjack.domain.card.CardDeckImpl.Companion.DIAMOND
+import blackjack.domain.card.RandomCardDeck
+import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
+import blackjack.util.CardDeckFake
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class CardDeckTest : FreeSpec({
 
-    "CardDeckImpl" - {
+    "RandomCardDeck" - {
 
         "랜덤한 카드 한 장이 나와야한다." {
-            val cardDeckImpl = CardDeckImpl()
+            val randomCardDeck = RandomCardDeck()
 
-            cardDeckImpl.getOne().shouldBeInstanceOf<Card>()
+            randomCardDeck.getOne().shouldBeInstanceOf<Card>()
         }
 
         "카드를 모두 뽑았을 때 중복되는 카드가 없어야한다." {
-            var cardDeckImpl = CardDeckImpl()
+            var cardDeckImpl = RandomCardDeck()
             val cards = List(48) {
                 cardDeckImpl.getOne()
             }
@@ -35,9 +35,9 @@ class CardDeckTest : FreeSpec({
                 Card(DIAMOND, "2"),
                 Card(DIAMOND, "3")
             )
-            val cardDeckFake = CardDeck.Fake(cards)
+            val cardDeckFake = CardDeckFake(cards)
 
-            cardDeckFake.getOne() shouldBe Card(CardDeckImpl.DIAMOND, "2")
+            cardDeckFake.getOne() shouldBe Card(RandomCardDeck.DIAMOND, "2")
         }
     }
 })

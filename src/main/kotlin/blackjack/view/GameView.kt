@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.game.BlackJack
 import blackjack.domain.player.Player
+import blackjack.view.CardView.cardsToString
 
 class GameView(
     private val blackJack: BlackJack,
@@ -11,7 +12,7 @@ class GameView(
     fun firstRoundState() {
         println()
         for (player in players) {
-            println("${player.name}카드: ${player.cards.joinToString(", ")}")
+            playerCards(player)
         }
     }
 
@@ -41,6 +42,6 @@ class GameView(
     }
 
     private fun playerCards(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString(", ")}")
+        println("${player.name}카드: ${cardsToString(player.cards).joinToString(", ")}")
     }
 }
