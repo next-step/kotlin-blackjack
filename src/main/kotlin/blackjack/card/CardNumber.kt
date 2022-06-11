@@ -1,7 +1,7 @@
 package blackjack.card
 
-enum class CardNumber(val noName: String, val primary: Int, val secondary: Int) {
-    ACE("Ace", 1, 10),
+enum class CardNumber(val noName: String, val primaryPoint: Int, val secondaryPoint: Int) {
+    ACE("Ace", 10, 1),
     TWO("2", 2, 0),
     THREE("3", 3, 0),
     FOUR("4", 4, 0),
@@ -12,5 +12,5 @@ enum class CardNumber(val noName: String, val primary: Int, val secondary: Int) 
     NINE("9", 9, 0),
     JACK("Jack", 10, 0),
     QUEEN("Queen", 10, 0),
-    KING("King", 10, 0),
+    KING("King", 10, 0);
 }
