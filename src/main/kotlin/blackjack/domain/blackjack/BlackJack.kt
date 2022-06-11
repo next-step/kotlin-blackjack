@@ -6,14 +6,15 @@ import blackjack.domain.player.Players
 
 class BlackJack(
     private val dealer: Dealer = Dealer(),
-    private val players: Players
+    val players: Players
 ) {
-    val hittablePlayers get() = players.hittablePlayers()
-    val isEnd: Boolean get() = players.isEnd() && dealer.isEnd()
-
     init {
         players.addBaseCards(dealer, BASE_CARD_COUNT)
         dealer.addBaseCards(BASE_CARD_COUNT)
+    }
+
+    fun isEnd(): Boolean {
+        return players.isEnd() && dealer.isEnd()
     }
 
     fun giveCard(player: Player) {
@@ -27,7 +28,7 @@ class BlackJack(
     }
 
     fun result(): BlackJackResult {
-        check(isEnd) { "게임이 종료되어야 결과를 확인할 수 있습니다" }
+        check(isEnd()) { "게임이 종료되어야 결과를 확인할 수 있습니다" }
 
         return BlackJackResult.of(players.players, dealer)
     }

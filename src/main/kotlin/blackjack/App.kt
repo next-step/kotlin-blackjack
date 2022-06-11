@@ -17,7 +17,7 @@ fun main() {
     ResultView.printlnBlackJackInit(players, dealer)
     ResultView.printlnPlayersWithCards(players, dealer)
 
-    val hittablePlayers = blackJack.hittablePlayers
+    val hittablePlayers = blackJack.players.hittablePlayers()
     playPlayers(blackJack, hittablePlayers)
     playDealer(blackJack, dealer)
 

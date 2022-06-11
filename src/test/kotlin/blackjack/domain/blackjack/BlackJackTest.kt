@@ -45,7 +45,7 @@ class BlackJackTest : DescribeSpec({
             val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
             pang.changeStatus(PlayerStatus.STAY)
 
-            blackJack.hittablePlayers shouldContainExactly listOf(yohan)
+            blackJack.players.hittablePlayers() shouldContainExactly listOf(yohan)
         }
     }
 
@@ -86,7 +86,7 @@ class BlackJackTest : DescribeSpec({
                 pang.changeStatus(PlayerStatus.STAY)
                 blackJack.playDealer()
 
-                blackJack.isEnd shouldBe true
+                blackJack.isEnd() shouldBe true
             }
         }
 
@@ -97,7 +97,7 @@ class BlackJackTest : DescribeSpec({
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
                 yohan.changeStatus(PlayerStatus.STAY)
 
-                blackJack.isEnd shouldBe false
+                blackJack.isEnd() shouldBe false
             }
         }
     }
