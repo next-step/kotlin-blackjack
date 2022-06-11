@@ -1,5 +1,6 @@
 package view
 
+import domain.Card
 import domain.Player
 
 object InputView {
@@ -44,7 +45,12 @@ object InputView {
     }
 
     fun displayHaveCard(player: Player) {
-        print(player.name + " : " + player.cards.joinToString(DELIMITER))
+        print(player.name + " : " + getCardString(player.cards))
+    }
+
+    private fun getCardString(cards: List<Card>): String {
+        val formattedStrings = cards.map { card -> "${card.suit.suitName}${card.denomination.denominationName}" }
+        return formattedStrings.joinToString(DELIMITER)
     }
 
     private const val YES_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"

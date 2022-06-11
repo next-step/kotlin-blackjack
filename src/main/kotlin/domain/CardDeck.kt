@@ -1,7 +1,7 @@
 package domain
 
 object CardDeck {
-    private val allCards = Card.issueAllCards().toMutableList()
+    val allCards = Card.issueAllCards().toMutableList()
 
     fun pop(count: Int): MutableList<Card> {
         val cards = mutableListOf<Card>()

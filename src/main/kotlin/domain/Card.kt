@@ -25,10 +25,6 @@ data class Card(val suit: CardSuit, val denomination: CardDenomination) {
         KING("K", 10);
     }
 
-    override fun toString(): String {
-        return "${suit.suitName}${denomination.denominationName}"
-    }
-
     companion object {
         fun issueAllCards(): Set<Card> {
             return ArrayList<Card>().apply {
