@@ -6,6 +6,7 @@ import blackjack.domain.game.WinnerJudge
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Players
 import blackjack.view.InputView
+import blackjack.view.CardsByPlayerView
 import blackjack.view.ResultView
 import blackjack.view.TakeMoreDealerView
 import blackjack.view.TakeMorePlayer
@@ -17,6 +18,7 @@ fun main() {
     val playerNames = inputView.enterPlayerName()
     val cardDeck = CardDeck()
     val takeMorePlayer = TakeMorePlayer()
+    val cardsByPlayerView = CardsByPlayerView()
     val takeMoreDealerView = TakeMoreDealerView()
     val takeMoreDealer = TakeMoreDealer(takeMoreDealerView)
     val dealer = Dealer(cardDeck)
@@ -26,14 +28,7 @@ fun main() {
     inputView.enterBattingAmountByPlayer(players.players)
     resultView.printInitDistributed(blackJackGamer)
 
-    players.playersToPlay()
-        .map {
-            while (it.canMoreGame() && it.wantToTake(takeMorePlayer)) {
-                it.addCard(cardDeck.pickCard())
-                resultView.printCardsByPlayer(it, false)
-            }
-        }
-
+    players.play(cardDeck, takeMorePlayer, cardsByPlayerView)
     dealer.play(cardDeck, takeMoreDealer)
     WinnerJudge(blackJackGamer)
 
