@@ -1,7 +1,6 @@
 package blackjack.domain
 
-enum class Denomination(private val value: String) {
-    ACE("A"),
+enum class Denomination(val value: String) {
     TWO("2"),
     THREE("3"),
     FOUR("4"),
@@ -13,7 +12,8 @@ enum class Denomination(private val value: String) {
     TEN("10"),
     JACK("J"),
     QUEEN("Q"),
-    KING("K");
+    KING("K"),
+    ACE("A");
 
     override fun toString(): String {
         return value

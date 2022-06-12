@@ -16,11 +16,11 @@
     - [x] Player는 이름을 가진다.
     - [x] Player는 여러장의 카드를 가질 수 있다.
     - [x] Player에 카드를 추가할 수 있다.
-  - [ ] BlackJack 구현
+  - [x] BlackJack 구현
     - [x] Deck과 Player들을 가진다.
     - [x] Player는 Deck에서 카드를 뽑을 수 있다.
-    - [ ] Ace는 1 or 11로 계산할 수 있다.
-    - [ ] Jack, Queen, King은 10으로 계산한다.
+    - [x] Ace는 1 or 11로 계산할 수 있다.
+    - [x] Jack, Queen, King은 10으로 계산한다.
 - [ ] Blackjack Game Controller를 구현한다.
   - [ ] 게임 참여자를 입력받는다.
   - [ ] 플레이어는 두 장의 카드를 지급 받는다.
