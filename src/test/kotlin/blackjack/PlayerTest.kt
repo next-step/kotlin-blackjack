@@ -7,7 +7,7 @@ internal class PlayerTest : FunSpec({
     test("손패에 가지고 있는 카드의 개수를 알 수 있다.") {
         // given
         val values = ArrayDeque(listOf(Card(CardNumber.ACE, CardSuit.SPADE)))
-        val sut = Player(Cards(values))
+        val sut = Player(name = "gomding", Cards(values))
 
         // when
         val result = sut.handSize()
@@ -18,7 +18,7 @@ internal class PlayerTest : FunSpec({
 
     test("플레이어는 손패에 카드를 추가할 수 있다.") {
         // given
-        val sut = Player()
+        val sut = Player(name = "gomding")
 
         // when
         sut.addCardToHand(Card(CardNumber.ACE, CardSuit.SPADE))
