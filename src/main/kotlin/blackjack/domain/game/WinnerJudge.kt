@@ -29,6 +29,20 @@ class WinnerJudge(private val players: List<Player>) {
             player.gamblingSummary.isWinner = false
             dealer.win++
         }
+
+        adjustEarningRate(player, dealer)
+    }
+
+    private fun adjustEarningRate(player: Player, dealer: Dealer) {
+        if (conditionOfFirstBlackJack(player, dealer)) {
+            player.gamblingSummary.earningRate = 1.5
+        }
+    }
+
+    private fun conditionOfFirstBlackJack(player: Player, dealer: Dealer): Boolean {
+        return player.receivedCards.count() == CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY
+                && player.isBlackJack()
+                && !dealer.isBlackJack()
     }
 
     private fun adjustBustBattingAmountToBust(gamer: Player) {
@@ -57,5 +71,6 @@ class WinnerJudge(private val players: List<Player>) {
 
     companion object {
         private const val BLACKJACK_SCORE = 21
+        private const val CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY = 2
     }
 }

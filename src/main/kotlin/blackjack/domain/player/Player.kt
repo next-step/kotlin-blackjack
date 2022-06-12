@@ -36,6 +36,10 @@ open class Player(
         return Score.calculateScore(_receivedCards) > BLACKJACK_SCORE
     }
 
+    fun isBlackJack(): Boolean {
+        return Score.calculateScore(_receivedCards) == BLACKJACK_SCORE
+    }
+
     fun adjustBustBattingAmount() {
         this.gamblingSummary.battingAmount = this.gamblingSummary.battingAmount.unaryMinus()
     }
