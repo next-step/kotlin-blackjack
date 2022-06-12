@@ -56,6 +56,6 @@ class HandsTest {
             )
         )
 
-        return Hands(cards)
+        return Hands.create() + cards
     }
 }
