@@ -6,7 +6,7 @@ import blackjack.card.CardShape
 import java.util.LinkedList
 
 class DealerDeck {
-    private var cards: LinkedList<Card> = LinkedList(
+    private val cards: LinkedList<Card> = LinkedList(
         CardNumber.values().flatMap { number ->
             CardShape.values().map { shape -> Card(number, shape) }
         }
