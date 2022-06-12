@@ -11,7 +11,9 @@ object InputView {
         val dealer = readlnOrNull()
         val dealerName = if (dealer.isNullOrEmpty()) {
             DEALER
-        } else dealer
+        } else {
+            dealer
+        }
         return Dealer(name = dealerName)
     }
 
