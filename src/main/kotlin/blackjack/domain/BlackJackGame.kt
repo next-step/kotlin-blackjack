@@ -1,9 +1,9 @@
 package blackjack.domain
 
 data class BlackJackGame(
-    val dealer: Dealer,
-    val players: List<Participant>,
-    val cardDeck: Deck
+    private val dealer: Dealer,
+    private val players: List<Participant>,
+    private val cardDeck: Deck
 ) {
 
     val participants = listOf(dealer) + players
@@ -22,7 +22,7 @@ data class BlackJackGame(
 
     fun match() {
         val gameResult = GameResult(dealer, players)
-        if (dealer.isBust) {
+        if (dealer.isBust()) {
             gameResult.setDealerIsWin()
         } else {
             gameResult.decideWinner()
