@@ -8,11 +8,14 @@
   - [x] Card를 구현한다. 
     - [x] Card는 Suit(문양)과 Denomination(끗수)를 가진다.
     - [x] Card는 String으로 변환할 수 있다. e.g. ♠A
-  - [ ] Deck을 구현한다.
+  - [x] Deck을 구현한다.
     - [x] Deck는 52장의 서로 다른 문양과 끗수로 이루어진다.
-    - [ ] Deck는 섞을 수 있다.
-  - [ ] Ace는 1 or 11로 계산할 수 있다.
-  - [ ] Jack, Queen, King은 10으로 계산한다.
+    - [x] Deck는 섞을 수 있다.
+  - [ ] Player를 구현한다.
+    - [ ] Player는 여러장의 카드를 가진다.
+    - [ ] Player에 카드를 추가할 수 있다.
+    - [ ] Ace는 1 or 11로 계산할 수 있다.
+    - [ ] Jack, Queen, King은 10으로 계산한다.
 - [ ] Blackjack Game Controller를 구현한다.
   - [ ] 게임 참여자를 입력받는다.
   - [ ] 플레이어는 두 장의 카드를 지급 받는다.
