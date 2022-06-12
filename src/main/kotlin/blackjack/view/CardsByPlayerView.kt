@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.game.CardsByPlayerViewStrategy
+import blackjack.domain.game.strategy.CardsByPlayerViewStrategy
 import blackjack.domain.player.Player
 
 class CardsByPlayerView : CardsByPlayerViewStrategy {

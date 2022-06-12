@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.game.CardsByPlayerViewStrategy
-import blackjack.domain.game.TakeMorePlayerStrategy
+import blackjack.domain.game.strategy.CardsByPlayerViewStrategy
+import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 
 class Players(playerNames: List<String>, cardDeck: CardDeck) {
     val players: List<Player>

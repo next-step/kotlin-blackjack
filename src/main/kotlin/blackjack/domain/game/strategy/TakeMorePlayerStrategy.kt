@@ -1,4 +1,4 @@
-package blackjack.domain.game
+package blackjack.domain.game.strategy
 
 import blackjack.domain.player.Player
 

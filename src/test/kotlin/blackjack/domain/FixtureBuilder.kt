@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.domain.game.TakeMoreDealerStrategy
-import blackjack.domain.game.TakeMorePlayerStrategy
+import blackjack.domain.game.strategy.TakeMoreDealerStrategy
+import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 import blackjack.domain.player.Player
 
 class FixtureBuilder {

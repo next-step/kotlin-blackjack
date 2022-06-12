@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.game.TakeMoreDealer
-import blackjack.domain.game.TakeMoreDealerViewStrategy
+import blackjack.domain.game.strategy.TakeMoreDealerViewStrategy
 
 class TakeMoreDealerView : TakeMoreDealerViewStrategy {
 

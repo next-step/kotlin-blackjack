@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.ReceivedCards
 import blackjack.domain.game.Score
-import blackjack.domain.game.TakeMorePlayerStrategy
+import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
