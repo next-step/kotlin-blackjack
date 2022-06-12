@@ -18,7 +18,7 @@ fun main() {
     PlayerView(console).run(game.status)
 
     val playerGameView = PlayerGameView(console)
-    game.processPlayers(playerGameView::drawChoice)
+    game.processPlayers(playerGameView)
 
     val drawCount = game.processDealer()
     DealerGameView(console).run(drawCount)

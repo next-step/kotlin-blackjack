@@ -7,8 +7,8 @@ class Game private constructor(
     val status: GameStatus
         get() = GameStatus(dealer, players)
 
-    fun processPlayers(drawChoice: (player: Player) -> Boolean) {
-        players.forEach { processPlayer(it, drawChoice) }
+    fun processPlayers(interaction: PlayerInteraction) {
+        players.forEach { processPlayer(it, interaction) }
     }
 
     fun processDealer(): Int {
@@ -22,15 +22,16 @@ class Game private constructor(
         return drawCount
     }
 
-    private tailrec fun processPlayer(player: Player, drawChoice: (player: Player) -> Boolean) {
+    private tailrec fun processPlayer(player: Player, interaction: PlayerInteraction) {
         if (!player.canDrawCard) {
             return
         }
 
-        val shouldGiveCard = drawChoice(player)
+        val shouldGiveCard = interaction.getDrawChoice(player)
         if (shouldGiveCard) {
             dealer.giveCard(player)
-            processPlayer(player, drawChoice)
+            interaction.printStatus(player)
+            processPlayer(player, interaction)
         }
     }
 
