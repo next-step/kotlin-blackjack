@@ -24,7 +24,8 @@ class Game(val dealer: Dealer) {
     }
 
     fun shareMoreCards(player: Player) {
-        var needCard = dealer.ask(player, readln())
+        var needCard = needMoreCare(player)
+
         if (!needCard) {
             return Screen.displayPlayerCard(player)
         }
@@ -32,7 +33,12 @@ class Game(val dealer: Dealer) {
         while (needCard) {
             player.takeCard(dealer.give(RandomCardFactory()))
             Screen.displayPlayerCard(player)
-            needCard = dealer.ask(player, readln())
+            needCard = needMoreCare(player)
         }
+    }
+
+    private fun needMoreCare(player: Player): Boolean {
+        dealer.ask(player.name)
+        return player.needCard(readln())
     }
 }

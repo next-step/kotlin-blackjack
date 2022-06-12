@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.view.Screen
+import blackjack.view.Screen.displayResults
 
 fun main() {
     val game = Game(Dealer())
@@ -13,4 +14,5 @@ fun main() {
     Screen.displayPlayerCards(players)
 
     players.map { player -> game.shareMoreCards(player) }
+    displayResults(players)
 }
