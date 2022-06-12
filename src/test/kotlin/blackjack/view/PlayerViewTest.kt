@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Card
 import blackjack.domain.Denomination
+import blackjack.domain.GameStatus
 import blackjack.domain.Suite
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -27,9 +28,10 @@ internal class PlayerViewTest : StringSpec({
                 Card(Suite.SPADES, Denomination.KING),
             ),
         )
-        val playerView = PlayerView(io, dealer, players)
+        val playerView = PlayerView(io)
+        val status = GameStatus(dealer, players)
 
-        playerView.run()
+        playerView.run(status)
 
         io.printed shouldBe listOf(
             "딜러와 pobi, jason에게 2장의 나누었습니다.",

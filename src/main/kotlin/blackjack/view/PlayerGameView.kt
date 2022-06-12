@@ -1,31 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.Dealer
 import blackjack.domain.Player
 
-class PlayerGameView(
-    private val io: IO,
-    private val dealer: Dealer,
-    private val players: List<Player>,
-) {
+class PlayerGameView(private val io: IO) {
 
-    fun run() {
-        players.forEach(::play)
-        io.print("")
-    }
-
-    private tailrec fun play(player: Player) {
-        if (!player.canDrawCard) {
-            return
-        }
-
+    fun drawChoice(player: Player): Boolean {
         io.print("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        val shouldGiveCard = getDrawChoice()
-        if (shouldGiveCard) {
-            dealer.giveCard(player)
-            io.print(player.text())
-            play(player)
-        }
+
+        return getDrawChoice()
     }
 
     private tailrec fun getDrawChoice(): Boolean =

@@ -1,15 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.GameStatus
 
-class ResultView(
-    private val io: IO,
-    private val dealer: Dealer,
-    private val players: List<Player>,
-) {
+class ResultView(private val io: IO) {
 
-    fun run() {
+    fun run(status: GameStatus) {
+        val dealer = status.dealer
+        val players = status.players
+
         io.print("${dealer.text()} - 결과: ${dealer.score.sum}")
         players.forEach {
             io.print("${it.text()} - 결과: ${it.score.sum}")

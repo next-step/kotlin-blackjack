@@ -1,7 +1,6 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
+import blackjack.domain.Game
 import blackjack.view.Console
 import blackjack.view.DealerGameView
 import blackjack.view.PlayerGameView
@@ -11,17 +10,19 @@ import blackjack.view.ResultView
 import blackjack.view.WinnerView
 
 fun main() {
-    val deck = Deck.shuffled()
-    val dealer = Dealer(deck)
     val console = Console()
 
     val playerNames = PlayerNameInputView(console).run()
+    val game = Game.start(playerNames)
 
-    val players = dealer.startGame(playerNames)
+    PlayerView(console).run(game.status)
 
-    PlayerView(console, dealer, players).run()
-    PlayerGameView(console, dealer, players).run()
-    DealerGameView(console, dealer).run()
-    ResultView(console, dealer, players).run()
-    WinnerView(console, dealer, players).run()
+    val playerGameView = PlayerGameView(console)
+    game.processPlayers(playerGameView::drawChoice)
+
+    val drawCount = game.processDealer()
+    DealerGameView(console).run(drawCount)
+
+    ResultView(console).run(game.status)
+    WinnerView(console).run(game.status)
 }
