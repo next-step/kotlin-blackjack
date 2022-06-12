@@ -7,6 +7,7 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
+import blackjack.view.TakeMoreDealerView
 import blackjack.view.TakeMorePlayer
 
 fun main() {
@@ -16,7 +17,8 @@ fun main() {
     val playerNames = inputView.enterPlayerName()
     val cardDeck = CardDeck()
     val takeMorePlayer = TakeMorePlayer()
-    val takeMoreDealer = TakeMoreDealer()
+    val takeMoreDealerView = TakeMoreDealerView()
+    val takeMoreDealer = TakeMoreDealer(takeMoreDealerView)
     val dealer = Dealer(cardDeck)
     val players = Players(playerNames, cardDeck)
     val blackJackGamer = players.players + dealer
