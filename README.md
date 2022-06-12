@@ -11,10 +11,14 @@
   - [x] Deck을 구현한다.
     - [x] Deck는 52장의 서로 다른 문양과 끗수로 이루어진다.
     - [x] Deck는 섞을 수 있다.
-  - [ ] Player를 구현한다.
+    - [x] Deck에서 카드를 한 장 또는 여러장 뽑을 수 있다.
+  - [x] Player를 구현한다.
     - [x] Player는 이름을 가진다.
     - [x] Player는 여러장의 카드를 가질 수 있다.
     - [x] Player에 카드를 추가할 수 있다.
+  - [ ] BlackJack 구현
+    - [x] Deck과 Player들을 가진다.
+    - [x] Player는 Deck에서 카드를 뽑을 수 있다.
     - [ ] Ace는 1 or 11로 계산할 수 있다.
     - [ ] Jack, Queen, King은 10으로 계산한다.
 - [ ] Blackjack Game Controller를 구현한다.

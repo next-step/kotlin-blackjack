@@ -2,8 +2,20 @@ package blackjack.domain
 
 class Deck constructor(var cards: List<Card>) {
 
+    private var index = 0
+
     fun shuffle() {
         cards = cards.shuffled()
+    }
+
+    fun draw(): Card {
+        return draw(1).firstOrNull() ?: throw RuntimeException("Deck is Empty")
+    }
+
+    fun draw(n: Int): List<Card> {
+        val subCards = cards.subList(index, index + n)
+        index += n
+        return subCards
     }
 
     companion object {

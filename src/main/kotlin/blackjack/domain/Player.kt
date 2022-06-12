@@ -7,6 +7,6 @@ class Player(val name: String) {
         cards = cards + card
     }
     fun addCards(cards: List<Card>) {
-        this.cards = this.cards.plus(cards)
+        this.cards = this.cards + cards
     }
 }
