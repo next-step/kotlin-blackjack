@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.GameScore
 import blackjack.domain.Participant
 
 object ResultView {
+
     fun gameResult(gameResult: GameResult) {
         println()
         println("### 최종 승패")
@@ -21,7 +21,6 @@ object ResultView {
         } else {
             println("${participant.name} : ${makePlayerResult(participant.gameScore)}")
         }
-
     }
 
     private fun makePlayerResult(gameScore: GameScore): String {
