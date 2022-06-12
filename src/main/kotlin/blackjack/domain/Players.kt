@@ -3,8 +3,8 @@ package blackjack.domain
 class Players(
     players: List<Player> = emptyList()
 ) {
-    private val _payers = players.toMutableList()
-    val players: List<Player> get() = _payers.toList()
+    private val _players = players.toMutableList()
+    val players: List<Player> get() = _players.toList()
 
     fun namesAsText() = players.joinToString { it.name }
 }
