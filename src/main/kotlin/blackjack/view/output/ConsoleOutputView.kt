@@ -84,18 +84,18 @@ class ConsoleOutputView : OutputView {
             is PlayerRecord.GuestWin -> ("승")
             is PlayerRecord.GuestLose -> ("패")
             is PlayerRecord.GuestDraw -> ("무")
-            is PlayerRecord.DealerRecord -> {
-                val recordString = StringBuilder()
-                if (this.win != 0) {
-                    recordString.append("${this.win}승 ")
+            is PlayerRecord.DealerRecord -> buildString {
+                val record = this@toDisplayString
+
+                if (record.win != 0) {
+                    this.append("${record.win}승 ")
                 }
-                if (this.lose != 0) {
-                    recordString.append("${this.lose}패 ")
+                if (record.lose != 0) {
+                    this.append("${record.lose}패 ")
                 }
-                if (this.draw != 0) {
-                    recordString.append("${this.lose}무 ")
+                if (record.draw != 0) {
+                    this.append("${record.draw}무 ")
                 }
-                recordString.toString()
             }
         }
     }
