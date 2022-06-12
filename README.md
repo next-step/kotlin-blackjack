@@ -9,7 +9,7 @@
     - [x] Card는 Suit(문양)과 Denomination(끗수)를 가진다.
     - [x] Card는 String으로 변환할 수 있다. e.g. ♠A
   - [ ] Deck을 구현한다.
-    - [ ] Deck는 52장의 서로 다른 문양과 끗수로 이루어진다.
+    - [x] Deck는 52장의 서로 다른 문양과 끗수로 이루어진다.
     - [ ] Deck는 섞을 수 있다.
   - [ ] Ace는 1 or 11로 계산할 수 있다.
   - [ ] Jack, Queen, King은 10으로 계산한다.
