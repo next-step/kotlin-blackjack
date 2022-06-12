@@ -20,12 +20,13 @@ class WinnerJudge(private val players: List<Player>) {
 
     private fun judge(player: Player, dealer: Dealer) {
         if (checkPlayerWin(player, dealer)) {
-            player.isWinner = true
+
+            player.gamblingSummary.isWinner = true
             dealer.lose++
         }
 
         if (checkDealerWin(player, dealer)) {
-            player.isWinner = false
+            player.gamblingSummary.isWinner = false
             dealer.win++
         }
     }

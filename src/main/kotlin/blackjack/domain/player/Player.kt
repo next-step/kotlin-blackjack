@@ -7,14 +7,13 @@ import blackjack.domain.game.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
-    private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf())
+    private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf()),
+    private val _gamblingSummary: GamblingSummary = GamblingSummary()
 ) {
     constructor(name: String, cardDeck: CardDeck) : this(_name = name) {
         _receivedCards.addCard(cardDeck.pickCard())
         _receivedCards.addCard(cardDeck.pickCard())
     }
-
-    var isWinner: Boolean = false
 
     val score: Int
         get() = calculateScore()
@@ -24,6 +23,9 @@ open class Player(
 
     val receivedCards: ReceivedCards
         get() = _receivedCards
+
+    val gamblingSummary: GamblingSummary
+        get() = _gamblingSummary
 
     fun calculateScore(): Int {
         var score = receivedCards.sumOfCards()

@@ -21,6 +21,7 @@ fun main() {
     val players = Players(playerNames, cardDeck)
     val blackJackGamer = players.players + dealer
 
+    inputView.enterBattingAmountByPlayer(players.players)
     resultView.printInitDistributed(blackJackGamer)
 
     players.playersToPlay()

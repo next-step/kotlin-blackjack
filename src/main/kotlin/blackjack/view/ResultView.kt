@@ -37,7 +37,7 @@ class ResultView {
     }
 
     private fun getPlayerResult(players: List<Player>): String {
-        return players.joinToString("\n") { "${it.name}: ${convertWinOrLose((it.isWinner))}" }
+        return players.joinToString("\n") { "${it.name}: ${convertWinOrLose((it.gamblingSummary.isWinner))}" }
     }
 
     private fun convertWinOrLose(toConvert: Boolean): String {
