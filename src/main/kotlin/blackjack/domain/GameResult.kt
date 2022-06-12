@@ -16,23 +16,20 @@ class GameResult(
         dealer.gameScore.lose()
     }
 
-    fun setDealerIsWin() {
-        players.forEach {
-            this.dealer.gameScore.win()
-            it.gameScore.lose()
-        }
-    }
-
     fun decideWinner(player: Participant) {
-        if (player.playerCards.score() < dealer.playerCards.score()) {
-            player.gameScore.win()
-            dealer.gameScore.lose()
-        } else if (player.playerCards.score() == dealer.playerCards.score()) {
-            player.gameScore.draw()
-            dealer.gameScore.draw()
-        } else {
-            player.gameScore.lose()
-            dealer.gameScore.win()
+        when {
+            player.playerCards.score() < dealer.playerCards.score() -> {
+                player.gameScore.lose()
+                dealer.gameScore.win()
+            }
+            player.playerCards.score() == dealer.playerCards.score() -> {
+                player.gameScore.draw()
+                dealer.gameScore.draw()
+            }
+            else -> {
+                player.gameScore.win()
+                dealer.gameScore.lose()
+            }
         }
     }
 }

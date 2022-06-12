@@ -5,16 +5,47 @@ import org.junit.jupiter.api.Test
 
 class GameResultTest {
     @Test
-    fun `플레이어 4명중 딜러가 bust`() {
-        val playerNames = listOf("molly", "jayce", "pug")
+    fun `딜러가 bust`() {
         val dealer = Dealer("딜러")
-        val players = playerNames.map { Participant(it) }
+        val players = Participant("molly")
 
-        val gameResult = GameResult(dealer, players)
+        val gameResult = GameResult(dealer, listOf(players))
 
-        gameResult.setDealerIsWin()
+        gameResult.dealerIsBust(players)
 
-        assertThat(dealer.gameScore.win).isEqualTo(3)
+        assertThat(dealer.gameScore.win).isEqualTo(0)
+        assertThat(dealer.gameScore.lose).isEqualTo(1)
+    }
+
+    @Test
+    internal fun `플레이어가 bust`() {
+        val dealer = Dealer("딜러")
+        val players = Participant("molly")
+
+        val gameResult = GameResult(dealer, listOf(players))
+
+        gameResult.playerIsBust(players)
+
+        assertThat(dealer.gameScore.win).isEqualTo(1)
+        assertThat(dealer.gameScore.lose).isEqualTo(0)
+    }
+
+    @Test
+    internal fun `플레이어가 12점, 딜러가 18점`() {
+        val dealer = Dealer("딜러")
+        val players = Participant("molly")
+
+        val blackjack =
+            BlackJackGame.of(dealer, listOf(players), MockCardDeck(Card(Card.CardPattern.CLUBS, Card.Denomination.SIX)))
+        blackjack.firstCardDistribution()
+        blackjack.drawTo("molly")
+
+        val gameResult = GameResult(dealer, listOf(players))
+
+        gameResult.decideWinner(players)
+
+        assertThat(dealer.gameScore.win).isEqualTo(0)
+        assertThat(dealer.gameScore.lose).isEqualTo(1)
     }
 
     @Test
