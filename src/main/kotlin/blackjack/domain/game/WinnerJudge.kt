@@ -20,10 +20,10 @@ class WinnerJudge(private val players: List<Player>) {
 
     private fun judge(player: Player, dealer: Dealer) {
         if (checkPlayerWin(player, dealer)) {
-
             player.gamblingSummary.isWinner = true
             dealer.lose++
         }
+        adjustBustBattingAmountToBust(player)
 
         if (checkDealerWin(player, dealer)) {
             player.gamblingSummary.isWinner = false
@@ -31,8 +31,16 @@ class WinnerJudge(private val players: List<Player>) {
         }
     }
 
+    private fun adjustBustBattingAmountToBust(gamer: Player) {
+        if (!gamer.isBust()) {
+            return
+        }
+
+        gamer.adjustBustBattingAmount()
+    }
+
     private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {
-        if (player.score > BLACKJACK_SCORE) {
+        if (player.isBust()) {
             return false
         }
 
@@ -40,7 +48,7 @@ class WinnerJudge(private val players: List<Player>) {
     }
 
     private fun checkDealerWin(player: Player, dealer: Dealer): Boolean {
-        if (dealer.score > BLACKJACK_SCORE) {
+        if (dealer.isBust()) {
             return false
         }
 

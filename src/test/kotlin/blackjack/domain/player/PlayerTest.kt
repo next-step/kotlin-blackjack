@@ -30,7 +30,8 @@ class PlayerTest {
             _receivedCards = receivedCards
         )
 
-        assertThat(player.calculateScore()).isEqualTo(10)
+
+        assertThat(player.score).isEqualTo(10)
         assertThat(player.canMoreGame()).isTrue
     }
 
@@ -48,7 +49,7 @@ class PlayerTest {
             _receivedCards = receivedCards
         )
 
-        assertThat(player.calculateScore()).isEqualTo(27)
+        assertThat(player.score).isEqualTo(27)
         assertThat(player.canMoreGame()).isFalse
     }
 
@@ -65,7 +66,7 @@ class PlayerTest {
             _receivedCards = receivedCards
         )
 
-        assertThat(player.calculateScore()).isEqualTo(2)
+        assertThat(player.score).isEqualTo(2)
         assertThat(player.canMoreGame()).isTrue
     }
 
@@ -83,7 +84,7 @@ class PlayerTest {
             _receivedCards = receivedCards
         )
 
-        assertThat(player.calculateScore()).isEqualTo(12)
+        assertThat(player.score).isEqualTo(12)
         assertThat(player.canMoreGame()).isTrue
     }
 
@@ -100,7 +101,7 @@ class PlayerTest {
             _receivedCards = receivedCards
         )
 
-        assertThat(player.calculateScore()).isEqualTo(21)
+        assertThat(player.score).isEqualTo(21)
         assertThat(player.canMoreGame()).isFalse
     }
 }

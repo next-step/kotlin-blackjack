@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.ReceivedCards
+import blackjack.domain.game.Score
 import blackjack.domain.game.TakeMorePlayerStrategy
 
 open class Player(
@@ -16,7 +17,7 @@ open class Player(
     }
 
     val score: Int
-        get() = calculateScore()
+        get() = Score.calculateScore(_receivedCards)
 
     val name: String
         get() = _name
@@ -27,20 +28,16 @@ open class Player(
     val gamblingSummary: GamblingSummary
         get() = _gamblingSummary
 
-    fun calculateScore(): Int {
-        var score = receivedCards.sumOfCards()
-
-        if (score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards.countOfAceCard()
-
-            score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
-        }
-
-        return score
+    fun canMoreGame(): Boolean {
+        return Score.calculateScore(_receivedCards) < BLACKJACK_SCORE
     }
 
-    fun canMoreGame(): Boolean {
-        return calculateScore() < BLACKJACK_SCORE
+    fun isBust(): Boolean {
+        return Score.calculateScore(_receivedCards) > BLACKJACK_SCORE
+    }
+
+    fun adjustBustBattingAmount() {
+        this.gamblingSummary.battingAmount = this.gamblingSummary.battingAmount.unaryMinus()
     }
 
     fun addCard(card: Card) {
@@ -53,7 +50,5 @@ open class Player(
 
     companion object {
         private const val BLACKJACK_SCORE = 21
-        private const val ACE_NUMBER_TO_ONE = 1
-        private const val ACE_NUMBER_TO_ELEVEN = 11
     }
 }
