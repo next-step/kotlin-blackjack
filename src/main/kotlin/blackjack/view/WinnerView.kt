@@ -6,7 +6,7 @@ import blackjack.domain.Player
 
 class WinnerView(private val io: IO) {
 
-    fun run(status: GameStatus) {
+    fun printWinnerResult(status: GameStatus) {
         io.print("## 최종 승패")
         printDealerResult(status)
         printPlayerResult(status)

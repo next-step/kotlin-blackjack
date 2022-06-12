@@ -31,7 +31,7 @@ internal class PlayerViewTest : StringSpec({
         val playerView = PlayerView(io)
         val status = GameStatus(dealer, players)
 
-        playerView.run(status)
+        playerView.printPlayers(status)
 
         io.printed shouldBe listOf(
             "딜러와 pobi, jason에게 2장의 나누었습니다.",

@@ -36,7 +36,7 @@ internal class WinnerViewTest : StringSpec({
         val status = GameStatus(dealer, player)
         val winnerView = WinnerView(io)
 
-        winnerView.run(status)
+        winnerView.printWinnerResult(status)
 
         io.printed shouldBe listOf(
             "## 최종 승패",

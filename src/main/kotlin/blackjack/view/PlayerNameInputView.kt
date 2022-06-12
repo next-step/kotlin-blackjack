@@ -2,7 +2,7 @@ package blackjack.view
 
 class PlayerNameInputView(private val io: IO) {
 
-    fun run(): List<String> {
+    fun inputPlayerNames(): List<String> {
         io.print("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val players = readPlayerNames()
         io.print("")

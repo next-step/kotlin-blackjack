@@ -33,7 +33,7 @@ class ResultViewTest : StringSpec({
         val status = GameStatus(dealer, players)
         val resultView = ResultView(io)
 
-        resultView.run(status)
+        resultView.printGameResult(status)
 
         io.printed shouldBe listOf(
             "딜러카드: 3다이아몬드, 9클로버, 8다이아몬드 - 결과: 20",

@@ -12,17 +12,17 @@ import blackjack.view.WinnerView
 fun main() {
     val console = Console()
 
-    val playerNames = PlayerNameInputView(console).run()
+    val playerNames = PlayerNameInputView(console).inputPlayerNames()
     val game = Game.start(playerNames)
 
-    PlayerView(console).run(game.status)
+    PlayerView(console).printPlayers(game.status)
 
     val playerGameView = PlayerGameView(console)
     game.processPlayers(playerGameView)
 
     val drawCount = game.processDealer()
-    DealerGameView(console).run(drawCount)
+    DealerGameView(console).printDealerDrawCount(drawCount)
 
-    ResultView(console).run(game.status)
-    WinnerView(console).run(game.status)
+    ResultView(console).printGameResult(game.status)
+    WinnerView(console).printWinnerResult(game.status)
 }

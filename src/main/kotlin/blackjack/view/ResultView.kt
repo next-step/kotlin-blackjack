@@ -4,7 +4,7 @@ import blackjack.domain.GameStatus
 
 class ResultView(private val io: IO) {
 
-    fun run(status: GameStatus) {
+    fun printGameResult(status: GameStatus) {
         val dealer = status.dealer
         val players = status.players
 
