@@ -23,13 +23,13 @@ class WinnerJudge(private val players: List<Player>) {
             player.gamblingSummary.isWinner = true
             dealer.lose++
         }
-        adjustBustBattingAmountToBust(player)
 
         if (checkDealerWin(player, dealer)) {
             player.gamblingSummary.isWinner = false
             dealer.win++
         }
 
+        adjustLossBattingAmount(player)
         adjustEarningRate(player, dealer)
     }
 
@@ -45,12 +45,10 @@ class WinnerJudge(private val players: List<Player>) {
                 && !dealer.isBlackJack()
     }
 
-    private fun adjustBustBattingAmountToBust(gamer: Player) {
-        if (!gamer.isBust()) {
-            return
+    private fun adjustLossBattingAmount(gamer: Player) {
+        if (gamer.isBust() || !gamer.gamblingSummary.isWinner) {
+            gamer.adjustBustBattingAmount()
         }
-
-        gamer.adjustBustBattingAmount()
     }
 
     private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {
