@@ -42,7 +42,15 @@ class BlackjackApplication {
         return if (isDealer) {
             (participant as Dealer).isHit()
         } else {
+            playerIsHit(participant)
+        }
+    }
+
+    private fun playerIsHit(participant: Participant): Boolean {
+        return if (participant.isBust()) {
             InputView.needMoreCard(participant)
+        } else {
+            false
         }
     }
 }

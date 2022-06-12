@@ -12,4 +12,12 @@ open class Participant(
     open fun isDealer(): Boolean {
         return this is Dealer
     }
+
+    fun isBust(): Boolean {
+        return playerCards.score() < BLACK_JACK_SCORE
+    }
+
+    companion object {
+        private const val BLACK_JACK_SCORE = 21
+    }
 }
