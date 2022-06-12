@@ -18,17 +18,17 @@ object ResultView {
     }
 
     private fun makeResult(gameScore: GameScore): String {
-        val result = StringBuilder()
-        if (gameScore.win != ZERO) {
-            result.append("${gameScore.win}승")
+        return buildString {
+            if (gameScore.win != ZERO) {
+                this.append("${gameScore.win}승")
+            }
+            if (gameScore.draw != ZERO) {
+                this.append("${gameScore.draw}무")
+            }
+            if (gameScore.lose != ZERO) {
+                this.append("${gameScore.lose}패")
+            }
         }
-        if (gameScore.draw != ZERO) {
-            result.append("${gameScore.draw}무")
-        }
-        if (gameScore.lose != ZERO) {
-            result.append("${gameScore.lose}패")
-        }
-        return result.toString()
     }
 
     private const val ZERO = 0
