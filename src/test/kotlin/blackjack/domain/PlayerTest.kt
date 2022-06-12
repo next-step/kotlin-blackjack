@@ -43,6 +43,7 @@ internal class PlayerTest : FreeSpec({
     "카드를 추가할 수 있는 상태인지 판별한다" - {
         "추가할 수 없는 경우" {
             val player = createPlayer(
+                "player",
                 Card(Suite.HEARTS, Denomination.QUEEN),
                 Card(Suite.HEARTS, Denomination.ACE)
             )
@@ -54,6 +55,7 @@ internal class PlayerTest : FreeSpec({
 
         "추가할 수 있는 경우" {
             val player = createPlayer(
+                "player",
                 Card(Suite.HEARTS, Denomination.QUEEN)
             )
 

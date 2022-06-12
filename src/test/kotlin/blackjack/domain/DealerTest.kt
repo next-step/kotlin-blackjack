@@ -7,6 +7,7 @@ class DealerTest : FreeSpec({
 
     "참가자가 카드 추가를 요청하는 경우 카드를 추가한다" {
         val player = createPlayer(
+            "player",
             Card(Suite.HEARTS, Denomination.FOUR),
         )
 
@@ -47,4 +48,4 @@ fun createDealer(): Dealer = Dealer(
     )
 )
 
-fun createPlayer(vararg cards: Card): Player = Player("player", Hand(cards.toList()))
+fun createPlayer(name: String, vararg cards: Card): Player = Player(name, Hand(cards.toList()))

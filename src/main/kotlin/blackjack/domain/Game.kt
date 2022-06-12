@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Game private constructor(
+class Game(
     private val dealer: Dealer,
     private val players: List<Player>,
 ) {
