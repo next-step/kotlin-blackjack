@@ -42,10 +42,8 @@ internal class DefaultCardDistributorTest {
 
         // Given
         val countOfCardToDistribute = 3
-        val dummyHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player, cardDistributor: CardDistributor): Boolean {
-                return (player.cardCount < countOfCardToDistribute) // 3장까지 카드를 받을 수 있도록 함.
-            }
+        val dummyHitDecisionMaker = HitDecisionMaker { player, _ ->
+            (player.cardCount < countOfCardToDistribute) // 3장까지 카드를 받을 수 있도록 함.
         }
 
         val player1 = Player.Guest("김", dummyHitDecisionMaker)

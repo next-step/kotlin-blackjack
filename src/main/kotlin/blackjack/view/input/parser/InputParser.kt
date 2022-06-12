@@ -1,5 +1,5 @@
 package blackjack.view.input.parser
 
-interface InputParser<T> {
+fun interface InputParser<T> {
     fun parseValue(inputString: String?): ParseResult<T>
 }
