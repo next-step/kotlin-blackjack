@@ -31,10 +31,12 @@ internal class BlackjackTest {
     @Test
     fun `카드가 21점 이상이면 뽑을 수 없다`() {
         val player = Player("han")
-        player.addCards(listOf(
-            Card(Suit.SPADE, Denomination.JACK),
-            Card(Suit.DIAMOND, Denomination.ACE)
-        ))
+        player.addCards(
+            listOf(
+                Card(Suit.SPADE, Denomination.JACK),
+                Card(Suit.DIAMOND, Denomination.ACE)
+            )
+        )
         val blackjack = Blackjack(listOf(player))
 
         assertThrows<IllegalStateException> { blackjack.drawingCard(player) }

@@ -1,7 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.Player
-
 object BlackjackView {
 
     fun printPlayerInput() {
