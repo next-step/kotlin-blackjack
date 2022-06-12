@@ -5,17 +5,16 @@ import blackjack.domain.card.ReceivedCards
 object Score {
 
     fun calculateScore(receivedCards: ReceivedCards): Int {
-        var score = receivedCards.sumOfCards()
-        if (score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards.countOfAceCard()
+        val sumOfExceptAce = receivedCards.sumOfCardsExceptAce()
+        val totalSumsByAceCount = receivedCards.calculationPoliciesByAceCount()
+            .map { sumOfAce -> sumOfAce + sumOfExceptAce }
 
-            score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
+        if (totalSumsByAceCount.contains(BLACKJACK_SCORE)) {
+            return BLACKJACK_SCORE
         }
 
-        return score
+        return totalSumsByAceCount.minOrNull() ?: 0
     }
 
     private const val BLACKJACK_SCORE = 21
-    private const val ACE_NUMBER_TO_ONE = 1
-    private const val ACE_NUMBER_TO_ELEVEN = 11
 }

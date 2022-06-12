@@ -69,6 +69,45 @@ class PlayerTest {
         assertThat(player.score).isEqualTo(2)
         assertThat(player.canMoreGame()).isTrue
     }
+    @Test
+    fun `게임을 더 할 수 있는 (기본(10)+기본(7)+에이스(1)+에이스(1)=19) 경우에 대한 테스트`() {
+        val receivedCards = ReceivedCards(
+            mutableSetOf(
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 7),
+                AceCard(cardSuit = CardSuit.CLUB),
+                AceCard(cardSuit = CardSuit.SPADE)
+            )
+        )
+        val player = Player(
+            _name = "name",
+            _receivedCards = receivedCards
+        )
+
+        assertThat(player.score).isEqualTo(19)
+        assertThat(player.canMoreGame()).isTrue
+    }
+
+    @Test
+    fun `게임을 더 할 수 없는 (기본(10)+기본(8)+에이스(1)+에이스(1)+에이스(1)+에이스(1)=22) 경우에 대한 테스트`() {
+        val receivedCards = ReceivedCards(
+            mutableSetOf(
+                BasicCard(cardSuit = CardSuit.CLUB, number = 10),
+                BasicCard(cardSuit = CardSuit.CLUB, number = 8),
+                AceCard(cardSuit = CardSuit.CLUB),
+                AceCard(cardSuit = CardSuit.SPADE),
+                AceCard(cardSuit = CardSuit.DIAMOND),
+                AceCard(cardSuit = CardSuit.HEART)
+            )
+        )
+        val player = Player(
+            _name = "name",
+            _receivedCards = receivedCards
+        )
+
+        assertThat(player.score).isEqualTo(22)
+        assertThat(player.canMoreGame()).isFalse
+    }
 
     @Test
     fun `게임을 더 할 수 있는 (기본(10)+에이스(1)+에이스(1)=12) 경우에 대한 테스트`() {
