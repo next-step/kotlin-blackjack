@@ -1,8 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.interfaces.RandomCardFactory
+import blackjack.view.Screen
 
-class Game() {
+class Game(val dealer: Dealer) {
     fun enter(input: String): List<Player> {
         val players = mutableListOf<Player>()
         for (name in input.split(",")) {
@@ -12,19 +13,26 @@ class Game() {
         return players
     }
 
-    fun start(players: List<Player>, dealer: Dealer) {
-        takeCards(players, dealer)
-    }
-
-    private fun takeCards(players: List<Player>, dealer: Dealer) {
+    fun shareCards(players: List<Player>) {
         for (player in players) {
-            takeCard(player, dealer)
+            shareCard(player)
         }
     }
 
-    private fun takeCard(player: Player, dealer: Dealer) {
-        repeat(Dealer.BASIC_CARD_AMOUNT) {
+    private fun shareCard(player: Player) {
+        dealer.shareCards().map { card -> player.takeCard(card) }
+    }
+
+    fun shareMoreCards(player: Player) {
+        var needCard = dealer.ask(player, readln())
+        if (!needCard) {
+            return Screen.displayPlayerCard(player)
+        }
+
+        while (needCard) {
             player.takeCard(dealer.give(RandomCardFactory()))
+            Screen.displayPlayerCard(player)
+            needCard = dealer.ask(player, readln())
         }
     }
 }

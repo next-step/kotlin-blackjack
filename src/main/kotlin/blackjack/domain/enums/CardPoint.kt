@@ -1,5 +1,6 @@
 package blackjack.domain.enums
 
+import blackjack.domain.Card
 import kotlin.random.Random
 
 enum class CardPoint(val cardName: String, val point: Int) {
@@ -22,6 +23,10 @@ enum class CardPoint(val cardName: String, val point: Int) {
 
         fun randomPoint(): CardPoint {
             return cardPoints[Random.nextInt(size)]
+        }
+
+        fun point(card: Card): Int {
+            return values().find { it == card.point }?.point ?: throw IllegalArgumentException("비 정상적인 카드입니다.")
         }
     }
 }
