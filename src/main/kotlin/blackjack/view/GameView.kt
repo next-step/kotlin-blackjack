@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
 import blackjack.domain.Dealer
+import blackjack.domain.GameResult
 import blackjack.domain.Participant
 
 object GameView {
@@ -26,9 +27,9 @@ object GameView {
         }
     }
 
-    fun displayResult(participants: BlackJackGame) {
+    fun displayResult(gameResult: GameResult) {
         println()
-        participants.participants.forEach {
+        gameResult.allParticipant.forEach {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
             println("결과 : ${it.playerCards.score()}")

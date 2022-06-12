@@ -21,9 +21,9 @@ class BlackjackApplication {
         blackJackGame.participantsSortByPlayer.forEach {
             suggestMoreCard(blackJackGame, it)
         }
-        blackJackGame.match()
-        GameView.displayResult(blackJackGame)
-        ResultView.gameResult(blackJackGame)
+        val gameResult = blackJackGame.match()
+        GameView.displayResult(gameResult)
+        ResultView.gameResult(gameResult)
     }
 
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {

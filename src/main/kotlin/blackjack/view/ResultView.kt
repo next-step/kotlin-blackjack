@@ -1,20 +1,40 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Dealer
+import blackjack.domain.GameResult
 import blackjack.domain.GameScore
 import blackjack.domain.Participant
 
 object ResultView {
-    fun gameResult(blackJackGame: BlackJackGame) {
+    fun gameResult(gameResult: GameResult) {
         println()
         println("### 최종 승패")
-        blackJackGame.participants.forEach {
+        gameResult.allParticipant.forEach {
             printResult(it)
         }
     }
 
     private fun printResult(participant: Participant) {
-        println("${participant.name} : ${makeResult(participant.gameScore)}")
+        if (participant is Dealer) {
+            println("${participant.name} : ${makeResult(participant.gameScore)}")
+        } else {
+            println("${participant.name} : ${makePlayerResult(participant.gameScore)}")
+        }
+
+    }
+
+    private fun makePlayerResult(gameScore: GameScore): String {
+        if (gameScore.win != ZERO) {
+            return "승"
+        }
+        if (gameScore.draw != ZERO) {
+            return "무"
+        }
+        if (gameScore.lose != ZERO) {
+            return "패"
+        }
+        return ""
     }
 
     private fun makeResult(gameScore: GameScore): String {

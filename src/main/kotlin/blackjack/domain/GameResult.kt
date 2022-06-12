@@ -6,6 +6,7 @@ class GameResult(
     private val dealer: Dealer,
     private val players: List<Participant>
 ) {
+    val allParticipant = listOf(dealer) + players
     fun setDealerIsWin() {
         players.forEach {
             this.dealer.gameScore.win()

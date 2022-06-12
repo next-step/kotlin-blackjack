@@ -20,13 +20,14 @@ data class BlackJackGame(
         playerMap[playerName]!!.addCard(cardDeck.draw())
     }
 
-    fun match() {
+    fun match(): GameResult {
         val gameResult = GameResult(dealer, players)
         if (dealer.isBust()) {
             gameResult.setDealerIsWin()
         } else {
             gameResult.decideWinner()
         }
+        return gameResult
     }
 
     private fun Participant.addFirstCard() {
