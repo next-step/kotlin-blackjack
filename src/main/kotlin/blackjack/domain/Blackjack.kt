@@ -16,6 +16,7 @@ class Blackjack(
 
     fun drawingCard(player: Player): Card {
         require(player in players) { "[${player.name} is not blackjack player" }
+        check(calculatePoints(player) < BLACKJACK_POINTS) { "${player.name}는 ${calculatePoints(player)}점이라 카드를 받을 수 없습니다." }
         val card = deck.draw()
         player.addCard(deck.draw())
 
@@ -49,5 +50,9 @@ class Blackjack(
     private fun getAcePoints(points: Int): Int {
         return if (points <= 10) 11
         else 1
+    }
+
+    companion object {
+        private const val BLACKJACK_POINTS = 21
     }
 }

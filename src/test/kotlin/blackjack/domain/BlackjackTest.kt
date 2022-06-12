@@ -2,6 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -25,6 +26,18 @@ internal class BlackjackTest {
 
         assertThat(blackjack.players).hasSize(1)
         assertThat(blackjack.players.first().cards).hasSize(1)
+    }
+
+    @Test
+    fun `카드가 21점 이상이면 뽑을 수 없다`() {
+        val player = Player("han")
+        player.addCards(listOf(
+            Card(Suit.SPADE, Denomination.JACK),
+            Card(Suit.DIAMOND, Denomination.ACE)
+        ))
+        val blackjack = Blackjack(listOf(player))
+
+        assertThrows<IllegalStateException> { blackjack.drawingCard(player) }
     }
 
     @Test
