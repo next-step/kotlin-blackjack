@@ -11,4 +11,16 @@ internal class CardsTest : FunSpec({
         // then
         sut.size() shouldBe 52
     }
+
+    test("카드를 추가할 수 있다.") {
+        // given
+        val card = Card(CardNumber.ACE, CardSuit.SPADE)
+        val sut = Cards()
+
+        // when
+        sut.add(card)
+
+        // then
+        sut.size() shouldBe 1
+    }
 })

@@ -1,9 +1,15 @@
 package blackjack
 
 @JvmInline
-value class Cards(private val values: List<Card>) {
+value class Cards(
+    private val values: ArrayDeque<Card> = ArrayDeque(listOf())
+) {
 
     fun size() = this.values.size
+
+    fun add(card: Card) {
+        this.values.add(card)
+    }
 
     companion object {
         fun createDeck(): Cards {
