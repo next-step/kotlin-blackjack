@@ -30,7 +30,9 @@ class GameResultTest {
 
         val gameResult = GameResult(dealer, players)
 
-        gameResult.decideWinner()
+        players.forEach {
+            gameResult.decideWinner(it)
+        }
 
         assertThat(dealer.gameScore.draw).isEqualTo(2)
     }
