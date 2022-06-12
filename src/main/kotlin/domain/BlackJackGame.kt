@@ -9,10 +9,10 @@ object BlackJackGame {
         }
     }
 
-    fun checkBustCondition(player: Player, isIssued: Boolean): Boolean {
+    fun isBust(player: Player, isIssued: Boolean): Boolean {
         var isExceed21 = false
         if (isIssued) {
-            player.offer(CardDeck.pop(1))
+            provideCard(player)
             if (player.getSumOfCards() >= BUST_THRESHOLD_SCORE) isExceed21 = true
         }
 
@@ -23,9 +23,19 @@ object BlackJackGame {
         return (noCnt != playersSize || isExceed21).not()
     }
 
+    private fun provideCard(player: Player) {
+        player.offer(ordinaryIssue())
+    }
+
     private fun initialIssue(): MutableList<Card> {
-        return CardDeck.pop(2)
+        return CardDeck.pop(INITIAL_POP_SIZE)
+    }
+
+    private fun ordinaryIssue(): MutableList<Card> {
+        return CardDeck.pop(ORDINARY_POP_SIZE)
     }
 
     private const val BUST_THRESHOLD_SCORE = 21
+    private const val INITIAL_POP_SIZE = 2
+    private const val ORDINARY_POP_SIZE = 1
 }

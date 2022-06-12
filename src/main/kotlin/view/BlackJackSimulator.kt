@@ -1,9 +1,8 @@
-package domain
+package view
 
+import domain.BlackJackGame
 import domain.BlackJackGame.endCheck
 import domain.BlackJackGame.setInitialCards
-import view.InputView
-import view.ResultView
 
 fun main() {
     val players = InputView.getUserName()
@@ -22,7 +21,7 @@ fun main() {
             val enableToIssue = InputView.isYesOrNo(it.name)
             if (!enableToIssue) noCnt++
 
-            val exceed21 = BlackJackGame.checkBustCondition(it, enableToIssue)
+            val exceed21 = BlackJackGame.isBust(it, enableToIssue)
 
             InputView.displayHaveCard(it)
 
