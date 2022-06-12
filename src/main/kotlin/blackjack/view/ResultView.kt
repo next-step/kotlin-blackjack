@@ -1,10 +1,10 @@
-package balckjac.view
+package blackjack.view
 
-import balckjac.domain.GameRule.INIT_DRAW_CARD_COUNT
-import balckjac.domain.Player
-import balckjac.domain.Players
-import balckjac.domain.ScoreCalculator
-import balckjac.domain.asText
+import blackjack.domain.GameRule.INIT_DRAW_CARD_COUNT
+import blackjack.domain.Player
+import blackjack.domain.Players
+import blackjack.domain.ScoreCalculator
+import blackjack.domain.asText
 
 object ResultView {
 

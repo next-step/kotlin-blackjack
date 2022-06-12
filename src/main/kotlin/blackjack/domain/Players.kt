@@ -1,4 +1,4 @@
-package balckjac.domain
+package blackjack.domain
 
 class Players(
     players: List<Player> = emptyList()

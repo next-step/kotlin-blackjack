@@ -1,6 +1,6 @@
-package balckjac.domain
+package blackjack.domain
 
-import balckjac.domain.GameRule.BLACKJACK_SCORE
+import blackjack.domain.GameRule.BLACKJACK_SCORE
 
 object ScoreCalculator {
 

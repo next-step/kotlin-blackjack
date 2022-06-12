@@ -1,11 +1,11 @@
-package balckjac.view
+package blackjack.view
 
-import balckjac.domain.Card
-import balckjac.domain.GameRule.INIT_DRAW_CARD_COUNT
-import balckjac.domain.Player
-import balckjac.domain.Players
-import balckjac.domain.asText
-import balckjac.domain.toPlayers
+import blackjack.domain.Card
+import blackjack.domain.GameRule.INIT_DRAW_CARD_COUNT
+import blackjack.domain.Player
+import blackjack.domain.Players
+import blackjack.domain.asText
+import blackjack.domain.toPlayers
 import java.util.Locale
 
 object InputView {

@@ -1,4 +1,4 @@
-package balckjac.domain
+package blackjack.domain
 
 object GameRule {
     const val INIT_DRAW_CARD_COUNT = 2

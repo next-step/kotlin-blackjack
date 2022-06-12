@@ -1,8 +1,8 @@
-package balckjac
+package blackjack
 
-import balckjac.domain.Deck
-import balckjac.view.InputView
-import balckjac.view.ResultView
+import blackjack.domain.Deck
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
 fun main() {
     val deck = Deck()

@@ -1,4 +1,4 @@
-package balckjac.domain
+package blackjack.domain
 
 enum class Denomination(
     val label: String,

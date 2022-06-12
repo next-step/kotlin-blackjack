@@ -1,4 +1,4 @@
-package balckjac.domain
+package blackjack.domain
 
 class Player(
     val name: String,

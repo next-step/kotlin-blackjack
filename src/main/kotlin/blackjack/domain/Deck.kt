@@ -1,6 +1,6 @@
-package balckjac.domain
+package blackjack.domain
 
-import balckjac.domain.GameRule.TOTAL_CARD_COUNT
+import blackjack.domain.GameRule.TOTAL_CARD_COUNT
 
 class Deck(
     cards: Set<Card> = CARD_LIST

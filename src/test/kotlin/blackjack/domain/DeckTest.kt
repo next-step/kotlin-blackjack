@@ -1,6 +1,6 @@
-package balckjac.domain
+package blackjack.domain
 
-import balckjac.domain.Deck.Companion.CARD_LIST
+import blackjack.domain.Deck.Companion.CARD_LIST
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

@@ -1,4 +1,4 @@
-package balckjac.domain
+package blackjack.domain
 
 import org.junit.jupiter.api.Test
 
