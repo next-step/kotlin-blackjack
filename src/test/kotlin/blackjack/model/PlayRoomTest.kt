@@ -4,7 +4,6 @@ import blackjack.dummy.toCardSet
 import blackjack.fixture.AlwaysHitDecisionMaker
 import blackjack.fixture.AlwaysStayDecisionMaker
 import blackjack.model.card.Card
-import blackjack.model.card.State
 import blackjack.model.player.CardRecipient
 import blackjack.model.player.HitDecisionMaker
 import blackjack.model.player.Player
@@ -43,7 +42,7 @@ internal class PlayRoomTest {
     }
 
     @Test
-    fun `playRoom startGame Test`() {
+    fun `playRoom 에서 게임 시작시 초기 카드 장 설정값(2장)씩 배분하는지 테스트`() {
 
         // given
         val cardDistributor = sequentialCardDistributor.apply {
@@ -64,14 +63,10 @@ internal class PlayRoomTest {
 
         // then
         assertAll(
-            {
-                assertThat(players.map { it.cardCount }.distinct())
-                    .containsOnly(initialCardCountForEachPlayer)
-            },
-            { assertThat(players[0].state).isEqualTo(State.Running(12)) },
-            { assertThat(players[1].state).isEqualTo(State.Running(12)) },
-            { assertThat(players[2].state).isEqualTo(State.Running(4)) },
-            { assertThat(players[3].state).isEqualTo(State.Running(4)) }
+            { assertThat(players[0].cardCount).isEqualTo(initialCardCountForEachPlayer) },
+            { assertThat(players[1].cardCount).isEqualTo(initialCardCountForEachPlayer) },
+            { assertThat(players[2].cardCount).isEqualTo(initialCardCountForEachPlayer) },
+            { assertThat(players[3].cardCount).isEqualTo(initialCardCountForEachPlayer) }
         )
     }
 
