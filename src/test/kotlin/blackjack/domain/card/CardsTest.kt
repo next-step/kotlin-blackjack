@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.Score
+import blackjack.domain.score.Score
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -12,8 +12,8 @@ class CardsTest : DescribeSpec({
         context("카드 목록이 주어지면") {
             it("카드들을 생성할 수 있다") {
                 val cards = listOf(
-                    Card(CardPattern.DIAMOND, NumberCard(4)),
-                    Card(CardPattern.SPADE, Ace())
+                    Card(Suit.DIAMOND, NumberCard(4)),
+                    Card(Suit.SPADE, Ace())
                 )
 
                 Cards(cards) shouldNotBe null
@@ -25,20 +25,20 @@ class CardsTest : DescribeSpec({
         it("카드를 추가할 수 있다") {
             val cards = Cards(
                 listOf(
-                    Card(CardPattern.DIAMOND, NumberCard(4)),
-                    Card(CardPattern.SPADE, Ace())
+                    Card(Suit.DIAMOND, NumberCard(4)),
+                    Card(Suit.SPADE, Ace())
                 )
             )
 
-            cards.add(Card(CardPattern.HEART, NumberCard(7)))
-            cards.add(Card(CardPattern.HEART, Queen()))
+            cards.add(Card(Suit.HEART, NumberCard(7)))
+            cards.add(Card(Suit.HEART, Queen()))
 
             cards.cards shouldContainExactly (
                 listOf(
-                    Card(CardPattern.DIAMOND, NumberCard(4)),
-                    Card(CardPattern.SPADE, Ace()),
-                    Card(CardPattern.HEART, NumberCard(7)),
-                    Card(CardPattern.HEART, Queen())
+                    Card(Suit.DIAMOND, NumberCard(4)),
+                    Card(Suit.SPADE, Ace()),
+                    Card(Suit.HEART, NumberCard(7)),
+                    Card(Suit.HEART, Queen())
                 )
                 )
         }
@@ -49,10 +49,10 @@ class CardsTest : DescribeSpec({
             it("카드들의 카드 숫자를 합산할 수 있다") {
                 val cards = Cards(
                     listOf(
-                        Card(CardPattern.DIAMOND, NumberCard(4)),
-                        Card(CardPattern.SPADE, Jack()),
-                        Card(CardPattern.HEART, NumberCard(7)),
-                        Card(CardPattern.HEART, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(4)),
+                        Card(Suit.SPADE, Jack()),
+                        Card(Suit.HEART, NumberCard(7)),
+                        Card(Suit.HEART, Queen()),
                     )
                 )
 
@@ -64,9 +64,9 @@ class CardsTest : DescribeSpec({
             it("Ace 카드를 제외한 숫자가 11이 이상이면 1로 계산하여 더한다") {
                 val cards = Cards(
                     listOf(
-                        Card(CardPattern.DIAMOND, NumberCard(4)),
-                        Card(CardPattern.HEART, NumberCard(7)),
-                        Card(CardPattern.HEART, Ace())
+                        Card(Suit.DIAMOND, NumberCard(4)),
+                        Card(Suit.HEART, NumberCard(7)),
+                        Card(Suit.HEART, Ace())
                     )
                 )
 
@@ -76,8 +76,8 @@ class CardsTest : DescribeSpec({
             it("Ace 카드를 제외한 숫자가 10이 이하이면 10으로 계산하여 더한다") {
                 val cards = Cards(
                     listOf(
-                        Card(CardPattern.HEART, Ace()),
-                        Card(CardPattern.SPADE, Queen())
+                        Card(Suit.HEART, Ace()),
+                        Card(Suit.SPADE, Queen())
                     )
                 )
 
@@ -89,9 +89,9 @@ class CardsTest : DescribeSpec({
             it("카드들의 카드 숫자를 합산할 수 있다") {
                 val cards = Cards(
                     listOf(
-                        Card(CardPattern.HEART, Ace()),
-                        Card(CardPattern.SPADE, Ace()),
-                        Card(CardPattern.DIAMOND, Ace()),
+                        Card(Suit.HEART, Ace()),
+                        Card(Suit.SPADE, Ace()),
+                        Card(Suit.DIAMOND, Ace()),
                     )
                 )
 

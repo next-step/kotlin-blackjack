@@ -1,13 +1,13 @@
 package blackjack.domain.player
 
-import blackjack.domain.Score
 import blackjack.domain.card.Ace
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardPattern
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Jack
 import blackjack.domain.card.NumberCard
 import blackjack.domain.card.Queen
+import blackjack.domain.card.Suit
+import blackjack.domain.score.Score
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -23,120 +23,99 @@ class PlayerTest : DescribeSpec({
         }
     }
 
-    describe("hit") {
-        context("가지고 있는 카드들의 합이 21을 넘지 않으면") {
+    describe("changeStatus") {
+        context("STAY 또는 BUST가 아닌 경우") {
+            it("카드를 추가하기로 할 수 있다") {
+                val player = Player(name = "요한")
+                player.changeStatus(PlayerStatus.HIT)
+            }
+
+            it("카드를 추가하지 않기로 할 수 있다") {
+                val player = Player(name = "요한")
+                player.changeStatus(PlayerStatus.STAY)
+            }
+        }
+
+        context("BUST 인 경우") {
+            val player = Player(
+                name = "요한",
+                cards = Cards(
+                    listOf(
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(10)),
+                        Card(Suit.DIAMOND, NumberCard(2)),
+                    )
+                )
+            )
+
+            it("카드를 추가하기로 하면 IllegalStateException 이 발생한다") {
+                shouldThrow<IllegalStateException> {
+                    player.changeStatus(PlayerStatus.HIT)
+                }
+            }
+
+            it("카드를 추가히지 않기로 하면 IllegalStateException 이 발생한다") {
+                shouldThrow<IllegalStateException> {
+                    player.changeStatus(PlayerStatus.STAY)
+                }
+            }
+        }
+    }
+
+    describe("addCard") {
+        context("STAY 또는 BUST 가 아닌 경우") {
             it("카드를 추가할 수 있다") {
                 val player = Player(
                     name = "요한",
                     cards = Cards(
                         listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(9)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     )
                 )
 
-                player.hit(Card(CardPattern.DIAMOND, NumberCard(10)))
+                player.addCard(Card(Suit.DIAMOND, NumberCard(10)))
 
                 player.cards.cards shouldBe
                     listOf(
-                        Card(CardPattern.DIAMOND, Queen()),
-                        Card(CardPattern.DIAMOND, NumberCard(9)),
-                        Card(CardPattern.DIAMOND, NumberCard(2)),
-                        Card(CardPattern.DIAMOND, NumberCard(10)),
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(9)),
+                        Card(Suit.DIAMOND, NumberCard(2)),
+                        Card(Suit.DIAMOND, NumberCard(10)),
                     )
             }
         }
 
-        context("카드들의 합이 21을 넘으면") {
+        context("BUST 인 경우") {
             it("IllegalStateException 이 발생한다") {
                 val player = Player(
                     name = "요한",
                     cards = Cards(
                         listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(10)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(10)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
                         )
                     )
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.hit(Card(CardPattern.DIAMOND, NumberCard(2)))
+                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
 
-        context("카드를 받지 않기로 한 경우") {
+        context("STAY 인 경우") {
             it("IllegalStateException 이 발생한다") {
                 val player = Player(
                     name = "요한",
-                    stay = true
+                    playerStatus = PlayerStatus.STAY
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.hit(Card(CardPattern.DIAMOND, NumberCard(2)))
-                }
-            }
-        }
-    }
-
-    describe("stay") {
-        it("카드들을 받지 않기로 할 수 있다") {
-            val player = Player(name = "요한")
-
-            player.stay()
-
-            player.stay shouldBe true
-        }
-    }
-
-    describe("hittable") {
-        context("카드들의 합이 21을 초과하지 않고 카드를 추가하지 않기로 하지 않았다면") {
-            it("카드를 추가할 수 있다") {
-                val player = Player(
-                    name = "요한",
-                    cards = Cards(
-                        listOf(
-                            Card(CardPattern.DIAMOND, Queen()),
-                            Card(CardPattern.DIAMOND, NumberCard(9)),
-                            Card(CardPattern.DIAMOND, NumberCard(2)),
-                        )
-                    ),
-                    stay = false
-                )
-
-                player.hittable() shouldBe true
-            }
-
-            context("카드들의 합이 21을 초과하면") {
-                it("카드를 추가할 수 없다") {
-                    val player = Player(
-                        name = "요한",
-                        cards = Cards(
-                            listOf(
-                                Card(CardPattern.DIAMOND, Queen()),
-                                Card(CardPattern.DIAMOND, NumberCard(9)),
-                                Card(CardPattern.DIAMOND, NumberCard(3)),
-                            )
-                        ),
-                        stay = false
-                    )
-
-                    player.hittable() shouldBe false
-                }
-            }
-
-            context("카드를 추가하지 않기로 하였다면") {
-                it("카드를 추가할 수 없다") {
-                    val player = Player(
-                        name = "요한",
-                        cards = Cards.empty(),
-                        stay = true
-                    )
-
-                    player.hittable() shouldBe false
+                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
                 }
             }
         }
@@ -148,14 +127,43 @@ class PlayerTest : DescribeSpec({
                 name = "요한",
                 cards = Cards(
                     listOf(
-                        Card(CardPattern.DIAMOND, Ace()),
-                        Card(CardPattern.DIAMOND, Jack()),
-                        Card(CardPattern.DIAMOND, NumberCard(5)),
+                        Card(Suit.DIAMOND, Ace()),
+                        Card(Suit.DIAMOND, Jack()),
+                        Card(Suit.DIAMOND, NumberCard(5)),
                     )
                 )
             )
 
-            player.score() shouldBe Score(16)
+            player.cards.score() shouldBe Score(16)
+        }
+    }
+
+    describe("isEnd") {
+        it("BUST 이거나 STAY 가 아니면 참여가 종료되지 않는다") {
+            val player = Player(name = "yohan")
+
+            player.isEnd() shouldBe false
+        }
+
+        it("STAY 이면 참가자의 참여가 종료된다") {
+            val player = Player(name = "yohan", playerStatus = PlayerStatus.STAY)
+
+            player.isEnd() shouldBe true
+        }
+
+        it("BUST 이면 참가자의 참여가 종료된다") {
+            val player = Player(
+                name = "yohan",
+                cards = Cards(
+                    listOf(
+                        Card(Suit.DIAMOND, Queen()),
+                        Card(Suit.DIAMOND, NumberCard(9)),
+                        Card(Suit.DIAMOND, NumberCard(3)),
+                    )
+                )
+            )
+
+            player.isEnd() shouldBe true
         }
     }
 })

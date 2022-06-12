@@ -1,25 +1,53 @@
-package blackjack.domain
+package blackjack
 
+import blackjack.domain.blackjack.BlackJack
+import blackjack.domain.blackjack.BlackJack.Companion.BASE_CARD_COUNT
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
+import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     val players = InputView.players()
-    val blackJack = BlackJack(players = players)
+    val dealer = Dealer()
+    val blackJack = BlackJack(dealer = dealer, players = Players(players))
 
-    ResultView.printlnBlackJackInit(players)
-    ResultView.printlnPlayersWithCards(players)
+    ResultView.printlnBlackJackInit(players, dealer)
+    ResultView.printlnPlayersWithCards(players, dealer)
 
-    while (!blackJack.isEnd) {
-        val hittablePlayers = blackJack.hittablePlayers()
-        val player = hittablePlayers.first()
-        when (InputView.isHit(player)) {
-            true -> blackJack.hit(player)
-                .also { ResultView.printlnPlayerWithCards(player.name, player.cards.cards) }
-            false -> player.stay()
-        }
-    }
+    val hittablePlayers = blackJack.players.hittablePlayers()
+    playPlayers(blackJack, hittablePlayers)
+    playDealer(blackJack, dealer)
 
     val result = blackJack.result()
     ResultView.printResult(result)
+    ResultView.printMatch(result)
+}
+
+private fun playPlayers(
+    blackJack: BlackJack,
+    hittablePlayers: List<Player>
+) {
+    hittablePlayers.forEach {
+        while (!it.isEnd()) {
+            hitOrStay(blackJack, it, InputView.isHit(it))
+        }
+    }
+}
+
+private fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
+    if (hit) {
+        player.changeStatus(PlayerStatus.HIT)
+        blackJack.giveCard(player)
+            .also { ResultView.printlnPlayerWithCards(player.name, player.cards.cards) }
+    } else {
+        player.changeStatus(PlayerStatus.STAY)
+    }
+}
+
+private fun playDealer(blackJack: BlackJack, dealer: Dealer) {
+    blackJack.playDealer()
+    ResultView.printDealerPlay(dealer.cards.cards.size - BASE_CARD_COUNT)
 }

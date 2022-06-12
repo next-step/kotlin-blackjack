@@ -1,39 +1,24 @@
 package blackjack.domain.player
 
-import blackjack.domain.Score
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Cards.Companion.WINNING_SCORE
+import blackjack.domain.score.CardScore
 
 class Player(
-    val name: String,
-    val cards: Cards = Cards.empty(),
-    var stay: Boolean = false
-) {
-    fun hit(card: Card) {
-        check(isNotExceedWinningScore()) {
-            "가지고 있는 카드의 합이 $WINNING_SCORE 를 넘으면 카드를 추가할 수 없습니다"
+    name: String,
+    cards: Cards = Cards.empty(),
+    private var playerStatus: PlayerStatus = PlayerStatus.HIT
+) : Participant(name, cards) {
+
+    override fun isEnd(): Boolean {
+        return playerStatus == PlayerStatus.STAY || cards.cardScore() == CardScore.BUST
+    }
+
+    fun changeStatus(status: PlayerStatus) {
+        check(!isEnd()) {
+            "게임이 종료된 이후에는 상태를 변경할 수 없습니다."
         }
 
-        check(!stay) {
-            "카드를 받지 않기로 하면 카드를 추가할 수 없습니다"
-        }
-
-        cards.add(card)
-    }
-
-    fun stay() {
-        stay = true
-    }
-
-    fun hittable(): Boolean {
-        return !stay && isNotExceedWinningScore()
-    }
-
-    private fun isNotExceedWinningScore() = cards.score() <= WINNING_SCORE
-
-    fun score(): Score {
-        return cards.score()
+        playerStatus = status
     }
 
     companion object {

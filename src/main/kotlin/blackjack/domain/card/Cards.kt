@@ -1,6 +1,7 @@
 package blackjack.domain.card
 
-import blackjack.domain.Score
+import blackjack.domain.score.CardScore
+import blackjack.domain.score.Score
 
 class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()
@@ -10,25 +11,29 @@ class Cards(cards: List<Card>) {
         _cards.add(card)
     }
 
-    fun score(): Score {
-        val (aces, normalCards) = cards.partition { it.type is Ace }
+    fun cardScore(): CardScore {
+        return CardScore.of(score(), cards.size)
+    }
 
-        val normalScores = normalCards.map { it.type.score }
+    fun score(): Score {
+        val (aces, normalCards) = cards.partition { it.denomination is Ace }
+
+        val normalScores = normalCards.map { it.denomination.score }
             .fold(Score.ZERO) { acc, score -> acc + score }
 
-        return aces.map { it.type as Ace }
-            .fold(normalScores) { acc, ace ->
-                if (acc + ace.maxScore <= WINNING_SCORE) {
-                    acc + ace.maxScore
-                } else {
-                    acc + ace.score
-                }
-            }
+        return aces.map { it.denomination as Ace }
+            .fold(normalScores) { acc, ace -> acc + aceScore(ace, acc) }
+    }
+
+    private fun aceScore(ace: Ace, acc: Score): Score {
+        return if (acc + ace.maxScore <= Score.BLACKJACK) {
+            ace.maxScore
+        } else {
+            ace.score
+        }
     }
 
     companion object {
-        val WINNING_SCORE = Score(21)
-
         fun empty(): Cards {
             return Cards(emptyList())
         }

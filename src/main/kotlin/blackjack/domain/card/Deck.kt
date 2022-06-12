@@ -12,12 +12,12 @@ class Deck(cards: List<Card>) {
 
     companion object {
         fun default(): Deck {
-            val cards = CardPattern.values()
+            val cards = Suit.values()
                 .flatMap { createCards(it) }
             return Deck(cards)
         }
 
-        private fun createCards(pattern: CardPattern): List<Card> {
+        private fun createCards(pattern: Suit): List<Card> {
             val numberCards = NumberCard.NUMBER_CARDS
                 .map { Card(pattern, it) }
             return numberCards +
