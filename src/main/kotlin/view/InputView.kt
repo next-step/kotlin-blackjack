@@ -32,7 +32,7 @@ object InputView {
 
     private fun enableIssued(input: String): Boolean {
         return try {
-            isValidYn(input)
+            ensureValidAskConditionInput(input)
             return input.equals(YES)
         } catch (e: IllegalArgumentException) {
             println(YES_NO_INVALID_MESSAGE)
@@ -40,12 +40,13 @@ object InputView {
         }
     }
 
-    private fun isValidYn(isChecked: String) {
+    private fun ensureValidAskConditionInput(isChecked: String) {
         require(isChecked == YES || isChecked == NO)
     }
 
     fun displayHaveCard(player: Player) {
         print(player.name + " : " + getCardString(player.cards))
+        println()
     }
 
     private fun getCardString(cards: List<Card>): String {

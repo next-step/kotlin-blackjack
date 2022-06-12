@@ -6,15 +6,13 @@ import view.InputView
 import view.ResultView
 
 fun main() {
-    val playerNames = InputView.getUserName()
-    InputView.displayCardDivide(playerNames.joinToString { it.name }, "2")
+    val players = InputView.getUserName()
+    InputView.displayCardDivide(players.joinToString { it.name }, "2")
 
-    val players = setInitialCards(playerNames)
+    setInitialCards(players)
     players.forEach {
         InputView.displayHaveCard(it)
-        println()
     }
-    println()
 
     do {
         var noCnt = 0
@@ -24,11 +22,9 @@ fun main() {
             val enableToIssue = InputView.isYesOrNo(it.name)
             if (!enableToIssue) noCnt++
 
-            val exceed21 = BlackJackGame.issueAndCheck(it, enableToIssue)
+            val exceed21 = BlackJackGame.checkBustCondition(it, enableToIssue)
 
             InputView.displayHaveCard(it)
-            println()
-            println()
 
             continueGame = endCheck(noCnt, players.size, exceed21)
         }

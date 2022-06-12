@@ -1,7 +1,7 @@
 package domain
 
+import domain.BlackJackGame.checkBustCondition
 import domain.BlackJackGame.endCheck
-import domain.BlackJackGame.issueAndCheck
 import io.kotest.matchers.collections.shouldNotContainAll
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -14,9 +14,9 @@ internal class BlackJackGameTest {
         val player2 = Player("tyrus")
         var players = listOf<Player>(player1, player2)
 
-        val offered = BlackJackGame.setInitialCards(players)
+        BlackJackGame.setInitialCards(players)
 
-        offered.forEach {
+        players.forEach {
             it.cards.shouldNotContainAll(CardDeck.allCards)
         }
     }
@@ -25,7 +25,7 @@ internal class BlackJackGameTest {
     fun `플레이어는 카드를 안받기로 선택하면 카드를 받지 않는다`() {
         val player = Player("keira")
 
-        issueAndCheck(player, false)
+        checkBustCondition(player, false)
 
         assertThat(player.cards).isEmpty()
     }
@@ -38,10 +38,10 @@ internal class BlackJackGameTest {
             Card(Card.CardSuit.CLUB, Card.CardDenomination.JACK),
             Card(Card.CardSuit.CLUB, Card.CardDenomination.KING),
             Card(Card.CardSuit.CLUB, Card.CardDenomination.TEN)
-            )
+        )
         player.offer(cards)
 
-        val isExceed21 = issueAndCheck(player, true)
+        val isExceed21 = checkBustCondition(player, true)
         assertThat(endCheck(1, 1, isExceed21)).isFalse()
     }
 }
