@@ -19,7 +19,7 @@ internal class PlayerTest {
     @Test
     fun `플레이어가 카드를 받는다`() {
         val player = Player("김성주")
-        player.draw(Card(CardShape.DIAMOND, CardNumber(1)))
-        assertThat(player.cards[0]).isEqualTo(Card(CardShape.DIAMOND, CardNumber(1)))
+        player.draw(Card(CardShape.DIAMOND, CardSymbol.ACE))
+        assertThat(player.cards[0]).isEqualTo(Card(CardShape.DIAMOND, CardSymbol.ACE))
     }
 }

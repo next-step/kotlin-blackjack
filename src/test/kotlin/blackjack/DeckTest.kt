@@ -19,12 +19,12 @@ internal class DeckTest {
     fun `요청 값에 맞는 카드를 가져온다`() {
         val cardShuffle = object : CardShuffle {
             override fun getCards(): List<Card> {
-                return listOf(Card(CardShape.SPADE, CardNumber(1)))
+                return listOf(Card(CardShape.SPADE, CardSymbol.ACE))
             }
         }
         val deck = Deck(cardShuffle)
         val card = deck.deal()
-        assertThat(card).isEqualTo(Card(CardShape.SPADE, CardNumber(1)))
+        assertThat(card).isEqualTo(Card(CardShape.SPADE, CardSymbol.ACE))
     }
 
     @Test

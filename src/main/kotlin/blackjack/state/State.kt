@@ -10,6 +10,6 @@ interface State {
     fun isFinish(): Boolean
     fun draw(card: Card): State
     fun score(cards: List<Card>): Int {
-        return cards.map { it.cardNumber }.sumOf { it.number }
+        return cards.map { it.cardSymbol }.sumOf { it.score }
     }
 }

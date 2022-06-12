@@ -1,9 +1,6 @@
 package blackjack.state
 
-import blackjack.Card
-import blackjack.CardNumber
-import blackjack.CardShape
-import blackjack.PlayerDeck
+import blackjack.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -21,9 +18,9 @@ internal class BurstTest {
         val burst = Burst(
             PlayerDeck(
                 listOf(
-                    Card(CardShape.CLOVER, CardNumber(10)),
-                    Card(CardShape.HEART, CardNumber(10)),
-                    Card(CardShape.DIAMOND, CardNumber(10))
+                    Card(CardShape.CLOVER, CardSymbol.JACK),
+                    Card(CardShape.HEART, CardSymbol.JACK),
+                    Card(CardShape.DIAMOND, CardSymbol.JACK)
                 )
             )
         )

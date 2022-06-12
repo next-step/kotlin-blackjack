@@ -1,9 +1,6 @@
 package blackjack.state
 
-import blackjack.Card
-import blackjack.CardNumber
-import blackjack.CardShape
-import blackjack.PlayerDeck
+import blackjack.*
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
@@ -20,8 +17,8 @@ internal class HitTest {
         val hit = Hit(
             PlayerDeck(
                 listOf(
-                    Card(CardShape.CLOVER, CardNumber(10)),
-                    Card(CardShape.HEART, CardNumber(10))
+                    Card(CardShape.CLOVER, CardSymbol.JACK),
+                    Card(CardShape.HEART, CardSymbol.JACK)
                 )
             )
         )
