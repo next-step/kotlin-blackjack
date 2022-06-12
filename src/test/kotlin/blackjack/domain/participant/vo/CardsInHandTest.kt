@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant.vo
 
 import blackjack.domain.Score
 import blackjack.domain.card.Card
