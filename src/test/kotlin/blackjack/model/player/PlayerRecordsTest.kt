@@ -1,19 +1,24 @@
 package blackjack.model.player
 
 import blackjack.dummy.toCardSet
-import blackjack.model.CardDistributor
+import blackjack.fixture.AlwaysHitDecisionMaker
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class PlayerRecordsTest {
+
+    private lateinit var alwaysHitDecisionMaker: HitDecisionMaker
+
+    @BeforeEach
+    fun setUp() {
+        this.alwaysHitDecisionMaker = AlwaysHitDecisionMaker
+    }
 
     @Test
     fun `승패계산테스트`() {
 
         // given
-        val alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
-        }
 
         val dealer = Player.Dealer("딜러").apply {
             "JS,5S".toCardSet().forEach(this::addCard) // 15점 1승 2패

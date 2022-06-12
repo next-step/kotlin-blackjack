@@ -1,6 +1,8 @@
 package blackjack.model
 
 import blackjack.dummy.toCardSet
+import blackjack.fixture.AlwaysHitDecisionMaker
+import blackjack.fixture.AlwaysStayDecisionMaker
 import blackjack.model.card.Card
 import blackjack.model.card.State
 import blackjack.model.player.CardRecipient
@@ -23,13 +25,8 @@ internal class PlayRoomTest {
     @BeforeEach
     fun setUp() {
 
-        this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
-        }
-
-        this.alwaysStayDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = false
-        }
+        this.alwaysHitDecisionMaker = AlwaysHitDecisionMaker
+        this.alwaysStayDecisionMaker = AlwaysStayDecisionMaker
 
         this.sequentialCardDistributor = object : CardDistributor {
             private var offset = 0
