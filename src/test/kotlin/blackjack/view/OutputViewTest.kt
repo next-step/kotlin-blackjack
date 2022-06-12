@@ -79,4 +79,21 @@ class OutputViewTest : DescribeSpec({
             output.message shouldBe "pobi카드: 2하트, 8스페이드"
         }
     }
+
+    describe("Extension") {
+        context("Players.names()를 호출하면") {
+            it("player들의 이름이 ,로 합쳐진다") {
+                val sut = Players(
+                    listOf(
+                        Player("pobi"),
+                        Player("jason"),
+                    )
+                )
+
+                val result = sut.names()
+
+                result shouldBe "pobi, jason"
+            }
+        }
+    }
 })

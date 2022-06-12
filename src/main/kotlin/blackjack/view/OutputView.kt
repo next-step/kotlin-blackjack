@@ -23,3 +23,11 @@ class OutputView(private val output: Output) {
         output.print(players.players.joinToString("\n") { "${playerMessage(it)} - 결과: ${it.sumPoint()}" })
     }
 }
+
+fun Player.cardNames(): String {
+    return this.cards().joinToString(", ") { it.fullName() }
+}
+
+fun Players.names(): String {
+    return this.players.joinToString(", ") { it.playerName }
+}

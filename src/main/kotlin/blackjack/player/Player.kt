@@ -13,8 +13,8 @@ class Player(val playerName: String) {
         this.deck.add(card)
     }
 
-    fun cardNames(): String {
-        return this.deck.cards.joinToString(", ") { it.fullName() }
+    fun cards(): List<Card> {
+        return this.deck.cards
     }
 
     fun sumPoint(): Int {
