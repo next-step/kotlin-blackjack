@@ -18,7 +18,8 @@ data class Score(private val cards: List<Card>) {
                 return BLACKJACK_SUM
             }
 
-            return outcomes.minOrNull() ?: 0
+            val bestOutcome = outcomes.filter { it <= BLACKJACK_SUM }.maxOrNull()
+            return bestOutcome ?: outcomes.firstOrNull() ?: 0
         }
 
     operator fun compareTo(other: Score): Int = this.sum - other.sum

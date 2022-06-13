@@ -61,6 +61,20 @@ internal class ScoreTest : FreeSpec({
     }
 
     "Ace 의 개수에 따른 점수계산" - {
+        "모든 경우가 bust 이면 가장 작은 점수를 반환한다" {
+            val score = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.ACE),
+                    Card(Suite.CLUBS, Denomination.ACE),
+                    Card(Suite.CLUBS, Denomination.ACE),
+                    Card(Suite.HEARTS, Denomination.SIX),
+                    Card(Suite.HEARTS, Denomination.TEN),
+                    Card(Suite.HEARTS, Denomination.FIVE),
+                )
+            )
+            score.sum shouldBe 24
+        }
+
         "4개인 경우" - {
             "14로 판단" {
                 val score = Score(
@@ -121,11 +135,11 @@ internal class ScoreTest : FreeSpec({
                     listOf(
                         Card(Suite.SPADES, Denomination.ACE),
                         Card(Suite.HEARTS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.TWO),
-                        Card(Suite.HEARTS, Denomination.FIVE),
+                        Card(Suite.CLUBS, Denomination.FIVE),
+                        Card(Suite.HEARTS, Denomination.TEN),
                     )
                 )
-                score.sum shouldBe 9
+                score.sum shouldBe 17
             }
 
             "12로 판단" {
@@ -133,10 +147,10 @@ internal class ScoreTest : FreeSpec({
                     listOf(
                         Card(Suite.SPADES, Denomination.ACE),
                         Card(Suite.HEARTS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.NINE),
+                        Card(Suite.CLUBS, Denomination.EIGHT),
                     )
                 )
-                score.sum shouldBe 21
+                score.sum shouldBe 20
             }
         }
 
@@ -156,10 +170,10 @@ internal class ScoreTest : FreeSpec({
                 val score = Score(
                     listOf(
                         Card(Suite.DIAMONDS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.TEN),
+                        Card(Suite.CLUBS, Denomination.NINE),
                     )
                 )
-                score.sum shouldBe 21
+                score.sum shouldBe 20
             }
         }
     }
