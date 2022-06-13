@@ -15,7 +15,7 @@ data class BlackJackResult(
             val matchByPlayer = players.associateWith { !dealer.match(it) }
             val playerResults = matchByPlayer.entries
                 .map { PlayerResult.of(it.key, it.value) }
-            val dealerResult = DealerResult.of(dealer, matchByPlayer.values.map { !it }.toList())
+            val dealerResult = DealerResult.of(dealer, matchByPlayer.values.map { !it })
             return BlackJackResult(playerResults, dealerResult)
         }
     }
