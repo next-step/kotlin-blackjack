@@ -16,8 +16,8 @@ class Users(val users: List<User>) {
     }
 
     companion object {
-        fun of(usersName: String): Users {
-            return Users(usersName.split(",").map { User(it) })
+        fun of(usersNames: List<String>): Users {
+            return Users(usersNames.map { User(it) })
         }
     }
 }

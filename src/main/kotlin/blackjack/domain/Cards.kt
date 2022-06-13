@@ -9,8 +9,8 @@ class Cards {
     val hands: List<Card>
         get() = _hands.toList()
 
-    fun addCard(type: String? = null, number: String? = null) {
-        _hands.add(Card.take(type, number))
+    fun addCard(card: Card? = null) {
+        _hands.add(card ?: Card.take())
     }
 
     fun getSize() = _hands.size

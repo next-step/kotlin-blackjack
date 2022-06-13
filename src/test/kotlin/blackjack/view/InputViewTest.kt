@@ -1,5 +1,6 @@
 package blackjack.view
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource
@@ -15,6 +16,12 @@ class InputViewTest {
         assertThrows<IllegalArgumentException> {
             InputView.getPlayersName { source }
         }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["asss,dddd,a"])
+    internal fun `게임 참여자 이름을 받고 쉼표를 기준으로 잘 나눈다`(source: String) {
+        assertThat(InputView.getPlayersName { source }).hasSize(3)
     }
 
     @ParameterizedTest

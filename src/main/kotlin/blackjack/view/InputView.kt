@@ -8,11 +8,11 @@ import blackjack.constant.Messages
  * Created by Jaesungchi on 2022.06.07..
  */
 object InputView {
-    fun getPlayersName(readStringValue: () -> String? = { readlnOrNull() }): String {
+    fun getPlayersName(readStringValue: () -> String? = { readlnOrNull() }): List<String> {
         println(Messages.WRITE_PLAYERS_NAME)
         val input = readStringValue()
         require(!input.isNullOrBlank()) { ErrorMessages.INPUT_IS_NULL_OR_BLANK }
-        return input
+        return input.split(",")
     }
 
     fun getYesOrNo(readStringValue: () -> String? = { readlnOrNull() }): Boolean {
