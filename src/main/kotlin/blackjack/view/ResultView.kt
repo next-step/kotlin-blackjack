@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.GamblingSummary
+import blackjack.domain.player.GambleSummary
 import blackjack.domain.player.Player
 
 class ResultView {
@@ -39,26 +39,26 @@ class ResultView {
 
     private fun getDealerResult(dealer: Dealer, player: List<Player>): String {
         val incomeOfDealer = player
-            .filter { !it.gamblingSummary.isWinner }
-            .sumOf { (it.gamblingSummary.battingAmount * it.gamblingSummary.earningRate) }
+            .filter { !it.gambleSummary.isWinner }
+            .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
             .unaryMinus()
 
         val expensesOfDealer = player
-            .filter { it.gamblingSummary.isWinner }
-            .sumOf { (it.gamblingSummary.battingAmount * it.gamblingSummary.earningRate) }
+            .filter { it.gambleSummary.isWinner }
+            .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
 
         return "${dealer.name}: ${calculateProfitOfDealer(incomeOfDealer, expensesOfDealer)}"
     }
 
     private fun getPlayerResult(players: List<Player>): String {
-        return players.joinToString("\n") { "${it.name}: ${calculateProfitOfPlayer((it.gamblingSummary))}" }
+        return players.joinToString("\n") { "${it.name}: ${calculateProfitOfPlayer((it.gambleSummary))}" }
     }
 
     private fun calculateProfitOfDealer(incomeOfDealer: Double, expensesOfDealer: Double): Int {
         return (incomeOfDealer - expensesOfDealer).toInt()
     }
 
-    private fun calculateProfitOfPlayer(gamblingSummary: GamblingSummary): Int {
-        return (gamblingSummary.battingAmount * gamblingSummary.earningRate).toInt()
+    private fun calculateProfitOfPlayer(gambleSummary: GambleSummary): Int {
+        return (gambleSummary.battingAmount * gambleSummary.earningRate).toInt()
     }
 }

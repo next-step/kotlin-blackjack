@@ -67,10 +67,10 @@ class PlayerTest {
             )
         )
 
-        player.gamblingSummary.battingAmount = 10000
+        player.gambleSummary.battingAmount = 10000
         player.adjustBustBattingAmount()
 
-        assertThat(player.gamblingSummary.battingAmount).isEqualTo(-10000)
+        assertThat(player.gambleSummary.battingAmount).isEqualTo(-10000)
     }
 
     @Test

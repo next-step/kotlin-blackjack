@@ -8,7 +8,7 @@ import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 open class Player(
     private val _name: String,
     private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf()),
-    private val _gamblingSummary: GamblingSummary = GamblingSummary()
+    private val _gambleSummary: GambleSummary = GambleSummary()
 ) {
     constructor(name: String, cards: List<Card>) : this(_name = name) {
         cards.map {
@@ -25,8 +25,8 @@ open class Player(
     val receivedCards: ReceivedCards
         get() = _receivedCards
 
-    val gamblingSummary: GamblingSummary
-        get() = _gamblingSummary
+    val gambleSummary: GambleSummary
+        get() = _gambleSummary
 
     fun canMoreGame(): Boolean {
         return Score.calculateScore(_receivedCards) < BLACKJACK_SCORE
@@ -41,11 +41,11 @@ open class Player(
     }
 
     fun adjustBustBattingAmount() {
-        this.gamblingSummary.battingAmount = this.gamblingSummary.battingAmount.unaryMinus()
+        _gambleSummary.battingAmount = _gambleSummary.battingAmount.unaryMinus()
     }
 
     fun addCard(card: Card) {
-        receivedCards.addCard(card)
+        _receivedCards.addCard(card)
     }
 
     fun wantToTake(takeMorePlayerStrategy: TakeMorePlayerStrategy): Boolean {

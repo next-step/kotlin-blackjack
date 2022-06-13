@@ -13,7 +13,7 @@ class InputView {
     fun enterBattingAmountByPlayer(players: List<Player>) {
         players.map {
             println("${it.name}의 베팅 금액은?")
-            it.gamblingSummary.battingAmount = enterBattingAmount()
+            it.gambleSummary.battingAmount = enterBattingAmount()
         }
     }
 
