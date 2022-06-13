@@ -12,12 +12,6 @@ internal class BetTest : StringSpec({
         bet.amount shouldBe 100
     }
 
-    "금액에 0을 제공하면 에러가 발생한다" {
-        shouldThrow<IllegalArgumentException> {
-            Bet(0)
-        }
-    }
-
     "금액에 음수를 제공하면 에러가 발생한다" {
         shouldThrow<IllegalArgumentException> {
             Bet(-1)

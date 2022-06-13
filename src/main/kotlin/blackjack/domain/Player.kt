@@ -2,7 +2,7 @@ package blackjack.domain
 
 open class Player(
     val name: String,
-    hand: Hand = Hand(emptyList())
+    hand: Hand = Hand(emptyList(), Bet.EMPTY_BET)
 ) {
     var hand = hand
         private set
