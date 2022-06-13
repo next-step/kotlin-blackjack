@@ -18,7 +18,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
-class DealerSpecs : DescribeSpec({
+class DealerTests : DescribeSpec({
 
     describe("딜러는") {
         it("카드 덱으로부터 카드를 한 장 뽑을 수 있다.") {

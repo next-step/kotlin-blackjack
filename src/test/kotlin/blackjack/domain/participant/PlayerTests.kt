@@ -17,7 +17,7 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
-class PlayerSpecs : DescribeSpec({
+class PlayerTests : DescribeSpec({
 
     describe("플레이어는") {
         it("최초 상태로 Hittable 상태를 가진다") {

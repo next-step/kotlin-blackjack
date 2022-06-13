@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-class StateSpecs : DescribeSpec({
+class StateTests : DescribeSpec({
 
     describe("Hittable 상태는") {
         it("다른 상태와 비교할 수 없다") {

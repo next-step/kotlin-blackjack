@@ -20,7 +20,7 @@ import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
-class HandSpecs : DescribeSpec({
+class HandTests : DescribeSpec({
 
     describe("카드 패는") {
 

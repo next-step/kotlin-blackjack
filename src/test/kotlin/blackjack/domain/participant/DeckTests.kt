@@ -8,7 +8,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class DeckSpecs : DescribeSpec({
+class DeckTests : DescribeSpec({
 
     describe("카드 덱은") {
         it("카드 한 장을 뽑을 수 있다") {
