@@ -17,15 +17,11 @@ data class Hand(
             val sum = ACE.run {
                 Point(minValue * i + maxValue * (numberOfAce - i) + sumOfNotAce)
             }
-            if (sum <= Point.BLACKJACK) max(sum, point)
-            else point
-        }
-    }
-
-    private fun max(a: Point, b: Point): Point {
-        return when {
-            a >= b -> a
-            else -> b
+            if (sum <= Point.BLACKJACK) {
+                sum.compareAndMax(point)
+            } else {
+                point
+            }
         }
     }
 
@@ -44,7 +40,6 @@ data class Hand(
     }
 
     companion object {
-        const val BLACKJACK_POINT = 21
         fun empty(): Hand = Hand(emptyList())
     }
 }
