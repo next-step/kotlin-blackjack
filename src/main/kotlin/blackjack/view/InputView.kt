@@ -17,6 +17,14 @@ object InputView {
         return Dealer(name = dealerName)
     }
 
+    fun battingMoney(players: List<Participant>) {
+        players.forEach {
+            println("${it.name}의 배팅 금액은?")
+            val amount = readln().toInt()
+            it.battingMoney(amount)
+        }
+    }
+
     fun createParticipants(): List<Participant> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val participants = readln().split(",")

@@ -5,6 +5,14 @@ open class Participant(
     open val playerCards: Cards = Cards(),
     val gameScore: GameScore = GameScore()
 ) {
+    private var _battingAmount = 0
+    val battingAmount
+        get() = _battingAmount
+
+    open fun battingMoney(amount: Int) {
+        this._battingAmount = amount
+    }
+
     open fun addCard(card: Card) {
         this.playerCards.addCard(card)
     }

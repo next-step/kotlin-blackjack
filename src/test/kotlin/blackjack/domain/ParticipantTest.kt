@@ -27,4 +27,12 @@ class ParticipantTest {
         val participant = Participant(input)
         assertThat(participant.playerCards.playerCards.size).isEqualTo(0)
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["molly"])
+    fun `참가자가 배팅한 금액 10000원`(input: String) {
+        val participant = Participant(input)
+        participant.battingMoney(10000)
+        assertThat(participant.battingAmount).isEqualTo(10000)
+    }
 }
