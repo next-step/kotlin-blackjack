@@ -94,7 +94,6 @@ class GameResultTest {
 
         val gameResult = GameResult(dealer, listOf(player))
 
-
         gameResult.matchParticipantsIsBlackJack(player)
 
         assertThat(dealer.earnAmount).isEqualTo(-5000)
@@ -124,7 +123,6 @@ class GameResultTest {
         blackJackGame.firstCardDistribution()
 
         val gameResult = GameResult(dealer, listOf(player))
-
 
         gameResult.matchParticipantsIsBlackJack(player)
 
