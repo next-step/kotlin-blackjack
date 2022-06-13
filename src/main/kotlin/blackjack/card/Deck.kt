@@ -3,10 +3,6 @@ package blackjack.card
 class Deck private constructor(private var _cards: MutableList<Card>) {
     val cards: List<Card> get() = _cards.toList()
 
-    fun shuffle() {
-        _cards.shuffled()
-    }
-
     companion object {
         fun init(): Deck {
             val cards = Suit.values().flatMap { suit ->
