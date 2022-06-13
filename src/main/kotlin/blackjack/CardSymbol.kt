@@ -14,5 +14,4 @@ enum class CardSymbol(val cardNumber: Int, val score: Int) {
     JACK(11, 10),
     QUEEN(12, 10),
     KING(13, 10);
-
 }

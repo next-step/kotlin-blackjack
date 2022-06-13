@@ -1,6 +1,9 @@
 package blackjack.state
 
-import blackjack.*
+import blackjack.Card
+import blackjack.CardShape
+import blackjack.CardSymbol
+import blackjack.PlayerDeck
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test

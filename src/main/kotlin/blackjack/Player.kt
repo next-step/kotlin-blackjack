@@ -4,7 +4,7 @@ import blackjack.state.Ready
 import blackjack.state.Stand
 import blackjack.state.State
 
-class Player(val name: String, private val state: State = Ready(PlayerDeck())) {
+class Player(val name: String, val state: State = Ready(PlayerDeck())) {
 
     val cards: List<Card>
         get() = state.currentCard()
@@ -16,6 +16,13 @@ class Player(val name: String, private val state: State = Ready(PlayerDeck())) {
     }
 
     fun stand(): Player {
+        if (state.isFinish()) {
+            return this
+        }
         return Player(name, Stand(state.currentCard()))
     }
+
+    fun isFinish(): Boolean = state.isFinish()
+
+    fun getScore(): Int = state.score(state.currentCard().cards)
 }

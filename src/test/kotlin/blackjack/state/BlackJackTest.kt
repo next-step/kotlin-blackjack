@@ -28,5 +28,4 @@ internal class BlackJackTest {
         )
         assertThat(blackJack.isFinish()).isTrue
     }
-
 }
