@@ -41,10 +41,27 @@ internal class HandTest {
     @Test
     fun `참가자의 처음 두 장의 카드 합이 21일 경우 블랙잭이다`() {
         // given
+        val hand = Hand()
 
         // when
+        hand.add(DIAMOND_ACE)
+            .add(CLUB_KING)
 
         // then
-        TODO()
+        assertThat(hand.isBlackjack()).isTrue
+    }
+
+    @Test
+    fun `참가자의 처음 두 장의 카드 합이 21이 아닌 경우 블랙잭이 아니다`() {
+        // given
+        val hand = Hand()
+
+        // when
+        hand.add(SPADE_TEN)
+            .add(CLUB_KING)
+            .add(DIAMOND_ACE)
+
+        // then
+        assertThat(hand.isBlackjack()).isFalse
     }
 }

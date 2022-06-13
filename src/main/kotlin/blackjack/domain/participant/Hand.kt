@@ -23,6 +23,10 @@ data class Hand(
         return score() > BUST_THRESHOLD
     }
 
+    fun isBlackjack(): Boolean {
+        return _cards.size == 2 && score() == BUST_THRESHOLD
+    }
+
     companion object {
         const val BUST_THRESHOLD: Int = 21
     }
