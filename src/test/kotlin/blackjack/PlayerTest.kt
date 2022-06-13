@@ -21,9 +21,9 @@ internal class PlayerTest : FunSpec({
         val sut = Player(name = "gomding")
 
         // when
-        sut.addCardToHand(Card(CardNumber.ACE, CardSuit.SPADE))
+        val result: Player = sut.addCardToHand(Card(CardNumber.ACE, CardSuit.SPADE))
 
         // then
-        sut.handSize() shouldBe 1
+        result.handSize() shouldBe 1
     }
 })
