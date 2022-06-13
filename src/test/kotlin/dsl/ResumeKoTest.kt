@@ -1,7 +1,5 @@
-import dsl.Language
-import dsl.Person
-import dsl.Skill
-import dsl.introduce
+package dsl
+
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
