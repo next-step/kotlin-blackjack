@@ -69,13 +69,27 @@ internal class DealerTest {
     }
 
     @Test
-    fun `딜러의 처음 두 장의 카드 합이 21일 경우 블랙잭이다`() {
+    fun `딜러의 처음 두 장의 카드 합이 21일 경우 BLACKJACK 이다`() {
         // given
+        val dealer = Dealer()
 
         // when
+        dealer.addCards(SPADE_TEN, DIAMOND_ACE)
 
         // then
-        TODO()
+        assertThat(dealer.status).isEqualTo(ParticipantStatus.BLACKJACK)
+    }
+
+    @Test
+    fun `딜러의 처음 두 장의 카드 합이 21이 아닌 경우 BLACKJACK 이 아니다`() {
+        // given
+        val dealer = Dealer()
+
+        // when
+        dealer.addCards(SPADE_TEN, CLUB_KING, DIAMOND_ACE)
+
+        // then
+        assertThat(dealer.status).isNotEqualTo(ParticipantStatus.BLACKJACK)
     }
 
     companion object {
