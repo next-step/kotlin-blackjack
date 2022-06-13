@@ -13,6 +13,7 @@ import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
 import blackjack.domain.hand
 import blackjack.domain.to
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.data.headers
 import io.kotest.data.row
@@ -40,6 +41,23 @@ class HandSpecs : DescribeSpec({
             val card = Card(KING, CLOVER)
             cards.add(card)
             cards.calculate() shouldBe Point(20)
+        }
+
+        context("카드 패가 비어있지 않다면") {
+            it("첫 번째 카드를 가져올 수 있다") {
+                val card = Card(KING, HEART)
+                val hand = hand(card)
+                hand.first() shouldBe card
+            }
+        }
+
+        context("카드 패가 비어있다면") {
+            it("첫 번째 카드를 가져올 수 없다") {
+                val hand = Hand()
+                shouldThrowExactly<NoSuchElementException> {
+                    hand.first()
+                }
+            }
         }
 
         context("카드 패에 끗수가 ACE인 카드가 포함된 경우") {
