@@ -17,9 +17,7 @@ class CardTotalTest {
             )
         )
 
-        val expectedTotal = 2 + 5 + 10
-
-        assertThat(cardTotal.value).isEqualTo(expectedTotal)
+        assertThat(cardTotal.value).isEqualTo(17)
     }
 
     @Test
@@ -36,9 +34,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 2 + 10 + 10
-
-                assertThat(cardTotalAboveTwentyOne.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalAboveTwentyOne.value).isEqualTo(22)
                 assertThat(cardTotalAboveTwentyOne.isAboveTwentyOne).isTrue
             },
             {
@@ -51,9 +47,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 2 + 3 + 10
-
-                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(15)
                 assertThat(cardTotalBelowTwentyOne.isAboveTwentyOne).isFalse
             },
             {
@@ -66,9 +60,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 2 + 9 + 10
-
-                assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)
                 assertThat(cardTotalEqualsToTwentyOne.isAboveTwentyOne).isFalse
             }
         )
@@ -86,9 +78,7 @@ class CardTotalTest {
             )
         )
 
-        val expectedTotal = 2 + 9 + 10
-
-        assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(expectedTotal)
+        assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)
         assertThat(cardTotalEqualsToTwentyOne.isBlackjack).isTrue
     }
 
@@ -103,9 +93,7 @@ class CardTotalTest {
             )
         )
 
-        val expectedTotal = 10 + 10
-
-        assertThat(cardTotalNotEqualsToTwentyOne.value).isEqualTo(expectedTotal)
+        assertThat(cardTotalNotEqualsToTwentyOne.value).isEqualTo(20)
         assertThat(cardTotalNotEqualsToTwentyOne.isBlackjack).isFalse
     }
 
@@ -123,9 +111,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 1 + 8 + 3
-
-                assertThat(cardTotalWithAceValuedAsOne.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalWithAceValuedAsOne.value).isEqualTo(12)
             },
             {
                 val suit = CardSuit.CLOVER
@@ -138,9 +124,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 11 + 8 + 2
-
-                assertThat(cardTotalWithAceValuedAsEleven.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalWithAceValuedAsEleven.value).isEqualTo(21)
             }
         )
     }
@@ -158,8 +142,6 @@ class CardTotalTest {
             )
         )
 
-        val expectedTotal = 1 + 10 + 8 + 5
-
-        assertThat(cardTotalAboveTwentyOne.value).isEqualTo(expectedTotal)
+        assertThat(cardTotalAboveTwentyOne.value).isEqualTo(24)
     }
 }
