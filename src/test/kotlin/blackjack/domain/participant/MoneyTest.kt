@@ -14,30 +14,17 @@ internal class MoneyTest {
     }
 
     @Test
-    fun `블랙잭 게임 결과의 수익을 퍼센테이지로 관리한다`() {
-        // given
-        val money = Money(10000)
-
-        // when
-        money.setProfitPercentage(150)
-
-        // then
-        assertThat(money.profitPercentage).isEqualTo(150)
-    }
-
-    @Test
-    fun `베팅 금액과 수익으로 최종 수익을 계산할 수 있다`() {
+    fun `베팅 금액에서 수익을 합산하여 최종 수익을 계산할 수 있다`() {
         // given
         val bat = 10000
-        val profitPercentage = 150
-        val expectedFinalEarnings = 15000
+        val profitPercentage = 1.5
+        val winMoney = (bat * profitPercentage).toInt()
+        val money = Money(bat)
 
         // when
-        val money = Money(bat)
-        money.setProfitPercentage(profitPercentage)
-        val result = money.getFinalEarnings()
+        money.accBatMoney(winMoney)
 
         // then
-        assertThat(result).isEqualTo(expectedFinalEarnings)
+        assertThat(money.bat).isEqualTo(bat + winMoney)
     }
 }

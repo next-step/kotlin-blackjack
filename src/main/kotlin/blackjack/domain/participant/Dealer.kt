@@ -37,9 +37,9 @@ class Dealer : Participant() {
             }
         }
         const val FIRST_DRAW_NUMBER = 2
+        const val DEALER_BAT_MONEY = 10000
         private val STANDARD_52_CARD_DECK: Deck = Deck(ALL_CARDS)
         private const val DEALER_DRAWABLE_SCORE_LIMIT = 16
         private const val DEALER_NAME = "딜러"
-        private const val DEALER_BAT_MONEY = 10000
     }
 }

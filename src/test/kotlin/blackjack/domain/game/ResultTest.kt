@@ -7,9 +7,12 @@ import blackjack.CardFixtures.MONEY
 import blackjack.CardFixtures.SPADE_FIVE
 import blackjack.CardFixtures.SPADE_TEN
 import blackjack.domain.card.Card
+import blackjack.domain.game.Result.Companion.BLACKJACK_PROFIT_PERCENTAGE
 import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Dealer.Companion.DEALER_BAT_MONEY
+import blackjack.domain.participant.Money
 import blackjack.domain.participant.Player
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -32,9 +35,12 @@ internal class ResultTest {
         result.decideWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreByParticipant)
-            .containsEntry(dealer, Score(win = 0, lose = 1))
-            .containsEntry(player, Score(win = 1, lose = 0))
+        assertThat(result.scoreByParticipantName)
+            .containsEntry(dealer.name, Score(win = 0, lose = 1))
+            .containsEntry(player.name, Score(win = 1, lose = 0))
+        assertThat(result.totalEarningsByParticipantName)
+            .containsEntry(dealer.name, DEALER_BAT_MONEY)
+            .containsEntry(player.name, MONEY.bat)
     }
 
     @ParameterizedTest
@@ -44,6 +50,7 @@ internal class ResultTest {
         val player = Player("pug", MONEY)
         val dealer = Dealer()
         val result = Result(dealer, listOf(player))
+        val playerMoney = player.money.bat
 
         // when
         player.addCards(*playerCards)
@@ -51,9 +58,12 @@ internal class ResultTest {
         result.decideWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreByParticipant)
-            .containsEntry(dealer, Score(win = 1, lose = 0))
-            .containsEntry(player, Score(win = 0, lose = 1))
+        assertThat(result.scoreByParticipantName)
+            .containsEntry(dealer.name, Score(win = 1, lose = 0))
+            .containsEntry(player.name, Score(win = 0, lose = 1))
+        assertThat(result.totalEarningsByParticipantName)
+            .containsEntry(dealer.name, DEALER_BAT_MONEY + playerMoney)
+            .containsEntry(player.name, 0)
     }
 
     @ParameterizedTest
@@ -70,9 +80,12 @@ internal class ResultTest {
         result.decideWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreByParticipant)
-            .containsEntry(dealer, Score(win = 0, lose = 1))
-            .containsEntry(player, Score(win = 1, lose = 0))
+        assertThat(result.scoreByParticipantName)
+            .containsEntry(dealer.name, Score(win = 0, lose = 1))
+            .containsEntry(player.name, Score(win = 1, lose = 0))
+        assertThat(result.totalEarningsByParticipantName)
+            .containsEntry(dealer.name, DEALER_BAT_MONEY)
+            .containsEntry(player.name, MONEY.bat)
     }
 
     @Test
@@ -88,31 +101,53 @@ internal class ResultTest {
         result.decideWinner(dealer, player)
 
         // then
-        Assertions.assertThat(result.scoreByParticipant)
-            .containsEntry(dealer, Score(win = 0, lose = 0))
-            .containsEntry(player, Score(win = 0, lose = 0))
+        assertThat(result.scoreByParticipantName)
+            .containsEntry(dealer.name, Score(win = 0, lose = 0))
+            .containsEntry(player.name, Score(win = 0, lose = 0))
+        assertThat(result.totalEarningsByParticipantName)
+            .containsEntry(dealer.name, DEALER_BAT_MONEY)
+            .containsEntry(player.name, MONEY.bat)
     }
 
 
     @Test
     fun `플레이어의 패가 블랙잭인 경우 베팅 금액의 150%를 딜러에게 받는다`() {
         // given
+        val bat = 20000
+        val expectedPlayerFinalEarnings = bat + (bat * BLACKJACK_PROFIT_PERCENTAGE).toInt()
+        val expectedDealerFinalEarnings = DEALER_BAT_MONEY - (expectedPlayerFinalEarnings - bat)
+        val player = Player("pug", Money(bat))
+        val dealer = Dealer()
+        val result = Result(dealer, listOf(player))
 
         // when
+        player.addCards(SPADE_TEN, DIAMOND_ACE)
+        dealer.addCards(HEART_TWO, SPADE_FIVE)
+        result.decideWinner(dealer, player)
 
         // then
-        TODO()
+        assertThat(player.money.bat).isEqualTo(expectedPlayerFinalEarnings)
+        assertThat(result.totalEarningsByParticipantName)
+            .containsEntry(dealer.name, expectedDealerFinalEarnings)
+            .containsEntry(player.name, expectedPlayerFinalEarnings)
     }
 
 
     @Test
     fun `딜러와 플레이어가 모두 블랙잭인 경우 베팅 금액을 돌려받는다`() {
         // given
+        val bat = 20000
+        val player = Player("pug", Money(bat))
+        val dealer = Dealer()
+        val result = Result(dealer, listOf(player))
 
         // when
+        player.addCards(SPADE_TEN, DIAMOND_ACE)
+        dealer.addCards(DIAMOND_ACE, CLUB_KING)
+        result.decideWinner(dealer, player)
 
         // then
-        TODO()
+        assertThat(player.money.bat).isEqualTo(bat)
     }
 
     companion object {
