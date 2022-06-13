@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.dto.ProfitResult
+
 data class GameStatus(
     val dealer: Dealer,
     val players: List<Player>,
@@ -27,5 +29,3 @@ data class GameStatus(
         private const val BLACKJACK_WIN_BONUS_RATE = 1.5
     }
 }
-
-data class ProfitResult(val name: String, val profit: Double)

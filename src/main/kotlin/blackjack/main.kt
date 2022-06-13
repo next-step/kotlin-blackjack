@@ -6,8 +6,8 @@ import blackjack.view.DealerGameView
 import blackjack.view.PlayerGameView
 import blackjack.view.PlayerInputView
 import blackjack.view.PlayerView
+import blackjack.view.ProfitView
 import blackjack.view.ResultView
-import blackjack.view.WinnerView
 
 fun main() {
     val console = Console()
@@ -24,5 +24,5 @@ fun main() {
     DealerGameView(console).printDealerDrawCount(drawCount)
 
     ResultView(console).printGameResult(game.status)
-    WinnerView(console).printWinnerResult(game.status)
+    ProfitView(console).printProfitResult(game.status.toProfitResult())
 }
