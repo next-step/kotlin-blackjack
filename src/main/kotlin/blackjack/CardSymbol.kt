@@ -1,7 +1,7 @@
 package blackjack
 
 enum class CardSymbol(val cardNumber: Int, val score: Int) {
-    ACE(1, 1),
+    ACE(1, 11),
     TWO(2, 2),
     THREE(3, 3),
     FOUR(4, 4),
@@ -13,7 +13,6 @@ enum class CardSymbol(val cardNumber: Int, val score: Int) {
     TEN(10, 10),
     JACK(11, 10),
     QUEEN(12, 10),
-    KING(13, 10)
-
+    KING(13, 10);
 
 }

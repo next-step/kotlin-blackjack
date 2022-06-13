@@ -1,11 +1,23 @@
 package blackjack
 
-class Score(cards: List<Card>) {
+class Score(val cards: List<Card>) {
 
+    fun getScore(): Int {
+        var sumOf = cards.sumOf { it.cardSymbol.score }
+        val aceCount = cards.count { it.cardSymbol == CardSymbol.ACE }
 
-    private fun getScoreByAceCard(cards: List<Card>) {
+        repeat(aceCount) {
+            if (sumOf <= BLACKJACK) {
+                return sumOf
+            }
+            sumOf -= CORRECTION_NUMBER
+        }
 
-        cards.filter { it.cardSymbol != CardSymbol.ACE }
+        return sumOf
+    }
 
+    companion object {
+        private const val CORRECTION_NUMBER = 10
+        private const val BLACKJACK = 21
     }
 }
