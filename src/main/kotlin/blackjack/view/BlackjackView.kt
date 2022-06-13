@@ -45,7 +45,7 @@ object BlackjackView {
     private fun cardsToString(cards: Cards): String {
         return cards.values
             .map { "${it.cardNumber.desc}${it.suit.desc}" }
-            .joinToString(",`")
+            .joinToString(",")
     }
 
     fun printPlayersWithScore(players: Players) {

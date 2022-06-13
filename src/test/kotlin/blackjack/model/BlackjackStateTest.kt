@@ -31,14 +31,6 @@ class BlackjackStateTest {
     }
 
     @Test
-    fun `아직 종료되지 않은 플레이어 목록을 반환한다`() {
-        val state = BlackjackState(players)
-        assertThat(state.findNotOverPlayers()).hasSize(2)
-        val newState = state.setGameOver(players.values[0])
-        assertThat(newState.findNotOverPlayers()).hasSize(1)
-    }
-
-    @Test
     fun `아직 종료되지 않은 플레이어를 반환한다`() {
         val state = BlackjackState(players)
         assertThat(state.findNotOverPlayer()).isEqualTo(players.values[0])

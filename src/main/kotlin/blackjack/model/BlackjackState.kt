@@ -11,10 +11,6 @@ class BlackjackState(val players: Players, private val cards: Cards = createShuf
         return BlackjackState(Players(newPlayerList), newCards)
     }
 
-    fun findNotOverPlayers(): List<Player> {
-        return players.findNotOver()
-    }
-
     fun findNotOverPlayer(): Player {
         return players.findNotOver().first()
     }
