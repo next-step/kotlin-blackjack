@@ -10,4 +10,8 @@ class BlackjackDealer(private val deck: CardDeck = CardDeck.createDeck()) {
         repeat(2) { playerTemp = playerTemp.addCardToHand(this.deck.draw()) }
         return playerTemp
     }
+
+    fun shuffleCardDeck() {
+        this.deck.shuffle()
+    }
 }

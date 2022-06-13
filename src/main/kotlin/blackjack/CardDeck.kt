@@ -11,6 +11,10 @@ value class CardDeck(
         return this.values.lastOrNull() ?: throw IllegalArgumentException("더이상 뽑을 카드가 없습니다.")
     }
 
+    fun shuffle() {
+        this.values.shuffled()
+    }
+
     companion object {
         fun createDeck(): CardDeck {
             return CardDeck(ArrayDeque(STANDARD_CARD_DECK))
