@@ -40,6 +40,7 @@ sealed interface PlayerRecord {
     companion object {
 
         const val REWARD_RATIO_OF_BLACK_JACK = 1.5
+
         fun Player.Guest.recordWith(dealer: Player.Dealer): PlayerRecord {
             val dealerState = dealer.state
             val guestState = this.state
