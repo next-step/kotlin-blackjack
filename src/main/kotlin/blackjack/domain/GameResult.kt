@@ -12,7 +12,6 @@ class GameResult(
         when {
             participant.isBlackJack && dealer.isBlackJack -> {
                 participant.appendEarnAmount(participant.battingAmount)
-                dealer.appendEarnAmount(-participant.battingAmount)
             }
             participant.isBlackJack && !dealer.isBlackJack -> {
                 participant.appendEarnAmount((participant.battingAmount.toDouble() * 1.5).roundToInt())
