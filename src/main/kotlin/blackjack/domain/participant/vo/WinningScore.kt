@@ -10,7 +10,7 @@ enum class WinningScore(val value: Int, val description: String) {
     DRAW(0, "무");
 
     companion object {
-        fun valueOf(value: Int): WinningScore = when(value) {
+        fun valueOf(value: Int): WinningScore = when (value) {
             1 -> WIN
             -1 -> LOSE
             0 -> DRAW
@@ -18,4 +18,3 @@ enum class WinningScore(val value: Int, val description: String) {
         }
     }
 }
-

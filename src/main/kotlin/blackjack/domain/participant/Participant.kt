@@ -11,12 +11,13 @@ import blackjack.domain.participant.vo.WinningScores
 private const val READY_CARD_COUNT = 2
 
 abstract class Participant(
-    participantInformation: ParticipantInformation
+    participantInformation: ParticipantInformation,
+    cardsInHand: CardsInHand
 ) {
     var participantInformation: ParticipantInformation
         protected set
 
-    val cardsInHand: CardsInHand
+    val cardsInHand: CardsInHand = cardsInHand
 
     var winningScores = WinningScores(emptyList())
         protected set
@@ -29,10 +30,9 @@ abstract class Participant(
 
     init {
         this.participantInformation = participantInformation
-        this.cardsInHand = CardsInHand()
     }
 
-    open fun ready(cardDeck: CardDeck) = repeat(READY_CARD_COUNT) {
+    open fun ready(cardDeck: CardDeck): Unit = repeat(READY_CARD_COUNT) {
         cardsInHand.add(cardDeck.draw())
         changeStatus()
     }
@@ -51,7 +51,7 @@ abstract class Participant(
         participantInformation = participantInformation.changeStatus(score)
     }
 
-    fun score(participants: List<Participant>) = participants.map {
+    fun score(participants: List<Participant>): Unit = participants.map {
         when {
             participantInformation.isBust() -> WinningScore.LOSE
             it.participantInformation.isBust() -> WinningScore.WIN

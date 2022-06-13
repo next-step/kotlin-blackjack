@@ -20,7 +20,7 @@ class Players(
 
     fun ready(cardDeck: CardDeck): Unit = players.forEach { it.ready(cardDeck) }
 
-    fun hit(hitAction: (Player) -> Unit) = playable.forEach { hitAction(it) }
+    fun hit(hitAction: (Player) -> Unit): Unit = playable.forEach { hitAction(it) }
 
-    fun score(dealer: Dealer) = players.forEach { it.score(listOf(dealer)) }
+    fun score(dealer: Dealer): Unit = players.forEach { it.score(listOf(dealer)) }
 }

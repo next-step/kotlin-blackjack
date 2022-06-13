@@ -22,5 +22,5 @@ class CardsInHand(
             }
         }
 
-    fun add(card: Card) = _cards.add(card)
+    fun add(card: Card): Boolean = _cards.add(card)
 }

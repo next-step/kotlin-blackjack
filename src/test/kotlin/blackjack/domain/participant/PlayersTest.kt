@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeckTest
+import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
@@ -39,7 +40,7 @@ class PlayersTest : StringSpec({
 
     "최종 승패를 알수 있다." {
         val players = Players(listOf(Player.sit(Name("dean")), Player.sit(Name("dane"))))
-        val dealer = Dealer()
+        val dealer = Dealer(CardsInHand())
 
         shouldNotThrow<Throwable> { players.score(dealer) }
     }

@@ -2,12 +2,14 @@ package blackjack.domain.participant
 
 import blackjack.domain.Score
 import blackjack.domain.participant.type.Status
+import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
 
 class Player(
-    participantInformation: ParticipantInformation
-) : Participant(participantInformation) {
+    participantInformation: ParticipantInformation,
+    cardsInHand: CardsInHand
+) : Participant(participantInformation, cardsInHand) {
 
     override fun validateHitRules() {
         require(!participantInformation.isStay()) { "Stay를 선언하였다면 카드를 뽑을수 없습니다." }
@@ -21,6 +23,6 @@ class Player(
     }
 
     companion object {
-        fun sit(name: Name): Player = Player(ParticipantInformation(name, Status.PLAY))
+        fun sit(name: Name): Player = Player(ParticipantInformation(name, Status.PLAY), CardsInHand())
     }
 }

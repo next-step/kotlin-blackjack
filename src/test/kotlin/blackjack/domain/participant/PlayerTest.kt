@@ -6,6 +6,7 @@ import blackjack.domain.card.CardDeckTest
 import blackjack.domain.card.type.Ace
 import blackjack.domain.card.type.Suit
 import blackjack.domain.card.type.Ten
+import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.WinningScore
 import io.kotest.assertions.throwables.shouldNotThrow
@@ -67,7 +68,7 @@ class PlayerTest : StringSpec({
 
         player.ready(reverseCardDeck)
 
-        val win = Dealer()
+        val win = Dealer(CardsInHand())
         win.ready(sortedCardDeck)
 
         player.score(listOf(win))
@@ -82,7 +83,7 @@ class PlayerTest : StringSpec({
 
         player.ready(sortedCardDeck)
 
-        val lose = Dealer()
+        val lose = Dealer(CardsInHand())
         lose.ready(reverseCardDeck)
 
         player.score(listOf(lose))
@@ -96,7 +97,7 @@ class PlayerTest : StringSpec({
 
         player.ready(reverseCardDeck)
 
-        val draw = Dealer()
+        val draw = Dealer(CardsInHand())
         draw.ready(reverseCardDeck)
 
         player.score(listOf(draw))

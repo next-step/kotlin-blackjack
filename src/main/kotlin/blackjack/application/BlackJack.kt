@@ -12,6 +12,7 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
 import blackjack.domain.participant.vo.Name
+import java.util.Collections.addAll
 
 private fun Dealer.status(): BlackJackStatus = BlackJackStatus(this.name, listOf(this.cardsInHand.cards.first()))
 
@@ -37,28 +38,13 @@ class BlackJack private constructor(
     private val cardDeck: CardDeck
 ) {
     val statuses: BlackJackStatuses
-        get() = BlackJackStatuses(
-            buildList {
-                add(dealer.status())
-                addAll(players.statuses())
-            }
-        )
+        get() = BlackJackStatuses(listOf(dealer.status()) + players.statuses())
 
     private val winningResults: BlackJackWinningResults
-        get() = BlackJackWinningResults(
-            buildList {
-                add(dealer.winningResult())
-                addAll(players.winningResults())
-            }
-        )
+        get() = BlackJackWinningResults(listOf(dealer.winningResult()) + players.winningResults())
 
     val scores: BlackjackScores
-        get() = BlackjackScores(
-            buildList {
-                add(dealer.score())
-                addAll(players.scores())
-            }
-        )
+        get() = BlackjackScores(listOf(dealer.score()) + players.scores())
 
     val hasMorePlayablePlayer: Boolean
         get() = players.playable.isEmpty()
