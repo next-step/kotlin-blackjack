@@ -1,14 +1,11 @@
 package blackjack.domain.card
 
 class CardTotal(private val cards: List<Card>) {
-    val isAboveTwentyOne: Boolean
+    val isBusted: Boolean
         get() = getSmallestTotal().isAboveTwentyOne()
 
-    val isBlackjack: Boolean
-        get() = getLargestTotalNotExceedingTwentyOne() == TWENTY_ONE
-
     val value: Int
-        get() = if (isAboveTwentyOne) getSmallestTotal() else getLargestTotalNotExceedingTwentyOne()
+        get() = if (isBusted) getSmallestTotal() else getLargestTotalNotExceedingTwentyOne()
 
     private fun getAllNonZeroBonuses(): List<Int> = cards
         .map { it.bonusValue }

@@ -35,7 +35,7 @@ class CardTotalTest {
                 )
 
                 assertThat(cardTotalAboveTwentyOne.value).isEqualTo(22)
-                assertThat(cardTotalAboveTwentyOne.isAboveTwentyOne).isTrue
+                assertThat(cardTotalAboveTwentyOne.isBusted).isTrue
             },
             {
                 val suit = CardSuit.CLOVER
@@ -48,7 +48,7 @@ class CardTotalTest {
                 )
 
                 assertThat(cardTotalBelowTwentyOne.value).isEqualTo(15)
-                assertThat(cardTotalBelowTwentyOne.isAboveTwentyOne).isFalse
+                assertThat(cardTotalBelowTwentyOne.isBusted).isFalse
             },
             {
                 val suit = CardSuit.CLOVER
@@ -61,40 +61,9 @@ class CardTotalTest {
                 )
 
                 assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)
-                assertThat(cardTotalEqualsToTwentyOne.isAboveTwentyOne).isFalse
+                assertThat(cardTotalEqualsToTwentyOne.isBusted).isFalse
             }
         )
-    }
-
-    @Test
-    fun `카드 숫자의 합이 21일 경우 블랙잭이라고 판단한다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotalEqualsToTwentyOne = CardTotal(
-            listOf(
-                Card.Two(suit),
-                Card.Nine(suit),
-                Card.King(suit)
-            )
-        )
-
-        assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)
-        assertThat(cardTotalEqualsToTwentyOne.isBlackjack).isTrue
-    }
-
-    @Test
-    fun `카드 숫자의 합이 21이 아닐 경우 블랙잭이 아니라고 판단한다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotalNotEqualsToTwentyOne = CardTotal(
-            listOf(
-                Card.Ten(suit),
-                Card.King(suit)
-            )
-        )
-
-        assertThat(cardTotalNotEqualsToTwentyOne.value).isEqualTo(20)
-        assertThat(cardTotalNotEqualsToTwentyOne.isBlackjack).isFalse
     }
 
     @Test

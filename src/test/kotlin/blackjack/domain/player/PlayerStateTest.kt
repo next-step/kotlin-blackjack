@@ -7,20 +7,7 @@ import org.junit.jupiter.api.Test
 
 class PlayerStateTest {
     @Test
-    fun `숫자 합이 21 미만이라면 게임 진행 상태가 된다`() {
-        val player = Player("vivian")
-        val cardsWithTotalBelowTwentyOne = listOf(
-            Card.Ten(CardSuit.CLOVER),
-            Card.Ten(CardSuit.HEART)
-        )
-
-        cardsWithTotalBelowTwentyOne.forEach { player.addCardToHand(it) }
-
-        assertThat(PlayerState.of(player)).isExactlyInstanceOf(PlayerState.Playing::class.java)
-    }
-
-    @Test
-    fun `숫자 합이 21 이라면 게임 진행 불가 상태가 된다`() {
+    fun `숫자 합이 21 이하 라면 게임 진행 상태가 된다`() {
         val player = Player("vivian")
         val cardsWithTotalBelowTwentyOne = listOf(
             Card.Ace(CardSuit.CLOVER),
@@ -29,7 +16,7 @@ class PlayerStateTest {
 
         cardsWithTotalBelowTwentyOne.forEach { player.addCardToHand(it) }
 
-        assertThat(PlayerState.of(player)).isExactlyInstanceOf(PlayerState.Done::class.java)
+        assertThat(PlayerState.of(player)).isExactlyInstanceOf(PlayerState.Playing::class.java)
     }
 
     @Test

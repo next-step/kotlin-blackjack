@@ -21,6 +21,6 @@ sealed interface PlayerState {
             return if (player.isDone()) Done else Playing(player)
         }
 
-        private fun Player.isDone(): Boolean = with(cards.total) { isAboveTwentyOne || isBlackjack }
+        private fun Player.isDone(): Boolean = with(cards.total) { isBusted }
     }
 }
