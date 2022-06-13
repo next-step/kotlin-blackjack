@@ -26,8 +26,8 @@ object WinningDiscriminator {
 
     private fun isDealerWin(dealer: Player, player: Player): ResultStatus {
         return when {
-            dealer.isBust() -> ResultStatus.Lose
             player.isBust() -> ResultStatus.Win
+            dealer.isBust() -> ResultStatus.Lose
             dealer.score > player.score -> ResultStatus.Win
             dealer.score == player.score -> ResultStatus.Draw
             dealer.score < player.score -> ResultStatus.Lose

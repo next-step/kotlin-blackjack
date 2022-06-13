@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.DealerRule
 import blackjack.domain.Player
+import blackjack.domain.PlayerRule
 import blackjack.domain.Players
 import blackjack.domain.WinningResult
 
@@ -13,10 +14,7 @@ object UI {
     }
 
     fun drawCardList(player: Player) {
-        val playerCards = when (player.rule) {
-            is DealerRule -> player.currentCards().first().toString()
-            else -> player.currentCards().joinToString(", ") { it.toString() }
-        }
+        val playerCards = player.openedCards().joinToString(", ") { it.toString() }
         println("${player.name}카드: $playerCards")
     }
 
@@ -35,14 +33,14 @@ object UI {
 
     fun drawRecord(result: WinningResult) {
         val recordString = when (result.player.rule) {
-            is DealerRule -> {
+            DealerRule -> {
                 buildString {
                     if (result.winCount > 0) append("${result.winCount}승")
                     if (result.loseCount > 0) append("${result.loseCount}패")
                     if (result.drawCount > 0) append("${result.drawCount}무")
                 }
             }
-            else -> when {
+            PlayerRule -> when {
                 result.winCount == 1 -> "승"
                 result.loseCount == 1 -> "패"
                 result.drawCount == 1 -> "무"

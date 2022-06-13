@@ -14,7 +14,7 @@ import io.kotest.matchers.shouldBe
 class WinningDiscriminatorTest : DescribeSpec({
     describe("discrimination") {
         context("딜러의 카드 점수 합이 21을 초과할 경우") {
-            it("모든 플레이어가 우승한다.") {
+            it("21을 초과한 플레이어는 전부 승리한다.") {
                 val dealer = Dealer(PlayerCards(CardNumber.Num8, CardNumber.Num9, CardNumber.Num10))
                 val player1 = Player("name", PlayerCards(CardNumber.Num4))
                 val player2 = Player("name", PlayerCards(CardNumber.Num4))
@@ -50,19 +50,18 @@ class WinningDiscriminatorTest : DescribeSpec({
                 player2Result.loseCount shouldBe 1
             }
         }
-        context("딜러의 카드 점수 합이 21이하인 경우 ") {
+        context("딜러의 점수에 상관없이") {
             it("21을 초과한 플레이어는 패배한다.") {
-                val dealer = Dealer(PlayerCards(CardNumber.Num7, CardNumber.Num10))
-                val player1 = Player("name", PlayerCards(CardNumber.Num8, CardNumber.Num9, CardNumber.Num10))
+                val dealer = Dealer(PlayerCards(CardNumber.Num7, CardNumber.Num9, CardNumber.Num10))
+                val player = Player("name", PlayerCards(CardNumber.Num8, CardNumber.Num9, CardNumber.Num10))
 
-                val results = WinningDiscriminator.discrimination(dealer, Players(player1))
+                val results = WinningDiscriminator.discrimination(dealer, Players(player))
 
                 val dealerResult = results[0]
-                val player1Result = results[1]
+                val playerResult = results[1]
 
                 dealerResult.winCount shouldBe 1
-
-                player1Result.loseCount shouldBe 1
+                playerResult.loseCount shouldBe 1
             }
         }
 

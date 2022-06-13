@@ -12,6 +12,8 @@ class Player(
         playerCards.addCard(cardDeck.pop())
     }
 
+    fun openedCards() = rule.openedCards(playerCards)
+
     fun currentCards() = playerCards.cards
 
     fun canDraw(): Boolean = rule.canDraw(score)
