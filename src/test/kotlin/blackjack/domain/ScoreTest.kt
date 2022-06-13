@@ -61,29 +61,58 @@ internal class ScoreTest : FreeSpec({
     }
 
     "Ace 의 개수에 따른 점수계산" - {
-        "4개면 4점으로 계산된다" {
-            val score = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.HEARTS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.JACK),
+        "4개인 경우" - {
+            "14로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.SEVEN),
+                    )
                 )
-            )
-            score.sum shouldBe 14
+                score.sum shouldBe 21
+            }
+
+            "4로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.JACK),
+                    )
+                )
+                score.sum shouldBe 14
+            }
         }
 
-        "3개면 3점으로 계산된다" {
-            val score = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.HEARTS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.NINE),
+        "3개인 경우" - {
+            "13으로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.EIGHT),
+                    )
                 )
-            )
-            score.sum shouldBe 12
+                score.sum shouldBe 21
+            }
+
+            "3으로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.KING),
+                    )
+                )
+                score.sum shouldBe 13
+            }
         }
 
         "2개인 경우" - {
