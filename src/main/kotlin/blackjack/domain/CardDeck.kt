@@ -7,6 +7,11 @@ object CardDeck {
         }
     }.shuffled().toMutableList()
 
+    fun all() = decks
+    fun start(): Cards {
+        return Cards().start(listOf(hit(), hit()))
+    }
+
     fun hit(): Card {
         return decks.removeFirst()
     }
