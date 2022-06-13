@@ -1,9 +1,7 @@
 package blackjack.application
 
-import blackjack.application.dto.BlackJackScore
 import blackjack.application.dto.BlackJackStatus
 import blackjack.application.dto.BlackJackStatuses
-import blackjack.application.dto.BlackJackWinningResult
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.card.CardDeck
@@ -11,26 +9,13 @@ import blackjack.domain.card.setupCardDeck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
+import blackjack.domain.participant.blackJackScore
+import blackjack.domain.participant.blackJackScores
+import blackjack.domain.participant.status
+import blackjack.domain.participant.statuses
 import blackjack.domain.participant.vo.Name
-import java.util.Collections.addAll
-
-private fun Dealer.status(): BlackJackStatus = BlackJackStatus(this.name, listOf(this.cardsInHand.cards.first()))
-
-private fun Players.statuses(): List<BlackJackStatus> =
-    players.map { BlackJackStatus(it.name, it.cardsInHand.cards) }
-
-private fun Dealer.score(): BlackJackScore =
-    BlackJackScore(this.name, this.cardsInHand.cards, this.cardsInHand.calculateScore())
-
-private fun Players.scores(): List<BlackJackScore> {
-    return players.map { BlackJackScore(it.name, it.cardsInHand.cards, it.cardsInHand.calculateScore()) }
-}
-
-private fun Dealer.winningResult(): BlackJackWinningResult =
-    BlackJackWinningResult(this.name, this.winningScores)
-
-private fun Players.winningResults(): List<BlackJackWinningResult> =
-    players.map { BlackJackWinningResult(it.name, it.winningScores) }
+import blackjack.domain.participant.winningResult
+import blackjack.domain.participant.winningResults
 
 class BlackJack private constructor(
     private val dealer: Dealer,
@@ -44,7 +29,7 @@ class BlackJack private constructor(
         get() = BlackJackWinningResults(listOf(dealer.winningResult()) + players.winningResults())
 
     val scores: BlackjackScores
-        get() = BlackjackScores(listOf(dealer.score()) + players.scores())
+        get() = BlackjackScores(listOf(dealer.blackJackScore()) + players.blackJackScores())
 
     val hasMorePlayablePlayer: Boolean
         get() = players.playable.isEmpty()
