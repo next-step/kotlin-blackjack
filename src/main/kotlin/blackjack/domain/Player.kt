@@ -16,6 +16,4 @@ open class Player(
     fun addCard(card: Card) {
         hand = hand.addCard(card)
     }
-
-    operator fun compareTo(other: Player): Int = score.compareTo(other.score)
 }

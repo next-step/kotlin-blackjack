@@ -21,17 +21,7 @@ data class Score(private val cards: List<Card>) {
             return outcomes.minOrNull() ?: 0
         }
 
-    operator fun compareTo(other: Score): Int {
-        if (this.isBust) {
-            return -1
-        }
-
-        if (other.isBust) {
-            return 1
-        }
-
-        return this.sum - other.sum
-    }
+    operator fun compareTo(other: Score): Int = this.sum - other.sum
 
     private fun List<Card>.sum(): Int = sumOf {
         SCORE_MAP.getOrDefault(it.denomination, 0)
