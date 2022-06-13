@@ -31,25 +31,38 @@ class PlayerTests : DescribeSpec({
                 player.receive(card)
                 player.hand shouldBeEqualToComparingFields hand(card)
             }
+            it("hit을 선택하면 블랙잭을 계속 진행할 수 있다") {
+                player.isPlayable { true } shouldBe true
+            }
+            it("hit을 선택하지 않으면 블랙잭을 계속 진행할 수 없다") {
+                player.isPlayable { false } shouldBe false
+                player.state shouldBe Stay(player.point())
+            }
         }
 
-        context("Hittable 이 아닌 상태라면") {
+        context("Hittable 상태가 아니라면") {
+            val states = listOf(Bust, BlackJack, Stay(Point(10)))
             it("카드를 받을 수 없다") {
-                listOf(Bust, BlackJack, Stay(Point(10)))
-                    .forAll {
-                        val player = Player("이름", state = it)
-                        val card = Card(KING, SPADE)
-                        shouldThrowExactly<IllegalStateException> {
-                            player.receive(card)
-                        }
+                states.forAll {
+                    val player = Player("이름", state = it)
+                    val card = Card(KING, SPADE)
+                    shouldThrowExactly<IllegalStateException> {
+                        player.receive(card)
                     }
+                }
+            }
+            it("블랙잭을 더 이상 진행할 수 없다") {
+                states.forAll {
+                    val player = Player("이름", state = it)
+                    player.isPlayable { true } shouldBe false
+                }
             }
         }
 
         context("hit을 선택하지 않으면") {
-            val player = Player("이름") { false }
+            val player = Player("이름")
             it("`Stay` 상태가 된다") {
-                player.saidHit()
+                player.isPlayable { false }
                 player.state shouldBe Stay(player.point())
             }
         }

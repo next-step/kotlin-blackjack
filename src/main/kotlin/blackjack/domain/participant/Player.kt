@@ -8,24 +8,31 @@ class Player(
     override val name: String,
     override val hand: Hand = Hand.empty(),
     state: State = Hittable,
-    private val selectHit: (String) -> Boolean = { true }
 ) : Participant {
 
     override var state: State = state
         private set
 
-    override fun playable(): Boolean = state is Hittable
+    override fun isPlayable(askHit: (String) -> Boolean): Boolean {
+        if (!isPlayableState()) {
+            return false
+        }
 
-    override fun saidHit(): Boolean {
-        val isHit = selectHit(name)
-        if (!isHit) {
+        val saidHit = askHit(name)
+
+        if (!saidHit) {
             state = Stay(hand.calculate())
         }
-        return isHit
+
+        return saidHit
+    }
+
+    private fun isPlayableState(): Boolean {
+        return state is Hittable
     }
 
     override fun receive(card: Card) {
-        check(playable()) { "카드를 더 이상 받을 수 없는 상태입니다." }
+        check(isPlayableState()) { "카드를 더 이상 받을 수 없는 상태입니다." }
         hand.add(card)
         changeState()
     }

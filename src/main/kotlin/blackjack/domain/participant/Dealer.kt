@@ -11,8 +11,6 @@ class Dealer(
     private val participant: Participant = Player(DEALER_NAME, hand, state)
 ) : Participant by participant {
 
-    override val name: String = DEALER_NAME
-
     override var state: State = participant.state
         private set
 
@@ -24,10 +22,6 @@ class Dealer(
     override fun open(): Hand {
         return Hand(listOf(hand.first()))
     }
-
-    override fun playable(): Boolean = state is Hittable
-
-    override fun saidHit(): Boolean = true
 
     override fun receive(card: Card) {
         participant.receive(card)

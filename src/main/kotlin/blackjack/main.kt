@@ -34,7 +34,7 @@ private fun deal(dealer: Dealer, participants: List<Participant>) {
 }
 
 private tailrec fun dealerHit(dealer: Dealer) {
-    if (!dealer.playable() || !dealer.saidHit()) {
+    if (!dealer.isPlayable()) {
         return
     }
     dealer.receive(dealer.draw())
@@ -43,7 +43,7 @@ private tailrec fun dealerHit(dealer: Dealer) {
 }
 
 private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
-    if (!participant.playable() || !participant.saidHit()) {
+    if (!participant.isPlayable { ParticipantView.askHit(participant.name) }) {
         return
     }
     participant.receive(dealer.draw())
@@ -54,7 +54,7 @@ private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
 private fun participate(): List<Participant> {
     return InputView.readPlayerNames()
         .map { name ->
-            Player(name) { ParticipantView.askHit(name) }
+            Player(name)
         }
 }
 
