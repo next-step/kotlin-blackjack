@@ -10,12 +10,12 @@ import blackjack.ui.dto.Continue
 
 fun main() {
     val players = InputView.inputNames()
-        .map { Player.sit(Name(it)) }
+        .map { Player.sit(Name(it), InputView.inputBetAmount(it)) }
         .let(::Players)
     val blackJack = BlackJack.setup(players)
     blackJack.ready()
 
-    OutputView.printGameReady(blackJack.names)
+    OutputView.printGameReady(blackJack.participantsNames)
     OutputView.printStatuses(blackJack.statuses)
 
     playBlackJack(blackJack)

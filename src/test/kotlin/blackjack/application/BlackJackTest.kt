@@ -2,6 +2,7 @@ package blackjack.application
 
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
+import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.Name
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec
@@ -43,7 +44,8 @@ class BlackJackTest : StringSpec({
     }
 }) {
     companion object {
-        fun players(): Players = Players(listOf(Player.sit(Name("dean")), Player.sit(Name("dane"))))
+        fun players(): Players =
+            Players(listOf(Player.sit(Name("dean"), BetAmount(1_000)), Player.sit(Name("dane"), BetAmount(1_000))))
 
         fun blackJack(): BlackJack = BlackJack.setup(players())
     }

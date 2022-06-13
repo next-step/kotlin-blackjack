@@ -2,6 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardDeckTest
+import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.WinningScore
@@ -67,14 +68,14 @@ class DealerTest : StringSpec({
 
         dealer.ready(reverseCardDeck)
 
-        val win = Player.sit(Name("win"))
+        val win = Player.sit(Name("win"), BetAmount(1_000))
         win.ready(sortedCardDeck)
 
-        val lose = Player.sit(Name("lose"))
+        val lose = Player.sit(Name("lose"), BetAmount(1_000))
         lose.ready(reverseCardDeck)
         lose.hit(sortedCardDeck)
 
-        val draw = Player.sit(Name("draw"))
+        val draw = Player.sit(Name("draw"), BetAmount(1_000))
         draw.ready(reverseCardDeck)
 
         val players = listOf(win, lose, draw)

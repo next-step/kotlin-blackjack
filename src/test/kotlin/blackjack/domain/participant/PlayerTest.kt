@@ -6,6 +6,7 @@ import blackjack.domain.card.CardDeckTest
 import blackjack.domain.card.type.Ace
 import blackjack.domain.card.type.Suit
 import blackjack.domain.card.type.Ten
+import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.WinningScore
@@ -17,7 +18,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "참가자 객체를 생성할수 있다." {
-        shouldNotThrow<Throwable> { Player.sit(Name("dean")) }
+        shouldNotThrow<Throwable> { Player.sit(Name("dean"), BetAmount(1_000)) }
     }
 
     "Stay 상태로 변경할수 있다" {
@@ -106,6 +107,6 @@ class PlayerTest : StringSpec({
     }
 }) {
     companion object {
-        private fun player() = Player.sit(Name("dean"))
+        private fun player() = Player.sit(Name("dean"), BetAmount(1_000))
     }
 }
