@@ -29,8 +29,6 @@ data class Hand(
         _cards.add(card)
     }
 
-    fun isNotEmpty(): Boolean = _cards.isNotEmpty()
-
     fun first(): Card = _cards.first()
 
     override fun toString(): String {
