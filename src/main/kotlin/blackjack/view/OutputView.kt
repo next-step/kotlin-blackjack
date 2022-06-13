@@ -22,7 +22,7 @@ object OutputView {
     }
 
     fun printUserCard(user: User) {
-        println(Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards)
+        println(Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards.hands.joinToString())
     }
 
     fun printMoreCard(user: User) {
@@ -37,6 +37,12 @@ object OutputView {
     }
 
     private fun printCardAndScore(user: User) {
-        println(Messages.PRINT_CARDS_AND_SCORE.format(user.name, user.cards, user.cards.getScore()))
+        println(
+            Messages.PRINT_CARDS_AND_SCORE.format(
+                user.name,
+                user.cards.hands.joinToString(),
+                user.cards.getScore().value
+            )
+        )
     }
 }

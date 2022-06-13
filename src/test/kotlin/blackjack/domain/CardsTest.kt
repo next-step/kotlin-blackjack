@@ -19,7 +19,7 @@ class CardsTest {
             addCard("스페이드", "A")
             addCard("하트", "8")
         }
-        assertThat(cards.getScore()).isEqualTo(19)
+        assertThat(cards.getScore().value).isEqualTo(19)
     }
 
     @Test
@@ -28,7 +28,7 @@ class CardsTest {
             addCard("다이아", "A")
             addCard("하트", "K")
         }
-        assertThat(cards.getScore()).isEqualTo(21)
+        assertThat(cards.getScore().value).isEqualTo(21)
     }
 
     @Test
@@ -37,7 +37,7 @@ class CardsTest {
             addCard("다이아", "A")
             addCard("클로버", "A")
         }
-        assertThat(cards.getScore()).isEqualTo(12)
+        assertThat(cards.getScore().value).isEqualTo(12)
     }
 
     @Test
@@ -47,6 +47,6 @@ class CardsTest {
             addCard("클로버", "A")
             addCard("하트", "A")
         }
-        assertThat(cards.getScore()).isEqualTo(13)
+        assertThat(cards.getScore().value).isEqualTo(13)
     }
 }
