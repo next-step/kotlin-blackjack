@@ -20,4 +20,14 @@ class PlayerTest : FreeSpec({
         player.hit(spade5)
         player.deck.size() shouldBe 1
     }
+
+    "새로운 카드를 받을 때 21을 초과하지 않으면 더 받을 수 있다.(힛)" {
+        player.takeOrBust(cloverA) shouldBe PlayerState.HIT
+        player.hit(cloverA)
+    }
+
+    "새로운 카드를 받을 때 21을 넘으면 더이상 받을 수 없다.(버스트)" {
+        player.hit(heartQ)
+        player.takeOrBust(dia7) shouldBe PlayerState.BUST
+    }
 })
