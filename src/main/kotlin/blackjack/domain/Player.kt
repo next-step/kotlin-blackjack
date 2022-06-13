@@ -18,4 +18,25 @@ class Player(val name: String) {
         else
             PlayerState.BUST
     }
+
+    fun getScore(): Int {
+        val hasAce = deck.cards.find { it.value.hasMultiNumber != null }
+        val sum = deck.cards.sumOf { it.value.number }
+        return if (hasAce != null) {
+            val aceSum = deck.cards.sumOf { it.value.hasMultiNumber ?: it.value.number }
+            if (aceSum < sum) {
+                if (sum > BLACKJACK_NUMBER) aceSum
+                else sum
+            } else {
+                if (aceSum > BLACKJACK_NUMBER) sum
+                else aceSum
+            }
+        } else {
+            sum
+        }
+    }
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
+    }
 }
