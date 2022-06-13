@@ -23,4 +23,16 @@ internal class CardsTest : FunSpec({
         // then
         sut.size() shouldBe 1
     }
+
+    test("카드뭉치에서 가장 위에있는 한장의 카드를 뽑을 수 있다.") {
+        // given
+        val card = Card(CardNumber.ACE, CardSuit.SPADE)
+        val sut = Cards(ArrayDeque(listOf(Card(CardNumber.ACE, CardSuit.SPADE), Card(CardNumber.TWO, CardSuit.SPADE))))
+
+        // when
+        val result = sut.draw()
+
+        // then
+        result shouldBe Card(CardNumber.TWO, CardSuit.SPADE)
+    }
 })

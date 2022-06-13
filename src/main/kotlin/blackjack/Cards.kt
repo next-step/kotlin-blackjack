@@ -11,6 +11,10 @@ value class Cards(
         this.values.add(card)
     }
 
+    fun draw(): Card {
+        return this.values.lastOrNull() ?: throw IllegalArgumentException("더이상 뽑을 카드가 없습니다.")
+    }
+
     companion object {
         fun createDeck(): Cards {
             return Cards(ArrayDeque(STANDARD_CARD_DECK))
