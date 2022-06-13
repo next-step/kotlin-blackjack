@@ -139,4 +139,78 @@ internal class ScoreTest : FreeSpec({
         val score = Score(emptyList())
         score.sum shouldBe 0
     }
+
+    "score 비교" - {
+        "내가 bust 이면 상대에 관계없이 패배" {
+            val myScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.CLUBS, Denomination.QUEEN),
+                    Card(Suite.SPADES, Denomination.TWO),
+                )
+            )
+            val opponentScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.CLUBS, Denomination.QUEEN),
+                    Card(Suite.SPADES, Denomination.TWO),
+                )
+            )
+
+            myScore.compareTo(opponentScore) shouldBe -1
+        }
+
+        "상대만 bust 이면 승리" {
+            val myScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.SPADES, Denomination.TWO),
+                )
+            )
+            val opponentScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.CLUBS, Denomination.QUEEN),
+                    Card(Suite.SPADES, Denomination.TWO),
+                )
+            )
+
+            myScore.compareTo(opponentScore) shouldBe 1
+        }
+
+        "동점인 경우" {
+            val myScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.SPADES, Denomination.ACE),
+                )
+            )
+            val opponentScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.NINE),
+                    Card(Suite.HEARTS, Denomination.NINE),
+                    Card(Suite.CLUBS, Denomination.THREE),
+                )
+            )
+
+            myScore.compareTo(opponentScore) shouldBe 0
+        }
+
+        "둘 다 bust 가 아니면 21에 가까운 사람이 승리" {
+            val myScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.KING),
+                    Card(Suite.SPADES, Denomination.QUEEN),
+                )
+            )
+            val opponentScore = Score(
+                listOf(
+                    Card(Suite.DIAMONDS, Denomination.JACK),
+                    Card(Suite.SPADES, Denomination.NINE),
+                )
+            )
+
+            myScore.compareTo(opponentScore) shouldBe 1
+        }
+    }
 })

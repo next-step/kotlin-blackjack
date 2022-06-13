@@ -1,25 +1,28 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
+import blackjack.domain.Game
 import blackjack.view.Console
-import blackjack.view.GameView
+import blackjack.view.DealerGameView
+import blackjack.view.PlayerGameView
 import blackjack.view.PlayerNameInputView
 import blackjack.view.PlayerView
 import blackjack.view.ResultView
+import blackjack.view.WinnerView
 
 fun main() {
-    val deck = Deck.shuffled()
-    val dealer = Dealer(deck)
     val console = Console()
 
-    val playerNames = PlayerNameInputView(console).run()
+    val playerNames = PlayerNameInputView(console).inputPlayerNames()
+    val game = Game.start(playerNames)
 
-    val players = playerNames.map(dealer::makePlayer)
+    PlayerView(console).printPlayers(game.status)
 
-    PlayerView(console, players).run()
+    val playerGameView = PlayerGameView(console)
+    game.processPlayers(playerGameView)
 
-    GameView(console, dealer, players).run()
+    val drawCount = game.processDealer()
+    DealerGameView(console).printDealerDrawCount(drawCount)
 
-    ResultView(console, players).run()
+    ResultView(console).printGameResult(game.status)
+    WinnerView(console).printWinnerResult(game.status)
 }

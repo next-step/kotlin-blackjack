@@ -31,3 +31,5 @@ private val denominationMap = mapOf(
 fun Card.text(): String = "${denominationMap[denomination]}${suiteMap[suite]}"
 
 fun Player.text(): String = "${name}카드: ${hand.cards.joinToString(", ") { it.text() }}"
+
+fun Player.textFirstCard(): String = "${name}카드: ${hand.cards.firstOrNull()?.text() ?: ""}"

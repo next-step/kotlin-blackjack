@@ -11,7 +11,7 @@ class PlayerNameInputViewTest : FreeSpec({
         val view = PlayerNameInputView(io)
         io.addInput("user")
 
-        view.run()
+        view.inputPlayerNames()
 
         io.printed shouldBe listOf("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)", "")
     }
@@ -27,7 +27,7 @@ class PlayerNameInputViewTest : FreeSpec({
                 io.addInput(input)
                 io.addInput("user")
 
-                view.run()
+                view.inputPlayerNames()
 
                 io.printed shouldHaveSize 3
                 io.printed[1] shouldBe "잘못 입력하셨습니다. 다시 입력하세요."
@@ -40,7 +40,7 @@ class PlayerNameInputViewTest : FreeSpec({
         val view = PlayerNameInputView(io)
         io.addInput("user1,user2")
 
-        val names = view.run()
+        val names = view.inputPlayerNames()
 
         names shouldBe listOf("user1", "user2")
     }

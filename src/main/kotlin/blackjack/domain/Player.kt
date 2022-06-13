@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(
+open class Player(
     val name: String,
     hand: Hand = Hand(emptyList())
 ) {
@@ -16,4 +16,6 @@ class Player(
     fun addCard(card: Card) {
         hand = hand.addCard(card)
     }
+
+    operator fun compareTo(other: Player): Int = score.compareTo(other.score)
 }
