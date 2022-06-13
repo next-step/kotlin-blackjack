@@ -3,13 +3,14 @@ package blackjack.domain.player
 import blackjack.domain.card.CardDeck
 import blackjack.domain.game.strategy.CardsByPlayerViewStrategy
 import blackjack.domain.game.strategy.TakeMorePlayerStrategy
+import blackjack.domain.player.Player.Companion.INIT_PICK_CARD_NUMBER
 
 class Players(playerNames: List<String>, cardDeck: CardDeck) {
     val players: List<Player>
 
     init {
         players = playerNames
-            .map { Player(it, cardDeck) }
+            .map { Player(it, cardDeck.pickCards(INIT_PICK_CARD_NUMBER)) }
             .toMutableList()
     }
 

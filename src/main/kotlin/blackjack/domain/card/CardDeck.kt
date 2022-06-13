@@ -23,6 +23,22 @@ class CardDeck {
         return cards.removeAt(randomIndex)
     }
 
+    fun pickCards(size: Int): MutableList<Card> {
+        val pickCards: MutableList<Card> = mutableListOf()
+
+        repeat(size) {
+            pickCards.add(pickCard())
+        }
+
+        return pickCards
+    }
+
+    fun pickCardByNumber(number: Int): Card {
+        val pickCard = cards.first { it.number == number }
+        cards.remove(pickCard)
+        return pickCard
+    }
+
     private fun makeCard(cardSuit: CardSuit): List<Card> {
         val cards: MutableList<Card> = mutableListOf()
 

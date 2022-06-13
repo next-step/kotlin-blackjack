@@ -29,6 +29,51 @@ class PlayerTest {
     }
 
     @Test
+    fun `플레이어가 bust 조건인지 확인`() {
+        val cardDeck = CardDeck()
+        val player = Player("A", cardDeck.pickCards(2))
+
+        while (player.score <= 21) {
+            player.addCard(cardDeck.pickCard())
+        }
+
+        assertThat(player.isBust()).isTrue
+    }
+
+    @Test
+    fun `플레이어가 blackJack 조건인지 확인`() {
+        val cardDeck = CardDeck()
+        val player = Player(
+            name = "A",
+            cards = listOf(
+                cardDeck.pickCardByNumber(7),
+                cardDeck.pickCardByNumber(7),
+                cardDeck.pickCardByNumber(7),
+            )
+        )
+
+        assertThat(player.isBlackJack()).isTrue
+    }
+
+    @Test
+    fun `플레이어가 패해서 잃었는지 확인`() {
+        val cardDeck = CardDeck()
+        val player = Player(
+            name = "A",
+            cards = listOf(
+                cardDeck.pickCardByNumber(10),
+                cardDeck.pickCardByNumber(9),
+                cardDeck.pickCardByNumber(8),
+            )
+        )
+
+        player.gamblingSummary.battingAmount = 10000
+        player.adjustBustBattingAmount()
+
+        assertThat(player.gamblingSummary.battingAmount).isEqualTo(-10000)
+    }
+
+    @Test
     fun `게임을 더 할 수 있는(기본(10)=10) 경우에 대한 테스트`() {
         val receivedCards = ReceivedCards(
             mutableSetOf(
@@ -78,6 +123,7 @@ class PlayerTest {
         assertThat(player.score).isEqualTo(2)
         assertThat(player.canMoreGame()).isTrue
     }
+
     @Test
     fun `게임을 더 할 수 있는 (기본(10)+기본(7)+에이스(1)+에이스(1)=19) 경우에 대한 테스트`() {
         val receivedCards = ReceivedCards(

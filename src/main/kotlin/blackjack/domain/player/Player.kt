@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
 import blackjack.domain.card.ReceivedCards
 import blackjack.domain.game.Score
 import blackjack.domain.game.strategy.TakeMorePlayerStrategy
@@ -11,9 +10,10 @@ open class Player(
     private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf()),
     private val _gamblingSummary: GamblingSummary = GamblingSummary()
 ) {
-    constructor(name: String, cardDeck: CardDeck) : this(_name = name) {
-        _receivedCards.addCard(cardDeck.pickCard())
-        _receivedCards.addCard(cardDeck.pickCard())
+    constructor(name: String, cards: List<Card>) : this(_name = name) {
+        cards.map {
+            _receivedCards.addCard(it)
+        }
     }
 
     val score: Int
@@ -54,5 +54,6 @@ open class Player(
 
     companion object {
         private const val BLACKJACK_SCORE = 21
+        const val INIT_PICK_CARD_NUMBER = 2
     }
 }
