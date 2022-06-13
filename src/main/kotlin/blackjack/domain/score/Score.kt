@@ -1,12 +1,6 @@
 package blackjack.domain.score
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Card.Companion.ACE_DEFAULT_SCORE
-import blackjack.domain.card.Card.Companion.ACE_SCORE
-import blackjack.domain.card.Card.Companion.BLACK_JACK_SCORE
-import blackjack.domain.card.Card.Companion.JACK_SCORE
-import blackjack.domain.card.Card.Companion.KING_SCORE
-import blackjack.domain.card.Card.Companion.QUEEN_SCORE
 import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.JACK
 import blackjack.domain.card.RandomCardDeck.Companion.KING
@@ -50,6 +44,15 @@ class Score {
     }
 
     private fun containAce(cards: List<Card>): Boolean {
-        return cards.any { it.number === ACE }
+        return cards.any { it.number == ACE }
+    }
+
+    companion object {
+        private const val BLACK_JACK_SCORE = 21
+        private const val ACE_DEFAULT_SCORE = 11
+        private const val ACE_SCORE = 1
+        private const val JACK_SCORE = 10
+        private const val QUEEN_SCORE = 10
+        private const val KING_SCORE = 10
     }
 }

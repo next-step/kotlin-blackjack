@@ -3,8 +3,8 @@ package blackjack.domain.card
 class RandomCardDeck : CardDeck {
 
     private val cardPool: MutableList<Card> =
-        patterns.flatMap { pattern ->
-            numbers.map { number ->
+        PATTERNS.flatMap { pattern ->
+            NUMBERS.map { number ->
                 Card(pattern, number)
             }
         }
@@ -26,7 +26,7 @@ class RandomCardDeck : CardDeck {
         const val QUEEN = "Q"
         const val KING = "K"
 
-        private val patterns = listOf(HEART, SPADE, CLUB, DIAMOND)
-        private val numbers = listOf(ACE, "2", "3", "4", "5", "6", "7", "8", "9", JACK, QUEEN, KING)
+        private val PATTERNS = listOf(HEART, SPADE, CLUB, DIAMOND)
+        private val NUMBERS = listOf(ACE, "2", "3", "4", "5", "6", "7", "8", "9", JACK, QUEEN, KING)
     }
 }

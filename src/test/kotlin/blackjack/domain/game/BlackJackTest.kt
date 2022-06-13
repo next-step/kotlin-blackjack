@@ -1,9 +1,8 @@
-package blackjack
+package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
-import blackjack.domain.game.BlackJack
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
 import io.kotest.core.spec.style.FreeSpec

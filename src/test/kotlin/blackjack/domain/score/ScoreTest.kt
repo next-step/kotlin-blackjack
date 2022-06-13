@@ -1,16 +1,11 @@
-package blackjack
+package blackjack.domain.score
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Card.Companion.ACE_DEFAULT_SCORE
-import blackjack.domain.card.Card.Companion.ACE_SCORE
-import blackjack.domain.card.Card.Companion.JACK_SCORE
-import blackjack.domain.card.Card.Companion.KING_SCORE
 import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
 import blackjack.domain.card.RandomCardDeck.Companion.JACK
 import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.domain.game.BlackJack
-import blackjack.domain.score.Score
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
 import io.kotest.core.spec.style.FreeSpec
@@ -49,7 +44,7 @@ class ScoreTest : FreeSpec({
             val score = Score()
             score.calculate(players)
 
-            score.playerScore[0].score shouldBe (ACE_SCORE + JACK_SCORE + KING_SCORE)
+            score.playerScore[0].score shouldBe 21
         }
 
         "ACE카드가 존재하면서 21 이하인 경우 에이스를 11로 계산한다." {
@@ -63,7 +58,7 @@ class ScoreTest : FreeSpec({
             val score = Score()
             score.calculate(players)
 
-            score.playerScore[0].score shouldBe (ACE_DEFAULT_SCORE + JACK_SCORE)
+            score.playerScore[0].score shouldBe 21
         }
     }
 })

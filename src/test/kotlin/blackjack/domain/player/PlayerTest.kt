@@ -1,8 +1,7 @@
-package blackjack
+package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
-import blackjack.domain.player.Player
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
