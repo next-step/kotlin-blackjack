@@ -8,6 +8,7 @@ import blackjack.CardFixtures.SPADE_FIVE
 import blackjack.CardFixtures.SPADE_TEN
 import blackjack.domain.card.Card
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -39,6 +40,26 @@ internal class PlayerTest {
 
         // then
         assertThat(player.status).isNotEqualTo(ParticipantStatus.BUST)
+    }
+
+    @Test
+    fun `플레이어의 처음 두 장의 카드 합이 21일 경우 블랙잭이다`() {
+        // given
+
+        // when
+
+        // then
+        TODO()
+    }
+
+    @Test
+    fun `플레이어는 베팅 금액을 정할 수 있다`() {
+        // given
+
+        // when
+
+        // then
+        TODO()
     }
 
     companion object {

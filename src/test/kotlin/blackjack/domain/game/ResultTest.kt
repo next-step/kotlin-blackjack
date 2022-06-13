@@ -92,6 +92,28 @@ internal class ResultTest {
             .containsEntry(player, Score(win = 0, lose = 0))
     }
 
+
+    @Test
+    fun `플레이어의 패가 블랙잭인 경우 베팅 금액의 150%를 딜러에게 받는다`() {
+        // given
+
+        // when
+
+        // then
+        TODO()
+    }
+
+
+    @Test
+    fun `딜러와 플레이어가 모두 블랙잭인 경우 베팅 금액을 돌려받는다`() {
+        // given
+
+        // when
+
+        // then
+        TODO()
+    }
+
     companion object {
         @JvmStatic
         fun `플레이어 패의 합계가 21을 넘지 않고 딜러보다 높은 케이스`() = Stream.of(
