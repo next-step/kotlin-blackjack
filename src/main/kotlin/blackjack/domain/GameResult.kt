@@ -2,9 +2,17 @@ package blackjack.domain
 
 class GameResult(
     private val dealer: Dealer,
-    private val players: List<Participant>
+    players: List<Participant>
 ) {
     val allParticipant = listOf(dealer) + players
+
+    fun matchWithPlayer(participant: Participant) {
+        when {
+            participant.playerCards.isBust() -> playerIsBust(participant)
+            dealer.playerCards.isBust() -> dealerIsBust(participant)
+            else -> decideWinner(participant)
+        }
+    }
 
     fun playerIsBust(participant: Participant) {
         participant.gameScore.lose()

@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.view.GameView
 import blackjack.view.InputView
@@ -40,14 +39,14 @@ class BlackjackApplication {
     private fun isHit(participant: Participant): Boolean {
         val isDealer = participant.isDealer()
         return if (isDealer) {
-            (participant as Dealer).isHit()
+            participant.isHit()
         } else {
             playerIsHit(participant)
         }
     }
 
     private fun playerIsHit(participant: Participant): Boolean {
-        return if (participant.isBust()) {
+        return if (participant.playerCards.isBust()) {
             false
         } else {
             InputView.needMoreCard(participant)

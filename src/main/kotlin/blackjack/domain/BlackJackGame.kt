@@ -23,17 +23,9 @@ data class BlackJackGame(
     fun match(): GameResult {
         val gameResult = GameResult(dealer, players)
         players.forEach {
-            matchWithPlayer(gameResult, it, dealer)
+            gameResult.matchWithPlayer(it)
         }
         return gameResult
-    }
-
-    private fun matchWithPlayer(gameResult: GameResult, participant: Participant, dealer: Dealer) {
-        when {
-            participant.isBust() -> gameResult.playerIsBust(participant)
-            dealer.isBust() -> gameResult.dealerIsBust(participant)
-            else -> gameResult.decideWinner(participant)
-        }
     }
 
     private fun Participant.addFirstCard() {

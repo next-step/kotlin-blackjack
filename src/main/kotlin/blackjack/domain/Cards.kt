@@ -20,6 +20,10 @@ class Cards(
         }
     }
 
+    fun isBust(): Boolean {
+        return score() > BLACK_JACK_SCORE
+    }
+
     private fun List<Card>.hasAceCard(): Boolean {
         return this.map { it.denomination }.contains(Card.Denomination.ACE)
     }
@@ -33,6 +37,7 @@ class Cards(
     }
 
     companion object {
+        private const val BLACK_JACK_SCORE = 21
         private const val BIG_VALUE_OF_ACE = 11
     }
 }
