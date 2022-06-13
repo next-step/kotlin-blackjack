@@ -5,7 +5,7 @@ import blackjack.PlayerDeck
 
 class BlackJack(private val playerDeck: PlayerDeck) : State {
     init {
-//        validate(playerDeck.cards)
+        validate(playerDeck.cards)
     }
 
     override fun currentCard(): PlayerDeck = playerDeck
