@@ -12,7 +12,7 @@
 
 - [X] Player.Guest 는 배팅 금액을 0 이상으로 설정할 수 있게함. (기본 10000원 )
 - [X] PlayerRecord 에 금액계산 로직  
-- [] 승패 대신 최종 수익 출력하도록 수정  
+- [X] 승패 대신 최종 수익 출력하도록 수정  
 
 
 ## Requirements for the step 3

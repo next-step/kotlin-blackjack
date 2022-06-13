@@ -34,12 +34,12 @@ class ConsoleOutputView : OutputView {
     }
 
     override fun printPlayerRecords(playerRecords: PlayerRecords) {
-        println("## 최종 승패 ")
+        println("## 최종 수익 ")
         playerRecords.forEach(this::printPlayerRecord)
     }
 
     private fun printPlayerRecord(playerRecord: PlayerRecord) {
-        println("${playerRecord.player.name} :  ${playerRecord.toDisplayString()}")
+        println("${playerRecord.player.name} :  ${playerRecord.earnMoneyString}")
     }
 
     private fun printCardsOfGuest(player: Player, isGameOver: Boolean) {
@@ -80,12 +80,15 @@ class ConsoleOutputView : OutputView {
         val Card.displayName: String
             get() = "${denomination.displayName}${shape.displayName}"
 
-        private fun PlayerRecord.toDisplayString(): String = when (this) {
+        private val PlayerRecord.earnMoneyString: String
+            get() = this.earnMoney.toString()
+
+        private fun PlayerRecord.toWinLoseDrawString(): String = when (this) {
             is PlayerRecord.GuestWin -> ("승")
             is PlayerRecord.GuestLose -> ("패")
             is PlayerRecord.GuestDraw -> ("무")
             is PlayerRecord.DealerRecord -> buildString {
-                val record = this@toDisplayString
+                val record = this@toWinLoseDrawString
 
                 if (record.win != 0) {
                     this.append("${record.win}승 ")
