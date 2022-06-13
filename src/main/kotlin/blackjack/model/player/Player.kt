@@ -58,7 +58,7 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
     }
 }
 
-class Players(playerList: List<Player>) : List<Player> by playerList {
+class Players<T : Player>(playerList: List<T>) : List<T> by playerList {
 
     val blackJackPlayer: Player?
         get() = this.find { it.state is BlackJack }
@@ -68,6 +68,6 @@ class Players(playerList: List<Player>) : List<Player> by playerList {
     }
 
     companion object {
-        fun List<Player>.toPlayers() = Players(this)
+        fun <T : Player> List<T>.toPlayers() = Players(this)
     }
 }

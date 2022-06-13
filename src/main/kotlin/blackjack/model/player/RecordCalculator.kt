@@ -4,13 +4,12 @@ import blackjack.model.card.State
 
 class RecordCalculator(
     private val dealer: Player.Dealer,
-    private val guests: Players,
+    private val guests: Players<Player.Guest>,
     private val initialCardCountForEachPlayer: Int
 ) {
 
     fun calculate(): PlayerRecords {
-        val guestLit = guests.filterIsInstance<Player.Guest>()
-        val guestRecords = guestLit.map { createGuestRecord(dealer.state, it) }
+        val guestRecords = guests.map { createGuestRecord(dealer.state, it) }
         val dealerRecord = createDealerRecord(guestRecords)
         return PlayerRecords(listOf(dealerRecord) + (guestRecords))
     }

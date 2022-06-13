@@ -9,13 +9,11 @@ import blackjack.model.player.RecordCalculator
 class PlayRoom(
     val cardDistributor: CardDistributor,
     val dealer: Player.Dealer,
-    val guests: Players
+    val guests: Players<Player.Guest>
 ) {
 
-    private val players: Players by lazy {
-        this.guests.toMutableList()
-            .apply { this.add(dealer) }
-            .toPlayers()
+    private val players: Players<Player> by lazy {
+        (this.guests.toMutableList() + dealer).toPlayers()
     }
 
     fun startNewGame() {
