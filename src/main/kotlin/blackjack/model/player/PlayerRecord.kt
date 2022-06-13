@@ -5,8 +5,15 @@ sealed interface PlayerRecord {
     val earnMoney: Int
 
     data class GuestWin(override val player: Player.Guest, override val earnMoney: Int) : PlayerRecord
-    data class GuestLose(override val player: Player.Guest, override val earnMoney: Int) : PlayerRecord
-    data class GuestDraw(override val player: Player.Guest, override val earnMoney: Int) : PlayerRecord
+    data class GuestLose(override val player: Player.Guest) : PlayerRecord {
+        override val earnMoney: Int
+            get() = -player.betMoney
+    }
+
+    data class GuestDraw(override val player: Player.Guest) : PlayerRecord {
+        override val earnMoney: Int
+            get() = 0
+    }
 
     data class DealerRecord(
         override val player: Player.Dealer,

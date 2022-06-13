@@ -36,7 +36,7 @@ class RecordCalculator(
 
         return when {
             dealerState is State.Bust -> PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
-            guestState is State.Bust -> PlayerRecord.GuestLose(player = guest, earnMoney = -guestBetMoney)
+            guestState is State.Bust -> PlayerRecord.GuestLose(player = guest)
             guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer ->
                 if (dealerState is State.BlackJack) {
                     PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
@@ -50,11 +50,8 @@ class RecordCalculator(
                 player = guest,
                 earnMoney = guestBetMoney
             )
-            guestState.finalScore < dealerState.finalScore -> PlayerRecord.GuestLose(
-                player = guest,
-                earnMoney = -guestBetMoney
-            )
-            else -> PlayerRecord.GuestDraw(player = guest, earnMoney = 0)
+            guestState.finalScore < dealerState.finalScore -> PlayerRecord.GuestLose(player = guest)
+            else -> PlayerRecord.GuestDraw(player = guest)
         }
     }
 
