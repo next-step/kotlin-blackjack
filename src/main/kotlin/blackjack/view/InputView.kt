@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
+import blackjack.domain.Player
 
 class InputView {
     fun getPlayers(): List<String> {
@@ -14,7 +15,7 @@ class InputView {
         return playerList
     }
 
-    fun askThePlayer(player: String): Card? {
+    fun askThePlayer(player: Player): Card? {
         println(String.format(INPUT_ASK_HIT, player))
         return when (readln()) {
             YES -> CardDeck.hit()

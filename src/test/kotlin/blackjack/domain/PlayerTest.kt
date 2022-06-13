@@ -13,7 +13,7 @@ class PlayerTest : FreeSpec({
     val player = Player("pobi")
 
     "플레이어는 이름을 갖는다." {
-        player.name shouldBe "pobi"
+        player.toString() shouldBe "pobi"
     }
 
     "새로운 카드를 받을 수 있다." {

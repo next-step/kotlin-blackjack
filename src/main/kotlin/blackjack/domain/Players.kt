@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Players(private val players: List<Player>) {
-    fun names(): List<String> = players.map { it.name }
+    fun names(): List<String> = players.map { it.toString() }
 
     fun all() = players
 

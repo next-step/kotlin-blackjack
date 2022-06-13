@@ -26,7 +26,7 @@ fun main() {
 }
 
 private fun takeOrBust(player: Player): Card? {
-    val card = InputView().askThePlayer(player.name) ?: return null
+    val card = InputView().askThePlayer(player) ?: return null
 
     when (player.takeOrBust(card)) {
         PlayerState.HIT -> return card

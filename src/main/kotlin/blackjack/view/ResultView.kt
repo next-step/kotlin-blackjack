@@ -28,7 +28,7 @@ class ResultView {
             val cards = formatToPrintCards(player.deck)
             println(
                 String.format(
-                    OUTPUT_CARD_PLAYER_HAS, player.name, cards
+                    OUTPUT_CARD_PLAYER_HAS, player, cards
                 ) + String.format(
                     OUTPUT_PLAY_RESULT, player.getScore()
                 )

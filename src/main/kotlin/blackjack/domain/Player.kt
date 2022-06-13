@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String) {
+class Player(private val name: String) {
     var deck = Cards()
 
     fun start(): Player {
@@ -34,6 +34,10 @@ class Player(val name: String) {
         } else {
             sum
         }
+    }
+
+    override fun toString(): String {
+        return name
     }
 
     companion object {
