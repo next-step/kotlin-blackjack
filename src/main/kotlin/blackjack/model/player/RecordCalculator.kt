@@ -1,0 +1,57 @@
+package blackjack.model.player
+
+import blackjack.model.card.State
+
+class RecordCalculator(
+    private val dealer: Player.Dealer,
+    private val guests: Players,
+    private val initialCardCountForEachPlayer: Int
+) {
+
+    fun calculate(): PlayerRecords {
+        val guestLit = guests.filterIsInstance<Player.Guest>()
+        val guestRecords = guestLit.map { createGuestRecord(dealer.state, it) }
+        val dealerRecord = createDealerRecord(guestRecords)
+        return PlayerRecords(listOf(dealerRecord) + (guestRecords))
+    }
+
+    private fun createDealerRecord(guestRecords: List<PlayerRecord>): PlayerRecord {
+        val drawCount = guestRecords.count { it is PlayerRecord.GuestDraw }
+        val dealerLostCount = guestRecords.count { it is PlayerRecord.GuestWin }
+        val dealerWinCount = guestRecords.count() - dealerLostCount - drawCount
+        val dealerEarnMoney = guestRecords.sumOf { -it.earnMoney }
+        return PlayerRecord.DealerRecord(
+            dealer,
+            win = dealerWinCount,
+            lose = dealerLostCount,
+            draw = drawCount,
+            earnMoney = dealerEarnMoney
+        )
+    }
+
+    private fun createGuestRecord(dealerState: State, guest: Player.Guest): PlayerRecord {
+        val guestState = guest.state
+        val guestBetMoney = guest.betMoney
+        val guestCardCount = guest.cardCount
+
+        return when {
+            dealerState is State.Bust -> PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
+            guestState is State.Bust -> PlayerRecord.GuestLose(player = guest, earnMoney = -guestBetMoney)
+            guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer ->
+                if (dealerState is State.BlackJack) {
+                    PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
+                } else {
+                    PlayerRecord.GuestWin(player = guest, earnMoney = (guestBetMoney * 1.5f).toInt())
+                }
+            guestState.finalScore > dealerState.finalScore -> PlayerRecord.GuestWin(
+                player = guest,
+                earnMoney = guestBetMoney
+            )
+            guestState.finalScore < dealerState.finalScore -> PlayerRecord.GuestLose(
+                player = guest,
+                earnMoney = -guestBetMoney
+            )
+            else -> PlayerRecord.GuestDraw(player = guest, earnMoney = 0)
+        }
+    }
+}

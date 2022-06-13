@@ -2,45 +2,157 @@ package blackjack.model.player
 
 import blackjack.dummy.toCardSet
 import blackjack.fixture.AlwaysHitDecisionMaker
+import blackjack.model.CardDistributor
+import blackjack.model.DefaultCardDistributor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 internal class PlayerRecordsTest {
 
     private lateinit var alwaysHitDecisionMaker: HitDecisionMaker
+    private lateinit var cardDistributor: CardDistributor
 
     @BeforeEach
     fun setUp() {
         this.alwaysHitDecisionMaker = AlwaysHitDecisionMaker
+        this.cardDistributor = DefaultCardDistributor()
     }
 
     @Test
-    fun `승패계산테스트`() {
+    fun `기본 승패 계산 테스트`() {
 
         // given
-
+        val defBetMoney = Player.MIN_BET_MONEY
         val dealer = Player.Dealer("딜러").apply {
             "JS,5S".toCardSet().forEach(this::addCard) // 15점 1승 2패
         }
-
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
             "JS,6S".toCardSet().forEach(this::addCard) // 16점 승
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
             "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
         }
 
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val playerRecords = PlayerRecords.of(dealer, guests)
+        val playerRecords = RecordCalculator(
+            dealer = dealer,
+            guests = guests,
+            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        ).calculate()
 
         // then
-        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0)
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0, earnMoney = -defBetMoney)
+
         assertThat(playerRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord)
+    }
+
+    @Test
+    fun `처음 2장으로 블랙잭 딜러는 블랙잭 아닌 경우 테스트 `() {
+
+        // given
+        val defBetMoney = Player.MIN_BET_MONEY
+
+        val dealer = Player.Dealer("딜러").apply {
+            "JS,5S".toCardSet().forEach(this::addCard) // 15점 블랙잭 아님
+        }
+
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승
+        }
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
+        }
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
+        }
+
+        val guests = Players(listOf(playerA, playerB, playerC))
+
+        // when
+        val actualRecords = RecordCalculator(
+            dealer = dealer,
+            guests = guests,
+            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        ).calculate()
+
+        // then
+        val expectedWinCount = 1
+        val expectedLoseCount = 2
+        val expectedDealerEarn =
+            expectedWinCount * defBetMoney - (defBetMoney * 0.5f).toInt() - defBetMoney * expectedLoseCount
+
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(
+                dealer,
+                win = expectedWinCount,
+                lose = expectedLoseCount,
+                earnMoney = expectedDealerEarn
+            )
+
+        assertAll(
+            { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
+            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo((playerA.betMoney * 1.5f).toInt()) },
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+        )
+    }
+
+    @Test
+    fun `처음 2장으로 블랙잭 딜러도 블랙잭인 경우 테스트 `() {
+
+        // given
+        val defBetMoney = Player.MIN_BET_MONEY
+
+        val dealer = Player.Dealer("딜러").apply {
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 2승 1패
+        }
+
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승
+        }
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,7S".toCardSet().forEach(this::addCard) // 17점 패
+        }
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
+        }
+
+        val guests = Players(listOf(playerA, playerB, playerC))
+
+        // when
+        val actualRecords = RecordCalculator(
+            dealer = dealer,
+            guests = guests,
+            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        ).calculate()
+
+        // then
+        val expectedWinCount = 2
+        val expectedLoseCount = 1
+        val expectedDealerEarn =
+            expectedWinCount * defBetMoney - defBetMoney * expectedLoseCount
+
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(
+                dealer,
+                win = expectedWinCount,
+                lose = expectedLoseCount,
+                earnMoney = expectedDealerEarn
+            )
+
+        assertAll(
+            { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
+            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(playerA.betMoney) },
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(-playerB.betMoney) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+        )
     }
 }

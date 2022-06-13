@@ -78,8 +78,9 @@ internal class PlayRoomTest {
             this.resetCardSet()
         }
         val cardForBust = "JS,JD,5S".toCardSet()
+        val betMoney = Player.MIN_BET_MONEY
 
-        val bustPlayers = listOf("a", "b", "c").map { Player.Guest("a", alwaysHitDecisionMaker) }
+        val bustPlayers = listOf("a", "b", "c").map { Player.Guest("a", alwaysHitDecisionMaker, betMoney = betMoney) }
             .onEach { player -> cardForBust.forEach(player::addCard) }
             .toPlayers()
 
@@ -89,7 +90,11 @@ internal class PlayRoomTest {
 
         val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayers)
 
-        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, lose = bustPlayers.count())
+        val expectedDealerRecord = PlayerRecord.DealerRecord(
+            player = dealer,
+            lose = bustPlayers.count(),
+            earnMoney = -(betMoney * bustPlayers.count())
+        )
         // when
         val playerRecords = playRoom.playGame()
         val dealerRecord = playerRecords.playerRecordList.find { it.player is Player.Dealer }
@@ -106,6 +111,7 @@ internal class PlayRoomTest {
     fun `Running인 것에 대해 각각 딜러와 승패 판정 `() {
 
         // given
+        val betMoney = Player.MIN_BET_MONEY
         val cardDistributor = sequentialCardDistributor.apply {
             this.resetCardSet()
         }
@@ -116,23 +122,35 @@ internal class PlayRoomTest {
         }
 
         // 버스트 패자 : 25점 획득 패
-        val bustPlayer = Player.Guest("bustGuest", alwaysStayDecisionMaker).apply {
-            "JS,JD,5S".toCardSet().forEach(this::addCard)
-        }
+        val bustPlayer = Player.Guest(
+            name = "bustGuest",
+            hitDecisionMaker = alwaysStayDecisionMaker,
+            betMoney = betMoney
+        ).apply { "JS,JD,5S".toCardSet().forEach(this::addCard) }
 
         // 패자 : 13점 획득 패
-        val loser = Player.Guest("loser", alwaysStayDecisionMaker).apply {
-            "QS,3D".toCardSet().forEach(this::addCard)
-        }
+        val loser = Player.Guest(
+            name = "loser",
+            hitDecisionMaker = alwaysStayDecisionMaker,
+            betMoney = betMoney
+        ).apply { "QS,3D".toCardSet().forEach(this::addCard) }
 
         // 승자 : 15점 동점자 무
-        val drawPlayer = Player.Guest("drawGuest", alwaysStayDecisionMaker).apply {
+        val drawPlayer = Player.Guest(
+            name = "drawGuest",
+            hitDecisionMaker = alwaysStayDecisionMaker,
+            betMoney = betMoney
+        ).apply {
             val cardForBust = "6S,5D,4S".toCardSet()
             cardForBust.forEach(this::addCard)
         }
 
         // 승자 : 20점 획득 승
-        val winner = Player.Guest("winner", alwaysStayDecisionMaker).apply {
+        val winner = Player.Guest(
+            name = "winner",
+            hitDecisionMaker = alwaysStayDecisionMaker,
+            betMoney = betMoney
+        ).apply {
             val cardForBust = "JS,8D,2S".toCardSet()
             cardForBust.forEach(this::addCard)
         }
@@ -148,7 +166,19 @@ internal class PlayRoomTest {
         val winnerRecord = playerRecords.playerRecordList.find { it.player === winner }
         val drawRecord = playerRecords.playerRecordList.find { it.player === drawPlayer }
 
-        val expectedDealerRecord = PlayerRecord.DealerRecord(dealer, win = 2, lose = 1, draw = 1)
+        val expectedWinCount = 2
+        val expectedLoseCount = 1
+        val expectedDrawCount = 1
+        val expectedEarnMoney = betMoney * expectedWinCount - betMoney * expectedLoseCount
+
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(
+                dealer,
+                win = expectedWinCount,
+                lose = expectedLoseCount,
+                draw = expectedDrawCount,
+                earnMoney = expectedEarnMoney
+            )
         // then
         assertAll(
             { assertThat(dealerRecord).isEqualTo(expectedDealerRecord) },
