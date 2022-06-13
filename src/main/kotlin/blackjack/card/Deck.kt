@@ -11,11 +11,15 @@ class Deck private constructor(private var _cards: Set<Card>) {
         fun init(): Deck {
             val cards = mutableSetOf<Card>()
             for (symbol in CardSymbol.values()) {
-                for (suit in Suit.values()) {
-                    cards.add(Card(suit = suit, symbol = symbol))
-                }
+                addSymbols(cards, symbol)
             }
             return Deck(cards)
+        }
+
+        private fun addSymbols(cards: MutableSet<Card>, symbol: CardSymbol) {
+            for (suit in Suit.values()) {
+                cards.add(Card(suit = suit, symbol = symbol))
+            }
         }
     }
 }
