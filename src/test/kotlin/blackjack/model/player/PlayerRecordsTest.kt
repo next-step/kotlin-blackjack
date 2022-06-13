@@ -165,4 +165,60 @@ internal class PlayerRecordsTest {
             { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
         )
     }
+
+    @Test
+    fun `추가카드로 블랙잭, 딜러는 블랙잭 아닌 경우 테스트 `() {
+
+        // given
+        val defBetMoney = Player.MIN_BET_MONEY
+
+        val dealer = Player.Dealer("딜러").apply {
+            "JS,5S".toCardSet().forEach(this::addCard) // 15점 블랙잭 아님
+        }
+
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "AS,8S,2C".toCardSet().forEach(this::addCard) // 3장으로 블랙잭 승
+        }
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
+        }
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
+        }
+
+        val guests = Players(listOf(playerA, playerB, playerC))
+
+        // when
+        val actualRecords = RecordCalculator(
+            dealer = dealer,
+            guests = guests,
+            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        ).calculate()
+
+        // then
+        val expectedWinCount = 1
+        val expectedLoseCount = 2
+
+        val expectedPlayerAEarn = playerA.betMoney
+        val expectedPlayerBEarn = playerB.betMoney
+        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
+
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(
+                dealer,
+                win = expectedWinCount,
+                lose = expectedLoseCount,
+                earnMoney = expectedDealerEarn
+            )
+
+        assertAll(
+            { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
+            {
+                assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn)
+            },
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+        )
+    }
 }
