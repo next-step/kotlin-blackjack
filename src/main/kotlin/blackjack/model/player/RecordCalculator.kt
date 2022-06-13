@@ -35,14 +35,14 @@ class RecordCalculator(
         val guestCardCount = guest.cardCount
 
         return when {
+            guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer -> {
+                createGuestRecordWhenGuestBlackJack(dealerState = dealerState, guest = guest)
+            }
             dealerState is State.Bust -> {
                 PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
             }
             guestState is State.Bust -> {
                 PlayerRecord.GuestLose(player = guest)
-            }
-            guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer -> {
-                createGuestRecordWhenGuestBlackJack(dealerState = dealerState, guest = guest)
             }
             guestState.finalScore > dealerState.finalScore -> {
                 PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)

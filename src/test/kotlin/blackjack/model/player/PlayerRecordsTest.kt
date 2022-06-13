@@ -148,8 +148,11 @@ internal class PlayerRecordsTest {
         val expectedWinCount = 2
         val expectedLoseCount = 0
         val expectedDrawCount = 1
-        val expectedDealerEarn =
-            expectedWinCount * defBetMoney - defBetMoney * expectedLoseCount
+
+        val expectedPlayerAEarn = 0
+        val expectedPlayerBEarn = -playerB.betMoney
+        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
             PlayerRecord.DealerRecord(
@@ -162,9 +165,9 @@ internal class PlayerRecordsTest {
 
         assertAll(
             { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
-            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(0) },
-            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(-playerB.betMoney) },
-            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn) },
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(expectedPlayerBEarn) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(expectedPlayerCEarn) }
         )
     }
 
@@ -221,6 +224,62 @@ internal class PlayerRecordsTest {
             },
             { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
             { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+        )
+    }
+
+    @Test
+    fun `처음 2장으로 블랙잭 딜러가 Bust 테스트 `() {
+
+        // given
+        val defBetMoney = Player.MIN_BET_MONEY
+
+        val dealer = Player.Dealer("딜러").apply {
+            "QS,5S,JS".toCardSet().forEach(this::addCard) // 버스트 3패
+        }
+
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승 (1.5배 받음)
+        }
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
+        }
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+            "JS,QS,KS".toCardSet().forEach(this::addCard) // 버스트 승
+        }
+
+        val guests = Players(listOf(playerA, playerB, playerC))
+
+        // when
+        val actualRecords = RecordCalculator(
+            dealer = dealer,
+            guests = guests,
+            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        ).calculate()
+
+        // then
+        val expectedPlayerAEarn = (defBetMoney * RecordCalculator.REWARD_RATIO_OF_BLACK_JACK).toInt()
+        val expectedPlayerBEarn = defBetMoney
+        val expectedPlayerCEarn = defBetMoney
+
+        val expectedWinCount = 0
+        val expectedLoseCount = 3
+        val expectedDrawCount = 0
+        val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
+
+        val expectedDealerRecord =
+            PlayerRecord.DealerRecord(
+                dealer,
+                win = expectedWinCount,
+                lose = expectedLoseCount,
+                draw = expectedDrawCount,
+                earnMoney = expectedDealerEarn
+            )
+
+        assertAll(
+            { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
+            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn) },
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(expectedPlayerBEarn) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(expectedPlayerCEarn) }
         )
     }
 }
