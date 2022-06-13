@@ -122,11 +122,11 @@ internal class PlayerRecordsTest {
         val defBetMoney = Player.MIN_BET_MONEY
 
         val dealer = Player.Dealer("딜러").apply {
-            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 2승 1패
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 1승 1패 1무
         }
 
         val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
-            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승
+            "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 무승부 (돌려받음)
         }
         val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 패
@@ -146,7 +146,8 @@ internal class PlayerRecordsTest {
 
         // then
         val expectedWinCount = 2
-        val expectedLoseCount = 1
+        val expectedLoseCount = 0
+        val expectedDrawCount = 1
         val expectedDealerEarn =
             expectedWinCount * defBetMoney - defBetMoney * expectedLoseCount
 
@@ -155,12 +156,13 @@ internal class PlayerRecordsTest {
                 dealer,
                 win = expectedWinCount,
                 lose = expectedLoseCount,
+                draw = expectedDrawCount,
                 earnMoney = expectedDealerEarn
             )
 
         assertAll(
             { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
-            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(playerA.betMoney) },
+            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(0) },
             { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(-playerB.betMoney) },
             { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
         )

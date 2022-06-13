@@ -58,11 +58,10 @@ class RecordCalculator(
 
     private fun createGuestRecordWhenGuestBlackJack(dealerState: State, guest: Player.Guest): PlayerRecord {
         require(guest.state is State.BlackJack)
-        val guestEarnMoney = if (dealerState is State.BlackJack)
-            guest.betMoney
+        return if (dealerState is State.BlackJack)
+            PlayerRecord.GuestDraw(guest)
         else
-            (guest.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
-        return PlayerRecord.GuestWin(player = guest, earnMoney = guestEarnMoney)
+            PlayerRecord.GuestWin(player = guest, earnMoney = (guest.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt())
     }
 
     companion object {
