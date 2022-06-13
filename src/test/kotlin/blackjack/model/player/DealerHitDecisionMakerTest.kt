@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 internal class DealerHitDecisionMakerTest {
 
-    private lateinit var dealerHitDecisionMaker: DealerHitDecisionMaker
+    private lateinit var dealerHitDecisionMaker: HitDecisionMaker
     private lateinit var cardDistributor: CardDistributor
 
     @BeforeEach
