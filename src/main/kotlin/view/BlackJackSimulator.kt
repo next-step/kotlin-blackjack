@@ -21,11 +21,12 @@ fun main() {
             val enableToIssue = InputView.isYesOrNo(it.name)
             if (!enableToIssue) noCnt++
 
-            val exceed21 = BlackJackGame.isBust(it, enableToIssue)
+            BlackJackGame.drawCard(it)
+            val isBust = BlackJackGame.isBust(it, enableToIssue)
 
             InputView.displayHaveCard(it)
 
-            continueGame = endCheck(noCnt, players.size, exceed21)
+            continueGame = endCheck(noCnt, players.size, isBust)
         }
     } while (continueGame)
 

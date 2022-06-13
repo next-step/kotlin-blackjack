@@ -10,20 +10,19 @@ object BlackJackGame {
     }
 
     fun isBust(player: Player, isIssued: Boolean): Boolean {
-        var isExceed21 = false
+        var isBust = false
         if (isIssued) {
-            provideCard(player)
-            if (player.getSumOfCards() >= BUST_THRESHOLD_SCORE) isExceed21 = true
+            if (player.getSumOfCards() >= BUST_THRESHOLD_SCORE) isBust = true
         }
 
-        return isExceed21
+        return isBust
     }
 
-    fun endCheck(noCnt: Int, playersSize: Int, isExceed21: Boolean): Boolean {
-        return (noCnt != playersSize || isExceed21).not()
+    fun endCheck(noCnt: Int, playersSize: Int, isBust: Boolean): Boolean {
+        return (noCnt != playersSize || isBust).not()
     }
 
-    private fun provideCard(player: Player) {
+    fun drawCard(player: Player) {
         player.offer(ordinaryIssue())
     }
 

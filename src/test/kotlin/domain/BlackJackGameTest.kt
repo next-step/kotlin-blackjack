@@ -41,7 +41,7 @@ internal class BlackJackGameTest {
         )
         player.offer(cards)
 
-        val isExceed21 = isBust(player, true)
-        assertThat(endCheck(1, 1, isExceed21)).isFalse()
+        val isBust = isBust(player, true)
+        assertThat(endCheck(1, 1, isBust)).isFalse()
     }
 }
