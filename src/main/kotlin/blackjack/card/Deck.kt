@@ -1,25 +1,18 @@
 package blackjack.card
 
-class Deck private constructor(private var _cards: Set<Card>) {
-    val cards: Set<Card> get() = _cards
+class Deck private constructor(private var _cards: MutableList<Card>) {
+    val cards: List<Card> get() = _cards.toList()
 
     fun shuffle() {
-        _cards = _cards.shuffled().toSet()
+        _cards.shuffled()
     }
 
     companion object {
         fun init(): Deck {
-            val cards = mutableSetOf<Card>()
-            for (symbol in CardSymbol.values()) {
-                addSymbols(cards, symbol)
+            val cards = Suit.values().flatMap { suit ->
+                CardSymbol.values().map { symbol -> Card(suit, symbol) }
             }
-            return Deck(cards)
-        }
-
-        private fun addSymbols(cards: MutableSet<Card>, symbol: CardSymbol) {
-            for (suit in Suit.values()) {
-                cards.add(Card(suit = suit, symbol = symbol))
-            }
+            return Deck(cards.shuffled().toMutableList())
         }
     }
 }
