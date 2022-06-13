@@ -41,11 +41,7 @@ internal class PlayerRecordsTest {
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val playerRecords = RecordCalculator(
-            dealer = dealer,
-            guests = guests,
-            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
-        ).calculate()
+        val actualRecords = PlayerRecords.of(dealer, guests)
 
         // then
         val expectedPlayerAEarn = playerA.betMoney
@@ -56,7 +52,7 @@ internal class PlayerRecordsTest {
         val expectedDealerRecord =
             PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0, earnMoney = expectedDealerEarn)
 
-        assertThat(playerRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord)
+        assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord)
     }
 
     @Test
@@ -82,17 +78,13 @@ internal class PlayerRecordsTest {
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val actualRecords = RecordCalculator(
-            dealer = dealer,
-            guests = guests,
-            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
-        ).calculate()
+        val actualRecords = PlayerRecords.of(dealer, guests)
 
         // then
         val expectedWinCount = 1
         val expectedLoseCount = 2
 
-        val expectedPlayerAEarn = (playerA.betMoney * RecordCalculator.REWARD_RATIO_OF_BLACK_JACK).toInt()
+        val expectedPlayerAEarn = (playerA.betMoney * PlayerRecord.REWARD_RATIO_OF_BLACK_JACK).toInt()
         val expectedPlayerBEarn = playerB.betMoney
         val expectedPlayerCEarn = -playerB.betMoney
         val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
@@ -138,11 +130,7 @@ internal class PlayerRecordsTest {
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val actualRecords = RecordCalculator(
-            dealer = dealer,
-            guests = guests,
-            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
-        ).calculate()
+        val actualRecords = PlayerRecords.of(dealer, guests)
 
         // then
         val expectedWinCount = 2
@@ -194,11 +182,7 @@ internal class PlayerRecordsTest {
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val actualRecords = RecordCalculator(
-            dealer = dealer,
-            guests = guests,
-            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
-        ).calculate()
+        val actualRecords = PlayerRecords.of(dealer, guests)
 
         // then
         val expectedWinCount = 1
@@ -250,14 +234,10 @@ internal class PlayerRecordsTest {
         val guests = Players(listOf(playerA, playerB, playerC))
 
         // when
-        val actualRecords = RecordCalculator(
-            dealer = dealer,
-            guests = guests,
-            initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
-        ).calculate()
+        val actualRecords = PlayerRecords.of(dealer, guests)
 
         // then
-        val expectedPlayerAEarn = (defBetMoney * RecordCalculator.REWARD_RATIO_OF_BLACK_JACK).toInt()
+        val expectedPlayerAEarn = (defBetMoney * PlayerRecord.REWARD_RATIO_OF_BLACK_JACK).toInt()
         val expectedPlayerBEarn = defBetMoney
         val expectedPlayerCEarn = defBetMoney
 

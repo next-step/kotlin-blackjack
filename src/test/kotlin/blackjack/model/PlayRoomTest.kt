@@ -57,7 +57,8 @@ internal class PlayRoomTest {
             .onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 
         val playRoom = PlayRoom(cardDistributor, dealer, players)
-        val initialCardCountForEachPlayer = cardDistributor.initialCardCountForEachPlayer
+        val initialCardCountForEachPlayer = CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
+
         // when
         playRoom.startNewGame()
 

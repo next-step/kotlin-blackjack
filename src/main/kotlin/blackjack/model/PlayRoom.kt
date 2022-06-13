@@ -4,7 +4,6 @@ import blackjack.model.player.Player
 import blackjack.model.player.PlayerRecords
 import blackjack.model.player.Players
 import blackjack.model.player.Players.Companion.toPlayers
-import blackjack.model.player.RecordCalculator
 
 class PlayRoom(
     val cardDistributor: CardDistributor,
@@ -26,6 +25,6 @@ class PlayRoom(
         this.players.forEach { player ->
             player.hitWhileWants(cardDistributor, onHitBlock)
         }
-        return RecordCalculator(dealer, guests, cardDistributor.initialCardCountForEachPlayer).calculate()
+        return PlayerRecords.of(dealer, guests)
     }
 }

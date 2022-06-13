@@ -27,6 +27,9 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
     val cardCount: Int
         get() = this.cardList.size
 
+    val hasAdditionalCards: Boolean
+        get() = this.cardCount > CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
+
     override fun addCard(card: Card) {
         this.cardList.add(card)
     }

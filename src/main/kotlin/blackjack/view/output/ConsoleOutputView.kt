@@ -1,5 +1,6 @@
 package blackjack.view.output
 
+import blackjack.model.CardDistributor
 import blackjack.model.PlayRoom
 import blackjack.model.card.Card
 import blackjack.model.card.CardShape
@@ -13,7 +14,7 @@ class ConsoleOutputView : OutputView {
     override fun printInitialMessage(playRoom: PlayRoom) {
         val dealerName = playRoom.dealer.name
         val playerNames = playRoom.guests.joinToString(",") { it.name }
-        val initialCardCountForEachPlayer = playRoom.cardDistributor.initialCardCountForEachPlayer
+        val initialCardCountForEachPlayer = CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
 
         println("${dealerName}와 ${playerNames}에게 ${initialCardCountForEachPlayer}장씩 카드를 나누었습니다.")
         this.printCardsOfPlayRoom(playRoom, isGameOver = false)
