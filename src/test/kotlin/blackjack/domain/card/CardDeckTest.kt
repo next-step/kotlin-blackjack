@@ -1,7 +1,9 @@
 package blackjack.domain.card
 
+import blackjack.domain.exception.AllCardExhaustException
 import blackjack.domain.player.Players
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class CardDeckTest {
@@ -28,5 +30,17 @@ class CardDeckTest {
 
         assertThat(players.players[0].receivedCards.count()).isEqualTo(2)
         assertThat(players.players[1].receivedCards.count()).isEqualTo(2)
+    }
+
+    @Test
+    fun `모든 카드를 소진한 이후 또 뽑을 때 발생하는 예외사항 체크`() {
+        val cardDeck = CardDeck()
+        val count = 52
+
+        repeat(count) {
+            cardDeck.pickCard()
+        }
+
+        assertThatThrownBy { cardDeck.pickCard() }.isInstanceOf(AllCardExhaustException::class.java)
     }
 }
