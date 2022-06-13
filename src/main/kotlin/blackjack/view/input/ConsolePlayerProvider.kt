@@ -13,11 +13,14 @@ class ConsolePlayerProvider : PlayerProvider {
     private val hitDecisionMaker = ConsoleHitDecisionMaker()
     private val betMoneyInputParser = IntInputParser(minValue = Player.MIN_BET_MONEY)
 
-    override fun createPlayers(): Players<Player.Guest> =
-        ConsoleReader.read(MESSAGE_INPUT_PLAYERS, playNamesInputParser)
-            .map { name ->
-                Player.Guest(name = name, hitDecisionMaker = hitDecisionMaker, betMoney = readBetMoneyFor(name))
-            }.toPlayers()
+    override fun createPlayers(previousPlayers: Players<Player.Guest>?): Players<Player.Guest> {
+        val playerNames = previousPlayers?.map { it.name }
+            ?: ConsoleReader.read(MESSAGE_INPUT_PLAYERS, playNamesInputParser)
+
+        return playerNames.map { name ->
+            Player.Guest(name = name, hitDecisionMaker = hitDecisionMaker, betMoney = readBetMoneyFor(name))
+        }.toPlayers()
+    }
 
     private fun readBetMoneyFor(name: String): Int =
         ConsoleReader.read("${name}의 배팅 금액은?", betMoneyInputParser)
