@@ -13,4 +13,9 @@ class CardDeckTest : FreeSpec({
         takeCards.add(CardDeck.hit())
         takeCards.size() shouldBe 3
     }
+
+    "시작 시 랜덤하게 카드 두개를 가져온다" {
+        takeCards = CardDeck.start()
+        takeCards.size() shouldBe 2
+    }
 })
