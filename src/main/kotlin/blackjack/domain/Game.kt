@@ -8,7 +8,7 @@ class Game(
         get() = GameStatus(dealer, players)
 
     fun drawPlayerCard(interaction: PlayerInteraction) {
-        players.forEach { processPlayer(it, interaction) }
+        players.forEach { drawCardByPlayer(it, interaction) }
     }
 
     fun drawDealerCard(): Int {
@@ -22,7 +22,7 @@ class Game(
         return drawCount
     }
 
-    private tailrec fun processPlayer(player: Player, interaction: PlayerInteraction) {
+    private tailrec fun drawCardByPlayer(player: Player, interaction: PlayerInteraction) {
         if (!player.canDrawCard) {
             return
         }
@@ -31,7 +31,7 @@ class Game(
         if (shouldGiveCard) {
             dealer.giveCard(player)
             interaction.printStatus(player)
-            processPlayer(player, interaction)
+            drawCardByPlayer(player, interaction)
         }
     }
 
