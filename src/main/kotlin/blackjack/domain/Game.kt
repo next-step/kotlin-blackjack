@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.dto.GameParticipationRequest
+
 class Game(
     private val dealer: Dealer,
     private val players: List<Player>,
@@ -36,10 +38,10 @@ class Game(
     }
 
     companion object {
-        fun start(playerNames: List<String>): Game {
+        fun start(requests: List<GameParticipationRequest>): Game {
             val deck = Deck.shuffled()
             val dealer = Dealer(deck)
-            val players = dealer.startGame(playerNames)
+            val players = dealer.prepareGame(requests)
 
             return Game(dealer, players)
         }

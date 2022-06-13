@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.dto.GameParticipationRequest
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -18,7 +19,7 @@ class DealerTest : FreeSpec({
 
     "참가자 이름을 받아 카드 2장을 가진 참가자를 생성하고 본인도 2장을 가진다" {
         val dealer = createDealer()
-        val (player) = dealer.startGame(listOf("user"))
+        val (player) = dealer.prepareGame(listOf(GameParticipationRequest("user", Bet.EMPTY_BET)))
 
         player.name shouldBe "user"
         player.hand shouldBe Hand(
@@ -34,6 +35,13 @@ class DealerTest : FreeSpec({
                 Card(Suite.HEARTS, Denomination.FOUR),
             )
         )
+    }
+
+    "배팅금액을 가진 참가자를 생성한다" {
+        val dealer = createDealer()
+        val (player) = dealer.prepareGame(listOf(GameParticipationRequest("user", Bet(1000))))
+
+        player.hand.betAmount shouldBe 1000
     }
 })
 

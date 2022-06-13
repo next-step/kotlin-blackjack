@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.dto.GameParticipationRequest
+
 class Dealer(private val deck: Deck) : Player("딜러") {
 
     val shouldDraw: Boolean
@@ -9,11 +11,12 @@ class Dealer(private val deck: Deck) : Player("딜러") {
         player.addCard(deck.draw())
     }
 
-    fun startGame(names: List<String>): List<Player> {
+    fun prepareGame(requests: List<GameParticipationRequest>): List<Player> {
         repeat(INIT_CARD_COUNT) { drawSelf() }
 
-        return names.map { playerName ->
-            Player(playerName).also { player -> repeat(INIT_CARD_COUNT) { giveCard(player) } }
+        return requests.map {
+            Player(it.name, Hand(emptyList(), it.bet))
+                .also { player -> repeat(INIT_CARD_COUNT) { giveCard(player) } }
         }
     }
 
