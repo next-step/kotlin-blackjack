@@ -48,8 +48,13 @@ internal class PlayerRecordsTest {
         ).calculate()
 
         // then
+        val expectedPlayerAEarn = playerA.betMoney
+        val expectedPlayerBEarn = playerB.betMoney
+        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
+
         val expectedDealerRecord =
-            PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0, earnMoney = -defBetMoney)
+            PlayerRecord.DealerRecord(dealer, win = 1, lose = 2, draw = 0, earnMoney = expectedDealerEarn)
 
         assertThat(playerRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord)
     }
@@ -86,8 +91,11 @@ internal class PlayerRecordsTest {
         // then
         val expectedWinCount = 1
         val expectedLoseCount = 2
-        val expectedDealerEarn =
-            expectedWinCount * defBetMoney - (defBetMoney * 0.5f).toInt() - defBetMoney * expectedLoseCount
+
+        val expectedPlayerAEarn = (playerA.betMoney * RecordCalculator.REWARD_RATIO_OF_BLACK_JACK).toInt()
+        val expectedPlayerBEarn = playerB.betMoney
+        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
             PlayerRecord.DealerRecord(
@@ -99,7 +107,9 @@ internal class PlayerRecordsTest {
 
         assertAll(
             { assertThat(actualRecords.find { it.player is Player.Dealer }).isEqualTo(expectedDealerRecord) },
-            { assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo((playerA.betMoney * 1.5f).toInt()) },
+            {
+                assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn)
+            },
             { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
             { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
         )

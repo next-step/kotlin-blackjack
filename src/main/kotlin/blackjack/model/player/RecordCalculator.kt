@@ -41,7 +41,10 @@ class RecordCalculator(
                 if (dealerState is State.BlackJack) {
                     PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
                 } else {
-                    PlayerRecord.GuestWin(player = guest, earnMoney = (guestBetMoney * 1.5f).toInt())
+                    PlayerRecord.GuestWin(
+                        player = guest,
+                        earnMoney = (guestBetMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
+                    )
                 }
             guestState.finalScore > dealerState.finalScore -> PlayerRecord.GuestWin(
                 player = guest,
@@ -53,5 +56,9 @@ class RecordCalculator(
             )
             else -> PlayerRecord.GuestDraw(player = guest, earnMoney = 0)
         }
+    }
+
+    companion object {
+        const val REWARD_RATIO_OF_BLACK_JACK = 1.5
     }
 }
