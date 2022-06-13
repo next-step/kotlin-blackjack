@@ -1,7 +1,7 @@
 package blackjack.domain
 
-data class Cards(
-    private val cards: List<Card> = emptyList()
+class Cards(
+    cards: List<Card> = emptyList()
 ) {
     val playerCards: List<Card>
         get() = _playerCards.toList()
@@ -25,7 +25,7 @@ data class Cards(
     }
 
     private fun compareContainedAceScore(score: Int): Int {
-        return if (score < BIG_VALUE_OF_ACE) {
+        return if (score <= BIG_VALUE_OF_ACE) {
             score + (BIG_VALUE_OF_ACE - Card.Denomination.ACE.point)
         } else {
             score

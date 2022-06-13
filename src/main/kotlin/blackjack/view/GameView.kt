@@ -2,37 +2,42 @@ package blackjack.view
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.GameResult
 import blackjack.domain.Participant
 
 object GameView {
-    fun giveCard(participants: BlackJackGame) {
-        participants.players.joinToString { it.name }.also {
+    fun drawFirstCardDistribution(participants: BlackJackGame) {
+        participants.participants.joinToString { it.name }.also {
             println("${it}에게 2장을 나눠주었습니다.")
         }
     }
 
     fun displayInitialCard(participants: BlackJackGame) {
-        participants.players.forEach {
+        participants.participants.forEach {
             println("${it.name}카드 : ${getCardDisplayName(it)}")
         }
     }
 
-    fun displayPlayerCard(participant: Participant) {
-        participant.also {
-            println("${it.name}카드 : ${getCardDisplayName(it)}")
+    fun printDrawResult(participant: Participant) {
+        if (participant !is Dealer) {
+            println("${participant.name}카드 : ${getCardDisplayName(participant)}")
+        } else {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         }
     }
 
-    fun displayResult(participants: BlackJackGame) {
-        participants.players.forEach {
+    fun displayResult(gameResult: GameResult) {
+        println()
+        gameResult.allParticipant.forEach {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
-            println("결과 : ${it.cards.score()}")
+            println("결과 : ${it.playerCards.score()}")
         }
     }
 
     private fun getCardDisplayName(player: Participant): String {
-        return player.cards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
+        return player.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
     }
 
     private fun Card.CardPattern.toDisplayName(): String {
