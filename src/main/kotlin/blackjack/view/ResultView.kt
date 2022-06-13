@@ -18,15 +18,6 @@ class ResultView {
         }
     }
 
-    fun printCardsByPlayer(player: Player, withScore: Boolean) {
-        if (withScore) {
-            println("${player.name}카드: ${player.receivedCards.getCardDescription()} - 결과: ${player.score}")
-            return
-        }
-
-        println("${player.name}카드: ${player.receivedCards.getCardDescription()}")
-    }
-
     fun printFinalResult(blackJackGamer: List<Player>) {
         val dealer = blackJackGamer.filterIsInstance<Dealer>().first()
         val players = blackJackGamer.filter { it !is Dealer }
@@ -35,6 +26,15 @@ class ResultView {
         println("## 최종 수익")
         println(getDealerResult(dealer, players))
         println(getPlayerResult(players))
+    }
+
+    private fun printCardsByPlayer(player: Player, withScore: Boolean) {
+        if (withScore) {
+            println("${player.name}카드: ${player.receivedCards.getCardDescription()} - 결과: ${player.score}")
+            return
+        }
+
+        println("${player.name}카드: ${player.receivedCards.getCardDescription()}")
     }
 
     private fun getDealerResult(dealer: Dealer, player: List<Player>): String {
