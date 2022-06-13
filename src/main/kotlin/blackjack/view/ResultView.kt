@@ -12,6 +12,6 @@ object ResultView {
     }
 
     fun printResult(player: Player) {
-        println("${player.cards.asText()} : ${player.score()}")
+        println("${player.name} : ${player.cards.asText()} : ${player.score()}")
     }
 }

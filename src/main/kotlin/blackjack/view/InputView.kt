@@ -51,8 +51,8 @@ object InputView {
 
             if (answer.isApprove()) {
                 deckFunc().apply {
-                    println("${name}카드 : ${this.fullName}")
                     player.addCard(this)
+                    println("${name}카드 : ${this.fullName}, Score : ${player.score()}")
                 }
             }
 
