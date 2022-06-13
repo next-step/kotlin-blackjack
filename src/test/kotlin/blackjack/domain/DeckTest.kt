@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-internal class DeckTest {
+class DeckTest {
 
     @Test
     fun `Deck 은 52개의 카드로 구성되어야 한다`() {

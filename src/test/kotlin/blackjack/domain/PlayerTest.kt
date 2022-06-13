@@ -3,7 +3,7 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class PlayerTest {
+class PlayerTest {
 
     @Test
     fun `플레이어는 이름과 카드 정보를 갖는다`() {
