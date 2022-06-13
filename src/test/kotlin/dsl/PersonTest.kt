@@ -39,9 +39,11 @@ class PersonTest {
         }
 
         // then
-        assertEquals(person.skills[0], Skill.Soft("Good communication skills"))
-        assertEquals(person.skills[1], Skill.Soft("Documentation"))
-        assertEquals(person.skills[2], Skill.Hard("Programming"))
+        val (skill1, skill2, skill3) = person.skills.skills
+
+        assertEquals(skill1, Skill.Soft("Good communication skills"))
+        assertEquals(skill2, Skill.Soft("Documentation"))
+        assertEquals(skill3, Skill.Hard("Programming"))
     }
 
     @Test
@@ -55,8 +57,10 @@ class PersonTest {
         }
 
         // then
-        assertEquals(person.languages[0], Language("Korean", 5))
-        assertEquals(person.languages[1], Language("English", 3))
+        val (language1, language2) = person.languages.languages
+
+        assertEquals(language1, Language("Korean", 5))
+        assertEquals(language2, Language("English", 3))
     }
 
     @Test
@@ -80,12 +84,16 @@ class PersonTest {
         assertEquals(person.name, "유인근")
         assertEquals(person.company, "카카오")
 
-        assertEquals(person.skills[0], Skill.Soft("Good communication skills"))
-        assertEquals(person.skills[1], Skill.Soft("Documentation"))
-        assertEquals(person.skills[2], Skill.Hard("Programming"))
+        val (skill1, skill2, skill3) = person.skills.skills
 
-        assertEquals(person.languages[0], Language("Korean", 5))
-        assertEquals(person.languages[1], Language("English", 3))
+        assertEquals(skill1, Skill.Soft("Good communication skills"))
+        assertEquals(skill2, Skill.Soft("Documentation"))
+        assertEquals(skill3, Skill.Hard("Programming"))
+
+        val (language1, language2) = person.languages.languages
+
+        assertEquals(language1, Language("Korean", 5))
+        assertEquals(language2, Language("English", 3))
     }
 
     private fun introduce(block: PersonBuilder.() -> Unit): Person {
