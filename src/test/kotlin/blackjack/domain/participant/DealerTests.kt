@@ -6,7 +6,9 @@ import blackjack.domain.card.Denomination.FIVE
 import blackjack.domain.card.Denomination.KING
 import blackjack.domain.card.Denomination.SEVEN
 import blackjack.domain.card.Denomination.SIX
+import blackjack.domain.card.Denomination.THREE
 import blackjack.domain.card.Denomination.TWO
+import blackjack.domain.card.Point
 import blackjack.domain.card.Suit.DIAMOND
 import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
@@ -15,6 +17,7 @@ import blackjack.domain.hand
 import blackjack.domain.to
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
@@ -55,12 +58,34 @@ class DealerTests : DescribeSpec({
                 dealer.receive(Card(TWO, HEART))
                 dealer.state shouldBe Stay(dealer.point())
             }
+            it("카드 패의 점수가 16 이하라면 `Hittable` 상태를 유지한다") {
+                val hand = hand(KING to SPADE, TWO to DIAMOND)
+                val dealer = Dealer(hand = hand)
+                dealer.receive(Card(THREE, HEART))
+                dealer.state shouldBe Hittable
+            }
         }
 
         it("카드 패를 공개할 때 첫번째 카드만 공개한다") {
             val hand = hand(KING to SPADE, SIX to DIAMOND)
             val dealer = Dealer(hand = hand)
             dealer.open() shouldBeEqualToComparingFields hand(KING to SPADE)
+        }
+
+        context("Hittable 상태라면") {
+            it("블랙잭을 계속 진행할 수 있다") {
+                val dealer = Dealer(state = Hittable)
+                dealer.isPlayable() shouldBe true
+            }
+        }
+
+        context("Hittable 상태가 아니면") {
+            it("블랙잭을 계속 진행할 수 없다") {
+                listOf(Bust, BlackJack, Stay(Point(17))).forAll {
+                    val dealer = Dealer(state = it)
+                    dealer.isPlayable() shouldBe false
+                }
+            }
         }
     }
 })
