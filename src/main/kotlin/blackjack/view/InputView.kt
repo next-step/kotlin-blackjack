@@ -8,7 +8,10 @@ class InputView {
         println(INPUT_PLAYERS)
         val players = readln()
         println(players)
-        return players.trim().split(SEPARATE_DELIMITER)
+
+        val playerList = players.trim().split(SEPARATE_DELIMITER)
+        check(playerList.size * STARTING_CARDS <= MAX_CARDS)
+        return playerList
     }
 
     fun askThePlayer(player: String): Card? {
@@ -28,5 +31,8 @@ class InputView {
         private const val NO = "n"
 
         private const val SEPARATE_DELIMITER = ","
+
+        private const val STARTING_CARDS = 2
+        private const val MAX_CARDS = 52
     }
 }
