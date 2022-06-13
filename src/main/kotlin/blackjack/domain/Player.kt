@@ -7,4 +7,8 @@ class Player(val name: String) {
         deck = CardDeck.start()
         return this
     }
+
+    fun hit(card: Card) {
+        deck.add(card)
+    }
 }
