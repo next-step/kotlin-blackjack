@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.GameRule.INIT_DRAW_CARD_COUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.ScoreCalculator
 import blackjack.domain.asText
 
 object ResultView {
@@ -13,6 +12,6 @@ object ResultView {
     }
 
     fun printResult(player: Player) {
-        println("${player.cards.asText()} : ${ScoreCalculator.calculate(player.cards)}")
+        println("${player.cards.asText()} : ${player.score()}")
     }
 }

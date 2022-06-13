@@ -1,12 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.Card
+import blackjack.domain.*
 import blackjack.domain.GameRule.INIT_DRAW_CARD_COUNT
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.domain.asText
-import blackjack.domain.toPlayers
-import java.util.Locale
+import java.util.*
 
 object InputView {
     private const val PLAYER_DELIMITER = ","
@@ -47,9 +43,8 @@ object InputView {
         println("${player.name}카드: ${player.cards.asText()}")
     }
 
-    fun askGetCard(name: String, deckFunc: () -> Card): List<Card> {
-        val list: MutableList<Card> = mutableListOf()
-
+    fun shareAnotherCard(player: Player, deckFunc: () -> Card) {
+        val name = player.name
         do {
             println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val answer = Answer.of(readln())
@@ -57,11 +52,10 @@ object InputView {
             if (answer.isApprove()) {
                 deckFunc().apply {
                     println("${name}카드 : ${this.fullName}")
-                    list.add(this)
+                    player.addCard(this)
                 }
             }
-        } while (answer.isApprove())
 
-        return list
+        } while (answer.isApprove() && player.canReceive)
     }
 }

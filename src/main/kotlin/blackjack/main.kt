@@ -16,11 +16,7 @@ fun main() {
     }
 
     players.players.forEach {
-        val newCard = InputView.askGetCard(it.name) { deck.draw() }
-
-        if (newCard.isNotEmpty()) {
-            it.addCard(newCard)
-        }
+        InputView.shareAnotherCard(it) { deck.draw() }
     }
 
     players.players.forEach {
