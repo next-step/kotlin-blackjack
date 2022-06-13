@@ -35,24 +35,34 @@ class RecordCalculator(
         val guestCardCount = guest.cardCount
 
         return when {
-            dealerState is State.Bust -> PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
-            guestState is State.Bust -> PlayerRecord.GuestLose(player = guest)
-            guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer ->
-                if (dealerState is State.BlackJack) {
-                    PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
-                } else {
-                    PlayerRecord.GuestWin(
-                        player = guest,
-                        earnMoney = (guestBetMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
-                    )
-                }
-            guestState.finalScore > dealerState.finalScore -> PlayerRecord.GuestWin(
-                player = guest,
-                earnMoney = guestBetMoney
-            )
-            guestState.finalScore < dealerState.finalScore -> PlayerRecord.GuestLose(player = guest)
-            else -> PlayerRecord.GuestDraw(player = guest)
+            dealerState is State.Bust -> {
+                PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
+            }
+            guestState is State.Bust -> {
+                PlayerRecord.GuestLose(player = guest)
+            }
+            guestState is State.BlackJack && guestCardCount == initialCardCountForEachPlayer -> {
+                createGuestRecordWhenGuestBlackJack(dealerState = dealerState, guest = guest)
+            }
+            guestState.finalScore > dealerState.finalScore -> {
+                PlayerRecord.GuestWin(player = guest, earnMoney = guestBetMoney)
+            }
+            guestState.finalScore < dealerState.finalScore -> {
+                PlayerRecord.GuestLose(player = guest)
+            }
+            else -> {
+                PlayerRecord.GuestDraw(player = guest)
+            }
         }
+    }
+
+    private fun createGuestRecordWhenGuestBlackJack(dealerState: State, guest: Player.Guest): PlayerRecord {
+        require(guest.state is State.BlackJack)
+        val guestEarnMoney = if (dealerState is State.BlackJack)
+            guest.betMoney
+        else
+            (guest.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
+        return PlayerRecord.GuestWin(player = guest, earnMoney = guestEarnMoney)
     }
 
     companion object {
