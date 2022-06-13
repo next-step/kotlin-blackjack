@@ -6,4 +6,8 @@ object CardDeck {
             Card(pattern, number)
         }
     }.shuffled().toMutableList()
+
+    fun hit(): Card {
+        return decks.removeFirst()
+    }
 }
