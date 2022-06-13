@@ -8,14 +8,23 @@ import blackjack.domain.result.DealerResult
 import blackjack.domain.result.PlayerResult
 
 class BlackJack(
-    private val dealer: Dealer,
-    private val participants: List<Participant>
+    val dealer: Dealer,
+    val participants: List<Participant>
 ) {
 
     init {
         require(participants.size in PLAYER_RANGE) {
             "블랙잭을 진행하기 위한 인원은 ${PLAYER_RANGE.first} ~ ${PLAYER_RANGE.last} 명입니다. 현재 인원 = ${participants.size}"
         }
+    }
+
+    fun distribute() {
+        participants.forEach { participant ->
+            participant.receive(dealer.draw())
+            participant.receive(dealer.draw())
+        }
+        dealer.receive(dealer.draw())
+        dealer.receive(dealer.draw())
     }
 
     fun matching(): BlackJackResult {

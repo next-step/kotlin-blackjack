@@ -13,7 +13,10 @@ fun main() {
     val dealer = Dealer()
     val participants = participate()
 
-    distribute(dealer, participants)
+    val blackjack = BlackJack(dealer, participants)
+
+    blackjack.distribute()
+    PlayingView.showDistribution(dealer, participants)
 
     deal(dealer, participants)
 
@@ -56,14 +59,4 @@ private fun participate(): List<Participant> {
         .map { name ->
             Player(name)
         }
-}
-
-private fun distribute(dealer: Dealer, participants: List<Participant>) {
-    participants.forEach { participant ->
-        participant.receive(dealer.draw())
-        participant.receive(dealer.draw())
-    }
-    dealer.receive(dealer.draw())
-    dealer.receive(dealer.draw())
-    PlayingView.showDistribution(dealer, participants)
 }
