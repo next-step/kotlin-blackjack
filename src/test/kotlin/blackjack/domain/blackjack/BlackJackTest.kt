@@ -49,7 +49,7 @@ class BlackJackTest : DescribeSpec({
         }
     }
 
-    describe("giveCard") {
+    describe("play") {
         context("카드를 추가할 수 있는 참가자가 주어지면") {
             it("카드를 지급한다") {
                 val yohan = Player(name = "yohan")
@@ -57,7 +57,7 @@ class BlackJackTest : DescribeSpec({
                     players = Players(listOf(yohan))
                 )
 
-                blackJack.giveCard(yohan)
+                blackJack.play(yohan)
 
                 yohan.cards.cards.size shouldBe 3
             }
@@ -69,7 +69,7 @@ class BlackJackTest : DescribeSpec({
                 val blackJack = BlackJack(players = Players(listOf(target, Player("pang"))))
                 target.changeStatus(PlayerStatus.STAY)
 
-                shouldThrow<IllegalArgumentException> { blackJack.giveCard(target) }
+                shouldThrow<IllegalArgumentException> { blackJack.play(target) }
             }
         }
     }

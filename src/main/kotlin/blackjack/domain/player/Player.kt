@@ -6,7 +6,7 @@ import blackjack.domain.score.CardScore
 class Player(
     name: String,
     cards: Cards = Cards.empty(),
-    private var playerStatus: PlayerStatus = PlayerStatus.HIT
+    var playerStatus: PlayerStatus = PlayerStatus.HIT
 ) : Participant(name, cards) {
 
     override fun isEnd(): Boolean {

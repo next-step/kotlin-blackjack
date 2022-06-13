@@ -2,6 +2,7 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import blackjack.domain.player.Players
 
 class BlackJack(
@@ -17,10 +18,12 @@ class BlackJack(
         return players.isEnd() && dealer.isEnd()
     }
 
-    fun giveCard(player: Player) {
+    fun play(player: Player) {
         require(player in players) { "존재하지 않는 참가자입니다" }
 
-        dealer.giveCard(player)
+        if (player.playerStatus == PlayerStatus.HIT) {
+            dealer.giveCard(player)
+        }
     }
 
     fun playDealer() {
