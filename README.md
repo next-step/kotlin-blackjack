@@ -38,10 +38,10 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 * git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가한다.
 
 ### 상세 구현 사항
-[] 이름 입력받기
-    [] 입력받은 값이 empty인 경우 IllegalArgumentException 발생
-    [] 쉼표로 입력받은 이름 입력받기
-    [] 이름이 2개 미만인 경우 IllegalArgumentException 발생
+[x] 이름 입력받기
+    [x] 입력받은 값이 empty인 경우 IllegalArgumentException 발생
+    [x] 쉼표로 입력받은 이름 나누기
+    [x] 이름이 2개 미만인 경우 IllegalArgumentException 발생
 [] 랜덤한 카드 나누어주기
     [] 나누어 주는 카드는 중복될 수 없다.
 [] 추가로 카드 받기
