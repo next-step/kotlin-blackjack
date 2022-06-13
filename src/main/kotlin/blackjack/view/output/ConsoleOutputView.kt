@@ -82,24 +82,5 @@ class ConsoleOutputView : OutputView {
 
         private val PlayerRecord.earnMoneyString: String
             get() = this.earnMoney.toString()
-
-        private fun PlayerRecord.toWinLoseDrawString(): String = when (this) {
-            is PlayerRecord.GuestWin -> ("승")
-            is PlayerRecord.GuestLose -> ("패")
-            is PlayerRecord.GuestDraw -> ("무")
-            is PlayerRecord.DealerRecord -> buildString {
-                val record = this@toWinLoseDrawString
-
-                if (record.win != 0) {
-                    this.append("${record.win}승 ")
-                }
-                if (record.lose != 0) {
-                    this.append("${record.lose}패 ")
-                }
-                if (record.draw != 0) {
-                    this.append("${record.draw}무 ")
-                }
-            }
-        }
     }
 }
