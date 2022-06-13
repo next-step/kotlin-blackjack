@@ -1,7 +1,5 @@
-import dsl.Language
-import dsl.Person
-import dsl.Skill
-import dsl.introduce
+package dsl
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
