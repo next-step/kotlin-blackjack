@@ -1,10 +1,25 @@
 package blackjack.domain
 
+import kotlin.math.roundToInt
+
 class GameResult(
     private val dealer: Dealer,
     players: List<Participant>
 ) {
     val allParticipant = listOf(dealer) + players
+
+    fun matchParticipantsIsBlackJack(participant: Participant) {
+        when {
+            participant.isBlackJack && dealer.isBlackJack -> {
+                participant.appendEarnAmount(participant.battingAmount)
+                dealer.appendEarnAmount(-participant.battingAmount)
+            }
+            participant.isBlackJack && !dealer.isBlackJack -> {
+                participant.appendEarnAmount((participant.battingAmount.toDouble() * 1.5).roundToInt())
+                dealer.appendEarnAmount(-(participant.battingAmount.toDouble() * 0.5).roundToInt())
+            }
+        }
+    }
 
     fun matchWithPlayer(participant: Participant) {
         when {
@@ -15,28 +30,27 @@ class GameResult(
     }
 
     fun playerIsBust(participant: Participant) {
-        participant.gameScore.lose()
-        dealer.gameScore.win()
+        participant.appendEarnAmount(-participant.battingAmount)
+        dealer.appendEarnAmount(participant.battingAmount)
     }
 
     fun dealerIsBust(participant: Participant) {
-        participant.gameScore.win()
-        dealer.gameScore.lose()
+        participant.appendEarnAmount(participant.battingAmount)
+        dealer.appendEarnAmount(-participant.battingAmount)
     }
 
     fun decideWinner(player: Participant) {
         when {
             player.playerCards.score() < dealer.playerCards.score() -> {
-                player.gameScore.lose()
-                dealer.gameScore.win()
+                player.appendEarnAmount(-player.battingAmount)
+                dealer.appendEarnAmount(player.battingAmount)
             }
             player.playerCards.score() == dealer.playerCards.score() -> {
-                player.gameScore.draw()
-                dealer.gameScore.draw()
+                player.appendEarnAmount(player.battingAmount)
             }
             else -> {
-                player.gameScore.win()
-                dealer.gameScore.lose()
+                player.appendEarnAmount(player.battingAmount)
+                dealer.appendEarnAmount(-player.battingAmount)
             }
         }
     }

@@ -23,6 +23,9 @@ data class BlackJackGame(
     fun match(): GameResult {
         val gameResult = GameResult(dealer, players)
         players.forEach {
+            gameResult.matchParticipantsIsBlackJack(it)
+        }
+        players.filter { !it.isBlackJack }.forEach {
             gameResult.matchWithPlayer(it)
         }
         return gameResult
@@ -32,6 +35,7 @@ data class BlackJackGame(
         repeat(FIRST_DISTRIBUTION_CARD_COUNT) {
             addCard(cardDeck.draw())
         }
+        setFirstDistributionBlackJack()
     }
 
     companion object {
