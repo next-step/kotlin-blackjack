@@ -40,9 +40,7 @@ class WinnerJudge(private val players: List<Player>) {
     }
 
     private fun conditionOfFirstBlackJack(player: Player, dealer: Dealer): Boolean {
-        return player.receivedCards.count() == CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY
-                && player.isBlackJack()
-                && !dealer.isBlackJack()
+        return player.receivedCards.count() == CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY && player.isBlackJack() && !dealer.isBlackJack()
     }
 
     private fun adjustLossBattingAmount(gamer: Player) {

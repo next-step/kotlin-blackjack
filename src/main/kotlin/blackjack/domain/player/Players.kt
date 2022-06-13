@@ -13,10 +13,6 @@ class Players(playerNames: List<String>, cardDeck: CardDeck) {
             .toMutableList()
     }
 
-    private fun playersToPlay(): List<Player> {
-        return players.filter { it.canMoreGame() }
-    }
-
     fun play(
         cardDeck: CardDeck,
         takeMorePlayer: TakeMorePlayerStrategy,
@@ -25,6 +21,10 @@ class Players(playerNames: List<String>, cardDeck: CardDeck) {
         playersToPlay().forEach {
             playByPlayer(it, cardDeck, takeMorePlayer, cardsByPlayerView)
         }
+    }
+
+    private fun playersToPlay(): List<Player> {
+        return players.filter { it.canMoreGame() }
     }
 
     private fun playByPlayer(

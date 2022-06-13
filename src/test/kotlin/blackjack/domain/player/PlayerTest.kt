@@ -19,6 +19,16 @@ class PlayerTest {
     }
 
     @Test
+    fun `블랙잭 게임을 2인이 조인했을 때 인원 수 체크`() {
+        val cardDeck = CardDeck()
+        val dealer = Dealer(cardDeck)
+        val players = Players(listOf("A", "B"), cardDeck)
+        val blackJackGamer = players.players + dealer
+
+        assertThat(blackJackGamer).hasSize(3)
+    }
+
+    @Test
     fun `게임을 더 할 수 있는(기본(10)=10) 경우에 대한 테스트`() {
         val receivedCards = ReceivedCards(
             mutableSetOf(
@@ -29,7 +39,6 @@ class PlayerTest {
             _name = "name",
             _receivedCards = receivedCards
         )
-
 
         assertThat(player.score).isEqualTo(10)
         assertThat(player.canMoreGame()).isTrue

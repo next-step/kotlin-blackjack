@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.domain.player.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,5 +19,14 @@ class CardDeckTest {
 
         assertThat(cardDeck.getCurrentCardSize()).isEqualTo(51)
         assertThat(cardDeck.isContains(pickedCard)).isFalse
+    }
+
+    @Test
+    fun `블랙잭 게임을 2인이 조인했을 때 초기 카드 갯수 체크`() {
+        val cardDeck = CardDeck()
+        val players = Players(listOf("A", "B"), cardDeck)
+
+        assertThat(players.players[0].receivedCards.count()).isEqualTo(2)
+        assertThat(players.players[1].receivedCards.count()).isEqualTo(2)
     }
 }
