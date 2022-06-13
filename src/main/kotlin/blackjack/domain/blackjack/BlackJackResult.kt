@@ -12,10 +12,12 @@ data class BlackJackResult(
 ) {
     companion object {
         fun of(players: List<Player>, dealer: Dealer): BlackJackResult {
-            val matchByPlayer = players.associateWith { !dealer.match(it) }
-            val playerResults = matchByPlayer.entries
-                .map { PlayerResult.of(it.key, it.value) }
-            val dealerResult = DealerResult.of(dealer, matchByPlayer.values.map { !it })
+            val dealerMatchByPlayer = players.associateWith { dealer.match(it) }
+            val playerResults = dealerMatchByPlayer.entries.map {
+                val (player, dealerMatch) = it
+                PlayerResult.of(player, !dealerMatch)
+            }
+            val dealerResult = DealerResult.of(dealer, dealerMatchByPlayer.values.toList())
             return BlackJackResult(playerResults, dealerResult)
         }
     }
