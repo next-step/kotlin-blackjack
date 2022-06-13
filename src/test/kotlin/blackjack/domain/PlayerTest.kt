@@ -30,4 +30,15 @@ class PlayerTest : FreeSpec({
         player.hit(heartQ)
         player.takeOrBust(dia7) shouldBe PlayerState.BUST
     }
+
+    "갖고있는 카드들의 합을 구할 수 있다." {
+        player.getScore() shouldBe 16
+    }
+
+    "갖고있는 카드에 ACE 가 포함되어 있으면 1, 11중 하나를 사용해 21을 넘지 않는 큰 수를 합으로 구한다." {
+        val withAcePlayer = Player("ace")
+        withAcePlayer.hit(cloverA)
+        withAcePlayer.hit(heartQ)
+        withAcePlayer.getScore() shouldBe 21
+    }
 })
