@@ -20,7 +20,7 @@ internal class GameTest : FreeSpec({
         )
         val game = Game.byPlayers(blackjackPlayer, bustPlayer)
 
-        game.processPlayers(StubPlayerInteraction(true))
+        game.drawPlayerCard(StubPlayerInteraction(true))
 
         game.status.players.map { it.hand.count } shouldBe listOf(2, 3)
     }
@@ -33,7 +33,7 @@ internal class GameTest : FreeSpec({
         )
         val game = Game.byPlayers(player)
 
-        game.processPlayers(StubPlayerInteraction(false))
+        game.drawPlayerCard(StubPlayerInteraction(false))
 
         game.status.players.first().hand.count shouldBe 2
     }
@@ -46,7 +46,7 @@ internal class GameTest : FreeSpec({
         )
         val game = Game.byPlayers(player)
 
-        game.processPlayers(StubPlayerInteraction(true))
+        game.drawPlayerCard(StubPlayerInteraction(true))
 
         game.status.players.first().hand.count shouldBeGreaterThan 2
     }
@@ -59,7 +59,7 @@ internal class GameTest : FreeSpec({
             Card(Suite.HEARTS, Denomination.ACE), // 19
         )
 
-        game.processDealer()
+        game.drawDealerCard()
 
         game.status.dealer.hand.count shouldBe 4
     }

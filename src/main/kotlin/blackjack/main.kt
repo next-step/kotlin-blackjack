@@ -18,9 +18,9 @@ fun main() {
     PlayerView(console).printPlayers(game.status)
 
     val playerGameView = PlayerGameView(console)
-    game.processPlayers(playerGameView)
+    game.drawPlayerCard(playerGameView)
 
-    val drawCount = game.processDealer()
+    val drawCount = game.drawDealerCard()
     DealerGameView(console).printDealerDrawCount(drawCount)
 
     ResultView(console).printGameResult(game.status)

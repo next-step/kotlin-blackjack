@@ -7,11 +7,11 @@ class Game(
     val status: GameStatus
         get() = GameStatus(dealer, players)
 
-    fun processPlayers(interaction: PlayerInteraction) {
+    fun drawPlayerCard(interaction: PlayerInteraction) {
         players.forEach { processPlayer(it, interaction) }
     }
 
-    fun processDealer(): Int {
+    fun drawDealerCard(): Int {
         var drawCount = 0
 
         while (dealer.shouldDraw) {
