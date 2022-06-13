@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 
 abstract class Participant {
     abstract val name: String
+    abstract val money: Money
     val hand: Hand = Hand()
     var status: ParticipantStatus = ParticipantStatus.HIT
         private set

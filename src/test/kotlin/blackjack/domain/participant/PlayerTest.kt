@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.CardFixtures.CLUB_KING
+import blackjack.CardFixtures.MONEY
 import blackjack.CardFixtures.DIAMOND_ACE
 import blackjack.CardFixtures.HEART_SIX
 import blackjack.CardFixtures.HEART_TWO
@@ -20,7 +21,7 @@ internal class PlayerTest {
     @MethodSource("패의 합계가 21초과인 케이스")
     fun `플레이어는 패의 합계가 21을 초과하면 BUST 된다`(cards: Array<Card>) {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
 
         // when
         player.addCards(*cards)
@@ -33,7 +34,7 @@ internal class PlayerTest {
     @MethodSource("패의 합계가 21이하인 케이스")
     fun `플레이어는 카드의 점수가 21을 초과하지 않으면 BUST 되지 않는다`(cards: Array<Card>) {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
 
         // when
         player.addCards(*cards)
@@ -45,7 +46,7 @@ internal class PlayerTest {
     @Test
     fun `플레이어의 처음 두 장의 카드 합이 21일 경우 BLACKJACK 이다`() {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
 
         // when
         player.addCards(SPADE_TEN, DIAMOND_ACE)
@@ -57,7 +58,7 @@ internal class PlayerTest {
     @Test
     fun `플레이어의 처음 두 장의 카드 합이 21이 아닌 경우 BLACKJACK 이 아니다`() {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
 
         // when
         player.addCards(SPADE_TEN, CLUB_KING, DIAMOND_ACE)
@@ -69,11 +70,13 @@ internal class PlayerTest {
     @Test
     fun `플레이어는 베팅 금액을 정할 수 있다`() {
         // given
+        val batMoney = 10000
 
         // when
+        val player = Player("pug", Money(batMoney))
 
         // then
-        TODO()
+        assertThat(player.money.bat).isEqualTo(10000)
     }
 
     companion object {

@@ -3,7 +3,7 @@ package blackjack.domain.participant
 data class Money(
     val bat: Int,
 ) {
-    private var _profitPercentage: Int = 0
+    private var _profitPercentage: Int = DEFAULT_PROFIT_PERCENTAGE
     val profitPercentage: Int
         get() = _profitPercentage
 
@@ -17,5 +17,9 @@ data class Money(
 
     fun getFinalEarnings(): Int {
         return (bat * _profitPercentage * 0.01).toInt()
+    }
+
+    companion object {
+        private const val DEFAULT_PROFIT_PERCENTAGE = 100
     }
 }

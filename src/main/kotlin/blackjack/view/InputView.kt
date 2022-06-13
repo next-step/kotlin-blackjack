@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.participant.Money
 import blackjack.domain.participant.Player
 
 object InputView {
@@ -8,7 +9,11 @@ object InputView {
         val playerNames = requireNotNull(readlnOrNull())
 
         require(playerNames.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
-        return playerNames.split(PLAYER_INPUT_DELIMITER).map { Player(it) }
+        return playerNames.split(PLAYER_INPUT_DELIMITER).map { name ->
+            println("$name 의 베팅 금액은?")
+            val batMoney = requireNotNull(readlnOrNull()?.toIntOrNull()) { "잘못된 베팅 금액입니다." }
+            Player(name, Money(batMoney))
+        }
     }
 
     fun decidePlayerHitDecision(player: Player): Boolean {

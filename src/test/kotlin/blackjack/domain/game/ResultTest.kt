@@ -3,6 +3,7 @@ package blackjack.domain.game
 import blackjack.CardFixtures.CLUB_KING
 import blackjack.CardFixtures.DIAMOND_ACE
 import blackjack.CardFixtures.HEART_TWO
+import blackjack.CardFixtures.MONEY
 import blackjack.CardFixtures.SPADE_FIVE
 import blackjack.CardFixtures.SPADE_TEN
 import blackjack.domain.card.Card
@@ -21,7 +22,7 @@ internal class ResultTest {
     @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 높은 케이스")
     fun `플레이어가 가진 패의 합계가 21을 넘지 않으면서 딜러보다 높으면 플레이어가 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
         val dealer = Dealer()
         val result = Result(dealer, listOf(player))
 
@@ -40,7 +41,7 @@ internal class ResultTest {
     @MethodSource("플레이어 패의 합계가 21을 넘지 않고 딜러보다 낮은 케이스")
     fun `플레이어가 가진 패의 합계보다 딜러의 패의 합계가 높은 경우 플레이어가 패배한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
         val dealer = Dealer()
         val result = Result(dealer, listOf(player))
 
@@ -59,7 +60,7 @@ internal class ResultTest {
     @MethodSource("딜러가 가진 패의 합계가 21을 초과하는 케이스")
     fun `딜러가 가진 패의 합계가 21을 초과하면 플레이어는 가진 패에 상관없이 승리한다`(playerCards: Array<Card>, dealerCards: Array<Card>) {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
         val dealer = Dealer()
         val result = Result(dealer, listOf(player))
 
@@ -77,7 +78,7 @@ internal class ResultTest {
     @Test
     fun `딜러와 플레이어가 가진 패의 합계가 같은 경우 비긴다`() {
         // given
-        val player = Player("pug")
+        val player = Player("pug", MONEY)
         val dealer = Dealer()
         val result = Result(dealer, listOf(player))
 
