@@ -4,7 +4,7 @@ import blackjack.domain.Game
 import blackjack.view.Console
 import blackjack.view.DealerGameView
 import blackjack.view.PlayerGameView
-import blackjack.view.PlayerNameInputView
+import blackjack.view.PlayerInputView
 import blackjack.view.PlayerView
 import blackjack.view.ResultView
 import blackjack.view.WinnerView
@@ -12,7 +12,7 @@ import blackjack.view.WinnerView
 fun main() {
     val console = Console()
 
-    val playerNames = PlayerNameInputView(console).inputPlayerNames()
+    val playerNames = PlayerInputView(console).inputPlayerInfo()
     val game = Game.start(playerNames)
 
     PlayerView(console).printPlayers(game.status)
