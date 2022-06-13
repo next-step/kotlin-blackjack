@@ -2,17 +2,17 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Point
 
-sealed class State {
-    abstract fun compare(other: State): Match
+sealed interface State {
+    fun compare(other: State): Match
 }
 
-object Hittable : State() {
+object Hittable : State {
     override fun compare(other: State): Match {
         throw IllegalStateException("Hittable 상태는 다른 상태와 비교될 수 없습니다")
     }
 }
 
-object BlackJack : State() {
+object BlackJack : State {
     override fun compare(other: State): Match {
         return when (other) {
             is BlackJack -> Match.DRAW
@@ -23,7 +23,7 @@ object BlackJack : State() {
 
 data class Stay(
     val point: Point
-) : State() {
+) : State {
     override fun compare(other: State): Match {
         return when (other) {
             is BlackJack -> Match.LOSE
@@ -41,7 +41,7 @@ data class Stay(
     }
 }
 
-object Bust : State() {
+object Bust : State {
     override fun compare(other: State): Match {
         return when (other) {
             is Bust -> Match.DRAW
