@@ -17,4 +17,16 @@ internal class BlackjackDealerTest : FunSpec({
             it.handSize() shouldBe 2
         }
     }
+
+    test("플레이어에게 카드를 한 장 준다.") {
+        // given
+        val player = Player(name = "홍길동")
+        val sut = BlackjackDealer()
+
+        // when
+        val result = sut.sendCard(player)
+
+        // then
+        result.handSize() shouldBe 1
+    }
 })

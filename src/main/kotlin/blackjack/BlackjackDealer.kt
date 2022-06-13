@@ -14,4 +14,8 @@ class BlackjackDealer(private val deck: CardDeck = CardDeck.createDeck()) {
     fun shuffleCardDeck() {
         this.deck.shuffle()
     }
+
+    fun sendCard(player: Player): Player {
+        return player.addCardToHand(this.deck.draw())
+    }
 }
