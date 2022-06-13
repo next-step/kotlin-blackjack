@@ -11,4 +11,11 @@ class Player(val name: String) {
     fun hit(card: Card) {
         deck.add(card)
     }
+
+    fun takeOrBust(card: Card): PlayerState {
+        return if (deck.underTheBlackJack(card))
+            PlayerState.HIT
+        else
+            PlayerState.BUST
+    }
 }
