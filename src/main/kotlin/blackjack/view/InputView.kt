@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.exception.NotNumericException
 import blackjack.domain.player.Player
 
 class InputView {
@@ -24,6 +25,6 @@ class InputView {
     }
 
     private fun validateNotString(toCheck: String) {
-        checkNotNull(toCheck.toIntOrNull()) { "베팅을 위해서는 숫자를 입력하셔야 합니다." }
+        checkNotNull(toCheck.toIntOrNull()) { throw NotNumericException("베팅을 위해서는 숫자를 입력하셔야 합니다.") }
     }
 }
