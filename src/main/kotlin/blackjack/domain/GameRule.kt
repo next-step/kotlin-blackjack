@@ -1,7 +1,10 @@
 package blackjack.domain
 
-object GameRule {
-    const val INIT_DRAW_CARD_COUNT = 2
-    const val BLACKJACK_SCORE = 21
-    const val TOTAL_CARD_COUNT = 52
-}
+@JvmInline
+value class Blackjack(val score: Int = 21)
+
+@JvmInline
+value class InitDrawCard(val count: Int = 2)
+
+@JvmInline
+value class TotalCard(val count: Int = 52)

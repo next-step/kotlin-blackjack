@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.*
-import blackjack.domain.GameRule.INIT_DRAW_CARD_COUNT
 import java.util.*
 
 object InputView {
@@ -34,7 +33,7 @@ object InputView {
     }
 
     fun initDistributeCard(deckFunc: () -> Card): List<Card> {
-        return List(INIT_DRAW_CARD_COUNT) {
+        return List(InitDrawCard().count) {
             deckFunc()
         }
     }

@@ -1,16 +1,16 @@
 package blackjack.domain
 
-import blackjack.domain.GameRule.TOTAL_CARD_COUNT
-
 class Deck(
     cards: Set<Card> = CARD_LIST
 ) {
     private val _cards = cards.toMutableSet()
     val cards: Set<Card> get() = _cards.toSet()
 
+    private val totalCardCount = TotalCard().count
+
     init {
-        require(cards.size == TOTAL_CARD_COUNT) {
-            "카드는 ${TOTAL_CARD_COUNT}으로 구성되어야 합니다."
+        require(cards.size == totalCardCount) {
+            "카드는 ${totalCardCount}으로 구성되어야 합니다."
         }
     }
 

@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.GameRule.BLACKJACK_SCORE
-
 class Player(
     val name: String = "",
     cards: List<Card> = emptyList()
@@ -11,7 +9,7 @@ class Player(
     val cards: List<Card> get() = _cards.toList()
 
     val canReceive: Boolean
-        get() = score() < BLACKJACK_SCORE
+        get() = score() < Blackjack().score
 
     fun addCard(newCards: List<Card>) {
         _cards.addAll(newCards)
@@ -23,7 +21,7 @@ class Player(
 
 
     private fun aceScore(total: Int): Int {
-        return if (total + (Denomination.ACE.extraScore) <= GameRule.BLACKJACK_SCORE)
+        return if (total + (Denomination.ACE.extraScore) <= Blackjack().score)
             Denomination.ACE.extraScore
         else Denomination.ACE.score
     }
