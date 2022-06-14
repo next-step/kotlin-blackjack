@@ -59,3 +59,17 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [x] 플레이어의 현재 정보 (이름, 카드 정보 등) 을 프린트 할 수 있다 (OutputView)
 - [x] 사용자가 카드를 더 받을지 안 받을지 입력받을 수 있다 (InputView)
    - [x] y 또는 n 가 아닐 경우 유효한 값을 받을 때까지 입력하도록 유도한다 
+
+## 리뷰 반영
+- [x] CardSuit 와 Card 의 이름을 가져오는 CardName 생성
+- [x] CardTotalTest 에서 상수로 검증하도록 변경
+- [x] isAboveTwentyOne 을 isBusted 로 변경
+- [x] isBlackjack 제거
+- [ ] 점수를 계산할 때 ace가 있고 isBusted가 아닐경우 bonus 를 더하는 식으로 변경
+- [x] Cards.getAll 메소드 리팩토링
+- [x] CardDeck 생성자에 총 52장의 중복된 카드가 없다는 검증 진행하기
+- [x] 하나 이상의 element 를 가지는 List 생성
+- [x] object 을 비교할 때에는 isEqualTo 사용하기
+- [x] Blackjack은 InputView, Outputview 에 의존하지 않도록 변경
+- [ ] PlayerState 에 isPlaying 필드 추가
+- [ ] 테스트 간결하게 리팩토링
