@@ -47,7 +47,7 @@ class BlackjackApplication {
     }
 
     private fun playerIsHit(participant: Participant): Boolean {
-        return if (participant.playerCards.isBust()) {
+        return if (participant.isBust()) {
             false
         } else {
             InputView.needMoreCard(participant)

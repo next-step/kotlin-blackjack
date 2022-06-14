@@ -24,6 +24,10 @@ open class Participant(
             playerCards.score() == BLACK_JACK_SCORE && this.playerCards.playerCards.size == FIRST_DISTRIBUTION_CARD_COUNT
     }
 
+    open fun isBust(): Boolean {
+        return this.playerCards.isBust()
+    }
+
     open fun battingMoney(amount: Int) {
         this._battingAmount = amount
     }
