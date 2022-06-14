@@ -10,7 +10,7 @@ object Blackjack {
     private const val numberOfStartingCards = 2
 
     fun play() {
-        val players: List<Player> = InputView.getPlayerNames().toPlayers()
+        val players: List<Player> = InputView.getPlayerNames().list.toPlayers()
         val deck = CardDeck()
 
         giveOutStartingCardsToPlayers(players, deck)
