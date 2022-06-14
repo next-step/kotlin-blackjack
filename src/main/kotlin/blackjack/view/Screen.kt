@@ -14,7 +14,7 @@ object Screen {
     }
 
     fun displayPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.cards.map { card -> "${card.point.cardName}${card.shape.shapeName}" }.joinToString(",")}")
+        println("${player.name}카드: ${player.cards.map { card -> card.getName() }.joinToString(",")}")
     }
 
     fun displayResults(players: List<Player>) {
@@ -23,6 +23,6 @@ object Screen {
 
     private fun displayResult(player: Player) {
         val score = player.cards.map { card -> CardPoint.point(card) }.sum()
-        println("${player.name}카드: ${player.cards.map { card -> "${card.point.cardName}${card.shape.shapeName}" }.joinToString(",")} - 결과: $score")
+        println("${player.name}카드: ${player.cards.map { card -> card.getName() }.joinToString(",")} - 결과: $score")
     }
 }

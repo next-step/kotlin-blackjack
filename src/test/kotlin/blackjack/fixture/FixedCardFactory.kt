@@ -1,4 +1,4 @@
-package blackjack.factory
+package blackjack.fixture
 
 import blackjack.domain.Card
 import blackjack.domain.enums.CardPoint
