@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.participant.vo.Amount
+import blackjack.domain.Amount
 import blackjack.domain.participant.vo.BetAmount
 import blackjack.ui.dto.Continue
 

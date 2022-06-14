@@ -1,15 +1,12 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardDeckTest
 import blackjack.domain.card.type.Ace
 import blackjack.domain.card.type.Suit
 import blackjack.domain.card.type.Ten
 import blackjack.domain.participant.vo.BetAmount
-import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
-import blackjack.domain.participant.vo.WinningScore
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -18,7 +15,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "참가자 객체를 생성할수 있다." {
-        shouldNotThrow<Throwable> { Player.sit(Name("dean"), BetAmount(1_000)) }
+        shouldNotThrow<Throwable> { Player.sit(Name("dean"), BetAmount.of(1_000)) }
     }
 
     "Stay 상태로 변경할수 있다" {
@@ -61,52 +58,8 @@ class PlayerTest : StringSpec({
             shouldThrow<IllegalArgumentException> { player.hit(cardDeck) }
         }
     }
-
-    "딜러와 비교하여 승리할수 있다." {
-        val player = player()
-        val reverseCardDeck = CardDeck(CardDeckTest.sortedCardDeck().cards.reversed())
-        val sortedCardDeck = CardDeckTest.sortedCardDeck()
-
-        player.ready(reverseCardDeck)
-
-        val win = Dealer(CardsInHand())
-        win.ready(sortedCardDeck)
-
-        player.score(listOf(win))
-
-        player.winningScores.values shouldBe listOf(WinningScore.WIN)
-    }
-
-    "딜러와 비교하여 패배할수 있다." {
-        val player = player()
-        val reverseCardDeck = CardDeck(CardDeckTest.sortedCardDeck().cards.reversed())
-        val sortedCardDeck = CardDeckTest.sortedCardDeck()
-
-        player.ready(sortedCardDeck)
-
-        val lose = Dealer(CardsInHand())
-        lose.ready(reverseCardDeck)
-
-        player.score(listOf(lose))
-
-        player.winningScores.values shouldBe listOf(WinningScore.LOSE)
-    }
-
-    "딜러와 비교하여 무승부할수 있다." {
-        val player = player()
-        val reverseCardDeck = CardDeck(CardDeckTest.sortedCardDeck().cards.reversed())
-
-        player.ready(reverseCardDeck)
-
-        val draw = Dealer(CardsInHand())
-        draw.ready(reverseCardDeck)
-
-        player.score(listOf(draw))
-
-        player.winningScores.values shouldBe listOf(WinningScore.DRAW)
-    }
 }) {
     companion object {
-        private fun player() = Player.sit(Name("dean"), BetAmount(1_000))
+        private fun player() = Player.sit(Name("dean"), BetAmount.of(1_000))
     }
 }

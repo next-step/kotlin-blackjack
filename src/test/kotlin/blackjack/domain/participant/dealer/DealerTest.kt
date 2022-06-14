@@ -1,11 +1,8 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.dealer
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardDeckTest
-import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.CardsInHand
-import blackjack.domain.participant.vo.Name
-import blackjack.domain.participant.vo.WinningScore
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -59,28 +56,5 @@ class DealerTest : StringSpec({
         dealer.ready(cardDeck)
 
         shouldThrow<IllegalArgumentException> { dealer.hit(cardDeck) }
-    }
-
-    "플레이어들의 점수와 비교하여 최종 결과를 알수 있다." {
-        val dealer = Dealer(CardsInHand())
-        val reverseCardDeck = CardDeck(CardDeckTest.sortedCardDeck().cards.reversed())
-        val sortedCardDeck = CardDeckTest.sortedCardDeck()
-
-        dealer.ready(reverseCardDeck)
-
-        val win = Player.sit(Name("win"), BetAmount(1_000))
-        win.ready(sortedCardDeck)
-
-        val lose = Player.sit(Name("lose"), BetAmount(1_000))
-        lose.ready(reverseCardDeck)
-        lose.hit(sortedCardDeck)
-
-        val draw = Player.sit(Name("draw"), BetAmount(1_000))
-        draw.ready(reverseCardDeck)
-
-        val players = listOf(win, lose, draw)
-        dealer.score(players)
-
-        dealer.winningScores.values shouldBe listOf(WinningScore.WIN, WinningScore.LOSE, WinningScore.DRAW)
     }
 })

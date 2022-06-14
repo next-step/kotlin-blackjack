@@ -1,8 +1,8 @@
 package blackjack.domain.participant
 
+import blackjack.domain.Amount
 import blackjack.domain.Score
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participant.vo.Amount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation

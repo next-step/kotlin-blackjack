@@ -1,5 +1,7 @@
 package blackjack.domain.participant.vo
 
+import blackjack.domain.Amount
+
 @JvmInline
 value class BetAmount(
     val amount: Amount

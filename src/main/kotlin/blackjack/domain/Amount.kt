@@ -1,4 +1,4 @@
-package blackjack.domain.participant.vo
+package blackjack.domain
 
 @JvmInline
 value class Amount(

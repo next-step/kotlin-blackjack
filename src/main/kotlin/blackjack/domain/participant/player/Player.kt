@@ -3,7 +3,7 @@ package blackjack.domain.participant.player
 import blackjack.domain.Score
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.type.Status
-import blackjack.domain.participant.vo.Amount
+import blackjack.domain.Amount
 import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
