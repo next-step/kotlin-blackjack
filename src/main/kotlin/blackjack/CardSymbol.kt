@@ -1,7 +1,7 @@
 package blackjack
 
 @JvmInline
-value class CardSymbol private constructor(
+value class CardSymbol(
     private val symbol: String,
 ) {
 
