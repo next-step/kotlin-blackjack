@@ -10,7 +10,9 @@ import blackjack.model.card.State.Running
 sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
     CardRecipient {
 
-    class Guest(name: String, hitDecisionMaker: HitDecisionMaker) : Player(name, hitDecisionMaker)
+    class Guest(name: String, hitDecisionMaker: HitDecisionMaker) :
+        Player(name, hitDecisionMaker)
+
     class Dealer(name: String, hitDecisionMaker: HitDecisionMaker = DealerHitDecisionMaker) :
         Player(name, hitDecisionMaker)
 
@@ -24,6 +26,9 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
 
     val cardCount: Int
         get() = this.cardList.size
+
+    val hasAdditionalCards: Boolean
+        get() = this.cardCount > CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
 
     override fun addCard(card: Card) {
         this.cardList.add(card)
@@ -52,7 +57,7 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
     }
 }
 
-class Players(playerList: List<Player>) : List<Player> by playerList {
+class Players<T : Player>(playerList: List<T>) : List<T> by playerList {
 
     val blackJackPlayer: Player?
         get() = this.find { it.state is BlackJack }
@@ -62,6 +67,6 @@ class Players(playerList: List<Player>) : List<Player> by playerList {
     }
 
     companion object {
-        fun List<Player>.toPlayers() = Players(this)
+        fun <T : Player> List<T>.toPlayers() = Players(this)
     }
 }

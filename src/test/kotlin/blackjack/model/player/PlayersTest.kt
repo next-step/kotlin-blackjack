@@ -1,5 +1,6 @@
 package blackjack.model.player
 
+import blackjack.fixture.AlwaysHitDecisionMaker
 import blackjack.model.CardDistributor
 import blackjack.model.card.Card
 import blackjack.model.card.State
@@ -11,15 +12,13 @@ import org.junit.jupiter.api.assertAll
 
 internal class PlayersTest {
 
-    private lateinit var alwaysHitDecisionMaker: HitDecisionMaker
     private lateinit var sequentialCardDistributor: CardDistributor
+    private lateinit var alwaysHitDecisionMaker: HitDecisionMaker
 
     @BeforeEach
     fun setUp() {
-        this.alwaysHitDecisionMaker = object : HitDecisionMaker {
-            override fun shouldHit(player: Player, cardDistributor: CardDistributor) = true
-        }
 
+        this.alwaysHitDecisionMaker = AlwaysHitDecisionMaker
         this.sequentialCardDistributor = object : CardDistributor {
             private var offset = 0
             override fun resetCardSet() {

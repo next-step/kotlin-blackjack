@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerBets
 import blackjack.model.player.PlayerRecords
 import blackjack.model.player.Players
 import blackjack.model.player.Players.Companion.toPlayers
@@ -8,13 +9,11 @@ import blackjack.model.player.Players.Companion.toPlayers
 class PlayRoom(
     val cardDistributor: CardDistributor,
     val dealer: Player.Dealer,
-    val guests: Players
+    val playerBets: PlayerBets
 ) {
 
-    private val players: Players by lazy {
-        this.guests.toMutableList()
-            .apply { this.add(dealer) }
-            .toPlayers()
+    private val players: Players<Player> by lazy {
+        (this.playerBets.map { it.player }.toMutableList() + dealer).toPlayers()
     }
 
     fun startNewGame() {
@@ -27,6 +26,6 @@ class PlayRoom(
         this.players.forEach { player ->
             player.hitWhileWants(cardDistributor, onHitBlock)
         }
-        return PlayerRecords.of(dealer, guests)
+        return PlayerRecords.of(dealer, playerBets)
     }
 }
