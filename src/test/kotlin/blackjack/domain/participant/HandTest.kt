@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class HandTest {
 
     @Test
-    fun `플레이어의 핸드에 카드를 추가할 수 있다`() {
+    fun `참가자의 핸드에 카드를 추가할 수 있다`() {
         // given
         val hand = Hand()
 
@@ -24,7 +24,7 @@ internal class HandTest {
     }
 
     @Test
-    fun `플레이어의 핸드에 있는 카드의 총 점수를 계산할 수 있다`() {
+    fun `참가자의 핸드에 있는 카드의 총 점수를 계산할 수 있다`() {
         // given
         val hand = Hand()
 
@@ -36,5 +36,32 @@ internal class HandTest {
 
         // then
         assertThat(score).isEqualTo(21)
+    }
+
+    @Test
+    fun `참가자의 처음 두 장의 카드 합이 21일 경우 BLACKJACK 이다`() {
+        // given
+        val hand = Hand()
+
+        // when
+        hand.add(DIAMOND_ACE)
+            .add(CLUB_KING)
+
+        // then
+        assertThat(hand.isBlackjack()).isTrue
+    }
+
+    @Test
+    fun `참가자의 처음 두 장의 카드 합이 21이 아닌 경우 BLACKJACK 이 아니다`() {
+        // given
+        val hand = Hand()
+
+        // when
+        hand.add(SPADE_TEN)
+            .add(CLUB_KING)
+            .add(DIAMOND_ACE)
+
+        // then
+        assertThat(hand.isBlackjack()).isFalse
     }
 }

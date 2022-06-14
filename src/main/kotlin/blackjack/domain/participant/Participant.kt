@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 
 abstract class Participant {
     abstract val name: String
+    abstract val money: Money
     val hand: Hand = Hand()
     var status: ParticipantStatus = ParticipantStatus.HIT
         private set
@@ -12,6 +13,9 @@ abstract class Participant {
 
     fun addCards(vararg cards: Card) {
         cards.forEach { hand.add(it) }
+        if (hand.isBlackjack()) {
+            changeStatus(ParticipantStatus.BLACKJACK)
+        }
         if (hand.isBust()) {
             changeStatus(ParticipantStatus.BUST)
         }
