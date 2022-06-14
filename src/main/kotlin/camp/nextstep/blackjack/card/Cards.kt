@@ -9,15 +9,14 @@ object Cards {
         .flatten()
         .associateBy { CardId(it.suit, it.number) }
 
+    val cards
+        get() = CARDS.values.toSet()
+
     fun of(suit: CardSuit, number: CardNumber): Card {
         return requireNotNull(CARDS[CardId(suit, number)]) { "잘못된 카드 모양과 숫자입니다." }
     }
 
     private data class CardId(val suit: CardSuit, val number: CardNumber)
-
-    fun ofCombinations(): Set<Card> {
-        return CARDS.values.toSet()
-    }
 
     private fun CardSuit.with(number: CardNumber) = Card(this, number)
 }

@@ -11,7 +11,7 @@ internal class CardsTest {
     @DisplayName("카드 조합은 총 52가지이다.")
     @Test
     fun cardCombinationNumber() {
-        val allCombinationsOfCards = Cards.ofCombinations()
+        val allCombinationsOfCards = Cards.cards
 
         Assertions.assertThat(allCombinationsOfCards.size).isEqualTo(CardSuit.CARD_SUIT_NUMBERS * CardNumber.CARD_NUMBERS)
     }
@@ -28,7 +28,7 @@ internal class CardsTest {
         ]
     )
     fun getCard(suit: String, number: String) {
-        val actualCardCombinations = Cards.ofCombinations()
+        val actualCardCombinations = Cards.cards
 
         val cardSuit = CardSuit.valueOf(suit)
         val cardNumber = CardNumber.valueOf(number)
