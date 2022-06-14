@@ -5,13 +5,9 @@ import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
 import camp.nextstep.blackjack.player.Player
 
-class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
+class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Player>) {
 
-    private val _participants = mutableListOf<Player>()
-
-    private lateinit var turns: List<Turn>
-
-    private var isInitialized = false
+    private var turns: List<Turn>
 
     private var isEnded = false
 
@@ -19,11 +15,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
 
     val participants get() = _participants.toList()
 
-    fun participate(player: Player) {
-        _participants.add(player)
-    }
-
-    fun initialize() {
+    init {
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
         repeat(INIT_CARD_NUMBER) {
@@ -32,12 +24,10 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
             }
         }
 
-        isInitialized = true
         turns = _participants.map { Turn(it) }
     }
 
     fun turns(): List<Turn> {
-        check(isInitialized) { "게임이 초기화되지 않았습니다." }
         return turns
     }
 
@@ -79,8 +69,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck) {
     companion object {
         const val INIT_CARD_NUMBER = 2
 
-        fun new(): BlackJackGame {
-            return BlackJackGame(CardDeck.new())
+        fun new(participants: List<Player> = listOf()): BlackJackGame {
+            return BlackJackGame(CardDeck.new(), participants)
         }
     }
 }

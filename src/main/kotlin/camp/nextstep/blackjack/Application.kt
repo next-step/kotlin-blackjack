@@ -9,14 +9,9 @@ import camp.nextstep.blackjack.ui.cli.PlayersReader
 
 fun main() {
 
-    val game = BlackJackGame.new()
-
     val players = PlayersReader.read()
-    for (player in players) {
-        game.participate(player)
-    }
+    val game = BlackJackGame.new(players)
 
-    game.initialize()
     GameWriter.write(game)
     for (player in players) {
         PlayerCardsWriter.write(player)
