@@ -1,15 +1,16 @@
 package blackjack.domain.participant.player
 
+import blackjack.domain.Amount
 import blackjack.domain.Score
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.type.Status
-import blackjack.domain.Amount
 import blackjack.domain.participant.vo.BetAmount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
 
 private const val BLACKJACK_PRICE = 1.5
+
 class Player(
     participantInformation: ParticipantInformation,
     cardsInHand: CardsInHand,
@@ -25,7 +26,7 @@ class Player(
         }
     }
 
-    fun betAmount(): Amount = if (isBlackJack) {
+    fun winBetAmount(): Amount = if (isBlackJack) {
         BetAmount(Amount((betAmount.amount.value * BLACKJACK_PRICE).toInt())).amount
     } else {
         betAmount.amount

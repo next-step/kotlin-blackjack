@@ -17,13 +17,13 @@ class DealerScoreStrategy(val players: Players) : ScoreStrategy<Dealer> {
                 else -> WinningScore.valueOf(dealer.score.compareTo(player.score))
             }.let {
                 when (it) {
-                    WIN -> WinningAmount(dealer.winningAmount.amount + player.betAmount())
+                    WIN -> WinningAmount(dealer.winningAmount.amount + player.betAmount.amount)
                     DRAW -> if (player.isBlackJack) {
                         WinningAmount(dealer.winningAmount.amount - player.betAmount.amount)
                     } else {
-                        WinningAmount(dealer.winningAmount.amount + player.betAmount())
+                        WinningAmount(dealer.winningAmount.amount + player.betAmount.amount)
                     }
-                    LOSE -> WinningAmount(dealer.winningAmount.amount - player.betAmount())
+                    LOSE -> WinningAmount(dealer.winningAmount.amount - player.winBetAmount())
                 }
             }
         }
