@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.PlayerDecision
 import blackjack.common.NonEmptyList
+import blackjack.common.PlayerDecision
 import blackjack.common.toNonEmptyList
 
 object InputView {

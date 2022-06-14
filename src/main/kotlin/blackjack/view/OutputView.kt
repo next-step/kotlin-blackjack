@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.PlayerSummary
+import blackjack.common.PlayerSummary
 
 object OutputView {
     fun markStartOfNewParagraph() {
