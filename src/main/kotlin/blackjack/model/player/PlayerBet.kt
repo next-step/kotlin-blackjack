@@ -11,6 +11,6 @@ data class PlayerBets(val playerBetList: List<PlayerBet>) : List<PlayerBet> by p
 
     companion object {
 
-        fun List<PlayerBet>.toPlayersBets(): PlayerBets = PlayerBets(this)
+        fun List<PlayerBet>.toPlayerBets(): PlayerBets = PlayerBets(this)
     }
 }

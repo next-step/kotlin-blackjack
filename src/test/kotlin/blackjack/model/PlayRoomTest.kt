@@ -8,7 +8,7 @@ import blackjack.model.player.CardRecipient
 import blackjack.model.player.HitDecisionMaker
 import blackjack.model.player.Player
 import blackjack.model.player.PlayerBet
-import blackjack.model.player.PlayerBets.Companion.toPlayersBets
+import blackjack.model.player.PlayerBets.Companion.toPlayerBets
 import blackjack.model.player.PlayerRecord
 import blackjack.model.player.Players.Companion.toPlayers
 import org.assertj.core.api.Assertions.assertThat
@@ -57,7 +57,7 @@ internal class PlayRoomTest {
             Player.Guest("d", alwaysHitDecisionMaker),
         ).onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 
-        val playerBets = players.map { PlayerBet(it) }.toPlayersBets()
+        val playerBets = players.map { PlayerBet(it) }.toPlayerBets()
         val playRoom = PlayRoom(cardDistributor, dealer, playerBets)
         val initialCardCountForEachPlayer = CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
 
@@ -86,7 +86,7 @@ internal class PlayRoomTest {
         val bustPlayers = listOf("a", "b", "c").map { Player.Guest("a", alwaysHitDecisionMaker) }
             .onEach { player -> cardForBust.forEach(player::addCard) }
 
-        val bustPlayerBests = bustPlayers.map { PlayerBet(it) }.toPlayersBets()
+        val bustPlayerBests = bustPlayers.map { PlayerBet(it) }.toPlayerBets()
 
         val bustDealer = this.dealer.apply {
             cardForBust.forEach(this::addCard)
@@ -156,7 +156,7 @@ internal class PlayRoomTest {
         }
 
         val guests = listOf(bustPlayer, loser, winner, drawPlayer).toPlayers()
-        val playRoom = PlayRoom(cardDistributor, dealer, guests.map { PlayerBet(it) }.toPlayersBets())
+        val playRoom = PlayRoom(cardDistributor, dealer, guests.map { PlayerBet(it) }.toPlayerBets())
 
         // when
         val playerRecords = playRoom.playGame()

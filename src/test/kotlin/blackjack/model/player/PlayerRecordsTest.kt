@@ -4,7 +4,7 @@ import blackjack.dummy.toCardSet
 import blackjack.fixture.AlwaysHitDecisionMaker
 import blackjack.model.CardDistributor
 import blackjack.model.DefaultCardDistributor
-import blackjack.model.player.PlayerBets.Companion.toPlayersBets
+import blackjack.model.player.PlayerBets.Companion.toPlayerBets
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -39,7 +39,7 @@ internal class PlayerRecordsTest {
         }
 
         val guests = Players(listOf(playerA, playerB, playerC))
-        val playerBets = guests.map { PlayerBet(it) }.toPlayersBets()
+        val playerBets = guests.map { PlayerBet(it) }.toPlayerBets()
 
         // when
         val actualRecords = PlayerRecords.of(dealer, playerBets)
@@ -76,7 +76,7 @@ internal class PlayerRecordsTest {
         }
 
         val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
-            .toPlayersBets()
+            .toPlayerBets()
 
         // when
         val actualRecords = PlayerRecords.of(dealer, playerBets)
@@ -128,7 +128,7 @@ internal class PlayerRecordsTest {
         }
 
         val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
-            .toPlayersBets()
+            .toPlayerBets()
 
         // when
         val actualRecords = PlayerRecords.of(dealer, playerBets)
@@ -179,7 +179,7 @@ internal class PlayerRecordsTest {
         }
 
         val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
-            .toPlayersBets()
+            .toPlayerBets()
 
         // when
         val actualRecords = PlayerRecords.of(dealer, playerBets)
@@ -231,7 +231,7 @@ internal class PlayerRecordsTest {
         }
 
         val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
-            .toPlayersBets()
+            .toPlayerBets()
 
         // when
         val actualRecords = PlayerRecords.of(dealer, playerBets)
