@@ -64,8 +64,7 @@ data class Result(
     }
 
     private fun updateParticipantResultCount(participant: Participant, isWin: Boolean) {
-        val score =
-            _scoreByParticipantName[participant.name] ?: throw IllegalStateException("participant must be added to map")
+        val score = checkNotNull(_scoreByParticipantName[participant.name]) { "participant must be added to map" }
         if (isWin) {
             score.win += 1
         } else {
