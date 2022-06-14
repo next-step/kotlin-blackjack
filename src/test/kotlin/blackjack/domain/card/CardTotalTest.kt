@@ -4,60 +4,39 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
+fun `20 point card`() = listOf(
+    Card.King(CardSuit.CLOVER),
+    Card.Ten(CardSuit.HEART)
+)
+
 class CardTotalTest {
     @Test
     fun `카드 숫자의 합을 계산할 수 있다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotal = CardTotal(
-            listOf(
-                Card.Two(suit),
-                Card.Five(suit),
-                Card.King(suit)
-            )
-        )
-
-        assertThat(cardTotal.value).isEqualTo(17)
+        assertThat(CardTotal(`20 point card`()).value).isEqualTo(20)
     }
 
     @Test
     fun `카드 숫자의 합이 21 보다 큰지 아닌지 판단할 수 있다`() {
         assertAll(
             {
-                val suit = CardSuit.CLOVER
-
                 val cardTotalAboveTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Ten(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`() + Card.Two(CardSuit.CLOVER)
                 )
 
                 assertThat(cardTotalAboveTwentyOne.value).isEqualTo(22)
                 assertThat(cardTotalAboveTwentyOne.isBusted).isTrue
             },
             {
-                val suit = CardSuit.CLOVER
                 val cardTotalBelowTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Three(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`()
                 )
 
-                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(15)
+                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(20)
                 assertThat(cardTotalBelowTwentyOne.isBusted).isFalse
             },
             {
-                val suit = CardSuit.CLOVER
                 val cardTotalEqualsToTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Nine(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`() + Card.Ace(CardSuit.CLOVER)
                 )
 
                 assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)

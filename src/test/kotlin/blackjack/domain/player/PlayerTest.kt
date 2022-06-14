@@ -6,6 +6,14 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatNoException
 import org.junit.jupiter.api.Test
 
+fun Player(cards: List<Card>): Player {
+    val player = Player("vivian")
+
+    cards.forEach { player.addCardToHand(it) }
+
+    return player
+}
+
 class PlayerTest {
     @Test
     fun `플레이어는 이름을 가지고 있다`() {
