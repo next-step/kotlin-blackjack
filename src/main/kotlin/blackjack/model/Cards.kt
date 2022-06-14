@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Cards(
-    private val cards: List<Card>,
+    private val cards: List<Card> = emptyList(),
 ) {
     val size = cards.size
 

@@ -1,6 +1,7 @@
 package blackjack.model
 
-@JvmInline
-value class Player(
-    val name: String
-)
+class Player(
+    val name: String,
+) {
+    val cards: Cards = Cards()
+}
