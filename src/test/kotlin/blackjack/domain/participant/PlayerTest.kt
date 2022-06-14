@@ -76,7 +76,7 @@ internal class PlayerTest {
         val player = Player("pug", Money(batMoney))
 
         // then
-        assertThat(player.money._bat).isEqualTo(10000)
+        assertThat(player.money.bat).isEqualTo(10000)
     }
 
     companion object {

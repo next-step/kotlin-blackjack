@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
 data class Money(
-    var _bat: Int,
+    private var _bat: Int,
 ) {
     val bat: Int
         get() = _bat
