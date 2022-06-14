@@ -1,37 +1,30 @@
 package blackjack
 
-import blackjack.domain.AlphabetCard
 import blackjack.domain.Card
-import blackjack.domain.NumberCard
+import blackjack.domain.CardNumber
 import blackjack.domain.PlayerCards
 import blackjack.domain.Symbol
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class PlayerCardsTest : DescribeSpec({
 
     describe("score") {
-        context("2,3,4 번의 카드가 있다면") {
-            it("9점을 리턴한다.") {
-                val playerCards = PlayerCards(Card(2), Card(3), Card(4))
-                playerCards.score shouldBe 9
-            }
-        }
-        context("A,J 번의 카드가 있다면") {
-            it("21점을 리턴한다.") {
-                val playerCards = PlayerCards(Card('A'), Card('J'))
-                playerCards.score shouldBe 21
-            }
-        }
-        context("A,A 번의 카드가 있다면") {
-            it("12점을 리턴한다.") {
-                val playerCards = PlayerCards(AlphabetCard(Symbol.Diamond, 'A'), AlphabetCard(Symbol.Heart, 'A'))
-                playerCards.score shouldBe 12
+        listOf(
+            listOf(CardNumber.Num2, CardNumber.Num3, CardNumber.Num4) to 9,
+            listOf(CardNumber.Ace, CardNumber.Jack) to 21,
+            listOf(CardNumber.Ace, CardNumber.Ace) to 12
+        ).forAll { (cards, expected) ->
+            context("$cards 번의 카드가 있다면") {
+                it("$expected 점을 리턴한다.") {
+                    val playerCards = PlayerCards(cards)
+                    playerCards.score.value shouldBe expected
+                }
             }
         }
     }
 })
 
-private fun PlayerCards(vararg cards: Card) = PlayerCards(cards.toList())
-private fun Card(number: Int) = NumberCard(Symbol.Diamond, number)
-private fun Card(char: Char) = AlphabetCard(Symbol.Diamond, char)
+private fun PlayerCards(cards: List<CardNumber>) = PlayerCards(cards.map { Card(it) })
+private fun Card(number: CardNumber) = Card(Symbol.Diamond, number)

@@ -1,17 +1,22 @@
 package blackjack.domain
 
-data class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
+class Player(
+    val name: String,
+    private val playerCards: PlayerCards = PlayerCards(),
+    val rule: Rule = PlayerRule,
+) {
     val cardCount: Int get() = playerCards.size
-    val score: Int get() = playerCards.score
+    val score: Score get() = playerCards.score
+
     fun draw(cardDeck: CardDeck) {
         playerCards.addCard(cardDeck.pop())
     }
 
-    fun canDraw(): Boolean = playerCards.score < CARD_DRAW_THRESHOLD
+    fun openedCards() = rule.openedCards(playerCards)
 
     fun currentCards() = playerCards.cards
 
-    companion object {
-        private const val CARD_DRAW_THRESHOLD = 21
-    }
+    fun canDraw(): Boolean = rule.canDraw(score)
+
+    fun isBust(): Boolean = playerCards.isBust()
 }
