@@ -56,13 +56,4 @@ class CardTest {
             assertThat(aceCard.value + aceCard.bonusValue).isEqualTo(11)
         }
     }
-
-    @Test
-    fun `카드 숫자와 슈트를 알려주는 카드 이름을 가져올 수 있다`() {
-        val card = Card.Jack(CardSuit.DIAMOND)
-
-        val expectedName = "J다이아몬드"
-
-        assertThat(card.getName()).isEqualTo(expectedName)
-    }
 }

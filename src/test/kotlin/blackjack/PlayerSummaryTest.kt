@@ -27,7 +27,7 @@ class PlayerSummaryTest {
 
         listOfCardsDrawn.forEach { player.addCardToHand(it) }
 
-        assertThat(PlayerSummary(player).playerCards).isEqualTo(Cards(listOfCardsDrawn).getNames())
+        assertThat(PlayerSummary(player).playerCards).isEqualTo(listOfCardsDrawn.map { CardName.of(it) })
     }
 
     @Test
