@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.model
 
 enum class CardNumber(
     private val mark: String,
