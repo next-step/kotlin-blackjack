@@ -6,9 +6,9 @@ import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
-import blackjack.domain.participant.Players
+import blackjack.domain.participant.dealer.Dealer
+import blackjack.domain.participant.player.Player
+import blackjack.domain.participant.player.Players
 import blackjack.domain.participant.vo.Name
 
 class BlackJack private constructor(

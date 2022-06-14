@@ -1,4 +1,4 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.dealer
 
 import blackjack.application.dto.BlackJackScore
 import blackjack.application.dto.BlackJackStatus
@@ -10,4 +10,4 @@ fun Dealer.blackJackScore(): BlackJackScore =
     BlackJackScore(this.name, this.cardsInHand.cards, this.cardsInHand.calculateScore())
 
 fun Dealer.winningResult(): BlackJackWinningResult =
-    BlackJackWinningResult(this.name, this.winningScores)
+    BlackJackWinningResult(this.name, this.winningAmount)

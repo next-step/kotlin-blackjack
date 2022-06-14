@@ -1,4 +1,4 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.player
 
 import blackjack.application.dto.BlackJackScore
 import blackjack.application.dto.BlackJackStatus
@@ -12,4 +12,4 @@ fun Players.blackJackScores(): List<BlackJackScore> {
 }
 
 fun Players.winningResults(): List<BlackJackWinningResult> =
-    players.map { BlackJackWinningResult(it.name, it.winningScores) }
+    players.map { BlackJackWinningResult(it.name, it.winningAmount) }

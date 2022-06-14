@@ -4,16 +4,18 @@ import blackjack.application.dto.BlackJackStatuses
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.card.CardDeck
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
-import blackjack.domain.participant.Players
-import blackjack.domain.participant.blackJackScore
-import blackjack.domain.participant.blackJackScores
-import blackjack.domain.participant.status
-import blackjack.domain.participant.statuses
+import blackjack.domain.participant.dealer.Dealer
+import blackjack.domain.participant.dealer.DealerScoreStrategy
+import blackjack.domain.participant.dealer.blackJackScore
+import blackjack.domain.participant.dealer.status
+import blackjack.domain.participant.dealer.winningResult
+import blackjack.domain.participant.player.Player
+import blackjack.domain.participant.player.PlayerScoreStrategy
+import blackjack.domain.participant.player.Players
+import blackjack.domain.participant.player.blackJackScores
+import blackjack.domain.participant.player.statuses
+import blackjack.domain.participant.player.winningResults
 import blackjack.domain.participant.vo.Name
-import blackjack.domain.participant.winningResult
-import blackjack.domain.participant.winningResults
 
 class BlackJackParticipants(
     private val dealer: Dealer,
@@ -55,8 +57,8 @@ class BlackJackParticipants(
     }
 
     fun winningResults(): BlackJackWinningResults {
-        dealer.score(players.players)
-        players.score(dealer)
+        dealer.score(DealerScoreStrategy(players))
+        players.score(PlayerScoreStrategy(dealer))
 
         return winningResults
     }

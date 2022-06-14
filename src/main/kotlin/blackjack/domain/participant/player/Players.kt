@@ -1,4 +1,4 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.player
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.participant.vo.Name
@@ -22,5 +22,5 @@ class Players(
 
     fun hit(hitAction: (Player) -> Unit): Unit = playable.forEach { hitAction(it) }
 
-    fun score(dealer: Dealer): Unit = players.forEach { it.score(listOf(dealer)) }
+    fun score(playerScoreStrategy: PlayerScoreStrategy): Unit = players.forEach { it.score(playerScoreStrategy) }
 }

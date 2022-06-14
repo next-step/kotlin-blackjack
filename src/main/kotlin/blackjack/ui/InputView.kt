@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.participant.vo.Amount
 import blackjack.domain.participant.vo.BetAmount
 import blackjack.ui.dto.Continue
 
@@ -16,6 +17,6 @@ object InputView {
 
     fun inputBetAmount(name: String): BetAmount {
         println("${name}의 베팅 금액은?")
-        return readln().toIntOrNull()?.let(::BetAmount) ?: throw IllegalArgumentException("베팅 금액을 정확히 업력해주세요.")
+        return readln().toIntOrNull()?.let { BetAmount(Amount(it)) } ?: throw IllegalArgumentException("베팅 금액을 정확히 업력해주세요.")
     }
 }

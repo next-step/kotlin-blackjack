@@ -2,25 +2,22 @@ package blackjack.domain.participant
 
 import blackjack.domain.Score
 import blackjack.domain.card.CardDeck
+import blackjack.domain.participant.vo.Amount
 import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
-import blackjack.domain.participant.vo.WinningScore
-import blackjack.domain.participant.vo.WinningScores
+import blackjack.domain.participant.vo.WinningAmount
 
 private const val READY_CARD_COUNT = 2
 
 abstract class Participant(
     participantInformation: ParticipantInformation,
-    cardsInHand: CardsInHand
+    val cardsInHand: CardsInHand
 ) {
     var participantInformation: ParticipantInformation
         protected set
 
-    val cardsInHand: CardsInHand = cardsInHand
-
-    var winningScores = WinningScores(emptyList())
-        protected set
+    var winningAmount: WinningAmount = WinningAmount(Amount(0))
 
     val name: Name
         get() = participantInformation.name
@@ -51,11 +48,7 @@ abstract class Participant(
         participantInformation = participantInformation.changeStatus(score)
     }
 
-    fun score(participants: List<Participant>): Unit = participants.map {
-        when {
-            participantInformation.isBust() -> WinningScore.LOSE
-            it.participantInformation.isBust() -> WinningScore.WIN
-            else -> WinningScore.valueOf(score.compareTo(it.score))
-        }
-    }.let { winningScores = WinningScores(it) }
+    fun <T : Participant> score(scoreStrategy: ScoreStrategy<T>) {
+        scoreStrategy.compare(this as T)
+    }
 }

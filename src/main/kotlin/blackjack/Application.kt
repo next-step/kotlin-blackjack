@@ -1,8 +1,8 @@
 package blackjack
 
 import blackjack.application.BlackJack
-import blackjack.domain.participant.Player
-import blackjack.domain.participant.Players
+import blackjack.domain.participant.player.Player
+import blackjack.domain.participant.player.Players
 import blackjack.domain.participant.vo.Name
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
