@@ -9,4 +9,8 @@ open class Player(
     override fun isDealer(): Boolean {
         return false
     }
+
+    override fun getEarnAmount(participants: List<Participant>, dealer: Dealer): Int {
+        return GameResult.earnMoney(this, dealer)
+    }
 }

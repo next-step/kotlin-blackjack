@@ -8,7 +8,7 @@ data class BlackJackGame(
 
     val participants = listOf(dealer) + players
     val participantsSortByPlayer = players + listOf(dealer)
-    private val playerMap = participants.associate { it.name to it.playerCards }
+    private val playerMap = participants.associateBy { it.name }
 
     fun firstCardDistribution() {
         participants.forEach { participant ->
@@ -20,15 +20,8 @@ data class BlackJackGame(
         playerMap[playerName]!!.addCard(cardDeck.draw())
     }
 
-    fun match(): GameResult {
-        val gameResult = GameResult(dealer, players)
-        players.forEach {
-            gameResult.matchParticipantsIsBlackJack(it)
-        }
-        players.filter { !it.initIsBlackJack }.forEach {
-            gameResult.matchWithPlayer(it)
-        }
-        return gameResult
+    fun getEarnAmount(name: String): Int {
+        return playerMap[name]!!.getEarnAmount(players, dealer)
     }
 
     private fun Participant.addFirstCard() {

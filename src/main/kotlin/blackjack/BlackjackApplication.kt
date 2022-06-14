@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackJackStatus
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
 import blackjack.domain.Participant
@@ -20,9 +21,8 @@ class BlackjackApplication {
         blackJackGame.participantsSortByPlayer.forEach {
             suggestMoreCard(blackJackGame, it)
         }
-        val gameResult = blackJackGame.match()
-        GameView.displayResult(gameResult)
-        ResultView.gameResult(gameResult)
+        GameView.displayResult(blackJackGame)
+        ResultView.gameResult(blackJackGame)
     }
 
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {
@@ -39,14 +39,14 @@ class BlackjackApplication {
     private fun isHit(participant: Participant): Boolean {
         val isDealer = participant.isDealer()
         return if (isDealer) {
-            participant.isHit()
+            participant.blackJackStatus == BlackJackStatus.HIT
         } else {
             playerIsHit(participant)
         }
     }
 
     private fun playerIsHit(participant: Participant): Boolean {
-        return if (participant.isBust()) {
+        return if (participant.blackJackStatus == BlackJackStatus.BUST) {
             false
         } else {
             InputView.needMoreCard(participant)

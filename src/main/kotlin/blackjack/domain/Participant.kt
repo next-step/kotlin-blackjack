@@ -5,32 +5,24 @@ abstract class Participant {
     abstract val playerCards: Cards
     abstract val battingAmount: Int
     abstract val name: String
-    private var _earnAmount = 0
-    private var _initIsBlackJack = false
-    val initIsBlackJack
-        get() = _initIsBlackJack
-    val earnAmount
-        get() = _earnAmount
+    private var _blackJackStatus: BlackJackStatus = BlackJackStatus.INIT
+    val blackJackStatus
+        get() = _blackJackStatus
 
     abstract fun isDealer(): Boolean
 
-    fun appendEarnAmount(amount: Int) {
-        _earnAmount += amount
-    }
+    abstract fun getEarnAmount(participants: List<Participant>, dealer: Dealer): Int
 
     fun addCard(card: Card) {
         this.playerCards.addCard(card)
+        _blackJackStatus = playerCards.getBlackJackStatus()
     }
 
     fun setFirstDistributionBlackJack() {
-        _initIsBlackJack = playerCards.initContributionCardIsBlackJack()
+        _blackJackStatus = playerCards.getBlackJackStatus()
     }
 
-    fun isBust(): Boolean {
-        return this.playerCards.isBust()
-    }
-
-    fun isHit(): Boolean {
-        return this.playerCards.isHit()
+    fun setBlackJackStatusStay() {
+        _blackJackStatus = BlackJackStatus.STAY
     }
 }

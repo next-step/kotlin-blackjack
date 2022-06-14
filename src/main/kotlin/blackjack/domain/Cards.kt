@@ -14,8 +14,22 @@ abstract class Cards(
         _playerCards.add(card)
     }
 
-    fun initContributionCardIsBlackJack(): Boolean {
-        return score() == BLACK_JACK_SCORE && playerCards.size == FIRST_DISTRIBUTION_CARD_COUNT
+    fun getBlackJackStatus(): BlackJackStatus {
+        return when {
+            score() == BLACK_JACK_SCORE && playerCards.size == FIRST_DISTRIBUTION_CARD_COUNT -> {
+                BlackJackStatus.INIT_BLACK_JACK
+            }
+            score() == BLACK_JACK_SCORE -> {
+                BlackJackStatus.BLACK_JACK
+            }
+            isHit() -> {
+                BlackJackStatus.HIT
+            }
+            isBust() -> {
+                BlackJackStatus.BUST
+            }
+            else -> BlackJackStatus.STAY
+        }
     }
 
     fun score(): Int {
@@ -27,7 +41,7 @@ abstract class Cards(
         }
     }
 
-    fun isBust(): Boolean {
+    private fun isBust(): Boolean {
         return score() >= BLACK_JACK_SCORE
     }
 

@@ -8,24 +8,48 @@ class GameResultTest {
     fun `참가자 배팅 10000, 딜러가 bust`() {
         val dealer = Dealer("딜러")
         val players = Player("molly", 10000)
+        BlackJackGame.of(
+            dealer,
+            listOf(players),
+            MockCardListDeck(
+                listOf(
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.JACK),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.SEVEN),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.ACE),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.KING),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.THREE),
+                )
+            )
+        ).let { game ->
+            repeat(3) { game.drawTo("딜러") }
+        }
 
-        val gameResult = GameResult(dealer, listOf(players))
-
-        gameResult.dealerIsBust(players)
-
-        assertThat(dealer.earnAmount).isEqualTo(-10000)
+        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
+        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
     }
 
     @Test
     fun `참가자 배팅 10000 플레이어가 bust`() {
         val dealer = Dealer("딜러")
         val players = Player("molly", 10000)
+        BlackJackGame.of(
+            dealer,
+            listOf(players),
+            MockCardListDeck(
+                listOf(
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.JACK),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.SEVEN),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.ACE),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.KING),
+                    Card(Card.CardPattern.CLUBS, Card.Denomination.THREE),
+                )
+            )
+        ).let { game ->
+            repeat(3) { game.drawTo("molly") }
+        }
 
-        val gameResult = GameResult(dealer, listOf(players))
-
-        gameResult.playerIsBust(players)
-
-        assertThat(dealer.earnAmount).isEqualTo(10000)
+        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
+        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
     }
 
     @Test
@@ -38,11 +62,8 @@ class GameResultTest {
         blackjack.firstCardDistribution()
         blackjack.drawTo("딜러")
 
-        val gameResult = GameResult(dealer, listOf(players))
-
-        gameResult.decideWinner(players)
-
-        assertThat(dealer.earnAmount).isEqualTo(10000)
+        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
+        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
     }
 
     @Test
@@ -56,15 +77,8 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        val gameResult = GameResult(dealer, players)
-
-        players.forEach {
-            gameResult.decideWinner(it)
-        }
-
-        assertThat(dealer.earnAmount).isEqualTo(0)
-        assertThat(players[0].earnAmount).isEqualTo(10000)
-        assertThat(players[1].earnAmount).isEqualTo(10000)
+        assertThat(players[0].getEarnAmount(players, dealer)).isEqualTo(10000)
+        assertThat(dealer.getEarnAmount(players, dealer)).isEqualTo(0)
     }
 
     @Test
@@ -89,12 +103,8 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        val gameResult = GameResult(dealer, listOf(player))
-
-        gameResult.matchParticipantsIsBlackJack(player)
-
-        assertThat(dealer.earnAmount).isEqualTo(-5000)
-        assertThat(player.earnAmount).isEqualTo(15000)
+        assertThat(player.getEarnAmount(listOf(player), dealer)).isEqualTo(15000)
+        assertThat(dealer.getEarnAmount(listOf(player), dealer)).isEqualTo(-5000)
     }
 
     @Test
@@ -119,11 +129,7 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        val gameResult = GameResult(dealer, listOf(player))
-
-        gameResult.matchParticipantsIsBlackJack(player)
-
-        assertThat(dealer.earnAmount).isEqualTo(0)
-        assertThat(player.earnAmount).isEqualTo(10000)
+        assertThat(player.getEarnAmount(listOf(player), dealer)).isEqualTo(10000)
+        assertThat(dealer.getEarnAmount(listOf(player), dealer)).isEqualTo(0)
     }
 }

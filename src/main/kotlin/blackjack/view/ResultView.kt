@@ -1,20 +1,14 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
-import blackjack.domain.Participant
-import blackjack.domain.Player
+import blackjack.domain.BlackJackGame
 
 object ResultView {
 
-    fun gameResult(gameResult: GameResult) {
+    fun gameResult(blackJackGame: BlackJackGame) {
         println()
         println("### 최종 수익")
-        gameResult.allParticipant.forEach {
-            printResult(it)
+        blackJackGame.participants.forEach {
+            println("${it.name} : ${blackJackGame.getEarnAmount(it.name)}")
         }
-    }
-
-    private fun printResult(participant: Participant) {
-        println("${participant.name} : ${participant.earnAmount}")
     }
 }

@@ -31,7 +31,9 @@ object InputView {
     fun needMoreCard(participant: Participant): Boolean {
         println()
         println("${participant.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln().toBoolean()
+        return readln().toBoolean().also {
+            if (it) participant.setBlackJackStatusStay()
+        }
     }
 
     private fun String.toBoolean(): Boolean {
