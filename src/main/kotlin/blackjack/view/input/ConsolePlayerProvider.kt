@@ -13,7 +13,7 @@ class ConsolePlayerProvider : PlayerProvider {
     private val hitDecisionMaker = ConsoleHitDecisionMaker()
     private val betMoneyInputParser = IntInputParser(minValue = Player.MIN_BET_MONEY)
 
-    override fun createPlayers(previousPlayers: Players<Player.Guest>?): Players<Player.Guest> {
+    override fun createGuestPlayers(previousPlayers: Players<Player.Guest>?): Players<Player.Guest> {
         val playerNames = previousPlayers?.map { it.name }
             ?: ConsoleReader.read(MESSAGE_INPUT_PLAYERS, playNamesInputParser)
 

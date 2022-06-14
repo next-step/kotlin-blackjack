@@ -18,7 +18,7 @@ class BlackJackGame(
     private var currentPlayers: Players<Player.Guest>? = null
     fun run() {
 
-        val players = playerProvider.createPlayers(currentPlayers)
+        val players = playerProvider.createGuestPlayers(currentPlayers)
         this.currentPlayers = players
 
         val playRoom = PlayRoom(
