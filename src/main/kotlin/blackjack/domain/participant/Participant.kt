@@ -10,7 +10,7 @@ interface Participant {
     val state: State
 
     fun point(): Point = hand.calculate()
-    fun isPlayable(askHit: (String) -> Boolean = { true }): Boolean = state is Hittable
+    fun isPlayable(askHit: (String) -> Boolean): Boolean
     fun receive(card: Card)
     fun open(): Hand = hand
     fun match(dealer: Dealer): Match

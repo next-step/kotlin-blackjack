@@ -19,6 +19,10 @@ class Dealer(
         return deck.draw()
     }
 
+    override fun isPlayable(askHit: (String) -> Boolean): Boolean {
+        return state is Hittable
+    }
+
     override fun open(): Hand {
         return Hand(listOf(hand.first()))
     }

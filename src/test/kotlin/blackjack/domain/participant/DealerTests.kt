@@ -75,7 +75,7 @@ class DealerTests : DescribeSpec({
         context("Hittable 상태라면") {
             it("블랙잭을 계속 진행할 수 있다") {
                 val dealer = Dealer(state = Hittable)
-                dealer.isPlayable() shouldBe true
+                dealer.isPlayable { true } shouldBe true
             }
         }
 
@@ -83,7 +83,7 @@ class DealerTests : DescribeSpec({
             it("블랙잭을 계속 진행할 수 없다") {
                 listOf(Bust, BlackJack, Stay(Point(17))).forAll {
                     val dealer = Dealer(state = it)
-                    dealer.isPlayable() shouldBe false
+                    dealer.isPlayable { true } shouldBe false
                 }
             }
         }
