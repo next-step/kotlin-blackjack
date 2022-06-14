@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class BlackJackGame(
     private val dealer: Dealer,
-    private val players: List<Participant>,
+    private val players: List<Player>,
     private val cardDeck: Deck
 ) {
 
@@ -25,7 +25,7 @@ data class BlackJackGame(
         players.forEach {
             gameResult.matchParticipantsIsBlackJack(it)
         }
-        players.filter { !it.isBlackJack }.forEach {
+        players.filter { !it.initIsBlackJack }.forEach {
             gameResult.matchWithPlayer(it)
         }
         return gameResult
@@ -39,7 +39,7 @@ data class BlackJackGame(
     }
 
     companion object {
-        fun of(dealer: Dealer, players: List<Participant>, deck: Deck): BlackJackGame {
+        fun of(dealer: Dealer, players: List<Player>, deck: Deck): BlackJackGame {
             return BlackJackGame(
                 dealer, players, deck
             )

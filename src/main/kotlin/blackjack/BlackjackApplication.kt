@@ -13,7 +13,6 @@ class BlackjackApplication {
         val cardDeck = CardDeck(Card.createDeck())
         val dealer = InputView.createDealer()
         val player = InputView.createParticipants()
-        InputView.battingMoney(player)
         val blackJackGame = BlackJackGame.of(dealer, player, cardDeck)
         GameView.drawFirstCardDistribution(blackJackGame)
         blackJackGame.firstCardDistribution()

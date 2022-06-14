@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
-import blackjack.domain.Dealer
 import blackjack.domain.GameResult
 import blackjack.domain.Participant
 
@@ -20,10 +19,10 @@ object GameView {
     }
 
     fun printDrawResult(participant: Participant) {
-        if (participant !is Dealer) {
-            println("${participant.name}카드 : ${getCardDisplayName(participant)}")
-        } else {
+        if (participant.isDealer()) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        } else {
+            println("${participant.name}카드 : ${getCardDisplayName(participant)}")
         }
     }
 
@@ -36,8 +35,8 @@ object GameView {
         }
     }
 
-    private fun getCardDisplayName(player: Participant): String {
-        return player.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
+    private fun getCardDisplayName(participant: Participant): String {
+        return participant.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
     }
 
     private fun Card.CardPattern.toDisplayName(): String {

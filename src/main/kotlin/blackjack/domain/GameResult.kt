@@ -4,41 +4,41 @@ import kotlin.math.roundToInt
 
 class GameResult(
     private val dealer: Dealer,
-    players: List<Participant>
+    players: List<Player>
 ) {
     val allParticipant = listOf(dealer) + players
 
-    fun matchParticipantsIsBlackJack(participant: Participant) {
+    fun matchParticipantsIsBlackJack(player: Player) {
         when {
-            participant.isBlackJack && dealer.isBlackJack -> {
-                participant.appendEarnAmount(participant.battingAmount)
+            player.initIsBlackJack && dealer.initIsBlackJack -> {
+                player.appendEarnAmount(player.battingAmount)
             }
-            participant.isBlackJack && !dealer.isBlackJack -> {
-                participant.appendEarnAmount((participant.battingAmount.toDouble() * 1.5).roundToInt())
-                dealer.appendEarnAmount(-(participant.battingAmount.toDouble() * 0.5).roundToInt())
+            player.initIsBlackJack && !dealer.initIsBlackJack -> {
+                player.appendEarnAmount((player.battingAmount.toDouble() * 1.5).roundToInt())
+                dealer.appendEarnAmount(-(player.battingAmount.toDouble() * 0.5).roundToInt())
             }
         }
     }
 
-    fun matchWithPlayer(participant: Participant) {
+    fun matchWithPlayer(player: Player) {
         when {
-            participant.playerCards.isBust() -> playerIsBust(participant)
-            dealer.playerCards.isBust() -> dealerIsBust(participant)
-            else -> decideWinner(participant)
+            player.playerCards.isBust() -> playerIsBust(player)
+            dealer.playerCards.isBust() -> dealerIsBust(player)
+            else -> decideWinner(player)
         }
     }
 
-    fun playerIsBust(participant: Participant) {
-        participant.appendEarnAmount(-participant.battingAmount)
-        dealer.appendEarnAmount(participant.battingAmount)
+    fun playerIsBust(player: Player) {
+        player.appendEarnAmount(-player.battingAmount)
+        dealer.appendEarnAmount(player.battingAmount)
     }
 
-    fun dealerIsBust(participant: Participant) {
-        participant.appendEarnAmount(participant.battingAmount)
-        dealer.appendEarnAmount(-participant.battingAmount)
+    fun dealerIsBust(player: Player) {
+        player.appendEarnAmount(player.battingAmount)
+        dealer.appendEarnAmount(-player.battingAmount)
     }
 
-    fun decideWinner(player: Participant) {
+    fun decideWinner(player: Player) {
         when {
             player.playerCards.score() < dealer.playerCards.score() -> {
                 player.appendEarnAmount(-player.battingAmount)
