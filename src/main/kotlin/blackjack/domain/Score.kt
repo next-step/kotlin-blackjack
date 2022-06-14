@@ -24,32 +24,15 @@ data class Score(private val cards: List<Card>) {
 
     operator fun compareTo(other: Score): Int = this.sum.compareTo(other.sum)
 
-    private fun List<Card>.sum(): Int = sumOf {
-        SCORE_MAP.getOrDefault(it.denomination, 0)
-    }
+    private fun List<Card>.sum(): Int = sumOf { it.denomination.score }
 
     private fun possibleOutcome(aceCount: Int): List<Int> =
         when (aceCount) {
-            1, 2, 3, 4 -> listOf(aceCount, aceCount + SECONDARY_SCORE_ACE)
+            1, 2, 3, 4 -> listOf(aceCount, aceCount + Denomination.ACE.score)
             else -> listOf(aceCount)
         }
 
     companion object {
-        private const val SECONDARY_SCORE_ACE = 10
         private const val BLACKJACK_SUM = 21
-        private val SCORE_MAP = mapOf(
-            Denomination.TWO to 2,
-            Denomination.THREE to 3,
-            Denomination.FOUR to 4,
-            Denomination.FIVE to 5,
-            Denomination.SIX to 6,
-            Denomination.SEVEN to 7,
-            Denomination.EIGHT to 8,
-            Denomination.NINE to 9,
-            Denomination.TEN to 10,
-            Denomination.JACK to 10,
-            Denomination.QUEEN to 10,
-            Denomination.KING to 10,
-        )
     }
 }
