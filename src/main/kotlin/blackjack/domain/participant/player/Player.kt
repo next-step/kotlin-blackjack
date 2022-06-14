@@ -13,7 +13,7 @@ private const val BLACKJACK_PRICE = 1.5
 class Player(
     participantInformation: ParticipantInformation,
     cardsInHand: CardsInHand,
-    private val betAmount: BetAmount
+    val betAmount: BetAmount
 ) : Participant(participantInformation, cardsInHand) {
     val isBlackJack: Boolean
         get() = score == Score.BLACKJACK && cardsInHand.cards.size == 2
