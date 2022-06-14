@@ -1,49 +1,51 @@
-package blackjack
+package blackjack.domain
 
+import blackjack.Fetcher
+import blackjack.Printer
+import blackjack.common.NonEmptyList
 import blackjack.common.PlayerDecision
 import blackjack.common.PlayerSummary
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerState
-import blackjack.view.InputView
-import blackjack.view.OutputView
 
 object Blackjack {
-    private const val numberOfStartingCards = 2
+    const val numberOfStartingCards = 2
 
-    fun play() {
-        val players: List<Player> = InputView.getPlayerNames().list.toPlayers()
+    fun play(
+        playerNameFetcher: Fetcher<Unit, NonEmptyList<String>>,
+        playerDecisionFetcher: Fetcher<String, PlayerDecision>,
+        startingPlayerSummaryPrinter: Printer<List<PlayerSummary>>,
+        playerSummaryPrinter: Printer<PlayerSummary>,
+        finalPlayerSummaryPrinter: Printer<List<PlayerSummary>>
+    ) {
+        val players: List<Player> = playerNameFetcher.fetch(Unit).list.toPlayers()
         val deck = CardDeck()
 
         giveOutStartingCardsToPlayers(players, deck)
 
-        OutputView.markStartOfNewParagraph()
+        startingPlayerSummaryPrinter.print(players.toPlayerSummaries())
 
         players.forEach { player ->
             var playerState = PlayerState.of(player)
 
             while (playerState is PlayerState.Playing) {
-                playerState = when (InputView.getPlayerDecision(player.name)) {
+                playerState = when (playerDecisionFetcher.fetch(player.name)) {
                     PlayerDecision.HIT -> playerState.hit(deck.drawCard())
                     PlayerDecision.STAND -> playerState.stand()
                 }
 
-                OutputView.printPlayerSummary(PlayerSummary(player))
+                playerSummaryPrinter.print(PlayerSummary(player))
             }
         }
 
-        OutputView.markStartOfNewParagraph()
-        OutputView.printPlayerSummaries(players.toPlayerSummaries(), true)
+        finalPlayerSummaryPrinter.print(players.toPlayerSummaries())
     }
 
     private fun giveOutStartingCardsToPlayers(players: List<Player>, deck: CardDeck) {
         players.forEach {
             it.drawCardFromDeck(deck, numberOfStartingCards)
         }
-
-        OutputView.markStartOfNewParagraph()
-        OutputView.printPlayerNamesAndNumberOfCardsDrawn(players.toPlayerNames(), numberOfStartingCards)
-        OutputView.printPlayerSummaries(players.toPlayerSummaries())
     }
 
     private fun List<String>.toPlayers(): List<Player> = map { Player(it) }
@@ -57,8 +59,4 @@ object Blackjack {
             addCardToHand(deck.drawCard())
         }
     }
-}
-
-fun main() {
-    Blackjack.play()
 }

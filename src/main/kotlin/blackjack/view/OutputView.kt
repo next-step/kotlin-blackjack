@@ -3,16 +3,18 @@ package blackjack.view
 import blackjack.common.PlayerSummary
 
 object OutputView {
-    fun markStartOfNewParagraph() {
+    fun printStartingPlayerSummaries(playerSummaries: List<PlayerSummary>, numberOfStartingCards: Int) {
+        val playerNames = playerSummaries.map { it.playerName }
+
+        println()
+        println("${playerNames.joinWithComma()}에게 ${numberOfStartingCards}장의 카드를 나누었습니다.")
+        playerSummaries.forEach { printPlayerSummary(it) }
         println()
     }
 
-    fun printPlayerNamesAndNumberOfCardsDrawn(playerNames: List<String>, numberOfStartingCards: Int) {
-        println("${playerNames.joinWithComma()}에게 ${numberOfStartingCards}장의 카드를 나누었습니다.")
-    }
-
-    fun printPlayerSummaries(summaries: List<PlayerSummary>, withTotal: Boolean = false) {
-        summaries.forEach { printPlayerSummary(it, withTotal) }
+    fun printFinalPlayerSummaries(playerSummaries: List<PlayerSummary>) {
+        println()
+        playerSummaries.forEach { printPlayerSummary(it, true) }
     }
 
     fun printPlayerSummary(summary: PlayerSummary, withTotal: Boolean = false) {
