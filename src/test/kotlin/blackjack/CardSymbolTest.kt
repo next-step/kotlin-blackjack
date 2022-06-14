@@ -12,8 +12,10 @@ class CardSymbolTest {
         // given
         val generated = CardSymbol.generateAllKinds()
 
-        // when, then
+        // when
         val allKindsCardSymbols = CardSymbol.from(listOf("하트", "클로버", "다이아", "스페이드"))
+
+        // then
         assertThat(generated.containsAll(allKindsCardSymbols)).isTrue
         assertThat(generated.size).isEqualTo(4)
     }
