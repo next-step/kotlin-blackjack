@@ -30,7 +30,7 @@ class PlayerStateTest {
 
         cardsWithTotalBelowTwentyOne.forEach { player.addCardToHand(it) }
 
-        assertThat(PlayerState.of(player)).isExactlyInstanceOf(PlayerState.Done::class.java)
+        assertThat(PlayerState.of(player)).isEqualTo(PlayerState.Done)
     }
 
     @Test
@@ -68,7 +68,7 @@ class PlayerStateTest {
         assertThat(playerState).isExactlyInstanceOf(PlayerState.Playing::class.java)
 
         val newPlayerState = (playerState as PlayerState.Playing).hit(additionalCard)
-        assertThat(newPlayerState).isExactlyInstanceOf(PlayerState.Done::class.java)
+        assertThat(newPlayerState).isEqualTo(PlayerState.Done)
     }
 
     @Test
@@ -86,6 +86,6 @@ class PlayerStateTest {
         assertThat(playerState).isExactlyInstanceOf(PlayerState.Playing::class.java)
 
         val newPlayerState = (playerState as PlayerState.Playing).stand()
-        assertThat(newPlayerState).isExactlyInstanceOf(PlayerState.Done::class.java)
+        assertThat(newPlayerState).isEqualTo(PlayerState.Done)
     }
 }
