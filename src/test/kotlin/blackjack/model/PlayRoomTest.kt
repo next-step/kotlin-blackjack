@@ -7,6 +7,8 @@ import blackjack.model.card.Card
 import blackjack.model.player.CardRecipient
 import blackjack.model.player.HitDecisionMaker
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerBet
+import blackjack.model.player.PlayerBets.Companion.toPlayersBets
 import blackjack.model.player.PlayerRecord
 import blackjack.model.player.Players.Companion.toPlayers
 import org.assertj.core.api.Assertions.assertThat
@@ -53,10 +55,10 @@ internal class PlayRoomTest {
             Player.Guest("b", alwaysHitDecisionMaker),
             Player.Guest("c", alwaysHitDecisionMaker),
             Player.Guest("d", alwaysHitDecisionMaker),
-        ).toPlayers()
-            .onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
+        ).onEach { it.hitWhileWants(cardDistributor = cardDistributor) }
 
-        val playRoom = PlayRoom(cardDistributor, dealer, players)
+        val playerBets = players.map { PlayerBet(it) }.toPlayersBets()
+        val playRoom = PlayRoom(cardDistributor, dealer, playerBets)
         val initialCardCountForEachPlayer = CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
 
         // when
@@ -79,17 +81,18 @@ internal class PlayRoomTest {
             this.resetCardSet()
         }
         val cardForBust = "JS,JD,5S".toCardSet()
-        val betMoney = Player.MIN_BET_MONEY
+        val betMoney = PlayerBet.MIN_BET_MONEY
 
-        val bustPlayers = listOf("a", "b", "c").map { Player.Guest("a", alwaysHitDecisionMaker, betMoney = betMoney) }
+        val bustPlayers = listOf("a", "b", "c").map { Player.Guest("a", alwaysHitDecisionMaker) }
             .onEach { player -> cardForBust.forEach(player::addCard) }
-            .toPlayers()
+
+        val bustPlayerBests = bustPlayers.map { PlayerBet(it) }.toPlayersBets()
 
         val bustDealer = this.dealer.apply {
             cardForBust.forEach(this::addCard)
         }
 
-        val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayers)
+        val playRoom = PlayRoom(cardDistributor, bustDealer, bustPlayerBests)
 
         val expectedDealerRecord = PlayerRecord.DealerRecord(
             player = dealer,
@@ -112,7 +115,7 @@ internal class PlayRoomTest {
     fun `Running인 것에 대해 각각 딜러와 승패 판정 `() {
 
         // given
-        val betMoney = Player.MIN_BET_MONEY
+        val betMoney = PlayerBet.MIN_BET_MONEY
         val cardDistributor = sequentialCardDistributor.apply {
             this.resetCardSet()
         }
@@ -125,22 +128,19 @@ internal class PlayRoomTest {
         // 버스트 패자 : 25점 획득 패
         val bustPlayer = Player.Guest(
             name = "bustGuest",
-            hitDecisionMaker = alwaysStayDecisionMaker,
-            betMoney = betMoney
+            hitDecisionMaker = alwaysStayDecisionMaker
         ).apply { "JS,JD,5S".toCardSet().forEach(this::addCard) }
 
         // 패자 : 13점 획득 패
         val loser = Player.Guest(
             name = "loser",
-            hitDecisionMaker = alwaysStayDecisionMaker,
-            betMoney = betMoney
+            hitDecisionMaker = alwaysStayDecisionMaker
         ).apply { "QS,3D".toCardSet().forEach(this::addCard) }
 
         // 승자 : 15점 동점자 무
         val drawPlayer = Player.Guest(
             name = "drawGuest",
-            hitDecisionMaker = alwaysStayDecisionMaker,
-            betMoney = betMoney
+            hitDecisionMaker = alwaysStayDecisionMaker
         ).apply {
             val cardForBust = "6S,5D,4S".toCardSet()
             cardForBust.forEach(this::addCard)
@@ -149,15 +149,14 @@ internal class PlayRoomTest {
         // 승자 : 20점 획득 승
         val winner = Player.Guest(
             name = "winner",
-            hitDecisionMaker = alwaysStayDecisionMaker,
-            betMoney = betMoney
+            hitDecisionMaker = alwaysStayDecisionMaker
         ).apply {
             val cardForBust = "JS,8D,2S".toCardSet()
             cardForBust.forEach(this::addCard)
         }
 
         val guests = listOf(bustPlayer, loser, winner, drawPlayer).toPlayers()
-        val playRoom = PlayRoom(cardDistributor, dealer, guests)
+        val playRoom = PlayRoom(cardDistributor, dealer, guests.map { PlayerBet(it) }.toPlayersBets())
 
         // when
         val playerRecords = playRoom.playGame()

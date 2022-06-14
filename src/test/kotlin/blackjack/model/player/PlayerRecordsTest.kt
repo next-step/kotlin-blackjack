@@ -4,6 +4,7 @@ import blackjack.dummy.toCardSet
 import blackjack.fixture.AlwaysHitDecisionMaker
 import blackjack.model.CardDistributor
 import blackjack.model.DefaultCardDistributor
+import blackjack.model.player.PlayerBets.Companion.toPlayersBets
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -24,29 +25,29 @@ internal class PlayerRecordsTest {
     fun `기본 승패 계산 테스트`() {
 
         // given
-        val defBetMoney = Player.MIN_BET_MONEY
         val dealer = Player.Dealer("딜러").apply {
             "JS,5S".toCardSet().forEach(this::addCard) // 15점 1승 2패
         }
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
             "JS,6S".toCardSet().forEach(this::addCard) // 16점 승
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
             "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
         }
 
         val guests = Players(listOf(playerA, playerB, playerC))
+        val playerBets = guests.map { PlayerBet(it) }.toPlayersBets()
 
         // when
-        val actualRecords = PlayerRecords.of(dealer, guests)
+        val actualRecords = PlayerRecords.of(dealer, playerBets)
 
         // then
-        val expectedPlayerAEarn = playerA.betMoney
-        val expectedPlayerBEarn = playerB.betMoney
-        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedPlayerAEarn = PlayerBet.MIN_BET_MONEY
+        val expectedPlayerBEarn = PlayerBet.MIN_BET_MONEY
+        val expectedPlayerCEarn = -PlayerBet.MIN_BET_MONEY
         val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
@@ -59,34 +60,34 @@ internal class PlayerRecordsTest {
     fun `처음 2장으로 블랙잭 딜러는 블랙잭 아닌 경우 테스트 `() {
 
         // given
-        val defBetMoney = Player.MIN_BET_MONEY
 
         val dealer = Player.Dealer("딜러").apply {
             "JS,5S".toCardSet().forEach(this::addCard) // 15점 블랙잭 아님
         }
 
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
             "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
             "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
         }
 
-        val guests = Players(listOf(playerA, playerB, playerC))
+        val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
+            .toPlayersBets()
 
         // when
-        val actualRecords = PlayerRecords.of(dealer, guests)
+        val actualRecords = PlayerRecords.of(dealer, playerBets)
 
         // then
         val expectedWinCount = 1
         val expectedLoseCount = 2
 
-        val expectedPlayerAEarn = (playerA.betMoney * PlayerRecord.REWARD_RATIO_OF_BLACK_JACK).toInt()
-        val expectedPlayerBEarn = playerB.betMoney
-        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedPlayerAEarn = (PlayerBet.MIN_BET_MONEY * PlayerRecord.REWARD_RATIO_OF_BLACK_JACK).toInt()
+        val expectedPlayerBEarn = PlayerBet.MIN_BET_MONEY
+        val expectedPlayerCEarn = -PlayerBet.MIN_BET_MONEY
         val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
@@ -102,8 +103,8 @@ internal class PlayerRecordsTest {
             {
                 assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn)
             },
-            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
-            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(PlayerBet.MIN_BET_MONEY) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-PlayerBet.MIN_BET_MONEY) }
         )
     }
 
@@ -111,26 +112,26 @@ internal class PlayerRecordsTest {
     fun `처음 2장으로 블랙잭 딜러도 블랙잭인 경우 테스트 `() {
 
         // given
-        val defBetMoney = Player.MIN_BET_MONEY
 
         val dealer = Player.Dealer("딜러").apply {
             "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 1승 1패 1무
         }
 
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
             "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 무승부 (돌려받음)
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 패
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
             "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
         }
 
-        val guests = Players(listOf(playerA, playerB, playerC))
+        val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
+            .toPlayersBets()
 
         // when
-        val actualRecords = PlayerRecords.of(dealer, guests)
+        val actualRecords = PlayerRecords.of(dealer, playerBets)
 
         // then
         val expectedWinCount = 2
@@ -138,8 +139,8 @@ internal class PlayerRecordsTest {
         val expectedDrawCount = 1
 
         val expectedPlayerAEarn = 0
-        val expectedPlayerBEarn = -playerB.betMoney
-        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedPlayerBEarn = -PlayerBet.MIN_BET_MONEY
+        val expectedPlayerCEarn = -PlayerBet.MIN_BET_MONEY
         val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
@@ -163,34 +164,33 @@ internal class PlayerRecordsTest {
     fun `추가카드로 블랙잭, 딜러는 블랙잭 아닌 경우 테스트 `() {
 
         // given
-        val defBetMoney = Player.MIN_BET_MONEY
-
         val dealer = Player.Dealer("딜러").apply {
             "JS,5S".toCardSet().forEach(this::addCard) // 15점 블랙잭 아님
         }
 
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
             "AS,8S,2C".toCardSet().forEach(this::addCard) // 3장으로 블랙잭 승
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
             "JS,4S".toCardSet().forEach(this::addCard) // 14점 패
         }
 
-        val guests = Players(listOf(playerA, playerB, playerC))
+        val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
+            .toPlayersBets()
 
         // when
-        val actualRecords = PlayerRecords.of(dealer, guests)
+        val actualRecords = PlayerRecords.of(dealer, playerBets)
 
         // then
         val expectedWinCount = 1
         val expectedLoseCount = 2
 
-        val expectedPlayerAEarn = playerA.betMoney
-        val expectedPlayerBEarn = playerB.betMoney
-        val expectedPlayerCEarn = -playerB.betMoney
+        val expectedPlayerAEarn = PlayerBet.MIN_BET_MONEY
+        val expectedPlayerBEarn = PlayerBet.MIN_BET_MONEY
+        val expectedPlayerCEarn = -PlayerBet.MIN_BET_MONEY
         val expectedDealerEarn = -(expectedPlayerAEarn + expectedPlayerBEarn + expectedPlayerCEarn)
 
         val expectedDealerRecord =
@@ -206,8 +206,8 @@ internal class PlayerRecordsTest {
             {
                 assertThat(actualRecords.find { it.player == playerA }?.earnMoney).isEqualTo(expectedPlayerAEarn)
             },
-            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(playerB.betMoney) },
-            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-playerC.betMoney) }
+            { assertThat(actualRecords.find { it.player == playerB }?.earnMoney).isEqualTo(PlayerBet.MIN_BET_MONEY) },
+            { assertThat(actualRecords.find { it.player == playerC }?.earnMoney).isEqualTo(-PlayerBet.MIN_BET_MONEY) }
         )
     }
 
@@ -215,26 +215,26 @@ internal class PlayerRecordsTest {
     fun `처음 2장으로 블랙잭 딜러가 Bust 테스트 `() {
 
         // given
-        val defBetMoney = Player.MIN_BET_MONEY
-
+        val defBetMoney = PlayerBet.MIN_BET_MONEY
         val dealer = Player.Dealer("딜러").apply {
             "QS,5S,JS".toCardSet().forEach(this::addCard) // 버스트 3패
         }
 
-        val playerA = Player.Guest("A", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerA = Player.Guest("A", alwaysHitDecisionMaker).apply {
             "AS,QS".toCardSet().forEach(this::addCard) // 블랙잭 승 (1.5배 받음)
         }
-        val playerB = Player.Guest("B", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerB = Player.Guest("B", alwaysHitDecisionMaker).apply {
             "JS,7S".toCardSet().forEach(this::addCard) // 17점 승
         }
-        val playerC = Player.Guest("C", alwaysHitDecisionMaker, betMoney = defBetMoney).apply {
+        val playerC = Player.Guest("C", alwaysHitDecisionMaker).apply {
             "JS,QS,KS".toCardSet().forEach(this::addCard) // 버스트 승
         }
 
-        val guests = Players(listOf(playerA, playerB, playerC))
+        val playerBets = Players(listOf(playerA, playerB, playerC)).map { PlayerBet(it) }
+            .toPlayersBets()
 
         // when
-        val actualRecords = PlayerRecords.of(dealer, guests)
+        val actualRecords = PlayerRecords.of(dealer, playerBets)
 
         // then
         val expectedPlayerAEarn = (defBetMoney * PlayerRecord.REWARD_RATIO_OF_BLACK_JACK).toInt()

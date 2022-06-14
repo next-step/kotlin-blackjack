@@ -13,7 +13,7 @@ interface OutputView {
 
     fun printCardsOfPlayRoom(playRoom: PlayRoom, isGameOver: Boolean = false) {
         this.printCardsOfPlayer(playRoom.dealer, isGameOver)
-        playRoom.guests.forEach { this.printCardsOfPlayer(it, isGameOver) }
+        playRoom.playerBets.forEach { this.printCardsOfPlayer(it.player, isGameOver) }
     }
 
     fun printPlayerRecords(playerRecords: PlayerRecords)

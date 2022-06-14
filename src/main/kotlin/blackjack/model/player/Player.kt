@@ -10,7 +10,7 @@ import blackjack.model.card.State.Running
 sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionMaker) :
     CardRecipient {
 
-    class Guest(name: String, hitDecisionMaker: HitDecisionMaker, val betMoney: Int = MIN_BET_MONEY) :
+    class Guest(name: String, hitDecisionMaker: HitDecisionMaker) :
         Player(name, hitDecisionMaker)
 
     class Dealer(name: String, hitDecisionMaker: HitDecisionMaker = DealerHitDecisionMaker) :
@@ -54,10 +54,6 @@ sealed class Player(val name: String, private val hitDecisionMaker: HitDecisionM
 
     private fun hit(cardDistributor: CardDistributor) {
         cardDistributor.giveCardsTo(this)
-    }
-
-    companion object {
-        const val MIN_BET_MONEY = 10000
     }
 }
 

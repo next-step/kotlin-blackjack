@@ -13,7 +13,7 @@ class ConsoleOutputView : OutputView {
 
     override fun printInitialMessage(playRoom: PlayRoom) {
         val dealerName = playRoom.dealer.name
-        val playerNames = playRoom.guests.joinToString(",") { it.name }
+        val playerNames = playRoom.playerBets.joinToString(",") { it.player.name }
         val initialCardCountForEachPlayer = CardDistributor.INITIAL_CARD_COUNT_FOR_EACH_PLAYER
 
         println("${dealerName}와 ${playerNames}에게 ${initialCardCountForEachPlayer}장씩 카드를 나누었습니다.")

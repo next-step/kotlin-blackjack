@@ -7,24 +7,36 @@ sealed interface PlayerRecord {
     val player: Player
     val earnMoney: Int
 
-    data class GuestWin(override val player: Player.Guest) : PlayerRecord {
+    data class GuestWin(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+
+        override val player: Player
+            get() = playerBetBetMoney.player
+
         override val earnMoney: Int
             get() {
                 val shouldApplyRewardRatio = (player.state is State.BlackJack && !player.hasAdditionalCards)
                 return if (shouldApplyRewardRatio) {
-                    (player.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
+                    (playerBetBetMoney.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
                 } else {
-                    player.betMoney
+                    playerBetBetMoney.betMoney
                 }
             }
     }
 
-    data class GuestLose(override val player: Player.Guest) : PlayerRecord {
+    data class GuestLose(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+
+        override val player: Player
+            get() = playerBetBetMoney.player
+
         override val earnMoney: Int
-            get() = -player.betMoney
+            get() = -playerBetBetMoney.betMoney
     }
 
-    data class GuestDraw(override val player: Player.Guest) : PlayerRecord {
+    data class GuestDraw(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+
+        override val player: Player
+            get() = playerBetBetMoney.player
+
         override val earnMoney: Int
             get() = 0
     }
@@ -41,16 +53,16 @@ sealed interface PlayerRecord {
 
         const val REWARD_RATIO_OF_BLACK_JACK = 1.5
 
-        fun Player.Guest.recordWith(dealer: Player.Dealer): PlayerRecord {
+        fun PlayerBet.recordWith(dealer: Player.Dealer): PlayerRecord {
             val dealerState = dealer.state
-            val guestState = this.state
+            val guestState = this.player.state
 
             return when {
-                dealerState is State.Bust -> GuestWin(player = this)
-                guestState is State.Bust -> GuestLose(player = this)
-                guestState.finalScore > dealerState.finalScore -> GuestWin(player = this)
-                guestState.finalScore < dealerState.finalScore -> GuestLose(player = this)
-                else -> GuestDraw(player = this)
+                dealerState is State.Bust -> GuestWin(playerBetBetMoney = this)
+                guestState is State.Bust -> GuestLose(playerBetBetMoney = this)
+                guestState.finalScore > dealerState.finalScore -> GuestWin(playerBetBetMoney = this)
+                guestState.finalScore < dealerState.finalScore -> GuestLose(playerBetBetMoney = this)
+                else -> GuestDraw(playerBetBetMoney = this)
             }
         }
 
@@ -73,8 +85,8 @@ sealed interface PlayerRecord {
 data class PlayerRecords(val playerRecordList: List<PlayerRecord>) : List<PlayerRecord> by playerRecordList {
 
     companion object {
-        fun of(dealer: Player.Dealer, guests: Players<Player.Guest>): PlayerRecords {
-            val guestRecords = guests.map { guest -> guest.recordWith(dealer = dealer) }
+        fun of(dealer: Player.Dealer, guestBets: PlayerBets): PlayerRecords {
+            val guestRecords = guestBets.map { guestBet -> guestBet.recordWith(dealer = dealer) }
             val dealerRecord = dealer.recordWith(guestRecords = guestRecords)
             return PlayerRecords(listOf(dealerRecord) + (guestRecords))
         }
