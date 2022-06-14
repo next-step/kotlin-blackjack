@@ -14,4 +14,6 @@ sealed class Card(val suit: CardSuit, val value: Int, val bonusValue: Int = 0) {
     class Queen(suit: CardSuit) : Card(suit, 10)
     class King(suit: CardSuit) : Card(suit, 10)
     class Ace(suit: CardSuit) : Card(suit, 1, 10)
+
+    fun getName(): String = CardName.of(this)
 }

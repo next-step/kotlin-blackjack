@@ -6,12 +6,7 @@ class Cards(cardList: List<Card> = emptyList()) {
 
     val total: CardTotal = CardTotal(this.cardList)
 
-    val list: List<Card>
-        get() = cardList.toList()
-
-    fun shuffle() {
-        cardList.shuffle()
-    }
+    fun getNames(): List<String> = cardList.map { it.getName() }
 
     operator fun get(index: Int): Card = cardList[index]
 
@@ -20,7 +15,7 @@ class Cards(cardList: List<Card> = emptyList()) {
     }
 
     companion object {
-        private fun getAllCardsOfSuit(suit: CardSuit): List<Card> = listOf(
+        private fun all(suit: CardSuit): List<Card> = listOf(
             Card.Two(suit),
             Card.Three(suit),
             Card.Four(suit),
@@ -36,10 +31,8 @@ class Cards(cardList: List<Card> = emptyList()) {
             Card.Ace(suit)
         )
 
-        fun getAll(): Cards = Cards(
-            CardSuit
-                .values()
-                .flatMap { getAllCardsOfSuit(it) }
-        )
+        fun all(): List<Card> = CardSuit
+            .values()
+            .flatMap { all(it) }
     }
 }

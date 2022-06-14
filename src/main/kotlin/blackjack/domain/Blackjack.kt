@@ -50,8 +50,6 @@ object Blackjack {
 
     private fun List<String>.toPlayers(): List<Player> = map { Player(it) }
 
-    private fun List<Player>.toPlayerNames(): List<String> = map { it.name }
-
     private fun List<Player>.toPlayerSummaries(): List<PlayerSummary> = map { PlayerSummary(it) }
 
     private fun Player.drawCardFromDeck(deck: CardDeck, numberOfCards: Int = 1) {

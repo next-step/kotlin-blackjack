@@ -1,13 +1,13 @@
 package blackjack.domain.card
 
-class CardDeck(cards: Cards = Cards.getAll()) {
-    private val cardDrawer: CardDrawer = CardDrawer(cards)
+class CardDeck(cards: List<Card> = Cards.all()) {
+    private val cardDrawer: CardDrawer
 
     init {
-        require(cards.list.size == DECK_SIZE) { INCORRECT_DECK_SIZE }
-        require(cards.list.toSet().size == DECK_SIZE) { DUPLICATE_CARD }
+        require(cards.size == DECK_SIZE) { INCORRECT_DECK_SIZE }
+        require(cards.toSet().size == DECK_SIZE) { DUPLICATE_CARD }
 
-        cards.shuffle()
+        this.cardDrawer = CardDrawer(Cards(cards.shuffled()))
     }
 
     fun drawCard(): Card = cardDrawer.draw()

@@ -46,7 +46,7 @@ class CardsTest {
 
     @Test
     fun `모든 플레잉 카드를 가져올 수 있다`() {
-        val allCards = Cards.getAll()
+        val allCards = Cards.all()
         val totalNumberOfPlayingCards = 52
 
         assertThatNoException()

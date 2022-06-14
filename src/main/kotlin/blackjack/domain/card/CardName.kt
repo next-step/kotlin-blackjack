@@ -1,7 +1,4 @@
-package blackjack.common
-
-import blackjack.domain.card.Card
-import blackjack.domain.card.CardSuit
+package blackjack.domain.card
 
 object CardName {
     fun of(card: Card): String = "${card.numberString()}${card.suitString()}"
