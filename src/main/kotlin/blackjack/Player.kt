@@ -15,4 +15,10 @@ class Player(
     fun handSize(): Int {
         return this.hand.size()
     }
+
+    fun isStart(): Boolean = this.isStart()
+    fun isHit(): Boolean = this.isHit()
+    fun isStay(): Boolean = this.isStay()
+    fun isBust(): Boolean = this.isBust()
+    fun isBlackjack(): Boolean = this.isBlackjack()
 }
