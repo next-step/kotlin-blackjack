@@ -14,11 +14,7 @@ data class Result(
     val scoreByParticipantName: Map<String, Score>
         get() = _scoreByParticipantName.map { it.key to it.value.copy() }.toMap()
     val totalEarningsByParticipantName: Map<String, Int>
-        get() {
-            val totalEarningsByParticipantName = mutableMapOf(dealer.name to dealer.money.bat)
-            players.forEach { player -> totalEarningsByParticipantName[player.name] = player.money.bat }
-            return totalEarningsByParticipantName
-        }
+        get() = mapOf(dealer.name to dealer.money.bat) + players.associate { it.name to it.money.bat }
 
     init {
         _scoreByParticipantName[dealer.name] = Score()
