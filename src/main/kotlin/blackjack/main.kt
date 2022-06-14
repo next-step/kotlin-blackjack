@@ -18,21 +18,20 @@ fun main() {
     blackjack.distribute()
     PlayingView.showDistribution(dealer, participants)
 
-    deal(dealer, participants)
+    deal(blackjack, participants)
 
     dealerHit(dealer)
 
     ResultView.showResultHand(listOf(dealer) + participants)
 
-    val manager = BlackJack(dealer, participants)
-    val result = manager.matching()
+    val result = blackjack.matching()
 
     ResultView.showBlackJackResult(result)
 }
 
-private fun deal(dealer: Dealer, participants: List<Participant>) {
+private fun deal(blackJack: BlackJack, participants: List<Participant>) {
     participants.forEach { participant ->
-        dealWith(dealer, participant)
+        blackJack.dealWith(participant, ParticipantView::askHit, PlayingView::showOpenHand)
     }
 }
 
@@ -43,15 +42,6 @@ private tailrec fun dealerHit(dealer: Dealer) {
     dealer.receive(dealer.draw())
     PlayingView.showDealerHit()
     dealerHit(dealer)
-}
-
-private tailrec fun dealWith(dealer: Dealer, participant: Participant) {
-    if (!participant.isPlayable { ParticipantView.askHit(participant.name) }) {
-        return
-    }
-    participant.receive(dealer.draw())
-    PlayingView.showOpenHand(participant)
-    dealWith(dealer, participant)
 }
 
 private fun participate(): List<Participant> {

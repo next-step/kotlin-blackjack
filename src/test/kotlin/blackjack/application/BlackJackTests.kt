@@ -2,21 +2,27 @@ package blackjack.application
 
 import blackjack.domain.CustomDeck
 import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination.ACE
 import blackjack.domain.card.Denomination.FIVE
 import blackjack.domain.card.Denomination.FOUR
+import blackjack.domain.card.Denomination.KING
 import blackjack.domain.card.Denomination.SEVEN
 import blackjack.domain.card.Denomination.SIX
+import blackjack.domain.card.Denomination.TEN
 import blackjack.domain.card.Denomination.THREE
 import blackjack.domain.card.Denomination.TWO
+import blackjack.domain.card.Point
 import blackjack.domain.card.Suit.CLOVER
 import blackjack.domain.card.Suit.DIAMOND
 import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
 import blackjack.domain.cards
 import blackjack.domain.hand
+import blackjack.domain.participant.Bust
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Deck
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.Stay
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
@@ -24,6 +30,8 @@ import io.kotest.data.headers
 import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
+import io.kotest.matchers.shouldBe
+import blackjack.domain.participant.BlackJack as BLACKJACK
 
 class BlackJackTests : DescribeSpec({
 
@@ -79,6 +87,42 @@ class BlackJackTests : DescribeSpec({
             dealer.hand shouldBeEqualToComparingFields hand(Card(TWO, CLOVER), Card(THREE, HEART))
             participants[0].hand shouldBeEqualToComparingFields hand(Card(TWO, CLOVER), Card(THREE, HEART))
             participants[1].hand shouldBeEqualToComparingFields hand(Card(SIX, DIAMOND), Card(SEVEN, CLOVER))
+        }
+
+        it("참가자가 카드를 받을 수 없을 때(Bust 상태) 까지 거래를 진행한다") {
+            val deck: Deck = CustomDeck(
+                cards(Card(TWO, CLOVER))
+            )
+            val dealer = Dealer(deck)
+            val participant = Player("1", hand(Card(KING, HEART), Card(TEN, DIAMOND)))
+            val participants = listOf(participant, Player("2"))
+            val blackjack = BlackJack(dealer, participants)
+            blackjack.dealWith(participant, { true }, { })
+            participant.state shouldBe Bust
+        }
+
+        it("참가자가 카드를 받을 수 없을 때(BlackJack 상태) 까지 거래를 진행한다") {
+            val deck: Deck = CustomDeck(
+                cards(Card(ACE, CLOVER))
+            )
+            val dealer = Dealer(deck)
+            val participant = Player("1", hand(Card(KING, HEART), Card(TEN, DIAMOND)))
+            val participants = listOf(participant, Player("2"))
+            val blackjack = BlackJack(dealer, participants)
+            blackjack.dealWith(participant, { true }, { })
+            participant.state shouldBe BLACKJACK
+        }
+
+        it("참가자가 카드를 받을 수 없을 때(Stay 상태) 까지 거래를 진행한다") {
+            val deck: Deck = CustomDeck(
+                cards(Card(ACE, CLOVER))
+            )
+            val dealer = Dealer(deck)
+            val participant = Player("1", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+            val participants = listOf(participant, Player("2"))
+            val blackjack = BlackJack(dealer, participants)
+            blackjack.dealWith(participant, { false }, { })
+            participant.state shouldBe Stay(Point(16))
         }
     }
 })

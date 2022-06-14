@@ -8,8 +8,8 @@ import blackjack.domain.result.DealerResult
 import blackjack.domain.result.PlayerResult
 
 class BlackJack(
-    val dealer: Dealer,
-    val participants: List<Participant>
+    private val dealer: Dealer,
+    private val participants: List<Participant>,
 ) {
 
     init {
@@ -25,6 +25,15 @@ class BlackJack(
         }
         dealer.receive(dealer.draw())
         dealer.receive(dealer.draw())
+    }
+
+    tailrec fun dealWith(participant: Participant, askHit: (String) -> Boolean, openHand: (Participant) -> Unit) {
+        if (!participant.isPlayable { askHit(participant.name) }) {
+            return
+        }
+        participant.receive(dealer.draw())
+        openHand(participant)
+        dealWith(participant, askHit, openHand)
     }
 
     fun matching(): BlackJackResult {
