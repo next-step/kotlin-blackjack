@@ -23,9 +23,9 @@ data class Result(
 
     fun decideWinner(dealer: Dealer, player: Player) {
         if (dealer.status != ParticipantStatus.BLACKJACK && player.status == ParticipantStatus.BLACKJACK) {
-            val playerAccMoney = (player.money.bat * BLACKJACK_PROFIT_PERCENTAGE).toInt()
-            win(player, winMoney = playerAccMoney)
-            lose(dealer, loseMoney = playerAccMoney)
+            val earning = calculateEarningByProfit(player, BLACKJACK_PROFIT_PERCENTAGE)
+            win(player, winMoney = earning)
+            lose(dealer, loseMoney = earning)
             return
         }
         if (dealer.status == ParticipantStatus.BUST) {
@@ -48,6 +48,9 @@ data class Result(
             lose(dealer)
         }
     }
+
+    private fun calculateEarningByProfit(participant: Participant, profitPercentage: Double) =
+        (participant.money.bat * profitPercentage).toInt()
 
     private fun win(participant: Participant, winMoney: Int = 0) {
         updateParticipantResultCount(participant, isWin = true)
