@@ -7,6 +7,8 @@ import blackjack.domain.card.Jack
 import blackjack.domain.card.NumberCard
 import blackjack.domain.card.Queen
 import blackjack.domain.card.Suit
+import blackjack.domain.common.Money
+import blackjack.domain.score.Match
 import blackjack.domain.score.Score
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -164,6 +166,91 @@ class PlayerTest : DescribeSpec({
             )
 
             player.isEnd() shouldBe true
+        }
+    }
+
+    describe("profit") {
+        context("게임에 이겼을 때 블랙잭이면") {
+            it("배팅금액의 1.5배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, Ace())
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.WIN)
+
+                profit shouldBe Money.of(1500.0)
+            }
+        }
+
+        context("게임에 이겼을 때 블랙잭이 아니면") {
+            it("배팅금액의 1배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.WIN)
+
+                profit shouldBe Money.of(1000.0)
+            }
+        }
+
+        context("게임에 비겼을 때") {
+            it("배팅금액의 0배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.DRAW)
+
+                profit shouldBe Money.ZERO
+            }
+        }
+
+        context("게임에서 패배했을 때 ") {
+            it("배팅금액의 -1배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                            Card(Suit.DIAMOND, NumberCard(2)),
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.LOSE)
+
+                profit shouldBe Money.of(-1000)
+            }
         }
     }
 })

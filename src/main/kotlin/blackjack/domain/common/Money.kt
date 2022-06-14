@@ -16,12 +16,22 @@ value class Money(val amount: BigDecimal) : Comparable<Money> {
         return Money(amount - other.amount)
     }
 
+    operator fun unaryMinus(): Money {
+        return Money(-amount)
+    }
+
     fun multiply(rate: Double): Money {
         return Money(amount.multiply(rate.toBigDecimal()))
     }
 
     companion object {
+        val ZERO: Money = Money(BigDecimal.ZERO)
+
         fun of(amount: Int): Money {
+            return Money(amount.toBigDecimal())
+        }
+
+        fun of(amount: Double): Money {
             return Money(amount.toBigDecimal())
         }
     }

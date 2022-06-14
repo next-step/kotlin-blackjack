@@ -1,11 +1,12 @@
 package blackjack.domain.score
 
 enum class CardScore(
-    private val condition: (Score) -> Boolean
+    private val condition: (Score) -> Boolean,
+    val profitRate: Double
 ) {
-    NORMAL({ score -> score <= Score.BLACKJACK }),
-    BLACKJACK({ score -> score == Score.BLACKJACK }),
-    BUST({ score -> score > Score.BLACKJACK });
+    NORMAL({ score -> score <= Score.BLACKJACK }, 1.0),
+    BLACKJACK({ score -> score == Score.BLACKJACK }, 1.5),
+    BUST({ score -> score > Score.BLACKJACK }, -1.0);
 
     companion object {
         fun of(score: Score, cardCount: Int): CardScore {
