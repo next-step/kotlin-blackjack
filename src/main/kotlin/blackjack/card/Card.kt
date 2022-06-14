@@ -1,11 +1,9 @@
 package blackjack.card
 
 class Card(private val number: CardNumber, private val shape: CardShape) {
-    var primaryPoint = this.number.primaryPoint
-        private set
+    val primaryPoint = this.number.primaryPoint
 
-    var secondaryPoint = this.number.secondaryPoint
-        private set
+    val secondaryPoint = this.number.secondaryPoint
 
     fun fullName(): String {
         return "${this.number.noName}${this.shape.shapeName}"
