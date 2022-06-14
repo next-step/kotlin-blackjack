@@ -1,15 +1,21 @@
 package blackjack.domain
 
-import blackjack.domain.interfaces.CardFactory
-import blackjack.domain.interfaces.RandomCardFactory
+import java.util.LinkedList
+import java.util.Queue
 
 class Dealer() {
-    fun give(cardFactory: CardFactory): Card {
-        return cardFactory.create()
+    private val cards: Queue<Card> = LinkedList()
+
+    init {
+        Card.pack().shuffled().map { card -> cards.add(card) }
+    }
+
+    fun give(): Card {
+        return cards.poll()
     }
 
     fun shareCards(): List<Card> {
-        return BASIC_CARD_RANGE.map { give(RandomCardFactory()) }
+        return BASIC_CARD_RANGE.map { cards.poll() }
     }
 
     fun ask(name: String) {

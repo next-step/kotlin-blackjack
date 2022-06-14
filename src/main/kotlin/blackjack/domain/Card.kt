@@ -26,5 +26,9 @@ class Card private constructor(val shape: CardShape, val point: CardPoint) {
             require(cardPoint != null) { "블랙잭 카드가 아닙니다." }
             return Card(shape, cardPoint)
         }
+
+        fun pack(): List<Card> {
+            return cardCaches.flatMap { (shape, points) -> points.map { point -> Card(shape, point) } }
+        }
     }
 }

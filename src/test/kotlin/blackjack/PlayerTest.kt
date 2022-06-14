@@ -3,7 +3,7 @@ package blackjack
 import blackjack.domain.Player
 import blackjack.domain.enums.CardPoint
 import blackjack.domain.enums.CardShape
-import blackjack.domain.interfaces.FixedCardFactory
+import blackjack.factory.FixedCardFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
