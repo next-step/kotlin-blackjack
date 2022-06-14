@@ -1,31 +1,35 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.Denomination.ACE
-import java.lang.Integer.max
+import blackjack.domain.card.Denomination.ACE
 
-class Hand(
-    cards: List<Card>
+data class Hand(
+    private val cards: List<Card> = emptyList(),
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
-    fun calculate(): Int {
+    fun calculate(): Point {
         val numberOfAce = _cards.count { it.denomination == ACE }
         val sumOfNotAce = _cards.filterNot { it.denomination == ACE }
             .fold(0) { sum, card ->
-                sum + card.defaultPoint
+                sum + card.defaultPoint.value
             }
-        return (0..numberOfAce).fold(sumOfNotAce + numberOfAce) { point, i ->
+        return (0..numberOfAce).fold(Point(sumOfNotAce + numberOfAce)) { point, i ->
             val sum = ACE.run {
-                minValue * i + maxValue * (numberOfAce - i) + sumOfNotAce
+                Point(minValue * i + maxValue * (numberOfAce - i) + sumOfNotAce)
             }
-            if (sum <= BLACKJACK_POINT) max(sum, point)
-            else point
+            if (sum <= Point.BLACKJACK) {
+                sum.compareAndMax(point)
+            } else {
+                point
+            }
         }
     }
 
     fun add(card: Card) {
         _cards.add(card)
     }
+
+    fun first(): Card = _cards.first()
 
     override fun toString(): String {
         return _cards.joinToString {
@@ -34,7 +38,6 @@ class Hand(
     }
 
     companion object {
-        const val BLACKJACK_POINT = 21
         fun empty(): Hand = Hand(emptyList())
     }
 }

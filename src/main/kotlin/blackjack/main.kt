@@ -1,34 +1,42 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
-import blackjack.ui.InputView
-import blackjack.ui.OutputView
+import blackjack.application.BlackJack
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.ui.input.InputView
+import blackjack.ui.input.ParticipantView
+import blackjack.ui.output.PlayingView
+import blackjack.ui.output.ResultView
 
 fun main() {
-    val players = participate()
     val dealer = Dealer()
+    val participants = participate()
 
-    distribution(dealer, players)
-    deal(dealer, players)
+    val blackjack = BlackJack(dealer, participants)
 
-    OutputView.showResult(players)
+    blackjack.distribute()
+    PlayingView.showDistribution(dealer, participants)
+
+    deal(blackjack, dealer, participants)
+
+    ResultView.showResultHand(listOf(dealer) + participants)
+
+    val result = blackjack.matching()
+
+    ResultView.showBlackJackResult(result)
 }
 
-private fun participate(): List<Player> {
-    val names = InputView.readPlayerNames()
-    return names.map { Player(it) { InputView.askHit(it) } }
-}
-
-private fun distribution(dealer: Dealer, players: List<Player>) {
-    dealer.distribute(players)
-    OutputView.showDistribution(players)
-}
-
-private fun deal(dealer: Dealer, players: List<Player>) {
-    players.forEach { player ->
-        while (dealer.dealWith(player)) {
-            OutputView.showHand(player)
-        }
+private fun deal(blackJack: BlackJack, dealer: Dealer, participants: List<Participant>) {
+    participants.forEach { participant ->
+        blackJack.dealWith(participant, ParticipantView::askHit, PlayingView::showOpenHand)
     }
+    blackJack.dealWith(dealer, { true }, PlayingView::showDealerHit)
+}
+
+private fun participate(): List<Participant> {
+    return InputView.readPlayerNames()
+        .map { name ->
+            Player(name)
+        }
 }

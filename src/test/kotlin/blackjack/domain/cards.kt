@@ -1,4 +1,10 @@
 package blackjack.domain
 
-fun cards(vararg card: Pair<Denomination, Suit>): List<Card> = card.toList().map { Card.from(it.first, it.second) }
-fun hand(vararg card: Pair<Denomination, Suit>): Hand = Hand(cards(*card))
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Hand
+import blackjack.domain.card.Suit
+
+infix fun Denomination.to(suit: Suit) = Card(this, suit)
+fun hand(vararg cards: Card): Hand = Hand(cards.toList())
+fun cards(vararg cards: Card): List<Card> = cards.toList()
