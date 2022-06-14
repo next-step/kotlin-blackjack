@@ -23,7 +23,6 @@ introduce {
   - [x] soft 함수
   - [x] hard 함수
 - [x] languages는 언어와 그에 따른 레벨을 입력으로 받는다
-  - [x] infix 함수 level이 필요하다
 
 ***
 ## 블랙잭
