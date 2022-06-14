@@ -1,7 +1,6 @@
 package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -22,6 +21,6 @@ class PlayerNameTest {
     fun `플레이어 이름이 공백이면 예외 발생`(name: String) {
         // when, then
         val exception = assertThrows<IllegalArgumentException> { PlayerName(name) }
-        Assertions.assertEquals("플레이어 이름이 공백일 수 없습니다.", exception.message)
+        assertThat(exception.message).isEqualTo("플레이어 이름이 공백일 수 없습니다.")
     }
 }
