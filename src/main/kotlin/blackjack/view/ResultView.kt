@@ -1,14 +1,12 @@
 package blackjack.view
 
 import blackjack.domain.blackjack.BlackJackResult
-import blackjack.domain.blackjack.DealerResult
+import blackjack.domain.blackjack.ParticipantProfitResult
 import blackjack.domain.blackjack.ParticipantResult
-import blackjack.domain.blackjack.PlayerResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.score.Match
 
 object ResultView {
 
@@ -29,10 +27,10 @@ object ResultView {
 
     fun printResult(result: BlackJackResult) {
         println()
-        val dealer = result.dealerResult.participantResult
+        val dealer = result.dealerResult()
         printParticipantWithScore(dealer)
-        result.playerResults.forEach {
-            printParticipantWithScore(it.participantResult)
+        result.playersResult().forEach {
+            printParticipantWithScore(it)
         }.also { println() }
     }
 
@@ -42,34 +40,13 @@ object ResultView {
     }
 
     fun printMatch(result: BlackJackResult) {
-        println("## 최종 승패")
-        printDealerMatch(result.dealerResult)
-        printPlayersMatch(result.playerResults)
+        println("## 최종 수익")
+        printProfits(listOf(result.dealerProfit()) + result.playersProfit())
     }
 
-    private fun printDealerMatch(dealerResult: DealerResult) {
-        val matches = dealerResult.matches
-        val win = matches.count { it == Match.WIN }
-            .let { if (it > 0) "$it${convertMatch(Match.WIN)} " else "" }
-        val draw = matches.count { it == Match.DRAW }
-            .let { if (it > 0) "$it${convertMatch(Match.DRAW)} " else "" }
-        val lose = matches.count { it == Match.LOSE }
-            .let { if (it > 0) "$it${convertMatch(Match.LOSE)} " else "" }
-
-        println("${dealerResult.participantResult.name} $win$draw$lose")
-    }
-
-    private fun convertMatch(match: Match): String {
-        return when (match) {
-            Match.WIN -> "승"
-            Match.DRAW -> "무"
-            Match.LOSE -> "패"
-        }
-    }
-
-    private fun printPlayersMatch(playerResults: List<PlayerResult>) {
-        playerResults.forEach {
-            println("${it.participantResult.name}: ${convertMatch(it.match)}")
+    private fun printProfits(participantProfitResults: List<ParticipantProfitResult>) {
+        participantProfitResults.forEach {
+            println("${it.name}: ${it.profit.amount.toInt()}")
         }
     }
 

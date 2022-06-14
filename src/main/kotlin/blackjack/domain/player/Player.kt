@@ -32,11 +32,4 @@ class Player(
             Match.DRAW -> Money.ZERO
         }
     }
-
-    companion object {
-        fun ofList(value: String, delimiter: String = ","): List<Player> {
-            val names = value.split(delimiter)
-            return names.map(::Player)
-        }
-    }
 }
