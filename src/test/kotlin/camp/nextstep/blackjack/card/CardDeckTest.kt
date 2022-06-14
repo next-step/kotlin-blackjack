@@ -11,7 +11,7 @@ internal class CardDeckTest {
     fun cardDeck() {
         val cardDeck = CardDeck.new()
 
-        assertThat(cardDeck.cards.toSet().size).isEqualTo(CardSuit.CARD_SUIT_NUMBERS * CardNumber.CARD_NUMBERS)
+        assertThat(cardDeck.cards.toSet()).hasSize(CardSuit.CARD_SUIT_NUMBERS * CardNumber.CARD_NUMBERS)
     }
 
     @DisplayName("카드 뭉치에서 카드 한 장을 뽑을 수 있다.")
