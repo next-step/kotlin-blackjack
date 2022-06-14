@@ -33,7 +33,7 @@ class BlackJack(
     fun result(): BlackJackResult {
         check(isEnd()) { "게임이 종료되어야 결과를 확인할 수 있습니다" }
 
-        return BlackJackResult.of(players.players, dealer)
+        return BlackJackResult(dealer, players)
     }
 
     companion object {

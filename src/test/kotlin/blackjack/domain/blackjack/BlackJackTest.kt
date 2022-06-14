@@ -64,12 +64,16 @@ class BlackJackTest : DescribeSpec({
         }
 
         context("카드를 추가할 수 있는 참가자가 아니라면") {
-            it("IllegalArgumentException 이 발생한다") {
+            it("카드를 지급하지 않는다") {
                 val target = Player("yohan")
                 val blackJack = BlackJack(players = Players(listOf(target, Player("pang"))))
                 target.changeStatus(PlayerStatus.STAY)
 
-                shouldThrow<IllegalArgumentException> { blackJack.play(target) }
+                blackJack.play(target)
+                blackJack.play(target)
+                blackJack.play(target)
+
+                target.cards.cards.size shouldBe 2
             }
         }
     }

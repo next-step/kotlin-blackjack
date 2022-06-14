@@ -1,25 +1,34 @@
 package blackjack.domain.blackjack
 
 import blackjack.domain.card.Cards
+import blackjack.domain.common.Money
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
-import blackjack.domain.score.Match
+import blackjack.domain.player.Players
 
 data class BlackJackResult(
-    val playerResults: List<PlayerResult>,
-    val dealerResult: DealerResult
+    private val dealer: Dealer,
+    private val players: Players
 ) {
-    companion object {
-        fun of(players: List<Player>, dealer: Dealer): BlackJackResult {
-            val dealerMatchByPlayer = players.associateWith { dealer.match(it) }
-            val playerResults = dealerMatchByPlayer.entries.map {
-                val (player, dealerMatch) = it
-                PlayerResult.of(player, !dealerMatch)
-            }
-            val dealerResult = DealerResult.of(dealer, dealerMatchByPlayer.values.toList())
-            return BlackJackResult(playerResults, dealerResult)
-        }
+
+    fun dealerResult(): ParticipantResult {
+        return ParticipantResult.of(dealer)
+    }
+
+    fun playersResult(): List<ParticipantResult> {
+        return players.players.map { ParticipantResult.of(it) }
+    }
+
+    fun dealerProfit(): ParticipantProfitResult {
+        val profitByPlayer: Map<Player, Money> = players.profit(dealer)
+        val profit = profitByPlayer.values.fold(Money.ZERO) { acc, playerProfit -> acc.minus(playerProfit) }
+        return ParticipantProfitResult(dealer.name, profit)
+    }
+
+    fun playersProfit(): List<ParticipantProfitResult> {
+        val profitByPlayer = players.profit(dealer)
+        return profitByPlayer.map { (player, profit) -> ParticipantProfitResult(player.name, profit) }
     }
 }
 
@@ -37,30 +46,7 @@ data class ParticipantResult(
     }
 }
 
-data class PlayerResult(
-    val participantResult: ParticipantResult,
-    val match: Match
-) {
-    companion object {
-        fun of(player: Player, match: Match): PlayerResult {
-            return PlayerResult(
-                participantResult = ParticipantResult.of(player),
-                match = match
-            )
-        }
-    }
-}
-
-data class DealerResult(
-    val participantResult: ParticipantResult,
-    val matches: List<Match>
-) {
-    companion object {
-        fun of(dealer: Dealer, matches: List<Match>): DealerResult {
-            return DealerResult(
-                participantResult = ParticipantResult.of(dealer),
-                matches = matches
-            )
-        }
-    }
-}
+data class ParticipantProfitResult(
+    val name: String,
+    val profit: Money
+)
