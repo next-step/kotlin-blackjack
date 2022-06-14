@@ -6,7 +6,7 @@ object PlayersReader {
 
     fun read(): List<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val playerNames = requireNotNull(readLine()).split(',').map { it.trim() }
+        val playerNames = readln().split(',').map { it.trim() }
 
         check(playerNames.isNotEmpty()) { "플레이어를 입력해주세요." }
 
