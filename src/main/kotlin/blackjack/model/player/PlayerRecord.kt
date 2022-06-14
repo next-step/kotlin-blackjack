@@ -7,35 +7,35 @@ sealed interface PlayerRecord {
     val player: Player
     val earnMoney: Int
 
-    data class GuestWin(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+    data class GuestWin(val playerBet: PlayerBet) : PlayerRecord {
 
         override val player: Player
-            get() = playerBetBetMoney.player
+            get() = playerBet.player
 
         override val earnMoney: Int
             get() {
                 val shouldApplyRewardRatio = (player.state is State.BlackJack && !player.hasAdditionalCards)
                 return if (shouldApplyRewardRatio) {
-                    (playerBetBetMoney.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
+                    (playerBet.betMoney * REWARD_RATIO_OF_BLACK_JACK).toInt()
                 } else {
-                    playerBetBetMoney.betMoney
+                    playerBet.betMoney
                 }
             }
     }
 
-    data class GuestLose(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+    data class GuestLose(val playerBet: PlayerBet) : PlayerRecord {
 
         override val player: Player
-            get() = playerBetBetMoney.player
+            get() = playerBet.player
 
         override val earnMoney: Int
-            get() = -playerBetBetMoney.betMoney
+            get() = -playerBet.betMoney
     }
 
-    data class GuestDraw(val playerBetBetMoney: PlayerBet) : PlayerRecord {
+    data class GuestDraw(val playerBet: PlayerBet) : PlayerRecord {
 
         override val player: Player
-            get() = playerBetBetMoney.player
+            get() = playerBet.player
 
         override val earnMoney: Int
             get() = 0
@@ -58,11 +58,11 @@ sealed interface PlayerRecord {
             val guestState = this.player.state
 
             return when {
-                dealerState is State.Bust -> GuestWin(playerBetBetMoney = this)
-                guestState is State.Bust -> GuestLose(playerBetBetMoney = this)
-                guestState.finalScore > dealerState.finalScore -> GuestWin(playerBetBetMoney = this)
-                guestState.finalScore < dealerState.finalScore -> GuestLose(playerBetBetMoney = this)
-                else -> GuestDraw(playerBetBetMoney = this)
+                dealerState is State.Bust -> GuestWin(playerBet = this)
+                guestState is State.Bust -> GuestLose(playerBet = this)
+                guestState.finalScore > dealerState.finalScore -> GuestWin(playerBet = this)
+                guestState.finalScore < dealerState.finalScore -> GuestLose(playerBet = this)
+                else -> GuestDraw(playerBet = this)
             }
         }
 
