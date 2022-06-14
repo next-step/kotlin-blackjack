@@ -17,12 +17,9 @@ class Cards(cardList: List<Card> = emptyList()) {
     operator fun plusAssign(card: Card) {
         cardList.add(card)
     }
-    private operator fun plus(other: Cards): Cards {
-        return Cards(cardList + other.cardList)
-    }
 
     companion object {
-        private fun getAllCardsOfSuit(suit: CardSuit): Cards = Cards(
+        private fun getAllCardsOfSuit(suit: CardSuit): List<Card> =
             listOf(
                 Card.Two(suit),
                 Card.Three(suit),
@@ -38,11 +35,11 @@ class Cards(cardList: List<Card> = emptyList()) {
                 Card.King(suit),
                 Card.Ace(suit)
             )
-        )
 
-        fun getAll(): Cards = getAllCardsOfSuit(CardSuit.CLOVER) +
-            getAllCardsOfSuit(CardSuit.HEART) +
-            getAllCardsOfSuit(CardSuit.DIAMOND) +
-            getAllCardsOfSuit(CardSuit.SPADE)
+        fun getAll(): Cards = Cards(
+            CardSuit
+                .values()
+                .flatMap { getAllCardsOfSuit(it) }
+        )
     }
 }
