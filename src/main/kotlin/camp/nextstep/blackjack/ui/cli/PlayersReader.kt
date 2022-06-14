@@ -10,13 +10,6 @@ object PlayersReader {
 
         check(playerNames.isNotEmpty()) { "플레이어를 입력해주세요." }
 
-        val players = mutableListOf<Player>()
-
-        for (playerName in playerNames) {
-            check(playerName.isNotBlank()) { "올바른 플레이어 이름을 입력해주세요. ($playerName)" }
-            players.add(Player(playerName))
-        }
-
-        return players
+        return playerNames.map { Player(it) }
     }
 }
