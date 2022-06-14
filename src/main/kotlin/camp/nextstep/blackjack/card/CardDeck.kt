@@ -14,7 +14,7 @@ class CardDeck private constructor(private val _cards: MutableList<Card>) {
 
     companion object {
         fun new(): CardDeck {
-            return CardDeck(Card.ofCombinations().toMutableList())
+            return CardDeck(Cards.ofCombinations().toMutableList())
         }
 
         fun of(cards: List<Card>): CardDeck {

@@ -29,9 +29,9 @@ internal class ScoreTest {
     @Test
     fun aceScoreAs11() {
         val cards = listOf(
-            Card.of(CardSuit.SPADE, CardNumber.FIVE),
-            Card.of(CardSuit.HEART, CardNumber.FIVE), // 10
-            Card.of(CardSuit.SPADE, CardNumber.ACE), // 11
+            Card(CardSuit.SPADE, CardNumber.FIVE),
+            Card(CardSuit.HEART, CardNumber.FIVE), // 10
+            Card(CardSuit.SPADE, CardNumber.ACE), // 11
         )
 
         assertThat(Score.of(cards).value).isEqualTo(21)
@@ -41,9 +41,9 @@ internal class ScoreTest {
     @Test
     fun aceScoreAs1() {
         val cards = listOf(
-            Card.of(CardSuit.SPADE, CardNumber.FIVE),
-            Card.of(CardSuit.HEART, CardNumber.SIX), // 11
-            Card.of(CardSuit.SPADE, CardNumber.ACE), // 1
+            Card(CardSuit.SPADE, CardNumber.FIVE),
+            Card(CardSuit.HEART, CardNumber.SIX), // 11
+            Card(CardSuit.SPADE, CardNumber.ACE), // 1
         )
 
         assertThat(Score.of(cards).value).isEqualTo(12)
@@ -76,7 +76,7 @@ internal class ScoreTest {
 
         for (matchResult in cardRegex.findAll(inputCards)) {
             val (suit, number) = matchResult.destructured
-            cards.add(Card.of(CardSuit.valueOf(suit), CardNumber.valueOf(number)))
+            cards.add(Card(CardSuit.valueOf(suit), CardNumber.valueOf(number)))
         }
 
         val score = Score.of(cards)
