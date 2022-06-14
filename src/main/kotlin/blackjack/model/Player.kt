@@ -1,7 +1,12 @@
 package blackjack.model
 
 class Player(
-    val name: String,
+    val name: PlayerName,
 ) {
-    val cards: Cards = Cards()
+    private val cards: Cards = Cards()
+    val cardSize = cards.size
+
+    companion object {
+        fun from(name: String) = Player(PlayerName(name))
+    }
 }
