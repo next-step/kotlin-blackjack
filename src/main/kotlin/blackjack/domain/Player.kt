@@ -1,7 +1,10 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    private var hands = Hands.from(PlayingCards.empty())
+class Player(
+    val name: String,
+    initialCards: PlayingCards = PlayingCards.empty()
+) {
+    private var hands = Hands.from(initialCards)
     val cardsOfHands: PlayingCards
         get() = hands.cards
     val score: Score
