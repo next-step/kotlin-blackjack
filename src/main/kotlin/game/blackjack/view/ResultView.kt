@@ -1,9 +1,29 @@
 package game.blackjack.view
 
 import game.blackjack.domain.Card
+import game.blackjack.domain.Denomination
 import game.blackjack.domain.Player
+import game.blackjack.domain.Suit
 
 class ResultView {
+
+    private val denominationSymbols: Map<Denomination, String> = Denomination.values().associateWith { toSymbol(it) }
+
+    private val suitSymbols: Map<Suit, String> = mapOf(
+        Suit.SPADE to "♠",
+        Suit.DIAMOND to "◆",
+        Suit.HEART to "♥",
+        Suit.CLOVER to "♣",
+    )
+
+    private fun toSymbol(denomination: Denomination): String =
+        when (denomination) {
+            Denomination.ACE -> "A"
+            Denomination.JACK -> "J"
+            Denomination.QUEEN -> "Q"
+            Denomination.KING -> "K"
+            else -> denomination.score.toString()
+        }
 
     fun printAllPlayerCard(players: List<Player>) {
         println("${players.joinToString { it.name }}에게 ${players[0].cards.size}장의 카드를 나누었습니다.")
@@ -20,5 +40,5 @@ class ResultView {
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }
 
-    private fun formatCard(card: Card): String = "${card.denomination.symbol} ${card.suit.symbol}"
+    private fun formatCard(card: Card): String = "${denominationSymbols[card.denomination]} ${suitSymbols[card.suit]}"
 }

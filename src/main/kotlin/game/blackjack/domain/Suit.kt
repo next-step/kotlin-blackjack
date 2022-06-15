@@ -1,8 +1,8 @@
 package game.blackjack.domain
 
-enum class Suit(val symbol: String) {
-    SPADE("♠"),
-    DIAMOND("◆"),
-    HEART("♥"),
-    CLOVER("♣"),
+enum class Suit {
+    SPADE,
+    DIAMOND,
+    HEART,
+    CLOVER,
 }

@@ -1,12 +1,12 @@
 package game.blackjack.domain
 
-import game.blackjack.view.InputView
 import game.blackjack.view.ResultView
 
 class Table(
     private val players: List<Player>,
-    private val inputView: InputView,
     private val resultView: ResultView,
+    private val getAction: (name: String) -> String,
+    private val showPlayerCard: (player: Player) -> Unit,
 ) {
 
     private val dealer = Dealer()
@@ -27,11 +27,11 @@ class Table(
     fun distribute() {
         players.forEach {
             while (it.canReceive()) {
-                it.determine(inputView.readPlayerAction(it.name))
+                it.determine(getAction(it.name))
                 if (it.canReceive()) {
                     it.receive(dealer.drawCard())
                 }
-                resultView.printPlayerCard(it)
+                showPlayerCard(it)
             }
         }
     }
