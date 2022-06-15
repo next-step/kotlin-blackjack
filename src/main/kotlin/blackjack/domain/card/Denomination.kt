@@ -1,7 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.score.Score
-
 sealed class Denomination(val name: String, val score: Score) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

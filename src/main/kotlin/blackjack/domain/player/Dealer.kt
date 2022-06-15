@@ -1,28 +1,25 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.CardScore
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
+import blackjack.domain.card.Score
 import blackjack.domain.common.Money
-import blackjack.domain.score.CardScore
-import blackjack.domain.score.Match
-import blackjack.domain.score.Score
 
 class Dealer(
     name: String = "딜러",
     cards: Cards = Cards.empty(),
-    private val deck: Deck = Deck.default()
+    private val deck: Deck = Deck.default(),
 ) : Participant(name, cards) {
 
     override fun isEnd(): Boolean {
         return cards.score() >= PLAY_END_STANDARD
     }
 
-    fun giveCard(player: Player) {
-        require(!player.isEnd()) {
-            "플레이가 종료된 참가자입니다"
+    fun play(player: Player) {
+        if (player.playerStatus == PlayerStatus.HIT) {
+            player.addCard(deck.draw())
         }
-
-        player.addCard(deck.draw())
     }
 
     fun addBaseCards(baseCount: Int) {

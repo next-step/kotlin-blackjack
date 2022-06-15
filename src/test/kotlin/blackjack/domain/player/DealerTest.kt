@@ -2,9 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.cards
 import blackjack.domain.common.Money
-import blackjack.domain.score.Match
 import io.kotest.assertions.assertSoftly
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -38,26 +36,26 @@ class DealerTest : DescribeSpec({
         }
     }
 
-    describe("giveCard") {
+    describe("play") {
         context("플레이 중인 참가자의 경우") {
             it("딜러는 플레이어에게 카드를 나누어줄 수 있다") {
                 val dealer = Dealer()
                 val player = Player("yohan")
 
-                dealer.giveCard(player)
+                dealer.play(player)
 
                 player.cards.cards.size shouldBe 1
             }
         }
 
-        context("플레이가 종료된 참가자의 경우") {
-            it("IllegalArgumentException 이 발생한다") {
+        context("카드를 추가할 수 있는 참가자가 아니라면") {
+            it("카드를 지급하지 않는다") {
                 val dealer = Dealer()
-                val player = Player("yohan", playerStatus = PlayerStatus.STAY)
+                val target = Player("yohan", playerStatus = PlayerStatus.STAY)
 
-                shouldThrow<IllegalArgumentException> {
-                    dealer.giveCard(player)
-                }
+                dealer.play(target)
+
+                target.cards.cards.size shouldBe 0
             }
         }
     }

@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.card
 
 @JvmInline
 value class Score(val value: Int) {

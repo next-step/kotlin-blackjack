@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.card
 
 import blackjack.domain.blackjack.BlackJack
 

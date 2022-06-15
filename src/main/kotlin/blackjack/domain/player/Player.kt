@@ -1,15 +1,14 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.CardScore
 import blackjack.domain.card.Cards
 import blackjack.domain.common.Money
-import blackjack.domain.score.CardScore
-import blackjack.domain.score.Match
 
 class Player(
     name: String,
     cards: Cards = Cards.empty(),
     playerStatus: PlayerStatus = PlayerStatus.HIT,
-    private val batting: Money = Money.ZERO
+    private val batting: Money = Money.ZERO,
 ) : Participant(name, cards) {
     private var _playerStatus: PlayerStatus = playerStatus
     val playerStatus get() = _playerStatus

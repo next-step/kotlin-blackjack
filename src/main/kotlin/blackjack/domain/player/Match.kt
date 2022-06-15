@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.player
 
 enum class Match {
     WIN,

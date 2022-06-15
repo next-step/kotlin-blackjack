@@ -1,10 +1,9 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Score
 import blackjack.domain.card.card
 import blackjack.domain.card.cards
 import blackjack.domain.common.Money
-import blackjack.domain.score.Match
-import blackjack.domain.score.Score
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

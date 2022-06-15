@@ -2,12 +2,11 @@ package blackjack.domain.blackjack
 
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerStatus
 import blackjack.domain.player.Players
 
 class BlackJack(
     private val dealer: Dealer = Dealer(),
-    private val players: Players
+    private val players: Players,
 ) {
     val hittablePlayers get() = players.hittablePlayers()
 
@@ -23,9 +22,7 @@ class BlackJack(
     fun play(player: Player) {
         require(player in players) { "존재하지 않는 참가자입니다" }
 
-        if (player.playerStatus == PlayerStatus.HIT) {
-            dealer.giveCard(player)
-        }
+        dealer.play(player)
     }
 
     fun playDealer() {

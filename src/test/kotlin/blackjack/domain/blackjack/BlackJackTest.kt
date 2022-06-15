@@ -70,8 +70,6 @@ class BlackJackTest : DescribeSpec({
                 target.changeStatus(PlayerStatus.STAY)
 
                 blackJack.play(target)
-                blackJack.play(target)
-                blackJack.play(target)
 
                 target.cards.cards.size shouldBe 2
             }
