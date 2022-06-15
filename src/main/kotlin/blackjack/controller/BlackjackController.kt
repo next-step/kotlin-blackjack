@@ -14,7 +14,7 @@ object BlackjackController {
         val players = Users.of(InputView.getPlayersName(), Deck())
         OutputView.printHandOutMessage(players)
         OutputView.printUsersCard(players)
-        players.hit()
+        players.hit(OutputView)
         OutputView.printResult(players)
     }
 }

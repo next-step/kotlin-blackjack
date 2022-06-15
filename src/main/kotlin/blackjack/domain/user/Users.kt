@@ -3,7 +3,7 @@ package blackjack.domain.user
 import blackjack.constant.ErrorMessages
 import blackjack.domain.card.Deck
 import blackjack.view.InputView
-import blackjack.view.OutputView
+import blackjack.view.OutputInterface
 
 /**
  * 유저들을 저장하는 일급 컬렉션
@@ -19,19 +19,18 @@ class Users(val users: List<User>, private val deck: Deck) {
         return users.map { it.name }
     }
 
-    // TODO 여기 정리해야함!
-    fun hit() {
+    fun hit(output: OutputInterface) {
         users.forEach {
-            hitStage(it)
+            hitStage(it, output)
         }
     }
 
-    private fun hitStage(user: User) {
+    private fun hitStage(user: User, output: OutputInterface) {
         while (!user.cards.isBust()) {
-            OutputView.printMoreCard(user)
+            output.printMoreCard(user)
             if (!InputView.getYesOrNo()) return
             user.cards.addCard(deck.takeCard())
-            OutputView.printUserCard(user)
+            output.printUserCard(user)
         }
     }
 

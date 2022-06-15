@@ -14,7 +14,7 @@ import blackjack.domain.user.Users
  * 출력을 담당하는 클래스
  * Created by Jaesungchi on 2022.06.07..
  */
-object OutputView {
+object OutputView : OutputInterface {
     fun printHandOutMessage(users: Users) {
         println()
         println(Messages.HAND_OUT_CARD.format(users.names().joinToString()))
@@ -27,7 +27,7 @@ object OutputView {
         println()
     }
 
-    fun printUserCard(user: User) {
+    override fun printUserCard(user: User) {
         println(
             Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards.hands.joinToString {
                 cardToString(it)
@@ -35,7 +35,7 @@ object OutputView {
         )
     }
 
-    fun printMoreCard(user: User) {
+    override fun printMoreCard(user: User) {
         println(Messages.WANT_MORE_CARD.format(user.name))
     }
 
