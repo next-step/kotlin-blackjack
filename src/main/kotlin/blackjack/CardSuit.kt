@@ -3,6 +3,6 @@ package blackjack
 enum class CardSuit {
     SPADE,
     CLUB,
-    HEARD,
+    HEART,
     DIAMOND;
 }

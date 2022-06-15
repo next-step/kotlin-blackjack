@@ -10,7 +10,17 @@ class Cards(private val values: List<Card> = listOf()) {
     }
 
     fun totalScore(): Score {
-        return cardScores().totalScore()
+        var totalScore: Score = cardScores().totalScore()
+        repeat(this.aceCount()) {
+            if (totalScore.isLessThan(Score.ACE_BONUS_SCORE_BASE_LINE)) {
+                totalScore += Score.ACE_BONUS_SCORE
+            }
+        }
+        return totalScore
+    }
+
+    private fun aceCount(): Int {
+        return this.values.count { it.number == CardNumber.ACE }
     }
 
     private fun cardScores() = Scores(this.values.map { it.number.score })
