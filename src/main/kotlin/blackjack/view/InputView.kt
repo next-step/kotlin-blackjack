@@ -54,7 +54,6 @@ object InputView {
                     println("${name}카드 : ${this.fullName}, Score : ${player.score()}")
                 }
             }
-
         } while (answer.isApprove() && player.canReceive)
     }
 }

@@ -19,7 +19,6 @@ class Player(
         _cards.add(newCards)
     }
 
-
     private fun aceScore(total: Int): Int {
         return if ((total + (Denomination.ACE.extraScore)).canBlackjack())
             Denomination.ACE.extraScore
