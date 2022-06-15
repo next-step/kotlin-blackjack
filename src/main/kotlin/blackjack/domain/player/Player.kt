@@ -3,7 +3,9 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-class Player(val name: String) {
+open class Player(val name: String) {
+    open val isFirstCardHidden: Boolean = false
+
     val cards: Cards = Cards()
 
     fun addCardToHand(card: Card) {

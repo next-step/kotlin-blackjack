@@ -38,4 +38,9 @@ class PlayerTest {
         assertThat(player.cards[0]).isSameAs(firstCard)
         assertThat(player.cards[1]).isSameAs(secondCard)
     }
+
+    @Test
+    fun `플레이어는 isFirstCardHidden 이 false 이다`() {
+        assertThat(Player("vivian").isFirstCardHidden).isFalse
+    }
 }
