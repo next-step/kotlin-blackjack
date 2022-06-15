@@ -5,6 +5,7 @@ import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.game.BlackJack
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
+import blackjack.domain.score.PlayerScore
 import blackjack.domain.score.Score
 import blackjack.dto.BlackJackRequest
 import blackjack.view.GameView
@@ -32,11 +33,11 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
     gameView.firstRoundState()
     gameView.run()
 
-    calculateScore(resultView, players)
+    calculateScore(resultView, players, dealer)
 }
 
-fun calculateScore(resultView: ResultView, players: List<Player>) {
-    val score = Score()
-    score.calculate(players)
-    resultView.score(score.playerScore)
+fun calculateScore(resultView: ResultView, players: List<Player>, dealer: Dealer) {
+    val scores: List<PlayerScore> = players.map { player -> Score.byPlayer(player) }
+    resultView.dealerScore(Score.byPlayer(dealer))
+    resultView.playerScore(scores)
 }
