@@ -1,8 +1,9 @@
 package blackjack.dto
 
 import blackjack.Player
+import blackjack.UserRole
 
-class PlayersDto(private val players: List<Player>) {
+class PlayersDto(private val players: List<UserRole>) {
 
     fun showPlayerNames() {
         val names = players.map { it.name }

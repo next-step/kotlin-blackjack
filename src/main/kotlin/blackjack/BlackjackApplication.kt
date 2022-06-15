@@ -11,18 +11,23 @@ val cardShuffle = BlackjackCardShuffle()
 val cards = cardShuffle.getCards().toMutableList()
 
 fun main() {
+    val gamers = mutableListOf<UserRole>(Dealer())
+
+
     println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
     val players = readln()
         .split(BASIC_RULE_DELIMITER)
         .map { Player(it) }
 
+    gamers.addAll(players)
+
     repeat(BASIC_RULE_COUNT) {
-        players.forEach {
+        gamers.forEach {
             it.draw(cards.removeAt(TOP_CARD))
         }
     }
 
-    val playersDto = PlayersDto(players)
+    val playersDto = PlayersDto(gamers)
     playersDto.showPlayerNames()
     playersDto.showInitCards()
 
@@ -30,7 +35,7 @@ fun main() {
     for (player in players) {
         var p = player
         while (!p.isFinish()) {
-            p = deal(p)
+            p = deal(p) as Player
         }
         results.add(p)
     }
@@ -39,7 +44,7 @@ fun main() {
     resultDto.result()
 }
 
-private fun deal(player: Player): Player {
+private fun deal(player: Player): UserRole {
     println("%s 님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".format(player.name))
     return when (readln()) {
         "y" -> player.draw(cards.removeAt(0))
