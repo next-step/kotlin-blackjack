@@ -4,6 +4,7 @@ import blackjack.domain.card.`20 point card`
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardName
 import blackjack.domain.card.CardSuit
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -35,5 +36,41 @@ class PlayerSummaryTest {
         assertThat(
             PlayerSummary(Player(`20 point card`())).playerCardsTotal
         ).isEqualTo(20)
+    }
+
+    @Test
+    fun `excludeHiddenCard 가 true 일 경우 딜러의 첫번째카드는 비공개이다`() {
+        val cards = listOf(
+            Card.Three(CardSuit.DIAMOND),
+            Card.Jack(CardSuit.HEART)
+        )
+
+        assertThat(
+            PlayerSummary(Dealer(cards), excludeHiddenCard = true).playerCards
+        ).isEqualTo(listOf("J하트"))
+    }
+
+    @Test
+    fun `excludeHiddenCard 가 false 일 경우 딜러의 모든 카드는 공개되어있다`() {
+        val cards = listOf(
+            Card.Three(CardSuit.DIAMOND),
+            Card.Jack(CardSuit.HEART)
+        )
+
+        assertThat(
+            PlayerSummary(Dealer(cards), excludeHiddenCard = false).playerCards
+        ).isEqualTo(listOf("3다이아몬드", "J하트"))
+    }
+
+    @Test
+    fun `excludeHiddenCard 가 true 일 경우에도 플레이어의 모든 카드는 공개되어있다`() {
+        val cards = listOf(
+            Card.Three(CardSuit.DIAMOND),
+            Card.Jack(CardSuit.HEART)
+        )
+
+        assertThat(
+            PlayerSummary(Player(cards), excludeHiddenCard = true).playerCards
+        ).isEqualTo(listOf("3다이아몬드", "J하트"))
     }
 }
