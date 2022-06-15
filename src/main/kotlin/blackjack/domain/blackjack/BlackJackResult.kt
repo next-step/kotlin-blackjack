@@ -4,7 +4,6 @@ import blackjack.domain.card.Cards
 import blackjack.domain.common.Money
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
-import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 data class BlackJackResult(
@@ -21,7 +20,7 @@ data class BlackJackResult(
     }
 
     fun dealerProfit(): ParticipantProfitResult {
-        val profitByPlayer: Map<Player, Money> = players.profit(dealer)
+        val profitByPlayer = players.profit(dealer)
         val profit = profitByPlayer.values.fold(Money.ZERO) { acc, playerProfit -> acc.minus(playerProfit) }
         return ParticipantProfitResult(dealer.name, profit)
     }
