@@ -8,9 +8,11 @@ import blackjack.domain.score.Match
 class Player(
     name: String,
     cards: Cards = Cards.empty(),
-    var playerStatus: PlayerStatus = PlayerStatus.HIT,
-    var batting: Money = Money.ZERO
+    playerStatus: PlayerStatus = PlayerStatus.HIT,
+    private val batting: Money = Money.ZERO
 ) : Participant(name, cards) {
+    private var _playerStatus: PlayerStatus = playerStatus
+    val playerStatus get() = _playerStatus
 
     override fun isEnd(): Boolean {
         return playerStatus == PlayerStatus.STAY || cards.cardScore() == CardScore.BUST
@@ -21,7 +23,7 @@ class Player(
             "게임이 종료된 이후에는 상태를 변경할 수 없습니다."
         }
 
-        playerStatus = status
+        _playerStatus = status
     }
 
     fun profit(match: Match): Money {
