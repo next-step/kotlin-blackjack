@@ -6,7 +6,7 @@ class Deck(
     private val _cards = cards.toMutableSet()
     val cards: Set<Card> get() = _cards.toSet()
 
-    private val totalCardCount = TotalCard().count
+    private val totalCardCount = TOTAL_CARD_COUNT
 
     init {
         require(cards.size == totalCardCount) {
@@ -30,5 +30,7 @@ class Deck(
                 Card(suit = character, denomination = number)
             }
         }.flatten().shuffled().toSet()
+
+        private const val TOTAL_CARD_COUNT = 52
     }
 }

@@ -9,7 +9,7 @@ class Player(
     val cards: List<Card> get() = _cards.toList()
 
     val canReceive: Boolean
-        get() = score() < Blackjack().score
+        get() = score() < BLACKJACK_SCORE
 
     fun addCard(newCards: List<Card>) {
         _cards.addAll(newCards)
@@ -21,7 +21,7 @@ class Player(
 
 
     private fun aceScore(total: Int): Int {
-        return if (total + (Denomination.ACE.extraScore) <= Blackjack().score)
+        return if ((total + (Denomination.ACE.extraScore)).canBlackjack())
             Denomination.ACE.extraScore
         else Denomination.ACE.score
     }
@@ -40,5 +40,11 @@ class Player(
         return if (hasAce != null) {
             total + aceScore(total)
         } else total
+    }
+
+    private fun Int.canBlackjack() = this <= BLACKJACK_SCORE
+
+    companion object {
+        private const val BLACKJACK_SCORE = 21
     }
 }

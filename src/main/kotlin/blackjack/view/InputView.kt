@@ -32,8 +32,8 @@ object InputView {
         return players.toPlayers()
     }
 
-    fun initDistributeCard(deckFunc: () -> Card): List<Card> {
-        return List(InitDrawCard().count) {
+    fun initDistributeCard(cardCount: Int, deckFunc: () -> Card): List<Card> {
+        return List(cardCount) {
             deckFunc()
         }
     }
