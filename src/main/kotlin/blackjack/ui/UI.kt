@@ -1,28 +1,29 @@
 package blackjack.ui
 
 import blackjack.domain.BetResult
-import blackjack.domain.Player
+import blackjack.domain.Dealer
 import blackjack.domain.Players
+import blackjack.domain.User
 
 object UI {
 
-    fun drawFirstTurnMessage(dealer: Player, players: Players) {
+    fun drawFirstTurnMessage(dealer: Dealer, players: Players) {
         val playerNames = players.list.joinToString(",") { it.name }
         println("${dealer.name}와 ${playerNames}에게 각자 2장을 나누었습니다.")
     }
 
-    fun drawCardList(player: Player) {
-        val playerCards = player.openedCards().joinToString(", ") { it.toString() }
-        println("${player.name}카드: $playerCards")
+    fun drawCardList(user: User) {
+        val playerCards = user.openedCards().joinToString(", ") { it.toString() }
+        println("${user.name}카드: $playerCards")
     }
 
-    fun drawDealerDrawMessage(dealer: Player) {
+    fun drawDealerDrawMessage(dealer: Dealer) {
         println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun drawResult(player: Player) {
-        val playerCards = player.currentCards().joinToString(", ") { it.toString() }
-        println("${player.name}카드: $playerCards - ${player.score.value}")
+    fun drawResult(user: User) {
+        val playerCards = user.currentCards().joinToString(", ") { it.toString() }
+        println("${user.name}카드: $playerCards - ${user.score.value}")
     }
 
     fun drawRecordTitle() {
@@ -30,7 +31,7 @@ object UI {
     }
 
     fun drawResult(result: BetResult) {
-        println("${result.player.name}: ${result.earnMoney}")
+        println("${result.user.name}: ${result.earnMoney}")
     }
 
     fun drawDivider() {

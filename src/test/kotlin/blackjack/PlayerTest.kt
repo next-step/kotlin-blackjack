@@ -18,7 +18,7 @@ class PlayerTest : DescribeSpec({
                 val cardDeck = CardDeck(CardNumber.Num2, CardNumber.Num3, CardNumber.Num4)
                 player.draw(cardDeck)
                 player.draw(cardDeck)
-                player.cardCount shouldBe 2
+                player.currentCards().size shouldBe 2
             }
         }
     }
@@ -71,8 +71,17 @@ class PlayerTest : DescribeSpec({
         }
         context("카드가 블랙잭이 아닌 경우") {
             it("false 를 리턴한다.") {
-                val player = Player("name", PlayerCards(CardNumber.Num2,CardNumber.Num9, CardNumber.Jack))
+                val player = Player("name", PlayerCards(CardNumber.Num2, CardNumber.Num9, CardNumber.Jack))
                 player.isBlackJack() shouldBe false
+            }
+        }
+    }
+
+    describe("openedCards") {
+        context("가지고 있는 카드가 2장인 경우") {
+            it("2장을 전부 오픈 한다.") {
+                val player = Player("", PlayerCards(CardNumber.Num6, CardNumber.Num10))
+                player.openedCards().size shouldBe 2
             }
         }
     }
