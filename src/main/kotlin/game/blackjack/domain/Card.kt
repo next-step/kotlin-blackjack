@@ -12,7 +12,5 @@ data class Card(val suit: Suit, val denomination: Denomination) {
             total += if (denominations.contains(Denomination.ACE) && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0
             return total
         }
-
-        fun isBust(score: Int): Boolean = score > BLACKJACK_SCORE
     }
 }

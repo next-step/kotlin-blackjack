@@ -1,11 +1,11 @@
 package game.blackjack.domain
 
 class Player(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
+    private val _cards: Cards = Cards()
     var status: Status = Status.HIT
 
     val cards: List<Card>
-        get() = _cards.toList()
+        get() = _cards.get()
 
     fun determine(response: String): Status {
         when (response) {
@@ -20,8 +20,8 @@ class Player(val name: String) {
 
     fun receive(card: Card): Int {
         _cards.add(card)
-        val score = Card.score(_cards)
-        if (Card.isBust(score)) {
+        val score = _cards.score()
+        if (_cards.isBust()) {
             status = Status.BUST
         }
         return score
