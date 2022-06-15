@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: PlayerName,
-    initialCards: PlayingCards = PlayingCards.empty()
+    initialCards: PlayingCards
 ) {
     private var hands = Hands.from(initialCards)
     val cardsOfHands: PlayingCards

@@ -53,8 +53,8 @@ class BlackjackViewModel private constructor(
             }
         }
 
-        fun of(players: List<Player>, cardDeck: CardDeck): BlackjackViewModel {
-            return BlackjackViewModel(players, cardDeck)
+        fun of(playerNames: List<PlayerName>, cardDeck: CardDeck): BlackjackViewModel {
+            return BlackjackViewModel(playerNames.toPlayers(cardDeck), cardDeck)
         }
     }
 }
