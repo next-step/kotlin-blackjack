@@ -39,3 +39,19 @@ class Cards(cards: List<Card>) {
         }
     }
 }
+
+fun cards(block: CardsBuilder.() -> Unit): Cards {
+    return CardsBuilder().apply(block).build()
+}
+
+class CardsBuilder {
+    private val cards: MutableList<Card> = mutableListOf()
+
+    fun card(block: CardBuilder.() -> Unit) {
+        cards.add(CardBuilder().apply(block).build())
+    }
+
+    fun build(): Cards {
+        return Cards(cards)
+    }
+}
