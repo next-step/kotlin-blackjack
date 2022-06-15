@@ -2,7 +2,10 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.RandomCardDeck
+import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
+import blackjack.domain.card.RandomCardDeck.Companion.JACK
+import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
 import io.kotest.core.spec.style.FreeSpec
@@ -59,6 +62,40 @@ class BlackJackTest : FreeSpec({
             blackJack.giveCard(player)
 
             player.cards.size shouldBe 3
+        }
+    }
+
+    "canHitPlayer" - {
+        "플레이어의 카드가 21을 초과하지 않으면 true를 반환한다." {
+            val dto = BlackJackRequest.of(listOf("uju"))
+            val cards = mutableListOf(
+                Card(DIAMOND, "2"),
+                Card(DIAMOND, "3"),
+                Card(DIAMOND, "4"),
+                Card(DIAMOND, "5"),
+            )
+            val cardDeck = CardDeckFake(cards)
+            val blackJack = BlackJack(dto, cardDeck)
+            val player = dto.players[0]
+
+            val result = blackJack.canHitPlayer(player)
+            result shouldBe true
+        }
+
+        "플레이어의 카드가 21을 초과하면 false를 반환한다." {
+            val dto = BlackJackRequest.of(listOf("uju"))
+            val cards = mutableListOf(
+                Card(DIAMOND, ACE),
+                Card(DIAMOND, JACK),
+                Card(DIAMOND, KING),
+                Card(DIAMOND, "5"),
+            )
+            val cardDeck = CardDeckFake(cards)
+            val blackJack = BlackJack(dto, cardDeck)
+            val player = dto.players[0]
+
+            val result = blackJack.canHitPlayer(player)
+            result shouldBe false
         }
     }
 })

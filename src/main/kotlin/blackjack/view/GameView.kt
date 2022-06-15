@@ -29,7 +29,12 @@ class GameView(
         val input = readlnOrNull() ?: throw IllegalArgumentException()
         when (input) {
             "y" -> {
-                blackJack.giveCard(player)
+                if (blackJack.canHitPlayer(player)) {
+                    blackJack.giveCard(player)
+                } else {
+                    println("더 이상 카드를 받을 수 없습니다.")
+                    return
+                }
                 playerCards(player)
                 hitCard(player)
             }
