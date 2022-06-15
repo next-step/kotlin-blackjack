@@ -10,15 +10,21 @@ import io.kotest.matchers.shouldBe
 class DealerTest : DescribeSpec({
 
     describe("canDraw") {
-        context("카드의 점수 합이 16이하이면 ") {
+        context("카드의 점수 합이 16이하이면") {
             it("true 를 리턴한다.") {
                 val player = Dealer(PlayerCards(CardNumber.Num6, CardNumber.Num10))
                 player.canDraw() shouldBe true
             }
         }
-        context("카드의 점수 합이 17이상이면 ") {
+        context("카드의 점수 합이 17이상이면") {
             it("false 를 리턴한다.") {
                 val player = Dealer(PlayerCards(CardNumber.Num7, CardNumber.Num10))
+                player.canDraw() shouldBe false
+            }
+        }
+        context("카드의 점수 합이 16이하이면서 카드가 3장 이상인 경우") {
+            it("false 를 리턴한다.") {
+                val player = Dealer(PlayerCards(CardNumber.Num4, CardNumber.Num4, CardNumber.Num4))
                 player.canDraw() shouldBe false
             }
         }

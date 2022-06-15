@@ -1,13 +1,13 @@
 package blackjack
 
 import blackjack.domain.BetResult
+import blackjack.domain.BetResultDiscriminator
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
 import blackjack.domain.User
-import blackjack.domain.BetResultDiscriminator
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
@@ -58,7 +58,7 @@ object CardGame {
         UI.drawFirstTurnMessage(dealer, players)
 
         UI.drawCardList(dealer)
-        players.list.forEach {
+        players.forEach {
             UI.drawCardList(it)
         }
     }

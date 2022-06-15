@@ -3,9 +3,9 @@ package blackjack.domain
 class Dealer(
     playerCards: PlayerCards = PlayerCards(),
 ) : User("딜러", playerCards) {
-    override fun openedCards(): List<Card> = playerCards.cards.take(1)
+    override fun openedCards(): List<Card> = playerCards.cards.take(CARD_OPEN_COUNT)
 
-    override fun canDraw(): Boolean = score < CARD_DRAW_THRESHOLD
+    override fun canDraw(): Boolean = playerCards.size <= CARD_TAKE_COUNT_THRESHOLD && score < CARD_DRAW_THRESHOLD
 
     fun getPlayerBetResult(player: Player): ResultStatus {
         return when {
@@ -21,5 +21,7 @@ class Dealer(
 
     companion object {
         private val CARD_DRAW_THRESHOLD = Score(17)
+        private const val CARD_TAKE_COUNT_THRESHOLD = 2
+        private const val CARD_OPEN_COUNT = 1
     }
 }
