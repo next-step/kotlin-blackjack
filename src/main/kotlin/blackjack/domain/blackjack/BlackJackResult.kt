@@ -20,9 +20,7 @@ data class BlackJackResult(
     }
 
     fun dealerProfit(): ParticipantProfitResult {
-        val profitByPlayer = players.profit(dealer)
-        val profit = profitByPlayer.values.fold(Money.ZERO) { acc, playerProfit -> acc.minus(playerProfit) }
-        return ParticipantProfitResult(dealer.name, profit)
+        return ParticipantProfitResult(dealer.name, dealer.profit(players))
     }
 
     fun playersProfit(): List<ParticipantProfitResult> {

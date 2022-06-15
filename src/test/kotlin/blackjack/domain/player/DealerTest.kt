@@ -7,7 +7,9 @@ import blackjack.domain.card.Jack
 import blackjack.domain.card.NumberCard
 import blackjack.domain.card.Queen
 import blackjack.domain.card.Suit
+import blackjack.domain.common.Money
 import blackjack.domain.score.Match
+import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -260,6 +262,50 @@ class DealerTest : DescribeSpec({
                 )
 
                 dealer.match(player) shouldBe Match.WIN
+            }
+        }
+    }
+
+    describe("profit") {
+        context("참가자들이 주어지면") {
+            it("딜러의 배팅 결과를 알 수 있다") {
+                val dealer = Dealer(
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, Jack()),
+                        )
+                    )
+                )
+
+                val yohan = Player(
+                    name = "yohan",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, Ace()),
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+                val pang = Player(
+                    name = "pang",
+                    cards = Cards(
+                        listOf(
+                            Card(Suit.DIAMOND, Queen()),
+                            Card(Suit.DIAMOND, NumberCard(9)),
+                        )
+                    ),
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = dealer.profit(Players(listOf(yohan, pang)))
+
+                assertSoftly {
+                    profit shouldBe Money.of(-500)
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
+import blackjack.domain.common.Money
 import blackjack.domain.score.CardScore
 import blackjack.domain.score.Match
 import blackjack.domain.score.Score
@@ -32,6 +33,11 @@ class Dealer(
         while (!isEnd()) {
             addCard(deck.draw())
         }
+    }
+
+    fun profit(players: Players): Money {
+        return players.profit(this).values
+            .fold(Money.ZERO) { acc, playerProfit -> acc.minus(playerProfit) }
     }
 
     fun match(other: Player): Match {
