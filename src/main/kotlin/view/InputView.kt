@@ -45,13 +45,17 @@ object InputView {
     }
 
     fun displayHaveCard(player: Player) {
-        print(player.name + " : " + getCardString(player.cards))
-        println()
+        println(player.name + " : " + getCardString(player.cards))
     }
 
-    private fun getCardString(cards: List<Card>): String {
+    fun getCardString(cards: List<Card>): String {
         val formattedStrings = cards.map { card -> "${card.suit.suitName}${card.denomination.denominationName}" }
         return formattedStrings.joinToString(DELIMITER)
+    }
+
+    fun displayDealerCard() {
+        println()
+        println(DEALER_CARD_MESSAGE)
     }
 
     private const val YES_NO_MESSAGE = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
@@ -59,6 +63,7 @@ object InputView {
     private const val DELIMITER = ","
     private const val PLAYER_INPUT = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)"
     private const val CARD_DIVIDE_MESSAGE = "%s에게 %s장의 카드를 나누었습니다."
+    private const val DEALER_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
     private const val YES = "y"
     private const val NO = "n"

@@ -29,7 +29,7 @@ data class Card(val suit: CardSuit, val denomination: CardDenomination) {
         fun issueAllCards(): Set<Card> {
             return CardSuit.values().flatMap { p ->
                 CardDenomination.values().map { Card(p, it) }
-            }.toHashSet()
+            }.shuffled().toHashSet()
         }
     }
 }

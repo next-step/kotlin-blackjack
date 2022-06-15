@@ -3,13 +3,17 @@ package view
 import domain.BlackJackGame
 import domain.BlackJackGame.endCheck
 import domain.BlackJackGame.setInitialCards
+import domain.Dealer
 
 fun main() {
-    val players = InputView.getUserName()
-    InputView.displayCardDivide(players.joinToString { it.name }, "2")
+    val participants = InputView.getUserName()
+    InputView.displayCardDivide(participants.joinToString { it.name }, "2")
 
-    setInitialCards(players)
-    players.forEach {
+    val dealer = Dealer("딜러")
+    val allPlayer = listOf(dealer) + participants
+    setInitialCards(allPlayer)
+
+    allPlayer.forEach {
         InputView.displayHaveCard(it)
     }
 
@@ -17,7 +21,7 @@ fun main() {
         var noCnt = 0
         var continueGame = false
 
-        players.forEach {
+        participants.forEach {
             val enableToIssue = InputView.isYesOrNo(it.name)
             if (!enableToIssue) noCnt++
 
@@ -26,9 +30,18 @@ fun main() {
 
             InputView.displayHaveCard(it)
 
-            continueGame = endCheck(noCnt, players.size, isBust)
+            continueGame = endCheck(noCnt, participants.size, isBust)
         }
     } while (continueGame)
 
-    ResultView.displayResult(players)
+    val isMoreCardForDealer = dealer.isBelowForDealerScore(dealer.getSumOfCards())
+    if (isMoreCardForDealer) {
+        InputView.displayDealerCard()
+        BlackJackGame.drawCard(dealer)
+    }
+
+    BlackJackGame.computeWinner(allPlayer)
+
+    ResultView.displayPlayersScore(allPlayer)
+    ResultView.displayWinOrLose(allPlayer)
 }

@@ -34,6 +34,12 @@ object BlackJackGame {
         return CardDeck.pop(ORDINARY_POP_SIZE)
     }
 
+    fun computeWinner(players: List<Player>) {
+        players
+            .filter { it.getSumOfCards() <= BUST_THRESHOLD_SCORE }
+            .sortedByDescending { it.getSumOfCards() }.get(0).match = Match.WIN
+    }
+
     private const val BUST_THRESHOLD_SCORE = 21
     private const val INITIAL_POP_SIZE = 2
     private const val ORDINARY_POP_SIZE = 1
