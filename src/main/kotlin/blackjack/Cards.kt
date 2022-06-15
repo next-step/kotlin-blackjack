@@ -8,4 +8,10 @@ class Cards(private val values: List<Card> = listOf()) {
     fun size(): Int {
         return this.values.size
     }
+
+    fun totalScore(): Score {
+        return cardScores().totalScore()
+    }
+
+    private fun cardScores() = Scores(this.values.map { it.number.score })
 }

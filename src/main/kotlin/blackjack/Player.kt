@@ -16,6 +16,10 @@ class Player(
         return this.hand.size()
     }
 
+    fun totalScoreInHand(): Score {
+        return this.hand.totalScore()
+    }
+
     fun isStart(): Boolean = this.state.isStart()
     fun isHit(): Boolean = this.state.isHit()
     fun isStay(): Boolean = this.state.isStay()

@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardNumber(private val score: Score) {
+enum class CardNumber(val score: Score) {
     ACE(Score(1)),
     TWO(Score(2)),
     THREE(Score(3)),

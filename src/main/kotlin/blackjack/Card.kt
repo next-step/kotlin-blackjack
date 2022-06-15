@@ -1,6 +1,6 @@
 package blackjack
 
 data class Card(
-    private val number: CardNumber,
+    val number: CardNumber,
     private val suit: CardSuit
 )
