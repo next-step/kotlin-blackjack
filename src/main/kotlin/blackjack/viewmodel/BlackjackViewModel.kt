@@ -3,20 +3,16 @@ package blackjack.viewmodel
 import blackjack.domain.CardDeck
 import blackjack.domain.Observable
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.rule.DistinctRule
 import blackjack.domain.rule.ShuffleRule
 
 class BlackjackViewModel private constructor(
-    players: List<Player>,
+    val players: List<Player>,
     private val cardDeck: CardDeck
 ) {
-    val players: List<Player> = players.withInitialHands()
     val currentTurn: Observable<Player?> = Observable(players.currentTurn())
-
-    private fun List<Player>.withInitialHands(): List<Player> = onEach { player ->
-        player.receive(cardDeck.draw(START_CARD_COUNT))
-    }
 
     private fun List<Player>.currentTurn(): Player? = find { player ->
         player.isReceivable()
@@ -40,12 +36,21 @@ class BlackjackViewModel private constructor(
         const val START_CARD_COUNT = 2
         private const val HIT_CARD_COUNT = 1
 
-        fun from(players: List<Player>): BlackjackViewModel {
+        fun from(playerNames: List<PlayerName>): BlackjackViewModel {
             val cardDeck = CardDeck.of(
                 PlayingCard.all(),
                 DistinctRule, ShuffleRule
             )
-            return BlackjackViewModel(players, cardDeck)
+            return BlackjackViewModel(playerNames.toPlayers(cardDeck), cardDeck)
+        }
+
+        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Player> {
+            return map { playerName ->
+                Player(
+                    name = playerName,
+                    initialCards = cardDeck.draw(START_CARD_COUNT)
+                )
+            }
         }
 
         fun of(players: List<Player>, cardDeck: CardDeck): BlackjackViewModel {

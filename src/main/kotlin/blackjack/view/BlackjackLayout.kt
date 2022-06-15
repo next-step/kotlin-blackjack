@@ -1,9 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.view.input.InputView
 import blackjack.view.input.UserInputRequest
-import blackjack.view.input.converter.PlayersConverter
+import blackjack.view.input.converter.PlayerNamesConverter
 import blackjack.view.input.converter.YesOrNoConverter
 import blackjack.view.output.OutputView
 import blackjack.view.output.converter.EndOfGameConverter
@@ -16,7 +17,7 @@ object BlackjackLayout {
     private const val GUIDANCE_MESSAGE_HIT = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
 
     fun execute() {
-        val viewModel = BlackjackViewModel.from(getPlayers())
+        val viewModel = BlackjackViewModel.from(getPlayerNames())
         OutputView.println(viewModel.players, StartOfGameConverter)
 
         viewModel.currentTurn.observe { player ->
@@ -31,10 +32,10 @@ object BlackjackLayout {
         OutputView.print(viewModel.players, EndOfGameConverter)
     }
 
-    private fun getPlayers(): List<Player> {
+    private fun getPlayerNames(): List<PlayerName> {
         val userInputRequest = UserInputRequest(
             message = GUIDANCE_MESSAGE_PLAYERS_NAME,
-            inputConverter = PlayersConverter
+            inputConverter = PlayerNamesConverter
         )
 
         return InputView.receiveUserInput(userInputRequest)

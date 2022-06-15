@@ -9,6 +9,7 @@ import blackjack.domain.PlayingCards
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class BlackjackViewModelTest {
     private val names = listOf(PlayerName("Spade"), PlayerName("Diamond"))
@@ -21,6 +22,20 @@ class BlackjackViewModelTest {
             players = players,
             cardDeck = CardDeck.from(PlayingCard.all())
         )
+
+    @Test
+    fun `from에 PlayerName List를 넘겨 BlackjackViewModel을 생성할 수 있다`() {
+        val viewModel = BlackjackViewModel.from(names)
+
+        assertAll(
+            { assertThat(viewModel.players).hasSize(names.size) },
+            {
+                assertThat(viewModel.players).allMatch { player ->
+                    player.name in names
+                }
+            }
+        )
+    }
 
     @Test
     fun `players는 현재 게임에 참가 중인 참가자들을 보관한다`() {
