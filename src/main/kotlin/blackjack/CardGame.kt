@@ -14,7 +14,7 @@ import blackjack.ui.UI
 object CardGame {
     fun run() {
         val dealer = Player("딜러", rule = DealerRule)
-        val players = InputReceiver.receiverPlayers()
+        val players = InputReceiver.receivePlayers()
         val cardDeck = CardDeck.new(RandomShuffleStrategy)
 
         playFirstTurn(dealer, players, cardDeck)
@@ -69,7 +69,7 @@ object CardGame {
                 player.draw(cardDeck)
                 UI.drawDealerDrawMessage(player)
             }
-            PlayerRule -> while (player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)) {
+            PlayerRule -> while (player.canDraw() && InputReceiver.receiveWhetherDrawCard(player)) {
                 player.draw(cardDeck)
                 UI.drawCardList(player)
             }

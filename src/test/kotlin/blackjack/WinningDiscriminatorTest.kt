@@ -85,5 +85,5 @@ class WinningDiscriminatorTest : DescribeSpec({
 
 private fun PlayerCards(vararg cards: CardNumber) = PlayerCards(cards.toList().map { Card(it) })
 private fun Players(vararg player: Player) = Players(player.toList())
-private fun Dealer(card: PlayerCards) = Player("딜러", card, DealerRule)
+private fun Dealer(card: PlayerCards) = Player("딜러", card, rule = DealerRule)
 private fun Card(number: CardNumber) = Card(Symbol.Diamond, number)
