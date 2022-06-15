@@ -42,7 +42,7 @@ class DealerTest : DescribeSpec({
     describe("getBetResult") {
         context("버스트인 경우") {
             it("배팅을 전부 잃는다.") {
-                val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack)
+                val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack, CardNumber.Num10)
                 val playerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack, CardNumber.Num10)
 
                 val dealer = Dealer(dealerCards)

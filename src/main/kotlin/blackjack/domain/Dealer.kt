@@ -9,8 +9,8 @@ class Dealer(
 
     fun getPlayerBetResult(player: Player): ResultStatus {
         return when {
-            isBust() -> ResultStatus.WinByDealerBust
             player.isBust() -> ResultStatus.LoseByBust
+            isBust() -> ResultStatus.WinByDealerBust
             isBlackJack() && player.isBlackJack() -> ResultStatus.DrawWithBlackJack
             player.isBlackJack() -> ResultStatus.WinByBlackJack
             score > player.score -> ResultStatus.LoseByScore
