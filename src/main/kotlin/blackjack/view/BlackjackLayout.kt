@@ -58,7 +58,7 @@ object BlackjackLayout {
 
     private fun isPlayerWannaHit(player: Player): Boolean {
         val userInputRequest = UserInputRequest(
-            message = "${player.name}$GUIDANCE_MESSAGE_HIT",
+            message = "${player.name.value}$GUIDANCE_MESSAGE_HIT",
             inputConverter = YesOrNoConverter
         )
 
