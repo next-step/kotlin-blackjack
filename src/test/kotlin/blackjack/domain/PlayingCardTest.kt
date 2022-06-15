@@ -7,7 +7,7 @@ import org.junit.jupiter.api.assertAll
 class PlayingCardTest {
     @Test
     fun `PlayingCard는 카드 모양과 카드 번호로 구성된다`() {
-        val playingCard = PlayingCard.of(Suit.CLUBS, CardNumber.ACE)
+        val playingCard = PlayingCard(Suit.CLUBS, CardNumber.ACE)
 
         assertAll(
             { assertThat(playingCard.suit).isEqualTo(Suit.CLUBS) },
@@ -27,7 +27,7 @@ class PlayingCardTest {
 
     @Test
     fun `isCardOf를 통해 PlayingCard가 특정 번호의 카드인지 확인할 수 있다`() {
-        val playingCard = PlayingCard.of(Suit.DIAMONDS, CardNumber.ACE)
+        val playingCard = PlayingCard(Suit.DIAMONDS, CardNumber.ACE)
 
         assertAll(
             { assertThat(playingCard.isCardOf(CardNumber.ACE)).isTrue },
