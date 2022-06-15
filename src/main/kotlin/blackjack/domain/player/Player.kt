@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
-class Player(val name: String) {
+open class Player(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card>
         get() = _cards.toList()

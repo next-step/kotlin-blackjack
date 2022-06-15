@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.game.BlackJack
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.score.Score
 import blackjack.dto.BlackJackRequest
@@ -26,7 +27,8 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
     val blackJack = BlackJack(dto, cardDeck)
 
     val players: List<Player> = dto.players
-    val gameView = GameView(blackJack, players)
+    val dealer: Dealer = dto.dealer
+    val gameView = GameView(blackJack, dealer, players)
     gameView.firstRoundState()
     gameView.run()
 

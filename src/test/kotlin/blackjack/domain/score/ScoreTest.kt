@@ -19,7 +19,9 @@ class ScoreTest : FreeSpec({
             val dto = BlackJackRequest.of(listOf("uju"))
             val cards = mutableListOf(
                 Card(DIAMOND, "2"),
-                Card(DIAMOND, "3")
+                Card(DIAMOND, "3"),
+                Card(DIAMOND, "4"),
+                Card(DIAMOND, "5"),
             )
             val cardDeck = CardDeckFake(cards)
 
@@ -35,15 +37,21 @@ class ScoreTest : FreeSpec({
 
         "ACE카드가 존재하면서 21 초과인 경우 에이스를 1로 계산한다." {
             val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(Card(DIAMOND, ACE), Card(DIAMOND, JACK), Card(DIAMOND, KING))
+            val cards = mutableListOf(
+                Card(DIAMOND, ACE),
+                Card(DIAMOND, JACK),
+                Card(DIAMOND, "4"),
+                Card(DIAMOND, "5"),
+                Card(DIAMOND, KING),
+            )
             val cardDeck = CardDeckFake(cards)
 
-            BlackJack(dto, cardDeck)
-
+            val blackJack = BlackJack(dto, cardDeck)
             val players = dto.players
+            blackJack.giveCard(players[0])
             val score = Score()
             score.calculate(players)
-
+            println(players[0].cards)
             score.playerScore[0].score shouldBe 21
         }
 

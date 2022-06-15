@@ -1,16 +1,19 @@
 package blackjack.view
 
 import blackjack.domain.game.BlackJack
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.view.CardView.cardsToString
 
 class GameView(
     private val blackJack: BlackJack,
+    private val dealer: Dealer,
     private val players: List<Player>,
 ) {
 
     fun firstRoundState() {
         println()
+        dealerCards(dealer)
         for (player in players) {
             playerCards(player)
         }
@@ -39,6 +42,10 @@ class GameView(
                 hitCard(player)
             }
         }
+    }
+
+    private fun dealerCards(dealer: Dealer) {
+        println("${dealer.name}: ${cardsToString(dealer.cards).joinToString(", ")}")
     }
 
     private fun playerCards(player: Player) {

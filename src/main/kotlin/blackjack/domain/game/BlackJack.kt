@@ -7,10 +7,18 @@ import blackjack.dto.BlackJackRequest
 class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDeck) {
 
     private val players = blackJackRequest.players
+    private val dealer = blackJackRequest.dealer
 
     init {
+        println(dealer.cards)
+        println(dealer.name)
         for (player in players) {
             repeat(FIRST_DEAL) { player.addCard(cardDeck.getOne()) }
+        }
+
+        repeat(FIRST_DEAL) {
+            println(dealer.cards)
+            dealer.addCard(cardDeck.getOne())
         }
     }
 
