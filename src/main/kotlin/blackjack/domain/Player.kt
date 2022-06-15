@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
-    private val betMoney: Money = Money(0),
+    val betMoney: Money = Money(0),
     val rule: Rule = PlayerRule,
 ) {
     val cardCount: Int get() = playerCards.size
@@ -16,6 +16,7 @@ class Player(
     fun openedCards() = rule.openedCards(playerCards)
 
     fun currentCards() = playerCards.cards
+    fun currentHands() = playerCards
 
     fun canDraw(): Boolean = rule.canDraw(score)
 

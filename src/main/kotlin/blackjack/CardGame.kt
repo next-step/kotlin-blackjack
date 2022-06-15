@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BetResult
 import blackjack.domain.CardDeck
 import blackjack.domain.DealerRule
 import blackjack.domain.Player
@@ -7,7 +8,6 @@ import blackjack.domain.PlayerRule
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
 import blackjack.domain.WinningDiscriminator
-import blackjack.domain.WinningResult
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
@@ -41,11 +41,11 @@ object CardGame {
         }
     }
 
-    private fun drawRecord(results: List<WinningResult>) {
+    private fun drawRecord(results: List<BetResult>) {
         UI.drawDivider()
         UI.drawRecordTitle()
         results.forEach {
-            UI.drawRecord(it)
+            UI.drawResult(it)
         }
     }
 

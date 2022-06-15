@@ -1,10 +1,8 @@
 package blackjack.ui
 
-import blackjack.domain.DealerRule
+import blackjack.domain.BetResult
 import blackjack.domain.Player
-import blackjack.domain.PlayerRule
 import blackjack.domain.Players
-import blackjack.domain.WinningResult
 
 object UI {
 
@@ -28,27 +26,11 @@ object UI {
     }
 
     fun drawRecordTitle() {
-        println("## 최종 승패")
+        println("## 최종 수익")
     }
 
-    fun drawRecord(result: WinningResult) {
-        val recordString = when (result.player.rule) {
-            DealerRule -> {
-                buildString {
-                    if (result.winCount > 0) append("${result.winCount}승")
-                    if (result.loseCount > 0) append("${result.loseCount}패")
-                    if (result.drawCount > 0) append("${result.drawCount}무")
-                }
-            }
-            PlayerRule -> when {
-                result.winCount == 1 -> "승"
-                result.loseCount == 1 -> "패"
-                result.drawCount == 1 -> "무"
-                else -> "무"
-            }
-        }
-
-        println("${result.player.name}: $recordString")
+    fun drawResult(result: BetResult) {
+        println("${result.player.name}: ${result.earnMoney}")
     }
 
     fun drawDivider() {

@@ -1,27 +1,17 @@
 package blackjack.domain
 
 object WinningDiscriminator {
-    fun discrimination(dealer: Player, players: Players): List<WinningResult> {
-        val dealerResult = WinningResult(dealer)
-        val playerResults = players.map { player ->
-            WinningResult(player).apply {
-                val isDealerWin = isDealerWin(dealer, player)
-                updateResult(!isDealerWin)
-                dealerResult.updateResult(isDealerWin)
-            }
-        }
-        return listOf(dealerResult) + playerResults
-    }
+    fun discrimination(dealer: Player, players: Players): List<BetResult> {
+        var dealerEarnMoney = Money(0)
 
-    private fun isDealerWin(dealer: Player, player: Player): ResultStatus {
-        return when {
-            player.isBust() -> ResultStatus.Win
-            dealer.isBust() -> ResultStatus.Lose
-            dealer.score > player.score -> ResultStatus.Win
-            dealer.score == player.score -> ResultStatus.Draw
-            dealer.score < player.score -> ResultStatus.Lose
-            else -> ResultStatus.Draw
+        val playerResults = players.map { player ->
+            val playerEarnMoney = getBetResult(player.betMoney, dealer.currentHands(), player.currentHands())
+            dealerEarnMoney -= playerEarnMoney
+            BetResult(player, playerEarnMoney)
         }
+
+        val dealerResult = BetResult(dealer, dealerEarnMoney)
+        return listOf(dealerResult) + playerResults
     }
 
     fun getBetResult(money: Money, dealerCards: PlayerCards, playerCards: PlayerCards): Money {
