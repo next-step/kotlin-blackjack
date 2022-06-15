@@ -96,7 +96,7 @@ class PlayersTest : DescribeSpec({
                 val profits = Players(listOf(yohan, pang)).profit(dealer)
 
                 assertSoftly {
-                    profits[yohan] shouldBe Money.of(1000.0)
+                    profits[yohan] shouldBe Money.of(1000)
                     profits[pang] shouldBe Money.of(-1000)
                 }
             }

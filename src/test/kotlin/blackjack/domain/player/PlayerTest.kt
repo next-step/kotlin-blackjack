@@ -186,7 +186,7 @@ class PlayerTest : DescribeSpec({
 
                 val profit = player.profit(Match.WIN)
 
-                profit shouldBe Money.of(1500.0)
+                profit shouldBe Money.of(1500)
             }
         }
 
@@ -207,7 +207,7 @@ class PlayerTest : DescribeSpec({
 
                 val profit = player.profit(Match.WIN)
 
-                profit shouldBe Money.of(1000.0)
+                profit shouldBe Money.of(1000)
             }
         }
 

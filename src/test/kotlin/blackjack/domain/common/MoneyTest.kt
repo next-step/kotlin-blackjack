@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import java.math.BigDecimal
 
 class MoneyTest : DescribeSpec({
 
@@ -33,7 +32,7 @@ class MoneyTest : DescribeSpec({
         it("두 금액을 곱할 수 있다") {
             val money = Money.of(100)
 
-            money.multiply(1.5) shouldBe Money(BigDecimal("150.0"))
+            money.multiply(1.5) shouldBe Money.of(150)
         }
     }
 

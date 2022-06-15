@@ -103,9 +103,9 @@ class BlackJackResultTest : DescribeSpec({
             val result = BlackJackResult(dealer, Players(listOf(yohan, pang)))
 
             assertSoftly {
-                result.playersProfit()[0] shouldBe ParticipantProfitResult("yohan", Money.of(1500.0))
+                result.playersProfit()[0] shouldBe ParticipantProfitResult("yohan", Money.of(1500))
                 result.playersProfit()[1] shouldBe ParticipantProfitResult("pang", Money.of(-1000))
-                result.dealerProfit() shouldBe ParticipantProfitResult("딜러", Money.of(-500.0))
+                result.dealerProfit() shouldBe ParticipantProfitResult("딜러", Money.of(-500))
             }
         }
     }
