@@ -1,12 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.blackjack.BlackJack
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
-import blackjack.domain.card.Jack
-import blackjack.domain.card.NumberCard
-import blackjack.domain.card.Queen
-import blackjack.domain.card.Suit
+import blackjack.domain.card.cards
 import blackjack.domain.common.Money
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
@@ -61,34 +56,28 @@ class PlayersTest : DescribeSpec({
         context("딜러가 주어지면") {
             it("참가자들의 배팅 결과를 알 수 있다") {
                 val dealer = Dealer(
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, Jack()),
-                        )
-                    )
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to "J" }
+                    }
                 )
 
                 val yohan = Player(
                     name = "yohan",
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(9)),
-                            Card(Suit.DIAMOND, NumberCard(2)),
-                        )
-                    ),
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    },
                     playerStatus = PlayerStatus.STAY,
                     batting = Money.of(1000)
                 )
                 val pang = Player(
                     name = "pang",
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(9)),
-                        )
-                    ),
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                    },
                     playerStatus = PlayerStatus.STAY,
                     batting = Money.of(1000)
                 )
