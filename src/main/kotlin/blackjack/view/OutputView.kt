@@ -1,6 +1,12 @@
 package blackjack.view
 
 import blackjack.constant.Messages
+import blackjack.domain.ACE
+import blackjack.domain.Card
+import blackjack.domain.CardType
+import blackjack.domain.JACK
+import blackjack.domain.KING
+import blackjack.domain.QUEEN
 import blackjack.domain.User
 import blackjack.domain.Users
 
@@ -22,7 +28,11 @@ object OutputView {
     }
 
     fun printUserCard(user: User) {
-        println(Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards.hands.joinToString())
+        println(
+            Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards.hands.joinToString {
+                cardToString(it)
+            }
+        )
     }
 
     fun printMoreCard(user: User) {
@@ -36,11 +46,28 @@ object OutputView {
         }
     }
 
+    private fun cardToString(card: Card): String {
+        val number = when (card) {
+            is ACE -> "A"
+            is JACK -> "J"
+            is QUEEN -> "Q"
+            is KING -> "K"
+            else -> card.score
+        }
+        val type = when (card.type) {
+            CardType.HEART -> "하트"
+            CardType.DIAMOND -> "다이아"
+            CardType.SPADE -> "스페이드"
+            CardType.CLUB -> "클로버"
+        }
+        return "$number$type"
+    }
+
     private fun printCardAndScore(user: User) {
         println(
             Messages.PRINT_CARDS_AND_SCORE.format(
                 user.name,
-                user.cards.hands.joinToString(),
+                user.cards.hands.joinToString { cardToString(it) },
                 user.cards.getScore().value
             )
         )

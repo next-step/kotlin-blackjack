@@ -10,8 +10,8 @@ value class Score(val value: Int) {
         private const val ACE_SUB_SCORE = 10
 
         fun of(cards: Cards): Score {
-            var score = cards.hands.sumOf { it.number.score }
-            if (cards.hands.any { it.number == CardNumber.ACE } && score + ACE_SUB_SCORE <= Cards.BLACKJACK_SCORE)
+            var score = cards.hands.sumOf { it.score }
+            if (cards.hands.any { it is ACE } && score + ACE_SUB_SCORE <= Cards.BLACKJACK_SCORE)
                 score += ACE_SUB_SCORE
             return Score(score)
         }

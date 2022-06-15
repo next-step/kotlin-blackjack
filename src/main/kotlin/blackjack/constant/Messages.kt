@@ -17,6 +17,6 @@ object ErrorMessages {
     const val NAME_IS_EMPTY = "이름은 빈칸일 수 없습니다."
     const val INPUT_IS_NOT_YES_OR_NO = "입력이 y나 n이 아닙니다."
     const val NOT_CARD_NUMBER = "없는 숫자입니다."
-    const val NOT_CARD_TYPE = "없는 타입입니다."
+    const val EMPTY_DECK = "모든 카드를 꺼냈습니다."
     const val USER_IS_EMPTY = "유저가 한명도 없습니다."
 }
