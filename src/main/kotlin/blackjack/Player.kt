@@ -16,9 +16,9 @@ class Player(
         return this.hand.size()
     }
 
-    fun isStart(): Boolean = this.isStart()
-    fun isHit(): Boolean = this.isHit()
-    fun isStay(): Boolean = this.isStay()
-    fun isBust(): Boolean = this.isBust()
-    fun isBlackjack(): Boolean = this.isBlackjack()
+    fun isStart(): Boolean = this.state.isStart()
+    fun isHit(): Boolean = this.state.isHit()
+    fun isStay(): Boolean = this.state.isStay()
+    fun isBust(): Boolean = this.state.isBust()
+    fun isBlackjack(): Boolean = this.state.isBlackjack()
 }
