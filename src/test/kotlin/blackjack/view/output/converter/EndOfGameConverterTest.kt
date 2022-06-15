@@ -16,9 +16,9 @@ class EndOfGameConverterTest {
             name = PlayerName("panther"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.SPADES, CardNumber.TWO),
-                    PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
-                    PlayingCard.of(Suit.SPADES, CardNumber.EIGHT)
+                    PlayingCard(Suit.SPADES, CardNumber.TWO),
+                    PlayingCard(Suit.HEARTS, CardNumber.ACE),
+                    PlayingCard(Suit.SPADES, CardNumber.EIGHT)
                 )
             )
         )
@@ -26,8 +26,8 @@ class EndOfGameConverterTest {
             name = PlayerName("fox"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.DIAMONDS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.SEVEN)
+                    PlayingCard(Suit.DIAMONDS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.SEVEN)
                 )
             )
         )

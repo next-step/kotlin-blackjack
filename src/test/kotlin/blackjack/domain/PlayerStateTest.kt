@@ -21,8 +21,8 @@ class PlayerStateTest {
         val score = Score.from(
             PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                    PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                    PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                    PlayingCard(Suit.HEARTS, CardNumber.ACE)
                 )
             )
         )
@@ -48,8 +48,8 @@ class PlayerStateTest {
     private fun hitOrStayScore(): Score = Score.from(
         PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.HEARTS, CardNumber.ACE)
             )
         )
     )
@@ -57,8 +57,8 @@ class PlayerStateTest {
     private fun blackjackScore(): Score = Score.from(
         PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
-                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                PlayingCard(Suit.CLUBS, CardNumber.KING),
+                PlayingCard(Suit.HEARTS, CardNumber.ACE)
             )
         )
     )
@@ -66,9 +66,9 @@ class PlayerStateTest {
     private fun bustScore(): Score = Score.from(
         PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.KING),
-                PlayingCard.of(Suit.HEARTS, CardNumber.QUEEN),
-                PlayingCard.of(Suit.HEARTS, CardNumber.JACK)
+                PlayingCard(Suit.CLUBS, CardNumber.KING),
+                PlayingCard(Suit.HEARTS, CardNumber.QUEEN),
+                PlayingCard(Suit.HEARTS, CardNumber.JACK)
             )
         )
     )

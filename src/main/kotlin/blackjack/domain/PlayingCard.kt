@@ -13,10 +13,6 @@ class PlayingCard private constructor(
             }
         }
 
-        fun of(suit: Suit, number: CardNumber): PlayingCard = ALL_PLAYING_CARDS.first { playingCard ->
-            playingCard.suit == suit && playingCard.number == number
-        }
-
         operator fun invoke(suit: Suit, number: CardNumber): PlayingCard = ALL_PLAYING_CARDS.first { playingCard ->
             playingCard.suit == suit && playingCard.number == number
         }

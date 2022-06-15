@@ -28,8 +28,8 @@ class PlayerTest {
         player.receive(
             PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.ACE)
+                    PlayingCard(Suit.CLUBS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.ACE)
                 )
             )
         )
@@ -45,8 +45,8 @@ class PlayerTest {
             name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.KING)
+                    PlayingCard(Suit.CLUBS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.KING)
                 )
             )
         )
@@ -61,8 +61,8 @@ class PlayerTest {
             name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.KING)
+                    PlayingCard(Suit.CLUBS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.KING)
                 )
             )
         )
@@ -72,8 +72,8 @@ class PlayerTest {
             name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.ACE)
+                    PlayingCard(Suit.CLUBS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.ACE)
                 )
             )
         )

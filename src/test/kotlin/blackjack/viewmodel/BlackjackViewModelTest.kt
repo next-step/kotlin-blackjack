@@ -53,12 +53,12 @@ class BlackjackViewModelTest {
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
-                        PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.TWO),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.THREE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FIVE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.SIX)
+                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.TWO),
+                        PlayingCard(Suit.HEARTS, CardNumber.THREE),
+                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
+                        PlayingCard(Suit.HEARTS, CardNumber.FIVE),
+                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
                     )
                 )
             )
@@ -100,12 +100,12 @@ class BlackjackViewModelTest {
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
-                        PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.EIGHT),
-                        PlayingCard.of(Suit.DIAMONDS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard.of(Suit.SPADES, CardNumber.TWO),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.SIX)
+                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.EIGHT),
+                        PlayingCard(Suit.DIAMONDS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
+                        PlayingCard(Suit.SPADES, CardNumber.TWO),
+                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
                     )
                 )
             )

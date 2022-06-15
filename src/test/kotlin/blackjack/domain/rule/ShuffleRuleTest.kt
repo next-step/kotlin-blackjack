@@ -12,10 +12,10 @@ class ShuffleRuleTest {
     fun `ShuffleRule을 사용하여 카드를 섞을 수 있다`() {
         val playingCards = PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.HEARTS, CardNumber.NINE),
-                PlayingCard.of(Suit.DIAMONDS, CardNumber.TEN),
-                PlayingCard.of(Suit.SPADES, CardNumber.KING)
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.HEARTS, CardNumber.NINE),
+                PlayingCard(Suit.DIAMONDS, CardNumber.TEN),
+                PlayingCard(Suit.SPADES, CardNumber.KING)
             )
         )
 

@@ -9,8 +9,8 @@ class HandsTest {
     fun `Hands는 플레이어가 손패에 보관하고 있는 카드 목록을 나타낸다`() {
         val hands = hands()
         assertThat(hands.cards).contains(
-            PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-            PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+            PlayingCard(Suit.CLUBS, CardNumber.NINE),
+            PlayingCard(Suit.HEARTS, CardNumber.ACE)
         )
     }
 
@@ -20,8 +20,8 @@ class HandsTest {
 
         val additionalCards = PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.DIAMONDS, CardNumber.KING),
-                PlayingCard.of(Suit.SPADES, CardNumber.JACK)
+                PlayingCard(Suit.DIAMONDS, CardNumber.KING),
+                PlayingCard(Suit.SPADES, CardNumber.JACK)
             )
         )
         val newHands = hands + additionalCards
@@ -51,8 +51,8 @@ class HandsTest {
     private fun hands(): Hands {
         val cards = PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.HEARTS, CardNumber.ACE)
             )
         )
 

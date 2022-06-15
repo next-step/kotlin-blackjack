@@ -16,8 +16,8 @@ class PlayerConverterTest {
             name = PlayerName("joker"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.SPADES, CardNumber.TWO),
-                    PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                    PlayingCard(Suit.SPADES, CardNumber.TWO),
+                    PlayingCard(Suit.HEARTS, CardNumber.ACE)
                 )
             )
         )

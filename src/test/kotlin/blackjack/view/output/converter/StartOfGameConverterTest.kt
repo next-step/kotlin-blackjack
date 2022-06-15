@@ -16,8 +16,8 @@ class StartOfGameConverterTest {
             name = PlayerName("mona"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.SPADES, CardNumber.TWO),
-                    PlayingCard.of(Suit.HEARTS, CardNumber.ACE)
+                    PlayingCard(Suit.SPADES, CardNumber.TWO),
+                    PlayingCard(Suit.HEARTS, CardNumber.ACE)
                 )
             )
         )
@@ -25,8 +25,8 @@ class StartOfGameConverterTest {
             name = PlayerName("skull"),
             initialCards = PlayingCards.from(
                 listOf(
-                    PlayingCard.of(Suit.DIAMONDS, CardNumber.JACK),
-                    PlayingCard.of(Suit.CLUBS, CardNumber.SEVEN)
+                    PlayingCard(Suit.DIAMONDS, CardNumber.JACK),
+                    PlayingCard(Suit.CLUBS, CardNumber.SEVEN)
                 )
             )
         )
