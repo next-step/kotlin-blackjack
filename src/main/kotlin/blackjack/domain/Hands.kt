@@ -21,8 +21,8 @@ class Hands private constructor(
     operator fun plus(additionalCards: PlayingCards): Hands = Hands(cards + additionalCards, isRunning)
 
     companion object {
-        fun create(): Hands = Hands(
-            cards = PlayingCards.empty(),
+        fun from(cards: PlayingCards): Hands = Hands(
+            cards = cards,
             isRunning = true
         )
     }

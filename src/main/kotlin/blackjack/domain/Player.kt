@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Player(val name: String) {
-    private var hands = Hands.create()
+    private var hands = Hands.from(PlayingCards.empty())
     val cardsOfHands: PlayingCards
         get() = hands.cards
     val score: Score
