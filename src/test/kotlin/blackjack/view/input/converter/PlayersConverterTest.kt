@@ -1,5 +1,6 @@
 package blackjack.view.input.converter
 
+import blackjack.domain.PlayerName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -13,7 +14,7 @@ class PlayersConverterTest {
         val players = PlayersConverter.convert(input)
 
         players.forEachIndexed { index, player ->
-            assertThat(player.name).isEqualTo(names[index])
+            assertThat(player.name).isEqualTo(PlayerName(names[index]))
         }
     }
 }

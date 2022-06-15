@@ -2,6 +2,7 @@ package blackjack.view.output.converter
 
 import blackjack.domain.CardNumber
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
 import blackjack.domain.Suit
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
 class StartOfGameConverterTest {
     @Test
     fun `StartOfGameConverter는 게임이 시작될 때의 플레이어 정보들을 출력을 위한 문자열로 변환해 반환한다`() {
-        val player1 = Player("mona").apply {
+        val player1 = Player(PlayerName("mona")).apply {
             receive(
                 PlayingCards.from(
                     listOf(
@@ -21,7 +22,7 @@ class StartOfGameConverterTest {
                 )
             )
         }
-        val player2 = Player("skull").apply {
+        val player2 = Player(PlayerName("skull")).apply {
             receive(
                 PlayingCards.from(
                     listOf(

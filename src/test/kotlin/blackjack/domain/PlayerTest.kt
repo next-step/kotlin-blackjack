@@ -8,12 +8,12 @@ class PlayerTest {
     @Test
     fun `Player는 이름과 손패, 점수를 보관한다`() {
         val player = Player(
-            name = "이름",
+            name = PlayerName("이름"),
             initialCards = PlayingCards.empty()
         )
 
         assertAll(
-            { assertThat(player.name).isEqualTo("이름") },
+            { assertThat(player.name.value).isEqualTo("이름") },
             { assertThat(player.cardsOfHands).isEmpty() },
             { assertThat(player.score).isEqualTo(Score.zero()) }
         )
@@ -22,7 +22,7 @@ class PlayerTest {
     @Test
     fun `receive를 통해 카드를 받아 손패에 추가할 수 있다`() {
         val player = Player(
-            name = "이름",
+            name = PlayerName("이름"),
             initialCards = PlayingCards.empty()
         )
         player.receive(
@@ -42,7 +42,7 @@ class PlayerTest {
     @Test
     fun `stay를 통해 더 이상 카드를 받지 않겠다는 의사를 나타낼 수 있다`() {
         val player = Player(
-            name = "이름",
+            name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
                     PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
@@ -58,7 +58,7 @@ class PlayerTest {
     @Test
     fun `isReceivable을 통해 플레이어가 카드를 받을 수 있는 상태인지 알 수 있다`() {
         val receivablePlayer = Player(
-            name = "이름",
+            name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
                     PlayingCard.of(Suit.CLUBS, CardNumber.JACK),
@@ -69,7 +69,7 @@ class PlayerTest {
         assertThat(receivablePlayer.isReceivable()).isTrue
 
         val nonReceivablePlayer = Player(
-            name = "이름",
+            name = PlayerName("이름"),
             initialCards = PlayingCards.from(
                 listOf(
                     PlayingCard.of(Suit.CLUBS, CardNumber.JACK),

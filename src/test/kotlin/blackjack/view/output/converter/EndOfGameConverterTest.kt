@@ -2,6 +2,7 @@ package blackjack.view.output.converter
 
 import blackjack.domain.CardNumber
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
 import blackjack.domain.Suit
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test
 class EndOfGameConverterTest {
     @Test
     fun `EndOfGameConverter는 게임의 결과를 출력을 위한 문자열로 변환해 반환한다`() {
-        val player1 = Player("panther").apply {
+        val player1 = Player(PlayerName("panther")).apply {
             receive(
                 PlayingCards.from(
                     listOf(
@@ -22,7 +23,7 @@ class EndOfGameConverterTest {
                 )
             )
         }
-        val player2 = Player("fox").apply {
+        val player2 = Player(PlayerName("fox")).apply {
             receive(
                 PlayingCards.from(
                     listOf(

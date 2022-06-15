@@ -3,6 +3,7 @@ package blackjack.viewmodel
 import blackjack.domain.CardDeck
 import blackjack.domain.CardNumber
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
 import blackjack.domain.Suit
@@ -10,7 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BlackjackViewModelTest {
-    private val names = listOf("Spade", "Diamond")
+    private val names = listOf(PlayerName("Spade"), PlayerName("Diamond"))
     private val players: List<Player>
         get() = names.map { name ->
             Player(name)
@@ -103,6 +104,6 @@ class BlackjackViewModelTest {
         viewModel.hit()
         viewModel.nextTurn()
 
-        assertThat(viewModel.currentTurn.value?.name).isEqualTo("Diamond")
+        assertThat(viewModel.currentTurn.value?.name).isEqualTo(PlayerName("Diamond"))
     }
 }

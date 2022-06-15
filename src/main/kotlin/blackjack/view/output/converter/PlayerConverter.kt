@@ -5,7 +5,7 @@ import blackjack.domain.PlayingCards
 
 object PlayerConverter : OutputConverter<Player> {
     override fun convert(printable: Player): String {
-        return "${printable.name}카드: ${printable.cardsOfHands.toPrintableText()}"
+        return "${printable.name.value}카드: ${printable.cardsOfHands.toPrintableText()}"
     }
 
     private fun PlayingCards.toPrintableText(): String {
