@@ -7,7 +7,7 @@ class Players(val list: List<Player>) {
 
     fun getBetResults(dealer: Dealer): List<BetResult> {
         return list.map { player ->
-            BetResult(player, player.betMoney, dealer.getBetResult(player))
+            BetResult(player, player.betMoney, dealer.getPlayerBetResult(player))
         }
     }
 

@@ -7,16 +7,18 @@ class Dealer(
 
     override fun canDraw(): Boolean = score < CARD_DRAW_THRESHOLD
 
-    fun getBetResult(player: Player): ResultStatus {
-        if (isBust()) return ResultStatus.WinByDealerBust
-        if (player.isBust()) return ResultStatus.LoseByBust
-        if (isBlackJack() && player.isBlackJack()) return ResultStatus.DrawWithBlackJack
-        if (player.isBlackJack()) return ResultStatus.WinByBlackJack
-        if (score > player.score) return ResultStatus.LoseByScore
-        if (score < player.score) return ResultStatus.WinByScore
-        return ResultStatus.Draw
+    fun getPlayerBetResult(player: Player): ResultStatus {
+        return when {
+            isBust() -> ResultStatus.WinByDealerBust
+            player.isBust() -> ResultStatus.LoseByBust
+            isBlackJack() && player.isBlackJack() -> ResultStatus.DrawWithBlackJack
+            player.isBlackJack() -> ResultStatus.WinByBlackJack
+            score > player.score -> ResultStatus.LoseByScore
+            score < player.score -> ResultStatus.WinByScore
+            else -> ResultStatus.Draw
+        }
     }
-    
+
     companion object {
         private val CARD_DRAW_THRESHOLD = Score(17)
     }

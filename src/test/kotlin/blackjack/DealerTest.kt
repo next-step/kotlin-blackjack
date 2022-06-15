@@ -41,7 +41,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe -1.0f
             }
@@ -54,7 +54,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe 1.5f
             }
@@ -67,7 +67,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe 1.0f
             }
@@ -80,7 +80,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe 1.0f
             }
@@ -93,7 +93,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe 1.0f
             }
@@ -106,7 +106,7 @@ class DealerTest : DescribeSpec({
 
                 val dealer = Dealer(dealerCards)
                 val player = Player(name = "", playerCards = playerCards)
-                val actual = dealer.getBetResult(player)
+                val actual = dealer.getPlayerBetResult(player)
 
                 actual.earnMoneyRatio shouldBe -1.0f
             }
