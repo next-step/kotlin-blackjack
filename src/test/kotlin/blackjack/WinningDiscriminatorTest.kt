@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.DealerRule
+import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.PlayerCards
 import blackjack.domain.Players
@@ -78,6 +79,80 @@ class WinningDiscriminatorTest : DescribeSpec({
                 dealerResult.drawCount shouldBe 1
 
                 player1Result.drawCount shouldBe 1
+            }
+        }
+    }
+
+    describe("getBetResult") {
+        context("버스트인 경우") {
+            it("배팅을 전부 잃는다.") {
+                val money = Money(10000)
+                val expected = Money(-10000)
+
+                val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack)
+                val playerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack, CardNumber.Num10)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
+            }
+        }
+
+        context("첫 두장으로 블랙잭인 경우") {
+            it("배팅의 1.5배 를 받는다.") {
+                val money = Money(10000)
+                val expected = Money(15000)
+
+                val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack)
+                val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
+            }
+        }
+
+        context("딜러와 플레이어가 동시에 블랙잭인 경우") {
+            it("배팅 금액을 받는다.") {
+                val money = Money(10000)
+                val expected = Money(10000)
+
+                val dealerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
+                val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
+            }
+        }
+
+        context("딜러가 버스트인 경우") {
+            it("남아있는 플레이어는 배팅 금액을 받는다.") {
+                val money = Money(10000)
+                val expected = Money(10000)
+
+                val dealerCards = PlayerCards(CardNumber.Jack, CardNumber.Num4, CardNumber.Num10)
+                val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Num5)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
+            }
+        }
+
+        context("딜러가 17점인 경우") {
+            it("18점 이상인 플레이어는 배팅 금액을 받는다.") {
+                val money = Money(10000)
+                val expected = Money(10000)
+
+                val dealerCards = PlayerCards(CardNumber.Num10, CardNumber.Num7)
+                val playerCards = PlayerCards(CardNumber.Num10, CardNumber.Num8)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
+            }
+        }
+
+        context("딜러가 17점인 경우") {
+            it("16점 이하인 플레이어는 배팅을 전부 잃는다.") {
+                val money = Money(10000)
+                val expected = Money(-10000)
+
+                val dealerCards = PlayerCards(CardNumber.Num10, CardNumber.Num7)
+                val playerCards = PlayerCards(CardNumber.Num10, CardNumber.Num6)
+                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+                actual shouldBe expected
             }
         }
     }

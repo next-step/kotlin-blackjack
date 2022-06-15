@@ -23,4 +23,14 @@ object WinningDiscriminator {
             else -> ResultStatus.Draw
         }
     }
+
+    fun getBetResult(money: Money, dealerCards: PlayerCards, playerCards: PlayerCards): Money {
+        if (dealerCards.isBust()) return money
+        if (playerCards.isBust()) return -money
+        if (playerCards.isBlackJack() && dealerCards.isBlackJack()) return money
+        if (playerCards.isBlackJack()) return money * 1.5
+        if (dealerCards.score > playerCards.score) return -money
+        if (dealerCards.score < playerCards.score) return money
+        return Money(0)
+    }
 }

@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
-    private val betMoney: BetMoney = BetMoney(0),
+    private val betMoney: Money = Money(0),
     val rule: Rule = PlayerRule,
 ) {
     val cardCount: Int get() = playerCards.size
