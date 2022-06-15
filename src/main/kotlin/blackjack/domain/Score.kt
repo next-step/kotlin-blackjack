@@ -7,6 +7,7 @@ value class Score(val value: Int) {
     }
 
     fun isBust() = this > BLACK_JACK_SCORE
+
     fun isBlackJack() = this == BLACK_JACK_SCORE
 
     operator fun plus(other: Score): Score {

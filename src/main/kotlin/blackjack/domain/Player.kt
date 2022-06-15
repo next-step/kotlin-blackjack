@@ -16,9 +16,10 @@ class Player(
     fun openedCards() = rule.openedCards(playerCards)
 
     fun currentCards() = playerCards.cards
-    fun currentHands() = playerCards
 
     fun canDraw(): Boolean = rule.canDraw(score)
 
     fun isBust(): Boolean = playerCards.isBust()
+
+    fun isBlackJack(): Boolean = playerCards.size == 2 && score.isBlackJack()
 }

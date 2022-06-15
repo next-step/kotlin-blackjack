@@ -61,6 +61,21 @@ class PlayerTest : DescribeSpec({
             }
         }
     }
+
+    describe("isBlackJack") {
+        context("카드가 블랙잭인 경우") {
+            it("true 를 리턴한다.") {
+                val player = Player("name", PlayerCards(CardNumber.Ace, CardNumber.Jack))
+                player.isBlackJack() shouldBe true
+            }
+        }
+        context("카드가 블랙잭이 아닌 경우") {
+            it("false 를 리턴한다.") {
+                val player = Player("name", PlayerCards(CardNumber.Num2,CardNumber.Num9, CardNumber.Jack))
+                player.isBlackJack() shouldBe false
+            }
+        }
+    }
 })
 
 private fun PlayerCards(vararg cards: CardNumber) = blackjack.domain.PlayerCards(cards.toList().map { Card(it) })

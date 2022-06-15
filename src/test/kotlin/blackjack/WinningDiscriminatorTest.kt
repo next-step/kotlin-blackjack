@@ -50,7 +50,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack)
                 val playerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack, CardNumber.Num10)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }
@@ -62,7 +66,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Num4, CardNumber.Jack)
                 val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }
@@ -74,7 +82,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
                 val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Jack)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }
@@ -86,7 +98,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Jack, CardNumber.Num4, CardNumber.Num10)
                 val playerCards = PlayerCards(CardNumber.Ace, CardNumber.Num5)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }
@@ -98,7 +114,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Num10, CardNumber.Num7)
                 val playerCards = PlayerCards(CardNumber.Num10, CardNumber.Num8)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }
@@ -110,7 +130,11 @@ class WinningDiscriminatorTest : DescribeSpec({
 
                 val dealerCards = PlayerCards(CardNumber.Num10, CardNumber.Num7)
                 val playerCards = PlayerCards(CardNumber.Num10, CardNumber.Num6)
-                val actual = WinningDiscriminator.getBetResult(money, dealerCards, playerCards)
+
+                val dealer = Dealer(dealerCards)
+                val player = Player(name = "", betMoney = money, playerCards = playerCards)
+                val actual = WinningDiscriminator.getBetResult(money, dealer, player)
+
                 actual shouldBe expected
             }
         }

@@ -12,7 +12,6 @@ class PlayerCards(list: List<Card> = emptyList()) {
     }
 
     fun isBust(): Boolean = score.isBust()
-    fun isBlackJack(): Boolean = cards.size == 2 && score.isBlackJack()
 
     private fun hasSoftCard() = _cards.any { it.isAceCard() }
 }
