@@ -1,3 +1,5 @@
 package dsl
 
-data class Skills(val soft: List<String>, val hard: List<String>)
+import dsl.vo.Skill
+
+data class Skills(val list: List<Skill>)
