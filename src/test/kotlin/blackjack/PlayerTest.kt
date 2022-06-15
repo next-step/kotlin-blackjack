@@ -5,6 +5,7 @@ import blackjack.state.Bust
 import blackjack.state.Hit
 import blackjack.state.Start
 import blackjack.state.Stay
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -86,5 +87,117 @@ internal class PlayerTest : FunSpec({
 
         // then
         result.shouldBeTrue()
+    }
+
+    test("플레이어의 손패가 21점 미만이라면, hit할 수 있다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE)
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        val result: Player = sut.hit()
+
+        // then
+        result.isHit().shouldBeTrue()
+    }
+
+    test("플레이어 21점 이상이라면, hit 상태가 될 수 없다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.ACE, CardSuit.SPADE)
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        shouldThrow<IllegalStateException> { sut.hit() }
+    }
+
+    test("플레이어 손패 총 합이 20 이하라면 stay 상태가 될 수 있다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        val result: Player = sut.stay()
+
+        // then
+        result.isStay().shouldBeTrue()
+    }
+
+    test("플레이어 손패 총합이 21을 이상이면 stay 상태가 될 수 없다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.ACE, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when then
+        shouldThrow<IllegalStateException> { sut.stay() }
+    }
+
+    test("플레이어 손패 총합이 22 이상이면 bust상태가 될 수 있다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TWO, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        val result: Player = sut.bust()
+
+        // then
+        result.isBust().shouldBeTrue()
+    }
+
+    test("플레이어 손패 총합이 22 미만이면 bust상태가 될 수 없다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.ACE, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        shouldThrow<IllegalStateException> { sut.bust() }
+    }
+
+    test("플레이어 손패 총합이 21이라면 blackjack 상태가 될 수 있다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.ACE, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        val result: Player = sut.blackjack()
+
+        // then
+        result.isBlackjack().shouldBeTrue()
+    }
+
+    test("플레이어 손패 총합이 21이 아니라면 blackjack 상태가 될 수 없다.") {
+        // given
+        val values = listOf(
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TEN, CardSuit.SPADE),
+            Card(CardNumber.TWO, CardSuit.SPADE),
+        )
+        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+
+        // when
+        shouldThrow<IllegalStateException> { sut.blackjack() }
     }
 })
