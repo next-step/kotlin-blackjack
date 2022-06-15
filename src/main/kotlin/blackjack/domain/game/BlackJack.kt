@@ -30,8 +30,21 @@ class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDe
         return false
     }
 
+    fun giveCardToDealer() {
+        if (canHitDealer()) {
+            giveCard(dealer)
+        }
+    }
+
+    private fun canHitDealer(): Boolean {
+        val score = Score.calculate(dealer)
+        if (score <= DEALER_MAX_HIT_SCORE) return true
+        return false
+    }
+
     companion object {
         const val FIRST_DEAL = 2
+        const val DEALER_MAX_HIT_SCORE = 16
         const val PLAYER_MAX_HIT_SCORE = 20
     }
 }

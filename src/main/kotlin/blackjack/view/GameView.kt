@@ -22,6 +22,7 @@ class GameView(
     fun run() {
         println()
         players.forEach { hitCard(it) }
+        hitCardByDealer()
     }
 
     private fun hitCard(player: Player) {
@@ -46,6 +47,14 @@ class GameView(
                 println("다시 입력해주세요. (예는 y, 아니오는 n)")
                 hitCard(player)
             }
+        }
+    }
+
+    private fun hitCardByDealer() {
+        blackJack.giveCardToDealer()
+        if (dealer.cards.size >= 3) {
+            println()
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         }
     }
 
