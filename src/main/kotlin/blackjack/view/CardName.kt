@@ -5,7 +5,7 @@ import blackjack.domain.enums.CardPoint
 import blackjack.domain.enums.CardShape
 
 private val pointNames = mapOf(
-    CardPoint.ONE to "A",
+    CardPoint.ACE to "A",
     CardPoint.TWO to "2",
     CardPoint.THREE to "3",
     CardPoint.FOUR to "4",
@@ -14,6 +14,7 @@ private val pointNames = mapOf(
     CardPoint.SEVEN to "7",
     CardPoint.EIGHT to "8",
     CardPoint.NINE to "9",
+    CardPoint.TEN to "10",
     CardPoint.JACK to "J",
     CardPoint.QUEEN to "Q",
     CardPoint.KING to "K",

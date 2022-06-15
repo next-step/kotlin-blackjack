@@ -25,4 +25,28 @@ class PlayerTest {
         val player = Player("서정국")
         assertThat(player.needCard(input)).isEqualTo(expect)
     }
+
+    @Test
+    fun `플레이어는 자신이 가진 카드 점수를 계산할 수 있다`() {
+        val player = Player("서정국")
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        assertThat(player.score()).isEqualTo(10)
+    }
+
+    @Test
+    fun `플레이어는 21을 넘지 않는다면 ACE 카드 점수를 11로 계산한다`() {
+        val player = Player("서정국")
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.ACE).create())
+        assertThat(player.score()).isEqualTo(21)
+    }
+
+    @Test
+    fun `플레이어는 21을 넘는다면 ACE 카드 점수를 1로 계산한다`() {
+        val player = Player("서정국")
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.QUEEN).create())
+        player.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.ACE).create())
+        assertThat(player.score()).isEqualTo(21)
+    }
 }
