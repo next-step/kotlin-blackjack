@@ -2,21 +2,22 @@ package blackjack.view
 
 import blackjack.domain.blackjack.BlackJackResult
 import blackjack.domain.blackjack.ParticipantProfitResult
-import blackjack.domain.blackjack.ParticipantResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 object ResultView {
 
-    fun printlnBlackJackInit(players: List<Player>, dealer: Dealer) {
-        println("${dealer.name}와 ${players.map(Player::name).joinToString(",")}에게 2장의 나누었습니다.")
+    fun printInit(players: Players, dealer: Dealer) {
+        println("${dealer.name}와 ${players.players.map(Player::name).joinToString(",")}에게 2장의 나누었습니다.")
     }
 
-    fun printlnPlayersWithCards(players: List<Player>, dealer: Dealer) {
+    fun printCards(players: Players, dealer: Dealer) {
         printlnPlayerWithCards(dealer.name, dealer.cards.cards.take(1))
-        players.forEach { player ->
+        players.players.forEach { player ->
             printlnPlayerWithCards(player.name, player.cards.cards)
         }.also { println() }
     }
@@ -25,21 +26,20 @@ object ResultView {
         printPlayerWithCards(name, cards).also { println() }
     }
 
-    fun printResult(result: BlackJackResult) {
+    fun printCardsWithScore(players: Players, dealer: Dealer) {
         println()
-        val dealer = result.dealerResult()
         printParticipantWithScore(dealer)
-        result.playersResult().forEach {
+        players.players.forEach {
             printParticipantWithScore(it)
         }.also { println() }
     }
 
-    private fun printParticipantWithScore(participantResult: ParticipantResult) {
-        printPlayerWithCards(participantResult.name, participantResult.cards.cards)
-        println(" - 결과: ${participantResult.cards.score().value}")
+    private fun printParticipantWithScore(participant: Participant) {
+        printPlayerWithCards(participant.name, participant.cards.cards)
+        println(" - 결과: ${participant.cards.score().value}")
     }
 
-    fun printMatch(result: BlackJackResult) {
+    fun printProfits(result: BlackJackResult) {
         println("## 최종 수익")
         printProfits(listOf(result.dealerProfit()) + result.playersProfit())
     }

@@ -10,19 +10,19 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val players = InputView.players()
+    val players = Players(InputView.players())
     val dealer = Dealer()
-    val blackJack = BlackJack(dealer = dealer, players = Players(players))
+    val blackJack = BlackJack(dealer = dealer, players = players)
 
-    ResultView.printlnBlackJackInit(players, dealer)
-    ResultView.printlnPlayersWithCards(players, dealer)
+    ResultView.printInit(players, dealer)
+    ResultView.printCards(players, dealer)
 
     playPlayers(blackJack, blackJack.hittablePlayers)
     playDealer(blackJack, dealer)
 
     val result = blackJack.result()
-    ResultView.printResult(result)
-    ResultView.printMatch(result)
+    ResultView.printCardsWithScore(players, dealer)
+    ResultView.printProfits(result)
 }
 
 private fun playPlayers(

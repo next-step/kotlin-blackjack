@@ -1,23 +1,13 @@
 package blackjack.domain.blackjack
 
-import blackjack.domain.card.Cards
 import blackjack.domain.common.Money
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participant
 import blackjack.domain.player.Players
 
 data class BlackJackResult(
     private val dealer: Dealer,
-    private val players: Players
+    private val players: Players,
 ) {
-
-    fun dealerResult(): ParticipantResult {
-        return ParticipantResult.of(dealer)
-    }
-
-    fun playersResult(): List<ParticipantResult> {
-        return players.players.map { ParticipantResult.of(it) }
-    }
 
     fun dealerProfit(): ParticipantProfitResult {
         return ParticipantProfitResult(dealer.name, dealer.profit(players))
@@ -29,21 +19,7 @@ data class BlackJackResult(
     }
 }
 
-data class ParticipantResult(
-    val name: String,
-    val cards: Cards,
-) {
-    companion object {
-        fun of(participant: Participant): ParticipantResult {
-            return ParticipantResult(
-                name = participant.name,
-                cards = participant.cards,
-            )
-        }
-    }
-}
-
 data class ParticipantProfitResult(
     val name: String,
-    val profit: Money
+    val profit: Money,
 )
