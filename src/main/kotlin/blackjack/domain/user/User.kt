@@ -1,6 +1,8 @@
-package blackjack.domain
+package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 /**
  * 유저데이터를 갖고 있는 클래스

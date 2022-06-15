@@ -1,14 +1,14 @@
 package blackjack.view
 
 import blackjack.constant.Messages
-import blackjack.domain.ACE
-import blackjack.domain.Card
-import blackjack.domain.CardType
-import blackjack.domain.JACK
-import blackjack.domain.KING
-import blackjack.domain.QUEEN
-import blackjack.domain.User
-import blackjack.domain.Users
+import blackjack.domain.card.ACE
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardType
+import blackjack.domain.card.JACK
+import blackjack.domain.card.KING
+import blackjack.domain.card.QUEEN
+import blackjack.domain.user.User
+import blackjack.domain.user.Users
 
 /**
  * 출력을 담당하는 클래스

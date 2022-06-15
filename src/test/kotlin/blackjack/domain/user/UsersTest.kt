@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.user
 
+import blackjack.domain.card.Deck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

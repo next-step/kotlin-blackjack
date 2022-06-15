@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 /**
  * 카드 데이터 클래스

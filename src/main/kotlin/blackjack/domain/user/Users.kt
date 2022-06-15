@@ -1,6 +1,7 @@
-package blackjack.domain
+package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
+import blackjack.domain.card.Deck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

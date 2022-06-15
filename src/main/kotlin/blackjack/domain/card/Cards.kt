@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.Score
 
 /**
  * 카드르 저장하는 클래스

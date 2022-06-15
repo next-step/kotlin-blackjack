@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.user
 
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
