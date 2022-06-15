@@ -31,7 +31,7 @@ fun main() {
     playersDto.showPlayerNames()
     playersDto.showInitCards()
 
-    val results = mutableListOf<Player>()
+    val results = mutableListOf<UserRole>()
     for (player in players) {
         var p = player
         while (!p.isFinish()) {
@@ -39,6 +39,15 @@ fun main() {
         }
         results.add(p)
     }
+
+    var dealer = gamers.first { it.isDealer() }
+
+
+    while (!dealer.isFinish()) {
+        dealer = dealer.draw(cards.removeAt(0))
+    }
+
+    results.add(dealer)
 
     val resultDto = ResultDto(results)
     resultDto.result()

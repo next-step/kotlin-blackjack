@@ -21,7 +21,7 @@ abstract class UserRole(open val name: String, open val state: State = Ready(Pla
         return Player(name, Stand(state.currentCard()))
     }
 
-     fun isFinish(): Boolean = state.isFinish()
+     open fun isFinish(): Boolean = state.isFinish()
 
      fun getScore(): Int = state.score(state.currentCard().cards)
 
