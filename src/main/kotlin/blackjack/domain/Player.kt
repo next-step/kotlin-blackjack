@@ -2,7 +2,7 @@ package blackjack.domain
 
 open class Player(
     val name: String,
-    hand: Hand = Hand(emptyList())
+    hand: Hand = Hand(emptyList(), Bet.EMPTY_BET)
 ) {
     var hand = hand
         private set
@@ -16,6 +16,4 @@ open class Player(
     fun addCard(card: Card) {
         hand = hand.addCard(card)
     }
-
-    operator fun compareTo(other: Player): Int = score.compareTo(other.score)
 }

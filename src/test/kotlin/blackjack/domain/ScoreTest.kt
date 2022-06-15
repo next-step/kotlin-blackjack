@@ -61,29 +61,72 @@ internal class ScoreTest : FreeSpec({
     }
 
     "Ace 의 개수에 따른 점수계산" - {
-        "4개면 4점으로 계산된다" {
+        "모든 경우가 bust 이면 가장 작은 점수를 반환한다" {
             val score = Score(
                 listOf(
                     Card(Suite.DIAMONDS, Denomination.ACE),
                     Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.HEARTS, Denomination.ACE),
                     Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.JACK),
+                    Card(Suite.HEARTS, Denomination.SIX),
+                    Card(Suite.HEARTS, Denomination.TEN),
+                    Card(Suite.HEARTS, Denomination.FIVE),
                 )
             )
-            score.sum shouldBe 14
+            score.sum shouldBe 24
         }
 
-        "3개면 3점으로 계산된다" {
-            val score = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.ACE),
-                    Card(Suite.HEARTS, Denomination.ACE),
-                    Card(Suite.CLUBS, Denomination.NINE),
+        "4개인 경우" - {
+            "14로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.SEVEN),
+                    )
                 )
-            )
-            score.sum shouldBe 12
+                score.sum shouldBe 21
+            }
+
+            "4로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.JACK),
+                    )
+                )
+                score.sum shouldBe 14
+            }
+        }
+
+        "3개인 경우" - {
+            "13으로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.EIGHT),
+                    )
+                )
+                score.sum shouldBe 21
+            }
+
+            "3으로 판단" {
+                val score = Score(
+                    listOf(
+                        Card(Suite.DIAMONDS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.ACE),
+                        Card(Suite.HEARTS, Denomination.ACE),
+                        Card(Suite.CLUBS, Denomination.KING),
+                    )
+                )
+                score.sum shouldBe 13
+            }
         }
 
         "2개인 경우" - {
@@ -92,11 +135,11 @@ internal class ScoreTest : FreeSpec({
                     listOf(
                         Card(Suite.SPADES, Denomination.ACE),
                         Card(Suite.HEARTS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.TWO),
-                        Card(Suite.HEARTS, Denomination.FIVE),
+                        Card(Suite.CLUBS, Denomination.FIVE),
+                        Card(Suite.HEARTS, Denomination.TEN),
                     )
                 )
-                score.sum shouldBe 9
+                score.sum shouldBe 17
             }
 
             "12로 판단" {
@@ -104,10 +147,10 @@ internal class ScoreTest : FreeSpec({
                     listOf(
                         Card(Suite.SPADES, Denomination.ACE),
                         Card(Suite.HEARTS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.NINE),
+                        Card(Suite.CLUBS, Denomination.EIGHT),
                     )
                 )
-                score.sum shouldBe 21
+                score.sum shouldBe 20
             }
         }
 
@@ -127,10 +170,10 @@ internal class ScoreTest : FreeSpec({
                 val score = Score(
                     listOf(
                         Card(Suite.DIAMONDS, Denomination.ACE),
-                        Card(Suite.CLUBS, Denomination.TEN),
+                        Card(Suite.CLUBS, Denomination.NINE),
                     )
                 )
-                score.sum shouldBe 21
+                score.sum shouldBe 20
             }
         }
     }
@@ -138,79 +181,5 @@ internal class ScoreTest : FreeSpec({
     "카드가 없는 경우 합은 0이다" {
         val score = Score(emptyList())
         score.sum shouldBe 0
-    }
-
-    "score 비교" - {
-        "내가 bust 이면 상대에 관계없이 패배" {
-            val myScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.CLUBS, Denomination.QUEEN),
-                    Card(Suite.SPADES, Denomination.TWO),
-                )
-            )
-            val opponentScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.CLUBS, Denomination.QUEEN),
-                    Card(Suite.SPADES, Denomination.TWO),
-                )
-            )
-
-            myScore.compareTo(opponentScore) shouldBe -1
-        }
-
-        "상대만 bust 이면 승리" {
-            val myScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.SPADES, Denomination.TWO),
-                )
-            )
-            val opponentScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.CLUBS, Denomination.QUEEN),
-                    Card(Suite.SPADES, Denomination.TWO),
-                )
-            )
-
-            myScore.compareTo(opponentScore) shouldBe 1
-        }
-
-        "동점인 경우" {
-            val myScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.SPADES, Denomination.ACE),
-                )
-            )
-            val opponentScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.NINE),
-                    Card(Suite.HEARTS, Denomination.NINE),
-                    Card(Suite.CLUBS, Denomination.THREE),
-                )
-            )
-
-            myScore.compareTo(opponentScore) shouldBe 0
-        }
-
-        "둘 다 bust 가 아니면 21에 가까운 사람이 승리" {
-            val myScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.KING),
-                    Card(Suite.SPADES, Denomination.QUEEN),
-                )
-            )
-            val opponentScore = Score(
-                listOf(
-                    Card(Suite.DIAMONDS, Denomination.JACK),
-                    Card(Suite.SPADES, Denomination.NINE),
-                )
-            )
-
-            myScore.compareTo(opponentScore) shouldBe 1
-        }
     }
 })

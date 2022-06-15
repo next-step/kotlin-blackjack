@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.dto.GameParticipationRequest
+
 class Game(
     private val dealer: Dealer,
     private val players: List<Player>,
@@ -7,11 +9,11 @@ class Game(
     val status: GameStatus
         get() = GameStatus(dealer, players)
 
-    fun processPlayers(interaction: PlayerInteraction) {
-        players.forEach { processPlayer(it, interaction) }
+    fun drawPlayerCard(interaction: PlayerInteraction) {
+        players.forEach { drawCardByPlayer(it, interaction) }
     }
 
-    fun processDealer(): Int {
+    fun drawDealerCard(): Int {
         var drawCount = 0
 
         while (dealer.shouldDraw) {
@@ -22,7 +24,7 @@ class Game(
         return drawCount
     }
 
-    private tailrec fun processPlayer(player: Player, interaction: PlayerInteraction) {
+    private tailrec fun drawCardByPlayer(player: Player, interaction: PlayerInteraction) {
         if (!player.canDrawCard) {
             return
         }
@@ -31,15 +33,15 @@ class Game(
         if (shouldGiveCard) {
             dealer.giveCard(player)
             interaction.printStatus(player)
-            processPlayer(player, interaction)
+            drawCardByPlayer(player, interaction)
         }
     }
 
     companion object {
-        fun start(playerNames: List<String>): Game {
+        fun start(requests: List<GameParticipationRequest>): Game {
             val deck = Deck.shuffled()
             val dealer = Dealer(deck)
-            val players = dealer.startGame(playerNames)
+            val players = dealer.prepareGame(requests)
 
             return Game(dealer, players)
         }

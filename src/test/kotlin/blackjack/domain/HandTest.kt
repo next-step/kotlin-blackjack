@@ -9,10 +9,12 @@ internal class HandTest : FreeSpec({
         Card(Suite.DIAMONDS, Denomination.KING)
     )
 
-    "주어진 카드를 통해 인스턴스를 생성한다" {
-        val hand = Hand(cards)
+    "주어진 카드와 배팅액을 통해 인스턴스를 생성한다" {
+        val bet = Bet(100)
+        val hand = Hand(cards, bet)
 
         hand.count shouldBe cards.size
+        hand.betAmount shouldBe bet.amount
     }
 
     "새로운 카드를 더해 새로운 손패를 생성한다" {
