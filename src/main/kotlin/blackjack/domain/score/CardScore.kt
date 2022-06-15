@@ -1,5 +1,7 @@
 package blackjack.domain.score
 
+import blackjack.domain.blackjack.BlackJack
+
 enum class CardScore(
     private val condition: (Score) -> Boolean,
     val profitRate: Double
@@ -10,7 +12,7 @@ enum class CardScore(
 
     companion object {
         fun of(score: Score, cardCount: Int): CardScore {
-            if (cardCount == 2 && BLACKJACK.condition(score)) {
+            if (cardCount == BlackJack.BASE_CARD_COUNT && BLACKJACK.condition(score)) {
                 return BLACKJACK
             }
 
