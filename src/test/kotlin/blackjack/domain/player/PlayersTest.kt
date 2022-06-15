@@ -33,7 +33,7 @@ class PlayersTest : DescribeSpec({
             val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
             pang.changeStatus(PlayerStatus.STAY)
 
-            blackJack.players.hittablePlayers() shouldContainExactly listOf(yohan)
+            blackJack.hittablePlayers shouldContainExactly listOf(yohan)
         }
     }
 

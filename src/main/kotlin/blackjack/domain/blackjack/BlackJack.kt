@@ -7,8 +7,10 @@ import blackjack.domain.player.Players
 
 class BlackJack(
     private val dealer: Dealer = Dealer(),
-    val players: Players
+    private val players: Players
 ) {
+    val hittablePlayers get() = players.hittablePlayers()
+
     init {
         players.addBaseCards(dealer, BASE_CARD_COUNT)
         dealer.addBaseCards(BASE_CARD_COUNT)
