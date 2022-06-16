@@ -2,7 +2,7 @@ package blackjack.domain.winning
 
 import blackjack.domain.player.Player
 
-data class WinningResult(
+data class PlayerGameResult(
     val player: Player,
     val winCount: Int,
     val looseCount: Int,
