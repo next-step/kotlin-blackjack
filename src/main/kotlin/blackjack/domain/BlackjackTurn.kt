@@ -5,22 +5,24 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerResult
 import blackjack.domain.player.PlayerState
 
 class DealerTurn(private val dealer: Dealer) {
-    fun play(deck: CardDeck, printDealerSummary: () -> Unit): PlayerState {
+    fun play(deck: CardDeck, printDealerSummary: () -> Unit): PlayerResult {
         val turn = BlackjackTurn(dealer)
 
         turn.makeDecision(dealer.shouldDrawCard) { deck.drawCard() }
+        turn.makeDecision(false) { deck.drawCard() }
 
         printDealerSummary()
 
-        return turn.playerState
+        return PlayerResult(dealer, turn.playerState)
     }
 }
 
 class PlayerTurn(private val player: Player) {
-    fun play(deck: CardDeck, getPlayerDecision: () -> PlayerDecision, printPlayerSummary: () -> Unit): PlayerState {
+    fun play(deck: CardDeck, getPlayerDecision: () -> PlayerDecision, printPlayerSummary: () -> Unit): PlayerResult {
         val turn = BlackjackTurn(player)
 
         while (turn.playerState is PlayerState.Playing) {
@@ -28,7 +30,7 @@ class PlayerTurn(private val player: Player) {
             printPlayerSummary()
         }
 
-        return turn.playerState
+        return PlayerResult(player, turn.playerState)
     }
 }
 

@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.common.PlayerSummary
+import blackjack.common.ScoreSummary
 
 object OutputView {
     fun printStartingSummaries(playerSummaries: List<PlayerSummary>, numberOfStartingCards: Int) {
@@ -34,6 +35,13 @@ object OutputView {
         } else {
             println("딜러는 17이상이라 추가로 카드를 받지 않았습니다.")
         }
+    }
+
+    fun printScoreSummary(scoreSummary: ScoreSummary) {
+        println()
+        println("## 최종 승패")
+        scoreSummary.values
+            .map { println("${it.first}: ${it.second}") }
     }
 
     private fun List<String>.joinWithComma(): String = joinToString(", ")

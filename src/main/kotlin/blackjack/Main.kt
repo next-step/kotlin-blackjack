@@ -12,5 +12,6 @@ fun main() {
         playerSummaryPrinter = { summary -> OutputView.printPlayerSummary(summary) },
         dealerSummaryPrinter = { summary -> OutputView.printDealerSummary(summary) },
         finalSummariesPrinter = { summaries -> OutputView.printFinalSummaries(summaries) },
+        finalScoresPrinter = { scoreSummary -> OutputView.printScoreSummary(scoreSummary) }
     )
 }
