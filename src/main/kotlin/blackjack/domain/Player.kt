@@ -22,6 +22,19 @@ class Player(val name: String) {
         return result
     }
 
-    private fun calculateScore(card: Card, result: Int): Int =
-        if (card.point.max + result <= CardPoint.BLACK_JACK_SCORE) card.point.max else card.point.min
+    private fun calculateScore(card: Card, result: Int): Int {
+        if (card.point === CardPoint.ACE) {
+            return chooseAceScore(result)
+        }
+
+        return card.point.score
+    }
+
+    private fun chooseAceScore(result: Int): Int {
+        if (CardPoint.ACE_SPECIAL_VALUE + result <= CardPoint.BLACK_JACK_SCORE) {
+            return CardPoint.ACE_SPECIAL_VALUE
+        }
+
+        return CardPoint.ACE.score
+    }
 }
