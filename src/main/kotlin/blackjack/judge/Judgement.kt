@@ -1,4 +1,3 @@
 package blackjack.judge
 
-interface Judgement {
-}
+interface Judgement

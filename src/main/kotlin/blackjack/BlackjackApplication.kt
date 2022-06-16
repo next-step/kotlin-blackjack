@@ -25,4 +25,3 @@ fun main() {
     val resultDto = ResultDto(blackjackJudgement.updateGameJudgement())
     resultDto.result()
 }
-

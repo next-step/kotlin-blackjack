@@ -8,5 +8,4 @@ class Player(
     override val name: String,
     override val state: State = Ready(PlayerDeck()),
     override val judgements: MutableList<Judgement> = mutableListOf()
-) : UserRole(name, state, judgements) {
-}
+) : UserRole(name, state, judgements)
