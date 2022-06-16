@@ -18,8 +18,11 @@ fun main() {
     gamers.addAll(players)
 
     val blackjackGame = BlackjackGame(gamers)
+    val users = blackjackGame.play()
 
-    val resultDto = ResultDto(blackjackGame.play())
+    val blackjackJudgement = BlackjackJudgement(users)
+
+    val resultDto = ResultDto(blackjackJudgement.updateGameJudgement())
     resultDto.result()
 }
 

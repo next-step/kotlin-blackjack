@@ -1,10 +1,15 @@
 package blackjack
 
+import blackjack.judge.Judgement
 import blackjack.state.Ready
 import blackjack.state.Stand
 import blackjack.state.State
 
-class Dealer(override val name: String = "딜러", override val state: State = Ready(PlayerDeck())) :
+class Dealer(
+    override val name: String = "딜러",
+    override val state: State = Ready(PlayerDeck()),
+    override val judgements: MutableList<Judgement> = mutableListOf()
+) :
     UserRole(name, state) {
 
     override fun stand(): UserRole {
