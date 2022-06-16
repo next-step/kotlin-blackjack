@@ -10,6 +10,11 @@ class Player(
     val score: Score
         get() = hands.score
 
+    constructor(name: String, vararg initialCards: PlayingCard) : this(
+        PlayerName(name),
+        PlayingCards.from(initialCards.toList())
+    )
+
     fun receive(playingCards: PlayingCards) {
         hands += playingCards
     }
