@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.blackjack.BlackJackResult
-import blackjack.domain.blackjack.ParticipantProfitResult
+import blackjack.domain.blackjack.ParticipantProfit
+import blackjack.domain.blackjack.ParticipantProfits
 import blackjack.domain.card.Card
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
@@ -39,14 +39,14 @@ object ResultView {
         println(" - 결과: ${participant.cards.score().value}")
     }
 
-    fun printProfits(result: BlackJackResult) {
+    fun printProfits(result: ParticipantProfits) {
         println("## 최종 수익")
         printProfits(listOf(result.dealerProfit()) + result.playersProfit())
     }
 
-    private fun printProfits(participantProfitResults: List<ParticipantProfitResult>) {
-        participantProfitResults.forEach {
-            println("${it.name}: ${it.profit.amount.toInt()}")
+    private fun printProfits(participantProfits: List<ParticipantProfit>) {
+        participantProfits.forEach {
+            println("${it.participant.name}: ${it.profit.amount.toInt()}")
         }
     }
 

@@ -104,9 +104,9 @@ class BlackJackTest : DescribeSpec({
         }
     }
 
-    describe("result") {
+    describe("profits") {
         context("참가자와 딜러의 플레이가 모두 종료되면") {
-            it("결과를 확인할 수 있다") {
+            it("수익 금액을 확인할 수 있다") {
                 val yohan = Player("yohan")
                 val pang = Player("pang")
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
@@ -115,7 +115,7 @@ class BlackJackTest : DescribeSpec({
                 pang.changeStatus(PlayerStatus.STAY)
                 blackJack.playDealer()
 
-                blackJack.result() shouldNotBe null
+                blackJack.profits() shouldNotBe null
             }
         }
 
@@ -126,7 +126,7 @@ class BlackJackTest : DescribeSpec({
                 val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
                 yohan.changeStatus(PlayerStatus.STAY)
 
-                shouldThrow<IllegalStateException> { blackJack.result() }
+                shouldThrow<IllegalStateException> { blackJack.profits() }
             }
         }
     }

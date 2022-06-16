@@ -10,7 +10,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class BlackJackResultTest : DescribeSpec({
+class ParticipantProfitsTest : DescribeSpec({
 
     describe("profit") {
         it("딜러와 플레이어별로 수익 금액을 확인할 수 있다") {
@@ -39,19 +39,20 @@ class BlackJackResultTest : DescribeSpec({
                 }
             )
 
-            val result = BlackJackResult(dealer, Players(listOf(yohan, pang)))
+            val result = ParticipantProfits.of(Players(listOf(yohan, pang)), dealer)
 
             assertSoftly {
-                result.playersProfit()[0] shouldBe ParticipantProfitResult(
-                    "yohan",
+                val playersProfit = result.playersProfit()
+                playersProfit[0] shouldBe ParticipantProfit(
+                    yohan,
                     Money.of(1500)
                 )
-                result.playersProfit()[1] shouldBe ParticipantProfitResult(
-                    "pang",
+                playersProfit[1] shouldBe ParticipantProfit(
+                    pang,
                     Money.of(-1000)
                 )
-                result.dealerProfit() shouldBe ParticipantProfitResult(
-                    "딜러",
+                result.dealerProfit() shouldBe ParticipantProfit(
+                    dealer,
                     Money.of(-500)
                 )
             }

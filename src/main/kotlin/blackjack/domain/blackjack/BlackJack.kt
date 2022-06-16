@@ -29,10 +29,10 @@ class BlackJack(
         dealer.addCard()
     }
 
-    fun result(): BlackJackResult {
-        check(isEnd()) { "게임이 종료되어야 결과를 확인할 수 있습니다" }
+    fun profits(): ParticipantProfits {
+        check(isEnd()) { "게임이 종료되어야 수익 금액을 확인할 수 있습니다" }
 
-        return BlackJackResult(dealer, players)
+        return ParticipantProfits.of(players, dealer)
     }
 
     companion object {

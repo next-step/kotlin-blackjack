@@ -20,9 +20,9 @@ fun main() {
     playPlayers(blackJack, blackJack.hittablePlayers)
     playDealer(blackJack, dealer)
 
-    val result = blackJack.result()
+    val profits = blackJack.profits()
     ResultView.printCardsWithScore(players, dealer)
-    ResultView.printProfits(result)
+    ResultView.printProfits(profits)
 }
 
 private fun playPlayers(
