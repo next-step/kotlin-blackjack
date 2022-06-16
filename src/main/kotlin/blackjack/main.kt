@@ -39,8 +39,8 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
 }
 
 fun calculateScore(resultView: ResultView, players: List<Player>, dealer: Dealer) {
-    val scores: List<PlayerScore> = players.map { player -> Score.byPlayer(player) }
-    val dealerScore: PlayerScore = Score.byPlayer(dealer)
+    val scores: List<PlayerScore> = players.map { player -> Score.calculatePlayerScore(player) }
+    val dealerScore: PlayerScore = Score.calculatePlayerScore(dealer)
     resultView.dealerScore(dealerScore)
     resultView.playerScore(scores)
 

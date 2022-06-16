@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 
 class WinningStatTest : FreeSpec({
 
-    "indicator" - {
+    "playerGameResult" - {
         "우승 지표를 가져온다." {
             val player = Player("test")
             val winningStat = WinningStat(
@@ -16,7 +16,7 @@ class WinningStatTest : FreeSpec({
                 PlayerScore(Dealer(), 3)
             )
 
-            val result = winningStat.indicator()
+            val result = winningStat.playerGameResult()
             result.size shouldBe 2
             result[0].player.name shouldBe "test"
             result[0].winCount shouldBe 1

@@ -29,7 +29,7 @@ class ScoreTest : FreeSpec({
 
             val players = dto.players
 
-            val scoreResult = Score.byPlayer(players[0])
+            val scoreResult = Score.calculatePlayerScore(players[0])
 
             scoreResult.player.name shouldBe players[0].name
             scoreResult.score shouldBe 5
@@ -50,7 +50,7 @@ class ScoreTest : FreeSpec({
             val players = dto.players
             blackJack.giveCard(players[0])
 
-            val scoreResult = Score.byPlayer(players[0])
+            val scoreResult = Score.calculatePlayerScore(players[0])
             scoreResult.score shouldBe 21
         }
 
@@ -68,7 +68,7 @@ class ScoreTest : FreeSpec({
 
             val players = dto.players
 
-            val scoreResult = Score.byPlayer(players[0])
+            val scoreResult = Score.calculatePlayerScore(players[0])
             scoreResult.score shouldBe 21
         }
     }

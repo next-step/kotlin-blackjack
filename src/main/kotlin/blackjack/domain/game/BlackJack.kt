@@ -2,7 +2,6 @@ package blackjack.domain.game
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
-import blackjack.domain.score.Score
 import blackjack.dto.BlackJackRequest
 
 class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDeck) {
@@ -25,9 +24,7 @@ class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDe
     }
 
     fun canHitPlayer(player: Player): Boolean {
-        val score = Score.calculate(player)
-        if (score <= PLAYER_MAX_HIT_SCORE) return true
-        return false
+        return player.score() <= PLAYER_MAX_HIT_SCORE
     }
 
     fun giveCardToDealer() {
@@ -37,9 +34,7 @@ class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDe
     }
 
     private fun canHitDealer(): Boolean {
-        val score = Score.calculate(dealer)
-        if (score <= DEALER_MAX_HIT_SCORE) return true
-        return false
+        return dealer.score() <= DEALER_MAX_HIT_SCORE
     }
 
     companion object {

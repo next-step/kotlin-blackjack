@@ -9,9 +9,9 @@ class WinningStat(
     private val scores: List<PlayerScore> = playerScores + dealerScore
     private val dealerScore: Int = dealerScore.score
 
-    fun indicator(): List<WinningResult> {
+    fun playerGameResult(): List<PlayerGameResult> {
         return scores.map {
-            WinningResult(it.player, win(it.score), loose(it.score), tie(it.score))
+            PlayerGameResult(it.player, win(it.score), loose(it.score), tie(it.score))
         }
     }
 

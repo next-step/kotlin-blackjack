@@ -15,7 +15,7 @@ object Score {
     private const val QUEEN_SCORE = 10
     private const val KING_SCORE = 10
 
-    fun byPlayer(player: Player): PlayerScore {
+    fun calculatePlayerScore(player: Player): PlayerScore {
         return PlayerScore(player, calculate(player))
     }
 

@@ -5,7 +5,7 @@ import blackjack.domain.winning.WinningStat
 class WinningStatView(
     private val winningStat: WinningStat
 ) {
-    private val winningResult = winningStat.indicator()
+    private val winningResult = winningStat.playerGameResult()
 
     fun title() {
         println()
