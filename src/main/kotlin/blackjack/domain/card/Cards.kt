@@ -6,6 +6,9 @@ class Cards(cardList: List<Card> = emptyList()) {
 
     val total: CardTotal = CardTotal(this.cardList)
 
+    val size: Int
+        get() = cardList.size
+
     fun getNames(): List<String> = cardList.map { it.getName() }
 
     operator fun get(index: Int): Card = cardList[index]

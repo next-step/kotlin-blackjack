@@ -4,6 +4,7 @@ import blackjack.common.PlayerDecision
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardSuit
+import blackjack.domain.card.`blackjack card`
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
@@ -23,7 +24,7 @@ class BlackjackTurnTest {
 
             DealerTurn(dealer).play(CardDeck()) {}
 
-            assertThat(dealer.cards.getNames()).hasSize(3)
+            assertThat(dealer.cards.size).isEqualTo(3)
         }
 
         @Test
@@ -32,7 +33,7 @@ class BlackjackTurnTest {
 
             DealerTurn(dealer).play(CardDeck()) {}
 
-            assertThat(dealer.cards.getNames()).hasSize(2)
+            assertThat(dealer.cards.size).isEqualTo(2)
         }
     }
 
@@ -44,7 +45,7 @@ class BlackjackTurnTest {
 
             PlayerTurn(player).play(CardDeck(), { PlayerDecision.HIT }) {}
 
-            assertThat(player.cards.getNames()).hasSizeGreaterThan(2)
+            assertThat(player.cards.size).isGreaterThan(2)
         }
 
         @Test
@@ -53,16 +54,16 @@ class BlackjackTurnTest {
 
             PlayerTurn(player).play(CardDeck(), { PlayerDecision.STAND }) {}
 
-            assertThat(player.cards.getNames()).hasSize(2)
+            assertThat(player.cards.size).isEqualTo(2)
         }
 
         @Test
-        fun `21 을 초과할 경우 카드를 뽑지 않는다`() {
-            val player = Player(`two cards with total 20`() + listOf(Card.King(CardSuit.CLOVER)))
+        fun `블랙잭일 경우 카드를 뽑지 않는다`() {
+            val player = Player(`blackjack card`())
 
             PlayerTurn(player).play(CardDeck(), { PlayerDecision.HIT }) {}
 
-            assertThat(player.cards.getNames()).hasSize(3)
+            assertThat(player.cards.size).isEqualTo(2)
         }
     }
 }

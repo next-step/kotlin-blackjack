@@ -9,6 +9,11 @@ fun `20 point card`() = listOf(
     Card.Ten(CardSuit.HEART)
 )
 
+fun `blackjack card`() = listOf(
+    Card.King(CardSuit.CLOVER),
+    Card.Ace(CardSuit.HEART)
+)
+
 class CardTotalTest {
     @Test
     fun `카드 숫자의 합을 계산할 수 있다`() {
