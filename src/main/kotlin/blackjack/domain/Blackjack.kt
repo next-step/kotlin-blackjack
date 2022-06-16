@@ -5,6 +5,7 @@ import blackjack.Printer
 import blackjack.common.NonEmptyList
 import blackjack.common.PlayerDecision
 import blackjack.common.PlayerSummary
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
@@ -21,14 +22,12 @@ object Blackjack {
         dealerSummaryPrinter: Printer<PlayerSummary>,
         finalSummariesPrinter: Printer<List<PlayerSummary>>
     ) {
-        val allPlayers = Players(
-            Dealer(),
-            playerNameFetcher.fetch(Unit).list.toPlayers()
-        )
-
         val deck = CardDeck()
 
-        allPlayers.drawStartingCards(deck)
+        val allPlayers = Players(
+            Dealer(drawStartingCardsFromDeck(deck)),
+            playerNameFetcher.fetch(Unit).list.map { Player(it, drawStartingCardsFromDeck(deck)) }
+        )
 
         startingSummariesPrinter.print(allPlayers.toPlayerSummaries(true))
 
@@ -46,22 +45,8 @@ object Blackjack {
         finalSummariesPrinter.print(allPlayers.toPlayerSummaries(false))
     }
 
-    private fun Players.drawStartingCards(deck: CardDeck) {
-        dealer.drawCardFromDeck(deck, numberOfStartingCards)
-
-        players.forEach {
-            it.drawCardFromDeck(deck, numberOfStartingCards)
-        }
-    }
+    private fun drawStartingCardsFromDeck(deck: CardDeck): List<Card> = listOf(deck.drawCard(), deck.drawCard())
 
     private fun Players.toPlayerSummaries(excludeHiddenCard: Boolean): List<PlayerSummary> =
         listOf(PlayerSummary(dealer, excludeHiddenCard)) + players.map { PlayerSummary(it) }
-
-    private fun List<String>.toPlayers(): List<Player> = map { Player(it) }
-
-    private fun Player.drawCardFromDeck(deck: CardDeck, numberOfCards: Int = 1) {
-        repeat(numberOfCards) {
-            addCardToHand(deck.drawCard())
-        }
-    }
 }

@@ -4,14 +4,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-fun `20 point card`() = listOf(
+private fun `20 point card`() = listOf(
     Card.King(CardSuit.CLOVER),
     Card.Ten(CardSuit.HEART)
-)
-
-fun `blackjack card`() = listOf(
-    Card.King(CardSuit.CLOVER),
-    Card.Ace(CardSuit.HEART)
 )
 
 class CardTotalTest {

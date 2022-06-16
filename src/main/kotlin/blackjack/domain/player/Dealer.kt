@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
-class Dealer : Player("딜러") {
+import blackjack.domain.card.Card
+
+class Dealer(startingCards: List<Card>) : Player("딜러", startingCards) {
     val shouldDrawCard: Boolean
         get() = cards.total.value <= 16
 }

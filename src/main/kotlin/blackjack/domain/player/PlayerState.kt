@@ -20,10 +20,7 @@ sealed interface PlayerState {
     object Stand : Done
 
     companion object {
-        private const val STARTING_CARD_SIZE_IS_TWO = "플레이어는 두 장의 카드로 게임을 시작해야 합니다."
         fun of(player: Player): PlayerState {
-            require(player.cards.size == 2) { STARTING_CARD_SIZE_IS_TWO }
-
             return if (player.isBlackjack()) Blackjack else Playing(player)
         }
 

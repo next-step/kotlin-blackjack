@@ -1,35 +1,29 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.`20 point card`
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
-import blackjack.domain.card.`blackjack card`
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
 private fun Playing(cards: List<Card>): PlayerState.Playing {
-    return PlayerState.Playing(Player(cards))
+    return PlayerState.Playing(Player("vivian", cards))
 }
+
+private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Queen(CardSuit.CLOVER))
+private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))
 
 class PlayerStateTest {
     @Test
-    fun `두 장의 카드로 시작하지 않을 경우 IllegalArgumentException 이 발생한다`() {
-        assertThatIllegalArgumentException()
-            .isThrownBy { PlayerState.of(Player(`20 point card`() + `20 point card`())) }
-    }
-
-    @Test
     fun `숫자 합이 21 이하 라면 Playing 을 리턴한다`() {
         assertThat(
-            PlayerState.of(Player(`20 point card`()))
+            PlayerState.of(Player("vivian", `20 point card`()))
         ).isExactlyInstanceOf(PlayerState.Playing::class.java)
     }
 
     @Test
     fun `숫자 합이 21 이라면 Blackjack 을 리턴한다`() {
         assertThat(
-            PlayerState.of(Player(`blackjack card`()))
+            PlayerState.of(Player("vivian", `blackjack card`()))
         ).isEqualTo(PlayerState.Blackjack)
     }
 

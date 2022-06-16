@@ -3,39 +3,40 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatNoException
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
-fun Player(cards: List<Card>): Player {
-    val player = Player("vivian")
-
-    cards.forEach { player.addCardToHand(it) }
-
-    return player
-}
-
+private fun `starting cards`() = listOf(Card.Two(CardSuit.DIAMOND), Card.Ace(CardSuit.SPADE))
 class PlayerTest {
     @Test
     fun `플레이어는 이름을 가지고 있다`() {
         val name = "vivian"
-        val player = Player(name)
+        val player = Player(name, `starting cards`())
 
         assertThat(player.name).isEqualTo(name)
     }
 
     @Test
-    fun `플레이어는 여러장의 카드를 가질 수 있다`() {
-        val player = Player("vivian")
+    fun `플레이어는 2장의 카드로 시작한다`() {
+        val player = Player("vivian", `starting cards`())
 
-        val firstCard = Card.Two(CardSuit.DIAMOND)
-        val secondCard = Card.Ace(CardSuit.SPADE)
+        assertThat(player.cards.size).isEqualTo(2)
+    }
 
-        assertThatNoException().isThrownBy {
-            player.addCardToHand(firstCard)
-            player.addCardToHand(secondCard)
-        }
+    @Test
+    fun `플레이어가 2장의 카드로 시작하지 않을 경우 IllegalArgumentException 이 발생한다`() {
+        assertThatIllegalArgumentException()
+            .isThrownBy { Player("vivian", `starting cards`() + listOf(Card.Two(CardSuit.CLOVER))) }
+    }
 
-        assertThat(player.cards[0]).isSameAs(firstCard)
-        assertThat(player.cards[1]).isSameAs(secondCard)
+    @Test
+    fun `플레이어는 핸드에 카드를 추가할 수 있다`() {
+        val player = Player("vivian", `starting cards`())
+        val additionalCard = Card.Two(CardSuit.CLOVER)
+
+        player.addCardToHand(additionalCard)
+
+        assertThat(player.cards.size).isEqualTo(3)
+        assertThat(player.cards[2]).isSameAs(additionalCard)
     }
 }
