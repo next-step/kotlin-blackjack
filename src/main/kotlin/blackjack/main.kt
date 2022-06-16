@@ -7,10 +7,12 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.score.PlayerScore
 import blackjack.domain.score.Score
+import blackjack.domain.winning.WinningStat
 import blackjack.dto.BlackJackRequest
 import blackjack.view.GameView
 import blackjack.view.InputView
 import blackjack.view.ResultView
+import blackjack.view.WinningStatView
 
 fun main() {
     val inputView = InputView()
@@ -38,6 +40,15 @@ fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
 
 fun calculateScore(resultView: ResultView, players: List<Player>, dealer: Dealer) {
     val scores: List<PlayerScore> = players.map { player -> Score.byPlayer(player) }
-    resultView.dealerScore(Score.byPlayer(dealer))
+    val dealerScore: PlayerScore = Score.byPlayer(dealer)
+    resultView.dealerScore(dealerScore)
     resultView.playerScore(scores)
+
+    winningStat(WinningStat(scores, dealerScore))
+}
+
+fun winningStat(winingStat: WinningStat) {
+    val winningStatView = WinningStatView(winingStat)
+    winningStatView.title()
+    winningStatView.indicator()
 }
