@@ -8,8 +8,9 @@ fun main() {
     Blackjack.play(
         playerNameFetcher = { InputView.getPlayerNames() },
         playerDecisionFetcher = { playerName -> InputView.getPlayerDecision(playerName) },
-        startingPlayerSummaryPrinter = { summaries -> OutputView.printStartingPlayerSummaries(summaries, Blackjack.numberOfStartingCards) },
+        startingSummariesPrinter = { summaries -> OutputView.printStartingSummaries(summaries, Blackjack.numberOfStartingCards) },
         playerSummaryPrinter = { summary -> OutputView.printPlayerSummary(summary) },
-        finalPlayerSummaryPrinter = { summaries -> OutputView.printFinalPlayerSummaries(summaries) },
+        dealerSummaryPrinter = { summary -> OutputView.printDealerSummary(summary) },
+        finalSummariesPrinter = { summaries -> OutputView.printFinalSummaries(summaries) },
     )
 }

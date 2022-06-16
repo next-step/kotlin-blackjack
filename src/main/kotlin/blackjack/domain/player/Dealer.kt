@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
 class Dealer : Player("딜러") {
-    override val isFirstCardHidden: Boolean = true
+    val shouldDrawCard: Boolean
+        get() = cards.total.value <= 16
 }

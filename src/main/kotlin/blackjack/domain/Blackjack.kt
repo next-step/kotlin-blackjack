@@ -8,7 +8,7 @@ import blackjack.common.PlayerSummary
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerState
+import blackjack.domain.player.Players
 
 object Blackjack {
     const val numberOfStartingCards = 2
@@ -16,43 +16,48 @@ object Blackjack {
     fun play(
         playerNameFetcher: Fetcher<Unit, NonEmptyList<String>>,
         playerDecisionFetcher: Fetcher<String, PlayerDecision>,
-        startingPlayerSummaryPrinter: Printer<List<PlayerSummary>>,
+        startingSummariesPrinter: Printer<List<PlayerSummary>>,
         playerSummaryPrinter: Printer<PlayerSummary>,
-        finalPlayerSummaryPrinter: Printer<List<PlayerSummary>>
+        dealerSummaryPrinter: Printer<PlayerSummary>,
+        finalSummariesPrinter: Printer<List<PlayerSummary>>
     ) {
-        val dealer = Dealer()
-        val players: List<Player> = listOf(dealer) + playerNameFetcher.fetch(Unit).list.toPlayers()
+        val allPlayers = Players(
+            Dealer(),
+            playerNameFetcher.fetch(Unit).list.toPlayers()
+        )
+
         val deck = CardDeck()
 
-        giveOutStartingCardsToPlayers(players, deck)
+        allPlayers.drawStartingCards(deck)
 
-        startingPlayerSummaryPrinter.print(players.toPlayerSummaries(true))
+        startingSummariesPrinter.print(allPlayers.toPlayerSummaries(true))
 
-        players.forEach { player ->
-            var playerState = PlayerState.of(player)
-
-            while (playerState is PlayerState.Playing) {
-                playerState = when (playerDecisionFetcher.fetch(player.name)) {
-                    PlayerDecision.HIT -> playerState.hit(deck.drawCard())
-                    PlayerDecision.STAND -> playerState.stand()
-                }
-
-                playerSummaryPrinter.print(PlayerSummary(player))
+        allPlayers.run {
+            players.map { player ->
+                PlayerTurn(player).play(
+                    deck,
+                    { playerDecisionFetcher.fetch(player.name) }
+                ) { playerSummaryPrinter.print(PlayerSummary(player)) }
             }
+
+            DealerTurn(dealer).play(deck) { dealerSummaryPrinter.print(PlayerSummary(dealer)) }
         }
 
-        finalPlayerSummaryPrinter.print(players.toPlayerSummaries(false))
+        finalSummariesPrinter.print(allPlayers.toPlayerSummaries(false))
     }
 
-    private fun giveOutStartingCardsToPlayers(players: List<Player>, deck: CardDeck) {
+    private fun Players.drawStartingCards(deck: CardDeck) {
+        dealer.drawCardFromDeck(deck, numberOfStartingCards)
+
         players.forEach {
             it.drawCardFromDeck(deck, numberOfStartingCards)
         }
     }
 
-    private fun List<String>.toPlayers(): List<Player> = map { Player(it) }
+    private fun Players.toPlayerSummaries(excludeHiddenCard: Boolean): List<PlayerSummary> =
+        listOf(PlayerSummary(dealer, excludeHiddenCard)) + players.map { PlayerSummary(it) }
 
-    private fun List<Player>.toPlayerSummaries(excludeHiddenCard: Boolean): List<PlayerSummary> = map { PlayerSummary(it, excludeHiddenCard) }
+    private fun List<String>.toPlayers(): List<Player> = map { Player(it) }
 
     private fun Player.drawCardFromDeck(deck: CardDeck, numberOfCards: Int = 1) {
         repeat(numberOfCards) {

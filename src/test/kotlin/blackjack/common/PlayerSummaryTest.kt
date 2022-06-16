@@ -47,7 +47,7 @@ class PlayerSummaryTest {
 
         assertThat(
             PlayerSummary(Dealer(cards), excludeHiddenCard = true).playerCards
-        ).isEqualTo(listOf("J하트"))
+        ).isEqualTo(listOf("3다이아몬드"))
     }
 
     @Test

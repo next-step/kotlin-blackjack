@@ -1,5 +1,6 @@
 package blackjack.common
 
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
 class PlayerSummary(player: Player, excludeHiddenCard: Boolean = false) {
@@ -7,8 +8,8 @@ class PlayerSummary(player: Player, excludeHiddenCard: Boolean = false) {
 
     val playerCards: List<String> = player.cards.getNames()
         .let {
-            if (excludeHiddenCard && player.isFirstCardHidden)
-                it.drop(1)
+            if (player is Dealer && excludeHiddenCard)
+                it.dropLast(1)
             else
                 it
         }
