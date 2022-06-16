@@ -1,6 +1,5 @@
 package blackjack.dto
 
-import blackjack.Player
 import blackjack.UserRole
 
 class PlayersDto(private val players: List<UserRole>) {
@@ -14,7 +13,7 @@ class PlayersDto(private val players: List<UserRole>) {
 
     fun showInitCards() {
         players.forEach {
-            println("%s카드: %s".format(it.name, it.cards.map { c -> c.show() }))
+            println("%s카드: %s".format(it.name, it.cards.map { c -> c.toString() }))
         }
     }
 }

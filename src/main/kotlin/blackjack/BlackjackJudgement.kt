@@ -8,7 +8,6 @@ class BlackjackJudgement(private val users: List<UserRole>) {
 
     private val dealer = users.first { it.isDealer() }
 
-
     fun updateGameJudgement(): List<UserRole> {
         var players = users.filter { !it.isDealer() }
         val dealerScore = dealer.getScore()

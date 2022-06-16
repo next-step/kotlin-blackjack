@@ -5,6 +5,8 @@ import blackjack.dto.PlayersDto
 class BlackjackGame(private val gamers: List<UserRole>) {
 
     init {
+        validate(gamers.size)
+
         repeat(BASIC_RULE_COUNT) {
             gamers.forEach {
                 it.draw(cards.removeAt(TOP_CARD))
@@ -25,6 +27,10 @@ class BlackjackGame(private val gamers: List<UserRole>) {
 
         results.add(playDealerTurn())
         return results.toList()
+    }
+
+    private fun validate(playerCount: Int) {
+        require(BLACKJACK_PLAY_MIN_PLAYER_COUNT > playerCount) { "플레이어가 너무 많습니다" }
     }
 
     private fun playPlayerTurn(player: UserRole): UserRole {
@@ -53,6 +59,8 @@ class BlackjackGame(private val gamers: List<UserRole>) {
 
     companion object {
         private const val BASIC_RULE_COUNT = 2
+        private const val BLACKJACK_CARD_COUNT = 52
+        private const val BLACKJACK_PLAY_MIN_PLAYER_COUNT = BLACKJACK_CARD_COUNT / BASIC_RULE_COUNT
         const val TOP_CARD = 0
     }
 }
