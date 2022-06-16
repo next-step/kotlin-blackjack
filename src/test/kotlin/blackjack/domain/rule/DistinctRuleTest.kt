@@ -12,13 +12,13 @@ class DistinctRuleTest {
     fun `DistinctRule을 적용하여 중복되는 카드를 제거할 수 있다`() {
         val playingCards = PlayingCards.from(
             listOf(
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard.of(Suit.DIAMONDS, CardNumber.TEN),
-                PlayingCard.of(Suit.SPADES, CardNumber.KING)
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.DIAMONDS, CardNumber.TEN),
+                PlayingCard(Suit.SPADES, CardNumber.KING)
             )
         )
 
-        assertThat(DistinctRule.applyTo(playingCards)).containsOnlyOnce(PlayingCard.of(Suit.CLUBS, CardNumber.NINE))
+        assertThat(DistinctRule.applyTo(playingCards)).containsOnlyOnce(PlayingCard(Suit.CLUBS, CardNumber.NINE))
     }
 }

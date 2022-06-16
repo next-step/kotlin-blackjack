@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class PlayingCards private constructor(private val cards: List<PlayingCard>) : List<PlayingCard> by cards {
-    fun hasCardOf(number: CardNumber): Boolean = any { playingCard ->
+    operator fun contains(number: CardNumber): Boolean = any { playingCard ->
         playingCard.isCardOf(number)
     }
 

@@ -10,7 +10,7 @@ object StartOfGameConverter : OutputConverter<List<Player>> {
     }
 
     private fun List<Player>.toNamesText(): String {
-        return joinToString(", ") { player -> player.name }
+        return joinToString(", ") { player -> player.name.value }
     }
 
     private fun List<Player>.toPrintableText(): String {

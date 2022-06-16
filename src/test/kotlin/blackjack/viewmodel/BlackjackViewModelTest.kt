@@ -2,24 +2,35 @@ package blackjack.viewmodel
 
 import blackjack.domain.CardDeck
 import blackjack.domain.CardNumber
-import blackjack.domain.Player
+import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class BlackjackViewModelTest {
-    private val names = listOf("Spade", "Diamond")
-    private val players: List<Player>
-        get() = names.map { name ->
-            Player.from(name)
-        }
+    private val names = listOf(PlayerName("Spade"), PlayerName("Diamond"))
     private val viewModel: BlackjackViewModel
         get() = BlackjackViewModel.of(
-            players = players,
+            playerNames = names,
             cardDeck = CardDeck.from(PlayingCard.all())
         )
+
+    @Test
+    fun `from에 PlayerName List를 넘겨 BlackjackViewModel을 생성할 수 있다`() {
+        val viewModel = BlackjackViewModel.from(names)
+
+        assertAll(
+            { assertThat(viewModel.players).hasSize(names.size) },
+            {
+                assertThat(viewModel.players).allMatch { player ->
+                    player.name in names
+                }
+            }
+        )
+    }
 
     @Test
     fun `players는 현재 게임에 참가 중인 참가자들을 보관한다`() {
@@ -31,23 +42,23 @@ class BlackjackViewModelTest {
     @Test
     fun `BlackJackViewModel을 생성할 때 각 플레이어들은 카드를 두 장씩 뽑는다`() {
         assertThat(viewModel.players).allMatch { player ->
-            player.hands.cards.size == BlackjackViewModel.START_CARD_COUNT
+            player.cardsOfHands.size == BlackjackViewModel.START_CARD_COUNT
         }
     }
 
     @Test
     fun `BlackJackViewModel을 생성할 때 카드를 뽑을 수 있는 첫 번째 사람이 턴을 얻게 된다`() {
         val viewModel = BlackjackViewModel.of(
-            players = players,
+            playerNames = names,
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
-                        PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.TWO),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.THREE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FIVE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.SIX)
+                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.TWO),
+                        PlayingCard(Suit.HEARTS, CardNumber.THREE),
+                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
+                        PlayingCard(Suit.HEARTS, CardNumber.FIVE),
+                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
                     )
                 )
             )
@@ -71,7 +82,7 @@ class BlackjackViewModelTest {
         val viewModel = viewModel
         viewModel.hit()
 
-        assertThat(viewModel.currentTurn.value?.hands?.cards?.size).isEqualTo(3)
+        assertThat(viewModel.currentTurn.value?.cardsOfHands?.size).isEqualTo(3)
     }
 
     @Test
@@ -85,16 +96,16 @@ class BlackjackViewModelTest {
     @Test
     fun `nextTurn을 호출하여 카드를 받을 수 있는 플레이어에게 턴을 넘길 수 있다`() {
         val viewModel = BlackjackViewModel.of(
-            players = players,
+            playerNames = names,
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
-                        PlayingCard.of(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.EIGHT),
-                        PlayingCard.of(Suit.DIAMONDS, CardNumber.ACE),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard.of(Suit.SPADES, CardNumber.TWO),
-                        PlayingCard.of(Suit.HEARTS, CardNumber.SIX)
+                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.EIGHT),
+                        PlayingCard(Suit.DIAMONDS, CardNumber.ACE),
+                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
+                        PlayingCard(Suit.SPADES, CardNumber.TWO),
+                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
                     )
                 )
             )
@@ -103,6 +114,6 @@ class BlackjackViewModelTest {
         viewModel.hit()
         viewModel.nextTurn()
 
-        assertThat(viewModel.currentTurn.value?.name).isEqualTo("Diamond")
+        assertThat(viewModel.currentTurn.value?.name).isEqualTo(PlayerName("Diamond"))
     }
 }

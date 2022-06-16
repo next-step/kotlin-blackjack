@@ -4,8 +4,6 @@ class PlayingCard private constructor(
     val suit: Suit,
     val number: CardNumber
 ) {
-    val text: String = "${number.text}${suit.text}"
-
     fun isCardOf(number: CardNumber): Boolean = this.number == number
 
     companion object {
@@ -15,7 +13,7 @@ class PlayingCard private constructor(
             }
         }
 
-        fun of(suit: Suit, number: CardNumber): PlayingCard = ALL_PLAYING_CARDS.first { playingCard ->
+        operator fun invoke(suit: Suit, number: CardNumber): PlayingCard = ALL_PLAYING_CARDS.first { playingCard ->
             playingCard.suit == suit && playingCard.number == number
         }
 

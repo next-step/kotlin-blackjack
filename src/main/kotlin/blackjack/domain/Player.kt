@@ -1,26 +1,22 @@
 package blackjack.domain
 
-class Player private constructor(val name: String) {
-    var hands = Hands.from(PlayingCards.empty())
-        private set
-    var state = PlayerState.of(hands.score)
-        private set
+class Player(
+    val name: PlayerName,
+    initialCards: PlayingCards
+) {
+    private var hands = Hands.from(initialCards)
+    val cardsOfHands: PlayingCards
+        get() = hands.cards
+    val score: Score
+        get() = hands.score
 
     fun receive(playingCards: PlayingCards) {
         hands += playingCards
-        state = PlayerState.of(hands.score)
     }
 
-    fun finish() {
-        state = PlayerState.of(
-            score = hands.score,
-            isRunning = false
-        )
+    fun stay() {
+        hands = hands.stay()
     }
 
-    fun isReceivable(): Boolean = !state.isFinished()
-
-    companion object {
-        fun from(name: String): Player = Player(name)
-    }
+    fun isReceivable(): Boolean = hands.isReceivable()
 }

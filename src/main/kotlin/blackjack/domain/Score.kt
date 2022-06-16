@@ -31,7 +31,7 @@ value class Score private constructor(val value: Int) {
         fun zero(): Score = Score(0)
 
         private fun needToAddScoreOfAce(cards: PlayingCards, currentScore: Int): Boolean {
-            return cards.hasCardOf(CardNumber.ACE) && currentScore + ADDITIONAL_SCORE_OF_ACE <= BLACKJACK_SCORE
+            return CardNumber.ACE in cards && currentScore + ADDITIONAL_SCORE_OF_ACE <= BLACKJACK_SCORE
         }
     }
 }
