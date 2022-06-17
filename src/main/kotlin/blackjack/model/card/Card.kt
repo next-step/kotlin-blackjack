@@ -5,6 +5,9 @@ class Card(
     private val number: CardNumber,
 ) {
 
+    val score
+        get() = number.score
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Card) return false

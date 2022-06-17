@@ -6,6 +6,10 @@ class Cards(
     val size
         get() = cards.size
 
+    val sumOfScore
+        get() = cards.map { it.score }
+            .reduce { totalScore, score -> totalScore.plus(score) }
+
     fun addOne(card: Card) = cards.add(card)
 
     fun removeOne(): Card {
