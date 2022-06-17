@@ -39,14 +39,14 @@ class BlackjackApplication {
     private fun isHit(participant: Participant): Boolean {
         val isDealer = participant.isDealer()
         return if (isDealer) {
-            participant.blackJackStatus == BlackJackStatus.HIT
+            participant.isHit()
         } else {
             playerIsHit(participant)
         }
     }
 
     private fun playerIsHit(participant: Participant): Boolean {
-        return if (participant.blackJackStatus == BlackJackStatus.BUST) {
+        return if (participant.isBust()) {
             false
         } else {
             InputView.needMoreCard(participant)

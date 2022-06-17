@@ -25,4 +25,12 @@ abstract class Participant {
     fun setBlackJackStatusStay() {
         _blackJackStatus = BlackJackStatus.STAY
     }
+
+    fun isHit(): Boolean {
+        return this.blackJackStatus == BlackJackStatus.HIT
+    }
+
+    fun isBust(): Boolean {
+        return this.blackJackStatus == BlackJackStatus.BUST
+    }
 }
