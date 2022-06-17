@@ -1,7 +1,7 @@
 package blackjack.model
 
 class CardProvider(
-    private val cardSet: Cards = CardSetGenerator.generateOneCardSet(
+    val cardSet: Cards = CardSetGenerator.generateOneCardSet(
         CardSymbol.generateAllKinds(),
         CardNumber.values().toList()
     )
