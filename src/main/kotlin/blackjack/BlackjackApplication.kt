@@ -25,31 +25,14 @@ class BlackjackApplication {
     }
 
     private fun suggestMoreCard(blackJackGame: BlackJackGame, participant: Participant) {
-        var isHit = isHit(participant)
+        var isHit = participant.canDrawable()
         do {
             if (isHit) {
                 blackJackGame.drawTo(participant.name)
                 GameView.printDrawResult(participant)
-                isHit = isHit(participant)
+                isHit = participant.canDrawable()
             }
         } while (isHit)
-    }
-
-    private fun isHit(participant: Participant): Boolean {
-        val isDealer = participant.isDealer()
-        return if (isDealer) {
-            participant.isHit()
-        } else {
-            playerIsHit(participant)
-        }
-    }
-
-    private fun playerIsHit(participant: Participant): Boolean {
-        return if (participant.isBust()) {
-            false
-        } else {
-            InputView.needMoreCard(participant)
-        }
     }
 }
 

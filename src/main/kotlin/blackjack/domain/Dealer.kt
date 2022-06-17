@@ -8,4 +8,8 @@ class Dealer(
     override fun isDealer(): Boolean {
         return true
     }
+
+    override fun canDrawable(): Boolean {
+        return participantCards.isHit()
+    }
 }

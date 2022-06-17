@@ -11,6 +11,8 @@ abstract class Participant(
 
     abstract fun isDealer(): Boolean
 
+    abstract fun canDrawable(): Boolean
+
     fun addCard(card: Card) {
         if (blackJackStatus.isDrawable) {
             this.participantCards.addCard(card)
@@ -26,13 +28,5 @@ abstract class Participant(
 
     fun setBlackJackStatusStay() {
         blackJackStatus = BlackJackStatus.STAY
-    }
-
-    fun isHit(): Boolean {
-        return this.blackJackStatus == BlackJackStatus.HIT
-    }
-
-    fun isBust(): Boolean {
-        return this.blackJackStatus == BlackJackStatus.BUST
     }
 }
