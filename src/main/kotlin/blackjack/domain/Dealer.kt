@@ -8,8 +8,4 @@ class Dealer(
     override fun isDealer(): Boolean {
         return true
     }
-
-    override fun getEarnAmount(players: List<Player>, dealer: Dealer): Int {
-        return GameResult.earnAmount(players, this)
-    }
 }

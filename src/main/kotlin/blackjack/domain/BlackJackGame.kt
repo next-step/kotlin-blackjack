@@ -1,8 +1,8 @@
 package blackjack.domain
 
 data class BlackJackGame(
-    private val dealer: Dealer,
-    private val players: List<Player>,
+    val dealer: Dealer,
+    val players: List<Player>,
     private val cardDeck: Deck
 ) {
 
@@ -18,10 +18,6 @@ data class BlackJackGame(
 
     fun drawTo(playerName: String) {
         playerMap[playerName]!!.addCard(cardDeck.draw())
-    }
-
-    fun getEarnAmount(name: String): Int {
-        return playerMap[name]!!.getEarnAmount(players, dealer)
     }
 
     private fun Participant.addFirstCard() {

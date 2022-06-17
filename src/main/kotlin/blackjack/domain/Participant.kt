@@ -11,8 +11,6 @@ abstract class Participant(
 
     abstract fun isDealer(): Boolean
 
-    abstract fun getEarnAmount(participants: List<Player>, dealer: Dealer): Int
-
     fun addCard(card: Card) {
         if (blackJackStatus.isDrawable) {
             this.participantCards.addCard(card)

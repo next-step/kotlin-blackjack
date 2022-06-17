@@ -21,11 +21,10 @@ class GameResultTest {
                 )
             )
         ).let { game ->
-            repeat(3) { game.drawTo("딜러") }
+            repeat(2) { game.drawTo("딜러") }
         }
 
-        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
-        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
+        assertThat(players.getEarnAmount(dealer)).isEqualTo(-10000)
     }
 
     @Test
@@ -48,8 +47,7 @@ class GameResultTest {
             repeat(3) { game.drawTo("molly") }
         }
 
-        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
-        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
+        assertThat(players.getEarnAmount(dealer)).isEqualTo(10000)
     }
 
     @Test
@@ -62,8 +60,7 @@ class GameResultTest {
         blackjack.firstCardDistribution()
         blackjack.drawTo("딜러")
 
-        assertThat(players.getEarnAmount(listOf(players), dealer)).isEqualTo(-10000)
-        assertThat(dealer.getEarnAmount(listOf(players), dealer)).isEqualTo(10000)
+        assertThat(players.getEarnAmount(dealer)).isEqualTo(-10000)
     }
 
     @Test
@@ -77,8 +74,7 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        assertThat(players[0].getEarnAmount(players, dealer)).isEqualTo(10000)
-        assertThat(dealer.getEarnAmount(players, dealer)).isEqualTo(0)
+        assertThat(players[0].getEarnAmount(dealer)).isEqualTo(10000)
     }
 
     @Test
@@ -103,8 +99,7 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        assertThat(player.getEarnAmount(listOf(player), dealer)).isEqualTo(15000)
-        assertThat(dealer.getEarnAmount(listOf(player), dealer)).isEqualTo(-5000)
+        assertThat(player.getEarnAmount(dealer)).isEqualTo(15000)
     }
 
     @Test
@@ -129,7 +124,6 @@ class GameResultTest {
 
         blackJackGame.firstCardDistribution()
 
-        assertThat(player.getEarnAmount(listOf(player), dealer)).isEqualTo(10000)
-        assertThat(dealer.getEarnAmount(listOf(player), dealer)).isEqualTo(0)
+        assertThat(player.getEarnAmount(dealer)).isEqualTo(10000)
     }
 }
