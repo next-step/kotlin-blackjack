@@ -18,4 +18,15 @@ class PlayerTest : FreeSpec({
             player.cards[0] shouldBe card
         }
     }
+
+    "score" - {
+
+        "플레이어가 가진 점수를 반환해야한다." {
+            val player = Player("uju")
+            val card = Card(DIAMOND, "3")
+            player.addCard(card)
+
+            player.score() shouldBe 3
+        }
+    }
 })

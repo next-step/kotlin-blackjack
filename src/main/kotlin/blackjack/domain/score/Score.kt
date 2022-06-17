@@ -7,16 +7,20 @@ import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.domain.card.RandomCardDeck.Companion.QUEEN
 import blackjack.domain.player.Player
 
-class Score {
-    private var _playerScores: MutableList<PlayerScore> = mutableListOf()
-    val playerScore: List<PlayerScore>
-        get() = _playerScores.toList()
+object Score {
+    private const val BLACK_JACK_SCORE = 21
+    private const val ACE_DEFAULT_SCORE = 11
+    private const val ACE_SCORE = 1
+    private const val JACK_SCORE = 10
+    private const val QUEEN_SCORE = 10
+    private const val KING_SCORE = 10
 
-    fun calculate(players: List<Player>) {
-        players.forEach { player ->
-            val sum = sum(player.cards)
-            _playerScores.add(PlayerScore(player, sum))
-        }
+    fun calculatePlayerScore(player: Player): PlayerScore {
+        return PlayerScore(player, calculate(player))
+    }
+
+    fun calculate(player: Player): Int {
+        return sum(player.cards)
     }
 
     private fun sum(cards: List<Card>): Int {
@@ -31,28 +35,19 @@ class Score {
             }
         }
 
-        if (isBurst(sum) && containAce(cards)) {
+        if (isBust(sum) && containAce(cards)) {
             sum = sum - ACE_DEFAULT_SCORE + ACE_SCORE
         }
 
         return sum
     }
 
-    private fun isBurst(score: Int): Boolean {
+    private fun isBust(score: Int): Boolean {
         if (score > BLACK_JACK_SCORE) return true
         return false
     }
 
     private fun containAce(cards: List<Card>): Boolean {
         return cards.any { it.number == ACE }
-    }
-
-    companion object {
-        private const val BLACK_JACK_SCORE = 21
-        private const val ACE_DEFAULT_SCORE = 11
-        private const val ACE_SCORE = 1
-        private const val JACK_SCORE = 10
-        private const val QUEEN_SCORE = 10
-        private const val KING_SCORE = 10
     }
 }
