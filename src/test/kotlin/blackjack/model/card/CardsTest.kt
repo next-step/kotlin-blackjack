@@ -12,7 +12,7 @@ class CardsTest {
     fun `카드 추가 기능이 정상 동작`() {
         // given
         val cards = Cards()
-        val card = Card(CardSymbol("하트"), CardNumber.ONE)
+        val card = Card(CardSymbol.하트, CardNumber.ONE)
 
         // when
         assertThat(cards.contains(card)).isFalse
@@ -25,7 +25,7 @@ class CardsTest {
     @Test
     fun `카드 제거 기능이 정상 동작`() {
         // given
-        val card = Card(CardSymbol("하트"), CardNumber.ONE)
+        val card = Card(CardSymbol.하트, CardNumber.ONE)
         val cards = Cards(mutableListOf(card))
 
         // when

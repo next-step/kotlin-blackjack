@@ -10,9 +10,14 @@ class Player private constructor(
     val cardSize
         get() = cards.size
 
+    val sumOfCardScore
+        get() = cards.sumOfScore
+
     fun receiveCard(card: Card) = cards.addOne(card)
 
     companion object {
         fun from(name: String) = Player(PlayerName(name))
+
+        fun from(name: String, cards: Cards) = Player(PlayerName(name), cards)
     }
 }
