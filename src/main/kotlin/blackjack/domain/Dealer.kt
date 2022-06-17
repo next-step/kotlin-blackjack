@@ -3,19 +3,20 @@ package blackjack.domain
 import java.util.LinkedList
 import java.util.Queue
 
-class Dealer() {
-    private val cards: Queue<Card> = LinkedList()
+class Dealer() : Player("딜러") {
+    private val cardPack: Queue<Card> = LinkedList()
+    override val cards = mutableListOf<Card>()
 
     init {
-        Card.pack().shuffled().map { card -> cards.add(card) }
+        Card.pack().shuffled().map { card -> cardPack.add(card) }
     }
 
     fun give(): Card {
-        return cards.poll()
+        return cardPack.poll()
     }
 
     fun shareCards(): List<Card> {
-        return BASIC_CARD_RANGE.map { cards.poll() }
+        return BASIC_CARD_RANGE.map { cardPack.poll() }
     }
 
     fun ask(name: String) {

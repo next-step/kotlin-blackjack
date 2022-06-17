@@ -2,9 +2,9 @@ package blackjack.domain
 
 import blackjack.view.Screen
 
-class Game(val dealer: Dealer) {
+class Game(private val dealer: Dealer) {
     fun enter(input: String): List<Player> {
-        return input.split(",").map { Player(it) }
+        return listOf(dealer) + input.split(",").map { Player(it) }
     }
 
     fun shareCards(players: List<Player>) {

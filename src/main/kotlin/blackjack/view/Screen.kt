@@ -4,8 +4,11 @@ import blackjack.domain.Player
 
 object Screen {
     fun displayPlayerCards(players: List<Player>) {
-        val names = players.map { player -> player.name }.joinToString(", ")
-        println("$names 에게 2장의 카드를 나누었습니다.")
+        val dealer = players[0]
+        val gamers = players.filterIndexed { index, _ -> index != 0 }
+
+        val names = gamers.map { gamer -> gamer.name }.joinToString(", ")
+        println("${dealer.name}와 $names 에게 2장의 카드를 나누었습니다.")
 
         for (player in players) {
             displayPlayerCard(player)
