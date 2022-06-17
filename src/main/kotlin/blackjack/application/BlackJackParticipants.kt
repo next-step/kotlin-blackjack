@@ -23,13 +23,13 @@ class BlackJackParticipants(
 ) {
 
     val statuses: BlackJackStatuses
-        get() = BlackJackStatuses(listOf(dealer.status()) + players.statuses())
+        get() = BlackJackStatuses(players.statuses() + dealer.status())
 
     val scores: BlackjackScores
-        get() = BlackjackScores(listOf(dealer.blackJackScore()) + players.blackJackScores())
+        get() = BlackjackScores(players.blackJackScores() + dealer.blackJackScore())
 
     private val winningResults: BlackJackWinningResults
-        get() = BlackJackWinningResults(listOf(dealer.winningResult()) + players.winningResults())
+        get() = BlackJackWinningResults(players.winningResults() + dealer.winningResult())
 
     val hasMorePlayablePlayer: Boolean
         get() = players.playable.isEmpty()

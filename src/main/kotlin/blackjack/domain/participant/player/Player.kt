@@ -17,7 +17,7 @@ class Player(
     val betAmount: BetAmount
 ) : Participant(participantInformation, cardsInHand) {
     val isBlackJack: Boolean
-        get() = score == Score.BLACKJACK && cardsInHand.cards.size == 2
+        get() = cardsInHand.isBlackJack
 
     override fun validateHitRules() {
         require(!participantInformation.isStay()) { "Stay를 선언하였다면 카드를 뽑을수 없습니다." }
