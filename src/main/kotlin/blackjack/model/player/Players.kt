@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.player
 
 class Players(
     private val players: List<Player>

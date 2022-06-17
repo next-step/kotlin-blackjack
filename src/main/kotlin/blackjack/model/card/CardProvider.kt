@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.card
+
+import blackjack.model.player.Player
 
 class CardProvider(
     val cardSet: Cards = CardSetGenerator.generateOneCardSet(

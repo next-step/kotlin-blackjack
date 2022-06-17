@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class Card(
     private val symbol: CardSymbol,
