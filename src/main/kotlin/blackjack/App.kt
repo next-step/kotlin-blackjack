@@ -10,40 +10,38 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val players = InputView.players()
+    val players = Players(InputView.players())
     val dealer = Dealer()
-    val blackJack = BlackJack(dealer = dealer, players = Players(players))
+    val blackJack = BlackJack(dealer = dealer, players = players)
 
-    ResultView.printlnBlackJackInit(players, dealer)
-    ResultView.printlnPlayersWithCards(players, dealer)
+    ResultView.printInit(players, dealer)
+    ResultView.printCards(players, dealer)
 
-    val hittablePlayers = blackJack.players.hittablePlayers()
-    playPlayers(blackJack, hittablePlayers)
+    playPlayers(blackJack, blackJack.hittablePlayers)
     playDealer(blackJack, dealer)
 
-    val result = blackJack.result()
-    ResultView.printResult(result)
-    ResultView.printMatch(result)
+    val profits = blackJack.profits()
+    ResultView.printCardsWithScore(players, dealer)
+    ResultView.printProfits(profits)
 }
 
 private fun playPlayers(
     blackJack: BlackJack,
     hittablePlayers: List<Player>
 ) {
-    hittablePlayers.forEach {
-        while (!it.isEnd()) {
-            hitOrStay(blackJack, it, InputView.isHit(it))
-        }
+    hittablePlayers.forEach { player -> playPlayer(player, blackJack) }
+}
+
+private fun playPlayer(player: Player, blackJack: BlackJack) {
+    while (!player.isEnd()) {
+        player.changeStatus(InputView.isHit(player))
+        blackJack.play(player).also { printHitPlayer(player) }
     }
 }
 
-private fun hitOrStay(blackJack: BlackJack, player: Player, hit: Boolean) {
-    if (hit) {
-        player.changeStatus(PlayerStatus.HIT)
-        blackJack.giveCard(player)
-            .also { ResultView.printlnPlayerWithCards(player.name, player.cards.cards) }
-    } else {
-        player.changeStatus(PlayerStatus.STAY)
+private fun printHitPlayer(player: Player) {
+    if (player.playerStatus == PlayerStatus.HIT) {
+        ResultView.printlnPlayerWithCards(player.name, player.cards.cards)
     }
 }
 

@@ -1,6 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.blackjack.BlackJack
+import blackjack.domain.card.cards
+import blackjack.domain.common.Money
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
@@ -25,7 +28,7 @@ class PlayersTest : DescribeSpec({
             val blackJack = BlackJack(players = Players(listOf(yohan, pang)))
             pang.changeStatus(PlayerStatus.STAY)
 
-            blackJack.players.hittablePlayers() shouldContainExactly listOf(yohan)
+            blackJack.hittablePlayers shouldContainExactly listOf(yohan)
         }
     }
 
@@ -45,6 +48,46 @@ class PlayersTest : DescribeSpec({
                 val pang = Player(name = "pang")
 
                 Players(listOf(yohan, pang)).isEnd() shouldBe false
+            }
+        }
+    }
+
+    describe("profit") {
+        context("딜러가 주어지면") {
+            it("참가자들의 배팅 결과를 알 수 있다") {
+                val dealer = Dealer(
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to "J" }
+                    }
+                )
+
+                val yohan = Player(
+                    name = "yohan",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+                val pang = Player(
+                    name = "pang",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profits = Players(listOf(yohan, pang)).profit(dealer)
+
+                assertSoftly {
+                    profits[yohan] shouldBe Money.of(1000)
+                    profits[pang] shouldBe Money.of(-1000)
+                }
             }
         }
     }

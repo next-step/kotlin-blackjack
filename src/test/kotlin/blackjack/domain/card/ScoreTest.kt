@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.card
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow

@@ -1,8 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.score.CardScore
-import blackjack.domain.score.Score
-
 class Cards(cards: List<Card>) {
     private val _cards = cards.toMutableList()
     val cards get() = _cards.toList()
@@ -37,5 +34,21 @@ class Cards(cards: List<Card>) {
         fun empty(): Cards {
             return Cards(emptyList())
         }
+    }
+}
+
+fun cards(block: CardsBuilder.() -> Unit): Cards {
+    return CardsBuilder().apply(block).build()
+}
+
+class CardsBuilder {
+    private val cards: MutableList<Card> = mutableListOf()
+
+    fun card(block: CardBuilder.() -> Unit) {
+        cards.add(CardBuilder().apply(block).build())
+    }
+
+    fun build(): Cards {
+        return Cards(cards)
     }
 }

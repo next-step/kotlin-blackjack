@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.score.Score
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

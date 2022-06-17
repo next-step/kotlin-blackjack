@@ -1,24 +1,23 @@
 package blackjack.view
 
-import blackjack.domain.blackjack.BlackJackResult
-import blackjack.domain.blackjack.DealerResult
-import blackjack.domain.blackjack.ParticipantResult
-import blackjack.domain.blackjack.PlayerResult
+import blackjack.domain.blackjack.ParticipantProfit
+import blackjack.domain.blackjack.ParticipantProfits
 import blackjack.domain.card.Card
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
-import blackjack.domain.score.Match
+import blackjack.domain.player.Players
 
 object ResultView {
 
-    fun printlnBlackJackInit(players: List<Player>, dealer: Dealer) {
-        println("${dealer.name}와 ${players.map(Player::name).joinToString(",")}에게 2장의 나누었습니다.")
+    fun printInit(players: Players, dealer: Dealer) {
+        println("${dealer.name}와 ${players.players.map(Player::name).joinToString(",")}에게 2장의 나누었습니다.")
     }
 
-    fun printlnPlayersWithCards(players: List<Player>, dealer: Dealer) {
+    fun printCards(players: Players, dealer: Dealer) {
         printlnPlayerWithCards(dealer.name, dealer.cards.cards.take(1))
-        players.forEach { player ->
+        players.players.forEach { player ->
             printlnPlayerWithCards(player.name, player.cards.cards)
         }.also { println() }
     }
@@ -27,49 +26,27 @@ object ResultView {
         printPlayerWithCards(name, cards).also { println() }
     }
 
-    fun printResult(result: BlackJackResult) {
+    fun printCardsWithScore(players: Players, dealer: Dealer) {
         println()
-        val dealer = result.dealerResult.participantResult
         printParticipantWithScore(dealer)
-        result.playerResults.forEach {
-            printParticipantWithScore(it.participantResult)
+        players.players.forEach {
+            printParticipantWithScore(it)
         }.also { println() }
     }
 
-    private fun printParticipantWithScore(participantResult: ParticipantResult) {
-        printPlayerWithCards(participantResult.name, participantResult.cards.cards)
-        println(" - 결과: ${participantResult.cards.score().value}")
+    private fun printParticipantWithScore(participant: Participant) {
+        printPlayerWithCards(participant.name, participant.cards.cards)
+        println(" - 결과: ${participant.cards.score().value}")
     }
 
-    fun printMatch(result: BlackJackResult) {
-        println("## 최종 승패")
-        printDealerMatch(result.dealerResult)
-        printPlayersMatch(result.playerResults)
+    fun printProfits(result: ParticipantProfits) {
+        println("## 최종 수익")
+        printProfits(listOf(result.dealerProfit()) + result.playersProfit())
     }
 
-    private fun printDealerMatch(dealerResult: DealerResult) {
-        val matches = dealerResult.matches
-        val win = matches.count { it == Match.WIN }
-            .let { if (it > 0) "$it${convertMatch(Match.WIN)} " else "" }
-        val draw = matches.count { it == Match.DRAW }
-            .let { if (it > 0) "$it${convertMatch(Match.DRAW)} " else "" }
-        val lose = matches.count { it == Match.LOSE }
-            .let { if (it > 0) "$it${convertMatch(Match.LOSE)} " else "" }
-
-        println("${dealerResult.participantResult.name} $win$draw$lose")
-    }
-
-    private fun convertMatch(match: Match): String {
-        return when (match) {
-            Match.WIN -> "승"
-            Match.DRAW -> "무"
-            Match.LOSE -> "패"
-        }
-    }
-
-    private fun printPlayersMatch(playerResults: List<PlayerResult>) {
-        playerResults.forEach {
-            println("${it.participantResult.name}: ${convertMatch(it.match)}")
+    private fun printProfits(participantProfits: List<ParticipantProfit>) {
+        participantProfits.forEach {
+            println("${it.participant.name}: ${it.profit.amount.toInt()}")
         }
     }
 

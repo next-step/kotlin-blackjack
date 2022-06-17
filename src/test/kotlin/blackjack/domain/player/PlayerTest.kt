@@ -1,13 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Ace
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
-import blackjack.domain.card.Jack
-import blackjack.domain.card.NumberCard
-import blackjack.domain.card.Queen
-import blackjack.domain.card.Suit
-import blackjack.domain.score.Score
+import blackjack.domain.card.Score
+import blackjack.domain.card.card
+import blackjack.domain.card.cards
+import blackjack.domain.common.Money
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -39,13 +35,11 @@ class PlayerTest : DescribeSpec({
         context("BUST 인 경우") {
             val player = Player(
                 name = "요한",
-                cards = Cards(
-                    listOf(
-                        Card(Suit.DIAMOND, Queen()),
-                        Card(Suit.DIAMOND, NumberCard(10)),
-                        Card(Suit.DIAMOND, NumberCard(2)),
-                    )
-                )
+                cards = cards {
+                    card { "다이아몬드" to "Q" }
+                    card { "다이아몬드" to 10 }
+                    card { "다이아몬드" to 2 }
+                }
             )
 
             it("카드를 추가하기로 하면 IllegalStateException 이 발생한다") {
@@ -67,23 +61,21 @@ class PlayerTest : DescribeSpec({
             it("카드를 추가할 수 있다") {
                 val player = Player(
                     name = "요한",
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(9)),
-                            Card(Suit.DIAMOND, NumberCard(2)),
-                        )
-                    )
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    }
                 )
 
-                player.addCard(Card(Suit.DIAMOND, NumberCard(10)))
+                player.addCard(card { "다이아몬드" to 10 })
 
                 player.cards.cards shouldBe
                     listOf(
-                        Card(Suit.DIAMOND, Queen()),
-                        Card(Suit.DIAMOND, NumberCard(9)),
-                        Card(Suit.DIAMOND, NumberCard(2)),
-                        Card(Suit.DIAMOND, NumberCard(10)),
+                        card { "다이아몬드" to "Q" },
+                        card { "다이아몬드" to 9 },
+                        card { "다이아몬드" to 2 },
+                        card { "다이아몬드" to 10 },
                     )
             }
         }
@@ -92,17 +84,15 @@ class PlayerTest : DescribeSpec({
             it("IllegalStateException 이 발생한다") {
                 val player = Player(
                     name = "요한",
-                    cards = Cards(
-                        listOf(
-                            Card(Suit.DIAMOND, Queen()),
-                            Card(Suit.DIAMOND, NumberCard(10)),
-                            Card(Suit.DIAMOND, NumberCard(2)),
-                        )
-                    )
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 10 }
+                        card { "다이아몬드" to 2 }
+                    }
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
+                    player.addCard(card { "다이아몬드" to 2 })
                 }
             }
         }
@@ -115,7 +105,7 @@ class PlayerTest : DescribeSpec({
                 )
 
                 shouldThrow<IllegalStateException> {
-                    player.addCard(Card(Suit.DIAMOND, NumberCard(2)))
+                    player.addCard(card { "다이아몬드" to 2 })
                 }
             }
         }
@@ -125,13 +115,11 @@ class PlayerTest : DescribeSpec({
         it("카드들의 점수의 합을 구할 수 있다") {
             val player = Player(
                 name = "요한",
-                cards = Cards(
-                    listOf(
-                        Card(Suit.DIAMOND, Ace()),
-                        Card(Suit.DIAMOND, Jack()),
-                        Card(Suit.DIAMOND, NumberCard(5)),
-                    )
-                )
+                cards = cards {
+                    card { "다이아몬드" to "A" }
+                    card { "다이아몬드" to "J" }
+                    card { "다이아몬드" to 5 }
+                }
             )
 
             player.cards.score() shouldBe Score(16)
@@ -154,16 +142,91 @@ class PlayerTest : DescribeSpec({
         it("BUST 이면 참가자의 참여가 종료된다") {
             val player = Player(
                 name = "yohan",
-                cards = Cards(
-                    listOf(
-                        Card(Suit.DIAMOND, Queen()),
-                        Card(Suit.DIAMOND, NumberCard(9)),
-                        Card(Suit.DIAMOND, NumberCard(3)),
-                    )
-                )
+                cards = cards {
+                    card { "다이아몬드" to "Q" }
+                    card { "다이아몬드" to 9 }
+                    card { "다이아몬드" to 3 }
+                }
             )
 
             player.isEnd() shouldBe true
+        }
+    }
+
+    describe("profit") {
+        context("게임에 이겼을 때 블랙잭이면") {
+            it("배팅금액의 1.5배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to "A" }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.WIN)
+
+                profit shouldBe Money.of(1500)
+            }
+        }
+
+        context("게임에 이겼을 때 블랙잭이 아니면") {
+            it("배팅금액의 1배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.WIN)
+
+                profit shouldBe Money.of(1000)
+            }
+        }
+
+        context("게임에 비겼을 때") {
+            it("배팅금액의 0배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.DRAW)
+
+                profit shouldBe Money.ZERO
+            }
+        }
+
+        context("게임에서 패배했을 때 ") {
+            it("배팅금액의 -1배의 수익을 가진다") {
+                val player = Player(
+                    name = "yohan",
+                    cards = cards {
+                        card { "다이아몬드" to "Q" }
+                        card { "다이아몬드" to 9 }
+                        card { "다이아몬드" to 2 }
+                    },
+                    playerStatus = PlayerStatus.STAY,
+                    batting = Money.of(1000)
+                )
+
+                val profit = player.profit(Match.LOSE)
+
+                profit shouldBe Money.of(-1000)
+            }
         }
     }
 })

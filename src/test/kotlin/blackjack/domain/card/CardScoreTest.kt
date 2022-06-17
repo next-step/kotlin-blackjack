@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.card
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
