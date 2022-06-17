@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 enum class CardNumber(
-    private val mark: String,
+    val mark: String,
     val score: CardScore,
 ) {
 

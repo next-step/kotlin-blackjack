@@ -24,5 +24,5 @@ class Card(
         return result
     }
 
-    override fun toString() = "$number$symbol"
+    override fun toString() = "${number.mark}$symbol"
 }

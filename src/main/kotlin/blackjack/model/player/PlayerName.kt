@@ -10,4 +10,6 @@ value class PlayerName(
     }
 
     private fun validateNotEmpty(name: String) = require(name.isNotBlank()) { "플레이어 이름이 공백일 수 없습니다." }
+
+    override fun toString() = name
 }

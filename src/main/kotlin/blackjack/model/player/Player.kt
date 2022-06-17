@@ -5,7 +5,8 @@ import blackjack.model.card.Cards
 
 class Player private constructor(
     val name: PlayerName,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    var needMoreCard: Boolean = true,
 ) {
     val cardSize
         get() = cards.size
