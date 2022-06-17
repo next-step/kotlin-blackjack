@@ -26,7 +26,5 @@ class Players(
         return players[nextIndex]
     }
 
-    private fun validateNotEmpty(players: List<Player>) {
-        require(players.isNotEmpty()) { "플레이어는 1명 이상이어야 합니다." }
-    }
+    private fun validateNotEmpty(players: List<Player>) = require(players.isNotEmpty()) { "플레이어는 1명 이상이어야 합니다." }
 }

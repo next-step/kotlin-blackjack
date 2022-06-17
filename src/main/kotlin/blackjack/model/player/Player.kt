@@ -24,9 +24,7 @@ class Player private constructor(
         return true
     }
 
-    override fun hashCode(): Int {
-        return name.hashCode()
-    }
+    override fun hashCode() = name.hashCode()
 
     companion object {
         fun from(name: String) = Player(PlayerName(name))

@@ -23,4 +23,6 @@ class Card(
         result = 31 * result + number.hashCode()
         return result
     }
+
+    override fun toString() = "$number$symbol"
 }

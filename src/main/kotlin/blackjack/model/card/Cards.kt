@@ -15,9 +15,7 @@ class Cards(
                 .reduce { totalScore, score -> totalScore.plus(score) }
         }
 
-    fun shuffle() {
-        cards.shuffle()
-    }
+    fun shuffle() = cards.shuffle()
 
     fun addOne(card: Card) = cards.add(card)
 
@@ -31,6 +29,8 @@ class Cards(
     fun containsAll(cards: List<Card>) = this.cards.containsAll(cards)
 
     private fun validateNotEmpty() = require(size > EMPTY_CARDS_SIZE) { "카드 개수가 0개 입니다." }
+
+    override fun toString() = cards.joinToString(", ")
 
     companion object {
         private const val EMPTY_CARDS_SIZE = 0

@@ -15,9 +15,7 @@ class GameHost(
     )
 ) {
 
-    fun shuffleCards() {
-        cardSet.shuffle()
-    }
+    fun shuffleCards() = cardSet.shuffle()
 
     fun provideCardTo(players: Players, cardCount: Int = 1) {
         players.players.map { player ->
@@ -32,9 +30,8 @@ class GameHost(
         player.receiveCard(drawnCard)
     }
 
-    private fun validateNotExceedMaxScore(score: CardScore) {
+    private fun validateNotExceedMaxScore(score: CardScore) =
         require(score.isLessThan(MAX_SCORE)) { "카드 점수가 ${MAX_SCORE}점을 넘을 수 없습니다." }
-    }
 
     companion object {
         private const val MAX_SCORE = 21

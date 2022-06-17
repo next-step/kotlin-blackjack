@@ -16,9 +16,7 @@ class Game(
         turnPlayer = players.first
     }
 
-    fun provideCardToTurnPlayer() {
-        gameHost.provideOneCardTo(turnPlayer)
-    }
+    fun provideCardToTurnPlayer() = gameHost.provideOneCardTo(turnPlayer)
 
     fun changeTurn() {
         turnPlayer = players.findNext(turnPlayer)

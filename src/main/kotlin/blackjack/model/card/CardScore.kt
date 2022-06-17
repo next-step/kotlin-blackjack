@@ -18,9 +18,7 @@ class CardScore(
 
     fun isLessThan(other: Int) = score1 < other || score2 < other
 
-    private fun validateMinScore(score: Int) {
-        require(score >= MIN_SCORE) { "카드 점수는 최소 ${MIN_SCORE}점 이상이어야 합니다." }
-    }
+    private fun validateMinScore(score: Int) = require(score >= MIN_SCORE) { "카드 점수는 최소 ${MIN_SCORE}점 이상이어야 합니다." }
 
     companion object {
         private const val MIN_SCORE = 0
