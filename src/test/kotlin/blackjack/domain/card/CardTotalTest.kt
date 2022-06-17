@@ -4,109 +4,45 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
+private fun `20 point card`() = listOf(
+    Card.King(CardSuit.CLOVER),
+    Card.Ten(CardSuit.HEART)
+)
+
 class CardTotalTest {
     @Test
     fun `카드 숫자의 합을 계산할 수 있다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotal = CardTotal(
-            listOf(
-                Card.Two(suit),
-                Card.Five(suit),
-                Card.King(suit)
-            )
-        )
-
-        val expectedTotal = 2 + 5 + 10
-
-        assertThat(cardTotal.value).isEqualTo(expectedTotal)
+        assertThat(CardTotal(`20 point card`()).value).isEqualTo(20)
     }
 
     @Test
     fun `카드 숫자의 합이 21 보다 큰지 아닌지 판단할 수 있다`() {
         assertAll(
             {
-                val suit = CardSuit.CLOVER
-
                 val cardTotalAboveTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Ten(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`() + Card.Two(CardSuit.CLOVER)
                 )
 
-                val expectedTotal = 2 + 10 + 10
-
-                assertThat(cardTotalAboveTwentyOne.value).isEqualTo(expectedTotal)
-                assertThat(cardTotalAboveTwentyOne.isAboveTwentyOne).isTrue
+                assertThat(cardTotalAboveTwentyOne.value).isEqualTo(22)
+                assertThat(cardTotalAboveTwentyOne.isBusted).isTrue
             },
             {
-                val suit = CardSuit.CLOVER
                 val cardTotalBelowTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Three(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`()
                 )
 
-                val expectedTotal = 2 + 3 + 10
-
-                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(expectedTotal)
-                assertThat(cardTotalBelowTwentyOne.isAboveTwentyOne).isFalse
+                assertThat(cardTotalBelowTwentyOne.value).isEqualTo(20)
+                assertThat(cardTotalBelowTwentyOne.isBusted).isFalse
             },
             {
-                val suit = CardSuit.CLOVER
                 val cardTotalEqualsToTwentyOne = CardTotal(
-                    listOf(
-                        Card.Two(suit),
-                        Card.Nine(suit),
-                        Card.King(suit)
-                    )
+                    `20 point card`() + Card.Ace(CardSuit.CLOVER)
                 )
 
-                val expectedTotal = 2 + 9 + 10
-
-                assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(expectedTotal)
-                assertThat(cardTotalEqualsToTwentyOne.isAboveTwentyOne).isFalse
+                assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(21)
+                assertThat(cardTotalEqualsToTwentyOne.isBusted).isFalse
             }
         )
-    }
-
-    @Test
-    fun `카드 숫자의 합이 21일 경우 블랙잭이라고 판단한다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotalEqualsToTwentyOne = CardTotal(
-            listOf(
-                Card.Two(suit),
-                Card.Nine(suit),
-                Card.King(suit)
-            )
-        )
-
-        val expectedTotal = 2 + 9 + 10
-
-        assertThat(cardTotalEqualsToTwentyOne.value).isEqualTo(expectedTotal)
-        assertThat(cardTotalEqualsToTwentyOne.isBlackjack).isTrue
-    }
-
-    @Test
-    fun `카드 숫자의 합이 21이 아닐 경우 블랙잭이 아니라고 판단한다`() {
-        val suit = CardSuit.CLOVER
-
-        val cardTotalNotEqualsToTwentyOne = CardTotal(
-            listOf(
-                Card.Ten(suit),
-                Card.King(suit)
-            )
-        )
-
-        val expectedTotal = 10 + 10
-
-        assertThat(cardTotalNotEqualsToTwentyOne.value).isEqualTo(expectedTotal)
-        assertThat(cardTotalNotEqualsToTwentyOne.isBlackjack).isFalse
     }
 
     @Test
@@ -123,9 +59,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 1 + 8 + 3
-
-                assertThat(cardTotalWithAceValuedAsOne.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalWithAceValuedAsOne.value).isEqualTo(12)
             },
             {
                 val suit = CardSuit.CLOVER
@@ -138,9 +72,7 @@ class CardTotalTest {
                     )
                 )
 
-                val expectedTotal = 11 + 8 + 2
-
-                assertThat(cardTotalWithAceValuedAsEleven.value).isEqualTo(expectedTotal)
+                assertThat(cardTotalWithAceValuedAsEleven.value).isEqualTo(21)
             }
         )
     }
@@ -158,8 +90,6 @@ class CardTotalTest {
             )
         )
 
-        val expectedTotal = 1 + 10 + 8 + 5
-
-        assertThat(cardTotalAboveTwentyOne.value).isEqualTo(expectedTotal)
+        assertThat(cardTotalAboveTwentyOne.value).isEqualTo(24)
     }
 }

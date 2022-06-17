@@ -7,20 +7,25 @@ sealed interface PlayerState {
         fun hit(card: Card): PlayerState {
             player.addCardToHand(card)
 
-            return if (player.isDone()) Done else this
+            return if (player.isBusted()) Busted else this
         }
 
         fun stand(): PlayerState {
-            return Done
+            return Stand
         }
     }
-    object Done : PlayerState
+    sealed interface Done : PlayerState
+    object Blackjack : Done
+    object Busted : Done
+    object Stand : Done
 
     companion object {
         fun of(player: Player): PlayerState {
-            return if (player.isDone()) Done else Playing(player)
+            return if (player.isBlackjack()) Blackjack else Playing(player)
         }
 
-        private fun Player.isDone(): Boolean = with(cards.total) { isAboveTwentyOne || isBlackjack }
+        private fun Player.isBlackjack(): Boolean = cards.total.value == 21
+
+        private fun Player.isBusted(): Boolean = cards.total.isBusted
     }
 }

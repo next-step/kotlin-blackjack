@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.common
 
 enum class PlayerDecision {
     HIT, STAND;

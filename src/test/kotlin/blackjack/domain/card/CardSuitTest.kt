@@ -8,8 +8,8 @@ class CardSuitTest {
     @ParameterizedTest
     @EnumSource(CardSuit::class)
     fun `카드 슈트는 클로버, 스페이드, 다이아몬드, 하트로 이루어져 있다`(suit: CardSuit) {
-        val expectedSuitTexts = listOf("클로버", "스페이드", "다이아몬드", "하트")
+        val expectedSuitTexts = listOf(CardSuit.CLOVER, CardSuit.SPADE, CardSuit.DIAMOND, CardSuit.HEART)
 
-        assertThat(suit.text).isIn(expectedSuitTexts)
+        assertThat(suit).isIn(expectedSuitTexts)
     }
 }
