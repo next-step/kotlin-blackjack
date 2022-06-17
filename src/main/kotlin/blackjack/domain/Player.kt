@@ -2,7 +2,7 @@ package blackjack.domain
 
 open class Player(
     override val name: String,
-    override val battingAmount: Int,
+    val battingAmount: Int,
     override val playerCards: PlayerCards = PlayerCards()
 ) : Participant() {
 
@@ -10,7 +10,7 @@ open class Player(
         return false
     }
 
-    override fun getEarnAmount(participants: List<Participant>, dealer: Dealer): Int {
+    override fun getEarnAmount(players: List<Player>, dealer: Dealer): Int {
         return GameResult.earnMoney(this, dealer)
     }
 }

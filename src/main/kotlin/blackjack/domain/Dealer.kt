@@ -5,13 +5,11 @@ class Dealer(
     override val playerCards: DealerCards = DealerCards()
 ) : Participant() {
 
-    override val battingAmount: Int = 0
-
     override fun isDealer(): Boolean {
         return true
     }
 
-    override fun getEarnAmount(participants: List<Participant>, dealer: Dealer): Int {
-        return GameResult.earnAmount(participants, this)
+    override fun getEarnAmount(players: List<Player>, dealer: Dealer): Int {
+        return GameResult.earnAmount(players, this)
     }
 }

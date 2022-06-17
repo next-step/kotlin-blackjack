@@ -3,7 +3,6 @@ package blackjack.domain
 abstract class Participant {
 
     abstract val playerCards: Cards
-    abstract val battingAmount: Int
     abstract val name: String
     private var _blackJackStatus: BlackJackStatus = BlackJackStatus.INIT
     val blackJackStatus
@@ -11,7 +10,7 @@ abstract class Participant {
 
     abstract fun isDealer(): Boolean
 
-    abstract fun getEarnAmount(participants: List<Participant>, dealer: Dealer): Int
+    abstract fun getEarnAmount(participants: List<Player>, dealer: Dealer): Int
 
     fun addCard(card: Card) {
         this.playerCards.addCard(card)
