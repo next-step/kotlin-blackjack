@@ -9,6 +9,10 @@ import blackjack.domain.card.Cards
 @JvmInline
 value class Score(val value: Int) {
 
+    operator fun compareTo(score: Score): Int {
+        return compareValues(this.value, score.value)
+    }
+
     companion object {
         private const val ACE_SUB_SCORE = 10
 

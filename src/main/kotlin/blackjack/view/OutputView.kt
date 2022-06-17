@@ -41,13 +41,26 @@ object OutputView : OutputInterface {
     }
 
     override fun printDealerHitMessage() {
-        TODO("Not yet implemented")
+        println()
+        println(Messages.PRINT_DEALER_HIT_MESSAGE)
     }
 
     fun printResult(users: Users) {
         println()
+        printCardAndScore(users.dealer)
         users.users.forEach {
             printCardAndScore(it)
+        }
+    }
+
+    fun printWinAndLose(users: Users) {
+        println()
+        println(Messages.FINAL_WIN_AND_LOSE)
+        val winAndLose = users.dealer.getWinAndLose(users.users)
+        println(Messages.DEALER_WIN_AND_LOSE.format(winAndLose.first, winAndLose.second))
+        users.users.forEach {
+            val isWin = it.isWin(users.dealer)
+            println(Messages.USER_COLON.format(it.name) + if (isWin) Messages.WIN else Messages.LOSE)
         }
     }
 

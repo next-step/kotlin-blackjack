@@ -16,5 +16,6 @@ object BlackjackController {
         OutputView.printUsersCard(players)
         players.hit(OutputView)
         OutputView.printResult(players)
+        OutputView.printWinAndLose(players)
     }
 }

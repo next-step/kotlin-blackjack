@@ -11,6 +11,11 @@ object Messages {
     const val WANT_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     const val PRINT_CARDS_AND_SCORE = "%s카드: %s - 결과: %s"
     const val PRINT_DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    const val FINAL_WIN_AND_LOSE = "## 최종 승패"
+    const val DEALER_WIN_AND_LOSE = "딜러: %s승 %s패"
+    const val USER_COLON = "%s: "
+    const val WIN = "승"
+    const val LOSE = "패"
 }
 
 object ErrorMessages {

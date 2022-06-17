@@ -28,4 +28,10 @@ open class User(val name: String, initCards: List<Card>) {
     fun isBust(): Boolean {
         return _cards.isBust()
     }
+
+    fun isWin(user: User): Boolean {
+        if (isBust())
+            return false
+        return user._cards.getScore() < _cards.getScore()
+    }
 }
