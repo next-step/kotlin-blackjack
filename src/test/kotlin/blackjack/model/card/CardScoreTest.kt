@@ -19,22 +19,22 @@ class CardScoreTest {
         val sumOfScore = cardScore.plus(other)
 
         // then
-        assertThat(sumOfScore.score).isEqualTo(4)
-        assertThat(sumOfScore.otherScore).isEqualTo(6)
+        assertThat(sumOfScore.score1).isEqualTo(4)
+        assertThat(sumOfScore.score2).isEqualTo(6)
     }
 
     @Test
-    fun `카드 점수가 1점 미만이면 예외 발생`() {
+    fun `카드 점수가 0점 미만이면 예외 발생`() {
         // given, when, then
         assertAll(
             "validate card min score",
             {
-                val exception = assertThrows<IllegalArgumentException> { CardScore(0, 1) }
-                assertThat(exception.message).isEqualTo("카드 점수는 최소 1점 이상이어야 합니다.")
+                val exception = assertThrows<IllegalArgumentException> { CardScore(0, -1) }
+                assertThat(exception.message).isEqualTo("카드 점수는 최소 0점 이상이어야 합니다.")
             },
             {
-                val exception = assertThrows<IllegalArgumentException> { CardScore(1, 0) }
-                assertThat(exception.message).isEqualTo("카드 점수는 최소 1점 이상이어야 합니다.")
+                val exception = assertThrows<IllegalArgumentException> { CardScore(-1, 0) }
+                assertThat(exception.message).isEqualTo("카드 점수는 최소 0점 이상이어야 합니다.")
             }
         )
     }
