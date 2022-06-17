@@ -1,12 +1,8 @@
 package blackjack.domain
 
-class Deck constructor(var cards: List<Card>) {
+class Deck(val cards: List<Card>) {
 
     private var index = 0
-
-    fun shuffle() {
-        cards = cards.shuffled()
-    }
 
     fun draw(): Card {
         return draw(1).firstOrNull() ?: throw RuntimeException("Deck is Empty")
@@ -23,7 +19,7 @@ class Deck constructor(var cards: List<Card>) {
             return Deck(
                 Suit.values().map {
                     createDenominations(it)
-                }.flatten()
+                }.flatten().shuffled()
             )
         }
 

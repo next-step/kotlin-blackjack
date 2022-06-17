@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Blackjack
 import blackjack.domain.Player
 import blackjack.service.InputParser
+import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackView
 
 class BlackjackController {
@@ -14,29 +15,30 @@ class BlackjackController {
 
         val blackjack = Blackjack(players)
 
-        players.forEach { blackjack.drawingCards(it, 2) }
-        players.forEach { BlackjackView.printPlayerCard(it.name, it.cards.joinToString()) }
+        blackjack.drawFirstCards()
+        players.forEach { BlackjackView.printPlayerCard(it.name, it.cards) }
         players.forEach { drawCard(blackjack, it) }
-        players.forEach { BlackjackView.printResult(it.name, it.cards.joinToString(), blackjack.calculatePoints(it)) }
+        players.forEach { BlackjackView.printResult(it.name, it.cards, it.getPoints()) }
     }
 
     private fun getPlayers(): List<Player> {
-        return InputParser.parsePlayerName(readLine()!!).map(::Player)
+        val names = BlackjackInputView.readPlayerNames()
+
+        return InputParser.parsePlayerName(names).map(::Player)
     }
 
     private fun drawCard(blackjack: Blackjack, player: Player) {
+        if (blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard()
+
         BlackjackView.printMoreCard(player.name)
-        while (InputParser.parseMoreCard(readLine()!!)) {
+        while (InputParser.parseMoreCard(BlackjackInputView.readMoreCard())) {
             BlackjackView.printMoreCard(player.name)
-            try {
-                blackjack.drawingCard(player)
-            } catch (e: IllegalStateException) {
-                BlackjackView.printDrawingFailed(e.message.toString())
-                break
-            }
-            BlackjackView.printPlayerCard(player.name, player.cards.joinToString())
+            blackjack.drawCard(player)
+            BlackjackView.printPlayerCard(player.name, player.cards)
+
+            if (blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard()
         }
 
-        BlackjackView.printPlayerCard(player.name, player.cards.joinToString())
+        BlackjackView.printPlayerCard(player.name, player.cards)
     }
 }

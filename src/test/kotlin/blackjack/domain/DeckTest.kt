@@ -17,18 +17,7 @@ internal class DeckTest {
     fun `Deck을 생성하면 52장의 서로다른 Card로 구성된다`() {
         val deck = Deck.create()
 
-        assertThat(deck.cards).isEqualTo(deck.cards)
         assertThat(deck.cards.toSet()).hasSize(52)
-    }
-
-    @Test
-    fun `Deck을 섞으면 순서가 변경된다`() {
-        val deck = Deck.create()
-        val cards = deck.cards
-
-        deck.shuffle()
-
-        assertThat(deck.cards).isNotEqualTo(cards)
     }
 
     @Test
