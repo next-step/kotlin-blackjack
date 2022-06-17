@@ -28,7 +28,7 @@ class BlackjackController {
     }
 
     private fun drawCard(blackjack: Blackjack, player: Player) {
-        if (blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard()
+        if (!blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard(player)
 
         BlackjackView.printMoreCard(player.name)
         while (InputParser.parseMoreCard(BlackjackInputView.readMoreCard())) {
@@ -36,7 +36,7 @@ class BlackjackController {
             blackjack.drawCard(player)
             BlackjackView.printPlayerCard(player.name, player.cards)
 
-            if (blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard()
+            if (!blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard(player)
         }
 
         BlackjackView.printPlayerCard(player.name, player.cards)

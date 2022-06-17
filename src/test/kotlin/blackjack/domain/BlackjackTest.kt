@@ -44,6 +44,7 @@ internal class BlackjackTest {
             )
         )
 
+        assertThat(blackjack.isDrawable(player)).isFalse
         assertThrows<java.lang.IllegalArgumentException> { blackjack.drawCard(player) }
     }
 
