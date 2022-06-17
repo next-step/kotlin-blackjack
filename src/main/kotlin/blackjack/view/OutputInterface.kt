@@ -9,4 +9,6 @@ import blackjack.domain.user.User
 interface OutputInterface {
     fun printUserCard(user: User)
     fun printMoreCard(user: User)
+
+    fun printDealerHitMessage()
 }

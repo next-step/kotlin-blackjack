@@ -23,6 +23,14 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
         users.forEach {
             hitStage(it, output)
         }
+        hitStageDealer(output)
+    }
+
+    private fun hitStageDealer(output: OutputInterface) {
+        while (!dealer.isOverHitScore()) {
+            output.printDealerHitMessage()
+            dealer.hit(deck.takeCard())
+        }
     }
 
     private fun hitStage(user: User, output: OutputInterface) {

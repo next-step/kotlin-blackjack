@@ -8,7 +8,12 @@ import blackjack.domain.card.Card
  */
 class Dealer(initCards: List<Card>) : User(DEALER_NAME, initCards) {
 
+    fun isOverHitScore(): Boolean {
+        return cards.getScore().value >= HIT_SCORE
+    }
+
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val HIT_SCORE = 17
     }
 }

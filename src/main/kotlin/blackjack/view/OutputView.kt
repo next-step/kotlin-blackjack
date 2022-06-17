@@ -40,6 +40,10 @@ object OutputView : OutputInterface {
         println(Messages.WANT_MORE_CARD.format(user.name))
     }
 
+    override fun printDealerHitMessage() {
+        TODO("Not yet implemented")
+    }
+
     fun printResult(users: Users) {
         println()
         users.users.forEach {

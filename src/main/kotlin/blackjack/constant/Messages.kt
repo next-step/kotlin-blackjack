@@ -10,6 +10,7 @@ object Messages {
     const val PRINT_HAVE_CARDS = "%s카드: "
     const val WANT_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     const val PRINT_CARDS_AND_SCORE = "%s카드: %s - 결과: %s"
+    const val PRINT_DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 }
 
 object ErrorMessages {
