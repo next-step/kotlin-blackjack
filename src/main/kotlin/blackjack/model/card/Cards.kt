@@ -7,8 +7,13 @@ class Cards(
         get() = cards.size
 
     val sumOfScore
-        get() = cards.map { it.score }
-            .reduce { totalScore, score -> totalScore.plus(score) }
+        get(): CardScore {
+            if (cards.isEmpty()) {
+                return CardScore.zero
+            }
+            return cards.map { it.score }
+                .reduce { totalScore, score -> totalScore.plus(score) }
+        }
 
     fun addOne(card: Card) = cards.add(card)
 
