@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.BlackJackStatus
 import blackjack.domain.Card
 import blackjack.domain.CardDeck
 import blackjack.domain.Participant
