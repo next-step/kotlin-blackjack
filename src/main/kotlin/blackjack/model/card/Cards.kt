@@ -15,6 +15,10 @@ class Cards(
                 .reduce { totalScore, score -> totalScore.plus(score) }
         }
 
+    fun shuffle() {
+        cards.shuffle()
+    }
+
     fun addOne(card: Card) = cards.add(card)
 
     fun removeOne(): Card {

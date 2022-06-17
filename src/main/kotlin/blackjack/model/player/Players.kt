@@ -4,15 +4,29 @@ class Players(
     val players: List<Player>
 ) {
 
+    val first
+        get(): Player {
+            validateNotEmpty(players)
+
+            return players[0]
+        }
+
     init {
         validateNotEmpty(players)
     }
 
-    private fun validateNotEmpty(players: List<Player>) {
-        require(players.isNotEmpty()) { "플레이어는 1명 이상이어야 합니다." }
+    fun findNext(currentPlayer: Player): Player {
+        val nextIndex = players.indexOf(currentPlayer) + 1
+        val maxIndex = players.size - 1
+
+        if (nextIndex > maxIndex) {
+            return players[nextIndex % players.size]
+        }
+
+        return players[nextIndex]
     }
 
-    companion object {
-        fun from(names: List<String>) = names.map { Player.from(it) }
+    private fun validateNotEmpty(players: List<Player>) {
+        require(players.isNotEmpty()) { "플레이어는 1명 이상이어야 합니다." }
     }
 }
