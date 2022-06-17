@@ -42,7 +42,7 @@ abstract class Cards(
     }
 
     private fun isBust(): Boolean {
-        return score() >= BLACK_JACK_SCORE
+        return score() > BLACK_JACK_SCORE
     }
 
     private fun List<Card>.hasAceCard(): Boolean {
