@@ -58,11 +58,13 @@ object GameResult {
     }
 
     private fun decideDealerAmount(player: Player, dealer: Dealer): Int {
+        val playerScore = player.participantCards.score()
+        val dealerScore = dealer.participantCards.score()
         return when {
-            player.participantCards.score() < dealer.participantCards.score() -> {
+            playerScore < dealerScore -> {
                 player.battingAmount
             }
-            player.participantCards.score() == dealer.participantCards.score() -> {
+            playerScore == dealerScore -> {
                 0
             }
             else -> {
@@ -72,11 +74,13 @@ object GameResult {
     }
 
     private fun decidePlayerAmount(player: Player, dealer: Dealer): Int {
+        val playerScore = player.participantCards.score()
+        val dealerScore = dealer.participantCards.score()
         return when {
-            player.participantCards.score() < dealer.participantCards.score() -> {
+            playerScore < dealerScore -> {
                 -player.battingAmount
             }
-            player.participantCards.score() == dealer.participantCards.score() -> {
+            playerScore == dealerScore -> {
                 player.battingAmount
             }
             else -> {
