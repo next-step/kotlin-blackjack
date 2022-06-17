@@ -21,6 +21,7 @@ object OutputView : OutputInterface {
     }
 
     fun printUsersCard(users: Users) {
+        printUserCard(users.dealer)
         users.users.forEach {
             printUserCard(it)
         }

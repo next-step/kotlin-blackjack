@@ -9,7 +9,7 @@ import blackjack.view.OutputInterface
  * 유저들을 저장하는 일급 컬렉션
  * Created by Jaesungchi on 2022.06.07..
  */
-class Users(val users: List<User>, private val deck: Deck) {
+class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
 
     init {
         require(users.isNotEmpty()) { ErrorMessages.USER_IS_EMPTY }
@@ -26,10 +26,10 @@ class Users(val users: List<User>, private val deck: Deck) {
     }
 
     private fun hitStage(user: User, output: OutputInterface) {
-        while (!user.cards.isBust()) {
+        while (!user.isBust()) {
             output.printMoreCard(user)
             if (!InputView.getYesOrNo()) return
-            user.cards.addCard(deck.takeCard())
+            user.hit(deck.takeCard())
             output.printUserCard(user)
         }
     }
@@ -37,7 +37,11 @@ class Users(val users: List<User>, private val deck: Deck) {
     companion object {
         private const val INIT_CARD_SIZE = 2
         fun of(usersNames: List<String>, deck: Deck): Users {
-            return Users(usersNames.map { User(it, deck.takeCards(INIT_CARD_SIZE)) }, deck)
+            return Users(
+                users = usersNames.map { User(it, deck.takeCards(INIT_CARD_SIZE)) },
+                deck = deck,
+                dealer = Dealer(deck.takeCards(INIT_CARD_SIZE))
+            )
         }
     }
 }

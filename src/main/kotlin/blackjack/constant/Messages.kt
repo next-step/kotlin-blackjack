@@ -6,7 +6,7 @@ package blackjack.constant
  */
 object Messages {
     const val WRITE_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요. (쉼표 기준으로 분리)"
-    const val HAND_OUT_CARD = "%s에게 2장의 카드를 나누었습니다."
+    const val HAND_OUT_CARD = "딜러와 %s에게 2장의 카드를 나누었습니다."
     const val PRINT_HAVE_CARDS = "%s카드: "
     const val WANT_MORE_CARD = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     const val PRINT_CARDS_AND_SCORE = "%s카드: %s - 결과: %s"
