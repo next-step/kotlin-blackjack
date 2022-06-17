@@ -59,10 +59,10 @@ object GameResult {
 
     private fun decideDealerAmount(player: Player, dealer: Dealer): Int {
         return when {
-            player.playerCards.score() < dealer.playerCards.score() -> {
+            player.participantCards.score() < dealer.participantCards.score() -> {
                 player.battingAmount
             }
-            player.playerCards.score() == dealer.playerCards.score() -> {
+            player.participantCards.score() == dealer.participantCards.score() -> {
                 0
             }
             else -> {
@@ -73,10 +73,10 @@ object GameResult {
 
     private fun decidePlayerAmount(player: Player, dealer: Dealer): Int {
         return when {
-            player.playerCards.score() < dealer.playerCards.score() -> {
+            player.participantCards.score() < dealer.participantCards.score() -> {
                 -player.battingAmount
             }
-            player.playerCards.score() == dealer.playerCards.score() -> {
+            player.participantCards.score() == dealer.participantCards.score() -> {
                 player.battingAmount
             }
             else -> {

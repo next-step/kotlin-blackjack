@@ -30,12 +30,12 @@ object GameView {
         blackJackGame.participants.forEach {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
-            println("결과 : ${it.playerCards.score()}")
+            println("결과 : ${it.participantCards.score()}")
         }
     }
 
     private fun getCardDisplayName(participant: Participant): String {
-        return participant.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
+        return participant.participantCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
     }
 
     private fun Card.CardPattern.toDisplayName(): String {

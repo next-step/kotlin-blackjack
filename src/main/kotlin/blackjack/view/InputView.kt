@@ -15,7 +15,7 @@ object InputView {
         } else {
             dealer
         }
-        return Dealer(name = dealerName)
+        return Dealer(dealerName)
     }
 
     fun createParticipants(): List<Player> {

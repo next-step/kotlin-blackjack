@@ -1,10 +1,10 @@
 package blackjack.domain
 
 open class Player(
-    override val name: String,
+    playerName: String,
     val battingAmount: Int,
-    override val playerCards: PlayerCards = PlayerCards()
-) : Participant() {
+    playerCards: PlayerCards = PlayerCards()
+) : Participant(name = playerName, participantCards = playerCards) {
 
     override fun isDealer(): Boolean {
         return false

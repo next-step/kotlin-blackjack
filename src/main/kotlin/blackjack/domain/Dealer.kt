@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class Dealer(
-    override val name: String,
-    override val playerCards: DealerCards = DealerCards()
-) : Participant() {
+    dealerName: String,
+    dealerCards: DealerCards = DealerCards()
+) : Participant(dealerName, dealerCards) {
 
     override fun isDealer(): Boolean {
         return true

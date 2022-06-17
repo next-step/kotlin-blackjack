@@ -1,28 +1,27 @@
 package blackjack.domain
 
-abstract class Participant {
-
-    abstract val playerCards: Cards
-    abstract val name: String
-    private var _blackJackStatus: BlackJackStatus = BlackJackStatus.INIT
-    val blackJackStatus
-        get() = _blackJackStatus
+abstract class Participant(
+    val name: String,
+    val participantCards: Cards
+) {
+    var blackJackStatus = participantCards.getBlackJackStatus()
+        private set
 
     abstract fun isDealer(): Boolean
 
     abstract fun getEarnAmount(participants: List<Player>, dealer: Dealer): Int
 
     fun addCard(card: Card) {
-        this.playerCards.addCard(card)
-        _blackJackStatus = playerCards.getBlackJackStatus()
+        this.participantCards.addCard(card)
+        blackJackStatus = participantCards.getBlackJackStatus()
     }
 
     fun setFirstDistributionBlackJack() {
-        _blackJackStatus = playerCards.getBlackJackStatus()
+        blackJackStatus = participantCards.getBlackJackStatus()
     }
 
     fun setBlackJackStatusStay() {
-        _blackJackStatus = BlackJackStatus.STAY
+        blackJackStatus = BlackJackStatus.STAY
     }
 
     fun isHit(): Boolean {
