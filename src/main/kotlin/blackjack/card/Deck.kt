@@ -1,14 +1,17 @@
 package blackjack.card
 
-class Deck private constructor(private var _cards: MutableList<Card>) {
-    val cards: List<Card> get() = _cards.toList()
+class Deck(private val cards: Cards) {
+    init {
+        require(cards.size == DECK_INIT_CARD_SIZE) {
+            "덱은 ${DECK_INIT_CARD_SIZE}장의 카드로 구성 돼 있습니다."
+        }
+    }
+
+    fun draw(): Card {
+        return cards.drawCard()
+    }
 
     companion object {
-        fun init(): Deck {
-            val cards = Suit.values().flatMap { suit ->
-                CardSymbol.values().map { symbol -> Card(suit, symbol) }
-            }
-            return Deck(cards.shuffled().toMutableList())
-        }
+        private const val DECK_INIT_CARD_SIZE = 52
     }
 }
