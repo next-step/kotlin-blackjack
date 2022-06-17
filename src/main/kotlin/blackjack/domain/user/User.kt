@@ -32,6 +32,8 @@ open class User(val name: String, initCards: List<Card>) {
     fun isWin(user: User): Boolean {
         if (isBust())
             return false
+        if (user.isBust())
+            return true
         return user._cards.getScore() < _cards.getScore()
     }
 }

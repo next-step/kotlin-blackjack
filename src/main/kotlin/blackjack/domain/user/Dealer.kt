@@ -9,6 +9,8 @@ import blackjack.domain.card.Card
 class Dealer(initCards: List<Card>) : User(DEALER_NAME, initCards) {
 
     fun getWinAndLose(users: List<User>): Pair<Int, Int> {
+        if (isBust())
+            return Pair(0, users.size)
         val winSize = users.filter { isWin(it) }.size
         return Pair(winSize, users.size - winSize)
     }
