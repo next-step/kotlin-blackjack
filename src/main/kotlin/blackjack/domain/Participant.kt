@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.exception.DrawCardFailException
+
 abstract class Participant(
     val name: String,
     val participantCards: Cards
@@ -12,8 +14,12 @@ abstract class Participant(
     abstract fun getEarnAmount(participants: List<Player>, dealer: Dealer): Int
 
     fun addCard(card: Card) {
-        this.participantCards.addCard(card)
-        blackJackStatus = participantCards.getBlackJackStatus()
+        if (blackJackStatus.isDrawable) {
+            this.participantCards.addCard(card)
+            blackJackStatus = participantCards.getBlackJackStatus()
+        } else {
+            throw DrawCardFailException()
+        }
     }
 
     fun setFirstDistributionBlackJack() {
