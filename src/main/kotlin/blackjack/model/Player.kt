@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player(
+class Player private constructor(
     val name: PlayerName,
     private val cards: Cards = Cards()
 ) {
