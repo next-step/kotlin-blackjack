@@ -22,7 +22,7 @@ object InputView {
         return participants.map {
             println("${it}의 배팅 금액은?")
             val amount = readln().toInt()
-            Player(it, amount)
+            Player(it, amount, drawable = GameView)
         }
     }
 

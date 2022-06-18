@@ -2,9 +2,12 @@ package blackjack.view
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
+import blackjack.domain.Drawable
 import blackjack.domain.Participant
+import blackjack.domain.Player
+import blackjack.exception.InvalidInputValueException
 
-object GameView {
+object GameView : Drawable {
     fun drawFirstCardDistribution(participants: BlackJackGame) {
         participants.participants.joinToString { it.name }.also {
             println("${it}에게 2장을 나눠주었습니다.")
@@ -46,4 +49,22 @@ object GameView {
             Card.CardPattern.DIAMONDS -> "다이아몬드"
         }
     }
+
+    override fun canDraw(player: Player): Boolean {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return readln().toBoolean().also {
+            if (it) player.setBlackJackStatusStay()
+        }
+    }
+
+    private fun String.toBoolean(): Boolean {
+        return when (uppercase()) {
+            YES -> true
+            NO -> false
+            else -> throw InvalidInputValueException()
+        }
+    }
+
+    private const val YES = "Y"
+    private const val NO = "N"
 }
