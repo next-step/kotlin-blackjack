@@ -9,8 +9,8 @@ object BlackjackView {
         println(PLAYER_INPUT_MESSAGE)
     }
 
-    fun printInitialize(players: String) {
-        println("$players$BLACKJACK_INIT_MESSAGE")
+    fun printInitialize(players: List<Player>) {
+        println("${players.joinToString(", ") { it.name }}$BLACKJACK_INIT_MESSAGE")
     }
 
     fun printPlayerCard(name: String, cards: List<Card>) {

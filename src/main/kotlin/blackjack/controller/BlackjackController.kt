@@ -11,7 +11,7 @@ class BlackjackController {
     fun start() {
         BlackjackView.printPlayerInput()
         val players = getPlayers()
-        BlackjackView.printInitialize(players.joinToString(", ") { it.name })
+        BlackjackView.printInitialize(players)
 
         val blackjack = Blackjack(players)
 

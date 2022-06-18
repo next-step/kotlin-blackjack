@@ -1,5 +1,11 @@
 package blackjack.domain
 
+import blackjack.domain.Denomination.ACE
+import blackjack.domain.Denomination.FIVE
+import blackjack.domain.Denomination.FOUR
+import blackjack.domain.Denomination.JACK
+import blackjack.domain.Denomination.QUEEN
+import blackjack.domain.Denomination.SIX
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,7 +40,7 @@ internal class PlayerTest {
         assertThat(player.name).isEqualTo(name)
         assertThat(player.cards).hasSize(0)
 
-        player.addCard(Card(Suit.SPADE, Denomination.ACE))
+        player.addCard(Card(Suit.SPADE, ACE))
         assertThat(player.cards).hasSize(1)
     }
 
@@ -48,8 +54,7 @@ internal class PlayerTest {
 
         player.addCards(
             listOf(
-                Card(Suit.SPADE, Denomination.ACE),
-                Card(Suit.SPADE, Denomination.TWO)
+                Card(Suit.SPADE, ACE), Card(Suit.SPADE, Denomination.TWO)
             )
         )
         assertThat(player.cards).hasSize(2)
@@ -70,74 +75,26 @@ internal class PlayerTest {
         fun cardsArguments(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(listOf<Card>(), 0),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.ACE)
-                    ),
-                    11
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.JACK),
-                        Card(Suit.DIAMOND, Denomination.QUEEN)
-                    ),
-                    20
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.JACK),
-                        Card(Suit.DIAMOND, Denomination.ACE)
-                    ),
-                    21
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.JACK),
-                        Card(Suit.DIAMOND, Denomination.QUEEN),
-                        Card(Suit.DIAMOND, Denomination.ACE)
-                    ),
-                    21
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.DIAMOND, Denomination.ACE),
-                        Card(Suit.SPADE, Denomination.JACK),
-                        Card(Suit.DIAMOND, Denomination.QUEEN)
-                    ),
-                    21
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.ACE),
-                        Card(Suit.DIAMOND, Denomination.ACE)
-                    ),
-                    12
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.SIX),
-                        Card(Suit.DIAMOND, Denomination.FIVE),
-                        Card(Suit.SPADE, Denomination.ACE)
-                    ),
-                    12
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.FIVE),
-                        Card(Suit.DIAMOND, Denomination.FIVE),
-                        Card(Suit.SPADE, Denomination.ACE)
-                    ),
-                    21
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(Suit.SPADE, Denomination.FOUR),
-                        Card(Suit.DIAMOND, Denomination.FIVE),
-                        Card(Suit.SPADE, Denomination.ACE)
-                    ),
-                    20
-                ),
+                Arguments.of(createCards(ACE), 11),
+                Arguments.of(createCards(JACK, QUEEN), 20),
+                Arguments.of(createCards(JACK, ACE), 21),
+                Arguments.of(createCards(JACK, QUEEN, ACE), 21),
+                Arguments.of(createCards(ACE, JACK, QUEEN), 21),
+                Arguments.of(createCards(ACE, ACE), 12),
+                Arguments.of(createCards(ACE, ACE, ACE), 13),
+                Arguments.of(createCards(ACE, ACE, ACE, ACE), 14),
+                Arguments.of(createCards(SIX, FIVE, ACE), 12),
+                Arguments.of(createCards(FIVE, FIVE, ACE), 21),
+                Arguments.of(createCards(FOUR, FIVE, ACE), 20),
             )
+        }
+
+        private fun createCards(vararg denominations: Denomination): List<Card> {
+            val counter = denominations.groupingBy { it }.eachCount()
+
+            return counter.map {
+                Suit.values().take(it.value).map { suit -> Card(suit, it.key) }
+            }.flatten()
         }
     }
 }

@@ -2,6 +2,7 @@ package blackjack.domain
 
 class Player(val name: String) {
     var cards: List<Card> = listOf()
+        private set
 
     fun addCard(card: Card) {
         cards = cards + card
@@ -12,20 +13,15 @@ class Player(val name: String) {
     }
 
     fun getPoints(): Int {
-        var points = 0
-        cards.sortedBy { it.denomination.ordinal }.forEach {
-            points += when (it.denomination) {
-                Denomination.ACE -> getAcePoints(points)
-                Denomination.JACK, Denomination.QUEEN, Denomination.KING -> 10
-                else -> it.denomination.value.toInt()
-            }
-        }
+        val points = cards.sumOf { it.denomination.point }
+
+        if (Denomination.ACE in cards.map { it.denomination } && points <= SOFT_HAND_CRITERIA) return points + SOFT_HAND_POINT
 
         return points
     }
 
-    private fun getAcePoints(points: Int): Int {
-        return if (points <= 10) 11
-        else 1
+    companion object {
+        private const val SOFT_HAND_CRITERIA = 11
+        private const val SOFT_HAND_POINT = 10
     }
 }
