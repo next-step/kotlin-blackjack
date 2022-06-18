@@ -28,7 +28,9 @@ value class Score(val value: Int) : Comparable<Score> {
 
         private const val BLACK_JACK_SCORE = 21
 
-        private val SCORES = (0..30).associateWith { Score(it) }
+        private val CACHEABLE_RANGE = 0..30
+
+        private val SCORES = CACHEABLE_RANGE.associateWith { Score(it) }
 
         private val BLACK_JACK = of(BLACK_JACK_SCORE)
 
