@@ -109,5 +109,16 @@ class PlayerTest : DescribeSpec({
                 dealer.profit shouldBe Money(1000)
             }
         }
+
+        context("딜러와 비긴다면") {
+            it("베팅한 금액을 돌려 받는다") {
+                val bettingMoney = Money(1000)
+                val player = Player("name", state = Bust, bettingMoney = bettingMoney)
+                val dealer = Dealer(state = Bust)
+                player.match(dealer) shouldBe Match.DRAW
+                player.profit shouldBe Money(0)
+                dealer.profit shouldBe Money(0)
+            }
+        }
     }
 })
