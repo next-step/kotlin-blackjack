@@ -17,29 +17,14 @@ fun main() {
     blackjack.distribute()
     PlayingView.showDistribution(dealer, players)
 
-    if (dealer.state is BlackjackState) {
-        finish(dealer, players, blackjack)
-        return
+    if (dealer.state !is BlackjackState) {
+        blackjack.confirmBlackJackPlayer()
+        val remainedPlayers = players.filterNot { it.state is BlackjackState }
+        deal(blackjack, dealer, remainedPlayers)
     }
-
-    blackjack.confirmBlackJackPlayer()
-
-    val remainedPlayers = players.filterNot { it.state is BlackjackState }
-
-    deal(blackjack, dealer, remainedPlayers)
-
-    finish(dealer, players, blackjack)
-}
-
-private fun finish(
-    dealer: Dealer,
-    players: List<Player>,
-    blackjack: BlackJack
-) {
     ResultView.showResultHand(listOf(dealer) + players)
 
     val result = blackjack.matching()
-
     ResultView.showBlackJackResult(result)
 }
 

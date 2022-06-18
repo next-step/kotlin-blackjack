@@ -1,7 +1,6 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Denomination.ACE
 import blackjack.domain.card.Denomination.FIVE
 import blackjack.domain.card.Denomination.FOUR
 import blackjack.domain.card.Denomination.KING
@@ -101,66 +100,6 @@ class PlayerTest : DescribeSpec({
             val bettingMoney = Money(-1)
             shouldThrowExactly<IllegalArgumentException> {
                 Player("name", state = BlackJack, bettingMoney = bettingMoney)
-            }
-        }
-
-        context("딜러에게 이기면") {
-            it("베팅한 금액을 받는다") {
-                val bettingMoney = Money(1000)
-                val player = Player("name", state = BlackJack, bettingMoney = bettingMoney)
-                val dealer = Dealer(state = Bust)
-                player.match(dealer) shouldBe Match.WIN
-                player.profit shouldBe Money(1000)
-                dealer.profit shouldBe Money(-1000)
-            }
-        }
-
-        context("딜러에게 진다면") {
-            it("베팅한 금액을 잃는다") {
-                val bettingMoney = Money(1000)
-                val player = Player("name", state = Bust, bettingMoney = bettingMoney)
-                val dealer = Dealer(state = BlackJack)
-                player.match(dealer) shouldBe Match.LOSE
-                player.profit shouldBe Money(-1000)
-                dealer.profit shouldBe Money(1000)
-            }
-        }
-
-        context("딜러와 비긴다면") {
-            it("베팅한 금액을 돌려 받는다") {
-                val bettingMoney = Money(1000)
-                val player = Player("name", state = Bust, bettingMoney = bettingMoney)
-                val dealer = Dealer(state = Bust)
-                player.match(dealer) shouldBe Match.DRAW
-                player.profit shouldBe Money(0)
-                dealer.profit shouldBe Money(0)
-            }
-        }
-
-        context("첫 2장이 블랙잭이면") {
-            it("딜러에게 베팅 금액의 1.5배 만큼의 금액을 받는다") {
-                val bettingMoney = Money(1000)
-                val player = Player("name", bettingMoney = bettingMoney)
-                player.receive(Card(KING, HEART))
-                player.receive(Card(ACE, HEART))
-                val dealer = Dealer(state = Stay(Point(10)))
-                player.winIfBlackJackAfterDistribution(dealer)
-                player.state shouldBe BlackJack
-                player.profit shouldBe Money(1500)
-                dealer.profit shouldBe Money(-1500)
-            }
-        }
-
-        context("첫 2장이 블랙잭이고 딜러도 블랙잭이라면") {
-            it("딜러에게 베팅 금액을 돌려 받는다") {
-                val bettingMoney = Money(1000)
-                val player = Player("name", bettingMoney = bettingMoney)
-                player.receive(Card(KING, HEART))
-                player.receive(Card(ACE, HEART))
-                val dealer = Dealer(state = BlackJack)
-                player.winIfBlackJackAfterDistribution(dealer)
-                player.profit shouldBe Money(0)
-                dealer.profit shouldBe Money(0)
             }
         }
     }

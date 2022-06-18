@@ -91,6 +91,40 @@ class BlackJackTest : DescribeSpec({
             participants[1].hand shouldBeEqualToComparingFields hand(Card(SIX, DIAMOND), Card(SEVEN, CLOVER))
         }
 
+        context("카드 분배 후 딜러가 블랙잭이 아니라면") {
+            it("블랙잭인 플레이어는 베팅 금액의 1.5배를 받는다") {
+                val bettingMoney = Money(100)
+                val blackjackPlayer = Player(
+                    "1",
+                    hand(Card(KING, HEART), Card(ACE, DIAMOND)),
+                    state = BLACKJACK,
+                    bettingMoney = bettingMoney
+                )
+                val player1 = Player("2", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+                val player2 = Player("3", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+                val dealer = Dealer(state = Hittable)
+                val blackjack = BlackJack(dealer, listOf(blackjackPlayer, player1, player2))
+                blackjack.confirmBlackJackPlayer()
+                blackjackPlayer.profit shouldBe Money(150)
+                dealer.profit shouldBe Money(-150)
+            }
+        }
+
+        context("카드 분배 후 딜러가 블랙잭이라면") {
+            val bettingMoney = Money(100)
+            val blackjackPlayer =
+                Player("1", hand(Card(KING, HEART), Card(ACE, DIAMOND)), state = BLACKJACK, bettingMoney = bettingMoney)
+            val player1 = Player("2", hand(Card(KING, HEART), Card(SIX, DIAMOND)), bettingMoney = Money(100))
+            val player2 = Player("3", hand(Card(KING, HEART), Card(SIX, DIAMOND)), bettingMoney = Money(100))
+            val dealer = Dealer(state = BLACKJACK)
+            val blackjack = BlackJack(dealer, listOf(blackjackPlayer, player1, player2))
+            blackjack.confirmBlackJackPlayer()
+            it("블랙잭인 플레이어는 베팅 금액을 돌려 받는다") {
+                blackjackPlayer.profit shouldBe Money(0)
+                dealer.profit shouldBe Money(0)
+            }
+        }
+
         it("참가자가 카드를 받을 수 없을 때(Bust 상태) 까지 거래를 진행한다") {
             val deck: Deck = CustomDeck(
                 cards(Card(TWO, CLOVER))
@@ -127,16 +161,68 @@ class BlackJackTest : DescribeSpec({
             player.state shouldBe Stay(Point(16))
         }
 
-        it("카드 분배 후 딜러가 블랙잭이 아니라면, 블랙잭 상태인 플레이어에게 베팅 금액의 1.5배를 준다") {
+        it("딜러가 이기는 경우, 플레이어는 베팅 금액을 잃는다") {
             val bettingMoney = Money(100)
-            val blackjackPlayer = Player("1", hand(Card(KING, HEART), Card(ACE, DIAMOND)), state = BLACKJACK, bettingMoney = bettingMoney)
-            val player1 = Player("2", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
-            val player2 = Player("3", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
-            val dealer = Dealer(state = Hittable)
-            val blackjack = BlackJack(dealer, listOf(blackjackPlayer, player1, player2))
-            blackjack.confirmBlackJackPlayer()
-            blackjackPlayer.profit shouldBe Money(150)
-            dealer.profit shouldBe Money(-150)
+            val player1 = Player(
+                "1",
+                hand(Card(KING, HEART), Card(SIX, DIAMOND)),
+                state = Stay(Point(16)),
+                bettingMoney = bettingMoney
+            )
+            val player2 = Player(
+                "2",
+                hand(Card(KING, HEART), Card(SIX, DIAMOND)),
+                state = Stay(Point(16)),
+                bettingMoney = bettingMoney
+            )
+            val dealer = Dealer(state = BLACKJACK)
+            val blackjack = BlackJack(dealer, listOf(player1, player2))
+            blackjack.matching()
+            dealer.profit shouldBe Money(200)
+            player1.profit shouldBe Money(-100)
+            player2.profit shouldBe Money(-100)
+        }
+        it("딜러가 지는 경우, 플레이어는 베팅 금액 만큼 수익을 얻는다") {
+            val bettingMoney = Money(100)
+            val player1 = Player(
+                "1",
+                hand(Card(KING, HEART), Card(SIX, DIAMOND)),
+                state = Stay(Point(16)),
+                bettingMoney = bettingMoney
+            )
+            val player2 = Player(
+                "2",
+                hand(Card(KING, HEART), Card(SIX, DIAMOND)),
+                state = Stay(Point(16)),
+                bettingMoney = bettingMoney
+            )
+            val dealer = Dealer(state = Bust)
+            val blackjack = BlackJack(dealer, listOf(player1, player2))
+            blackjack.matching()
+            dealer.profit shouldBe Money(-200)
+            player1.profit shouldBe Money(100)
+            player2.profit shouldBe Money(100)
+        }
+        it("딜러와 비기는 경우, 플레이어는 베팅 금액을 돌려 받는다") {
+            val bettingMoney = Money(100)
+            val player1 = Player(
+                "1",
+                hand(Card(KING, HEART), Card(SEVEN, DIAMOND)),
+                state = Stay(Point(17)),
+                bettingMoney = bettingMoney
+            )
+            val player2 = Player(
+                "2",
+                hand(Card(KING, HEART), Card(SEVEN, DIAMOND)),
+                state = Stay(Point(17)),
+                bettingMoney = bettingMoney
+            )
+            val dealer = Dealer(state = Stay(Point(17)))
+            val blackjack = BlackJack(dealer, listOf(player1, player2))
+            blackjack.matching()
+            dealer.profit shouldBe Money(0)
+            player1.profit shouldBe Money(0)
+            player2.profit shouldBe Money(0)
         }
     }
 })
