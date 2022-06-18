@@ -12,6 +12,7 @@ import blackjack.domain.card.Suit.HEART
 import blackjack.domain.card.Suit.SPADE
 import blackjack.domain.hand
 import blackjack.domain.to
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.inspectors.forAll
@@ -86,6 +87,20 @@ class PlayerTest : DescribeSpec({
                 val player = Player("name", hand = hand)
                 player.receive(Card(FOUR, SPADE))
                 player.state shouldBe Hittable
+            }
+        }
+
+        it("베팅 금액은 0 이상이어야 한다") {
+            val bettingMoney = Money(0)
+            shouldNotThrowAny {
+                Player("name", state = BlackJack, bettingMoney = bettingMoney)
+            }
+        }
+
+        it("베팅 금액은 0보다 작을 수 없다") {
+            val bettingMoney = Money(-1)
+            shouldThrowExactly<IllegalArgumentException> {
+                Player("name", state = BlackJack, bettingMoney = bettingMoney)
             }
         }
 

@@ -9,6 +9,10 @@ class Player(
     private val bettingMoney: Money = Money.ZERO
 ) : Participant(name, hand, state) {
 
+    init {
+        require(bettingMoney >= Money.ZERO) { "베팅 금액은 0 이상이어야 합니다" }
+    }
+
     override fun isPlayable(askHit: (String) -> Boolean): Boolean {
         if (!isPlayableState()) {
             return false
