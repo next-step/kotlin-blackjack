@@ -1,8 +1,8 @@
 package camp.nextstep.blackjack
 
 import camp.nextstep.blackjack.game.BlackJackGame
+import camp.nextstep.blackjack.ui.cli.GameInitializedInfoWriter
 import camp.nextstep.blackjack.ui.cli.GameResultWriter
-import camp.nextstep.blackjack.ui.cli.GameWriter
 import camp.nextstep.blackjack.ui.cli.PlayerActionReader
 import camp.nextstep.blackjack.ui.cli.PlayerCardsWriter
 import camp.nextstep.blackjack.ui.cli.PlayersReader
@@ -12,7 +12,8 @@ fun main() {
     val players = PlayersReader.read()
     val game = BlackJackGame.new(players)
 
-    GameWriter.write(game)
+    GameInitializedInfoWriter.write(game.participants)
+
     for (player in players) {
         PlayerCardsWriter.write(player)
     }
