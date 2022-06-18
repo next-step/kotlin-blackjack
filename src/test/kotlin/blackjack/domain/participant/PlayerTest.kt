@@ -135,5 +135,18 @@ class PlayerTest : DescribeSpec({
                 dealer.profit shouldBe Money(-1500)
             }
         }
+
+        context("첫 2장이 블랙잭이고 딜러도 블랙잭이라면") {
+            it("딜러에게 베팅 금액을 돌려 받는다") {
+                val bettingMoney = Money(1000)
+                val player = Player("name", bettingMoney = bettingMoney)
+                player.receive(Card(KING, HEART))
+                player.receive(Card(ACE, HEART))
+                val dealer = Dealer(state = BlackJack)
+                player.match(dealer)
+                player.profit shouldBe Money(0)
+                dealer.profit shouldBe Money(0)
+            }
+        }
     }
 })
