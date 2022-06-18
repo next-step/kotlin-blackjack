@@ -1,3 +1,3 @@
 package study
 
-abstract class Skill
+sealed class Skill
