@@ -109,7 +109,7 @@ internal class BlackJackGameTest {
         val turn = blackJackGame.turns[0]
         assertThat(turn.player).isEqualTo(playerTim)
 
-        while (Score.of(playerTim.cards).isNotBust) {
+        while (Score.of(playerTim.cards).isNotBust()) {
             turn.applyToGame(Action.HIT)
         }
 

@@ -47,7 +47,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         }
 
         val playerScore = Score.of(turn.player.cards)
-        if (playerScore.isBust || action == Action.STAY) {
+        if (playerScore.isBust() || action == Action.STAY) {
             turn.isDone = true
         }
     }

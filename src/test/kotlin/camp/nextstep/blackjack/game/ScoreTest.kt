@@ -15,14 +15,14 @@ internal class ScoreTest {
     @Test
     fun isBlackJackWhenScoreIs21() {
         val score = Score(21)
-        assertThat(score.isBlackJack).isTrue
+        assertThat(score.isBlackJack()).isTrue
     }
 
     @DisplayName("21점이 넘으면 버스트이다.")
     @Test
     fun isBustWhenScoreOver21() {
         val score = Score(22)
-        assertThat(score.isBust).isTrue
+        assertThat(score.isBust()).isTrue
     }
 
     @DisplayName("Ace 는 다른 카드의 점수 합이 10점 이하인 경우 11점으로 계산한다.")

@@ -3,13 +3,14 @@ package camp.nextstep.blackjack.game
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardNumber
 
-data class Score(val value: Int) : Comparable<Score> {
+@JvmInline
+value class Score(val value: Int) : Comparable<Score> {
 
-    val isBlackJack: Boolean = value == BLACK_JACK_SCORE
+    fun isBlackJack(): Boolean = value == BLACK_JACK_SCORE
 
-    val isBust: Boolean = value > BLACK_JACK_SCORE
+    fun isBust(): Boolean = value > BLACK_JACK_SCORE
 
-    val isNotBust: Boolean = !isBust
+    fun isNotBust(): Boolean = !isBust()
 
     override fun compareTo(other: Score): Int {
         return this.value.compareTo(other.value)
