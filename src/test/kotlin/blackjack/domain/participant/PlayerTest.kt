@@ -87,5 +87,16 @@ class PlayerTest : DescribeSpec({
                 player.state shouldBe Hittable
             }
         }
+
+        context("딜러에게 이기면") {
+            it("베팅한 금액을 받는다") {
+                val bettingMoney = Money(1000)
+                val player = Player("name", state = BlackJack, bettingMoney = bettingMoney)
+                val dealer = Dealer(state = Bust)
+                player.match(dealer) shouldBe Match.WIN
+                player.profit shouldBe Money(1000)
+                dealer.profit shouldBe Money(-1000)
+            }
+        }
     }
 })

@@ -31,6 +31,8 @@ class Hand(
 
     fun first(): Card = cards.first()
 
+    fun size(): Int = cards.size
+
     override fun toString(): String {
         return cards.joinToString {
             it.toString()

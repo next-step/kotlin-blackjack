@@ -34,7 +34,7 @@ private fun deal(blackJack: BlackJack, dealer: Dealer, participants: List<Partic
     blackJack.dealWith(dealer, { true }, PlayingView::showDealerHit)
 }
 
-private fun participate(): List<Participant> {
+private fun participate(): List<Player> {
     return InputView.readPlayerNames()
         .map { name ->
             Player(name)

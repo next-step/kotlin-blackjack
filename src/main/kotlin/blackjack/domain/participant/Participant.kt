@@ -8,7 +8,7 @@ abstract class Participant(
     val name: String,
     val hand: Hand,
     state: State = Hittable
-) {
+) : Gambler() {
     var state: State = state
         protected set
 
@@ -34,10 +34,6 @@ abstract class Participant(
     private fun isPlayableState(): Boolean = state is Hittable
 
     open fun open(): Hand = hand
-
-    fun match(dealer: Dealer): Match {
-        return state.compare(dealer.state)
-    }
 }
 
 enum class Match {
