@@ -2,7 +2,6 @@ package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
 import blackjack.domain.card.Deck
-import blackjack.view.InputView
 import blackjack.view.OutputInterface
 
 /**
@@ -21,9 +20,9 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
 
     fun hit(output: OutputInterface) {
         users.forEach {
-            hitStage(it, output)
+            it.hitStage(deck, output)
         }
-        hitStageDealer(output)
+        dealer.hitStage(deck, output)
     }
 
     private fun hitStageDealer(output: OutputInterface) {
@@ -33,22 +32,13 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
         }
     }
 
-    private fun hitStage(user: User, output: OutputInterface) {
-        while (!user.isBust()) {
-            output.printMoreCard(user)
-            if (!InputView.getYesOrNo()) return
-            user.hit(deck.takeCard())
-            output.printUserCard(user)
-        }
-    }
-
     companion object {
         private const val INIT_CARD_SIZE = 2
         fun of(usersNames: List<String>, deck: Deck): Users {
             return Users(
                 users = usersNames.map { User(it, deck.takeCards(INIT_CARD_SIZE)) },
                 deck = deck,
-                dealer = Dealer(deck.takeCards(INIT_CARD_SIZE))
+                dealer = Dealer(deck.takeCard())
             )
         }
     }

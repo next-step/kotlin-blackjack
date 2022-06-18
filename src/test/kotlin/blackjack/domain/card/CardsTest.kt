@@ -16,8 +16,8 @@ class CardsTest {
     @Test
     fun `A스페이드와 8하트 카드를 갖고 있는경우 점수는 19점이다`() {
         val cards = Cards().apply {
-            addCard(ACE(CardType.SPADE))
-            addCard(EIGHT(CardType.HEART))
+            addCard(Ace(CardType.SPADE))
+            addCard(Eight(CardType.HEART))
         }
         assertThat(cards.getScore().value).isEqualTo(19)
     }
@@ -25,8 +25,8 @@ class CardsTest {
     @Test
     fun `A다이아와 K하트 카드를 갖고 있는경우 점수는 21점이다`() {
         val cards = Cards().apply {
-            addCard(ACE(CardType.SPADE))
-            addCard(KING(CardType.HEART))
+            addCard(Ace(CardType.SPADE))
+            addCard(King(CardType.HEART))
         }
         assertThat(cards.getScore().value).isEqualTo(21)
     }
@@ -34,8 +34,8 @@ class CardsTest {
     @Test
     fun `A다이아와 A클로버 카드를 갖고 있는경우 점수는 12점이다`() {
         val cards = Cards().apply {
-            addCard(ACE(CardType.SPADE))
-            addCard(ACE(CardType.CLUB))
+            addCard(Ace(CardType.SPADE))
+            addCard(Ace(CardType.CLUB))
         }
         assertThat(cards.getScore().value).isEqualTo(12)
     }
@@ -43,9 +43,9 @@ class CardsTest {
     @Test
     fun `A다이아와 A클로버 A하트 카드를 갖고 있는경우 점수는 13점이다`() {
         val cards = Cards().apply {
-            addCard(ACE(CardType.SPADE))
-            addCard(ACE(CardType.CLUB))
-            addCard(ACE(CardType.HEART))
+            addCard(Ace(CardType.SPADE))
+            addCard(Ace(CardType.CLUB))
+            addCard(Ace(CardType.HEART))
         }
         assertThat(cards.getScore().value).isEqualTo(13)
     }

@@ -1,12 +1,12 @@
 package blackjack.view
 
 import blackjack.constant.Messages
-import blackjack.domain.card.ACE
+import blackjack.domain.card.Ace
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardType
-import blackjack.domain.card.JACK
-import blackjack.domain.card.KING
-import blackjack.domain.card.QUEEN
+import blackjack.domain.card.Jack
+import blackjack.domain.card.King
+import blackjack.domain.card.Queen
 import blackjack.domain.user.User
 import blackjack.domain.user.Users
 
@@ -66,10 +66,10 @@ object OutputView : OutputInterface {
 
     private fun cardToString(card: Card): String {
         val number = when (card) {
-            is ACE -> "A"
-            is JACK -> "J"
-            is QUEEN -> "Q"
-            is KING -> "K"
+            is Ace -> "A"
+            is Jack -> "J"
+            is Queen -> "Q"
+            is King -> "K"
             else -> card.score
         }
         val type = when (card.type) {

@@ -20,12 +20,4 @@ class Cards {
     fun getScore(): Score {
         return Score.of(this)
     }
-
-    fun isBust(): Boolean {
-        return getScore().value > BLACKJACK_SCORE
-    }
-
-    companion object {
-        const val BLACKJACK_SCORE = 21
-    }
 }

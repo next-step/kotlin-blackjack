@@ -3,6 +3,9 @@ package blackjack.domain.user
 import blackjack.constant.ErrorMessages
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
+import blackjack.view.InputView
+import blackjack.view.OutputInterface
 
 /**
  * 유저데이터를 갖고 있는 클래스
@@ -25,8 +28,8 @@ open class User(val name: String, initCards: List<Card>) {
         _cards.addCard(card)
     }
 
-    fun isBust(): Boolean {
-        return _cards.isBust()
+    private fun isBust(): Boolean {
+        return _cards.getScore().isBust()
     }
 
     fun isWin(user: User): Boolean {
@@ -35,5 +38,14 @@ open class User(val name: String, initCards: List<Card>) {
         if (user.isBust())
             return true
         return user._cards.getScore() < _cards.getScore()
+    }
+
+    open fun hitStage(deck: Deck, output: OutputInterface) {
+        while (!isBust()) {
+            output.printMoreCard(this)
+            if (!InputView.getYesOrNo()) return
+            hit(deck.takeCard())
+            output.printUserCard(this)
+        }
     }
 }
