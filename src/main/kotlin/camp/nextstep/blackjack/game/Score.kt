@@ -45,7 +45,7 @@ value class Score(val value: Int) : Comparable<Score> {
         fun of(cards: Collection<Card>): Score {
             var score = of(cards.sumOf { it.number.value })
 
-            val aceCount = cards.filter { it.number == CardNumber.ACE }.size
+            val aceCount = cards.count { it.number == CardNumber.ACE }
             repeat(aceCount) {
                 if (canAddAceBonus(score)) score += ACE_BONUS
             }
