@@ -18,9 +18,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
         repeat(INIT_CARD_NUMBER) {
-            for (player in _participants) {
-                serve(player, _cardDeck.draw())
-            }
+            serve(_participants) { _cardDeck.draw() }
         }
 
         turns = _participants.map { Turn(it) }
@@ -51,6 +49,12 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         val playerScore = Score.of(turn.player.cards)
         if (playerScore.isBust || action == Action.STAY) {
             turn.isDone = true
+        }
+    }
+
+    private fun serve(players: List<Player>, cardDrawer: () -> Card) {
+        for (player in players) {
+            serve(player, cardDrawer())
         }
     }
 
