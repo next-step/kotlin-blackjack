@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 internal class LanguageTest : StringSpec({
 
     "Language는 언어의 이름과 숙련도를 가진다." {
-        val language = language {
+        val language = languages {
             "Hangul" level 9999
             "English" level 5
         }

@@ -13,5 +13,5 @@ class LanguageBuilder() {
     fun build(): List<Language> = languages
 }
 
-fun language(block: LanguageBuilder.() -> Unit) =
+fun languages(block: LanguageBuilder.() -> Unit) =
     LanguageBuilder().apply(block).build()
