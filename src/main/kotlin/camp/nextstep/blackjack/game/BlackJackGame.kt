@@ -7,8 +7,6 @@ import camp.nextstep.blackjack.player.Player
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Player>) {
 
-    private var isEnded = false
-
     val turns: List<Turn>
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
@@ -28,7 +26,9 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
     }
 
     fun result(): GameResult {
+        val isEnded = turns.all { it.isDone }
         check(isEnded) { "게임이 종료되지 않았습니다." }
+
         return GameResult(
             _participants.map { PlayerScore(it, Score.of(it.cards)) }
         )
@@ -43,8 +43,6 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         if (playerScore.isBust || action == Action.STAY) {
             turn.isDone = true
         }
-
-        if (turns.all { it.isDone }) isEnded = true
     }
 
     private fun serve(to: Player, card: Card) {
