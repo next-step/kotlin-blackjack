@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.domain.User
-import blackjack.domain.Users
+import blackjack.domain.card.Deck
+import blackjack.domain.user.Users
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -11,23 +11,11 @@ import blackjack.view.OutputView
  */
 object BlackjackController {
     fun startGame() {
-        val players = Users.of(InputView.getPlayersName())
+        val players = Users.of(InputView.getPlayersName(), Deck())
         OutputView.printHandOutMessage(players)
         OutputView.printUsersCard(players)
-
-        players.users.forEach { user ->
-            hitStage(user)
-        }
-
+        players.hit(OutputView)
         OutputView.printResult(players)
-    }
-
-    private fun hitStage(user: User) {
-        while (!user.cards.isOverScore()) {
-            OutputView.printMoreCard(user)
-            if (!InputView.getYesOrNo()) return
-            user.cards.addCard()
-            OutputView.printUserCard(user)
-        }
+        OutputView.printWinAndLose(players)
     }
 }
