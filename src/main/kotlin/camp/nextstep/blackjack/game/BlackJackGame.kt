@@ -4,6 +4,7 @@ import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
 import camp.nextstep.blackjack.player.Player
+import camp.nextstep.blackjack.ui.cli.PlayerCardsWriter
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Player>) {
 
@@ -32,6 +33,14 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         return GameResult(
             _participants.map { PlayerScore(it, Score.of(it.cards)) }
         )
+    }
+
+    fun doTurn(turn: Turn, readPlayersAction: (Player) -> Action) {
+        while (!turn.isDone) {
+            val action = readPlayersAction(turn.player)
+            turn.applyToGame(action)
+            PlayerCardsWriter.write(turn.player)
+        }
     }
 
     private fun play(turn: Turn, action: Action) {
