@@ -8,11 +8,7 @@ class Dealer(
     private val deck: Deck = ShuffledDeck(),
     hand: Hand = Hand.empty(),
     state: State = Hittable,
-    private val participant: Participant = Player(DEALER_NAME, hand, state)
-) : Participant by participant {
-
-    override var state: State = participant.state
-        private set
+) : Participant(DEALER_NAME, hand, state) {
 
     fun draw(): Card {
         check(!deck.isEmpty()) { "덱에 남은 카드가 없습니다" }
@@ -27,14 +23,9 @@ class Dealer(
         return Hand(listOf(hand.first()))
     }
 
-    override fun receive(card: Card) {
-        participant.receive(card)
-        changeState()
-    }
-
-    private fun changeState() {
+    override fun changeState() {
+        super.changeState()
         val point = hand.calculate()
-        state = participant.state
         if (point >= STAY_POINT && point < Point.BLACKJACK) {
             state = Stay(point)
         }
