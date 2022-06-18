@@ -54,8 +54,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         }
     }
 
-    private fun serve(to: Player, card: Card) {
-        to.receive(card)
+    private fun serve(player: Player, card: Card) {
+        player.receive(card)
     }
 
     inner class Turn(val player: Player) {
