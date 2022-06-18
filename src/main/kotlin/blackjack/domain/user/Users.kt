@@ -1,8 +1,8 @@
 package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
+import blackjack.domain.OutputInterface
 import blackjack.domain.card.Deck
-import blackjack.view.OutputInterface
 
 /**
  * 유저들을 저장하는 일급 컬렉션
@@ -27,13 +27,13 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
 
     private fun hitStageDealer(output: OutputInterface) {
         while (!dealer.isOverHitScore()) {
-            output.printDealerHitMessage()
+            output.drawDealerHitMessage()
             dealer.hit(deck.takeCard())
         }
     }
 
     companion object {
-        private const val INIT_CARD_SIZE = 2
+        const val INIT_CARD_SIZE = 2
         fun of(usersNames: List<String>, deck: Deck): Users {
             return Users(
                 users = usersNames.map { User(it, deck.takeCards(INIT_CARD_SIZE)) },

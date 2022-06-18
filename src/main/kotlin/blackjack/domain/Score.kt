@@ -13,12 +13,16 @@ value class Score(val value: Int) {
         return value > BLACKJACK_SCORE
     }
 
+    fun isBlackJackScore(): Boolean {
+        return value == BLACKJACK_SCORE
+    }
+
     operator fun compareTo(score: Score): Int {
         return compareValues(this.value, score.value)
     }
 
     companion object {
-        const val BLACKJACK_SCORE = 21
+        private const val BLACKJACK_SCORE = 21
         private const val ACE_SUB_SCORE = 10
 
         fun of(cards: Cards): Score {

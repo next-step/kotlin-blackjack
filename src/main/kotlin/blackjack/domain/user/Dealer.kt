@@ -1,8 +1,8 @@
 package blackjack.domain.user
 
+import blackjack.domain.OutputInterface
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
-import blackjack.view.OutputInterface
 
 /**
  * 딜러
@@ -10,9 +10,13 @@ import blackjack.view.OutputInterface
  */
 class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
 
-    fun getWinAndLose(users: List<User>): Pair<Int, Int> {
-        val winSize = users.filter { isWin(it) }.size
-        return Pair(winSize, users.size - winSize)
+    fun getWinAndLose(users: List<User>): MatchResults {
+        val matchResult = users.map { match(it) }
+        return MatchResults(
+            matchResult.count { it == Match.WIN },
+            matchResult.count { it == Match.DRAW },
+            matchResult.count { it == Match.LOSE }
+        )
     }
 
     fun isOverHitScore(): Boolean {
@@ -21,7 +25,7 @@ class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
 
     override fun hitStage(deck: Deck, output: OutputInterface) {
         while (!isOverHitScore()) {
-            output.printDealerHitMessage()
+            output.drawDealerHitMessage()
             hit(deck.takeCard())
         }
     }

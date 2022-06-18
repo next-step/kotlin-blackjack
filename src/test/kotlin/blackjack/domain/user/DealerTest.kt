@@ -5,6 +5,10 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Five
 import blackjack.domain.card.Four
 import blackjack.domain.card.Jack
+import blackjack.domain.card.King
+import blackjack.domain.card.Nine
+import blackjack.domain.card.Queen
+import blackjack.domain.card.Seven
 import blackjack.domain.card.Six
 import blackjack.domain.card.Two
 import org.assertj.core.api.Assertions.assertThat
@@ -29,7 +33,7 @@ class DealerTest {
             hit(Ace(CardType.CLUB))
         }
         val user = User("hello", listOf(Ace(CardType.HEART), Six(CardType.DIAMOND)))
-        assertThat(dealer.getWinAndLose(listOf(user)).first).isEqualTo(0)
+        assertThat(dealer.getWinAndLose(listOf(user)).winCount).isEqualTo(0)
     }
 
     @Test
@@ -40,6 +44,44 @@ class DealerTest {
         }
         val user1 = User("hello", listOf(Ace(CardType.HEART), Six(CardType.DIAMOND)))
         val user2 = User("ggg", listOf(Two(CardType.CLUB), Jack(CardType.HEART)))
-        assertThat(dealer.getWinAndLose(listOf(user1, user2)).first).isEqualTo(0)
+        assertThat(dealer.getWinAndLose(listOf(user1, user2)).winCount).isEqualTo(0)
+    }
+
+    @Test
+    fun `딜러와 플레이어 둘다 bust라면 무승부이다`() {
+        val dealer = Dealer(Two(CardType.CLUB)).apply {
+            hit(Jack(CardType.HEART))
+            hit(Jack(CardType.DIAMOND))
+        }
+        val user1 = User("hello", listOf(Queen(CardType.HEART), King(CardType.HEART), Nine(CardType.SPADE)))
+        assertThat(dealer.getWinAndLose(listOf(user1)).drawCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `딜러와 플레이어의 점수가 블랙잭이 아닌경우 같다면 무승부이다`() {
+        val dealer = Dealer(Two(CardType.CLUB)).apply {
+            hit(Jack(CardType.HEART))
+        }
+        val user1 = User("hello", listOf(Two(CardType.HEART), King(CardType.HEART)))
+        val user2 = User("ggg", listOf(Five(CardType.CLUB), Seven(CardType.HEART)))
+        assertThat(dealer.getWinAndLose(listOf(user1, user2)).drawCount).isEqualTo(2)
+    }
+
+    @Test
+    fun `딜러가 블랙잭 플레이어가 블랙잭이 아닌 21점이면 딜러의 승리이다`() {
+        val dealer = Dealer(Ace(CardType.CLUB)).apply {
+            hit(Jack(CardType.HEART))
+        }
+        val user1 = User("hello", listOf(Two(CardType.HEART), King(CardType.HEART), Nine(CardType.SPADE)))
+        assertThat(dealer.getWinAndLose(listOf(user1)).winCount).isEqualTo(1)
+    }
+
+    @Test
+    internal fun `딜러와 플레이어 둘다 블랙잭이면 무승부이다`() {
+        val dealer = Dealer(Ace(CardType.CLUB)).apply {
+            hit(Jack(CardType.HEART))
+        }
+        val user1 = User("hello", listOf(Ace(CardType.HEART), King(CardType.HEART)))
+        assertThat(dealer.getWinAndLose(listOf(user1)).drawCount).isEqualTo(1)
     }
 }

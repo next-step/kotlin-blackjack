@@ -1,4 +1,4 @@
-package blackjack.view
+package blackjack.domain
 
 import blackjack.domain.user.User
 
@@ -7,8 +7,8 @@ import blackjack.domain.user.User
  * Created by Jaesungchi on 2022.06.15..
  */
 interface OutputInterface {
-    fun printUserCard(user: User)
-    fun printMoreCard(user: User)
+    fun drawUserCard(user: User)
+    fun drawMoreCard(user: User)
 
-    fun printDealerHitMessage()
+    fun drawDealerHitMessage()
 }
