@@ -18,13 +18,9 @@ class Player(
             return false
         }
 
-        val saidHit = askHit(name)
-
-        if (!saidHit) {
-            state = Stay(hand.calculate())
+        return askHit(name).also {
+            if (!it) state = Stay(hand.calculate())
         }
-
-        return saidHit
     }
 
     private fun isPlayableState(): Boolean {

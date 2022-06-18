@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
 @JvmInline
-value class Money(private val amount: Int) {
+value class Money(val amount: Int) {
 
     operator fun plus(other: Money): Money = Money(amount + other.amount)
     operator fun minus(other: Money): Money = Money(amount - other.amount)

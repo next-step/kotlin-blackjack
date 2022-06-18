@@ -1,12 +1,10 @@
 package blackjack.application
 
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Match
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.domain.result.BlackJackResult
-import blackjack.domain.result.DealerResult
-import blackjack.domain.result.PlayerResult
+import blackjack.domain.result.ParticipantResult
 
 class BlackJack(
     private val dealer: Dealer,
@@ -38,22 +36,14 @@ class BlackJack(
     }
 
     fun matching(): BlackJackResult {
-        val playerResults = getPlayerResults()
-        val dealerResult = getDealerResult(playerResults)
-        return BlackJackResult(dealerResult, playerResults)
-    }
-
-    private fun getDealerResult(playerResults: List<PlayerResult>): DealerResult {
-        val win = playerResults.count { it.match == Match.LOSE }
-        val draw = playerResults.count { it.match == Match.DRAW }
-        val lose = playerResults.count { it.match == Match.WIN }
-        return DealerResult(win, draw, lose)
-    }
-
-    private fun getPlayerResults(): List<PlayerResult> {
-        return players.map {
-            PlayerResult(it.name, it.match(dealer))
+        players.forEach { player ->
+            player.match(dealer)
         }
+
+        val participantResults = (listOf(dealer) + players).map {
+            ParticipantResult(it.name, it.profit)
+        }
+        return BlackJackResult(participantResults)
     }
 
     companion object {

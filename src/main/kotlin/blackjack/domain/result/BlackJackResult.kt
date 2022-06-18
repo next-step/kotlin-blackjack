@@ -1,19 +1,12 @@
 package blackjack.domain.result
 
-import blackjack.domain.participant.Match
+import blackjack.domain.participant.Money
 
 data class BlackJackResult(
-    val dealerResult: DealerResult,
-    val playerResults: List<PlayerResult>
+    val participantResults: List<ParticipantResult>
 )
 
-data class DealerResult(
-    val win: Int,
-    val draw: Int,
-    val lose: Int
-)
-
-data class PlayerResult(
+data class ParticipantResult(
     val playerName: String,
-    val match: Match
+    val profit: Money
 )
