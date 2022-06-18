@@ -31,8 +31,9 @@ class Player(
         val match = state.compare(dealer.state)
         when (match) {
             Match.WIN -> {
-                earn(bettingMoney)
-                dealer.lost(bettingMoney)
+                val money = applyBonus(bettingMoney)
+                earn(money)
+                dealer.lost(money)
             }
             Match.LOSE -> {
                 lost(bettingMoney)
@@ -41,6 +42,13 @@ class Player(
             Match.DRAW -> {}
         }
         return match
+    }
+
+    private fun applyBonus(money: Money): Money {
+        if (hand.size() == DISTRIBUTED_CARDS_SIZE) {
+            return money * BONUS_RATE
+        }
+        return money
     }
 
     companion object {
