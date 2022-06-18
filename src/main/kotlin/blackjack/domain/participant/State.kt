@@ -8,7 +8,10 @@ sealed interface State {
 
 object Hittable : State {
     override fun compare(other: State): Match {
-        throw IllegalStateException("Hittable 상태는 다른 상태와 비교될 수 없습니다")
+        return when (other) {
+            BlackJack -> Match.LOSE
+            else -> throw IllegalStateException("Hittable 상태는 BlackJack을 제외한 다른 상태와 비교될 수 없습니다")
+        }
     }
 }
 
