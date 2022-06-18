@@ -30,9 +30,10 @@ class Cards(
 
     private fun validateNotEmpty() = require(size > EMPTY_CARDS_SIZE) { "카드 개수가 0개 입니다." }
 
-    override fun toString() = cards.joinToString(", ")
+    override fun toString() = cards.joinToString(CARDS_SEPARATOR)
 
     companion object {
         private const val EMPTY_CARDS_SIZE = 0
+        private const val CARDS_SEPARATOR = ", "
     }
 }
