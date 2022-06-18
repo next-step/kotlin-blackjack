@@ -34,7 +34,10 @@ class Player(
                 earn(bettingMoney)
                 dealer.lost(bettingMoney)
             }
-            Match.LOSE -> {}
+            Match.LOSE -> {
+                lost(bettingMoney)
+                dealer.earn(bettingMoney)
+            }
             Match.DRAW -> {}
         }
         return match

@@ -98,5 +98,16 @@ class PlayerTest : DescribeSpec({
                 dealer.profit shouldBe Money(-1000)
             }
         }
+
+        context("딜러에게 진다면") {
+            it("베팅한 금액을 잃는다") {
+                val bettingMoney = Money(1000)
+                val player = Player("name", state = Bust, bettingMoney = bettingMoney)
+                val dealer = Dealer(state = BlackJack)
+                player.match(dealer) shouldBe Match.LOSE
+                player.profit shouldBe Money(-1000)
+                dealer.profit shouldBe Money(1000)
+            }
+        }
     }
 })
