@@ -13,7 +13,7 @@ object Cards {
         get() = CARDS.values.toSet()
 
     fun of(suit: CardSuit, number: CardNumber): Card {
-        return requireNotNull(CARDS[CardId(suit, number)]) { "잘못된 카드 모양과 숫자입니다." }
+        return CARDS[CardId(suit, number)] ?: throw IllegalArgumentException("잘못된 카드 모양과 숫자입니다.")
     }
 
     private data class CardId(val suit: CardSuit, val number: CardNumber)
