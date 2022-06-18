@@ -9,7 +9,7 @@ class Cards(
     val sumOfScore
         get(): CardScore {
             if (cards.isEmpty()) {
-                return CardScore.zero
+                return CardScore.ZERO
             }
             return cards.map { it.score }
                 .reduce { totalScore, score -> totalScore.plus(score) }

@@ -30,6 +30,6 @@ class CardScore(
     companion object {
         private const val MIN_SCORE = 0
 
-        val zero = CardScore(0, 0)
+        val ZERO = CardScore(0, 0)
     }
 }
