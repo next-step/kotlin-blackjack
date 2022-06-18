@@ -144,7 +144,7 @@ class PlayerTest : DescribeSpec({
                 player.receive(Card(KING, HEART))
                 player.receive(Card(ACE, HEART))
                 val dealer = Dealer(state = Stay(Point(10)))
-                player.match(dealer)
+                player.winIfBlackJackAfterDistribution(dealer)
                 player.state shouldBe BlackJack
                 player.profit shouldBe Money(1500)
                 dealer.profit shouldBe Money(-1500)
@@ -158,7 +158,7 @@ class PlayerTest : DescribeSpec({
                 player.receive(Card(KING, HEART))
                 player.receive(Card(ACE, HEART))
                 val dealer = Dealer(state = BlackJack)
-                player.match(dealer)
+                player.winIfBlackJackAfterDistribution(dealer)
                 player.profit shouldBe Money(0)
                 dealer.profit shouldBe Money(0)
             }

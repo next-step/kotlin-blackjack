@@ -46,6 +46,12 @@ class BlackJack(
         return BlackJackResult(participantResults)
     }
 
+    fun confirmBlackJackPlayer() {
+        players.forEach {
+            it.winIfBlackJackAfterDistribution(dealer)
+        }
+    }
+
     companion object {
         private val PLAYER_RANGE = 2..6
     }

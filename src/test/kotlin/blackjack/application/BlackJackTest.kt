@@ -21,6 +21,8 @@ import blackjack.domain.hand
 import blackjack.domain.participant.Bust
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Deck
+import blackjack.domain.participant.Hittable
+import blackjack.domain.participant.Money
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Stay
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -118,11 +120,23 @@ class BlackJackTest : DescribeSpec({
                 cards(Card(ACE, CLOVER))
             )
             val dealer = Dealer(deck)
-            val participant = Player("1", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
-            val participants = listOf(participant, Player("2"))
-            val blackjack = BlackJack(dealer, participants)
-            blackjack.dealWith(participant, { false }, { })
-            participant.state shouldBe Stay(Point(16))
+            val player = Player("1", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+            val players = listOf(player, Player("2"))
+            val blackjack = BlackJack(dealer, players)
+            blackjack.dealWith(player, { false }, { })
+            player.state shouldBe Stay(Point(16))
+        }
+
+        it("카드 분배 후 딜러가 블랙잭이 아니라면, 블랙잭 상태인 플레이어에게 베팅 금액의 1.5배를 준다") {
+            val bettingMoney = Money(100)
+            val blackjackPlayer = Player("1", hand(Card(KING, HEART), Card(ACE, DIAMOND)), state = BLACKJACK, bettingMoney = bettingMoney)
+            val player1 = Player("2", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+            val player2 = Player("3", hand(Card(KING, HEART), Card(SIX, DIAMOND)))
+            val dealer = Dealer(state = Hittable)
+            val blackjack = BlackJack(dealer, listOf(blackjackPlayer, player1, player2))
+            blackjack.confirmBlackJackPlayer()
+            blackjackPlayer.profit shouldBe Money(150)
+            dealer.profit shouldBe Money(-150)
         }
     }
 })

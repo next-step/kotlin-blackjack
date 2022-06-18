@@ -27,13 +27,25 @@ class Player(
         return state is Hittable
     }
 
+    fun winIfBlackJackAfterDistribution(dealer: Dealer) {
+        if (state !is BlackJack || dealer.state is BlackJack || hand.size() != DISTRIBUTED_CARDS_SIZE) {
+            return
+        }
+        val money = applyBonus(bettingMoney)
+        earn(money)
+        dealer.lost(money)
+    }
+
+    private fun applyBonus(money: Money): Money {
+        return money * BONUS_RATE
+    }
+
     fun match(dealer: Dealer): Match {
         val match = state.compare(dealer.state)
         when (match) {
             Match.WIN -> {
-                val money = applyBonus(bettingMoney)
-                earn(money)
-                dealer.lost(money)
+                earn(bettingMoney)
+                dealer.lost(bettingMoney)
             }
             Match.LOSE -> {
                 lost(bettingMoney)
@@ -42,13 +54,6 @@ class Player(
             Match.DRAW -> {}
         }
         return match
-    }
-
-    private fun applyBonus(money: Money): Money {
-        if (hand.size() == DISTRIBUTED_CARDS_SIZE) {
-            return money * BONUS_RATE
-        }
-        return money
     }
 
     companion object {
