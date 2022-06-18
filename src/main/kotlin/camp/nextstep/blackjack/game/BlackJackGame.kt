@@ -7,9 +7,9 @@ import camp.nextstep.blackjack.player.Player
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Player>) {
 
-    private var turns: List<Turn>
-
     private var isEnded = false
+
+    val turns: List<Turn>
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
@@ -25,10 +25,6 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         }
 
         turns = _participants.map { Turn(it) }
-    }
-
-    fun turns(): List<Turn> {
-        return turns
     }
 
     fun result(): GameResult {

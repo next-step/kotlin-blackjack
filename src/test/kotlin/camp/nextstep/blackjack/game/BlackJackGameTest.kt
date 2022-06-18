@@ -57,8 +57,8 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(players)
 
-        val timsTurn = blackJackGame.turns()[0]
-        val tomsTurn = blackJackGame.turns()[1]
+        val timsTurn = blackJackGame.turns[0]
+        val tomsTurn = blackJackGame.turns[1]
 
         assertThat(timsTurn.player).isEqualTo(playerTim)
         assertThat(tomsTurn.player).isEqualTo(playerTom)
@@ -72,7 +72,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(players)
 
-        val turn = blackJackGame.turns()[0]
+        val turn = blackJackGame.turns[0]
 
         val beforeCards = playerTim.cards
         turn.applyToGame(Action.HIT)
@@ -89,7 +89,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(players)
 
-        val turn = blackJackGame.turns()[0]
+        val turn = blackJackGame.turns[0]
 
         val beforeCards = playerTim.cards
         turn.applyToGame(Action.STAY)
@@ -106,7 +106,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(players)
 
-        val turn = blackJackGame.turns()[0]
+        val turn = blackJackGame.turns[0]
         assertThat(turn.player).isEqualTo(playerTim)
 
         while (Score.of(playerTim.cards).isNotBust) {
@@ -126,7 +126,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(players)
 
-        blackJackGame.turns().forEach { it.applyToGame(Action.STAY) }
+        blackJackGame.turns.forEach { it.applyToGame(Action.STAY) }
 
         val result = blackJackGame.result()
 

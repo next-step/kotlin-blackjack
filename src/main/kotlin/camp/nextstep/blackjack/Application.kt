@@ -17,7 +17,7 @@ fun main() {
         PlayerCardsWriter.write(player)
     }
 
-    val turns = game.turns()
+    val turns = game.turns
     for (turn in turns) {
         while (!turn.isDone) {
             val action = PlayerActionReader.read(turn.player)
