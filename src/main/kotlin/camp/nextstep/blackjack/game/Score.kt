@@ -12,6 +12,10 @@ value class Score(val value: Int) : Comparable<Score> {
 
     fun isNotBust(): Boolean = !isBust()
 
+    fun plusIf(other: Score, predicate: (Score) -> Boolean): Score {
+        return if (predicate(other)) this + other else this
+    }
+
     override fun compareTo(other: Score): Int {
         return this.value.compareTo(other.value)
     }
@@ -47,7 +51,7 @@ value class Score(val value: Int) : Comparable<Score> {
 
             val aceCount = cards.count { it.number == CardNumber.ACE }
             repeat(aceCount) {
-                if (canAddAceBonus(score)) score += ACE_BONUS
+                score = score.plusIf(ACE_BONUS) { canAddAceBonus(score) }
             }
 
             return score
