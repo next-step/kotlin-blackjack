@@ -2,14 +2,14 @@ package blackjack.domain.card
 
 import blackjack.domain.card.Denomination.ACE
 
-data class Hand(
-    private val cards: List<Card> = emptyList(),
+class Hand(
+    cards: List<Card> = emptyList(),
 ) {
-    private val _cards: MutableList<Card> = cards.toMutableList()
+    private val cards: MutableList<Card> = cards.toMutableList()
 
     fun calculate(): Point {
-        val numberOfAce = _cards.count { it.denomination == ACE }
-        val sumOfNotAce = _cards.filterNot { it.denomination == ACE }
+        val numberOfAce = cards.count { it.denomination == ACE }
+        val sumOfNotAce = cards.filterNot { it.denomination == ACE }
             .fold(0) { sum, card ->
                 sum + card.defaultPoint.value
             }
@@ -26,13 +26,13 @@ data class Hand(
     }
 
     fun add(card: Card) {
-        _cards.add(card)
+        cards.add(card)
     }
 
-    fun first(): Card = _cards.first()
+    fun first(): Card = cards.first()
 
     override fun toString(): String {
-        return _cards.joinToString {
+        return cards.joinToString {
             it.toString()
         }
     }

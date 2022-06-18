@@ -33,7 +33,7 @@ import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 import blackjack.domain.participant.BlackJack as BLACKJACK
 
-class BlackJackTests : DescribeSpec({
+class BlackJackTest : DescribeSpec({
 
     describe("블랙잭은") {
         it("2명에서 6명 사이의 참가자가 있어야 진행 가능하다") {

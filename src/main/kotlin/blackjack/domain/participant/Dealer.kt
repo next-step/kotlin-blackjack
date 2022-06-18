@@ -15,7 +15,7 @@ class Dealer(
         private set
 
     fun draw(): Card {
-        check(deck.isNotEmpty()) { "덱에 남은 카드가 없습니다" }
+        check(!deck.isEmpty()) { "덱에 남은 카드가 없습니다" }
         return deck.draw()
     }
 
