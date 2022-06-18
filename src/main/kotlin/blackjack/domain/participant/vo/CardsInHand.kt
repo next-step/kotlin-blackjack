@@ -12,6 +12,9 @@ class CardsInHand(
     val cards: List<Card>
         get() = _cards.toList()
 
+    val isBlackJack: Boolean
+        get() = calculateScore() == BLACKJACK && cards.size == 2
+
     fun calculateScore(): Score = _cards.map { it.denomination }
         .sortedDescending()
         .fold(Score.zero()) { acc, denomination ->
@@ -22,5 +25,5 @@ class CardsInHand(
             }
         }
 
-    fun add(card: Card) = _cards.add(card)
+    fun add(card: Card): Boolean = _cards.add(card)
 }

@@ -1,83 +1,40 @@
 package blackjack.application
 
-import blackjack.application.dto.BlackJackScore
 import blackjack.application.dto.BlackJackStatus
 import blackjack.application.dto.BlackJackStatuses
-import blackjack.application.dto.BlackJackWinningResult
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.setupCardDeck
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
-import blackjack.domain.participant.Players
+import blackjack.domain.participant.dealer.Dealer
+import blackjack.domain.participant.player.Player
+import blackjack.domain.participant.player.Players
 import blackjack.domain.participant.vo.Name
 
-private fun Dealer.status(): BlackJackStatus = BlackJackStatus(this.name, listOf(this.cardsInHand.cards.first()))
-
-private fun Players.statuses(): List<BlackJackStatus> =
-    players.map { BlackJackStatus(it.name, it.cardsInHand.cards) }
-
-private fun Dealer.score(): BlackJackScore =
-    BlackJackScore(this.name, this.cardsInHand.cards, this.cardsInHand.calculateScore())
-
-private fun Players.scores(): List<BlackJackScore> {
-    return players.map { BlackJackScore(it.name, it.cardsInHand.cards, it.cardsInHand.calculateScore()) }
-}
-
-private fun Dealer.winningResult(): BlackJackWinningResult =
-    BlackJackWinningResult(this.name, this.winningScores)
-
-private fun Players.winningResults(): List<BlackJackWinningResult> =
-    players.map { BlackJackWinningResult(it.name, it.winningScores) }
-
 class BlackJack private constructor(
-    private val dealer: Dealer,
-    private val players: Players,
+    private val participants: BlackJackParticipants,
     private val cardDeck: CardDeck
 ) {
     val statuses: BlackJackStatuses
-        get() = BlackJackStatuses(
-            buildList {
-                add(dealer.status())
-                addAll(players.statuses())
-            }
-        )
-
-    private val winningResults: BlackJackWinningResults
-        get() = BlackJackWinningResults(
-            buildList {
-                add(dealer.winningResult())
-                addAll(players.winningResults())
-            }
-        )
+        get() = participants.statuses
 
     val scores: BlackjackScores
-        get() = BlackjackScores(
-            buildList {
-                add(dealer.score())
-                addAll(players.scores())
-            }
-        )
+        get() = participants.scores
 
     val hasMorePlayablePlayer: Boolean
-        get() = players.playable.isEmpty()
+        get() = participants.hasMorePlayablePlayer
 
     val isDealerDrawMoreCard: Boolean
-        get() = dealer.isDealerDrawMoreCard
+        get() = participants.isDealerDrawMoreCard
 
-    val names: List<Name>
-        get() = buildList {
-            add(dealer.name)
-            addAll(players.names)
-        }
+    val participantsNames: List<Name>
+        get() = participants.names
 
     val isDealerBust: Boolean
-        get() = dealer.participantInformation.isBust()
+        get() = participants.isDealerBust
 
     fun ready() {
-        dealer.ready(cardDeck)
-        players.ready(cardDeck)
+        participants.ready(cardDeck)
     }
 
     fun play(player: Player): BlackJackStatus {
@@ -86,18 +43,15 @@ class BlackJack private constructor(
     }
 
     fun hitPlayers(hitAction: (Player) -> Unit) {
-        players.hit(hitAction)
+        participants.hitPlayers(hitAction)
     }
 
     fun hitDealer() {
-        dealer.hit(cardDeck)
+        participants.hitDealer(cardDeck)
     }
 
     fun winningResults(): BlackJackWinningResults {
-        dealer.score(players.players)
-        players.score(dealer)
-
-        return winningResults
+        return participants.winningResults()
     }
 
     companion object {
@@ -108,7 +62,7 @@ class BlackJack private constructor(
                 heart()
                 club()
             }
-            return BlackJack(Dealer.sit(), players, cardDeck)
+            return BlackJack(BlackJackParticipants(Dealer.sit(), players), cardDeck)
         }
     }
 }

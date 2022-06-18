@@ -6,7 +6,6 @@ import blackjack.application.dto.BlackJackStatuses
 import blackjack.application.dto.BlackJackWinningResults
 import blackjack.application.dto.BlackjackScores
 import blackjack.domain.participant.vo.Name
-import blackjack.domain.participant.vo.WinningScore
 
 object OutputView {
     fun printGameReady(names: List<Name>) {
@@ -40,20 +39,9 @@ object OutputView {
 
     fun printBlackJackResult(blackJackWinningResults: BlackJackWinningResults) {
         blackJackWinningResults.blackJackWinningResults.forEach {
-            val winningScoreString =
-                WinningScore.values()
-                    .joinToString(" ") { winningScore -> winningScoreFormat(it.winningScores.values, winningScore) }
-
-            println("${it.name.value}카드: $winningScoreString")
+            println("${it.name.value}: ${it.winningAmount.amount.value}")
         }
         newline()
-    }
-
-    private fun winningScoreFormat(values: List<WinningScore>, type: WinningScore): String {
-        if (values.count { it == type } > 0) {
-            return "${values.count { it == type }} ${type.description}"
-        }
-        return ""
     }
 
     fun printDealerHit() {

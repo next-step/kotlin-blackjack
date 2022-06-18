@@ -7,7 +7,7 @@ value class Name(
     val value: String
 ) {
     init {
-        require(value.isNotEmpty()) { "이름은 비어있을수 없습니다." }
+        require(value.isNotBlank()) { "이름은 비어있을수 없습니다." }
     }
 
     companion object {

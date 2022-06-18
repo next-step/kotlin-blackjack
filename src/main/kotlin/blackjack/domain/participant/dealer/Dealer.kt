@@ -1,12 +1,14 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.dealer
 
 import blackjack.domain.Score
 import blackjack.domain.card.CardDeck
+import blackjack.domain.participant.Participant
 import blackjack.domain.participant.type.Status
+import blackjack.domain.participant.vo.CardsInHand
 import blackjack.domain.participant.vo.Name
 import blackjack.domain.participant.vo.ParticipantInformation
 
-class Dealer : Participant(ParticipantInformation(Name.dealer(), Status.PLAY)) {
+class Dealer(cardsInHand: CardsInHand) : Participant(ParticipantInformation(Name.dealer(), Status.PLAY), cardsInHand) {
 
     val isDealerDrawMoreCard: Boolean
         get() = score <= DEALER_SCORE
@@ -34,6 +36,6 @@ class Dealer : Participant(ParticipantInformation(Name.dealer(), Status.PLAY)) {
     companion object {
         private val DEALER_SCORE = Score.of(16)
 
-        fun sit(): Dealer = Dealer()
+        fun sit(): Dealer = Dealer(CardsInHand())
     }
 }
