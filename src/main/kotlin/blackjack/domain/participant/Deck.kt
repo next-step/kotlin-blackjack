@@ -6,7 +6,6 @@ import blackjack.domain.card.Suit
 
 interface Deck {
     fun isEmpty(): Boolean
-    fun isNotEmpty(): Boolean = !isEmpty()
     fun draw(): Card
 }
 

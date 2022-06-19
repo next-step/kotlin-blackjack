@@ -8,15 +8,18 @@ sealed interface State {
 
 object Hittable : State {
     override fun compare(other: State): Match {
-        throw IllegalStateException("Hittable 상태는 다른 상태와 비교될 수 없습니다")
+        if (other is BlackJack) return Match.LOSE
+        throw IllegalStateException("Hittable 상태는 BlackJack을 제외한 다른 상태와 비교할 수 없습니다")
     }
 }
 
 object BlackJack : State {
     override fun compare(other: State): Match {
         return when (other) {
-            is BlackJack -> Match.DRAW
-            else -> Match.WIN
+            BlackJack -> Match.DRAW
+            is Stay -> Match.WIN
+            Bust -> Match.WIN
+            Hittable -> Match.WIN
         }
     }
 }
@@ -26,9 +29,10 @@ data class Stay(
 ) : State {
     override fun compare(other: State): Match {
         return when (other) {
-            is BlackJack -> Match.LOSE
+            BlackJack -> Match.LOSE
             is Stay -> comparePoint(other.point)
-            else -> Match.WIN
+            Bust -> Match.WIN
+            Hittable -> Match.WIN
         }
     }
 
@@ -44,8 +48,10 @@ data class Stay(
 object Bust : State {
     override fun compare(other: State): Match {
         return when (other) {
-            is Bust -> Match.DRAW
-            else -> Match.LOSE
+            Bust -> Match.DRAW
+            BlackJack -> Match.LOSE
+            is Stay -> Match.LOSE
+            Hittable -> Match.LOSE
         }
     }
 }

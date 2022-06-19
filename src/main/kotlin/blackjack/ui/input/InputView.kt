@@ -1,5 +1,7 @@
 package blackjack.ui.input
 
+import blackjack.domain.participant.Money
+
 object InputView {
 
     private const val MIN_PLAYER_NUMBER = 2
@@ -15,5 +17,27 @@ object InputView {
                 return readPlayerNames()
             }
         }
+    }
+
+    tailrec fun askHit(playerName: String): Boolean {
+        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return when (readln()) {
+            "y" -> true
+            "n" -> false
+            else -> {
+                println("y 또는 n을 입력해 주세요")
+                askHit(playerName)
+            }
+        }
+    }
+
+    tailrec fun getBettingMoney(playerName: String): Money {
+        println("${playerName}의 배팅 금액은?")
+        val amount = readln().toIntOrNull()
+        if (amount == null || amount < 0) {
+            println("베팅 금액은 0 이상이어야 합니다")
+            return getBettingMoney(playerName)
+        }
+        return Money(amount)
     }
 }
