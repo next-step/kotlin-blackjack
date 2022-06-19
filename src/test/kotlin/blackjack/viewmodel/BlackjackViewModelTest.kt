@@ -112,6 +112,7 @@ class BlackjackViewModelTest {
         )
 
         viewModel.hit()
+        viewModel.stay()
         viewModel.nextTurn()
 
         assertThat(viewModel.currentTurn.value?.name).isEqualTo(PlayerName("Diamond"))

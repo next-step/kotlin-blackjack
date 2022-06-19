@@ -4,12 +4,11 @@ class Hands private constructor(
     val cards: PlayingCards,
     private val isRunning: Boolean
 ) {
-    val score: Score by lazy {
-        Score.from(cards)
-    }
     private val state: PlayerState by lazy {
-        PlayerState.of(score, isRunning)
+        PlayerState.of(cards, isRunning)
     }
+    val score: Score
+        get() = state.score
 
     fun stay(): Hands = Hands(
         cards = cards,
