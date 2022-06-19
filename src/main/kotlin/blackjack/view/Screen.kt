@@ -17,12 +17,47 @@ object Screen {
         println("${player.name}카드: ${player.cards.map { card -> card.getName() }.joinToString(",")}")
     }
 
-    fun displayResults(players: List<Player>) {
-        players.map { player -> displayResult(player) }
+    fun displayCardScores(players: List<Player>) {
+        players.map { player -> displayCardScore(player) }
     }
 
-    private fun displayResult(player: Player) {
+    private fun displayCardScore(player: Player) {
         val score = player.score()
         println("${player.name}카드: ${player.cards.map { card -> card.getName() }.joinToString(",")} - 결과: $score")
+    }
+
+    fun displayGameResults(players: List<Player>, dealer: Dealer) {
+        println("## 최종 승패")
+        displayDealerResult(players, dealer)
+        displayPlayerResults(players, dealer)
+    }
+
+    private fun displayDealerResult(players: List<Player>, dealer: Dealer) {
+        var resultString = ""
+        val results = players.map { player -> dealer.winOrLose(listOf(player)) }
+        val winCounts = results.filter { it }
+        val loseCounts = results.filter { !it }
+
+        if (winCounts.isNotEmpty()) {
+            resultString += "${winCounts.size}승"
+        }
+
+        if (loseCounts.isNotEmpty()) {
+            resultString += "${loseCounts.size}패"
+        }
+
+        println(resultString)
+    }
+
+    private fun displayPlayerResults(players: List<Player>, dealer: Dealer) {
+        for (player in players) {
+            displayPlayerResult(player, listOf(dealer) + players)
+        }
+    }
+
+    private fun displayPlayerResult(player: Player, players: List<Player>) {
+        val otherPlayers = players.filter { it.name != player.name }
+        val isWin = player.winOrLose(otherPlayers)
+        println("${player.name}: ${if (isWin) "승" else "패"}")
     }
 }

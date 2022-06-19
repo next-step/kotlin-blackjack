@@ -63,4 +63,32 @@ class PlayerTest {
 
         assertThat(result).isEqualTo(true)
     }
+
+    @Test
+    fun `플레이어 카드 합이 21을 초과하면 패배한다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SEVEN).create())
+        val player = Player("승리자")
+        player.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.KING).create())
+        player.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
+        player.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.JACK).create())
+
+        assertThat(player.winOrLose(listOf(dealer, player))).isEqualTo(false)
+    }
+
+    @Test
+    fun `플레이어는 승패 여부를 알 수 있다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SEVEN).create())
+        val winnerPlayer = Player("승리자")
+        winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.KING).create())
+        winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
+        val losePlayer = Player("패배자")
+        losePlayer.takeCard(FixedCardFactory(CardShape.SPADE, CardPoint.NINE).create())
+        losePlayer.takeCard(FixedCardFactory(CardShape.SPADE, CardPoint.FIVE).create())
+
+        assertThat(winnerPlayer.winOrLose(listOf(dealer, losePlayer))).isEqualTo(true)
+    }
 }

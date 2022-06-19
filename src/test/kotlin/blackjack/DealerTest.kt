@@ -61,4 +61,32 @@ class DealerTest {
 
         assertThat(result).isEqualTo(false)
     }
+
+    @Test
+    fun `딜러는 플레이어 카드와 비교해 패배한 사실을 알 수 있다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SEVEN).create())
+        val winnerPlayer = Player("승리자")
+        winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.KING).create())
+        winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
+
+        val result = dealer.winOrLose(listOf(winnerPlayer))
+
+        assertThat(result).isEqualTo(false)
+    }
+
+    @Test
+    fun `딜러는 플레이어 카드와 비교해 이긴 사실을 알 수 있다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SEVEN).create())
+        val losePlayer = Player("패배자")
+        losePlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.TWO).create())
+        losePlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
+
+        val result = dealer.winOrLose(listOf(losePlayer))
+
+        assertThat(result).isEqualTo(true)
+    }
 }

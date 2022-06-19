@@ -30,12 +30,13 @@ class Dealer() : Player("딜러") {
         }
     }
 
-    override fun winOrLose(others: List<Player>): Boolean {
-        if (score() > CardPoint.BLACK_JACK_SCORE) {
+    override fun winOrLose(players: List<Player>): Boolean {
+        val myScore = score()
+        if (myScore > CardPoint.BLACK_JACK_SCORE) {
             return false
         }
 
-        return true
+        return myScore > players[0].score()
     }
 
     private fun needCard(): Boolean {

@@ -30,7 +30,16 @@ open class Player(val name: String) {
             return true
         }
 
-        return false
+        val myScore = score()
+        if (overScore(myScore)) {
+            return false
+        }
+
+        return others.all { other -> myScore > other.score() }
+    }
+
+    private fun overScore(myScore: Int): Boolean {
+        return myScore > CardPoint.BLACK_JACK_SCORE
     }
 
     private fun calculateScore(card: Card, result: Int): Int {
