@@ -16,4 +16,6 @@ fun main() {
     playGame.start()
 
     outputView.firstCard(players)
+
+    outputView.result(players)
 }
