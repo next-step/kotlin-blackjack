@@ -9,6 +9,7 @@ import blackjack.model.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("게임 진행자 테스트")
@@ -30,9 +31,12 @@ class GameHostTest {
         gameHost.provideOneCardTo(player)
 
         // then
-        assertThat(gameHost.cardSet.size).isEqualTo(5)
-        assertThat(player.cardSize).isEqualTo(1)
-        assertThat(player.cards.contains(Card(CardSymbol.하트, CardNumber.TWO))).isTrue
+        assertAll(
+            "provide one card to player test",
+            { assertThat(gameHost.cardSet.size).isEqualTo(5) },
+            { assertThat(player.cardSize).isEqualTo(1) },
+            { assertThat(player.cards.contains(Card(CardSymbol.하트, CardNumber.TWO))).isTrue }
+        )
     }
 
     @Test
