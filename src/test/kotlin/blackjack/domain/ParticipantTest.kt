@@ -14,7 +14,7 @@ class ParticipantTest {
         assertAll(
             { assertThat(player.name.value).isEqualTo("이름") },
             { assertThat(player.cardsOfHands).isEmpty() },
-            { assertThat(player.score).isEqualTo(Score.zero()) }
+            { assertThat(player.score).isEqualTo(Score.from(0)) }
         )
     }
 

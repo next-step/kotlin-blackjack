@@ -3,10 +3,6 @@ package blackjack.domain
 sealed class PlayerState(val score: Score) {
     abstract fun isFinished(): Boolean
 
-    class Start(score: Score) : PlayerState(score) {
-        override fun isFinished(): Boolean = false
-    }
-
     class Hit(score: Score) : PlayerState(score) {
         override fun isFinished(): Boolean = false
     }
@@ -28,7 +24,6 @@ sealed class PlayerState(val score: Score) {
             val score = Score.from(cards)
 
             return when {
-                score.isZero() -> Start(score)
                 score.isBlackjack() && cards.size == 2 -> Blackjack(score) // FIXME : Magic Number!
                 score.isBust() -> Bust(score)
                 isRunning -> Hit(score)
