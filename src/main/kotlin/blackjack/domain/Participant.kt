@@ -4,9 +4,10 @@ sealed class Participant(
     val name: PlayerName,
     protected var hands: Hands
 ) {
-    fun cardsOfHands(): PlayingCards = hands.cards
-
-    fun score(): Score = hands.score
+    val cardsOfHands: PlayingCards
+        get() = hands.cards
+    val score: Score
+        get() = hands.score
 
     fun receive(playingCards: PlayingCards) {
         hands += playingCards
