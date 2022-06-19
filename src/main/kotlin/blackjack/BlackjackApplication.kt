@@ -16,15 +16,19 @@ fun main() {
     OutputView.firstCard(players)
 
     players.forEach { player ->
-        var hit: Boolean
         runCatching {
-            do {
-                hit = InputView.hitOrStand(player.name)
+            while (true) {
+                if (!player.canHit()) {
+                    println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
+                    break
+                }
+                val hit = InputView.hitOrStand(player.name)
                 if (hit) {
                     playGame.hit(player)
                 }
                 OutputView.cardOfPlayer(player)
-            } while (hit)
+                if (!hit) break
+            }
         }.onFailure { println(it.message) }
     }
 

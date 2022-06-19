@@ -17,7 +17,7 @@ internal class PlayerTest {
     }
 
     @Test
-    internal fun `카드 숫자의 총합이 21이 넘으면 isBust=true이다`() {
+    internal fun `카드 숫자의 총합이 21이 넘으면 canHit()=false이다`() {
         val player = Player("name")
         listOf(
             Card(Symbol.SPADE, CardNumber.JACK),
@@ -28,11 +28,11 @@ internal class PlayerTest {
         }
 
         assertThat(player.sumOfPoints()).isEqualTo(30)
-        assertThat(player.isBust()).isTrue
+        assertThat(player.canHit()).isFalse
     }
 
     @Test
-    internal fun `카드 숫자의 총합이 21이 안넘으면 isBust=false이다`() {
+    internal fun `카드 숫자의 총합이 21이 안넘으면 canHit=true이다`() {
         val player = Player("name")
         listOf(
             Card(Symbol.SPADE, CardNumber.TWO),
@@ -43,7 +43,7 @@ internal class PlayerTest {
         }
 
         assertThat(player.sumOfPoints()).isEqualTo(6)
-        assertThat(player.isBust()).isFalse
+        assertThat(player.canHit()).isTrue
     }
 
     @Test

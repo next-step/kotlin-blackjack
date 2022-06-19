@@ -10,7 +10,7 @@ class Player(val name: String) {
         _cards.add(card)
     }
 
-    fun isBust() = sumOfPoints() > MAX_POINT
+    fun canHit() = sumOfPoints() < MAX_POINT
 
     fun sumOfPoints(): Int =
         if (_cards.any { it.number.anotherValue != null }) {
