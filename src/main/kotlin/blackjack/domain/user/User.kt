@@ -1,11 +1,11 @@
 package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
+import blackjack.domain.InputInterface
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
-import blackjack.view.InputView
 
 /**
  * 유저데이터를 갖고 있는 클래스
@@ -60,10 +60,10 @@ open class User(val name: String, initCards: List<Card>) {
             Match.DRAW
     }
 
-    open fun hitStage(deck: Deck, output: OutputInterface) {
+    open fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
         while (!isBust()) {
             output.drawMoreCard(this)
-            if (!InputView.getYesOrNo()) return
+            if (!input.getYesOrNo()) return
             hit(deck.takeCard())
             output.drawUserCard(this)
         }

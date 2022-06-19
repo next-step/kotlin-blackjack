@@ -1,5 +1,6 @@
 package blackjack.domain.user
 
+import blackjack.domain.InputInterface
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
@@ -23,7 +24,7 @@ class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
         return cards.getScore().value >= HIT_SCORE
     }
 
-    override fun hitStage(deck: Deck, output: OutputInterface) {
+    override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
         while (!isOverHitScore()) {
             output.drawDealerHitMessage()
             hit(deck.takeCard())

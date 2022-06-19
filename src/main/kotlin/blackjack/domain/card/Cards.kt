@@ -18,6 +18,9 @@ class Cards {
     fun getSize() = _hands.size
 
     fun getScore(): Score {
-        return Score.of(this)
+        var score = _hands.sumOf { it.score }
+        if (_hands.any { it is Ace } && score + Score.ACE_SUB_SCORE <= Score.BLACKJACK_SCORE)
+            score += Score.ACE_SUB_SCORE
+        return Score(score)
     }
 }

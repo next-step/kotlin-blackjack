@@ -1,6 +1,7 @@
 package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
+import blackjack.domain.InputInterface
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Deck
 
@@ -9,7 +10,7 @@ import blackjack.domain.card.Deck
  * Created by Jaesungchi on 2022.06.07..
  */
 class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
-
+    // TODO 3개 말고 2개로 줄이자...
     init {
         require(users.isNotEmpty()) { ErrorMessages.USER_IS_EMPTY }
     }
@@ -18,18 +19,11 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
         return users.map { it.name }
     }
 
-    fun hit(output: OutputInterface) {
+    fun hit(input: InputInterface, output: OutputInterface) {
         users.forEach {
-            it.hitStage(deck, output)
+            it.hitStage(deck, input, output)
         }
-        dealer.hitStage(deck, output)
-    }
-
-    private fun hitStageDealer(output: OutputInterface) {
-        while (!dealer.isOverHitScore()) {
-            output.drawDealerHitMessage()
-            dealer.hit(deck.takeCard())
-        }
+        dealer.hitStage(deck, input, output)
     }
 
     companion object {

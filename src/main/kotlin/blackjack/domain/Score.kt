@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.card.Ace
-import blackjack.domain.card.Cards
-
 /**
  * Created by Jaesungchi on 2022.06.14..
  */
@@ -22,14 +19,7 @@ value class Score(val value: Int) {
     }
 
     companion object {
-        private const val BLACKJACK_SCORE = 21
-        private const val ACE_SUB_SCORE = 10
-
-        fun of(cards: Cards): Score {
-            var score = cards.hands.sumOf { it.score }
-            if (cards.hands.any { it is Ace } && score + ACE_SUB_SCORE <= BLACKJACK_SCORE)
-                score += ACE_SUB_SCORE
-            return Score(score)
-        }
+        const val BLACKJACK_SCORE = 21
+        const val ACE_SUB_SCORE = 10
     }
 }
