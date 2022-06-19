@@ -1,7 +1,6 @@
 package blackjack.domain
 
 data class BlackjackParticipantResult(
-    val name: PlayerName,
-    val hands: Hands,
+    val participant: Participant,
     val matchStatus: MatchStatus
 )

@@ -17,8 +17,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
         private fun List<Player>.toResults(dealer: Dealer): List<BlackjackParticipantResult> {
             return map { player ->
                 BlackjackParticipantResult(
-                    name = player.name,
-                    hands = player.hands,
+                    participant = player,
                     matchStatus = player matchWith dealer
                 )
             }
@@ -32,8 +31,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             }.eachCount()
 
             return BlackjackParticipantResult(
-                name = name,
-                hands = hands,
+                participant = this,
                 matchStatus = MatchStatus.Dealer.from(dealerMatchStatusMap)
             )
         }
