@@ -8,8 +8,8 @@ import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
-import blackjack.domain.rule.DistinctRule
-import blackjack.domain.rule.ShuffleRule
+import blackjack.domain.cardrule.DistinctRule
+import blackjack.domain.cardrule.ShuffleRule
 
 class BlackjackViewModel private constructor(
     val participants: Participants,
