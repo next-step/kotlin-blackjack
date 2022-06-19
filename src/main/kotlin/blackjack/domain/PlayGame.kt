@@ -1,6 +1,7 @@
 package blackjack.domain
 
 class PlayGame {
+    private val cardDeck = CardDeck()
     fun start(player: Player) {
         repeat(2) {
             hit(player)
@@ -8,8 +9,8 @@ class PlayGame {
     }
 
     fun hit(player: Player) {
-        if (CardDeck.isLeft()) {
-            player.receiveCard(CardDeck.getOne())
+        if (cardDeck.isLeft()) {
+            player.receiveCard(cardDeck.getOne())
         } else {
             throw IllegalStateException("카드가 존재하지 않습니다.")
         }

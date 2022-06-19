@@ -1,6 +1,6 @@
 package blackjack.domain
 
-object CardDeck {
+class CardDeck {
     private val cards = Symbol.values().flatMap { symbol ->
         CardNumber.values().map { cardNumber ->
             Card(symbol, cardNumber)
