@@ -31,7 +31,7 @@ internal class DslTest {
     }
 
     @Test
-    fun skills() {
+    fun hardSkills() {
         val person = introduce {
             name("엄현식")
             company("카카오")
@@ -42,13 +42,27 @@ internal class DslTest {
             }
         }
 
-        assertThat(person.skills.getHardSkills().size()).isEqualTo(1)
-        assertThat(person.skills.getSoftSkills().size()).isEqualTo(2)
-
         val hardSkillValues = person.skills.getHardSkills().skills.map { it.description }
+
+        assertThat(hardSkillValues.size).isEqualTo(1)
+        assertThat(hardSkillValues.contains("Kotlin")).isTrue
+    }
+
+    @Test
+    fun softSkills() {
+        val person = introduce {
+            name("엄현식")
+            company("카카오")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
         val softSkillValues = person.skills.getSoftSkills().skills.map { it.description }
 
-        assertThat(hardSkillValues.contains("Kotlin")).isTrue
+        assertThat(softSkillValues.size).isEqualTo(2)
         assertThat(softSkillValues.contains("A passion for problem solving")).isTrue
         assertThat(softSkillValues.contains("Good communication skills")).isTrue
     }
