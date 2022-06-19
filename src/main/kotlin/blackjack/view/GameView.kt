@@ -2,11 +2,12 @@ package blackjack.view
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Card
-import blackjack.domain.Dealer
-import blackjack.domain.GameResult
+import blackjack.domain.Drawable
 import blackjack.domain.Participant
+import blackjack.domain.Player
+import blackjack.exception.InvalidInputValueException
 
-object GameView {
+object GameView : Drawable {
     fun drawFirstCardDistribution(participants: BlackJackGame) {
         participants.participants.joinToString { it.name }.also {
             println("${it}에게 2장을 나눠주었습니다.")
@@ -20,24 +21,24 @@ object GameView {
     }
 
     fun printDrawResult(participant: Participant) {
-        if (participant !is Dealer) {
-            println("${participant.name}카드 : ${getCardDisplayName(participant)}")
-        } else {
+        if (participant.isDealer()) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        } else {
+            println("${participant.name}카드 : ${getCardDisplayName(participant)}")
         }
     }
 
-    fun displayResult(gameResult: GameResult) {
+    fun displayResult(blackJackGame: BlackJackGame) {
         println()
-        gameResult.allParticipant.forEach {
+        blackJackGame.participants.forEach {
             print("${it.name}카드 : ${getCardDisplayName(it)}")
             print(" - ")
-            println("결과 : ${it.playerCards.score()}")
+            println("결과 : ${it.participantCards.score()}")
         }
     }
 
-    private fun getCardDisplayName(player: Participant): String {
-        return player.playerCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
+    private fun getCardDisplayName(participant: Participant): String {
+        return participant.participantCards.playerCards.joinToString { "${it.denomination.displayName}${it.pattern.toDisplayName()}" }
     }
 
     private fun Card.CardPattern.toDisplayName(): String {
@@ -48,4 +49,22 @@ object GameView {
             Card.CardPattern.DIAMONDS -> "다이아몬드"
         }
     }
+
+    override fun canDraw(player: Player): Boolean {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return readln().toBoolean().also {
+            if (it) player.setBlackJackStatusStay()
+        }
+    }
+
+    private fun String.toBoolean(): Boolean {
+        return when (uppercase()) {
+            YES -> true
+            NO -> false
+            else -> throw InvalidInputValueException()
+        }
+    }
+
+    private const val YES = "Y"
+    private const val NO = "N"
 }

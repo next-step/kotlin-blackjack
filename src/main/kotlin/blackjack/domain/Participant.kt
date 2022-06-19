@@ -1,26 +1,32 @@
 package blackjack.domain
 
-open class Participant(
-    open val name: String,
-    open val playerCards: Cards = Cards(),
-    val gameScore: GameScore = GameScore()
+import blackjack.exception.DrawCardFailException
+
+abstract class Participant(
+    val name: String,
+    val participantCards: Cards
 ) {
-    open fun addCard(card: Card) {
-        this.playerCards.addCard(card)
+    var blackJackStatus = participantCards.getBlackJackStatus()
+        private set
+
+    abstract fun isDealer(): Boolean
+
+    abstract fun canDrawable(): Boolean
+
+    fun addCard(card: Card) {
+        if (blackJackStatus.isDrawable) {
+            this.participantCards.addCard(card)
+            blackJackStatus = participantCards.getBlackJackStatus()
+        } else {
+            throw DrawCardFailException()
+        }
     }
 
-    open fun isDealer(): Boolean {
-        return false
+    fun setFirstDistributionBlackJack() {
+        blackJackStatus = participantCards.getBlackJackStatus()
     }
 
-    open fun isBust(): Boolean = playerCards.score() > BLACK_JACK_SCORE
-
-    fun isHit(): Boolean {
-        return this.playerCards.score() <= SCORE_TO_REQUEST_A_CARD_FOR_DEALER
-    }
-
-    companion object {
-        private const val BLACK_JACK_SCORE = 21
-        private const val SCORE_TO_REQUEST_A_CARD_FOR_DEALER = 16
+    fun setBlackJackStatusStay() {
+        blackJackStatus = BlackJackStatus.STAY
     }
 }

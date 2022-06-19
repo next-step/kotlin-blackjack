@@ -1,14 +1,14 @@
 package blackjack.domain
 
 data class BlackJackGame(
-    private val dealer: Dealer,
-    private val players: List<Participant>,
+    val dealer: Dealer,
+    val players: List<Player>,
     private val cardDeck: Deck
 ) {
 
     val participants = listOf(dealer) + players
     val participantsSortByPlayer = players + listOf(dealer)
-    private val playerMap = participants.associate { it.name to it.playerCards }
+    private val playerMap = participants.associateBy { it.name }
 
     fun firstCardDistribution() {
         participants.forEach { participant ->
@@ -20,30 +20,15 @@ data class BlackJackGame(
         playerMap[playerName]!!.addCard(cardDeck.draw())
     }
 
-    fun match(): GameResult {
-        val gameResult = GameResult(dealer, players)
-        players.forEach {
-            matchWithPlayer(gameResult, it, dealer)
-        }
-        return gameResult
-    }
-
-    private fun matchWithPlayer(gameResult: GameResult, participant: Participant, dealer: Dealer) {
-        when {
-            participant.isBust() -> gameResult.playerIsBust(participant)
-            dealer.isBust() -> gameResult.dealerIsBust(participant)
-            else -> gameResult.decideWinner(participant)
-        }
-    }
-
     private fun Participant.addFirstCard() {
         repeat(FIRST_DISTRIBUTION_CARD_COUNT) {
             addCard(cardDeck.draw())
         }
+        setFirstDistributionBlackJack()
     }
 
     companion object {
-        fun of(dealer: Dealer, players: List<Participant>, deck: Deck): BlackJackGame {
+        fun of(dealer: Dealer, players: List<Player>, deck: Deck): BlackJackGame {
             return BlackJackGame(
                 dealer, players, deck
             )

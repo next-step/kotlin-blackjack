@@ -1,34 +1,43 @@
 package blackjack.domain
 
-class GameResult(
-    private val dealer: Dealer,
-    private val players: List<Participant>
-) {
-    val allParticipant = listOf(dealer) + players
+import kotlin.math.roundToInt
 
-    fun playerIsBust(participant: Participant) {
-        participant.gameScore.lose()
-        dealer.gameScore.win()
-    }
-
-    fun dealerIsBust(participant: Participant) {
-        participant.gameScore.win()
-        dealer.gameScore.lose()
-    }
-
-    fun decideWinner(player: Participant) {
-        when {
-            player.playerCards.score() < dealer.playerCards.score() -> {
-                player.gameScore.lose()
-                dealer.gameScore.win()
+object GameResult {
+    fun earnMoney(player: Player, dealer: Dealer): Int {
+        val playerStatus = player.blackJackStatus
+        val dealerStatus = dealer.blackJackStatus
+        return when {
+            playerStatus == BlackJackStatus.INIT_BLACK_JACK && dealerStatus == BlackJackStatus.INIT_BLACK_JACK -> {
+                player.battingAmount
             }
-            player.playerCards.score() == dealer.playerCards.score() -> {
-                player.gameScore.draw()
-                dealer.gameScore.draw()
+            playerStatus == BlackJackStatus.INIT_BLACK_JACK && dealerStatus != BlackJackStatus.INIT_BLACK_JACK -> {
+                (player.battingAmount.toDouble() * 1.5).roundToInt()
+            }
+            playerStatus == BlackJackStatus.BUST -> {
+                -player.battingAmount
+            }
+            dealerStatus == BlackJackStatus.BUST -> {
+                player.battingAmount
+            }
+            playerStatus == BlackJackStatus.BLACK_JACK && dealerStatus == BlackJackStatus.BLACK_JACK -> {
+                player.battingAmount
+            }
+            else -> decidePlayerAmount(player, dealer)
+        }
+    }
+
+    private fun decidePlayerAmount(player: Player, dealer: Dealer): Int {
+        val playerScore = player.participantCards.score()
+        val dealerScore = dealer.participantCards.score()
+        return when {
+            playerScore < dealerScore -> {
+                -player.battingAmount
+            }
+            playerScore == dealerScore -> {
+                player.battingAmount
             }
             else -> {
-                player.gameScore.win()
-                dealer.gameScore.lose()
+                player.battingAmount
             }
         }
     }
