@@ -3,6 +3,10 @@ package blackjack.view.output
 import blackjack.view.output.converter.OutputConverter
 
 object OutputView {
+    fun printlnOnlyMessage(message: String) {
+        println(message)
+    }
+
     fun <T> println(printable: T, outputConverter: OutputConverter<T>) {
         print(printable, outputConverter)
         println()
