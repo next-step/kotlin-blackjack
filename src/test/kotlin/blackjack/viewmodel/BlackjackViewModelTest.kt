@@ -6,6 +6,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
+import blackjack.domain.START_CARD_COUNT
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -39,7 +40,7 @@ class BlackjackViewModelTest {
     @Test
     fun `BlackJackViewModel을 생성할 때 각 플레이어들은 카드를 두 장씩 뽑는다`() {
         assertThat(viewModel.participants.all).allMatch { player ->
-            player.cardsOfHands.size == BlackjackViewModel.START_CARD_COUNT
+            player.cardsOfHands.size == START_CARD_COUNT
         }
     }
 

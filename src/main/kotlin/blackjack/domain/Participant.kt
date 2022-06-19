@@ -15,6 +15,10 @@ sealed class Participant(
         hands += playingCards
     }
 
+    fun isBust(): Boolean = playerState is PlayerState.Bust
+
+    fun isBlackjack(): Boolean = playerState is PlayerState.Blackjack
+
     abstract fun isReceivable(): Boolean
 
     class Player(

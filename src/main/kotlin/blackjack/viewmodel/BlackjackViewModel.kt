@@ -2,12 +2,14 @@ package blackjack.viewmodel
 
 import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
+import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
 import blackjack.domain.Observable
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
+import blackjack.domain.START_CARD_COUNT
 import blackjack.domain.cardrule.DistinctRule
 import blackjack.domain.cardrule.ShuffleRule
 
@@ -32,9 +34,6 @@ class BlackjackViewModel private constructor(
     }
 
     companion object {
-        const val START_CARD_COUNT = 2
-        private const val HIT_CARD_COUNT = 1
-
         fun from(dealerName: PlayerName, playerNames: List<PlayerName>): BlackjackViewModel {
             val cardDeck = CardDeck.of(
                 PlayingCard.all(),

@@ -24,7 +24,7 @@ sealed class PlayerState(val score: Score) {
             val score = Score.from(cards)
 
             return when {
-                score.isBlackjack() && cards.size == 2 -> Blackjack(score) // FIXME : Magic Number!
+                score.isBlackjack() && cards.size == START_CARD_COUNT -> Blackjack(score) // FIXME : Magic Number!
                 score.isBust() -> Bust(score)
                 isRunning -> Hit(score)
                 else -> Stay(score)
