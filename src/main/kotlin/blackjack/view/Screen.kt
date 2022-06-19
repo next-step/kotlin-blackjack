@@ -1,16 +1,14 @@
 package blackjack.view
 
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 object Screen {
-    fun displayPlayerCards(players: List<Player>) {
-        val dealer = players[0]
-        val gamers = players.filterIndexed { index, _ -> index != 0 }
-
-        val names = gamers.map { gamer -> gamer.name }.joinToString(", ")
+    fun displayPlayerCards(players: List<Player>, dealer: Dealer) {
+        val names = players.joinToString(", ") { player -> player.name }
         println("${dealer.name}와 $names 에게 2장의 카드를 나누었습니다.")
 
-        for (player in players) {
+        for (player in listOf(dealer) + players) {
             displayPlayerCard(player)
         }
     }

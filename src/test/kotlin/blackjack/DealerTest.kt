@@ -28,4 +28,24 @@ class DealerTest {
 
         assertThat(Pair(card.shape, card.point)).isEqualTo(Pair(CardShape.HEART, CardPoint.KING))
     }
+
+    @Test
+    fun `딜러는 가진 카드의 합이 16 이하면 한 장의 카드를 받는다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SIX).create())
+        dealer.getMoreCard()
+
+        assertThat(dealer.cards.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `딜러는 가진 카드의 합이 17 이상이면 카드를 받을 수 없다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.SEVEN).create())
+        dealer.getMoreCard()
+
+        assertThat(dealer.cards.size).isEqualTo(2)
+    }
 }

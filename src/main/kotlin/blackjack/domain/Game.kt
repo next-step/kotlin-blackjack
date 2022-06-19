@@ -4,7 +4,7 @@ import blackjack.view.Screen
 
 class Game(private val dealer: Dealer) {
     fun enter(input: String): List<Player> {
-        return listOf(dealer) + input.split(",").map { Player(it) }
+        return input.split(",").map { Player(it) }
     }
 
     fun shareCards(players: List<Player>) {
@@ -17,8 +17,8 @@ class Game(private val dealer: Dealer) {
         dealer.shareCards().map { card -> player.takeCard(card) }
     }
 
-    fun shareMoreCards(player: Player) {
-        var needCard = needMoreCare(player)
+    open fun shareMoreCards(player: Player) {
+        var needCard = needMoreCard(player)
 
         if (!needCard) {
             return Screen.displayPlayerCard(player)
@@ -27,11 +27,11 @@ class Game(private val dealer: Dealer) {
         while (needCard) {
             player.takeCard(dealer.give())
             Screen.displayPlayerCard(player)
-            needCard = needMoreCare(player)
+            needCard = needMoreCard(player)
         }
     }
 
-    private fun needMoreCare(player: Player): Boolean {
+    private fun needMoreCard(player: Player): Boolean {
         dealer.ask(player.name)
         return player.needCard(readln())
     }
