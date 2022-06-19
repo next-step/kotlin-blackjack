@@ -6,8 +6,10 @@ sealed class Participant(
 ) {
     val cardsOfHands: PlayingCards
         get() = hands.cards
+    private val playerState: PlayerState
+        get() = hands.state
     val score: Score
-        get() = hands.score
+        get() = playerState.score
 
     fun receive(playingCards: PlayingCards) {
         hands += playingCards
