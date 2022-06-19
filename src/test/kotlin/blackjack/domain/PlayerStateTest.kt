@@ -18,16 +18,14 @@ class PlayerStateTest {
 
     @Test
     fun `PlayerState는 플레이어의 점수를 보관한다`() {
-        val score = Score.from(
-            PlayingCards.from(
-                listOf(
-                    PlayingCard(Suit.CLUBS, CardNumber.NINE),
-                    PlayingCard(Suit.HEARTS, CardNumber.ACE)
-                )
+        val playingCards = PlayingCards.from(
+            listOf(
+                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.HEARTS, CardNumber.ACE)
             )
         )
 
-        assertThat(PlayerState.of(score).score).isEqualTo(score)
+        assertThat(PlayerState.of(playingCards).score.value).isEqualTo(20)
     }
 
     @Test
@@ -40,36 +38,30 @@ class PlayerStateTest {
         )
     }
 
-    private fun hitState(): PlayerState = PlayerState.of(hitOrStayScore(), true)
-    private fun stayState(): PlayerState = PlayerState.of(hitOrStayScore(), false)
-    private fun blackjackState(): PlayerState = PlayerState.of(blackjackScore())
-    private fun bustState(): PlayerState = PlayerState.of(bustScore())
+    private fun hitState(): PlayerState = PlayerState.of(hitOrStayCards(), true)
+    private fun stayState(): PlayerState = PlayerState.of(hitOrStayCards(), false)
+    private fun blackjackState(): PlayerState = PlayerState.of(blackjackCards())
+    private fun bustState(): PlayerState = PlayerState.of(bustCards())
 
-    private fun hitOrStayScore(): Score = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard(Suit.HEARTS, CardNumber.ACE)
-            )
+    private fun hitOrStayCards(): PlayingCards = PlayingCards.from(
+        listOf(
+            PlayingCard(Suit.CLUBS, CardNumber.NINE),
+            PlayingCard(Suit.HEARTS, CardNumber.ACE)
         )
     )
 
-    private fun blackjackScore(): Score = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard(Suit.CLUBS, CardNumber.KING),
-                PlayingCard(Suit.HEARTS, CardNumber.ACE)
-            )
+    private fun blackjackCards(): PlayingCards = PlayingCards.from(
+        listOf(
+            PlayingCard(Suit.CLUBS, CardNumber.KING),
+            PlayingCard(Suit.HEARTS, CardNumber.ACE)
         )
     )
 
-    private fun bustScore(): Score = Score.from(
-        PlayingCards.from(
-            listOf(
-                PlayingCard(Suit.CLUBS, CardNumber.KING),
-                PlayingCard(Suit.HEARTS, CardNumber.QUEEN),
-                PlayingCard(Suit.HEARTS, CardNumber.JACK)
-            )
+    private fun bustCards(): PlayingCards = PlayingCards.from(
+        listOf(
+            PlayingCard(Suit.CLUBS, CardNumber.KING),
+            PlayingCard(Suit.HEARTS, CardNumber.QUEEN),
+            PlayingCard(Suit.HEARTS, CardNumber.JACK)
         )
     )
 }

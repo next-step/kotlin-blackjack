@@ -24,16 +24,6 @@ sealed class PlayerState(val score: Score) {
     }
 
     companion object {
-        fun of(score: Score, isRunning: Boolean = true): PlayerState {
-            return when {
-                score.isZero() -> Start(score)
-                score.isBlackjack() -> Blackjack(score)
-                score.isBust() -> Bust(score)
-                isRunning -> Hit(score)
-                else -> Stay(score)
-            }
-        }
-
         fun of(cards: PlayingCards, isRunning: Boolean = true): PlayerState {
             val score = Score.from(cards)
 
