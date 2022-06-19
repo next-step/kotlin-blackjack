@@ -1,5 +1,6 @@
 package blackjack.viewmodel
 
+import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
 import blackjack.domain.CardNumber
 import blackjack.domain.PlayerName
@@ -61,17 +62,17 @@ class BlackjackViewModelTest {
             )
         )
 
-        assertThat(viewModel.currentTurn.value?.name).isEqualTo(names[0])
+        assertThat(viewModel.currentTurn.value.participant.name).isEqualTo(names[0])
     }
 
     @Test
     fun `currentTurn을 observe해서 어떤 플레이어의 턴인지 확인할 수 있다`() {
         val viewModel = viewModel
-        viewModel.currentTurn.observe { player ->
-            assertThat(player).isIn(viewModel.participants.all)
+        viewModel.currentTurn.observe { turn ->
+            assertThat(turn.participant).isIn(viewModel.participants.all)
         }
 
-        viewModel.currentTurn.value = viewModel.participants.all[2]
+        viewModel.currentTurn.value = BlackjackGameTurn.from(viewModel.participants.all[2])
     }
 
     @Test
@@ -79,7 +80,8 @@ class BlackjackViewModelTest {
         val viewModel = viewModel
         viewModel.hit()
 
-        assertThat(viewModel.currentTurn.value?.cardsOfHands?.size).isEqualTo(3)
+        val currentParticipant = viewModel.currentTurn.value.participant
+        assertThat(currentParticipant.cardsOfHands.size).isEqualTo(3)
     }
 
     @Test
@@ -87,7 +89,7 @@ class BlackjackViewModelTest {
         val viewModel = viewModel
         viewModel.stay()
 
-        assertThat(viewModel.currentTurn.value?.isReceivable()).isFalse
+        assertThat(viewModel.currentTurn.value.isTurnEnd()).isTrue
     }
 
     @Test
@@ -113,6 +115,7 @@ class BlackjackViewModelTest {
         viewModel.stay()
         viewModel.nextTurn()
 
-        assertThat(viewModel.currentTurn.value?.name).isEqualTo(PlayerName("Diamond"))
+        val currentParticipant = viewModel.currentTurn.value.participant
+        assertThat(currentParticipant.name).isEqualTo(PlayerName("Diamond"))
     }
 }

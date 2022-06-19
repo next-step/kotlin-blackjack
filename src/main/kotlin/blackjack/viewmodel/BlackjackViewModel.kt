@@ -1,5 +1,6 @@
 package blackjack.viewmodel
 
+import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
 import blackjack.domain.Hands
 import blackjack.domain.Observable
@@ -14,24 +15,20 @@ class BlackjackViewModel private constructor(
     val participants: Participants,
     private val cardDeck: CardDeck
 ) {
-    val currentTurn: Observable<Participant?> = Observable(participants.players.currentTurn())
-
-    private fun List<Participant>.currentTurn(): Participant? = find { player ->
-        player.isReceivable()
-    }
+    val currentTurn: Observable<BlackjackGameTurn> = Observable(BlackjackGameTurn.from(participants))
 
     fun hit() {
-        val currentPlayer = currentTurn.value
-        currentPlayer?.receive(cardDeck.draw(HIT_CARD_COUNT))
+        val currentPlayer = currentTurn.value.participant
+        currentPlayer.receive(cardDeck.draw(HIT_CARD_COUNT))
     }
 
     fun stay() {
-        val currentPlayer = currentTurn.value as? Participant.Player // Todo : 수정해야 함
+        val currentPlayer = currentTurn.value.participant as? Participant.Player // Todo : 수정해야 함
         currentPlayer?.stay()
     }
 
     fun nextTurn() {
-        currentTurn.value = participants.players.currentTurn()
+        currentTurn.value = BlackjackGameTurn.from(participants)
     }
 
     companion object {

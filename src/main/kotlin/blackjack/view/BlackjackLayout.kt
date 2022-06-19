@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.Participant
 import blackjack.domain.PlayerName
 import blackjack.view.input.InputView
@@ -21,10 +22,10 @@ object BlackjackLayout {
         val viewModel = BlackjackViewModel.from(DEALER_NAME, getPlayerNames())
         OutputView.println(viewModel.participants.all, StartOfGameConverter)
 
-        viewModel.currentTurn.observe { player ->
-            player ?: return@observe
+        viewModel.currentTurn.observe { turn ->
+            if (turn.isTurnEnd()) return@observe
 
-            takeTurn(player, viewModel)
+            takeTurn(turn, viewModel)
 
             viewModel.nextTurn()
         }
@@ -42,16 +43,16 @@ object BlackjackLayout {
         return InputView.receiveUserInput(userInputRequest)
     }
 
-    private fun takeTurn(participant: Participant, viewModel: BlackjackViewModel) {
-        while (participant.isReceivable()) {
-            stepOfTurn(participant, viewModel)
+    private fun takeTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
+        while (turn.isTurnEnd()) {
+            stepOfTurn(turn, viewModel)
         }
     }
 
-    private fun stepOfTurn(participant: Participant, viewModel: BlackjackViewModel) {
-        if (isPlayerWannaHit(participant)) {
+    private fun stepOfTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
+        if (isPlayerWannaHit(turn.participant)) {
             viewModel.hit()
-            OutputView.print(participant, PlayerConverter)
+            OutputView.print(turn.participant, PlayerConverter)
         } else {
             viewModel.stay()
         }
