@@ -15,15 +15,14 @@ class CardsTest {
         val cards = Cards()
         val card = Card(CardSymbol.하트, CardNumber.TWO)
 
+        // when
+        cards.addOne(card)
+
+        // then
         assertAll(
             "add card test",
-            {
-                assertThat(cards.contains(card)).isFalse
-                // when
-                cards.addOne(card)
-            },
-            // then
-            { assertThat(cards.contains(card)).isTrue }
+            { assertThat(cards.contains(card)).isTrue },
+            { assertThat(cards.size).isEqualTo(1) }
         )
     }
 
@@ -33,14 +32,12 @@ class CardsTest {
         val card = Card(CardSymbol.하트, CardNumber.TWO)
         val cards = Cards(mutableListOf(card))
 
+        // when
+        cards.removeOne()
+
+        // then
         assertAll(
             "remove card test",
-            {
-                assertThat(cards.contains(card)).isTrue
-                // when
-                cards.removeOne()
-            },
-            // then
             { assertThat(cards.contains(card)).isFalse },
             { assertThat(cards.size).isEqualTo(0) }
         )
