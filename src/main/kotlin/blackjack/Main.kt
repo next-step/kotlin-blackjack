@@ -1,7 +1,5 @@
-package lotto
-
-import lotto.entity.Lotto
+package blackjack
 
 fun main() {
-    Lotto().play()
+  BlackJack().play()
 }
