@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.domain.PlayerName
 import blackjack.view.input.InputView
 import blackjack.view.input.UserInputRequest
@@ -41,24 +41,24 @@ object BlackjackLayout {
         return InputView.receiveUserInput(userInputRequest)
     }
 
-    private fun takeTurn(player: Player, viewModel: BlackjackViewModel) {
-        while (player.isReceivable()) {
-            stepOfTurn(player, viewModel)
+    private fun takeTurn(participant: Participant, viewModel: BlackjackViewModel) {
+        while (participant.isReceivable()) {
+            stepOfTurn(participant, viewModel)
         }
     }
 
-    private fun stepOfTurn(player: Player, viewModel: BlackjackViewModel) {
-        if (isPlayerWannaHit(player)) {
+    private fun stepOfTurn(participant: Participant, viewModel: BlackjackViewModel) {
+        if (isPlayerWannaHit(participant)) {
             viewModel.hit()
-            OutputView.print(player, PlayerConverter)
+            OutputView.print(participant, PlayerConverter)
         } else {
             viewModel.stay()
         }
     }
 
-    private fun isPlayerWannaHit(player: Player): Boolean {
+    private fun isPlayerWannaHit(participant: Participant): Boolean {
         val userInputRequest = UserInputRequest(
-            message = "${player.name.value}$GUIDANCE_MESSAGE_HIT",
+            message = "${participant.name.value}$GUIDANCE_MESSAGE_HIT",
             inputConverter = YesOrNoConverter
         )
 
