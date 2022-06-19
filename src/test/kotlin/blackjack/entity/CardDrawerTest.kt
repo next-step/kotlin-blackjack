@@ -1,9 +1,9 @@
 package blackjack.entity
 
+import blackjack.entity.CardNumber.Companion.MAXIMUM_CARD_NUMBER
+import blackjack.entity.CardNumber.Companion.MINIMUM_CARD_NUMBER
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import blackjack.entity.Card.Companion.MAXIMUM_CARD_NUMBER
-import blackjack.entity.Card.Companion.MINIMUM_CARD_NUMBER
 
 internal class CardDrawerTest {
 
