@@ -4,7 +4,7 @@ sealed class PlayerState(val score: Score) {
     abstract fun isFinished(): Boolean
 
     class Hit(score: Score) : PlayerState(score) {
-        override fun isFinished(): Boolean = score.canAddMore()
+        override fun isFinished(): Boolean = !score.canAddMore()
     }
 
     class Stay(score: Score) : PlayerState(score) {
