@@ -67,33 +67,33 @@ class BlackjackGameRuleTest {
         )
     }
 
-    private fun getBustPlayer(): Participant.Player = Participant.Player(
+    private fun getBustPlayer(): Player = Player(
         "버스트",
         PlayingCard(Suit.HEARTS, CardNumber.NINE),
         PlayingCard(Suit.HEARTS, CardNumber.TEN),
         PlayingCard(Suit.HEARTS, CardNumber.KING)
     )
 
-    private fun getBlackjackPlayer(): Participant.Player = Participant.Player(
+    private fun getBlackjackPlayer(): Player = Player(
         "블랙잭",
         PlayingCard(Suit.SPADES, CardNumber.ACE),
         PlayingCard(Suit.SPADES, CardNumber.QUEEN)
     )
 
-    private fun getNormal21ScorePlayer(): Participant.Player = Participant.Player(
+    private fun getNormal21ScorePlayer(): Player = Player(
         "일반 21점",
         PlayingCard(Suit.CLUBS, CardNumber.SEVEN),
         PlayingCard(Suit.SPADES, CardNumber.SIX),
         PlayingCard(Suit.DIAMONDS, CardNumber.EIGHT)
     )
 
-    private fun getUnder21ScorePlayer(): Participant.Player = Participant.Player(
+    private fun getUnder21ScorePlayer(): Player = Player(
         "21점 보다 아래",
         PlayingCard(Suit.HEARTS, CardNumber.SEVEN),
         PlayingCard(Suit.DIAMONDS, CardNumber.JACK)
     )
 
-    private fun getDealerFrom(player: Participant.Player): Participant.Dealer = Participant.Dealer(
+    private fun getDealerFrom(player: Player): Dealer = Dealer(
         "딜러",
         *player.hands.cards.toTypedArray()
     )

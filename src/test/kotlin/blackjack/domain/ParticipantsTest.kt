@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class ParticipantsTest {
-    private val dealer = Participant.Dealer(
+    private val dealer = Dealer(
         "딜러",
         PlayingCard(Suit.DIAMONDS, CardNumber.TWO),
         PlayingCard(Suit.SPADES, CardNumber.KING)
     )
     private val players = listOf(
-        Participant.Player(
+        Player(
             "이름",
             PlayingCard(Suit.CLUBS, CardNumber.KING),
             PlayingCard(Suit.SPADES, CardNumber.JACK)

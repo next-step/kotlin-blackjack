@@ -20,36 +20,36 @@ sealed class Participant(
     fun isBlackjack(): Boolean = playerState is PlayerState.Blackjack
 
     abstract fun isReceivable(): Boolean
+}
 
-    class Player(
-        name: PlayerName,
-        hands: Hands
-    ) : Participant(name, hands) {
-        constructor(name: String, vararg initialCards: PlayingCard) : this(
-            PlayerName(name),
-            Hands.from(PlayingCards.from(initialCards.toList()))
-        )
+class Player(
+    name: PlayerName,
+    hands: Hands
+) : Participant(name, hands) {
+    constructor(name: String, vararg initialCards: PlayingCard) : this(
+        PlayerName(name),
+        Hands.from(PlayingCards.from(initialCards.toList()))
+    )
 
-        fun stay() {
-            hands = hands.stay()
-        }
-
-        override fun isReceivable(): Boolean = hands.isReceivable()
+    fun stay() {
+        hands = hands.stay()
     }
 
-    class Dealer(
-        name: PlayerName,
-        hands: Hands
-    ) : Participant(name, hands) {
-        constructor(name: String, vararg initialCards: PlayingCard) : this(
-            PlayerName(name),
-            Hands.from(PlayingCards.from(initialCards.toList()))
-        )
+    override fun isReceivable(): Boolean = hands.isReceivable()
+}
 
-        override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
+class Dealer(
+    name: PlayerName,
+    hands: Hands
+) : Participant(name, hands) {
+    constructor(name: String, vararg initialCards: PlayingCard) : this(
+        PlayerName(name),
+        Hands.from(PlayingCards.from(initialCards.toList()))
+    )
 
-        companion object {
-            const val SHOULD_HIT_MAX_SCORE = 16
-        }
+    override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
+
+    companion object {
+        const val SHOULD_HIT_MAX_SCORE = 16
     }
 }

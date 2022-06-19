@@ -2,11 +2,12 @@ package blackjack.viewmodel
 
 import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
 import blackjack.domain.Observable
-import blackjack.domain.Participant
 import blackjack.domain.Participants
+import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.START_CARD_COUNT
@@ -25,7 +26,7 @@ class BlackjackViewModel private constructor(
     }
 
     fun stay() {
-        val currentPlayer = currentTurn.value.participant as? Participant.Player // Todo : 수정해야 함
+        val currentPlayer = currentTurn.value.participant as? Player // Todo : 수정해야 함
         currentPlayer?.stay()
     }
 
@@ -62,13 +63,13 @@ class BlackjackViewModel private constructor(
             return Hands.from(draw(START_CARD_COUNT))
         }
 
-        private fun PlayerName.toDealer(cardDeck: CardDeck): Participant.Dealer {
-            return Participant.Dealer(this, cardDeck.initialHands())
+        private fun PlayerName.toDealer(cardDeck: CardDeck): Dealer {
+            return Dealer(this, cardDeck.initialHands())
         }
 
-        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Participant.Player> {
+        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Player> {
             return map { playerName ->
-                Participant.Player(
+                Player(
                     name = playerName,
                     hands = cardDeck.initialHands()
                 )

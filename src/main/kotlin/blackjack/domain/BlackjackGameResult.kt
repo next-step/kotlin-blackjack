@@ -14,7 +14,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             return BlackjackGameResult(results)
         }
 
-        private fun List<Participant.Player>.toResults(dealer: Participant.Dealer): List<BlackjackParticipantResult> {
+        private fun List<Player>.toResults(dealer: Dealer): List<BlackjackParticipantResult> {
             return map { player ->
                 BlackjackParticipantResult(
                     name = player.name,
@@ -24,7 +24,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             }
         }
 
-        private fun Participant.Dealer.toResult(playerResults: List<BlackjackParticipantResult>): BlackjackParticipantResult {
+        private fun Dealer.toResult(playerResults: List<BlackjackParticipantResult>): BlackjackParticipantResult {
             val dealerMatchStatusMap = playerResults.map { playerResult ->
                 playerResult.matchStatus.inverse()
             }.groupingBy { matchStatus ->

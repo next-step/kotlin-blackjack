@@ -7,23 +7,23 @@ import org.junit.jupiter.api.assertAll
 class BlackjackGameResultTest {
     @Test
     fun `BlackjackGameResult는 참가자들을 받아 그들의 블랙잭 게임 결과를 보관한다`() {
-        val dealer = Participant.Dealer(
+        val dealer = Dealer(
             "딜러",
             PlayingCard(Suit.HEARTS, CardNumber.NINE),
             PlayingCard(Suit.DIAMONDS, CardNumber.JACK)
         )
         val players = listOf(
-            Participant.Player(
+            Player(
                 "파이리",
                 PlayingCard(Suit.SPADES, CardNumber.ACE),
                 PlayingCard(Suit.HEARTS, CardNumber.JACK)
             ),
-            Participant.Player(
+            Player(
                 "꼬부기",
                 PlayingCard(Suit.CLUBS, CardNumber.JACK),
                 PlayingCard(Suit.SPADES, CardNumber.NINE)
             ),
-            Participant.Player(
+            Player(
                 "이상해씨",
                 PlayingCard(Suit.CLUBS, CardNumber.TWO),
                 PlayingCard(Suit.DIAMONDS, CardNumber.FOUR)
