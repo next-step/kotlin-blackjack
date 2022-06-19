@@ -2,10 +2,10 @@ package blackjack.domain
 
 sealed class Participant(
     val name: PlayerName,
-    protected var hands: Hands
+    hands: Hands
 ) {
-    val cardsOfHands: PlayingCards
-        get() = hands.cards
+    var hands = hands
+        protected set
     private val playerState: PlayerState
         get() = hands.state
     val score: Score

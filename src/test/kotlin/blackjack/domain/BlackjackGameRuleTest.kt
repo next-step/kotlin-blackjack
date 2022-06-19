@@ -95,6 +95,6 @@ class BlackjackGameRuleTest {
 
     private fun getDealerFrom(player: Participant.Player): Participant.Dealer = Participant.Dealer(
         "딜러",
-        *player.cardsOfHands.toTypedArray()
+        *player.hands.cards.toTypedArray()
     )
 }

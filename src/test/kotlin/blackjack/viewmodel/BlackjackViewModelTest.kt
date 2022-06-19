@@ -40,7 +40,7 @@ class BlackjackViewModelTest {
     @Test
     fun `BlackJackViewModel을 생성할 때 각 플레이어들은 카드를 두 장씩 뽑는다`() {
         assertThat(viewModel.participants.all).allMatch { player ->
-            player.cardsOfHands.size == START_CARD_COUNT
+            player.hands.cards.size == START_CARD_COUNT
         }
     }
 
@@ -82,7 +82,7 @@ class BlackjackViewModelTest {
         viewModel.hit()
 
         val currentParticipant = viewModel.currentTurn.value.participant
-        assertThat(currentParticipant.cardsOfHands.size).isEqualTo(3)
+        assertThat(currentParticipant.hands.cards.size).isEqualTo(3)
     }
 
     @Test

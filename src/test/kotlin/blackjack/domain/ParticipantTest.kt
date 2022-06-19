@@ -7,14 +7,15 @@ import org.junit.jupiter.api.assertAll
 class ParticipantTest {
     @Test
     fun `Participant는 이름과 손패, 점수를 보관한다`() {
+        val hands = Hands.from(PlayingCards.empty())
         val player = Participant.Player(
-            name = "이름"
+            name = PlayerName("이름"),
+            hands = hands
         )
 
         assertAll(
             { assertThat(player.name.value).isEqualTo("이름") },
-            { assertThat(player.cardsOfHands).isEmpty() },
-            { assertThat(player.score).isEqualTo(Score.from(0)) }
+            { assertThat(player.hands).isEqualTo(hands) }
         )
     }
 
@@ -34,7 +35,7 @@ class ParticipantTest {
         )
 
         assertAll(
-            { assertThat(player.cardsOfHands).hasSize(2) }
+            { assertThat(player.hands.cards).hasSize(2) }
         )
     }
 }
