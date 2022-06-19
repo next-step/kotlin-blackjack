@@ -9,5 +9,7 @@ object CardDeck {
         .shuffled()
         .toMutableList()
 
+    fun isLeft(): Boolean = cards.size > 0
+
     fun getOne(): Card = cards.removeFirst()
 }
