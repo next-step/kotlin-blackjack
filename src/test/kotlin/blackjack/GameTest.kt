@@ -11,4 +11,13 @@ class GameTest {
         val players = Game(Dealer()).enter("서정국")
         assertThat(players[0].name).isEqualTo("서정국")
     }
+
+    @Test
+    fun `게임에서 카드를 돌리면 플레이어가 카드를 받는다`() {
+        val game = Game(Dealer())
+        val players = game.enter("서정국")
+        game.shareCards(players)
+
+        assertThat(players[0].cards.size).isEqualTo(2)
+    }
 }
