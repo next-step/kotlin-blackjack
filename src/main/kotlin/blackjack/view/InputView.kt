@@ -1,6 +1,9 @@
 package blackjack.view
 
-class InputView {
+object InputView {
+    private const val DELIMITER = ","
+    private const val GET_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
+
     fun getNames(): List<String> {
         val inputStr = printMsgAndReadValue(GET_NAME) ?: throw IllegalArgumentException("")
         val result = inputStr.split(DELIMITER).map { it.trim() }
@@ -25,10 +28,5 @@ class InputView {
     private enum class ContinueGame(val value: Boolean, val input: String) {
         HIT(true, "y"),
         STAND(false, "n")
-    }
-
-    companion object {
-        const val DELIMITER = ","
-        const val GET_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     }
 }

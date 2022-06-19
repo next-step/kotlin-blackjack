@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Player
 
-class OutputView {
+object OutputView {
     fun firstCard(players: List<Player>) {
         val result = buildString {
             appendLine()
