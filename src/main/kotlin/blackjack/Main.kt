@@ -1,5 +1,5 @@
 package blackjack
 
 fun main() {
-  BlackJack().play()
+    BlackJack().play()
 }
