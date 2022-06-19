@@ -5,7 +5,6 @@ enum class CardNumber(
     val score: CardScore,
 ) {
 
-    ONE("1", CardScore(1, 1)),
     TWO("2", CardScore(2, 2)),
     THREE("3", CardScore(3, 3)),
     FOUR("4", CardScore(4, 4)),

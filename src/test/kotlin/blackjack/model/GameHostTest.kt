@@ -18,7 +18,7 @@ class GameHostTest {
     fun `카드 제공 기능이 정상 동작`() {
         // given
         val symbols = listOf(CardSymbol.하트, CardSymbol.클로버)
-        val numbers = listOf(CardNumber.ONE, CardNumber.TWO, CardNumber.THREE)
+        val numbers = listOf(CardNumber.TWO, CardNumber.THREE, CardNumber.FOUR)
         val generatedCards = CardSetGenerator.generateOneCardSet(symbols, numbers)
         val gameHost = GameHost(generatedCards)
 
@@ -32,7 +32,7 @@ class GameHostTest {
         // then
         assertThat(gameHost.cardSet.size).isEqualTo(5)
         assertThat(player.cardSize).isEqualTo(1)
-        assertThat(player.cards.contains(Card(CardSymbol.하트, CardNumber.ONE))).isTrue
+        assertThat(player.cards.contains(Card(CardSymbol.하트, CardNumber.TWO))).isTrue
     }
 
     @Test
@@ -40,9 +40,9 @@ class GameHostTest {
         // given
         val cards = Cards(
             mutableListOf(
-                Card(CardSymbol.하트, CardNumber.TEN),
-                Card(CardSymbol.클로버, CardNumber.TEN),
-                Card(CardSymbol.스페이드, CardNumber.ONE),
+                Card(CardSymbol.하트, CardNumber.TWO),
+                Card(CardSymbol.클로버, CardNumber.NINE),
+                Card(CardSymbol.스페이드, CardNumber.TEN),
             )
         )
         val player = Player.from("aiden", cards)
