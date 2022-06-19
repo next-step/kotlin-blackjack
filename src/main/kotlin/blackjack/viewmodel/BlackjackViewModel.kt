@@ -4,16 +4,17 @@ import blackjack.domain.CardDeck
 import blackjack.domain.Hands
 import blackjack.domain.Observable
 import blackjack.domain.Participant
+import blackjack.domain.Participants
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.rule.DistinctRule
 import blackjack.domain.rule.ShuffleRule
 
 class BlackjackViewModel private constructor(
-    val players: List<Participant>,
+    val participants: Participants,
     private val cardDeck: CardDeck
 ) {
-    val currentTurn: Observable<Participant?> = Observable(players.currentTurn())
+    val currentTurn: Observable<Participant?> = Observable(participants.players.currentTurn())
 
     private fun List<Participant>.currentTurn(): Participant? = find { player ->
         player.isReceivable()
@@ -30,32 +31,52 @@ class BlackjackViewModel private constructor(
     }
 
     fun nextTurn() {
-        currentTurn.value = players.currentTurn()
+        currentTurn.value = participants.players.currentTurn()
     }
 
     companion object {
         const val START_CARD_COUNT = 2
         private const val HIT_CARD_COUNT = 1
 
-        fun from(playerNames: List<PlayerName>): BlackjackViewModel {
+        fun from(dealerName: PlayerName, playerNames: List<PlayerName>): BlackjackViewModel {
             val cardDeck = CardDeck.of(
                 PlayingCard.all(),
                 DistinctRule, ShuffleRule
             )
-            return BlackjackViewModel(playerNames.toPlayers(cardDeck), cardDeck)
+            val participants = Participants(
+                dealer = dealerName.toDealer(cardDeck),
+                players = playerNames.toPlayers(cardDeck)
+            )
+
+            return BlackjackViewModel(
+                participants,
+                cardDeck
+            )
         }
 
-        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Participant> {
+        fun of(dealerName: PlayerName, playerNames: List<PlayerName>, cardDeck: CardDeck): BlackjackViewModel {
+            val participants = Participants(
+                dealer = dealerName.toDealer(cardDeck),
+                players = playerNames.toPlayers(cardDeck)
+            )
+            return BlackjackViewModel(participants, cardDeck)
+        }
+
+        private fun CardDeck.initialHands(): Hands {
+            return Hands.from(draw(START_CARD_COUNT))
+        }
+
+        private fun PlayerName.toDealer(cardDeck: CardDeck): Participant.Dealer {
+            return Participant.Dealer(this, cardDeck.initialHands())
+        }
+
+        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Participant.Player> {
             return map { playerName ->
                 Participant.Player(
                     name = playerName,
-                    hands = Hands.from(cardDeck.draw(START_CARD_COUNT))
+                    hands = cardDeck.initialHands()
                 )
             }
-        }
-
-        fun of(playerNames: List<PlayerName>, cardDeck: CardDeck): BlackjackViewModel {
-            return BlackjackViewModel(playerNames.toPlayers(cardDeck), cardDeck)
         }
     }
 }

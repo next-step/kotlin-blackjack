@@ -15,10 +15,11 @@ import blackjack.viewmodel.BlackjackViewModel
 object BlackjackLayout {
     private const val GUIDANCE_MESSAGE_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val GUIDANCE_MESSAGE_HIT = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+    private val DEALER_NAME = PlayerName("딜러")
 
     fun execute() {
-        val viewModel = BlackjackViewModel.from(getPlayerNames())
-        OutputView.println(viewModel.players, StartOfGameConverter)
+        val viewModel = BlackjackViewModel.from(DEALER_NAME, getPlayerNames())
+        OutputView.println(viewModel.participants.all, StartOfGameConverter)
 
         viewModel.currentTurn.observe { player ->
             player ?: return@observe
@@ -29,7 +30,7 @@ object BlackjackLayout {
         }
 
         println()
-        OutputView.print(viewModel.players, EndOfGameConverter)
+        OutputView.print(viewModel.participants.all, EndOfGameConverter)
     }
 
     private fun getPlayerNames(): List<PlayerName> {
