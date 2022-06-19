@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-class Cards(
+data class Cards(
     private val cards: MutableList<Card> = mutableListOf(),
 ) {
     val size
@@ -23,10 +23,6 @@ class Cards(
         validateNotEmpty()
         return cards.removeAt(0)
     }
-
-    fun contains(card: Card) = cards.contains(card)
-
-    fun containsAll(cards: List<Card>) = this.cards.containsAll(cards)
 
     private fun validateNotEmpty() = require(size > EMPTY_CARDS_SIZE) { "카드 개수가 0개 입니다." }
 

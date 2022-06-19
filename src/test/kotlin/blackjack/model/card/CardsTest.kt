@@ -3,7 +3,6 @@ package blackjack.model.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("카드 컬렉션 테스트")
@@ -19,11 +18,7 @@ class CardsTest {
         cards.addOne(card)
 
         // then
-        assertAll(
-            "add card test",
-            { assertThat(cards.contains(card)).isTrue },
-            { assertThat(cards.size).isEqualTo(1) }
-        )
+        assertThat(cards).isEqualTo(Cards(mutableListOf(card)))
     }
 
     @Test
@@ -36,11 +31,7 @@ class CardsTest {
         cards.removeOne()
 
         // then
-        assertAll(
-            "remove card test",
-            { assertThat(cards.contains(card)).isFalse },
-            { assertThat(cards.size).isEqualTo(0) }
-        )
+        assertThat(cards).isEqualTo(Cards(mutableListOf()))
     }
 
     @Test

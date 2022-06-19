@@ -31,11 +31,22 @@ class GameHostTest {
         gameHost.provideOneCardTo(player)
 
         // then
+        val expectedGameHostCards = Cards(
+            mutableListOf(
+                Card(CardSymbol.하트, CardNumber.THREE),
+                Card(CardSymbol.하트, CardNumber.FOUR),
+                Card(CardSymbol.클로버, CardNumber.TWO),
+                Card(CardSymbol.클로버, CardNumber.THREE),
+                Card(CardSymbol.클로버, CardNumber.FOUR)
+            )
+        )
+
+        val expectedPlayerCards = Cards(mutableListOf(Card(CardSymbol.하트, CardNumber.TWO)))
+
         assertAll(
             "provide one card to player test",
-            { assertThat(gameHost.cardSet.size).isEqualTo(5) },
-            { assertThat(player.cardSize).isEqualTo(1) },
-            { assertThat(player.cards.contains(Card(CardSymbol.하트, CardNumber.TWO))).isTrue }
+            { assertThat(gameHost.cardSet).isEqualTo(expectedGameHostCards) },
+            { assertThat(player.cards).isEqualTo(expectedPlayerCards) }
         )
     }
 
