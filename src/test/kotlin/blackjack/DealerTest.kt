@@ -48,4 +48,17 @@ class DealerTest {
 
         assertThat(dealer.cards.size).isEqualTo(2)
     }
+
+    @Test
+    fun `딜러의 카드 합이 21을 초과하면 패배한다`() {
+        val dealer = Dealer()
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.KING).create())
+        dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.TWO).create())
+        val player = Player("정국")
+
+        val result = dealer.winOrLose(listOf(dealer, player))
+
+        assertThat(result).isEqualTo(false)
+    }
 }

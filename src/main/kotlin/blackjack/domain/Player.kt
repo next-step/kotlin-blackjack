@@ -22,6 +22,17 @@ open class Player(val name: String) {
         return result
     }
 
+    open fun winOrLose(others: List<Player>): Boolean {
+        val dealer = others.find { it.name == "딜러" }
+        require(dealer != null)
+
+        if (dealer.score() > CardPoint.BLACK_JACK_SCORE) {
+            return true
+        }
+
+        return false
+    }
+
     private fun calculateScore(card: Card, result: Int): Int {
         if (card.point === CardPoint.ACE) {
             return chooseAceScore(result)

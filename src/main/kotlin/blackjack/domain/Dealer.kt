@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.enums.CardPoint
 import java.util.LinkedList
 import java.util.Queue
 
@@ -27,6 +28,14 @@ class Dealer() : Player("딜러") {
         if (needCard()) {
             cards.add(give())
         }
+    }
+
+    override fun winOrLose(others: List<Player>): Boolean {
+        if (score() > CardPoint.BLACK_JACK_SCORE) {
+            return false
+        }
+
+        return true
     }
 
     private fun needCard(): Boolean {
