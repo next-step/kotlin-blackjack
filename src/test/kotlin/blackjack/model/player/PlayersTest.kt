@@ -3,6 +3,7 @@ package blackjack.model.player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("플레이어 컬렉션 테스트")
@@ -25,8 +26,11 @@ class PlayersTest {
         val players = Players(listOf(player1, player2, player3))
 
         // when, then
-        assertThat(players.findNext(player1)).isEqualTo(player2)
-        assertThat(players.findNext(player2)).isEqualTo(player3)
-        assertThat(players.findNext(player3)).isEqualTo(player1)
+        assertAll(
+            "find next player test",
+            { assertThat(players.findNext(player1)).isEqualTo(player2) },
+            { assertThat(players.findNext(player2)).isEqualTo(player3) },
+            { assertThat(players.findNext(player3)).isEqualTo(player1) }
+        )
     }
 }

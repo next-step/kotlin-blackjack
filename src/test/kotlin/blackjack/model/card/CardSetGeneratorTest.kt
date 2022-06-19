@@ -3,6 +3,7 @@ package blackjack.model.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 @DisplayName("카드 세트 생성기 테스트")
 class CardSetGeneratorTest {
@@ -26,7 +27,10 @@ class CardSetGeneratorTest {
             Card(CardSymbol.클로버, CardNumber.THREE)
         )
 
-        assertThat(generatedCards.containsAll(cards)).isTrue
-        assertThat(generatedCards.size).isEqualTo(6)
+        assertAll(
+            "generate card test",
+            { assertThat(generatedCards.containsAll(cards)).isTrue },
+            { assertThat(generatedCards.size).isEqualTo(6) }
+        )
     }
 }

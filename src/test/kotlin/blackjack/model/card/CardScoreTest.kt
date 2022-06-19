@@ -19,8 +19,11 @@ class CardScoreTest {
         val sumOfScore = cardScore.plus(other)
 
         // then
-        assertThat(sumOfScore.score1).isEqualTo(4)
-        assertThat(sumOfScore.score2).isEqualTo(6)
+        assertAll(
+            "sum of score test",
+            { assertThat(sumOfScore.score1).isEqualTo(4) },
+            { assertThat(sumOfScore.score2).isEqualTo(6) }
+        )
     }
 
     @Test
