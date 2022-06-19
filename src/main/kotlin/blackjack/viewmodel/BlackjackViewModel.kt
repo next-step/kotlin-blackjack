@@ -1,5 +1,6 @@
 package blackjack.viewmodel
 
+import blackjack.domain.BlackjackGameResult
 import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
@@ -32,6 +33,10 @@ class BlackjackViewModel private constructor(
 
     fun nextTurn() {
         currentTurn.value = BlackjackGameTurn.from(participants)
+    }
+
+    fun getBlackjackGameResult(): BlackjackGameResult {
+        return BlackjackGameResult.from(participants)
     }
 
     companion object {

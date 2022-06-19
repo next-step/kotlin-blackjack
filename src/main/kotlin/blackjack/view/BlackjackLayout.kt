@@ -31,7 +31,7 @@ object BlackjackLayout {
         }
 
         println()
-        OutputView.print(viewModel.participants.all, EndOfGameConverter)
+        OutputView.print(viewModel.getBlackjackGameResult(), EndOfGameConverter)
     }
 
     private fun getPlayerNames(): List<PlayerName> {
