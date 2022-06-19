@@ -16,7 +16,7 @@ class CardScoreTest {
         val other = CardScore(3, 4)
 
         // when
-        val sumOfScore = cardScore.plus(other)
+        val sumOfScore = cardScore + other
 
         // then
         assertAll(

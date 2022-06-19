@@ -10,7 +10,7 @@ class CardScore(
         validateMinScore(score2)
     }
 
-    fun plus(other: CardScore): CardScore {
+    operator fun plus(other: CardScore): CardScore {
         val sumOfScore = score1.plus(other.score1)
         val sumOfOtherScore = score2.plus(other.score2)
         return CardScore(sumOfScore, sumOfOtherScore)

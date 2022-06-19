@@ -12,7 +12,7 @@ class Cards(
                 return CardScore.ZERO
             }
             return cards.map { it.score }
-                .reduce { totalScore, score -> totalScore.plus(score) }
+                .reduce { totalScore, score -> totalScore + score }
         }
 
     fun shuffle() = cards.shuffle()
