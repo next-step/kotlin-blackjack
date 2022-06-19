@@ -14,8 +14,13 @@ class OutputView {
         println(result)
     }
 
+    fun cardOfPlayer(player: Player) {
+        println(playerCardToString(player))
+    }
+
     fun result(players: List<Player>) {
         val result = buildString {
+            appendLine()
             players.forEach { player ->
                 append(playerCardToString(player))
                 appendLine(" - 결과: ${player.sumOfPoints()}")
