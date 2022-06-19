@@ -10,7 +10,7 @@ internal class CardDrawerTest {
   @Test
   fun `drawSingleCard의 결과 카드를 한 장 생성한다`() {
     // given
-    val expectedCard = Card(Shape.CLOVER, 2)
+    val expectedCard = Card(Shape.CLOVER, CardNumber.NINE)
 
     // when
     val resultCards = CardDrawer.drawSingleCard()
@@ -22,38 +22,38 @@ internal class CardDrawerTest {
   @Test
   fun `drawInitialCards의 결과 카드가 생성된다`() {
     // given
-    val expectedCard = Card(Shape.CLOVER, 2)
+    val expectedCard = Card(Shape.CLOVER, CardNumber.NINE)
 
     // when
-    val resultCards = CardDrawer.drawInitialCards()
+    val resultWallet = CardDrawer.drawInitialCards()
 
     // then
-    Assertions.assertThat(resultCards[0]).hasSameClassAs(expectedCard)
+    Assertions.assertThat(resultWallet.cards[0]).hasSameClassAs(expectedCard)
   }
 
   @Test
   fun `drawInitialCards의 결과 카드가 두 장 생성한다`() {
     // given
-    val expectedCard = Card(Shape.CLOVER, 2)
+    val expectedCard = Card(Shape.CLOVER, CardNumber.NINE)
 
     // when
-    val resultCards = CardDrawer.drawInitialCards()
+    val resultWallet = CardDrawer.drawInitialCards()
 
     // then
-    Assertions.assertThat(resultCards.size).isEqualTo(2)
+    Assertions.assertThat(resultWallet.cards.size).isEqualTo(2)
   }
 
   @Test
   fun `drawAdditionalCard 결과 카드 갯수가 하나 늘어난다`() {
     // given
-    val cards = listOf<Card>(Card(Shape.CLOVER, 1), Card(Shape.DIAMOND, 2))
+    val cards = listOf<Card>(Card(Shape.CLOVER, CardNumber.NINE), Card(Shape.DIAMOND, CardNumber.EIGHT))
     val cardsSize = cards.size
 
     // when
-    val resultCards = CardDrawer.drawAdditionalCard(cards)
+    val resultWallet = CardDrawer.drawAdditionalCard(cards)
 
     // then
-    Assertions.assertThat(resultCards.size).isEqualTo(cardsSize+1)
+    Assertions.assertThat(resultWallet.cards.size).isEqualTo(cardsSize+1)
   }
 
   @Test
@@ -71,7 +71,7 @@ internal class CardDrawerTest {
   @Test
   fun `randomNumer는 1에서 14 중 하나의 숫자를 리턴한다`() {
     // when
-    val result = CardDrawer.getRandomNumber()
+    val result = CardDrawer.getRandomNumber().value
 
     // then
     Assertions.assertThat(result).isGreaterThanOrEqualTo(MINIMUM_CARD_NUMBER)
