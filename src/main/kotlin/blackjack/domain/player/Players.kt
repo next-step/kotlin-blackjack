@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
-class Players(val dealer: Dealer, val list: List<Player>) {
+@JvmInline
+value class Players(val list: List<Player>) {
     init {
         require(list.isNotEmpty()) { ONE_OR_MORE_ELEMENTS_REQUIRED }
     }

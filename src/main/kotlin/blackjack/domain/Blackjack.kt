@@ -26,32 +26,29 @@ object Blackjack {
     ) {
         val deck = CardDeck()
 
-        val allPlayers = Players(
-            Dealer(drawStartingCardsFromDeck(deck)),
+        val dealer = Dealer(drawStartingCardsFromDeck(deck))
+        val players = Players(
             playerNameFetcher.fetch(Unit).map { Player(it, drawStartingCardsFromDeck(deck)) }
         )
 
-        startingSummariesPrinter.print(allPlayers.toPlayerSummaries(true))
+        startingSummariesPrinter.print(players.toPlayerSummaries(PlayerSummary(dealer, true)))
 
-        val scores = allPlayers.run {
-            val playerResults = list.map { player ->
+        val scores = Scores.of(
+            players = players.list.map { player ->
                 PlayerTurn(player).play(
                     deck,
                     { playerDecisionFetcher.fetch(player.name) }
                 ) { playerSummaryPrinter.print(PlayerSummary(player)) }
-            }
+            },
+            dealer = DealerTurn(dealer).play(deck) { dealerSummaryPrinter.print(PlayerSummary(dealer)) }
+        )
 
-            val dealerResult = DealerTurn(dealer).play(deck) { dealerSummaryPrinter.print(PlayerSummary(dealer)) }
-
-            Scores.of(dealerResult, playerResults)
-        }
-
-        finalSummariesPrinter.print(allPlayers.toPlayerSummaries(false))
+        finalSummariesPrinter.print(players.toPlayerSummaries(PlayerSummary(dealer, false)))
         finalScoresPrinter.print(ScoreSummary(scores))
     }
 
     private fun drawStartingCardsFromDeck(deck: CardDeck): List<Card> = listOf(deck.drawCard(), deck.drawCard())
 
-    private fun Players.toPlayerSummaries(excludeHiddenCard: Boolean): List<PlayerSummary> =
-        listOf(PlayerSummary(dealer, excludeHiddenCard)) + list.map { PlayerSummary(it) }
+    private fun Players.toPlayerSummaries(dealerSummary: PlayerSummary): List<PlayerSummary> =
+        listOf(dealerSummary) + list.map { PlayerSummary(it) }
 }
