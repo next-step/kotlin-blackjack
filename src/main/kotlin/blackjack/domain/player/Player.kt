@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.ReceivedCards
-import blackjack.domain.game.Score
 import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 
 open class Player(
@@ -17,7 +16,7 @@ open class Player(
     }
 
     val score: Int
-        get() = Score.calculateScore(_receivedCards)
+        get() = _receivedCards.calculateScore().score
 
     val name: String
         get() = _name
@@ -29,15 +28,15 @@ open class Player(
         get() = _gambleSummary
 
     fun canMoreGame(): Boolean {
-        return Score.calculateScore(_receivedCards) < BLACKJACK_SCORE
+        return _receivedCards.calculateScore().score < BLACKJACK_SCORE
     }
 
     fun isBust(): Boolean {
-        return Score.calculateScore(_receivedCards) > BLACKJACK_SCORE
+        return _receivedCards.calculateScore().score > BLACKJACK_SCORE
     }
 
     fun isBlackJack(): Boolean {
-        return _receivedCards.count() == CARD_SIZE_FOR_BLACKJACK && Score.calculateScore(_receivedCards) == BLACKJACK_SCORE
+        return _receivedCards.count() == CARD_SIZE_FOR_BLACKJACK && _receivedCards.calculateScore().score == BLACKJACK_SCORE
     }
 
     fun adjustBustBattingAmount() {

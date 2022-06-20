@@ -19,6 +19,6 @@ class ScoreTest {
             )
         )
 
-        assertThat(Score.calculateScore(player.receivedCards)).isEqualTo(16)
+        assertThat(player.receivedCards.calculateScore().score).isEqualTo(16)
     }
 }
