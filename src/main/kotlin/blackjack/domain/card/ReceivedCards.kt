@@ -11,7 +11,7 @@ data class ReceivedCards(private val receivedCards: MutableSet<Card>) {
     }
 
     fun calculationPoliciesByAceCount(): List<Int> {
-        return when (countOfAceCard()) {
+        return when (countOfSoftHand()) {
             1 -> ACE_COUNT_ONE_CASE
             2 -> ACE_COUNT_TWO_CASE
             3 -> ACE_COUNT_THREE_CASE
@@ -32,7 +32,7 @@ data class ReceivedCards(private val receivedCards: MutableSet<Card>) {
         return receivedCards.joinToString(", ") { extractCardDescription(it) }
     }
 
-    private fun countOfAceCard(): Int {
+    private fun countOfSoftHand(): Int {
         return receivedCards.count { it is AceCard }
     }
 
