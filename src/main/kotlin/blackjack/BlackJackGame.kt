@@ -12,11 +12,19 @@ class BlackJackGame(
         giveStartCards()
     }
 
-    fun showPlayersCards(player: Player) {
+    fun allPlayer(): List<Player> {
+        return players
+    }
+
+    fun playerCards(player: Player) {
         players.first { it == player }.show()
     }
 
     private fun giveStartCards() {
-        players.forEach { dealer.giveCard(it) }
+        players.forEach { dealer.giveCards(it, INIT_DRAW_CARD_COUNT) }
+    }
+
+    companion object {
+        private const val INIT_DRAW_CARD_COUNT = 2
     }
 }

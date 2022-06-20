@@ -1,4 +1,4 @@
-package blackjack.view.input
+package blackjack.ui.input
 
 object BlackjackInputView {
 
