@@ -2,15 +2,12 @@ package blackjack.player
 
 import blackjack.card.Card
 
-class Player(val name: String) {
-    private val _cards = mutableListOf<Card>()
-    private val card: List<Card> get() = _cards.toList()
-
+class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
     fun getCard(card: Card) {
-        _cards.add(card)
+        playerCards.add(card)
     }
 
     fun show(): List<Card> {
-        return card
+        return playerCards.show()
     }
 }

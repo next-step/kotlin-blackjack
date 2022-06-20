@@ -1,6 +1,6 @@
 package blackjack.card
 
-class Cards(vararg value: Card) {
+class PlayCards(vararg value: Card) {
 
     private var _cards: MutableList<Card> = value.toMutableList()
     val size = _cards.size

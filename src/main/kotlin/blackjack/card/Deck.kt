@@ -1,14 +1,14 @@
 package blackjack.card
 
-class Deck(private val cards: Cards) {
+class Deck(private val playCards: PlayCards) {
     init {
-        require(cards.size == DECK_INIT_CARD_SIZE) {
+        require(playCards.size == DECK_INIT_CARD_SIZE) {
             "덱은 ${DECK_INIT_CARD_SIZE}장의 카드로 구성 돼 있습니다."
         }
     }
 
     fun draw(): Card {
-        return cards.drawCard()
+        return playCards.drawCard()
     }
 
     companion object {
