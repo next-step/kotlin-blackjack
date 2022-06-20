@@ -1,20 +1,20 @@
 package blackjack
 
-import blackjack.domain.BetResult
-import blackjack.domain.BetResultDiscriminator
 import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
+import blackjack.domain.DealerRule
 import blackjack.domain.Player
+import blackjack.domain.PlayerRule
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
-import blackjack.domain.User
+import blackjack.domain.WinningDiscriminator
+import blackjack.domain.WinningResult
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
 object CardGame {
     fun run() {
-        val dealer = Dealer()
-        val players = InputReceiver.receivePlayers()
+        val dealer = Player("딜러", rule = DealerRule)
+        val players = InputReceiver.receiverPlayers()
         val cardDeck = CardDeck.new(RandomShuffleStrategy)
 
         playFirstTurn(dealer, players, cardDeck)
@@ -29,11 +29,11 @@ object CardGame {
 
         drawResult(dealer, players)
 
-        val results = BetResultDiscriminator.discrimination(dealer, players)
+        val results = WinningDiscriminator.discrimination(dealer, players)
         drawRecord(results)
     }
 
-    private fun drawResult(dealer: Dealer, players: Players) {
+    private fun drawResult(dealer: Player, players: Players) {
         UI.drawDivider()
         UI.drawResult(dealer)
         players.forEach {
@@ -41,15 +41,15 @@ object CardGame {
         }
     }
 
-    private fun drawRecord(results: List<BetResult>) {
+    private fun drawRecord(results: List<WinningResult>) {
         UI.drawDivider()
         UI.drawRecordTitle()
         results.forEach {
-            UI.drawResult(it)
+            UI.drawRecord(it)
         }
     }
 
-    private fun playFirstTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) {
+    private fun playFirstTurn(dealer: Player, players: Players, cardDeck: CardDeck) {
         repeat(2) {
             dealer.draw(cardDeck)
             players.drawAllPlayer(cardDeck)
@@ -58,20 +58,20 @@ object CardGame {
         UI.drawFirstTurnMessage(dealer, players)
 
         UI.drawCardList(dealer)
-        players.forEach {
+        players.list.forEach {
             UI.drawCardList(it)
         }
     }
 
-    private fun playTurn(user: User, cardDeck: CardDeck) {
-        when (user) {
-            is Dealer -> if (user.canDraw()) {
-                user.draw(cardDeck)
-                UI.drawDealerDrawMessage(user)
+    private fun playTurn(player: Player, cardDeck: CardDeck) {
+        when (player.rule) {
+            DealerRule -> if (player.canDraw()) {
+                player.draw(cardDeck)
+                UI.drawDealerDrawMessage(player)
             }
-            is Player -> while (user.canDraw() && InputReceiver.receiveWhetherDrawCard(user)) {
-                user.draw(cardDeck)
-                UI.drawCardList(user)
+            PlayerRule -> while (player.canDraw() && InputReceiver.receiverWhetherDrawCard(player)) {
+                player.draw(cardDeck)
+                UI.drawCardList(player)
             }
         }
     }
