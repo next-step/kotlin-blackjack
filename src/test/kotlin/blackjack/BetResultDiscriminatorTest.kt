@@ -21,8 +21,8 @@ class BetResultDiscriminatorTest : DescribeSpec({
             row(-20000, 20000),
             row(0, 0)
         ) { playerBetMoney, dealerExpectedMoney ->
-            context("플레이어가 총 수익이 20000원을 인 경우") {
-                it("딜러는 -20000원을 갇는다.") {
+            context("플레이어가 총 수익이 ${playerBetMoney}원을 인 경우") {
+                it("딜러는 ${dealerExpectedMoney}원을 갇는다.") {
                     val betMoney = Money(playerBetMoney)
                     val expected = Money(dealerExpectedMoney)
 

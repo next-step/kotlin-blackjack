@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class ResultStatus(val earnMoneyRatio: Float) {
+enum class BetResultStatus(val earnMoneyRatio: Float) {
     WinByDealerBust(1.0f),
     WinByBlackJack(1.5f),
     WinByScore(1.0f),

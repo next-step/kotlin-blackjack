@@ -14,7 +14,7 @@ abstract class User(
 
     fun isBust(): Boolean = playerCards.isBust()
 
-    fun isBlackJack(): Boolean = playerCards.size == 2 && score.isBlackJack()
+    fun isBlackJack(): Boolean = playerCards.size == 2 && score.canBlackJack()
 
     abstract fun openedCards(): List<Card>
 

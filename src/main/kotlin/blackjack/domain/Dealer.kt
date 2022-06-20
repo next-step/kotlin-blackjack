@@ -7,15 +7,15 @@ class Dealer(
 
     override fun canDraw(): Boolean = playerCards.size <= CARD_TAKE_COUNT_THRESHOLD && score < CARD_DRAW_THRESHOLD
 
-    fun getPlayerBetResult(player: Player): ResultStatus {
+    fun getPlayerBetResult(player: Player): BetResultStatus {
         return when {
-            player.isBust() -> ResultStatus.LoseByBust
-            isBust() -> ResultStatus.WinByDealerBust
-            isBlackJack() && player.isBlackJack() -> ResultStatus.DrawWithBlackJack
-            player.isBlackJack() -> ResultStatus.WinByBlackJack
-            score > player.score -> ResultStatus.LoseByScore
-            score < player.score -> ResultStatus.WinByScore
-            else -> ResultStatus.Draw
+            player.isBust() -> BetResultStatus.LoseByBust
+            isBust() -> BetResultStatus.WinByDealerBust
+            isBlackJack() && player.isBlackJack() -> BetResultStatus.DrawWithBlackJack
+            player.isBlackJack() -> BetResultStatus.WinByBlackJack
+            score > player.score -> BetResultStatus.LoseByScore
+            score < player.score -> BetResultStatus.WinByScore
+            else -> BetResultStatus.Draw
         }
     }
 
