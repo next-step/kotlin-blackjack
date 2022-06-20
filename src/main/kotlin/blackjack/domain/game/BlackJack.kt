@@ -38,8 +38,8 @@ class BlackJack(blackJackRequest: BlackJackRequest, private val cardDeck: CardDe
     }
 
     companion object {
-        const val FIRST_DEAL = 2
-        const val DEALER_MAX_HIT_SCORE = 16
-        const val PLAYER_MAX_HIT_SCORE = 20
+        private const val FIRST_DEAL = 2
+        private const val DEALER_MAX_HIT_SCORE = 16
+        private const val PLAYER_MAX_HIT_SCORE = 20
     }
 }
