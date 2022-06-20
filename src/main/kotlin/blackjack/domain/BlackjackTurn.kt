@@ -12,8 +12,9 @@ class DealerTurn(private val dealer: Dealer) {
     fun play(deck: CardDeck, printDealerSummary: () -> Unit): PlayerResult {
         val turn = BlackjackTurn(dealer)
 
-        turn.makeDecision(dealer.shouldDrawCard) { deck.drawCard() }
-        turn.makeDecision(false) { deck.drawCard() }
+        while (turn.playerState is PlayerState.Playing) {
+            turn.makeDecision(dealer.shouldDrawCard) { deck.drawCard() }
+        }
 
         printDealerSummary()
 

@@ -10,7 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-private fun `16 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Six(CardSuit.CLOVER))
+private fun `4 point card`() = listOf(Card.Two(CardSuit.CLOVER), Card.Two(CardSuit.HEART))
 private fun `17 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Seven(CardSuit.CLOVER))
 private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ten(CardSuit.CLOVER))
 private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))
@@ -20,12 +20,12 @@ class BlackjackTurnTest {
     @Nested
     inner class `딜러의 카드가` {
         @Test
-        fun `16 이하일 경우 덱에서 카드를 뽑는다`() {
-            val dealer = Dealer(`16 point card`())
+        fun `16 이하일 경우 17 이상이 될때까지 덱에서 카드를 뽑는다`() {
+            val dealer = Dealer(`4 point card`())
 
             DealerTurn(dealer).play(CardDeck()) {}
 
-            assertThat(dealer.cards.size).isEqualTo(3)
+            assertThat(dealer.cards.size).isGreaterThanOrEqualTo(4)
         }
 
         @Test
