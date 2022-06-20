@@ -30,8 +30,8 @@ fun main() {
 
     players.play(takeMorePlayer, cardsByPlayerView)
     dealer.play(takeMoreDealer)
-    WinnerJudge(blackJackGamer)
+    WinnerJudge(players.players, dealer)
 
     resultView.printCardsByPlayers(blackJackGamer, true)
-    resultView.printFinalResult(blackJackGamer)
+    resultView.printFinalResult(players.players, dealer)
 }

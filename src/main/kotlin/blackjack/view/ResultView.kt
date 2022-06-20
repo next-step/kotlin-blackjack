@@ -18,10 +18,7 @@ class ResultView {
         }
     }
 
-    fun printFinalResult(blackJackGamer: List<Player>) {
-        val dealer = blackJackGamer.filterIsInstance<Dealer>().first()
-        val players = blackJackGamer.filter { it !is Dealer }
-
+    fun printFinalResult(players: List<Player>, dealer: Dealer) {
         println("")
         println("## 최종 수익")
         println(getDealerResult(dealer, players))

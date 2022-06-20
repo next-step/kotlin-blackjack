@@ -3,16 +3,13 @@ package blackjack.domain.game
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
-class WinnerJudge(private val players: List<Player>) {
+class WinnerJudge(private val players: List<Player>, private val dealer: Dealer) {
 
     init {
         calculateWinner()
     }
 
     private fun calculateWinner() {
-        val dealer = players.filterIsInstance<Dealer>().first()
-        val players = players.filter { it !is Dealer }.toList()
-
         players.forEach {
             judge(it, dealer)
         }

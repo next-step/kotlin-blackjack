@@ -13,13 +13,12 @@ class WinnerJudgeTest {
         val cardDeck = CardDeck()
         val dealer = Dealer(cardDeck)
         val players = Players(listOf("A", "B"), cardDeck)
-        val blackJackGamer = players.players + dealer
 
         while (dealer.score <= 21) {
             dealer.addCard(cardDeck.pickCard())
         }
 
-        WinnerJudge(blackJackGamer)
+        WinnerJudge(players.players, dealer)
 
         Assertions.assertThat(players.players[0].gambleSummary.isWinner).isTrue
         Assertions.assertThat(players.players[1].gambleSummary.isWinner).isTrue
