@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.common.PlayerSummary
-import blackjack.common.ScoreSummary
+import blackjack.common.ProfitSummary
 
 interface OutputView {
     fun printStartingSummaries(playerSummaries: List<PlayerSummary>)
@@ -12,5 +12,5 @@ interface OutputView {
 
     fun printDealerSummary(summary: PlayerSummary)
 
-    fun printScoreSummary(scoreSummary: ScoreSummary)
+    fun printProfitSummary(scoreSummary: ProfitSummary)
 }

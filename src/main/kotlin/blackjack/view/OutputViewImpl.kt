@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.Blackjack
 import blackjack.common.PlayerSummary
-import blackjack.common.ScoreSummary
+import blackjack.common.ProfitSummary
 
 object OutputViewImpl : OutputView {
     override fun printStartingSummaries(playerSummaries: List<PlayerSummary>) {
@@ -38,9 +38,9 @@ object OutputViewImpl : OutputView {
         }
     }
 
-    override fun printScoreSummary(scoreSummary: ScoreSummary) {
+    override fun printProfitSummary(scoreSummary: ProfitSummary) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
         scoreSummary.values
             .map { println("${it.first}: ${it.second}") }
     }

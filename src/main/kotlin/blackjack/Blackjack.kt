@@ -1,14 +1,14 @@
 package blackjack
 
 import blackjack.common.PlayerSummary
-import blackjack.common.ScoreSummary
+import blackjack.common.ProfitSummary
 import blackjack.domain.DealerTurn
+import blackjack.domain.bet.Profits
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
-import blackjack.domain.score.Scores
 import blackjack.view.InputView
 import blackjack.view.InputViewImpl
 import blackjack.view.OutputView
@@ -27,7 +27,7 @@ object Blackjack {
 
         outputView.printStartingSummaries(listOf(PlayerSummary(dealer, true)) + players.toPlayerSummaries())
 
-        val scores = Scores.of(
+        val profits = Profits.of(
             players = players.play(
                 deck,
                 { name -> inputView.getPlayerDecision(name) }
@@ -36,7 +36,7 @@ object Blackjack {
         )
 
         outputView.printFinalSummaries(listOf(PlayerSummary(dealer, false)) + players.toPlayerSummaries())
-        outputView.printScoreSummary(ScoreSummary(scores))
+        outputView.printProfitSummary(ProfitSummary(profits))
     }
 
     private fun drawStartingCardsFromDeck(deck: CardDeck): List<Card> = listOf(deck.drawCard(), deck.drawCard())

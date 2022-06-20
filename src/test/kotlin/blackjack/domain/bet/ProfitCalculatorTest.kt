@@ -2,6 +2,7 @@ package blackjack.domain.bet
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
+import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerResult
 import blackjack.domain.player.PlayerState
 import org.assertj.core.api.Assertions.assertThat
@@ -82,4 +83,4 @@ private fun `stand with 16 total`() = PlayerResult(
     PlayerState.Stand
 )
 
-private fun Player(cards: List<Card>) = blackjack.domain.player.Player("vivian", 1.0, cards)
+private fun Player(cards: List<Card>) = Player("vivian", 1.0, cards)
