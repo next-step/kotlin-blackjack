@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.card.Deck
+import blackjack.card.SimpleCardCreator
 import blackjack.dealer.Dealer
-import blackjack.factory.PlayerCreator
-import blackjack.factory.SimpleCardCreator
+import blackjack.player.PlayerCreator
 import blackjack.ui.input.BlackjackInputView
 import blackjack.ui.output.ResultView
 

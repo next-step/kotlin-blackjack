@@ -1,8 +1,8 @@
 package blackjack
 
 import blackjack.card.Deck
+import blackjack.card.SimpleCardCreator
 import blackjack.dealer.Dealer
-import blackjack.factory.SimpleCardCreator
 import blackjack.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

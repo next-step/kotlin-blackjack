@@ -1,6 +1,4 @@
-package blackjack.factory
-
-import blackjack.player.Player
+package blackjack.player
 
 object PlayerCreator {
     private const val DELIMITER = ","

@@ -2,6 +2,7 @@ package blackjack.factory
 
 import blackjack.card.Card
 import blackjack.card.CardSymbol
+import blackjack.card.SimpleCardCreator
 import blackjack.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
