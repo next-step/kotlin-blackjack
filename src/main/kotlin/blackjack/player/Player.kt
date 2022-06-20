@@ -12,6 +12,13 @@ class Player(
 
     fun getCard(card: Card) {
         playerCards.add(card)
+        updateStatus()
+    }
+
+    private fun updateStatus() {
+        if (bust) {
+            stopBetting()
+        }
     }
 
     fun myCards(): List<Card> {
@@ -19,11 +26,7 @@ class Player(
     }
 
     private fun isLoosingScore(): Boolean {
-        val isBust = WINNING_SCORE < score
-        if (isBust) {
-            stopBetting()
-        }
-        return isBust
+        return WINNING_SCORE < score
     }
 
     fun wantToPlay(): Boolean {

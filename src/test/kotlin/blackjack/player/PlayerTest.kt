@@ -49,4 +49,13 @@ class PlayerTest {
         player.stopBetting()
         assertThat(player.wantToPlay()).isFalse
     }
+    @Test
+    fun `플레이어는 bust하면  게임을 할 수 없다`() {
+        val player = Player("pang")
+        player.getCard(Card(Suit.SPADE, CardSymbol.TEN))
+        player.getCard(Card(Suit.SPADE, CardSymbol.JACK))
+        player.getCard(Card(Suit.SPADE, CardSymbol.KING))
+
+        assertThat(player.wantToPlay()).isFalse
+    }
 }
