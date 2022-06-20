@@ -16,16 +16,16 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
     }
 
     private fun judge(player: Player, dealer: Dealer) {
-        if (checkDraw(player, dealer)) {
+        if (player.isDraw(dealer)) {
             player.gambleSummary.gameStatus = GameStatus.DRAW
         }
 
-        if (checkPlayerWin(player, dealer)) {
+        if (player.isWin(dealer)) {
             player.gambleSummary.gameStatus = GameStatus.WIN
             dealer.lose++
         }
 
-        if (checkDealerWin(player, dealer)) {
+        if (dealer.isWin(player)) {
             player.gambleSummary.gameStatus = GameStatus.LOSE
             dealer.win++
         }
@@ -50,28 +50,7 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
         }
     }
 
-    private fun checkDraw(player: Player, dealer: Dealer): Boolean {
-        return player.score == dealer.score
-    }
-
-    private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {
-        if (player.isBust()) {
-            return false
-        }
-
-        return dealer.score > BLACKJACK_SCORE || player.score > dealer.score || player.score == BLACKJACK_SCORE
-    }
-
-    private fun checkDealerWin(player: Player, dealer: Dealer): Boolean {
-        if (dealer.isBust()) {
-            return false
-        }
-
-        return player.score > BLACKJACK_SCORE || player.score < dealer.score || dealer.score == BLACKJACK_SCORE
-    }
-
     companion object {
-        private const val BLACKJACK_SCORE = 21
         private const val FIRST_BLACKJACK_EARNING_RATE = 1.5
     }
 }

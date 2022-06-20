@@ -52,9 +52,21 @@ open class Player(
         return takeMorePlayerStrategy.wantToTake(this)
     }
 
+    fun isDraw(player: Player): Boolean {
+        return player.score == this.score
+    }
+
+    fun isWin(compare: Player): Boolean {
+        if (isBust()) {
+            return false
+        }
+
+        return compare.score > BLACKJACK_SCORE || compare.score < score || score == BLACKJACK_SCORE
+    }
+
     companion object {
-        private const val BLACKJACK_SCORE = 21
-        private const val CARD_SIZE_FOR_BLACKJACK = 2
+        const val BLACKJACK_SCORE = 21
+        const val CARD_SIZE_FOR_BLACKJACK = 2
         const val INIT_PICK_CARD_NUMBER = 2
     }
 }
