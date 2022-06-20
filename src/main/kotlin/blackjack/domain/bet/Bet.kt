@@ -1,7 +1,7 @@
 package blackjack.domain.bet
 
 @JvmInline
-value class Bet(private val bet: Int) {
+value class Bet(private val bet: Double) {
     init {
         require(bet > 0) { BET_SHOULD_BE_ABOVE_ZERO }
     }

@@ -77,4 +77,4 @@ private fun `stand with 16 total`() = PlayerResult(
     PlayerState.Stand
 )
 
-private fun Player(cards: List<Card>) = Player("vivian", 1000, cards)
+private fun Player(cards: List<Card>) = Player("vivian", 1000.0, cards)

@@ -23,6 +23,6 @@ class ScoresTest {
 }
 
 private fun result() = PlayerResult(
-    Player("vivian", 1000, listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
+    Player("vivian", 1000.0, listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
     PlayerState.Stand
 )

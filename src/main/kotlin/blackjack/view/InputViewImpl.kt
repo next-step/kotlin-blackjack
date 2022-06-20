@@ -36,8 +36,8 @@ object InputViewImpl : InputView {
     private fun List<String>.toNonBlankStrings(): List<String> = map { it.trim() }
         .filter { it.isNotBlank() }
 
-    private fun String.toPositiveInteger(): Int = trim()
-        .toIntOrNull()
+    private fun String.toPositiveInteger(): Double = trim()
+        .toDoubleOrNull()
         ?.takeIf { it > 0 }
         ?: throw IllegalArgumentException(NOT_A_POSITIVE_INT)
 }

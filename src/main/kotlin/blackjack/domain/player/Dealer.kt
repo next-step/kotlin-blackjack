@@ -8,6 +8,6 @@ class Dealer(startingCards: List<Card>) : Player(DEALER_NAME, ARBITRARY_BET_AMOU
 
     companion object {
         const val DEALER_NAME = "딜러"
-        const val ARBITRARY_BET_AMOUNT = 1
+        const val ARBITRARY_BET_AMOUNT = 1.0
     }
 }

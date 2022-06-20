@@ -46,6 +46,6 @@ private fun Playing(cards: List<Card>): PlayerState.Playing {
     return PlayerState.Playing(Player(cards))
 }
 
-private fun Player(cards: List<Card>) = Player("vivian", 1000, cards)
+private fun Player(cards: List<Card>) = Player("vivian", 1000.0, cards)
 private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Queen(CardSuit.CLOVER))
 private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))

@@ -24,6 +24,6 @@ class PlayersTest {
     }
 }
 
-private fun Player(name: String) = Player(name, 1000, `starting cards`())
+private fun Player(name: String) = Player(name, 1000.0, `starting cards`())
 
 private fun `starting cards`() = listOf(Card.Two(CardSuit.CLOVER), Card.Three(CardSuit.CLOVER))
