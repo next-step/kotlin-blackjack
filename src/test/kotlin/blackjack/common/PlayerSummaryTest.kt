@@ -14,7 +14,7 @@ class PlayerSummaryTest {
     @Test
     fun `플레이어의 이름을 가져올 수 있다`() {
         val name = "vivian"
-        val player = Player(name, `20 point card`())
+        val player = Player(name, 1000, `20 point card`())
 
         assertThat(PlayerSummary(player).playerName).isEqualTo(name)
     }
@@ -27,14 +27,14 @@ class PlayerSummaryTest {
         )
 
         assertThat(
-            PlayerSummary(Player("vivian", cards)).playerCards
+            PlayerSummary(Player("vivian", 1000, cards)).playerCards
         ).isEqualTo(cards.map { CardName.of(it) })
     }
 
     @Test
     fun `플레이어 핸드에 있는 총 카드 합을 가져올 수 있다`() {
         assertThat(
-            PlayerSummary(Player("vivian", `20 point card`())).playerCardsTotal
+            PlayerSummary(Player("vivian", 1000, `20 point card`())).playerCardsTotal
         ).isEqualTo(20)
     }
 
@@ -70,7 +70,7 @@ class PlayerSummaryTest {
         )
 
         assertThat(
-            PlayerSummary(Player("vivian", cards), excludeHiddenCard = true).playerCards
+            PlayerSummary(Player("vivian", 1000, cards), excludeHiddenCard = true).playerCards
         ).isEqualTo(listOf("3다이아몬드", "J하트"))
     }
 }

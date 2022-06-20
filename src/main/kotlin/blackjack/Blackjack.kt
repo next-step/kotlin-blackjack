@@ -22,7 +22,7 @@ object Blackjack {
 
         val dealer = Dealer(drawStartingCardsFromDeck(deck))
         val players = Players(
-            inputView.getPlayerNames().map { Player(it, drawStartingCardsFromDeck(deck)) }
+            inputView.getPlayerProperties().map { Player(it.name, it.bet, drawStartingCardsFromDeck(deck)) }
         )
 
         outputView.printStartingSummaries(listOf(PlayerSummary(dealer, true)) + players.toPlayerSummaries())

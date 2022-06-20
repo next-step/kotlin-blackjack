@@ -28,16 +28,16 @@ class ScoreSummaryTest {
 }
 
 private fun `stand with 14 total`() = PlayerResult(
-    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
+    Player("vivian", 1000, listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
     PlayerState.Stand
 )
 
 private fun `stand with 15 total`() = PlayerResult(
-    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Five(CardSuit.CLOVER))),
+    Player("vivian", 1000, listOf(Card.Queen(CardSuit.CLOVER), Card.Five(CardSuit.CLOVER))),
     PlayerState.Stand
 )
 
 private fun `stand with 16 total`() = PlayerResult(
-    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Six(CardSuit.CLOVER))),
+    Player("vivian", 1000, listOf(Card.Queen(CardSuit.CLOVER), Card.Six(CardSuit.CLOVER))),
     PlayerState.Stand
 )

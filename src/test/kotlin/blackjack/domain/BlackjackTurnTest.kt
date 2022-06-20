@@ -67,4 +67,4 @@ private fun `4 point card`() = listOf(Card.Two(CardSuit.CLOVER), Card.Two(CardSu
 private fun `17 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Seven(CardSuit.CLOVER))
 private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ten(CardSuit.CLOVER))
 private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))
-private fun Player(cards: List<Card>) = Player("vivian", cards)
+private fun Player(cards: List<Card>) = Player("vivian", 1000, cards)

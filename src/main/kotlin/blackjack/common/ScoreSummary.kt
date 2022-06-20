@@ -15,7 +15,7 @@ class ScoreSummary(scores: Scores) {
         val draw = playerScores.dealerScoreOf(ScoreType.DRAW)
         val lose = playerScores.dealerScoreOf(ScoreType.LOSE)
 
-        return listOf(win, draw, lose).joinToString(" ")
+        return "$win $draw $lose".trim()
     }
 
     private fun Scores.dealerScoreOf(scoreType: ScoreType): String {

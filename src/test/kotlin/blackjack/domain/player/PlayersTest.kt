@@ -16,12 +16,14 @@ class PlayersTest {
 
     @Test
     fun `모든 플레이어에게는 게임을 진행할 수 있는 턴이 주어진다`() {
-        val players = Players(listOf(Player("a", `starting cards`()), Player("b", `starting cards`())))
+        val players = Players(listOf(Player("a"), Player("b")))
         val results = players.play(CardDeck(), { PlayerDecision.HIT }) {}
 
         assertThat(results).hasSize(2)
         results.forEach { assertThat(it.finalState).isInstanceOf(PlayerState.Done::class.java) }
     }
 }
+
+private fun Player(name: String) = Player(name, 1000, `starting cards`())
 
 private fun `starting cards`() = listOf(Card.Two(CardSuit.CLOVER), Card.Three(CardSuit.CLOVER))

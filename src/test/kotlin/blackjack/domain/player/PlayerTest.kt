@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
@@ -10,14 +11,22 @@ class PlayerTest {
     @Test
     fun `플레이어는 이름을 가지고 있다`() {
         val name = "vivian"
-        val player = Player(name, `starting cards`())
+        val player = Player(name, 1000, `starting cards`())
 
         assertThat(player.name).isEqualTo(name)
     }
 
     @Test
+    fun `플레이어는 베팅 금액을 지정해야 한다`() {
+        val bet = 1000
+        val player = Player("vivian", bet, `starting cards`())
+
+        assertThat(player.bet).isEqualTo(Bet(bet))
+    }
+
+    @Test
     fun `플레이어는 2장의 카드로 시작한다`() {
-        val player = Player("vivian", `starting cards`())
+        val player = Player("vivian", 1000, `starting cards`())
 
         assertThat(player.cards.size).isEqualTo(2)
     }
@@ -25,12 +34,12 @@ class PlayerTest {
     @Test
     fun `플레이어가 2장의 카드로 시작하지 않을 경우 IllegalArgumentException 이 발생한다`() {
         assertThatIllegalArgumentException()
-            .isThrownBy { Player("vivian", `starting cards`() + listOf(Card.Two(CardSuit.CLOVER))) }
+            .isThrownBy { Player("vivian", 1000, `starting cards`() + listOf(Card.Two(CardSuit.CLOVER))) }
     }
 
     @Test
     fun `플레이어는 핸드에 카드를 추가할 수 있다`() {
-        val player = Player("vivian", `starting cards`())
+        val player = Player("vivian", 1000, `starting cards`())
         val additionalCard = Card.Two(CardSuit.CLOVER)
 
         player.addCardToHand(additionalCard)
@@ -41,3 +50,5 @@ class PlayerTest {
 }
 
 private fun `starting cards`() = listOf(Card.Two(CardSuit.DIAMOND), Card.Ace(CardSuit.SPADE))
+
+private fun Player() = Player("vivian", 1000, `starting cards`())

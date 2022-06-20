@@ -22,5 +22,6 @@ class PlayerResultTest {
 
 private fun Player() = Player(
     "vivian",
+    1000,
     listOf(Card.Ace(CardSuit.CLOVER), Card.King(CardSuit.CLOVER))
 )
