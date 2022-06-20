@@ -1,4 +1,9 @@
-package blackjack.card
+package blackjack.factory
+
+import blackjack.card.Card
+import blackjack.card.CardSymbol
+import blackjack.card.Cards
+import blackjack.card.Suit
 
 object SimpleCardCreator {
 

@@ -14,4 +14,9 @@ enum class CardSymbol(private val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
+    ;
+
+    fun value(): Int {
+        return this.value
+    }
 }
