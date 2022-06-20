@@ -40,4 +40,13 @@ class PlayerTest {
         player.getCard(Card(Suit.HEART, CardSymbol.QUEEN))
         assertThat(player.bust).isEqualTo(true)
     }
+
+    @Test
+    fun `플레이어는 상태가 HIT이면 게임을 할 수 있다`() {
+        val player = Player("pang")
+        assertThat(player.wantToPlay()).isTrue
+
+        player.stopBetting()
+        assertThat(player.wantToPlay()).isFalse
+    }
 }
