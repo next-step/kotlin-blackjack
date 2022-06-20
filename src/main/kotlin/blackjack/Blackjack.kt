@@ -3,7 +3,6 @@ package blackjack
 import blackjack.common.PlayerSummary
 import blackjack.common.ScoreSummary
 import blackjack.domain.DealerTurn
-import blackjack.domain.PlayerTurn
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
@@ -26,26 +25,21 @@ object Blackjack {
             inputView.getPlayerNames().map { Player(it, drawStartingCardsFromDeck(deck)) }
         )
 
-        outputView.printStartingSummaries(players.toPlayerSummaries(PlayerSummary(dealer, true)))
+        outputView.printStartingSummaries(listOf(PlayerSummary(dealer, true)) + players.toPlayerSummaries())
 
         val scores = Scores.of(
-            players = players.list.map { player ->
-                PlayerTurn(player).play(
-                    deck,
-                    { inputView.getPlayerDecision(player.name) }
-                ) { outputView.printPlayerSummary(PlayerSummary(player)) }
-            },
+            players = players.play(
+                deck,
+                { name -> inputView.getPlayerDecision(name) }
+            ) { summary -> outputView.printPlayerSummary(summary) },
             dealer = DealerTurn(dealer).play(deck) { outputView.printDealerSummary(PlayerSummary(dealer)) }
         )
 
-        outputView.printFinalSummaries(players.toPlayerSummaries(PlayerSummary(dealer, false)))
+        outputView.printFinalSummaries(listOf(PlayerSummary(dealer, false)) + players.toPlayerSummaries())
         outputView.printScoreSummary(ScoreSummary(scores))
     }
 
     private fun drawStartingCardsFromDeck(deck: CardDeck): List<Card> = listOf(deck.drawCard(), deck.drawCard())
-
-    private fun Players.toPlayerSummaries(dealerSummary: PlayerSummary): List<PlayerSummary> =
-        listOf(dealerSummary) + list.map { PlayerSummary(it) }
 }
 
 fun main() {

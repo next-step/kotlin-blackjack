@@ -1,6 +1,9 @@
 package blackjack.domain
 
+import blackjack.Fetcher
+import blackjack.Printer
 import blackjack.common.PlayerDecision
+import blackjack.common.PlayerSummary
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
@@ -9,26 +12,26 @@ import blackjack.domain.player.PlayerResult
 import blackjack.domain.player.PlayerState
 
 class DealerTurn(private val dealer: Dealer) {
-    fun play(deck: CardDeck, printDealerSummary: () -> Unit): PlayerResult {
+    fun play(deck: CardDeck, printDealerSummary: Printer<PlayerSummary>): PlayerResult {
         val turn = BlackjackTurn(dealer)
 
         while (turn.playerState is PlayerState.Playing) {
             turn.makeDecision(dealer.shouldDrawCard) { deck.drawCard() }
         }
 
-        printDealerSummary()
+        printDealerSummary(PlayerSummary(dealer))
 
         return PlayerResult(dealer, turn.playerState)
     }
 }
 
 class PlayerTurn(private val player: Player) {
-    fun play(deck: CardDeck, getPlayerDecision: () -> PlayerDecision, printPlayerSummary: () -> Unit): PlayerResult {
+    fun play(deck: CardDeck, getPlayerDecision: Fetcher<String, PlayerDecision>, printPlayerSummary: Printer<PlayerSummary>): PlayerResult {
         val turn = BlackjackTurn(player)
 
         while (turn.playerState is PlayerState.Playing) {
-            turn.makeDecision(getPlayerDecision() == PlayerDecision.HIT) { deck.drawCard() }
-            printPlayerSummary()
+            turn.makeDecision(getPlayerDecision(player.name) == PlayerDecision.HIT) { deck.drawCard() }
+            printPlayerSummary(PlayerSummary(player))
         }
 
         return PlayerResult(player, turn.playerState)
