@@ -27,7 +27,7 @@ class BlackjackViewModel private constructor(
     }
 
     fun stay() {
-        val currentPlayer = currentTurn.value.participant as? Player // Todo : 수정해야 함
+        val currentPlayer = currentTurn.value.participant as? Player
         currentPlayer?.stay()
     }
 
