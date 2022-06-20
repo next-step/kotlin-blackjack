@@ -36,7 +36,7 @@ class BlackjackState(val players: Players, private val cards: Cards = createShuf
         private const val NUMBER_OF_INIT_CARDS = 2
         private const val NUMBER_OF_GIVE_CARDS = 1
 
-        fun createShuffledCards(): Cards {
+        private fun createShuffledCards(): Cards {
             val cardList = CardNumber.values().flatMap { cardNumber ->
                 Suit.values().map { suit ->
                     Card(cardNumber, suit)

@@ -12,11 +12,6 @@ class BlackjackStateTest {
     )
 
     @Test
-    fun `모든 카드가 있는 상태로 초기화된 Cards 를 필드로 갖는다`() {
-        assertThat(BlackjackState.createShuffledCards().values).hasSize(52)
-    }
-
-    @Test
     fun `Players들을 생성자로 받는다`() {
         assertThat(BlackjackState(players).players).isEqualTo(players)
     }
