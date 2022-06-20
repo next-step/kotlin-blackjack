@@ -16,10 +16,10 @@ class DealerTest {
         val dealer = Dealer(deck)
         val player = Player("pang")
 
-        assertThat(player.show()).isEmpty()
+        assertThat(player.myCards()).isEmpty()
         dealer.giveCard(player)
 
-        assertThat(player.show().size).isEqualTo(1)
+        assertThat(player.myCards().size).isEqualTo(1)
     }
 
     @ParameterizedTest
@@ -31,6 +31,6 @@ class DealerTest {
 
         dealer.giveCards(player, value)
 
-        assertThat(player.show().size).isEqualTo(value)
+        assertThat(player.myCards().size).isEqualTo(value)
     }
 }

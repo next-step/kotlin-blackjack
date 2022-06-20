@@ -13,7 +13,7 @@ object ResultView {
     }
 
     fun showPlayerCard(player: Player) {
-        val cards = player.show().map { "${it.symbol.symbol}${it.suit.value}" }
+        val cards = player.myCards().map { "${it.symbol.symbol}${it.suit.value}" }
             .joinToString { it }
 
         println("${player.name}카드: $cards")

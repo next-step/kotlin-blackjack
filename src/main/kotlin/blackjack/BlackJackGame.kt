@@ -17,7 +17,7 @@ class BlackJackGame(
     }
 
     fun playerCards(player: Player) {
-        players.first { it == player }.show()
+        players.first { it == player }.myCards()
     }
 
     private fun giveStartCards() {

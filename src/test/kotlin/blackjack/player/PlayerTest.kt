@@ -17,7 +17,7 @@ class PlayerTest {
     @Test
     fun `플레이어 최초 카드는 0개다 갖는다`() {
         val player = Player("pang")
-        assertThat(player.show().size).isEqualTo(0)
+        assertThat(player.myCards().size).isEqualTo(0)
     }
 
     @Test
@@ -25,6 +25,6 @@ class PlayerTest {
         val player = Player("pang")
         player.getCard(Card(Suit.SPADE, CardSymbol.ACE))
 
-        assertThat(player.show()).contains(Card(Suit.SPADE, CardSymbol.ACE))
+        assertThat(player.myCards()).contains(Card(Suit.SPADE, CardSymbol.ACE))
     }
 }

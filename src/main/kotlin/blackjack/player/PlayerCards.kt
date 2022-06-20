@@ -10,7 +10,7 @@ class PlayerCards {
         _cards.add(card)
     }
 
-    fun show(): List<Card> {
+    fun get(): List<Card> {
         return card
     }
 }
