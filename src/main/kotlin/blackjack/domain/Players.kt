@@ -5,6 +5,11 @@ class Players(val list: List<Player>) {
         list.forEach { it.draw(cardDeck) }
     }
 
+    fun getBetResults(dealer: Dealer): List<BetResult> {
+        return list.map { player ->
+            BetResult(player, player.betMoney, dealer.getPlayerBetResult(player))
+        }
+    }
+
     fun forEach(action: (Player) -> Unit) = list.forEach(action)
-    fun <T> map(mapper: (Player) -> T) = list.map(mapper)
 }

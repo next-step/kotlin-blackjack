@@ -1,22 +1,11 @@
 package blackjack.domain
 
 class Player(
-    val name: String,
-    private val playerCards: PlayerCards = PlayerCards(),
-    val rule: Rule = PlayerRule,
-) {
-    val cardCount: Int get() = playerCards.size
-    val score: Score get() = playerCards.score
+    name: String,
+    playerCards: PlayerCards = PlayerCards(),
+    val betMoney: Money = Money(0),
+) : User(name, playerCards) {
+    override fun openedCards(): List<Card> = currentCards()
 
-    fun draw(cardDeck: CardDeck) {
-        playerCards.addCard(cardDeck.pop())
-    }
-
-    fun openedCards() = rule.openedCards(playerCards)
-
-    fun currentCards() = playerCards.cards
-
-    fun canDraw(): Boolean = rule.canDraw(score)
-
-    fun isBust(): Boolean = playerCards.isBust()
+    override fun canDraw(): Boolean = !score.isBust()
 }
