@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
-private fun `starting cards`() = listOf(Card.Two(CardSuit.DIAMOND), Card.Ace(CardSuit.SPADE))
 class PlayerTest {
     @Test
     fun `플레이어는 이름을 가지고 있다`() {
@@ -40,3 +39,5 @@ class PlayerTest {
         assertThat(player.cards[2]).isSameAs(additionalCard)
     }
 }
+
+private fun `starting cards`() = listOf(Card.Two(CardSuit.DIAMOND), Card.Ace(CardSuit.SPADE))

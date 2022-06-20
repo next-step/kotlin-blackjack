@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
-private fun `starting cards`() = listOf(Card.Two(CardSuit.CLOVER), Card.Three(CardSuit.CLOVER))
 class PlayersTest {
     @Test
     fun `Players 는 여러명의 플레이어로 구성되어 있다`() {
@@ -20,3 +19,5 @@ class PlayersTest {
         assertThatIllegalArgumentException().isThrownBy { Players(emptyList()) }
     }
 }
+
+private fun `starting cards`() = listOf(Card.Two(CardSuit.CLOVER), Card.Three(CardSuit.CLOVER))

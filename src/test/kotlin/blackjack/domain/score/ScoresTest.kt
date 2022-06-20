@@ -8,11 +8,6 @@ import blackjack.domain.player.PlayerState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun result() = PlayerResult(
-    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
-    PlayerState.Stand
-)
-
 class ScoresTest {
     @Test
     fun `플레이어 수 만큼 스코어를 계산한다`() {
@@ -26,3 +21,8 @@ class ScoresTest {
         ).hasSize(numberOfPlayers)
     }
 }
+
+private fun result() = PlayerResult(
+    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
+    PlayerState.Stand
+)
