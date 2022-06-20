@@ -7,6 +7,6 @@ class CardTest {
 
     @Test
     fun createCard() {
-        assertDoesNotThrow { Card(Suit.CLUB, CardSymbol.ONE) }
+        assertDoesNotThrow { Card(Suit.CLUB, CardSymbol.ACE) }
     }
 }

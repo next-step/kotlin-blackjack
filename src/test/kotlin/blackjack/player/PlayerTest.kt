@@ -23,8 +23,8 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 받을 수 있다`() {
         val player = Player("pang")
-        player.getCard(Card(Suit.SPADE, CardSymbol.ONE))
+        player.getCard(Card(Suit.SPADE, CardSymbol.ACE))
 
-        assertThat(player.show()).contains(Card(Suit.SPADE, CardSymbol.ONE))
+        assertThat(player.show()).contains(Card(Suit.SPADE, CardSymbol.ACE))
     }
 }
