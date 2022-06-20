@@ -46,9 +46,8 @@ class PlayerTest {
         val player = Player(
             name = "A",
             cards = listOf(
-                cardDeck.pickCardByNumber(7),
-                cardDeck.pickCardByNumber(7),
-                cardDeck.pickCardByNumber(7),
+                cardDeck.pickCardByNumber(10),
+                cardDeck.pickCardByNumber(11),
             )
         )
 

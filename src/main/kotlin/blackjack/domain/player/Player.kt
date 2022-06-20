@@ -37,7 +37,7 @@ open class Player(
     }
 
     fun isBlackJack(): Boolean {
-        return Score.calculateScore(_receivedCards) == BLACKJACK_SCORE
+        return _receivedCards.count() == CARD_SIZE_FOR_BLACKJACK && Score.calculateScore(_receivedCards) == BLACKJACK_SCORE
     }
 
     fun adjustBustBattingAmount() {
@@ -54,6 +54,7 @@ open class Player(
 
     companion object {
         private const val BLACKJACK_SCORE = 21
+        private const val CARD_SIZE_FOR_BLACKJACK = 2
         const val INIT_PICK_CARD_NUMBER = 2
     }
 }

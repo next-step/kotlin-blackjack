@@ -31,13 +31,13 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
     }
 
     private fun adjustEarningRate(player: Player, dealer: Dealer) {
-        if (conditionOfFirstBlackJack(player, dealer)) {
+        if (conditionOfBlackJack(player, dealer)) {
             player.gambleSummary.earningRate = FIRST_BLACKJACK_EARNING_RATE
         }
     }
 
-    private fun conditionOfFirstBlackJack(player: Player, dealer: Dealer): Boolean {
-        return player.receivedCards.count() == CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY && player.isBlackJack() && !dealer.isBlackJack()
+    private fun conditionOfBlackJack(player: Player, dealer: Dealer): Boolean {
+        return player.isBlackJack() && !dealer.isBlackJack()
     }
 
     private fun adjustLossBattingAmount(gamer: Player) {
@@ -64,7 +64,6 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
 
     companion object {
         private const val BLACKJACK_SCORE = 21
-        private const val CARD_SIZE_FOR_FIRST_BLACKJACK_POLICY = 2
         private const val FIRST_BLACKJACK_EARNING_RATE = 1.5
     }
 }
