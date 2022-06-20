@@ -13,10 +13,27 @@ fun main() {
     val deck = Deck(SimpleCardCreator.startCard())
     val dealer = Dealer(deck)
 
-    val game = BlackJackGame(players, dealer)
+    val blackJack = BlackJackGame(players, dealer)
 
-    game.startGame()
+    blackJack.startGame()
     ResultView.showStartStatus(
-        game.allPlayer()
+        blackJack.allPlayer()
     )
+    println()
+
+    play(blackJack)
+
+    println()
+
+    ResultView.showGameResult(blackJack.allPlayer())
+}
+
+private fun play(blackJack: BlackJackGame) {
+    val player = blackJack.getPlayablePlayer()
+    if (player != null) {
+        val needMoreCard = BlackjackInputView.needMoreCard(player.name)
+        blackJack.ask(player, needMoreCard)
+        ResultView.showPlayerCard(player)
+        play(blackJack)
+    }
 }
