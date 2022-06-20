@@ -5,8 +5,9 @@ import blackjack.player.Player
 
 class Dealer(private val deck: Deck) {
     fun giveCards(player: Player, count: Int) {
-        for (i in 0..count)
+        repeat(count) {
             giveCard(player)
+        }
     }
 
     fun giveCard(player: Player) {

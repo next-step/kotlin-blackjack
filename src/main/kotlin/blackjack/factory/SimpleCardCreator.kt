@@ -8,11 +8,12 @@ import blackjack.card.Suit
 object SimpleCardCreator {
 
     fun startCard(): PlayCards {
-        return PlayCards(
-            * Suit.values().flatMap { suit ->
-                CardSymbol.values()
-                    .map { symbol -> Card(suit, symbol) }
-            }.toTypedArray()
-        )
+        val cards = Suit.values().flatMap { suit ->
+            CardSymbol.values()
+                .map { symbol -> Card(suit, symbol) }
+        }.toTypedArray()
+            .also { it.shuffle() }
+
+        return PlayCards(*cards)
     }
 }
