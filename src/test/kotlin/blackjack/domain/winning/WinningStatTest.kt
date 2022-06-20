@@ -10,7 +10,7 @@ class WinningStatTest : FreeSpec({
 
     "playerGameResult" - {
         "우승 지표를 가져온다." {
-            val player = Player("test")
+            val player = Player("test", 1000)
             val winningStat = WinningStat(
                 listOf(PlayerScore(player, 2)),
                 PlayerScore(Dealer(), 3)
@@ -27,7 +27,7 @@ class WinningStatTest : FreeSpec({
 
     "dealerWinning" - {
         "딜러의 점수가 21을 초과할 경우 false를 반환한다." {
-            val player = Player("test")
+            val player = Player("test", 1000)
             val winningStat = WinningStat(
                 listOf(PlayerScore(player, 2)),
                 PlayerScore(Dealer(), 21)
@@ -38,7 +38,7 @@ class WinningStatTest : FreeSpec({
         }
 
         "딜러의 점수가 21을 미만일 경우 true를 반환한다." {
-            val player = Player("test")
+            val player = Player("test", 1000)
             val winningStat = WinningStat(
                 listOf(PlayerScore(player, 2)),
                 PlayerScore(Dealer(), 20)

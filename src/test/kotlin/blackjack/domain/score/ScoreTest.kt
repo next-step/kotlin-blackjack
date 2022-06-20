@@ -8,6 +8,7 @@ import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.domain.game.BlackJack
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
+import blackjack.view.InputPlayerBetting
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,7 +17,7 @@ class ScoreTest : FreeSpec({
     "calculate" - {
 
         "플레이어의 점수를 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, "2"),
                 Card(DIAMOND, "3"),
@@ -36,7 +37,7 @@ class ScoreTest : FreeSpec({
         }
 
         "ACE카드가 존재하면서 21 초과인 경우 에이스를 1로 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, ACE),
                 Card(DIAMOND, JACK),
@@ -55,7 +56,7 @@ class ScoreTest : FreeSpec({
         }
 
         "ACE카드가 존재하면서 21 이하인 경우 에이스를 11로 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, ACE),
                 Card(DIAMOND, JACK),

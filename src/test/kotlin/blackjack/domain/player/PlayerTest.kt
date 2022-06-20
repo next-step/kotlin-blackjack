@@ -10,7 +10,7 @@ class PlayerTest : FreeSpec({
     "addCard" - {
 
         "플레이어에게 카드가 추가되어야한다" {
-            val player = Player("uju")
+            val player = Player("uju", 1000)
             val card = Card(DIAMOND, "3")
             player.addCard(card)
 
@@ -22,7 +22,7 @@ class PlayerTest : FreeSpec({
     "score" - {
 
         "플레이어가 가진 점수를 반환해야한다." {
-            val player = Player("uju")
+            val player = Player("uju", 1000)
             val card = Card(DIAMOND, "3")
             player.addCard(card)
 

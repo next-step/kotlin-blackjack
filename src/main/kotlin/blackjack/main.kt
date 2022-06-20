@@ -19,18 +19,24 @@ fun main() {
     val resultView = ResultView()
 
     val inputPlayers = inputView.inputPlayers()
-    resultView.players(inputPlayers)
+    inputView.inputBetting(inputPlayers)
 
-    startBlackJack(resultView, inputPlayers)
+    startBlackJack(inputView, resultView, inputPlayers)
 }
 
-fun startBlackJack(resultView: ResultView, inputPlayers: List<String>) {
-    val dto: BlackJackRequest = BlackJackRequest.of(inputPlayers)
+fun startBlackJack(
+    inputView: InputView,
+    resultView: ResultView,
+    inputPlayers: List<String>
+) {
+    val dto: BlackJackRequest = BlackJackRequest.of(inputView.inputPlayerAndBetting)
     val cardDeck: CardDeck = RandomCardDeck()
+    resultView.players(inputPlayers)
     val blackJack = BlackJack(dto, cardDeck)
 
     val players: List<Player> = dto.players
     val dealer: Dealer = dto.dealer
+
     val gameView = GameView(blackJack, dealer, players)
     gameView.firstRoundState()
     gameView.run()

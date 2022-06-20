@@ -8,14 +8,19 @@ import blackjack.domain.card.RandomCardDeck.Companion.JACK
 import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
+import blackjack.view.InputPlayerBetting
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
 class BlackJackTest : FreeSpec({
 
+    beforeTest() {
+        val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+    }
+
     "init" - {
         "블랙잭 게임이 사작할 때 플레이어는 2장의 카드를 받아야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, "2"),
                 Card(DIAMOND, "3"),
@@ -33,7 +38,7 @@ class BlackJackTest : FreeSpec({
         }
 
         "블랙잭 게임이 시작할 때 딜러는 2장의 카드를 받아야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, "2"),
                 Card(DIAMOND, "3"),
@@ -54,7 +59,7 @@ class BlackJackTest : FreeSpec({
 
     "giveCard" - {
         "카드 한장을 줘야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cardDeck = RandomCardDeck()
             val blackJack = BlackJack(dto, cardDeck)
             val player = dto.players[0]
@@ -67,7 +72,7 @@ class BlackJackTest : FreeSpec({
 
     "canHitPlayer" - {
         "플레이어의 카드가 21을 초과하지 않으면 true를 반환한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, "2"),
                 Card(DIAMOND, "3"),
@@ -83,7 +88,7 @@ class BlackJackTest : FreeSpec({
         }
 
         "플레이어의 카드가 21을 초과하면 false를 반환한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, ACE),
                 Card(DIAMOND, JACK),
