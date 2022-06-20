@@ -1,10 +1,13 @@
 package blackjack.domain.player
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-open class Player(val name: String, startingCards: List<Card>) {
+open class Player(val name: String, bet: Double, startingCards: List<Card>) {
     val cards: Cards = Cards(startingCards)
+
+    val bet: Bet = Bet(bet)
 
     init {
         require(startingCards.size == 2) { SHOULD_START_WITH_TWO_CARDS }

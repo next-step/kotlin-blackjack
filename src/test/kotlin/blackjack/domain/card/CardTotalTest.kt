@@ -4,11 +4,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-private fun `20 point card`() = listOf(
-    Card.King(CardSuit.CLOVER),
-    Card.Ten(CardSuit.HEART)
-)
-
 class CardTotalTest {
     @Test
     fun `카드 숫자의 합을 계산할 수 있다`() {
@@ -93,3 +88,8 @@ class CardTotalTest {
         assertThat(cardTotalAboveTwentyOne.value).isEqualTo(24)
     }
 }
+
+private fun `20 point card`() = listOf(
+    Card.King(CardSuit.CLOVER),
+    Card.Ten(CardSuit.HEART)
+)

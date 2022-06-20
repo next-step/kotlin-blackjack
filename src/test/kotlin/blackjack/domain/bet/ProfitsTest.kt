@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.bet
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardSuit
@@ -8,21 +8,21 @@ import blackjack.domain.player.PlayerState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun result() = PlayerResult(
-    Player("vivian", listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
-    PlayerState.Stand
-)
-
-class ScoresTest {
+class ProfitsTest {
     @Test
-    fun `플레이어 수 만큼 스코어를 계산한다`() {
+    fun `플레이어 수만큼 베팅 수익을 계산한다`() {
         val numberOfPlayers = 5
 
         assertThat(
-            Scores.of(
+            Profits.of(
                 result(),
                 (1..numberOfPlayers).map { result() }
-            ).values
+            ).players
         ).hasSize(numberOfPlayers)
     }
 }
+
+private fun result() = PlayerResult(
+    Player("vivian", 1000.0, listOf(Card.Queen(CardSuit.CLOVER), Card.Four(CardSuit.CLOVER))),
+    PlayerState.Stand
+)

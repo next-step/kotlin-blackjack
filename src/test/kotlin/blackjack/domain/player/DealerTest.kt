@@ -5,9 +5,6 @@ import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun `16 point card`() = listOf(Card.Ten(CardSuit.CLOVER), Card.Six(CardSuit.CLOVER))
-private fun `17 point card`() = listOf(Card.Ten(CardSuit.CLOVER), Card.Seven(CardSuit.CLOVER))
-
 class DealerTest {
     @Test
     fun `딜러의 이름은 "딜러"이다`() {
@@ -24,3 +21,6 @@ class DealerTest {
         assertThat(Dealer(`17 point card`()).shouldDrawCard).isFalse
     }
 }
+
+private fun `16 point card`() = listOf(Card.Ten(CardSuit.CLOVER), Card.Six(CardSuit.CLOVER))
+private fun `17 point card`() = listOf(Card.Ten(CardSuit.CLOVER), Card.Seven(CardSuit.CLOVER))

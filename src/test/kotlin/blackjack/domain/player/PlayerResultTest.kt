@@ -5,11 +5,6 @@ import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun Player() = Player(
-    "vivian",
-    listOf(Card.Ace(CardSuit.CLOVER), Card.King(CardSuit.CLOVER))
-)
-
 class PlayerResultTest {
     @Test
     fun `플레이어 정보를 가지고 있다`() {
@@ -24,3 +19,5 @@ class PlayerResultTest {
         assertThat(PlayerResult(Player(), playerState).finalState).isEqualTo(playerState)
     }
 }
+
+private fun Player() = Player("vivian", 1000.0, listOf(Card.Ace(CardSuit.CLOVER), Card.King(CardSuit.CLOVER)))

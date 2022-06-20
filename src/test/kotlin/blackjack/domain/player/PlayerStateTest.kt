@@ -5,25 +5,18 @@ import blackjack.domain.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-private fun Playing(cards: List<Card>): PlayerState.Playing {
-    return PlayerState.Playing(Player("vivian", cards))
-}
-
-private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Queen(CardSuit.CLOVER))
-private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))
-
 class PlayerStateTest {
     @Test
     fun `숫자 합이 21 이하 라면 Playing 을 리턴한다`() {
         assertThat(
-            PlayerState.of(Player("vivian", `20 point card`()))
+            PlayerState.of(Player(`20 point card`()))
         ).isExactlyInstanceOf(PlayerState.Playing::class.java)
     }
 
     @Test
     fun `숫자 합이 21 이라면 Blackjack 을 리턴한다`() {
         assertThat(
-            PlayerState.of(Player("vivian", `blackjack card`()))
+            PlayerState.of(Player(`blackjack card`()))
         ).isEqualTo(PlayerState.Blackjack)
     }
 
@@ -48,3 +41,11 @@ class PlayerStateTest {
         ).isEqualTo(PlayerState.Stand)
     }
 }
+
+private fun Playing(cards: List<Card>): PlayerState.Playing {
+    return PlayerState.Playing(Player(cards))
+}
+
+private fun Player(cards: List<Card>) = Player("vivian", 1000.0, cards)
+private fun `20 point card`() = listOf(Card.King(CardSuit.CLOVER), Card.Queen(CardSuit.CLOVER))
+private fun `blackjack card`() = listOf(Card.King(CardSuit.CLOVER), Card.Ace(CardSuit.CLOVER))

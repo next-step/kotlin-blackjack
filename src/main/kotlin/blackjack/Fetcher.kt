@@ -1,5 +1,5 @@
 package blackjack
 
 fun interface Fetcher<A, B> {
-    fun fetch(args: A): B
+    operator fun invoke(args: A): B
 }
