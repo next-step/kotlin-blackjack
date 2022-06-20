@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import blackjack.view.CardName
+
 sealed class Card(val suit: CardSuit, val value: Int, val bonusValue: Int = 0) {
     class Two(suit: CardSuit) : Card(suit, 2)
     class Three(suit: CardSuit) : Card(suit, 3)

@@ -1,5 +1,6 @@
-package blackjack.domain.score
+package blackjack.view
 
+import blackjack.domain.score.ScoreType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

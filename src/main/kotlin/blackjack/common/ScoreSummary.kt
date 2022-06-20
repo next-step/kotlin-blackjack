@@ -1,9 +1,9 @@
 package blackjack.common
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.score.ScoreName
 import blackjack.domain.score.ScoreType
 import blackjack.domain.score.Scores
+import blackjack.view.ScoreName
 
 class ScoreSummary(scores: Scores) {
     val values: List<Pair<String, String>> =

@@ -1,10 +1,10 @@
 package blackjack.common
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardName
 import blackjack.domain.card.CardSuit
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
+import blackjack.view.CardName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

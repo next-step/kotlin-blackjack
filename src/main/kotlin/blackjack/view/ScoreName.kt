@@ -1,4 +1,6 @@
-package blackjack.domain.score
+package blackjack.view
+
+import blackjack.domain.score.ScoreType
 
 object ScoreName {
     fun of(score: ScoreType) = when (score) {
