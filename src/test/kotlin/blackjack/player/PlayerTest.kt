@@ -27,4 +27,17 @@ class PlayerTest {
 
         assertThat(player.myCards()).contains(Card(Suit.SPADE, CardSymbol.ACE))
     }
+
+    @Test
+    fun `플레이어가 갖고있는 점수가 22점 이상이면 burst 상태가 된다`() {
+        val player = Player("pang")
+        player.getCard(Card(Suit.SPADE, CardSymbol.TEN))
+        assertThat(player.burst).isEqualTo(false)
+
+        player.getCard(Card(Suit.HEART, CardSymbol.JACK))
+        assertThat(player.burst).isEqualTo(false)
+
+        player.getCard(Card(Suit.HEART, CardSymbol.QUEEN))
+        assertThat(player.burst).isEqualTo(true)
+    }
 }
