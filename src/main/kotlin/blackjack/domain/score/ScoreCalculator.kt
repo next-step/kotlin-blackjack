@@ -15,14 +15,17 @@ object ScoreCalculator {
         }
         else -> when (player.finalState) {
             PlayerState.Busted -> ScoreType.LOSE
-            else -> {
-                val difference = player.player.cards.total.value - dealer.player.cards.total.value
-                when {
-                    difference > 0 -> ScoreType.WIN
-                    difference == 0 -> ScoreType.DRAW
-                    else -> ScoreType.LOSE
-                }
-            }
+            else -> compareTotal(player.player.cards.total.value, dealer.player.cards.total.value)
+        }
+    }
+
+    private fun compareTotal(playerTotal: Int, dealerTotal: Int): ScoreType {
+        val difference = playerTotal - dealerTotal
+
+        return when {
+            difference > 0 -> ScoreType.WIN
+            difference == 0 -> ScoreType.DRAW
+            else -> ScoreType.LOSE
         }
     }
 }
