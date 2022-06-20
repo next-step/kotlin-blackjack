@@ -7,10 +7,10 @@ class CardsByPlayerView : CardsByPlayerViewStrategy {
 
     override fun print(player: Player, withScore: Boolean) {
         if (withScore) {
-            println("${player.name}카드: ${player.receivedCards.getCardDescription()} - 결과: ${player.score}")
+            println("${player.name}카드: ${CardView.getCardDescription(player.receivedCards)} - 결과: ${player.score}")
             return
         }
 
-        println("${player.name}카드: ${player.receivedCards.getCardDescription()}")
+        println("${player.name}카드: ${CardView.getCardDescription(player.receivedCards)}")
     }
 }

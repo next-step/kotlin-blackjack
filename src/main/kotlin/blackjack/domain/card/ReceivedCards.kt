@@ -2,10 +2,13 @@ package blackjack.domain.card
 
 import blackjack.domain.card.Card.AceCard
 
-data class ReceivedCards(private val receivedCards: MutableSet<Card>) {
+data class ReceivedCards(private val _receivedCards: MutableSet<Card>) {
+
+    val receivedCards: Set<Card>
+        get() = _receivedCards
 
     fun sumOfCardsExceptAce(): Int {
-        return receivedCards
+        return _receivedCards
             .filter { it !is AceCard }
             .sumOf { it.number }
     }
@@ -21,29 +24,15 @@ data class ReceivedCards(private val receivedCards: MutableSet<Card>) {
     }
 
     fun addCard(card: Card) {
-        receivedCards.add(card)
+        _receivedCards.add(card)
     }
 
     fun count(): Int {
-        return receivedCards.size
-    }
-
-    fun getCardDescription(): String {
-        return receivedCards.joinToString(", ") { extractCardDescription(it) }
+        return _receivedCards.size
     }
 
     private fun countOfSoftHand(): Int {
-        return receivedCards.count { it is AceCard }
-    }
-
-    private fun extractCardDescription(card: Card): String {
-        return when (card) {
-            is AceCard -> "A${card.cardSuit.description}"
-            is Card.JackCard -> "J${card.cardSuit.description}"
-            is Card.QueenCard -> "Q${card.cardSuit.description}"
-            is Card.KingCard -> "K${card.cardSuit.description}"
-            is Card.BasicCard -> "${card.number}${card.cardSuit.description}"
-        }
+        return _receivedCards.count { it is AceCard }
     }
 
     companion object {
