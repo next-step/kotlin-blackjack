@@ -28,8 +28,8 @@ fun main() {
     inputView.enterBattingAmountByPlayer(players.players)
     resultView.printInitDistributed(blackJackGamer)
 
-    players.play(cardDeck, takeMorePlayer, cardsByPlayerView)
-    dealer.play(cardDeck, takeMoreDealer)
+    players.play(takeMorePlayer, cardsByPlayerView)
+    dealer.play(takeMoreDealer)
     WinnerJudge(blackJackGamer)
 
     resultView.printCardsByPlayers(blackJackGamer, true)

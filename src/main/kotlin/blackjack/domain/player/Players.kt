@@ -5,7 +5,7 @@ import blackjack.domain.game.strategy.CardsByPlayerViewStrategy
 import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 import blackjack.domain.player.Player.Companion.INIT_PICK_CARD_NUMBER
 
-class Players(playerNames: List<String>, cardDeck: CardDeck) {
+class Players(playerNames: List<String>, private val cardDeck: CardDeck) {
     private val _players: List<Player>
 
     val players: List<Player>
@@ -18,7 +18,6 @@ class Players(playerNames: List<String>, cardDeck: CardDeck) {
     }
 
     fun play(
-        cardDeck: CardDeck,
         takeMorePlayer: TakeMorePlayerStrategy,
         cardsByPlayerView: CardsByPlayerViewStrategy
     ) {

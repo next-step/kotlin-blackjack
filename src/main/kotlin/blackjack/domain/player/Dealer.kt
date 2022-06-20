@@ -4,13 +4,12 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.game.TakeMoreDealer
 import blackjack.domain.game.strategy.TakeMoreDealerStrategy
 
-class Dealer(cardDeck: CardDeck) : Player(name = DEALER_NAME, cardDeck.pickCards(INIT_PICK_CARD_NUMBER)) {
+class Dealer(private val cardDeck: CardDeck) : Player(name = DEALER_NAME, cardDeck.pickCards(INIT_PICK_CARD_NUMBER)) {
 
     var win: Int = 0
     var lose: Int = 0
 
     fun play(
-        cardDeck: CardDeck,
         takeMoreDealerStrategy: TakeMoreDealerStrategy
     ) {
         val takeMoreDealer = takeMoreDealerStrategy as TakeMoreDealer
