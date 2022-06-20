@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.Fetcher
 import blackjack.Printer
-import blackjack.common.NonEmptyList
 import blackjack.common.PlayerDecision
 import blackjack.common.PlayerSummary
 import blackjack.common.ScoreSummary
@@ -17,7 +16,7 @@ object Blackjack {
     const val numberOfStartingCards = 2
 
     fun play(
-        playerNameFetcher: Fetcher<Unit, NonEmptyList<String>>,
+        playerNameFetcher: Fetcher<Unit, List<String>>,
         playerDecisionFetcher: Fetcher<String, PlayerDecision>,
         startingSummariesPrinter: Printer<List<PlayerSummary>>,
         playerSummaryPrinter: Printer<PlayerSummary>,
@@ -29,13 +28,13 @@ object Blackjack {
 
         val allPlayers = Players(
             Dealer(drawStartingCardsFromDeck(deck)),
-            playerNameFetcher.fetch(Unit).list.map { Player(it, drawStartingCardsFromDeck(deck)) }
+            playerNameFetcher.fetch(Unit).map { Player(it, drawStartingCardsFromDeck(deck)) }
         )
 
         startingSummariesPrinter.print(allPlayers.toPlayerSummaries(true))
 
         val scores = allPlayers.run {
-            val playerResults = players.map { player ->
+            val playerResults = list.map { player ->
                 PlayerTurn(player).play(
                     deck,
                     { playerDecisionFetcher.fetch(player.name) }
@@ -54,5 +53,5 @@ object Blackjack {
     private fun drawStartingCardsFromDeck(deck: CardDeck): List<Card> = listOf(deck.drawCard(), deck.drawCard())
 
     private fun Players.toPlayerSummaries(excludeHiddenCard: Boolean): List<PlayerSummary> =
-        listOf(PlayerSummary(dealer, excludeHiddenCard)) + players.map { PlayerSummary(it) }
+        listOf(PlayerSummary(dealer, excludeHiddenCard)) + list.map { PlayerSummary(it) }
 }
