@@ -16,13 +16,17 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
     }
 
     private fun judge(player: Player, dealer: Dealer) {
+        if (checkDraw(player, dealer)) {
+            player.gambleSummary.gameStatus = GameStatus.DRAW
+        }
+
         if (checkPlayerWin(player, dealer)) {
-            player.gambleSummary.isWinner = true
+            player.gambleSummary.gameStatus = GameStatus.WIN
             dealer.lose++
         }
 
         if (checkDealerWin(player, dealer)) {
-            player.gambleSummary.isWinner = false
+            player.gambleSummary.gameStatus = GameStatus.LOSE
             dealer.win++
         }
 
@@ -41,9 +45,13 @@ class WinnerJudge(private val players: List<Player>, private val dealer: Dealer)
     }
 
     private fun adjustLossBattingAmount(gamer: Player) {
-        if (gamer.isBust() || !gamer.gambleSummary.isWinner) {
+        if (gamer.isBust() || gamer.gambleSummary.gameStatus == GameStatus.LOSE) {
             gamer.adjustBustBattingAmount()
         }
+    }
+
+    private fun checkDraw(player: Player, dealer: Dealer): Boolean {
+        return player.score == dealer.score
     }
 
     private fun checkPlayerWin(player: Player, dealer: Dealer): Boolean {

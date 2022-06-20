@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.game.GameStatus
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.GambleSummary
 import blackjack.domain.player.Player
@@ -36,12 +37,12 @@ class ResultView {
 
     private fun getDealerResult(dealer: Dealer, player: List<Player>): String {
         val incomeOfDealer = player
-            .filter { !it.gambleSummary.isWinner }
+            .filter { it.gambleSummary.gameStatus == GameStatus.LOSE }
             .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
             .unaryMinus()
 
         val expensesOfDealer = player
-            .filter { it.gambleSummary.isWinner }
+            .filter { it.gambleSummary.gameStatus == GameStatus.WIN }
             .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
 
         return "${dealer.name}: ${calculateProfitOfDealer(incomeOfDealer, expensesOfDealer)}"

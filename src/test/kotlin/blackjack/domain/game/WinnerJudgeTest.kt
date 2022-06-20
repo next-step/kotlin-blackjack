@@ -20,7 +20,7 @@ class WinnerJudgeTest {
 
         WinnerJudge(players.players, dealer)
 
-        Assertions.assertThat(players.players[0].gambleSummary.isWinner).isTrue
-        Assertions.assertThat(players.players[1].gambleSummary.isWinner).isTrue
+        Assertions.assertThat(players.players[0].gambleSummary.gameStatus).isEqualTo(GameStatus.WIN)
+        Assertions.assertThat(players.players[1].gambleSummary.gameStatus).isEqualTo(GameStatus.WIN)
     }
 }
