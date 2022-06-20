@@ -5,7 +5,7 @@ class Player(
     playerCards: PlayerCards = PlayerCards(),
     val betMoney: Money = Money(0),
 ) : User(name, playerCards) {
-    override fun openedCards(): List<Card> = playerCards.cards
+    override fun openedCards(): List<Card> = currentCards()
 
     override fun canDraw(): Boolean = !score.isBust()
 }

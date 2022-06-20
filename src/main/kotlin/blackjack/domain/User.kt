@@ -2,7 +2,7 @@ package blackjack.domain
 
 abstract class User(
     val name: String,
-    protected val playerCards: PlayerCards = PlayerCards(),
+    private val playerCards: PlayerCards = PlayerCards(),
 ) {
     val score: Score get() = playerCards.score
 
