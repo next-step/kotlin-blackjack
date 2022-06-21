@@ -25,7 +25,7 @@ open class Player(val name: String) {
     }
 
     companion object {
-        private const val BLACKJACK_POINT = 21
+        const val BLACKJACK_POINT = 21
         private const val SOFT_HAND_CRITERIA = 11
         private const val SOFT_HAND_POINT = 10
     }

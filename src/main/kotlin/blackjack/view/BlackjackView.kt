@@ -18,8 +18,12 @@ object BlackjackView {
         blackjack.players.forEach { PlayerView.printCards(it) }
     }
 
-    fun printMoreCard(name: String) {
-        println("${name}$MORE_CARD_MESSAGE")
+    fun printCanNotDrawCard(player: Player) {
+        println("${player.name}${CAN_NOT_DRAW_CARD_MESSAGE}")
+    }
+
+    fun printMoreCard(player: Player) {
+        println("${player.name}$MORE_CARD_MESSAGE")
     }
 
     fun printResult(blackjack: Blackjack) {

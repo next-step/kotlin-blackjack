@@ -90,11 +90,7 @@ internal class PlayerTest {
         }
 
         private fun createCards(vararg denominations: Denomination): List<Card> {
-            val counter = denominations.groupingBy { it }.eachCount()
-
-            return counter.map {
-                Suit.values().take(it.value).map { suit -> Card(suit, it.key) }
-            }.flatten()
+            return denominations.map { Card(Suit.DIAMOND, it) }
         }
     }
 }

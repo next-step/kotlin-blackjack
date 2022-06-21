@@ -3,10 +3,15 @@ package blackjack.domain
 import blackjack.domain.Denomination.ACE
 import blackjack.domain.Denomination.FIVE
 import blackjack.domain.Denomination.SIX
+import blackjack.domain.Denomination.TEN
 import blackjack.domain.Suit.DIAMOND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 internal class DealerTest {
 
@@ -39,11 +44,44 @@ internal class DealerTest {
         assertThrows<IllegalStateException> { dealer.addCard(Card(DIAMOND, ACE)) }
     }
 
-    private fun createCards(vararg denominations: Denomination): List<Card> {
-        val counter = denominations.groupingBy { it }.eachCount()
+    @ParameterizedTest
+    @MethodSource("compareArguments")
+    fun `딜러와 Player는 비교할 수 있다`(dealer: Dealer, player: Player, stat: Stat) {
+        val expected = dealer.compareTo(player)
 
-        return counter.map {
-            Suit.values().take(it.value).map { suit -> Card(suit, it.key) }
-        }.flatten()
+        assertThat(expected).isEqualTo(stat)
+    }
+
+    companion object {
+        @JvmStatic
+        fun compareArguments(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(createDealer(), createPlayer(), Stat.DRAW),
+                Arguments.of(createDealer(ACE, TEN), createPlayer(ACE, TEN), Stat.DRAW),
+                Arguments.of(createDealer(ACE, TEN), createPlayer(ACE, ACE), Stat.WIN),
+                Arguments.of(createDealer(ACE, TEN), createPlayer(TEN, TEN), Stat.WIN),
+                Arguments.of(createDealer(ACE, ACE), createPlayer(TEN, TEN), Stat.LOSE),
+                Arguments.of(createDealer(TEN, TEN), createPlayer(ACE, TEN), Stat.LOSE),
+                Arguments.of(createDealer(TEN, ACE), createPlayer(ACE, ACE, TEN), Stat.WIN),
+                Arguments.of(createDealer(TEN, TEN, FIVE), createPlayer(TEN, TEN, FIVE), Stat.WIN),
+                Arguments.of(createDealer(TEN, TEN, FIVE), createPlayer(ACE, ACE), Stat.LOSE),
+            )
+        }
+
+        private fun createDealer(vararg denominations: Denomination): Dealer {
+            return Dealer().apply {
+                addCards(createCards(*denominations))
+            }
+        }
+
+        private fun createPlayer(vararg denominations: Denomination): Player {
+            return Player("dummy").apply {
+                addCards(createCards(*denominations))
+            }
+        }
+
+        private fun createCards(vararg denominations: Denomination): List<Card> {
+            return denominations.map { Card(DIAMOND, it) }
+        }
     }
 }
