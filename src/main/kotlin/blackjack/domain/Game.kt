@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.view.Screen
 
-class Game(val dealer: Dealer) {
+class Game(private val dealer: Dealer) {
     fun enter(input: String): List<Player> {
         return input.split(",").map { Player(it) }
     }
@@ -18,7 +18,7 @@ class Game(val dealer: Dealer) {
     }
 
     fun shareMoreCards(player: Player) {
-        var needCard = needMoreCare(player)
+        var needCard = needMoreCard(player)
 
         if (!needCard) {
             return Screen.displayPlayerCard(player)
@@ -27,12 +27,12 @@ class Game(val dealer: Dealer) {
         while (needCard) {
             player.takeCard(dealer.give())
             Screen.displayPlayerCard(player)
-            needCard = needMoreCare(player)
+            needCard = needMoreCard(player)
         }
     }
 
-    private fun needMoreCare(player: Player): Boolean {
-        dealer.ask(player.name)
+    private fun needMoreCard(player: Player): Boolean {
+        Screen.displayNeedCard(player.name)
         return player.needCard(readln())
     }
 }

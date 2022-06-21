@@ -2,8 +2,8 @@ package blackjack.domain
 
 import blackjack.domain.enums.CardPoint
 
-class Player(val name: String) {
-    val cards = mutableListOf<Card>()
+open class Player(val name: String) {
+    open val cards = mutableListOf<Card>()
     fun takeCard(card: Card) {
         cards.add(card)
     }
@@ -22,6 +22,39 @@ class Player(val name: String) {
         return result
     }
 
-    private fun calculateScore(card: Card, result: Int): Int =
-        if (card.point.max + result <= CardPoint.BLACK_JACK_SCORE) card.point.max else card.point.min
+    open fun isWinner(others: List<Player>): Boolean {
+        val dealer = others.find { it.name == "딜러" }
+        require(dealer != null)
+
+        if (dealer.score() > CardPoint.BLACK_JACK_SCORE) {
+            return true
+        }
+
+        val myScore = score()
+        if (overScore(myScore)) {
+            return false
+        }
+
+        return others.all { other -> myScore > other.score() }
+    }
+
+    private fun overScore(myScore: Int): Boolean {
+        return myScore > CardPoint.BLACK_JACK_SCORE
+    }
+
+    private fun calculateScore(card: Card, result: Int): Int {
+        if (card.point === CardPoint.ACE) {
+            return chooseAceScore(result)
+        }
+
+        return card.point.score
+    }
+
+    private fun chooseAceScore(result: Int): Int {
+        if (CardPoint.ACE_SPECIAL_VALUE + result <= CardPoint.BLACK_JACK_SCORE) {
+            return CardPoint.ACE_SPECIAL_VALUE
+        }
+
+        return CardPoint.ACE.score
+    }
 }

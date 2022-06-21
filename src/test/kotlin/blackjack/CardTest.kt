@@ -12,7 +12,7 @@ class CardTest {
     }
 
     @Test
-    fun `ACE 카드는 1 혹은 11 값이 될 수 있다`() {
-        assertThat(Pair(CardPoint.ACE.min, CardPoint.ACE.max)).isEqualTo(Pair(1, 11))
+    fun `ACE 카드 점수는 1 이다`() {
+        assertThat(CardPoint.ACE.score).isEqualTo(1)
     }
 }
