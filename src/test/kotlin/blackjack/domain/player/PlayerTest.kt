@@ -31,11 +31,14 @@ class PlayerTest {
     @Test
     fun `플레이어가 bust 조건인지 확인`() {
         val cardDeck = CardDeck()
-        val player = Player("A", cardDeck.pickCards(2))
-
-        while (player.score <= 21) {
-            player.addCard(cardDeck.pickCard())
-        }
+        val player = Player(
+            name = "A",
+            cards = listOf(
+                cardDeck.pickCardByNumber(10),
+                cardDeck.pickCardByNumber(10),
+                cardDeck.pickCardByNumber(10)
+            )
+        )
 
         assertThat(player.isBust()).isTrue
     }
