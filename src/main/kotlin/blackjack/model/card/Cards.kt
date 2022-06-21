@@ -17,7 +17,9 @@ data class Cards(
 
     fun shuffle() = cards.shuffle()
 
-    fun addOne(card: Card) = cards.add(card)
+    fun addOne(card: Card) {
+        cards.add(card)
+    }
 
     fun removeOne(): Card {
         validateNotEmpty()

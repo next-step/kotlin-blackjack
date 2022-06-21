@@ -3,7 +3,7 @@ package blackjack.model.player
 import blackjack.model.card.Card
 import blackjack.model.card.Cards
 
-class Player private constructor(
+open class Player protected constructor(
     val name: PlayerName,
     val cards: Cards = Cards(),
     var needMoreCard: Boolean = true,
@@ -14,7 +14,9 @@ class Player private constructor(
     val sumOfCardScore
         get() = cards.sumOfScore
 
-    fun receiveCard(card: Card) = cards.addOne(card)
+    open fun receiveCard(card: Card) {
+        cards.addOne(card)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

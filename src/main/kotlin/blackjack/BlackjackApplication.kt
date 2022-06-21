@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.model.Game
+import blackjack.model.player.Dealer
 import blackjack.model.player.Players
 import blackjack.view.InputView
 import blackjack.view.MoreCardMark
@@ -18,7 +19,7 @@ object BlackjackApplication {
     private fun startGame(inputView: InputView): Game {
         inputView.printPlayerNamesInputMessage()
 
-        val players = Players(inputView.inputPlayerNames())
+        val players = Players(inputView.inputPlayerNames().plus(Dealer()))
         val game = Game(players = players)
 
         game.start()
