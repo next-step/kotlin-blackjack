@@ -4,10 +4,15 @@ import domain.BlackJackGame
 import domain.BlackJackGame.endCheck
 import domain.BlackJackGame.setInitialCards
 import domain.Dealer
+import view.InputView.setBattingAmount
 
 fun main() {
     val participants = InputView.getUserName()
     InputView.displayCardDivide(participants.joinToString { it.name }, "2")
+
+    participants.forEach {
+        setBattingAmount(it)
+    }
 
     val dealer = Dealer("딜러")
     val allPlayer = listOf(dealer) + participants
@@ -44,4 +49,7 @@ fun main() {
 
     ResultView.displayPlayersScore(allPlayer)
     ResultView.displayWinOrLose(allPlayer)
+
+    val revenueMap = BlackJackGame.calculateRevenue(allPlayer)
+    ResultView.displayRevenue(revenueMap)
 }
