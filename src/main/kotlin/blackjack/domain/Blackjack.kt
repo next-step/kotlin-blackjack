@@ -3,10 +3,15 @@ package blackjack.domain
 class Blackjack(
     val players: List<Player>
 ) {
+    val dealer = Dealer()
+
+    private val users = players.plus(dealer)
+
     private val deck = Deck.create()
 
     fun drawFirstCards() {
-        players.forEach {
+        check(users.none { it.cards.isNotEmpty() })
+        users.forEach {
             val cards = deck.draw(INIT_DRAW_COUNT)
             it.addCards(cards)
         }
@@ -19,8 +24,8 @@ class Blackjack(
     }
 
     fun drawCard(player: Player): Card {
-        require(player in players) { "[${player.name} is not blackjack player" }
-        require(isDrawable(player)) { "[${player.name}]은 21점 이상이라 카드를 받을 수 없습니다." }
+        require(player in users) { "[${player.name}] is not blackjack player" }
+        check(player.drawable())
 
         val card = deck.draw()
 

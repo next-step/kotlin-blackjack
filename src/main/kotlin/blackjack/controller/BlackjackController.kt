@@ -1,24 +1,27 @@
 package blackjack.controller
 
 import blackjack.domain.Blackjack
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.service.InputParser
 import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackView
+import blackjack.view.DealerView
+import blackjack.view.PlayerView
 
 class BlackjackController {
 
     fun start() {
         BlackjackView.printPlayerInput()
         val players = getPlayers()
-        BlackjackView.printInitialize(players)
 
-        val blackjack = Blackjack(players)
-
-        blackjack.drawFirstCards()
-        players.forEach { BlackjackView.printPlayerCard(it.name, it.cards) }
-        players.forEach { drawCard(blackjack, it) }
-        players.forEach { BlackjackView.printResult(it.name, it.cards, it.getPoints()) }
+        Blackjack(players).let {
+            it.drawFirstCards()
+            BlackjackView.printInitialize(it.players)
+            BlackjackView.printCards(it)
+            startGame(it)
+            BlackjackView.printResult(it)
+        }
     }
 
     private fun getPlayers(): List<Player> {
@@ -27,18 +30,28 @@ class BlackjackController {
         return InputParser.parsePlayerName(names).map(::Player)
     }
 
-    private fun drawCard(blackjack: Blackjack, player: Player) {
-        if (!blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard(player)
-
-        BlackjackView.printMoreCard(player.name)
-        while (InputParser.parseMoreCard(BlackjackInputView.readMoreCard())) {
-            BlackjackView.printMoreCard(player.name)
-            blackjack.drawCard(player)
-            BlackjackView.printPlayerCard(player.name, player.cards)
-
-            if (!blackjack.isDrawable(player)) return BlackjackView.printCanNotDrawCard(player)
+    private fun startGame(blackjack: Blackjack) {
+        blackjack.apply {
+            players.forEach {
+                while (drawable(it)) {
+                    drawCard(it)
+                    PlayerView.printCards(it)
+                }
+            }
+            while (dealer.drawable()) {
+                drawCard(dealer)
+                DealerView.printMoreCard(dealer)
+                PlayerView.printCards(dealer)
+            }
         }
+    }
 
-        BlackjackView.printPlayerCard(player.name, player.cards)
+    private fun drawable(player: Player) = when {
+        !player.drawable() -> false
+        player is Dealer -> true
+        else -> {
+            BlackjackView.printMoreCard(player.name)
+            InputParser.parseMoreCard(BlackjackInputView.readMoreCard())
+        }
     }
 }

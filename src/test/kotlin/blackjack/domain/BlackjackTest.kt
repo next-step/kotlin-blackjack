@@ -45,16 +45,25 @@ internal class BlackjackTest {
         )
 
         assertThat(blackjack.isDrawable(player)).isFalse
-        assertThrows<java.lang.IllegalArgumentException> { blackjack.drawCard(player) }
+        assertThrows<java.lang.IllegalStateException> { blackjack.drawCard(player) }
     }
 
     @Test
-    fun `player는 게임 시작 후 카드 2장을 받을 수 있다`() {
+    fun `dealer와 player는 게임 시작 후 카드 2장을 받을 수 있다`() {
         val player = Player("player")
         val blackjack = Blackjack(listOf(player))
         blackjack.drawFirstCards()
 
         assertThat(blackjack.players).hasSize(1)
+        assertThat(blackjack.dealer.cards).hasSize(2)
         assertThat(blackjack.players.first().cards).hasSize(2)
+    }
+
+    @Test
+    fun `카드가 있으면, drawFirstCards를 호출할 수 없다`() {
+        val player = Player("player")
+        val blackjack = Blackjack(listOf(player))
+        blackjack.drawFirstCards()
+        assertThrows<IllegalStateException> { blackjack.drawFirstCards() }
     }
 }

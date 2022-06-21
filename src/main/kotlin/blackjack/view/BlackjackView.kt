@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Card
+import blackjack.domain.Blackjack
 import blackjack.domain.Player
 
 object BlackjackView {
@@ -13,20 +13,19 @@ object BlackjackView {
         println("${players.joinToString(", ") { it.name }}$BLACKJACK_INIT_MESSAGE")
     }
 
-    fun printPlayerCard(name: String, cards: List<Card>) {
-        println("${name}카드: ${cards.joinToString()}")
-    }
-
-    fun printCanNotDrawCard(player: Player) {
-        println("[${player.name}]$CAN_NOT_DRAW_CARD_MESSAGE")
+    fun printCards(blackjack: Blackjack) {
+        DealerView.printFirstCard(blackjack.dealer)
+        blackjack.players.forEach { PlayerView.printCards(it) }
     }
 
     fun printMoreCard(name: String) {
         println("${name}$MORE_CARD_MESSAGE")
     }
 
-    fun printResult(name: String, cards: List<Card>, points: Int) {
-        println("${name}카드: ${cards.joinToString()} - 결과: $points")
+    fun printResult(blackjack: Blackjack) {
+        println()
+        PlayerView.printCardsWithResult(blackjack.dealer)
+        blackjack.players.map { PlayerView.printCardsWithResult(it) }
     }
 
     private const val PLAYER_INPUT_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"

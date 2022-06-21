@@ -1,10 +1,14 @@
 package blackjack.domain
 
-class Player(val name: String) {
+open class Player(val name: String) {
     var cards: List<Card> = listOf()
         private set
 
-    fun addCard(card: Card) {
+    open fun drawable(): Boolean {
+        return getPoints() < BLACKJACK_POINT
+    }
+
+    open fun addCard(card: Card) {
         cards = cards + card
     }
 
@@ -21,6 +25,7 @@ class Player(val name: String) {
     }
 
     companion object {
+        private const val BLACKJACK_POINT = 21
         private const val SOFT_HAND_CRITERIA = 11
         private const val SOFT_HAND_POINT = 10
     }
