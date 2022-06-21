@@ -1,5 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackGameTurn
+import blackjack.domain.Dealer
+import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.view.input.InputView
@@ -15,21 +18,23 @@ import blackjack.viewmodel.BlackjackViewModel
 object BlackjackLayout {
     private const val GUIDANCE_MESSAGE_PLAYERS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val GUIDANCE_MESSAGE_HIT = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+    private const val GUIDANCE_MESSAGE_DEALER_HIT = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
+    private val DEALER_NAME = PlayerName("딜러")
 
     fun execute() {
-        val viewModel = BlackjackViewModel.from(getPlayerNames())
-        OutputView.println(viewModel.players, StartOfGameConverter)
+        val viewModel = BlackjackViewModel.from(DEALER_NAME, getPlayerNames())
+        OutputView.println(viewModel.participants.all, StartOfGameConverter)
 
-        viewModel.currentTurn.observe { player ->
-            player ?: return@observe
+        viewModel.currentTurn.observe { turn ->
+            if (turn.isTurnEnd()) return@observe
 
-            takeTurn(player, viewModel)
+            takeTurn(turn, viewModel)
 
             viewModel.nextTurn()
         }
 
         println()
-        OutputView.print(viewModel.players, EndOfGameConverter)
+        OutputView.print(viewModel.getBlackjackGameResult(), EndOfGameConverter)
     }
 
     private fun getPlayerNames(): List<PlayerName> {
@@ -41,27 +46,39 @@ object BlackjackLayout {
         return InputView.receiveUserInput(userInputRequest)
     }
 
-    private fun takeTurn(player: Player, viewModel: BlackjackViewModel) {
-        while (player.isReceivable()) {
-            stepOfTurn(player, viewModel)
+    private fun takeTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
+        while (!turn.isTurnEnd()) {
+            stepOfTurn(turn, viewModel)
         }
     }
 
-    private fun stepOfTurn(player: Player, viewModel: BlackjackViewModel) {
-        if (isPlayerWannaHit(player)) {
+    private fun stepOfTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
+        when (turn.participant) {
+            is Player -> stepOfPlayerTurn(turn, viewModel)
+            is Dealer -> stepOfDealerTurn(viewModel)
+        }
+    }
+
+    private fun stepOfPlayerTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
+        if (isPlayerWannaHit(turn.participant)) {
             viewModel.hit()
-            OutputView.print(player, PlayerConverter)
+            OutputView.print(turn.participant, PlayerConverter)
         } else {
             viewModel.stay()
         }
     }
 
-    private fun isPlayerWannaHit(player: Player): Boolean {
+    private fun isPlayerWannaHit(participant: Participant): Boolean {
         val userInputRequest = UserInputRequest(
-            message = "${player.name.value}$GUIDANCE_MESSAGE_HIT",
+            message = "${participant.name.value}$GUIDANCE_MESSAGE_HIT",
             inputConverter = YesOrNoConverter
         )
 
         return InputView.receiveUserInput(userInputRequest)
+    }
+
+    private fun stepOfDealerTurn(viewModel: BlackjackViewModel) {
+        OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_DEALER_HIT)
+        viewModel.hit()
     }
 }

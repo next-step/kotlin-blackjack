@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -33,8 +34,8 @@ class HandsTest {
     }
 
     @Test
-    fun `score를 통해 현재 손패의 점수를 구할 수 있다`() {
-        assertThat(hands().score.value).isEqualTo(20)
+    fun `state를 통해 현재 손패의 상태를 구할 수 있다`() {
+        assertThat(hands().state).isA<PlayerState.Hit>()
     }
 
     @Test

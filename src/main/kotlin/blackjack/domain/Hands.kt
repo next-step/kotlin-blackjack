@@ -2,13 +2,10 @@ package blackjack.domain
 
 class Hands private constructor(
     val cards: PlayingCards,
-    private val isRunning: Boolean
+    isRunning: Boolean
 ) {
-    val score: Score by lazy {
-        Score.from(cards)
-    }
-    private val state: PlayerState by lazy {
-        PlayerState.of(score, isRunning)
+    val state: PlayerState by lazy {
+        PlayerState.of(cards, isRunning)
     }
 
     fun stay(): Hands = Hands(
@@ -18,7 +15,7 @@ class Hands private constructor(
 
     fun isReceivable(): Boolean = !state.isFinished()
 
-    operator fun plus(additionalCards: PlayingCards): Hands = Hands(cards + additionalCards, isRunning)
+    operator fun plus(additionalCards: PlayingCards): Hands = Hands(cards + additionalCards, !state.isFinished())
 
     companion object {
         fun from(cards: PlayingCards): Hands = Hands(

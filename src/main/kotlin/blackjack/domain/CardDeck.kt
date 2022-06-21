@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.rule.PlayingCardsRule
+import blackjack.domain.cardrule.PlayingCardsRule
 
 class CardDeck private constructor(private var cards: PlayingCards) {
     fun draw(count: Int): PlayingCards {

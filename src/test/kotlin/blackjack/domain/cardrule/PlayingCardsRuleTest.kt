@@ -1,4 +1,4 @@
-package blackjack.domain.rule
+package blackjack.domain.cardrule
 
 import blackjack.domain.CardNumber
 import blackjack.domain.PlayingCard

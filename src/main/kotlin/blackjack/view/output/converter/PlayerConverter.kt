@@ -1,11 +1,11 @@
 package blackjack.view.output.converter
 
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.domain.PlayingCards
 
-object PlayerConverter : OutputConverter<Player> {
-    override fun convert(printable: Player): String {
-        return "${printable.name.value}카드: ${printable.cardsOfHands.toPrintableText()}"
+object PlayerConverter : OutputConverter<Participant> {
+    override fun convert(printable: Participant): String {
+        return "${printable.name.value}카드: ${printable.hands.cards.toPrintableText()}"
     }
 
     private fun PlayingCards.toPrintableText(): String {

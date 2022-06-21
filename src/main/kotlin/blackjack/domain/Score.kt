@@ -1,17 +1,17 @@
 package blackjack.domain
 
 @JvmInline
-value class Score private constructor(val value: Int) {
-    fun isZero(): Boolean = value == 0
-
+value class Score private constructor(val value: Int) : Comparable<Score> {
     fun isBlackjack(): Boolean = value == BLACKJACK_SCORE
 
     fun isBust(): Boolean = value > BLACKJACK_SCORE
 
     fun canAddMore(): Boolean = value < BLACKJACK_SCORE
 
+    override fun compareTo(other: Score): Int = value.compareTo(other.value)
+
     companion object {
-        private const val BLACKJACK_SCORE = 21
+        const val BLACKJACK_SCORE = 21
         private const val ADDITIONAL_SCORE_OF_ACE = 10
 
         fun from(cards: PlayingCards): Score {
@@ -28,7 +28,9 @@ value class Score private constructor(val value: Int) {
             return Score(result)
         }
 
-        fun zero(): Score = Score(0)
+        fun from(value: Int): Score {
+            return Score(value)
+        }
 
         private fun needToAddScoreOfAce(cards: PlayingCards, currentScore: Int): Boolean {
             return CardNumber.ACE in cards && currentScore + ADDITIONAL_SCORE_OF_ACE <= BLACKJACK_SCORE

@@ -1,4 +1,4 @@
-package blackjack.domain.rule
+package blackjack.domain.cardrule
 
 import blackjack.domain.CardNumber
 import blackjack.domain.PlayingCard
@@ -7,18 +7,18 @@ import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class DistinctRuleTest {
+class ShuffleRuleTest {
     @Test
-    fun `DistinctRule을 적용하여 중복되는 카드를 제거할 수 있다`() {
+    fun `ShuffleRule을 사용하여 카드를 섞을 수 있다`() {
         val playingCards = PlayingCards.from(
             listOf(
                 PlayingCard(Suit.CLUBS, CardNumber.NINE),
-                PlayingCard(Suit.CLUBS, CardNumber.NINE),
+                PlayingCard(Suit.HEARTS, CardNumber.NINE),
                 PlayingCard(Suit.DIAMONDS, CardNumber.TEN),
                 PlayingCard(Suit.SPADES, CardNumber.KING)
             )
         )
 
-        assertThat(DistinctRule.applyTo(playingCards)).containsOnlyOnce(PlayingCard(Suit.CLUBS, CardNumber.NINE))
+        assertThat(ShuffleRule.applyTo(playingCards)).containsAll(playingCards)
     }
 }
