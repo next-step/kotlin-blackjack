@@ -20,8 +20,8 @@ class PlayerTest {
 
     @Test
     fun `게임 종료 여부를 반환한다`() {
-        assertThat(player.gameOver).isFalse()
-        assertThat(player.gameOver().gameOver).isTrue()
+        assertThat(player.stay).isFalse()
+        assertThat(player.setStay().stay).isTrue()
     }
 
     @Test

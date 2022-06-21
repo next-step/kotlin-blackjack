@@ -44,9 +44,9 @@ class Cards(val values: List<Card>) {
     }
 
     fun optimalScore(): Score {
-        val notLoseScores = scores.filter { !it.isLose() }
-        if (notLoseScores.isNotEmpty()) {
-            return notLoseScores.maxByOrNull { it.value }!!
+        val notBustScores = scores.filter { !it.isBust() }
+        if (notBustScores.isNotEmpty()) {
+            return notBustScores.maxByOrNull { it.value }!!
         }
         return scores.minByOrNull { it.value }!!
     }

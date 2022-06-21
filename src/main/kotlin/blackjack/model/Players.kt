@@ -2,14 +2,14 @@ package blackjack.model
 
 class Players(val values: List<Player>) {
     fun findNotOver(): List<Player> {
-        return values.filter { !it.gameOver }
+        return values.filter { !it.stay }
     }
 
-    fun setGameOver(player: Player): Players {
+    fun setStay(player: Player): Players {
         return Players(
             values.map {
                 if (player.name.equals(it.name)) {
-                    player.gameOver()
+                    player.setStay()
                 } else {
                     it
                 }
@@ -17,7 +17,7 @@ class Players(val values: List<Player>) {
         )
     }
 
-    fun giveCard(player: Player, cardList: List<Card>): Players {
+    fun hit(player: Player, cardList: List<Card>): Players {
         return Players(
             values.map {
                 if (player.name.equals(it.name)) {
@@ -30,7 +30,7 @@ class Players(val values: List<Player>) {
     }
 
     fun isAllOver(): Boolean {
-        return values.all { it.gameOver }
+        return values.all { it.stay } // TODO stay 가 아닌 stay or bust 로 체크
     }
 
     fun find(name: String): Player? {

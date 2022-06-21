@@ -15,9 +15,9 @@ class ScoreTest {
 
     @Test
     fun `21점을 넘었는지 판단하는 판단한다`() {
-        assertThat(Score(1).isLose()).isFalse()
-        assertThat(Score(21).isLose()).isFalse()
-        assertThat(Score(22).isLose()).isTrue()
+        assertThat(Score(1).isBust()).isFalse()
+        assertThat(Score(21).isBust()).isFalse()
+        assertThat(Score(22).isBust()).isTrue()
     }
 
     @ParameterizedTest

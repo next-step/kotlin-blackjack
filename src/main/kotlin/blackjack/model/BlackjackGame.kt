@@ -4,25 +4,25 @@ class BlackjackGame(players: Players) {
     private var blackjackState: BlackjackState
 
     init {
-        blackjackState = BlackjackState(players).giveInitCards()
+        blackjackState = BlackjackState(players).initDeal()
     }
 
     fun isGameOver(): Boolean {
-        return blackjackState.isAllPlayersGameOver()
+        return blackjackState.isAllPlayersOver()
     }
 
-    fun playTurn(getContinue: (Player) -> Boolean): Player {
+    fun playTurn(getHit: (Player) -> Boolean): Player {
         val player = blackjackState.findNotOverPlayer()
-        if (getContinue(player)) {
-            blackjackState = blackjackState.giveCard(player)
+        if (getHit(player)) {
+            blackjackState = blackjackState.hit(player)
         } else {
-            blackjackState = blackjackState.setGameOver(player)
+            blackjackState = blackjackState.stay(player)
         }
 
         return blackjackState.findPlayer(player.name)
     }
 
-    fun <T>withPlayers(f: (Players) -> T): T {
+    fun <T> withPlayers(f: (Players) -> T): T {
         return f(blackjackState.players)
     }
 }

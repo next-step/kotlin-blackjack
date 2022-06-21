@@ -2,7 +2,7 @@ package blackjack.model
 
 class BlackjackState(val players: Players, private val cards: Cards = createShuffledCards()) {
 
-    fun giveInitCards(): BlackjackState {
+    fun initDeal(): BlackjackState {
         val (newCards, newPlayerList) = players.values.fold(Pair(cards, emptyList<Player>())) { (cards, accPlayers), player ->
             val (extractedCards, newCards) = cards.pollCards(NUMBER_OF_INIT_CARDS)
             val newPlayer = player.addCards(extractedCards)
@@ -15,16 +15,16 @@ class BlackjackState(val players: Players, private val cards: Cards = createShuf
         return players.findNotOver().first()
     }
 
-    fun setGameOver(player: Player): BlackjackState {
-        return BlackjackState(players.setGameOver(player), cards)
+    fun stay(player: Player): BlackjackState {
+        return BlackjackState(players.setStay(player), cards)
     }
 
-    fun giveCard(player: Player): BlackjackState {
+    fun hit(player: Player): BlackjackState {
         val (extractCards, newCards) = cards.pollCards(NUMBER_OF_GIVE_CARDS)
-        return BlackjackState(players.giveCard(player, extractCards), newCards)
+        return BlackjackState(players.hit(player, extractCards), newCards)
     }
 
-    fun isAllPlayersGameOver(): Boolean {
+    fun isAllPlayersOver(): Boolean {
         return players.isAllOver()
     }
 

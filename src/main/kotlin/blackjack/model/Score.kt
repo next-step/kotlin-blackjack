@@ -9,7 +9,7 @@ value class Score(val value: Int) {
         }
     }
 
-    fun isLose(): Boolean {
+    fun isBust(): Boolean {
         return value > MAX_SCORE_CRITERIA
     }
 

@@ -18,7 +18,7 @@ class BlackjackStateTest {
 
     @Test
     fun `Players에게 초기 카드를 발급한다`() {
-        val newState = BlackjackState(players).giveInitCards()
+        val newState = BlackjackState(players).initDeal()
         assertThat(newState.players.values).hasSize(2)
         newState.players.values.forEach {
             assertThat(it.cards.values).hasSize(2)
@@ -30,10 +30,10 @@ class BlackjackStateTest {
         val state = BlackjackState(players)
         assertThat(state.findNotOverPlayer()).isEqualTo(players.values[0])
 
-        val newState = state.setGameOver(players.values[0])
+        val newState = state.stay(players.values[0])
         assertThat(newState.findNotOverPlayer()).isEqualTo(players.values[1])
 
-        val finalState = newState.setGameOver(players.values[1])
+        val finalState = newState.stay(players.values[1])
         org.junit.jupiter.api.assertThrows<NoSuchElementException> {
             finalState.findNotOverPlayer()
         }
@@ -44,7 +44,7 @@ class BlackjackStateTest {
         val state = BlackjackState(players)
         assertThat(state.players.values[0].cards.values).hasSize(0)
 
-        val newState = state.giveCard(state.players.values[0])
+        val newState = state.hit(state.players.values[0])
         assertThat(newState.players.values[0].cards.values).hasSize(1)
         assertThat(newState.players.values[1]).isSameAs(state.players.values[1])
     }
@@ -52,10 +52,10 @@ class BlackjackStateTest {
     @Test
     fun `모든 플레이어가 게임이 종료되었는지 여부를 판단한다`() {
         val state = BlackjackState(players)
-        assertThat(state.isAllPlayersGameOver()).isFalse()
+        assertThat(state.isAllPlayersOver()).isFalse()
 
-        val newState = players.values.fold(state) { currState, player -> currState.setGameOver(player) }
-        assertThat(newState.isAllPlayersGameOver()).isTrue()
+        val newState = players.values.fold(state) { currState, player -> currState.stay(player) }
+        assertThat(newState.isAllPlayersOver()).isTrue()
     }
 
     @Test
