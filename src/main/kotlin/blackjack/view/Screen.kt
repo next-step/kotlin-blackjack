@@ -34,9 +34,8 @@ object Screen {
 
     private fun displayDealerResult(players: List<Player>, dealer: Dealer) {
         var resultString = ""
-        val results = players.map { player -> dealer.winOrLose(listOf(player)) }
-        val winCounts = results.filter { it }
-        val loseCounts = results.filter { !it }
+        val results = players.map { player -> dealer.isWinner(listOf(player)) }
+        val (winCounts, loseCounts) = results.partition { it }
 
         if (winCounts.isNotEmpty()) {
             resultString += "${winCounts.size}승"
@@ -57,7 +56,11 @@ object Screen {
 
     private fun displayPlayerResult(player: Player, players: List<Player>) {
         val otherPlayers = players.filter { it.name != player.name }
-        val isWin = player.winOrLose(otherPlayers)
+        val isWin = player.isWinner(otherPlayers)
         println("${player.name}: ${if (isWin) "승" else "패"}")
+    }
+
+    fun displayNeedCard(name: String) {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 }

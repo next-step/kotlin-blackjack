@@ -59,7 +59,7 @@ class PlayerTest {
         dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.TWO).create())
         val player = Player("정국")
 
-        val result = player.winOrLose(listOf(dealer, player))
+        val result = player.isWinner(listOf(dealer, player))
 
         assertThat(result).isEqualTo(true)
     }
@@ -74,7 +74,7 @@ class PlayerTest {
         player.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
         player.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.JACK).create())
 
-        assertThat(player.winOrLose(listOf(dealer, player))).isEqualTo(false)
+        assertThat(player.isWinner(listOf(dealer, player))).isEqualTo(false)
     }
 
     @Test
@@ -89,6 +89,6 @@ class PlayerTest {
         losePlayer.takeCard(FixedCardFactory(CardShape.SPADE, CardPoint.NINE).create())
         losePlayer.takeCard(FixedCardFactory(CardShape.SPADE, CardPoint.FIVE).create())
 
-        assertThat(winnerPlayer.winOrLose(listOf(dealer, losePlayer))).isEqualTo(true)
+        assertThat(winnerPlayer.isWinner(listOf(dealer, losePlayer))).isEqualTo(true)
     }
 }

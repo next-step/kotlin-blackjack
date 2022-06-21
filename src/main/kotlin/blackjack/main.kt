@@ -16,7 +16,9 @@ fun main() {
     Screen.displayPlayerCards(players, dealer)
 
     players.map { player -> game.shareMoreCards(player) }
-    dealer.getMoreCard()
+    if (dealer.getMoreCard()) {
+        println("딜러는 16 이하라 한장의 카드를 더 받았습니다.")
+    }
 
     displayCardScores(listOf(dealer) + players)
     displayGameResults(players, dealer)

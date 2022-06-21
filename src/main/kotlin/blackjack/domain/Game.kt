@@ -17,7 +17,7 @@ class Game(private val dealer: Dealer) {
         dealer.shareCards().map { card -> player.takeCard(card) }
     }
 
-    open fun shareMoreCards(player: Player) {
+    fun shareMoreCards(player: Player) {
         var needCard = needMoreCard(player)
 
         if (!needCard) {
@@ -32,7 +32,7 @@ class Game(private val dealer: Dealer) {
     }
 
     private fun needMoreCard(player: Player): Boolean {
-        dealer.ask(player.name)
+        Screen.displayNeedCard(player.name)
         return player.needCard(readln())
     }
 }

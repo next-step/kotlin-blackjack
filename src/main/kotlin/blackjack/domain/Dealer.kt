@@ -20,17 +20,16 @@ class Dealer() : Player("딜러") {
         return BASIC_CARD_RANGE.map { cardPack.poll() }
     }
 
-    fun ask(name: String) {
-        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-    }
-
-    fun getMoreCard() {
+    fun getMoreCard(): Boolean {
         if (needCard()) {
             cards.add(give())
+            return true
         }
+
+        return false
     }
 
-    override fun winOrLose(players: List<Player>): Boolean {
+    override fun isWinner(players: List<Player>): Boolean {
         val myScore = score()
         if (myScore > CardPoint.BLACK_JACK_SCORE) {
             return false
@@ -46,10 +45,7 @@ class Dealer() : Player("딜러") {
     private fun chooseNeedCard(): String {
         val cardScore = score()
         return when {
-            cardScore <= 16 -> {
-                println("딜러는 16 이하라 한장의 카드를 더 받았습니다.")
-                "y"
-            }
+            cardScore <= 16 -> "y"
             cardScore >= 17 -> "n"
             else -> throw IllegalArgumentException("카드 숫자 합이 비정상입니다.")
         }

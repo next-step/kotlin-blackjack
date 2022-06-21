@@ -22,7 +22,7 @@ open class Player(val name: String) {
         return result
     }
 
-    open fun winOrLose(others: List<Player>): Boolean {
+    open fun isWinner(others: List<Player>): Boolean {
         val dealer = others.find { it.name == "딜러" }
         require(dealer != null)
 

@@ -57,7 +57,7 @@ class DealerTest {
         dealer.takeCard(FixedCardFactory(CardShape.HEART, CardPoint.TWO).create())
         val player = Player("정국")
 
-        val result = dealer.winOrLose(listOf(dealer, player))
+        val result = dealer.isWinner(listOf(dealer, player))
 
         assertThat(result).isEqualTo(false)
     }
@@ -71,7 +71,7 @@ class DealerTest {
         winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.KING).create())
         winnerPlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
 
-        val result = dealer.winOrLose(listOf(winnerPlayer))
+        val result = dealer.isWinner(listOf(winnerPlayer))
 
         assertThat(result).isEqualTo(false)
     }
@@ -85,7 +85,7 @@ class DealerTest {
         losePlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.TWO).create())
         losePlayer.takeCard(FixedCardFactory(CardShape.DIAMOND, CardPoint.QUEEN).create())
 
-        val result = dealer.winOrLose(listOf(losePlayer))
+        val result = dealer.isWinner(listOf(losePlayer))
 
         assertThat(result).isEqualTo(true)
     }
