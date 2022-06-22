@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
 import blackjack.domain.card.RandomCardDeck.Companion.JACK
-import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.domain.game.BlackJack
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
