@@ -6,6 +6,7 @@ class Player(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
+    val score: Int = playerCards.getScore()
     private var status: PlayerStatus = PlayerStatus.HIT
 
     fun addCard(card: Card) {
