@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 
 @DisplayName("플레이어 게임 결과 테스트")
 class PlayerGameResultTest {
@@ -16,7 +15,7 @@ class PlayerGameResultTest {
     private lateinit var dealer: Dealer
     private lateinit var player1: Player
     private lateinit var player2: Player
-    private lateinit var players: Players
+    private lateinit var players: List<Player>
 
     @BeforeEach
     fun setUp() {
@@ -29,17 +28,17 @@ class PlayerGameResultTest {
         player2 = Player.from("aiden2")
         player2.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
 
-        players = Players(listOf(dealer, player1, player2))
+        players = listOf(dealer, player1, player2)
     }
 
     @Test
     fun `딜러 승패 결과가 정상적으로 생성`() {
         // when
-        val result = PlayerGameResult.of(dealer, players)
+        val result = PlayerGameResult.ofDealer(dealer, players)
 
         // then
         assertAll(
-            "player game result test",
+            "dealer game result test",
             { assertThat(result.winCount).isEqualTo(1) },
             { assertThat(result.lostCount).isEqualTo(1) },
         )
@@ -48,8 +47,8 @@ class PlayerGameResultTest {
     @Test
     fun `플레이어 승패 결과가 정상적으로 생성`() {
         // when
-        val resultOfPlayer1 = PlayerGameResult.of(player1, players)
-        val resultOfPlayer2 = PlayerGameResult.of(player2, players)
+        val resultOfPlayer1 = PlayerGameResult.ofPlayer(dealer, player1)
+        val resultOfPlayer2 = PlayerGameResult.ofPlayer(dealer, player2)
 
         // then
         assertAll(
@@ -59,15 +58,5 @@ class PlayerGameResultTest {
             { assertThat(resultOfPlayer2.winCount).isEqualTo(0) },
             { assertThat(resultOfPlayer2.lostCount).isEqualTo(1) },
         )
-    }
-
-    @Test
-    fun `플레이어 승패 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
-        // given
-        val players = Players(listOf(player1, player2))
-
-        // when, then
-        val exception = assertThrows<IllegalArgumentException> { PlayerGameResult.of(player1, players) }
-        assertThat(exception.message).isEqualTo("딜러가 존재하지 않습니다.")
     }
 }

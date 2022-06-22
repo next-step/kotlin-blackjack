@@ -7,29 +7,14 @@ class PlayerGameResult private constructor(
 ) {
 
     companion object {
-        fun of(player: Player, players: Players): PlayerGameResult {
-            if (player.isDealer) {
-                return generateDealerGameResult(player, players)
-            }
-            return generatePlayerGameResult(player, players)
+        fun ofDealer(dealer: Player, otherPlayers: List<Player>): PlayerGameResult {
+            val winCount = otherPlayers.count { dealer.isScoreGreaterThan(it) }
+            val lostCount = otherPlayers.count { dealer.isScoreLessThan(it) }
+
+            return PlayerGameResult(dealer, winCount, lostCount)
         }
 
-        private fun generateDealerGameResult(player: Player, players: Players): PlayerGameResult {
-            val otherPlayers = players.players
-                .filter { it != player }
-
-            val winCount = otherPlayers.count { player.isScoreGreaterThan(it) }
-            val lostCount = otherPlayers.count { player.isScoreLessThan(it) }
-
-            return PlayerGameResult(player, winCount, lostCount)
-        }
-
-        private fun generatePlayerGameResult(player: Player, players: Players): PlayerGameResult {
-            val dealer = players.players
-                .firstOrNull { it.isDealer }
-
-            require(dealer != null) { "딜러가 존재하지 않습니다." }
-
+        fun ofPlayer(dealer: Player, player: Player): PlayerGameResult {
             val winCount = listOf(player).count { player.isScoreGreaterThan(dealer) }
             val lostCount = listOf(player).count { player.isScoreLessThan(dealer) }
 
