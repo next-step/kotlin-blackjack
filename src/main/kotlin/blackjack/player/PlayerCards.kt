@@ -13,4 +13,8 @@ class PlayerCards {
     fun get(): List<Card> {
         return card
     }
+
+    fun getScore(): Int {
+        return BlackJackScoreCalculator.getScore(card)
+    }
 }

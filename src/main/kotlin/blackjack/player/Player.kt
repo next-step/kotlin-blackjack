@@ -7,7 +7,6 @@ class Player(
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
     private var status: BetStatus = BetStatus.HIT
-    private val score: Int get() = BlackJackScoreCalculator.getScore(myCards())
     val bust: Boolean get() = isLoosingScore()
 
     fun addCard(card: Card) {
@@ -26,7 +25,7 @@ class Player(
     }
 
     private fun isLoosingScore(): Boolean {
-        return WINNING_SCORE < score
+        return WINNING_SCORE < playerCards.getScore()
     }
 
     fun wantToPlay(): Boolean {
