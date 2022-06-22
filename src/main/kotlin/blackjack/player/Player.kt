@@ -20,7 +20,7 @@ class Player(
     }
 
     fun myCards(): List<Card> {
-        return playerCards.get()
+        return playerCards.toList()
     }
 
     private fun isBustScore(): Boolean {
