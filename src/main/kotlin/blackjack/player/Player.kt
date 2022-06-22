@@ -7,7 +7,7 @@ class Player(
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
     private var status: BetStatus = BetStatus.HIT
-    private val score: Int get() = BlackjackScoreCalculator.getScore(myCards())
+    private val score: Int get() = BlackJackScoreCalculator.getScore(myCards())
     val bust: Boolean get() = isLoosingScore()
 
     fun getCard(card: Card) {

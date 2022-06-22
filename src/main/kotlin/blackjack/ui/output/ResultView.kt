@@ -1,6 +1,6 @@
 package blackjack.ui.output
 
-import blackjack.player.BlackjackScoreCalculator
+import blackjack.player.BlackJackScoreCalculator
 import blackjack.player.Player
 
 object ResultView {
@@ -24,6 +24,6 @@ object ResultView {
     }
 
     fun showGameResult(allPlayer: List<Player>) {
-        allPlayer.forEach { this.showPlayerCard(it, BlackjackScoreCalculator.getScore(it.myCards())) }
+        allPlayer.forEach { this.showPlayerCard(it, BlackJackScoreCalculator.getScore(it.myCards())) }
     }
 }
