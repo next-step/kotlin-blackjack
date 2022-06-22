@@ -19,7 +19,7 @@ class BlackJackGame(
     fun ask(player: Player, needMoreCard: Boolean) {
         require(player in players)
         if (needMoreCard) {
-            dealer.drawTo(1, player)
+            dealer.drawTo(BASE_DRAW_CARD_COUNT, player)
         } else {
             stopPlayerBetting(player)
         }
@@ -37,5 +37,6 @@ class BlackJackGame(
 
     companion object {
         private const val INIT_DRAW_CARD_COUNT = 2
+        private const val BASE_DRAW_CARD_COUNT = 1
     }
 }
