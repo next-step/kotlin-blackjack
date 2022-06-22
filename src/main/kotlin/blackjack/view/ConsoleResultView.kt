@@ -1,6 +1,8 @@
 package blackjack.view
 
+import blackjack.model.player.Dealer.Companion.BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerName
 import blackjack.model.player.Players
 
 object ConsoleResultView : ResultView {
@@ -29,4 +31,7 @@ object ConsoleResultView : ResultView {
     }
 
     private fun playerCardStatus(player: Player) = "${player.name}카드: ${player.cards}"
+
+    override fun printDealerReceiveMoreCardMessage(dealerName: PlayerName) =
+        println("\n${dealerName}는 점수가 $BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD 이하라 한 장의 카드를 더 받았습니다.")
 }

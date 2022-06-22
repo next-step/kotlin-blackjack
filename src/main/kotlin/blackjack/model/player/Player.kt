@@ -14,6 +14,9 @@ open class Player protected constructor(
     val sumOfCardScore
         get() = cards.sumOfScore
 
+    open val isDealer
+        get() = false
+
     open fun receiveCard(card: Card) {
         cards.addOne(card)
     }
