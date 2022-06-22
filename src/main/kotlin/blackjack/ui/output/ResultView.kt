@@ -1,6 +1,5 @@
 package blackjack.ui.output
 
-import blackjack.player.BlackJackScoreCalculator
 import blackjack.player.Player
 
 object ResultView {
@@ -13,17 +12,23 @@ object ResultView {
         players.map(this::showPlayerCard)
     }
 
-    fun showPlayerCard(player: Player, score: Int? = null) {
-        val cardsString = player.myCards()
-            .map { CardViewMapper.toView(it) }
-            .joinToString { it }
-
-        val scoreString = score?.let { "- 결과: $it" } ?: ""
-
-        println("${player.name}카드: $cardsString $scoreString")
+    fun showPlayerCard(player: Player) {
+        val cardsString = toCardString(player)
+        println("${player.name}카드: $cardsString")
     }
 
     fun showGameResult(allPlayer: List<Player>) {
-        allPlayer.forEach { this.showPlayerCard(it, BlackJackScoreCalculator.getScore(it.myCards())) }
+        allPlayer.forEach { this.showPlayerCardWithScore(it) }
+    }
+
+    private fun showPlayerCardWithScore(player: Player) {
+        val cardsString = toCardString(player)
+        println("${player.name}카드: $cardsString - 결과: ${player.score}")
+    }
+
+    private fun toCardString(player: Player): String {
+        return player.myCards()
+            .map { CardViewMapper.toView(it) }
+            .joinToString { it }
     }
 }
