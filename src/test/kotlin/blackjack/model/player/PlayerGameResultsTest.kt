@@ -1,10 +1,6 @@
 package blackjack.model.player
 
-import blackjack.model.card.Card
-import blackjack.model.card.CardNumber
-import blackjack.model.card.CardSymbol
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.BeforeEach
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -22,6 +18,6 @@ class PlayerGameResultsTest {
 
         // when, then
         val exception = assertThrows<IllegalArgumentException> { PlayerGameResults.from(players) }
-        Assertions.assertThat(exception.message).isEqualTo("딜러가 존재하지 않습니다.")
+        assertThat(exception.message).isEqualTo("딜러가 존재하지 않습니다.")
     }
 }
