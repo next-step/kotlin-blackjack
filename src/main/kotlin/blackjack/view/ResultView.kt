@@ -1,7 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.card.Card
+import blackjack.domain.game.GameStatus
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.GambleSummary
 import blackjack.domain.player.Player
 
 class ResultView {
@@ -18,32 +19,44 @@ class ResultView {
         }
     }
 
-    fun printCardsByPlayer(player: Player, withScore: Boolean) {
+    fun printFinalResult(players: List<Player>, dealer: Dealer) {
+        println("")
+        println("## 최종 수익")
+        println(getDealerResult(dealer, players))
+        println(getPlayerResult(players))
+    }
+
+    private fun printCardsByPlayer(player: Player, withScore: Boolean) {
         if (withScore) {
-            println("${player.name}카드: ${player.receivedCards.map { extractCardDescription(it) }} - 결과: ${player.score}")
+            println("${player.name}카드: ${CardView.getCardDescription(player.receivedCards)} - 결과: ${player.score}")
             return
         }
 
-        println("${player.name}카드: ${player.receivedCards.map { extractCardDescription(it) }}")
+        println("${player.name}카드: ${CardView.getCardDescription(player.receivedCards)}")
     }
 
-    fun printFinalResult(players: List<Player>) {
-        val dealer = players
-            .filterIsInstance<Dealer>()
-            .first()
+    private fun getDealerResult(dealer: Dealer, player: List<Player>): String {
+        val incomeOfDealer = player
+            .filter { it.gambleSummary.gameStatus == GameStatus.LOSE }
+            .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
+            .unaryMinus()
 
-        println("${dealer.name}: ${dealer.win}승 ${dealer.lose}패")
+        val expensesOfDealer = player
+            .filter { it.gambleSummary.gameStatus == GameStatus.WIN }
+            .sumOf { (it.gambleSummary.battingAmount * it.gambleSummary.earningRate) }
 
-        players.filter { it !is Dealer }.map {
-            println("${it.name}: ${convertWinOrLose((it.isWinner))}")
-        }
+        return "${dealer.name}: ${calculateProfitOfDealer(incomeOfDealer, expensesOfDealer)}"
     }
 
-    private fun extractCardDescription(card: Card): String {
-        return card.description
+    private fun getPlayerResult(players: List<Player>): String {
+        return players.joinToString("\n") { "${it.name}: ${calculateProfitOfPlayer((it.gambleSummary))}" }
     }
 
-    private fun convertWinOrLose(toConvert: Boolean): String {
-        return if (toConvert) "승" else "패"
+    private fun calculateProfitOfDealer(incomeOfDealer: Double, expensesOfDealer: Double): Int {
+        return (incomeOfDealer - expensesOfDealer).toInt()
+    }
+
+    private fun calculateProfitOfPlayer(gambleSummary: GambleSummary): Int {
+        return (gambleSummary.battingAmount * gambleSummary.earningRate).toInt()
     }
 }

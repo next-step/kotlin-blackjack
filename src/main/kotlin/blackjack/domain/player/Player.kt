@@ -1,51 +1,71 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Card.AceCard
-import blackjack.domain.game.TakeMorePlayerStrategy
+import blackjack.domain.card.ReceivedCards
+import blackjack.domain.game.strategy.TakeMorePlayerStrategy
 
 open class Player(
     private val _name: String,
-    val takeMorePlayerStrategy: TakeMorePlayerStrategy,
-    val receivedCards: MutableSet<Card> = mutableSetOf()
+    private val _receivedCards: ReceivedCards = ReceivedCards(mutableSetOf()),
+    private val _gambleSummary: GambleSummary = GambleSummary()
 ) {
-
-    var isWinner: Boolean = false
+    constructor(name: String, cards: List<Card>) : this(_name = name) {
+        cards.map {
+            _receivedCards.addCard(it)
+        }
+    }
 
     val score: Int
-        get() = calculateScore()
+        get() = _receivedCards.calculateScore().score
 
     val name: String
         get() = _name
 
-    fun calculateScore(): Int {
-        var score = receivedCards.sumOf { it.number }
+    val receivedCards: ReceivedCards
+        get() = _receivedCards
 
-        if (score > BLACKJACK_SCORE) {
-            val aceCount = receivedCards
-                .count { it is AceCard }
-
-            score = score - (ACE_NUMBER_TO_ELEVEN * aceCount) + (ACE_NUMBER_TO_ONE * aceCount)
-        }
-
-        return score
-    }
+    val gambleSummary: GambleSummary
+        get() = _gambleSummary
 
     fun canMoreGame(): Boolean {
-        return calculateScore() < BLACKJACK_SCORE
+        return _receivedCards.calculateScore().score < BLACKJACK_SCORE
+    }
+
+    fun isBust(): Boolean {
+        return _receivedCards.calculateScore().score > BLACKJACK_SCORE
+    }
+
+    fun isBlackJack(): Boolean {
+        return _receivedCards.count() == CARD_SIZE_FOR_BLACKJACK && _receivedCards.calculateScore().score == BLACKJACK_SCORE
+    }
+
+    fun adjustBustBattingAmount() {
+        _gambleSummary.battingAmount = _gambleSummary.battingAmount.unaryMinus()
     }
 
     fun addCard(card: Card) {
-        receivedCards.add(card)
+        _receivedCards.addCard(card)
     }
 
-    fun wantToTake(): Boolean {
+    fun wantToTake(takeMorePlayerStrategy: TakeMorePlayerStrategy): Boolean {
         return takeMorePlayerStrategy.wantToTake(this)
     }
 
+    fun isDraw(player: Player): Boolean {
+        return player.score == this.score
+    }
+
+    fun isWin(compare: Player): Boolean {
+        if (isBust()) {
+            return false
+        }
+
+        return compare.score > BLACKJACK_SCORE || compare.score < score || score == BLACKJACK_SCORE
+    }
+
     companion object {
-        private const val BLACKJACK_SCORE = 21
-        private const val ACE_NUMBER_TO_ONE = 1
-        private const val ACE_NUMBER_TO_ELEVEN = 11
+        const val BLACKJACK_SCORE = 21
+        const val CARD_SIZE_FOR_BLACKJACK = 2
+        const val INIT_PICK_CARD_NUMBER = 2
     }
 }

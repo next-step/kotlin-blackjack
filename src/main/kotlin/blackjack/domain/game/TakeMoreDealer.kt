@@ -1,9 +1,17 @@
 package blackjack.domain.game
 
-class TakeMoreDealer : TakeMorePlayerStrategy {
+import blackjack.domain.game.strategy.TakeMoreDealerViewStrategy
+import blackjack.domain.game.strategy.TakeMorePlayerStrategy
+import blackjack.domain.player.Player
 
-    override fun canBeTakeOneCard(score: Int): Boolean {
-        return score <= DEALER_TAKE_ONE_CARD_POLICY
+class TakeMoreDealer(private val takeMoreDealerViewStrategy: TakeMoreDealerViewStrategy) : TakeMorePlayerStrategy {
+
+    override fun wantToTake(player: Player): Boolean {
+        return player.score <= DEALER_TAKE_ONE_CARD_POLICY
+    }
+
+    fun printTakeMoreDealer() {
+        takeMoreDealerViewStrategy.printDoneTakeMore()
     }
 
     companion object {
