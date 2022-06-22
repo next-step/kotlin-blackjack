@@ -8,7 +8,7 @@ import blackjack.ui.input.BlackjackInputView
 import blackjack.ui.output.ResultView
 
 fun main() {
-    val playerNames = BlackjackInputView.createPlayer()
+    val playerNames = BlackjackInputView.createPlayerNames()
     val players = PlayerCreator.create(playerNames)
     val deck = Deck(SimpleCardCreator.startCard())
     val dealer = Dealer(deck)
