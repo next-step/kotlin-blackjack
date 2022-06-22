@@ -13,20 +13,16 @@ class BlackJackGame(
     }
 
     private fun giveStartCards() {
-        players.forEach { dealer.giveCards(it, INIT_DRAW_CARD_COUNT) }
+        dealer.drawTo(INIT_DRAW_CARD_COUNT, *players.toTypedArray())
     }
 
     fun ask(player: Player, needMoreCard: Boolean) {
         require(player in players)
         if (needMoreCard) {
-            giveCard(player)
+            dealer.drawTo(1, player)
         } else {
             stopPlayerBetting(player)
         }
-    }
-
-    private fun giveCard(player: Player) {
-        dealer.giveCard(player)
     }
 
     private fun stopPlayerBetting(player: Player) {

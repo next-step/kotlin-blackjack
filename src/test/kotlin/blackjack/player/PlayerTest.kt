@@ -23,7 +23,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 받을 수 있다`() {
         val player = Player("pang")
-        player.getCard(Card(Suit.SPADE, CardSymbol.ACE))
+        player.addCard(Card(Suit.SPADE, CardSymbol.ACE))
 
         assertThat(player.myCards()).contains(Card(Suit.SPADE, CardSymbol.ACE))
     }
@@ -31,13 +31,13 @@ class PlayerTest {
     @Test
     fun `플레이어가 갖고있는 점수가 22점 이상이면 burst 상태가 된다`() {
         val player = Player("pang")
-        player.getCard(Card(Suit.SPADE, CardSymbol.TEN))
+        player.addCard(Card(Suit.SPADE, CardSymbol.TEN))
         assertThat(player.bust).isEqualTo(false)
 
-        player.getCard(Card(Suit.HEART, CardSymbol.JACK))
+        player.addCard(Card(Suit.HEART, CardSymbol.JACK))
         assertThat(player.bust).isEqualTo(false)
 
-        player.getCard(Card(Suit.HEART, CardSymbol.QUEEN))
+        player.addCard(Card(Suit.HEART, CardSymbol.QUEEN))
         assertThat(player.bust).isEqualTo(true)
     }
 
@@ -52,9 +52,9 @@ class PlayerTest {
     @Test
     fun `플레이어는 bust하면  게임을 할 수 없다`() {
         val player = Player("pang")
-        player.getCard(Card(Suit.SPADE, CardSymbol.TEN))
-        player.getCard(Card(Suit.SPADE, CardSymbol.JACK))
-        player.getCard(Card(Suit.SPADE, CardSymbol.KING))
+        player.addCard(Card(Suit.SPADE, CardSymbol.TEN))
+        player.addCard(Card(Suit.SPADE, CardSymbol.JACK))
+        player.addCard(Card(Suit.SPADE, CardSymbol.KING))
 
         assertThat(player.wantToPlay()).isFalse
     }

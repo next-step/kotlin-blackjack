@@ -10,7 +10,7 @@ class Player(
     private val score: Int get() = BlackJackScoreCalculator.getScore(myCards())
     val bust: Boolean get() = isLoosingScore()
 
-    fun getCard(card: Card) {
+    fun addCard(card: Card) {
         playerCards.add(card)
         updateStatus()
     }
