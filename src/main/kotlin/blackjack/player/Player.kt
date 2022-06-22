@@ -6,8 +6,7 @@ class Player(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
-    private var status: BetStatus = BetStatus.HIT
-    val bust: Boolean get() = isLoosingScore()
+    private var status: PlayerStatus = PlayerStatus.HIT
 
     fun addCard(card: Card) {
         playerCards.add(card)
@@ -15,8 +14,8 @@ class Player(
     }
 
     private fun updateStatus() {
-        if (bust) {
-            stopBetting()
+        if (isBustScore()) {
+            status = PlayerStatus.BUST
         }
     }
 
@@ -24,16 +23,20 @@ class Player(
         return playerCards.get()
     }
 
-    private fun isLoosingScore(): Boolean {
+    private fun isBustScore(): Boolean {
         return WINNING_SCORE < playerCards.getScore()
     }
 
     fun wantToPlay(): Boolean {
-        return status == BetStatus.HIT
+        return status == PlayerStatus.HIT
     }
 
     fun stopBetting() {
-        status = BetStatus.STAY
+        status = PlayerStatus.STAY
+    }
+
+    fun isBust(): Boolean {
+        return status == PlayerStatus.BUST
     }
 
     companion object {

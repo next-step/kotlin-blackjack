@@ -32,13 +32,13 @@ class PlayerTest {
     fun `플레이어가 갖고있는 점수가 22점 이상이면 burst 상태가 된다`() {
         val player = Player("pang")
         player.addCard(Card(Suit.SPADE, CardSymbol.TEN))
-        assertThat(player.bust).isEqualTo(false)
+        assertThat(player.isBust()).isEqualTo(false)
 
         player.addCard(Card(Suit.HEART, CardSymbol.JACK))
-        assertThat(player.bust).isEqualTo(false)
+        assertThat(player.isBust()).isEqualTo(false)
 
         player.addCard(Card(Suit.HEART, CardSymbol.QUEEN))
-        assertThat(player.bust).isEqualTo(true)
+        assertThat(player.isBust()).isEqualTo(true)
     }
 
     @Test

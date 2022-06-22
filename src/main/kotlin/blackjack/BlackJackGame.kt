@@ -31,7 +31,7 @@ class BlackJackGame(
 
     fun getPlayablePlayer(): Player? {
         return this.players
-            .filterNot { it.bust }
+            .filterNot { it.isBust() }
             .firstOrNull { it.wantToPlay() }
     }
 
