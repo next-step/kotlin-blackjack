@@ -15,7 +15,7 @@ object ResultView {
 
     fun showPlayerCard(player: Player, score: Int? = null) {
         val cardsString = player.myCards()
-            .map { "${it.symbol.symbol}${it.suit.value}" }
+            .map { CardViewMapper.toView(it) }
             .joinToString { it }
 
         val scoreString = score?.let { "- 결과: $it" } ?: ""
