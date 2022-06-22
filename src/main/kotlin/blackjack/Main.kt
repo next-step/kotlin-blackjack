@@ -17,7 +17,7 @@ fun main() {
 
     blackJack.startGame()
     ResultView.showStartStatus(
-        blackJack.allPlayer()
+        blackJack.players
     )
     println()
 
@@ -25,7 +25,7 @@ fun main() {
 
     println()
 
-    ResultView.showGameResult(blackJack.allPlayer())
+    ResultView.showGameResult(blackJack.players)
 }
 
 private fun play(blackJack: BlackJackGame) {

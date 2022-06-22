@@ -4,13 +4,9 @@ import blackjack.dealer.Dealer
 import blackjack.player.Player
 
 class BlackJackGame(
-    private val players: List<Player>,
+    val players: List<Player>,
     private val dealer: Dealer
 ) {
-
-    fun allPlayer(): List<Player> {
-        return players
-    }
 
     fun startGame() {
         giveStartCards()

@@ -23,7 +23,7 @@ internal class BlackJackGameTest {
 
     @Test
     fun `게임에 참여한 플레이어 모두를 반환한다`() {
-        val allPlayer = blackJackGame.allPlayer()
+        val allPlayer = blackJackGame.players
         assertThat(allPlayer.size).isEqualTo(2)
     }
 
