@@ -1,6 +1,6 @@
 package blackjack.domain
 
-abstract class User(
+sealed class User(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
@@ -8,6 +8,13 @@ abstract class User(
 
     fun draw(cardDeck: CardDeck) {
         playerCards.addCard(cardDeck.pop())
+    }
+
+    fun drawWhilePossible(cardDeck: CardDeck, whetherDraw: (String) -> Boolean, onDraw: (User) -> Unit) {
+        while (canDraw() && whetherDraw(name)) {
+            draw(cardDeck)
+            onDraw(this)
+        }
     }
 
     fun currentCards() = playerCards.cards

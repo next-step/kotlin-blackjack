@@ -4,10 +4,8 @@ import blackjack.domain.BetResult
 import blackjack.domain.BetResultDiscriminator
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.RandomShuffleStrategy
-import blackjack.domain.User
 import blackjack.ui.InputReceiver
 import blackjack.ui.UI
 
@@ -18,19 +16,21 @@ object CardGame {
         val cardDeck = CardDeck.new(RandomShuffleStrategy)
 
         playFirstTurn(dealer, players, cardDeck)
-
-        UI.drawDivider()
-        players.forEach {
-            playTurn(it, cardDeck)
-        }
-
-        UI.drawDivider()
-        playTurn(dealer, cardDeck)
+        playTurn(players, dealer, cardDeck)
 
         drawResult(dealer, players)
 
         val results = BetResultDiscriminator.discrimination(dealer, players)
         drawRecord(results)
+    }
+
+    private fun playTurn(players: Players, dealer: Dealer, cardDeck: CardDeck) {
+        UI.drawDivider()
+        players.forEach {
+            it.drawWhilePossible(cardDeck, InputReceiver::receiveWhetherDrawCard, UI::drawCardList)
+        }
+        UI.drawDivider()
+        dealer.drawWhilePossible(cardDeck, { true }, UI::drawDealerDrawMessage)
     }
 
     private fun drawResult(dealer: Dealer, players: Players) {
@@ -60,19 +60,6 @@ object CardGame {
         UI.drawCardList(dealer)
         players.forEach {
             UI.drawCardList(it)
-        }
-    }
-
-    private fun playTurn(user: User, cardDeck: CardDeck) {
-        when (user) {
-            is Dealer -> if (user.canDraw()) {
-                user.draw(cardDeck)
-                UI.drawDealerDrawMessage(user)
-            }
-            is Player -> while (user.canDraw() && InputReceiver.receiveWhetherDrawCard(user)) {
-                user.draw(cardDeck)
-                UI.drawCardList(user)
-            }
         }
     }
 }
