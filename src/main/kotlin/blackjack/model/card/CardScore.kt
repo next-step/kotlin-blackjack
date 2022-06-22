@@ -16,6 +16,8 @@ class CardScore(
         return CardScore(sumOfScore, sumOfOtherScore)
     }
 
+    fun isGreaterThan(other: Int) = score1 > other || score2 > other
+
     fun isLessThan(other: Int) = score1 < other || score2 < other
 
     fun isEqualOrLessThan(other: Int) = score1 <= other || score2 <= other
