@@ -30,17 +30,5 @@ sealed class PlayerState(val score: Score) {
                 else -> Stay(score)
             }
         }
-
-        fun of(cards: PlayingCards, isRunning: Boolean = true): PlayerState {
-            val score = Score.from(cards)
-
-            return when {
-                score.isZero() -> Start(score)
-                score.isBlackjack() && cards.size == 2 -> Blackjack(score) // FIXME : Magic Number!
-                score.isBust() -> Bust(score)
-                isRunning -> Hit(score)
-                else -> Stay(score)
-            }
-        }
     }
 }
