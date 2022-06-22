@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.player
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
