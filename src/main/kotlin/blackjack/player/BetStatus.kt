@@ -1,6 +1,6 @@
 package blackjack.player
 
-enum class BET_STATUS {
+enum class BetStatus {
     HIT,
     STAY
 }

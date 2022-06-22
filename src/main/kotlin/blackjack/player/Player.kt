@@ -6,7 +6,7 @@ class Player(
     val name: String,
     private val playerCards: PlayerCards = PlayerCards(),
 ) {
-    private var status: BET_STATUS = BET_STATUS.HIT
+    private var status: BetStatus = BetStatus.HIT
     private val score: Int get() = BlackjackScoreCalculator.getScore(myCards())
     val bust: Boolean get() = isLoosingScore()
 
@@ -30,11 +30,11 @@ class Player(
     }
 
     fun wantToPlay(): Boolean {
-        return status == BET_STATUS.HIT
+        return status == BetStatus.HIT
     }
 
     fun stopBetting() {
-        status = BET_STATUS.STAY
+        status = BetStatus.STAY
     }
 
     companion object {
