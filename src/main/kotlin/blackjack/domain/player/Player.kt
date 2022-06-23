@@ -1,8 +1,15 @@
 package blackjack.domain.player
 
+import blackjack.domain.deck.Card
+
 class Player(
     val playerName: PlayerName,
+    val hand: MutableList<Card> = mutableListOf(),
 ) {
+    fun receiveCard(card: Card) {
+        hand.add(card)
+    }
+
     companion object {
         fun from(nameValue: String): Player = Player(playerName = PlayerName(value = nameValue))
     }
