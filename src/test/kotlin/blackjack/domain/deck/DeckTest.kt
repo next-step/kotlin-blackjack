@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.deck
 
-import blackjack.domain.CardPattern.CLOVER
-import blackjack.domain.CardPattern.DIAMOND
-import blackjack.domain.CardPattern.HEART
-import blackjack.domain.CardPattern.SPADE
+import blackjack.domain.deck.CardPattern.CLOVER
+import blackjack.domain.deck.CardPattern.DIAMOND
+import blackjack.domain.deck.CardPattern.HEART
+import blackjack.domain.deck.CardPattern.SPADE
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe

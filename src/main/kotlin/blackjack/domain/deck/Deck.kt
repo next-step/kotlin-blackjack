@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.deck
 
 import java.util.LinkedList
 import java.util.Queue

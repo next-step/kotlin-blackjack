@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.deck
 
 enum class CardNumber(
     val score: Int,

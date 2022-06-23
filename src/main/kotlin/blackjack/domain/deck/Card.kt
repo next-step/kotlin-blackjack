@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.deck
 
 data class Card(
     val pattern: CardPattern,
