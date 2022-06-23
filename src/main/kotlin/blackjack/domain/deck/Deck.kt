@@ -3,9 +3,12 @@ package blackjack.domain.deck
 import java.util.LinkedList
 import java.util.Queue
 
-class Deck(
+class Deck private constructor(
     val cards: Queue<Card>,
 ) {
+    fun drawCard(): Card = cards.poll()
+        ?: throw IllegalStateException("덱에 남은 카드가 없습니다.")
+
     companion object {
         fun release(): Deck = Deck(
             CardPattern.values()
