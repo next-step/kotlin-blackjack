@@ -6,7 +6,7 @@ import blackjack.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BlackJackScoreCalculatorTest {
+class BlackjackScoreCalculatorTest {
 
     @Test
     fun `카드에 ace가 있고, 11점 이하면 ace를 11로 계산해서 합산한다`() {
@@ -14,7 +14,7 @@ class BlackJackScoreCalculatorTest {
             Card(Suit.CLUB, CardSymbol.ACE),
             Card(Suit.CLUB, CardSymbol.TEN),
         )
-        val score = BlackJackScoreCalculator.getScore(cards)
+        val score = BlackjackScoreCalculator.getScore(cards)
         assertThat(score).isEqualTo(21)
     }
 
@@ -25,7 +25,7 @@ class BlackJackScoreCalculatorTest {
             Card(Suit.CLUB, CardSymbol.TWO),
             Card(Suit.CLUB, CardSymbol.NINE),
         )
-        val score = BlackJackScoreCalculator.getScore(cards)
+        val score = BlackjackScoreCalculator.getScore(cards)
         assertThat(score).isEqualTo(12)
     }
 
@@ -37,7 +37,7 @@ class BlackJackScoreCalculatorTest {
             Card(Suit.CLUB, CardSymbol.NINE),
             Card(Suit.CLUB, CardSymbol.TEN),
         )
-        val score = BlackJackScoreCalculator.getScore(cards)
+        val score = BlackjackScoreCalculator.getScore(cards)
         assertThat(score).isEqualTo(26)
     }
 }

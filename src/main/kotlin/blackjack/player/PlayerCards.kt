@@ -15,6 +15,6 @@ class PlayerCards {
     }
 
     fun getScore(): Int {
-        return BlackJackScoreCalculator.getScore(card)
+        return BlackjackScoreCalculator.getScore(card)
     }
 }

@@ -10,20 +10,20 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalArgumentException
 
-internal class BlackJackGameTest {
+internal class BlackjackGameTest {
 
     private lateinit var players: List<Player>
-    private lateinit var blackJackGame: BlackJackGame
+    private lateinit var blackjackGame: BlackjackGame
 
     @BeforeEach
     fun init() {
         players = listOf(Player("pang"), Player("yohan"))
-        blackJackGame = BlackJackGame(players, Dealer(Deck(SimpleCardCreator.startCard())))
+        blackjackGame = BlackjackGame(players, Dealer(Deck(SimpleCardCreator.startCard())))
     }
 
     @Test
     fun `게임에 참여한 플레이어 모두를 반환한다`() {
-        val allPlayer = blackJackGame.players
+        val allPlayer = blackjackGame.players
         assertThat(allPlayer.size).isEqualTo(2)
     }
 
@@ -33,7 +33,7 @@ internal class BlackJackGameTest {
             assertThat(it.myCards().size).isEqualTo(0)
         }
 
-        blackJackGame.startGame()
+        blackjackGame.startGame()
 
         players.forEach {
             assertThat(it.myCards().size).isEqualTo(2)
@@ -42,7 +42,7 @@ internal class BlackJackGameTest {
 
     @Test
     fun `플레이 가능한 플레이어를 반환한다`() {
-        val playablePlayer = blackJackGame.getPlayablePlayer()
+        val playablePlayer = blackjackGame.getPlayablePlayer()
         assertThat(playablePlayer).isNotNull
         assertThat(playablePlayer?.name).isEqualTo("pang")
     }
@@ -50,7 +50,7 @@ internal class BlackJackGameTest {
     @Test
     fun `플레이 가능한 플레이어가 없으면 null을 반환한다`() {
         players.map { it.stopBetting() }
-        val playablePlayer = blackJackGame.getPlayablePlayer()
+        val playablePlayer = blackjackGame.getPlayablePlayer()
         assertThat(playablePlayer).isNull()
     }
 
@@ -59,7 +59,7 @@ internal class BlackJackGameTest {
         val firstPlayer = players.first()
         assertThat(firstPlayer.myCards()).isEmpty()
 
-        blackJackGame.ask(firstPlayer, true)
+        blackjackGame.ask(firstPlayer, true)
 
         assertThat(firstPlayer.myCards()).isNotEmpty
     }
@@ -69,6 +69,6 @@ internal class BlackJackGameTest {
         val invalidPlayer = Player("invalid")
         assertThat(invalidPlayer.myCards()).isEmpty()
 
-        assertThrows<IllegalArgumentException> { blackJackGame.ask(invalidPlayer, true) }
+        assertThrows<IllegalArgumentException> { blackjackGame.ask(invalidPlayer, true) }
     }
 }

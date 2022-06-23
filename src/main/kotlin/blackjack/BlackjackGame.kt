@@ -3,7 +3,7 @@ package blackjack
 import blackjack.dealer.Dealer
 import blackjack.player.Player
 
-class BlackJackGame(
+class BlackjackGame(
     val players: List<Player>,
     private val dealer: Dealer
 ) {

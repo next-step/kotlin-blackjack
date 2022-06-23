@@ -2,7 +2,7 @@ package blackjack.player
 
 import blackjack.card.Card
 
-object BlackJackScoreCalculator {
+object BlackjackScoreCalculator {
     private const val ACE_DIVISION_VALUE = 11
     private const val ACE_ADDITIONAL_VALUE = 10
 
