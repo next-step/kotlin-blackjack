@@ -15,7 +15,7 @@ class Player(
     }
 
     private fun updateStatus() {
-        if (playerCards.isBustScore()) {
+        if (playerCards.isBust()) {
             status = PlayerStatus.BUST
         }
     }
