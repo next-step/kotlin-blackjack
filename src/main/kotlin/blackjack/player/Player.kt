@@ -15,17 +15,13 @@ class Player(
     }
 
     private fun updateStatus() {
-        if (isBustScore()) {
+        if (playerCards.isBustScore()) {
             status = PlayerStatus.BUST
         }
     }
 
     fun myCards(): List<Card> {
         return playerCards.toList()
-    }
-
-    private fun isBustScore(): Boolean {
-        return WINNING_SCORE < playerCards.getScore()
     }
 
     fun wantToPlay(): Boolean {
@@ -38,9 +34,5 @@ class Player(
 
     fun isBust(): Boolean {
         return status == PlayerStatus.BUST
-    }
-
-    companion object {
-        private const val WINNING_SCORE = 21
     }
 }
