@@ -2,6 +2,7 @@ package blackjack.domain.user
 
 import blackjack.constant.ErrorMessages
 import blackjack.domain.InputInterface
+import blackjack.domain.Money
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
@@ -20,12 +21,19 @@ open class User(val name: String, initCards: List<Card>) {
     val cards: Cards
         get() = _cards
 
+    // TODO 여기 살짝 맘에 안드네..
+    private var money: Money? = null
+
     init {
         require(name.isNotEmpty()) { ErrorMessages.NAME_IS_EMPTY }
     }
 
     fun hit(card: Card) {
         _cards.addCard(card)
+    }
+
+    fun setBatMoney(input: InputInterface) {
+        money = Money(input.getBatMoney(this))
     }
 
     private fun isBust(): Boolean {

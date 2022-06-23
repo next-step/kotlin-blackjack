@@ -12,6 +12,7 @@ import blackjack.view.OutputView
 object BlackjackController {
     fun startGame() {
         val players = Users.of(InputView.getPlayersName(), Deck())
+        players.setBatMoney(InputView)
         OutputView.printHandOutMessage(players)
         OutputView.printUsersCard(players)
         players.hit(InputView, OutputView)

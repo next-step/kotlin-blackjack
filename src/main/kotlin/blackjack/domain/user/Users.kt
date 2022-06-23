@@ -26,6 +26,12 @@ class Users(val users: List<User>, private val deck: Deck, val dealer: Dealer) {
         dealer.hitStage(deck, input, output)
     }
 
+    fun setBatMoney(input: InputInterface) {
+        users.forEach {
+            it.setBatMoney(input)
+        }
+    }
+
     companion object {
         const val INIT_CARD_SIZE = 2
         fun of(usersNames: List<String>, deck: Deck): Users {
