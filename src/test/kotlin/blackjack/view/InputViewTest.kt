@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.user.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -37,6 +38,14 @@ class InputViewTest {
     fun `카드 받기 입력이 y나 n이 아닌경우 IllegalArgumentException을 던진다`(source: String?) {
         assertThrows<IllegalArgumentException> {
             InputView.getYesOrNo { source }
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["asss,dddd,a"])
+    fun `배팅금액에 글자가 들어오는 경우 IllegalArgumentException을 던진다`(source: String?) {
+        assertThrows<IllegalArgumentException> {
+            InputView.getBatMoney(User("hello", listOf())) { source }
         }
     }
 }
