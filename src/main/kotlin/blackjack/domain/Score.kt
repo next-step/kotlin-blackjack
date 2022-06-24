@@ -8,7 +8,6 @@ data class Score(val number: Int) {
 
     fun isGreater(score: Score) = number > score.number
 
-
     companion object {
         const val BLACKJACK_SCORE = 21
 

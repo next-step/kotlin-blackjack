@@ -31,5 +31,4 @@ fun main() {
     InputView.distributeToDealer(participants.dealer) { deck.draw() }
 
     ResultView.printResult(participants)
-
 }

@@ -58,7 +58,6 @@ class PlayerTest {
         assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.ACE))).score()).isEqualTo(Score(21))
     }
 
-
     @ParameterizedTest
     @MethodSource("cardList")
     fun `Score 점수에 따라 다른 카드를 받을 수 있는지 확인`(expect: Boolean, cads: List<Card>) {

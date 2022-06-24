@@ -11,4 +11,3 @@ class Dealer(
         private const val DEALER_NAME = "딜러"
     }
 }
-
