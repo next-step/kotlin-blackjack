@@ -1,15 +1,30 @@
 package view
 
+import domain.Match
 import domain.Player
-import view.InputView.displayHaveCard
 
 object ResultView {
 
-    fun displayResult(players: List<Player>) {
+    fun displayPlayersScore(players: List<Player>) {
+        println()
         players.forEach {
-            displayHaveCard(it)
-            print(" - ")
-            println("결과 : ${it.getSumOfCards()}")
+            print(it.name + " : " + InputView.getCardString(it.cards))
+            println("- 결과 : ${it.getSumOfCards()}")
+        }
+    }
+
+    fun displayWinOrLose(players: List<Player>) {
+        println()
+        println("## 최종 승패")
+        players.forEach {
+            println(getMatch(it))
+        }
+    }
+
+    private fun getMatch(player: Player): String {
+        return when (player.match) {
+            Match.WIN -> "${player.name}: 승"
+            Match.LOSE -> "${player.name}: 패"
         }
     }
 }

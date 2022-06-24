@@ -1,9 +1,10 @@
 package domain
 
-class Player(val name: String) {
+open class Player(val name: String) {
     private val holdingCards = mutableListOf<Card>()
     val cards
         get() = holdingCards.toList()
+    var match: Match = Match.LOSE
 
     fun offer(cards: List<Card>) {
         if (cards.isNotEmpty()) {
