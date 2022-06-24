@@ -1,6 +1,9 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Dealer.Companion.SCORE_SIXTEEN
+import blackjack.domain.Participant
+import blackjack.domain.asText
 import java.util.*
 
 object InputView {
@@ -21,7 +24,7 @@ object InputView {
         }
     }
 
-    fun getPlayer(): Players {
+    fun getPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val players = readln().split(PLAYER_DELIMITER)
 
@@ -29,31 +32,38 @@ object InputView {
             "반드시 $MINIMUM_PLAYER_COUNT 이상의 참가자가 필요합니다."
         }
 
-        return players.toPlayers()
+        return players
     }
 
-    fun initDistributeCard(cardCount: Int, deckFunc: () -> Card): List<Card> {
-        return List(cardCount) {
-            deckFunc()
+    fun distributeInit(participant: Participant, cardCount: Int, deckFunc: () -> Card) {
+        participant.addCard(
+            List(cardCount) { deckFunc() }
+        )
+    }
+
+    fun printCurrentCard(participant: Participant) {
+        println("${participant.name}카드: ${participant.cards.asText()}")
+    }
+
+    fun distributeToDealer(participant: Participant, deckFunc: () -> Card) {
+        if (participant.canReceive()) {
+            println("딜러는 ${SCORE_SIXTEEN}이하라 한장의 카드를 더 받았습니다.")
+            participant.addCard(deckFunc())
         }
     }
 
-    fun printCurrentCard(player: Player) {
-        println("${player.name}카드: ${player.cards.asText()}")
-    }
-
-    fun shareAnotherCard(player: Player, deckFunc: () -> Card) {
-        val name = player.name
+    fun distributeToPlayer(participant: Participant, deckFunc: () -> Card) {
+        val name = participant.name
         do {
             println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val answer = Answer.of(readln())
 
             if (answer.isApprove()) {
                 deckFunc().apply {
-                    player.addCard(this)
-                    println("${name}카드 : ${this.fullName}, Score : ${player.score()}")
+                    participant.addCard(this)
+                    println("${name}카드 : ${this.fullName}, Score : ${participant.score()}")
                 }
             }
-        } while (answer.isApprove() && player.canReceive)
+        } while (answer.isApprove() && participant.canReceive())
     }
 }
