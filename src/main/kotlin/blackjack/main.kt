@@ -1,6 +1,9 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participants
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -8,20 +11,24 @@ private const val INIT_DRAW_CARD = 2
 
 fun main() {
     val deck = Deck()
-    val players = InputView.getPlayer()
 
-    ResultView.printDistributeCard(INIT_DRAW_CARD, players)
+    val participants = Participants(
+        dealer = Dealer(),
+        player = InputView.getPlayerNames().map { Player(it) }
+    )
 
-    players.players.forEach {
-        it.addCard(InputView.initDistributeCard(INIT_DRAW_CARD) { deck.draw() })
+    ResultView.printDistributeCard(INIT_DRAW_CARD, participants)
+
+    participants.participants.forEach {
+        InputView.distributeInit(it, INIT_DRAW_CARD) { deck.draw() }
         InputView.printCurrentCard(it)
     }
 
-    players.players.forEach {
-        InputView.shareAnotherCard(it) { deck.draw() }
+    participants.player.forEach {
+        InputView.distributeToPlayer(it) { deck.draw() }
     }
 
-    players.players.forEach {
-        ResultView.printResult(it)
-    }
+    InputView.distributeToDealer(participants.dealer) { deck.draw() }
+
+    ResultView.printResult(participants)
 }
