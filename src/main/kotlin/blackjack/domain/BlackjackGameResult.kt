@@ -7,11 +7,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             val playerResults = participants.players.toResults(participants.dealer)
             val dealerResult = participants.dealer.toResult(playerResults)
 
-            val results = mutableListOf(dealerResult).apply {
-                addAll(playerResults)
-            }
-
-            return BlackjackGameResult(results)
+            return BlackjackGameResult(dealerResult + playerResults)
         }
 
         private fun List<Player>.toResults(dealer: Dealer): List<BlackjackParticipantResult> {
@@ -23,16 +19,18 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             }
         }
 
-        private fun Dealer.toResult(playerResults: List<BlackjackParticipantResult>): BlackjackParticipantResult {
+        private fun Dealer.toResult(playerResults: List<BlackjackParticipantResult>): List<BlackjackParticipantResult> {
             val dealerMatchStatusMap = playerResults.map { playerResult ->
                 playerResult.matchStatus.inverse()
             }.groupingBy { matchStatus ->
                 matchStatus
             }.eachCount()
 
-            return BlackjackParticipantResult(
-                participant = this,
-                matchStatus = MatchStatus.Dealer.from(dealerMatchStatusMap)
+            return listOf(
+                BlackjackParticipantResult(
+                    participant = this,
+                    matchStatus = MatchStatus.Dealer.from(dealerMatchStatusMap)
+                )
             )
         }
     }
