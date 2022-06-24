@@ -21,7 +21,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
 
         private fun Dealer.toResult(playerResults: List<BlackjackParticipantResult>): List<BlackjackParticipantResult> {
             val dealerMatchStatusMap = playerResults.map { playerResult ->
-                playerResult.matchStatus.inverse()
+                (playerResult.matchStatus as MatchStatus.Player).opposite()
             }.groupingBy { matchStatus ->
                 matchStatus
             }.eachCount()

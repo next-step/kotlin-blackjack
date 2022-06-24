@@ -1,13 +1,9 @@
 package blackjack.domain
 
 sealed interface MatchStatus {
-    fun inverse(): MatchStatus
-
     data class Dealer(val win: Int, val push: Int, val lose: Int) : MatchStatus {
-        override fun inverse(): MatchStatus = this
-
         companion object {
-            fun from(matchStatusMap: Map<MatchStatus, Int>): Dealer {
+            fun from(matchStatusMap: Map<Player, Int>): Dealer {
                 return Dealer(
                     win = matchStatusMap[Win] ?: 0,
                     push = matchStatusMap[Push] ?: 0,
@@ -17,15 +13,19 @@ sealed interface MatchStatus {
         }
     }
 
-    object Win : MatchStatus {
-        override fun inverse(): MatchStatus = Lose
+    sealed interface Player : MatchStatus {
+        fun opposite(): Player
     }
 
-    object Lose : MatchStatus {
-        override fun inverse(): MatchStatus = Win
+    object Win : Player {
+        override fun opposite(): Player = Lose
     }
 
-    object Push : MatchStatus {
-        override fun inverse(): MatchStatus = this
+    object Lose : Player {
+        override fun opposite(): Player = Win
+    }
+
+    object Push : Player {
+        override fun opposite(): Player = this
     }
 }
