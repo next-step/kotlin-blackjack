@@ -15,7 +15,7 @@ class BlackjackGame(
         return players.isExistWaitingPlayer()
     }
 
-    fun askDrawToCurrentTurnPlayer(isDrawCard: Boolean) { // TODO 2022-06-25 경록: 테스트 코드 작성하기
+    fun askDrawToCurrentTurnPlayer(isDrawCard: Boolean) {
         val player = players.findCurrentTurnPlayer()
         if (isDrawCard) {
             player.drawCard(deck.pullOut())

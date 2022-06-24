@@ -48,4 +48,30 @@ class BlackjackGameTest : StringSpec({
             actual shouldBe expected
         }
     }
+
+    "대기중인 플레이어에게 카드를 뽑을지 말지 묻는다." {
+        // given
+        val blackjackGame = BlackjackGame(
+            deck = Deck(listOf(Card(Suit.CLOVER, Face.THREE))),
+            players = Players(
+                listOf(
+                    Player(
+                        "김경록",
+                        Cards(
+                            mutableListOf(
+                                Card(Suit.CLOVER, Face.NINE),
+                                Card(Suit.CLOVER, Face.TEN),
+                            )
+                        ),
+                    )
+                )
+            ),
+        )
+
+        // when
+        blackjackGame.askDrawToCurrentTurnPlayer(true)
+
+        // then
+        blackjackGame.isPlaying() shouldBe false
+    }
 })
