@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 class BlackjackGame(
@@ -13,4 +14,15 @@ class BlackjackGame(
     fun isPlaying(): Boolean {
         return players.isExistWaitingPlayer()
     }
+
+    fun askDrawToCurrentTurnPlayer(isDrawCard: Boolean) { // TODO 2022-06-25 경록: 테스트 코드 작성하기
+        val player = players.findCurrentTurnPlayer()
+        if (isDrawCard) {
+            player.drawCard(deck.pullOut())
+            return
+        }
+        player.endOwnTurn()
+    }
+
+    fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer()
 }

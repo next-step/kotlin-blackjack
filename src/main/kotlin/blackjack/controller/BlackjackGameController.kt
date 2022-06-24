@@ -15,16 +15,22 @@ class BlackjackGameController {
         )
 
         blackjackGame.init()
-        while (blackjackGame.isPlaying()) {
-            // val player = blackjackGame.findCurrentPlayer()
-        }
-
-        OutputView.printAllInitCards(blackjackGame.players)
+        OutputView.printPlayersInitCards(blackjackGame.players)
+        playPlayersTurn(blackjackGame)
+        OutputView.printResult(blackjackGame.players)
     }
 
     private fun createPlayers(): Players {
         return InputView.inputPlayerNames()
             .map { Player(it) }
             .let { Players(it) }
+    }
+
+    private fun playPlayersTurn(blackjackGame: BlackjackGame) {
+        while (blackjackGame.isPlaying()) {
+            val currentTurnPlayer = blackjackGame.findCurrentTurnPlayer()
+            blackjackGame.askDrawToCurrentTurnPlayer(InputView.askDrawCard(currentTurnPlayer.name))
+            OutputView.printCurrentPlayerCards(currentTurnPlayer)
+        }
     }
 }

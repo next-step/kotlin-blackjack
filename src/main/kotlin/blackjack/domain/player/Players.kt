@@ -14,10 +14,13 @@ value class Players(
     constructor(vararg names: String) : this(names.map { Player(it) })
 
     fun drawInitCards(deck: Deck) {
-        players.forEach { it.drawCards(deck.drawFirstTurn()) }
+        players.forEach { it.drawCards(deck.pullOutFirstTurn()) }
     }
 
     fun isExistWaitingPlayer(): Boolean {
         return players.any { it.isAbleToDraw() }
     }
+
+    fun findCurrentTurnPlayer(): Player =
+        players.firstOrNull { it.isAbleToDraw() } ?: throw IllegalStateException("대기중인 플레이어가 존재하지 않습니다.")
 }

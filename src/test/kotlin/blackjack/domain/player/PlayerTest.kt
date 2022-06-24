@@ -20,7 +20,18 @@ class PlayerTest : StringSpec({
         }
     }
 
-    "플레이어가 카드들을 뽑는다." {
+    "플레이어가 한장의 카드를 뽑는다." {
+        // given
+        val player = Player("김경록")
+
+        // when
+        player.drawCard(Card(Suit.CLOVER, Face.ACE))
+
+        // then
+        player.cards.size shouldBe 1
+    }
+
+    "플레이어가 여러장의 카드를 뽑는다." {
         // given
         val player = Player("김경록")
 
@@ -73,5 +84,16 @@ class PlayerTest : StringSpec({
             // then
             actual shouldBe expected
         }
+    }
+
+    "플레이어의 턴이 종료되면 플레이어가 카드를 더 받을 수 없는 상태가 된다." {
+        // given
+        val player = Player("김경록", Cards())
+
+        // when
+        player.endOwnTurn()
+
+        // then
+        player.isAbleToDraw() shouldBe false
     }
 })

@@ -9,7 +9,7 @@ class DeckTest : FunSpec({
         val deck = Deck.createOf()
 
         // when
-        val actual = deck.drawFirstTurn()
+        val actual = deck.pullOutFirstTurn()
 
         // then
         actual.size shouldBe 2

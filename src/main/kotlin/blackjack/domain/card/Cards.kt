@@ -12,6 +12,10 @@ value class Cards(
     val size: Int
         get() = _value.size
 
+    fun add(card: Card) {
+        _value.add(card)
+    }
+
     fun addAll(cards: List<Card>) {
         _value.addAll(cards)
     }

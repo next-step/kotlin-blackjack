@@ -5,6 +5,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
+import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
@@ -101,5 +102,71 @@ class PlayersTest : StringSpec({
 
         // then
         actual shouldBe false
+    }
+
+    "자신의 턴인 플레이어를 찾는 기능" {
+        // given
+        val players = Players(
+            listOf(
+                Player(
+                    "김경록",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Face.TEN),
+                            Card(Suit.DIAMOND, Face.ACE),
+                        )
+                    ),
+                ),
+                Player(
+                    "로키",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.CLOVER, Face.EIGHT),
+                            Card(Suit.CLOVER, Face.NINE),
+                        )
+                    ),
+                )
+            )
+        )
+
+        // when
+        val currentTurnPlayer = players.findCurrentTurnPlayer()
+
+        // then
+        currentTurnPlayer.name shouldBe "로키"
+        assertSoftly(currentTurnPlayer.cards) {
+            value[0] shouldBe Card(Suit.CLOVER, Face.EIGHT)
+            value[1] shouldBe Card(Suit.CLOVER, Face.NINE)
+        }
+    }
+
+    "대기중인 플레이어가 없을 때, 자신의 턴인 플레이어를 찾으면 예외를 발생시킨다." {
+        // given
+        val players = Players(
+            listOf(
+                Player(
+                    "김경록",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Face.TEN),
+                            Card(Suit.DIAMOND, Face.ACE),
+                        )
+                    ),
+                ),
+                Player(
+                    "로키",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.CLOVER, Face.EIGHT),
+                            Card(Suit.CLOVER, Face.NINE),
+                            Card(Suit.CLOVER, Face.TEN),
+                        )
+                    ),
+                )
+            )
+        )
+
+        // when // then
+        shouldThrowExactly<IllegalStateException> { players.findCurrentTurnPlayer() }
     }
 })

@@ -7,11 +7,15 @@ class Deck(
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
 
-    fun drawFirstTurn(): List<Card> {
+    fun pullOutFirstTurn(): List<Card> {
         return listOf(
             _cards.removeFirst(),
             _cards.removeFirst(),
         )
+    }
+
+    fun pullOut(): Card {
+        return _cards.removeFirst()
     }
 
     companion object {
