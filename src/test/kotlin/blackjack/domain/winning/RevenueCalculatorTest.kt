@@ -5,6 +5,7 @@ import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.score.PlayerScore
+import blackjack.util.winningStat.createWinningStat
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -90,15 +91,3 @@ class RevenueCalculatorTest : FreeSpec({
         }
     }
 })
-
-fun createWinningStat(
-    bettingAmount: Int,
-    playerScore: Int,
-    dealerScore: Int
-): WinningStat {
-    val player = Player("test", bettingAmount)
-    return WinningStat(
-        listOf(PlayerScore(player, playerScore)),
-        PlayerScore(Dealer(), dealerScore)
-    )
-}
