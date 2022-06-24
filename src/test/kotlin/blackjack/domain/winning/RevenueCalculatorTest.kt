@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 
 class RevenueCalculatorTest : FreeSpec({
 
-    "calculate" - {
+    "playerRevenues" - {
         "DEALER_BUST 인 경우 플레이어는 배팅 금액을 돌려받는다." {
             val playerScore = 2
             val dealerScore = 22
@@ -18,7 +18,7 @@ class RevenueCalculatorTest : FreeSpec({
                 createWinningStat(1000, playerScore, dealerScore)
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe 0
             result.players[0].revenue shouldBe 1000
         }
@@ -30,7 +30,7 @@ class RevenueCalculatorTest : FreeSpec({
                 createWinningStat(1000, playerScore, dealerScore)
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe 1000
             result.players[0].revenue shouldBe -1000
         }
@@ -48,7 +48,7 @@ class RevenueCalculatorTest : FreeSpec({
                 )
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe -(1000 * 1.5)
             result.players[0].revenue shouldBe (1000 * 1.5)
         }
@@ -60,7 +60,7 @@ class RevenueCalculatorTest : FreeSpec({
                 createWinningStat(1000, playerScore, dealerScore)
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe -1000
             result.players[0].revenue shouldBe 1000
         }
@@ -72,7 +72,7 @@ class RevenueCalculatorTest : FreeSpec({
                 createWinningStat(1000, playerScore, dealerScore)
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe 1000
             result.players[0].revenue shouldBe -1000
         }
@@ -84,7 +84,7 @@ class RevenueCalculatorTest : FreeSpec({
                 createWinningStat(1000, playerScore, dealerScore)
             )
 
-            val result = revenueCalculator.calculate()
+            val result = revenueCalculator.playerRevenues()
             result.dealerRevenue shouldBe 0
             result.players[0].revenue shouldBe 1000
         }

@@ -7,7 +7,7 @@ import blackjack.domain.player.PlayerRevenues
 class RevenueCalculator(private val winningStat: WinningStat) {
     private var dealerRevenue: Double = 0.0
 
-    fun calculate(): PlayerRevenues {
+    fun playerRevenues(): PlayerRevenues {
         val playersRevenue = winningStat.result.map {
             when (it.playerWinningState) {
                 WinningState.DEALER_BUST -> calculatePlayerRevenue(it.player)

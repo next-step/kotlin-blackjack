@@ -56,7 +56,7 @@ fun calculateScore(resultView: ResultView, players: List<Player>, dealer: Dealer
 
 fun revenue(winingStat: WinningStat) {
     val revenueCalculator = RevenueCalculator(winingStat)
-    val a = revenueCalculator.calculate()
+    val a = revenueCalculator.playerRevenues()
     val revenueView = RevenueView(a)
     revenueView.title()
     revenueView.indicator()
