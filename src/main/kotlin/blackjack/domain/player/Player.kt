@@ -3,6 +3,8 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
+private const val MAX_SCORE = 21
+
 class Player(
     val name: String,
     val cards: Cards = Cards()
@@ -14,4 +16,6 @@ class Player(
     fun drawCards(cards: List<Card>) {
         this.cards.addAll(cards)
     }
+
+    fun isAbleToDraw(): Boolean = cards.calculateScore() < MAX_SCORE
 }

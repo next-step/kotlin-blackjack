@@ -2,11 +2,13 @@ package blackjack.domain.player
 
 import blackjack.domain.Deck
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class PlayersTest : StringSpec({
     "플레이어의 이름이 중복되면 예외를 발생한다." {
@@ -34,5 +36,70 @@ class PlayersTest : StringSpec({
 
         // when // then
         shouldNotThrowAny { players.drawInitCards(deck) }
+    }
+
+    "차례를 기다리는 플레이어가 있을 때, 차례를 기다리는 플레이어가 존재하는지 확인한다." {
+        // given
+        val players = Players(
+            listOf(
+                Player(
+                    "김경록",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Face.TEN),
+                            Card(Suit.DIAMOND, Face.ACE),
+                        )
+                    ),
+                ),
+                Player(
+                    "로키",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.CLOVER, Face.TWO),
+                            Card(Suit.CLOVER, Face.TEN),
+                        )
+                    ),
+                )
+            )
+        )
+
+        // when
+        val actual = players.isExistWaitingPlayer()
+
+        // then
+        actual shouldBe true
+    }
+
+    "차례를 기다리는 플레이어가 없을 때, 차례를 기다리는 플레이어가 존재하는지 확인한다." {
+        // given
+        val players = Players(
+            listOf(
+                Player(
+                    "김경록",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Face.TEN),
+                            Card(Suit.DIAMOND, Face.ACE),
+                        )
+                    ),
+                ),
+                Player(
+                    "로키",
+                    Cards(
+                        mutableListOf(
+                            Card(Suit.CLOVER, Face.EIGHT),
+                            Card(Suit.CLOVER, Face.NINE),
+                            Card(Suit.CLOVER, Face.TEN),
+                        )
+                    ),
+                )
+            )
+        )
+
+        // when
+        val actual = players.isExistWaitingPlayer()
+
+        // then
+        actual shouldBe false
     }
 })

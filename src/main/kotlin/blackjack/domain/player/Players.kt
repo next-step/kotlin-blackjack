@@ -16,4 +16,8 @@ value class Players(
     fun drawInitCards(deck: Deck) {
         players.forEach { it.drawCards(deck.drawFirstTurn()) }
     }
+
+    fun isExistWaitingPlayer(): Boolean {
+        return players.any { it.isAbleToDraw() }
+    }
 }
