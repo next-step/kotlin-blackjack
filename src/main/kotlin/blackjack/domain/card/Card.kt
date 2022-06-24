@@ -1,9 +1,12 @@
 package blackjack.domain.card
 
-class Card(
+data class Card(
     val suit: Suit,
     val face: Face,
 ) {
+    val isAce
+        get() = face === Face.ACE
+
     companion object {
         val ALL_CARDS = Suit.values()
             .flatMap { suit ->
