@@ -1,14 +1,12 @@
 package blackjack
 
 import blackjack.card.Deck
-import blackjack.card.SimpleCardCreator
 import blackjack.dealer.Dealer
 import blackjack.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 
 internal class BlackjackGameTest {
 
@@ -18,7 +16,7 @@ internal class BlackjackGameTest {
     @BeforeEach
     fun init() {
         players = listOf(Player("pang"), Player("yohan"))
-        blackjackGame = BlackjackGame(players, Dealer(Deck(SimpleCardCreator.startCard())))
+        blackjackGame = BlackjackGame(players, Dealer(Deck.init()))
     }
 
     @Test

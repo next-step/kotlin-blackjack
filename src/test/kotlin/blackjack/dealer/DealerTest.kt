@@ -1,7 +1,6 @@
 package blackjack.dealer
 
 import blackjack.card.Deck
-import blackjack.card.SimpleCardCreator
 import blackjack.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -11,7 +10,7 @@ class DealerTest {
     @ParameterizedTest
     @ValueSource(ints = [0, 1, 2, 3, 4, 5])
     fun `요청한 카드 갯수만큼 카드를 뽑아 줄 수 있다`(count: Int) {
-        val deck = Deck(SimpleCardCreator.startCard())
+        val deck = Deck.init()
         val dealer = Dealer(deck)
         val player = Player("pang")
 
