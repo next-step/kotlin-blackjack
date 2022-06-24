@@ -37,7 +37,7 @@ class WinningStat(
 
     private fun dealerBust(): Boolean = dealerScore > BLACK_JACK_SCORE
 
-    private fun dealerBlackJack(): Boolean = (dealerScore == BLACK_JACK_SCORE && dealer.cards.size == 2)
+    private fun dealerBlackJack(): Boolean = (dealerScore == BLACK_JACK_SCORE && dealer.cards.size == FIRST_TURN_CARDS_SIZE)
 
     private fun playerBust(playerScore: PlayerScore): Boolean = playerScore.score > BLACK_JACK_SCORE
 
@@ -47,5 +47,6 @@ class WinningStat(
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
+        private const val FIRST_TURN_CARDS_SIZE = 2
     }
 }
