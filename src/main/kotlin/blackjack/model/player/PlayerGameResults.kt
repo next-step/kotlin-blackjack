@@ -8,8 +8,6 @@ class PlayerGameResults private constructor(
         get() = results.map { it.player }
 
     companion object {
-        private const val LOST_DECISION_BOUNDARY_SCORE_OF_DEALER = 21
-
         fun from(players: Players): PlayerGameResults {
             val dealer = players.players
                 .firstOrNull { it.isDealer }
@@ -19,14 +17,12 @@ class PlayerGameResults private constructor(
             val otherPlayers = players.players
                 .filter { it != dealer }
 
-            if (dealer.isScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE_OF_DEALER)) {
-                return otherPlayers.map { PlayerGameResult(it, 1, 0) }
-                    .plus(PlayerGameResult(dealer, 0, 1))
-                    .let(::PlayerGameResults)
-            }
+            val dealerGameResults = otherPlayers.map { PlayerGameResult.of(dealer, it) }
+            val dealerWinCount = dealerGameResults.sumOf { it.winCount }
+            val dealerLostCount = dealerGameResults.sumOf { it.lostCount }
 
-            return otherPlayers.map { PlayerGameResult.ofPlayer(dealer, it) }
-                .plus(PlayerGameResult.ofDealer(dealer, otherPlayers))
+            return listOf(PlayerGameResult(dealer, dealerWinCount, dealerLostCount))
+                .plus(otherPlayers.map { PlayerGameResult.of(it, dealer) })
                 .let(::PlayerGameResults)
         }
     }

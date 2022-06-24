@@ -15,7 +15,7 @@ class Dealer(
     }
 
     private fun needMoreCard() =
-        cardSize == DETERMINABLE_CARD_COUNT_FOR_NEED_MORE_CARD && cards.sumOfScore.isEqualOrLessThan(
+        cardSize == DETERMINABLE_CARD_COUNT_FOR_NEED_MORE_CARD && cards.sumOfScore.isOneOfScoreEqualOrLessThan(
             BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
         )
 

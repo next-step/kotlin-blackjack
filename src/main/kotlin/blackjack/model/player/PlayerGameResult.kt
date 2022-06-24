@@ -10,18 +10,38 @@ class PlayerGameResult(
         get() = player.name
 
     companion object {
-        fun ofDealer(dealer: Player, otherPlayers: List<Player>): PlayerGameResult {
-            val winCount = otherPlayers.count { dealer.isScoreGreaterThan(it) }
-            val lostCount = otherPlayers.count { dealer.isScoreLessThan(it) }
+        const val LOST_DECISION_BOUNDARY_SCORE = 21
 
-            return PlayerGameResult(dealer, winCount, lostCount)
+        fun of(player: Player, other: Player): PlayerGameResult {
+            if (other.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofWin(player)
+            }
+
+            if (player.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofLost(player)
+            }
+
+            if (player.beats(other, LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofWin(player)
+            }
+
+            if (other.beats(player, LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofLost(player)
+            }
+
+            return ofDraw(player)
         }
 
-        fun ofPlayer(dealer: Player, player: Player): PlayerGameResult {
-            val winCount = listOf(player).count { player.isScoreGreaterThan(dealer) }
-            val lostCount = listOf(player).count { player.isScoreLessThan(dealer) }
+        private fun ofWin(player: Player): PlayerGameResult {
+            return PlayerGameResult(player, 1, 0)
+        }
 
-            return PlayerGameResult(player, winCount, lostCount)
+        private fun ofLost(player: Player): PlayerGameResult {
+            return PlayerGameResult(player, 0, 1)
+        }
+
+        private fun ofDraw(player: Player): PlayerGameResult {
+            return PlayerGameResult(player, 0, 0)
         }
     }
 }

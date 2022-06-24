@@ -20,13 +20,10 @@ open class Player protected constructor(
     open val isDealer
         get() = false
 
-    fun isScoreGreaterThan(other: Int) = sumOfCardScore.isGreaterThan(other)
+    fun isAllScoreGreaterThan(other: Int) = sumOfCardScore.isAllScoreGreaterThan(other)
 
-    fun isScoreGreaterThan(other: Player) =
-        sumOfCardScore.isGreaterThan(other.sumOfCardScore.score1) || sumOfCardScore.isGreaterThan(other.sumOfCardScore.score2)
-
-    fun isScoreLessThan(other: Player) =
-        sumOfCardScore.isLessThan(other.sumOfCardScore.score1) && sumOfCardScore.isLessThan(other.sumOfCardScore.score2)
+    fun beats(other: Player, boundaryScore: Int) =
+        sumOfCardScore.findNearestScoreEqualOrLessThan(boundaryScore) > other.sumOfCardScore.findNearestScoreEqualOrLessThan(boundaryScore)
 
     open fun receiveCard(card: Card) {
         cards.addOne(card)
