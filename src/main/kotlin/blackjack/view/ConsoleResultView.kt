@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.player.Dealer.Companion.BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerGameResults
 import blackjack.model.player.PlayerName
 import blackjack.model.player.Players
 
@@ -22,11 +23,16 @@ object ConsoleResultView : ResultView {
 
     override fun printPlayerCardStatus(player: Player) = println(playerCardStatus(player))
 
-    override fun printCardGameResult(players: Players) {
+    override fun printCardGameResult(results: PlayerGameResults) {
         println()
 
-        players.players.map {
+        results.players.forEach {
             println("${playerCardStatus(it)} - 결과: ${it.sumOfCardScore}")
+        }
+
+        println("\n## 최종 승패")
+        results.results.forEach {
+            println("${it.player.name}: ${it.winCount}승 ${it.lostCount}패")
         }
     }
 

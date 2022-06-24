@@ -15,8 +15,9 @@ class Dealer(
     }
 
     private fun needMoreCard() =
-        cardSize == DETERMINABLE_CARD_COUNT_FOR_NEED_MORE_CARD &&
-                cards.sumOfScore.isEqualOrLessThan(BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD)
+        cardSize == DETERMINABLE_CARD_COUNT_FOR_NEED_MORE_CARD && cards.sumOfScore.isEqualOrLessThan(
+            BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
+        )
 
     companion object {
         private const val DEALER_NAME = "딜러"

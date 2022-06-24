@@ -3,6 +3,7 @@ package blackjack
 import blackjack.model.Game
 import blackjack.model.player.Dealer
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerGameResults
 import blackjack.model.player.Players
 import blackjack.view.InputView
 import blackjack.view.MoreCardMark
@@ -14,7 +15,7 @@ object BlackjackApplication {
         resultView.printPlayersCardStatus(game.players)
 
         playGame(game, inputView, resultView)
-        resultView.printCardGameResult(game.players)
+        resultView.printCardGameResult(PlayerGameResults.from(game.players))
     }
 
     private fun startGame(inputView: InputView): Game {

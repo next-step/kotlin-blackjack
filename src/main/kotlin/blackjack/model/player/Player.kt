@@ -17,11 +17,13 @@ open class Player protected constructor(
     open val isDealer
         get() = false
 
-    fun isScoreGreaterThan(other: Player) = sumOfCardScore.isGreaterThan(other.sumOfCardScore.score1) ||
-            sumOfCardScore.isGreaterThan(other.sumOfCardScore.score2)
+    fun isScoreGreaterThan(other: Int) = sumOfCardScore.isGreaterThan(other)
 
-    fun isScoreLessThan(other: Player) = sumOfCardScore.isLessThan(other.sumOfCardScore.score1) &&
-            sumOfCardScore.isLessThan(other.sumOfCardScore.score2)
+    fun isScoreGreaterThan(other: Player) =
+        sumOfCardScore.isGreaterThan(other.sumOfCardScore.score1) || sumOfCardScore.isGreaterThan(other.sumOfCardScore.score2)
+
+    fun isScoreLessThan(other: Player) =
+        sumOfCardScore.isLessThan(other.sumOfCardScore.score1) && sumOfCardScore.isLessThan(other.sumOfCardScore.score2)
 
     open fun receiveCard(card: Card) {
         cards.addOne(card)

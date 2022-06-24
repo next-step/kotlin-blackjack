@@ -1,6 +1,6 @@
 package blackjack.model.player
 
-class PlayerGameResult private constructor(
+class PlayerGameResult(
     val player: Player,
     val winCount: Int,
     val lostCount: Int,
