@@ -5,4 +5,6 @@ sealed class Participant(
     cards: List<Card> = emptyList(),
 ) {
     abstract fun canReceive(): Boolean
+
+    fun score(): Score = Score(0)
 }
