@@ -37,33 +37,50 @@ class PlayerTest {
                     Card(Suit.DIA, Denomination.SEVEN),
                 )
             ).score()
-        ).isEqualTo(18)
+        ).isEqualTo(Score(18))
     }
 
     @Test
     fun `King, Queen, Jack은  10으로 계산한다`() {
-        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.KING))).score()).isEqualTo(15)
-        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.QUEEN))).score()).isEqualTo(15)
-        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.JACK))).score()).isEqualTo(15)
+        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.KING))).score()).isEqualTo(Score(15))
+        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.QUEEN))).score()).isEqualTo(Score(15))
+        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.JACK))).score()).isEqualTo(Score(15))
     }
 
     @ParameterizedTest
-    @MethodSource("cardList")
-    fun `누적 점수 + Ace 합이 21이 넘을것 같으면 Ace는 1로 계산한다`(expectScore: Int, cards: List<Card>) {
+    @MethodSource("over21CardList")
+    fun `누적 점수 + Ace 합이 21이 넘을것 같으면 Ace는 1로 계산한다`(expectScore: Score, cards: List<Card>) {
         assertThat(Player(cards = cards).score()).isEqualTo(expectScore)
     }
 
     @Test
     fun `누적 점수 + Ace 합이 21을 넘지 않을 경우 Ace는 11로 계산한다`() {
-        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.ACE))).score()).isEqualTo(21)
+        assertThat(Player(cards = listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.ACE))).score()).isEqualTo(Score(21))
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("cardList")
+    fun `Score 점수에 따라 다른 카드를 받을 수 있는지 확인`(expect: Boolean, cads: List<Card>) {
+        assertThat(Player(cards = cads).canReceive()).isEqualTo(expect)
     }
 
     companion object {
         @JvmStatic
-        fun cardList() = listOf(
-            Arguments.of(21, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.QUEEN), Card(Suit.DIA, Denomination.ACE))),
-            Arguments.of(15, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.FOUR), Card(Suit.DIA, Denomination.ACE))),
-            Arguments.of(20, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.FOUR), Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.ACE))),
+        fun over21CardList() = listOf(
+            Arguments.of(Score(21), listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.QUEEN), Card(Suit.DIA, Denomination.ACE))),
+            Arguments.of(Score(15), listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.FOUR), Card(Suit.DIA, Denomination.ACE))),
+            Arguments.of(
+                Score(20),
+                listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.FOUR), Card(Suit.DIA, Denomination.FIVE), Card(Suit.DIA, Denomination.ACE))
+            ),
+        )
+
+        @JvmStatic
+        private fun cardList() = listOf(
+            Arguments.of(true, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.TWO), Card(Suit.DIA, Denomination.THREE))),
+            Arguments.of(true, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.QUEEN))),
+            Arguments.of(false, listOf(Card(Suit.DIA, Denomination.KING), Card(Suit.DIA, Denomination.QUEEN), Card(Suit.DIA, Denomination.JACK))),
         )
     }
 }
