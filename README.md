@@ -92,7 +92,7 @@ introduce {
 
 ### TDD
 
-- [ ] Dealer, Player의 상위 개념인 Participant을 생성하며 카드를 받을 수 있는지 확인하는 추상 메소드를 갖는다.
+- [x] Dealer, Player의 상위 개념인 Participant을 생성하며 카드를 받을 수 있는지 확인하는 추상 메소드를 갖는다.
 - [ ] Dealer, Player은 서로 다른 조건으로 카드을 받을 수 있는지 판단한다.
 - [ ] Score을 이용하여 plus, equal, greater을 판단한다.
 - [ ] Participant는 두개의 Score을 비교하여 승, 패, 무승부를 판단한다.
