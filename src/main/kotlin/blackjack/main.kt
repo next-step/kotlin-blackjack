@@ -59,5 +59,5 @@ fun revenue(winingStat: WinningStat) {
     val a = revenueCalculator.playerRevenues()
     val revenueView = RevenueView(a)
     revenueView.title()
-    revenueView.indicator()
+    revenueView.playersRevenue()
 }

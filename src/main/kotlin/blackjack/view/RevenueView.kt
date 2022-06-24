@@ -10,7 +10,7 @@ class RevenueView(
         println("## 최종 수익")
     }
 
-    fun indicator() {
+    fun playersRevenue() {
         println("딜러: ${playerRevenues.dealerRevenue}")
         playerRevenues.players.forEach {
             println("${it.player.name}: ${it.revenue}")
