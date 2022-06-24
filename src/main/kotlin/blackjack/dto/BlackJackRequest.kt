@@ -20,7 +20,7 @@ class BlackJackRequest(val players: List<Player>, val dealer: Dealer) {
         }
 
         private fun convertToBettingAmount(inputBettingAmount: String): Int {
-            val convertToBettingAmount = inputBettingAmount.toIntOrNull() ?: throw IllegalArgumentException(CANNOT_CONVERT_INT)
+            val convertToBettingAmount = requireNotNull(inputBettingAmount.toInt()) { CANNOT_CONVERT_INT }
             checkNegative(convertToBettingAmount)
             return convertToBettingAmount
         }

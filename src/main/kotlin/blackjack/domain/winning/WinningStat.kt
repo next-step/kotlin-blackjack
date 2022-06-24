@@ -27,11 +27,9 @@ class WinningStat(
             playerBust(playerScore) -> WinningState.PLAYER_BUST
             playerBlackJack(playerScore) -> WinningState.PLAYER_BLACKJACK
             playerBlackJack(playerScore) && dealerBlackJack() -> WinningState.PLAYER_TIE
-            else -> when (compareTo(playerScore.score)) {
-                0 -> WinningState.PLAYER_TIE
-                1 -> WinningState.PLAYER_WIN
-                else -> WinningState.PLAYER_LOOSE
-            }
+            dealerScore < playerScore.score -> WinningState.PLAYER_WIN
+            dealerScore == playerScore.score -> WinningState.PLAYER_TIE
+            else -> WinningState.PLAYER_LOOSE
         }
     }
 
@@ -42,8 +40,6 @@ class WinningStat(
     private fun playerBust(playerScore: PlayerScore): Boolean = playerScore.score > BLACK_JACK_SCORE
 
     private fun playerBlackJack(playerScore: PlayerScore): Boolean = (playerScore.score == BLACK_JACK_SCORE && playerScore.player.cards.size == 2)
-
-    private fun compareTo(score: Int): Int = score.compareTo(dealerScore)
 
     companion object {
         private const val BLACK_JACK_SCORE = 21
