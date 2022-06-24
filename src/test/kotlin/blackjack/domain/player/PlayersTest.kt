@@ -1,5 +1,10 @@
 package blackjack.domain.player
 
+import blackjack.domain.Deck
+import blackjack.domain.card.Card
+import blackjack.domain.card.Face
+import blackjack.domain.card.Suit
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 
@@ -13,5 +18,21 @@ class PlayersTest : StringSpec({
 
         // when // then
         shouldThrowExactly<IllegalArgumentException> { Players(players) }
+    }
+
+    "첫 턴에 모든 플레이어들이 카드를 뽑는다." {
+        // given
+        val players = Players("김경록", "로키")
+        val deck = Deck(
+            listOf(
+                Card(Suit.SPADE, Face.TWO),
+                Card(Suit.CLOVER, Face.THREE),
+                Card(Suit.CLOVER, Face.FOUR),
+                Card(Suit.DIAMOND, Face.FIVE),
+            )
+        )
+
+        // when // then
+        shouldNotThrowAny { players.drawInitCards(deck) }
     }
 })

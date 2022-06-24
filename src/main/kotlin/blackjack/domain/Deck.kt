@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-class Deck private constructor(
+class Deck(
     cards: List<Card>,
 ) {
     private val _cards: MutableList<Card> = cards.toMutableList()
