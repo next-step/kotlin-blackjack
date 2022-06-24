@@ -1,7 +1,7 @@
 package blackjack.model.card
 
 data class Cards(
-    private val cards: MutableList<Card> = mutableListOf(),
+    val cards: MutableList<Card> = mutableListOf(),
 ) {
     val size
         get() = cards.size
@@ -28,10 +28,7 @@ data class Cards(
 
     private fun validateNotEmpty() = require(size > EMPTY_CARDS_SIZE) { "카드 개수가 0개 입니다." }
 
-    override fun toString() = cards.joinToString(CARDS_SEPARATOR)
-
     companion object {
         private const val EMPTY_CARDS_SIZE = 0
-        private const val CARDS_SEPARATOR = ", "
     }
 }

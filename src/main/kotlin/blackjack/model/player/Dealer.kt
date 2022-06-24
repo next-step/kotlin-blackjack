@@ -4,7 +4,7 @@ import blackjack.model.card.Card
 
 class Dealer(
     name: PlayerName = PlayerName(DEALER_NAME)
-) : Player(name = name) {
+) : Player(playerName = name) {
 
     override val isDealer
         get() = true

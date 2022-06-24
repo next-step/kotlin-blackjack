@@ -49,11 +49,11 @@ object BlackjackApplication {
         turnPlayer: Player
     ): String {
         if (turnPlayer.isDealer && turnPlayer.needMoreCard) {
-            resultView.printDealerReceiveMoreCardMessage(turnPlayer.name)
+            resultView.printDealerReceiveMoreCardMessage(turnPlayer.playerName)
             return MoreCardMark.YES.mark
         }
 
-        inputView.printNeedMoreCardAskMessage(turnPlayer.name)
+        inputView.printNeedMoreCardAskMessage(turnPlayer.playerName)
         return inputView.inputWhetherNeedMoreCard()
     }
 }

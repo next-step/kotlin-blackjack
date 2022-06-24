@@ -6,6 +6,9 @@ class PlayerGameResult(
     val lostCount: Int,
 ) {
 
+    val playerName
+        get() = player.name
+
     companion object {
         fun ofDealer(dealer: Player, otherPlayers: List<Player>): PlayerGameResult {
             val winCount = otherPlayers.count { dealer.isScoreGreaterThan(it) }
