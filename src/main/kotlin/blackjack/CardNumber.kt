@@ -1,7 +1,7 @@
 package blackjack
 
 enum class CardNumber(val score: Score, val symbol: String) {
-    ACE(Score(1), "ACE"),
+    ACE(Score(1), "A"),
     TWO(Score(2), "2"),
     THREE(Score(3), "3"),
     FOUR(Score(4), "4"),
