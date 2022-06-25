@@ -5,7 +5,7 @@ class Players(val values: List<Player>) {
         return values.filter { !it.stay }
     }
 
-    fun setStay(player: Player): Players {
+    fun stay(player: Player): Players {
         return Players(
             values.map {
                 if (player.name.equals(it.name)) {
@@ -35,5 +35,9 @@ class Players(val values: List<Player>) {
 
     fun find(name: String): Player? {
         return values.find { it.name == name }
+    }
+
+    fun withAllPlayers(f: (Player) -> Player): Players {
+        return Players(values.map { f(it) })
     }
 }

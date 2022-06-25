@@ -1,28 +1,34 @@
 package blackjack.model
 
-class BlackjackGame(players: Players) {
-    private var blackjackState: BlackjackState
+class BlackjackGame(initPlayers: Players) {
+    private var cards: Cards = Cards.shuffledCards()
+    private var players: Players = initPlayers
 
     init {
-        blackjackState = BlackjackState(players).initDeal()
+        players = players.withAllPlayers {
+            val (extractedCards, newCards) = cards.pollCards(Cards.NUMBER_OF_INIT_CARDS)
+            cards = newCards
+            it.addCards(extractedCards)
+        }
     }
 
     fun isGameOver(): Boolean {
-        return blackjackState.isAllPlayersOver()
+        return players.isAllOver()
     }
 
     fun playTurn(getHit: (Player) -> Boolean): Player {
-        val player = blackjackState.findNotOverPlayer()
+        val player = players.findNotOver().first()
         if (getHit(player)) {
-            blackjackState = blackjackState.hit(player)
+            val (extracted, newCards) = cards.pollCards(Cards.NUMBER_OF_GIVE_CARDS)
+            cards = newCards
+            players = players.hit(player, extracted)
         } else {
-            blackjackState = blackjackState.stay(player)
+            players = players.stay(player)
         }
-
-        return blackjackState.findPlayer(player.name)
+        return players.find(player.name)!!
     }
 
     fun <T> withPlayers(f: (Players) -> T): T {
-        return f(blackjackState.players)
+        return f(players)
     }
 }

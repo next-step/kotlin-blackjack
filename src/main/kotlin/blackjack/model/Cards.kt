@@ -58,8 +58,20 @@ class Cards(val values: List<Card>) {
     }
 
     companion object {
+        const val NUMBER_OF_INIT_CARDS = 2
+        const val NUMBER_OF_GIVE_CARDS = 1
+
         fun emptyCards(): Cards {
             return Cards(emptyList())
+        }
+
+        fun shuffledCards(): Cards {
+            val cardList = CardNumber.values().flatMap { cardNumber ->
+                Suit.values().map { suit ->
+                    Card(cardNumber, suit)
+                }
+            }
+            return Cards(cardList.shuffled())
         }
     }
 }
