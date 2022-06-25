@@ -2,8 +2,7 @@ package blackjack.domain
 
 sealed class Participant(
     val name: PlayerName,
-    hands: Hands,
-    val betAmount: BetAmount
+    hands: Hands
 ) {
     var hands = hands
         protected set
@@ -26,12 +25,12 @@ sealed class Participant(
 class Player(
     name: PlayerName,
     hands: Hands,
-    betAmount: BetAmount = BetAmount(0)
-) : Participant(name, hands, betAmount) {
+    private val betAmount: BetAmount = BetAmount(1)
+) : Participant(name, hands) {
     constructor(name: String, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
         Hands.from(PlayingCards.from(initialCards.toList())),
-        BetAmount(0)
+        BetAmount(1)
     )
 
     fun stay() {
@@ -43,13 +42,11 @@ class Player(
 
 class Dealer(
     name: PlayerName,
-    hands: Hands,
-    betAmount: BetAmount = BetAmount(0)
-) : Participant(name, hands, betAmount) {
+    hands: Hands
+) : Participant(name, hands) {
     constructor(name: String, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
-        Hands.from(PlayingCards.from(initialCards.toList())),
-        BetAmount(0)
+        Hands.from(PlayingCards.from(initialCards.toList()))
     )
 
     override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
