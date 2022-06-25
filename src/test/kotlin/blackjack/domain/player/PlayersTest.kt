@@ -1,8 +1,11 @@
 package blackjack.domain.player
 
+import blackjack.domain.dealer.Dealer
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 internal class PlayersTest : FreeSpec({
@@ -23,5 +26,17 @@ internal class PlayersTest : FreeSpec({
             val exception = shouldThrowExactly<IllegalArgumentException> { Players.of(playNameValues = emptyList()) }
             exception.message shouldBe "플레이어가 없으면 게임을 진행할 수 없습니다."
         }
+    }
+
+    "딜러를 통해 초기 시작 카드를 2장씩 나눠 받는다." {
+        // given
+        val players = Players.of(listOf("현구님", "규남님"))
+        players.values.forEach { it.hand.shouldBeEmpty() }
+
+        // when
+        players.receiveInitCards(Dealer())
+
+        // then
+        players.values.forEach { it.hand.shouldHaveSize(2) }
     }
 })
