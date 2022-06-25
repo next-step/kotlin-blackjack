@@ -5,9 +5,11 @@ import blackjack.domain.card.RandomCardDeck
 import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
 import blackjack.domain.card.RandomCardDeck.Companion.JACK
-import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
+import blackjack.util.Cards.createCards
+import blackjack.util.Cards.createCardsOver21
+import blackjack.view.InputPlayerBetting
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -15,13 +17,8 @@ class BlackJackTest : FreeSpec({
 
     "init" - {
         "블랙잭 게임이 사작할 때 플레이어는 2장의 카드를 받아야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, "2"),
-                Card(DIAMOND, "3"),
-                Card(DIAMOND, "4"),
-                Card(DIAMOND, "5"),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCards()
             val cardDeck = CardDeckFake(cards)
 
             BlackJack(dto, cardDeck)
@@ -33,13 +30,8 @@ class BlackJackTest : FreeSpec({
         }
 
         "블랙잭 게임이 시작할 때 딜러는 2장의 카드를 받아야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, "2"),
-                Card(DIAMOND, "3"),
-                Card(DIAMOND, "4"),
-                Card(DIAMOND, "5"),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCards()
             val cardDeck = CardDeckFake(cards)
 
             BlackJack(dto, cardDeck)
@@ -54,7 +46,7 @@ class BlackJackTest : FreeSpec({
 
     "giveCard" - {
         "카드 한장을 줘야한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cardDeck = RandomCardDeck()
             val blackJack = BlackJack(dto, cardDeck)
             val player = dto.players[0]
@@ -67,13 +59,8 @@ class BlackJackTest : FreeSpec({
 
     "canHitPlayer" - {
         "플레이어의 카드가 21을 초과하지 않으면 true를 반환한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, "2"),
-                Card(DIAMOND, "3"),
-                Card(DIAMOND, "4"),
-                Card(DIAMOND, "5"),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCards()
             val cardDeck = CardDeckFake(cards)
             val blackJack = BlackJack(dto, cardDeck)
             val player = dto.players[0]
@@ -83,13 +70,8 @@ class BlackJackTest : FreeSpec({
         }
 
         "플레이어의 카드가 21을 초과하면 false를 반환한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, ACE),
-                Card(DIAMOND, JACK),
-                Card(DIAMOND, KING),
-                Card(DIAMOND, "5"),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCardsOver21()
             val cardDeck = CardDeckFake(cards)
             val blackJack = BlackJack(dto, cardDeck)
             val player = dto.players[0]
@@ -102,11 +84,7 @@ class BlackJackTest : FreeSpec({
     "giveCardToDealer" - {
         "딜러의 카드 점수가 16이하이면 한 장을 발급받아야한다." {
             val dto = BlackJackRequest.of(listOf())
-            val cards = mutableListOf(
-                Card(DIAMOND, ACE),
-                Card(DIAMOND, "2"),
-                Card(DIAMOND, "3"),
-            )
+            val cards = createCards()
             val cardDeck = CardDeckFake(cards)
             val blackJack = BlackJack(dto, cardDeck)
 
@@ -120,7 +98,6 @@ class BlackJackTest : FreeSpec({
             val cards = mutableListOf(
                 Card(DIAMOND, ACE),
                 Card(DIAMOND, JACK),
-                Card(DIAMOND, "3"),
             )
             val cardDeck = CardDeckFake(cards)
             val blackJack = BlackJack(dto, cardDeck)

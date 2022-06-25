@@ -4,10 +4,12 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.RandomCardDeck.Companion.ACE
 import blackjack.domain.card.RandomCardDeck.Companion.DIAMOND
 import blackjack.domain.card.RandomCardDeck.Companion.JACK
-import blackjack.domain.card.RandomCardDeck.Companion.KING
 import blackjack.domain.game.BlackJack
 import blackjack.dto.BlackJackRequest
 import blackjack.util.CardDeckFake
+import blackjack.util.Cards.createCards
+import blackjack.util.Cards.createCardsOver21
+import blackjack.view.InputPlayerBetting
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,13 +18,8 @@ class ScoreTest : FreeSpec({
     "calculate" - {
 
         "플레이어의 점수를 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, "2"),
-                Card(DIAMOND, "3"),
-                Card(DIAMOND, "4"),
-                Card(DIAMOND, "5"),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCards()
             val cardDeck = CardDeckFake(cards)
 
             BlackJack(dto, cardDeck)
@@ -36,14 +33,8 @@ class ScoreTest : FreeSpec({
         }
 
         "ACE카드가 존재하면서 21 초과인 경우 에이스를 1로 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
-            val cards = mutableListOf(
-                Card(DIAMOND, ACE),
-                Card(DIAMOND, JACK),
-                Card(DIAMOND, "4"),
-                Card(DIAMOND, "5"),
-                Card(DIAMOND, KING),
-            )
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
+            val cards = createCardsOver21()
             val cardDeck = CardDeckFake(cards)
 
             val blackJack = BlackJack(dto, cardDeck)
@@ -55,7 +46,7 @@ class ScoreTest : FreeSpec({
         }
 
         "ACE카드가 존재하면서 21 이하인 경우 에이스를 11로 계산한다." {
-            val dto = BlackJackRequest.of(listOf("uju"))
+            val dto = BlackJackRequest.of(listOf(InputPlayerBetting("uju", "1000")))
             val cards = mutableListOf(
                 Card(DIAMOND, ACE),
                 Card(DIAMOND, JACK),
