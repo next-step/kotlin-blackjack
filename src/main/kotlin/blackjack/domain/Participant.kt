@@ -2,7 +2,8 @@ package blackjack.domain
 
 sealed class Participant(
     val name: PlayerName,
-    hands: Hands
+    hands: Hands,
+    val betAmount: BetAmount
 ) {
     var hands = hands
         protected set
@@ -24,11 +25,13 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
-    hands: Hands
-) : Participant(name, hands) {
+    hands: Hands,
+    betAmount: BetAmount = BetAmount(0)
+) : Participant(name, hands, betAmount) {
     constructor(name: String, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
-        Hands.from(PlayingCards.from(initialCards.toList()))
+        Hands.from(PlayingCards.from(initialCards.toList())),
+        BetAmount(0)
     )
 
     fun stay() {
@@ -40,32 +43,18 @@ class Player(
 
 class Dealer(
     name: PlayerName,
-    hands: Hands
-) : Participant(name, hands) {
+    hands: Hands,
+    betAmount: BetAmount = BetAmount(0)
+) : Participant(name, hands, betAmount) {
     constructor(name: String, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
-        Hands.from(PlayingCards.from(initialCards.toList()))
+        Hands.from(PlayingCards.from(initialCards.toList())),
+        BetAmount(0)
     )
 
     override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
 
     companion object {
         const val SHOULD_HIT_MAX_SCORE = 16
-    }
-
-    class Dealer(
-        name: PlayerName,
-        hands: Hands
-    ) : Participant(name, hands) {
-        constructor(name: String, vararg initialCards: PlayingCard) : this(
-            PlayerName(name),
-            Hands.from(PlayingCards.from(initialCards.toList()))
-        )
-
-        override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
-
-        companion object {
-            const val SHOULD_HIT_MAX_SCORE = 16
-        }
     }
 }
