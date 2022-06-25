@@ -2,24 +2,26 @@ package blackjack
 
 import blackjack.dto.PlayersDto
 
-class BlackjackGame(private val gamers: List<UserRole>) {
+class BlackjackGame(gamers: List<UserRole>) {
+
+    private val _gamers: MutableList<UserRole> = gamers.toMutableList()
 
     init {
-        validate(gamers.size)
+        validate(_gamers.size)
 
         repeat(BASIC_RULE_COUNT) {
-            gamers.forEach {
+            _gamers.forEach {
                 it.draw(cards.removeAt(TOP_CARD))
             }
         }
-
-        val playersDto = PlayersDto(gamers)
-        playersDto.showPlayerNames()
-        playersDto.showInitCards()
     }
 
+    val gamers: List<UserRole>
+        get() = _gamers.toList()
+
+
     fun play(): List<UserRole> {
-        val players = gamers.filter { !it.isDealer() }
+        val players = _gamers.filter { !it.isDealer() }
         val results = mutableListOf<UserRole>()
         for (player in players) {
             results.add(playPlayerTurn(player))
@@ -42,7 +44,7 @@ class BlackjackGame(private val gamers: List<UserRole>) {
     }
 
     private fun playDealerTurn(): UserRole {
-        var dealer = gamers.first { it.isDealer() }
+        var dealer = _gamers.first { it.isDealer() }
         while (!dealer.isFinish()) {
             dealer = dealer.draw(cards.removeAt(TOP_CARD))
         }

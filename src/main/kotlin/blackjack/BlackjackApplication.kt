@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.dto.PlayersDto
 import blackjack.dto.ResultDto
 
 const val BASIC_RULE_DELIMITER = ","
@@ -18,6 +19,9 @@ fun main() {
     gamers.addAll(players)
 
     val blackjackGame = BlackjackGame(gamers)
+    val playersDto = PlayersDto(blackjackGame.gamers)
+    playersDto.showPlayInit()
+
     val users = blackjackGame.play()
 
     val blackjackJudgement = BlackjackJudgement(users)
