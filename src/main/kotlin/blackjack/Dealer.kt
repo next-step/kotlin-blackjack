@@ -22,7 +22,6 @@ class Dealer(
         return when (isFinish()) {
             true -> this
             else -> {
-                println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
                 return Dealer(name, state.draw(card))
             }
         }

@@ -45,6 +45,7 @@ class BlackjackGame(gamers: List<UserRole>, deck: Deck) {
     private fun playDealerTurn(): UserRole {
         var dealer = _gamers.first { it.isDealer() }
         while (!dealer.isFinish()) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             dealer = dealer.draw(cards.removeAt(TOP_CARD))
         }
         return dealer
