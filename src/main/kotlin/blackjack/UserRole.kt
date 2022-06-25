@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.judge.Judgement
 import blackjack.state.Ready
-import blackjack.state.Stand
 import blackjack.state.State
 
 abstract class UserRole(
@@ -15,20 +14,13 @@ abstract class UserRole(
             .cards
             .toList()
 
-    open fun draw(card: Card): UserRole {
-        return Player(name, state.draw(card))
-    }
+    abstract fun draw(card: Card): UserRole
 
-    open fun stand(): UserRole {
-        if (state.isFinish()) {
-            return this
-        }
-        return Player(name, Stand(state.currentCard()))
-    }
+    abstract fun stand(): UserRole
 
-    open fun isFinish(): Boolean = state.isFinish()
+    abstract fun isFinish(): Boolean
+
+    abstract fun isDealer(): Boolean
 
     fun getScore(): Int = state.score(state.currentCard().cards)
-
-    open fun isDealer(): Boolean = false
 }

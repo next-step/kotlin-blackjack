@@ -9,8 +9,7 @@ class Dealer(
     override val name: String = "딜러",
     override val state: State = Ready(PlayerDeck()),
     override val judgements: MutableList<Judgement> = mutableListOf()
-) :
-    UserRole(name, state) {
+) : UserRole(name, state) {
 
     override fun stand(): UserRole {
         if (state.isFinish()) {

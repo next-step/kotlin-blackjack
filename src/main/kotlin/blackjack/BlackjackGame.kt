@@ -1,13 +1,12 @@
 package blackjack
 
-import blackjack.dto.PlayersDto
-
-class BlackjackGame(gamers: List<UserRole>) {
+class BlackjackGame(gamers: List<UserRole>, deck: Deck) {
 
     private val _gamers: MutableList<UserRole> = gamers.toMutableList()
+    private val cards = deck.cards.toMutableList()
 
     init {
-        validate(_gamers.size)
+        validateMinPlayer(_gamers.size)
 
         repeat(BASIC_RULE_COUNT) {
             _gamers.forEach {
@@ -31,7 +30,7 @@ class BlackjackGame(gamers: List<UserRole>) {
         return results.toList()
     }
 
-    private fun validate(playerCount: Int) {
+    private fun validateMinPlayer(playerCount: Int) {
         require(BLACKJACK_PLAY_MIN_PLAYER_COUNT > playerCount) { "플레이어가 너무 많습니다" }
     }
 
