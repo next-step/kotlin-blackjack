@@ -1,6 +1,6 @@
 package blackjack.model
 
-class Player(val name: String, val cards: Cards = Cards.emptyCards(), val stay: Boolean = false) {
+open class Player(val name: String, val cards: Cards = Cards.emptyCards(), val stay: Boolean = false) {
     fun scores(): List<Score> {
         return cards.scores
     }
