@@ -12,10 +12,23 @@ class DslTest {
         val person: Person = introduce {
             name(input)
             company(company)
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
 
         assertThat(person.name).isEqualTo(input)
         assertThat(person.company).isEqualTo(company)
+        assertThat(person.skills.softSkills).containsExactly("A passion for problem solving", "Good communication skills")
+        assertThat(person.skills.hardSkills).containsExactly("Kotlin")
+        assertThat(person.languages.languages).extractingByKeys("Korean", "English")
+            .containsExactly(5, 3)
     }
 
     private fun introduce(block: PersonBuilder.() -> Unit): Person {
@@ -23,24 +36,4 @@ class DslTest {
     }
 }
 
-class PersonBuilder {
-    private lateinit var name: String
-    private lateinit var company: String
 
-    fun name(name: String) {
-        this.name = name
-    }
-
-    fun company(company: String) {
-        this.company = company
-    }
-
-    fun build(): Person {
-        return Person(name, company)
-    }
-}
-
-data class Person(
-    val name: String,
-    val company: String
-)
