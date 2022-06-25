@@ -8,11 +8,11 @@ value class CardDeck(
     fun size() = this.values.size
 
     fun draw(): Card {
-        return this.values.lastOrNull() ?: throw IllegalArgumentException("더이상 뽑을 카드가 없습니다.")
+        return this.values.removeLastOrNull() ?: throw IllegalArgumentException("더이상 뽑을 카드가 없습니다.")
     }
 
-    fun shuffle() {
-        this.values.shuffled()
+    fun shuffle(): CardDeck {
+        return CardDeck(ArrayDeque(this.values.shuffled()))
     }
 
     companion object {

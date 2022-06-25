@@ -14,7 +14,6 @@ internal class CardDeckTest : FunSpec({
 
     test("카드뭉치에서 가장 위에있는 한장의 카드를 뽑을 수 있다.") {
         // given
-        val card = Card(CardNumber.ACE, CardSuit.SPADE)
         val sut = CardDeck(ArrayDeque(listOf(Card(CardNumber.ACE, CardSuit.SPADE), Card(CardNumber.TWO, CardSuit.SPADE))))
 
         // when

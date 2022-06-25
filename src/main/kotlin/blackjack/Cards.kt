@@ -24,4 +24,8 @@ class Cards(private val values: List<Card> = listOf()) {
     }
 
     private fun cardScores() = Scores(this.values.map { it.number.score })
+
+    fun toList(): List<Card> {
+        return this.values
+    }
 }

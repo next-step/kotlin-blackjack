@@ -10,10 +10,10 @@ internal class BlackjackDealerTest : FunSpec({
         val sut = BlackjackDealer()
 
         // when
-        val result: List<Player> = sut.startTheGame(players)
+        sut.startTheGame(players)
 
         // then
-        result.forEach() {
+        players.forEach() {
             it.handSize() shouldBe 2
         }
     }
@@ -24,9 +24,9 @@ internal class BlackjackDealerTest : FunSpec({
         val sut = BlackjackDealer()
 
         // when
-        val result = sut.sendCard(player)
+        sut.sendCard(player)
 
         // then
-        result.handSize() shouldBe 1
+        player.handSize() shouldBe 1
     }
 })

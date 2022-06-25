@@ -1,21 +1,19 @@
 package blackjack
 
-class BlackjackDealer(private val deck: CardDeck = CardDeck.createDeck()) {
-    fun startTheGame(players: List<Player>): List<Player> {
-        return players.map(::drawTwice)
+class BlackjackDealer(private var deck: CardDeck = CardDeck.createDeck()) {
+    fun startTheGame(players: List<Player>) {
+        players.forEach(::drawTwice)
     }
 
-    private fun drawTwice(player: Player): Player {
-        var playerTemp = player
-        repeat(2) { playerTemp = playerTemp.addCardToHand(this.deck.draw()) }
-        return playerTemp
+    private fun drawTwice(player: Player) {
+        repeat(2) { player.addCardToHand(this.deck.draw()) }
     }
 
     fun shuffleCardDeck() {
-        this.deck.shuffle()
+        this.deck = this.deck.shuffle()
     }
 
-    fun sendCard(player: Player): Player {
-        return player.addCardToHand(this.deck.draw())
+    fun sendCard(player: Player) {
+        player.addCardToHand(this.deck.draw())
     }
 }
