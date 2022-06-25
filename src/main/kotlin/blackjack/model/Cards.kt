@@ -1,7 +1,13 @@
 package blackjack.model
 
-class Cards(val values: List<Card>) {
+data class Cards(val values: List<Card>) {
     constructor(vararg values: Card) : this(values.asList())
+
+    init {
+        require(values.distinct().size == values.size) {
+            "카드는 중복을 허용하지 않습니다."
+        }
+    }
 
     val scores: List<Score> = if (values.isEmpty()) {
         emptyList()
@@ -25,36 +31,13 @@ class Cards(val values: List<Card>) {
         return Cards(values + newCardList)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Cards
-
-        if (values != other.values) return false
-        if (scores != other.scores) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = values.hashCode()
-        result = 31 * result + scores.hashCode()
-        return result
-    }
-
     fun optimalScore(): Score {
         val notBustScores = scores.filter { !it.isBust() }
         if (notBustScores.isNotEmpty()) {
             return notBustScores.maxByOrNull { it.value }!!
         }
-        return scores.minByOrNull { it.value }!!
-    }
 
-    init {
-        require(values.distinct().size == values.size) {
-            "카드는 중복을 허용하지 않습니다."
-        }
+        return scores.minByOrNull { it.value } ?: throw RuntimeException("score는 항상 존재해야 합니다.")
     }
 
     companion object {
