@@ -11,7 +11,7 @@ class ResultDto(private val players: List<UserRole>) {
 
         println("최종 결과")
         players.forEach {
-            println("%s - %s".format(it.name, it.judgements.toString()))
+            println("%s - %s".format(it.name, it.gameStatus.judgements.toString()))
         }
     }
 }

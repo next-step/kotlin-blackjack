@@ -1,28 +1,24 @@
 package blackjack
 
-import blackjack.judge.Judgement
-import blackjack.state.Ready
 import blackjack.state.Stand
-import blackjack.state.State
 
 class Player(
     override val name: String,
-    override val state: State = Ready(PlayerDeck()),
-    override val judgements: MutableList<Judgement> = mutableListOf()
-) : UserRole(name, state, judgements) {
+    override val gameStatus: GameStatus = GameStatus()
+) : UserRole(name, gameStatus) {
 
     override fun draw(card: Card): UserRole {
-        return Player(name, state.draw(card))
+        return Player(name, GameStatus(state = gameStatus.state.draw(card)))
     }
 
     override fun stand(): UserRole {
-        if (state.isFinish()) {
+        if (gameStatus.state.isFinish()) {
             return this
         }
-        return Player(name, Stand(state.currentCard()))
+        return Player(name, GameStatus(state = Stand(gameStatus.state.currentCard())))
     }
 
-    override fun isFinish(): Boolean = state.isFinish()
+    override fun isFinish(): Boolean = gameStatus.state.isFinish()
 
     override fun isDealer(): Boolean = false
 }

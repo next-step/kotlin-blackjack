@@ -1,16 +1,11 @@
 package blackjack
 
-import blackjack.judge.Judgement
-import blackjack.state.Ready
-import blackjack.state.State
-
 abstract class UserRole(
     open val name: String,
-    open val state: State = Ready(PlayerDeck()),
-    open val judgements: MutableList<Judgement> = mutableListOf()
+    open val gameStatus: GameStatus = GameStatus()
 ) {
     val cards: List<Card>
-        get() = state.currentCard()
+        get() = gameStatus.state.currentCard()
             .cards
             .toList()
 
@@ -22,5 +17,5 @@ abstract class UserRole(
 
     abstract fun isDealer(): Boolean
 
-    fun getScore(): Int = state.score(state.currentCard().cards)
+    fun getScore(): Int = gameStatus.state.score(gameStatus.state.currentCard().cards)
 }

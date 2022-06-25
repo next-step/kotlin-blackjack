@@ -13,9 +13,9 @@ class BlackjackJudgement(private val users: List<UserRole>) {
         val dealerScore = dealer.getScore()
         players = when (dealer.getScore() >= BURST_SCORE_MIN) {
             true -> {
-                dealer.judgements.add(Loose())
+                dealer.gameStatus.judgements.add(Loose())
                 players
-                    .map { Player(it.name, it.state, mutableListOf(Win())) }
+                    .map { Player(it.name, GameStatus(it.gameStatus.state, mutableListOf(Win()))) }
                     .toList()
             }
             else -> {
@@ -29,24 +29,28 @@ class BlackjackJudgement(private val users: List<UserRole>) {
 
     private fun updateGameJudgement(it: UserRole, dealerScore: Int): UserRole {
         return when {
-            it.getScore() == dealerScore -> {
-                it.judgements.add(Push())
-                dealer.judgements.add(Push())
-                it
-            }
-
-            it.getScore() < dealerScore -> {
-                it.judgements.add(Loose())
-                dealer.judgements.add(Win())
-                it
-            }
-
-            else -> {
-                it.judgements.add(Win())
-                dealer.judgements.add(Loose())
-                it
-            }
+            it.getScore() == dealerScore -> getUserRoleWithSameDealer(it)
+            it.getScore() < dealerScore -> getUserRoleWithLessDealer(it)
+            else -> getUserRoleWithGreaterDealer(it)
         }
+    }
+
+    private fun getUserRoleWithSameDealer(userRole: UserRole): UserRole {
+        userRole.gameStatus.judgements.add(Push())
+        dealer.gameStatus.judgements.add(Push())
+        return userRole
+    }
+
+    private fun getUserRoleWithLessDealer(userRole: UserRole): UserRole {
+        userRole.gameStatus.judgements.add(Loose())
+        dealer.gameStatus.judgements.add(Win())
+        return userRole
+    }
+
+    private fun getUserRoleWithGreaterDealer(userRole: UserRole): UserRole {
+        userRole.gameStatus.judgements.add(Win())
+        dealer.gameStatus.judgements.add(Loose())
+        return userRole
     }
 
     companion object {
