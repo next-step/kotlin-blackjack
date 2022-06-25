@@ -44,8 +44,8 @@ internal class BlackJackGameTest {
         val afterCards = blackJackGame.cardDeck.cards
 
         assertThat(afterCards).hasSize(52 - (2 * 2))
-        assertThat(playerTim.cards).hasSize(2)
-        assertThat(playerTom.cards).hasSize(2)
+        assertThat(playerTim.hand.cards).hasSize(2)
+        assertThat(playerTom.hand.cards).hasSize(2)
     }
 
     @DisplayName("게임이 초기화되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
@@ -74,10 +74,10 @@ internal class BlackJackGameTest {
 
         val turn = blackJackGame.turns[0]
 
-        val beforeCards = playerTim.cards
+        val beforeCards = playerTim.hand.cards
         turn.applyToGame(Action.HIT)
 
-        val afterCards = playerTim.cards
+        val afterCards = playerTim.hand.cards
         assertThat(afterCards).hasSize(beforeCards.size + 1)
     }
 
@@ -91,10 +91,10 @@ internal class BlackJackGameTest {
 
         val turn = blackJackGame.turns[0]
 
-        val beforeCards = playerTim.cards
+        val beforeCards = playerTim.hand.cards
         turn.applyToGame(Action.STAY)
 
-        val afterCards = playerTim.cards
+        val afterCards = playerTim.hand.cards
         assertThat(afterCards).hasSize(beforeCards.size)
     }
 
@@ -109,7 +109,7 @@ internal class BlackJackGameTest {
         val turn = blackJackGame.turns[0]
         assertThat(turn.player).isEqualTo(playerTim)
 
-        while (Score.of(playerTim.cards).isNotBust()) {
+        while (Score.of(playerTim.hand).isNotBust()) {
             turn.applyToGame(Action.HIT)
         }
 
@@ -132,7 +132,7 @@ internal class BlackJackGameTest {
 
         assertThat(result.playerScores).hasSize(1)
 
-        val timsScore = Score.of(playerTim.cards)
+        val timsScore = Score.of(playerTim.hand)
         assertThat(result.playerScores.find { it.player == playerTim }!!.score).isEqualTo(timsScore)
     }
 }

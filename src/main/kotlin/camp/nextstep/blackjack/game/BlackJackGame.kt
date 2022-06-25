@@ -3,6 +3,7 @@ package camp.nextstep.blackjack.game
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
+import camp.nextstep.blackjack.player.Dealer
 import camp.nextstep.blackjack.player.Player
 import camp.nextstep.blackjack.ui.cli.PlayerCardsWriter
 
@@ -11,6 +12,8 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
     val turns: List<Turn>
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
+
+    val dealer = Dealer()
 
     val participants get() = _participants.toList()
 
@@ -29,7 +32,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         check(isEnded) { "게임이 종료되지 않았습니다." }
 
         return GameResult(
-            _participants.map { PlayerScore(it, Score.of(it.cards)) }
+            _participants.map { PlayerScore(it, Score.of(it.hand)) }
         )
     }
 
@@ -46,7 +49,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
             serve(turn.player, _cardDeck.draw())
         }
 
-        val playerScore = Score.of(turn.player.cards)
+        val playerScore = Score.of(turn.player.hand)
         if (playerScore.isBust() || action == Action.STAY) {
             turn.isDone = true
         }
