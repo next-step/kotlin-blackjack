@@ -6,7 +6,7 @@ import blackjack.domain.deck.CardPattern.CLOVER
 import blackjack.domain.deck.CardPattern.DIAMOND
 import blackjack.domain.deck.CardPattern.HEART
 import blackjack.domain.deck.CardPattern.SPADE
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Player
 
 class OutputView {
 

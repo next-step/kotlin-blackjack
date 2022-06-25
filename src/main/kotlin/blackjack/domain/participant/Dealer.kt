@@ -1,4 +1,4 @@
-package blackjack.domain.dealer
+package blackjack.domain.participant
 
 import blackjack.domain.deck.Card
 import blackjack.domain.deck.Deck

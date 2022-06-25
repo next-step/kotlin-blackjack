@@ -1,6 +1,5 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
-import blackjack.domain.dealer.Dealer
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldBeEmpty

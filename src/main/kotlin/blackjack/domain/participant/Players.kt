@@ -1,6 +1,4 @@
-package blackjack.domain.player
-
-import blackjack.domain.dealer.Dealer
+package blackjack.domain.participant
 
 class Players private constructor(
     val values: List<Player>,
