@@ -13,5 +13,6 @@ class BlackjackGame(
         val dealer = Dealer()
         val players = Players.of(playNameValues = inputView.inputPlayerNames())
         players.receiveInitCards(dealer)
+        ouputView.printInitHands(players.values)
     }
 }

@@ -10,6 +10,8 @@ class Player(
         hand.add(card)
     }
 
+    fun getPlayerNameValue(): String = playerName.value
+
     companion object {
         fun from(nameValue: String): Player = Player(playerName = PlayerName(value = nameValue))
     }
