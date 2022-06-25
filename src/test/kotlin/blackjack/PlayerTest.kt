@@ -28,10 +28,10 @@ internal class PlayerTest : FunSpec({
         val sut = Player(name = "gomding")
 
         // when
-        val result: Player = sut.addCardToHand(Card(CardNumber.ACE, CardSuit.SPADE))
+        sut.addCardToHand(Card(CardNumber.ACE, CardSuit.SPADE))
 
         // then
-        result.handSize() shouldBe 1
+        sut.handSize() shouldBe 1
     }
 
     test("플레이어가 게임을 시작한 상태인지 확인할 수 있다.") {
@@ -98,10 +98,10 @@ internal class PlayerTest : FunSpec({
         val sut = Player(name = "gomding", hand = Cards(values), state = Start)
 
         // when
-        val result: Player = sut.hit()
+        sut.hit()
 
         // then
-        result.isHit().shouldBeTrue()
+        sut.isHit().shouldBeTrue()
     }
 
     test("플레이어 21점 이상이라면, hit 상태가 될 수 없다.") {
@@ -125,10 +125,10 @@ internal class PlayerTest : FunSpec({
         val sut = Player(name = "gomding", hand = Cards(values), state = Start)
 
         // when
-        val result: Player = sut.stay()
+        sut.stay()
 
         // then
-        result.isStay().shouldBeTrue()
+        sut.isStay().shouldBeTrue()
     }
 
     test("플레이어 손패 총합이 21을 이상이면 stay 상태가 될 수 없다.") {
@@ -150,13 +150,13 @@ internal class PlayerTest : FunSpec({
             Card(CardNumber.TEN, CardSuit.SPADE),
             Card(CardNumber.TWO, CardSuit.SPADE),
         )
-        val sut = Player(name = "gomding", hand = Cards(values), state = Start)
+        val sut = Player(name = "gomding", hand = Cards(values), state = Hit)
 
         // when
-        val result: Player = sut.bust()
+        sut.bust()
 
         // then
-        result.isBust().shouldBeTrue()
+        sut.isBust().shouldBeTrue()
     }
 
     test("플레이어 손패 총합이 22 미만이면 bust상태가 될 수 없다.") {
@@ -182,10 +182,10 @@ internal class PlayerTest : FunSpec({
         val sut = Player(name = "gomding", hand = Cards(values), state = Start)
 
         // when
-        val result: Player = sut.blackjack()
+        sut.blackjack()
 
         // then
-        result.isBlackjack().shouldBeTrue()
+        sut.isBlackjack().shouldBeTrue()
     }
 
     test("플레이어 손패 총합이 21이 아니라면 blackjack 상태가 될 수 없다.") {
