@@ -5,13 +5,13 @@ const val HIT_CARD_COUNT = 1
 
 infix fun Player.matchWith(dealer: Dealer): MatchStatus {
     return when {
-        this.isBust() -> MatchStatus.Lose
-        dealer.isBust() -> MatchStatus.Win
-        isBlackjack() && dealer.isBlackjack() -> MatchStatus.Push
-        isBlackjack() -> MatchStatus.Blackjack
-        dealer.isBlackjack() -> MatchStatus.Lose
-        score > dealer.score -> MatchStatus.Win
-        score == dealer.score -> MatchStatus.Push
-        else -> MatchStatus.Lose
+        this.isBust() -> MatchStatus.LOSE
+        dealer.isBust() -> MatchStatus.WIN
+        isBlackjack() && dealer.isBlackjack() -> MatchStatus.PUSH
+        isBlackjack() -> MatchStatus.BLACKJACK
+        dealer.isBlackjack() -> MatchStatus.LOSE
+        score > dealer.score -> MatchStatus.WIN
+        score == dealer.score -> MatchStatus.PUSH
+        else -> MatchStatus.LOSE
     }
 }
