@@ -16,8 +16,8 @@ class Dealer : Player {
         if (hand.cards.isEmpty()) {
             hand.add(DrawnCard(card).apply { turnUp() })
         } else if (hand.cards.size > 2 ||
-            hand.cards[0].card.number == CardNumber.ACE ||
-            hand.cards[0].card.number == CardNumber.TEN
+            hand.cards[0].number == CardNumber.ACE ||
+            hand.cards[0].number == CardNumber.TEN
         ) {
             hand.add(DrawnCard(card).apply { turnUp() })
         } else {

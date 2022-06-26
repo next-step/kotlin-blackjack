@@ -2,7 +2,9 @@ package camp.nextstep.blackjack.card
 
 class Hand {
     private val _cards = mutableListOf<DrawnCard>()
-    val cards get() = _cards.toList()
+    val cards get() = _cards.map { it.card }.toList()
+    val faceUpCards get() = _cards.filter { it.isFaceUp }.map { it.card }.toList()
+    val faceDownCardCount get() = _cards.filter { it.isFaceDown }.size
 
     fun isEmpty() = _cards.isEmpty()
 

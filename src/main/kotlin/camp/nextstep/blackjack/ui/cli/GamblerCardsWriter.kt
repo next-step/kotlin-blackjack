@@ -6,8 +6,6 @@ object GamblerCardsWriter {
 
     fun write(gambler: Gambler) {
         print("${gambler.name}카드: ")
-
-        val gamblerCards = gambler.hand.cards.map { it.card }.joinToString(",") { "{${it.number.value}:${it.suit}}" }
-        println(gamblerCards)
+        HandWriter.write(gambler.hand)
     }
 }

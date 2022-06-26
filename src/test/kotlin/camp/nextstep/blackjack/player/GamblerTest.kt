@@ -42,6 +42,6 @@ internal class GamblerTest {
 
         tim.receive(Card(CardSuit.SPADE, CardNumber.ACE))
 
-        assertThat(tim.hand.cards.map { it.card }).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(tim.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
     }
 }

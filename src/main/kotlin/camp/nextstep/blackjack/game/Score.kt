@@ -47,7 +47,7 @@ value class Score(val value: Int) : Comparable<Score> {
         private fun canAddAceBonus(score: Score) = BLACK_JACK >= score + ACE_BONUS
 
         fun of(hand: Hand): Score {
-            val cards = hand.cards.map { it.card }
+            val cards = hand.cards
             var score = of(cards.sumOf { it.number.value })
 
             val aceCount = cards.count { it.number == CardNumber.ACE }

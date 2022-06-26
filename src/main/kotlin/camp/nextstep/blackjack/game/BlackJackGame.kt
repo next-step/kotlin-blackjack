@@ -34,10 +34,11 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         )
     }
 
-    fun play(turn: Turn, actionProducer: (Gambler) -> Action) {
+    fun play(turn: Turn, actionProducer: (Gambler) -> Action, afterAction: () -> Unit = {}) {
         while (!turn.isDone) {
             val action = actionProducer(turn.gambler)
             turn.play(action)
+            afterAction()
         }
     }
 

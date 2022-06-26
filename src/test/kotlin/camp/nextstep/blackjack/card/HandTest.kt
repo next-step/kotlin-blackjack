@@ -21,6 +21,6 @@ internal class HandTest {
         hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.ACE)))
 
         assertThat(hand.cards).hasSize(1)
-        assertThat(hand.cards[0].card).isEqualTo(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(hand.cards[0]).isEqualTo(Card(CardSuit.SPADE, CardNumber.ACE))
     }
 }
