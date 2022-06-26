@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-class Player(val name: String) {
+open class Player(val name: String) {
     private val _cards: Cards = Cards()
     var status: Status = Status.HIT
 
@@ -21,5 +21,19 @@ class Player(val name: String) {
         return score
     }
 
-    fun canReceive(): Boolean = status == Status.HIT
+    open fun canReceive(): Boolean = status == Status.HIT
+
+    open fun receiveUntilHit(
+        action: (name: String) -> Boolean,
+        showPlayerCard: (player: Player) -> Unit,
+        drawCard: () -> Card
+    ) {
+        while (canReceive()) {
+            determine(action(name))
+            if (canReceive()) {
+                receive(drawCard())
+            }
+            showPlayerCard(this)
+        }
+    }
 }

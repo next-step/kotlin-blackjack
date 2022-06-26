@@ -5,8 +5,6 @@ value class Score(private val value: Int) {
 
     fun isBust(): Boolean = value > BLACKJACK_SCORE
 
-    operator fun plus(score: Score) = Score(this.value + score.value)
-
     fun calculateAceScore(aceCount: Int): Score {
         var total = value
         repeat(aceCount) {
@@ -16,6 +14,10 @@ value class Score(private val value: Int) {
     }
 
     fun toInt(): Int = value
+
+    operator fun plus(score: Score) = Score(this.value + score.value)
+
+    operator fun compareTo(other: Score): Int = value - other.value
 
     companion object {
         private const val ACE_EXTRA_SCORE = 10

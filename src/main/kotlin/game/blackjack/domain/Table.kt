@@ -1,30 +1,24 @@
 package game.blackjack.domain
 
 class Table(
+    private val dealer: Dealer,
     private val players: List<Player>,
     private val getAction: (name: String) -> Boolean,
     private val showPlayerCard: (player: Player) -> Unit,
 ) {
 
-    private val dealer = Dealer()
-
     fun init(): List<Player> {
-        players.forEach {
+        listOf(dealer, *(players.toTypedArray())).forEach {
             repeat(INIT_CARD_COUNT) { _ -> it.receive(dealer.drawCard()) }
         }
         return players
     }
 
     fun distribute(): List<Player> {
-        players.forEach {
-            while (it.canReceive()) {
-                it.determine(getAction(it.name))
-                if (it.canReceive()) {
-                    it.receive(dealer.drawCard())
-                }
-                showPlayerCard(it)
-            }
+        (players + dealer).forEach {
+            it.receiveUntilHit(getAction, showPlayerCard) { dealer.drawCard() }
         }
+
         return players
     }
 
