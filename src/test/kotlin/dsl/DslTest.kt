@@ -34,6 +34,6 @@ class DslTest {
             assertThat(person.languages).hasSize(2)
             assertThat(person.languages["Korean"]).isEqualTo(5)
             assertThat(person.languages["English"]).isEqualTo(3)
-       })
+        })
     }
 }
