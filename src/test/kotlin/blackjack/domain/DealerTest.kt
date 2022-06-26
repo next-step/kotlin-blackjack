@@ -20,4 +20,14 @@ class DealerTest {
         )
         assertThat(nonReceivableDealer.isReceivable()).isFalse
     }
+
+    @Test
+    fun `getFirstCard를 통해 딜러의 첫 번째 카드를 확인할 수 있다`() {
+        val dealer = Dealer(
+            "딜러",
+            PlayingCard(Suit.DIAMONDS, CardNumber.KING),
+            PlayingCard(Suit.DIAMONDS, CardNumber.TWO)
+        )
+        assertThat(dealer.getFirstCard()).isEqualTo(PlayingCard(Suit.DIAMONDS, CardNumber.KING))
+    }
 }
