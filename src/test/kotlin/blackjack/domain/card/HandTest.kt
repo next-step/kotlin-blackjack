@@ -14,10 +14,18 @@ class HandTest {
         val hand = Hand()
         hand.add(Card.of(ACE, Suit.SPADE))
         assertAll({
-            assertThat(hand.value2).hasSize(1)
-            assertThat(hand.value2[0].suit).isEqualTo(Suit.SPADE)
-            assertThat(hand.value2[0].rank).isEqualTo(ACE)
+            assertThat(hand.value).hasSize(1)
+            assertThat(hand.value[0].suit).isEqualTo(Suit.SPADE)
+            assertThat(hand.value[0].rank).isEqualTo(ACE)
         })
+    }
+
+    @Test
+    fun `카드의 합이 21을 초과하면 bust된다`() {
+        val hand = Hand()
+        listOf(Card.of(JACK, Suit.SPADE), Card.of(QUEEN, Suit.SPADE), Card.of(TWO, Suit.SPADE)).forEach { hand.add(it) }
+
+        assertThat(hand.isBust()).isTrue
     }
 
     @ParameterizedTest

@@ -5,11 +5,15 @@ private const val MAX_SCORE = 21
 class Hand {
     private var _value: MutableList<Card> = mutableListOf()
 
-    val value2
+    val value
         get() = _value.toList()
 
     fun add(card: Card) {
         _value.add(card)
+    }
+
+    fun isBust(): Boolean {
+        return getScore() > MAX_SCORE
     }
 
     fun getScore(): Int {
