@@ -10,13 +10,13 @@ internal class CardsTest {
     @Test
     fun `빈 생성자 초기 점수는 0점`() {
         val cards = Cards()
-        Assertions.assertThat(cards.score()).isEqualTo(0)
+        Assertions.assertThat(cards.score()).isEqualTo(Score(0))
     }
 
     @Test
     fun `세컨더리 생성자로 생성시 점수`() {
         val cards = Cards(mutableListOf(Card(Suit.SPADE, Denomination.KING)))
-        Assertions.assertThat(cards.score()).isEqualTo(10)
+        Assertions.assertThat(cards.score()).isEqualTo(Score(10))
     }
 
     @Test

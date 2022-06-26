@@ -22,7 +22,7 @@ class ResultView {
             Denomination.JACK -> "J"
             Denomination.QUEEN -> "Q"
             Denomination.KING -> "K"
-            else -> denomination.score.toString()
+            else -> denomination.score.toInt().toString()
         }
 
     fun printAllPlayerCard(players: List<Player>) {
@@ -35,7 +35,7 @@ class ResultView {
     }
 
     fun printResult(players: List<Player>) {
-        players.forEach { println("${it.name}카드: ${formatCards(it.cards)} - 결과: ${Card.score(it.cards)}") }
+        players.forEach { println("${it.name}카드: ${formatCards(it.cards)} - 결과: ${Card.score(it.cards).toInt()}") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }

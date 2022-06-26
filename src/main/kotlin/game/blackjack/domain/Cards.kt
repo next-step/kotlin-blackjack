@@ -3,7 +3,7 @@ package game.blackjack.domain
 class Cards(
     private val cards: MutableList<Card>
 ) {
-    private val score: Int
+    private var score: Score
 
     init {
         score = score()
@@ -13,15 +13,12 @@ class Cards(
 
     fun get(): List<Card> = cards.toList()
 
-    fun score(): Int = Card.score(cards)
+    fun score(): Score = Card.score(cards)
 
-    fun isBust(): Boolean = score() > BLACKJACK_SCORE
+    fun isBust(): Boolean = score.isBust()
 
     fun add(card: Card) {
         cards.add(card)
-    }
-
-    companion object {
-        private const val BLACKJACK_SCORE = 21
+        score = Card.score(cards)
     }
 }

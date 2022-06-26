@@ -18,10 +18,10 @@ class Player(val name: String) {
         return status
     }
 
-    fun receive(card: Card): Int {
+    fun receive(card: Card): Score {
         _cards.add(card)
         val score = _cards.score()
-        if (_cards.isBust()) {
+        if (score.isBust()) {
             status = Status.BUST
         }
         return score
