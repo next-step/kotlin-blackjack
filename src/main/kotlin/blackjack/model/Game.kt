@@ -9,9 +9,6 @@ class Game(
     var turnPlayer: Player = players.first
 ) {
 
-    val turnPlayerName
-        get() = turnPlayer.name
-
     fun start() {
         gameHost.shuffleCards()
         gameHost.provideCardTo(players, INITIAL_PROVIDED_CARD_COUNT)

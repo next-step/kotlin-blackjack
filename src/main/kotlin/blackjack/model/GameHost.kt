@@ -31,7 +31,7 @@ class GameHost(
     }
 
     private fun validateNotExceedMaxScore(score: CardScore) =
-        require(score.isLessThan(MAX_SCORE)) { "카드 점수가 ${MAX_SCORE}점을 넘을 수 없습니다." }
+        require(score.isOneOfScoreLessThan(MAX_SCORE)) { "카드 점수가 ${MAX_SCORE}점을 넘을 수 없습니다." }
 
     companion object {
         private const val MAX_SCORE = 21

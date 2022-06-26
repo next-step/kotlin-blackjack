@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.model.player.Player
+import blackjack.model.player.PlayerGameResults
+import blackjack.model.player.PlayerName
 import blackjack.model.player.Players
 
 interface ResultView {
@@ -8,5 +10,7 @@ interface ResultView {
 
     fun printPlayerCardStatus(player: Player)
 
-    fun printCardGameResult(players: Players)
+    fun printCardGameResult(results: PlayerGameResults)
+
+    fun printDealerReceiveMoreCardMessage(dealerName: PlayerName)
 }

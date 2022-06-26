@@ -1,6 +1,9 @@
 package blackjack
 
 import blackjack.model.Game
+import blackjack.model.player.Dealer
+import blackjack.model.player.Player
+import blackjack.model.player.PlayerGameResults
 import blackjack.model.player.Players
 import blackjack.view.InputView
 import blackjack.view.MoreCardMark
@@ -12,13 +15,13 @@ object BlackjackApplication {
         resultView.printPlayersCardStatus(game.players)
 
         playGame(game, inputView, resultView)
-        resultView.printCardGameResult(game.players)
+        resultView.printCardGameResult(PlayerGameResults.from(game.players))
     }
 
     private fun startGame(inputView: InputView): Game {
         inputView.printPlayerNamesInputMessage()
 
-        val players = Players(inputView.inputPlayerNames())
+        val players = Players(inputView.inputPlayerNames().plus(Dealer()))
         val game = Game(players = players)
 
         game.start()
@@ -28,9 +31,8 @@ object BlackjackApplication {
 
     private fun playGame(game: Game, inputView: InputView, resultView: ResultView) {
         while (game.isNotEnd()) {
-            inputView.printNeedMoreCardAskMessage(game.turnPlayerName)
 
-            val needMoreCardMark = inputView.inputWhetherNeedMoreCard()
+            val needMoreCardMark = printAndInputWhetherNeedMoreCard(inputView, resultView, game.turnPlayer)
             if (MoreCardMark.needMoreCard(needMoreCardMark)) {
                 game.provideCardToTurnPlayer()
                 resultView.printPlayerCardStatus(game.turnPlayer)
@@ -39,5 +41,19 @@ object BlackjackApplication {
 
             game.changeTurn()
         }
+    }
+
+    private fun printAndInputWhetherNeedMoreCard(
+        inputView: InputView,
+        resultView: ResultView,
+        turnPlayer: Player
+    ): String {
+        if (turnPlayer.isDealer && turnPlayer.needMoreCard) {
+            resultView.printDealerReceiveMoreCardMessage(turnPlayer.playerName)
+            return MoreCardMark.YES.mark
+        }
+
+        inputView.printNeedMoreCardAskMessage(turnPlayer.playerName)
+        return inputView.inputWhetherNeedMoreCard()
     }
 }

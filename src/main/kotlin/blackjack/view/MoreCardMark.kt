@@ -1,7 +1,7 @@
 package blackjack.view
 
 enum class MoreCardMark(
-    private val mark: String,
+    val mark: String,
     private val needMoreCard: Boolean,
 ) {
     YES("y", true),
