@@ -15,7 +15,7 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
                 val matchStatus = player matchWith dealer
                 BlackjackParticipantResult(
                     participant = player,
-                    revenue = matchStatus.getRevenueFrom(player.betAmount)
+                    revenue = player.getRevenue(matchStatus)
                 )
             }
         }

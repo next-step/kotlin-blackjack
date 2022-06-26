@@ -24,7 +24,7 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
-    val betAmount: BetAmount,
+    private val betAmount: BetAmount,
     hands: Hands
 ) : Participant(name, hands) {
     constructor(name: String, betAmount: Int, vararg initialCards: PlayingCard) : this(
@@ -35,6 +35,10 @@ class Player(
 
     fun stay() {
         hands = hands.stay()
+    }
+
+    fun getRevenue(matchStatus: MatchStatus): Revenue {
+        return Revenue((betAmount.value * matchStatus.revenueRatio).toInt())
     }
 
     override fun isReceivable(): Boolean = hands.isReceivable()
