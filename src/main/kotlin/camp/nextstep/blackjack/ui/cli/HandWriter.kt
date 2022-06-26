@@ -14,7 +14,5 @@ object HandWriter {
         repeat(hand.faceDownCardCount) {
             print(faceDownCard)
         }
-
-        println()
     }
 }

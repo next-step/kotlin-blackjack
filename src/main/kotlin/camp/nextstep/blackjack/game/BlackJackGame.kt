@@ -2,6 +2,7 @@ package camp.nextstep.blackjack.game
 
 import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
+import camp.nextstep.blackjack.game.GameResult.Companion.reversedResults
 import camp.nextstep.blackjack.player.Dealer
 import camp.nextstep.blackjack.player.Gambler
 import camp.nextstep.blackjack.player.Player
@@ -28,12 +29,21 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         gamblerTurns = _participants.map { Turn(it) }
     }
 
-    fun result(): GameResult {
+    fun result(): GameResults {
         val isEnded = gamblerTurns.all { it.isDone } && dealerTurn.isDone
         check(isEnded) { "게임이 종료되지 않았습니다." }
 
-        return GameResult(
-            _participants.map { GamblerScore(it, Score.of(it.hand)) }
+        val gamblersScore = mutableListOf<GamblerScore>()
+        val dealerScore = Score.of(dealer.hand)
+        for (gambler in _participants) {
+            val gamblerScore = Score.of(gambler.hand)
+            val result = GameResult.of(gamblerScore, dealerScore)
+            gamblersScore.add(GamblerScore(gambler, gamblerScore, result))
+        }
+
+        return GameResults(
+            DealerScore(dealer, Score.of(dealer.hand), gamblersScore.map { it.result }.reversedResults()),
+            gamblersScore
         )
     }
 

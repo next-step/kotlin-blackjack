@@ -7,7 +7,7 @@ import camp.nextstep.blackjack.ui.cli.GamblerActionReader
 import camp.nextstep.blackjack.ui.cli.GamblerCardsWriter
 import camp.nextstep.blackjack.ui.cli.GamblersReader
 import camp.nextstep.blackjack.ui.cli.GameInitializedInfoWriter
-import camp.nextstep.blackjack.ui.cli.GameResultWriter
+import camp.nextstep.blackjack.ui.cli.GameResultsWriter
 
 fun main() {
 
@@ -35,5 +35,5 @@ fun main() {
     }
 
     val result = game.result()
-    GameResultWriter.write(result)
+    GameResultsWriter.write(result)
 }

@@ -83,4 +83,35 @@ internal class ScoreTest {
 
         assertThat(score.value).isEqualTo(expectedScore)
     }
+
+    @DisplayName("CloseThan 테스트")
+    @ParameterizedTest(name = "{0} 이 {1} 보다 21에 더 가깞다")
+    @CsvSource(
+        delimiter = ',',
+        value = [
+            "7,1",
+            "10,1",
+            "15,10",
+            "20,10",
+            "21,20",
+        ]
+    )
+    fun scoreCloseThan(closer: Int, farther: Int) {
+        assertThat(Score.of(closer).closerThan(Score.of(farther))).isTrue
+    }
+
+    @DisplayName("CloseThan 테스트")
+    @ParameterizedTest(name = "{0} 은 {1} 보다 21에 가깝지 않다.")
+    @CsvSource(
+        delimiter = ',',
+        value = [
+            "15,15",
+            "21,21",
+            "22,10",
+            "22,1",
+        ]
+    )
+    fun scoreCloseThenFalseWhenEquals(farther: Int, closer: Int) {
+        assertThat(Score.of(farther).closerThan(Score.of(closer))).isFalse
+    }
 }

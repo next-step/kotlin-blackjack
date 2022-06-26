@@ -12,6 +12,12 @@ value class Score(val value: Int) : Comparable<Score> {
 
     fun isNotBust(): Boolean = !isBust()
 
+    fun closerThan(other: Score): Boolean {
+        return if (isBust()) false
+        else if (other.isBust()) true
+        else (BLACK_JACK_SCORE - value) < (BLACK_JACK_SCORE - other.value)
+    }
+
     fun plusIf(other: Score, predicate: (Score) -> Boolean): Score {
         return if (predicate(other)) this + other else this
     }

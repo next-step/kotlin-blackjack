@@ -121,7 +121,7 @@ internal class BlackJackGameTest {
 
     @DisplayName("딜러와 플레이어 모두 카드 뽑기가 끝나면 각 플레이어별 점수를 확인할 수 있다.")
     @Test
-    fun gameResult() {
+    fun gameResultScore() {
         val gamblerTim = Gambler("tim")
         val gamblers = listOf(gamblerTim)
 

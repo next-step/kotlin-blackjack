@@ -7,5 +7,6 @@ object GamblerCardsWriter {
     fun write(gambler: Gambler) {
         print("${gambler.name}카드: ")
         HandWriter.write(gambler.hand)
+        println()
     }
 }
