@@ -12,8 +12,7 @@ internal class TableTest {
     fun `초기화하면 2장의 카드를 갖는다`() {
         val resultView = ResultView()
         val table = Table(
-            Dealer(),
-            listOf(Player("jade"), Player("sehee")),
+            Players(Dealer(), listOf(Player("jade"), Player("sehee"))),
             { true },
             { resultView.printPlayerCard(it) },
         )
@@ -26,8 +25,7 @@ internal class TableTest {
     fun `무조건 카드를 받으면 상태가 버스트로 바뀔때까지 받는다`() {
         val resultView = ResultView()
         val table = Table(
-            Dealer(),
-            listOf(Player("jade"), Player("sehee")),
+            Players(Dealer(), listOf(Player("jade"), Player("sehee"))),
             { true },
             { resultView.printPlayerCard(it) },
         )
@@ -41,8 +39,7 @@ internal class TableTest {
     fun `무조건 카드를 안받으면 2장의 카드 그대로이다`() {
         val resultView = ResultView()
         val table = Table(
-            Dealer(),
-            listOf(Player("jade"), Player("sehee")),
+            Players(Dealer(), listOf(Player("jade"), Player("sehee"))),
             { false },
             { resultView.printPlayerCard(it) },
         )
