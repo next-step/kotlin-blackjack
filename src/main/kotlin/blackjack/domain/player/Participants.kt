@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.player.vo.Name
 
 private const val MINIMUM_PARTICIPANT_SIZE = 1
 
@@ -18,7 +19,7 @@ class Participants private constructor(val value: List<Participant>): Iterable<P
     }
 
     companion object {
-        infix fun from(names: List<String>): Participants {
+        infix fun from(names: List<Name>): Participants {
             return Participants(names.map { Participant(it) })
         }
     }

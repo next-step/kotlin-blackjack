@@ -1,15 +1,16 @@
 package blackjack.view
 
 import blackjack.domain.player.Participant
+import blackjack.domain.player.vo.Name
 
 private const val NAME_SPLITTER = ","
 
 class ConsoleInput : Input {
-    override fun askParticipantNames(): List<String> {
+    override fun askParticipantNames(): List<Name> {
         return try {
             println()
             println("게임에 참여할 사람의 이름을 입력하세요.(${NAME_SPLITTER}를 기준으로 분리)")
-            readln().split(NAME_SPLITTER)
+            readln().split(NAME_SPLITTER).map { Name(it.trim()) }
         } catch (e: Exception) {
             println("잘못된 입력입니다.")
             askParticipantNames()

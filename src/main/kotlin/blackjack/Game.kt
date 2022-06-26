@@ -8,7 +8,7 @@ import blackjack.view.ConsoleOutput
 import blackjack.view.Input
 import blackjack.view.Output
 
-class Game(val deck: Deck, val input: Input, val output: Output) {
+class Game(private val deck: Deck, private val input: Input, private val output: Output) {
     fun run() {
         val names = input.askParticipantNames()
         val participants = Participants from names
