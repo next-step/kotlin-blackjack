@@ -26,6 +26,10 @@ object InputView {
 
 object OutputView {
 
+    fun printPlayers(players: List<Player>) {
+        players.forEach { printPlayer(it) }
+    }
+
     fun printPlayer(player: Player) {
         println("${player.name}카드: " + player.hand.joinToString { card -> "${card.cardNumber.symbol}${card.cardSuit.suit}" })
     }

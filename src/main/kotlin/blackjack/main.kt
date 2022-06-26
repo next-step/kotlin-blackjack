@@ -6,7 +6,7 @@ import blackjack.view.OutputView
 
 fun main() {
     val players = BlackJackService.createPlayers(InputView.inputPlayers())
-    players.forEach { OutputView.printPlayer(it) }
+    OutputView.printPlayers(players)
 
     for (player in players) {
         while (BlackJackService.isBurst(player)) {
