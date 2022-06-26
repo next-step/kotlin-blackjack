@@ -12,23 +12,18 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
 
         private fun List<Player>.toResults(dealer: Dealer): List<BlackjackParticipantResult> {
             return map { player ->
-                val matchStatus = player matchWith dealer
                 BlackjackParticipantResult(
                     participant = player,
-                    revenue = player.getRevenue(matchStatus)
+                    revenue = player getRevenueFrom dealer
                 )
             }
         }
 
         private fun Dealer.toResult(playerResults: List<BlackjackParticipantResult>): List<BlackjackParticipantResult> {
-            val playersRevenue = playerResults.sumOf { result ->
-                result.revenue.value
-            }
-
             return listOf(
                 BlackjackParticipantResult(
                     participant = this,
-                    revenue = Revenue(playersRevenue).reverse()
+                    revenue = playerResults.getDealerRevenue()
                 )
             )
         }
