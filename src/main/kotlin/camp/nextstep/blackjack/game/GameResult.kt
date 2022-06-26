@@ -30,8 +30,8 @@ enum class GameResult {
 
         fun of(myScore: Score, otherScore: Score): GameResult {
             return if (myScore.closerThan(otherScore)) WIN
-            else if (myScore == otherScore) DRAW
-            else LOSE
+            else if (myScore.isBust() && otherScore.isNotBust()) LOSE
+            else DRAW
         }
     }
 }
