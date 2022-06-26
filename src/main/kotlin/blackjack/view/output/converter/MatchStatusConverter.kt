@@ -10,6 +10,7 @@ object MatchStatusConverter : OutputConverter<MatchStatus> {
                 is MatchStatus.Win -> "승"
                 is MatchStatus.Push -> "무"
                 is MatchStatus.Lose -> "패"
+                else -> ""
             }
         }
     }

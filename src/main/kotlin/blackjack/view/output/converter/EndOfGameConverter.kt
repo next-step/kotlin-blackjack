@@ -4,7 +4,7 @@ import blackjack.domain.BlackjackGameResult
 
 object EndOfGameConverter : OutputConverter<BlackjackGameResult> {
     override fun convert(printable: BlackjackGameResult): String {
-        return "${printable.toCardsText()}\n\n## 최종 승패\n${printable.toMatchStatusText()}"
+        return "${printable.toCardsText()}\n\n## 최종 수익\n${printable.toRevenueText()}"
     }
 
     private fun BlackjackGameResult.toCardsText(): String {
@@ -14,9 +14,9 @@ object EndOfGameConverter : OutputConverter<BlackjackGameResult> {
         }
     }
 
-    private fun BlackjackGameResult.toMatchStatusText(): String {
+    private fun BlackjackGameResult.toRevenueText(): String {
         return value.joinToString("\n") { result ->
-            "${result.participant.name.value}: ${MatchStatusConverter.convert(result.matchStatus)}"
+            "${result.participant.name.value}: ${result.revenue.value}"
         }
     }
 }

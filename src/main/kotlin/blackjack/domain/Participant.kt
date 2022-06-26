@@ -24,7 +24,7 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
-    private val betAmount: BetAmount,
+    val betAmount: BetAmount,
     hands: Hands
 ) : Participant(name, hands) {
     constructor(name: String, betAmount: Int, vararg initialCards: PlayingCard) : this(

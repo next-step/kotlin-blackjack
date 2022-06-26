@@ -37,7 +37,7 @@ class EndOfGameConverterTest {
 
         val cardText =
             "딜러카드: 9다이아몬드, Q하트 - 결과: 19\npanther카드: 2스페이드, A하트, 8스페이드 - 결과: 21\nfox카드: J다이아몬드, 7클로버, 10클로버 - 결과: 27"
-        val matchStatusText = "## 최종 승패\n딜러: 1승 0무 1패\npanther: 승\nfox: 패"
+        val matchStatusText = "## 최종 수익\n딜러: 10000\npanther: 10000\nfox: -20000"
         val expected = "$cardText\n\n$matchStatusText"
         Assertions.assertThat(EndOfGameConverter.convert(blackjackGameResult)).isEqualTo(expected)
     }
