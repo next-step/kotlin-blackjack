@@ -12,4 +12,11 @@ open class Player(val name: String, val cards: Cards = Cards.emptyCards(), val s
     fun addCards(newCardList: List<Card>): Player {
         return Player(name, cards.addCards(newCardList), stay)
     }
+
+    companion object {
+        private const val DEALER_NAME = "딜러"
+        fun createDealer(): Player {
+            return Player(DEALER_NAME)
+        }
+    }
 }
