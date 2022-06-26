@@ -29,7 +29,7 @@ object BlackjackLayout {
         val playerInfos = getPlayerNames().map { playerName ->
             playerName.toPlayerInfo()
         }
-        val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos.map { it.name })
+        val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos)
         OutputView.println(viewModel.participants.all, StartOfGameConverter)
 
         viewModel.currentTurn.observe { turn ->

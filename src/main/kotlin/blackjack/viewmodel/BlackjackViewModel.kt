@@ -9,6 +9,7 @@ import blackjack.domain.Hands
 import blackjack.domain.Observable
 import blackjack.domain.Participants
 import blackjack.domain.Player
+import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.START_CARD_COUNT
@@ -40,14 +41,14 @@ class BlackjackViewModel private constructor(
     }
 
     companion object {
-        fun from(dealerName: PlayerName, playerNames: List<PlayerName>): BlackjackViewModel {
+        fun from(dealerName: PlayerName, playerInfos: List<PlayerInfo>): BlackjackViewModel {
             val cardDeck = CardDeck.of(
                 PlayingCard.all(),
                 DistinctRule, ShuffleRule
             )
             val participants = Participants(
                 dealer = dealerName.toDealer(cardDeck),
-                players = playerNames.toPlayers(cardDeck)
+                players = playerInfos.toPlayers(cardDeck)
             )
 
             return BlackjackViewModel(
@@ -56,26 +57,27 @@ class BlackjackViewModel private constructor(
             )
         }
 
-        fun of(dealerName: PlayerName, playerNames: List<PlayerName>, cardDeck: CardDeck): BlackjackViewModel {
+        fun of(dealerName: PlayerName, playerInfos: List<PlayerInfo>, cardDeck: CardDeck): BlackjackViewModel {
             val participants = Participants(
                 dealer = dealerName.toDealer(cardDeck),
-                players = playerNames.toPlayers(cardDeck)
+                players = playerInfos.toPlayers(cardDeck)
             )
             return BlackjackViewModel(participants, cardDeck)
-        }
-
-        private fun CardDeck.initialHands(): Hands {
-            return Hands.from(draw(START_CARD_COUNT))
         }
 
         private fun PlayerName.toDealer(cardDeck: CardDeck): Dealer {
             return Dealer(this, cardDeck.initialHands())
         }
 
-        private fun List<PlayerName>.toPlayers(cardDeck: CardDeck): List<Player> {
-            return map { playerName ->
+        private fun CardDeck.initialHands(): Hands {
+            return Hands.from(draw(START_CARD_COUNT))
+        }
+
+        private fun List<PlayerInfo>.toPlayers(cardDeck: CardDeck): List<Player> {
+            return map { playerInfo ->
                 Player(
-                    name = playerName,
+                    name = playerInfo.name,
+                    betAmount = playerInfo.betAmount,
                     hands = cardDeck.initialHands()
                 )
             }

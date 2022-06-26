@@ -24,13 +24,13 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
-    hands: Hands,
-    private val betAmount: BetAmount = BetAmount(1)
+    private val betAmount: BetAmount = BetAmount(1),
+    hands: Hands
 ) : Participant(name, hands) {
     constructor(name: String, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
-        Hands.from(PlayingCards.from(initialCards.toList())),
-        BetAmount(1)
+        BetAmount(1),
+        Hands.from(PlayingCards.from(initialCards.toList()))
     )
 
     fun stay() {

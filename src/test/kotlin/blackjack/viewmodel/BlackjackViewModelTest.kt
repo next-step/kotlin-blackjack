@@ -1,8 +1,10 @@
 package blackjack.viewmodel
 
+import blackjack.domain.BetAmount
 import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
 import blackjack.domain.CardNumber
+import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
@@ -14,26 +16,24 @@ import org.junit.jupiter.api.assertAll
 
 class BlackjackViewModelTest {
     private val dealerName = PlayerName("딜러")
-    private val names = listOf(PlayerName("Spade"), PlayerName("Diamond"))
+    private val playerInfos = listOf(
+        PlayerInfo(PlayerName("Spade"), BetAmount(10_000)),
+        PlayerInfo(PlayerName("Diamond"), BetAmount(20_000))
+    )
     private val viewModel: BlackjackViewModel
         get() = BlackjackViewModel.of(
             dealerName = dealerName,
-            playerNames = names,
+            playerInfos = playerInfos,
             cardDeck = CardDeck.from(PlayingCard.all())
         )
 
     @Test
     fun `from에 PlayerName List를 넘겨 BlackjackViewModel을 생성할 수 있다`() {
-        val viewModel = BlackjackViewModel.from(dealerName, names)
+        val viewModel = BlackjackViewModel.from(dealerName, playerInfos)
 
         assertAll(
             { assertThat(viewModel.participants.dealer.name).isEqualTo(dealerName) },
-            { assertThat(viewModel.participants.players).hasSize(names.size) },
-            {
-                assertThat(viewModel.participants.players).allMatch { player ->
-                    player.name in names
-                }
-            }
+            { assertThat(viewModel.participants.players).hasSize(playerInfos.size) }
         )
     }
 
@@ -48,7 +48,7 @@ class BlackjackViewModelTest {
     fun `BlackJackViewModel을 생성할 때 카드를 뽑을 수 있는 첫 번째 사람이 턴을 얻게 된다`() {
         val viewModel = BlackjackViewModel.of(
             dealerName = dealerName,
-            playerNames = names,
+            playerInfos = playerInfos,
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
@@ -63,7 +63,7 @@ class BlackjackViewModelTest {
             )
         )
 
-        assertThat(viewModel.currentTurn.value.participant.name).isEqualTo(names[0])
+        assertThat(viewModel.currentTurn.value.participant.name).isEqualTo(playerInfos[0].name)
     }
 
     @Test
@@ -97,7 +97,7 @@ class BlackjackViewModelTest {
     fun `nextTurn을 호출하여 카드를 받을 수 있는 플레이어에게 턴을 넘길 수 있다`() {
         val viewModel = BlackjackViewModel.of(
             dealerName = dealerName,
-            playerNames = names,
+            playerInfos = playerInfos,
             cardDeck = CardDeck.from(
                 PlayingCards.from(
                     listOf(
