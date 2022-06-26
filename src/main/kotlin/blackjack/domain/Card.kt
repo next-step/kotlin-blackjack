@@ -1,7 +1,11 @@
 package blackjack.domain
 
-class Card(
+data class Card(
     val cardNumber: CardNumber,
     val cardSuit: CardSuit
 ) {
+
+    fun isAce(): Boolean {
+        return cardNumber == CardNumber.ACE
+    }
 }
