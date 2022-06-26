@@ -10,6 +10,7 @@ class ParticipantTest {
         val hands = Hands.from(PlayingCards.empty())
         val player = Player(
             name = PlayerName("이름"),
+            betAmount = BetAmount(10_000),
             hands = hands
         )
 
@@ -22,7 +23,8 @@ class ParticipantTest {
     @Test
     fun `receive를 통해 카드를 받아 손패에 추가할 수 있다`() {
         val player = Player(
-            name = "이름"
+            name = "이름",
+            10_000
         )
 
         player.receive(

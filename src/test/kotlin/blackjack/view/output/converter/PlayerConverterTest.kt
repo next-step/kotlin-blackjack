@@ -12,6 +12,7 @@ class PlayerConverterTest {
     fun `PlayerConverter는 Player를 출력을 위한 문자열로 변환해 반환한다`() {
         val player = Player(
             "joker",
+            10_000,
             PlayingCard(Suit.SPADES, CardNumber.TWO),
             PlayingCard(Suit.HEARTS, CardNumber.ACE)
         )

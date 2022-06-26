@@ -20,12 +20,14 @@ class EndOfGameConverterTest {
         )
         val player1 = Player(
             "panther",
+            10_000,
             PlayingCard(Suit.SPADES, CardNumber.TWO),
             PlayingCard(Suit.HEARTS, CardNumber.ACE),
             PlayingCard(Suit.SPADES, CardNumber.EIGHT)
         )
         val player2 = Player(
             "fox",
+            20_000,
             PlayingCard(Suit.DIAMONDS, CardNumber.JACK),
             PlayingCard(Suit.CLUBS, CardNumber.SEVEN),
             PlayingCard(Suit.CLUBS, CardNumber.TEN),

@@ -11,11 +11,13 @@ class BlackjackGameTurnTest {
             players = listOf(
                 Player(
                     "강아지",
+                    10_000,
                     PlayingCard(Suit.SPADES, CardNumber.ACE),
                     PlayingCard(Suit.SPADES, CardNumber.TEN)
                 ),
                 Player(
                     "고양이",
+                    10_000,
                     PlayingCard(Suit.SPADES, CardNumber.TWO),
                     PlayingCard(Suit.SPADES, CardNumber.THREE)
                 )
@@ -33,11 +35,13 @@ class BlackjackGameTurnTest {
             players = listOf(
                 Player(
                     "강아지",
+                    10_000,
                     PlayingCard(Suit.SPADES, CardNumber.ACE),
                     PlayingCard(Suit.SPADES, CardNumber.TEN)
                 ),
                 Player(
                     "고양이",
+                    10_000,
                     PlayingCard(Suit.DIAMONDS, CardNumber.TEN),
                     PlayingCard(Suit.CLUBS, CardNumber.JACK),
                     PlayingCard(Suit.HEARTS, CardNumber.KING),
@@ -53,6 +57,7 @@ class BlackjackGameTurnTest {
     fun `isTurnEnd를 통해 현재 참가자의 턴이 끝났는지 확인할 수 있다`() {
         val notEndParticipant = Player(
             "앙몬드",
+            10_000,
             PlayingCard(Suit.SPADES, CardNumber.TWO),
             PlayingCard(Suit.SPADES, CardNumber.THREE)
         )
@@ -61,6 +66,7 @@ class BlackjackGameTurnTest {
 
         val endParticipant = Player(
             "죠르디",
+            10_000,
             PlayingCard(Suit.SPADES, CardNumber.ACE),
             PlayingCard(Suit.SPADES, CardNumber.KING)
         )

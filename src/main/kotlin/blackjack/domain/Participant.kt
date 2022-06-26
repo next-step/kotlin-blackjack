@@ -24,12 +24,12 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
-    private val betAmount: BetAmount = BetAmount(1),
+    private val betAmount: BetAmount,
     hands: Hands
 ) : Participant(name, hands) {
-    constructor(name: String, vararg initialCards: PlayingCard) : this(
+    constructor(name: String, betAmount: Int, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
-        BetAmount(1),
+        BetAmount(betAmount),
         Hands.from(PlayingCards.from(initialCards.toList()))
     )
 

@@ -69,6 +69,7 @@ class BlackjackGameRuleTest {
 
     private fun getBustPlayer(): Player = Player(
         "버스트",
+        10_000,
         PlayingCard(Suit.HEARTS, CardNumber.NINE),
         PlayingCard(Suit.HEARTS, CardNumber.TEN),
         PlayingCard(Suit.HEARTS, CardNumber.KING)
@@ -76,12 +77,14 @@ class BlackjackGameRuleTest {
 
     private fun getBlackjackPlayer(): Player = Player(
         "블랙잭",
+        10_000,
         PlayingCard(Suit.SPADES, CardNumber.ACE),
         PlayingCard(Suit.SPADES, CardNumber.QUEEN)
     )
 
     private fun getNormal21ScorePlayer(): Player = Player(
         "일반 21점",
+        10_000,
         PlayingCard(Suit.CLUBS, CardNumber.SEVEN),
         PlayingCard(Suit.SPADES, CardNumber.SIX),
         PlayingCard(Suit.DIAMONDS, CardNumber.EIGHT)
@@ -89,6 +92,7 @@ class BlackjackGameRuleTest {
 
     private fun getUnder21ScorePlayer(): Player = Player(
         "21점 보다 아래",
+        10_000,
         PlayingCard(Suit.HEARTS, CardNumber.SEVEN),
         PlayingCard(Suit.DIAMONDS, CardNumber.JACK)
     )

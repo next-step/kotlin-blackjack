@@ -15,16 +15,19 @@ class BlackjackGameResultTest {
         val players = listOf(
             Player(
                 "파이리",
+                10_000,
                 PlayingCard(Suit.SPADES, CardNumber.ACE),
                 PlayingCard(Suit.HEARTS, CardNumber.JACK)
             ),
             Player(
                 "꼬부기",
+                20_000,
                 PlayingCard(Suit.CLUBS, CardNumber.JACK),
                 PlayingCard(Suit.SPADES, CardNumber.NINE)
             ),
             Player(
                 "이상해씨",
+                15_000,
                 PlayingCard(Suit.CLUBS, CardNumber.TWO),
                 PlayingCard(Suit.DIAMONDS, CardNumber.FOUR)
             )
