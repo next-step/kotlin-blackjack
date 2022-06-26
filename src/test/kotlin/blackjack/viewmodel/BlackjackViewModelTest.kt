@@ -29,7 +29,7 @@ class BlackjackViewModelTest {
 
     @Test
     fun `from에 PlayerName List를 넘겨 BlackjackViewModel을 생성할 수 있다`() {
-        val viewModel = BlackjackViewModel.from(dealerName, playerInfos)
+        val viewModel = BlackjackViewModel.from(dealerName, playerInfos) { false }
 
         assertAll(
             { assertThat(viewModel.participants.dealer.name).isEqualTo(dealerName) },

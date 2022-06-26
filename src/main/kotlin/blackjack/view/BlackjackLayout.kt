@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.BetAmount
-import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
@@ -29,15 +28,13 @@ object BlackjackLayout {
         val playerInfos = getPlayerNames().map { playerName ->
             playerName.toPlayerInfo()
         }
-        val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos)
+        val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos, ::isPlayerWannaHit)
         OutputView.println(viewModel.participants, StartOfGameConverter)
 
         viewModel.currentTurn.observe { turn ->
             if (turn.isTurnEnd()) return@observe
 
-            takeTurn(turn, viewModel)
-
-            viewModel.nextTurn()
+            stepOfTurn(turn.participant, viewModel)
         }
 
         println()
@@ -66,31 +63,25 @@ object BlackjackLayout {
         return InputView.receiveUserInput(userInputRequest)
     }
 
-    private fun takeTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
-        while (!turn.isTurnEnd()) {
-            stepOfTurn(turn, viewModel)
-        }
-    }
-
-    private fun stepOfTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
-        when (turn.participant) {
-            is Player -> stepOfPlayerTurn(turn, viewModel)
+    private fun stepOfTurn(participant: Participant, viewModel: BlackjackViewModel) {
+        when (participant) {
+            is Player -> stepOfPlayerTurn(participant, viewModel)
             is Dealer -> stepOfDealerTurn(viewModel)
         }
     }
 
-    private fun stepOfPlayerTurn(turn: BlackjackGameTurn, viewModel: BlackjackViewModel) {
-        if (isPlayerWannaHit(turn.participant)) {
+    private fun stepOfPlayerTurn(player: Player, viewModel: BlackjackViewModel) {
+        if (isPlayerWannaHit(player)) {
             viewModel.hit()
-            OutputView.print(turn.participant, PlayerConverter)
+            OutputView.print(player, PlayerConverter)
         } else {
             viewModel.stay()
         }
     }
 
-    private fun isPlayerWannaHit(participant: Participant): Boolean {
+    private fun isPlayerWannaHit(player: Player): Boolean {
         val userInputRequest = UserInputRequest(
-            message = "${participant.name.value}$GUIDANCE_MESSAGE_HIT",
+            message = "${player.name.value}$GUIDANCE_MESSAGE_HIT",
             inputConverter = YesOrNoConverter
         )
 

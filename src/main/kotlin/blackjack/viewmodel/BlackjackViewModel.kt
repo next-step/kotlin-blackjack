@@ -18,7 +18,8 @@ import blackjack.domain.cardrule.ShuffleRule
 
 class BlackjackViewModel private constructor(
     val participants: Participants,
-    private val cardDeck: CardDeck
+    private val cardDeck: CardDeck,
+    private val isPlayerWannaHit: (Player) -> Boolean
 ) {
     val currentTurn: Observable<BlackjackGameTurn> = Observable(BlackjackGameTurn.from(participants))
 
@@ -33,7 +34,10 @@ class BlackjackViewModel private constructor(
     }
 
     fun nextTurn() {
-        currentTurn.value = BlackjackGameTurn.from(participants)
+        val nextTurn = BlackjackGameTurn.from(participants)
+        if (nextTurn.participant is Dealer && nextTurn.isTurnEnd()) return // Todo : 수정
+
+        currentTurn.value = nextTurn
     }
 
     fun getBlackjackGameResult(): BlackjackGameResult {
@@ -41,7 +45,11 @@ class BlackjackViewModel private constructor(
     }
 
     companion object {
-        fun from(dealerName: PlayerName, playerInfos: List<PlayerInfo>): BlackjackViewModel {
+        fun from(
+            dealerName: PlayerName,
+            playerInfos: List<PlayerInfo>,
+            isPlayerWannaHit: (Player) -> Boolean
+        ): BlackjackViewModel {
             val cardDeck = CardDeck.of(
                 PlayingCard.all(),
                 DistinctRule, ShuffleRule
@@ -53,7 +61,8 @@ class BlackjackViewModel private constructor(
 
             return BlackjackViewModel(
                 participants,
-                cardDeck
+                cardDeck,
+                isPlayerWannaHit
             )
         }
 
@@ -62,7 +71,7 @@ class BlackjackViewModel private constructor(
                 dealer = dealerName.toDealer(cardDeck),
                 players = playerInfos.toPlayers(cardDeck)
             )
-            return BlackjackViewModel(participants, cardDeck)
+            return BlackjackViewModel(participants, cardDeck) { false }
         }
 
         private fun PlayerName.toDealer(cardDeck: CardDeck): Dealer {
