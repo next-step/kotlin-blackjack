@@ -49,6 +49,8 @@ class Dealer(
         Hands.from(PlayingCards.from(initialCards.toList()))
     )
 
+    fun getFirstCard(): PlayingCard = hands.cards.first()
+
     override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
 
     companion object {
