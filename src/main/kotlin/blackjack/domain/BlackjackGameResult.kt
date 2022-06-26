@@ -24,12 +24,11 @@ value class BlackjackGameResult private constructor(val value: List<BlackjackPar
             val playersRevenue = playerResults.sumOf { result ->
                 result.revenue.value
             }
-            val dealerRevenue = playersRevenue * -1
 
             return listOf(
                 BlackjackParticipantResult(
                     participant = this,
-                    revenue = Revenue(dealerRevenue)
+                    revenue = Revenue(playersRevenue).reverse()
                 )
             )
         }
