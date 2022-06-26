@@ -4,15 +4,8 @@ class Skills(
     val softSkills: List<SoftSkill>,
     val hardSkills: List<HardSkill>
 )
-sealed class Skill(val name: String) {
-    fun isSoft(): Boolean {
-        return this is SoftSkill
-    }
 
-    fun isHard(): Boolean {
-        return this is HardSkill
-    }
-}
+sealed class Skill(val name: String)
 
 class SoftSkill(name: String) : Skill(name)
 class HardSkill(name: String) : Skill(name)
