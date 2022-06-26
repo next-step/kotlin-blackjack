@@ -21,4 +21,6 @@ class Cards(
         cards.add(card)
         score = Card.score(cards)
     }
+
+    fun size(): Int = cards.size
 }

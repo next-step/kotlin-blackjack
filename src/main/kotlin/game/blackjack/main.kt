@@ -10,10 +10,10 @@ fun main() {
     val resultView = ResultView()
     val table = Table(
         inputView.readNames().map { Player(it) },
-        ResultView(),
         { inputView.readPlayerAction(it) },
         { resultView.printPlayerCard(it) },
     )
 
-    table.start()
+    resultView.printAllPlayerCard(table.init())
+    resultView.printResult(table.distribute())
 }

@@ -4,8 +4,8 @@ class Player(val name: String) {
     private val _cards: Cards = Cards()
     var status: Status = Status.HIT
 
-    val cards: List<Card>
-        get() = _cards.get()
+    val cards: Cards
+        get() = _cards
 
     fun determine(response: Boolean): Status {
         status = if (response) Status.HIT else Status.STAY
