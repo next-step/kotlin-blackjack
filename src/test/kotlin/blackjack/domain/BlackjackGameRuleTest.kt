@@ -44,8 +44,8 @@ class BlackjackGameRuleTest {
     @Test
     fun `플레이어가 블랙잭이고 딜러가 블랙잭이 아니라면 승리한다`() {
         assertAll(
-            { assertThat(blackjackPlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.Win) },
-            { assertThat(blackjackPlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.Win) }
+            { assertThat(blackjackPlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.Blackjack) },
+            { assertThat(blackjackPlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.Blackjack) }
         )
     }
 
