@@ -9,3 +9,17 @@ internal class CardTest {
         assertThat(Card(CardNumber.ACE, CardSuit.CLOVER).isAce()).isTrue
     }
 }
+
+internal class HandTest {
+
+    @Test
+    fun add() {
+        val hand = Hand()
+        val newCard = Card(CardNumber.QUEEN, CardSuit.CLOVER)
+
+        hand.add(newCard)
+
+        assertThat(hand).hasSize(1)
+            .containsExactly(newCard)
+    }
+}

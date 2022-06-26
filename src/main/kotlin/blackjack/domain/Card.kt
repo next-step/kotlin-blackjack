@@ -9,3 +9,10 @@ data class Card(
         return cardNumber == CardNumber.ACE
     }
 }
+
+class Hand(
+    private val _cards: MutableList<Card> = mutableListOf()
+) : MutableList<Card> by _cards {
+
+    val cards: List<Card> = _cards
+}
