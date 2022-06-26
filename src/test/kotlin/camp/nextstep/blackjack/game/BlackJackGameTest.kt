@@ -76,7 +76,7 @@ internal class BlackJackGameTest {
         val turn = blackJackGame.turns[0]
 
         val beforeCards = gamblerTim.hand.cards
-        turn.applyToGame(Action.HIT)
+        turn.play(Action.HIT)
 
         val afterCards = gamblerTim.hand.cards
         assertThat(afterCards).hasSize(beforeCards.size + 1)
@@ -93,7 +93,7 @@ internal class BlackJackGameTest {
         val turn = blackJackGame.turns[0]
 
         val beforeCards = gamblerTim.hand.cards
-        turn.applyToGame(Action.STAY)
+        turn.play(Action.STAY)
 
         val afterCards = gamblerTim.hand.cards
         assertThat(afterCards).hasSize(beforeCards.size)
@@ -111,11 +111,11 @@ internal class BlackJackGameTest {
         assertThat(turn.gambler).isEqualTo(gamblerTim)
 
         while (Score.of(gamblerTim.hand).isNotBust()) {
-            turn.applyToGame(Action.HIT)
+            turn.play(Action.HIT)
         }
 
         assertThrows<IllegalStateException> {
-            turn.applyToGame(Action.HIT)
+            turn.play(Action.HIT)
         }
     }
 
@@ -127,7 +127,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        blackJackGame.turns.forEach { it.applyToGame(Action.STAY) }
+        blackJackGame.turns.forEach { it.play(Action.STAY) }
 
         val result = blackJackGame.result()
 

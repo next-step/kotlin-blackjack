@@ -20,7 +20,7 @@ fun main() {
 
     val turns = game.turns
     for (turn in turns) {
-        game.doTurn(turn) { GamblerActionReader.read(turn.gambler) }
+        game.play(turn) { GamblerActionReader.read(turn.gambler) }
     }
 
     val result = game.result()

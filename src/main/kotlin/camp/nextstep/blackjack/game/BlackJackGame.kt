@@ -34,21 +34,10 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         )
     }
 
-    fun doTurn(turn: Turn, readGamblersAction: (Gambler) -> Action) {
+    fun play(turn: Turn, actionProducer: (Gambler) -> Action) {
         while (!turn.isDone) {
-            val action = readGamblersAction(turn.gambler)
-            turn.applyToGame(action)
-        }
-    }
-
-    private fun play(turn: Turn, action: Action) {
-        if (action == Action.HIT) {
-            dealer.serve(_cardDeck, turn.gambler)
-        }
-
-        val gamblerScore = Score.of(turn.gambler.hand)
-        if (gamblerScore.isBust() || action == Action.STAY) {
-            turn.isDone = true
+            val action = actionProducer(turn.gambler)
+            turn.play(action)
         }
     }
 
@@ -57,9 +46,17 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         var isDone = false
             internal set
 
-        fun applyToGame(action: Action) {
+        internal fun play(action: Action) {
             check(!isDone) { "턴이 종료되었습니다." }
-            play(this, action)
+
+            if (action == Action.HIT) {
+                dealer.serve(_cardDeck, gambler)
+            }
+
+            val gamblerScore = Score.of(gambler.hand)
+            if (gamblerScore.isBust() || action == Action.STAY) {
+                isDone = true
+            }
         }
     }
 
