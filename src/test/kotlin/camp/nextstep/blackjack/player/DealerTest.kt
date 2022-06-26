@@ -42,4 +42,54 @@ internal class DealerTest {
         dealer.receive(Card(CardSuit.SPADE, CardNumber.ACE))
         assertThat(dealer.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
     }
+
+    @DisplayName("딜러의 첫번째 카드는 공개한다.")
+    @Test
+    fun faceUpFirstCard() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(0)
+    }
+
+    @DisplayName("딜러의 첫번째 카드가 10 혹은 에이스가 아니면 두 번째 카드는 비공개한다.")
+    @Test
+    fun faceDownSecondCardIfFirstCardIsTenNorAce() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TWO))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TEN))
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(1)
+    }
+
+    @DisplayName("딜러의 첫번째 카드 10이면 두번째 카드는 공개한다. ")
+    @Test
+    fun faceUpSecondCardIfFirstCardIsTen() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TEN))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(0)
+    }
+
+    @DisplayName("딜러의 첫번째 카드 에이스면 두번째 카드는 공개한다. ")
+    @Test
+    fun faceUpSecondCardIfFirstCardIsAce() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.ACE))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(0)
+    }
+
+    @DisplayName("딜러의 세번째 카드부터는 항상 공개한다.")
+    @Test
+    fun faceUpAfterThirdCard() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.ACE))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TWO))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.THREE))
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.THREE))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(0)
+    }
 }

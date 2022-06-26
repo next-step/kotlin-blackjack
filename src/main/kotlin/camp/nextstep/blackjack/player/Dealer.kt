@@ -15,7 +15,7 @@ class Dealer : Player {
     override fun receive(card: Card) {
         if (hand.cards.isEmpty()) {
             hand.add(DrawnCard(card).apply { turnUp() })
-        } else if (hand.cards.size > 2 ||
+        } else if (hand.cards.size >= 2 ||
             hand.cards[0].number == CardNumber.ACE ||
             hand.cards[0].number == CardNumber.TEN
         ) {
@@ -23,6 +23,10 @@ class Dealer : Player {
         } else {
             hand.add(DrawnCard(card))
         }
+    }
+
+    fun openCards() {
+        hand.turnUp()
     }
 
     fun serve(cardDeck: CardDeck, target: Player) {

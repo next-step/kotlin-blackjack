@@ -11,4 +11,10 @@ class Hand {
     fun add(card: DrawnCard) {
         this._cards.add(card)
     }
+
+    fun turnUp() {
+        _cards.forEach {
+            it.turnUp()
+        }
+    }
 }

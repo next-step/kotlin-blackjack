@@ -58,11 +58,11 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        val timsTurn = blackJackGame.turns[0]
-        val tomsTurn = blackJackGame.turns[1]
+        val timsTurn = blackJackGame.gamblerTurns[0]
+        val tomsTurn = blackJackGame.gamblerTurns[1]
 
-        assertThat(timsTurn.gambler).isEqualTo(gamblerTim)
-        assertThat(tomsTurn.gambler).isEqualTo(gamblerTom)
+        assertThat(timsTurn.player).isEqualTo(gamblerTim)
+        assertThat(tomsTurn.player).isEqualTo(gamblerTom)
     }
 
     @DisplayName("플레이어는 카드를 더 받을 수 있다. Hit")
@@ -73,7 +73,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        val turn = blackJackGame.turns[0]
+        val turn = blackJackGame.gamblerTurns[0]
 
         val beforeCards = gamblerTim.hand.cards
         turn.play(Action.HIT)
@@ -90,7 +90,7 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        val turn = blackJackGame.turns[0]
+        val turn = blackJackGame.gamblerTurns[0]
 
         val beforeCards = gamblerTim.hand.cards
         turn.play(Action.STAY)
@@ -107,8 +107,8 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        val turn = blackJackGame.turns[0]
-        assertThat(turn.gambler).isEqualTo(gamblerTim)
+        val turn = blackJackGame.gamblerTurns[0]
+        assertThat(turn.player).isEqualTo(gamblerTim)
 
         while (Score.of(gamblerTim.hand).isNotBust()) {
             turn.play(Action.HIT)
@@ -119,7 +119,7 @@ internal class BlackJackGameTest {
         }
     }
 
-    @DisplayName("각 플레이어별 점수를 확인할 수 있다.")
+    @DisplayName("딜러와 플레이어 모두 카드 뽑기가 끝나면 각 플레이어별 점수를 확인할 수 있다.")
     @Test
     fun gameResult() {
         val gamblerTim = Gambler("tim")
@@ -127,7 +127,8 @@ internal class BlackJackGameTest {
 
         val blackJackGame = BlackJackGame.new(gamblers)
 
-        blackJackGame.turns.forEach { it.play(Action.STAY) }
+        blackJackGame.gamblerTurns.forEach { it.play(Action.STAY) }
+        blackJackGame.dealerTurn.play(Action.STAY)
 
         val result = blackJackGame.result()
 

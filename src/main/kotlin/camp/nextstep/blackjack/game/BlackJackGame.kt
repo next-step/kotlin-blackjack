@@ -4,12 +4,15 @@ import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
 import camp.nextstep.blackjack.player.Dealer
 import camp.nextstep.blackjack.player.Gambler
+import camp.nextstep.blackjack.player.Player
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Gambler>) {
 
-    val turns: List<Turn>
+    val gamblerTurns: List<Turn<Gambler>>
 
     val dealer = Dealer()
+
+    val dealerTurn: Turn<Dealer> = Turn(dealer)
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
@@ -22,11 +25,11 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
             dealer.serve(_cardDeck, _participants + dealer)
         }
 
-        turns = _participants.map { Turn(it) }
+        gamblerTurns = _participants.map { Turn(it) }
     }
 
     fun result(): GameResult {
-        val isEnded = turns.all { it.isDone }
+        val isEnded = gamblerTurns.all { it.isDone } && dealerTurn.isDone
         check(isEnded) { "게임이 종료되지 않았습니다." }
 
         return GameResult(
@@ -34,15 +37,20 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         )
     }
 
-    fun play(turn: Turn, actionProducer: (Gambler) -> Action, afterAction: () -> Unit = {}) {
+    fun play(turn: Turn<out Player>, actionProducer: (Player) -> Action, actionCallback: (Action) -> Unit = {}) {
         while (!turn.isDone) {
-            val action = actionProducer(turn.gambler)
+            val action = actionProducer(turn.player)
             turn.play(action)
-            afterAction()
+            actionCallback(action)
         }
     }
 
-    inner class Turn(val gambler: Gambler) {
+    fun dealersPlay(turn: Turn<Dealer>, actionCallback: (Action) -> Unit = {}) {
+        dealer.openCards()
+        play(turn, { DealerActionProducer.produce(dealer) }, actionCallback)
+    }
+
+    inner class Turn<P : Player>(val player: P) {
 
         var isDone = false
             internal set
@@ -51,10 +59,10 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
             check(!isDone) { "턴이 종료되었습니다." }
 
             if (action == Action.HIT) {
-                dealer.serve(_cardDeck, gambler)
+                dealer.serve(_cardDeck, player)
             }
 
-            val gamblerScore = Score.of(gambler.hand)
+            val gamblerScore = Score.of(player.hand)
             if (gamblerScore.isBust() || action == Action.STAY) {
                 isDone = true
             }
