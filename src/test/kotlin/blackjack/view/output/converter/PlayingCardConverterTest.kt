@@ -11,7 +11,7 @@ class PlayingCardConverterTest {
     fun `PlayingCardConverter는 PlayingCard를 출력을 위한 문자열로 변환해 반환한다`() {
         val playingCard = PlayingCard(Suit.SPADES, CardNumber.TWO)
 
-        val expected = "2스페이드, A하트"
+        val expected = "2스페이드"
         Assertions.assertThat(PlayingCardConverter.convert(playingCard)).isEqualTo(expected)
     }
 }
