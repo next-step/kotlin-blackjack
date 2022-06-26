@@ -13,6 +13,10 @@ value class Score(val value: Int) {
         return value > MAX_SCORE_CRITERIA
     }
 
+    fun isWinThan(that: Score): Boolean {
+        return !isBust() && value >= that.value
+    }
+
     operator fun plus(that: Score): Score {
         return Score(value + that.value)
     }
