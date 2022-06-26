@@ -2,26 +2,32 @@ package dsl
 
 data class Person(val name: String, val company: String, val skills: List<Skill>, val languages: Map<String, Int>) {}
 
-data class Skill(val type: SkillType, val description: String) {}
+data class Skill(val type: SkillType, val description: String) {
+    companion object {
+        fun soft(description: String): Skill {
+            return Skill(SkillType.Soft, description)
+        }
 
-enum class SkillType {
-    SOFT,
-    HARD
+        fun hard(description: String): Skill {
+            return Skill(SkillType.Hard, description)
+        }
+    }
+}
+
+sealed class SkillType {
+    object Soft: SkillType()
+    object Hard: SkillType()
 }
 
 class SkillsBuilder {
-    private var skills: List<Skill> = emptyList()
+    private val skills: MutableList<Skill> = ArrayList()
 
     fun soft(description: String) {
-        val skillForAdd = skills.toMutableList()
-        skillForAdd.add(Skill(SkillType.SOFT, description))
-        skills = skillForAdd.toList()
+        skills.add(Skill.soft(description))
     }
 
     fun hard(description: String) {
-        val skillForAdd = skills.toMutableList()
-        skillForAdd.add(Skill(SkillType.HARD, description))
-        skills = skillForAdd.toList()
+        skills.add(Skill.hard(description))
     }
 
     fun build(): List<Skill> {
