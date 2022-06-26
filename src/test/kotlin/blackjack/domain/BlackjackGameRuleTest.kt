@@ -67,9 +67,34 @@ class BlackjackGameRuleTest {
         )
     }
 
+    @Test
+    fun `getRevenueFrom을 통해 플레이어가 딜러로 부터 얻을 수 있는 수익을 계산할 수 있다`() {
+        assertAll(
+            { assertThat(blackjackPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(15_000)) },
+            { assertThat(normal21ScorePlayer getRevenueFrom under21ScoreDealer).isEqualTo(Revenue(10_000)) },
+            { assertThat(bustPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(-10_000)) },
+            { assertThat(normal21ScorePlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(0)) }
+        )
+    }
+
+    @Test
+    fun `getDealerRevenue를 통해 플레이어들의 수익으로부터 딜러의 수익을 계산할 수 있다`() {
+        val bustDealerRevenue = getPlayerResults(bustDealer).getDealerRevenue()
+        val blackjackDealerRevenue = getPlayerResults(blackjackDealer).getDealerRevenue()
+        val normal21ScoreDealerRevenue = getPlayerResults(normal21ScoreDealer).getDealerRevenue()
+        val under21ScoreDealerRevenue = getPlayerResults(under21ScoreDealer).getDealerRevenue()
+
+        assertAll(
+            { assertThat(bustDealerRevenue).isEqualTo(Revenue(-17500)) },
+            { assertThat(blackjackDealerRevenue).isEqualTo(Revenue(35000)) },
+            { assertThat(normal21ScoreDealerRevenue).isEqualTo(Revenue(2500)) },
+            { assertThat(under21ScoreDealerRevenue).isEqualTo(Revenue(-12500)) }
+        )
+    }
+
     private fun getBustPlayer(): Player = Player(
         "버스트",
-        10_000,
+        20_000,
         PlayingCard(Suit.HEARTS, CardNumber.NINE),
         PlayingCard(Suit.HEARTS, CardNumber.TEN),
         PlayingCard(Suit.HEARTS, CardNumber.KING)
@@ -77,7 +102,7 @@ class BlackjackGameRuleTest {
 
     private fun getBlackjackPlayer(): Player = Player(
         "블랙잭",
-        10_000,
+        15_000,
         PlayingCard(Suit.SPADES, CardNumber.ACE),
         PlayingCard(Suit.SPADES, CardNumber.QUEEN)
     )
@@ -92,7 +117,7 @@ class BlackjackGameRuleTest {
 
     private fun getUnder21ScorePlayer(): Player = Player(
         "21점 보다 아래",
-        10_000,
+        5_000,
         PlayingCard(Suit.HEARTS, CardNumber.SEVEN),
         PlayingCard(Suit.DIAMONDS, CardNumber.JACK)
     )
@@ -101,4 +126,13 @@ class BlackjackGameRuleTest {
         "딜러",
         *player.hands.cards.toTypedArray()
     )
+
+    private fun getPlayerResults(dealer: Dealer): List<BlackjackParticipantResult> {
+        return listOf(bustPlayer, blackjackPlayer, normal21ScorePlayer, under21ScorePlayer).map { player ->
+            BlackjackParticipantResult(
+                participant = player,
+                revenue = player getRevenueFrom dealer
+            )
+        }
+    }
 }

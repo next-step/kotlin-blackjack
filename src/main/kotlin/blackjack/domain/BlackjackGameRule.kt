@@ -5,13 +5,29 @@ const val HIT_CARD_COUNT = 1
 
 infix fun Player.matchWith(dealer: Dealer): MatchStatus {
     return when {
-        this.isBust() -> MatchStatus.LOSE
-        dealer.isBust() -> MatchStatus.WIN
         isBlackjack() && dealer.isBlackjack() -> MatchStatus.PUSH
         isBlackjack() -> MatchStatus.BLACKJACK
         dealer.isBlackjack() -> MatchStatus.LOSE
+        isBust() -> MatchStatus.LOSE
+        dealer.isBust() -> MatchStatus.WIN
         score > dealer.score -> MatchStatus.WIN
         score == dealer.score -> MatchStatus.PUSH
         else -> MatchStatus.LOSE
     }
+}
+
+infix fun Player.getRevenueFrom(dealer: Dealer): Revenue {
+    val matchStatus = this matchWith dealer
+    return Revenue((betAmount.value * matchStatus.revenueRatio).toInt())
+}
+
+fun List<BlackjackParticipantResult>.getDealerRevenue(): Revenue {
+    require(all { result -> result.participant is Player }) {
+        "플레이어의 결과 수익으로만 딜러의 수익을 계산할 수 있습니다."
+    }
+
+    val playersRevenue = sumOf { result ->
+        result.revenue.value
+    }
+    return Revenue(playersRevenue).reverse()
 }
