@@ -6,7 +6,7 @@ import blackjack.Score
 
 const val BLACKJACK_NUMBER = 21
 
-interface State {
+sealed interface State {
     fun currentCard(): PlayerDeck
     fun isFinish(): Boolean
     fun draw(card: Card): State
