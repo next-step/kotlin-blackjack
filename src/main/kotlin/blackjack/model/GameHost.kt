@@ -1,12 +1,12 @@
 package blackjack.model
 
+import blackjack.model.candidate.Candidate
+import blackjack.model.candidate.Candidates
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardScore
 import blackjack.model.card.CardSetGenerator
 import blackjack.model.card.CardSymbol
 import blackjack.model.card.Cards
-import blackjack.model.candidate.Candidate
-import blackjack.model.candidate.Candidates
 
 class GameHost(
     val cardSet: Cards = CardSetGenerator.generateOneCardSet(

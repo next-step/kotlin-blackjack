@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.model.candidate.Dealer.Companion.BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
 import blackjack.model.candidate.Candidate
 import blackjack.model.candidate.CandidateGameResults
 import blackjack.model.candidate.CandidateName
 import blackjack.model.candidate.Candidates
+import blackjack.model.candidate.Dealer.Companion.BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
 
 object ConsoleResultView : ResultView {
     private const val CARD_SEPARATOR = ", "

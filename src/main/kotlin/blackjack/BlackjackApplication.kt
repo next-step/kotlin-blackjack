@@ -1,10 +1,10 @@
 package blackjack
 
 import blackjack.model.Game
-import blackjack.model.candidate.Dealer
 import blackjack.model.candidate.Candidate
 import blackjack.model.candidate.CandidateGameResults
 import blackjack.model.candidate.Candidates
+import blackjack.model.candidate.Dealer
 import blackjack.view.InputView
 import blackjack.view.MoreCardMark
 import blackjack.view.ResultView
