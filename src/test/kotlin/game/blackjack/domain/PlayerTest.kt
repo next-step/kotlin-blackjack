@@ -15,25 +15,25 @@ internal class PlayerTest {
     }
 
     @Test
-    fun `y 입력하면 상태 그대로`() {
+    fun `true 입력하면 상태 그대로`() {
         val expectedName = "jade"
         val player = Player(expectedName)
 
         player.receive(Card(Suit.SPADE, Denomination.QUEEN))
         player.receive(Card(Suit.SPADE, Denomination.ACE))
-        player.determine("y")
+        player.determine(true)
 
         assertThat(player.canReceive()).isTrue
     }
 
     @Test
-    fun `n 입력하면 상태 변화`() {
+    fun `false 입력하면 상태 변화`() {
         val expectedName = "jade"
         val player = Player(expectedName)
 
         player.receive(Card(Suit.SPADE, Denomination.QUEEN))
         player.receive(Card(Suit.SPADE, Denomination.ACE))
-        player.determine("n")
+        player.determine(false)
 
         assertThat(player.canReceive()).isFalse
     }
@@ -45,7 +45,7 @@ internal class PlayerTest {
 
         player.receive(Card(Suit.SPADE, Denomination.QUEEN))
         player.receive(Card(Suit.SPADE, Denomination.ACE))
-        player.determine("n")
+        player.determine(false)
 
         assertThat(player.cards).hasSize(2)
     }

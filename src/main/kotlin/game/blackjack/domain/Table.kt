@@ -5,7 +5,7 @@ import game.blackjack.view.ResultView
 class Table(
     private val players: List<Player>,
     private val resultView: ResultView,
-    private val getAction: (name: String) -> String,
+    private val getAction: (name: String) -> Boolean,
     private val showPlayerCard: (player: Player) -> Unit,
 ) {
 

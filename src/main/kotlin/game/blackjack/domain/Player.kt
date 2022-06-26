@@ -7,14 +7,8 @@ class Player(val name: String) {
     val cards: List<Card>
         get() = _cards.get()
 
-    fun determine(response: String): Status {
-        when (response) {
-            "y" -> {
-                status = Status.HIT
-            }
-            "n" -> status = Status.STAY
-        }
-
+    fun determine(response: Boolean): Status {
+        status = if (response) Status.HIT else Status.STAY
         return status
     }
 
