@@ -44,6 +44,9 @@ class ResultView {
     fun printResult(dealer: Dealer, players: List<Player>) {
         println()
         listOf(dealer, *(players.toTypedArray())).forEach { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${Card.score(it.cards.get()).toInt()}") }
+
+        println("\n## 최종 승패")
+        listOf(dealer, *(players.toTypedArray())).forEach { println("${it.name}: ${it.winningRecord().win()}승 ${it.winningRecord().lose()}패") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }

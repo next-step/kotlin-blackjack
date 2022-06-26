@@ -5,6 +5,14 @@ class Dealer : Player("딜러") {
 
     fun drawCard(): Card = deck.draw()
 
+    fun recordWin() {
+        winningRecord.recordWin()
+    }
+
+    fun recordLose() {
+        winningRecord.recordLose()
+    }
+
     override fun canReceive(): Boolean = cards.score() <= CAN_RECEIVE_SCORE
 
     override fun receiveUntilHit(

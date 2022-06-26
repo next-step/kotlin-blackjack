@@ -2,7 +2,8 @@ package game.blackjack.domain
 
 open class Player(val name: String) {
     private val _cards: Cards = Cards()
-    var status: Status = Status.HIT
+    private var status: Status = Status.HIT
+    protected val winningRecord = WinningRecord()
 
     val cards: Cards
         get() = _cards
@@ -11,6 +12,10 @@ open class Player(val name: String) {
         status = if (response) Status.HIT else Status.STAY
         return status
     }
+
+    fun score(): Score = cards.score()
+
+    fun isBust(): Boolean = cards.isBust()
 
     fun receive(card: Card): Score {
         _cards.add(card)
@@ -36,4 +41,16 @@ open class Player(val name: String) {
             showPlayerCard(this)
         }
     }
+
+    fun record(dealer: Dealer) {
+        if (dealer.isBust()) {
+            dealer.recordLose()
+            winningRecord.recordWin()
+        } else {
+            dealer.recordWin()
+            winningRecord.recordLose()
+        }
+    }
+
+    fun winningRecord() = winningRecord
 }

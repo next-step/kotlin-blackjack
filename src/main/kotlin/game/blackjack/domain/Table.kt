@@ -19,6 +19,8 @@ class Table(
             it.receiveUntilHit(getAction, showPlayerCard) { dealer.drawCard() }
         }
 
+        players.forEach { it.record(dealer) }
+
         return players
     }
 
