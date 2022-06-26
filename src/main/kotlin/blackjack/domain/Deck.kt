@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Deck() {
+object Deck {
     private val cards: MutableList<Card> = CardNumber.values().flatMap { cardNumber ->
         CardSuit.values().map { Card(cardNumber, it) }
     }.shuffled().toMutableList()
