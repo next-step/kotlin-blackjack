@@ -5,6 +5,7 @@ import game.blackjack.domain.Dealer
 import game.blackjack.domain.Dealer.Companion.CAN_RECEIVE_SCORE
 import game.blackjack.domain.Denomination
 import game.blackjack.domain.Player
+import game.blackjack.domain.Players
 import game.blackjack.domain.Suit
 
 class ResultView {
@@ -27,9 +28,9 @@ class ResultView {
             else -> denomination.score.toInt().toString()
         }
 
-    fun printAllPlayerCard(dealer: Dealer, players: List<Player>) {
-        println("딜러와 ${players.joinToString { it.name }}에게 ${players[0].cards.size()}장의 카드를 나누었습니다.")
-        listOf(dealer, *(players.toTypedArray())).forEach { println(formatPlayerCard(it)) }
+    fun printAllPlayerCard(players: Players) {
+        println("딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
+        players.forEachWithDealer { println(formatPlayerCard(it)) }
     }
 
     fun printPlayerCard(player: Player) {
@@ -41,12 +42,12 @@ class ResultView {
 
     private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.cards.get())}"
 
-    fun printResult(dealer: Dealer, players: List<Player>) {
+    fun printResult(players: Players) {
         println()
-        listOf(dealer, *(players.toTypedArray())).forEach { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${Card.score(it.cards.get()).toInt()}") }
+        players.forEachWithDealer { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${Card.score(it.cards.get()).toInt()}") }
 
         println("\n## 최종 승패")
-        listOf(dealer, *(players.toTypedArray())).forEach { println("${it.name}: ${it.winningRecord().win()}승 ${it.winningRecord().lose()}패") }
+        players.forEachWithDealer { println("${it.name}: ${it.winningRecord().win()}승 ${it.winningRecord().lose()}패") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }

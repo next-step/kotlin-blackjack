@@ -32,7 +32,7 @@ internal class TableTest {
 
         table.init()
         val players = table.distribute()
-        players.forEach { assertThat(it.cards.isBust()).isTrue() }
+        players.forEach { assertThat(it.isBust()).isTrue() }
     }
 
     @Test

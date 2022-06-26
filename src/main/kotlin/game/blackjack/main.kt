@@ -17,6 +17,6 @@ fun main() {
         { resultView.printPlayerCard(it) },
     )
 
-    resultView.printAllPlayerCard(dealer, table.init())
-    resultView.printResult(dealer, table.distribute())
+    resultView.printAllPlayerCard(table.init())
+    resultView.printResult(table.distribute())
 }

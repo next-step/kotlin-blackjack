@@ -43,12 +43,12 @@ open class Player(val name: String) {
     }
 
     fun record(dealer: Dealer) {
-        if (dealer.isBust()) {
-            dealer.recordLose()
-            winningRecord.recordWin()
-        } else {
+        if (!dealer.isBust() && dealer.score() > score()) {
             dealer.recordWin()
             winningRecord.recordLose()
+        } else {
+            dealer.recordLose()
+            winningRecord.recordWin()
         }
     }
 
