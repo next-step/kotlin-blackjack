@@ -28,6 +28,7 @@ object OutputView {
 
     fun printPlayers(players: List<Player>) {
         players.forEach { printPlayer(it) }
+        println()
     }
 
     fun printPlayer(player: Player) {
@@ -35,6 +36,7 @@ object OutputView {
     }
 
     fun printOutput(results: GameResults) {
+        println()
         results.result.forEach {
             println("${it.name}카드: ${it.hand.joinToString { card -> "${card.cardNumber}${card.cardSuit}" }} - 결과: ${it.score}")
         }

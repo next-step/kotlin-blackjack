@@ -9,7 +9,7 @@ fun main() {
     OutputView.printPlayers(players)
 
     for (player in players) {
-        while (BlackJackService.isBurst(player)) {
+        while (!BlackJackService.isBurst(player)) {
             val willDraw = InputView.inputWillDraw(player.name)
             if (!willDraw) {
                 break
