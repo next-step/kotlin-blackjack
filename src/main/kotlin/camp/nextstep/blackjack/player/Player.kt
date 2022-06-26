@@ -2,11 +2,11 @@ package camp.nextstep.blackjack.player
 
 import camp.nextstep.blackjack.card.Card
 
-class Player(val name: String, val hand: Hand = Hand()) {
+sealed interface Player {
 
-    init {
-        require(name.isNotBlank()) { "올바른 플레이어 이름을 입력해주세요. ($name)" }
-    }
+    val name: String
+
+    val hand: Hand
 
     fun receive(card: Card) {
         hand.add(card)

@@ -6,12 +6,12 @@ object GameResultWriter {
 
     fun write(gameResult: GameResult) {
         println()
-        for (playerScore in gameResult.playerScores) {
-            val player = playerScore.player.name
-            val playerCards = playerScore.player.hand.cards.joinToString(",") { "{${it.number.value}:${it.suit}}" }
-            val score = playerScore.score.value
+        for (gamblerScore in gameResult.gamblersScore) {
+            val gambler = gamblerScore.gambler.name
+            val gamblerCards = gamblerScore.gambler.hand.cards.joinToString(",") { "{${it.number.value}:${it.suit}}" }
+            val score = gamblerScore.score.value
 
-            println("${player}카드: $playerCards - 결과: $score")
+            println("${gambler}카드: $gamblerCards - 결과: $score")
         }
     }
 }

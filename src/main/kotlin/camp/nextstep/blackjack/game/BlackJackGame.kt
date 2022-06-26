@@ -1,19 +1,17 @@
 package camp.nextstep.blackjack.game
 
-import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardDeck
 import camp.nextstep.blackjack.card.CardShuffler
 import camp.nextstep.blackjack.player.Dealer
-import camp.nextstep.blackjack.player.Player
-import camp.nextstep.blackjack.ui.cli.PlayerCardsWriter
+import camp.nextstep.blackjack.player.Gambler
 
-class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Player>) {
+class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Gambler>) {
 
     val turns: List<Turn>
 
-    val cardDeck get() = CardDeck.of(_cardDeck.cards)
-
     val dealer = Dealer()
+
+    val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
     val participants get() = _participants.toList()
 
@@ -21,7 +19,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
         repeat(INIT_CARD_NUMBER) {
-            serve(_participants) { _cardDeck.draw() }
+            dealer.serve(_cardDeck, _participants + dealer)
         }
 
         turns = _participants.map { Turn(it) }
@@ -32,40 +30,29 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
         check(isEnded) { "게임이 종료되지 않았습니다." }
 
         return GameResult(
-            _participants.map { PlayerScore(it, Score.of(it.hand)) }
+            _participants.map { GamblerScore(it, Score.of(it.hand)) }
         )
     }
 
-    fun doTurn(turn: Turn, readPlayersAction: (Player) -> Action) {
+    fun doTurn(turn: Turn, readGamblersAction: (Gambler) -> Action) {
         while (!turn.isDone) {
-            val action = readPlayersAction(turn.player)
+            val action = readGamblersAction(turn.gambler)
             turn.applyToGame(action)
-            PlayerCardsWriter.write(turn.player)
         }
     }
 
     private fun play(turn: Turn, action: Action) {
         if (action == Action.HIT) {
-            serve(turn.player, _cardDeck.draw())
+            dealer.serve(_cardDeck, turn.gambler)
         }
 
-        val playerScore = Score.of(turn.player.hand)
-        if (playerScore.isBust() || action == Action.STAY) {
+        val gamblerScore = Score.of(turn.gambler.hand)
+        if (gamblerScore.isBust() || action == Action.STAY) {
             turn.isDone = true
         }
     }
 
-    private fun serve(players: List<Player>, cardDrawer: () -> Card) {
-        for (player in players) {
-            serve(player, cardDrawer())
-        }
-    }
-
-    private fun serve(player: Player, card: Card) {
-        player.receive(card)
-    }
-
-    inner class Turn(val player: Player) {
+    inner class Turn(val gambler: Gambler) {
 
         var isDone = false
             internal set
@@ -79,7 +66,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
     companion object {
         const val INIT_CARD_NUMBER = 2
 
-        fun new(participants: List<Player> = listOf()): BlackJackGame {
+        fun new(participants: List<Gambler> = listOf()): BlackJackGame {
             return BlackJackGame(CardDeck.new(), participants)
         }
     }

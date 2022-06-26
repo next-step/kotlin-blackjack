@@ -20,12 +20,12 @@ internal class DealerTest {
                 Card(CardSuit.SPADE, CardNumber.TWO),
             )
         )
-        val player = Player("tim",)
+        val gambler = Gambler("tim",)
 
-        dealer.serve(cardDeck, player)
-        dealer.serve(cardDeck, player)
+        dealer.serve(cardDeck, gambler)
+        dealer.serve(cardDeck, gambler)
 
-        assertThat(player.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(gambler.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO))
     }
 
     @DisplayName("딜러의 처음 카드 패는 비어있다.")
