@@ -21,12 +21,12 @@ class BlackjackGameTest {
         val game = BlackjackGame(Players(playerList))
 
         Assertions.assertThat(game.isGameOver()).isEqualTo(false)
-        Assertions.assertThat((game.withPlayers { it }).values[0].cards.values.size).isEqualTo(2)
+        Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(2)
         game.playTurn { true }
-        Assertions.assertThat((game.withPlayers { it }).values[0].cards.values.size).isEqualTo(3)
+        Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(3)
 
         game.playTurn { false }
-        Assertions.assertThat((game.withPlayers { it }).values[0].cards.values.size).isEqualTo(3)
+        Assertions.assertThat(game.players.values[0].cards.values.size).isEqualTo(3)
         Assertions.assertThat(game.isGameOver()).isEqualTo(true)
     }
 

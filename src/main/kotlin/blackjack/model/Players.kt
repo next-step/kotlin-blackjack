@@ -17,11 +17,11 @@ class Players(val values: List<Player>) {
         )
     }
 
-    fun hit(player: Player, cardList: List<Card>): Players {
+    fun update(player: Player): Players {
         return Players(
             values.map {
                 if (player.name.equals(it.name)) {
-                    player.addCards(cardList)
+                    player
                 } else {
                     it
                 }

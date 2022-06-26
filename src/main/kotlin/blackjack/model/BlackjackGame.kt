@@ -7,9 +7,7 @@ class BlackjackGame(initPlayers: Players) {
 
     init {
         players = players.withAllPlayers {
-            val (extractedCards, newCards) = cards.pollCards(Cards.NUMBER_OF_INIT_CARDS)
-            cards = newCards
-            it.addCards(extractedCards)
+            hit(it, Cards.NUMBER_OF_INIT_CARDS)
         }
 
         dealer = hit(dealer, Cards.NUMBER_OF_INIT_CARDS)
@@ -28,9 +26,7 @@ class BlackjackGame(initPlayers: Players) {
     fun playTurn(getHit: (Player) -> Boolean): Player {
         val player = players.findNotOver().first()
         if (getHit(player)) {
-            val (extracted, newCards) = cards.pollCards(Cards.NUMBER_OF_GIVE_CARDS)
-            cards = newCards
-            players = players.hit(player, extracted)
+            players = players.update(hit(player))
         } else {
             players = players.stay(player)
         }
@@ -48,9 +44,5 @@ class BlackjackGame(initPlayers: Players) {
 
     fun createResults(): Results {
         return Results(players, dealer)
-    }
-
-    fun <T> withPlayers(f: (Players) -> T): T {
-        return f(players)
     }
 }

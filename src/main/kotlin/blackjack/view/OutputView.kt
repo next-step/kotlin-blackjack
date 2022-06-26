@@ -8,7 +8,7 @@ import blackjack.model.Results
 
 object OutputView {
 
-    fun printPlayerWithScore(player: Player) {
+    private fun printPlayerWithScore(player: Player) {
         println("${player.name}카드: ${cardsToString(player.cards)} - 결과 : ${player.cards.optimalScore().value}")
     }
 
@@ -16,10 +16,6 @@ object OutputView {
         return cards.values
             .map { "${CardNumberView.toString(it.cardNumber)}${SuitView.toString(it.suit)}" }
             .joinToString(",")
-    }
-
-    fun printPlayersWithScore(players: Players) {
-        players.values.forEach { printPlayerWithScore(it) }
     }
 
     fun printInitialState(game: BlackjackGame) {
@@ -42,7 +38,7 @@ object OutputView {
         }
     }
 
-    fun printPlayers(players: Players) {
+    private fun printPlayers(players: Players) {
         players.values.forEach { printPlayer(it) }
         println()
     }
