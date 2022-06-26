@@ -3,7 +3,8 @@ package camp.nextstep.blackjack.game
 import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardNumber
 import camp.nextstep.blackjack.card.CardSuit
-import camp.nextstep.blackjack.player.Hand
+import camp.nextstep.blackjack.card.DrawnCard
+import camp.nextstep.blackjack.card.Hand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -30,9 +31,9 @@ internal class ScoreTest {
     @Test
     fun aceScoreAs11() {
         val hand = Hand()
-        hand.add(Card(CardSuit.SPADE, CardNumber.FIVE))
-        hand.add(Card(CardSuit.HEART, CardNumber.FIVE)) // 10
-        hand.add(Card(CardSuit.SPADE, CardNumber.ACE)) // 11
+        hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.FIVE)))
+        hand.add(DrawnCard(Card(CardSuit.HEART, CardNumber.FIVE))) // 10
+        hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.ACE))) // 11
 
         assertThat(Score.of(hand).value).isEqualTo(21)
     }
@@ -41,9 +42,9 @@ internal class ScoreTest {
     @Test
     fun aceScoreAs1() {
         val hand = Hand()
-        hand.add(Card(CardSuit.SPADE, CardNumber.FIVE))
-        hand.add(Card(CardSuit.HEART, CardNumber.SIX)) // 11
-        hand.add(Card(CardSuit.SPADE, CardNumber.ACE)) // 1
+        hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.FIVE)))
+        hand.add(DrawnCard(Card(CardSuit.HEART, CardNumber.SIX))) // 11
+        hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.ACE))) // 1
 
         assertThat(Score.of(hand).value).isEqualTo(12)
     }
@@ -75,7 +76,7 @@ internal class ScoreTest {
 
         for (matchResult in cardRegex.findAll(inputCards)) {
             val (suit, number) = matchResult.destructured
-            hand.add(Card(CardSuit.valueOf(suit), CardNumber.valueOf(number)))
+            hand.add(DrawnCard(Card(CardSuit.valueOf(suit), CardNumber.valueOf(number))))
         }
 
         val score = Score.of(hand)

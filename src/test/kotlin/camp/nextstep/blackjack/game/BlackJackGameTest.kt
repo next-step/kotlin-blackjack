@@ -49,7 +49,7 @@ internal class BlackJackGameTest {
         assertThat(blackJackGame.dealer.hand.cards).hasSize(2)
     }
 
-    @DisplayName("게임이 초기화되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
+    @DisplayName("게임이 준비되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
     @Test
     fun turns() {
         val gamblerTim = Gambler("tim")

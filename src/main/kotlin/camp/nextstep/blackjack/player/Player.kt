@@ -1,6 +1,7 @@
 package camp.nextstep.blackjack.player
 
 import camp.nextstep.blackjack.card.Card
+import camp.nextstep.blackjack.card.Hand
 
 sealed interface Player {
 
@@ -8,7 +9,5 @@ sealed interface Player {
 
     val hand: Hand
 
-    fun receive(card: Card) {
-        hand.add(card)
-    }
+    fun receive(card: Card)
 }

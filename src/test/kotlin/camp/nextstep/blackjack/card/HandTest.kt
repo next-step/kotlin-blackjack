@@ -1,8 +1,5 @@
-package camp.nextstep.blackjack.player
+package camp.nextstep.blackjack.card
 
-import camp.nextstep.blackjack.card.Card
-import camp.nextstep.blackjack.card.CardNumber
-import camp.nextstep.blackjack.card.CardSuit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -21,8 +18,9 @@ internal class HandTest {
     fun handAddCard() {
         val hand = Hand()
 
-        hand.add(Card(CardSuit.SPADE, CardNumber.ACE))
+        hand.add(DrawnCard(Card(CardSuit.SPADE, CardNumber.ACE)))
 
-        assertThat(hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(hand.cards).hasSize(1)
+        assertThat(hand.cards[0].card).isEqualTo(Card(CardSuit.SPADE, CardNumber.ACE))
     }
 }

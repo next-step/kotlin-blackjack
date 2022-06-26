@@ -25,7 +25,7 @@ internal class DealerTest {
         dealer.serve(cardDeck, gambler)
         dealer.serve(cardDeck, gambler)
 
-        assertThat(gambler.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO))
+        assertThat(gambler.hand.cards.map { it.card }).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.SPADE, CardNumber.TWO))
     }
 
     @DisplayName("딜러의 처음 카드 패는 비어있다.")
@@ -40,6 +40,6 @@ internal class DealerTest {
     fun receiveCard() {
         val dealer = Dealer()
         dealer.receive(Card(CardSuit.SPADE, CardNumber.ACE))
-        assertThat(dealer.hand.cards).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
+        assertThat(dealer.hand.cards.map { it.card }).containsExactly(Card(CardSuit.SPADE, CardNumber.ACE))
     }
 }
