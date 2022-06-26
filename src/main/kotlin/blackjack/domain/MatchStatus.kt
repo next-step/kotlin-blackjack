@@ -1,25 +1,23 @@
 package blackjack.domain
 
 sealed interface MatchStatus {
-    sealed interface Player : MatchStatus {
-        val revenueRatio: Double
+    val revenueRatio: Double
 
-        fun getRevenueFrom(betAmount: BetAmount): Revenue = Revenue((betAmount.value * revenueRatio).toInt())
-    }
+    fun getRevenueFrom(betAmount: BetAmount): Revenue = Revenue((betAmount.value * revenueRatio).toInt())
 
-    object Blackjack : Player {
+    object Blackjack : MatchStatus {
         override val revenueRatio: Double = 1.5
     }
 
-    object Win : Player {
+    object Win : MatchStatus {
         override val revenueRatio: Double = 1.0
     }
 
-    object Lose : Player {
+    object Lose : MatchStatus {
         override val revenueRatio: Double = -1.0
     }
 
-    object Push : Player {
+    object Push : MatchStatus {
         override val revenueRatio: Double = 0.0
     }
 }

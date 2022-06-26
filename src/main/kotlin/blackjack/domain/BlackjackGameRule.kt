@@ -3,7 +3,7 @@ package blackjack.domain
 const val START_CARD_COUNT = 2
 const val HIT_CARD_COUNT = 1
 
-infix fun Player.matchWith(dealer: Dealer): MatchStatus.Player {
+infix fun Player.matchWith(dealer: Dealer): MatchStatus {
     return when {
         this.isBust() -> MatchStatus.Lose
         dealer.isBust() -> MatchStatus.Win
