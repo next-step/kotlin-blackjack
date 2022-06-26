@@ -29,4 +29,24 @@ class BlackjackGameTest {
         Assertions.assertThat((game.withPlayers { it }).values[0].cards.values.size).isEqualTo(3)
         Assertions.assertThat(game.isGameOver()).isEqualTo(true)
     }
+
+    @Test
+    fun `딜러가 한번 턴을 진행한다`() {
+        val playerList = listOf(Player("jason"))
+        val game = BlackjackGame(Players(playerList))
+
+        Assertions.assertThat(game.dealer.cards.values.size).isEqualTo(2)
+        game.playDealer()
+        Assertions.assertThat(game.dealer.cards.values.size).isEqualTo(3)
+    }
+
+    @Test
+    fun `Results를 만든다`() {
+        val playerList = listOf(Player("jason"), Player("pobi"))
+        val game = BlackjackGame(Players(playerList))
+
+        val results = game.createResults()
+        Assertions.assertThat(results.playerResults.size).isEqualTo(2)
+        Assertions.assertThat(results.dealerResult.win + results.dealerResult.lose).isEqualTo(2)
+    }
 }

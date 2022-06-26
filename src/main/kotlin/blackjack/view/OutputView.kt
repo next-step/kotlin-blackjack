@@ -1,8 +1,10 @@
 package blackjack.view
 
+import blackjack.model.BlackjackGame
 import blackjack.model.Cards
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.Results
 
 object OutputView {
 
@@ -20,10 +22,24 @@ object OutputView {
         players.values.forEach { printPlayerWithScore(it) }
     }
 
-    fun printInitialState(players: Players) {
-        println("${players.values.map { it.name }.joinToString(", ")}에게 2장의 카드를 나누어 주었습니다.")
-        printPlayers(players)
+    fun printInitialState(game: BlackjackGame) {
+        println("${game.dealer.name}와 ${game.players.values.map { it.name }.joinToString(", ")}에게 2장의 카드를 나누어 주었습니다.")
+        printPlayer(game.dealer)
+        printPlayers(game.players)
         println()
+    }
+
+    fun printFinalState(game: BlackjackGame) {
+        printPlayerWithScore(game.dealer)
+        game.players.values.forEach { printPlayerWithScore(it) }
+    }
+
+    fun printWinners(results: Results) {
+        println("\n ## 최종 승패")
+        println("${results.dealerResult.player.name} : ${results.dealerResult.win}승 ${results.dealerResult.lose}패")
+        results.playerResults.forEach { playerResult ->
+            println("${playerResult.player.name} : ${if (playerResult.win) "승" else "패"}")
+        }
     }
 
     fun printPlayers(players: Players) {

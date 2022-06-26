@@ -14,7 +14,13 @@ value class Score(val value: Int) {
     }
 
     fun isWinThan(that: Score): Boolean {
-        return !isBust() && value >= that.value
+        if (isBust()) {
+            return false
+        } else if (that.isBust()) {
+            return true
+        } else {
+            return value >= that.value
+        }
     }
 
     operator fun plus(that: Score): Score {
@@ -23,5 +29,6 @@ value class Score(val value: Int) {
 
     companion object {
         private const val MAX_SCORE_CRITERIA = 21
+        const val DELAER_HIT_CRITERIA = 16
     }
 }

@@ -6,12 +6,17 @@ import blackjack.view.OutputView
 
 fun main() {
     val blackjackGame = BlackjackGame(InputView.inputPlayers())
-    blackjackGame.withPlayers(OutputView::printInitialState)
+    OutputView.printInitialState(blackjackGame)
 
     while (!blackjackGame.isGameOver()) {
         val player = blackjackGame.playTurn(InputView::inputConditionToGiveCard)
         OutputView.printPlayer(player)
     }
 
-    blackjackGame.withPlayers(OutputView::printPlayersWithScore)
+    while (!blackjackGame.isDealerGameOver()) {
+        OutputView.printPlayer(blackjackGame.playDealer())
+    }
+
+    OutputView.printFinalState(blackjackGame)
+    OutputView.printWinners(blackjackGame.createResults())
 }
