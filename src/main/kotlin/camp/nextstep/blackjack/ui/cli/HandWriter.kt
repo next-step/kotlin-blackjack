@@ -1,18 +1,21 @@
 package camp.nextstep.blackjack.ui.cli
 
-import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.Hand
+import camp.nextstep.blackjack.ui.FaceDownCard
+import camp.nextstep.blackjack.ui.FaceUpCard
 
 object HandWriter {
 
     fun write(hand: Hand) {
-        val faceUpCard = { card: Card -> "{${card.number.value}:${card.suit}}" }
-        val faceUpCards = hand.faceUpCards.joinToString(",") { faceUpCard(it) }
-        print(faceUpCards)
+        writeFaceUpCards(FaceUpCard.from(hand.faceUpCards))
+        writeFaceDownCards(hand.faceDownCardCount)
+    }
 
-        val faceDownCard = "{?:?}"
-        repeat(hand.faceDownCardCount) {
-            print(faceDownCard)
-        }
+    private fun writeFaceUpCards(cards: List<FaceUpCard>) {
+        print(cards.joinToString { it.toString() })
+    }
+
+    private fun writeFaceDownCards(faceDownCardCount: Int) {
+        repeat(faceDownCardCount) { print(FaceDownCard) }
     }
 }
