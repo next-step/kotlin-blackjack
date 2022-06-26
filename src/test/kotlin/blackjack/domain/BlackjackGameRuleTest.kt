@@ -30,7 +30,7 @@ class BlackjackGameRuleTest {
     @Test
     fun `플레이어가 버스트가 아니고 딜러가 버스트라면 무조건 승리한다`() {
         assertAll(
-            { assertThat(blackjackPlayer matchWith bustDealer).isEqualTo(MatchStatus.WIN) },
+            { assertThat(blackjackPlayer matchWith bustDealer).isEqualTo(MatchStatus.BLACKJACK) },
             { assertThat(normal21ScorePlayer matchWith bustDealer).isEqualTo(MatchStatus.WIN) },
             { assertThat(under21ScorePlayer matchWith bustDealer).isEqualTo(MatchStatus.WIN) }
         )
@@ -70,9 +70,9 @@ class BlackjackGameRuleTest {
     @Test
     fun `getRevenueFrom을 통해 플레이어가 딜러로 부터 얻을 수 있는 수익을 계산할 수 있다`() {
         assertAll(
-            { assertThat(blackjackPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(15_000)) },
+            { assertThat(blackjackPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(22_500)) },
             { assertThat(normal21ScorePlayer getRevenueFrom under21ScoreDealer).isEqualTo(Revenue(10_000)) },
-            { assertThat(bustPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(-10_000)) },
+            { assertThat(bustPlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(-20_000)) },
             { assertThat(normal21ScorePlayer getRevenueFrom normal21ScoreDealer).isEqualTo(Revenue(0)) }
         )
     }
