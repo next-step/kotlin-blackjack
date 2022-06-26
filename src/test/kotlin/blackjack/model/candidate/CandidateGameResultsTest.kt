@@ -1,4 +1,4 @@
-package blackjack.model.player
+package blackjack.model.candidate
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
@@ -9,19 +9,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
-@DisplayName("플레이어 게임 결과 컬렉션 테스트")
-class PlayerGameResultsTest {
+@DisplayName("참가자 게임 결과 컬렉션 테스트")
+class CandidateGameResultsTest {
 
     @Test
-    fun `플레이어 승패 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
+    fun `참가자 승패 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
         // given
-        val player1 = Player.from("aiden1")
-        val player2 = Player.from("aiden2")
+        val candidate1 = Candidate.from("aiden1")
+        val candidate2 = Candidate.from("aiden2")
 
-        val players = Players(listOf(player1, player2))
+        val candidates = Candidates(listOf(candidate1, candidate2))
 
         // when, then
-        val exception = assertThrows<IllegalArgumentException> { PlayerGameResults.from(players) }
+        val exception = assertThrows<IllegalArgumentException> { CandidateGameResults.from(candidates) }
         assertThat(exception.message).isEqualTo("딜러가 존재하지 않습니다.")
     }
 
@@ -31,25 +31,25 @@ class PlayerGameResultsTest {
         val dealer1 = Dealer()
         dealer1.receiveCard(Card(CardSymbol.스페이드, CardNumber.THREE))
 
-        val player1 = Player.from("aiden1")
-        player1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
+        val candidate1 = Candidate.from("aiden1")
+        candidate1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
 
-        val player2 = Player.from("aiden2")
-        player2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
+        val candidate2 = Candidate.from("aiden2")
+        candidate2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
 
-        val player3 = Player.from("aiden3")
-        player3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
+        val candidate3 = Candidate.from("aiden3")
+        candidate3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
 
-        val players = Players(listOf(dealer1, player1, player2, player3))
+        val candidates = Candidates(listOf(dealer1, candidate1, candidate2, candidate3))
 
         // when
-        val playerGameResults = PlayerGameResults.from(players)
+        val candidateGameResults = CandidateGameResults.from(candidates)
 
         // then
-        val (resultOfDealer, resultOfPlayer1, resultOfPlayer2, resultOfPlayer3) = playerGameResults.results
+        val (resultOfDealer, resultOfPlayer1, resultOfPlayer2, resultOfPlayer3) = candidateGameResults.results
 
         assertAll(
-            "player game results test",
+            "candidate game results test",
             { assertThat(resultOfDealer.winCount).isEqualTo(1) },
             { assertThat(resultOfDealer.lostCount).isEqualTo(1) },
 

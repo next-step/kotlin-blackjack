@@ -5,8 +5,8 @@ import blackjack.model.card.CardScore
 import blackjack.model.card.CardSetGenerator
 import blackjack.model.card.CardSymbol
 import blackjack.model.card.Cards
-import blackjack.model.player.Player
-import blackjack.model.player.Players
+import blackjack.model.candidate.Candidate
+import blackjack.model.candidate.Candidates
 
 class GameHost(
     val cardSet: Cards = CardSetGenerator.generateOneCardSet(
@@ -17,17 +17,17 @@ class GameHost(
 
     fun shuffleCards() = cardSet.shuffle()
 
-    fun provideCardTo(players: Players, cardCount: Int = 1) {
-        players.players.map { player ->
+    fun provideCardTo(candidates: Candidates, cardCount: Int = 1) {
+        candidates.candidates.map { player ->
             repeat(cardCount) { provideOneCardTo(player) }
         }
     }
 
-    fun provideOneCardTo(player: Player) {
-        validateNotExceedMaxScore(player.sumOfCardScore)
+    fun provideOneCardTo(candidate: Candidate) {
+        validateNotExceedMaxScore(candidate.sumOfCardScore)
 
         val drawnCard = cardSet.removeOne()
-        player.receiveCard(drawnCard)
+        candidate.receiveCard(drawnCard)
     }
 
     private fun validateNotExceedMaxScore(score: CardScore) =

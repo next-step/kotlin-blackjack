@@ -1,16 +1,16 @@
 package blackjack.view
 
-import blackjack.model.player.Player
-import blackjack.model.player.PlayerGameResults
-import blackjack.model.player.PlayerName
-import blackjack.model.player.Players
+import blackjack.model.candidate.Candidate
+import blackjack.model.candidate.CandidateGameResults
+import blackjack.model.candidate.CandidateName
+import blackjack.model.candidate.Candidates
 
 interface ResultView {
-    fun printPlayersCardStatus(players: Players)
+    fun printCandidatesCardStatus(candidates: Candidates)
 
-    fun printPlayerCardStatus(player: Player)
+    fun printCandidateCardStatus(candidate: Candidate)
 
-    fun printCardGameResult(results: PlayerGameResults)
+    fun printCardGameResult(results: CandidateGameResults)
 
-    fun printDealerReceiveMoreCardMessage(dealerName: PlayerName)
+    fun printDealerReceiveMoreCardMessage(dealerName: CandidateName)
 }
