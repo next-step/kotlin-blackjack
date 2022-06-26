@@ -30,7 +30,7 @@ object BlackjackLayout {
             playerName.toPlayerInfo()
         }
         val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos)
-        OutputView.println(viewModel.participants.all, StartOfGameConverter)
+        OutputView.println(viewModel.participants, StartOfGameConverter)
 
         viewModel.currentTurn.observe { turn ->
             if (turn.isTurnEnd()) return@observe

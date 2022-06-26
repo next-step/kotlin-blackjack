@@ -1,21 +1,30 @@
 package blackjack.view.output.converter
 
-import blackjack.domain.Participant
+import blackjack.domain.Dealer
+import blackjack.domain.Participants
 
-object StartOfGameConverter : OutputConverter<List<Participant>> {
+object StartOfGameConverter : OutputConverter<Participants> {
     private const val GUIDANCE_MESSAGE_PLAYERS = "에게 2장을 나누었습니다."
 
-    override fun convert(printable: List<Participant>): String {
+    override fun convert(printable: Participants): String {
         return "${printable.toNamesText()}${GUIDANCE_MESSAGE_PLAYERS}${printable.toPrintableText()}"
     }
 
-    private fun List<Participant>.toNamesText(): String {
-        return joinToString(", ") { player -> player.name.value }
+    private fun Participants.toNamesText(): String {
+        val dealerName = dealer.name.value
+        val playerNames = players.joinToString(", ") { player -> player.name.value }
+        return "${dealerName}와 $playerNames"
     }
 
-    private fun List<Participant>.toPrintableText(): String {
-        return joinToString("") { player ->
+    private fun Participants.toPrintableText(): String {
+        val dealerText = dealer.toPrintableText()
+        val playersText = players.joinToString("") { player ->
             "\n${PlayerConverter.convert(player)}"
         }
+        return "\n${dealerText}$playersText"
+    }
+
+    private fun Dealer.toPrintableText(): String {
+        return "${name.value}: ${PlayingCardConverter.convert(getFirstCard())}"
     }
 }
