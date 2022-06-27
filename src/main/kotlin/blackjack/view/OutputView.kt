@@ -8,7 +8,6 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Jack
 import blackjack.domain.card.King
 import blackjack.domain.card.Queen
-import blackjack.domain.user.Match
 import blackjack.domain.user.User
 import blackjack.domain.user.Users
 
@@ -58,21 +57,10 @@ object OutputView : OutputInterface {
     fun printWinAndLose(users: Users) {
         println()
         println(Messages.FINAL_WIN_AND_LOSE)
-        val matchResults = users.dealer.getWinAndLose(users.users)
-        println(
-            Messages.DEALER_WIN_AND_LOSE.format(
-                matchResults.winCount,
-                matchResults.drawCount,
-                matchResults.loseCount
-            )
-        )
+        val matchResults = users.dealer.getBatResult(users.users)
+        println(Messages.USER_COLON.format(users.dealer.name) + matchResults.value)
         users.users.forEach {
-            val matchResultOutput = when (it.match(users.dealer)) {
-                Match.DRAW -> Messages.DRAW
-                Match.WIN -> Messages.WIN
-                Match.LOSE -> Messages.LOSE
-            }
-            println(Messages.USER_COLON.format(it.name) + matchResultOutput)
+            println(Messages.USER_COLON.format(it.name) + it.getBatResult(users.dealer).value)
         }
     }
 
@@ -96,10 +84,9 @@ object OutputView : OutputInterface {
     private fun printCardAndScore(user: User) {
         println(
             Messages.PRINT_CARDS_AND_SCORE.format(
-                user.name,
-                user.cards.hands.joinToString { cardToString(it) },
-                user.cards.getScore().value
+                user.name, user.cards.hands.joinToString { cardToString(it) }, user.cards.getScore().value
+                )
             )
-        )
+        }
     }
-}
+    

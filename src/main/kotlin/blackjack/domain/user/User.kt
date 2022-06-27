@@ -21,8 +21,9 @@ open class User(val name: String, initCards: List<Card>) {
     val cards: Cards
         get() = _cards
 
-    // TODO 여기 살짝 맘에 안드네..
-    private var money: Money? = null
+    private var _money = Money()
+    val money: Money
+        get() = _money
 
     init {
         require(name.isNotEmpty()) { ErrorMessages.NAME_IS_EMPTY }
@@ -32,8 +33,8 @@ open class User(val name: String, initCards: List<Card>) {
         _cards.addCard(card)
     }
 
-    fun setBatMoney(input: InputInterface) {
-        money = Money(input.getBatMoney(this))
+    fun setBatMoney(money: Int) {
+        _money += money
     }
 
     private fun isBust(): Boolean {
@@ -45,7 +46,15 @@ open class User(val name: String, initCards: List<Card>) {
             _cards.getScore().isBlackJackScore()
     }
 
-    fun match(user: User): Match {
+    fun getBatResult(user: User): Money {
+        return when (match(user)) {
+            Match.WIN -> money
+            Match.LOSE -> Money(-money.value)
+            else -> Money()
+        }
+    }
+
+    protected fun match(user: User): Match {
         if (isBust() && user.isBust())
             return Match.DRAW
         else if (user.isBust())
