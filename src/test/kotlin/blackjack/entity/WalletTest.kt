@@ -46,4 +46,34 @@ internal class WalletTest {
         // then
         Assertions.assertThat(result).isTrue()
     }
+
+    @Test
+    fun `총 합이 11 이하이면 CardNumber ACE를 10로 계산한다`(){
+        // given
+        val cards: List<Card> = listOf(Card(Shape.CLOVER, CardNumber.THREE))
+        val wallet = Wallet(cards)
+        val aceCard: CardNumber = CardNumber.ACE
+        val expectedValue = 10
+
+        // when
+        val resultValue = wallet.checkSumUpCondition(aceCard)
+
+        // then
+        Assertions.assertThat(resultValue).isEqualTo(expectedValue)
+    }
+
+    @Test
+    fun `총 합이 11 초과이면 CardNumber ACE를 1로 계산한다`(){
+        // given
+        val cards: List<Card> = listOf(Card(Shape.CLOVER, CardNumber.TEN), Card(Shape.HEART, CardNumber.FIVE))
+        val wallet = Wallet(cards)
+        val aceCard: CardNumber = CardNumber.ACE
+        val expectedValue = 1
+
+        // when
+        val resultValue = wallet.checkSumUpCondition(aceCard)
+
+        // then
+        Assertions.assertThat(resultValue).isEqualTo(expectedValue)
+    }
 }
