@@ -13,7 +13,7 @@ import org.junit.jupiter.api.assertThrows
 class CandidateGameResultsTest {
 
     @Test
-    fun `참가자 승패 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
+    fun `참가자 게임 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
         // given
         val player1 = Player.from("aiden1", 1)
         val player2 = Player.from("aiden2", 1)
@@ -28,19 +28,19 @@ class CandidateGameResultsTest {
     @Test
     fun `딜러, 플레이어 게임 결과가 정상적으로 생성`() {
         // given
-        val dealer1 = Dealer()
-        dealer1.receiveCard(Card(CardSymbol.스페이드, CardNumber.THREE))
+        val dealer = Dealer()
+        dealer.receiveCard(Card(CardSymbol.스페이드, CardNumber.THREE))
 
-        val player1 = Player.from("aiden1", 1)
+        val player1 = Player.from("aiden1", 10000)
         player1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
 
-        val player2 = Player.from("aiden2", 1)
+        val player2 = Player.from("aiden2", 20000)
         player2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
 
-        val player3 = Player.from("aiden3", 1)
+        val player3 = Player.from("aiden3", 30000)
         player3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
 
-        val candidates = Candidates(listOf(dealer1, player1, player2, player3))
+        val candidates = Candidates(listOf(dealer, player1, player2, player3))
 
         // when
         val candidateGameResults = CandidateGameResults.from(candidates)
@@ -50,17 +50,10 @@ class CandidateGameResultsTest {
 
         assertAll(
             "candidate game results test",
-            { assertThat(resultOfDealer.winCount).isEqualTo(1) },
-            { assertThat(resultOfDealer.lostCount).isEqualTo(1) },
-
-            { assertThat(resultOfPlayer1.winCount).isEqualTo(0) },
-            { assertThat(resultOfPlayer1.lostCount).isEqualTo(1) },
-
-            { assertThat(resultOfPlayer2.winCount).isEqualTo(0) },
-            { assertThat(resultOfPlayer2.lostCount).isEqualTo(0) },
-
-            { assertThat(resultOfPlayer3.winCount).isEqualTo(1) },
-            { assertThat(resultOfPlayer3.lostCount).isEqualTo(0) },
+            { assertThat(resultOfDealer.profit).isEqualTo(-20000.0) },
+            { assertThat(resultOfPlayer1.profit).isEqualTo(-10000.0) },
+            { assertThat(resultOfPlayer2.profit).isEqualTo(0.0) },
+            { assertThat(resultOfPlayer3.profit).isEqualTo(30000.0) },
         )
     }
 }

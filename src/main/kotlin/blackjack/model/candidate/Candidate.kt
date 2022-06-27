@@ -27,6 +27,8 @@ abstract class Candidate protected constructor(
             boundaryScore
         )
 
+    fun satisfyBlackJack() = cards.satisfyCardSizeBlackJack() && sumOfCardScore.isOneOfScoreBlackJack()
+
     open fun receiveCard(card: Card) {
         cards.addOne(card)
     }

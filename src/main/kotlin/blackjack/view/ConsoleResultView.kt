@@ -34,9 +34,9 @@ object ConsoleResultView : ResultView {
             println("${candidateCardStatus(it)} - 결과: ${candidateCardScore(score1, score2)}")
         }
 
-        println("\n## 최종 승패")
+        println("\n## 최종 수익")
         results.results.forEach {
-            println("${it.candidateName}: ${it.winCount}승 ${it.lostCount}패")
+            println("${it.candidateName}: ${it.profit}")
         }
     }
 

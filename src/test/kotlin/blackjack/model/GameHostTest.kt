@@ -53,14 +53,11 @@ class GameHostTest {
     @Test
     fun `카드 점수가 21점 이상이면 카드 제공 불가`() {
         // given
-        val cards = Cards(
-            mutableListOf(
-                Card(CardSymbol.하트, CardNumber.TWO),
-                Card(CardSymbol.클로버, CardNumber.NINE),
-                Card(CardSymbol.스페이드, CardNumber.TEN),
-            )
-        )
-        val player = Player.from("aiden", cards, 1)
+        val player = Player.from("aiden", 1)
+        player.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
+        player.receiveCard(Card(CardSymbol.클로버, CardNumber.NINE))
+        player.receiveCard(Card(CardSymbol.스페이드, CardNumber.TEN))
+
         val gameHost = GameHost()
 
         // when, then

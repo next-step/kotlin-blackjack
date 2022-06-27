@@ -14,15 +14,15 @@ class CandidateGameResults private constructor(
 
             require(dealer != null) { "딜러가 존재하지 않습니다." }
 
-            val players = candidates.candidates
+            val playerGameResults = candidates.candidates
                 .filter { it != dealer }
+                .map { CandidateGameResult.of(it as Player, dealer as Dealer) }
 
-            val dealerGameResults = players.map { CandidateGameResult.of(dealer, it) }
-            val dealerWinCount = dealerGameResults.sumOf { it.winCount }
-            val dealerLostCount = dealerGameResults.sumOf { it.lostCount }
+            val dealerProfit = -playerGameResults.sumOf { it.profit }
+            val dealerGameResult = CandidateGameResult(dealer, dealerProfit)
 
-            return listOf(CandidateGameResult(dealer, dealerWinCount, dealerLostCount))
-                .plus(players.map { CandidateGameResult.of(it, dealer) })
+            return listOf(dealerGameResult)
+                .plus(playerGameResults)
                 .let(::CandidateGameResults)
         }
     }

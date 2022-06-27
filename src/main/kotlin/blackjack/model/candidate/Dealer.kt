@@ -3,7 +3,7 @@ package blackjack.model.candidate
 import blackjack.model.card.Card
 
 class Dealer(
-    name: CandidateName = CandidateName(DEALER_NAME)
+    name: CandidateName = CandidateName(DEALER_NAME),
 ) : Candidate(candidateName = name) {
 
     override val isDealer

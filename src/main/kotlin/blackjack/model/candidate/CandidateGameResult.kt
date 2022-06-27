@@ -2,8 +2,7 @@ package blackjack.model.candidate
 
 class CandidateGameResult(
     val candidate: Candidate,
-    val winCount: Int,
-    val lostCount: Int,
+    val profit: Double,
 ) {
 
     val candidateName
@@ -11,37 +10,51 @@ class CandidateGameResult(
 
     companion object {
         private const val LOST_DECISION_BOUNDARY_SCORE = 21
+        private const val MULTIPLICATION_NUMBER_FOR_BLACK_JACK_PROFIT = 1.5
+        private const val DRAW_PROFIT = 0
 
-        fun of(candidate: Candidate, other: Candidate): CandidateGameResult {
-            if (other.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofWin(candidate)
+        fun of(player: Player, dealer: Dealer): CandidateGameResult {
+            if (player.satisfyBlackJack() && dealer.satisfyBlackJack()) {
+                return ofDraw(player)
             }
 
-            if (candidate.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofLost(candidate)
+            if (player.satisfyBlackJack()) {
+                return ofBlackJack(player)
             }
 
-            if (candidate.beats(other, LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofWin(candidate)
+            if (dealer.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofWin(player)
             }
 
-            if (other.beats(candidate, LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofLost(candidate)
+            if (player.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofLost(player)
             }
 
-            return ofDraw(candidate)
+            if (player.beats(dealer, LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofWin(player)
+            }
+
+            if (dealer.beats(player, LOST_DECISION_BOUNDARY_SCORE)) {
+                return ofLost(player)
+            }
+
+            return ofDraw(player)
         }
 
-        private fun ofWin(candidate: Candidate): CandidateGameResult {
-            return CandidateGameResult(candidate, 1, 0)
+        private fun ofBlackJack(player: Player): CandidateGameResult {
+            return CandidateGameResult(player, player.bettingAmount * MULTIPLICATION_NUMBER_FOR_BLACK_JACK_PROFIT)
         }
 
-        private fun ofLost(candidate: Candidate): CandidateGameResult {
-            return CandidateGameResult(candidate, 0, 1)
+        private fun ofWin(player: Player): CandidateGameResult {
+            return CandidateGameResult(player, player.bettingAmount.toDouble())
         }
 
-        private fun ofDraw(candidate: Candidate): CandidateGameResult {
-            return CandidateGameResult(candidate, 0, 0)
+        private fun ofLost(player: Player): CandidateGameResult {
+            return CandidateGameResult(player, -player.bettingAmount.toDouble())
+        }
+
+        private fun ofDraw(player: Player): CandidateGameResult {
+            return CandidateGameResult(player, DRAW_PROFIT.toDouble())
         }
     }
 }

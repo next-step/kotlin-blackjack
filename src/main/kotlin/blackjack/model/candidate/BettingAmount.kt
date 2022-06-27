@@ -2,7 +2,7 @@ package blackjack.model.candidate
 
 @JvmInline
 value class BettingAmount(
-    private val amount: Int
+    val amount: Int
 ) {
 
     init {
