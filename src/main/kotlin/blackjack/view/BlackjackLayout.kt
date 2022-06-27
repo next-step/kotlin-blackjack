@@ -30,7 +30,7 @@ object BlackjackLayout {
         val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos, ::isPlayerWannaHit)
         OutputView.println(viewModel.participants, StartOfGameConverter)
 
-        viewModel.uiEvent.observe { participant ->
+        viewModel.hitEvent.observe { participant ->
             when (participant) {
                 is Player -> OutputView.print(participant, PlayerConverter)
                 is Dealer -> OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_DEALER_HIT)

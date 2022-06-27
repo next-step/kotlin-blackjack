@@ -6,8 +6,7 @@ import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
-import blackjack.domain.Observable
-import blackjack.domain.Participant
+import blackjack.domain.HitEvent
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.PlayerInfo
@@ -22,13 +21,14 @@ class BlackjackViewModel private constructor(
     private val cardDeck: CardDeck,
     private val isPlayerWannaHit: (Player) -> Boolean
 ) {
-    val uiEvent: Observable<Participant?> = Observable(null)
+    val hitEvent: HitEvent = HitEvent()
 
     private var currentTurn: BlackjackGameTurn = BlackjackGameTurn.from(participants)
 
     fun startGame() {
         while (!currentTurn.isBlackjackGameEnd()) {
             takeTurn()
+            setNextTurn()
         }
     }
 
@@ -37,14 +37,12 @@ class BlackjackViewModel private constructor(
             is Player -> takePlayerTurn(participant)
             is Dealer -> takeDealerTurn(participant)
         }
-
-        nextTurn()
     }
 
     private fun takePlayerTurn(player: Player) {
         if (isPlayerWannaHit(player)) {
             currentTurn.hit(cardDeck.draw(HIT_CARD_COUNT))
-            uiEvent.value = player
+            hitEvent.emit(player)
         } else {
             currentTurn.stay()
         }
@@ -52,10 +50,10 @@ class BlackjackViewModel private constructor(
 
     private fun takeDealerTurn(dealer: Dealer) {
         currentTurn.hit(cardDeck.draw(HIT_CARD_COUNT))
-        uiEvent.value = dealer
+        hitEvent.emit(dealer)
     }
 
-    private fun nextTurn() {
+    private fun setNextTurn() {
         currentTurn = BlackjackGameTurn.from(participants)
     }
 

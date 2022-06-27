@@ -2,12 +2,10 @@ package blackjack.viewmodel
 
 import blackjack.domain.BetAmount
 import blackjack.domain.CardDeck
-import blackjack.domain.Participant
 import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.START_CARD_COUNT
-import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -45,10 +43,10 @@ class BlackjackViewModelTest {
     @Test
     fun `uiEvent를 observe해서 출력해야 할 모델을 받을 수 있다`() {
         val viewModel = viewModel
-        viewModel.uiEvent.observe { participant ->
-            assertThat(participant).isA<Participant>()
+        viewModel.hitEvent.observe { participant ->
+            assertThat(participant).isEqualTo(viewModel.participants.all[2])
         }
 
-        viewModel.uiEvent.value = viewModel.participants.all[2]
+        viewModel.hitEvent.emit(viewModel.participants.all[2])
     }
 }
