@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.entity.Card
 import blackjack.entity.Player
 
 object GetResult {
@@ -9,12 +10,18 @@ object GetResult {
     }
 
     fun printPlayerStatus(player: Player) {
-        val cardStatus = player.wallet.cards.joinToString(", ") { card -> card.number.value.toString() + card.shape.value }
+        val cardStatus = getCardStatus(player)
         println(player.name + "카드: " + cardStatus)
     }
 
     fun printPlayerStatusWithResult(player: Player) {
-        val cardStatus = player.wallet.cards.joinToString(", ") { card -> card.number.value.toString() + card.shape.value }
-        println(player.name + "카드: " + cardStatus + " - 결과: " + player.wallet.sumUp)
+        val cardStatus = getCardStatus(player)
+        println(player.name + "카드: " + cardStatus + " - 결과: " + player.getWalletSum())
     }
+
+    fun getCardStatus (player: Player): String {
+        return player.getWalletCards().joinToString(JOIN_SEPARATOR) { card :Card -> card.getNumberValue().toString() + card.getShapeValue() }
+    }
+
+    private const val JOIN_SEPARATOR = ", "
 }

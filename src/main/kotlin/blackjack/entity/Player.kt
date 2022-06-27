@@ -7,4 +7,12 @@ class Player(override val name: String, override val wallet: Wallet, override va
         cards.add(CardDrawer.drawSingleCard())
         return Wallet(cards)
     }
+
+    fun getWalletSum(): Int {
+        return wallet.sumUp
+    }
+
+    fun getWalletCards(): List<Card>{
+        return wallet.cards
+    }
 }
