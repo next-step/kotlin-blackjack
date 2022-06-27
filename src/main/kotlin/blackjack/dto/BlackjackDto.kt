@@ -8,6 +8,6 @@ data class BlackjackDto(
 )
 
 fun Blackjack.toDto() = BlackjackDto(
-    players = players.map { PlayerDto.of(it, dealer.compareTo(it).opposite()) },
-    dealer = DealerDto.of(dealer, players.groupingBy { dealer.compareTo(it) }.eachCount())
+    players = players.map { PlayerDto.of(it, dealer.versus(it).opposite()) },
+    dealer = DealerDto.of(dealer, players.groupingBy { dealer.versus(it) }.eachCount())
 )

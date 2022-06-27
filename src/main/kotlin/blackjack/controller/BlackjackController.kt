@@ -1,8 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.Blackjack
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.user.Player
+import blackjack.dto.PlayerDto
+import blackjack.dto.UserDto
 import blackjack.dto.toDto
 import blackjack.service.InputParser
 import blackjack.view.BlackjackInputView
@@ -10,6 +11,7 @@ import blackjack.view.BlackjackResultView
 import blackjack.view.BlackjackView
 import blackjack.view.DealerView
 import blackjack.view.PlayerView
+import blackjack.view.UserView
 
 class BlackjackController {
 
@@ -19,10 +21,10 @@ class BlackjackController {
 
         Blackjack(players).let {
             it.drawFirstCards()
-            BlackjackView.printInitialize(it.players)
-            BlackjackView.printCards(it)
+            BlackjackView.printInitialize(it.players.map { player -> PlayerDto.of(player, it.dealer.versus(player)) })
+            BlackjackView.printCards(it.toDto())
             startGame(it)
-            BlackjackView.printResult(it)
+            BlackjackView.printResult(it.toDto())
             BlackjackResultView.printResult(it.toDto())
         }
     }
@@ -34,30 +36,32 @@ class BlackjackController {
     }
 
     private fun startGame(blackjack: Blackjack) {
-        blackjack.apply {
-            players.forEach {
-                while (drawable(it)) {
-                    drawCard(it)
-                    PlayerView.printCards(it)
-                }
-            }
-            while (drawable(dealer)) {
-                drawCard(dealer)
-                DealerView.printMoreCard(dealer)
-                PlayerView.printCards(dealer)
-            }
+        blackjack.players.forEach {
+            drawUntilFinish(blackjack, it)
+        }
+
+        val dealer = blackjack.dealer
+        while (dealer.drawable()) {
+            blackjack.drawCard(dealer)
+            DealerView.printMoreCard(UserDto.of(dealer))
+            UserView.printCards(UserDto.of(dealer))
         }
     }
 
-    private fun drawable(player: Player) = when {
-        !player.drawable() -> {
-            BlackjackView.printCanNotDrawCard(player)
-            false
+    private fun drawUntilFinish(blackjack: Blackjack, player: Player) {
+        while (true) {
+            if (!player.drawable()) return PlayerView.printCanNotDrawCard(UserDto.of(player))
+
+            PlayerView.printMoreCard(UserDto.of(player))
+
+            if (askMoreCard()) blackjack.drawCard(player)
+            else return UserView.printCards(UserDto.of(player))
+
+            UserView.printCards(UserDto.of(player))
         }
-        player is Dealer -> true
-        else -> {
-            BlackjackView.printMoreCard(player)
-            InputParser.parseMoreCard(BlackjackInputView.readMoreCard())
-        }
+    }
+
+    private fun askMoreCard(): Boolean {
+        return InputParser.parseMoreCard(BlackjackInputView.readMoreCard())
     }
 }

@@ -1,9 +1,12 @@
-package blackjack.domain
+package blackjack.domain.user
 
+import blackjack.domain.Card
+import blackjack.domain.Denomination
 import blackjack.domain.Denomination.ACE
 import blackjack.domain.Denomination.FIVE
 import blackjack.domain.Denomination.SIX
 import blackjack.domain.Denomination.TEN
+import blackjack.domain.Stat
 import blackjack.domain.Suit.DIAMOND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,7 +35,7 @@ internal class DealerTest {
 
         dealer.addCard(Card(DIAMOND, ACE))
 
-        assertThat(dealer.cards).hasSize(3)
+        assertThat(dealer.sizeOfCards()).isEqualTo(3)
     }
 
     @Test
@@ -47,7 +50,7 @@ internal class DealerTest {
     @ParameterizedTest
     @MethodSource("compareArguments")
     fun `딜러와 Player는 비교할 수 있다`(dealer: Dealer, player: Player, stat: Stat) {
-        val expected = dealer.compareTo(player)
+        val expected = dealer.versus(player)
 
         assertThat(expected).isEqualTo(stat)
     }
@@ -63,8 +66,8 @@ internal class DealerTest {
                 Arguments.of(createDealer(ACE, ACE), createPlayer(TEN, TEN), Stat.LOSE),
                 Arguments.of(createDealer(TEN, TEN), createPlayer(ACE, TEN), Stat.LOSE),
                 Arguments.of(createDealer(TEN, ACE), createPlayer(ACE, ACE, TEN), Stat.WIN),
-                Arguments.of(createDealer(TEN, TEN, FIVE), createPlayer(TEN, TEN, FIVE), Stat.WIN),
-                Arguments.of(createDealer(TEN, TEN, FIVE), createPlayer(ACE, ACE), Stat.LOSE),
+                Arguments.of(createDealer(TEN, FIVE, TEN), createPlayer(TEN, TEN, FIVE), Stat.WIN),
+                Arguments.of(createDealer(TEN, FIVE, TEN), createPlayer(ACE, ACE), Stat.LOSE),
             )
         }
 
