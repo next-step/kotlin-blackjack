@@ -6,4 +6,8 @@ class Wallet(val cards: List<Card>) {
     fun isAbleToDraw(limit: Int): Boolean {
         return (this.sumUp < limit)
     }
+
+    fun getMutableCardList(): MutableList<Card> {
+        return this.cards.toMutableList()
+    }
 }
