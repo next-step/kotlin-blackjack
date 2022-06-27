@@ -1,31 +1,56 @@
 package game.blackjack.domain
 
-class Player(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
-    var status: Status = Status.HIT
+open class Player(val name: String) {
+    private val _cards: Cards = Cards()
+    private var status: Status = Status.HIT
+    protected val winningRecord = WinningRecord()
 
-    val cards: List<Card>
-        get() = _cards.toList()
+    val cards: Cards
+        get() = _cards
 
-    fun determine(response: String): Status {
-        when (response) {
-            "y" -> {
-                status = Status.HIT
-            }
-            "n" -> status = Status.STAY
-        }
-
+    fun determine(response: Boolean): Status {
+        status = if (response) Status.HIT else Status.STAY
         return status
     }
 
-    fun receive(card: Card): Int {
+    fun score(): Score = cards.score()
+
+    fun isBust(): Boolean = cards.isBust()
+
+    fun receive(card: Card): Score {
         _cards.add(card)
-        val score = Card.score(_cards)
-        if (Card.isBust(score)) {
+        val score = _cards.score()
+        if (score.isBust()) {
             status = Status.BUST
         }
         return score
     }
 
-    fun canReceive(): Boolean = status == Status.HIT
+    open fun canReceive(): Boolean = status == Status.HIT
+
+    open fun receiveUntilHit(
+        action: (name: String) -> Boolean,
+        showPlayerCard: (player: Player) -> Unit,
+        drawCard: () -> Card
+    ) {
+        while (canReceive()) {
+            determine(action(name))
+            if (canReceive()) {
+                receive(drawCard())
+            }
+            showPlayerCard(this)
+        }
+    }
+
+    fun record(dealer: Dealer) {
+        if (!dealer.isBust() && dealer.score() > score()) {
+            dealer.recordWin()
+            winningRecord.recordLose()
+        } else {
+            dealer.recordLose()
+            winningRecord.recordWin()
+        }
+    }
+
+    fun winningRecord() = winningRecord
 }

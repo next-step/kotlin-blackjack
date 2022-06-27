@@ -25,7 +25,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.JACK),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(22)
+        assertThat(score).isEqualTo(Score(22))
     }
 
     @Test
@@ -36,7 +36,7 @@ internal class CardTest {
             Card(Suit.HEART, Denomination.TWO),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(15)
+        assertThat(score).isEqualTo(Score(15))
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.QUEEN),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(Score(21))
     }
 
     @Test
@@ -58,7 +58,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.SIX),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(Score(21))
     }
 
     @Test
@@ -68,7 +68,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.KING),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(21)
+        assertThat(score).isEqualTo(Score(21))
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.ACE),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(12)
+        assertThat(score).isEqualTo(Score(12))
     }
 
     @Test
@@ -89,7 +89,7 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.ACE),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(13)
+        assertThat(score).isEqualTo(Score(13))
     }
 
     @Test
@@ -101,6 +101,6 @@ internal class CardTest {
             Card(Suit.SPADE, Denomination.ACE),
         )
         val score = Card.score(ranks)
-        assertThat(score).isEqualTo(14)
+        assertThat(score).isEqualTo(Score(14))
     }
 }

@@ -10,7 +10,6 @@ internal class DenominationTest {
     @Test
     fun `단순 합 계산`() {
         val denomination = Denomination.TEN
-        assertThat(denomination.symbol).isEqualTo("10")
-        assertThat(denomination.score).isEqualTo(10)
+        assertThat(denomination.score).isEqualTo(Score(10))
     }
 }

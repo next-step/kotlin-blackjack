@@ -1,17 +1,17 @@
 package game.blackjack.domain
 
-enum class Denomination(val symbol: String, val score: Int) {
-    ACE("A", 1),
-    TWO("2", 2),
-    TREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8),
-    NINE("9", 9),
-    TEN("10", 10),
-    JACK("J", 10),
-    QUEEN("Q", 10),
-    KING("K", 10),
+enum class Denomination(val score: Score) {
+    ACE(Score(1)),
+    TWO(Score(2)),
+    THREE(Score(3)),
+    FOUR(Score(4)),
+    FIVE(Score(5)),
+    SIX(Score(6)),
+    SEVEN(Score(7)),
+    EIGHT(Score(8)),
+    NINE(Score(9)),
+    TEN(Score(10)),
+    JACK(Score(10)),
+    QUEEN(Score(10)),
+    KING(Score(10)),
 }

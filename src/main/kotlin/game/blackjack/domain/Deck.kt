@@ -3,20 +3,17 @@ package game.blackjack.domain
 import java.util.Stack
 
 class Deck {
-    private val _cards: Stack<Card> = Stack()
-    val cards: List<Card>
-        get() = _cards.toList()
+    private var cards: Stack<Card> = Stack()
 
     init {
-        val cards: MutableList<Card> = mutableListOf()
-        Denomination.values().forEach { rank ->
-            Suit.values().forEach { cards.add(Card(it, rank)) }
-        }
-
-        _cards.addAll(cards.shuffled())
+        cards.addAll(
+            Denomination.values().flatMap { rank ->
+                Suit.values().map { Card(it, rank) }
+            }.shuffled()
+        )
     }
 
     fun draw(): Card {
-        return _cards.pop()
+        return cards.pop()
     }
 }

@@ -7,13 +7,14 @@ class InputView {
         return readln().split(",")
     }
 
-    fun readPlayerAction(name: String): String {
-        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun readPlayerAction(name: String): Boolean {
+        println("\n${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         var action: String
         do {
             action = readln()
         } while (!RESPONSES.contains(action))
-        return action
+
+        return action == "y"
     }
 
     companion object {
