@@ -30,7 +30,7 @@ class BlackJack {
 
     fun chooseDrawing(player: Player, answer: String): Player{
         if (answer == "n") return player
-        val newWallet = player.draw(answer)
+        val newWallet = player.draw()
        return Player(player.name, newWallet)
     }
 }

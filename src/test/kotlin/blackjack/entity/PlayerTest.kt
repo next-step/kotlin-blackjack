@@ -2,6 +2,7 @@
 
 package blackjack.entity
 
+import blackjack.BlackJack
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -15,7 +16,7 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw("y")
+        val resultWallet = testPlayer.draw()
 
         // then
         Assertions.assertThat(resultWallet.cards.size).isEqualTo(testWallet.cards.size + 1)
@@ -29,7 +30,7 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw("y")
+        val resultWallet = testPlayer.draw()
 
         // then
         Assertions.assertThat(resultWallet.sumUp).isGreaterThan(testWallet.sumUp)
@@ -43,10 +44,10 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw("n")
+        val resultPlayer = BlackJack().chooseDrawing(testPlayer, "n")
 
         // then
-        Assertions.assertThat(resultWallet.cards.size).isEqualTo(testWallet.cards.size)
+        Assertions.assertThat(resultPlayer.wallet.cards.size).isEqualTo(testWallet.cards.size)
     }
 
     @Test
@@ -57,9 +58,9 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw("n")
+        val resultPlayer = BlackJack().chooseDrawing(testPlayer, "n")
 
         // then
-        Assertions.assertThat(resultWallet.sumUp).isEqualTo(testWallet.sumUp)
+        Assertions.assertThat(resultPlayer.wallet.sumUp).isEqualTo(testWallet.sumUp)
     }
 }

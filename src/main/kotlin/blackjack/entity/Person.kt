@@ -4,5 +4,5 @@ interface Person {
     val name: String
     val wallet: Wallet
     val limit: Int
-    fun draw(answer: String): Wallet
+    fun draw(): Wallet
 }
