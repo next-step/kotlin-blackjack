@@ -46,7 +46,7 @@ open class User(val name: String, initCards: List<Card>) {
             _cards.getScore().isBlackJackScore()
     }
 
-    fun getBatResult(user: User): Money {
+    open fun getBatResult(user: User): Money {
         return when (match(user)) {
             Match.WIN -> money
             Match.WIN_BLACKJACK -> money.times(BLACKJACK_WIN_PROFIT_MARGIN)
