@@ -16,4 +16,8 @@ value class Money(val value: Int = 0) {
     operator fun minus(money: Money): Money {
         return Money(value - money.value)
     }
+
+    operator fun times(value: Double): Money {
+        return Money((this.value * value).toInt())
+    }
 }

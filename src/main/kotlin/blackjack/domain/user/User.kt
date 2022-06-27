@@ -41,14 +41,14 @@ open class User(val name: String, initCards: List<Card>) {
         return _cards.getScore().isBust()
     }
 
-    private fun isBlackJack(): Boolean {
+    fun isBlackJack(): Boolean {
         return _cards.getSize() == Users.INIT_CARD_SIZE &&
             _cards.getScore().isBlackJackScore()
     }
 
     fun getBatResult(user: User): Money {
         return when (match(user)) {
-            Match.WIN -> money
+            Match.WIN -> if (isBlackJack()) money.times(BLACKJACK_WIN_PROFIT_MARGIN) else money
             Match.LOSE -> Money(-money.value)
             else -> Money()
         }
@@ -84,6 +84,10 @@ open class User(val name: String, initCards: List<Card>) {
             hit(deck.takeCard())
             output.drawUserCard(this)
         }
+    }
+
+    companion object {
+        const val BLACKJACK_WIN_PROFIT_MARGIN = 1.5
     }
 }
 

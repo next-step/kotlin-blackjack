@@ -19,7 +19,10 @@ class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
                     money += it.money
                 }
                 Match.LOSE -> {
-                    money -= it.money
+                    money -= if (it.isBlackJack())
+                        it.money.times(BLACKJACK_WIN_PROFIT_MARGIN)
+                    else
+                        it.money
                 }
             }
         }

@@ -2,6 +2,7 @@ package blackjack.domain.user
 
 import blackjack.domain.card.Ace
 import blackjack.domain.card.CardType
+import blackjack.domain.card.Jack
 import blackjack.domain.card.Nine
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -37,5 +38,23 @@ class UserTest {
         }
         val dealer = Dealer(Ace(CardType.SPADE))
         assertThat(user1.getBatResult(dealer).value).isEqualTo(-10000)
+    }
+
+    @Test
+    fun `유저가 블랙잭으로 승리한경우 승리시 일점오배를 받는다`() {
+        val user1 = User("link", listOf(Ace(CardType.DIAMOND), Jack(CardType.SPADE))).apply {
+            setBatMoney(10000)
+        }
+        val dealer = Dealer(Ace(CardType.SPADE))
+        assertThat(user1.getBatResult(dealer).value).isEqualTo(15000)
+    }
+
+    @Test
+    fun `무승부시 배팅금액을 돌려 받는다`() {
+        val user1 = User("link", listOf(Ace(CardType.DIAMOND))).apply {
+            setBatMoney(10000)
+        }
+        val dealer = Dealer(Ace(CardType.SPADE))
+        assertThat(user1.getBatResult(dealer).value).isEqualTo(0)
     }
 }

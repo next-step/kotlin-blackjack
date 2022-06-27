@@ -91,7 +91,7 @@ class DealerTest {
     }
 
     @Test
-    internal fun `딜러와 플레이어 둘다 블랙잭이면 무승부로 수익은 0이다`() {
+    fun `딜러와 플레이어 둘다 블랙잭이면 무승부로 수익은 0이다`() {
         val dealer = Dealer(Ace(CardType.CLUB)).apply {
             hit(Jack(CardType.HEART))
         }
@@ -99,5 +99,14 @@ class DealerTest {
             setBatMoney(10000)
         }
         assertThat(dealer.getBatResult(listOf(user1)).value).isEqualTo(0)
+    }
+
+    @Test
+    fun `플레이어가 블랙잭으로 승리하면 딜러는 배팅의 일점오배만큼 잃는다`() {
+        val dealer = Dealer(Ace(CardType.CLUB))
+        val user1 = User("hello", listOf(Ace(CardType.HEART), King(CardType.HEART))).apply {
+            setBatMoney(10000)
+        }
+        assertThat(dealer.getBatResult(listOf(user1)).value).isEqualTo(-15000)
     }
 }
