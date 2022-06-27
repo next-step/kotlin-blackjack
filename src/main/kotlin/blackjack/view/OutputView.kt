@@ -8,6 +8,7 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Jack
 import blackjack.domain.card.King
 import blackjack.domain.card.Queen
+import blackjack.domain.user.Dealer
 import blackjack.domain.user.User
 import blackjack.domain.user.Users
 
@@ -21,8 +22,8 @@ object OutputView : OutputInterface {
         println(Messages.HAND_OUT_CARD.format(users.names().joinToString()))
     }
 
-    fun printUsersCard(users: Users) {
-        drawUserCard(users.dealer)
+    fun printUsersCard(users: Users, dealer: Dealer) {
+        drawUserCard(dealer)
         users.users.forEach {
             drawUserCard(it)
         }
@@ -46,21 +47,21 @@ object OutputView : OutputInterface {
         println(Messages.PRINT_DEALER_HIT_MESSAGE)
     }
 
-    fun printResult(users: Users) {
+    fun printResult(users: Users, dealer: Dealer) {
         println()
-        printCardAndScore(users.dealer)
+        printCardAndScore(dealer)
         users.users.forEach {
             printCardAndScore(it)
         }
     }
 
-    fun printWinAndLose(users: Users) {
+    fun printWinAndLose(users: Users, dealer: Dealer) {
         println()
         println(Messages.FINAL_WIN_AND_LOSE)
-        val matchResults = users.dealer.getBatResult(users.users)
-        println(Messages.USER_COLON.format(users.dealer.name) + matchResults.value)
+        val matchResults = dealer.getBatResult(users.users)
+        println(Messages.USER_COLON.format(dealer.name) + matchResults.value)
         users.users.forEach {
-            println(Messages.USER_COLON.format(it.name) + it.getBatResult(users.dealer).value)
+            println(Messages.USER_COLON.format(it.name) + it.getBatResult(dealer).value)
         }
     }
 
