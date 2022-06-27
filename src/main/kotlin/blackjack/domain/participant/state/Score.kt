@@ -17,7 +17,20 @@ value class Score(
         else -> DRAW
     }
 
+    fun increaseAceScoreBeforeBust(countOfAce: Int): Score {
+        var increaseValue = this.value
+
+        repeat(countOfAce) {
+            if (increaseValue + INCREASE_ACE_SCORE <= BLACKJACK) {
+                increaseValue += INCREASE_ACE_SCORE
+            }
+        }
+
+        return Score(value = increaseValue)
+    }
+
     companion object {
         private const val BLACKJACK = 21
+        private const val INCREASE_ACE_SCORE = 10
     }
 }

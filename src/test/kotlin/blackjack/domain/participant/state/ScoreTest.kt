@@ -21,4 +21,19 @@ internal class ScoreTest : FreeSpec({
             }
         }
     }
+
+    "버스트가 되지 않는다면, ACE의 개수만큼 점수를 증가시킨다." - {
+        listOf(
+            row(12, 2, 12),
+            row(21, 1, 21),
+            row(1, 1, 11),
+            row(15, 1, 15),
+            row(9, 1, 19),
+        ).forEach { (currentScore, countOfAce, newScore) ->
+            "$currentScore 에서 ACE가 $countOfAce 개면 $newScore 가 된다." {
+                val score = Score(value = currentScore)
+                score.increaseAceScoreBeforeBust(countOfAce = countOfAce) shouldBe Score(value = newScore)
+            }
+        }
+    }
 })
