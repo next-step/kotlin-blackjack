@@ -15,10 +15,10 @@ class CandidateGameResultsTest {
     @Test
     fun `참가자 승패 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
         // given
-        val candidate1 = Candidate.from("aiden1")
-        val candidate2 = Candidate.from("aiden2")
+        val player1 = Player.from("aiden1", 1)
+        val player2 = Player.from("aiden2", 1)
 
-        val candidates = Candidates(listOf(candidate1, candidate2))
+        val candidates = Candidates(listOf(player1, player2))
 
         // when, then
         val exception = assertThrows<IllegalArgumentException> { CandidateGameResults.from(candidates) }
@@ -31,16 +31,16 @@ class CandidateGameResultsTest {
         val dealer1 = Dealer()
         dealer1.receiveCard(Card(CardSymbol.스페이드, CardNumber.THREE))
 
-        val candidate1 = Candidate.from("aiden1")
-        candidate1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
+        val player1 = Player.from("aiden1", 1)
+        player1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
 
-        val candidate2 = Candidate.from("aiden2")
-        candidate2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
+        val player2 = Player.from("aiden2", 1)
+        player2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
 
-        val candidate3 = Candidate.from("aiden3")
-        candidate3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
+        val player3 = Player.from("aiden3", 1)
+        player3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
 
-        val candidates = Candidates(listOf(dealer1, candidate1, candidate2, candidate3))
+        val candidates = Candidates(listOf(dealer1, player1, player2, player3))
 
         // when
         val candidateGameResults = CandidateGameResults.from(candidates)

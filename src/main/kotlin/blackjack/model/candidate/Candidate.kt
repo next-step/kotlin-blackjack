@@ -3,7 +3,7 @@ package blackjack.model.candidate
 import blackjack.model.card.Card
 import blackjack.model.card.Cards
 
-open class Candidate protected constructor(
+abstract class Candidate protected constructor(
     val candidateName: CandidateName,
     val cards: Cards = Cards(),
     var needMoreCard: Boolean = true,
@@ -41,10 +41,4 @@ open class Candidate protected constructor(
     }
 
     override fun hashCode() = candidateName.hashCode()
-
-    companion object {
-        fun from(name: String) = Candidate(CandidateName(name))
-
-        fun from(name: String, cards: Cards) = Candidate(CandidateName(name), cards)
-    }
 }

@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.candidate.Candidate
+import blackjack.model.candidate.Player
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardSetGenerator
@@ -25,10 +25,10 @@ class GameHostTest {
 
         assertThat(gameHost.cardSet.size).isEqualTo(6)
 
-        val candidate = Candidate.from("aiden")
+        val player = Player.from("aiden", 1)
 
         // when
-        gameHost.provideOneCardTo(candidate)
+        gameHost.provideOneCardTo(player)
 
         // then
         val expectedGameHostCards = Cards(
@@ -46,7 +46,7 @@ class GameHostTest {
         assertAll(
             "provide one card to candidate test",
             { assertThat(gameHost.cardSet).isEqualTo(expectedGameHostCards) },
-            { assertThat(candidate.cards).isEqualTo(expectedPlayerCards) }
+            { assertThat(player.cards).isEqualTo(expectedPlayerCards) }
         )
     }
 
@@ -60,11 +60,11 @@ class GameHostTest {
                 Card(CardSymbol.스페이드, CardNumber.TEN),
             )
         )
-        val candidate = Candidate.from("aiden", cards)
+        val player = Player.from("aiden", cards, 1)
         val gameHost = GameHost()
 
         // when, then
-        val exception = assertThrows<IllegalArgumentException> { gameHost.provideOneCardTo(candidate) }
+        val exception = assertThrows<IllegalArgumentException> { gameHost.provideOneCardTo(player) }
         assertThat(exception.message).isEqualTo("카드 점수가 21점을 넘을 수 없습니다.")
     }
 }

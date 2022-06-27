@@ -19,18 +19,18 @@ class CandidatesTest {
     @Test
     fun `다음 참가자 찾는 기능이 정상 동작`() {
         // given
-        val candidate1 = Candidate.from("aiden1")
-        val candidate2 = Candidate.from("aiden2")
-        val candidate3 = Candidate.from("aiden3")
+        val player1 = Player.from("aiden1", 1)
+        val player2 = Player.from("aiden2", 1)
+        val player3 = Player.from("aiden3", 1)
 
-        val candidates = Candidates(listOf(candidate1, candidate2, candidate3))
+        val candidates = Candidates(listOf(player1, player2, player3))
 
         // when, then
         assertAll(
             "find next candidate test",
-            { assertThat(candidates.findNext(candidate1)).isEqualTo(candidate2) },
-            { assertThat(candidates.findNext(candidate2)).isEqualTo(candidate3) },
-            { assertThat(candidates.findNext(candidate3)).isEqualTo(candidate1) }
+            { assertThat(candidates.findNext(player1)).isEqualTo(player2) },
+            { assertThat(candidates.findNext(player2)).isEqualTo(player3) },
+            { assertThat(candidates.findNext(player3)).isEqualTo(player1) }
         )
     }
 }

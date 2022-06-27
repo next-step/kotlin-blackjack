@@ -23,7 +23,7 @@ object ConsoleResultView : ResultView {
         println()
     }
 
-    override fun printCandidateCardStatus(candidate: Candidate) = println(playerCardStatus(candidate))
+    override fun printCandidateCardStatus(candidate: Candidate) = println(candidateCardStatus(candidate))
 
     override fun printCardGameResult(results: CandidateGameResults) {
         println()
@@ -31,7 +31,7 @@ object ConsoleResultView : ResultView {
         results.candidates.forEach {
             val score1 = it.sumOfCardScore.score1
             val score2 = it.sumOfCardScore.score2
-            println("${playerCardStatus(it)} - 결과: ${playerCardScore(score1, score2)}")
+            println("${candidateCardStatus(it)} - 결과: ${candidateCardScore(score1, score2)}")
         }
 
         println("\n## 최종 승패")
@@ -40,13 +40,13 @@ object ConsoleResultView : ResultView {
         }
     }
 
-    private fun playerCardStatus(candidate: Candidate): String {
+    private fun candidateCardStatus(candidate: Candidate): String {
         val cards = candidate.cards.cards
             .joinToString(CARD_SEPARATOR) { "${it.numberMark}${it.symbol}" }
         return "${candidate.name}카드: $cards"
     }
 
-    private fun playerCardScore(score1: Int, score2: Int): String {
+    private fun candidateCardScore(score1: Int, score2: Int): String {
         if (score1 == score2) {
             return "$score1"
         }

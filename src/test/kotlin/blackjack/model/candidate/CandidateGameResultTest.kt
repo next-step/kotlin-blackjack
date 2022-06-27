@@ -20,17 +20,17 @@ class CandidateGameResultTest {
         val dealer2 = Dealer()
         dealer2.receiveCard(Card(CardSymbol.스페이드, CardNumber.THREE))
 
-        val candidate1 = Candidate.from("aiden1")
-        candidate1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
+        val player1 = Player.from("aiden1", 1)
+        player1.receiveCard(Card(CardSymbol.하트, CardNumber.TWO))
 
-        val candidate2 = Candidate.from("aiden2")
-        candidate2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
+        val player2 = Player.from("aiden2", 1)
+        player2.receiveCard(Card(CardSymbol.하트, CardNumber.THREE))
 
         // when
-        val resultOfPlayer1AndDealer1 = CandidateGameResult.of(candidate1, dealer1)
-        val resultOfPlayer1AndDealer2 = CandidateGameResult.of(candidate1, dealer2)
-        val resultOfPlayer2AndDealer1 = CandidateGameResult.of(candidate2, dealer1)
-        val resultOfPlayer2AndDealer2 = CandidateGameResult.of(candidate2, dealer2)
+        val resultOfPlayer1AndDealer1 = CandidateGameResult.of(player1, dealer1)
+        val resultOfPlayer1AndDealer2 = CandidateGameResult.of(player1, dealer2)
+        val resultOfPlayer2AndDealer1 = CandidateGameResult.of(player2, dealer1)
+        val resultOfPlayer2AndDealer2 = CandidateGameResult.of(player2, dealer2)
 
         // then
         assertAll(
