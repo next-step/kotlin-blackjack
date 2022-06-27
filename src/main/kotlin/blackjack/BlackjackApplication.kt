@@ -5,6 +5,7 @@ import blackjack.model.candidate.Candidate
 import blackjack.model.candidate.CandidateGameResults
 import blackjack.model.candidate.Candidates
 import blackjack.model.candidate.Dealer
+import blackjack.model.candidate.Player
 import blackjack.view.InputView
 import blackjack.view.MoreCardMark
 import blackjack.view.ResultView
@@ -20,8 +21,13 @@ object BlackjackApplication {
 
     private fun startGame(inputView: InputView): Game {
         inputView.printPlayerNamesInputMessage()
+        val players = inputView.inputPlayerNames()
+            .map {
+                inputView.printPlayerBettingAmountInputMessage(it)
+                Player.from(it, inputView.inputPlayerBettingAmount())
+            }
 
-        val candidates = Candidates(inputView.inputPlayerNames().plus(Dealer()))
+        val candidates = Candidates(players.plus(Dealer()))
         val game = Game(candidates = candidates)
 
         game.start()

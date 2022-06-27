@@ -1,12 +1,15 @@
 package blackjack.view
 
 import blackjack.model.candidate.CandidateName
-import blackjack.model.candidate.Player
 
 interface InputView {
     fun printPlayerNamesInputMessage()
 
-    fun inputPlayerNames(): List<Player>
+    fun inputPlayerNames(): List<String>
+
+    fun printPlayerBettingAmountInputMessage(name: String)
+
+    fun inputPlayerBettingAmount(): Int
 
     fun printNeedMoreCardAskMessage(name: CandidateName)
 
