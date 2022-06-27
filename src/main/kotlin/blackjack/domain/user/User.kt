@@ -41,14 +41,15 @@ open class User(val name: String, initCards: List<Card>) {
         return _cards.getScore().isBust()
     }
 
-    fun isBlackJack(): Boolean {
+    private fun isBlackJack(): Boolean {
         return _cards.getSize() == Users.INIT_CARD_SIZE &&
             _cards.getScore().isBlackJackScore()
     }
 
     fun getBatResult(user: User): Money {
         return when (match(user)) {
-            Match.WIN -> if (isBlackJack()) money.times(BLACKJACK_WIN_PROFIT_MARGIN) else money
+            Match.WIN -> money
+            Match.WIN_BLACKJACK -> money.times(BLACKJACK_WIN_PROFIT_MARGIN)
             Match.LOSE -> Money(-money.value)
             else -> Money()
         }
@@ -65,9 +66,9 @@ open class User(val name: String, initCards: List<Card>) {
         if (isBlackJack() && user.isBlackJack())
             return Match.DRAW
         else if (isBlackJack())
-            return Match.WIN
+            return Match.WIN_BLACKJACK
         else if (user.isBlackJack())
-            return Match.LOSE
+            return Match.LOSE_BLACKJACK
 
         return if (user._cards.getScore() < _cards.getScore())
             Match.WIN
@@ -92,5 +93,5 @@ open class User(val name: String, initCards: List<Card>) {
 }
 
 enum class Match {
-    WIN, LOSE, DRAW
+    WIN, LOSE, DRAW, WIN_BLACKJACK, LOSE_BLACKJACK
 }

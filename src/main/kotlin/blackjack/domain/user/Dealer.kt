@@ -14,19 +14,26 @@ class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
     fun getBatResult(users: List<User>): Money {
         var money = Money(0)
         users.forEach {
-            when (match(it)) {
-                Match.WIN -> {
-                    money += it.money
-                }
-                Match.LOSE -> {
-                    money -= if (it.isBlackJack())
-                        it.money.times(BLACKJACK_WIN_PROFIT_MARGIN)
-                    else
-                        it.money
-                }
-            }
+            money += matchUser(it)
         }
         return money
+    }
+
+    private fun matchUser(user: User): Money {
+        return when (match(user)) {
+            Match.WIN, Match.WIN_BLACKJACK -> {
+                user.money
+            }
+            Match.LOSE -> {
+                Money(-user.money.value)
+            }
+            Match.LOSE_BLACKJACK -> {
+                Money(-user.money.times(BLACKJACK_WIN_PROFIT_MARGIN).value)
+            }
+            else -> {
+                Money(0)
+            }
+        }
     }
 
     fun isOverHitScore(): Boolean {
