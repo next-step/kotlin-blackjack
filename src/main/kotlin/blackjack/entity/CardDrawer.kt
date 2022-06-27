@@ -2,7 +2,7 @@ package blackjack.entity
 
 object CardDrawer {
     fun drawSingleCard(): Card {
-        return Card(getRandomShape(), getRandomNumber())
+        return Deck.cards.removeFirst()
     }
 
     fun drawInitialCards(): Wallet {
