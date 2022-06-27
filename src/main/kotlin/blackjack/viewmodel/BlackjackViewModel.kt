@@ -7,6 +7,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
 import blackjack.domain.Observable
+import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.PlayerInfo
@@ -21,23 +22,41 @@ class BlackjackViewModel private constructor(
     private val cardDeck: CardDeck,
     private val isPlayerWannaHit: (Player) -> Boolean
 ) {
-    val currentTurn: Observable<BlackjackGameTurn> = Observable(BlackjackGameTurn.from(participants))
+    val uiEvent: Observable<Participant?> = Observable(null)
 
-    fun hit() {
-        val currentPlayer = currentTurn.value.participant
-        currentPlayer.receive(cardDeck.draw(HIT_CARD_COUNT))
+    private var currentTurn: BlackjackGameTurn = BlackjackGameTurn.from(participants)
+
+    fun startGame() {
+        while (!currentTurn.isBlackjackGameEnd()) {
+            takeTurn()
+        }
     }
 
-    fun stay() {
-        val currentPlayer = currentTurn.value.participant as? Player
-        currentPlayer?.stay()
+    private fun takeTurn() {
+        when (val participant = currentTurn.participant) {
+            is Player -> takePlayerTurn(participant)
+            is Dealer -> takeDealerTurn(participant)
+        }
+
+        nextTurn()
     }
 
-    fun nextTurn() {
-        val nextTurn = BlackjackGameTurn.from(participants)
-        if (nextTurn.participant is Dealer && nextTurn.isTurnEnd()) return // Todo : 수정
+    private fun takePlayerTurn(player: Player) {
+        if (isPlayerWannaHit(player)) {
+            currentTurn.hit(cardDeck.draw(HIT_CARD_COUNT))
+            uiEvent.value = player
+        } else {
+            currentTurn.stay()
+        }
+    }
 
-        currentTurn.value = nextTurn
+    private fun takeDealerTurn(dealer: Dealer) {
+        currentTurn.hit(cardDeck.draw(HIT_CARD_COUNT))
+        uiEvent.value = dealer
+    }
+
+    private fun nextTurn() {
+        currentTurn = BlackjackGameTurn.from(participants)
     }
 
     fun getBlackjackGameResult(): BlackjackGameResult {

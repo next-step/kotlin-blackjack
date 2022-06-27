@@ -10,6 +10,8 @@ class PlayingCards private constructor(private val cards: List<PlayingCard>) : L
     companion object {
         fun from(cards: List<PlayingCard>): PlayingCards = PlayingCards(cards)
 
+        fun from(vararg card: PlayingCard): PlayingCards = PlayingCards(card.toList())
+
         fun empty(): PlayingCards = PlayingCards(emptyList())
     }
 }

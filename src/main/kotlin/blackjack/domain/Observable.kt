@@ -11,6 +11,5 @@ class Observable<T>(value: T) {
 
     fun observe(observer: (T) -> Unit) {
         this.observer = observer
-        observer.invoke(value)
     }
 }

@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.domain.BetAmount
 import blackjack.domain.Dealer
-import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
@@ -31,11 +30,13 @@ object BlackjackLayout {
         val viewModel = BlackjackViewModel.from(DEALER_NAME, playerInfos, ::isPlayerWannaHit)
         OutputView.println(viewModel.participants, StartOfGameConverter)
 
-        viewModel.currentTurn.observe { turn ->
-            if (turn.isTurnEnd()) return@observe
-
-            stepOfTurn(turn.participant, viewModel)
+        viewModel.uiEvent.observe { participant ->
+            when (participant) {
+                is Player -> OutputView.print(participant, PlayerConverter)
+                is Dealer -> OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_DEALER_HIT)
+            }
         }
+        viewModel.startGame()
 
         println()
         OutputView.print(viewModel.getBlackjackGameResult(), EndOfGameConverter)
@@ -63,22 +64,6 @@ object BlackjackLayout {
         return InputView.receiveUserInput(userInputRequest)
     }
 
-    private fun stepOfTurn(participant: Participant, viewModel: BlackjackViewModel) {
-        when (participant) {
-            is Player -> stepOfPlayerTurn(participant, viewModel)
-            is Dealer -> stepOfDealerTurn(viewModel)
-        }
-    }
-
-    private fun stepOfPlayerTurn(player: Player, viewModel: BlackjackViewModel) {
-        if (isPlayerWannaHit(player)) {
-            viewModel.hit()
-            OutputView.print(player, PlayerConverter)
-        } else {
-            viewModel.stay()
-        }
-    }
-
     private fun isPlayerWannaHit(player: Player): Boolean {
         val userInputRequest = UserInputRequest(
             message = "${player.name.value}$GUIDANCE_MESSAGE_HIT",
@@ -86,10 +71,5 @@ object BlackjackLayout {
         )
 
         return InputView.receiveUserInput(userInputRequest)
-    }
-
-    private fun stepOfDealerTurn(viewModel: BlackjackViewModel) {
-        OutputView.printlnOnlyMessage(GUIDANCE_MESSAGE_DEALER_HIT)
-        viewModel.hit()
     }
 }

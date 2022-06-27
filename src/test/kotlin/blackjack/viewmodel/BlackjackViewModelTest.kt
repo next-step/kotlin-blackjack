@@ -1,15 +1,13 @@
 package blackjack.viewmodel
 
 import blackjack.domain.BetAmount
-import blackjack.domain.BlackjackGameTurn
 import blackjack.domain.CardDeck
-import blackjack.domain.CardNumber
+import blackjack.domain.Participant
 import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
-import blackjack.domain.PlayingCards
 import blackjack.domain.START_CARD_COUNT
-import blackjack.domain.Suit
+import isA
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -45,78 +43,12 @@ class BlackjackViewModelTest {
     }
 
     @Test
-    fun `BlackJackViewModel을 생성할 때 카드를 뽑을 수 있는 첫 번째 사람이 턴을 얻게 된다`() {
-        val viewModel = BlackjackViewModel.of(
-            dealerName = dealerName,
-            playerInfos = playerInfos,
-            cardDeck = CardDeck.from(
-                PlayingCards.from(
-                    listOf(
-                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard(Suit.HEARTS, CardNumber.TWO),
-                        PlayingCard(Suit.HEARTS, CardNumber.THREE),
-                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard(Suit.HEARTS, CardNumber.FIVE),
-                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
-                    )
-                )
-            )
-        )
-
-        assertThat(viewModel.currentTurn.value.participant.name).isEqualTo(playerInfos[0].name)
-    }
-
-    @Test
-    fun `currentTurn을 observe해서 어떤 플레이어의 턴인지 확인할 수 있다`() {
+    fun `uiEvent를 observe해서 출력해야 할 모델을 받을 수 있다`() {
         val viewModel = viewModel
-        viewModel.currentTurn.observe { turn ->
-            assertThat(turn.participant).isIn(viewModel.participants.all)
+        viewModel.uiEvent.observe { participant ->
+            assertThat(participant).isA<Participant>()
         }
 
-        viewModel.currentTurn.value = BlackjackGameTurn.from(viewModel.participants.all[2])
-    }
-
-    @Test
-    fun `hit를 호출하여 현재 턴인 플레이어가 카드를 받을 수 있다`() {
-        val viewModel = viewModel
-        viewModel.hit()
-
-        val currentParticipant = viewModel.currentTurn.value.participant
-        assertThat(currentParticipant.hands.cards.size).isEqualTo(3)
-    }
-
-    @Test
-    fun `stay를 호출하여 더 이상 플레이어가 카드를 뽑지 않고 차례를 마칠 수 있다`() {
-        val viewModel = viewModel
-        viewModel.stay()
-
-        assertThat(viewModel.currentTurn.value.isTurnEnd()).isTrue
-    }
-
-    @Test
-    fun `nextTurn을 호출하여 카드를 받을 수 있는 플레이어에게 턴을 넘길 수 있다`() {
-        val viewModel = BlackjackViewModel.of(
-            dealerName = dealerName,
-            playerInfos = playerInfos,
-            cardDeck = CardDeck.from(
-                PlayingCards.from(
-                    listOf(
-                        PlayingCard(Suit.HEARTS, CardNumber.ACE),
-                        PlayingCard(Suit.HEARTS, CardNumber.EIGHT),
-                        PlayingCard(Suit.DIAMONDS, CardNumber.ACE),
-                        PlayingCard(Suit.HEARTS, CardNumber.FOUR),
-                        PlayingCard(Suit.SPADES, CardNumber.TWO),
-                        PlayingCard(Suit.HEARTS, CardNumber.SIX)
-                    )
-                )
-            )
-        )
-
-        viewModel.hit()
-        viewModel.stay()
-        viewModel.nextTurn()
-
-        val currentParticipant = viewModel.currentTurn.value.participant
-        assertThat(currentParticipant.name).isEqualTo(PlayerName("Diamond"))
+        viewModel.uiEvent.value = viewModel.participants.all[2]
     }
 }
