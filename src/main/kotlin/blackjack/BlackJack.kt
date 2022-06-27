@@ -15,18 +15,21 @@ class BlackJack {
         players.map { player: Player -> GetResult.printPlayerStatus(player) }
         println()
 
-        val playedPlayers = players.map { player -> chooseDrawing(player) }
+        val playedPlayers = players.map { player -> checkDrawingCondition(player) }
         println()
         playedPlayers.map { player: Player -> GetResult.printPlayerStatusWithResult(player) }
     }
 
-    fun chooseDrawing(player: Player): Player {
+    fun checkDrawingCondition(player: Player): Player {
         if (!player.wallet.isAbleToDraw(player.limit)) return player
-        val answer: String = Input.additionalCard(player.name)
+        val newPlayer = chooseDrawing(player, Input.additionalCard(player.name))
+        GetResult.printPlayerStatus(newPlayer)
+        return checkDrawingCondition(newPlayer)
+    }
+
+    fun chooseDrawing(player: Player, answer: String): Player{
         if (answer == "n") return player
         val newWallet = player.draw(answer)
-        val newPlayer = Player(player.name, newWallet)
-        GetResult.printPlayerStatus(newPlayer)
-        return chooseDrawing(newPlayer)
+       return Player(player.name, newWallet)
     }
 }
