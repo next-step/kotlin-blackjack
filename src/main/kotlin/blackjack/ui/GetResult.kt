@@ -2,7 +2,7 @@ package blackjack.ui
 
 import blackjack.entity.Player
 
-class GetResult {
+object GetResult {
 
     fun informGameStart(names: List<String>) {
         println(names.toString() + "에게 " + "2장을 나누었습니다.")
