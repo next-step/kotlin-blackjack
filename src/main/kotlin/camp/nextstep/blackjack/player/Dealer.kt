@@ -29,12 +29,12 @@ class Dealer : Player {
         hand.turnUp()
     }
 
-    fun serve(cardDeck: CardDeck, target: Player) {
-        target.receive(cardDeck.draw())
+    fun serve(cardDeck: CardDeck, player: Player) {
+        player.receive(cardDeck.draw())
     }
 
-    fun serve(cardDeck: CardDeck, target: List<Player>) {
-        for (player in target) {
+    fun serve(cardDeck: CardDeck, players: List<Player>) {
+        for (player in players) {
             player.receive(cardDeck.draw())
         }
     }
