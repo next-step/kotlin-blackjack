@@ -16,7 +16,7 @@ fun main() {
 
     gamers.addAll(players)
 
-    val blackjackGame = BlackjackGame(gamers, Deck(cardShuffle))
+    val blackjackGame = BlackjackGame(BlackjackGameElement(gamers, Deck(cardShuffle)))
     val playersDto = PlayersDto(blackjackGame.gamers)
     playersDto.showPlayInit()
 
