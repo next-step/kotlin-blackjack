@@ -12,7 +12,5 @@ class Hit(hand: Hand) : Running(hand) {
         }
     }
 
-    override fun stay(): State {
-        TODO("Not yet implemented")
-    }
+    override fun stay(): State = Stay(this.hand)
 }
