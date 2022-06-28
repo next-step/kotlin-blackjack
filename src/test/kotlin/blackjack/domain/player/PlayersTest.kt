@@ -27,7 +27,7 @@ class PlayersTest : StringSpec({
         // given
         val players = Players("김경록", "로키")
         val deck = Deck(
-            listOf(
+            mutableListOf(
                 Card(Suit.SPADE, Face.TWO),
                 Card(Suit.CLOVER, Face.THREE),
                 Card(Suit.CLOVER, Face.FOUR),

@@ -21,7 +21,7 @@ class DeckTest : FunSpec({
 
     test("덱에 카드가 부족할 때, 첫 턴의 카드를 뽑으면 예외를 발생시킨다.") {
         // given
-        val deck = Deck(listOf(Card(Suit.DIAMOND, Face.NINE)))
+        val deck = Deck(mutableListOf(Card(Suit.DIAMOND, Face.NINE)))
 
         // when // then
         shouldThrowExactly<IllegalArgumentException> { deck.pullOutFirstTurn() }
@@ -29,7 +29,7 @@ class DeckTest : FunSpec({
 
     test("덱에 카드가 부족할 때, 카드를 뽑으면 예외를 발생시킨다.") {
         // given
-        val deck = Deck(emptyList())
+        val deck = Deck(mutableListOf())
 
         // when // then
         shouldThrowExactly<IllegalArgumentException> { deck.pullOut() }

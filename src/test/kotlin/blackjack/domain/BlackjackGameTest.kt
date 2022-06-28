@@ -52,7 +52,7 @@ class BlackjackGameTest : StringSpec({
     "대기중인 플레이어에게 카드를 뽑을지 말지 묻는다." {
         // given
         val blackjackGame = BlackjackGame(
-            deck = Deck(listOf(Card(Suit.CLOVER, Face.THREE))),
+            deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
             players = Players(
                 listOf(
                     Player(
