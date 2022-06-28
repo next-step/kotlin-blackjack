@@ -17,5 +17,5 @@ abstract class UserRole(
 
     abstract fun isDealer(): Boolean
 
-    fun getScore(): Int = gameStatus.state.score(gameStatus.state.currentCard().cards)
+    fun getScore(): Int = gameStatus.state.score(gameStatus.state.currentCard())
 }

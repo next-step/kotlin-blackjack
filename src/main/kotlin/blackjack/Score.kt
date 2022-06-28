@@ -1,8 +1,8 @@
 package blackjack
 
-class Score(val cards: List<Card>) {
+class Score(private val playerDeck: PlayerDeck) {
 
     fun getScore(): Int {
-        return PlayerDeck(cards).calculateScore()
+        return playerDeck.calculateScore()
     }
 }

@@ -10,7 +10,7 @@ sealed interface State {
     fun currentCard(): PlayerDeck
     fun isFinish(): Boolean
     fun draw(card: Card): State
-    fun score(cards: List<Card>): Int {
-        return Score(cards).getScore()
+    fun score(playerDeck: PlayerDeck): Int {
+        return Score(playerDeck).getScore()
     }
 }

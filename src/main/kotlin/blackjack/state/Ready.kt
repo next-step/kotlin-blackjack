@@ -13,7 +13,7 @@ class Ready(private val playerDeck: PlayerDeck) : State {
 
         when {
             playerDeck.cards.size < BASE_CARD_SIZE -> return Ready(playerDeck)
-            playerDeck.cards.size == BASE_CARD_SIZE && score(playerDeck.cards) == BLACKJACK_NUMBER -> return BlackJack(playerDeck)
+            playerDeck.cards.size == BASE_CARD_SIZE && score(playerDeck) == BLACKJACK_NUMBER -> return BlackJack(playerDeck)
         }
 
         return Hit(playerDeck)

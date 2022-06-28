@@ -5,7 +5,7 @@ import blackjack.PlayerDeck
 
 class Hit(private val playerDeck: PlayerDeck) : State {
     init {
-        validate(playerDeck.cards)
+        validate(playerDeck)
     }
     override fun currentCard(): PlayerDeck = playerDeck
 
@@ -14,13 +14,13 @@ class Hit(private val playerDeck: PlayerDeck) : State {
     override fun draw(card: Card): State {
         playerDeck.addCard(card)
 
-        if (score(playerDeck.cards) > BLACKJACK_NUMBER) {
+        if (score(playerDeck) > BLACKJACK_NUMBER) {
             return Burst(playerDeck)
         }
         return this
     }
 
-    private fun validate(cards: List<Card>) {
-        require(cards.size >= 2) { "카드를 두 장 이상 가지고 있어야 합니다." }
+    private fun validate(playerDeck: PlayerDeck) {
+        require(playerDeck.cards.size >= 2) { "카드를 두 장 이상 가지고 있어야 합니다." }
     }
 }
