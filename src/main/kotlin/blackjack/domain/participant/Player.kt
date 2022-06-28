@@ -20,6 +20,8 @@ class Player(val playerName: PlayerName) {
         this.state = this.state.stay()
     }
 
+    fun isRunning(): Boolean = !state.isFinished()
+
     fun cards(): List<Card> {
         return try {
             this.state.cards()
@@ -29,6 +31,8 @@ class Player(val playerName: PlayerName) {
     }
 
     fun getPlayerNameValue(): String = playerName.value
+
+    fun getScore(): Int = this.state.score()
 
     companion object {
         fun enrollPlayer(nameValue: String): Player = Player(

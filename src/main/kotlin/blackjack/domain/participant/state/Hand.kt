@@ -13,6 +13,8 @@ class Hand(
 
     fun isBust(): Boolean = score().isBust()
 
+    fun getScoreValue(): Int = score().value
+
     private fun score(): Score {
         var score = Score(this.cards.sumOf { it.number.score })
         val countOfAce = this.cards.count { it.number == CardNumber.ACE }
