@@ -6,6 +6,7 @@ import blackjack.dto.ResultDto
 const val BASIC_RULE_DELIMITER = ","
 
 val cardShuffle = BlackjackCardShuffle()
+val blackjackRequestView: RequestView = BlackjackRequestView()
 
 fun main() {
     val gamers = mutableListOf<UserRole>(Dealer())
@@ -16,7 +17,7 @@ fun main() {
 
     gamers.addAll(players)
 
-    val blackjackGame = BlackjackGame(BlackjackGameElement(gamers, Deck(cardShuffle)))
+    val blackjackGame = BlackjackGame(BlackjackGameElement(gamers, Deck(cardShuffle)), blackjackRequestView)
     val playersDto = PlayersDto(blackjackGame.gamers)
     playersDto.showPlayInit()
 

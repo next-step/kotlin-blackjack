@@ -1,6 +1,9 @@
 package blackjack
 
-class BlackjackGame(private val blackjackGameElement: BlackjackGameElement) {
+class BlackjackGame(
+    private val blackjackGameElement: BlackjackGameElement,
+    private val requestView: RequestView
+) {
 
     fun play(): List<UserRole> {
         val players = blackjackGameElement.gamers.filter { !it.isDealer() }
@@ -27,14 +30,14 @@ class BlackjackGame(private val blackjackGameElement: BlackjackGameElement) {
     private fun playDealerTurn(): UserRole {
         var dealer = blackjackGameElement.gamers.first { it.isDealer() }
         while (!dealer.isFinish()) {
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            requestView.moreCardToDealer()
             dealer = dealer.draw(blackjackGameElement.draw())
         }
         return dealer
     }
 
     private fun deal(player: UserRole): UserRole {
-        println("%s 님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)".format(player.name))
+        requestView.moreCardToGamer(player.name)
         return when (readln()) {
             "y" -> player.draw(blackjackGameElement.draw())
             else -> player.stand()
