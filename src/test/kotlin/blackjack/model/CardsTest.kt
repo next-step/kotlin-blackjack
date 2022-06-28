@@ -55,4 +55,14 @@ class CardsTest {
         val should12 = Cards(listOf(Card(CardNumber.Ace, Suit.Club), Card(CardNumber.Ace, Suit.Heart)))
         assertThat(should12.optimalScore()).isEqualTo(Score(12))
     }
+
+    @ParameterizedTest
+    @CsvSource("Ace,Six,,true", "Six,Ace,,true", "Ace,Five,,false", "Ten,Seven,,false", "Two,,,false", "Two,Three,,false", "Two,Ten,Four,false", "Two,Ten,Jack,false", "Ace,,,false", "Two,Ace,,false")
+    fun `A6 의 경우 soft라 한다`(cardNumber1: CardNumber, cardNumber2: CardNumber?, cardNumber3: CardNumber?, isSoft: Boolean) {
+        val cardList = listOf(cardNumber1, cardNumber2, cardNumber3)
+            .filterNotNull()
+            .map { Card(it, Suit.Heart) }
+
+        assertThat(Cards(cardList).isSoft()).isEqualTo(isSoft)
+    }
 }

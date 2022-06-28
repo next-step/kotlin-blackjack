@@ -14,7 +14,8 @@ fun main() {
     }
 
     while (!blackjackGame.isDealerGameOver()) {
-        OutputView.printPlayer(blackjackGame.playDealer())
+        OutputView.printDealerHit()
+        blackjackGame.playDealer()
     }
 
     OutputView.printFinalState(blackjackGame)

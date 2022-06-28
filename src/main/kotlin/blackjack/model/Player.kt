@@ -1,6 +1,6 @@
 package blackjack.model
 
-open class Player(val name: String, val cards: Cards = Cards.emptyCards(), val stay: Boolean = false) {
+class Player(val name: String, val cards: Cards = Cards.emptyCards(), val stay: Boolean = false) {
     fun scores(): List<Score> {
         return cards.scores
     }
@@ -11,6 +11,14 @@ open class Player(val name: String, val cards: Cards = Cards.emptyCards(), val s
 
     fun addCards(newCardList: List<Card>): Player {
         return Player(name, cards.addCards(newCardList), stay)
+    }
+
+    fun isGameOver(): Boolean {
+        return stay || cards.optimalScore().isBust()
+    }
+
+    fun isWinThen(that: Player): Boolean {
+        return cards.optimalScore().isWinThan(that.cards.optimalScore())
     }
 
     companion object {

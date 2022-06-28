@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.Score.Companion.DELAER_SOFT_SCORE
+
 data class Cards(val values: List<Card>) {
     constructor(vararg values: Card) : this(values.asList())
 
@@ -38,6 +40,11 @@ data class Cards(val values: List<Card>) {
         }
 
         return scores.minByOrNull { it.value } ?: throw RuntimeException("score는 항상 존재해야 합니다.")
+    }
+
+    fun isSoft(): Boolean {
+        return optimalScore() == Score(DELAER_SOFT_SCORE) &&
+            values.all { it.cardNumber == CardNumber.Ace || it.cardNumber == CardNumber.Six }
     }
 
     companion object {

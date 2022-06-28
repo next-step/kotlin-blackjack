@@ -12,15 +12,16 @@ object OutputView {
         println("${player.name}카드: ${cardsToString(player.cards)} - 결과 : ${player.cards.optimalScore().value}")
     }
 
-    private fun cardsToString(cards: Cards): String {
+    private fun cardsToString(cards: Cards, skip: Int = 0): String {
         return cards.values
+            .drop(skip)
             .map { "${CardNumberView.toString(it.cardNumber)}${SuitView.toString(it.suit)}" }
             .joinToString(",")
     }
 
     fun printInitialState(game: BlackjackGame) {
         println("${game.dealer.name}와 ${game.players.values.map { it.name }.joinToString(", ")}에게 2장의 카드를 나누어 주었습니다.")
-        printPlayer(game.dealer)
+        printDealer(game.dealer)
         printPlayers(game.players)
         println()
     }
@@ -45,5 +46,13 @@ object OutputView {
 
     fun printPlayer(player: Player) {
         println("${player.name}카드: ${cardsToString(player.cards)}")
+    }
+
+    fun printDealerHit() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printDealer(player: Player) {
+        println("${player.name}카드: ${cardsToString(player.cards, skip = 1)}")
     }
 }

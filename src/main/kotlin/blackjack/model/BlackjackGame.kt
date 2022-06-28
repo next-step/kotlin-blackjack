@@ -30,11 +30,11 @@ class BlackjackGame(initPlayers: Players) {
         } else {
             players = players.stay(player)
         }
-        return players.find(player.name)!!
+        return players.find(player.name) ?: player
     }
 
     fun isDealerGameOver(): Boolean {
-        return dealer.cards.optimalScore().value > Score.DELAER_HIT_CRITERIA
+        return dealer.cards.optimalScore().value > Score.DELAER_HIT_CRITERIA && !dealer.cards.isSoft()
     }
 
     fun playDealer(): Player {

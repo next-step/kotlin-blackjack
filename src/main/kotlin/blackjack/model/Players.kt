@@ -8,7 +8,7 @@ class Players(val values: List<Player>) {
     fun stay(player: Player): Players {
         return Players(
             values.map {
-                if (player.name.equals(it.name)) {
+                if (player.name == it.name) {
                     player.setStay()
                 } else {
                     it
@@ -20,7 +20,7 @@ class Players(val values: List<Player>) {
     fun update(player: Player): Players {
         return Players(
             values.map {
-                if (player.name.equals(it.name)) {
+                if (player.name == it.name) {
                     player
                 } else {
                     it
@@ -30,7 +30,7 @@ class Players(val values: List<Player>) {
     }
 
     fun isAllOver(): Boolean {
-        return values.all { it.stay } // TODO stay 가 아닌 stay or bust 로 체크
+        return values.all { it.isGameOver() }
     }
 
     fun find(name: String): Player? {
