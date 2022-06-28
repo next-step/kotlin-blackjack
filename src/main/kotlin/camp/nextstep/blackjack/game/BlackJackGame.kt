@@ -7,7 +7,7 @@ import camp.nextstep.blackjack.player.Dealer
 import camp.nextstep.blackjack.player.Gambler
 import camp.nextstep.blackjack.player.Player
 
-class BlackJackGame private constructor(private var _cardDeck: CardDeck, private val _participants: List<Gambler>) {
+class BlackJackGame private constructor(private var _cardDeck: CardDeck, val participants: List<Gambler>) {
 
     val gamblerTurns: List<Turn<Gambler>>
 
@@ -17,16 +17,14 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
-    val participants get() = _participants.toList()
-
     init {
         _cardDeck = CardShuffler.shuffle(_cardDeck)
 
         repeat(INIT_CARD_NUMBER) {
-            dealer.serve(_cardDeck, _participants + dealer)
+            dealer.serve(_cardDeck, participants + dealer)
         }
 
-        gamblerTurns = _participants.map { Turn(it) }
+        gamblerTurns = participants.map { Turn(it) }
     }
 
     fun result(): GameResults {
@@ -35,7 +33,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, private
 
         val gamblersScore = mutableListOf<GamblerScore>()
         val dealerScore = Score.of(dealer.hand)
-        for (gambler in _participants) {
+        for (gambler in participants) {
             val gamblerScore = Score.of(gambler.hand)
             val result = GameResult.of(gamblerScore, dealerScore)
             gamblersScore.add(GamblerScore(gambler, gamblerScore, result))
