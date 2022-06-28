@@ -13,10 +13,24 @@ class OutputView {
     fun printInitHands(players: List<Player>) {
         println()
         println("${joinPlayerNames(players)}에게 2장의 카드를 나누었습니다.")
+        players.forEach { player -> printPlayerHand(player) }
+    }
+
+    fun printPlayerHand(player: Player) {
+        printHand(player.getPlayerNameValue(), player.cards())
+        println()
+    }
+
+    fun printResult(players: List<Player>) {
+        println()
         players.forEach { player ->
-            print(player.getPlayerNameValue())
-            println("카드: ${joinPlayerHandCards(player.cards())}")
+            printHand(player.getPlayerNameValue(), player.cards())
+            println(" - 결과: ${player.getScore()}")
         }
+    }
+
+    private fun printHand(name: String, cards: List<Card>) {
+        print("${name}카드: ${joinPlayerHandCards(cards)}")
     }
 
     private fun joinPlayerNames(players: List<Player>) = players.joinToString { it.getPlayerNameValue() }

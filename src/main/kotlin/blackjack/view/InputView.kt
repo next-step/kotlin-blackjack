@@ -7,6 +7,15 @@ class InputView {
         return readln().split(DELIMITER)
     }
 
+    fun receiveOneMoreCard(playerName: String): Boolean {
+        println("${playerName}은(는) 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        return when (readln()) {
+            "y" -> true
+            "n" -> false
+            else -> throw IllegalArgumentException("y 또는 n만 입력 가능합니다.")
+        }
+    }
+
     companion object {
         private const val DELIMITER = ","
     }
