@@ -12,7 +12,7 @@ interface Contract {
 
         fun getBetAmount(playerName: PlayerName): BetAmount
 
-        fun isPlayerWannaHit(player: Player): Boolean
+        fun isPlayerWannaHit(playerName: PlayerName): Boolean
 
         fun showStartOfGameInfo(participants: Participants)
 

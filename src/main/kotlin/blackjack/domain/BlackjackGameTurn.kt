@@ -1,7 +1,6 @@
 package blackjack.domain
 
-@JvmInline
-value class BlackjackGameTurn private constructor(val participant: Participant) {
+class BlackjackGameTurn private constructor(val participant: Participant) {
     fun isTurnEnd(): Boolean = !participant.isReceivable()
 
     fun isBlackjackGameEnd(): Boolean = participant is Dealer && isTurnEnd()

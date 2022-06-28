@@ -9,4 +9,16 @@ data class Participants(
             addAll(players)
         }
     }
+
+    companion object {
+        fun of(
+            dealerName: PlayerName,
+            playerInfos: List<PlayerInfo>,
+            cardDeck: CardDeck
+        ) {
+            val dealer = Dealer(
+                dealerName.value
+            )
+        }
+    }
 }
