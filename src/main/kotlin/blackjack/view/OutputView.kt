@@ -15,7 +15,7 @@ class OutputView {
         println("${joinPlayerNames(players)}에게 2장의 카드를 나누었습니다.")
         players.forEach { player ->
             print(player.getPlayerNameValue())
-            println("카드: ${joinPlayerHandCards(player.hand)}")
+            println("카드: ${joinPlayerHandCards(player.cards())}")
         }
     }
 

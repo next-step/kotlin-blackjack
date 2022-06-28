@@ -1,33 +1,38 @@
 package blackjack.domain.participant
 
 import blackjack.domain.deck.Card
+import blackjack.domain.participant.state.Init
+import blackjack.domain.participant.state.State
 
-class Player(
-    val playerName: PlayerName,
-    val hand: MutableList<Card> = mutableListOf(),
-) {
+class Player(val playerName: PlayerName) {
+
+    private lateinit var state: State
+
+    fun receiveInitCards(firstCard: Card, secondCard: Card) {
+        this.state = Init.receiveCard(firstCard = firstCard, secondCard = secondCard)
+    }
+
     fun receiveCard(card: Card) {
-        hand.add(card)
+        this.state = this.state.receiveCard(card = card)
+    }
+
+    fun stay() {
+        this.state = this.state.stay()
+    }
+
+    fun cards(): List<Card> {
+        return try {
+            this.state.cards()
+        } catch (_: UninitializedPropertyAccessException) {
+            throw IllegalStateException("아직 초기 카드를 받지 못했습니다.")
+        }
     }
 
     fun getPlayerNameValue(): String = playerName.value
 
     companion object {
-        fun from(nameValue: String): Player = Player(playerName = PlayerName(value = nameValue))
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Player
-
-        if (playerName != other.playerName) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return playerName.hashCode()
+        fun enrollPlayer(nameValue: String): Player = Player(
+            playerName = PlayerName(value = nameValue)
+        )
     }
 }

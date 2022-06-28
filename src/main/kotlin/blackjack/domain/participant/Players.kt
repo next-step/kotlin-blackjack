@@ -8,11 +8,18 @@ class Players private constructor(
     }
 
     fun receiveInitCards(dealer: Dealer) {
-        repeat(2) { values.forEach { player -> player.receiveCard(dealer.drawCard()) } }
+        repeat(2) {
+            values.forEach { player ->
+                player.receiveInitCards(
+                    firstCard = dealer.drawCard(),
+                    secondCard = dealer.drawCard()
+                )
+            }
+        }
     }
 
     companion object {
-        fun of(playNameValues: List<String>): Players =
-            Players(values = playNameValues.map { Player.from(nameValue = it) })
+        fun enrollPlayers(playNameValues: List<String>): Players =
+            Players(values = playNameValues.map { Player.enrollPlayer(nameValue = it) })
     }
 }

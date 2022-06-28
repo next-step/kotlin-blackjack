@@ -2,7 +2,6 @@ package blackjack.domain.participant
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
@@ -16,26 +15,27 @@ internal class PlayersTest : FreeSpec({
             listOf("현구님", "규남님")
         ).forEach { nameValues ->
             "$nameValues 가 입력되면 플레이어 목록이 잘 생성된다." {
-                val players = Players.of(playNameValues = nameValues)
-                players.values.shouldContainExactly(nameValues.map { Player.from(nameValue = it) })
+                val players = Players.enrollPlayers(playNameValues = nameValues)
+                players.values.map { it.getPlayerNameValue() } shouldContainExactly nameValues
             }
         }
 
         "빈 리스트가 입력되면 플레이어 목록 생성에 실패한다." {
-            val exception = shouldThrowExactly<IllegalArgumentException> { Players.of(playNameValues = emptyList()) }
+            val exception =
+                shouldThrowExactly<IllegalArgumentException> { Players.enrollPlayers(playNameValues = emptyList()) }
             exception.message shouldBe "플레이어가 없으면 게임을 진행할 수 없습니다."
         }
     }
 
     "딜러를 통해 초기 시작 카드를 2장씩 나눠 받는다." {
         // given
-        val players = Players.of(listOf("현구님", "규남님"))
-        players.values.forEach { it.hand.shouldBeEmpty() }
+        val players = Players.enrollPlayers(listOf("현구님", "규남님"))
+        players.values.forEach { shouldThrowExactly<IllegalStateException> { it.cards() } }
 
         // when
         players.receiveInitCards(Dealer())
 
         // then
-        players.values.forEach { it.hand.shouldHaveSize(2) }
+        players.values.forEach { it.cards().shouldHaveSize(2) }
     }
 })
