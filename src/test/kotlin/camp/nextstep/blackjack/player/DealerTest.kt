@@ -62,6 +62,19 @@ internal class DealerTest {
         assertThat(dealer.hand.faceDownCardCount).isEqualTo(1)
     }
 
+    @DisplayName("딜러는 카드를 모두 공개할 수 있다.")
+    @Test
+    fun openCard() {
+        val dealer = Dealer()
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TWO))
+        dealer.receive(Card(CardSuit.SPADE, CardNumber.TEN))
+
+        dealer.openCards()
+
+        assertThat(dealer.hand.faceUpCards).containsExactly(Card(CardSuit.SPADE, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.TEN))
+        assertThat(dealer.hand.faceDownCardCount).isEqualTo(0)
+    }
+
     @DisplayName("딜러의 첫번째 카드 10이면 두번째 카드는 공개한다. ")
     @Test
     fun faceUpSecondCardIfFirstCardIsTen() {
