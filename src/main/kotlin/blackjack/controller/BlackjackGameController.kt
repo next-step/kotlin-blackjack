@@ -14,7 +14,7 @@ class BlackjackGameController {
             createPlayers(),
         )
 
-        blackjackGame.init()
+        blackjackGame.start()
         OutputView.printPlayersInitCards(blackjackGame.players)
         playPlayersTurn(blackjackGame)
         OutputView.printResult(blackjackGame.players)

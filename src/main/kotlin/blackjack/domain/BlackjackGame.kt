@@ -7,7 +7,7 @@ class BlackjackGame(
     private val deck: Deck,
     val players: Players,
 ) {
-    fun init() {
+    fun start() {
         players.drawInitCards(deck)
     }
 
