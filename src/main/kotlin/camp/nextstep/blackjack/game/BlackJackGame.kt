@@ -9,11 +9,11 @@ import camp.nextstep.blackjack.player.Player
 
 class BlackJackGame private constructor(private var _cardDeck: CardDeck, val participants: List<Gambler>) {
 
-    val gamblerTurns: List<Turn<Gambler>>
+    val gamblerTurns: List<Turn>
 
     val dealer = Dealer()
 
-    val dealerTurn: Turn<Dealer> = Turn(dealer)
+    val dealerTurn: Turn = Turn(dealer)
 
     val cardDeck get() = CardDeck.of(_cardDeck.cards)
 
@@ -45,7 +45,7 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, val par
         )
     }
 
-    fun play(turn: Turn<out Player>, actionProducer: (Player) -> Action, actionCallback: (Action) -> Unit = {}) {
+    fun play(turn: Turn, actionProducer: (Player) -> Action, actionCallback: (Action) -> Unit) {
         while (!turn.isDone) {
             val action = actionProducer(turn.player)
             turn.play(action)
@@ -53,12 +53,12 @@ class BlackJackGame private constructor(private var _cardDeck: CardDeck, val par
         }
     }
 
-    fun dealersPlay(turn: Turn<Dealer>, actionCallback: (Action) -> Unit = {}) {
+    fun dealersPlay(turn: Turn, actionCallback: (Action) -> Unit) {
         dealer.openCards()
         play(turn, { DealerActionProducer.produce(dealer) }, actionCallback)
     }
 
-    inner class Turn<P : Player>(val player: P) {
+    inner class Turn(val player: Player) {
 
         var isDone = false
             internal set

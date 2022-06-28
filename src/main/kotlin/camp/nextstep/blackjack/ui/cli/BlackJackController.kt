@@ -24,7 +24,7 @@ object BlackJackController {
         val turns = game.gamblerTurns
         for (turn in turns) {
             BlackJackWriter.write(PlayerHand(turn.player))
-            game.play(turn, { BlackJackReader.readGamblerAction(turn.player) }) { BlackJackWriter.write(PlayerHand(turn.player)) }
+            game.play(turn, { BlackJackReader.readGamblerAction(it.name) }) { BlackJackWriter.write(PlayerHand(turn.player)) }
         }
 
         val dealerTurn = game.dealerTurn
