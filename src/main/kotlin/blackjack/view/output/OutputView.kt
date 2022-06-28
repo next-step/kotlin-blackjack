@@ -5,6 +5,7 @@ import blackjack.view.output.converter.OutputConverter
 object OutputView {
     fun printlnOnlyMessage(message: String) {
         println(message)
+        println()
     }
 
     fun <T> println(printable: T, outputConverter: OutputConverter<T>) {

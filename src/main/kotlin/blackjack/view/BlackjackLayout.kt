@@ -60,7 +60,7 @@ object BlackjackLayout : Contract.View {
     }
 
     override fun showPlayersHitEvent(player: Player) {
-        OutputView.print(player, PlayerConverter)
+        OutputView.println(player, PlayerConverter)
     }
 
     override fun showDealerHitEvent() {
