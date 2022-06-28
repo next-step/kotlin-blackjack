@@ -10,21 +10,19 @@ class BlackjackJudgement(private val users: List<UserRole>) {
 
     fun updateGameJudgement(): List<UserRole> {
         var players = users.filter { !it.isDealer() }
-        val dealerScore = dealer.getScore()
-        players = when (dealer.getScore() >= BURST_SCORE_MIN) {
-            true -> {
-                dealer.gameStatus.judgements.add(Loose())
-                players
-                    .map { Player(it.name, GameStatus(it.gameStatus.state, mutableListOf(Win()))) }
-                    .toList()
-            }
-            else -> {
-                players.map { updateGameJudgement(it, dealerScore) }
-                    .toList()
-            }
-        }.toMutableList()
+        players = updateGame(players).toMutableList()
         players.add(dealer)
         return players.toList()
+    }
+
+    private fun updateGame(players: List<UserRole>): List<UserRole> {
+        if (dealer.getScore() >= BURST_SCORE_MIN) {
+            dealer.gameStatus.judgements.add(Loose())
+            return players.map { Player(it.name, GameStatus(it.gameStatus.state, mutableListOf(Win()))) }
+                .toList()
+        }
+        return players.map { updateGameJudgement(it, dealer.getScore()) }
+            .toList()
     }
 
     private fun updateGameJudgement(it: UserRole, dealerScore: Int): UserRole {
