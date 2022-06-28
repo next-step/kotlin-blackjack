@@ -1,39 +1,40 @@
 package blackjack.application
 
 import blackjack.domain.AceDifferScoreCalculateStrategy
-import blackjack.domain.BLACK_JACK_SCORE
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.view.GameResult
 import blackjack.view.GameResults
 import blackjack.view.response.CardResponse
 
+private const val FIRST_DRAW_COUNT = 2
+
 object BlackJackService {
 
     fun createPlayers(names: List<String>): List<Player> {
-        val players = names.map { Player(it) }
-        players.forEach { draw(it, 2) }
-        return players
+        require(names.size in Player.MIN_COUNT..Player.MAX_COUNT) { "플레이어 수는 1 이상 26 이하여야 합니다." }
+
+        return names.map { Player(it) }
     }
 
     fun calculate(players: List<Player>): GameResults {
         val gameResults = players.map {
             GameResult(
                 it.name,
-                it.hand.map { card -> CardResponse.from(card) },
-                AceDifferScoreCalculateStrategy.calculate(it.hand).score
+                it.hand.cards.map { card -> CardResponse.from(card) },
+                AceDifferScoreCalculateStrategy.calculate(it.hand.cards).score
             )
         }
         return GameResults(gameResults)
     }
 
-    fun draw(player: Player, drawCount: Int) {
-        repeat(drawCount) {
-            player.addCard(Deck.draw())
-        }
+    fun drawFirst(players: List<Player>, deck: Deck) {
+        players.forEach { draw(it, deck, FIRST_DRAW_COUNT) }
     }
 
-    fun isBurst(player: Player): Boolean {
-        return AceDifferScoreCalculateStrategy.calculate(player.hand).score > BLACK_JACK_SCORE
+    fun draw(player: Player, deck: Deck, drawCount: Int) {
+        repeat(drawCount) {
+            player.addCard(deck.draw())
+        }
     }
 }

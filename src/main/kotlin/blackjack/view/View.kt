@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.view.response.PlayerResponse
 
 object InputView {
 
@@ -26,19 +26,19 @@ object InputView {
 
 object OutputView {
 
-    fun printPlayers(players: List<Player>) {
+    fun printPlayers(players: List<PlayerResponse>) {
         players.forEach { printPlayer(it) }
         println()
     }
 
-    fun printPlayer(player: Player) {
-        println("${player.name}카드: " + player.hand.joinToString { card -> "${card.cardNumber.symbol}${card.cardSuit.suit}" })
+    fun printPlayer(player: PlayerResponse) {
+        println("${player.name}카드: " + player.hand.joinToString { card -> "${card.symbol}${card.suit}" })
     }
 
     fun printOutput(results: GameResults) {
         println()
         results.result.forEach {
-            println("${it.name}카드: ${it.hand.joinToString { card -> "${card.cardNumber}${card.cardSuit}" }} - 결과: ${it.score}")
+            println("${it.name}카드: ${it.hand.joinToString { card -> "${card.symbol}${card.suit}" }} - 결과: ${it.score}")
         }
     }
 }

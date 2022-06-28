@@ -4,5 +4,5 @@ import blackjack.vo.Score
 
 interface ScoreCalculateStrategy {
 
-    fun calculate(hand: Hand): Score
+    fun calculate(cards: List<Card>): Score
 }

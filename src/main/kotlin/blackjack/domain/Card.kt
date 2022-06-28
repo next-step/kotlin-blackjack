@@ -1,18 +1,21 @@
 package blackjack.domain
 
 data class Card(
-    val cardNumber: CardNumber,
-    val cardSuit: CardSuit
+    val number: CardNumber,
+    val suit: CardSuit
 ) {
 
     fun isAce(): Boolean {
-        return cardNumber == CardNumber.ACE
+        return number == CardNumber.ACE
     }
 }
 
 class Hand(
     private val _cards: MutableList<Card> = mutableListOf()
-) : MutableList<Card> by _cards {
-
+) {
     val cards: List<Card> = _cards
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
 }

@@ -11,7 +11,7 @@ class HandScoreStrategyTest {
     @MethodSource
     @ParameterizedTest
     fun calculate(cards: MutableList<Card>, expectedScore: Int) {
-        assertThat(AceDifferScoreCalculateStrategy.calculate(Hand(cards))).isEqualTo(Score(expectedScore))
+        assertThat(AceDifferScoreCalculateStrategy.calculate(cards)).isEqualTo(Score(expectedScore))
     }
 
     companion object {
@@ -63,6 +63,15 @@ class HandScoreStrategyTest {
                         Card(CardNumber.KING, CardSuit.CLOVER),
                     ),
                     30
+                ),
+                Arguments.arguments(
+                    mutableListOf(
+                        Card(CardNumber.ACE, CardSuit.CLOVER),
+                        Card(CardNumber.ACE, CardSuit.SPADE),
+                        Card(CardNumber.ACE, CardSuit.HEART),
+                        Card(CardNumber.ACE, CardSuit.DIAMOND),
+                    ),
+                    14
                 )
             )
         }

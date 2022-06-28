@@ -19,7 +19,7 @@ internal class HandTest {
 
         hand.add(newCard)
 
-        assertThat(hand).hasSize(1)
+        assertThat(hand.cards).hasSize(1)
             .containsExactly(newCard)
     }
 }
