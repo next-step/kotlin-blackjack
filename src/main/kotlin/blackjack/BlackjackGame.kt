@@ -6,14 +6,12 @@ class BlackjackGame(
 ) {
 
     fun play(): List<UserRole> {
-        val players = blackjackGameElement.gamers.filter { !it.isDealer() }
-        val results = mutableListOf<UserRole>()
-        for (player in players) {
-            results.add(playPlayerTurn(player))
-        }
 
-        results.add(playDealerTurn())
-        return results.toList()
+        return blackjackGameElement.gamers.asSequence()
+            .filter { !it.isDealer() }
+            .map { playPlayerTurn(it) }
+            .plus(playDealerTurn())
+            .toList()
     }
 
     val gamers: List<UserRole>
