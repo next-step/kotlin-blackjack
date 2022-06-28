@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.dto.PlayersDto
-import blackjack.dto.ResultDto
+import blackjack.view.PlayersView
+import blackjack.view.ResultView
 
 const val BASIC_RULE_DELIMITER = ","
 
@@ -18,13 +18,14 @@ fun main() {
     gamers.addAll(players)
 
     val blackjackGame = BlackjackGame(BlackjackGameElement(gamers, Deck(cardShuffle)), blackjackRequestView)
-    val playersDto = PlayersDto(blackjackGame.gamers)
-    playersDto.showPlayInit()
+    val playersView = PlayersView(blackjackGame.getGamers())
+    playersView.showPlayerNames()
+    playersView.showInitCards()
 
     val users = blackjackGame.play()
 
     val blackjackJudgement = BlackjackJudgement(users)
 
-    val resultDto = ResultDto(blackjackJudgement.updateGameJudgement())
-    resultDto.result()
+    val resultView = ResultView(blackjackJudgement.updateGameJudgement())
+    resultView.result()
 }

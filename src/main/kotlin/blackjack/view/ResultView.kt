@@ -1,8 +1,8 @@
-package blackjack.dto
+package blackjack.view
 
 import blackjack.UserRole
 
-class ResultDto(private val players: List<UserRole>) {
+class ResultView(private val players: List<UserRole>) {
 
     fun result() {
         players.forEach {

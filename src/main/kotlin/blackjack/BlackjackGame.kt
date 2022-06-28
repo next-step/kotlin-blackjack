@@ -14,8 +14,10 @@ class BlackjackGame(
             .toList()
     }
 
-    val gamers: List<UserRole>
-        get() = blackjackGameElement.gamers
+    fun getGamers(): List<PlayerVo> {
+        return blackjackGameElement.gamers
+            .map { PlayerVo(it.name, it.cards.map { c -> c.toString() }.toString()) }
+    }
 
     private fun playPlayerTurn(player: UserRole): UserRole {
         var p = player
