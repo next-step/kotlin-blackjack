@@ -9,7 +9,6 @@ import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
 import blackjack.domain.Participants
 import blackjack.domain.Player
-import blackjack.domain.PlayerInfo
 import blackjack.domain.PlayerName
 import blackjack.domain.PlayingCard
 import blackjack.domain.PlayingCards
@@ -24,7 +23,7 @@ class BlackjackPresenter(
     private lateinit var currentTurn: BlackjackGameTurn
 
     override fun startGame() {
-        val participants = getPlayerInfos().toParticipants()
+        val participants = view.getPlayerNames().toParticipants()
         view.showStartOfGameInfo(participants)
 
         setNextTurn(participants)
@@ -36,20 +35,12 @@ class BlackjackPresenter(
         view.showEndOfGameInfo(BlackjackGameResult.from(participants))
     }
 
-    private fun getPlayerInfos(): List<PlayerInfo> = view.getPlayerNames().map { playerName ->
-        playerName.toPlayerInfo()
-    }
-
-    private fun PlayerName.toPlayerInfo(): PlayerInfo {
-        return PlayerInfo(this, view.getBetAmount(this))
-    }
-
-    private fun List<PlayerInfo>.toParticipants(): Participants {
+    private fun List<PlayerName>.toParticipants(): Participants {
         val dealer = Dealer(DEALER_NAME, cardDeck.initialHands())
-        val players = map { playerInfo ->
+        val players = map { playerName ->
             Player(
-                name = playerInfo.name,
-                betAmount = playerInfo.betAmount,
+                name = playerName,
+                betAmount = view.getBetAmount(playerName),
                 hands = cardDeck.initialHands()
             )
         }

@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class BlackjackGameTurn private constructor(val participant: Participant) {
-    fun isTurnEnd(): Boolean = !participant.isReceivable()
-
     fun isBlackjackGameEnd(): Boolean = participant is Dealer && isTurnEnd()
+
+    private fun isTurnEnd(): Boolean = !participant.isReceivable()
 
     fun hit(playingCards: PlayingCards) {
         participant.receive(playingCards)
