@@ -30,5 +30,5 @@ value class Cards(
     }
 
     private fun isMatchAdditionalAceScore(score: Int) =
-        _value.any { it.isAce } && score + ADDITIONAL_ACE_SCORE <= MAX_SCORE
+        _value.any { it.isAce() } && score + ADDITIONAL_ACE_SCORE <= MAX_SCORE
 }
