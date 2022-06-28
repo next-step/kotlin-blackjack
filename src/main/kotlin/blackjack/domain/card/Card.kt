@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.card
 
 data class Card(val cardShape: CardShape, val cardSymbol: CardSymbol) {
 

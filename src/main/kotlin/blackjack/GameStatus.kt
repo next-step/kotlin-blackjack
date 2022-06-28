@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.card.PlayerDeck
 import blackjack.judge.Judgement
 import blackjack.state.Ready
 import blackjack.state.State

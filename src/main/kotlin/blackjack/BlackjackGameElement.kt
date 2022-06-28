@@ -1,5 +1,9 @@
 package blackjack
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
+import blackjack.domain.player.UserRole
+
 class BlackjackGameElement(val gamers: List<UserRole>, deck: Deck) {
 
     private val _cards = deck.cards.toMutableList()

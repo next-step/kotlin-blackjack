@@ -1,8 +1,8 @@
 package blackjack.state
 
-import blackjack.Card
-import blackjack.PlayerDeck
-import blackjack.Score
+import blackjack.domain.card.Card
+import blackjack.domain.card.PlayerDeck
+import blackjack.domain.card.Score
 
 const val BLACKJACK_NUMBER = 21
 

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.card
 
 class Deck(cardShuffle: CardShuffle) {
     private val _cards: MutableList<Card> = cardShuffle.getCards().toMutableList()

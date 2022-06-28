@@ -1,12 +1,15 @@
 package blackjack
 
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerVo
+import blackjack.domain.player.UserRole
+
 class BlackjackGame(
     private val blackjackGameElement: BlackjackGameElement,
     private val requestView: RequestView
 ) {
 
     fun play(): List<UserRole> {
-
         return blackjackGameElement.gamers.asSequence()
             .filter { !it.isDealer() }
             .map { playPlayerTurn(it) }

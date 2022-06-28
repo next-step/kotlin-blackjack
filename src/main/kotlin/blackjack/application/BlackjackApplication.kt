@@ -1,5 +1,11 @@
-package blackjack
+package blackjack.application
 
+import blackjack.*
+import blackjack.domain.card.Deck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.UserRole
+import blackjack.view.BlackjackRequestView
 import blackjack.view.PlayersView
 import blackjack.view.ResultView
 

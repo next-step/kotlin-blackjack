@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.domain.player
+
+import blackjack.GameStatus
+import blackjack.domain.card.Card
 
 abstract class UserRole(
     open val name: String,

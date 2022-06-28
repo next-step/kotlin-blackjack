@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.UserRole
+import blackjack.domain.player.UserRole
 
 class ResultView(private val players: List<UserRole>) {
 

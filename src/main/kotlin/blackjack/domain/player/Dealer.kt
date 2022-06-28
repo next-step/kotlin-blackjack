@@ -1,5 +1,7 @@
-package blackjack
+package blackjack.domain.player
 
+import blackjack.GameStatus
+import blackjack.domain.card.Card
 import blackjack.state.Stand
 
 class Dealer(

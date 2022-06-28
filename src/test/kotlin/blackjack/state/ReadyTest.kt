@@ -1,6 +1,6 @@
 package blackjack.state
 
-import blackjack.PlayerDeck
+import blackjack.domain.card.PlayerDeck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

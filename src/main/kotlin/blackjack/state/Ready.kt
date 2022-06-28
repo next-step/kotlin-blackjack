@@ -1,7 +1,7 @@
 package blackjack.state
 
-import blackjack.Card
-import blackjack.PlayerDeck
+import blackjack.domain.card.Card
+import blackjack.domain.card.PlayerDeck
 
 class Ready(private val playerDeck: PlayerDeck) : State {
     override fun currentCard(): PlayerDeck = playerDeck

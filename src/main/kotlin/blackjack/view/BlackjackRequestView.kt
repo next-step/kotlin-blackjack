@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.view
+
+import blackjack.RequestView
 
 class BlackjackRequestView: RequestView {
     override fun moreCardToDealer() {

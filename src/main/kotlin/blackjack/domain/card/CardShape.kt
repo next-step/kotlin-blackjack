@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.card
 
 enum class CardShape {
     SPADE,

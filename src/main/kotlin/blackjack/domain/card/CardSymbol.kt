@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.card
 
 enum class CardSymbol(val cardNumber: Int, val score: Int) {
     ACE(1, 1),

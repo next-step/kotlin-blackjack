@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.domain.player.Player
+import blackjack.domain.player.UserRole
 import blackjack.judge.Loose
 import blackjack.judge.Push
 import blackjack.judge.Win

@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.PlayerVo
+import blackjack.domain.player.PlayerVo
 
 class PlayersView(private val players: List<PlayerVo>) {
 
