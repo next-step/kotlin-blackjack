@@ -8,6 +8,10 @@ class Hand {
 
     fun isEmpty() = _cards.isEmpty()
 
+    fun firstCardIsAce() = _cards[0].card.number == CardNumber.ACE
+
+    fun firstCardIsTen() = _cards[0].card.number == CardNumber.TEN
+
     fun add(card: DrawnCard) {
         this._cards.add(card)
     }
