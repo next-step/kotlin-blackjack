@@ -3,9 +3,9 @@ package blackjack
 import blackjack.domain.blackjackgame.GameStatus
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
-import blackjack.judge.Loose
-import blackjack.judge.Push
-import blackjack.judge.Win
+import blackjack.domain.judge.Loose
+import blackjack.domain.judge.Push
+import blackjack.domain.judge.Win
 
 class BlackjackJudgement(private val users: List<UserRole>) {
 

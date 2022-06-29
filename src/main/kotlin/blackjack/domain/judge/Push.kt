@@ -1,4 +1,4 @@
-package blackjack.judge
+package blackjack.domain.judge
 
 class Push : Judgement {
 

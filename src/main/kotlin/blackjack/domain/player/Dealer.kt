@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.blackjackgame.GameStatus
 import blackjack.domain.card.Card
-import blackjack.state.Stand
+import blackjack.domain.state.Stand
 
 class Dealer(
     override val userSetting: UserSetting = UserSetting("딜러"),

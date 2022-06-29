@@ -9,7 +9,7 @@ import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
 import blackjack.domain.player.UserSetting
-import blackjack.state.Stand
+import blackjack.domain.state.Stand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.card.PlayerDeck
+import blackjack.domain.state.Stand
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
