@@ -7,7 +7,7 @@ object InputView {
     fun getNames(): List<String> {
         val inputStr = printMsgAndReadValue(GET_NAME) ?: throw IllegalArgumentException("")
         val result = inputStr.split(DELIMITER).map { it.trim() }
-        require(result.size in 2..24) { "게임 인원은 2명 ~ 24명만 가능합니다." }
+        require(result.size in 2..24) { "게임 인원은 2명 ~ 24명만 가능합니다. 현재 입력하신 인원은 ${result.size}명 입니다." }
         return result
     }
 

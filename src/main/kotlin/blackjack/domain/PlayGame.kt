@@ -19,18 +19,25 @@ class PlayGame {
         }
     }
 
-    fun hitOrStand(player: Player) {
-        while (true) {
-            if (!player.canHit()) {
-                println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
-                break
-            }
-            val hit = InputView.hitOrStand(player.name)
-            if (hit) {
-                hit(player)
-            }
-            OutputView.cardOfPlayer(player)
-            if (!hit) break
+    fun hitOrStandMultipleTimes(player: Player) {
+        var result: Boolean
+        do {
+            result = hitOrStand(player)
+        } while (result)
+    }
+
+    private fun hitOrStand(player: Player): Boolean {
+        if (!player.canHit()) {
+            println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
+            return false
         }
+        val hit = InputView.hitOrStand(player.name)
+        if (hit) {
+            hit(player)
+        }
+        OutputView.cardOfPlayer(player)
+        if (!hit) return false
+
+        return true
     }
 }

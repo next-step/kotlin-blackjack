@@ -17,7 +17,7 @@ fun main() {
 
     players.forEach { player ->
         runCatching {
-            playGame.hitOrStand(player)
+            playGame.hitOrStandMultipleTimes(player)
         }.onFailure { println(it.message) }
     }
 

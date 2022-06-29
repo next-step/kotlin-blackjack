@@ -27,7 +27,7 @@ internal class PlayGameTest {
         System.setIn(ByteArrayInputStream(input.toByteArray()))
 
         val player = Player("name")
-        PlayGame().hitOrStand(player)
+        PlayGame().hitOrStandMultipleTimes(player)
         assertThat(player.cards).hasSize(1)
     }
 }

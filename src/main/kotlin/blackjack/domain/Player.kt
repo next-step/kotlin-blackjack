@@ -33,6 +33,6 @@ class Player(val name: String) {
         }
 
     companion object {
-        const val MAX_POINT = 21
+        private const val MAX_POINT = 21
     }
 }
