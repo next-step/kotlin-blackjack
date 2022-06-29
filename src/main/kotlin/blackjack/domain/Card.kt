@@ -3,9 +3,7 @@ package blackjack.domain
 data class Card(
     val symbol: Symbol,
     val number: CardNumber
-) {
-    override fun toString() = number.displayStr + symbol.displayStr
-}
+)
 
 enum class Symbol(val displayStr: String) {
     HEART("하트"),
