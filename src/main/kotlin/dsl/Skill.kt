@@ -1,24 +1,24 @@
 package dsl
 
 data class Skill(
-  val name: String,
-  val type: SkillType
+    val name: String,
+    val type: SkillType
 )
 
 enum class SkillType {
-  Soft, Hard
+    Soft, Hard
 }
 
 class SkillBuilder {
-  val skills: MutableList<Skill> = mutableListOf()
+    val skills: MutableList<Skill> = mutableListOf()
 
-  fun soft(name: String) {
-    skills.add(Skill(name, SkillType.Soft))
-  }
+    fun soft(name: String) {
+        skills.add(Skill(name, SkillType.Soft))
+    }
 
-  fun hard(name: String) {
-    skills.add(Skill(name, SkillType.Hard))
-  }
+    fun hard(name: String) {
+        skills.add(Skill(name, SkillType.Hard))
+    }
 
-  fun build(): List<Skill> = skills.toList()
+    fun build(): List<Skill> = skills.toList()
 }
