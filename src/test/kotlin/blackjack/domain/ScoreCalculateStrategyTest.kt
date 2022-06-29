@@ -1,12 +1,11 @@
 package blackjack.domain
 
-import blackjack.vo.Score
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-class HandScoreStrategyTest {
+class ScoreCalculateStrategyTest {
 
     @MethodSource
     @ParameterizedTest

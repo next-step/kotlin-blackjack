@@ -4,7 +4,8 @@ class Player(
     val name: String,
     val hand: Hand = Hand(),
 ) {
-    val status = calculateStatus(AceDifferScoreCalculateStrategy)
+    val status
+        get() = calculateStatus(AceDifferScoreCalculateStrategy)
 
     init {
         require(name.isNotBlank()) { "플레이어 이름은 공백일 수 없습니다" }
@@ -15,9 +16,11 @@ class Player(
     }
 
     private fun calculateStatus(aceDifferScoreCalculateStrategy: AceDifferScoreCalculateStrategy): Status {
-        return when (aceDifferScoreCalculateStrategy.calculate(hand.cards).score) {
-            in 0..20 -> Status.NORMAL
-            21 -> Status.BLACKJACK
+        val score = aceDifferScoreCalculateStrategy.calculate(hand.cards).score
+
+        return when {
+            score == 21 && hand.cards.size == 2 -> Status.BLACKJACK
+            score in 0..21 -> Status.HIT
             else -> Status.BUST
         }
     }
