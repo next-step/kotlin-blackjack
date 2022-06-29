@@ -1,3 +1,5 @@
 package blackjack.domain.judge
 
-interface Judgement
+interface Judgement {
+    fun isWinner(): Boolean
+}

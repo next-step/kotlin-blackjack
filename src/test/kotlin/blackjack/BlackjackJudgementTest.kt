@@ -5,6 +5,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.card.PlayerDeck
+import blackjack.domain.judge.BlackjackJudgement
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole

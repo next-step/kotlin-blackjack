@@ -1,9 +1,11 @@
 package blackjack.application
 
 import blackjack.*
+import blackjack.domain.BlackjackBetting
 import blackjack.domain.blackjackgame.BlackjackGame
 import blackjack.domain.blackjackgame.BlackjackGameElement
 import blackjack.domain.card.Deck
+import blackjack.domain.judge.BlackjackJudgement
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
@@ -30,7 +32,9 @@ fun main() {
 
     val blackjackJudgement = BlackjackJudgement(users)
 
-    val resultView = ResultView(blackjackJudgement.updateGameJudgement())
+    val blackjackBetting = BlackjackBetting(blackjackJudgement.updateGameJudgement())
+
+    val resultView = ResultView(blackjackBetting.getGameResult())
     resultView.result()
 }
 

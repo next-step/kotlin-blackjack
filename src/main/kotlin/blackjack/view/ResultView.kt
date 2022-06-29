@@ -1,17 +1,17 @@
 package blackjack.view
 
-import blackjack.domain.player.UserRole
+import blackjack.BlackjackBettingDto
 
-class ResultView(private val players: List<UserRole>) {
+class ResultView(private val players: List<BlackjackBettingDto>) {
 
     fun result() {
         players.forEach {
-            println("%s카드: %s - 결과: %s".format(it.userSetting.name, it.cards.map { c -> c.toString() }, it.getScore()))
+            println("%s카드: %s - 결과: %s".format(it.name, it.cards, it.score))
         }
 
-        println("최종 결과")
+        println("최종 수익")
         players.forEach {
-            println("%s - %s".format(it.userSetting.name, it.gameStatus.judgements.toString()))
+            println("%s : %s".format(it.name, it.money))
         }
     }
 }

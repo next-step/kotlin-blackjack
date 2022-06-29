@@ -20,5 +20,11 @@ abstract class UserRole(
 
     abstract fun isDealer(): Boolean
 
+    fun isBlackjack(): Boolean = cards.size == 2 && getScore() == 21
+
+    fun isWinner(): Boolean = gameStatus.isWinner()
+
     fun getScore(): Int = gameStatus.state.score(gameStatus.state.currentCard())
+
+    fun getBettingMoney(): Int = userSetting.bettingMoney
 }
