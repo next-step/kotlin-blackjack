@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.blackjackgame.BlackjackGameElement
 import blackjack.domain.card.*
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole

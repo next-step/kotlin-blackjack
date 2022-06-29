@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.blackjackgame.GameStatus
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardSymbol

@@ -1,6 +1,8 @@
 package blackjack.application
 
 import blackjack.*
+import blackjack.domain.blackjackgame.BlackjackGame
+import blackjack.domain.blackjackgame.BlackjackGameElement
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
@@ -17,15 +19,7 @@ val blackjackRequestView: RequestView = BlackjackRequestView()
 
 fun main() {
     println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    val gamers = readln()
-        .split(BASIC_RULE_DELIMITER)
-        .asSequence()
-        .map {
-            println("%s 의 배팅 금액은?".format(it))
-            Player(UserSetting(it, readln().toInt()))
-        }
-        .plus(Dealer())
-        .toList()
+    val gamers = createGamers()
 
     val blackjackGame = BlackjackGame(BlackjackGameElement(gamers, Deck(cardShuffle)), blackjackRequestView)
     val playersView = PlayersView(blackjackGame.getGamers())
@@ -38,4 +32,14 @@ fun main() {
 
     val resultView = ResultView(blackjackJudgement.updateGameJudgement())
     resultView.result()
+}
+
+private fun createGamers(): List<UserRole> {
+    return readln()
+        .split(BASIC_RULE_DELIMITER).asSequence()
+        .map {
+            println("%s 의 배팅 금액은?".format(it))
+            Player(UserSetting(it, readln().toInt())) }
+        .plus(Dealer())
+        .toList()
 }

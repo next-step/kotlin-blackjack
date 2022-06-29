@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.domain.blackjackgame.GameStatus
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
-import blackjack.domain.player.UserSetting
 import blackjack.judge.Loose
 import blackjack.judge.Push
 import blackjack.judge.Win
