@@ -1,21 +1,15 @@
 # kotlin-blackjack
 
-## 1단계 
+## 블랙잭 - 기능구현 목록표
 
-아래와 같은 형식이 나올 수 있도록 dsl 코드를 작성한다! 
-
-```kotlin
-introduce {
-  name("박재성")
-  company("우아한형제들")
-  skills {
-    soft("A passion for problem solving")
-    soft("Good communication skills")
-    hard("Kotlin")
-  }
-  languages {
-    "Korean" level 5
-    "English" level 3
-  }
-}
-```
+- [x] 플레이어의 이름을 입력 받는기능
+  - [x] 이름이 공백이면 예외를 발생시킨다. 
+  - [x] 이름이 중복되면 예외를 발생시킨다.
+- [x] 게임에 필요한 카드 뭉치들을 가지는 덱을 생성하는 기능
+- [x] 플레이어들에게 2장 씩 카드를 나눠주는 기능
+- [x] 플레이어들이 처음에 받은 카드 2장을 출력하는 기능
+- [x] 카드들의 합을 구하는 기능
+- [x] 자신의 턴인 플레이어를 찾는 기능
+- [x] 플레이어들이 카드를 한 장씩 더 받을지 입력 받는다.
+  - [X] 플레이어가 카드를 더 받을 수 있는지 확인한다.
+- [x] 플레이어가 보유한 카드와 점수를 출력한다.

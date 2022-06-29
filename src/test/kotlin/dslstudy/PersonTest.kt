@@ -1,5 +1,6 @@
 package dslstudy
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
@@ -36,12 +37,14 @@ class PersonTest : StringSpec({
             }
         }
 
-        person.skills[0].type shouldBe Skill.Type.SOFT
-        person.skills[0].name shouldBe "A passion for problem solving"
-        person.skills[1].type shouldBe Skill.Type.SOFT
-        person.skills[1].name shouldBe "Good communication skills"
-        person.skills[2].type shouldBe Skill.Type.HARD
-        person.skills[2].name shouldBe "Kotlin"
+        assertSoftly(person) {
+            skills[0].type shouldBe Skill.Type.SOFT
+            skills[0].name shouldBe "A passion for problem solving"
+            skills[1].type shouldBe Skill.Type.SOFT
+            skills[1].name shouldBe "Good communication skills"
+            skills[2].type shouldBe Skill.Type.HARD
+            skills[2].name shouldBe "Kotlin"
+        }
     }
 
     "languages" {
