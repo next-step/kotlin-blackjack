@@ -19,7 +19,7 @@ class BlackjackGame(
 
     fun getGamers(): List<PlayerVo> {
         return blackjackGameElement.gamers
-            .map { PlayerVo(it.name, it.cards.map { c -> c.toString() }.toString()) }
+            .map { PlayerVo(it.userSetting.name, it.cards.map { c -> c.toString() }.toString()) }
     }
 
     private fun playPlayerTurn(player: UserRole): UserRole {
@@ -40,7 +40,7 @@ class BlackjackGame(
     }
 
     private fun deal(player: UserRole): UserRole {
-        requestView.moreCardToGamer(player.name)
+        requestView.moreCardToGamer(player.userSetting.name)
         return when (readln()) {
             "y" -> player.draw(blackjackGameElement.draw())
             else -> player.stand()

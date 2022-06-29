@@ -7,6 +7,7 @@ import blackjack.domain.card.PlayerDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
+import blackjack.domain.player.UserSetting
 import blackjack.state.Stand
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -46,7 +47,7 @@ internal class BlackjackJudgementTest {
         )
 
         return listOf(
-            Player("성주", gameStatus = playerStatus),
+            Player(UserSetting("성주"), gameStatus = playerStatus),
             Dealer(gameStatus = dealerStatus)
         )
     }

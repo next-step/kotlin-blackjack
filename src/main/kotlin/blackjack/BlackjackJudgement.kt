@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.player.Player
 import blackjack.domain.player.UserRole
+import blackjack.domain.player.UserSetting
 import blackjack.judge.Loose
 import blackjack.judge.Push
 import blackjack.judge.Win
@@ -20,7 +21,7 @@ class BlackjackJudgement(private val users: List<UserRole>) {
     private fun updateGame(players: List<UserRole>): List<UserRole> {
         if (dealer.getScore() >= BURST_SCORE_MIN) {
             dealer.gameStatus.judgements.add(Loose())
-            return players.map { Player(it.name, GameStatus(it.gameStatus.state, mutableListOf(Win()))) }
+            return players.map { Player(it.userSetting, GameStatus(it.gameStatus.state, mutableListOf(Win()))) }
                 .toList()
         }
         return players.map { updateGameJudgement(it, dealer.getScore()) }

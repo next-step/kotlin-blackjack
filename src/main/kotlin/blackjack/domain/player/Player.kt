@@ -5,19 +5,19 @@ import blackjack.domain.card.Card
 import blackjack.state.Stand
 
 class Player(
-    override val name: String,
+    override val userSetting: UserSetting,
     override val gameStatus: GameStatus = GameStatus()
-) : UserRole(name, gameStatus) {
+) : UserRole(userSetting, gameStatus) {
 
     override fun draw(card: Card): UserRole {
-        return Player(name, GameStatus(state = gameStatus.state.draw(card)))
+        return Player(userSetting, GameStatus(state = gameStatus.state.draw(card)))
     }
 
     override fun stand(): UserRole {
         if (gameStatus.state.isFinish()) {
             return this
         }
-        return Player(name, GameStatus(state = Stand(gameStatus.state.currentCard())))
+        return Player(userSetting, GameStatus(state = Stand(gameStatus.state.currentCard())))
     }
 
     override fun isFinish(): Boolean = gameStatus.state.isFinish()

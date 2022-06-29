@@ -4,7 +4,7 @@ import blackjack.GameStatus
 import blackjack.domain.card.Card
 
 abstract class UserRole(
-    open val name: String,
+    open val userSetting: UserSetting,
     open val gameStatus: GameStatus = GameStatus()
 ) {
     val cards: List<Card>

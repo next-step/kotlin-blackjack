@@ -15,7 +15,7 @@ internal class DealerTest {
         val dealer = Dealer()
 
         assertAll("프로퍼티 값", {
-            assertThat(dealer.name).isEqualTo("딜러")
+            assertThat(dealer.userSetting.name).isEqualTo("딜러")
             assertThat(dealer.gameStatus.state).isInstanceOf(Ready::class.java)
         })
     }
