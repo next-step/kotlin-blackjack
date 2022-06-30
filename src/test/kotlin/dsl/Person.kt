@@ -3,14 +3,21 @@ package dsl
 data class Person(
     val name: String,
     val company: String,
-    val skills: Skill,
+    val skills: Skills,
     val languages: Language
-)
+) {
+
+    companion object {
+        fun introduce(block: PersonBuilder.() -> Unit): Person {
+            return PersonBuilder().apply(block).build()
+        }
+    }
+}
 
 class PersonBuilder {
     private lateinit var name: String
     private lateinit var company: String
-    private lateinit var skills: Skill
+    private lateinit var skills: Skills
     private lateinit var languages: Language
 
     fun name(name: String) {

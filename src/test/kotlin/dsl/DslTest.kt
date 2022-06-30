@@ -9,7 +9,7 @@ class DslTest {
     @ValueSource(strings = ["디디", "루루", "라"])
     fun dsl(input: String) {
         val company = "우아한형제들"
-        val person: Person = introduce {
+        val person: Person = Person.introduce {
             name(input)
             company(company)
             skills {
@@ -25,14 +25,10 @@ class DslTest {
 
         assertThat(person.name).isEqualTo(input)
         assertThat(person.company).isEqualTo(company)
-        assertThat(person.skills.softSkills).containsExactly("A passion for problem solving", "Good communication skills")
-        assertThat(person.skills.hardSkills).containsExactly("Kotlin")
+        assertThat(person.skills.softSkills.map { it.name }).containsExactly("A passion for problem solving", "Good communication skills")
+        assertThat(person.skills.hardSkills.map { it.name }).containsExactly("Kotlin")
         assertThat(person.languages.languages).extractingByKeys("Korean", "English")
             .containsExactly(5, 3)
-    }
-
-    private fun introduce(block: PersonBuilder.() -> Unit): Person {
-        return PersonBuilder().apply(block).build()
     }
 }
 
