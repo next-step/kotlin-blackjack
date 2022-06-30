@@ -3,6 +3,7 @@ package blackjack.model
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class ScoreTest {
@@ -15,9 +16,9 @@ class ScoreTest {
 
     @Test
     fun `21점을 넘었는지 판단하는 판단한다`() {
-        assertThat(Score(1).isLose()).isFalse()
-        assertThat(Score(21).isLose()).isFalse()
-        assertThat(Score(22).isLose()).isTrue()
+        assertThat(Score(1).isBust()).isFalse()
+        assertThat(Score(21).isBust()).isFalse()
+        assertThat(Score(22).isBust()).isTrue()
     }
 
     @ParameterizedTest
@@ -26,5 +27,11 @@ class ScoreTest {
         org.junit.jupiter.api.assertThrows<IllegalArgumentException> {
             Score(i)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource("26,25,false", "26,20,false,", "21,20,true", "21,1,true", "20,21,false")
+    fun `두 점수를 비교해 승자를 판단한다`(a: Int, b: Int, c: Boolean) {
+        assertThat(Score(a).isWinThan(Score(b))).isEqualTo(c)
     }
 }

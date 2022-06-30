@@ -14,7 +14,7 @@ class PlayersTest {
     @Test
     fun `아직 종료되지 않은 유저 목록을 반환한다`() {
         assertThat(Players(playerList).findNotOver()).isEqualTo(playerList)
-        assertThat(Players(playerList.map { it.gameOver() }).findNotOver()).isEmpty()
+        assertThat(Players(playerList.map { it.setStay() }).findNotOver()).isEmpty()
     }
 
     @Test
