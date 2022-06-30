@@ -13,7 +13,7 @@ object ConsoleResultView : ResultView {
         println()
 
         with(StringBuilder()) {
-            candidates.candidates.map { this.append("${it.name}에게 ${it.cardSize}장을 ") }
+            candidates.candidates.map { candidate -> this.append("${candidate.name}에게 ${candidate.cardSize}장을 ") }
             this.append("나누었습니다.")
             println(this)
         }
@@ -28,21 +28,21 @@ object ConsoleResultView : ResultView {
     override fun printCardGameResult(results: CandidateGameResults) {
         println()
 
-        results.candidates.forEach {
-            val score1 = it.sumOfCardScore.score1
-            val score2 = it.sumOfCardScore.score2
-            println("${candidateCardStatus(it)} - 결과: ${candidateCardScore(score1, score2)}")
+        results.candidates.forEach { candidate ->
+            val score1 = candidate.sumOfCardScore.score1
+            val score2 = candidate.sumOfCardScore.score2
+            println("${candidateCardStatus(candidate)} - 결과: ${candidateCardScore(score1, score2)}")
         }
 
         println("\n## 최종 수익")
-        results.results.forEach {
-            println("${it.candidateName}: ${it.profit}")
+        results.results.forEach { gameResult ->
+            println("${gameResult.candidateName}: ${gameResult.profit}")
         }
     }
 
     private fun candidateCardStatus(candidate: Candidate): String {
         val cards = candidate.cards.cards
-            .joinToString(CARD_SEPARATOR) { "${it.numberMark}${it.symbol}" }
+            .joinToString(CARD_SEPARATOR) { card -> "${card.numberMark}${card.symbol}" }
         return "${candidate.name}카드: $cards"
     }
 

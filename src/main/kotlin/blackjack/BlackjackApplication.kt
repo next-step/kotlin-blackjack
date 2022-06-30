@@ -22,9 +22,9 @@ object BlackjackApplication {
     private fun startGame(inputView: InputView): Game {
         inputView.printPlayerNamesInputMessage()
         val players = inputView.inputPlayerNames()
-            .map {
-                inputView.printPlayerBettingAmountInputMessage(it)
-                Player.from(it, inputView.inputPlayerBettingAmount())
+            .map { playerName ->
+                inputView.printPlayerBettingAmountInputMessage(playerName)
+                Player.from(playerName, inputView.inputPlayerBettingAmount())
             }
 
         val candidates = Candidates(players.plus(Dealer()))
