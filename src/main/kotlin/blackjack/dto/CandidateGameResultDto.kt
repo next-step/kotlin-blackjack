@@ -17,8 +17,8 @@ class CandidateGameResultDto(
         private const val MULTIPLICATION_NUMBER_FOR_BLACK_JACK_PROFIT = 1.5
         private const val DRAW_PROFIT = 0
 
-        fun of(player: Player, dealer: Dealer): CandidateGameResultDto {
-            return when {
+        fun of(player: Player, dealer: Dealer): CandidateGameResultDto =
+            when {
                 player.satisfyBlackJack() && dealer.satisfyBlackJack() -> ofDraw(player)
                 player.satisfyBlackJack() -> ofBlackJack(player)
                 dealer.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE) -> ofWin(player)
@@ -27,7 +27,6 @@ class CandidateGameResultDto(
                 dealer.beats(player, LOST_DECISION_BOUNDARY_SCORE) -> ofLost(player)
                 else -> ofDraw(player)
             }
-        }
 
         private fun ofBlackJack(player: Player): CandidateGameResultDto {
             return CandidateGameResultDto(player, player.bettingAmount * MULTIPLICATION_NUMBER_FOR_BLACK_JACK_PROFIT)
