@@ -5,11 +5,7 @@ class Candidates(
 ) {
 
     val first
-        get(): Candidate {
-            validateNotEmpty(candidates)
-
-            return candidates[0]
-        }
+        get() = candidates[0]
 
     init {
         validateNotEmpty(candidates)
