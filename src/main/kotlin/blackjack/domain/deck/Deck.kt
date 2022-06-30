@@ -12,7 +12,6 @@ class Deck private constructor(
     companion object {
         fun release(): Deck = Deck(
             CardPattern.values()
-                .asSequence()
                 .flatMap { createCardWith(pattern = it) }
                 .shuffled()
                 .toCollection(LinkedList())
