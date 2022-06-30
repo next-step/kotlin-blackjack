@@ -33,15 +33,4 @@ abstract class Candidate protected constructor(
     open fun receiveCard(card: Card) {
         cards.addOne(card)
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Candidate) return false
-
-        if (candidateName != other.candidateName) return false
-
-        return true
-    }
-
-    override fun hashCode() = candidateName.hashCode()
 }
