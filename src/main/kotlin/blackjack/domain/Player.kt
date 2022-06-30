@@ -10,8 +10,8 @@ class Player(val name: String) {
     fun canHit() = sumOfPoints() < MAX_POINT
 
     fun sumOfPoints(): Int =
-        if (hands.hasAnotherValue()) {
-            hands.sumOfPointsWithAnotherValue()
+        if (hands.hasAce()) {
+            hands.sumOfPointsWithAce()
         } else {
             hands.sumOfPoints()
         }

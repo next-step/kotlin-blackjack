@@ -14,20 +14,20 @@ class Hands(
         _cards.add(card)
     }
 
-    fun hasAnotherValue() = _cards.any { it.number.anotherValue != null }
+    fun hasAce(): Boolean = _cards.any { it.isAce() }
 
     fun sumOfPoints(): Int = _cards.sumOf { it.numberValue }
 
-    fun sumOfPointsWithAnotherValue(): Int {
-        var result = sumOfPointsHasNoAnotherValue()
-        _cards.filter { it.number.anotherValue != null }
+    fun sumOfPointsWithAce(): Int {
+        var result = sumOfPointsHasNoAce()
+        _cards.filter { it.isAce() }
             .forEach {
-                result += it.chooseValue(result, it)
+                result += it.getAceNumberValue(result)
             }
         return result
     }
 
-    private fun sumOfPointsHasNoAnotherValue(): Int =
-        _cards.filterNot { it.number.anotherValue != null }
+    private fun sumOfPointsHasNoAce(): Int =
+        _cards.filterNot { it.isAce() }
             .sumOf { it.numberValue }
 }
