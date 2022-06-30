@@ -12,11 +12,11 @@ class PlayGame {
     }
 
     fun hit(player: Player) {
-        runCatching {
+        if (cardDeck.isLeft()) {
             player.receiveCard(cardDeck.getOne())
-        }.onFailure {
-            throw IllegalStateException("카드가 존재하지 않습니다.")
+            return
         }
+        throw IllegalStateException("카드가 존재하지 않습니다.")
     }
 
     fun hitOrStandMultipleTimes(player: Player) {

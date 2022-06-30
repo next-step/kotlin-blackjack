@@ -4,11 +4,13 @@ data class Card(
     val symbol: Symbol,
     val number: CardNumber
 ) {
+    val numberValue: Int = number.value
+
     fun chooseValue(sumValue: Int, card: Card): Int =
         card.number.anotherValue?.let { anotherValue ->
-            if (sumValue + anotherValue > MAX_POINT) card.number.value
+            if (sumValue + anotherValue > MAX_POINT) card.numberValue
             else anotherValue
-        } ?: card.number.value
+        } ?: card.numberValue
 
     companion object {
         private const val MAX_POINT = 21

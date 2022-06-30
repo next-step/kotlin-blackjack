@@ -16,7 +16,7 @@ class Hands(
 
     fun hasAnotherValue() = _cards.any { it.number.anotherValue != null }
 
-    fun sumOfPoints(): Int = _cards.sumOf { it.number.value }
+    fun sumOfPoints(): Int = _cards.sumOf { it.numberValue }
 
     fun sumOfPointsWithAnotherValue(): Int {
         var result = sumOfPointsHasNoAnotherValue()
@@ -29,5 +29,5 @@ class Hands(
 
     private fun sumOfPointsHasNoAnotherValue(): Int =
         _cards.filterNot { it.number.anotherValue != null }
-            .sumOf { it.number.value }
+            .sumOf { it.numberValue }
 }
