@@ -35,8 +35,8 @@ class CardScore(
     private fun validateMinScore(score: Int) = require(score >= MIN_SCORE) { "카드 점수는 최소 ${MIN_SCORE}점 이상이어야 합니다." }
 
     operator fun plus(other: CardScore): CardScore {
-        val sumOfScore = score1.plus(other.score1)
-        val sumOfOtherScore = score2.plus(other.score2)
+        val sumOfScore = score1 + other.score1
+        val sumOfOtherScore = score2 + other.score2
         return CardScore(sumOfScore, sumOfOtherScore)
     }
 

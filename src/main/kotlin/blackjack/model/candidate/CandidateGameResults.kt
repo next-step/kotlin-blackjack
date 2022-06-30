@@ -21,8 +21,7 @@ class CandidateGameResults private constructor(
             val dealerProfit = -playerGameResults.sumOf { it.profit }
             val dealerGameResult = CandidateGameResult(dealer, dealerProfit)
 
-            return listOf(dealerGameResult)
-                .plus(playerGameResults)
+            return (listOf(dealerGameResult) + playerGameResults)
                 .let(::CandidateGameResults)
         }
     }

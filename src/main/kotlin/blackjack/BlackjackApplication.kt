@@ -27,7 +27,7 @@ object BlackjackApplication {
                 Player.from(playerName, inputView.inputPlayerBettingAmount())
             }
 
-        val candidates = Candidates(players.plus(Dealer()))
+        val candidates = Candidates(players + Dealer())
         val game = Game(candidates = candidates)
 
         game.start()
