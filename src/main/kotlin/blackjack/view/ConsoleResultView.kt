@@ -40,6 +40,9 @@ object ConsoleResultView : ResultView {
         }
     }
 
+    override fun printDealerReceiveMoreCardMessage(dealerName: CandidateName) =
+        println("\n${dealerName.name}는 점수가 $BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD 이하라 한 장의 카드를 더 받았습니다.")
+
     private fun candidateCardStatus(candidate: Candidate): String {
         val cards = candidate.cards.cards
             .joinToString(CARD_SEPARATOR) { card -> "${card.numberMark}${card.symbol}" }
@@ -52,7 +55,4 @@ object ConsoleResultView : ResultView {
         }
         return "$score1 or $score2"
     }
-
-    override fun printDealerReceiveMoreCardMessage(dealerName: CandidateName) =
-        println("\n${dealerName.name}는 점수가 $BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD 이하라 한 장의 카드를 더 받았습니다.")
 }
