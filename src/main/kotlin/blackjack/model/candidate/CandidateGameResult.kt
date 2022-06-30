@@ -14,31 +14,15 @@ class CandidateGameResult(
         private const val DRAW_PROFIT = 0
 
         fun of(player: Player, dealer: Dealer): CandidateGameResult {
-            if (player.satisfyBlackJack() && dealer.satisfyBlackJack()) {
-                return ofDraw(player)
+            return when {
+                player.satisfyBlackJack() && dealer.satisfyBlackJack() -> ofDraw(player)
+                player.satisfyBlackJack() -> ofBlackJack(player)
+                dealer.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE) -> ofWin(player)
+                player.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE) -> ofLost(player)
+                player.beats(dealer, LOST_DECISION_BOUNDARY_SCORE) -> ofWin(player)
+                dealer.beats(player, LOST_DECISION_BOUNDARY_SCORE) -> ofLost(player)
+                else -> ofDraw(player)
             }
-
-            if (player.satisfyBlackJack()) {
-                return ofBlackJack(player)
-            }
-
-            if (dealer.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofWin(player)
-            }
-
-            if (player.isAllScoreGreaterThan(LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofLost(player)
-            }
-
-            if (player.beats(dealer, LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofWin(player)
-            }
-
-            if (dealer.beats(player, LOST_DECISION_BOUNDARY_SCORE)) {
-                return ofLost(player)
-            }
-
-            return ofDraw(player)
         }
 
         private fun ofBlackJack(player: Player): CandidateGameResult {
