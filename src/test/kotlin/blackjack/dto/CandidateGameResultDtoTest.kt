@@ -1,5 +1,7 @@
-package blackjack.model.candidate
+package blackjack.dto
 
+import blackjack.model.candidate.Dealer
+import blackjack.model.candidate.Player
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardSymbol
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 @DisplayName("참가자 게임 결과 테스트")
-class CandidateGameResultTest {
+class CandidateGameResultDtoTest {
 
     @Test
     fun `플레이어의 카드 점수가 21을 초과할 경우 베팅 금액을 모두 잃음`() {
@@ -23,7 +25,7 @@ class CandidateGameResultTest {
         player.receiveCard(Card(CardSymbol.다이아, CardNumber.TWO))
 
         // then
-        assertThat(CandidateGameResult.of(player, dealer).profit).isEqualTo(-10000.0)
+        assertThat(CandidateGameResultDto.of(player, dealer).profit).isEqualTo(-10000.0)
     }
 
     @Test
@@ -37,7 +39,7 @@ class CandidateGameResultTest {
         player.receiveCard(Card(CardSymbol.클로버, CardNumber.ACE))
 
         // then
-        assertThat(CandidateGameResult.of(player, dealer).profit).isEqualTo(15000.0)
+        assertThat(CandidateGameResultDto.of(player, dealer).profit).isEqualTo(15000.0)
     }
 
     @Test
@@ -53,7 +55,7 @@ class CandidateGameResultTest {
         player.receiveCard(Card(CardSymbol.스페이드, CardNumber.ACE))
 
         // then
-        assertThat(CandidateGameResult.of(player, dealer).profit).isEqualTo(0.0)
+        assertThat(CandidateGameResultDto.of(player, dealer).profit).isEqualTo(0.0)
     }
 
     @Test
@@ -72,9 +74,9 @@ class CandidateGameResultTest {
         player3.receiveCard(Card(CardSymbol.하트, CardNumber.FOUR))
 
         // when
-        val resultOfPlayer1 = CandidateGameResult.of(player1, dealer)
-        val resultOfPlayer2 = CandidateGameResult.of(player2, dealer)
-        val resultOfPlayer3 = CandidateGameResult.of(player3, dealer)
+        val resultOfPlayer1 = CandidateGameResultDto.of(player1, dealer)
+        val resultOfPlayer2 = CandidateGameResultDto.of(player2, dealer)
+        val resultOfPlayer3 = CandidateGameResultDto.of(player3, dealer)
 
         // then
         assertAll(

@@ -1,7 +1,7 @@
 package blackjack.view
 
+import blackjack.dto.CandidateGameResultsDto
 import blackjack.model.candidate.Candidate
-import blackjack.model.candidate.CandidateGameResults
 import blackjack.model.candidate.CandidateName
 import blackjack.model.candidate.Candidates
 import blackjack.model.candidate.Dealer.Companion.BOUNDARY_SCORE_FOR_RECEIVING_MORE_CARD
@@ -25,7 +25,7 @@ object ConsoleResultView : ResultView {
 
     override fun printCandidateCardStatus(candidate: Candidate) = println(candidateCardStatus(candidate))
 
-    override fun printCardGameResult(results: CandidateGameResults) {
+    override fun printCardGameResult(results: CandidateGameResultsDto) {
         println()
 
         results.candidates.forEach { candidate ->

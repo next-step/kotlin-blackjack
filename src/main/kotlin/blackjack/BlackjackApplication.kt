@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.dto.CandidateGameResultsDto
 import blackjack.model.Game
 import blackjack.model.candidate.Candidate
-import blackjack.model.candidate.CandidateGameResults
 import blackjack.model.candidate.Candidates
 import blackjack.model.candidate.Dealer
 import blackjack.model.candidate.Player
@@ -16,7 +16,7 @@ object BlackjackApplication {
         resultView.printCandidatesCardStatus(game.candidates)
 
         playGame(game, inputView, resultView)
-        resultView.printCardGameResult(CandidateGameResults.from(game.candidates))
+        resultView.printCardGameResult(CandidateGameResultsDto.from(game.candidates))
     }
 
     private fun startGame(inputView: InputView): Game {

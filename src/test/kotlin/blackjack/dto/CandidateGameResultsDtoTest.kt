@@ -1,5 +1,8 @@
-package blackjack.model.candidate
+package blackjack.dto
 
+import blackjack.model.candidate.Candidates
+import blackjack.model.candidate.Dealer
+import blackjack.model.candidate.Player
 import blackjack.model.card.Card
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardSymbol
@@ -10,7 +13,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("참가자 게임 결과 컬렉션 테스트")
-class CandidateGameResultsTest {
+class CandidateGameResultsDtoTest {
 
     @Test
     fun `참가자 게임 결과 생성시 딜러가 존재하지 않으면 예외 발생`() {
@@ -21,7 +24,7 @@ class CandidateGameResultsTest {
         val candidates = Candidates(listOf(player1, player2))
 
         // when, then
-        val exception = assertThrows<IllegalArgumentException> { CandidateGameResults.from(candidates) }
+        val exception = assertThrows<IllegalArgumentException> { CandidateGameResultsDto.from(candidates) }
         assertThat(exception.message).isEqualTo("딜러가 존재하지 않습니다.")
     }
 
@@ -43,7 +46,7 @@ class CandidateGameResultsTest {
         val candidates = Candidates(listOf(dealer, player1, player2, player3))
 
         // when
-        val candidateGameResults = CandidateGameResults.from(candidates)
+        val candidateGameResults = CandidateGameResultsDto.from(candidates)
 
         // then
         val (resultOfDealer, resultOfPlayer1, resultOfPlayer2, resultOfPlayer3) = candidateGameResults.results
