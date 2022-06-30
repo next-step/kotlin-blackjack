@@ -8,6 +8,7 @@ abstract class Candidate protected constructor(
     val cards: Cards = Cards(),
     var needMoreCard: Boolean = true,
 ) {
+
     val cardSize
         get() = cards.size
 

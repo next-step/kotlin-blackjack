@@ -3,6 +3,7 @@ package blackjack.model.card
 data class Cards(
     val cards: MutableList<Card> = mutableListOf(),
 ) {
+
     val size
         get() = cards.size
 
