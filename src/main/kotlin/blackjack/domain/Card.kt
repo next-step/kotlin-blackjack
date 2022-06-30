@@ -3,7 +3,17 @@ package blackjack.domain
 data class Card(
     val symbol: Symbol,
     val number: CardNumber
-)
+) {
+    fun chooseValue(sumValue: Int, card: Card): Int =
+        card.number.anotherValue?.let { anotherValue ->
+            if (sumValue + anotherValue > MAX_POINT) card.number.value
+            else anotherValue
+        } ?: card.number.value
+
+    companion object {
+        private const val MAX_POINT = 21
+    }
+}
 
 enum class Symbol(val displayStr: String) {
     HEART("하트"),

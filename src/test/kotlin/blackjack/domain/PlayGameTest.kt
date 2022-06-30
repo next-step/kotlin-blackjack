@@ -10,7 +10,7 @@ internal class PlayGameTest {
         val player = Player("name")
         PlayGame().start(player)
 
-        assertThat(player.cards.distinct()).hasSize(2)
+        assertThat(player.hands.cards.distinct()).hasSize(2)
     }
 
     @Test
@@ -18,7 +18,7 @@ internal class PlayGameTest {
         val player = Player("name")
         PlayGame().hit(player)
 
-        assertThat(player.cards).hasSize(1)
+        assertThat(player.hands.cards).hasSize(1)
     }
 
     // @Test
@@ -28,6 +28,6 @@ internal class PlayGameTest {
 
         val player = Player("name")
         PlayGame().hitOrStandMultipleTimes(player)
-        assertThat(player.cards).hasSize(1)
+        assertThat(player.hands.cards).hasSize(1)
     }
 }

@@ -31,7 +31,7 @@ object OutputView {
     private fun playerCardToString(player: Player) = buildString {
         append(
             "${player.name}카드: ${
-            player.cards.joinToString(", ") { it.number.displayStr + it.symbol.displayStr }
+            player.hands.cards.joinToString(", ") { it.number.displayStr + it.symbol.displayStr }
             }"
         )
     }

@@ -10,7 +10,7 @@ internal class PlayerTest {
         val card = Card(Symbol.SPADE, CardNumber.ACE)
         player.receiveCard(card)
 
-        val result = player.cards
+        val result = player.hands.cards
 
         assertThat(result).hasSize(1)
         assertThat(result.first()).isEqualTo(card)
