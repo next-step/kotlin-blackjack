@@ -35,7 +35,7 @@ class Player(val playerName: PlayerName) {
     fun getScore(): Int = this.state.score()
 
     companion object {
-        fun enrollPlayer(nameValue: String): Player = Player(
+        fun from(nameValue: String): Player = Player(
             playerName = PlayerName(value = nameValue)
         )
     }

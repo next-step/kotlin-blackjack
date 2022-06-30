@@ -24,7 +24,7 @@ class Players private constructor(
     fun isNotAllFinished(): Boolean = values.any { it.isRunning() }
 
     companion object {
-        fun enrollPlayers(playNameValues: List<String>): Players =
-            Players(values = playNameValues.map { Player.enrollPlayer(nameValue = it) })
+        fun of(playNameValues: List<String>): Players =
+            Players(values = playNameValues.map { Player.from(nameValue = it) })
     }
 }

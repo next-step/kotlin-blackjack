@@ -23,7 +23,7 @@ internal class PlayerTest : FreeSpec({
             row(Card(pattern = DIAMOND, number = TEN), Card(pattern = CLOVER, number = SEVEN)),
         ).forEach { (firstCard, secondCard) ->
             "$firstCard, $secondCard 를 받으면 손패에 $firstCard, $secondCard 가 생긴다." {
-                val 규남님 = Player.enrollPlayer(nameValue = "규남님")
+                val 규남님 = Player.from(nameValue = "규남님")
 
                 규남님.receiveInitCards(firstCard = firstCard, secondCard = secondCard)
 
