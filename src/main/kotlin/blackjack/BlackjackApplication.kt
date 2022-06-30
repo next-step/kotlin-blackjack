@@ -16,10 +16,26 @@ fun main() {
     OutputView.firstCard(players)
 
     players.forEach { player ->
-        runCatching {
-            playGame.hitOrStandMultipleTimes(player)
-        }.onFailure { println(it.message) }
+        var result: Boolean
+        do {
+            result = hitOrStand(playGame, player)
+        } while (result)
     }
 
     OutputView.result(players)
+}
+
+private fun hitOrStand(playGame: PlayGame, player: Player): Boolean {
+    if (!player.canHit()) {
+        println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
+        return false
+    }
+    val hit = InputView.hitOrStand(player.name)
+    if (hit) {
+        playGame.hit(player)
+    }
+    OutputView.cardOfPlayer(player)
+    if (!hit) return false
+
+    return true
 }

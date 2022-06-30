@@ -2,7 +2,6 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.io.ByteArrayInputStream
 
 internal class PlayGameTest {
     @Test
@@ -18,16 +17,6 @@ internal class PlayGameTest {
         val player = Player("name")
         PlayGame().hit(player)
 
-        assertThat(player.hands.cards).hasSize(1)
-    }
-
-    // @Test
-    internal fun `y를 입력받는 경우 card 개수가 1개 더 늘어난다`() {
-        val input = "y"
-        System.setIn(ByteArrayInputStream(input.toByteArray()))
-
-        val player = Player("name")
-        PlayGame().hitOrStandMultipleTimes(player)
         assertThat(player.hands.cards).hasSize(1)
     }
 }
