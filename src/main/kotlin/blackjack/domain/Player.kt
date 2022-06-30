@@ -3,14 +3,15 @@ package blackjack.domain
 class Player(val name: String) {
     val hands = Hands()
 
+    val canNotHit: Boolean
+        get() = sumOfPoints() >= MAX_POINT
+
     fun receiveCard(card: Card) {
         hands.add(card)
     }
 
-    fun canHit() = sumOfPoints() < MAX_POINT
-
     fun sumOfPoints(): Int =
-        if (hands.hasAce()) {
+        if (hands.hasAce) {
             hands.sumOfPointsWithAce()
         } else {
             hands.sumOfPoints()

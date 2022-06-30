@@ -7,13 +7,13 @@ import org.junit.jupiter.params.provider.ValueSource
 
 internal class CardTest {
     @Test
-    internal fun `Card가 Ace이면 isAce()=true`() {
-        assertThat(SPADE_ACE.isAce()).isTrue
+    internal fun `Card가 Ace이면 isAce=true`() {
+        assertThat(SPADE_ACE.isAce).isTrue
     }
 
     @Test
-    internal fun `Card가 Ace가 아니면 isAce()=false`() {
-        assertThat(SPADE_TWO.isAce()).isFalse
+    internal fun `Card가 Ace가 아니면 isAce=false`() {
+        assertThat(SPADE_TWO.isAce).isFalse
     }
 
     @ParameterizedTest
