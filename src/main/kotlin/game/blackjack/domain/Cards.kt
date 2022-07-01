@@ -3,23 +3,21 @@ package game.blackjack.domain
 class Cards(
     private val cards: MutableList<Card>
 ) {
-    private var score: Score
-
-    init {
-        score = score()
-    }
-
     constructor() : this(mutableListOf())
 
     fun get(): List<Card> = cards.toList()
 
-    fun score(): Score = Card.score(cards)
+    fun score(): Score {
+        val denominations = cards.map { it.denomination }
+        return denominations
+            .sumOf { it.score }
+            .sumIfSoftHand(denominations.contains(Denomination.ACE))
+    }
 
-    fun isBust(): Boolean = score.isBust()
+    fun isBust(): Boolean = score().isBust()
 
     fun add(card: Card) {
         cards.add(card)
-        score = Card.score(cards)
     }
 
     fun size(): Int = cards.size
