@@ -7,7 +7,7 @@ class ResultView(private val players: List<BlackjackBettingDto>) {
 
     fun result() {
         players.forEach {
-            println("%s카드: %s - 결과: %s".format(it.name, it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },, it.score))
+            println("%s카드: %s - 결과: %s".format(it.name, it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() }, it.score))
         }
 
         println("최종 수익")
