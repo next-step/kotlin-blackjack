@@ -21,9 +21,8 @@ open class User(val name: String, initCards: List<Card>) {
     val cards: Cards
         get() = _cards
 
-    private var _money = Money()
-    val money: Money
-        get() = _money
+    var money = Money()
+        private set
 
     init {
         require(name.isNotEmpty()) { ErrorMessages.NAME_IS_EMPTY }
@@ -34,7 +33,7 @@ open class User(val name: String, initCards: List<Card>) {
     }
 
     fun setBatMoney(money: Int) {
-        _money += money
+        this.money += money
     }
 
     private fun isBust(): Boolean {
@@ -50,32 +49,23 @@ open class User(val name: String, initCards: List<Card>) {
         return when (match(user)) {
             Match.WIN -> money
             Match.WIN_BLACKJACK -> money.times(BLACKJACK_WIN_PROFIT_MARGIN)
-            Match.LOSE -> Money(-money.value)
-            else -> Money()
+            Match.LOSE -> -money
+            else -> ZERO_MONEY
         }
     }
 
     protected fun match(user: User): Match {
-        if (isBust() && user.isBust())
-            return Match.DRAW
-        else if (user.isBust())
-            return Match.WIN
-        else if (isBust())
-            return Match.LOSE
-
-        if (isBlackJack() && user.isBlackJack())
-            return Match.DRAW
-        else if (isBlackJack())
-            return Match.WIN_BLACKJACK
-        else if (user.isBlackJack())
-            return Match.LOSE_BLACKJACK
-
-        return if (user._cards.getScore() < _cards.getScore())
-            Match.WIN
-        else if (user._cards.getScore() > _cards.getScore())
-            Match.LOSE
-        else
-            Match.DRAW
+        return when {
+            isBust() && user.isBust() -> Match.DRAW
+            user.isBust() -> Match.WIN
+            isBust() -> Match.LOSE
+            isBlackJack() && user.isBlackJack() -> Match.DRAW
+            user.isBlackJack() -> Match.LOSE_BLACKJACK
+            isBlackJack() -> Match.WIN_BLACKJACK
+            user._cards.getScore() < _cards.getScore() -> Match.WIN
+            user._cards.getScore() > _cards.getScore() -> Match.LOSE
+            else -> Match.DRAW
+        }
     }
 
     open fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
@@ -89,6 +79,7 @@ open class User(val name: String, initCards: List<Card>) {
 
     companion object {
         const val BLACKJACK_WIN_PROFIT_MARGIN = 1.5
+        private val ZERO_MONEY = Money(0)
     }
 }
 

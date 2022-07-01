@@ -5,6 +5,9 @@ package blackjack.domain
  */
 @JvmInline
 value class Money(val value: Int = 0) {
+
+    constructor(value: Double) : this(value.toInt())
+
     operator fun plus(money: Int): Money {
         return Money(value + money)
     }
@@ -18,6 +21,10 @@ value class Money(val value: Int = 0) {
     }
 
     operator fun times(value: Double): Money {
-        return Money((this.value * value).toInt())
+        return Money((this.value * value))
+    }
+
+    operator fun unaryMinus(): Money {
+        return Money(-value)
     }
 }
