@@ -5,11 +5,9 @@ value class Score(private val value: Int) {
 
     fun isBust(): Boolean = value > BLACKJACK_SCORE
 
-    fun calculateAceScore(aceCount: Int): Score {
+    fun sumIfSoftHand(hasAce: Boolean): Score {
         var total = value
-        repeat(aceCount) {
-            total += if (total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0
-        }
+        total += if (hasAce && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0
         return Score(total)
     }
 
@@ -26,7 +24,7 @@ value class Score(private val value: Int) {
 }
 
 inline fun <T> Iterable<T>.sumOf(selector: (T) -> Score): Score {
-    var sum: Score = Score(0)
+    var sum = Score(0)
     for (element in this) {
         sum += selector(element)
     }
