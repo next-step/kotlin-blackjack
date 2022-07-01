@@ -30,7 +30,12 @@ class ResultView {
 
     fun printAllPlayerCard(players: Players) {
         println("딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
-        players.forEachWithDealer { println(formatPlayerCard(it)) }
+        players.forEachWithDealer {
+            when (it) {
+                is Dealer -> println("${it.name}카드: ${formatCard(it.cards.get().first())}")
+                else -> println(formatPlayerCard(it))
+            }
+        }
     }
 
     fun printPlayerCard(player: Player) {
