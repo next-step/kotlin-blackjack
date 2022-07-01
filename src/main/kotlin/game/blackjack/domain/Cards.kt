@@ -16,8 +16,14 @@ class Cards(
 
     fun isBust(): Boolean = score().isBust()
 
+    fun isBlackJack(): Boolean = score().isBlackJack()
+
     fun add(card: Card) {
         cards.add(card)
+    }
+
+    fun add(cards: List<Card>) {
+        this.cards.addAll(cards)
     }
 
     fun size(): Int = cards.size

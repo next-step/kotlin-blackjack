@@ -1,12 +1,9 @@
 package game.blackjack.domain
 
 open class Player(val name: String) {
-    private val _cards: Cards = Cards()
+    val cards: Cards = Cards()
     private var status: Status = Status.HIT
     protected val winningRecord = WinningRecord()
-
-    val cards: Cards
-        get() = _cards
 
     fun determine(response: Boolean): Status {
         status = if (response) Status.HIT else Status.STAY
@@ -17,13 +14,20 @@ open class Player(val name: String) {
 
     fun isBust(): Boolean = cards.isBust()
 
+    fun init(cards: List<Card>): Score {
+        this.cards.add(cards)
+        if (this.cards.isBlackJack()) {
+            status = Status.BLACKJACK
+        }
+        return this.cards.score()
+    }
+
     fun receive(card: Card): Score {
-        _cards.add(card)
-        val score = _cards.score()
-        if (score.isBust()) {
+        cards.add(card)
+        if (cards.isBust()) {
             status = Status.BUST
         }
-        return score
+        return cards.score()
     }
 
     fun canReceive(): Boolean = status == Status.HIT

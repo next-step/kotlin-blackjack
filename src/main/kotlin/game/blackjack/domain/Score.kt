@@ -5,6 +5,8 @@ value class Score(private val value: Int) {
 
     fun isBust(): Boolean = value > BLACKJACK_SCORE
 
+    fun isBlackJack(): Boolean = value == BLACKJACK_SCORE
+
     fun sumIfSoftHand(hasAce: Boolean): Score {
         var total = value
         total += if (hasAce && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0

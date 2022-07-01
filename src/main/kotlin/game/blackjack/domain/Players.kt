@@ -6,7 +6,7 @@ class Players(
 ) {
     fun init(initCount: Int): Players {
         listOf(dealer, *(players.toTypedArray())).forEach {
-            repeat(initCount) { _ -> it.receive(dealer.drawCard()) }
+            it.init(dealer.drawCard(initCount))
         }
         return this
     }
@@ -15,9 +15,7 @@ class Players(
         (players + dealer).forEach {
             it.receiveUntilHit(getAction, showPlayerCard) { dealer.drawCard() }
         }
-
         players.forEach { it.record(dealer) }
-
         return this
     }
 

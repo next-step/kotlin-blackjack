@@ -4,6 +4,11 @@ class Dealer : Player("딜러") {
     private val deck = Deck()
 
     fun drawCard(): Card = deck.draw()
+    fun drawCard(count: Int): List<Card> {
+        val drawn = mutableListOf<Card>()
+        repeat(count) { drawn.add(drawCard()) }
+        return drawn
+    }
 
     fun recordWin() {
         winningRecord.recordWin()
