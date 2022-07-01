@@ -7,6 +7,8 @@ class Deck(cardShuffle: CardShuffle) {
         return _cards.removeFirst()
     }
 
+    fun isEmptyCard(): Boolean = _cards.isEmpty()
+
     val cards: List<Card>
         get() = _cards.toList()
 }
