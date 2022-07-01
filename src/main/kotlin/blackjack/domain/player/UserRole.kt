@@ -8,9 +8,8 @@ abstract class UserRole(
     open val gameStatus: GameStatus = GameStatus()
 ) {
     val cards: List<Card>
-        get() = gameStatus.state.currentCard()
-            .cards
-            .toList()
+        get() = gameStatus.getCards()
+    
 
     abstract fun draw(card: Card): UserRole
 
@@ -24,7 +23,7 @@ abstract class UserRole(
 
     fun isWinner(): Boolean = gameStatus.isWinner()
 
-    fun getScore(): Int = gameStatus.state.score(gameStatus.state.currentCard())
+    fun getScore(): Int = gameStatus.getScore()
 
     fun getBettingMoney(): Int = userSetting.bettingMoney
 }
