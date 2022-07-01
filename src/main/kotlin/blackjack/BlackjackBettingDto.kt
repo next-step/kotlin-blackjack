@@ -1,3 +1,5 @@
 package blackjack
 
-class BlackjackBettingDto(val name: String, val money: Int, val cards: String, val score: Int)
+import blackjack.domain.card.Card
+
+class BlackjackBettingDto(val name: String, val money: Int, val cards: List<Card>, val score: Int)

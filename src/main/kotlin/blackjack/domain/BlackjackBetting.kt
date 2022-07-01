@@ -20,21 +20,14 @@ class BlackjackBetting(private val users: List<UserRole>) {
         return bettingFinishedPlayers.toList()
     }
 
-    private fun allBlackjack() = users.map {
-        BlackjackBettingDto(
-            it.userSetting.name,
-            0,
-            it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },
-            it.getScore()
-        )
-    }
-        .toList()
+    private fun allBlackjack(): List<BlackjackBettingDto> =
+        users.map { BlackjackBettingDto(it.userSetting.name, 0, it.cards, it.getScore()) }.toList()
 
     private fun bettingDealer(dealer: UserRole, bettingFinishedPlayers: MutableList<BlackjackBettingDto>) =
         BlackjackBettingDto(
             dealer.userSetting.name,
             getRewardForDealer(bettingFinishedPlayers),
-            dealer.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },
+            dealer.cards,
             dealer.getScore()
         )
 
@@ -48,43 +41,29 @@ class BlackjackBetting(private val users: List<UserRole>) {
         return users.sumOf { -it.money }
     }
 
-    private fun getLooser(): List<BlackjackBettingDto> = users.filter { !it.isDealer() && !it.isWinner() }
-        .map {
-            BlackjackBettingDto(
-                it.userSetting.name,
-                -it.getBettingMoney(),
-                it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },
-                it.getScore()
-            )
-        }
-        .toList()
+    private fun getLooser(): List<BlackjackBettingDto> =
+        users
+            .filter { !it.isDealer() && !it.isWinner() }
+            .map { BlackjackBettingDto(it.userSetting.name, -it.getBettingMoney(), it.cards, it.getScore()) }
+            .toList()
 
     private fun getWinners(): List<BlackjackBettingDto> =
-        users.filter { !it.isDealer() && it.isWinner() && !it.isBlackjack() }
-            .map {
-                BlackjackBettingDto(
-                    it.userSetting.name,
-                    it.getBettingMoney(),
-                    it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },
-                    it.getScore()
-                )
-            }
+        users
+            .filter { !it.isDealer() && it.isWinner() && !it.isBlackjack() }
+            .map { BlackjackBettingDto(it.userSetting.name, it.getBettingMoney(), it.cards, it.getScore()) }
             .toList()
 
     private fun getWinnersWithBlackjack(): List<BlackjackBettingDto> {
-        return users.filter { !it.isDealer() && it.isBlackjack() && it.isWinner() }
+        return users
+            .filter { !it.isDealer() && it.isBlackjack() && it.isWinner() }
             .map {
                 BlackjackBettingDto(
                     it.userSetting.name,
                     (it.getBettingMoney() * 1.5).toInt(),
-                    it.cards.joinToString(SEPARATOR_CUSTOM) { card -> card.toString() },
+                    it.cards,
                     it.getScore()
                 )
             }
             .toList()
-    }
-
-    companion object {
-        private const val SEPARATOR_CUSTOM = ", "
     }
 }
