@@ -26,7 +26,7 @@ open class Player(val name: String) {
         return score
     }
 
-    open fun canReceive(): Boolean = status == Status.HIT
+    fun canReceive(): Boolean = status == Status.HIT
 
     open fun receiveUntilHit(
         action: (name: String) -> Boolean,
