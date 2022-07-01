@@ -41,17 +41,11 @@ open class User(val name: String, initCards: List<Card>) {
     }
 
     private fun isBlackJack(): Boolean {
-        return _cards.getSize() == Users.INIT_CARD_SIZE &&
-            _cards.getScore().isBlackJackScore()
+        return _cards.isBlackJack()
     }
 
     open fun getBatResult(user: User): Money {
-        return when (match(user)) {
-            Match.WIN -> money
-            Match.WIN_BLACKJACK -> money.times(BLACKJACK_WIN_PROFIT_MARGIN)
-            Match.LOSE -> -money
-            else -> ZERO_MONEY
-        }
+        return match(user).earningMoney(money)
     }
 
     protected fun match(user: User): Match {
@@ -79,10 +73,22 @@ open class User(val name: String, initCards: List<Card>) {
 
     companion object {
         const val BLACKJACK_WIN_PROFIT_MARGIN = 1.5
-        private val ZERO_MONEY = Money(0)
     }
 }
 
 enum class Match {
-    WIN, LOSE, DRAW, WIN_BLACKJACK, LOSE_BLACKJACK
+    WIN, LOSE, DRAW, WIN_BLACKJACK, LOSE_BLACKJACK;
+
+    fun earningMoney(money: Money): Money {
+        return when (this) {
+            WIN -> money
+            WIN_BLACKJACK -> money.times(User.BLACKJACK_WIN_PROFIT_MARGIN)
+            LOSE -> -money
+            else -> ZERO_MONEY
+        }
+    }
+
+    companion object {
+        private val ZERO_MONEY = Money()
+    }
 }
