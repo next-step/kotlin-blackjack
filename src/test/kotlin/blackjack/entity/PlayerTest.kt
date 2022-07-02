@@ -35,32 +35,4 @@ internal class PlayerTest {
         // then
         Assertions.assertThat(resultWallet.sumUp).isGreaterThan(testWallet.sumUp)
     }
-
-    @Test
-    fun `1장을 드로우 하지 않으면 player가 가진 wallet에 카드 갯수가 그대로이다`() {
-        // given
-        val cards = listOf<Card>(Card(Shape.DIAMOND, CardNumber.NINE), Card(Shape.CLOVER, CardNumber.EIGHT))
-        val testWallet = Wallet(cards)
-        val testPlayer = Player("제이", testWallet)
-
-        // when
-        val resultPlayer = BlackJack().chooseDrawing(testPlayer, "n")
-
-        // then
-        Assertions.assertThat(resultPlayer.wallet.cards.size).isEqualTo(testWallet.cards.size)
-    }
-
-    @Test
-    fun `1장을 드로우 하지 않으면 player가 가진 wallet에 카드 총 합이 늘어나지 않는다`() {
-        // given
-        val cards = listOf<Card>(Card(Shape.DIAMOND, CardNumber.NINE), Card(Shape.CLOVER, CardNumber.EIGHT))
-        val testWallet = Wallet(cards)
-        val testPlayer = Player("제이", testWallet)
-
-        // when
-        val resultPlayer = BlackJack().chooseDrawing(testPlayer, "n")
-
-        // then
-        Assertions.assertThat(resultPlayer.wallet.sumUp).isEqualTo(testWallet.sumUp)
-    }
 }

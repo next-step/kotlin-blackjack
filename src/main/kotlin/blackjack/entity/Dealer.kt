@@ -1,11 +1,19 @@
 package blackjack.entity
 
-class Dealer(override val name: String = "딜러", override val wallet: Wallet, override val limit: Int = 17) : Person {
-  override fun draw(): Wallet {
-    TODO("Not yet implemented")
-  }
+import blackjack.ui.GetResult
 
-  override fun checkDrawingCondition(): Person {
-    return Dealer(name, wallet, limit)
-  }
+class Dealer(override val wallet: Wallet, override val name: String = "딜러", override val limit: Int = 17) : Person {
+    override fun draw(): Wallet {
+        val cards = wallet.getMutableCardList()
+        cards.add(CardDrawer.drawSingleCard())
+        return Wallet(cards)
+    }
+
+    override fun checkDrawingCondition(dealer: Person): Person {
+        if (!wallet.isAbleToDraw(limit)) return dealer
+        GetResult.addDealerSingleCard()
+        println()
+        val newWallet = dealer.draw()
+        return Dealer(newWallet)
+    }
 }
