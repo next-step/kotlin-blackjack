@@ -10,13 +10,20 @@ import blackjack.domain.card.Deck
  * 딜러
  * Created by Jaesungchi on 2022.06.15..
  */
-class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
+class Dealer(initCard: Card) : Player(DEALER_NAME, listOf(initCard)) {
     fun getBatResult(users: List<User>): Money {
         var money = Money()
         users.forEach {
             money += matchUser(it)
         }
         return money
+    }
+
+    override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
+        while (!isOverHitScore()) {
+            output.drawDealerHitMessage()
+            hit(deck.takeCard())
+        }
     }
 
     private fun matchUser(user: User): Money {
@@ -28,15 +35,8 @@ class Dealer(initCard: Card) : User(DEALER_NAME, listOf(initCard)) {
         }
     }
 
-    fun isOverHitScore(): Boolean {
+    private fun isOverHitScore(): Boolean {
         return cards.getScore().value >= HIT_SCORE
-    }
-
-    override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
-        while (!isOverHitScore()) {
-            output.drawDealerHitMessage()
-            hit(deck.takeCard())
-        }
     }
 
     companion object {

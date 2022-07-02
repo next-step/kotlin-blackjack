@@ -20,14 +20,6 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `딜러의 카드가 16이하라면 isOverHitScore가 false다`() {
-        val dealer = Dealer(Five(CardType.DIAMOND)).apply {
-            hit(Ace(CardType.CLUB))
-        }
-        assertThat(dealer.isOverHitScore()).isFalse
-    }
-
-    @Test
     fun `딜러가 15 유저가 17인 경우 딜러가 유저의 배팅금액만큼 잃는다`() {
         val dealer = Dealer(Four(CardType.DIAMOND)).apply {
             hit(Ace(CardType.CLUB))

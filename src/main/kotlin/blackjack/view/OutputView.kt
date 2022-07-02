@@ -9,7 +9,7 @@ import blackjack.domain.card.Jack
 import blackjack.domain.card.King
 import blackjack.domain.card.Queen
 import blackjack.domain.user.Dealer
-import blackjack.domain.user.User
+import blackjack.domain.user.Player
 import blackjack.domain.user.Users
 
 /**
@@ -30,7 +30,7 @@ object OutputView : OutputInterface {
         println()
     }
 
-    override fun drawUserCard(user: User) {
+    override fun drawUserCard(user: Player) {
         println(
             Messages.PRINT_HAVE_CARDS.format(user.name) + user.cards.hands.joinToString {
                 cardToString(it)
@@ -38,7 +38,7 @@ object OutputView : OutputInterface {
         )
     }
 
-    override fun drawMoreCard(user: User) {
+    override fun drawMoreCard(user: Player) {
         println(Messages.WANT_MORE_CARD.format(user.name))
     }
 
@@ -82,7 +82,7 @@ object OutputView : OutputInterface {
         return "$number$type"
     }
 
-    private fun printCardAndScore(user: User) {
+    private fun printCardAndScore(user: Player) {
         println(
             Messages.PRINT_CARDS_AND_SCORE.format(
                 user.name, user.cards.hands.joinToString { cardToString(it) }, user.cards.getScore().value
