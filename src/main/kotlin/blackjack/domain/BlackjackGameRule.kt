@@ -17,8 +17,14 @@ infix fun Player.vs(dealer: Dealer): MatchStatus {
 }
 
 infix fun Player.getRevenueFrom(dealer: Dealer): Revenue {
-    val matchStatus = this vs dealer
-    return Revenue((betAmount.value * matchStatus.revenueRatio).toInt())
+    return revenue by (this vs dealer)
+}
+
+private val Player.revenue: BetAmount
+    get() = betAmount
+
+private infix fun BetAmount.by(matchStatus: MatchStatus): Revenue {
+    return Revenue((value * matchStatus.revenueRatio).toInt())
 }
 
 fun List<BlackjackParticipantResult>.getDealerRevenue(): Revenue {
