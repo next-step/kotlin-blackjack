@@ -12,6 +12,9 @@ import blackjack.domain.card.Card
 class User(name: String, initCards: List<Card>) : Player(name, initCards) {
     constructor(name: String, vararg initCards: Card) : this(name, initCards.asList())
 
+    var income = Money()
+        private set
+
     var money = Money()
         private set
 
@@ -20,9 +23,11 @@ class User(name: String, initCards: List<Card>) : Player(name, initCards) {
     }
 
     fun matchWithDealer(dealer: Dealer) {
-        val income = match(dealer).earningMoney(money)
-        dealer.addIncome(-income)
-        addIncome(income)
+        addIncome(match(dealer).earningMoney(money))
+    }
+
+    private fun addIncome(money: Money) {
+        income += money
     }
 
     override fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean {

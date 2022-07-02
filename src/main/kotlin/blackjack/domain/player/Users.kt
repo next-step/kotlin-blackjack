@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.constant.ErrorMessages
 import blackjack.domain.InputInterface
+import blackjack.domain.Money
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
@@ -36,6 +37,10 @@ class Users(val users: List<User>, private val deck: Deck) {
         users.forEach {
             it.matchWithDealer(dealer)
         }
+    }
+
+    fun getSumOfUsersIncome(): Money {
+        return Money(users.sumOf { it.income.value })
     }
 
     companion object {

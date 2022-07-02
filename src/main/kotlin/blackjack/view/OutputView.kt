@@ -64,7 +64,7 @@ object OutputView : OutputInterface {
     fun printWinAndLose(users: Users, dealer: Dealer) {
         println()
         println(Messages.FINAL_WIN_AND_LOSE)
-        println(Messages.USER_COLON.format(dealer.name) + dealer.income.value)
+        println(Messages.USER_COLON.format(dealer.name) + -users.getSumOfUsersIncome().value)
         users.users.forEach {
             println(Messages.USER_COLON.format(it.name) + it.income.value)
         }
