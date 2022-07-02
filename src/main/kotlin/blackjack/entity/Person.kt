@@ -5,7 +5,7 @@ interface Person {
   val wallet: Wallet
   val limit: Int
 
-  fun draw(): Wallet
+  fun draw(wallet: Wallet): Wallet
 
   fun getWalletCards(): List<Card> {
     return wallet.cards
