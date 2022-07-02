@@ -24,10 +24,12 @@ sealed class Participant(
 
 class Player(
     name: PlayerName,
+    val betAmount: BetAmount,
     hands: Hands
 ) : Participant(name, hands) {
-    constructor(name: String, vararg initialCards: PlayingCard) : this(
+    constructor(name: String, betAmount: Int, vararg initialCards: PlayingCard) : this(
         PlayerName(name),
+        BetAmount(betAmount),
         Hands.from(PlayingCards.from(initialCards.toList()))
     )
 
@@ -46,6 +48,8 @@ class Dealer(
         PlayerName(name),
         Hands.from(PlayingCards.from(initialCards.toList()))
     )
+
+    fun getFirstCard(): PlayingCard = hands.cards.first()
 
     override fun isReceivable(): Boolean = score.value <= SHOULD_HIT_MAX_SCORE
 

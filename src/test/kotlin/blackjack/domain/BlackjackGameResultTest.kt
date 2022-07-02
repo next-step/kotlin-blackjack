@@ -15,16 +15,19 @@ class BlackjackGameResultTest {
         val players = listOf(
             Player(
                 "파이리",
+                10_000,
                 PlayingCard(Suit.SPADES, CardNumber.ACE),
                 PlayingCard(Suit.HEARTS, CardNumber.JACK)
             ),
             Player(
                 "꼬부기",
+                20_000,
                 PlayingCard(Suit.CLUBS, CardNumber.JACK),
                 PlayingCard(Suit.SPADES, CardNumber.NINE)
             ),
             Player(
                 "이상해씨",
+                15_000,
                 PlayingCard(Suit.CLUBS, CardNumber.TWO),
                 PlayingCard(Suit.DIAMONDS, CardNumber.FOUR)
             )
@@ -33,10 +36,10 @@ class BlackjackGameResultTest {
         val blackjackGameResult = BlackjackGameResult.from(participants).value
 
         assertAll(
-            { assertThat(blackjackGameResult[0].matchStatus).isEqualTo(MatchStatus.Dealer(1, 1, 1)) },
-            { assertThat(blackjackGameResult[1].matchStatus).isEqualTo(MatchStatus.Win) },
-            { assertThat(blackjackGameResult[2].matchStatus).isEqualTo(MatchStatus.Push) },
-            { assertThat(blackjackGameResult[3].matchStatus).isEqualTo(MatchStatus.Lose) }
+            { assertThat(blackjackGameResult[0].revenue.value).isEqualTo(0) },
+            { assertThat(blackjackGameResult[1].revenue.value).isEqualTo(15_000) },
+            { assertThat(blackjackGameResult[2].revenue.value).isEqualTo(0) },
+            { assertThat(blackjackGameResult[3].revenue.value).isEqualTo(-15_000) }
         )
     }
 }

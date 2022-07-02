@@ -13,6 +13,7 @@ class ParticipantsTest {
     private val players = listOf(
         Player(
             "이름",
+            10_000,
             PlayingCard(Suit.CLUBS, CardNumber.KING),
             PlayingCard(Suit.SPADES, CardNumber.JACK)
         )
