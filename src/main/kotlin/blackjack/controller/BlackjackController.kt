@@ -25,6 +25,8 @@ object BlackjackController {
         dealer.hitStage(deck, InputView, OutputView)
 
         OutputView.printResult(players, dealer)
+
+        players.matchWithDealer(dealer)
         OutputView.printWinAndLose(players, dealer)
     }
 }

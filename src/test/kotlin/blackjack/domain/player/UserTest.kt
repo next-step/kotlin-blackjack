@@ -25,36 +25,40 @@ class UserTest {
     @Test
     fun `게임 승리시 배팅금액을 받는다`() {
         val user1 = User("link", Ace(CardType.DIAMOND), Nine(CardType.SPADE)).apply {
-            setBatMoney(10000)
+            setBetMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
-        assertThat(user1.getBatResult(dealer).value).isEqualTo(10000)
+        user1.matchWithDealer(dealer)
+        assertThat(user1.income.value).isEqualTo(10000)
     }
 
     @Test
     fun `게임 패배시 배팅금액을 잃는다`() {
         val user1 = User("link", Nine(CardType.SPADE)).apply {
-            setBatMoney(10000)
+            setBetMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
-        assertThat(user1.getBatResult(dealer).value).isEqualTo(-10000)
+        user1.matchWithDealer(dealer)
+        assertThat(user1.income.value).isEqualTo(-10000)
     }
 
     @Test
     fun `유저가 블랙잭으로 승리한경우 승리시 일점오배를 받는다`() {
         val user1 = User("link", Ace(CardType.DIAMOND), Jack(CardType.SPADE)).apply {
-            setBatMoney(10000)
+            setBetMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
-        assertThat(user1.getBatResult(dealer).value).isEqualTo(15000)
+        user1.matchWithDealer(dealer)
+        assertThat(user1.income.value).isEqualTo(15000)
     }
 
     @Test
     fun `무승부시 배팅금액을 돌려 받는다`() {
         val user1 = User("link", Ace(CardType.DIAMOND)).apply {
-            setBatMoney(10000)
+            setBetMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
-        assertThat(user1.getBatResult(dealer).value).isEqualTo(0)
+        user1.matchWithDealer(dealer)
+        assertThat(user1.income.value).isEqualTo(0)
     }
 }

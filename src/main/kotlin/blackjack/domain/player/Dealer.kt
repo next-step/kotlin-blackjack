@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.InputInterface
-import blackjack.domain.Money
 import blackjack.domain.OutputInterface
 import blackjack.domain.Score
 import blackjack.domain.card.Card
@@ -13,19 +12,6 @@ import blackjack.domain.card.Card
 class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
 
     constructor(vararg initCards: Card) : this(initCards.asList())
-
-    fun getBatResult(users: List<User>): Money {
-        return Money(users.sumOf { matchUser(it).value })
-    }
-
-    private fun matchUser(user: User): Money {
-        return when (match(user)) {
-            Match.WIN, Match.WIN_BLACKJACK -> user.money
-            Match.LOSE -> Money(-user.money.value)
-            Match.LOSE_BLACKJACK -> Money(-user.money.times(BLACKJACK_WIN_PROFIT_MARGIN).value)
-            else -> Money()
-        }
-    }
 
     override fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean {
         if (isOverHitScore()) return false

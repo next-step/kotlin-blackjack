@@ -28,7 +28,13 @@ class Users(val users: List<User>, private val deck: Deck) {
     fun setBatMoney(input: InputInterface) {
         users.forEach {
             val money = input.getBatMoney(it)
-            it.setBatMoney(money)
+            it.setBetMoney(money)
+        }
+    }
+
+    fun matchWithDealer(dealer: Dealer) {
+        users.forEach {
+            it.matchWithDealer(dealer)
         }
     }
 

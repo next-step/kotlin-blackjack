@@ -17,6 +17,13 @@ abstract class Player(val name: String, initCards: List<Card>) {
     val cards: Cards
         get() = _cards
 
+    var income = Money()
+        private set
+
+    fun addIncome(money: Money) {
+        income += money
+    }
+
     init {
         require(name.isNotEmpty()) { ErrorMessages.NAME_IS_EMPTY }
     }
@@ -69,7 +76,7 @@ enum class Match {
         return when (this) {
             WIN -> money
             WIN_BLACKJACK -> money.times(Player.BLACKJACK_WIN_PROFIT_MARGIN)
-            LOSE -> -money
+            LOSE, LOSE_BLACKJACK -> -money
             else -> ZERO_MONEY
         }
     }

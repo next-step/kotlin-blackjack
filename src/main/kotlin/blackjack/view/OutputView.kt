@@ -64,10 +64,9 @@ object OutputView : OutputInterface {
     fun printWinAndLose(users: Users, dealer: Dealer) {
         println()
         println(Messages.FINAL_WIN_AND_LOSE)
-        val matchResults = dealer.getBatResult(users.users)
-        println(Messages.USER_COLON.format(dealer.name) + matchResults.value)
+        println(Messages.USER_COLON.format(dealer.name) + dealer.income.value)
         users.users.forEach {
-            println(Messages.USER_COLON.format(it.name) + it.getBatResult(dealer).value)
+            println(Messages.USER_COLON.format(it.name) + it.income.value)
         }
     }
 

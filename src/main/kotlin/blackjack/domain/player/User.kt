@@ -15,12 +15,14 @@ class User(name: String, initCards: List<Card>) : Player(name, initCards) {
     var money = Money()
         private set
 
-    fun setBatMoney(money: Int) {
+    fun setBetMoney(money: Int) {
         this.money += money
     }
 
-    fun getBatResult(user: Player): Money {
-        return match(user).earningMoney(money)
+    fun matchWithDealer(dealer: Dealer) {
+        val income = match(dealer).earningMoney(money)
+        dealer.addIncome(-income)
+        addIncome(income)
     }
 
     override fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean {
