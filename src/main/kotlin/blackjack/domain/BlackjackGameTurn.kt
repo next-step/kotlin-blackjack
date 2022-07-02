@@ -1,7 +1,6 @@
 package blackjack.domain
 
-@JvmInline
-value class BlackjackGameTurn(val participant: Participant) {
+class BlackjackGameTurn(val participant: Participant) {
     fun isTurnEnd(): Boolean = !participant.isReceivable()
 
     fun hit(playingCards: PlayingCards) {
