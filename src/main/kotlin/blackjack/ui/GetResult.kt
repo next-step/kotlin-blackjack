@@ -8,6 +8,7 @@ object GetResult {
 
     fun informGameStart(names: List<String>) {
         println(names.toString() + "에게 " + "2장을 나누었습니다.")
+        println()
     }
 
     fun printPlayerStatus(player: Person) {

@@ -9,11 +9,10 @@ import blackjack.ui.Input
 
 class BlackJack {
     fun play() {
-        val names = Input.getNames()
+        val names: List<String> = Input.getNames()
         GetResult.informGameStart(names)
-        println()
 
-        val players: List<Person> = names.map { name -> Player(name, CardDrawer.drawInitialCards()) }
+        val players = getPlayers(names)
         players.map { player: Person -> GetResult.printPlayerStatus(player) }
         println()
 
@@ -33,5 +32,12 @@ class BlackJack {
         if (answer == "n") return player
         val newWallet = player.draw()
         return Player(player.name, newWallet)
+    }
+
+    fun getPlayers(names: List<String>): List<Person> {
+        val players: MutableList<Person> = mutableListOf()
+        players.add(Dealer(wallet = CardDrawer.drawInitialCards()))
+        names.forEach { name: String -> players.add(Player(name, CardDrawer.drawInitialCards())) }
+        return players.toList()
     }
 }
