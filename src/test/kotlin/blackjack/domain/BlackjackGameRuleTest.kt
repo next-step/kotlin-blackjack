@@ -20,50 +20,50 @@ class BlackjackGameRuleTest {
     @Test
     fun `플레이어가 버스트인 경우, 딜러의 상태에 무관하게 무조건 패배한다`() {
         assertAll(
-            { assertThat(bustPlayer matchWith bustDealer).isEqualTo(MatchStatus.LOSE) },
-            { assertThat(bustPlayer matchWith blackjackDealer).isEqualTo(MatchStatus.LOSE) },
-            { assertThat(bustPlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.LOSE) },
-            { assertThat(bustPlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.LOSE) }
+            { assertThat(bustPlayer vs bustDealer).isEqualTo(MatchStatus.LOSE) },
+            { assertThat(bustPlayer vs blackjackDealer).isEqualTo(MatchStatus.LOSE) },
+            { assertThat(bustPlayer vs normal21ScoreDealer).isEqualTo(MatchStatus.LOSE) },
+            { assertThat(bustPlayer vs under21ScoreDealer).isEqualTo(MatchStatus.LOSE) }
         )
     }
 
     @Test
     fun `플레이어가 버스트가 아니고 딜러가 버스트라면 무조건 승리한다`() {
         assertAll(
-            { assertThat(blackjackPlayer matchWith bustDealer).isEqualTo(MatchStatus.BLACKJACK) },
-            { assertThat(normal21ScorePlayer matchWith bustDealer).isEqualTo(MatchStatus.WIN) },
-            { assertThat(under21ScorePlayer matchWith bustDealer).isEqualTo(MatchStatus.WIN) }
+            { assertThat(blackjackPlayer vs bustDealer).isEqualTo(MatchStatus.BLACKJACK) },
+            { assertThat(normal21ScorePlayer vs bustDealer).isEqualTo(MatchStatus.WIN) },
+            { assertThat(under21ScorePlayer vs bustDealer).isEqualTo(MatchStatus.WIN) }
         )
     }
 
     @Test
     fun `플레이어와 딜러가 모두 블랙잭이라면 무승부가 된다`() {
-        assertThat(blackjackPlayer matchWith blackjackDealer).isEqualTo(MatchStatus.PUSH)
+        assertThat(blackjackPlayer vs blackjackDealer).isEqualTo(MatchStatus.PUSH)
     }
 
     @Test
     fun `플레이어가 블랙잭이고 딜러가 블랙잭이 아니라면 승리한다`() {
         assertAll(
-            { assertThat(blackjackPlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.BLACKJACK) },
-            { assertThat(blackjackPlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.BLACKJACK) }
+            { assertThat(blackjackPlayer vs normal21ScoreDealer).isEqualTo(MatchStatus.BLACKJACK) },
+            { assertThat(blackjackPlayer vs under21ScoreDealer).isEqualTo(MatchStatus.BLACKJACK) }
         )
     }
 
     @Test
     fun `플레이어가 블랙잭이 아니고 딜러가 블랙잭이라면 패배한다`() {
         assertAll(
-            { assertThat(normal21ScorePlayer matchWith blackjackDealer).isEqualTo(MatchStatus.LOSE) },
-            { assertThat(under21ScorePlayer matchWith blackjackDealer).isEqualTo(MatchStatus.LOSE) }
+            { assertThat(normal21ScorePlayer vs blackjackDealer).isEqualTo(MatchStatus.LOSE) },
+            { assertThat(under21ScorePlayer vs blackjackDealer).isEqualTo(MatchStatus.LOSE) }
         )
     }
 
     @Test
     fun `플레이어와 딜러 모두 블랙잭과 버스트가 없다면 점수가 높은 쪽이 승리한다`() {
         assertAll(
-            { assertThat(normal21ScorePlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.WIN) },
-            { assertThat(under21ScorePlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.LOSE) },
-            { assertThat(normal21ScorePlayer matchWith normal21ScoreDealer).isEqualTo(MatchStatus.PUSH) },
-            { assertThat(under21ScorePlayer matchWith under21ScoreDealer).isEqualTo(MatchStatus.PUSH) },
+            { assertThat(normal21ScorePlayer vs under21ScoreDealer).isEqualTo(MatchStatus.WIN) },
+            { assertThat(under21ScorePlayer vs normal21ScoreDealer).isEqualTo(MatchStatus.LOSE) },
+            { assertThat(normal21ScorePlayer vs normal21ScoreDealer).isEqualTo(MatchStatus.PUSH) },
+            { assertThat(under21ScorePlayer vs under21ScoreDealer).isEqualTo(MatchStatus.PUSH) },
         )
     }
 

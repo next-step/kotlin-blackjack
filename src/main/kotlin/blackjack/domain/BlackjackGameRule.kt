@@ -3,7 +3,7 @@ package blackjack.domain
 const val START_CARD_COUNT = 2
 const val HIT_CARD_COUNT = 1
 
-infix fun Player.matchWith(dealer: Dealer): MatchStatus {
+infix fun Player.vs(dealer: Dealer): MatchStatus {
     return when {
         isBlackjack() && dealer.isBlackjack() -> MatchStatus.PUSH
         isBlackjack() -> MatchStatus.BLACKJACK
@@ -17,7 +17,7 @@ infix fun Player.matchWith(dealer: Dealer): MatchStatus {
 }
 
 infix fun Player.getRevenueFrom(dealer: Dealer): Revenue {
-    val matchStatus = this matchWith dealer
+    val matchStatus = this vs dealer
     return Revenue((betAmount.value * matchStatus.revenueRatio).toInt())
 }
 
