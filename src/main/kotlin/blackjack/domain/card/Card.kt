@@ -6,26 +6,26 @@ package blackjack.domain.card
  */
 sealed class Card(val type: CardType, val score: Int)
 
-class ACE(type: CardType) : Card(type, 1)
+class Ace(type: CardType) : Card(type, 1)
 
-class TWO(type: CardType) : Card(type, 2)
+class Two(type: CardType) : Card(type, 2)
 
-class THREE(type: CardType) : Card(type, 3)
+class Three(type: CardType) : Card(type, 3)
 
-class FOUR(type: CardType) : Card(type, 4)
+class Four(type: CardType) : Card(type, 4)
 
-class FIVE(type: CardType) : Card(type, 5)
+class Five(type: CardType) : Card(type, 5)
 
-class SIX(type: CardType) : Card(type, 6)
+class Six(type: CardType) : Card(type, 6)
 
-class SEVEN(type: CardType) : Card(type, 7)
+class Seven(type: CardType) : Card(type, 7)
 
-class EIGHT(type: CardType) : Card(type, 8)
+class Eight(type: CardType) : Card(type, 8)
 
-class NINE(type: CardType) : Card(type, 9)
+class Nine(type: CardType) : Card(type, 9)
 
-class JACK(type: CardType) : Card(type, 10)
+class Jack(type: CardType) : Card(type, 10)
 
-class QUEEN(type: CardType) : Card(type, 10)
+class Queen(type: CardType) : Card(type, 10)
 
-class KING(type: CardType) : Card(type, 10)
+class King(type: CardType) : Card(type, 10)

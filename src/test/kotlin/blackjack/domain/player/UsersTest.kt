@@ -1,4 +1,4 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import org.assertj.core.api.Assertions.assertThat
@@ -12,7 +12,7 @@ class UsersTest {
     @Test
     fun `유저가 한명도 없을경우 IllegalArgumentException을 던진다`() {
         assertThrows<IllegalArgumentException> {
-            Users(listOf(), Deck(), Dealer(Deck().takeCards(2)))
+            Users(listOf(), Deck())
         }
     }
 

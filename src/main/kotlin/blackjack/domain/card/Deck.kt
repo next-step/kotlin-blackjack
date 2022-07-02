@@ -27,18 +27,18 @@ class Deck {
 
     private fun addCardToAllNumberByType(type: CardType): List<Card> {
         val cards = mutableListOf<Card>()
-        cards.add(ACE(type))
-        cards.add(TWO(type))
-        cards.add(THREE(type))
-        cards.add(FOUR(type))
-        cards.add(FIVE(type))
-        cards.add(SIX(type))
-        cards.add(SEVEN(type))
-        cards.add(EIGHT(type))
-        cards.add(NINE(type))
-        cards.add(JACK(type))
-        cards.add(QUEEN(type))
-        cards.add(KING(type))
+        cards.add(Ace(type))
+        cards.add(Two(type))
+        cards.add(Three(type))
+        cards.add(Four(type))
+        cards.add(Five(type))
+        cards.add(Six(type))
+        cards.add(Seven(type))
+        cards.add(Eight(type))
+        cards.add(Nine(type))
+        cards.add(Jack(type))
+        cards.add(Queen(type))
+        cards.add(King(type))
         return cards
     }
 }
