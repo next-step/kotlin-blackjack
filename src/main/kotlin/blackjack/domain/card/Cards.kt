@@ -6,8 +6,8 @@ import blackjack.domain.Score
  * 카드르 저장하는 클래스
  * Created by Jaesungchi on 2022.06.07..
  */
-class Cards {
-    private val _hands = mutableListOf<Card>()
+class Cards(initCards: List<Card>) {
+    private val _hands: MutableList<Card> = initCards.toMutableList()
     val hands: List<Card>
         get() = _hands.toList()
 

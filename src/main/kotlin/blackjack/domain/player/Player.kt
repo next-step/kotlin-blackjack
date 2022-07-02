@@ -13,11 +13,7 @@ import blackjack.domain.card.Deck
  * Created by Jaesungchi on 2022.07.02..
  */
 abstract class Player(val name: String, initCards: List<Card>) {
-    private val _cards: Cards = Cards().apply {
-        initCards.map {
-            addCard(it)
-        }
-    }
+    private val _cards: Cards = Cards(initCards)
     val cards: Cards
         get() = _cards
 

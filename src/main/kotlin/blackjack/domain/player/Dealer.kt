@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.InputInterface
 import blackjack.domain.Money
 import blackjack.domain.OutputInterface
+import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 
@@ -12,11 +13,7 @@ import blackjack.domain.card.Deck
  */
 class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
     fun getBatResult(users: List<User>): Money {
-        var money = Money()
-        users.forEach {
-            money += matchUser(it)
-        }
-        return money
+        return Money(users.sumOf { matchUser(it).value })
     }
 
     override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
@@ -36,11 +33,11 @@ class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
     }
 
     private fun isOverHitScore(): Boolean {
-        return cards.getScore().value >= HIT_SCORE
+        return cards.getScore() >= HIT_SCORE
     }
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val HIT_SCORE = 17
+        private val HIT_SCORE = Score(17)
     }
 }
