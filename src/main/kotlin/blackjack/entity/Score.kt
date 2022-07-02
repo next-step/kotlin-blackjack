@@ -8,20 +8,24 @@ object Score {
     private const val STANDARD_NUMBER = 21
 
     fun compare(player: Person, dealer: Person){
-        if(getDistance(player.getWalletSum())<=getDistance(dealer.getWalletSum())){
-            playerWin()
+        if(dealer.getWalletSum()>21){
+            playerWin(player)
             return
         }
-        dealerWin()
+        if(getDistance(player.getWalletSum())<=getDistance(dealer.getWalletSum())){
+            playerWin(player)
+            return
+        }
+        dealerWin(player)
         return
     }
 
-    fun dealerWin(){
+    fun dealerWin(player: Person){
         playerScore.add(Pair(player.name, "lose"))
         dealerScore["win"] = dealerScore["win"]?.plus(1) ?: 0
     }
 
-    fun playerWin(){
+    fun playerWin(player: Person){
         playerScore.add(Pair(player.name, "win"))
         dealerScore["lose"] = dealerScore["lose"]?.plus(1) ?: 0
     }
