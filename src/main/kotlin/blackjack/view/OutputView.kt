@@ -1,12 +1,15 @@
 package blackjack.view
 
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 object OutputView {
-    fun firstCard(players: List<Player>) {
+    fun firstCard(players: List<Player>, dealer: Dealer) {
+        val allPlayers = players.toMutableList()
+        allPlayers.add(0, dealer)
         val result = buildString {
-            appendLine("\n${players.joinToString(", ") { it.name }} 에게 2장의 카드를 나누어 주었습니다.")
-            players.forEach { player ->
+            appendLine("\n${allPlayers.joinToString(", ") { it.name }} 에게 2장의 카드를 나누어 주었습니다.")
+            allPlayers.forEach { player ->
                 appendLine(playerCardToString(player))
             }
         }

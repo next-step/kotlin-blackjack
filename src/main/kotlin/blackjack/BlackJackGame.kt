@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.PlayGame
 import blackjack.domain.Player
 import blackjack.view.InputView
@@ -9,12 +10,14 @@ object BlackJackGame {
     fun run() {
         val names = InputView.getNames()
         val players = names.map(::Player)
+        val dealer = Dealer()
 
         val playGame = PlayGame()
         players.forEach { player ->
             playGame.start(player)
         }
-        OutputView.firstCard(players)
+        playGame.start(dealer)
+        OutputView.firstCard(players, dealer)
 
         players.forEach { player ->
             var result: Boolean
