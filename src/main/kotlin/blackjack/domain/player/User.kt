@@ -4,7 +4,6 @@ import blackjack.domain.InputInterface
 import blackjack.domain.Money
 import blackjack.domain.OutputInterface
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
 
 /**
  * 유저데이터를 갖고 있는 클래스
@@ -22,12 +21,13 @@ class User(name: String, initCards: List<Card>) : Player(name, initCards) {
         return match(user).earningMoney(money)
     }
 
-    override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
-        while (!isBust()) {
-            output.drawMoreCard(this)
-            if (!input.getYesOrNo()) return
-            hit(deck.takeCard())
-            output.drawUserCard(this)
-        }
+    override fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean {
+        if (isBust()) return false
+        output.drawMoreCard(this)
+        return input.getYesOrNo()
+    }
+
+    override fun afterHit(output: OutputInterface) {
+        output.drawUserCard(this)
     }
 }

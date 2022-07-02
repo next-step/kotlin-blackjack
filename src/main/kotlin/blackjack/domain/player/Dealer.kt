@@ -5,7 +5,6 @@ import blackjack.domain.Money
 import blackjack.domain.OutputInterface
 import blackjack.domain.Score
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
 
 /**
  * 딜러
@@ -16,13 +15,6 @@ class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
         return Money(users.sumOf { matchUser(it).value })
     }
 
-    override fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
-        while (!isOverHitScore()) {
-            output.drawDealerHitMessage()
-            hit(deck.takeCard())
-        }
-    }
-
     private fun matchUser(user: User): Money {
         return when (match(user)) {
             Match.WIN, Match.WIN_BLACKJACK -> user.money
@@ -31,6 +23,14 @@ class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
             else -> Money()
         }
     }
+
+    override fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean {
+        if (isOverHitScore()) return false
+        output.drawDealerHitMessage()
+        return true
+    }
+
+    override fun afterHit(output: OutputInterface) {}
 
     private fun isOverHitScore(): Boolean {
         return cards.getScore() >= HIT_SCORE

@@ -47,7 +47,15 @@ abstract class Player(val name: String, initCards: List<Card>) {
         }
     }
 
-    abstract fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface)
+    protected abstract fun isReadyToHit(input: InputInterface, output: OutputInterface): Boolean
+    protected abstract fun afterHit(output: OutputInterface)
+
+    fun hitStage(deck: Deck, input: InputInterface, output: OutputInterface) {
+        while (isReadyToHit(input, output)) {
+            hit(deck.takeCard())
+            afterHit(output)
+        }
+    }
 
     companion object {
         const val BLACKJACK_WIN_PROFIT_MARGIN = 1.5
