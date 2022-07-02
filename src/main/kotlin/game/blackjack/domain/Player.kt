@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-open class Player(val name: String, val money: Int) {
+open class Player(val name: String, private val money: Int) {
     val cards: Cards = Cards()
     private var status: Status = Status.HIT
 

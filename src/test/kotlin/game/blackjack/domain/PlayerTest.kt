@@ -61,4 +61,78 @@ internal class PlayerTest {
 
         assertThat(player.canReceive()).isFalse
     }
+
+    @Test
+    fun `플레이어 버스트로 패배`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.FIVE), Card(Suit.SPADE, Denomination.TEN)))
+        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.FIVE)))
+        player.receive(Card(Suit.SPADE, Denomination.JACK))
+        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `딜러 버스트로 승리`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
+        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.QUEEN)))
+        dealer.receive(Card(Suit.HEART, Denomination.JACK))
+        assertThat(player.getProfit(dealer)).isEqualTo(1000)
+    }
+
+    @Test
+    fun `블랙잭 무승부`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
+        dealer.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
+        assertThat(player.getProfit(dealer)).isEqualTo(0)
+    }
+
+    @Test
+    fun `플레이어가 블랙잭으로 승리`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
+        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.TEN)))
+        assertThat(player.getProfit(dealer)).isEqualTo(1500)
+    }
+
+    @Test
+    fun `딜러가 블랙잭으로 승리`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.FIVE)))
+        dealer.init(listOf(Card(Suit.HEART, Denomination.ACE), Card(Suit.HEART, Denomination.QUEEN)))
+        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `둘다 21이하, 스코어 비교로 플레이어 승리`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
+        dealer.init(listOf(Card(Suit.HEART, Denomination.FIVE), Card(Suit.HEART, Denomination.QUEEN)))
+        assertThat(player.getProfit(dealer)).isEqualTo(1000)
+    }
+
+    @Test
+    fun `둘다 21이하, 스코어 비교로 딜러 승리`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.HEART, Denomination.FIVE), Card(Suit.HEART, Denomination.QUEEN)))
+        dealer.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
+        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+    }
+
+    @Test
+    fun `둘다 21이하, 스코어 비교로 무승부`() {
+        val player = Player("jade", 1000)
+        val dealer = Dealer()
+        player.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.JACK)))
+        dealer.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
+        assertThat(player.getProfit(dealer)).isEqualTo(0)
+    }
 }
