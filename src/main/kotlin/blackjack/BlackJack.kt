@@ -1,9 +1,6 @@
 package blackjack
 
-import blackjack.entity.CardDrawer
-import blackjack.entity.Dealer
-import blackjack.entity.Person
-import blackjack.entity.Player
+import blackjack.entity.*
 import blackjack.ui.GetResult
 import blackjack.ui.Input
 
@@ -20,6 +17,9 @@ class BlackJack {
         println()
         val playedDealer = dealer.checkDrawingCondition(dealer)
         GetResult.printAllStatusWithResult(playedPlayers, playedDealer)
+
+        playedPlayers.forEach { player: Person -> Score.compare(player, playedDealer) }
+        GetResult.getScoreResult()
     }
 
     fun getPlayers(names: List<String>): List<Person> {

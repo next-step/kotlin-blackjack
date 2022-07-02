@@ -1,9 +1,6 @@
 package blackjack.ui
 
-import blackjack.entity.Card
-import blackjack.entity.Dealer
-import blackjack.entity.Person
-import blackjack.entity.Player
+import blackjack.entity.*
 
 object GetResult {
 
@@ -39,6 +36,13 @@ object GetResult {
 
     fun addDealerSingleCard(){
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun getScoreResult(){
+        println()
+        println("## 최종 승패")
+        println("딜러: ${Score.dealerScore["win"]}승 ${Score.dealerScore["lose"]}패")
+        Score.playerScore.forEach{ playerScore:Pair<String, String> -> println("${playerScore.first}: ${playerScore.second}") }
     }
 
     private const val JOIN_SEPARATOR = ", "
