@@ -1,4 +1,4 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import org.assertj.core.api.Assertions.assertThat

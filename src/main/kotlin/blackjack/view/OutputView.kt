@@ -8,9 +8,9 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Jack
 import blackjack.domain.card.King
 import blackjack.domain.card.Queen
-import blackjack.domain.user.Dealer
-import blackjack.domain.user.Player
-import blackjack.domain.user.Users
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.Users
 
 /**
  * 출력을 담당하는 클래스

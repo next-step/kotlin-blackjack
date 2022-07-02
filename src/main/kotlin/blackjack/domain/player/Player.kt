@@ -1,4 +1,4 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.constant.ErrorMessages
 import blackjack.domain.InputInterface
@@ -37,16 +37,16 @@ abstract class Player(val name: String, initCards: List<Card>) {
         return _cards.isBlackJack()
     }
 
-    protected fun match(user: Player): Match {
+    protected fun match(player: Player): Match {
         return when {
-            isBust() && user.isBust() -> Match.DRAW
-            user.isBust() -> Match.WIN
+            isBust() && player.isBust() -> Match.DRAW
+            player.isBust() -> Match.WIN
             isBust() -> Match.LOSE
-            isBlackJack() && user.isBlackJack() -> Match.DRAW
-            user.isBlackJack() -> Match.LOSE_BLACKJACK
+            isBlackJack() && player.isBlackJack() -> Match.DRAW
+            player.isBlackJack() -> Match.LOSE_BLACKJACK
             isBlackJack() -> Match.WIN_BLACKJACK
-            user._cards.getScore() < _cards.getScore() -> Match.WIN
-            user._cards.getScore() > _cards.getScore() -> Match.LOSE
+            player._cards.getScore() < _cards.getScore() -> Match.WIN
+            player._cards.getScore() > _cards.getScore() -> Match.LOSE
             else -> Match.DRAW
         }
     }

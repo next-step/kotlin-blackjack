@@ -1,4 +1,4 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.constant.ErrorMessages
 import blackjack.domain.InputInterface

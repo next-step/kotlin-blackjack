@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
 import blackjack.domain.Score
-import blackjack.domain.user.Users
+import blackjack.domain.player.Users
 
 /**
  * 카드르 저장하는 클래스

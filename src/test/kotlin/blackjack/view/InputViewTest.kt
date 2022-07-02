@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.user.User
+import blackjack.domain.player.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest

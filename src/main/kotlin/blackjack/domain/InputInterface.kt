@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.user.User
+import blackjack.domain.player.User
 
 /**
  * Created by Jaesungchi on 2022.06.19..

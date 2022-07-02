@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.constant.ErrorMessages
 import blackjack.constant.Messages
 import blackjack.domain.InputInterface
-import blackjack.domain.user.User
+import blackjack.domain.player.User
 
 /**
  * 입력을 받는 클래스

@@ -1,4 +1,4 @@
-package blackjack.domain.user
+package blackjack.domain.player
 
 import blackjack.domain.InputInterface
 import blackjack.domain.Money

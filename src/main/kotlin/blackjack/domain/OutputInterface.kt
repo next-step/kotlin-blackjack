@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.user.Player
+import blackjack.domain.player.Player
 
 /**
  * view와 domain의 결합을 없애기 위한 interface
