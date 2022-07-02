@@ -66,8 +66,8 @@ internal class PlayerTest {
     fun `플레이어 버스트로 패배`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.FIVE), Card(Suit.SPADE, Denomination.TEN)))
-        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.FIVE)))
+        player.init(DECK_OF_15)
+        dealer.init(DECK_OF_20)
         player.receive(Card(Suit.SPADE, Denomination.JACK))
         assertThat(player.getProfit(dealer)).isEqualTo(-1000)
     }
@@ -76,8 +76,8 @@ internal class PlayerTest {
     fun `딜러 버스트로 승리`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
-        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.QUEEN)))
+        player.init(DECK_OF_20)
+        dealer.init(DECK_OF_15)
         dealer.receive(Card(Suit.HEART, Denomination.JACK))
         assertThat(player.getProfit(dealer)).isEqualTo(1000)
     }
@@ -86,8 +86,8 @@ internal class PlayerTest {
     fun `블랙잭 무승부`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
-        dealer.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
+        player.init(DECK_OF_BLACKJACK)
+        dealer.init(DECK_OF_BLACKJACK)
         assertThat(player.getProfit(dealer)).isEqualTo(0)
     }
 
@@ -95,8 +95,8 @@ internal class PlayerTest {
     fun `플레이어가 블랙잭으로 승리`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.QUEEN)))
-        dealer.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.TEN)))
+        player.init(DECK_OF_BLACKJACK)
+        dealer.init(DECK_OF_20)
         assertThat(player.getProfit(dealer)).isEqualTo(1500)
     }
 
@@ -104,8 +104,8 @@ internal class PlayerTest {
     fun `딜러가 블랙잭으로 승리`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.FIVE)))
-        dealer.init(listOf(Card(Suit.HEART, Denomination.ACE), Card(Suit.HEART, Denomination.QUEEN)))
+        player.init(DECK_OF_20)
+        dealer.init(DECK_OF_BLACKJACK)
         assertThat(player.getProfit(dealer)).isEqualTo(-1000)
     }
 
@@ -113,8 +113,8 @@ internal class PlayerTest {
     fun `둘다 21이하, 스코어 비교로 플레이어 승리`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
-        dealer.init(listOf(Card(Suit.HEART, Denomination.FIVE), Card(Suit.HEART, Denomination.QUEEN)))
+        player.init(DECK_OF_15)
+        dealer.init(DECK_OF_10)
         assertThat(player.getProfit(dealer)).isEqualTo(1000)
     }
 
@@ -122,8 +122,8 @@ internal class PlayerTest {
     fun `둘다 21이하, 스코어 비교로 딜러 승리`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.HEART, Denomination.FIVE), Card(Suit.HEART, Denomination.QUEEN)))
-        dealer.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
+        player.init(DECK_OF_10)
+        dealer.init(DECK_OF_15)
         assertThat(player.getProfit(dealer)).isEqualTo(-1000)
     }
 
@@ -131,8 +131,15 @@ internal class PlayerTest {
     fun `둘다 21이하, 스코어 비교로 무승부`() {
         val player = Player("jade", 1000)
         val dealer = Dealer()
-        player.init(listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.JACK)))
-        dealer.init(listOf(Card(Suit.SPADE, Denomination.KING), Card(Suit.SPADE, Denomination.JACK)))
+        player.init(DECK_OF_15)
+        dealer.init(DECK_OF_15)
         assertThat(player.getProfit(dealer)).isEqualTo(0)
+    }
+
+    companion object {
+        private val DECK_OF_BLACKJACK = listOf(Card(Suit.SPADE, Denomination.ACE), Card(Suit.SPADE, Denomination.KING))
+        private val DECK_OF_20 = listOf(Card(Suit.CLOVER, Denomination.KING), Card(Suit.CLOVER, Denomination.JACK))
+        private val DECK_OF_15 = listOf(Card(Suit.HEART, Denomination.KING), Card(Suit.HEART, Denomination.FIVE))
+        private val DECK_OF_10 = listOf(Card(Suit.DIAMOND, Denomination.SEVEN), Card(Suit.DIAMOND, Denomination.THREE))
     }
 }
