@@ -55,7 +55,7 @@ class BlackjackGameTurnTest {
     }
 
     @Test
-    fun `isBlackjackGameEnd를 통해 현재 게임이 완전히 끝났는지 확인할 수 있다`() {
+    fun `isTurnEnd를 통해 현재 참가자의 턴이 끝났는지 확인할 수 있다`() {
         val notEndParticipant = Player(
             "앙몬드",
             10_000,
@@ -63,15 +63,16 @@ class BlackjackGameTurnTest {
             PlayingCard(Suit.SPADES, CardNumber.THREE)
         )
 
-        assertThat(BlackjackGameTurn.from(notEndParticipant).isBlackjackGameEnd()).isFalse
+        assertThat(BlackjackGameTurn.from(notEndParticipant).isTurnEnd()).isFalse
 
-        val endParticipant = Dealer(
-            "달러",
+        val endParticipant = Player(
+            "죠르디",
+            10_000,
             PlayingCard(Suit.SPADES, CardNumber.ACE),
             PlayingCard(Suit.SPADES, CardNumber.KING)
         )
 
-        assertThat(BlackjackGameTurn.from(endParticipant).isBlackjackGameEnd()).isTrue
+        assertThat(BlackjackGameTurn.from(endParticipant).isTurnEnd()).isTrue
     }
 
     @Test

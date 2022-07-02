@@ -27,7 +27,7 @@ class BlackjackPresenter(
         view.showStartOfGameInfo(participants)
 
         setNextTurn(participants)
-        while (!currentTurn.isBlackjackGameEnd()) {
+        while (!isBlackjackGameEnd()) {
             takeTurn()
             setNextTurn(participants)
         }
@@ -78,6 +78,8 @@ class BlackjackPresenter(
     private fun setNextTurn(participants: Participants) {
         currentTurn = BlackjackGameTurn.from(participants)
     }
+
+    private fun isBlackjackGameEnd(): Boolean = currentTurn.participant is Dealer && currentTurn.isTurnEnd()
 
     companion object {
         private val DEALER_NAME = PlayerName("딜러")
