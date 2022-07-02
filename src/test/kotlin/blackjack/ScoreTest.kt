@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.card.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -12,7 +13,7 @@ internal class ScoreTest {
             Card(CardShape.CLOVER, CardSymbol.SEVEN)
         )
 
-        val score = Score(cards)
+        val score = Score(PlayerDeck(cards))
         assertThat(score.getScore()).isEqualTo(20)
     }
 
@@ -24,7 +25,7 @@ internal class ScoreTest {
             Card(CardShape.CLOVER, CardSymbol.EIGHT)
         )
 
-        val score = Score(cards)
+        val score = Score(PlayerDeck(cards))
         assertThat(score.getScore()).isEqualTo(21)
     }
 
@@ -35,7 +36,7 @@ internal class ScoreTest {
             Card(CardShape.CLOVER, CardSymbol.JACK)
         )
 
-        val score = Score(cards)
+        val score = Score(PlayerDeck(cards))
         assertThat(score.getScore()).isEqualTo(21)
     }
 
@@ -48,7 +49,7 @@ internal class ScoreTest {
             Card(CardShape.SPADE, CardSymbol.ACE)
         )
 
-        val score = Score(cards)
+        val score = Score(PlayerDeck(cards))
         assertThat(score.getScore()).isEqualTo(14)
     }
 }

@@ -1,5 +1,10 @@
 package blackjack
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.CardShuffle
+import blackjack.domain.card.CardSymbol
+
 class BlackjackCardShuffle : CardShuffle {
     private val cards: MutableList<Card> = mutableListOf()
 

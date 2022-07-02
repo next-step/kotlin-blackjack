@@ -4,22 +4,20 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.card.PlayerDeck
-import blackjack.domain.state.Burst
-import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import blackjack.domain.state.Stand
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-internal class BurstTest {
-
+internal class StandTest {
     @Test
-    fun `Burst 상태의 현재 가지고 있는 카드의 점수가 21이하라면 예외처리`() {
-        assertThatIllegalArgumentException()
-            .isThrownBy { Burst(PlayerDeck()) }
+    fun `Stand 상태의 카드를 더 받을 시 예외처리`() {
+        Assertions.assertThatIllegalArgumentException()
+            .isThrownBy { Stand(PlayerDeck()).draw(Card(CardShape.CLOVER, CardSymbol.ACE)) }
     }
 
     @Test
-    fun `Burst 상태에서 카드를 더 받을 수 없다`() {
-        val burst = Burst(
+    fun `Stand 상태에서 카드를 더 받을 수 없다`() {
+        val stand = Stand(
             PlayerDeck(
                 listOf(
                     Card(CardShape.CLOVER, CardSymbol.JACK),
@@ -28,6 +26,6 @@ internal class BurstTest {
                 )
             )
         )
-        assertThat(burst.isFinish()).isTrue
+        Assertions.assertThat(stand.isFinish()).isTrue
     }
 }
