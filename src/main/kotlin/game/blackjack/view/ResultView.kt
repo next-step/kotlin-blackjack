@@ -49,7 +49,13 @@ class ResultView {
 
     fun printScore(players: Players) {
         println()
-        players.forEachWithDealer { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${it.cards.score().toInt()}") }
+        players.forEachWithDealer {
+            println(
+                "${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${
+                    it.cards.score().toInt()
+                }"
+            )
+        }
     }
 
     fun printResult(players: Players) {
