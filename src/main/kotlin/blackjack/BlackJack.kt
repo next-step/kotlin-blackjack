@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.entity.CardDrawer
+import blackjack.entity.Dealer
 import blackjack.entity.Player
 import blackjack.ui.GetResult
 import blackjack.ui.Input
