@@ -63,7 +63,7 @@ class BlackjackGameTurnTest {
             PlayingCard(Suit.SPADES, CardNumber.THREE)
         )
 
-        assertThat(BlackjackGameTurn.from(notEndParticipant).isTurnEnd()).isFalse
+        assertThat(BlackjackGameTurn(notEndParticipant).isTurnEnd()).isFalse
 
         val endParticipant = Player(
             "죠르디",
@@ -72,7 +72,7 @@ class BlackjackGameTurnTest {
             PlayingCard(Suit.SPADES, CardNumber.KING)
         )
 
-        assertThat(BlackjackGameTurn.from(endParticipant).isTurnEnd()).isTrue
+        assertThat(BlackjackGameTurn(endParticipant).isTurnEnd()).isTrue
     }
 
     @Test
@@ -102,6 +102,6 @@ class BlackjackGameTurnTest {
             PlayingCard(Suit.SPADES, CardNumber.THREE)
         )
 
-        return BlackjackGameTurn.from(player)
+        return BlackjackGameTurn(player)
     }
 }

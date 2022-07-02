@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackjackGameTurn private constructor(val participant: Participant) {
+class BlackjackGameTurn(val participant: Participant) {
     fun isTurnEnd(): Boolean = !participant.isReceivable()
 
     fun hit(playingCards: PlayingCards) {
@@ -17,10 +17,6 @@ class BlackjackGameTurn private constructor(val participant: Participant) {
                 player.isReceivable()
             } ?: participants.dealer
 
-            return BlackjackGameTurn(participant)
-        }
-
-        fun from(participant: Participant): BlackjackGameTurn {
             return BlackjackGameTurn(participant)
         }
     }
