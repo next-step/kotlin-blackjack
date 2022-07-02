@@ -1,9 +1,10 @@
 package game.blackjack.domain
 
-open class Player(val name: String) {
+open class Player(val name: String, val money: Int) {
     val cards: Cards = Cards()
     private var status: Status = Status.HIT
-    protected val winningRecord = WinningRecord()
+
+    constructor(name: String) : this(name, 0)
 
     fun determine(response: Boolean): Status {
         status = if (response) Status.HIT else Status.STAY
@@ -14,9 +15,11 @@ open class Player(val name: String) {
 
     fun isBust(): Boolean = cards.isBust()
 
+    fun isBlackJack(): Boolean = cards.isBlackJack()
+
     fun init(cards: List<Card>): Score {
         this.cards.add(cards)
-        if (this.cards.isBlackJack()) {
+        if (isBlackJack()) {
             status = Status.BLACKJACK
         }
         return this.cards.score()
@@ -46,15 +49,14 @@ open class Player(val name: String) {
         }
     }
 
-    fun record(dealer: Dealer) {
-        if (!dealer.isBust() && dealer.score() > score()) {
-            dealer.recordWin()
-            winningRecord.recordLose()
-        } else {
-            dealer.recordLose()
-            winningRecord.recordWin()
-        }
+    fun getWinningRecord(dealer: Dealer): WinningRecord = when {
+        isBust() -> WinningRecord.LOSE
+        dealer.isBust() -> WinningRecord.WIN
+        isBlackJack() && dealer.isBlackJack() -> WinningRecord.TIE
+        isBlackJack() -> WinningRecord.WIN
+        dealer.isBlackJack() -> WinningRecord.LOSE
+        score() > dealer.score() -> WinningRecord.WIN
+        score() < dealer.score() -> WinningRecord.LOSE
+        else -> WinningRecord.TIE
     }
-
-    fun winningRecord() = winningRecord
 }

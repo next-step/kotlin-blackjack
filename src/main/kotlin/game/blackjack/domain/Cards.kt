@@ -16,7 +16,7 @@ class Cards(
 
     fun isBust(): Boolean = score().isBust()
 
-    fun isBlackJack(): Boolean = score().isBlackJack()
+    fun isBlackJack(): Boolean = score().isBlackJack() && cards.size == 2
 
     fun add(card: Card) {
         cards.add(card)

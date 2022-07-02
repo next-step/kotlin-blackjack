@@ -7,6 +7,7 @@ import game.blackjack.domain.Denomination
 import game.blackjack.domain.Player
 import game.blackjack.domain.Players
 import game.blackjack.domain.Suit
+import game.blackjack.domain.WinningRecord
 
 class ResultView {
 
@@ -29,7 +30,7 @@ class ResultView {
         }
 
     fun printAllPlayerCard(players: Players) {
-        println("딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
+        println("\n딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
         players.forEachWithDealer {
             when (it) {
                 is Dealer -> println("${it.name}카드: ${formatCard(it.cards.get().first())}")
@@ -47,15 +48,31 @@ class ResultView {
 
     private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.cards.get())}"
 
-    fun printResult(players: Players) {
+    fun printScore(players: Players) {
         println()
         players.forEachWithDealer { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${it.cards.score().toInt()}") }
+    }
 
+    fun printResult(players: Players) {
         println("\n## 최종 승패")
-        players.forEachWithDealer { println("${it.name}: ${it.winningRecord().win()}승 ${it.winningRecord().lose()}패") }
+
+        val result = players.getResult()
+        val eachCount = result.values.groupingBy { it }.eachCount()
+        println("딜러:" +
+            (eachCount[WinningRecord.LOSE]?.let { " ${it}승" } ?: "") +
+            (eachCount[WinningRecord.WIN]?.let { " ${it}패" } ?: "") +
+            (eachCount[WinningRecord.TIE]?.let { " ${it}무" } ?: "")
+        )
+        players.players.forEach { println("${it.name}: ${convertRecord(result[it.name]!!)}") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }
 
     private fun formatCard(card: Card): String = "${denominationSymbols[card.denomination]} ${suitSymbols[card.suit]}"
+
+    private fun convertRecord(record: WinningRecord): String = when(record) {
+        WinningRecord.WIN -> "승"
+        WinningRecord.LOSE -> "패"
+        WinningRecord.TIE -> "무"
+    }
 }

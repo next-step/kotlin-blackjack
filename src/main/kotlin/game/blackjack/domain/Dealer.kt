@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-class Dealer : Player("딜러") {
+class Dealer : Player("딜러", 0) {
     private val deck = Deck()
 
     fun drawCard(): Card = deck.draw()
@@ -8,14 +8,6 @@ class Dealer : Player("딜러") {
         val drawn = mutableListOf<Card>()
         repeat(count) { drawn.add(drawCard()) }
         return drawn
-    }
-
-    fun recordWin() {
-        winningRecord.recordWin()
-    }
-
-    fun recordLose() {
-        winningRecord.recordLose()
     }
 
     override fun receiveUntilHit(

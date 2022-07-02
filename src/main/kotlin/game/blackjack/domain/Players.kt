@@ -15,7 +15,6 @@ class Players(
         (players + dealer).forEach {
             it.receiveUntilHit(getAction, showPlayerCard) { dealer.drawCard() }
         }
-        players.forEach { it.record(dealer) }
         return this
     }
 
@@ -23,4 +22,8 @@ class Players(
 
     fun forEachWithDealer(action: (player: Player) -> Unit) =
         listOf(dealer, *(players.toTypedArray())).forEach { action(it) }
+
+    fun getResult(): Map<String, WinningRecord> {
+        return players.associateBy({ it.name }, { it.getWinningRecord(dealer) })
+    }
 }
