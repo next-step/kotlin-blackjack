@@ -1,27 +1,27 @@
 package blackjack.model
 
-import blackjack.model.player.Player
-import blackjack.model.player.Players
+import blackjack.model.candidate.Candidate
+import blackjack.model.candidate.Candidates
 
 class Game(
     private val gameHost: GameHost = GameHost(),
-    val players: Players,
-    var turnPlayer: Player = players.first
+    val candidates: Candidates,
+    var turnCandidate: Candidate = candidates.first
 ) {
 
     fun start() {
         gameHost.shuffleCards()
-        gameHost.provideCardTo(players, INITIAL_PROVIDED_CARD_COUNT)
+        gameHost.provideCardTo(candidates, INITIAL_PROVIDED_CARD_COUNT)
     }
 
-    fun provideCardToTurnPlayer() = gameHost.provideOneCardTo(turnPlayer)
+    fun provideCardToTurnPlayer() = gameHost.provideOneCardTo(turnCandidate)
 
     fun changeTurn() {
-        turnPlayer.needMoreCard = false
-        turnPlayer = players.findNext(turnPlayer)
+        turnCandidate.needMoreCard = false
+        turnCandidate = candidates.findNext(turnCandidate)
     }
 
-    fun isNotEnd() = turnPlayer.needMoreCard
+    fun isNotEnd() = turnCandidate.needMoreCard
 
     companion object {
         private const val INITIAL_PROVIDED_CARD_COUNT = 2

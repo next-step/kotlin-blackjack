@@ -3,6 +3,7 @@ package blackjack.model.card
 data class Cards(
     val cards: MutableList<Card> = mutableListOf(),
 ) {
+
     val size
         get() = cards.size
 
@@ -26,9 +27,12 @@ data class Cards(
         return cards.removeAt(0)
     }
 
-    private fun validateNotEmpty() = require(size > EMPTY_CARDS_SIZE) { "카드 개수가 0개 입니다." }
+    fun satisfyCardSizeBlackJack() = size == BLACK_JACK_CARD_SIZE
+
+    private fun validateNotEmpty() = require(size > EMPTY_CARD_SIZE) { "카드 개수가 0개 입니다." }
 
     companion object {
-        private const val EMPTY_CARDS_SIZE = 0
+        private const val EMPTY_CARD_SIZE = 0
+        private const val BLACK_JACK_CARD_SIZE = 2
     }
 }

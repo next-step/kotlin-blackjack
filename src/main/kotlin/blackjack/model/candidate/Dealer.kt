@@ -1,10 +1,10 @@
-package blackjack.model.player
+package blackjack.model.candidate
 
 import blackjack.model.card.Card
 
 class Dealer(
-    name: PlayerName = PlayerName(DEALER_NAME)
-) : Player(playerName = name) {
+    name: CandidateName = CandidateName(DEALER_NAME),
+) : Candidate(candidateName = name) {
 
     override val isDealer
         get() = true
