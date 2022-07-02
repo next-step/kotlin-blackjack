@@ -21,9 +21,8 @@ import org.junit.jupiter.api.Test
 class DealerTest {
     @Test
     fun `딜러가 15 유저가 17인 경우 딜러가 유저의 배팅금액만큼 잃는다`() {
-        val dealer = Dealer(Four(CardType.DIAMOND)).apply {
-            hit(Ace(CardType.CLUB))
-        }
+        val cards = listOf(Four(CardType.DIAMOND), Ace(CardType.CLUB))
+        val dealer = Dealer(cards)
         val user = User("hello", listOf(Ace(CardType.HEART), Six(CardType.DIAMOND))).apply {
             setBatMoney(10000)
         }
@@ -32,10 +31,8 @@ class DealerTest {
 
     @Test
     fun `딜러가 21을 초과하면 남은 플레이어의 패에 상관없이 유저의 배팅금액만큼 잃는다`() {
-        val dealer = Dealer(Two(CardType.CLUB)).apply {
-            hit(Jack(CardType.HEART))
-            hit(Jack(CardType.HEART))
-        }
+        val cards = listOf(Two(CardType.CLUB), Jack(CardType.HEART), Jack(CardType.DIAMOND))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Ace(CardType.HEART), Six(CardType.DIAMOND))).apply {
             setBatMoney(10000)
         }
@@ -47,10 +44,8 @@ class DealerTest {
 
     @Test
     fun `딜러와 플레이어 둘다 bust라면 무승부로 수익은 0이다`() {
-        val dealer = Dealer(Two(CardType.CLUB)).apply {
-            hit(Jack(CardType.HEART))
-            hit(Jack(CardType.DIAMOND))
-        }
+        val cards = listOf(Two(CardType.CLUB), Jack(CardType.HEART), Jack(CardType.DIAMOND))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Queen(CardType.HEART), King(CardType.HEART), Nine(CardType.SPADE))).apply {
             setBatMoney(10000)
         }
@@ -59,9 +54,8 @@ class DealerTest {
 
     @Test
     fun `딜러와 플레이어의 점수가 같은데 블랙잭이 아닌우 무승부로 수익은 0이다`() {
-        val dealer = Dealer(Two(CardType.CLUB)).apply {
-            hit(Jack(CardType.HEART))
-        }
+        val cards = listOf(Two(CardType.CLUB), Jack(CardType.HEART))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Two(CardType.HEART), King(CardType.HEART))).apply {
             setBatMoney(10000)
         }
@@ -73,9 +67,8 @@ class DealerTest {
 
     @Test
     fun `딜러가 블랙잭 플레이어가 블랙잭이 아닌 21점이면 딜러의 승리로 유저의 배팅금액만큼 받는다`() {
-        val dealer = Dealer(Ace(CardType.CLUB)).apply {
-            hit(Jack(CardType.HEART))
-        }
+        val cards = listOf(Ace(CardType.CLUB), Jack(CardType.HEART))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Two(CardType.HEART), King(CardType.HEART), Nine(CardType.SPADE))).apply {
             setBatMoney(10000)
         }
@@ -84,9 +77,8 @@ class DealerTest {
 
     @Test
     fun `딜러와 플레이어 둘다 블랙잭이면 무승부로 수익은 0이다`() {
-        val dealer = Dealer(Ace(CardType.CLUB)).apply {
-            hit(Jack(CardType.HEART))
-        }
+        val cards = listOf(Ace(CardType.CLUB), Jack(CardType.HEART))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Ace(CardType.HEART), King(CardType.HEART))).apply {
             setBatMoney(10000)
         }
@@ -95,7 +87,8 @@ class DealerTest {
 
     @Test
     fun `플레이어가 블랙잭으로 승리하면 딜러는 배팅의 일점오배만큼 잃는다`() {
-        val dealer = Dealer(Ace(CardType.CLUB))
+        val cards = listOf(Ace(CardType.CLUB))
+        val dealer = Dealer(cards)
         val user1 = User("hello", listOf(Ace(CardType.HEART), King(CardType.HEART))).apply {
             setBatMoney(10000)
         }

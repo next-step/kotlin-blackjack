@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.constant.ErrorMessages
 import blackjack.domain.InputInterface
 import blackjack.domain.OutputInterface
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
 
 /**
@@ -32,10 +33,9 @@ class Users(val users: List<User>, private val deck: Deck) {
     }
 
     companion object {
-        const val INIT_CARD_SIZE = 2
         fun of(usersNames: List<String>, deck: Deck): Users {
             return Users(
-                users = usersNames.map { User(it, deck.takeCards(INIT_CARD_SIZE)) },
+                users = usersNames.map { User(it, deck.takeCards(Cards.INIT_CARD_SIZE)) },
                 deck = deck
             )
         }

@@ -1,7 +1,6 @@
 package blackjack.domain.card
 
 import blackjack.domain.Score
-import blackjack.domain.player.Users
 
 /**
  * 카드르 저장하는 클래스
@@ -17,7 +16,7 @@ class Cards {
     }
 
     fun isBlackJack(): Boolean {
-        return _hands.size == Users.INIT_CARD_SIZE &&
+        return _hands.size == INIT_CARD_SIZE &&
             getScore().isBlackJackScore()
     }
 
@@ -36,5 +35,9 @@ class Cards {
 
     private fun hasAce(): Boolean {
         return _hands.any { it is Ace }
+    }
+
+    companion object {
+        const val INIT_CARD_SIZE = 2
     }
 }

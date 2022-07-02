@@ -27,7 +27,7 @@ class UserTest {
         val user1 = User("link", listOf(Ace(CardType.DIAMOND), Nine(CardType.SPADE))).apply {
             setBatMoney(10000)
         }
-        val dealer = Dealer(Ace(CardType.SPADE))
+        val dealer = Dealer(listOf(Ace(CardType.SPADE)))
         assertThat(user1.getBatResult(dealer).value).isEqualTo(10000)
     }
 
@@ -36,7 +36,7 @@ class UserTest {
         val user1 = User("link", listOf(Nine(CardType.SPADE))).apply {
             setBatMoney(10000)
         }
-        val dealer = Dealer(Ace(CardType.SPADE))
+        val dealer = Dealer(listOf(Ace(CardType.SPADE)))
         assertThat(user1.getBatResult(dealer).value).isEqualTo(-10000)
     }
 
@@ -45,7 +45,7 @@ class UserTest {
         val user1 = User("link", listOf(Ace(CardType.DIAMOND), Jack(CardType.SPADE))).apply {
             setBatMoney(10000)
         }
-        val dealer = Dealer(Ace(CardType.SPADE))
+        val dealer = Dealer(listOf(Ace(CardType.SPADE)))
         assertThat(user1.getBatResult(dealer).value).isEqualTo(15000)
     }
 
@@ -54,7 +54,7 @@ class UserTest {
         val user1 = User("link", listOf(Ace(CardType.DIAMOND))).apply {
             setBatMoney(10000)
         }
-        val dealer = Dealer(Ace(CardType.SPADE))
+        val dealer = Dealer(listOf(Ace(CardType.SPADE)))
         assertThat(user1.getBatResult(dealer).value).isEqualTo(0)
     }
 }

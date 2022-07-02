@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.card.Cards
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Users
@@ -14,7 +15,7 @@ object BlackjackController {
     fun startGame() {
         val deck = Deck()
         val players = Users.of(InputView.getPlayersName(), deck)
-        val dealer = Dealer(deck.takeCard())
+        val dealer = Dealer(deck.takeCards(Cards.INIT_CARD_SIZE))
         players.setBatMoney(InputView)
 
         OutputView.printHandOutMessage(players)

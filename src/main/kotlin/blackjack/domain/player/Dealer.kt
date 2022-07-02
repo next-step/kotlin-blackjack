@@ -10,7 +10,7 @@ import blackjack.domain.card.Deck
  * 딜러
  * Created by Jaesungchi on 2022.06.15..
  */
-class Dealer(initCard: Card) : Player(DEALER_NAME, listOf(initCard)) {
+class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
     fun getBatResult(users: List<User>): Money {
         var money = Money()
         users.forEach {

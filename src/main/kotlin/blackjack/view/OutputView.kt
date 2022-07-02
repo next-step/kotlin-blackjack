@@ -23,11 +23,17 @@ object OutputView : OutputInterface {
     }
 
     fun printUsersCard(users: Users, dealer: Dealer) {
-        drawUserCard(dealer)
+        drawDealerOpenCard(dealer)
         users.users.forEach {
             drawUserCard(it)
         }
         println()
+    }
+
+    private fun drawDealerOpenCard(dealer: Dealer) {
+        println(
+            Messages.PRINT_HAVE_CARDS.format(dealer.name) + cardToString(dealer.cards.hands[0])
+        )
     }
 
     override fun drawUserCard(user: Player) {
