@@ -22,14 +22,20 @@ object BlackJackGame {
         players.forEach { player ->
             var result: Boolean
             do {
-                result = hitOrStand(playGame, player)
+                result = playerHitOrStand(playGame, player)
             } while (result)
         }
 
-        OutputView.result(players)
+        println()
+        var dealerHit: Boolean
+        do {
+            dealerHit = dealerHitOrStand(playGame, dealer)
+        } while (dealerHit)
+
+        OutputView.result(players, dealer)
     }
 
-    private fun hitOrStand(playGame: PlayGame, player: Player): Boolean {
+    private fun playerHitOrStand(playGame: PlayGame, player: Player): Boolean {
         if (player.canNotHit) {
             println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
             return false
@@ -41,6 +47,16 @@ object BlackJackGame {
         OutputView.cardOfPlayer(player)
         if (!hit) return false
 
+        return true
+    }
+
+    private fun dealerHitOrStand(playGame: PlayGame, dealer: Dealer): Boolean {
+        if (dealer.canNotHit) {
+            return false
+        }
+
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        playGame.hit(dealer)
         return true
     }
 }

@@ -3,7 +3,7 @@ package blackjack.domain
 open class Player(val name: String) {
     val hands = Hands()
 
-    val canNotHit: Boolean
+    open val canNotHit: Boolean
         get() = sumOfPoints() >= MAX_POINT
 
     fun receiveCard(card: Card) {
