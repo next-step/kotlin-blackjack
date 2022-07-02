@@ -4,8 +4,6 @@ import blackjack.BlackJack
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class DealerTest {
     @Test
     fun `딜러는 처음에 받은 2장의 합계가 16이하이면 반드시 1장의 카드를 추가로 받아야 한다`() {
@@ -18,7 +16,7 @@ internal class DealerTest {
         val walletCards = dealer.checkDrawingCondition(dealer).getWalletCards()
 
         // then
-        Assertions.assertThat(walletCards.size).isEqualTo(cards.size+1)
+        Assertions.assertThat(walletCards.size).isEqualTo(cards.size + 1)
     }
 
     @Test

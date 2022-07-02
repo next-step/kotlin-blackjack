@@ -1,15 +1,13 @@
 package blackjack.entity
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 internal class ScoreTest {
     @BeforeEach
-    fun setUp(){
-        Score.dealerScore.put("win",0)
+    fun setUp() {
+        Score.dealerScore.put("win", 0)
         Score.dealerScore.put("lose", 0)
         Score.playerScore.clear()
     }
