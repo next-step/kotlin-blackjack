@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.entity.CardDrawer
-import blackjack.entity.Deck
 import blackjack.entity.Player
 import blackjack.ui.GetResult
 import blackjack.ui.Input
@@ -28,9 +27,9 @@ class BlackJack {
         return checkDrawingCondition(newPlayer)
     }
 
-    fun chooseDrawing(player: Player, answer: String): Player{
+    fun chooseDrawing(player: Player, answer: String): Player {
         if (answer == "n") return player
         val newWallet = player.draw()
-       return Player(player.name, newWallet)
+        return Player(player.name, newWallet)
     }
 }

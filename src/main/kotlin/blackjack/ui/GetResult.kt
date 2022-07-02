@@ -19,8 +19,8 @@ object GetResult {
         println(player.name + "카드: " + cardStatus + " - 결과: " + player.getWalletSum())
     }
 
-    fun getCardStatus (player: Player): String {
-        return player.getWalletCards().joinToString(JOIN_SEPARATOR) { card :Card -> card.getNumberValue().toString() + card.getShapeValue() }
+    fun getCardStatus(player: Player): String {
+        return player.getWalletCards().joinToString(JOIN_SEPARATOR) { card: Card -> card.getNumberValue().toString() + card.getShapeValue() }
     }
 
     private const val JOIN_SEPARATOR = ", "
