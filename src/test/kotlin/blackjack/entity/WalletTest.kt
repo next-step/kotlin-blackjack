@@ -53,7 +53,7 @@ internal class WalletTest {
         val cards: List<Card> = listOf(Card(Shape.CLOVER, CardNumber.THREE))
         val wallet = Wallet(cards)
         val aceCard: CardNumber = CardNumber.ACE
-        val expectedValue = 10
+        val expectedValue = 11
 
         // when
         val resultValue = wallet.checkSumUpCondition(aceCard)

@@ -12,6 +12,10 @@ object Score {
             playerWin(player)
             return
         }
+        if (player.getWalletSum()> 21) {
+            dealerWin(player)
+            return
+        }
         if (getDistance(player.getWalletSum()) <= getDistance(dealer.getWalletSum())) {
             playerWin(player)
             return

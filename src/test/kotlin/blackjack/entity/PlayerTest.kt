@@ -15,7 +15,7 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw()
+        val resultWallet = testPlayer.draw(testWallet)
 
         // then
         Assertions.assertThat(resultWallet.cards.size).isEqualTo(testWallet.cards.size + 1)
@@ -29,7 +29,7 @@ internal class PlayerTest {
         val testPlayer = Player("제이", testWallet)
 
         // when
-        val resultWallet = testPlayer.draw()
+        val resultWallet = testPlayer.draw(testWallet)
 
         // then
         Assertions.assertThat(resultWallet.sumUp).isGreaterThan(testWallet.sumUp)
