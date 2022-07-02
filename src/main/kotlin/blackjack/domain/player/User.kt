@@ -10,6 +10,8 @@ import blackjack.domain.card.Card
  * Created by Jaesungchi on 2022.06.07..
  */
 class User(name: String, initCards: List<Card>) : Player(name, initCards) {
+    constructor(name: String, vararg initCards: Card) : this(name, initCards.asList())
+
     var money = Money()
         private set
 

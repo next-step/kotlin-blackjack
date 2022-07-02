@@ -24,7 +24,7 @@ class UserTest {
 
     @Test
     fun `게임 승리시 배팅금액을 받는다`() {
-        val user1 = User("link", listOf(Ace(CardType.DIAMOND), Nine(CardType.SPADE))).apply {
+        val user1 = User("link", Ace(CardType.DIAMOND), Nine(CardType.SPADE)).apply {
             setBatMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
@@ -33,7 +33,7 @@ class UserTest {
 
     @Test
     fun `게임 패배시 배팅금액을 잃는다`() {
-        val user1 = User("link", listOf(Nine(CardType.SPADE))).apply {
+        val user1 = User("link", Nine(CardType.SPADE)).apply {
             setBatMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
@@ -42,7 +42,7 @@ class UserTest {
 
     @Test
     fun `유저가 블랙잭으로 승리한경우 승리시 일점오배를 받는다`() {
-        val user1 = User("link", listOf(Ace(CardType.DIAMOND), Jack(CardType.SPADE))).apply {
+        val user1 = User("link", Ace(CardType.DIAMOND), Jack(CardType.SPADE)).apply {
             setBatMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
@@ -51,7 +51,7 @@ class UserTest {
 
     @Test
     fun `무승부시 배팅금액을 돌려 받는다`() {
-        val user1 = User("link", listOf(Ace(CardType.DIAMOND))).apply {
+        val user1 = User("link", Ace(CardType.DIAMOND)).apply {
             setBatMoney(10000)
         }
         val dealer = Dealer(listOf(Ace(CardType.SPADE)))
