@@ -23,7 +23,7 @@ class Players(
     fun forEachWithDealer(action: (player: Player) -> Unit) =
         listOf(dealer, *(players.toTypedArray())).forEach { action(it) }
 
-    fun getResult(): Map<String, WinningRecord> {
-        return players.associateBy({ it.name }, { it.getWinningRecord(dealer) })
+    fun getResult(): Map<String, Int> {
+        return players.associateBy({ it.name }, { it.getProfit(dealer) })
     }
 }

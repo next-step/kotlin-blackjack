@@ -49,14 +49,14 @@ open class Player(val name: String, val money: Int) {
         }
     }
 
-    fun getWinningRecord(dealer: Dealer): WinningRecord = when {
-        isBust() -> WinningRecord.LOSE
-        dealer.isBust() -> WinningRecord.WIN
-        isBlackJack() && dealer.isBlackJack() -> WinningRecord.TIE
-        isBlackJack() -> WinningRecord.WIN
-        dealer.isBlackJack() -> WinningRecord.LOSE
-        score() > dealer.score() -> WinningRecord.WIN
-        score() < dealer.score() -> WinningRecord.LOSE
-        else -> WinningRecord.TIE
+    fun getProfit(dealer: Dealer): Int = when {
+        isBust() -> WinningRecord.LOSE.scale * money
+        dealer.isBust() -> WinningRecord.WIN.scale * money
+        isBlackJack() && dealer.isBlackJack() -> WinningRecord.TIE.scale * money
+        isBlackJack() -> (WinningRecord.WIN.scale * 1.5 * money).toInt()
+        dealer.isBlackJack() -> WinningRecord.LOSE.scale * money
+        score() > dealer.score() -> WinningRecord.WIN.scale * money
+        score() < dealer.score() -> WinningRecord.LOSE.scale * money
+        else -> WinningRecord.TIE.scale * money
     }
 }

@@ -7,7 +7,6 @@ import game.blackjack.domain.Denomination
 import game.blackjack.domain.Player
 import game.blackjack.domain.Players
 import game.blackjack.domain.Suit
-import game.blackjack.domain.WinningRecord
 
 class ResultView {
 
@@ -54,25 +53,13 @@ class ResultView {
     }
 
     fun printResult(players: Players) {
-        println("\n## 최종 승패")
-
+        println("\n## 최종 수익")
         val result = players.getResult()
-        val eachCount = result.values.groupingBy { it }.eachCount()
-        println("딜러:" +
-            (eachCount[WinningRecord.LOSE]?.let { " ${it}승" } ?: "") +
-            (eachCount[WinningRecord.WIN]?.let { " ${it}패" } ?: "") +
-            (eachCount[WinningRecord.TIE]?.let { " ${it}무" } ?: "")
-        )
-        players.players.forEach { println("${it.name}: ${convertRecord(result[it.name]!!)}") }
+        println("딜러: ${result.values.sumOf { it * -1 }}")
+        players.players.forEach { println("${it.name}: ${result[it.name]}") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }
 
     private fun formatCard(card: Card): String = "${denominationSymbols[card.denomination]} ${suitSymbols[card.suit]}"
-
-    private fun convertRecord(record: WinningRecord): String = when(record) {
-        WinningRecord.WIN -> "승"
-        WinningRecord.LOSE -> "패"
-        WinningRecord.TIE -> "무"
-    }
 }

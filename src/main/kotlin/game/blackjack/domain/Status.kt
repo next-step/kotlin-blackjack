@@ -4,5 +4,5 @@ enum class Status {
     BLACKJACK,
     HIT,
     STAY,
-    BUST,
+    BUST, ;
 }
