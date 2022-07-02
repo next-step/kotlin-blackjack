@@ -21,12 +21,12 @@ object Score {
     }
 
     fun dealerWin(player: Person){
-        playerScore.add(Pair(player.name, "lose"))
+        playerScore.add(Pair(player.name, "패"))
         dealerScore["win"] = dealerScore["win"]?.plus(1) ?: 0
     }
 
     fun playerWin(player: Person){
-        playerScore.add(Pair(player.name, "win"))
+        playerScore.add(Pair(player.name, "승"))
         dealerScore["lose"] = dealerScore["lose"]?.plus(1) ?: 0
     }
 
