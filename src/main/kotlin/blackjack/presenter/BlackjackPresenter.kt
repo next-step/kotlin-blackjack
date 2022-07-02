@@ -54,9 +54,11 @@ class BlackjackPresenter(
     }
 
     private fun takeTurn() {
-        when (val participant = currentTurn.participant) {
-            is Player -> takePlayerTurn(participant)
-            is Dealer -> takeDealerTurn()
+        while (!currentTurn.isTurnEnd()) {
+            when (val participant = currentTurn.participant) {
+                is Player -> takePlayerTurn(participant)
+                is Dealer -> takeDealerTurn()
+            }
         }
     }
 
