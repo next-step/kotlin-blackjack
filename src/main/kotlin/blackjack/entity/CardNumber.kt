@@ -8,6 +8,6 @@ enum class CardNumber(val value: Int) {
     companion object {
         const val MINIMUM_CARD_NUMBER = 1
         const val MAXIMUM_CARD_NUMBER = 11
-        const val ACE_CARD_OF_TEN = 10
+        const val ACE_CARD_OF_ELEVEN = 11
     }
 }
