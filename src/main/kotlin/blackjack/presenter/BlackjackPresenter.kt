@@ -7,6 +7,7 @@ import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
 import blackjack.domain.HIT_CARD_COUNT
 import blackjack.domain.Hands
+import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
@@ -27,7 +28,7 @@ class BlackjackPresenter(
         view.showStartOfGameInfo(participants)
 
         setNextTurn(participants)
-        while (!isBlackjackGameEnd()) {
+        while (!isBlackjackGameEnd(currentTurn)) {
             takeTurn()
             setNextTurn(participants)
         }
@@ -76,10 +77,18 @@ class BlackjackPresenter(
     private fun drawPlayingCardForHit(): PlayingCards = cardDeck.draw(HIT_CARD_COUNT)
 
     private fun setNextTurn(participants: Participants) {
-        currentTurn = BlackjackGameTurn.from(participants)
+        currentTurn = BlackjackGameTurn(participants.firstPlayableParticipant())
     }
 
-    private fun isBlackjackGameEnd(): Boolean = currentTurn.participant is Dealer && currentTurn.isTurnEnd()
+    private fun Participants.firstPlayableParticipant(): Participant {
+        return players.find { player ->
+            player.isReceivable()
+        } ?: dealer
+    }
+
+    private fun isBlackjackGameEnd(currentTurn: BlackjackGameTurn): Boolean {
+        return currentTurn.participant is Dealer && currentTurn.isTurnEnd()
+    }
 
     companion object {
         private val DEALER_NAME = PlayerName("딜러")
