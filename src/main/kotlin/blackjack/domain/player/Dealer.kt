@@ -11,6 +11,9 @@ import blackjack.domain.card.Card
  * Created by Jaesungchi on 2022.06.15..
  */
 class Dealer(initCards: List<Card>) : Player(DEALER_NAME, initCards) {
+
+    constructor(vararg initCards: Card) : this(initCards.asList())
+
     fun getBatResult(users: List<User>): Money {
         return Money(users.sumOf { matchUser(it).value })
     }
