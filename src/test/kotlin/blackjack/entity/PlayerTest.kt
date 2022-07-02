@@ -2,7 +2,6 @@
 
 package blackjack.entity
 
-import blackjack.BlackJack
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

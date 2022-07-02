@@ -1,6 +1,10 @@
 package blackjack
 
-import blackjack.entity.*
+import blackjack.entity.CardDrawer
+import blackjack.entity.Dealer
+import blackjack.entity.Person
+import blackjack.entity.Player
+import blackjack.entity.Score
 import blackjack.ui.GetResult
 import blackjack.ui.Input
 
@@ -28,7 +32,7 @@ class BlackJack {
         return players.toList()
     }
 
-    fun getDealer(): Dealer{
+    fun getDealer(): Dealer {
         return Dealer(CardDrawer.drawInitialCards())
     }
 }
