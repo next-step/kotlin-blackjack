@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.entity.Card
+import blackjack.entity.Person
 import blackjack.entity.Player
 
 object GetResult {
@@ -9,17 +10,17 @@ object GetResult {
         println(names.toString() + "에게 " + "2장을 나누었습니다.")
     }
 
-    fun printPlayerStatus(player: Player) {
+    fun printPlayerStatus(player: Person) {
         val cardStatus = getCardStatus(player)
         println(player.name + "카드: " + cardStatus)
     }
 
-    fun printPlayerStatusWithResult(player: Player) {
+    fun printPlayerStatusWithResult(player: Person) {
         val cardStatus = getCardStatus(player)
         println(player.name + "카드: " + cardStatus + " - 결과: " + player.getWalletSum())
     }
 
-    fun getCardStatus(player: Player): String {
+    fun getCardStatus(player: Person): String {
         return player.getWalletCards().joinToString(JOIN_SEPARATOR) { card: Card -> card.getNumberValue().toString() + card.getShapeValue() }
     }
 
