@@ -27,10 +27,7 @@ object BlackJackGame {
         }
 
         println()
-        var dealerHit: Boolean
-        do {
-            dealerHit = dealerHitOrStand(playGame, dealer)
-        } while (dealerHit)
+        dealerHitOrStand(playGame, dealer)
 
         OutputView.result(players, dealer)
     }
@@ -50,13 +47,12 @@ object BlackJackGame {
         return true
     }
 
-    private fun dealerHitOrStand(playGame: PlayGame, dealer: Dealer): Boolean {
+    private fun dealerHitOrStand(playGame: PlayGame, dealer: Dealer) {
         if (dealer.canNotHit) {
-            return false
+            return
         }
 
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         playGame.hit(dealer)
-        return true
     }
 }
