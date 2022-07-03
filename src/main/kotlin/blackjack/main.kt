@@ -16,10 +16,14 @@ fun main() {
 
     for (player in players) {
         while (player.status != Status.BUST) {
+            if (player.status == Status.STAY) break
+
             val willDraw = InputView.inputWillDraw(player.name)
             if (!willDraw) {
                 break
             }
+
+
             BlackJackService.draw(player, deck, 1)
             OutputView.printPlayer(PlayerResponse.from(player))
         }

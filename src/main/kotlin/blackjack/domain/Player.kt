@@ -19,8 +19,9 @@ class Player(
         val score = aceDifferScoreCalculateStrategy.calculate(hand.cards).score
 
         return when {
-            score == 21 && hand.cards.size == 2 -> Status.BLACKJACK
-            score in 0..21 -> Status.HIT
+            score == BUST_SCORE && hand.cards.size == 2 -> Status.BLACKJACK
+            score == BUST_SCORE -> Status.STAY
+            score in 0 until BUST_SCORE -> Status.HIT
             else -> Status.BUST
         }
     }
@@ -28,5 +29,18 @@ class Player(
     companion object {
         const val MIN_COUNT = 1
         const val MAX_COUNT = 26
+        const val BUST_SCORE = 21
     }
 }
+
+class Hand(
+    private val _cards: MutableList<Card> = mutableListOf()
+) {
+    val cards: List<Card>
+        get() = _cards.toList()
+
+    fun add(card: Card) {
+        _cards.add(card)
+    }
+}
+

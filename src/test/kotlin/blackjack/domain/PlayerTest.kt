@@ -44,7 +44,7 @@ internal class PlayerTest {
                 ),
                 Arguments.arguments(
                     Hand(mutableListOf(Card(CardNumber.JACK, CardSuit.CLOVER), Card(CardNumber.JACK, CardSuit.CLOVER), Card(CardNumber.ACE, CardSuit.CLOVER))),
-                    Status.HIT
+                    Status.STAY
                 ),
                 Arguments.arguments(
                     Hand(mutableListOf(Card(CardNumber.ACE, CardSuit.CLOVER), Card(CardNumber.NINE, CardSuit.CLOVER))),
