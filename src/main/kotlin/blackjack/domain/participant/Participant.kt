@@ -70,7 +70,7 @@ class Player(
     private var turn: Boolean = true
 
     override fun isAbleToDraw(): Boolean {
-        return this.turn && cards.calculateScore() < PLAYER_MAX_SCORE
+        return turn && score < PLAYER_MAX_SCORE
     }
 
     override fun openInitCards(): List<Card> {
