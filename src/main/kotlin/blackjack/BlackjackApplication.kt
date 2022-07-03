@@ -1,5 +1,5 @@
 package blackjack
 
 fun main() {
-    BlackJackGame.run()
+    BlackJackGame().run()
 }

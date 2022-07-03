@@ -1,38 +1,38 @@
 package blackjack
 
 import blackjack.domain.Dealer
+import blackjack.domain.GamePlayers
 import blackjack.domain.PlayGame
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-object BlackJackGame {
+class BlackJackGame {
+    private val playGame = PlayGame()
     fun run() {
-        val names = InputView.getNames()
-        val players = names.map(::Player)
-        val dealer = Dealer()
+        val gamePlayers = GamePlayers(
+            InputView.getNames().map(::Player),
+            Dealer()
+        )
 
-        val playGame = PlayGame()
-        players.forEach { player ->
+        gamePlayers.allPlayers.forEach { player ->
             playGame.start(player)
         }
-        playGame.start(dealer)
-        OutputView.firstCard(players, dealer)
+        OutputView.firstCard(gamePlayers)
 
-        players.forEach { player ->
+        gamePlayers.players.forEach { player ->
             var result: Boolean
             do {
-                result = playerHitOrStand(playGame, player)
+                result = playerHitOrStand(player)
             } while (result)
         }
 
-        println()
-        dealerHitOrStand(playGame, dealer)
+        dealerHitOrStand(gamePlayers.dealer)
 
-        OutputView.result(players, dealer)
+        OutputView.result(gamePlayers)
     }
 
-    private fun playerHitOrStand(playGame: PlayGame, player: Player): Boolean {
+    private fun playerHitOrStand(player: Player): Boolean {
         if (player.canNotHit) {
             println("${player.name}의 카드가 21 이상입니다. 카드를 더 받을 수 없습니다. \n")
             return false
@@ -47,12 +47,12 @@ object BlackJackGame {
         return true
     }
 
-    private fun dealerHitOrStand(playGame: PlayGame, dealer: Dealer) {
+    private fun dealerHitOrStand(dealer: Dealer) {
         if (dealer.canNotHit) {
             return
         }
 
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
         playGame.hit(dealer)
     }
 }
