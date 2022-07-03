@@ -15,5 +15,5 @@ interface State {
 
     fun score(): Score
 
-    fun judgementPlayerResult(otherScore: Score): GameResult
+    fun judgementGameResult(otherScore: Score): GameResult
 }

@@ -49,12 +49,12 @@ internal class BlackjackTest : FreeSpec({
 
         "다른 점수와 승패를 비교할 때" - {
             "같은 블랙잭 점수면 무승부 결과가 나온다." {
-                blackjack.judgementPlayerResult(otherScore = Score(21)) shouldBe GameResult.DRAW
+                blackjack.judgementGameResult(otherScore = Score(21)) shouldBe GameResult.DRAW
             }
 
             "블랙잭이 아니면 무조건 승리한다." {
-                blackjack.judgementPlayerResult(otherScore = Score(22)) shouldBe GameResult.WIN
-                blackjack.judgementPlayerResult(otherScore = Score(20)) shouldBe GameResult.WIN
+                blackjack.judgementGameResult(otherScore = Score(22)) shouldBe GameResult.WIN
+                blackjack.judgementGameResult(otherScore = Score(20)) shouldBe GameResult.WIN
             }
         }
     }

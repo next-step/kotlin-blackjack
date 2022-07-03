@@ -48,23 +48,23 @@ internal class StayTest : FreeSpec({
 
         "다른 점수와 승패를 비교할 때 " - {
             "상대점수가 블랙잭 점수면 무조건 패배한다." {
-                stay.judgementPlayerResult(otherScore = Score(21)) shouldBe GameResult.LOSE
+                stay.judgementGameResult(otherScore = Score(21)) shouldBe GameResult.LOSE
             }
 
             "상대점수가 버스트 점수면 무조건 승리한다." {
-                stay.judgementPlayerResult(otherScore = Score(22)) shouldBe GameResult.WIN
+                stay.judgementGameResult(otherScore = Score(22)) shouldBe GameResult.WIN
             }
 
             "내 점수가 더 높으면 승리한다." {
-                stay.judgementPlayerResult(otherScore = Score(9)) shouldBe GameResult.WIN
+                stay.judgementGameResult(otherScore = Score(9)) shouldBe GameResult.WIN
             }
 
             "내 점수가 더 낮으면 패배한다." {
-                stay.judgementPlayerResult(otherScore = Score(11)) shouldBe GameResult.LOSE
+                stay.judgementGameResult(otherScore = Score(11)) shouldBe GameResult.LOSE
             }
 
             "내 점수와 상대 점수가 같으면 무승부가 된다." {
-                stay.judgementPlayerResult(otherScore = Score(10)) shouldBe GameResult.DRAW
+                stay.judgementGameResult(otherScore = Score(10)) shouldBe GameResult.DRAW
             }
         }
     }

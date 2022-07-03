@@ -46,10 +46,10 @@ internal class BustTest : FreeSpec({
         }
 
         "다른 점수와 승패를 비교할 때 무조건 패배한다." {
-            bust.judgementPlayerResult(otherScore = Score(22)) shouldBe GameResult.LOSE
-            bust.judgementPlayerResult(otherScore = Score(21)) shouldBe GameResult.LOSE
-            bust.judgementPlayerResult(otherScore = Score(20)) shouldBe GameResult.LOSE
-            bust.judgementPlayerResult(otherScore = Score(1)) shouldBe GameResult.LOSE
+            bust.judgementGameResult(otherScore = Score(22)) shouldBe GameResult.LOSE
+            bust.judgementGameResult(otherScore = Score(21)) shouldBe GameResult.LOSE
+            bust.judgementGameResult(otherScore = Score(20)) shouldBe GameResult.LOSE
+            bust.judgementGameResult(otherScore = Score(1)) shouldBe GameResult.LOSE
         }
     }
 })

@@ -2,6 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.deck.Card
 import blackjack.domain.participant.state.Init
+import blackjack.domain.participant.state.Score
 import blackjack.domain.participant.state.State
 
 sealed class Participant(
@@ -19,7 +20,7 @@ sealed class Participant(
         this.state = this.state.stay()
     }
 
-    fun getScore(): Int = this.state.score().value
+    fun getScore(): Score = this.state.score()
 
     fun cards(): List<Card> = this.state.cards()
 }

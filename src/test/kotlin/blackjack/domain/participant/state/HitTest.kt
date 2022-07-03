@@ -56,7 +56,7 @@ internal class HitTest : FreeSpec({
 
         "다른 점수와 승패를 비교하려하면 예외가 발생한다." {
             val hit = Hit(cards = Cards(values = getHitScoreCards()))
-            shouldThrowExactly<IllegalStateException> { hit.judgementPlayerResult(otherScore = Score(10)) }
+            shouldThrowExactly<IllegalStateException> { hit.judgementGameResult(otherScore = Score(10)) }
         }
     }
 })
