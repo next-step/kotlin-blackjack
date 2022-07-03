@@ -22,11 +22,11 @@ open class Player(
         val compare = this.score.compareTo(dealer.score)
 
         return when {
-            (dealer.status == Status.BUST && this.status != Status.BUST)
-                || (this.status == Status.BLACKJACK && dealer.status != Status.BLACKJACK)
-                || (this.status != Status.BUST && compare > 0) -> MatchResult.WIN
-            (dealer.status == Status.BLACKJACK && this.status == Status.BLACKJACK)
-                || (this.status != Status.BUST && compare == 0) -> MatchResult.DRAW
+            (dealer.status == Status.BUST && this.status != Status.BUST) ||
+                (this.status == Status.BLACKJACK && dealer.status != Status.BLACKJACK) ||
+                (this.status != Status.BUST && compare > 0) -> MatchResult.WIN
+            (dealer.status == Status.BLACKJACK && this.status == Status.BLACKJACK) ||
+                (this.status != Status.BUST && compare == 0) -> MatchResult.DRAW
             else -> MatchResult.LOSE
         }
     }
@@ -84,4 +84,3 @@ class Hand(
         const val INITIAL_HAND_COUNT = 2
     }
 }
-
