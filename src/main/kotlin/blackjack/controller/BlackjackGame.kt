@@ -12,16 +12,11 @@ class BlackjackGame(
 ) {
     fun play() {
         val dealer = Dealer()
-        val players = Players.of(playNameValues = inputView.inputPlayerNames())
+        val players = Players.of(playNameValues = inputView.inputPlayerNames(), dealer = dealer)
+        outputView.printInitHands(players.values)
 
-        drawInitCardsEachPlayers(players, dealer)
         drawCardsEachPlayers(players, dealer)
         outputView.printResult(players.values)
-    }
-
-    private fun drawInitCardsEachPlayers(players: Players, dealer: Dealer) {
-        players.receiveInitCards(dealer)
-        outputView.printInitHands(players.values)
     }
 
     private fun drawCardsEachPlayers(players: Players, dealer: Dealer) {

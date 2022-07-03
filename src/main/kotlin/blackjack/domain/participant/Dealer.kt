@@ -3,24 +3,18 @@ package blackjack.domain.participant
 import blackjack.domain.deck.Card
 import blackjack.domain.deck.Deck
 import blackjack.domain.participant.state.Init
-import blackjack.domain.participant.state.State
+import blackjack.domain.participant.state.Score
 
 class Dealer(
     private val deck: Deck = Deck.release(),
+) : Participant(
+    state = Init.receiveCard(firstCard = deck.drawCard(), secondCard = deck.drawCard())
 ) {
-    private lateinit var state: State
-
     fun drawCard(): Card = deck.drawCard()
 
-    fun receiveInitCards(firstCard: Card, secondCard: Card) {
-        this.state = Init.receiveCard(firstCard = firstCard, secondCard = secondCard)
-    }
+    fun isOverThenLimitScore(): Boolean = state.score() >= LIMIT_SCORE
 
-    fun receiveCard(card: Card) {
-        this.state = this.state.receiveCard(card = card)
+    companion object {
+        private val LIMIT_SCORE = Score(17)
     }
-
-    fun isOverThenLimitScore(): Boolean =
-        if (this::state.isInitialized) state.score().value >= 17
-        else throw IllegalStateException("아직 초기 카드를 받지 못했습니다.")
 }
