@@ -37,8 +37,23 @@ object OutputView {
 
     fun printOutput(results: GameResults) {
         println()
-        results.result.forEach {
-            println("${it.name}카드: ${it.hand.joinToString { card -> "${card.symbol}${card.suit}" }} - 결과: ${it.score}")
+
+        printGameResult(results.dealerResult)
+        results.playerResults.forEach {
+            printGameResult(it)
         }
+
+        println()
+        println("## 최종 승패")
+        println(results.dealerResult.printMatchResult())
+        results.playerResults.forEach { println(it.printMatchResult()) }
+    }
+
+    private fun printGameResult(it: GameResult) {
+        println("${it.name}카드: ${it.hand.joinToString { card -> "${card.symbol}${card.suit}" }} - 결과: ${it.score}")
+    }
+
+    fun printDealerDraw() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }
