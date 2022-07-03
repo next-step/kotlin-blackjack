@@ -28,7 +28,7 @@ class BlackjackGame(
     fun findCurrentTurnPlayer(): Player = participants.findCurrentTurnPlayer() as Player
 
     fun isSatisfiedDealerPullOutCondition(): Boolean {
-        val dealer = findDealer()
+        val dealer = participants.findDealer() as Dealer
         val done = dealer.isAbleToDraw()
         if (done) {
             dealer.drawCard(deck.pullOut())
@@ -36,6 +36,4 @@ class BlackjackGame(
 
         return done
     }
-
-    private fun findDealer(): Dealer = participants.findDealer() as Dealer
 }
