@@ -21,14 +21,8 @@ class Blackjack(
         dealer.addCards(deck.draw(INIT_DRAW_COUNT))
     }
 
-    fun drawCard(user: User): Card {
-//        require(player in players) { "[${player.name} is not blackjack player" }
-//        check(user.drawable()) { "[${user.name}] is not drawable" }
-        val card = deck.draw()
-
+    fun drawCard(user: User) {
         user.addCard(deck.draw())
-
-        return card
     }
 
     companion object {
