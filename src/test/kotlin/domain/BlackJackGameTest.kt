@@ -1,5 +1,6 @@
 package domain
 
+import domain.BlackJackGame.calculateRevenue
 import domain.BlackJackGame.computeWinner
 import domain.BlackJackGame.endCheck
 import domain.BlackJackGame.isBust
@@ -104,5 +105,80 @@ internal class BlackJackGameTest {
 
         assertThat(winner).isEqualTo(player2)
         assertThat(loser).isEqualTo(player1)
+    }
+
+    @Test
+    fun `딜러가 21점을 초과하면 플레이어는 배팅금액을 돌려받는다`() {
+        val player1 = Player("keira")
+        val player2 = Player("tyrus")
+        val dealer = Player("딜러")
+
+        val cardsForPlayer1 = listOf(
+            Card(Card.CardSuit.HEART, Card.CardDenomination.TEN),
+            Card(Card.CardSuit.HEART, Card.CardDenomination.TWO),
+            Card(Card.CardSuit.HEART, Card.CardDenomination.NINE)
+        )
+        val cardsForPlayer2 = listOf(
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.ACE),
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.TWO),
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.TEN)
+        )
+        val cardForDealer = listOf(
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.TEN),
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.THREE),
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.NINE)
+        )
+
+        player1.battingAmount = 1000
+        player1.offer(cardsForPlayer1)
+
+        player2.battingAmount = 2000
+        player2.offer(cardsForPlayer2)
+
+        dealer.offer(cardForDealer)
+
+        var players = listOf(player1, player2, dealer)
+        calculateRevenue(players)
+
+        assertThat(player1.revenue).isEqualTo(1000)
+        assertThat(player2.revenue).isEqualTo(2000)
+        assertThat(dealer.revenue).isEqualTo(0)
+    }
+
+    @Test
+    fun `처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1*5배를 딜러에게 받는다`() {
+        val player1 = Player("keira")
+        val player2 = Player("tyrus")
+        val dealer = Player("딜러")
+
+        val cardsForPlayer1 = listOf(
+            Card(Card.CardSuit.HEART, Card.CardDenomination.TEN),
+            Card(Card.CardSuit.HEART, Card.CardDenomination.ACE),
+            Card(Card.CardSuit.HEART, Card.CardDenomination.NINE)
+        )
+        val cardsForPlayer2 = listOf(
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.ACE),
+            Card(Card.CardSuit.CLUB, Card.CardDenomination.TEN)
+        )
+        val cardForDealer = listOf(
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.TWO),
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.THREE),
+            Card(Card.CardSuit.SPADE, Card.CardDenomination.NINE)
+        )
+
+        player1.battingAmount = 1000
+        player1.offer(cardsForPlayer1)
+
+        player2.battingAmount = 2000
+        player2.offer(cardsForPlayer2)
+
+        dealer.offer(cardForDealer)
+
+        var players = listOf(player1, player2, dealer)
+        calculateRevenue(players)
+
+        assertThat(player1.revenue).isEqualTo(0)
+        assertThat(player2.revenue).isEqualTo(3000)
+        assertThat(dealer.revenue).isEqualTo(0)
     }
 }
