@@ -32,7 +32,7 @@ class Player(val playerName: PlayerName) {
 
     fun getPlayerNameValue(): String = playerName.value
 
-    fun getScore(): Int = this.state.score()
+    fun getScore(): Int = this.state.score().value
 
     companion object {
         fun from(nameValue: String): Player = Player(

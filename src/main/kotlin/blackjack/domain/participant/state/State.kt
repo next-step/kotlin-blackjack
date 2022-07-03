@@ -12,5 +12,5 @@ interface State {
 
     fun cards(): List<Card>
 
-    fun score(): Int
+    fun score(): Score
 }
