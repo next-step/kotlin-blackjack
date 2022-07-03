@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.GamePlayers
+import blackjack.domain.GameResult
 import blackjack.domain.PlayGame
 import blackjack.domain.Player
 import blackjack.view.InputView
@@ -29,7 +30,10 @@ class BlackJackGame {
 
         dealerHitOrStand(gamePlayers.dealer)
 
-        OutputView.result(gamePlayers)
+        val gameResults = GameResult.of(gamePlayers)
+
+        OutputView.gameScoreResult(gamePlayers)
+        OutputView.gameWinResult(gameResults)
     }
 
     private fun playerHitOrStand(player: Player): Boolean {
