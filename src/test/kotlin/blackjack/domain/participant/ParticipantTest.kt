@@ -136,4 +136,34 @@ class ParticipantTest : StringSpec({
         actual.size shouldBe 1
         actual shouldContainExactlyInAnyOrder listOf(Card(Suit.DIAMOND, Face.ACE))
     }
+
+    "딜러가 카드를 더 받을 수 있는 상태인지 확인한다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.TEN),
+                    Card(Suit.DIAMOND, Face.SIX),
+                ),
+                true
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.TEN),
+                    Card(Suit.DIAMOND, Face.SEVEN),
+                ),
+                false
+            ),
+        ).forEach { (cardGroup, expected) ->
+            // given
+            val dealer = Dealer(
+                Cards(cardGroup),
+            )
+
+            // when
+            val actual = dealer.isAbleToDraw()
+
+            // then
+            actual shouldBe expected
+        }
+    }
 })
