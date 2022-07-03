@@ -25,11 +25,12 @@ class DslTest {
 
         assertThat(person.name).isEqualTo(input)
         assertThat(person.company).isEqualTo(company)
-        assertThat(person.skills.softSkills.map { it.name }).containsExactly("A passion for problem solving", "Good communication skills")
+        assertThat(person.skills.softSkills.map { it.name }).containsExactly(
+            "A passion for problem solving",
+            "Good communication skills"
+        )
         assertThat(person.skills.hardSkills.map { it.name }).containsExactly("Kotlin")
         assertThat(person.languages.languages).extractingByKeys("Korean", "English")
             .containsExactly(5, 3)
     }
 }
-
-

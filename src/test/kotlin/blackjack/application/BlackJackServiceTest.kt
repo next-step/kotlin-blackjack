@@ -3,10 +3,10 @@ package blackjack.application
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardSuit
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Hand
 import blackjack.domain.Player
-import blackjack.domain.Score
 import blackjack.domain.Status
 import blackjack.view.GameResult
 import io.kotest.matchers.throwable.shouldHaveMessage
@@ -41,6 +41,10 @@ internal class BlackJackServiceTest {
 
     @Test
     fun `게임결과 계산`() {
+        val dealer = Dealer(
+            Hand(mutableListOf(Card(CardNumber.ACE, CardSuit.SPADE), Card(CardNumber.JACK, CardSuit.SPADE)))
+        )
+
         val players = listOf(
             Player(
                 "카일",
@@ -62,8 +66,8 @@ internal class BlackJackServiceTest {
             ),
         )
 
-        val results = BlackJackService.calculate(players)
-        assertThat(results.result).extracting(GameResult::name, GameResult::score)
+        val results = BlackJackService.calculate(dealer, players)
+        assertThat(results.playerResults).extracting(GameResult::name, GameResult::score)
             .containsExactlyInAnyOrder(
                 tuple("카일", 21),
                 tuple("디디", 12),

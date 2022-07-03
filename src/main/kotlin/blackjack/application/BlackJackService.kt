@@ -1,6 +1,6 @@
 package blackjack.application
 
-import blackjack.domain.AceDifferScoreCalculateStrategy
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.view.GameResult
@@ -12,23 +12,31 @@ private const val FIRST_DRAW_COUNT = 2
 object BlackJackService {
 
     fun createPlayers(names: List<String>): List<Player> {
-        require(names.size in Player.MIN_COUNT..Player.MAX_COUNT) { "플레이어 수는 1 이상 26 이하여야 합니다." }
+        require(names.size in Player.MIN_COUNT..Player.MAX_COUNT) { "플레이어 수는 1 이상 25 이하여야 합니다." }
 
         return names.map { Player(it) }
     }
 
-    fun calculate(players: List<Player>): GameResults {
-        val gameResults = players.map {
+    fun calculate(dealer: Dealer, players: List<Player>): GameResults {
+        val dealerResult = GameResult(
+            dealer.name,
+            dealer.hand.cards.map { card -> CardResponse.from(card) },
+            dealer.score.score,
+            players.map { it.getMatchResult(dealer).inverse() }
+        )
+        val playersResults = players.map {
             GameResult(
                 it.name,
                 it.hand.cards.map { card -> CardResponse.from(card) },
-                AceDifferScoreCalculateStrategy.calculate(it.hand.cards).score
+                it.score.score,
+                listOf(it.getMatchResult(dealer))
             )
         }
-        return GameResults(gameResults)
+        return GameResults(dealerResult, playersResults)
     }
 
-    fun drawFirst(players: List<Player>, deck: Deck) {
+    fun drawFirst(dealer: Dealer, players: List<Player>, deck: Deck) {
+        draw(dealer, deck, FIRST_DRAW_COUNT)
         players.forEach { draw(it, deck, FIRST_DRAW_COUNT) }
     }
 

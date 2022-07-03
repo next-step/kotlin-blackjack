@@ -9,13 +9,3 @@ data class Card(
         return number == CardNumber.ACE
     }
 }
-
-class Hand(
-    private val _cards: MutableList<Card> = mutableListOf()
-) {
-    val cards: List<Card> = _cards
-
-    fun add(card: Card) {
-        _cards.add(card)
-    }
-}
