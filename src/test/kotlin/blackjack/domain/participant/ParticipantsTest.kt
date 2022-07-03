@@ -10,6 +10,7 @@ import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class ParticipantsTest : StringSpec({
     "플레이어의 이름이 중복되면 예외를 발생한다." {
@@ -168,5 +169,21 @@ class ParticipantsTest : StringSpec({
 
         // when // then
         shouldThrowExactly<IllegalStateException> { participants.findCurrentTurnPlayer() }
+    }
+
+    "참가자들 중에서 딜러를 찾는다." {
+        // given
+        val participants = Participants(
+            listOf(
+                Player("경록"),
+                Dealer(),
+            )
+        )
+
+        // when
+        val actual = participants.findDealer()
+
+        // then
+        actual.shouldBeInstanceOf<Dealer>()
     }
 })
