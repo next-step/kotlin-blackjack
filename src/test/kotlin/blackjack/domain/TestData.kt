@@ -2,6 +2,7 @@ package blackjack.domain
 
 val SPADE_ACE = Card(Symbol.SPADE, CardNumber.ACE)
 val SPADE_TWO = Card(Symbol.SPADE, CardNumber.TWO)
+val SPADE_SIX = Card(Symbol.SPADE, CardNumber.SIX)
 val SPADE_JACK = Card(Symbol.SPADE, CardNumber.JACK)
 
 val HEART_ACE = Card(Symbol.HEART, CardNumber.ACE)
