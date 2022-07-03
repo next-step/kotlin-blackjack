@@ -4,7 +4,7 @@ open class Player(val name: String) {
     val hands = Hands()
 
     open val canNotHit: Boolean
-        get() = sumOfPoints() >= MAX_POINT
+        get() = sumOfPoints() >= BLACKJACK_POINT
 
     fun receiveCard(card: Card) {
         hands.add(card)
@@ -17,7 +17,19 @@ open class Player(val name: String) {
             hands.sumOfPoints()
         }
 
+    fun getStatus(): Status {
+        if (sumOfPoints() == BLACKJACK_POINT && hands.cards.size == 2)
+            return Status.BLACKJACK
+
+        if ((1..21).contains(hands.sumOfPoints()))
+            return Status.HIT
+
+        return Status.BUST
+    }
+    fun compareScore(otherPlayer: Player): Int =
+        sumOfPoints().compareTo(otherPlayer.sumOfPoints())
+
     companion object {
-        private const val MAX_POINT = 21
+        private const val BLACKJACK_POINT = 21
     }
 }

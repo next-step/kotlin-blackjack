@@ -7,6 +7,6 @@ class Dealer : Player(DEALER_NAME) {
 
     companion object {
         const val DEALER_NAME = "딜러"
-        const val MAX_HIT_POINT = 16
+        private const val MAX_HIT_POINT = 16
     }
 }
