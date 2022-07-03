@@ -4,12 +4,13 @@ import blackjack.domain.Card
 import blackjack.domain.Stat
 import blackjack.domain.user.Dealer
 
-data class DealerDto(
-    val name: String,
-    val cards: List<Card>,
-    val score: Int,
+class DealerDto(
+    name: String,
+    cards: List<Card>,
+    score: Int,
     val statMap: Map<Stat, Int>
-) {
+) : UserDto(name, cards, score) {
+
     companion object {
         fun of(dealer: Dealer, stats: Map<Stat, Int>): DealerDto {
             return DealerDto(

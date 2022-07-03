@@ -5,6 +5,7 @@ import blackjack.domain.Denomination
 import blackjack.domain.Suit
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class PlayerTest {
 
@@ -52,19 +53,18 @@ internal class PlayerTest {
         Assertions.assertThat(player.isEmptyCards()).isFalse
     }
 
-//    @Test
-//    fun `player는 21점 이상이면 카드를 받을 수 없다`() {
-//        val player = Player2("player")
-//        val blackjack = Blackjack(listOf(player))
-//
-//        player.addCards(
-//            listOf(
-//                Card(Suit.SPADE, Denomination.ACE),
-//                Card(Suit.SPADE, Denomination.TEN)
-//            )
-//        )
-//
-//        Assertions.assertThat(blackjack.isDrawable(player)).isFalse
-//        org.junit.jupiter.api.assertThrows<IllegalStateException> { blackjack.drawCard(player) }
-//    }
+    @Test
+    fun `player는 21점 이상이면 카드를 받을 수 없다`() {
+        val player = Player("player")
+
+        player.addCards(
+            listOf(
+                Card(Suit.SPADE, Denomination.ACE),
+                Card(Suit.SPADE, Denomination.TEN)
+            )
+        )
+
+        Assertions.assertThat(player.drawable()).isFalse
+        assertThrows<IllegalStateException> { player.addCard(Card(Suit.SPADE, Denomination.ACE)) }
+    }
 }

@@ -12,7 +12,7 @@ class Player(override val name: String) : User() {
     }
 
     override fun addCard(card: Card) {
-        check(drawable()) { "Dealer can not draw more than [${Dealer.STOP_POINT}] point" }
+        check(drawable()) { "Player can not drawable" }
         cards.add(card)
     }
 }

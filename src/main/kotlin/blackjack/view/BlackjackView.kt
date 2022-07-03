@@ -14,7 +14,7 @@ object BlackjackView {
     }
 
     fun printCards(blackjack: BlackjackDto) {
-        DealerView.printFirstCard(blackjack.dealer)
+//        DealerView.printFirstCard(blackjack.dealer)
         blackjack.players.forEach { PlayerView.printCards(it) }
     }
 

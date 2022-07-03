@@ -7,7 +7,15 @@ abstract class User {
 
     abstract val name: String
 
-    protected val cards: MutableList<Card> = mutableListOf()
+    private var _cards: MutableList<Card>? = null
+
+    val cards: MutableList<Card>
+        get() {
+            if (_cards == null) {
+                _cards = mutableListOf()
+            }
+            return _cards ?: throw AssertionError("Set to null by another thread")
+        }
 
     fun cards(): List<Card> {
         return cards.toList()

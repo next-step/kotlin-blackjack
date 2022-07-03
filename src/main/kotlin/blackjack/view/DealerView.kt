@@ -1,17 +1,16 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.user.Dealer
 import blackjack.dto.DealerDto
 import blackjack.dto.UserDto
 
 object DealerView {
 
-    private const val HIDDEN_CARD = "??"
-
     private val cardsTemplate = { dealer: DealerDto -> "${dealer.name} 카드 : ${dealer.cards.joinToString()}" }
 
-    fun printFirstCard(dealer: DealerDto) {
-        println("${dealer.name}: ${dealer.cards.first()}, $HIDDEN_CARD")
+    fun printCard(dealer: UserDto, card: Card) {
+        println("${dealer.name}: $card")
     }
 
     fun printMoreCard(user: UserDto) {

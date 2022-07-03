@@ -19,14 +19,14 @@ class BlackjackController {
         BlackjackView.printPlayerInput()
         val players = getPlayers()
 
-        Blackjack(players).let {
-            it.drawFirstCards()
-            BlackjackView.printInitialize(it.players.map { player -> PlayerDto.of(player, it.dealer.versus(player)) })
-            BlackjackView.printCards(it.toDto())
-            startGame(it)
-            BlackjackView.printResult(it.toDto())
-            BlackjackResultView.printResult(it.toDto())
-        }
+        val blackjack = Blackjack(players)
+        blackjack.drawFirstCards()
+        BlackjackView.printInitialize(blackjack.players.map { PlayerDto.of(it, blackjack.dealer.versus(it)) })
+        DealerView.printCard(UserDto.of(blackjack.dealer), blackjack.dealer.getFirstCard())
+        BlackjackView.printCards(blackjack.toDto())
+        startGame(blackjack)
+        BlackjackView.printResult(blackjack.toDto())
+        BlackjackResultView.printResult(blackjack.toDto())
     }
 
     private fun getPlayers(): List<Player> {

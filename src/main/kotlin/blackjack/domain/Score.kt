@@ -6,9 +6,11 @@ value class Score(private val cards: List<Card>) {
     val value: Int
         get() {
             val point = cards.sumOf { it.denomination.point }
-            return if (Denomination.ACE in cards.map { it.denomination } && point <= SOFT_HAND_CRITERIA) point + SOFT_HAND_POINT
+            return if (cards.hasAce() && point <= SOFT_HAND_CRITERIA) point + SOFT_HAND_POINT
             else point
         }
+
+    private fun List<Card>.hasAce() = Denomination.ACE in this.map { it.denomination }
 
     fun isBust(): Boolean {
         return value > BLACKJACK_POINT

@@ -32,6 +32,10 @@ class Dealer : User() {
         }
     }
 
+    fun getFirstCard(): Card {
+        return cards.first()
+    }
+
     companion object {
         private const val NAME = "딜러"
         const val STOP_POINT = 17
