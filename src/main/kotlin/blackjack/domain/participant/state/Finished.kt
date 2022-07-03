@@ -2,7 +2,7 @@ package blackjack.domain.participant.state
 
 import blackjack.domain.deck.Card
 
-sealed class Finished(hand: Hand) : AfterInit(hand) {
+sealed class Finished(cards: Cards) : AfterInit(cards) {
 
     override fun receiveCard(card: Card): State = throw IllegalStateException("턴이 종료되어 카드를 받을 수 없습니다.")
 

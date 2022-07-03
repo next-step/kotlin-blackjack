@@ -5,11 +5,12 @@ import blackjack.domain.participant.GameResult.DRAW
 import blackjack.domain.participant.GameResult.LOSE
 import blackjack.domain.participant.GameResult.WIN
 
-@JvmInline
-value class Score(
+data class Score(
     val value: Int,
 ) {
-    fun isBust(): Boolean = this.value > BLACKJACK
+    val isBust: Boolean = this.value > BLACKJACK
+
+    val isBlackjack: Boolean = this.value == BLACKJACK
 
     fun compareGameResult(other: Score): GameResult = when {
         this.value > other.value -> WIN

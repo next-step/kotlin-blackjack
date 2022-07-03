@@ -23,7 +23,7 @@ internal class BustTest : FreeSpec({
             Card(pattern = SPADE, number = TEN),
         )
 
-        val bust = Bust(hand = Hand(cards = cards))
+        val bust = Bust(cards = Cards(values = cards))
 
         "카드 받기를 요청하면 예외가 발생한다." {
             shouldThrowExactly<IllegalStateException> { bust.receiveCard(card = Card(HEART, TWO)) }
