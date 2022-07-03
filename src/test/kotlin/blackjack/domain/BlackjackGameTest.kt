@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 import io.kotest.core.spec.style.StringSpec
@@ -73,5 +74,41 @@ class BlackjackGameTest : StringSpec({
 
         // then
         blackjackGame.isPlayerTurn() shouldBe false
+    }
+
+    "딜러가 카드를 뽑을 상황인지 확인한다." {
+        // given
+
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                false,
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SIX),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                true,
+            ),
+        ).forEach { (cards, expectedResult) ->
+            val blackjackGame = BlackjackGame(
+                deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
+                participants = Participants(
+                    listOf(
+                        Dealer(Cards(cards))
+                    )
+                ),
+            )
+
+            // when
+            val actual = blackjackGame.isSatisfiedDealerPullOutCondition()
+
+            // then
+            actual shouldBe expectedResult
+        }
     }
 })
