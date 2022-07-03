@@ -10,6 +10,10 @@ sealed class Participant(
     val score: Int
         get() = cards.calculateScore()
 
+    init {
+        require(name.isNotBlank()) { "플레이어의 이름은 빈칸 혹은 여백을 허용하지 않습니다. name = $name" }
+    }
+
     fun drawCard(card: Card) {
         this.cards.add(card)
     }
@@ -52,10 +56,6 @@ class Player(
     cards,
 ) {
     private var turn: Boolean = true
-
-    init {
-        require(name.isNotBlank()) { "플레이어의 이름은 빈칸 혹은 여백을 허용하지 않습니다. name = $name" }
-    }
 
     override fun isAbleToDraw(): Boolean {
         return this.turn && cards.calculateScore() < PLAYER_MAX_SCORE
