@@ -8,7 +8,7 @@ import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackGameController {
+object BlackjackGameController {
     fun run() {
         val blackjackGame = BlackjackGame(
             Deck.createOf(),
