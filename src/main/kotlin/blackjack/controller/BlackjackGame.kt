@@ -17,7 +17,8 @@ class BlackjackGame(
 
         drawCardsEachPlayers(players, dealer)
         drawCardsDealer(dealer)
-        outputView.printResult(dealer, players.values)
+        outputView.printTotalScore(dealer, players.values)
+        outputView.printGameResult(players.judgementGameResults(dealer))
     }
 
     private fun drawCardsEachPlayers(players: Players, dealer: Dealer) {
