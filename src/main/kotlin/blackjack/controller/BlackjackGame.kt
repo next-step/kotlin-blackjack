@@ -13,15 +13,24 @@ class BlackjackGame(
     fun play() {
         val dealer = Dealer()
         val players = Players.of(playNameValues = inputView.inputPlayerNames(), dealer = dealer)
-        outputView.printInitHands(players.values)
+        outputView.printInitCards(dealer, players.values)
 
         drawCardsEachPlayers(players, dealer)
-        outputView.printResult(players.values)
+        drawCardsDealer(dealer)
+        outputView.printResult(dealer, players.values)
     }
 
     private fun drawCardsEachPlayers(players: Players, dealer: Dealer) {
         while (players.isNotAllFinished()) {
             drawCardsPlayer(players.getCurrentTurnPlayer(), dealer)
+        }
+    }
+
+    private fun drawCardsDealer(dealer: Dealer) {
+        while (dealer.isNotOverThenLimitScore()) {
+            val card = dealer.drawCard()
+            dealer.receiveCard(card = card)
+            outputView.printDealerReceiveCardNotOverLimitScore()
         }
     }
 
@@ -32,7 +41,7 @@ class BlackjackGame(
                 false -> player.stay()
             }
 
-            outputView.printPlayerHand(player = player)
+            outputView.printPlayerCards(player = player)
         }
     }
 }

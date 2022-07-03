@@ -12,7 +12,7 @@ class Dealer(
 ) {
     fun drawCard(): Card = deck.drawCard()
 
-    fun isOverThenLimitScore(): Boolean = state.score() >= LIMIT_SCORE
+    fun isNotOverThenLimitScore(): Boolean = state.score() < LIMIT_SCORE
 
     companion object {
         private val LIMIT_SCORE = Score(17)

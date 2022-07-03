@@ -20,7 +20,7 @@ internal class DealerTest : FreeSpec({
                 secondCard = tenScoreCard
             )
 
-            dealer.isOverThenLimitScore() shouldBe false
+            dealer.isNotOverThenLimitScore() shouldBe true
         }
 
         "17점을 넘었다." {
@@ -30,7 +30,7 @@ internal class DealerTest : FreeSpec({
                 secondCard = tenScoreCard
             )
 
-            dealer.isOverThenLimitScore() shouldBe true
+            dealer.isNotOverThenLimitScore() shouldBe false
         }
     }
 })
