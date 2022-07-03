@@ -2,6 +2,8 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.gameresult.GameResult
+import blackjack.domain.gameresult.GameResults
 
 sealed class Participant(
     val name: String,
@@ -42,6 +44,16 @@ class Dealer(
 
     override fun openInitCards(): List<Card> {
         return listOf(cards.value.first())
+    }
+
+    fun getDealerResult(players: List<Player>): GameResults {
+        return players.groupingBy { !GameResult.valueOf(it.score, score) }
+            .eachCount()
+            .let { GameResults(name, it) }
+    }
+
+    fun decideWinOrLoseResults(players: List<Player>): List<GameResults> {
+        return players.map { GameResults(it.name, GameResult.valueOf(it.score, score)) }
     }
 }
 

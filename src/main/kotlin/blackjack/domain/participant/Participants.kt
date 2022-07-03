@@ -27,6 +27,8 @@ value class Participants(
 
     private fun isWaitingPlayer(it: Participant) = it is Player && it.isAbleToDraw()
 
-    fun findDealer(): Participant =
-        participants.firstOrNull { it is Dealer } ?: throw IllegalStateException("딜러가 존재하지 않습니다.")
+    fun findDealer(): Dealer =
+        (participants.firstOrNull { it is Dealer } ?: throw IllegalStateException("딜러가 존재하지 않습니다.")) as Dealer
+
+    fun findPlayers(): List<Player> = participants.filterIsInstance<Player>()
 }

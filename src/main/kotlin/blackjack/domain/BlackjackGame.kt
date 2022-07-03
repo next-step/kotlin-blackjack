@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.participant.Dealer
+import blackjack.domain.gameresult.GameResults
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
 
@@ -28,7 +28,7 @@ class BlackjackGame(
     fun findCurrentTurnPlayer(): Player = participants.findCurrentTurnPlayer() as Player
 
     fun isSatisfiedDealerPullOutCondition(): Boolean {
-        val dealer = participants.findDealer() as Dealer
+        val dealer = findDealer()
         val done = dealer.isAbleToDraw()
         if (done) {
             dealer.drawCard(deck.pullOut())
@@ -36,4 +36,13 @@ class BlackjackGame(
 
         return done
     }
+
+    fun getGameResults(): List<GameResults> {
+        val players = findPlayers()
+        return (findDealer().decideWinOrLoseResults(players) + findDealer().getDealerResult(players))
+    }
+
+    private fun findDealer() = participants.findDealer()
+
+    private fun findPlayers() = participants.findPlayers()
 }

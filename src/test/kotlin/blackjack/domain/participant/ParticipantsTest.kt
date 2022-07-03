@@ -186,4 +186,23 @@ class ParticipantsTest : StringSpec({
         // then
         actual.shouldBeInstanceOf<Dealer>()
     }
+
+    "참가자들 중에서 플레이어들을 찾는다." {
+        // given
+        val participants = Participants(
+            listOf(
+                Player("경록"),
+                Player("로키"),
+                Dealer(),
+            )
+        )
+
+        // when
+        val actual = participants.findPlayers()
+
+        // then
+        actual.size shouldBe 2
+        actual[0].shouldBeInstanceOf<Player>()
+        actual[1].shouldBeInstanceOf<Player>()
+    }
 })

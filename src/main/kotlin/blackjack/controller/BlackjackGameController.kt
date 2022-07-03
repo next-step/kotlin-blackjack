@@ -20,7 +20,8 @@ class BlackjackGameController {
         playPlayersTurn(blackjackGame)
         playDealerTurn(blackjackGame)
 
-        OutputView.printResult(blackjackGame.participants)
+        OutputView.printAllParticipantsCard(blackjackGame.participants)
+        OutputView.printResult(blackjackGame.getGameResults())
     }
 
     private fun createParticipants(): Participants {
