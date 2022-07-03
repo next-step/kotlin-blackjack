@@ -42,7 +42,7 @@ class BlackjackGameTest : StringSpec({
             )
 
             // when
-            val actual = blackjackGame.isPlaying()
+            val actual = blackjackGame.isPlayerTurn()
 
             // then
             actual shouldBe expected
@@ -72,6 +72,6 @@ class BlackjackGameTest : StringSpec({
         blackjackGame.askDrawToCurrentTurnPlayer(true)
 
         // then
-        blackjackGame.isPlaying() shouldBe false
+        blackjackGame.isPlayerTurn() shouldBe false
     }
 })

@@ -12,7 +12,7 @@ class BlackjackGame(
         participants.drawInitCards(deck)
     }
 
-    fun isPlaying(): Boolean {
+    fun isPlayerTurn(): Boolean {
         return participants.isExistWaitingPlayer()
     }
 

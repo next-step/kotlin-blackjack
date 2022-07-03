@@ -30,7 +30,7 @@ class BlackjackGameController {
     }
 
     private fun playPlayersTurn(blackjackGame: BlackjackGame) {
-        while (blackjackGame.isPlaying()) {
+        while (blackjackGame.isPlayerTurn()) {
             val currentTurnPlayer = blackjackGame.findCurrentTurnPlayer()
             blackjackGame.askDrawToCurrentTurnPlayer(InputView.askDrawCard(currentTurnPlayer.name))
             OutputView.printCurrentPlayerCards(currentTurnPlayer)
