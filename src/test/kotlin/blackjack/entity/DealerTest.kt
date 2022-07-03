@@ -13,7 +13,7 @@ internal class DealerTest {
         val dealer = Dealer(wallet)
 
         // when
-        val walletCards = dealer.checkDrawingCondition(dealer).getWalletCards()
+        val walletCards = dealer.chooseDrawing(wallet).cards
 
         // then
         Assertions.assertThat(walletCards.size).isEqualTo(cards.size + 1)
@@ -27,7 +27,7 @@ internal class DealerTest {
         val dealer = Dealer(wallet)
 
         // when
-        val walletCards = dealer.checkDrawingCondition(dealer).getWalletCards()
+        val walletCards = dealer.chooseDrawing(wallet).cards
 
         // then
         Assertions.assertThat(walletCards.size).isEqualTo(cards.size)

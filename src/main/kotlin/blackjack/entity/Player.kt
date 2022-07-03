@@ -10,11 +10,11 @@ class Player(override val name: String, override val wallet: Wallet, override va
         return Wallet(cards)
     }
 
-    override fun checkDrawingCondition(player: Person): Person {
-        if (!player.wallet.isAbleToDraw(player.limit)) return player
-        if (Input.additionalCard(name) == "n") return player
-        val newPlayer = Player(name, draw(player.wallet))
+    override fun chooseDrawing(wallet: Wallet): Wallet {
+        if (!wallet.isAbleToDraw(limit)) return wallet
+        if (Input.additionalCard(name) == "n") return wallet
+        val newPlayer = Player(name, draw(wallet))
         GetResult.printPlayerStatus(newPlayer)
-        return checkDrawingCondition(newPlayer)
+        return chooseDrawing(wallet)
     }
 }

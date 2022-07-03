@@ -34,4 +34,18 @@ internal class PlayerTest {
         // then
         Assertions.assertThat(resultWallet.sumUp).isGreaterThan(testWallet.sumUp)
     }
+
+    @Test
+    fun `플레이어의 총 합이 21을 넘으면 카드를 추가하지 않는다`() {
+        // given
+        val cards = listOf<Card>(Card(Shape.DIAMOND, CardNumber.JACK), Card(Shape.CLOVER, CardNumber.KING), Card(Shape.CLOVER, CardNumber.QUEEN))
+        val testWallet = Wallet(cards)
+        val testPlayer = Player("제이", testWallet)
+
+        // when
+        val result = testPlayer.chooseDrawing(testWallet)
+
+        // then
+        Assertions.assertThat(testPlayer.wallet).isEqualTo(result)
+    }
 }

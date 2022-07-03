@@ -17,9 +17,9 @@ class BlackJack {
         val dealer = getDealer()
         GetResult.printAllStatus(players, dealer)
 
-        val playedPlayers = players.map { player -> player.checkDrawingCondition(player) }
+        val playedPlayers = players.map { player -> Player(player.name, player.chooseDrawing(player.wallet)) }
         println()
-        val playedDealer = dealer.checkDrawingCondition(dealer)
+        val playedDealer = Dealer(dealer.chooseDrawing(dealer.wallet))
         GetResult.printAllStatusWithResult(playedPlayers, playedDealer)
 
         playedPlayers.forEach { player: Person -> Score.compare(player, playedDealer) }

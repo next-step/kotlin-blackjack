@@ -9,11 +9,10 @@ class Dealer(override val wallet: Wallet, override val name: String = "딜러", 
         return Wallet(cards)
     }
 
-    override fun checkDrawingCondition(dealer: Person): Person {
-        if (!wallet.isAbleToDraw(limit)) return dealer
+    override fun chooseDrawing(wallet: Wallet): Wallet {
+        if (!wallet.isAbleToDraw(limit)) return wallet
         GetResult.addDealerSingleCard()
         println()
-        val newWallet = dealer.draw(dealer.wallet)
-        return Dealer(newWallet)
+        return draw(wallet)
     }
 }

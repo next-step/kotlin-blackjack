@@ -15,5 +15,5 @@ interface Person {
         return wallet.sumUp
     }
 
-    fun checkDrawingCondition(player: Person): Person
+    fun chooseDrawing(wallet: Wallet): Wallet
 }
