@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec({
+class ParticipantTest : StringSpec({
     "플레이어의 이름이 빈칸 혹은 공백이면 예외를 발생한다." {
         listOf(
             " ",

@@ -4,8 +4,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
@@ -31,7 +31,7 @@ class BlackjackGameTest : StringSpec({
             // given
             val blackjackGame = BlackjackGame(
                 deck = Deck.createOf(),
-                players = Players(
+                participants = Participants(
                     listOf(
                         Player(
                             "김경록",
@@ -53,7 +53,7 @@ class BlackjackGameTest : StringSpec({
         // given
         val blackjackGame = BlackjackGame(
             deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
-            players = Players(
+            participants = Participants(
                 listOf(
                     Player(
                         "김경록",

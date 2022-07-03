@@ -1,22 +1,23 @@
 package blackjack.domain
 
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 
 class BlackjackGame(
     private val deck: Deck,
-    val players: Players,
+    val participants: Participants,
 ) {
     fun start() {
-        players.drawInitCards(deck)
+        participants.drawInitCards(deck)
     }
 
     fun isPlaying(): Boolean {
-        return players.isExistWaitingPlayer()
+        return participants.isExistWaitingPlayer()
     }
 
     fun askDrawToCurrentTurnPlayer(isDrawCard: Boolean) {
-        val player = players.findCurrentTurnPlayer()
+        val player = findCurrentTurnPlayer()
         if (isDrawCard) {
             player.drawCard(deck.pullOut())
             return
@@ -24,5 +25,17 @@ class BlackjackGame(
         player.endOwnTurn()
     }
 
-    fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer()
+    fun findCurrentTurnPlayer(): Player = participants.findCurrentTurnPlayer() as Player
+
+    fun isSatisfiedDealerPullOutCondition(): Boolean {
+        val dealer = findDealer()
+        val done = dealer.isAbleToDraw()
+        if (done) {
+            dealer.drawCard(deck.pullOut())
+        }
+
+        return done
+    }
+
+    private fun findDealer(): Dealer = participants.findDealer() as Dealer
 }

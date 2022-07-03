@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.Deck
 import blackjack.domain.card.Card
@@ -11,21 +11,21 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class PlayersTest : StringSpec({
+class ParticipantsTest : StringSpec({
     "플레이어의 이름이 중복되면 예외를 발생한다." {
         // given
-        val players = listOf(
+        val participants = listOf(
             Player("김경록"),
             Player("김경록"),
         )
 
         // when // then
-        shouldThrowExactly<IllegalArgumentException> { Players(players) }
+        shouldThrowExactly<IllegalArgumentException> { Participants(participants) }
     }
 
     "첫 턴에 모든 플레이어들이 카드를 뽑는다." {
         // given
-        val players = Players("김경록", "로키")
+        val paritipants = Participants("김경록", "로키")
         val deck = Deck(
             mutableListOf(
                 Card(Suit.SPADE, Face.TWO),
@@ -36,12 +36,12 @@ class PlayersTest : StringSpec({
         )
 
         // when // then
-        shouldNotThrowAny { players.drawInitCards(deck) }
+        shouldNotThrowAny { paritipants.drawInitCards(deck) }
     }
 
     "차례를 기다리는 플레이어가 있을 때, 차례를 기다리는 플레이어가 존재하는지 확인한다." {
         // given
-        val players = Players(
+        val participants = Participants(
             listOf(
                 Player(
                     "김경록",
@@ -65,7 +65,7 @@ class PlayersTest : StringSpec({
         )
 
         // when
-        val actual = players.isExistWaitingPlayer()
+        val actual = participants.isExistWaitingPlayer()
 
         // then
         actual shouldBe true
@@ -73,7 +73,7 @@ class PlayersTest : StringSpec({
 
     "차례를 기다리는 플레이어가 없을 때, 차례를 기다리는 플레이어가 존재하는지 확인한다." {
         // given
-        val players = Players(
+        val participants = Participants(
             listOf(
                 Player(
                     "김경록",
@@ -98,7 +98,7 @@ class PlayersTest : StringSpec({
         )
 
         // when
-        val actual = players.isExistWaitingPlayer()
+        val actual = participants.isExistWaitingPlayer()
 
         // then
         actual shouldBe false
@@ -106,7 +106,7 @@ class PlayersTest : StringSpec({
 
     "자신의 턴인 플레이어를 찾는 기능" {
         // given
-        val players = Players(
+        val participants = Participants(
             listOf(
                 Player(
                     "김경록",
@@ -130,7 +130,7 @@ class PlayersTest : StringSpec({
         )
 
         // when
-        val currentTurnPlayer = players.findCurrentTurnPlayer()
+        val currentTurnPlayer = participants.findCurrentTurnPlayer()
 
         // then
         currentTurnPlayer.name shouldBe "로키"
@@ -142,7 +142,7 @@ class PlayersTest : StringSpec({
 
     "대기중인 플레이어가 없을 때, 자신의 턴인 플레이어를 찾으면 예외를 발생시킨다." {
         // given
-        val players = Players(
+        val participants = Participants(
             listOf(
                 Player(
                     "김경록",
@@ -167,6 +167,6 @@ class PlayersTest : StringSpec({
         )
 
         // when // then
-        shouldThrowExactly<IllegalStateException> { players.findCurrentTurnPlayer() }
+        shouldThrowExactly<IllegalStateException> { participants.findCurrentTurnPlayer() }
     }
 })
