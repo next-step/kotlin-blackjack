@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.PlayerGameResult
-import blackjack.domain.deck.Card
 import blackjack.domain.deck.CardPattern
 import blackjack.domain.deck.CardPattern.CLOVER
 import blackjack.domain.deck.CardPattern.DIAMOND
@@ -10,6 +9,7 @@ import blackjack.domain.deck.CardPattern.SPADE
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.GameResult
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.state.Cards
 
 class OutputView {
 
@@ -26,13 +26,13 @@ class OutputView {
         println()
     }
 
-    private fun printCards(name: String, cards: List<Card>) {
+    private fun printCards(name: String, cards: Cards) {
         print("${name}카드: ${joinCards(cards)}")
     }
 
     private fun joinPlayerNames(players: List<Player>) = players.joinToString { it.getPlayerNameValue() }
 
-    private fun joinCards(cards: List<Card>): String =
+    private fun joinCards(cards: Cards): String =
         cards.joinToString { card -> card.number.expression + convertCardPattern(card.pattern) }
 
     private fun convertCardPattern(cardPattern: CardPattern) = when (cardPattern) {
