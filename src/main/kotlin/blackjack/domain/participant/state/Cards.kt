@@ -4,18 +4,18 @@ import blackjack.domain.deck.Card
 import blackjack.domain.deck.CardNumber
 
 class Cards(
-    val values: List<Card> = listOf(),
-) {
+    values: List<Card> = listOf(),
+) : List<Card> by values {
 
     val isBustScore: Boolean = score().isBust
 
     val isBlackjackScore: Boolean = score().isBlackjack
 
-    fun receiveCard(card: Card): Cards = Cards(values = values + card)
+    fun receiveCard(card: Card): Cards = Cards(values = this + card)
 
     fun score(): Score {
-        val score = Score(this.values.sumOf { it.number.score })
-        val countOfAce = this.values.count { it.number == CardNumber.ACE }
+        val score = Score(value = sumOf { it.number.score })
+        val countOfAce = count { it.number == CardNumber.ACE }
         return score.increaseAceScoreBeforeBust(countOfAce = countOfAce)
     }
 }

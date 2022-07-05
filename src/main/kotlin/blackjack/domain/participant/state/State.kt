@@ -11,7 +11,7 @@ interface State {
 
     fun isFinished(): Boolean
 
-    fun cards(): List<Card>
+    fun cards(): Cards
 
     fun score(): Score
 
