@@ -21,14 +21,14 @@ internal class CardDeckTest {
             cards.add(cardDeck.getOne())
         }
         assertThat(cards.distinct()).hasSize(cards.size)
-        assertThat(cardDeck.isLeft()).isFalse
+        assertThat(cardDeck.isLeft).isFalse
     }
 
     @Test
     internal fun `남은 카드가 있는지 확인 - 있을 때`() {
         val cardDeck = CardDeck()
         cardDeck.getOne()
-        assertThat(cardDeck.isLeft()).isTrue
+        assertThat(cardDeck.isLeft).isTrue
     }
 
     @Test
@@ -37,6 +37,6 @@ internal class CardDeckTest {
         repeat(48) {
             cardDeck.getOne()
         }
-        assertThat(cardDeck.isLeft()).isFalse
+        assertThat(cardDeck.isLeft).isFalse
     }
 }

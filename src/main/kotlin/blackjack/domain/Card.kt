@@ -6,7 +6,7 @@ data class Card(
 ) {
     val numberValue: Int = number.value
 
-    fun isAce(): Boolean = number == CardNumber.ACE
+    val isAce: Boolean = number == CardNumber.ACE
 
     fun getAceNumberValue(sumValue: Int): Int {
         if (sumValue <= MAX_POINT - ACE_ANOTHER_VALUE)

@@ -10,24 +10,27 @@ class Hands(
     val cards: Set<Card>
         get() = _cards.toSet()
 
+    val hasAce: Boolean
+        get() = _cards.any { it.isAce }
+
+    val sumOfPoints: Int
+        get() = _cards.sumOf { it.numberValue }
+
+    val sumOfPointsWithAce: Int
+        get() {
+            var result = sumOfPointsHasNoAce
+            _cards.filter { it.isAce }
+                .forEach {
+                    result += it.getAceNumberValue(result)
+                }
+            return result
+        }
+
+    private val sumOfPointsHasNoAce: Int
+        get() = _cards.filterNot { it.isAce }
+            .sumOf { it.numberValue }
+
     fun add(card: Card) {
         _cards.add(card)
     }
-
-    fun hasAce(): Boolean = _cards.any { it.isAce() }
-
-    fun sumOfPoints(): Int = _cards.sumOf { it.numberValue }
-
-    fun sumOfPointsWithAce(): Int {
-        var result = sumOfPointsHasNoAce()
-        _cards.filter { it.isAce() }
-            .forEach {
-                result += it.getAceNumberValue(result)
-            }
-        return result
-    }
-
-    private fun sumOfPointsHasNoAce(): Int =
-        _cards.filterNot { it.isAce() }
-            .sumOf { it.numberValue }
 }

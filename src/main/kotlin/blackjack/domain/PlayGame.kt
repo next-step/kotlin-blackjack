@@ -9,7 +9,7 @@ class PlayGame {
     }
 
     fun hit(player: Player) {
-        if (cardDeck.isLeft()) {
+        if (cardDeck.isLeft) {
             player.receiveCard(cardDeck.getOne())
             return
         }
