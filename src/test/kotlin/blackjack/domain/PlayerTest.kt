@@ -23,7 +23,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.sumOfPoints()).isEqualTo(30)
+        assertThat(player.sumOfPoints).isEqualTo(30)
         assertThat(player.canNotHit).isTrue
     }
 
@@ -34,7 +34,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.sumOfPoints()).isEqualTo(14)
+        assertThat(player.sumOfPoints).isEqualTo(14)
         assertThat(player.canNotHit).isFalse
     }
 
@@ -49,7 +49,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.sumOfPoints()).isEqualTo(15)
+        assertThat(player.sumOfPoints).isEqualTo(15)
     }
 
     @Test
@@ -63,7 +63,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.sumOfPoints()).isEqualTo(21)
+        assertThat(player.sumOfPoints).isEqualTo(21)
     }
 
     @Test
@@ -77,7 +77,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.sumOfPoints()).isEqualTo(13)
+        assertThat(player.sumOfPoints).isEqualTo(13)
     }
 
     @Test
@@ -87,7 +87,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.getStatus()).isEqualTo(Status.BLACKJACK)
+        assertThat(player.status).isEqualTo(Status.BLACKJACK)
     }
 
     @Test
@@ -97,7 +97,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.getStatus()).isEqualTo(Status.HIT)
+        assertThat(player.status).isEqualTo(Status.HIT)
     }
 
     @Test
@@ -107,7 +107,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.getStatus()).isEqualTo(Status.HIT)
+        assertThat(player.status).isEqualTo(Status.HIT)
     }
 
     @Test
@@ -117,7 +117,7 @@ internal class PlayerTest {
             player.receiveCard(it)
         }
 
-        assertThat(player.getStatus()).isEqualTo(Status.BUST)
+        assertThat(player.status).isEqualTo(Status.BUST)
     }
 
     @Test

@@ -8,7 +8,7 @@ data class GameResult(
         fun of(gamePlayers: GamePlayers): List<GameResult> {
             val dealer = gamePlayers.dealer
             val players = gamePlayers.players
-            return when (dealer.getStatus()) {
+            return when (dealer.status) {
                 Status.BLACKJACK -> dealerIsBlackjack(players)
                 Status.BUST -> dealerIsBust(players)
                 Status.HIT -> dealerIsHit(players, dealer)
@@ -17,7 +17,7 @@ data class GameResult(
 
         private fun dealerIsBlackjack(players: List<Player>): List<GameResult> =
             players.map {
-                when (it.getStatus()) {
+                when (it.status) {
                     Status.BLACKJACK -> GameResult(it, Result.DRAW)
                     else -> GameResult(it, Result.LOOSE)
                 }
@@ -25,7 +25,7 @@ data class GameResult(
 
         private fun dealerIsBust(players: List<Player>): List<GameResult> =
             players.map {
-                when (it.getStatus()) {
+                when (it.status) {
                     Status.BUST -> GameResult(it, Result.LOOSE)
                     else -> GameResult(it, Result.WIN)
                 }
@@ -33,7 +33,7 @@ data class GameResult(
 
         private fun dealerIsHit(players: List<Player>, dealer: Dealer): List<GameResult> =
             players.map { player ->
-                when (player.getStatus()) {
+                when (player.status) {
                     Status.BLACKJACK -> GameResult(player, Result.WIN)
                     Status.BUST -> GameResult(player, Result.LOOSE)
                     Status.HIT -> {

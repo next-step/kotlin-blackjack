@@ -27,7 +27,7 @@ object OutputView {
             appendLine("==========================")
             gamePlayers.allPlayers.forEach { player ->
                 append(playerCardToString(player))
-                appendLine(" - 결과: ${player.sumOfPoints()}")
+                appendLine(" - 결과: ${player.sumOfPoints}")
             }
         }
         println(result)

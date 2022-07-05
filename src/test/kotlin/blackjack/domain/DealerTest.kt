@@ -14,7 +14,7 @@ internal class DealerTest {
             dealer.receiveCard(it)
         }
 
-        Assertions.assertThat(dealer.sumOfPoints()).isEqualTo(16)
+        Assertions.assertThat(dealer.sumOfPoints).isEqualTo(16)
         Assertions.assertThat(dealer.canNotHit).isFalse
     }
 
@@ -28,7 +28,7 @@ internal class DealerTest {
             dealer.receiveCard(it)
         }
 
-        Assertions.assertThat(dealer.sumOfPoints()).isEqualTo(20)
+        Assertions.assertThat(dealer.sumOfPoints).isEqualTo(20)
         Assertions.assertThat(dealer.canNotHit).isTrue
     }
 }
