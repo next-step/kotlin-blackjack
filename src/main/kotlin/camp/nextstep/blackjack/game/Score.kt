@@ -1,7 +1,7 @@
 package camp.nextstep.blackjack.game
 
-import camp.nextstep.blackjack.card.Card
 import camp.nextstep.blackjack.card.CardNumber
+import camp.nextstep.blackjack.card.Hand
 
 @JvmInline
 value class Score(val value: Int) : Comparable<Score> {
@@ -11,6 +11,12 @@ value class Score(val value: Int) : Comparable<Score> {
     fun isBust(): Boolean = value > BLACK_JACK_SCORE
 
     fun isNotBust(): Boolean = !isBust()
+
+    fun closerThan(other: Score): Boolean {
+        return if (isBust()) false
+        else if (other.isBust()) true
+        else (BLACK_JACK_SCORE - value) < (BLACK_JACK_SCORE - other.value)
+    }
 
     fun plusIf(other: Score, predicate: (Score) -> Boolean): Score {
         return if (predicate(other)) this + other else this
@@ -46,7 +52,8 @@ value class Score(val value: Int) : Comparable<Score> {
 
         private fun canAddAceBonus(score: Score) = BLACK_JACK >= score + ACE_BONUS
 
-        fun of(cards: Collection<Card>): Score {
+        fun of(hand: Hand): Score {
+            val cards = hand.cards
             var score = of(cards.sumOf { it.number.value })
 
             val aceCount = cards.count { it.number == CardNumber.ACE }

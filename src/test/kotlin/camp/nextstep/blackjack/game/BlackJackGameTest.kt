@@ -1,8 +1,9 @@
 package camp.nextstep.blackjack.game
 
-import camp.nextstep.blackjack.player.Player
+import camp.nextstep.blackjack.player.Gambler
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.lang.IllegalStateException
@@ -17,122 +18,141 @@ internal class BlackJackGameTest {
         assertThat(newGame.cardDeck.isNotEmpty).isTrue
     }
 
-    @DisplayName("플레이어(Player)를 게임에 참여시킬 수 있다.")
+    @DisplayName("배팅하는 플레이어(Gambler)를 게임에 참여시킬 수 있다.")
     @Test
-    fun participantPlayer() {
-        val players = listOf(
-            Player("tim"),
-            Player("tom")
+    fun participantGambler() {
+        val gamblers = listOf(
+            Gambler("tim"),
+            Gambler("tom")
         )
 
-        val blackJackGame = BlackJackGame.new(players)
+        val blackJackGame = BlackJackGame.new(gamblers)
 
         val participants = blackJackGame.participants
 
         assertThat(participants).hasSize(2)
     }
 
-    @DisplayName("게임이 시작되면 각 플레이어에게 카드 뭉치에서 카드를 2장씩 제공(Serving)한다.")
+    @DisplayName("게임이 시작되면 딜러가 각 플레이어와 자신에게 카드 뭉치에서 카드를 2장씩 제공(Serving)한다.")
     @Test
     fun servingCardsWhenStartGame() {
-        val playerTim = Player("tim")
-        val playerTom = Player("tom")
-        val players = listOf(playerTim, playerTom)
+        val gamblerTim = Gambler("tim")
+        val gamblerTom = Gambler("tom")
+        val gamblers = listOf(gamblerTim, gamblerTom)
 
-        val blackJackGame = BlackJackGame.new(players)
+        val blackJackGame = BlackJackGame.new(gamblers)
 
         val afterCards = blackJackGame.cardDeck.cards
 
-        assertThat(afterCards).hasSize(52 - (2 * 2))
-        assertThat(playerTim.cards).hasSize(2)
-        assertThat(playerTom.cards).hasSize(2)
+        assertThat(afterCards).hasSize(52 - (2 * 3))
+        assertThat(gamblerTim.hand.cards).hasSize(2)
+        assertThat(gamblerTom.hand.cards).hasSize(2)
+        assertThat(blackJackGame.dealer.hand.cards).hasSize(2)
     }
 
-    @DisplayName("게임이 초기화되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
+    @DisplayName("게임이 준비되면 참가한 순서대로 각 플레이어에 대한 Turn 을 받을 수 있다.")
     @Test
     fun turns() {
-        val playerTim = Player("tim")
-        val playerTom = Player("tom")
-        val players = listOf(playerTim, playerTom)
+        val gamblerTim = Gambler("tim")
+        val gamblerTom = Gambler("tom")
+        val gamblers = listOf(gamblerTim, gamblerTom)
 
-        val blackJackGame = BlackJackGame.new(players)
+        val blackJackGame = BlackJackGame.new(gamblers)
 
-        val timsTurn = blackJackGame.turns[0]
-        val tomsTurn = blackJackGame.turns[1]
+        val timsTurn = blackJackGame.gamblerTurns[0]
+        val tomsTurn = blackJackGame.gamblerTurns[1]
 
-        assertThat(timsTurn.player).isEqualTo(playerTim)
-        assertThat(tomsTurn.player).isEqualTo(playerTom)
+        assertThat(timsTurn.player).isEqualTo(gamblerTim)
+        assertThat(tomsTurn.player).isEqualTo(gamblerTom)
     }
 
-    @DisplayName("플레이어는 카드를 더 받을 수 있다. Hit")
+    @DisplayName("항상 HIT 을 하는 사용자는 언젠가 버스트된다.")
     @Test
-    fun playerCanHit() {
-        val playerTim = Player("tim")
-        val players = listOf(playerTim)
+    fun playAlwaysHit() {
+        val gamblerTim = Gambler("tim")
+        val gamblers = listOf(gamblerTim)
+        val blackJackGame = BlackJackGame.new(gamblers)
+        val timsTurn = blackJackGame.gamblerTurns[0]
 
-        val blackJackGame = BlackJackGame.new(players)
+        blackJackGame.play(timsTurn, { Action.HIT }, {})
 
-        val turn = blackJackGame.turns[0]
-
-        val beforeCards = playerTim.cards
-        turn.applyToGame(Action.HIT)
-
-        val afterCards = playerTim.cards
-        assertThat(afterCards).hasSize(beforeCards.size + 1)
+        assertThat(Score.of(gamblerTim.hand).isBust()).isTrue
     }
 
-    @DisplayName("플레이어는 카드를 더 받지 않을 수 있다. STAY")
-    @Test
-    fun playerCanStay() {
-        val playerTim = Player("tim")
-        val players = listOf(playerTim)
+    @DisplayName("Turn 테스트")
+    @Nested
+    inner class TurnTest {
+        @DisplayName("플레이어는 카드를 더 받을 수 있다. Hit")
+        @Test
+        fun gamblerCanHit() {
+            val gamblerTim = Gambler("tim")
+            val gamblers = listOf(gamblerTim)
 
-        val blackJackGame = BlackJackGame.new(players)
+            val blackJackGame = BlackJackGame.new(gamblers)
 
-        val turn = blackJackGame.turns[0]
+            val turn = blackJackGame.gamblerTurns[0]
 
-        val beforeCards = playerTim.cards
-        turn.applyToGame(Action.STAY)
+            val beforeCards = gamblerTim.hand.cards
+            turn.play(Action.HIT)
 
-        val afterCards = playerTim.cards
-        assertThat(afterCards).hasSize(beforeCards.size)
-    }
-
-    @DisplayName("플레이어 카드가 Bust 이면 카드를 더 받을 수 없다.")
-    @Test
-    fun playerCannotHitWhenBusted() {
-        val playerTim = Player("tim")
-        val players = listOf(playerTim)
-
-        val blackJackGame = BlackJackGame.new(players)
-
-        val turn = blackJackGame.turns[0]
-        assertThat(turn.player).isEqualTo(playerTim)
-
-        while (Score.of(playerTim.cards).isNotBust()) {
-            turn.applyToGame(Action.HIT)
+            val afterCards = gamblerTim.hand.cards
+            assertThat(afterCards).hasSize(beforeCards.size + 1)
         }
 
-        assertThrows<IllegalStateException> {
-            turn.applyToGame(Action.HIT)
+        @DisplayName("플레이어는 카드를 더 받지 않을 수 있다. STAY")
+        @Test
+        fun gamblerCanStay() {
+            val gamblerTim = Gambler("tim")
+            val gamblers = listOf(gamblerTim)
+
+            val blackJackGame = BlackJackGame.new(gamblers)
+
+            val turn = blackJackGame.gamblerTurns[0]
+
+            val beforeCards = gamblerTim.hand.cards
+            turn.play(Action.STAY)
+
+            val afterCards = gamblerTim.hand.cards
+            assertThat(afterCards).hasSize(beforeCards.size)
         }
-    }
 
-    @DisplayName("각 플레이어별 점수를 확인할 수 있다.")
-    @Test
-    fun gameResult() {
-        val playerTim = Player("tim")
-        val players = listOf(playerTim)
+        @DisplayName("플레이어 카드가 Bust 이면 카드를 더 받을 수 없다.")
+        @Test
+        fun gamblerCannotHitWhenBusted() {
+            val gamblerTim = Gambler("tim")
+            val gamblers = listOf(gamblerTim)
 
-        val blackJackGame = BlackJackGame.new(players)
+            val blackJackGame = BlackJackGame.new(gamblers)
 
-        blackJackGame.turns.forEach { it.applyToGame(Action.STAY) }
+            val turn = blackJackGame.gamblerTurns[0]
+            assertThat(turn.player).isEqualTo(gamblerTim)
 
-        val result = blackJackGame.result()
+            while (Score.of(gamblerTim.hand).isNotBust()) {
+                turn.play(Action.HIT)
+            }
 
-        assertThat(result.playerScores).hasSize(1)
+            assertThrows<IllegalStateException> {
+                turn.play(Action.HIT)
+            }
+        }
 
-        val timsScore = Score.of(playerTim.cards)
-        assertThat(result.playerScores.find { it.player == playerTim }!!.score).isEqualTo(timsScore)
+        @DisplayName("딜러와 플레이어 모두 카드 뽑기가 끝나면 각 플레이어별 점수를 확인할 수 있다.")
+        @Test
+        fun gameResultScore() {
+            val gamblerTim = Gambler("tim")
+            val gamblers = listOf(gamblerTim)
+
+            val blackJackGame = BlackJackGame.new(gamblers)
+
+            blackJackGame.gamblerTurns.forEach { it.play(Action.STAY) }
+            blackJackGame.dealerTurn.play(Action.STAY)
+
+            val result = blackJackGame.result()
+
+            assertThat(result.gamblersScore).hasSize(1)
+
+            val timsScore = Score.of(gamblerTim.hand)
+            assertThat(result.gamblersScore.find { it.gambler == gamblerTim }!!.score).isEqualTo(timsScore)
+        }
     }
 }
