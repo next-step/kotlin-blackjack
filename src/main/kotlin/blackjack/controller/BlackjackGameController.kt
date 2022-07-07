@@ -3,8 +3,8 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -13,21 +13,22 @@ object BlackjackGameController {
         val blackjackGame = BlackjackGame(
             Deck.createOf(),
             createParticipants(),
+            Dealer(),
         )
 
         blackjackGame.start()
-        OutputView.printPlayersInitCards(blackjackGame.participants)
+        OutputView.printPlayersInitCards(blackjackGame.players)
         playPlayersTurn(blackjackGame)
         playDealerTurn(blackjackGame)
 
-        OutputView.printAllParticipantsCard(blackjackGame.participants)
+        OutputView.printAllParticipantsCard(blackjackGame.players, blackjackGame.dealer)
         OutputView.printResult(blackjackGame.getGameResults())
     }
 
-    private fun createParticipants(): Participants {
+    private fun createParticipants(): Players {
         return InputView.inputPlayerNames()
             .map { Player(it) }
-            .let { Participants(it) + Dealer() }
+            .let { Players(it) }
     }
 
     private fun playPlayersTurn(blackjackGame: BlackjackGame) {

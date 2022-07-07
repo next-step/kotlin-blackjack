@@ -6,8 +6,8 @@ import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
 import blackjack.domain.gameresult.GameResult
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
@@ -33,7 +33,7 @@ class BlackjackGameTest : StringSpec({
             // given
             val blackjackGame = BlackjackGame(
                 deck = Deck.createOf(),
-                participants = Participants(
+                players = Players(
                     listOf(
                         Player(
                             "김경록",
@@ -41,6 +41,7 @@ class BlackjackGameTest : StringSpec({
                         )
                     )
                 ),
+                dealer = Dealer(),
             )
 
             // when
@@ -55,7 +56,7 @@ class BlackjackGameTest : StringSpec({
         // given
         val blackjackGame = BlackjackGame(
             deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
-            participants = Participants(
+            players = Players(
                 listOf(
                     Player(
                         "김경록",
@@ -68,6 +69,7 @@ class BlackjackGameTest : StringSpec({
                     )
                 )
             ),
+            dealer = Dealer(),
         )
 
         // when
@@ -97,11 +99,10 @@ class BlackjackGameTest : StringSpec({
         ).forEach { (cards, expectedResult) ->
             val blackjackGame = BlackjackGame(
                 deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
-                participants = Participants(
-                    listOf(
-                        Dealer(Cards(cards))
-                    )
+                players = Players(
+                    emptyList(),
                 ),
+                dealer = Dealer(Cards(cards)),
             )
 
             // when
@@ -138,7 +139,7 @@ class BlackjackGameTest : StringSpec({
         ).forEach { (cards, expectedResult) ->
             val blackjackGame = BlackjackGame(
                 deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
-                participants = Participants(
+                players = Players(
                     listOf(
                         Player(
                             "경록",
@@ -149,9 +150,9 @@ class BlackjackGameTest : StringSpec({
                                 )
                             )
                         ),
-                        Dealer(Cards(cards)),
                     )
                 ),
+                dealer = Dealer(Cards(cards)),
             )
 
             // when

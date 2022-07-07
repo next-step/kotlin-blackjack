@@ -2,14 +2,15 @@ package blackjack.view
 
 import blackjack.domain.gameresult.GameResult
 import blackjack.domain.gameresult.GameResults
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
-import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Players
 
 object OutputView {
-    fun printPlayersInitCards(participants: Participants) {
-        val playerNames = participants.participants.joinToString(", ") { it.name }
+    fun printPlayersInitCards(players: Players) {
+        val playerNames = players.players.joinToString(", ") { it.name }
         println("${playerNames}에게 2장의 카드를 나누었습니다.")
-        participants.participants.forEach { printPlayerNameAndCards(it) }
+        players.players.forEach { printPlayerNameAndCards(it) }
         println()
     }
 
@@ -23,10 +24,11 @@ object OutputView {
         println("${participant.name}카드: $cardNames")
     }
 
-    fun printAllParticipantsCard(participants: Participants) {
-        participants.participants.forEach {
+    fun printAllParticipantsCard(players: Players, dealer: Dealer) {
+        players.players.forEach {
             printPlayerResult(it)
         }
+        printPlayerResult(dealer)
         println()
     }
 
