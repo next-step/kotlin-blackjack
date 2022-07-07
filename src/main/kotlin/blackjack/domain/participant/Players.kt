@@ -18,12 +18,10 @@ value class Players(
     }
 
     fun isExistWaitingPlayer(): Boolean {
-        return players.any { isWaitingPlayer(it) }
+        return players.any { it.isAbleToDraw() }
     }
 
     fun findCurrentTurnPlayer(): Participant =
-        players.firstOrNull { isWaitingPlayer(it) }
+        players.firstOrNull { it.isAbleToDraw() }
             ?: throw IllegalStateException("대기중인 플레이어가 존재하지 않습니다.")
-
-    private fun isWaitingPlayer(it: Participant) = it is Player && it.isAbleToDraw()
 }
