@@ -1,6 +1,7 @@
 package blackjack.domain.participant.state
 
 import blackjack.domain.deck.Card
+import blackjack.domain.participant.GameResult
 
 interface State {
 
@@ -10,7 +11,9 @@ interface State {
 
     fun isFinished(): Boolean
 
-    fun cards(): List<Card>
+    fun cards(): Cards
 
-    fun score(): Int
+    fun score(): Score
+
+    fun judgementGameResult(otherScore: Score): GameResult
 }
