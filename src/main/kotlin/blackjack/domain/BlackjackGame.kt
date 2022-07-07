@@ -31,12 +31,12 @@ class BlackjackGame(
     fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer() as Player
 
     fun isSatisfiedDealerPullOutCondition(): Boolean {
-        val done = dealer.isAbleToDraw()
-        if (done) {
+        val drawable = dealer.isAbleToDraw()
+        if (drawable) {
             dealer.drawCard(deck.pullOut())
         }
 
-        return done
+        return drawable
     }
 
     fun getGameResults(): List<GameResults> {
