@@ -7,7 +7,6 @@ import blackjack.domain.deck.CardPattern.DIAMOND
 import blackjack.domain.deck.CardPattern.HEART
 import blackjack.domain.deck.CardPattern.SPADE
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.GameResult
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.state.Cards
 
@@ -58,19 +57,11 @@ class OutputView {
 
     fun printGameResult(gameResults: List<PlayerGameResult>) {
         println()
-        println("## 최종 승패")
-        val dealerWinCount = gameResults.count { it.gameResult == GameResult.LOSE }
-        val dealerLoseCount = gameResults.count { it.gameResult == GameResult.WIN }
-        val dealerDrawCount = gameResults.count { it.gameResult == GameResult.DRAW }
-        println("딜러: ${dealerWinCount}승 ${dealerLoseCount}패 ${dealerDrawCount}무")
+        println("## 최종 수익")
+        val dealerYield = -(gameResults.sumOf { it.yield })
+        println("딜러: $dealerYield")
         gameResults.forEach {
-            println("${it.playerName.value}: ${convertGameResult(it.gameResult)}")
+            println("${it.playerName.value}: ${it.yield}")
         }
-    }
-
-    private fun convertGameResult(gameResult: GameResult) = when (gameResult) {
-        GameResult.WIN, GameResult.BLACKJACK_WIN -> "승"
-        GameResult.DRAW -> "무"
-        GameResult.LOSE -> "패"
     }
 }
