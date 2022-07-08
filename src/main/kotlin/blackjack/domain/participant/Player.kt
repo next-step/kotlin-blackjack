@@ -6,8 +6,9 @@ import blackjack.domain.participant.state.Score
 
 class Player(
     val playerName: PlayerName,
-    val firstCard: Card,
-    val secondCard: Card,
+    val betAmount: BetAmount,
+    firstCard: Card,
+    secondCard: Card,
 ) : Participant(
     state = Init.receiveCard(firstCard = firstCard, secondCard = secondCard)
 ) {
@@ -18,8 +19,9 @@ class Player(
     fun judgementGameResult(otherScore: Score): GameResult = state.judgementGameResult(otherScore = otherScore)
 
     companion object {
-        fun of(nameValue: String, firstCard: Card, secondCard: Card): Player = Player(
-            playerName = PlayerName(value = nameValue),
+        fun of(playerName: PlayerName, betAmount: BetAmount, firstCard: Card, secondCard: Card): Player = Player(
+            playerName = playerName,
+            betAmount = betAmount,
             firstCard = firstCard,
             secondCard = secondCard
         )

@@ -12,18 +12,25 @@ internal class PlayersTest : FreeSpec({
         val dealer = Dealer()
 
         listOf(
-            listOf("호랑이"),
-            listOf("현구님", "규남님")
+            listOf(PlayerName("호랑이")),
+            listOf(PlayerName("현구님"), PlayerName("규남님"))
         ).forEach { nameValues ->
             "$nameValues 가 입력되면 플레이어 목록이 잘 생성된다." {
-                val players = Players.of(playNameValues = nameValues, dealer)
-                players.values.map { it.getPlayerNameValue() } shouldContainExactly nameValues
+                val players =
+                    Players.of(playNames = nameValues, betAmounts = List(nameValues.size) { BetAmount(0.0) }, dealer)
+                players.values.map { it.getPlayerNameValue() } shouldContainExactly nameValues.map { it.value }
             }
         }
 
         "빈 리스트가 입력되면 플레이어 목록 생성에 실패한다." {
             val exception =
-                shouldThrowExactly<IllegalArgumentException> { Players.of(playNameValues = emptyList(), dealer) }
+                shouldThrowExactly<IllegalArgumentException> {
+                    Players.of(
+                        playNames = emptyList(),
+                        betAmounts = emptyList(),
+                        dealer
+                    )
+                }
             exception.message shouldBe "플레이어가 없으면 게임을 진행할 수 없습니다."
         }
     }
@@ -31,7 +38,8 @@ internal class PlayersTest : FreeSpec({
     "딜러를 통해 초기 시작 카드를 2장씩 나눠 받는다." {
         // given
         val dealer = Dealer()
-        val players = Players.of(listOf("현구님", "규남님"), dealer)
+        val players =
+            Players.of(listOf(PlayerName("현구님"), PlayerName("규남님")), listOf(BetAmount(0.0), BetAmount(0.0)), dealer)
 
         // then
         players.values.forEach { it.cards().shouldHaveSize(2) }

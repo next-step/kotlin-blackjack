@@ -22,15 +22,15 @@ class Players private constructor(
     fun isNotAllFinished(): Boolean = values.any { it.isRunning() }
 
     companion object {
-        fun of(playNameValues: List<String>, dealer: Dealer): Players =
-            Players(
-                values = playNameValues.map {
-                    Player.of(
-                        nameValue = it,
-                        firstCard = dealer.drawCard(),
-                        secondCard = dealer.drawCard(),
-                    )
-                }
+        fun of(playNames: List<PlayerName>, betAmounts: List<BetAmount>, dealer: Dealer): Players =
+            Players(values = playNames.zip(betAmounts).map { (playerName, betAmount) ->
+                Player.of(
+                    playerName = playerName,
+                    betAmount = betAmount,
+                    firstCard = dealer.drawCard(),
+                    secondCard = dealer.drawCard(),
+                )
+            }
             )
     }
 }
