@@ -69,7 +69,7 @@ class OutputView {
     }
 
     private fun convertGameResult(gameResult: GameResult) = when (gameResult) {
-        GameResult.WIN -> "승"
+        GameResult.WIN, GameResult.BLACKJACK_WIN -> "승"
         GameResult.DRAW -> "무"
         GameResult.LOSE -> "패"
     }

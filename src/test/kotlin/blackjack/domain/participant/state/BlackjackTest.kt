@@ -52,9 +52,9 @@ internal class BlackjackTest : FreeSpec({
                 blackjack.judgementGameResult(otherScore = Score(21)) shouldBe GameResult.DRAW
             }
 
-            "블랙잭이 아니면 무조건 승리한다." {
-                blackjack.judgementGameResult(otherScore = Score(22)) shouldBe GameResult.WIN
-                blackjack.judgementGameResult(otherScore = Score(20)) shouldBe GameResult.WIN
+            "블랙잭이 아니면 무조건 블랙잭 승리한다." {
+                blackjack.judgementGameResult(otherScore = Score(22)) shouldBe GameResult.BLACKJACK_WIN
+                blackjack.judgementGameResult(otherScore = Score(20)) shouldBe GameResult.BLACKJACK_WIN
             }
         }
     }
