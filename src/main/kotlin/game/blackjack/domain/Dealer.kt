@@ -5,9 +5,7 @@ class Dealer : Player("딜러", 0) {
 
     fun drawCard(): Card = deck.draw()
     fun drawCard(count: Int): List<Card> {
-        val drawn = mutableListOf<Card>()
-        repeat(count) { drawn.add(drawCard()) }
-        return drawn
+        return (1..count).map { drawCard() }
     }
 
     override fun receiveUntilHit(

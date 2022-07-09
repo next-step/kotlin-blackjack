@@ -9,7 +9,9 @@ value class Score(private val value: Int) {
 
     fun sumIfSoftHand(hasAce: Boolean): Score {
         var total = value
-        total += if (hasAce && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) ACE_EXTRA_SCORE else 0
+        if (hasAce && total + ACE_EXTRA_SCORE <= BLACKJACK_SCORE) {
+            total += ACE_EXTRA_SCORE
+        }
         return Score(total)
     }
 
