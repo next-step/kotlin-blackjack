@@ -47,7 +47,7 @@ internal class PlayerTest {
         player.receive(Card(Suit.SPADE, Denomination.ACE))
         player.determine(false)
 
-        assertThat(player.cards.size()).isEqualTo(2)
+        assertThat(player.hand.size()).isEqualTo(2)
     }
 
     @Test

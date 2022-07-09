@@ -29,10 +29,10 @@ class ResultView {
         }
 
     fun printAllPlayerCard(players: Players) {
-        println("\n딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
+        println("\n딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].hand.size()}장의 카드를 나누었습니다.")
         players.forEachWithDealer {
             when (it) {
-                is Dealer -> println("${it.name}카드: ${formatCard(it.cards.get().first())}")
+                is Dealer -> println("${it.name}카드: ${formatCard(it.hand.cards().first())}")
                 else -> println(formatPlayerCard(it))
             }
         }
@@ -45,15 +45,13 @@ class ResultView {
         }
     }
 
-    private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.cards.get())}"
+    private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.hand.cards())}"
 
     fun printScore(players: Players) {
         println()
         players.forEachWithDealer {
             println(
-                "${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${
-                    it.cards.score().toInt()
-                }"
+                "${it.name}카드: ${formatCards(it.hand.cards())} - 결과: ${it.hand.score().toInt()}"
             )
         }
     }

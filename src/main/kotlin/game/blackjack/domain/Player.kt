@@ -1,39 +1,24 @@
 package game.blackjack.domain
 
 open class Player(val name: String, private val money: Int) {
-    val cards: Cards = Cards()
-    private var status: Status = Status.HIT
+
+    val hand: Hand = Hand()
 
     constructor(name: String) : this(name, 0)
 
-    fun determine(response: Boolean): Status {
-        status = if (response) Status.HIT else Status.STAY
-        return status
-    }
+    fun determine(response: Boolean) = hand.setStatus(if (response) Status.HIT else Status.STAY)
 
-    fun score(): Score = cards.score()
+    fun score(): Score = hand.score()
 
-    fun isBust(): Boolean = cards.isBust()
+    fun isBust(): Boolean = hand.isBust()
 
-    fun isBlackJack(): Boolean = cards.isBlackJack()
+    fun isBlackJack(): Boolean = hand.isBlackJack()
 
-    fun init(cards: List<Card>): Score {
-        this.cards.add(cards)
-        if (isBlackJack()) {
-            status = Status.BLACKJACK
-        }
-        return this.cards.score()
-    }
+    fun init(cards: List<Card>) = hand.init(cards)
 
-    fun receive(card: Card): Score {
-        cards.add(card)
-        if (cards.isBust()) {
-            status = Status.BUST
-        }
-        return cards.score()
-    }
+    fun receive(card: Card) = hand.receive(card)
 
-    fun canReceive(): Boolean = status == Status.HIT
+    fun canReceive(): Boolean = hand.isHit()
 
     open fun receiveUntilHit(
         action: (name: String) -> Boolean,

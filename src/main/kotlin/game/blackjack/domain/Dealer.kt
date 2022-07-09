@@ -15,7 +15,7 @@ class Dealer : Player("딜러", 0) {
         showPlayerCard: (player: Player) -> Unit,
         drawCard: () -> Card
     ) {
-        while (cards.score() <= CAN_RECEIVE_SCORE) {
+        while (hand.score() <= CAN_RECEIVE_SCORE) {
             receive(drawCard())
             showPlayerCard(this)
         }

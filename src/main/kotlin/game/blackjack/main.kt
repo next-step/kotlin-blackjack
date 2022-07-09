@@ -12,10 +12,7 @@ fun main() {
     val resultView = ResultView()
     val players = Players(
         Dealer(),
-        inputView.readNames().map {
-            val betMoney = inputView.readMoney(it)
-            Player(it, betMoney)
-        }
+        inputView.readNames().map { Player(it, inputView.readMoney(it)) }
     )
     val table = Table(
         players,

@@ -12,7 +12,7 @@ internal class PlayersTest {
     fun `초기화하면 2장의 카드를 갖는다`() {
         val players = Players(Dealer(), listOf(Player("jade"), Player("sehee")))
         players.init(2)
-        players.forEach { Assertions.assertThat(it.cards.size()).isEqualTo(2) }
+        players.forEach { Assertions.assertThat(it.hand.size()).isEqualTo(2) }
     }
 
     @Test
@@ -29,6 +29,6 @@ internal class PlayersTest {
         players.init(2)
         players.distribute({ false }, { ResultView().printPlayerCard(it) })
         players.forEach { Assertions.assertThat(it.isBust()).isFalse() }
-        players.forEach { Assertions.assertThat(it.cards.size()).isEqualTo(2) }
+        players.forEach { Assertions.assertThat(it.hand.size()).isEqualTo(2) }
     }
 }
