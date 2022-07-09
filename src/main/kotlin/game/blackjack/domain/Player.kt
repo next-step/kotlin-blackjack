@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-open class Player(val name: String, private val money: Int) {
+open class Player(val name: String, val money: Int) {
 
     val hand: Hand = Hand()
 
@@ -32,16 +32,5 @@ open class Player(val name: String, private val money: Int) {
             }
             showPlayerCard(this)
         }
-    }
-
-    fun getProfit(dealer: Dealer): Int = when {
-        isBust() -> WinningRecord.LOSE.scale * money
-        dealer.isBust() -> WinningRecord.WIN.scale * money
-        isBlackJack() && dealer.isBlackJack() -> WinningRecord.TIE.scale * money
-        isBlackJack() -> (WinningRecord.WIN.scale * 1.5 * money).toInt()
-        dealer.isBlackJack() -> WinningRecord.LOSE.scale * money
-        score() > dealer.score() -> WinningRecord.WIN.scale * money
-        score() < dealer.score() -> WinningRecord.LOSE.scale * money
-        else -> WinningRecord.TIE.scale * money
     }
 }

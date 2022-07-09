@@ -69,7 +69,7 @@ internal class PlayerTest {
         player.init(DECK_OF_15)
         dealer.init(DECK_OF_20)
         player.receive(Card(Suit.SPADE, Denomination.JACK))
-        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(-1000)
     }
 
     @Test
@@ -79,7 +79,7 @@ internal class PlayerTest {
         player.init(DECK_OF_20)
         dealer.init(DECK_OF_15)
         dealer.receive(Card(Suit.HEART, Denomination.JACK))
-        assertThat(player.getProfit(dealer)).isEqualTo(1000)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(1000)
     }
 
     @Test
@@ -88,7 +88,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_BLACKJACK)
         dealer.init(DECK_OF_BLACKJACK)
-        assertThat(player.getProfit(dealer)).isEqualTo(0)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(0)
     }
 
     @Test
@@ -97,7 +97,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_BLACKJACK)
         dealer.init(DECK_OF_20)
-        assertThat(player.getProfit(dealer)).isEqualTo(1500)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(1500)
     }
 
     @Test
@@ -106,7 +106,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_20)
         dealer.init(DECK_OF_BLACKJACK)
-        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(-1000)
     }
 
     @Test
@@ -115,7 +115,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_15)
         dealer.init(DECK_OF_10)
-        assertThat(player.getProfit(dealer)).isEqualTo(1000)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(1000)
     }
 
     @Test
@@ -124,7 +124,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_10)
         dealer.init(DECK_OF_15)
-        assertThat(player.getProfit(dealer)).isEqualTo(-1000)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(-1000)
     }
 
     @Test
@@ -133,7 +133,7 @@ internal class PlayerTest {
         val dealer = Dealer()
         player.init(DECK_OF_15)
         dealer.init(DECK_OF_15)
-        assertThat(player.getProfit(dealer)).isEqualTo(0)
+        assertThat(WinningRecord.getPlayerProfit(player, dealer)).isEqualTo(0)
     }
 
     companion object {

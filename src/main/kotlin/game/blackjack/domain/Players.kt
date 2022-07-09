@@ -24,6 +24,6 @@ class Players(
         listOf(dealer, *(players.toTypedArray())).forEach { action(it) }
 
     fun getResult(): Map<String, Int> {
-        return players.associateBy({ it.name }, { it.getProfit(dealer) })
+        return players.associateBy({ it.name }, { WinningRecord.getPlayerProfit(it, dealer) })
     }
 }
