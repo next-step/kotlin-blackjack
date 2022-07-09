@@ -1,9 +1,9 @@
 package game.blackjack.view
 
 import game.blackjack.domain.Card
-import game.blackjack.domain.Dealer
 import game.blackjack.domain.Dealer.Companion.CAN_RECEIVE_SCORE
 import game.blackjack.domain.Denomination
+import game.blackjack.domain.Participant
 import game.blackjack.domain.Player
 import game.blackjack.domain.Players
 import game.blackjack.domain.Suit
@@ -32,16 +32,16 @@ class ResultView {
         println("\n딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].hand.size()}장의 카드를 나누었습니다.")
         players.forEachWithDealer {
             when (it) {
-                is Dealer -> println("${it.name}카드: ${formatCard(it.hand.cards().first())}")
-                else -> println(formatPlayerCard(it))
+                is Player -> println(formatPlayerCard(it))
+                else -> println("${it.name}카드: ${formatCard(it.hand.cards().first())}")
             }
         }
     }
 
-    fun printPlayerCard(player: Player) {
-        when (player) {
-            is Dealer -> println("\n딜러는 ${CAN_RECEIVE_SCORE.toInt()}이하라 한장의 카드를 더 받았습니다.")
-            else -> println(formatPlayerCard(player))
+    fun printPlayerCard(participant: Participant) {
+        when (participant) {
+            is Player -> println(formatPlayerCard(participant))
+            else -> println("\n딜러는 ${CAN_RECEIVE_SCORE.toInt()}이하라 한장의 카드를 더 받았습니다.")
         }
     }
 

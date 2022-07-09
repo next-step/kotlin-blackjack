@@ -3,7 +3,7 @@ package game.blackjack.domain
 class Table(
     private val players: Players,
     private val getAction: (name: String) -> Boolean,
-    private val showPlayerCard: (player: Player) -> Unit,
+    private val showPlayerCard: (participant: Participant) -> Unit,
 ) {
 
     fun init(): Players = players.init(INIT_CARD_COUNT)
