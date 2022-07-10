@@ -16,7 +16,9 @@ class Wallet(val cards: List<Card>) {
         return (this.sumUp < limit)
     }
 
-    fun getMutableCardList(): MutableList<Card> {
-        return this.cards.toMutableList()
+    fun addNewCard(): Wallet {
+        val cards = this.cards.toMutableList()
+        cards.add(CardDrawer.drawSingleCard())
+        return Wallet(cards)
     }
 }

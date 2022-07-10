@@ -1,10 +1,6 @@
 package blackjack
 
-import blackjack.entity.CardDrawer
-import blackjack.entity.Dealer
-import blackjack.entity.Person
-import blackjack.entity.Player
-import blackjack.entity.Score
+import blackjack.entity.*
 import blackjack.ui.GetResult
 import blackjack.ui.Input
 
@@ -17,9 +13,9 @@ class BlackJack {
         val dealer = getDealer()
         GetResult.printAllStatus(players, dealer)
 
-        val playedPlayers = players.map { player -> Player(player.name, player.chooseDrawing(player.wallet)) }
+        val playedPlayers = players.map { player -> choosePlayerDrawing(player) }
         println()
-        val playedDealer = Dealer(dealer.chooseDrawing(dealer.wallet))
+        val playedDealer = chooseDealerDrawing(dealer)
         GetResult.printAllStatusWithResult(playedPlayers, playedDealer)
 
         playedPlayers.forEach { player: Person -> Score.compare(player, playedDealer) }
@@ -34,5 +30,20 @@ class BlackJack {
 
     fun getDealer(): Dealer {
         return Dealer(CardDrawer.drawInitialCards())
+    }
+
+    fun chooseDealerDrawing(dealer: Dealer): Dealer {
+        if (!dealer.wallet.isAbleToDraw(dealer.limit)) return dealer
+        GetResult.addDealerSingleCard()
+        println()
+        return Dealer(dealer.draw(dealer.wallet))
+    }
+
+    fun choosePlayerDrawing(player: Person): Person {
+        if (!player.wallet.isAbleToDraw(player.limit)) return player
+        if (Input.additionalCard(player.name) == "n") return player
+        val newPlayer = Player(player.name, player.draw(player.wallet))
+        GetResult.printPlayerStatus(newPlayer)
+        return (choosePlayerDrawing(newPlayer))
     }
 }

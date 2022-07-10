@@ -14,6 +14,4 @@ interface Person {
     fun getWalletSum(): Int {
         return wallet.sumUp
     }
-
-    fun chooseDrawing(wallet: Wallet): Wallet
 }
