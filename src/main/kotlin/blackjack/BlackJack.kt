@@ -33,16 +33,16 @@ class BlackJack {
     }
 
     fun chooseDealerDrawing(dealer: Dealer): Dealer {
-        if (!dealer.wallet.isAbleToDraw(dealer.limit)) return dealer
+        if (!dealer.hands.isAbleToDraw(dealer.limit)) return dealer
         GetResult.addDealerSingleCard()
         println()
-        return Dealer(dealer.draw(dealer.wallet))
+        return Dealer(dealer.draw(dealer.hands))
     }
 
     fun choosePlayerDrawing(player: Person): Person {
-        if (!player.wallet.isAbleToDraw(player.limit)) return player
+        if (!player.hands.isAbleToDraw(player.limit)) return player
         if (Input.additionalCard(player.name) == "n") return player
-        val newPlayer = Player(player.name, player.draw(player.wallet))
+        val newPlayer = Player(player.name, player.draw(player.hands))
         GetResult.printPlayerStatus(newPlayer)
         return (choosePlayerDrawing(newPlayer))
     }

@@ -5,18 +5,18 @@ object CardDrawer {
         return Deck.cards.removeFirst()
     }
 
-    fun drawInitialCards(): Wallet {
-        return Wallet(
+    fun drawInitialCards(): Hands {
+        return Hands(
             mutableListOf<Card>().apply {
                 repeat(2) { this.add(drawSingleCard()) }
             }.toList()
         )
     }
 
-    fun drawAdditionalCard(cardList: List<Card>): Wallet {
+    fun drawAdditionalCard(cardList: List<Card>): Hands {
         val cards = cardList.toMutableList()
         cards.add(drawSingleCard())
-        return Wallet(cards)
+        return Hands(cards)
     }
 
     fun getRandomShape(): Shape {

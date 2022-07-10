@@ -2,16 +2,16 @@ package blackjack.entity
 
 interface Person {
     val name: String
-    val wallet: Wallet
+    val hands: Hands
     val limit: Int
 
-    fun draw(wallet: Wallet): Wallet
+    fun draw(hands: Hands): Hands
 
     fun getWalletCards(): List<Card> {
-        return wallet.cards
+        return hands.cards
     }
 
     fun getWalletSum(): Int {
-        return wallet.sumUp
+        return hands.sumUp
     }
 }
