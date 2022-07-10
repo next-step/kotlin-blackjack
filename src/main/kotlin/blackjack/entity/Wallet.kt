@@ -1,13 +1,13 @@
 package blackjack.entity
 
-import blackjack.entity.CardNumber.Companion.ACE_CARD_OF_TEN
+import blackjack.entity.CardNumber.Companion.ACE_CARD_OF_ELEVEN
 
-class Wallet(val cards: List<Card>) {
+class Hands(val cards: List<Card>) {
     val sumUp: Int = cards.sumOf { card: Card -> checkSumUpCondition(card.number) }
 
-    fun checkSumUpCondition(number: CardNumber): Int{
-        if(number == CardNumber.ACE && this.sumUp <=11 ){
-            return ACE_CARD_OF_TEN
+    fun checkSumUpCondition(number: CardNumber): Int {
+        if (number == CardNumber.ACE && this.sumUp <= 11) {
+            return ACE_CARD_OF_ELEVEN
         }
         return number.value
     }
@@ -16,7 +16,9 @@ class Wallet(val cards: List<Card>) {
         return (this.sumUp < limit)
     }
 
-    fun getMutableCardList(): MutableList<Card> {
-        return this.cards.toMutableList()
+    fun addNewCard(): Hands {
+        val cards = this.cards.toMutableList()
+        cards.add(CardDrawer.drawSingleCard())
+        return Hands(cards)
     }
 }

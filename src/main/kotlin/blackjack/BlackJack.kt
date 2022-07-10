@@ -1,36 +1,49 @@
 package blackjack
 
-import blackjack.entity.CardDrawer
-import blackjack.entity.Deck
-import blackjack.entity.Player
+import blackjack.entity.*
 import blackjack.ui.GetResult
 import blackjack.ui.Input
 
 class BlackJack {
     fun play() {
-        val names = Input.getNames()
+        val names: List<String> = Input.getNames()
         GetResult.informGameStart(names)
-        println()
 
-        val players: List<Player> = names.map { name -> Player(name, CardDrawer.drawInitialCards()) }
-        players.map { player: Player -> GetResult.printPlayerStatus(player) }
-        println()
+        val players = getPlayers(names)
+        val dealer = getDealer()
+        GetResult.printAllStatus(players, dealer)
 
-        val playedPlayers = players.map { player -> checkDrawingCondition(player) }
+        val playedPlayers = players.map { player -> choosePlayerDrawing(player) }
         println()
-        playedPlayers.map { player: Player -> GetResult.printPlayerStatusWithResult(player) }
+        val playedDealer = chooseDealerDrawing(dealer)
+        GetResult.printAllStatusWithResult(playedPlayers, playedDealer)
+
+        playedPlayers.forEach { player: Person -> Score.compare(player, playedDealer) }
+        GetResult.getScoreResult()
     }
 
-    fun checkDrawingCondition(player: Player): Player {
-        if (!player.wallet.isAbleToDraw(player.limit)) return player
-        val newPlayer = chooseDrawing(player, Input.additionalCard(player.name))
+    fun getPlayers(names: List<String>): List<Person> {
+        val players: MutableList<Person> = mutableListOf()
+        names.forEach { name: String -> players.add(Player(name, CardDrawer.drawInitialCards())) }
+        return players.toList()
+    }
+
+    fun getDealer(): Dealer {
+        return Dealer(CardDrawer.drawInitialCards())
+    }
+
+    fun chooseDealerDrawing(dealer: Dealer): Dealer {
+        if (!dealer.hands.isAbleToDraw(dealer.limit)) return dealer
+        GetResult.addDealerSingleCard()
+        println()
+        return Dealer(dealer.draw(dealer.hands))
+    }
+
+    fun choosePlayerDrawing(player: Person): Person {
+        if (!player.hands.isAbleToDraw(player.limit)) return player
+        if (Input.additionalCard(player.name) == "n") return player
+        val newPlayer = Player(player.name, player.draw(player.hands))
         GetResult.printPlayerStatus(newPlayer)
-        return checkDrawingCondition(newPlayer)
-    }
-
-    fun chooseDrawing(player: Player, answer: String): Player{
-        if (answer == "n") return player
-        val newWallet = player.draw()
-       return Player(player.name, newWallet)
+        return (choosePlayerDrawing(newPlayer))
     }
 }
