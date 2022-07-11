@@ -1,26 +1,23 @@
 package game.blackjack.domain
 
-class Dealer : Player("딜러") {
+class Dealer : Participant("딜러") {
     private val deck = Deck()
 
     fun drawCard(): Card = deck.draw()
 
-    fun recordWin() {
-        winningRecord.recordWin()
+    fun drawCard(count: Int): List<Card> {
+        return (1..count).map { drawCard() }
     }
-
-    fun recordLose() {
-        winningRecord.recordLose()
-    }
-
-    override fun canReceive(): Boolean = cards.score() <= CAN_RECEIVE_SCORE
 
     override fun receiveUntilHit(
         action: (name: String) -> Boolean,
-        showPlayerCard: (player: Player) -> Unit,
+        showPlayerCard: (participant: Participant) -> Unit,
         drawCard: () -> Card
     ) {
-        super.receiveUntilHit({ canReceive() }, showPlayerCard, drawCard)
+        while (hand.score() <= CAN_RECEIVE_SCORE) {
+            receive(drawCard())
+            showPlayerCard(this)
+        }
     }
 
     companion object {

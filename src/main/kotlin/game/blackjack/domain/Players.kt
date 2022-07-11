@@ -6,23 +6,24 @@ class Players(
 ) {
     fun init(initCount: Int): Players {
         listOf(dealer, *(players.toTypedArray())).forEach {
-            repeat(initCount) { _ -> it.receive(dealer.drawCard()) }
+            it.init(dealer.drawCard(initCount))
         }
         return this
     }
 
-    fun distribute(getAction: (name: String) -> Boolean, showPlayerCard: (player: Player) -> Unit): Players {
+    fun distribute(getAction: (name: String) -> Boolean, showPlayerCard: (participant: Participant) -> Unit): Players {
         (players + dealer).forEach {
             it.receiveUntilHit(getAction, showPlayerCard) { dealer.drawCard() }
         }
-
-        players.forEach { it.record(dealer) }
-
         return this
     }
 
     fun forEach(action: (player: Player) -> Unit) = players.forEach { action(it) }
 
-    fun forEachWithDealer(action: (player: Player) -> Unit) =
+    fun forEachWithDealer(action: (participant: Participant) -> Unit) =
         listOf(dealer, *(players.toTypedArray())).forEach { action(it) }
+
+    fun getResult(): Map<String, Int> {
+        return players.associateBy({ it.name }, { WinningRecord.getPlayerProfit(it, dealer) })
+    }
 }

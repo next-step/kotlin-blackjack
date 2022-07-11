@@ -1,9 +1,9 @@
 package game.blackjack.view
 
 import game.blackjack.domain.Card
-import game.blackjack.domain.Dealer
 import game.blackjack.domain.Dealer.Companion.CAN_RECEIVE_SCORE
 import game.blackjack.domain.Denomination
+import game.blackjack.domain.Participant
 import game.blackjack.domain.Player
 import game.blackjack.domain.Players
 import game.blackjack.domain.Suit
@@ -29,25 +29,38 @@ class ResultView {
         }
 
     fun printAllPlayerCard(players: Players) {
-        println("딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].cards.size()}장의 카드를 나누었습니다.")
-        players.forEachWithDealer { println(formatPlayerCard(it)) }
-    }
-
-    fun printPlayerCard(player: Player) {
-        when (player) {
-            is Dealer -> println("\n딜러는 ${CAN_RECEIVE_SCORE.toInt()}이하라 한장의 카드를 더 받았습니다.")
-            else -> println(formatPlayerCard(player))
+        println("\n딜러와 ${players.players.joinToString { it.name }}에게 ${players.players[0].hand.size()}장의 카드를 나누었습니다.")
+        players.forEachWithDealer {
+            when (it) {
+                is Player -> println(formatPlayerCard(it))
+                else -> println("${it.name}카드: ${formatCard(it.hand.cards().first())}")
+            }
         }
     }
 
-    private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.cards.get())}"
+    fun printPlayerCard(participant: Participant) {
+        when (participant) {
+            is Player -> println(formatPlayerCard(participant))
+            else -> println("\n딜러는 ${CAN_RECEIVE_SCORE.toInt()}이하라 한장의 카드를 더 받았습니다.")
+        }
+    }
+
+    private fun formatPlayerCard(player: Player) = "${player.name}카드: ${formatCards(player.hand.cards())}"
+
+    fun printScore(players: Players) {
+        println()
+        players.forEachWithDealer {
+            println(
+                "${it.name}카드: ${formatCards(it.hand.cards())} - 결과: ${it.hand.score().toInt()}"
+            )
+        }
+    }
 
     fun printResult(players: Players) {
-        println()
-        players.forEachWithDealer { println("${it.name}카드: ${formatCards(it.cards.get())} - 결과: ${Card.score(it.cards.get()).toInt()}") }
-
-        println("\n## 최종 승패")
-        players.forEachWithDealer { println("${it.name}: ${it.winningRecord().win()}승 ${it.winningRecord().lose()}패") }
+        println("\n## 최종 수익")
+        val result = players.getResult()
+        println("딜러: ${result.values.sumOf { it * -1 }}")
+        players.players.forEach { println("${it.name}: ${result[it.name]}") }
     }
 
     private fun formatCards(cards: List<Card>): String = cards.joinToString { formatCard(it) }

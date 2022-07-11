@@ -1,36 +1,16 @@
 package game.blackjack.domain
 
-open class Player(val name: String) {
-    private val _cards: Cards = Cards()
-    private var status: Status = Status.HIT
-    protected val winningRecord = WinningRecord()
+class Player(name: String, val money: Int) : Participant(name) {
 
-    val cards: Cards
-        get() = _cards
+    constructor(name: String) : this(name, 0)
 
-    fun determine(response: Boolean): Status {
-        status = if (response) Status.HIT else Status.STAY
-        return status
-    }
+    fun determine(response: Boolean) = hand.setStatus(if (response) Status.HIT else Status.STAY)
 
-    fun score(): Score = cards.score()
+    fun canReceive(): Boolean = hand.isHit()
 
-    fun isBust(): Boolean = cards.isBust()
-
-    fun receive(card: Card): Score {
-        _cards.add(card)
-        val score = _cards.score()
-        if (score.isBust()) {
-            status = Status.BUST
-        }
-        return score
-    }
-
-    open fun canReceive(): Boolean = status == Status.HIT
-
-    open fun receiveUntilHit(
+    override fun receiveUntilHit(
         action: (name: String) -> Boolean,
-        showPlayerCard: (player: Player) -> Unit,
+        showPlayerCard: (participant: Participant) -> Unit,
         drawCard: () -> Card
     ) {
         while (canReceive()) {
@@ -41,16 +21,4 @@ open class Player(val name: String) {
             showPlayerCard(this)
         }
     }
-
-    fun record(dealer: Dealer) {
-        if (!dealer.isBust() && dealer.score() > score()) {
-            dealer.recordWin()
-            winningRecord.recordLose()
-        } else {
-            dealer.recordLose()
-            winningRecord.recordWin()
-        }
-    }
-
-    fun winningRecord() = winningRecord
 }
