@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
@@ -7,9 +7,10 @@ import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec({
+class ParticipantTest : StringSpec({
     "플레이어의 이름이 빈칸 혹은 공백이면 예외를 발생한다." {
         listOf(
             " ",
@@ -95,5 +96,74 @@ class PlayerTest : StringSpec({
 
         // then
         player.isAbleToDraw() shouldBe false
+    }
+
+    "플레이어의 초기 카드를 오픈한다." {
+        // given
+        val player = Player(
+            "김경록",
+            Cards(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.ACE),
+                    Card(Suit.CLOVER, Face.TWO),
+                )
+            )
+        )
+
+        // when
+        val actual = player.openInitCards()
+
+        // then
+        actual.size shouldBe 2
+        actual shouldContainExactlyInAnyOrder listOf(Card(Suit.DIAMOND, Face.ACE), Card(Suit.CLOVER, Face.TWO))
+    }
+
+    "딜러의 초기 카드를 오픈한다." {
+        // given
+        val dealer = Dealer(
+            Cards(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.ACE),
+                    Card(Suit.CLOVER, Face.TWO),
+                )
+            )
+        )
+
+        // when
+        val actual = dealer.openInitCards()
+
+        // then
+        actual.size shouldBe 1
+        actual shouldContainExactlyInAnyOrder listOf(Card(Suit.DIAMOND, Face.ACE))
+    }
+
+    "딜러가 카드를 더 받을 수 있는 상태인지 확인한다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.TEN),
+                    Card(Suit.DIAMOND, Face.SIX),
+                ),
+                true
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Face.TEN),
+                    Card(Suit.DIAMOND, Face.SEVEN),
+                ),
+                false
+            ),
+        ).forEach { (cardGroup, expected) ->
+            // given
+            val dealer = Dealer(
+                Cards(cardGroup),
+            )
+
+            // when
+            val actual = dealer.isAbleToDraw()
+
+            // then
+            actual shouldBe expected
+        }
     }
 })

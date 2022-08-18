@@ -1,7 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.gameresult.GameResult
+import blackjack.domain.gameresult.GameResults
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Players
 
 object OutputView {
     fun printPlayersInitCards(players: Players) {
@@ -11,24 +14,39 @@ object OutputView {
         println()
     }
 
-    fun printCurrentPlayerCards(player: Player) {
-        printPlayerNameAndCards(player)
+    fun printCurrentPlayerCards(participant: Participant) {
+        printPlayerNameAndCards(participant)
         println()
     }
 
-    private fun printPlayerNameAndCards(player: Player) {
-        val cardNames = player.cards.value.joinToString(", ") { "${it.face.value}${it.suit.value}" }
-        println("${player.name}카드: $cardNames")
+    private fun printPlayerNameAndCards(participant: Participant) {
+        val cardNames = participant.openInitCards().joinToString(", ") { "${it.face.value}${it.suit.value}" }
+        println("${participant.name}카드: $cardNames")
     }
 
-    fun printResult(players: Players) {
+    fun printAllParticipantsCard(players: Players, dealer: Dealer) {
         players.players.forEach {
             printPlayerResult(it)
         }
+        printPlayerResult(dealer)
+        println()
     }
 
-    private fun printPlayerResult(player: Player) {
-        val cardNames = player.cards.value.joinToString(", ") { "${it.face.value}${it.suit.value}" }
-        println("${player.name}카드: $cardNames - 결과: ${player.score}")
+    private fun printPlayerResult(participant: Participant) {
+        val cardNames = participant.cards.value.joinToString(", ") { "${it.face.value}${it.suit.value}" }
+        println("${participant.name}카드: $cardNames - 결과: ${participant.score}")
+    }
+
+    fun printDealerTurn() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다. \n")
+    }
+
+    fun printResult(results: List<GameResults>) {
+        println("## 최종 승패")
+        results.forEach { println("${it.name}: ${printDetailResult(it.result)}") }
+    }
+
+    private fun printDetailResult(gameResult: Map<GameResult, Int>): String {
+        return gameResult.keys.joinToString { "${gameResult[it]}${it.value} " }
     }
 }

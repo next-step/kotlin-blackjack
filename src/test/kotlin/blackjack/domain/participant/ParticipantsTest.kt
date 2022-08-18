@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.Deck
 import blackjack.domain.card.Card
@@ -11,21 +11,21 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class PlayersTest : StringSpec({
+class ParticipantsTest : StringSpec({
     "플레이어의 이름이 중복되면 예외를 발생한다." {
         // given
-        val players = listOf(
+        val participants = listOf(
             Player("김경록"),
             Player("김경록"),
         )
 
         // when // then
-        shouldThrowExactly<IllegalArgumentException> { Players(players) }
+        shouldThrowExactly<IllegalArgumentException> { Players(participants) }
     }
 
     "첫 턴에 모든 플레이어들이 카드를 뽑는다." {
         // given
-        val players = Players("김경록", "로키")
+        val paritipants = Players("김경록", "로키")
         val deck = Deck(
             mutableListOf(
                 Card(Suit.SPADE, Face.TWO),
@@ -36,7 +36,7 @@ class PlayersTest : StringSpec({
         )
 
         // when // then
-        shouldNotThrowAny { players.drawInitCards(deck) }
+        shouldNotThrowAny { paritipants.drawInitCards(deck) }
     }
 
     "차례를 기다리는 플레이어가 있을 때, 차례를 기다리는 플레이어가 존재하는지 확인한다." {

@@ -4,8 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.gameresult.GameResult
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
@@ -39,10 +41,11 @@ class BlackjackGameTest : StringSpec({
                         )
                     )
                 ),
+                dealer = Dealer(),
             )
 
             // when
-            val actual = blackjackGame.isPlaying()
+            val actual = blackjackGame.isPlayerTurn()
 
             // then
             actual shouldBe expected
@@ -66,12 +69,100 @@ class BlackjackGameTest : StringSpec({
                     )
                 )
             ),
+            dealer = Dealer(),
         )
 
         // when
         blackjackGame.askDrawToCurrentTurnPlayer(true)
 
         // then
-        blackjackGame.isPlaying() shouldBe false
+        blackjackGame.isPlayerTurn() shouldBe false
+    }
+
+    "딜러가 카드를 뽑을 상황인지 확인한다." {
+        // given
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                false,
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SIX),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                true,
+            ),
+        ).forEach { (cards, expectedResult) ->
+            val blackjackGame = BlackjackGame(
+                deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
+                players = Players(
+                    emptyList(),
+                ),
+                dealer = Dealer(Cards(cards)),
+            )
+
+            // when
+            val actual = blackjackGame.isSatisfiedDealerPullOutCondition()
+
+            // then
+            actual shouldBe expectedResult
+        }
+    }
+
+    "게임 결과를 확인한다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.EIGHT),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                GameResult.LOSE,
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                GameResult.DRAW,
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SIX),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                GameResult.WIN,
+            ),
+        ).forEach { (cards, expectedResult) ->
+            val blackjackGame = BlackjackGame(
+                deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
+                players = Players(
+                    listOf(
+                        Player(
+                            "경록",
+                            Cards(
+                                mutableListOf(
+                                    Card(Suit.CLOVER, Face.SEVEN),
+                                    Card(Suit.CLOVER, Face.TEN),
+                                )
+                            )
+                        ),
+                    )
+                ),
+                dealer = Dealer(Cards(cards)),
+            )
+
+            // when
+            val actual = blackjackGame.getGameResults()
+
+            // then
+            actual[0].name shouldBe "경록"
+            actual[0].result[expectedResult] shouldBe 1
+            actual[1].name shouldBe "딜러"
+            actual[1].result[!expectedResult] shouldBe 1
+        }
     }
 })
