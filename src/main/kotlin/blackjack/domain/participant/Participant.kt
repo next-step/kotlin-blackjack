@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.gameresult.GameResult
@@ -7,7 +8,8 @@ import blackjack.domain.gameresult.GameResults
 
 sealed class Participant(
     val name: String,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    var bettingMoney: BettingMoney = BettingMoney()
 ) {
     val score: Int
         get() = cards.calculateScore()
@@ -36,7 +38,7 @@ class Dealer(
     cards: Cards = Cards()
 ) : Participant(
     name = DEALER_NAME,
-    cards,
+    cards
 ) {
     override fun isAbleToDraw(): Boolean {
         return cards.calculateScore() <= DEALER_DRAW_STANDARD
@@ -62,10 +64,12 @@ private const val PLAYER_OPEN_INIT_CARDS_LENGTH = 2
 
 class Player(
     name: String,
-    cards: Cards = Cards()
+    cards: Cards = Cards(),
+    bettingMoney: BettingMoney = BettingMoney()
 ) : Participant(
     name,
     cards,
+    bettingMoney,
 ) {
     private var turn: Boolean = true
 
