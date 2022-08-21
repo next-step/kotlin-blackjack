@@ -21,7 +21,7 @@ value class Players(
         return players.any { it.isAbleToDraw() }
     }
 
-    fun findCurrentTurnPlayer(): Participant =
+    fun findCurrentTurnPlayer(): Player =
         players.firstOrNull { it.isAbleToDraw() }
             ?: throw IllegalStateException("대기중인 플레이어가 존재하지 않습니다.")
 }

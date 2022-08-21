@@ -28,7 +28,7 @@ class BlackjackGame(
         player.endOwnTurn()
     }
 
-    fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer() as Player
+    fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer()
 
     fun isSatisfiedDealerPullOutCondition(): Boolean {
         val drawable = dealer.isAbleToDraw()
