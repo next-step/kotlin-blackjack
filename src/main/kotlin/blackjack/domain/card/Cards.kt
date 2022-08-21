@@ -2,13 +2,16 @@ package blackjack.domain.card
 
 private const val ADDITIONAL_ACE_SCORE = 10
 private const val MAX_SCORE = 21
+private const val BLACKJACK_CARD_SIZE = 2
 
 @JvmInline
 value class Cards(
-    private val _value: MutableList<Card> = mutableListOf(),
+    private val _value: MutableList<Card> = mutableListOf()
 ) {
     val value
         get() = _value.toList()
+    val isBlackjack: Boolean
+        get() = _value.size == BLACKJACK_CARD_SIZE && this.calculateScore() == MAX_SCORE
     val size: Int
         get() = _value.size
 

@@ -1,10 +1,10 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameProfit.GameProfit
 import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.gameresult.GameResult
-import blackjack.domain.gameresult.GameResults
 
 sealed class Participant(
     val name: String,
@@ -25,6 +25,8 @@ sealed class Participant(
     fun drawCards(cards: List<Card>) {
         this.cards.addAll(cards)
     }
+
+    fun isBlackjack(): Boolean = cards.isBlackjack
 
     abstract fun isAbleToDraw(): Boolean
 
@@ -48,14 +50,13 @@ class Dealer(
         return listOf(cards.value.first())
     }
 
-    fun getDealerResult(players: List<Player>): GameResults {
-        return players.groupingBy { !GameResult.valueOf(it.score, score) }
-            .eachCount()
-            .let { GameResults(name, it) }
+    fun getDealerResult(players: List<Player>): GameResult {
+        val gameResults = players.map { !GameProfit.valueOf(it, this) }
+        return GameResult(name, gameResults)
     }
 
-    fun decideWinOrLoseResults(players: List<Player>): List<GameResults> {
-        return players.map { GameResults(it.name, GameResult.valueOf(it.score, score)) }
+    fun decideWinOrLoseResults(players: List<Player>): List<GameResult> {
+        return players.map { GameResult(it.name, GameProfit.valueOf(it, this)) }
     }
 }
 
@@ -69,7 +70,7 @@ class Player(
 ) : Participant(
     name,
     cards,
-    bettingMoney,
+    bettingMoney
 ) {
     private var turn: Boolean = true
 

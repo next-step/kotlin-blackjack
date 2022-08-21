@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.gameresult.GameResults
+import blackjack.domain.gameresult.GameResult
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
@@ -39,7 +39,7 @@ class BlackjackGame(
         return false
     }
 
-    fun getGameResults(): List<GameResults> {
+    fun getGameResults(): List<GameResult> {
         return (dealer.decideWinOrLoseResults(players.players) + dealer.getDealerResult(players.players))
     }
 }
