@@ -8,7 +8,7 @@ import blackjack.domain.participant.Players
 class BlackjackGame(
     private val deck: Deck,
     val players: Players,
-    val dealer: Dealer,
+    val dealer: Dealer
 ) {
     fun start() {
         players.drawInitCards(deck)
@@ -31,12 +31,12 @@ class BlackjackGame(
     fun findCurrentTurnPlayer(): Player = players.findCurrentTurnPlayer()
 
     fun isSatisfiedDealerPullOutCondition(): Boolean {
-        val drawable = dealer.isAbleToDraw()
-        if (drawable) {
+        if (dealer.isAbleToDraw()) {
             dealer.drawCard(deck.pullOut())
+            return true
         }
 
-        return drawable
+        return false
     }
 
     fun getGameResults(): List<GameResults> {
