@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 @JvmInline
 value class BettingMoney(
-    val value: BigDecimal = BigDecimal.ZERO
+    val value: BigDecimal,
 ) {
     constructor(value: Long) : this(BigDecimal.valueOf(value))
 
