@@ -32,7 +32,7 @@ object BlackjackGameController {
             .let { Players(it) }
     }
 
-    private fun createBettingMoney(it: String) = BettingMoney(InputView.inputBettingMoney(it))
+    private fun createBettingMoney(it: String): BettingMoney = BettingMoney(InputView.inputBettingMoney(it))
 
     private fun playPlayersTurn(blackjackGame: BlackjackGame) {
         while (blackjackGame.isPlayerTurn()) {
