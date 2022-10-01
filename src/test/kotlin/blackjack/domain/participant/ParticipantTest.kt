@@ -312,4 +312,59 @@ class ParticipantTest : StringSpec({
             actual[0].gameProfits[0] shouldBe expectedResult
         }
     }
+
+    "플레이어가 블랙잭이 아닌 경우, 딜러의 게임 결과를 확인한다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.ZERO),
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.EIGHT),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(1_000L))
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SIX),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(-1_000L))
+            )
+        ).forEach { (dealerCards, playerBettingMoney, expectedResult) ->
+            val playerName = "경록"
+            val player = Player(
+                playerName,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.CLOVER, Face.SEVEN),
+                        Card(Suit.CLOVER, Face.TEN)
+                    )
+                ),
+                playerBettingMoney
+            )
+
+            val dealer = Dealer(
+                Cards(
+                    dealerCards
+                )
+            )
+
+            // when
+            val actual = dealer.getDealerResult(listOf(player))
+
+            // then
+            actual.name shouldBe "딜러"
+            actual.gameProfits shouldHaveSize 1
+            actual.gameProfits[0] shouldBe expectedResult
+        }
+    }
 })
