@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Deck
+import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
@@ -15,8 +16,8 @@ class ParticipantsTest : StringSpec({
     "플레이어의 이름이 중복되면 예외를 발생한다." {
         // given
         val participants = listOf(
-            Player("김경록"),
-            Player("김경록"),
+            Player("김경록", bettingMoney = BettingMoney.ZERO),
+            Player("김경록", bettingMoney = BettingMoney.ZERO)
         )
 
         // when // then
@@ -25,13 +26,18 @@ class ParticipantsTest : StringSpec({
 
     "첫 턴에 모든 플레이어들이 카드를 뽑는다." {
         // given
-        val paritipants = Players("김경록", "로키")
+        val paritipants = Players(
+            listOf(
+                Player("김경록"),
+                Player("로키")
+            )
+        )
         val deck = Deck(
             mutableListOf(
                 Card(Suit.SPADE, Face.TWO),
                 Card(Suit.CLOVER, Face.THREE),
                 Card(Suit.CLOVER, Face.FOUR),
-                Card(Suit.DIAMOND, Face.FIVE),
+                Card(Suit.DIAMOND, Face.FIVE)
             )
         )
 
@@ -48,18 +54,18 @@ class ParticipantsTest : StringSpec({
                     Cards(
                         mutableListOf(
                             Card(Suit.DIAMOND, Face.TEN),
-                            Card(Suit.DIAMOND, Face.ACE),
+                            Card(Suit.DIAMOND, Face.ACE)
                         )
-                    ),
+                    )
                 ),
                 Player(
                     "로키",
                     Cards(
                         mutableListOf(
                             Card(Suit.CLOVER, Face.TWO),
-                            Card(Suit.CLOVER, Face.TEN),
+                            Card(Suit.CLOVER, Face.TEN)
                         )
-                    ),
+                    )
                 )
             )
         )
@@ -80,9 +86,9 @@ class ParticipantsTest : StringSpec({
                     Cards(
                         mutableListOf(
                             Card(Suit.DIAMOND, Face.TEN),
-                            Card(Suit.DIAMOND, Face.ACE),
+                            Card(Suit.DIAMOND, Face.ACE)
                         )
-                    ),
+                    )
                 ),
                 Player(
                     "로키",
@@ -90,9 +96,9 @@ class ParticipantsTest : StringSpec({
                         mutableListOf(
                             Card(Suit.CLOVER, Face.EIGHT),
                             Card(Suit.CLOVER, Face.NINE),
-                            Card(Suit.CLOVER, Face.TEN),
+                            Card(Suit.CLOVER, Face.TEN)
                         )
-                    ),
+                    )
                 )
             )
         )
@@ -113,18 +119,18 @@ class ParticipantsTest : StringSpec({
                     Cards(
                         mutableListOf(
                             Card(Suit.DIAMOND, Face.TEN),
-                            Card(Suit.DIAMOND, Face.ACE),
+                            Card(Suit.DIAMOND, Face.ACE)
                         )
-                    ),
+                    )
                 ),
                 Player(
                     "로키",
                     Cards(
                         mutableListOf(
                             Card(Suit.CLOVER, Face.EIGHT),
-                            Card(Suit.CLOVER, Face.NINE),
+                            Card(Suit.CLOVER, Face.NINE)
                         )
-                    ),
+                    )
                 )
             )
         )
@@ -149,9 +155,9 @@ class ParticipantsTest : StringSpec({
                     Cards(
                         mutableListOf(
                             Card(Suit.DIAMOND, Face.TEN),
-                            Card(Suit.DIAMOND, Face.ACE),
+                            Card(Suit.DIAMOND, Face.ACE)
                         )
-                    ),
+                    )
                 ),
                 Player(
                     "로키",
@@ -159,9 +165,9 @@ class ParticipantsTest : StringSpec({
                         mutableListOf(
                             Card(Suit.CLOVER, Face.EIGHT),
                             Card(Suit.CLOVER, Face.NINE),
-                            Card(Suit.CLOVER, Face.TEN),
+                            Card(Suit.CLOVER, Face.TEN)
                         )
-                    ),
+                    )
                 )
             )
         )

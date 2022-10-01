@@ -5,11 +5,12 @@ import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.gameresult.GameResult
+import java.math.BigDecimal
 
 sealed class Participant(
     val name: String,
     val cards: Cards = Cards(),
-    var bettingMoney: BettingMoney = BettingMoney()
+    var bettingMoney: BettingMoney = BettingMoney.ZERO,
 ) {
     val score: Int
         get() = cards.calculateScore()
@@ -40,7 +41,8 @@ class Dealer(
     cards: Cards = Cards()
 ) : Participant(
     name = DEALER_NAME,
-    cards
+    cards = cards,
+    bettingMoney = BettingMoney.ZERO
 ) {
     override fun isAbleToDraw(): Boolean {
         return cards.calculateScore() <= DEALER_DRAW_STANDARD
@@ -50,13 +52,68 @@ class Dealer(
         return listOf(cards.value.first())
     }
 
+    // TODO 2022-10-01 경록: 테스트 코드 추가 작성
     fun getDealerResult(players: List<Player>): GameResult {
-        val gameResults = players.map { !GameProfit.valueOf(it, this) }
-        return GameResult(name, gameResults)
+        val gameProfits = players.map { !calculatePlayerGameProfit(it) }
+        return GameResult(name, gameProfits)
     }
 
+    // TODO 2022-10-01 경록: 테스트 코드 추가 작성
     fun decideWinOrLoseResults(players: List<Player>): List<GameResult> {
-        return players.map { GameResult(it.name, GameProfit.valueOf(it, this)) }
+        return players.map { GameResult(it.name, calculatePlayerGameProfit(it)) }
+    }
+
+    private fun calculatePlayerGameProfit(player: Player): GameProfit {
+        if (isDealerWin(player)) {
+            return !GameProfit(player.bettingMoney.value)
+        }
+
+        if (isPlayerWin(player)) {
+            return getPlayerProfit(player)
+        }
+
+        return GameProfit.NONE
+    }
+
+    private fun isDealerWin(player: Player): Boolean {
+        if (player.score > GameProfit.SCORE_LIMIT) {
+            return true
+        }
+
+        if (this.score > GameProfit.SCORE_LIMIT || this.score <= player.score) {
+            return false
+        }
+
+        return true
+    }
+
+    private fun isPlayerWin(player: Player): Boolean {
+        val playerScore = player.score
+        if (playerScore > GameProfit.SCORE_LIMIT) {
+            return false
+        }
+
+        if (this.score > GameProfit.SCORE_LIMIT || this.score < playerScore) {
+            return true
+        }
+
+        return false
+    }
+
+    private fun getPlayerProfit(player: Player): GameProfit {
+        if (player.isBlackjack()) {
+            return decidePlayerProfitWhenPlayerIsBlackjack(player)
+        }
+
+        return GameProfit(player.bettingMoney.value)
+    }
+
+    private fun decidePlayerProfitWhenPlayerIsBlackjack(player: Player): GameProfit {
+        if (isBlackjack()) {
+            return GameProfit.NONE
+        }
+
+        return GameProfit(player.bettingMoney.value * GameProfit.BLACKJACK_EARNING_RATE)
     }
 }
 
@@ -66,11 +123,11 @@ private const val PLAYER_OPEN_INIT_CARDS_LENGTH = 2
 class Player(
     name: String,
     cards: Cards = Cards(),
-    bettingMoney: BettingMoney = BettingMoney()
+    bettingMoney: BettingMoney = BettingMoney.ZERO
 ) : Participant(
-    name,
-    cards,
-    bettingMoney
+    name = name,
+    cards = cards,
+    bettingMoney = bettingMoney
 ) {
     private var turn: Boolean = true
 
@@ -85,4 +142,8 @@ class Player(
     fun endOwnTurn() {
         this.turn = false
     }
+}
+
+private operator fun BigDecimal.times(multiplier: Double): BigDecimal {
+    return this.multiply(BigDecimal.valueOf(multiplier))
 }

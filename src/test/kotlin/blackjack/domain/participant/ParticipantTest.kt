@@ -1,5 +1,7 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameProfit.GameProfit
+import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
@@ -8,7 +10,9 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import java.math.BigDecimal
 
 class ParticipantTest : StringSpec({
     "플레이어의 이름이 빈칸 혹은 공백이면 예외를 발생한다." {
@@ -164,6 +168,148 @@ class ParticipantTest : StringSpec({
 
             // then
             actual shouldBe expected
+        }
+    }
+
+    "플레이어와 딜러가 비기면 이익이 없다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.ACE),
+                ),
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.ACE),
+                    Card(Suit.CLOVER, Face.TEN),
+                ),
+            ),
+        ).forEach { (playerCards, dealerCards) ->
+            val playerName = "경록"
+            val player = Player(
+                playerName,
+                Cards(playerCards),
+                BettingMoney(1_000L)
+            )
+
+            val dealer = Dealer(
+                Cards(
+                    dealerCards
+                )
+            )
+
+            // when
+            val actual = dealer.decideWinOrLoseResults(listOf(player))
+
+            // then
+            actual shouldHaveSize 1
+            actual[0].name shouldBe playerName
+            actual[0].gameProfits shouldHaveSize 1
+            actual[0].gameProfits[0] shouldBe GameProfit.NONE
+        }
+    }
+
+    "플레이어가 블랙잭으로 이긴경우, 플레이어는 1.5배의 이익을 얻는다." {
+        val playerName = "경록"
+        val player = Player(
+            playerName,
+            Cards(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.ACE),
+                    Card(Suit.CLOVER, Face.TEN)
+                )
+            ),
+            BettingMoney(1_000L)
+        )
+
+        val dealer = Dealer(
+            Cards(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN)
+                )
+            )
+        )
+
+        // when
+        val actual = dealer.decideWinOrLoseResults(listOf(player))
+
+        // then
+        actual shouldHaveSize 1
+        actual[0].name shouldBe playerName
+        actual[0].gameProfits shouldHaveSize 1
+        actual[0].gameProfits[0] shouldBe GameProfit(BigDecimal.valueOf(1_500.0))
+    }
+
+    "플레이어가 블랙잭이 아닌 경우, 플레이어들의 게임 결과를 확인한다." {
+        listOf(
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.EIGHT),
+                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.ACE)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(1_000L))
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.EIGHT),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(1_000L))
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SEVEN),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.ZERO)
+            ),
+            row(
+                mutableListOf(
+                    Card(Suit.CLOVER, Face.SIX),
+                    Card(Suit.CLOVER, Face.TEN)
+                ),
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(-1_000L))
+            )
+        ).forEach { (playerCards, bettingMoney, expectedResult) ->
+            val playerName = "경록"
+            val player = Player(
+                playerName,
+                Cards(playerCards),
+                bettingMoney
+            )
+
+            val dealer = Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.CLOVER, Face.SEVEN),
+                        Card(Suit.CLOVER, Face.TEN)
+                    )
+                )
+            )
+
+            // when
+            val actual = dealer.decideWinOrLoseResults(listOf(player))
+
+            // then
+            actual shouldHaveSize 1
+            actual[0].name shouldBe playerName
+            actual[0].gameProfits shouldHaveSize 1
+            actual[0].gameProfits[0] shouldBe expectedResult
         }
     }
 })
