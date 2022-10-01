@@ -19,7 +19,7 @@ object OutputView {
     }
 
     private fun printPlayerNameAndCards(participant: Participant) {
-        val cardNames = participant.openInitCards().joinToString(", ") { "${it.face.value}${it.suit.value}" }
+        val cardNames = participant.cards.value.joinToString(", ") { "${it.face.value}${it.suit.value}" }
         println("${participant.name}카드: $cardNames")
     }
 

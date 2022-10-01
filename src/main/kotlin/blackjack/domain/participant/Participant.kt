@@ -30,8 +30,6 @@ sealed class Participant(
     fun isBlackjack(): Boolean = cards.isBlackjack
 
     abstract fun isAbleToDraw(): Boolean
-
-    abstract fun openInitCards(): List<Card>
 }
 
 private const val DEALER_NAME = "딜러"
@@ -46,10 +44,6 @@ class Dealer(
 ) {
     override fun isAbleToDraw(): Boolean {
         return cards.calculateScore() <= DEALER_DRAW_STANDARD
-    }
-
-    override fun openInitCards(): List<Card> {
-        return listOf(cards.value.first())
     }
 
     // TODO 2022-10-01 경록: 테스트 코드 추가 작성
@@ -118,7 +112,6 @@ class Dealer(
 }
 
 private const val PLAYER_MAX_SCORE = 21
-private const val PLAYER_OPEN_INIT_CARDS_LENGTH = 2
 
 class Player(
     name: String,
@@ -133,10 +126,6 @@ class Player(
 
     override fun isAbleToDraw(): Boolean {
         return turn && score < PLAYER_MAX_SCORE
-    }
-
-    override fun openInitCards(): List<Card> {
-        return cards.value.subList(0, PLAYER_OPEN_INIT_CARDS_LENGTH)
     }
 
     fun endOwnTurn() {

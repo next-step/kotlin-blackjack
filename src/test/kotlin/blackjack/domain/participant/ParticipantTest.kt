@@ -9,7 +9,6 @@ import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
@@ -100,45 +99,6 @@ class ParticipantTest : StringSpec({
 
         // then
         player.isAbleToDraw() shouldBe false
-    }
-
-    "플레이어의 초기 카드를 오픈한다." {
-        // given
-        val player = Player(
-            "김경록",
-            Cards(
-                mutableListOf(
-                    Card(Suit.DIAMOND, Face.ACE),
-                    Card(Suit.CLOVER, Face.TWO),
-                )
-            )
-        )
-
-        // when
-        val actual = player.openInitCards()
-
-        // then
-        actual.size shouldBe 2
-        actual shouldContainExactlyInAnyOrder listOf(Card(Suit.DIAMOND, Face.ACE), Card(Suit.CLOVER, Face.TWO))
-    }
-
-    "딜러의 초기 카드를 오픈한다." {
-        // given
-        val dealer = Dealer(
-            Cards(
-                mutableListOf(
-                    Card(Suit.DIAMOND, Face.ACE),
-                    Card(Suit.CLOVER, Face.TWO),
-                )
-            )
-        )
-
-        // when
-        val actual = dealer.openInitCards()
-
-        // then
-        actual.size shouldBe 1
-        actual shouldContainExactlyInAnyOrder listOf(Card(Suit.DIAMOND, Face.ACE))
     }
 
     "딜러가 카드를 더 받을 수 있는 상태인지 확인한다." {
