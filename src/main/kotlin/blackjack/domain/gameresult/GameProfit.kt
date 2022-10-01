@@ -40,13 +40,13 @@ value class GameProfit(
 
         private fun getPlayerProfit(player: Player, dealer: Dealer): GameProfit {
             if (player.isBlackjack()) {
-                return decidePlayerWinOrDraw(player, dealer)
+                return decidePlayerProfitWhenPlayerIsBlackjack(player, dealer)
             }
 
             return of(player.bettingMoney)
         }
 
-        private fun decidePlayerWinOrDraw(player: Player, dealer: Dealer): GameProfit {
+        private fun decidePlayerProfitWhenPlayerIsBlackjack(player: Player, dealer: Dealer): GameProfit {
             if (dealer.isBlackjack()) {
                 return NONE
             }
