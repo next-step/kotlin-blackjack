@@ -28,7 +28,7 @@ object BlackjackGameController {
 
     private fun createParticipants(): Players {
         return InputView.inputPlayerNames()
-            .map { Player(it, bettingMoney = createBettingMoney(it)) }
+            .map { Player(name = it, bettingMoney = createBettingMoney(it)) }
             .let { Players(it) }
     }
 
