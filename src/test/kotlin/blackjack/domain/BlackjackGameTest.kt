@@ -1,16 +1,18 @@
 package blackjack.domain
 
+import blackjack.domain.GameProfit.GameProfit
+import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Face
 import blackjack.domain.card.Suit
-import blackjack.domain.gameresult.GameResult
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import java.math.BigDecimal
 
 class BlackjackGameTest : StringSpec({
     "블랙잭 게임이 진행중인 상태인지 파악한다." {
@@ -18,17 +20,17 @@ class BlackjackGameTest : StringSpec({
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.ACE),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
                 false
             ),
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.NINE),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
                 true
-            ),
+            )
         ).forEach { (cards, expected) ->
             // given
             val blackjackGame = BlackjackGame(
@@ -37,11 +39,11 @@ class BlackjackGameTest : StringSpec({
                     listOf(
                         Player(
                             "김경록",
-                            Cards(cards),
+                            Cards(cards)
                         )
                     )
                 ),
-                dealer = Dealer(),
+                dealer = Dealer()
             )
 
             // when
@@ -63,13 +65,13 @@ class BlackjackGameTest : StringSpec({
                         Cards(
                             mutableListOf(
                                 Card(Suit.CLOVER, Face.NINE),
-                                Card(Suit.CLOVER, Face.TEN),
+                                Card(Suit.CLOVER, Face.TEN)
                             )
-                        ),
+                        )
                     )
                 )
             ),
-            dealer = Dealer(),
+            dealer = Dealer()
         )
 
         // when
@@ -85,24 +87,24 @@ class BlackjackGameTest : StringSpec({
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.SEVEN),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
-                false,
+                false
             ),
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.SIX),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
-                true,
-            ),
+                true
+            )
         ).forEach { (cards, expectedResult) ->
             val blackjackGame = BlackjackGame(
                 deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
                 players = Players(
-                    emptyList(),
+                    emptyList()
                 ),
-                dealer = Dealer(Cards(cards)),
+                dealer = Dealer(Cards(cards))
             )
 
             // when
@@ -118,25 +120,28 @@ class BlackjackGameTest : StringSpec({
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.EIGHT),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
-                GameResult.LOSE,
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(-1_000L))
             ),
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.SEVEN),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
-                GameResult.DRAW,
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.ZERO)
             ),
             row(
                 mutableListOf(
                     Card(Suit.CLOVER, Face.SIX),
-                    Card(Suit.CLOVER, Face.TEN),
+                    Card(Suit.CLOVER, Face.TEN)
                 ),
-                GameResult.WIN,
-            ),
-        ).forEach { (cards, expectedResult) ->
+                BettingMoney(1_000L),
+                GameProfit(BigDecimal.valueOf(1_000L))
+            )
+        ).forEach { (dealerCards, bettingMoney, expectedResult) ->
             val blackjackGame = BlackjackGame(
                 deck = Deck(mutableListOf(Card(Suit.CLOVER, Face.THREE))),
                 players = Players(
@@ -146,13 +151,14 @@ class BlackjackGameTest : StringSpec({
                             Cards(
                                 mutableListOf(
                                     Card(Suit.CLOVER, Face.SEVEN),
-                                    Card(Suit.CLOVER, Face.TEN),
+                                    Card(Suit.CLOVER, Face.TEN)
                                 )
-                            )
-                        ),
+                            ),
+                            bettingMoney
+                        )
                     )
                 ),
-                dealer = Dealer(Cards(cards)),
+                dealer = Dealer(Cards(dealerCards))
             )
 
             // when
@@ -160,9 +166,9 @@ class BlackjackGameTest : StringSpec({
 
             // then
             actual[0].name shouldBe "경록"
-            actual[0].result[expectedResult] shouldBe 1
+            actual[0].gameProfits[0] shouldBe expectedResult
             actual[1].name shouldBe "딜러"
-            actual[1].result[!expectedResult] shouldBe 1
+            actual[1].gameProfits[0] shouldBe !expectedResult
         }
     }
 })

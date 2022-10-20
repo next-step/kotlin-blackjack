@@ -11,6 +11,11 @@ object InputView {
             .map { it.trim() }
     }
 
+    fun inputBettingMoney(playerName: String): Long {
+        println("${playerName}의 배팅 금액은?")
+        return readln().toLong()
+    }
+
     fun askDrawCard(playerName: String): Boolean {
         println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln()) {

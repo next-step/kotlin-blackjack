@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
+import blackjack.domain.bettingmoney.BettingMoney
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
@@ -13,7 +14,7 @@ object BlackjackGameController {
         val blackjackGame = BlackjackGame(
             Deck.createOf(),
             createParticipants(),
-            Dealer(),
+            Dealer()
         )
 
         blackjackGame.start()
@@ -27,9 +28,11 @@ object BlackjackGameController {
 
     private fun createParticipants(): Players {
         return InputView.inputPlayerNames()
-            .map { Player(it) }
+            .map { Player(name = it, bettingMoney = createBettingMoney(it)) }
             .let { Players(it) }
     }
+
+    private fun createBettingMoney(it: String): BettingMoney = BettingMoney(InputView.inputBettingMoney(it))
 
     private fun playPlayersTurn(blackjackGame: BlackjackGame) {
         while (blackjackGame.isPlayerTurn()) {
