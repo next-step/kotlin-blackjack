@@ -10,7 +10,7 @@ class DslTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["harris", "summer"])
-    fun `introduce dsl로 객체 생성시 이름 필드 확인`(value: String){
+    fun `introduce dsl로 객체 생성시 이름 필드 확인`(value: String) {
         //given & when
         val person = introduce {
             name(value)
@@ -20,7 +20,7 @@ class DslTest {
     }
 
     @Test
-    fun `introduce dsl로 객체 생성시 이름, 회사 필드 확인`(){
+    fun `introduce dsl로 객체 생성시 이름, 회사 필드 확인`() {
         //given && when
         val person = introduce {
             name("harris")
@@ -28,18 +28,18 @@ class DslTest {
         }
         //then
         assertAll(
-            {assertThat(person.name).isEqualTo("harris")},
-            {assertThat(person.company).isEqualTo("ks")}
+            { assertThat(person.name).isEqualTo("harris") },
+            { assertThat(person.company).isEqualTo("ks") }
         )
     }
 
     @Test
-    fun `introduce dsl로 객체 생성시 skill 필드 확인`(){
+    fun `introduce dsl로 객체 생성시 skill 필드 확인`() {
         //given && when
         val person = introduce {
             name("harris")
             company("ks")
-            skill{
+            skills {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
                 hard("Kotlin")
@@ -47,11 +47,11 @@ class DslTest {
         }
         //then
         assertAll(
-            {assertThat(person.name).isEqualTo("harris")},
-            {assertThat(person.company).isEqualTo("ks")}
-            {assertThat(person.skills.soft[0]).isEqualTo("A passion for problem solving")}
-            {assertThat(person.skills.soft[1]).isEqualTo("Good communication skills")}
-            {assertThat(person.skills.hard[0]).isEqualTo("Kotlin")}
+            { assertThat(person.name).isEqualTo("harris") },
+            { assertThat(person.company).isEqualTo("ks") },
+            { assertThat(person.skills!!.soft[0]).isEqualTo("A passion for problem solving") },
+            { assertThat(person.skills!!.soft[1]).isEqualTo("Good communication skills") },
+            { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
         )
     }
 }
