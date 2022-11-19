@@ -4,6 +4,7 @@ class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
     private var skill: Skill? = null
+    private var language: Language? = null
 
     fun name(value: String) {
         name = value
@@ -17,8 +18,12 @@ class PersonBuilder {
         skill = SkillBuilder().apply(block).build()
     }
 
+    fun languages(block: LanguageBuilder.() -> Unit){
+        language = LanguageBuilder().apply(block).build()
+    }
+
     fun build(): Person {
-        return Person(name, company, skill)
+        return Person(name, company, skill, language)
     }
 }
 
