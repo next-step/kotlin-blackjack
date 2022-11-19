@@ -54,4 +54,33 @@ class DslTest {
             { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
         )
     }
+
+    @Test
+    fun `introduce dsl로 객체 생성시 language 필드 확인`() {
+        //given && when
+        val person = introduce {
+            name("harris")
+            company("ks")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        //then
+        assertAll(
+            { assertThat(person.name).isEqualTo("harris") },
+            { assertThat(person.company).isEqualTo("ks") },
+            { assertThat(person.skills!!.soft[0]).isEqualTo("A passion for problem solving") },
+            { assertThat(person.skills!!.soft[1]).isEqualTo("Good communication skills") },
+            { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
+            { assertThat(person.languages.size).isEqualTo(2) },
+            { assertThat(person.languages.[0]).isEqualTo("Korean" to 5) },
+            { assertThat(person.languages.[1]).isEqualTo("English to 3") }
+        )
+    }
 }
