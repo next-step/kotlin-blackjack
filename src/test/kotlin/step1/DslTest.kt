@@ -32,4 +32,26 @@ class DslTest {
             {assertThat(person.company).isEqualTo("ks")}
         )
     }
+
+    @Test
+    fun `introduce dsl로 객체 생성시 skill 필드 확인`(){
+        //given && when
+        val person = introduce {
+            name("harris")
+            company("ks")
+            skill{
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        //then
+        assertAll(
+            {assertThat(person.name).isEqualTo("harris")},
+            {assertThat(person.company).isEqualTo("ks")}
+            {assertThat(person.skills.soft[0]).isEqualTo("A passion for problem solving")}
+            {assertThat(person.skills.soft[1]).isEqualTo("Good communication skills")}
+            {assertThat(person.skills.hard[0]).isEqualTo("Kotlin")}
+        )
+    }
 }
