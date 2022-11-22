@@ -1,23 +1,30 @@
 package step1
 
-data class Skill(
-    val soft: List<String>,
-    val hard: List<String>,
+sealed class Skill(
+    val type: String,
+    val value: String,
+) {
+    class Hard(value: String) : Skill("hard", value)
+    class Soft(value: String) : Skill("soft", value)
+}
+
+data class Skills(
+    val skills: List<Skill>
 )
 
 class SkillBuilder(
-    val soft: MutableList<String> = mutableListOf(),
-    val hard: MutableList<String> = mutableListOf(),
 ) {
+    private val skills: MutableList<Skill> = mutableListOf()
+
     fun soft(value: String) {
-        soft.add(value)
+        skills.add(Skill.Soft(value))
     }
 
     fun hard(value: String) {
-        hard.add(value)
+        skills.add(Skill.Hard(value))
     }
 
-    fun build(): Skill {
-        return Skill(soft, hard)
+    fun build(): Skills {
+        return Skills(skills)
     }
 }

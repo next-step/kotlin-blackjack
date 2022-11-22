@@ -3,14 +3,14 @@ package step1
 data class Person(
     val name: String,
     val company: String?,
-    val skills: Skill?,
+    val skills: Skills?,
     val languages: Languages?,
 )
 
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skill: Skill? = null
+    private var skills: Skills? = null
     private var languages: Languages? = null
 
     fun name(value: String) {
@@ -22,7 +22,7 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillBuilder.() -> Unit) {
-        skill = SkillBuilder().apply(block).build()
+        skills = SkillBuilder().apply(block).build()
     }
 
     fun languages(block: LanguageBuilder.() -> Unit){
@@ -30,7 +30,7 @@ class PersonBuilder {
     }
 
     fun build(): Person {
-        return Person(name, company, skill, languages)
+        return Person(name, company, skills, languages)
     }
 }
 
