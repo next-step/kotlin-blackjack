@@ -3,6 +3,7 @@ package step1
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -17,6 +18,11 @@ class DslTest {
         }
         //then
         assertThat(person.name).isEqualTo(value)
+    }
+
+    @Test
+    fun `UninitializedPropertyAccessException test`() {
+        assertThrows<UninitializedPropertyAccessException> { introduce {} }
     }
 
     @Test
@@ -49,9 +55,9 @@ class DslTest {
         assertAll(
             { assertThat(person.name).isEqualTo("harris") },
             { assertThat(person.company).isEqualTo("ks") },
-            { assertThat(person.skills!!.soft[0]).isEqualTo("A passion for problem solving") },
-            { assertThat(person.skills!!.soft[1]).isEqualTo("Good communication skills") },
-            { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
+            { assertThat(person.skills!!.skills[0].value).isEqualTo("A passion for problem solving") },
+            { assertThat(person.skills!!.skills[1].value).isEqualTo("Good communication skills") },
+            { assertThat(person.skills!!.skills[2].value).isEqualTo("Kotlin") },
         )
     }
 
@@ -75,9 +81,9 @@ class DslTest {
         assertAll(
             { assertThat(person.name).isEqualTo("harris") },
             { assertThat(person.company).isEqualTo("ks") },
-            { assertThat(person.skills!!.soft[0]).isEqualTo("A passion for problem solving") },
-            { assertThat(person.skills!!.soft[1]).isEqualTo("Good communication skills") },
-            { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
+            { assertThat(person.skills!!.skills[0].value).isEqualTo("A passion for problem solving") },
+            { assertThat(person.skills!!.skills[1].value).isEqualTo("Good communication skills") },
+            { assertThat(person.skills!!.skills[2].value).isEqualTo("Kotlin") },
             { assertThat(person.languages!!.value.size).isEqualTo(2) },
             { assertThat(person.languages!!.value[0]).isEqualTo(Language("Korean", 5)) },
             { assertThat(person.languages!!.value[1]).isEqualTo(Language("English", 3)) },
