@@ -1,5 +1,14 @@
 package step1
 
+data class Language(
+    val name: String,
+    val level: Int,
+)
+
+data class Languages(
+    val value: List<Language>
+)
+
 class LanguageBuilder(
     private val value: MutableList<Language> = mutableListOf()
 ) {
