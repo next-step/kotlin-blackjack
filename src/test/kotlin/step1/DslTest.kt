@@ -78,9 +78,9 @@ class DslTest {
             { assertThat(person.skills!!.soft[0]).isEqualTo("A passion for problem solving") },
             { assertThat(person.skills!!.soft[1]).isEqualTo("Good communication skills") },
             { assertThat(person.skills!!.hard[0]).isEqualTo("Kotlin") },
-            { assertThat(person.language!!.value.size).isEqualTo(2) },
-            { assertThat(person.language!!.value[0]).isEqualTo("Korean" to 5) },
-            { assertThat(person.language!!.value[1]).isEqualTo("English" to 3) },
+            { assertThat(person.languages!!.value.size).isEqualTo(2) },
+            { assertThat(person.languages!!.value[0]).isEqualTo(Language("Korean", 5)) },
+            { assertThat(person.languages!!.value[1]).isEqualTo(Language("English", 3)) },
         )
     }
 }
