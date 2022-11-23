@@ -1,5 +1,6 @@
 package blackjack
 
 class Player(
-    val playingCards: PlayingCards
+    val name: String,
+    val playingCards: PlayingCards,
 )
