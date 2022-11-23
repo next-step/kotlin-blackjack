@@ -7,15 +7,10 @@ data class Person(
     val languages: Languages?,
 )
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder(val name: String) {
     private var company: String? = null
     private var skills: Skills? = null
     private var languages: Languages? = null
-
-    fun name(value: String) {
-        name = value
-    }
 
     fun company(value: String) {
         company = value
@@ -34,6 +29,6 @@ class PersonBuilder {
     }
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
+fun introduce(name: String, block: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder(name).apply(block).build()
 }
