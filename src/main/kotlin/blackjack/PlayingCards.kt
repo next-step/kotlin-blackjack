@@ -20,6 +20,6 @@ class PlayingCards(
         if (sumWithoutSpecialAce > SPECIAL_ACE_USABLE_BOUNDARY) {
             return sumWithoutSpecialAce + ACE_POINT
         }
-        return sumPointExceptAces + SPECIAL_ACE_POINT
+        return sumWithoutSpecialAce + SPECIAL_ACE_POINT
     }
 }
