@@ -1,10 +1,13 @@
 package blackjack
 
+const val ACE_POINT = 1
+const val SPECIAL_ACE_POINT = 11
+
 enum class Card(
     val shape: Shape,
     val value: Int,
 ) {
-    HEART_A(Shape.HEART, 1),
+    HEART_A(Shape.HEART, ACE_POINT),
     HEART_2(Shape.HEART, 2),
     HEART_3(Shape.HEART, 3),
     HEART_4(Shape.HEART, 4),
@@ -17,7 +20,7 @@ enum class Card(
     HEART_J(Shape.HEART, 10),
     HEART_Q(Shape.HEART, 10),
     HEART_K(Shape.HEART, 10),
-    DIAMOND_A(Shape.DIAMOND, 1),
+    DIAMOND_A(Shape.DIAMOND, ACE_POINT),
     DIAMOND_2(Shape.DIAMOND, 2),
     DIAMOND_3(Shape.DIAMOND, 3),
     DIAMOND_4(Shape.DIAMOND, 4),
@@ -30,7 +33,7 @@ enum class Card(
     DIAMOND_J(Shape.DIAMOND, 10),
     DIAMOND_Q(Shape.DIAMOND, 10),
     DIAMOND_K(Shape.DIAMOND, 10),
-    SPADE_A(Shape.SPADE, 1),
+    SPADE_A(Shape.SPADE, ACE_POINT),
     SPADE_2(Shape.SPADE, 2),
     SPADE_3(Shape.SPADE, 3),
     SPADE_4(Shape.SPADE, 4),
@@ -43,7 +46,7 @@ enum class Card(
     SPADE_J(Shape.SPADE, 10),
     SPADE_Q(Shape.SPADE, 10),
     SPADE_K(Shape.SPADE, 10),
-    CLOVER_A(Shape.CLOVER, 1),
+    CLOVER_A(Shape.CLOVER, ACE_POINT),
     CLOVER_2(Shape.CLOVER, 2),
     CLOVER_3(Shape.CLOVER, 3),
     CLOVER_4(Shape.CLOVER, 4),
@@ -55,5 +58,14 @@ enum class Card(
     CLOVER_10(Shape.CLOVER, 10),
     CLOVER_J(Shape.CLOVER, 10),
     CLOVER_Q(Shape.CLOVER, 10),
-    CLOVER_K(Shape.CLOVER, 10),
+    CLOVER_K(Shape.CLOVER, 10);
+
+    fun isAce(): Boolean {
+        return this in setOf(
+            CLOVER_A,
+            HEART_A,
+            DIAMOND_A,
+            SPADE_A,
+        )
+    }
 }
