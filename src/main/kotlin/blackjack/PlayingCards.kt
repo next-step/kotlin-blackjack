@@ -3,23 +3,32 @@ package blackjack
 private const val SPECIAL_ACE_USABLE_BOUNDARY = 10
 
 class PlayingCards(
-    private val cards: MutableSet<Card>
+    val cards: MutableSet<Card> = mutableSetOf(),
 ) {
-    fun sumPoint(): Int {
-        val sumPointExceptAces = cards.filter { !it.isAce() }
-            .sumOf { it.value }
+    fun calculatePoint(): Int {
+        val sumPoint = sumPoint()
+        if (sumPoint > 21)
+            return 0
+        return sumPoint
+    }
 
-        val aces = cards.filter { it.isAce() }
-        if (aces.isEmpty()) {
-            return sumPointExceptAces
-        }
+    private fun sumPoint(): Int {
+        if (noAce()) return cards.sumOf { it.value }
 
-        val acesAsOnePoint = aces.size - 1
-
-        val sumWithoutSpecialAce = sumPointExceptAces + acesAsOnePoint
+        val sumWithoutSpecialAce = cards.sumOf { it.value } - 1
         if (sumWithoutSpecialAce > SPECIAL_ACE_USABLE_BOUNDARY) {
             return sumWithoutSpecialAce + ACE_POINT
         }
         return sumWithoutSpecialAce + SPECIAL_ACE_POINT
+    }
+
+    private fun noAce() = !cards.any { it.isAce() }
+
+    fun addOne(card: Card) {
+        cards.add(card)
+    }
+
+    fun addAll(cards: MutableSet<Card>) {
+        this.cards.addAll(cards)
     }
 }
