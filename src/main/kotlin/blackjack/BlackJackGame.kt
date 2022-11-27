@@ -13,11 +13,11 @@ class BlackJackGame(
         }
     }
 
-    fun addCard(name: String): PlayerDto = getByName(name)
+    fun addCard(name: String): PlayerDto = getPlayerBy(name)
         .addCard(deck.deal())
         .let { PlayerDto(it) }
 
-    private fun getByName(name: String): Player {
+    private fun getPlayerBy(name: String): Player {
         return players.firstOrNull { it.name == name } ?: throw IllegalArgumentException("존재하지 않는 플레이어 이름입니다.")
     }
 
