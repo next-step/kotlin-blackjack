@@ -1,7 +1,7 @@
 package blackjack
 
-data class CardDeck(
-    val deck: MutableList<Card> = Card.values().toMutableList()
+class CardDeck(
+    private val deck: MutableList<Card> = Card.values().toMutableList()
         .apply { shuffle() }
 ) {
 
