@@ -2,13 +2,15 @@ package blackjack
 
 import blackjack.view.PlayerDto
 
+private const val INITIAL_CARD_COUNT = 2
+
 class BlackJackGame(
     private val players: List<Player>,
     private val deck: CardDeck,
 ) {
     fun start(): List<PlayerDto> {
         return players.map {
-            val player = it.addCard(deck.deal(2))
+            val player = it.addCard(deck.deal(INITIAL_CARD_COUNT))
             PlayerDto(player)
         }
     }

@@ -1,5 +1,6 @@
 package blackjack
 
+private const val MAX_POINT = 21
 private const val SPECIAL_ACE_USABLE_BOUNDARY = 10
 
 class PlayingCards(
@@ -7,7 +8,7 @@ class PlayingCards(
 ) {
     fun calculatePoint(): Int {
         val sumPoint = sumPoint()
-        if (sumPoint > 21)
+        if (sumPoint > MAX_POINT)
             return 0
         return sumPoint
     }
@@ -15,7 +16,7 @@ class PlayingCards(
     private fun sumPoint(): Int {
         if (noAce()) return cards.sumOf { it.value }
 
-        val sumWithoutSpecialAce = cards.sumOf { it.value } - 1
+        val sumWithoutSpecialAce = cards.sumOf { it.value } - ACE_POINT
         if (sumWithoutSpecialAce > SPECIAL_ACE_USABLE_BOUNDARY) {
             return sumWithoutSpecialAce + ACE_POINT
         }
