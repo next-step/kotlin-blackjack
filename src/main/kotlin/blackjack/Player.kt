@@ -4,11 +4,13 @@ class Player(
     val name: String,
     val playingCards: PlayingCards = PlayingCards(),
 ) {
-    fun addCard(deal: Card) {
+    fun addCard(deal: Card): Player {
         playingCards.addOne(deal)
+        return this
     }
 
-    fun addCard(cards: MutableSet<Card>) {
+    fun addCard(cards: MutableSet<Card>): Player {
         playingCards.addAll(cards)
+        return this
     }
 }

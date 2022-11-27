@@ -8,15 +8,13 @@ class BlackJackGame(
 ) {
     fun start(): List<PlayerDto> {
         return players.map {
-            val player = it.apply {
-                addCard(deck.deal(2))
-            }
+            val player = it.addCard(deck.deal(2))
             PlayerDto(player)
         }
     }
 
     fun addCard(name: String): PlayerDto = getByName(name)
-        .apply { addCard(deck.deal()) }
+        .addCard(deck.deal())
         .let { PlayerDto(it) }
 
     private fun getByName(name: String): Player {
