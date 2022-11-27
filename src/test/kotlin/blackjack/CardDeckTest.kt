@@ -11,5 +11,4 @@ class CardDeckTest : StringSpec({
         shouldThrow<IllegalStateException> { CardDeck().deal(53) }
             .shouldHaveMessage("더 이상 카드가 없습니다.")
     }
-
 })

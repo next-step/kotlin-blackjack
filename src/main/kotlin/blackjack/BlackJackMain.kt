@@ -11,7 +11,7 @@ fun main() {
     val game = BlackJackGame(names.map { Player(it) }, deck)
     val playerDtos = game.start()
 
-    OutputView.printFirstDeal(names.joinToString(", "))
+    OutputView.printFirstDeal(names)
     OutputView.printCardsByPlayer(playerDtos)
 
 

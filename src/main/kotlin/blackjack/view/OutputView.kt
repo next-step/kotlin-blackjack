@@ -5,8 +5,8 @@ import blackjack.Player
 
 class OutputView {
     companion object {
-        fun printFirstDeal(players: String) {
-            println("$players 에게 2장의 카드를 나누었습니다.")
+        fun printFirstDeal(players: List<String>) {
+            println("${players.joinToString(", ")} 에게 2장의 카드를 나누었습니다.")
         }
 
         fun printCardsByPlayer(playerDtos: List<PlayerDto>) {
