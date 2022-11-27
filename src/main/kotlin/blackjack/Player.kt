@@ -9,7 +9,7 @@ class Player(
         return this
     }
 
-    fun addCard(cards: MutableSet<Card>): Player {
+    fun addCard(cards: Set<Card>): Player {
         playingCards.addAll(cards)
         return this
     }

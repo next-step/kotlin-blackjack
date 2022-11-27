@@ -28,7 +28,7 @@ class PlayingCards(
         cards.add(card)
     }
 
-    fun addAll(cards: MutableSet<Card>) {
+    fun addAll(cards: Set<Card>) {
         this.cards.addAll(cards)
     }
 }
