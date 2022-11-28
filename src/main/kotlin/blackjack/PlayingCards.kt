@@ -4,6 +4,7 @@ import blackjack.Point.Companion.ACE
 import blackjack.Point.Companion.MAX
 import blackjack.Point.Companion.SPECIAL_ACE
 import blackjack.Point.Companion.SPECIAL_ACE_USABLE_BOUNDARY
+import blackjack.Point.Companion.ZERO
 
 class PlayingCards(
     val cards: MutableSet<Card> = mutableSetOf(),
@@ -11,7 +12,7 @@ class PlayingCards(
     fun calculatePoint(): Point {
         val sumPoint = sumPoint()
         if (sumPoint > MAX)
-            return Point.ZERO
+            return ZERO
         return sumPoint
     }
 
