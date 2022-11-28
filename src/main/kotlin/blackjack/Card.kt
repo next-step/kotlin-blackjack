@@ -1,14 +1,13 @@
 package blackjack
 
-const val ACE_POINT = 1
-const val SPECIAL_ACE_POINT = 11
+import blackjack.Point.Companion.ACE
 
 enum class Card(
     val shape: Shape,
-    val value: Int,
+    val point: Point,
     val korean: String,
 ) {
-    HEART_A(Shape.HEART, ACE_POINT, "A하트"),
+    HEART_A(Shape.HEART, ACE, "A하트"),
     HEART_2(Shape.HEART, 2, "2하트"),
     HEART_3(Shape.HEART, 3, "3하트"),
     HEART_4(Shape.HEART, 4, "4하트"),
@@ -21,7 +20,7 @@ enum class Card(
     HEART_J(Shape.HEART, 10, "J하트"),
     HEART_Q(Shape.HEART, 10, "Q하트"),
     HEART_K(Shape.HEART, 10, "K하트"),
-    DIAMOND_A(Shape.DIAMOND, ACE_POINT, "A다이아몬드"),
+    DIAMOND_A(Shape.DIAMOND, ACE, "A다이아몬드"),
     DIAMOND_2(Shape.DIAMOND, 2, "2다이아몬드"),
     DIAMOND_3(Shape.DIAMOND, 3, "3다이아몬드"),
     DIAMOND_4(Shape.DIAMOND, 4, "4다이아몬드"),
@@ -34,7 +33,7 @@ enum class Card(
     DIAMOND_J(Shape.DIAMOND, 10, "J다이아몬드"),
     DIAMOND_Q(Shape.DIAMOND, 10, "Q다이아몬드"),
     DIAMOND_K(Shape.DIAMOND, 10, "K다이아몬드"),
-    SPADE_A(Shape.SPADE, ACE_POINT, "A스페이드"),
+    SPADE_A(Shape.SPADE, ACE, "A스페이드"),
     SPADE_2(Shape.SPADE, 2, "2스페이드"),
     SPADE_3(Shape.SPADE, 3, "3스페이드"),
     SPADE_4(Shape.SPADE, 4, "4스페이드"),
@@ -47,7 +46,7 @@ enum class Card(
     SPADE_J(Shape.SPADE, 10, "J스페이드"),
     SPADE_Q(Shape.SPADE, 10, "Q스페이드"),
     SPADE_K(Shape.SPADE, 10, "K스페이드"),
-    CLOVER_A(Shape.CLOVER, ACE_POINT, "A클로버"),
+    CLOVER_A(Shape.CLOVER, ACE, "A클로버"),
     CLOVER_2(Shape.CLOVER, 2, "2클로버"),
     CLOVER_3(Shape.CLOVER, 3, "3클로버"),
     CLOVER_4(Shape.CLOVER, 4, "4클로버"),
@@ -60,6 +59,12 @@ enum class Card(
     CLOVER_J(Shape.CLOVER, 10, "J클로버"),
     CLOVER_Q(Shape.CLOVER, 10, "Q클로버"),
     CLOVER_K(Shape.CLOVER, 10, "K클로버");
+
+    constructor(
+        shape: Shape,
+        value: Int,
+        korean: String,
+    ) : this(shape, Point(value), korean)
 
     fun isAce(): Boolean {
         return this in setOf(

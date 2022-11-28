@@ -35,5 +35,5 @@ data class PlayerDto(
     val cards: Set<Card>,
     val totalPoint: Int,
 ) {
-    constructor(player: Player) : this(player.name, player.playingCards.cards, player.playingCards.calculatePoint())
+    constructor(player: Player) : this(player.name, player.playingCards.cards, player.playingCards.calculatePoint().value)
 }
