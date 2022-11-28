@@ -11,9 +11,7 @@ class PlayingCards(
 ) {
     fun calculatePoint(): Point {
         val sumPoint = sumPoint()
-        if (sumPoint > MAX)
-            return ZERO
-        return sumPoint
+        return if (sumPoint > MAX) ZERO else sumPoint
     }
 
     private fun sumPoint(): Point {
