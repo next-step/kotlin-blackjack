@@ -1,6 +1,6 @@
 package blackjack
 
-class Point(val value: Int) {
+data class Point(val value: Int) {
 
     operator fun plus(adder: Point): Point {
         return Point(value + adder.value)
