@@ -13,23 +13,16 @@ class DslTest {
     @ValueSource(strings = ["harris", "summer"])
     fun `introduce dsl로 객체 생성시 이름 필드 확인`(value: String) {
         //given & when
-        val person = introduce {
-            name(value)
+        val person = introduce(value) {
         }
         //then
         assertThat(person.name).isEqualTo(value)
     }
 
     @Test
-    fun `UninitializedPropertyAccessException test`() {
-        assertThrows<UninitializedPropertyAccessException> { introduce {} }
-    }
-
-    @Test
     fun `introduce dsl로 객체 생성시 이름, 회사 필드 확인`() {
         //given && when
-        val person = introduce {
-            name("harris")
+        val person = introduce("harris") {
             company("ks")
         }
         //then
@@ -42,8 +35,7 @@ class DslTest {
     @Test
     fun `introduce dsl로 객체 생성시 skill 필드 확인`() {
         //given && when
-        val person = introduce {
-            name("harris")
+        val person = introduce("harris") {
             company("ks")
             skills {
                 soft("A passion for problem solving")
@@ -64,8 +56,7 @@ class DslTest {
     @Test
     fun `introduce dsl로 객체 생성시 language 필드 확인`() {
         //given && when
-        val person = introduce {
-            name("harris")
+        val person = introduce("harris") {
             company("ks")
             skills {
                 soft("A passion for problem solving")
