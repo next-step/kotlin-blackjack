@@ -82,8 +82,8 @@ class PersonBuilder {
 }
 
 class SkillBuilder {
-    private val soft: MutableList<String> = mutableListOf()
-    private val hard: MutableList<String> = mutableListOf()
+    private val soft = mutableListOf<String>()
+    private val hard = mutableListOf<String>()
 
     fun soft(value: String) {
         soft.add(value)
@@ -99,7 +99,7 @@ class SkillBuilder {
 }
 
 class LanguagesBuilder {
-    private val languages: MutableList<Language> = mutableListOf()
+    private val languages = mutableListOf<Language>()
 
     infix fun String.level(level: Int) {
         languages.add(Language(language = this, level = level))
