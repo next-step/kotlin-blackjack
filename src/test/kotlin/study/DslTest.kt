@@ -51,7 +51,13 @@ class DslTest {
         }
         person.name shouldBe "김동인"
         person.company shouldBe "ep"
-        person.skills shouldBe Skills(soft = listOf("A passion for problem solving", "Good communication skills"), hard = listOf("Kotlin"))
+        person.skills shouldBe Skills(
+            soft = listOf(
+                Soft("A passion for problem solving"),
+                Soft("Good communication skills")
+            ),
+            hard = listOf(Hard("Kotlin"))
+        )
     }
 
     @Test
@@ -71,7 +77,13 @@ class DslTest {
         }
         person.name shouldBe "김동인"
         person.company shouldBe "ep"
-        person.skills shouldBe Skills(soft = listOf("A passion for problem solving", "Good communication skills"), hard = listOf("Kotlin"))
+        person.skills shouldBe Skills(
+            soft = listOf(
+                Soft("A passion for problem solving"),
+                Soft("Good communication skills")
+            ),
+            hard = listOf(Hard("Kotlin"))
+        )
         person.languages shouldBe Languages(languages = listOf(Language("Korean", 5), Language("English", 3)))
     }
 }
@@ -117,15 +129,15 @@ class PersonBuilder {
 }
 
 class SkillBuilder {
-    private val soft = mutableListOf<String>()
-    private val hard = mutableListOf<String>()
+    private val soft = mutableListOf<Soft>()
+    private val hard = mutableListOf<Hard>()
 
     fun soft(value: String) {
-        soft.add(value)
+        soft.add(Soft(value))
     }
 
     fun hard(value: String) {
-        hard.add(value)
+        hard.add(Hard(value))
     }
 
     fun build(): Skills {
@@ -146,6 +158,20 @@ class LanguagesBuilder {
 }
 
 data class Person(val name: String, val company: String, val skills: Skills, val languages: Languages)
-data class Skills(val soft: List<String> = listOf(), val hard: List<String> = listOf())
 data class Languages(val languages: List<Language> = listOf())
 data class Language(val language: String, val level: Int)
+data class Skills(val soft: List<Soft> = listOf(), val hard: List<Hard> = listOf())
+
+@JvmInline
+value class Soft(private val value: String) {
+    init {
+        require(value.isNotBlank()) { "빈 문자열은 들어올 수 없습니다" }
+    }
+}
+
+@JvmInline
+value class Hard(private val value: String) {
+    init {
+        require(value.isNotBlank()) { "빈 문자열은 들어올 수 없습니다" }
+    }
+}
