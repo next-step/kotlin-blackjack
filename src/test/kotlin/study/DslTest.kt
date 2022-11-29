@@ -51,8 +51,8 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 
 data class Person(val name: String, val company: String?, val skills: Skills, val languages: List<Language>)
 class PersonBuilder {
-    lateinit var name: String
-    var company: String? = null
+    private lateinit var name: String
+    private var company: String? = null
     private lateinit var skills: Skills
     private lateinit var languages: List<Language>
 
@@ -79,8 +79,8 @@ class PersonBuilder {
 
 data class Skills(val softSkills: List<String>, val hardSkills: List<String>)
 class SkillsBuilder {
-    private var softSkills: MutableList<String> = mutableListOf()
-    private var hardSkills: MutableList<String> = mutableListOf()
+    private val softSkills: MutableList<String> = mutableListOf()
+    private val hardSkills: MutableList<String> = mutableListOf()
 
     fun soft(value: String) {
         this.softSkills.add(value)
@@ -96,7 +96,7 @@ class SkillsBuilder {
 
 data class Language(val name: String, val level: Int)
 class LanguagesBuilder {
-    private var languages: MutableList<Language> = mutableListOf()
+    private val languages: MutableList<Language> = mutableListOf()
 
     infix fun String.level(level: Int) {
         languages.add(Language(this, level))
