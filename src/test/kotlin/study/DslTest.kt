@@ -19,8 +19,43 @@ import org.junit.jupiter.api.Test
 }
  */
 class DslTest {
+
     @Test
     fun introduce() {
+        val person: Person = introduce {
+            name("김동인")
+        }
+        person.name shouldBe "김동인"
+    }
+
+    @Test
+    fun company() {
+        val person: Person = introduce {
+            name("김동인")
+            company("ep")
+        }
+        person.name shouldBe "김동인"
+        person.company shouldBe "ep"
+    }
+
+    @Test
+    fun skills() {
+        val person: Person = introduce {
+            name("김동인")
+            company("ep")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        person.name shouldBe "김동인"
+        person.company shouldBe "ep"
+        person.skills shouldBe Skills(soft = listOf("A passion for problem solving", "Good communication skills"), hard = listOf("Kotlin"))
+    }
+
+    @Test
+    fun languages() {
         val person: Person = introduce {
             name("김동인")
             company("ep")
@@ -50,9 +85,9 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 
 class PersonBuilder {
     private lateinit var name: String
-    private lateinit var company: String
-    private lateinit var skills: Skills
-    private lateinit var languages: Languages
+    private var company: String = ""
+    private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
 
     fun name(value: String) {
         this.name = value
@@ -111,6 +146,6 @@ class LanguagesBuilder {
 }
 
 data class Person(val name: String, val company: String, val skills: Skills, val languages: Languages)
-data class Skills(val soft: List<String>, val hard: List<String>)
-data class Languages(val languages: List<Language>)
+data class Skills(val soft: List<String> = listOf(), val hard: List<String> = listOf())
+data class Languages(val languages: List<Language> = listOf())
 data class Language(val language: String, val level: Int)
