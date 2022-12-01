@@ -6,6 +6,7 @@
 - 게임을 시작하면 플레이어는 두 장의 카드를 지급 받으며, 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이긴다. 21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다.
 
 # 프로그래밍 요구 사항
+
 - 모든 기능을 TDD로 구현해 단위 테스트가 존재해야 한다. 단, UI(System.out, System.in) 로직은 제외
 - indent(인덴트, 들여쓰기) depth를 2를 넘지 않도록 구현한다. 1까지만 허용한다.
 - 모든 엔티티를 작게 유지한다.
@@ -14,10 +15,11 @@
 - git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가한다.
 
 # TODO
-- [] A부터 J,Q,K 까지의 가지고 있는 PokerNumber 객체를 생성한다
-- [] 스페이드, 하트, 클로버, 다이아몬드 를 갖는 PorketShape 객체를 생성한다
-- [] PorkerNumber 과 PokerShape 의 조합을 Card 객체를 생성한다
-- [] Card 의 전체조합을 Trump 로하는 객체를 생성한다
+
+- [X] A부터 J,Q,K 까지의 가지고 있는 PokerNumber 객체를 생성한다
+- [X] 스페이드, 하트, 클로버, 다이아몬드 를 갖는 PorkerShape 객체를 생성한다
+- [X] PorkerNumber 과 PokerShape 의 조합을 Card 객체를 생성한다
+- [x] Card 의 전체조합을 Trump 로하는 객체를 생성한다
 - [] 이름과 Card 리스트를 가지는 Player 객체를 생성한다
 - [] Player 는 Hit를 하면 Card 를 추가로 받는다
 - [] Player 의 카드를 계산하는 Score 객체를 생성한다
