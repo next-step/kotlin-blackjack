@@ -23,6 +23,7 @@
 - [x] 이름과 Card 리스트를 가지는 Player 객체를 생성한다
 - [x] Player 는 Hit를 하면 Card 를 추가로 받는다
 - [x] Trump 를 가지는 Dealer 객체를 생성한다 
+- [x] 딜러와 플레이어들을 가진 PokerGame 객체를 생성한다
 - [] Player 의 카드를 계산하는 Score 객체를 생성한다
 - [] 입력을 구현한다
 - [] 출력을 구현한다
