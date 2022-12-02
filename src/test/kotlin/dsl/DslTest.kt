@@ -1,9 +1,5 @@
 package dsl
 
-import dtl.Language
-import dtl.Languages
-import dtl.Person
-import dtl.introduce
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
