@@ -1,4 +1,4 @@
-package dtl
+package dsl
 
 class LanguagesBuilder {
     private val languages = mutableListOf<Language>()

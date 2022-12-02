@@ -1,4 +1,4 @@
-package dtl
+package dsl
 
 class PersonBuilder {
     private lateinit var name: String
