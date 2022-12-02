@@ -4,16 +4,15 @@ class Trump(
     private val porkerNumber: List<PokerNumber>,
     private val pokerShape: List<PokerShape>
 ) {
-    var cards = getTrump()
-        private set
+    val cards = getTrump()
 
-    private fun getTrump(): MutableList<Card> {
-        var cards = mutableListOf<Card>()
+    private fun getTrump(): Cards {
+        val cards = mutableListOf<Card>()
         porkerNumber.forEach { number ->
             pokerShape.forEach { shape ->
                 cards.add(Card(number, shape))
             }
         }
-        return cards.apply { shuffle() }
+        return Cards(cards.apply { shuffle() })
     }
 }

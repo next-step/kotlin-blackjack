@@ -8,6 +8,6 @@ class TrumpTest : StringSpec({
         // when
         val trump = Trump(PokerNumber.pokerNumbers(), PokerShape.pokerShapes())
         // then
-        trump.cards.size shouldBe 56
+        trump.cards.count() shouldBe 56
     }
 })

@@ -20,7 +20,7 @@
 - [X] 스페이드, 하트, 클로버, 다이아몬드 를 갖는 PorkerShape 객체를 생성한다
 - [X] PorkerNumber 과 PokerShape 의 조합을 Card 객체를 생성한다
 - [x] Card 의 전체조합을 Trump 로하는 객체를 생성한다
-- [] 이름과 Card 리스트를 가지는 Player 객체를 생성한다
+- [x] 이름과 Card 리스트를 가지는 Player 객체를 생성한다
 - [] Player 는 Hit를 하면 Card 를 추가로 받는다
 - [] Player 의 카드를 계산하는 Score 객체를 생성한다
 - [] 입력을 구현한다
