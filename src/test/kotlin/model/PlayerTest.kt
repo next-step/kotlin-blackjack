@@ -14,4 +14,14 @@ class PlayerTest : StringSpec({
         player.name shouldBe "나잘함"
         player.cards.shouldNotBeNull()
     }
+
+    "플레이어는 Hit 에 카드를 받으면, 가지고 있는 CARDS 에 추가된다" {
+        // given
+        val player = Player("나잘함")
+        // when
+        player.hit(Card(PokerNumber.pokerNumbers().first(), PokerShape.pokerShapes().first()))
+
+        // then
+        player.cards.count() shouldBe 1
+    }
 })

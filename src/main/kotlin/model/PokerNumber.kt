@@ -1,6 +1,6 @@
 package model
 
-class PokerNumber(val value: String) {
+class PokerNumber private constructor(val value: String) {
 
     companion object {
         private val pokerNumbers: List<String> =
