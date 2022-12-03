@@ -1,7 +1,5 @@
 package model
 
 class Player(val name: String, val cards: Cards = Cards()) {
-    fun hit(card: Card) {
-        cards.add(card)
-    }
+    fun hit(card: Card) = cards.add(card)
 }

@@ -6,16 +6,11 @@ class PokerGame(
     val dealer: Dealer = Dealer(Trump()),
     val players: Players
 ) {
-
     init {
-        repeat(FIRST_SPREAD_CARD) {
-            plusCard()
-        }
+        repeat(FIRST_SPREAD_CARD) { plusCard() }
     }
 
-    private fun plusCard() {
-        players.hit(dealer)
-    }
+    private fun plusCard() = players.hit(dealer)
 
     fun getPlayers(): List<Player> = players.players
 }

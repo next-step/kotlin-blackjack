@@ -7,8 +7,6 @@ class Cards(val cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun pick() = cards.removeFirst()
-    override fun toString(): String {
-        return cards.joinToString(", ") { it.pokerNumber.value + it.pokerShape.value }
-    }
+    override fun toString(): String =
+        cards.joinToString(", ") { it.pokerNumber.value + it.pokerShape.value }
 }
-

@@ -29,10 +29,10 @@ class PokerScore(val cards: Cards) {
             PokerNumberFinder("7").pokerNumber -> 7
             PokerNumberFinder("8").pokerNumber -> 8
             PokerNumberFinder("9").pokerNumber -> 9
-            PokerNumberFinder("10").pokerNumber -> ACE_SPECIAL_MINUS_SCORE
-            PokerNumberFinder("Jack").pokerNumber -> ACE_SPECIAL_MINUS_SCORE
-            PokerNumberFinder("Queen").pokerNumber -> ACE_SPECIAL_MINUS_SCORE
-            PokerNumberFinder("King").pokerNumber -> ACE_SPECIAL_MINUS_SCORE
+            PokerNumberFinder("10").pokerNumber -> 10
+            PokerNumberFinder("Jack").pokerNumber -> 10
+            PokerNumberFinder("Queen").pokerNumber -> 10
+            PokerNumberFinder("King").pokerNumber -> 10
             else -> throw IllegalArgumentException("해당 번호를 찾을수 없습니다.")
         }
 }

@@ -7,12 +7,10 @@ class Trump(
     val cards = getTrump()
 
     private fun getTrump(): Cards {
-        val cards = mutableListOf<Card>()
-        porkerNumber.forEach { number ->
-            pokerShape.forEach { shape ->
-                cards.add(Card(number, shape))
-            }
-        }
+        val cards =
+            porkerNumber.flatMap { number ->
+                pokerShape.map { shape -> Card(number, shape) }
+            }.toMutableList()
         return Cards(cards.apply { shuffle() })
     }
 
