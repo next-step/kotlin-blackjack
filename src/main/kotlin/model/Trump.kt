@@ -16,6 +16,6 @@ class Trump(
         return Cards(cards.apply { shuffle() })
     }
 
-    fun hit() = cards.hit()
+    fun pick() = cards.pick()
     fun count() = cards.count()
 }

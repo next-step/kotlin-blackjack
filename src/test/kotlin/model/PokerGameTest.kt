@@ -18,6 +18,6 @@ class PokerGameTest : StringSpec({
         pokerGame.getPlayers().forEach {
             it.cards.count() shouldBe 2
         }
-        dealer.trump.count() shouldBe 52
+        dealer.cardCount() shouldBe 48
     }
 })

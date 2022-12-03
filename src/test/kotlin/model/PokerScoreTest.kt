@@ -19,7 +19,7 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.sum() shouldBe 20
+        pokerScore.score() shouldBe 20
     }
 
     "J~K 까지의 숫자가 넘어오면, 각 숫자10 으로 계산하여 합을 한다" {
@@ -36,7 +36,7 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.sum() shouldBe 30
+        pokerScore.score() shouldBe 30
     }
 
     "A 가 있고, 21을 넘지 않으면 11로 계산하여 합을 한다" {
@@ -53,7 +53,7 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.sum() shouldBe 16
+        pokerScore.score() shouldBe 16
     }
 
     "A 가 있고, 21을 넘으면 1로 계산하여 합을 한다" {
@@ -70,6 +70,6 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.sum() shouldBe 13
+        pokerScore.score() shouldBe 13
     }
 })

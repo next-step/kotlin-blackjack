@@ -1,5 +1,6 @@
 package model
 
-class Dealer(val trump: Trump = Trump()) {
-    fun hit(): Card = trump.hit()
+class Dealer(private val trump: Trump = Trump()) {
+    fun pick(): Card = trump.pick()
+    fun cardCount(): Int = trump.count()
 }

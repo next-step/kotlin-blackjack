@@ -9,7 +9,6 @@ class PokerNumberTest : StringSpec({
         // when
         val pokerNumbers = PokerNumber.pokerNumbers()
         // then
-        pokerNumbers.size shouldBe 14
+        pokerNumbers.size shouldBe 13
     }
-
 })

@@ -4,7 +4,7 @@ private const val FIRST_SPREAD_CARD = 2
 
 class PokerGame(
     val dealer: Dealer = Dealer(Trump()),
-    private val players: Players
+    val players: Players
 ) {
 
     init {
