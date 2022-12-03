@@ -3,7 +3,7 @@ package study
 class PersonBuilder {
     private lateinit var name: String
     private lateinit var company: String
-    private lateinit var skill: Skill
+    private lateinit var skills: Skills
     private lateinit var language: List<Language>
 
     fun name(value: String) {
@@ -15,7 +15,7 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillBuilder.() -> Unit) {
-        skill = SkillBuilder().apply(block).build()
+        skills = SkillBuilder().apply(block).build()
     }
 
     fun languages(block: LanguageBuilder.() -> Unit) {
@@ -23,6 +23,6 @@ class PersonBuilder {
     }
 
     fun build(): Person {
-        return Person(name, company, skill, language)
+        return Person(name, company, skills, language)
     }
 }

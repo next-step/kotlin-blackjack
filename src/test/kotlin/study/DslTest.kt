@@ -40,11 +40,15 @@ internal class DslTest {
         }
 
         person.name shouldBe "황재우"
+
         person.company shouldBe "Google"
-        person.skills.softSkills shouldContainExactlyInAnyOrder listOf(
-            "A passion for problem solving",
-            "Good communication skills"
+
+        person.skills.skillList shouldContainExactlyInAnyOrder listOf(
+            SoftSkill("A passion for problem solving"),
+            SoftSkill("Good communication skills"),
+            HardSkill("Kotlin")
         )
+
         person.languages shouldContainExactly listOf(
             Language("Korean", 5),
             Language("English", 3)

@@ -1,18 +1,17 @@
 package study
 
 class SkillBuilder {
-    private var softSkills: MutableList<String> = mutableListOf()
-    private var hardSkills: MutableList<String> = mutableListOf()
+    private var skills: MutableList<Skill> = mutableListOf()
 
     fun soft(value: String) {
-        softSkills.add(value)
+        skills.add(SoftSkill(value))
     }
 
     fun hard(value: String) {
-        hardSkills.add(value)
+        skills.add(HardSkill(value))
     }
 
-    fun build(): Skill {
-        return Skill(softSkills.toList(), hardSkills.toList())
+    fun build(): Skills {
+        return Skills(skills)
     }
 }
