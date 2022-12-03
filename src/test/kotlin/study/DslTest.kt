@@ -82,7 +82,27 @@ class DslTest {
 
     }
 
+    @Test
+    internal fun `언어가 지정된다`() {
+        // given
+        // when
+        val person = introduce {
+            name("김기연")
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
 
+        // then
+        assertThat(person.name).isEqualTo("김기연")
+
+        val languages = checkNotNull(person.languages) { "languages is not null" }
+
+        assertThat(languages)
+            .hasSize(2)
+            .containsExactly(Language("Korean", 5), Language("English", 3))
+    }
 }
 
 
