@@ -1,3 +1,5 @@
 package model
 
-class Dealer(private val trump: Trump)
+class Dealer(val trump: Trump = Trump()) {
+    fun hit(): Card = trump.hit()
+}

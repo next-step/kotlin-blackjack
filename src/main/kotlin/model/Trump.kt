@@ -1,8 +1,8 @@
 package model
 
 class Trump(
-    private val porkerNumber: List<PokerNumber>,
-    private val pokerShape: List<PokerShape>
+    private val porkerNumber: List<PokerNumber> = PokerNumber.pokerNumbers(),
+    private val pokerShape: List<PokerShape> = PokerShape.pokerShapes()
 ) {
     val cards = getTrump()
 
@@ -15,4 +15,7 @@ class Trump(
         }
         return Cards(cards.apply { shuffle() })
     }
+
+    fun hit() = cards.hit()
+    fun count() = cards.count()
 }

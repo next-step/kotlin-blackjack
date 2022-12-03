@@ -5,4 +5,6 @@ class Cards(val cards: MutableList<Card> = mutableListOf()) {
     fun add(card: Card) {
         cards.add(card)
     }
+
+    fun hit() = cards.removeFirst()
 }
