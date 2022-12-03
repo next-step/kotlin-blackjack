@@ -1,6 +1,6 @@
 package model
 
-class PokerShape private constructor(val value: String) {
+data class PokerShape private constructor(val value: String) {
 
     companion object {
         private val pokerShapes: List<String> =
