@@ -24,9 +24,43 @@ class DslTest {
     fun introduce() {
         val person: Person = introduce {
             name("최원준")
+            company("메쉬코리아")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         person.name shouldBe "최원준"
+        person.company shouldBe "메쉬코리아"
+
+        person.skills.values[0].name shouldBe "A passion for problem solving"
+        person.skills.values[0] is Soft
+        person.skills.values[1].name shouldBe "Good communication skills"
+        person.skills.values[1] is Soft
+        person.skills.values[2].name shouldBe "Kotlin"
+        person.skills.values[2] is Hard
+
+        person.languages.values[0].name shouldBe "Korean"
+        person.languages.values[0].level shouldBe 5
+        person.languages.values[1].name shouldBe "English"
+        person.languages.values[1].level shouldBe 3
+    }
+
+    @Test
+    fun name() {
+        val person: Person = introduce {
+            name("최원준")
+        }
+
+        person.name shouldBe "최원준"
         person.company.shouldBeNull()
+        person.skills shouldBe Skills()
+        person.languages shouldBe Languages()
     }
 
     @Test
