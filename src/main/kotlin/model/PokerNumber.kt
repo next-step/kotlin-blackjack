@@ -1,11 +1,17 @@
 package model
 
-data class PokerNumber private constructor(val value: String) {
-
-    companion object {
-        private val pokerNumbers: List<String> =
-            listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King")
-
-        fun pokerNumbers(): List<PokerNumber> = pokerNumbers.map { PokerNumber(it) }.toList()
-    }
+enum class PokerNumber(val desc: String) {
+    ACE("A"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8"),
+    NINE("9"),
+    TEN("10"),
+    JACK("Jack"),
+    QUEEN("Queen"),
+    KING("King")
 }

@@ -9,9 +9,9 @@ class PokerScoreTest : StringSpec({
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber),
-                Card(PokerNumberFinder("8").pokerNumber),
-                Card(PokerNumberFinder("10").pokerNumber)
+                Card(PokerNumberFinder("2").pokerNumber, PokerShape.CLOVER),
+                Card(PokerNumberFinder("8").pokerNumber, PokerShape.DIAMOND),
+                Card(PokerNumberFinder("10").pokerNumber, PokerShape.HEART)
             )
         )
 
@@ -19,16 +19,16 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.score() shouldBe 20
+        pokerScore.score shouldBe 20
     }
 
     "J~K 까지의 숫자가 넘어오면, 각 숫자10 으로 계산하여 합을 한다" {
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("Jack").pokerNumber),
-                Card(PokerNumberFinder("Queen").pokerNumber),
-                Card(PokerNumberFinder("King").pokerNumber)
+                Card(PokerNumberFinder("Jack").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("Queen").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("King").pokerNumber, PokerShape.HEART)
             )
         )
 
@@ -36,16 +36,16 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.score() shouldBe 30
+        pokerScore.score shouldBe 30
     }
 
     "A 가 있고, 21을 넘지 않으면 11로 계산하여 합을 한다" {
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber),
-                Card(PokerNumberFinder("3").pokerNumber),
-                Card(PokerNumberFinder("A").pokerNumber)
+                Card(PokerNumberFinder("2").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("3").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("A").pokerNumber, PokerShape.HEART)
             )
         )
 
@@ -53,16 +53,16 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.score() shouldBe 16
+        pokerScore.score shouldBe 16
     }
 
     "A 가 있고, 21을 넘으면 1로 계산하여 합을 한다" {
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber),
-                Card(PokerNumberFinder("10").pokerNumber),
-                Card(PokerNumberFinder("A").pokerNumber)
+                Card(PokerNumberFinder("2").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("10").pokerNumber, PokerShape.HEART),
+                Card(PokerNumberFinder("A").pokerNumber, PokerShape.HEART)
             )
         )
 
@@ -70,6 +70,6 @@ class PokerScoreTest : StringSpec({
         val pokerScore = PokerScore(cards)
 
         // then
-        pokerScore.score() shouldBe 13
+        pokerScore.score shouldBe 13
     }
 })

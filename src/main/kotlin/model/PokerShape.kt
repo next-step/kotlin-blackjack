@@ -1,10 +1,8 @@
 package model
 
-data class PokerShape private constructor(val value: String) {
-
-    companion object {
-        private val pokerShapes: List<String> = listOf("하트", "클로버", "스페이드", "다이아")
-
-        fun pokerShapes(): List<PokerShape> = pokerShapes.map { PokerShape(it) }.toList()
-    }
+enum class PokerShape(val desc: String) {
+    HEART("하트"),
+    SPADE("스페이드"),
+    DIAMOND("다이아"),
+    CLOVER("클로버")
 }

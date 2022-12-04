@@ -7,7 +7,7 @@ class PorkerShapeTest : StringSpec({
 
     "포커모양 조회를 하면  4개를 반환한다" {
         // when
-        val pokerShapes = PokerShape.pokerShapes()
+        val pokerShapes = PokerShape.values()
         // then
         pokerShapes.size shouldBe 4
     }

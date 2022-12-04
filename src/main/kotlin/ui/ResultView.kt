@@ -19,7 +19,7 @@ object ResultView {
     fun resultPokerGameScore(pokerGame: PokerGame) {
         println()
         pokerGame.getPlayers().forEach { player ->
-            println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score()}")
+            println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
         }
     }
 }

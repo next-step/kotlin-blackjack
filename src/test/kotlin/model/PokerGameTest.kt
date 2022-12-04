@@ -9,7 +9,7 @@ class PokerGameTest : StringSpec({
         // given
         val player1 = Player("1번주자")
         val player2 = Player("2번주자")
-        val dealer = Dealer(Trump())
+        val dealer = Dealer(Deck())
 
         // when
         val pokerGame = PokerGame(dealer, Players(listOf(player1, player2)))

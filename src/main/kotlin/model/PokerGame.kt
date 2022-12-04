@@ -3,7 +3,7 @@ package model
 private const val FIRST_SPREAD_CARD = 2
 
 class PokerGame(
-    val dealer: Dealer = Dealer(Trump()),
+    val dealer: Dealer = Dealer(Deck()),
     val players: Players
 ) {
     init {

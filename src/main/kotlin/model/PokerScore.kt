@@ -4,8 +4,10 @@ private const val BLACKJACK_MAX_SCORE = 21
 
 private const val ACE_SPECIAL_MINUS_SCORE = 10
 
-class PokerScore(val cards: Cards) {
-    fun score(): Int {
+class PokerScore(private val cards: Cards) {
+    val score: Int = score()
+
+    private fun score(): Int {
         val aceCard = cards.cards.find { it.pokerNumber == PokerNumberFinder("A").pokerNumber } != null
         val score = cards.cards.sumOf { pokerNumberScore(it.pokerNumber) }
         return specialAceRule(aceCard, score)

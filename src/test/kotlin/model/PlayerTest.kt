@@ -19,7 +19,7 @@ class PlayerTest : StringSpec({
         // given
         val player = Player("나잘함")
         // when
-        player.hit(Card(PokerNumber.pokerNumbers().first(), PokerShape.pokerShapes().first()))
+        player.hit(Card(PokerNumber.values().first(), PokerShape.values().first()))
 
         // then
         player.cards.count() shouldBe 1
