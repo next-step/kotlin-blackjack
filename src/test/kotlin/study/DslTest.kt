@@ -5,7 +5,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
-class DslTest : FunSpec ({
+class DslTest : FunSpec({
     context("introduce 테스트") {
         withData(listOf("길상현", "씨유", "제이슨", "브라운", "포비")) { name ->
             val person = introduce {
