@@ -3,7 +3,7 @@ package study
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skills: Skills? = null
+    private var skills: List<Skill> = listOf()
     private var languages: List<Language> = emptyList()
 
     fun name(value: String) {
@@ -30,6 +30,6 @@ class PersonBuilder {
 data class Person(
     val name: String,
     val company: String?,
-    val skills: Skills?,
+    val skills: List<Skill>,
     val languages: List<Language>
 )

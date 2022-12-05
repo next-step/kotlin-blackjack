@@ -2,7 +2,6 @@ package study
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -49,17 +48,11 @@ class DslTest {
 
         // then
         assertThat(person.name).isEqualTo("김기연")
-
-        val skills = checkNotNull(person.skills) { "skill is not null" }
-        assertAll({
-            assertThat(skills.hards)
-                .hasSize(1)
-                .containsExactly("Kotlin")
-        }, {
-            assertThat(skills.softs)
-                .hasSize(2)
-                .containsExactly("A passion for problem solving", "Good communication skills")
-        })
+        assertThat(person.skills).containsExactly(
+            SoftSkill("A passion for problem solving"),
+            SoftSkill("Good communication skills"),
+            HardSkill("Kotlin")
+        )
     }
 
     @Test
