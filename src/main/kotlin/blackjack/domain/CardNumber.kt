@@ -10,13 +10,14 @@ enum class CardNumber(val value: String) {
     SEVEN("7"),
     EIGHT("8"),
     NINE("9"),
+    TEN("10"),
     JACK("J"),
     QUEEN("Q"),
     KING("K");
 
     companion object {
         fun of(value: String): CardNumber {
-            return CardNumber.values().find { it.name == value }
+            return CardNumber.values().find { it.value == value }
                 ?: throw IllegalArgumentException("잘못된 카드 번호입니다.")
         }
     }
