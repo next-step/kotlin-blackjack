@@ -2,7 +2,7 @@ package blackjack
 
 enum class Number(
     val desc: String,
-    vararg val value: Int
+    vararg val values: Int
 ) {
     ACE("A", 1, 11),
     TWO("2", 2),
