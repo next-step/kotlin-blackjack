@@ -15,7 +15,6 @@ class SkillBuilder {
     fun build(): Skills {
         return Skills(softs, hards)
     }
-
 }
 
 data class Skills(val softs: List<String>, val hards: List<String>)

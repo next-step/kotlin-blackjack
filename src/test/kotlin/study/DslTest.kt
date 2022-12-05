@@ -6,25 +6,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-/*
-/**
-introduce {
-    name("박재성")
-    company("우아한형제들")
-    skills {
-        soft("A passion for problem solving")
-        soft("Good communication skills")
-        hard("Kotlin")
-    }
-    languages {
-        "Korean" level 5
-        "English" level 3
-    }
-}
-*/
-*/
 class DslTest {
-
 
     @ValueSource(strings = ["김기연", "사용자"])
     @ParameterizedTest
@@ -37,7 +19,6 @@ class DslTest {
         // then
         assertThat(person.name).isEqualTo(value)
     }
-
 
     @Test
     internal fun `회사가 지정된다`() {
@@ -79,7 +60,6 @@ class DslTest {
                 .hasSize(2)
                 .containsExactly("A passion for problem solving", "Good communication skills")
         })
-
     }
 
     @Test
@@ -98,13 +78,11 @@ class DslTest {
         assertThat(person.name).isEqualTo("김기연")
 
         val languages = checkNotNull(person.languages) { "languages is not null" }
-
         assertThat(languages)
             .hasSize(2)
             .containsExactly(Language("Korean", 5), Language("English", 3))
     }
 }
-
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
