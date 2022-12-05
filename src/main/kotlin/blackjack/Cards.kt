@@ -10,6 +10,8 @@ private const val ACE_VALUE_2 = 11
 class Cards(
     val items: MutableSet<Card>
 ) {
+    constructor(vararg cards: Card) : this(cards.toMutableSet())
+
     val size: Int
         get() = items.size
 
