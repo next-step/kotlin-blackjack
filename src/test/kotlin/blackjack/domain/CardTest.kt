@@ -14,7 +14,7 @@ class CardTest {
         card.shape.name shouldBe shape
     }
 
-    @CsvSource("1,HEART", "10,CLOVER", "B,DIAMOND", "12,HEART", "2,STAR")
+    @CsvSource("1,HEART", "11,CLOVER", "B,DIAMOND", "12,HEART", "2,STAR")
     @ParameterizedTest
     fun `범위에 있지 않은 카드는 예외 발생`(number: String, shape: String) {
         shouldThrow<IllegalArgumentException> {
