@@ -9,9 +9,9 @@ class PokerScoreTest : StringSpec({
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber, PokerShape.CLOVER),
-                Card(PokerNumberFinder("8").pokerNumber, PokerShape.DIAMOND),
-                Card(PokerNumberFinder("10").pokerNumber, PokerShape.HEART)
+                Card(PokerNumber.find("2"), PokerShape.CLOVER),
+                Card(PokerNumber.find("8"), PokerShape.DIAMOND),
+                Card(PokerNumber.find("10"), PokerShape.HEART)
             )
         )
 
@@ -26,9 +26,9 @@ class PokerScoreTest : StringSpec({
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("Jack").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("Queen").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("King").pokerNumber, PokerShape.HEART)
+                Card(PokerNumber.find("Jack"), PokerShape.HEART),
+                Card(PokerNumber.find("Queen"), PokerShape.HEART),
+                Card(PokerNumber.find("King"), PokerShape.HEART)
             )
         )
 
@@ -43,9 +43,9 @@ class PokerScoreTest : StringSpec({
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("3").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("A").pokerNumber, PokerShape.HEART)
+                Card(PokerNumber.find("2"), PokerShape.HEART),
+                Card(PokerNumber.find("3"), PokerShape.HEART),
+                Card(PokerNumber.find("A"), PokerShape.HEART)
             )
         )
 
@@ -60,9 +60,9 @@ class PokerScoreTest : StringSpec({
         // given
         val cards = Cards(
             mutableListOf(
-                Card(PokerNumberFinder("2").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("10").pokerNumber, PokerShape.HEART),
-                Card(PokerNumberFinder("A").pokerNumber, PokerShape.HEART)
+                Card(PokerNumber.find("2"), PokerShape.HEART),
+                Card(PokerNumber.find("10"), PokerShape.HEART),
+                Card(PokerNumber.find("A"), PokerShape.HEART)
             )
         )
 
