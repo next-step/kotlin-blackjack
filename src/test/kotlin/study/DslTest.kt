@@ -6,21 +6,6 @@ import dsl.introduce
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-/*
-introduce {
-  name("윤영빈")
-  company("KSD")
-  skills {
-    soft("A passion for problem solving")
-    soft("Good communication skills")
-    hard("Kotlin")
-  }
-  languages {
-    "Korean" level 5
-    "English" level 3
-  }
-}
- */
 class DslTest {
     @Test
     fun name() {
