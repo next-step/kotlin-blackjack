@@ -14,5 +14,5 @@
     - 승리자 플레이어
 
 - Sharp는 HEART, SPADE, DIAMOND, CLOVER 으로 구성된다.
-- Number 은 ACE TWO, ... TEN, A, JACK, KING, QUEEN 으로 구성된다.
+- Number 은 ACE TWO, ... JACK, KING, QUEEN 으로 구성된다.
 - Number 각 의미에 맞는 값을 가지고 있다.
