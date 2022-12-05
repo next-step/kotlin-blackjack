@@ -28,8 +28,8 @@ class DslTest {
     @Test
     fun skills() {
         val person: Person = introduce {
+            name("윤영빈")
             skills {
-                name("윤영빈")
                 soft("A passion for problem solving")
                 soft("Good communication skills")
                 hard("Kotlin")
@@ -42,12 +42,10 @@ class DslTest {
     @Test
     fun languages() {
         val person: Person = introduce {
-            skills {
-                name("윤영빈")
-                languages {
-                    "Korean" level 3
-                    "English" level 1
-                }
+            name("윤영빈")
+            languages {
+                "Korean" level 3
+                "English" level 1
             }
         }
         person.languages?.languages shouldBe listOf(
