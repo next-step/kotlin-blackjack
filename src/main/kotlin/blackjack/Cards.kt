@@ -4,6 +4,9 @@ import kotlin.math.abs
 
 private const val BLACKJACK_NUMBER = 21
 
+private const val ACE_VALUE_1 = 1
+private const val ACE_VALUE_2 = 11
+
 class Cards(
     val items: MutableSet<Card>
 ) {
@@ -21,7 +24,6 @@ class Cards(
 
     fun score(): Int {
         val allSum = items.sumOf { card -> card.sumAllScore() }
-
         val aceCount = items.count { card -> card.number == Number.ACE }
 
         if (aceCount == 0) {
@@ -29,13 +31,19 @@ class Cards(
         }
 
         return (0 until aceCount).fold(allSum) { acc, _ ->
-            if (abs(acc - 1 - BLACKJACK_NUMBER) < abs(acc - 11 - BLACKJACK_NUMBER)) {
-                acc - 1
+            val candidate1 = acc - ACE_VALUE_1
+            val candidate2 = acc - ACE_VALUE_2
+
+            if (candidate1.isNearBlackJackThan(candidate2)) {
+                candidate1
             } else {
-                acc - 11
+                candidate2
             }
         }
     }
+
+    private fun Int.isNearBlackJackThan(candidate2: Int) =
+        abs(this - BLACKJACK_NUMBER) < abs(candidate2 - BLACKJACK_NUMBER)
 
     companion object {
         private const val MIN_SIZE = 2
