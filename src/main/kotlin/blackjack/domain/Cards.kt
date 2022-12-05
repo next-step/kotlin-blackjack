@@ -1,8 +1,14 @@
 package blackjack.domain
 
-class Cards(val list: MutableList<Card> = mutableListOf()) {
-    val count: Int = list.size
+class Cards(list: List<Card> = listOf()) {
+    private val _list: MutableList<Card> = list.toMutableList()
+
+    val list: List<Card>
+        get() = _list.toList()
+
     fun add(card: Card) {
-        list.add(card)
+        _list.add(card)
     }
+
+    fun count(): Int = _list.size
 }
