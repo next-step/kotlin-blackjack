@@ -5,21 +5,6 @@ import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-/*
-introduce {
-  name("이도원")
-  company("새회사")
-  skills {
-    soft("A passion for problem solving")
-    soft("Good communication skills")
-    hard("Kotlin")
-  }
-  languages {
-    "Korean" level 5
-    "English" level 3
-  }
-}
- */
 class DslTest {
 
     @Test
@@ -82,7 +67,7 @@ class DslTest {
             Soft("Good communication skills"),
             Hard("Kotlin")
         )
-        person.language!! shouldContainExactly mapOf(
+        person.language shouldContainExactly mapOf(
             "Korean" to 5,
             "English" to 3
         )
