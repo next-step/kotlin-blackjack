@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Deck(
     _cards: MutableSet<Card>

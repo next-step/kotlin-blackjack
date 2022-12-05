@@ -1,11 +1,11 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.Number.ACE
-import blackjack.Number.THREE
-import blackjack.Number.TWO
-import blackjack.Sharp.CLOVER
-import blackjack.Sharp.DIAMOND
-import blackjack.Sharp.HEART
+import blackjack.domain.Number.ACE
+import blackjack.domain.Number.THREE
+import blackjack.domain.Number.TWO
+import blackjack.domain.Sharp.CLOVER
+import blackjack.domain.Sharp.DIAMOND
+import blackjack.domain.Sharp.HEART
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
