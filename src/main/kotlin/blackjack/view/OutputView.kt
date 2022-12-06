@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.People
-import blackjack.Person
+import blackjack.domain.People
+import blackjack.domain.Person
 
 object OutputView {
     fun printInitialState(people: People) {

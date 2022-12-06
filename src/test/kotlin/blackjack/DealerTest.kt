@@ -1,7 +1,8 @@
 package blackjack
 
-import blackjack.strategy.RandomCardPickStrategy
-import blackjack.util.RandomNumberGenerator
+import blackjack.domain.Dealer
+import blackjack.domain.strategy.RandomCardPickStrategy
+import blackjack.domain.util.RandomNumberGenerator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every

@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.strategy.CardPickStrategy
+import blackjack.domain.strategy.CardPickStrategy
 
 class Dealer(
     private val cardPickStrategy: CardPickStrategy

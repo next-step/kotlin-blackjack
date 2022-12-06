@@ -1,5 +1,6 @@
 package blackjack.util
 
+import blackjack.domain.util.RandomNumberGenerator
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.ints.shouldBeInRange
 import io.kotest.property.checkAll

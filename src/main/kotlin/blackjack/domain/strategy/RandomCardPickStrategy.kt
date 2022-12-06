@@ -1,9 +1,9 @@
-package blackjack.strategy
+package blackjack.domain.strategy
 
-import blackjack.Card
-import blackjack.CardNumber
-import blackjack.CardShape
-import blackjack.util.RandomNumberGenerator
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardShape
+import blackjack.domain.util.RandomNumberGenerator
 
 class RandomCardPickStrategy : CardPickStrategy {
     override fun pick(): Card {

@@ -1,6 +1,9 @@
 package blackjack
 
-import blackjack.strategy.RandomCardPickStrategy
+import blackjack.domain.Dealer
+import blackjack.domain.People
+import blackjack.domain.Person
+import blackjack.domain.strategy.RandomCardPickStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

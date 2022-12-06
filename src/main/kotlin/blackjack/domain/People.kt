@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.util.Parser
+import blackjack.domain.util.Parser
 
 data class People(
     private val nameStr: String,

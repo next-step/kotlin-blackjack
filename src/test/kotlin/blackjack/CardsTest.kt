@@ -1,5 +1,9 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardShape
+import blackjack.domain.Cards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
