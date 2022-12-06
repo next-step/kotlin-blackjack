@@ -6,7 +6,6 @@ import blackjack.domain.Player
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleOutput
 
-
 class BlackjackController {
     fun playGame() {
         val players = ConsoleInput().inputPlayers()
