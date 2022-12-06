@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 class CardCalculator(private val cards: List<Card>) {
     fun sum(): Int {
-        val sum = cards.sumOf { it.number.value }
+        val sum = cards.sumOf { if (it.number.value > 10) 10 else it.number.value }
         return sumChangeAce(sum)
     }
 

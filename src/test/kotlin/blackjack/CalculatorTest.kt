@@ -31,4 +31,13 @@ class CalculatorTest : StringSpec({
 
         cardCalculator.sum() shouldBe inputValues.sumOf { it.value } + 10
     }
+
+    "Jack, Queen, King 은 각각 10으로 계산한다" {
+        val inputValues = listOf(CardNumber(3), CardNumber(2), CardNumber(11))
+        val cardCalculator = CardCalculator(
+            inputValues.map { Card(CARD_SHAPE.Clover, it) }
+        )
+
+        cardCalculator.sum() shouldBe inputValues.sumOf { it.value } - 1
+    }
 })
