@@ -40,4 +40,16 @@ internal class BlackJackTest {
 
         assertThat(isOver).isTrue
     }
+
+    @Test
+    @DisplayName("카드 [ACE, ACE, ACE]를 가진 선수는 최종 점수는 23")
+    fun `(ACE, ACE, ACE) The player with the card has a final score of 23`() {
+        val player = Player("홍길동")
+        player.cards.add(Card(CardNumber.ACE, CardType.CLOVER))
+        player.cards.add(Card(CardNumber.ACE, CardType.CLOVER))
+        player.cards.add(Card(CardNumber.ACE, CardType.CLOVER))
+        val score = BlackJack.getScore(player)
+
+        assertThat(score).isEqualTo(23)
+    }
 }

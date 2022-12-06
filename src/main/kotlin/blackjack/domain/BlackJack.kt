@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
+import kotlin.math.abs
 
 object BlackJack {
 
@@ -31,5 +32,13 @@ object BlackJack {
     fun isOverScore(player: Player): Boolean {
         val totalScore = totalScore(player)
         return totalScore.minOf { it >= WIN_SCORE }
+    }
+
+    fun getScore(player: Player): Int {
+        val numbers = player.cards.map { it.number }
+        val score = CardNumber.calculate(numbers)
+        val min = score.minOf { abs(it - WIN_SCORE) }
+
+        return score.first { min == abs(it - WIN_SCORE) }
     }
 }
