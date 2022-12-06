@@ -20,18 +20,18 @@ class CardTest : StringSpec({
     }
 
     "카드 숫자 중 1은 Ace로 표시한다" {
-        val card = Card(CARD_SHAPE.Clover, CardNumber(1))
+        val card = Card(CARD_SHAPE.Clover, CardNumber.Ace())
 
-        card.number.toName() shouldBe "Ace"
+        card.number.name shouldBe "Ace"
     }
 
     "카드 숫자 중 11은 Jack, 12는 Queen, 13은 King 으로 표시한다" {
-        val cardJack = Card(CARD_SHAPE.Clover, CardNumber(11))
-        val cardQueen = Card(CARD_SHAPE.Clover, CardNumber(12))
-        val cardKing = Card(CARD_SHAPE.Clover, CardNumber(13))
+        val cardJack = Card(CARD_SHAPE.Clover, CardNumber.Jack())
+        val cardQueen = Card(CARD_SHAPE.Clover, CardNumber.Queen())
+        val cardKing = Card(CARD_SHAPE.Clover, CardNumber.King())
 
-        cardJack.number.toName() shouldBe "Jack"
-        cardQueen.number.toName() shouldBe "Queen"
-        cardKing.number.toName() shouldBe "King"
+        cardJack.number.name shouldBe "Jack"
+        cardQueen.number.name shouldBe "Queen"
+        cardKing.number.name shouldBe "King"
     }
 })
