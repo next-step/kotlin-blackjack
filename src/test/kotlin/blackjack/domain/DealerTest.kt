@@ -23,7 +23,7 @@ class DealerTest {
         val dealer = Dealer()
         var count = dealer.deck.count()
         repeat(5) {
-            dealer.divede()
+            dealer.divide()
             count--
             dealer.deck.count() shouldBe count
         }
