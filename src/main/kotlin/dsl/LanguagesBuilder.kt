@@ -1,8 +1,6 @@
 package dsl
 
-class LanguagesBuilder() {
-    private var languages = Languages()
-
+class LanguagesBuilder(private var languages: Languages = Languages()) {
     infix fun String.level(value: Int) {
         val newLanguages = languages.add(Language(this, value))
         languages = newLanguages
@@ -13,7 +11,7 @@ class LanguagesBuilder() {
     }
 }
 
-data class Language(private val type: String, private val level: Int)
+data class Language(val type: String, val level: Int)
 
 class Languages(languages: List<Language> = emptyList()) {
     private val _languages: MutableList<Language> = languages.toMutableList()

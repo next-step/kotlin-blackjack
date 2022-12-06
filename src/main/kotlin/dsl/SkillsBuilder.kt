@@ -1,9 +1,9 @@
 package dsl
 
-class SkillsBuilder {
-    private var softSkills = SoftSkills()
-    private var hardSkills = HardSkills()
-
+class SkillsBuilder(
+    private var softSkills: SoftSkills = SoftSkills(),
+    private var hardSkills: HardSkills = HardSkills()
+) {
     fun soft(value: String) {
         val newSoftSkills = softSkills.add(value)
         softSkills = newSoftSkills
