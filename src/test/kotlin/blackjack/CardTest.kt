@@ -25,4 +25,14 @@ class CardTest : StringSpec({
 
         card.number.toName() shouldBe "Ace"
     }
+
+    "카드 숫자 중 11은 Jack, 12는 Queen, 13은 King 으로 표시한다" {
+        val cardJack = Card(CARD_SHAPE.Clover, CardNumber(11))
+        val cardQueen = Card(CARD_SHAPE.Clover, CardNumber(12))
+        val cardKing = Card(CARD_SHAPE.Clover, CardNumber(13))
+
+        cardJack.number.toName() shouldBe "Jack"
+        cardQueen.number.toName() shouldBe "Queen"
+        cardKing.number.toName() shouldBe "King"
+    }
 })

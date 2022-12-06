@@ -6,7 +6,7 @@ class CardNumber(val value: Int = (1..13).random()) {
         1 -> "Ace"
         11 -> "Jack"
         12 -> "Queen"
-        13 -> "Jack"
+        13 -> "King"
         else -> value.toString()
     }
 }
