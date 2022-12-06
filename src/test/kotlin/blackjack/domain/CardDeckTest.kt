@@ -28,8 +28,8 @@ class CardDeckTest : StringSpec({
         val cardDeck = CardDeck.empty()
         val initCount = cardDeck.cards.size
 
-        val card = Card(Card.Suit.CLUB, Card.Number.ACE)
-        cardDeck.hit(card)
+        val card = Card(Suit.CLUB, Number.ACE)
+        cardDeck.add(card)
 
         cardDeck.cards shouldHaveSize initCount.inc()
     }

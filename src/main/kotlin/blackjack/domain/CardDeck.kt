@@ -10,16 +10,19 @@ class CardDeck private constructor(val cards: Stack<Card>) {
         return cards.pop()
     }
 
-    fun hit(card: Card): Card = cards.push(card.copy())
+    fun add(card: Card) {
+        cards.push(card.copy())
+    }
 
     companion object {
+        const val BLACK_JACk_NUMBER = 21
 
         fun empty(): CardDeck = CardDeck(Stack<Card>())
         fun shuffle(): CardDeck = CardDeck(init())
 
-        private fun init() = Card.Suit.values()
+        private fun init() = Suit.values()
             .flatMap { suit ->
-                Card.Number.values().map { number ->
+                Number.values().map { number ->
                     Card(suit, number)
                 }
             }

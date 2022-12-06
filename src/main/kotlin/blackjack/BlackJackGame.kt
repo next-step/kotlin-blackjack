@@ -20,7 +20,7 @@ class BlackJackGame {
         repeat(INIT_HIT_COUNT) {
             players.forEach { player ->
                 val card = cardDeck.draw()
-                player.cardDeck.hit(card)
+                player.hit(card)
             }
         }
 
@@ -62,7 +62,7 @@ class BlackJackGame {
             }
 
             val card = cardDeck.draw()
-            player.cardDeck.hit(card)
+            player.hit(card)
 
             val cards = toCardNames(player)
 
@@ -78,7 +78,7 @@ class BlackJackGame {
     private fun printResult(players: List<Player>) {
         players.forEach { player ->
             val cards = toCardNames(player)
-            val point = player.point()
+            val point = player.point
 
             ResultView.printResult(player.name, cards, point)
         }

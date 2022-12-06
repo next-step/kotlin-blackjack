@@ -17,17 +17,17 @@ class PlayerTest : StringSpec({
         forAll(
             row(
                 listOf(
-                    Card(Card.Suit.CLUB, Card.Number.SIX),
-                    Card(Card.Suit.DIAMOND, Card.Number.SIX),
-                    Card(Card.Suit.HEART, Card.Number.SIX),
-                    Card(Card.Suit.SPADE, Card.Number.SIX)
+                    Card(Suit.CLUB, Number.SIX),
+                    Card(Suit.DIAMOND, Number.SIX),
+                    Card(Suit.HEART, Number.SIX),
+                    Card(Suit.SPADE, Number.SIX)
                 ),
                 true
             ),
             row(
                 listOf(
-                    Card(Card.Suit.CLUB, Card.Number.SIX),
-                    Card(Card.Suit.DIAMOND, Card.Number.SIX)
+                    Card(Suit.CLUB, Number.SIX),
+                    Card(Suit.DIAMOND, Number.SIX)
                 ),
                 false
             )
@@ -35,7 +35,7 @@ class PlayerTest : StringSpec({
             val player = Player("테스터")
 
             cards.forEach { card ->
-                player.cardDeck.hit(card)
+                player.hit(card)
             }
 
             player.isBust() shouldBe isBust
@@ -46,17 +46,17 @@ class PlayerTest : StringSpec({
         forAll(
             row(
                 listOf(
-                    Card(Card.Suit.CLUB, Card.Number.SIX),
-                    Card(Card.Suit.DIAMOND, Card.Number.SIX),
-                    Card(Card.Suit.HEART, Card.Number.SIX),
-                    Card(Card.Suit.SPADE, Card.Number.SIX)
+                    Card(Suit.CLUB, Number.SIX),
+                    Card(Suit.DIAMOND, Number.SIX),
+                    Card(Suit.HEART, Number.SIX),
+                    Card(Suit.SPADE, Number.SIX)
                 ),
                 24
             ),
             row(
                 listOf(
-                    Card(Card.Suit.CLUB, Card.Number.SIX),
-                    Card(Card.Suit.DIAMOND, Card.Number.SIX)
+                    Card(Suit.CLUB, Number.SIX),
+                    Card(Suit.DIAMOND, Number.SIX)
                 ),
                 12
             )
@@ -64,35 +64,35 @@ class PlayerTest : StringSpec({
             val player = Player("테스터")
 
             cards.forEach { card ->
-                player.cardDeck.hit(card)
+                player.hit(card)
             }
 
-            player.point() shouldBe point
+            player.point shouldBe point
         }
     }
 
     "Ace 는 블랙잭 숫자보다 합산이 작을 경우엔 포인트가 11로 계산된다." {
         val player = Player("테스터")
-        val card = Card(Card.Suit.SPADE, Card.Number.ACE)
+        val card = Card(Suit.SPADE, Number.ACE)
 
-        player.cardDeck.hit(card)
+        player.hit(card)
 
-        player.point() shouldBe 11
+        player.point shouldBe 11
     }
 
     "Ace 는 블랙잭 숫자보다 합산이 클 경우엔 포인트가 1로 계산된다." {
         val player = Player("테스터")
 
         val cards = listOf(
-            Card(Card.Suit.HEART, Card.Number.NINE),
-            Card(Card.Suit.DIAMOND, Card.Number.NINE),
-            Card(Card.Suit.SPADE, Card.Number.ACE)
+            Card(Suit.HEART, Number.NINE),
+            Card(Suit.DIAMOND, Number.NINE),
+            Card(Suit.SPADE, Number.ACE)
         )
 
         cards.forEach { card ->
-            player.cardDeck.hit(card)
+            player.hit(card)
         }
 
-        player.point() shouldBe 19
+        player.point shouldBe 19
     }
 })

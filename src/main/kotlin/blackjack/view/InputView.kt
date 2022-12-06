@@ -11,7 +11,7 @@ object InputView {
             .map { it.trim() }
 
     fun requestConfirm(): Boolean {
-        val input: String = requestString()
+        val input = requestString()
         val isYes = input.uppercase() == YES
         val isNo = input.uppercase() == NO
 
@@ -21,7 +21,7 @@ object InputView {
     }
 
     private fun requestString(): String {
-        val input: String? = readlnOrNull()
+        val input = readlnOrNull()
         require(!input.isNullOrBlank()) { "빈값을 입력 할 수 없습니다." }
 
         return input
