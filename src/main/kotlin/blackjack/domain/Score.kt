@@ -20,24 +20,22 @@ object Score {
                 }
             }
         }
-
-        score = countingAceCard(score, cards.list.count { it.number == CardNumber.ACE })
+        score += countingMaxAceCard(score, cards.list.count { it.number == CardNumber.ACE })
         return score
     }
 
-    private fun countingAceCard(score: Int, countOfAceCard: Int): Int {
+    private fun countingMaxAceCard(score: Int, countOfAceCard: Int): Int {
         if (countOfAceCard == 0) {
-            return score
+            return 0
         }
 
-        var result = score
+        var aceScore = 0
         repeat(countOfAceCard) {
-            val tmp = score - ACE_CARD_MIN_SCORE + ACE_CARD_MAX_SCORE
-            if (tmp > BLACKJACK_SCORE) {
-                return score
+            val tmp = score + aceScore - ACE_CARD_MIN_SCORE + ACE_CARD_MAX_SCORE
+            if (tmp <= BLACKJACK_SCORE) {
+                aceScore = ACE_CARD_MAX_SCORE - ACE_CARD_MIN_SCORE
             }
-            result = score
         }
-        return result
+        return aceScore
     }
 }
