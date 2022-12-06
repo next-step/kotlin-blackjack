@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Constants.INITIAL_CARD_COUNT
+import blackjack.domain.Game
 import blackjack.domain.Player
 import blackjack.domain.Players
 
@@ -11,11 +12,13 @@ class ConsoleOutput {
         println()
     }
 
-    fun printPlayerCards(player: Player) = getPlayerInfo(player)
+    fun printPlayerCards(player: Player) = println(getPlayerInfo(player))
 
-    fun printGameResult(players: Players) {
-        players.list.map { println("${getPlayerInfo(it)} - 결과:") }
+    fun printGameResult(game: Game) {
+        game.players.list.map { println("${getPlayerInfo(it)} - 결과: ${it.countingCard()}") }
     }
+
+    fun printLine() = println()
 
     private fun getPlayerInfo(player: Player) = "${player.name}카드: ${player.cards}"
 }
