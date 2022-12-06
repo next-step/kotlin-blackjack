@@ -1,24 +1,32 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
-import blackjack.domain.Players
+import blackjack.domain.Game
+import blackjack.domain.Player
 import blackjack.view.ConsoleInput
+import blackjack.view.ConsoleOutput
 
-const val INITIAL_CARD_COUNT = 2
 
 class BlackjackController {
     fun playGame() {
         val players = ConsoleInput().inputPlayers()
-        val dealer = Dealer()
+        val game = Game(players)
+        ConsoleOutput().printInitialCards(game.players)
+
+        scratchPlayers(game)
     }
 
-    private fun initialCard(players: Players, dealer: Dealer) {
-        dealer.shuffle()
+    private fun scratchPlayers(game: Game) {
+        game.players.list.forEach {
+            scratch(it, game.dealer)
+        }
+        println()
+    }
 
-        players.list.forEach { player ->
-            repeat(INITIAL_CARD_COUNT) {
-                player.cards.add(dealer.divede())
-            }
+    private fun scratch(player: Player, dealer: Dealer) {
+        while (!player.isBurst() && ConsoleInput().inputScratch(player)) {
+            player.hit(dealer.divide())
+            ConsoleOutput().printPlayerCards(player)
         }
     }
 }
