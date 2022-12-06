@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.ParticipantResult
+import blackjack.domain.StayResult
 
 object InputView {
 
@@ -9,5 +10,11 @@ object InputView {
         val participant = readlnOrNull() ?: throw IllegalArgumentException("값을 입력하세요.")
 
         return ParticipantResult(participant)
+    }
+
+    fun stay(name: String): StayResult {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val answer = readln()
+        return StayResult(answer)
     }
 }

@@ -14,6 +14,9 @@
 
 - [x] 참여자 입력이 공백으로 들어왔을 경우 IllegalArgumentException 오류
 - [x] 참여자 입력이 홍길동, 심봉사로 들어왔을 경우 참여자는 [홍길동, 심봉사]
+- [x] 카드를 한장 더 받는 입력 값이 y 혹은 n이 아닌 경우 IllegalArgumentException 오류
+- [x] 카드를 한장 더 받는 입력 값이 y인 경우 true
+- [x] 카드를 한장 더 받는 입력 값이 n인 경우 false
 
 ### 검증
 
