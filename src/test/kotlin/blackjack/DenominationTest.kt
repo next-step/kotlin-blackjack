@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 internal class DenominationTest {
     @Test
     fun `2부터 9까지는 숫자 그대로 따라간다`() {
-        Denomination.SECOND.score shouldBe 2
-        Denomination.THIRD.score shouldBe 3
-        Denomination.FOURTH.score shouldBe 4
+        Denomination.TWO.score shouldBe 2
+        Denomination.THREE.score shouldBe 3
+        Denomination.FOUR.score shouldBe 4
         Denomination.FIVE.score shouldBe 5
         Denomination.SIX.score shouldBe 6
         Denomination.SEVEN.score shouldBe 7

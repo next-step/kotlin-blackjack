@@ -2,9 +2,9 @@ package blackjack
 
 enum class Denomination(val score: Int) {
     ACE(1),
-    SECOND(2),
-    THIRD(3),
-    FOURTH(4),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
     FIVE(5),
     SIX(6),
     SEVEN(7),
