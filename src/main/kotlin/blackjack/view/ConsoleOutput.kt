@@ -17,5 +17,5 @@ class ConsoleOutput {
         players.list.map { println("${getPlayerInfo(it)} - 결과:") }
     }
 
-    private fun getPlayerInfo(player: Player) = "${player.name}카드: ${player.cards.toString()}"
+    private fun getPlayerInfo(player: Player) = "${player.name}카드: ${player.cards}"
 }

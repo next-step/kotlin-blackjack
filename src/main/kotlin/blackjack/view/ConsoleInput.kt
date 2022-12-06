@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Player
 import blackjack.domain.Players
 
-
 class ConsoleInput {
 
     fun inputPlayers(): Players {
