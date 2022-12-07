@@ -7,27 +7,28 @@ private const val ACE_VALUE_1 = 1
 private const val ACE_VALUE_2 = 11
 
 class Cards(
-    private val items: MutableSet<Card>
+    items: Set<Card>
 ) {
     constructor(vararg cards: Card) : this(cards.toMutableSet())
 
-    val size: Int
-        get() = items.size
+    private val _items: MutableSet<Card> = items.toMutableSet()
     val elements: Set<Card>
-        get() = items
+        get() = _items.toSet()
+    val size: Int
+        get() = _items.size
 
     init {
-        require(items.size >= MIN_SIZE) { "카드는 최소 2장 이상이어야 합니다." }
+        require(_items.size >= MIN_SIZE) { "카드는 최소 2장 이상이어야 합니다." }
     }
 
     fun add(card: Card) {
-        require(!items.contains(card)) { "중복된 카드 ${card}는 추가할 수 없어요." }
-        items.add(card)
+        require(!_items.contains(card)) { "중복된 카드 ${card}는 추가할 수 없어요." }
+        _items.add(card)
     }
 
     fun score(): Int {
-        val allSum = items.sumOf { card -> card.sumAllScore() }
-        val aceCount = items.count { card -> card.isAce() }
+        val allSum = _items.sumOf { card -> card.sumAllScore() }
+        val aceCount = _items.count { card -> card.isAce() }
 
         if (aceCount == 0) {
             return allSum
@@ -46,6 +47,7 @@ class Cards(
             candidate2
         }
     }
+
     private fun Int.isNearBlackJackThan(candidate2: Int) =
         abs(this - BLACKJACK_NUMBER) < abs(candidate2 - BLACKJACK_NUMBER)
 

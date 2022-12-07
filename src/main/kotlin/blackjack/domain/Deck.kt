@@ -1,23 +1,23 @@
 package blackjack.domain
 
 class Deck(
-    _cards: MutableSet<Card>
+    cards: Set<Card>
 ) {
-    private val queue = ArrayDeque<Card>()
+    private val _queue = ArrayDeque<Card>()
     val size: Int
-        get() = queue.size
+        get() = _queue.size
 
     init {
-        queue.addAll(_cards)
+        _queue.addAll(cards)
     }
 
     fun draw(): Card {
-        check(queue.isNotEmpty()) { "뽑을 수 있는 카드가 없어요." }
-        return queue.removeFirst()
+        check(_queue.isNotEmpty()) { "뽑을 수 있는 카드가 없어요." }
+        return _queue.removeFirst()
     }
 
     fun drawInitAssignCards(): Cards {
-        check(queue.size > 2) { "카드가 두장 이상이어야 해요." }
+        check(_queue.size > 2) { "카드가 두장 이상이어야 해요." }
         return Cards(draw(), draw())
     }
 
