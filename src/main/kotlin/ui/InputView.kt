@@ -4,6 +4,7 @@ import model.Dealer
 import model.Player
 import model.Players
 import model.PokerGame
+import model.PokerScore
 import ui.ResultView.resultPlayerCard
 
 object InputView {
@@ -18,6 +19,15 @@ object InputView {
     fun inputPlayerQuestion(pokerGame: PokerGame) {
         pokerGame.getPlayers().forEach {
             inputQuestionHit(it, pokerGame.dealer)
+        }
+        inputDealerHit(pokerGame.dealer)
+    }
+
+    private fun inputDealerHit(dealer: Dealer) {
+        val pokerScore = PokerScore(dealer.cards)
+        if(pokerScore.score < 17){
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            dealer.hit(dealer.pick())
         }
     }
 

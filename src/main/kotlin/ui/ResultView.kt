@@ -8,7 +8,8 @@ object ResultView {
     fun resultInitPokerGame(pokerGame: PokerGame) {
         val playerNames = pokerGame.getPlayers().map { it.name }
         println()
-        println("${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
+        println("딜러와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
+        resultPlayerCard(pokerGame.dealer)
         pokerGame.getPlayers().forEach { player -> resultPlayerCard(player) }
     }
 
@@ -18,8 +19,13 @@ object ResultView {
 
     fun resultPokerGameScore(pokerGame: PokerGame) {
         println()
+        playerScore(pokerGame.dealer)
         pokerGame.getPlayers().forEach { player ->
-            println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
+            playerScore(player)
         }
+    }
+
+    private fun playerScore(player: Player) {
+        println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
     }
 }
