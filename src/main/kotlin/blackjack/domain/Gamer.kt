@@ -8,7 +8,7 @@ data class Gamer(val name: String, val cards: Cards = Cards()) {
 
     fun getTotalScore(): Int {
         val totalScoreByAceEleven = cards.getTotalScore(isAceEleven = true)
-        val diffByAceEleven = totalScoreByAceEleven - Companion.BLACK_JACK
+        val diffByAceEleven = totalScoreByAceEleven - BLACK_JACK
         val totalScoreByAceOne = cards.getTotalScore(isAceEleven = false)
         val diffByAceOne = totalScoreByAceOne - BLACK_JACK
 
