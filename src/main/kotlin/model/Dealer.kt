@@ -1,8 +1,9 @@
 package model
 
 class Dealer(
-    private val trump: Deck = Deck()
-) {
-    fun pick(): Card = trump.pick()
-    fun cardCount(): Int = trump.count()
+    name: String = "딜러",
+    private val deck: Deck = Deck()
+) : Player(name) {
+    fun pick(): Card = deck.pick()
+    fun cardCount(): Int = deck.count()
 }

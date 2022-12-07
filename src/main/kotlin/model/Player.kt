@@ -1,6 +1,6 @@
 package model
 
-class Player(
+open class Player(
     val name: String,
     val cards: Cards = Cards()
 ) {
