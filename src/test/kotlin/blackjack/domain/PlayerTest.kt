@@ -38,9 +38,9 @@ internal class PlayerTest {
 
         // then
         assertAll(
-            { assertThat(player.cards.size).isEqualTo(3) },
+            { assertThat(player.cardElements).hasSize(3) },
             {
-                assertThat(player.cards.elements).containsExactly(
+                assertThat(player.cardElements).containsExactly(
                     Card(ACE, HEART),
                     Card(TWO, CLOVER),
                     Card(THREE, DIAMOND)

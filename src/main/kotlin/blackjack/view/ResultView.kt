@@ -24,5 +24,5 @@ object ResultView {
 
     private fun Player.cardScoreDescription() = "${this.name}카드: ${this.cardsDescription()}"
     private fun Player.cardsDescription() =
-        this.cards.elements.map { c -> c.number.desc + c.sharp.desc }.joinToString { it }
+        this.cardElements.map { c -> c.number.desc + c.sharp.desc }.joinToString { it }
 }

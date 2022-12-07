@@ -4,8 +4,11 @@ import blackjack.domain.Const.BLACKJACK_NUMBER
 
 class Player(
     val name: String,
-    val cards: Cards
+    private val cards: Cards
 ) {
+    val cardElements: Set<Card>
+        get() = cards.elements
+
     fun addCard(card: Card) {
         this.cards.add(card)
     }
