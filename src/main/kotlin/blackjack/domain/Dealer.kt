@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Dealer {
+data class Dealer(override val name: String = "dealer", override val cards: Cards = Cards()) : Player(name, cards) {
 
-    private val cards: DealerCards = DealerCards()
+    private val dealerCards: DealerCards = DealerCards()
 
-    fun getCard(): Card = cards.getCard()
+    fun extractCard(): Card = dealerCards.getCard()
 }

@@ -33,7 +33,7 @@ class ResultView {
             return true
         }
 
-        gamer.addCard(dealer.getCard())
+        gamer.addCard(dealer.extractCard())
         println(gamer)
 
         return ask(gamer)
@@ -50,7 +50,7 @@ class ResultView {
     private fun distribute(gamers: List<Gamer>) {
         repeat(gamers.size) {
             val gamer = gamers[it]
-            repeat(2) { gamer.addCard(dealer.getCard()) }
+            repeat(2) { gamer.addCard(dealer.extractCard()) }
             println(gamer)
         }
     }
