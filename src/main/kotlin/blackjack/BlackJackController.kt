@@ -10,7 +10,8 @@ fun main() {
     val deck = Deck.init()
 
     val players = usersNames.map { name ->
-        Player.init(name, deck)
+        val cards = deck.drawInitAssignCards()
+        Player(name, cards)
     }
 
     ResultView.printDrawResults(players)

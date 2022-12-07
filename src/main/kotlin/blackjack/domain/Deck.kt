@@ -16,6 +16,11 @@ class Deck(
         return queue.removeFirst()
     }
 
+    fun drawInitAssignCards(): Cards {
+        check(queue.size > 2) { "카드가 두장 이상이어야 해요." }
+        return Cards(draw(), draw())
+    }
+
     companion object {
         fun init(): Deck {
             return Deck(

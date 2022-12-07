@@ -37,4 +37,17 @@ internal class DeckTest {
             deck.draw()
         }
     }
+
+    @Test
+    internal fun `카드가 두장이 뽑힌다`() {
+        // given
+        val deck = Deck.init()
+
+        // when
+        val cards = deck.drawInitAssignCards()
+
+        // then
+        assertThat(deck.size).isEqualTo(46)
+        assertThat(cards.size).isEqualTo(2)
+    }
 }
