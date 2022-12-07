@@ -8,35 +8,21 @@ class ResultView {
     private val dealer = Dealer()
 
     fun show(gamers: List<Gamer>) {
-        val guide = gamers.joinToString(", ") {
-            it.name
-        }
-
-        println("${guide}에게 2장의 나누었습니다.")
-
-        repeat(gamers.size) {
-            val gamer = gamers[it].apply {
-                addCard(dealer.getCard())
-                addCard(dealer.getCard())
-            }
-            println(gamer)
-        }
-
+        introduceGamers(gamers)
+        distribute(gamers)
         println()
+        relay(gamers)
+        showResult(gamers)
+    }
 
-        var index = 0
-        do {
-            val next = relay(gamers[index])
-            if (next) index++
-        } while (index < gamers.size)
-
+    private fun showResult(gamers: List<Gamer>) {
         repeat(gamers.size) {
             val gamer = gamers[it]
             println("$gamer - 결과: ${gamer.getTotalScore()}")
         }
     }
 
-    private fun relay(gamer: Gamer): Boolean {
+    private fun ask(gamer: Gamer): Boolean {
         println("${gamer.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readLine()
         if (answer.isNullOrBlank()) {
@@ -50,6 +36,27 @@ class ResultView {
         gamer.addCard(dealer.getCard())
         println(gamer)
 
-        return relay(gamer)
+        return ask(gamer)
+    }
+
+    private fun relay(gamers: List<Gamer>) {
+        var index = 0
+        do {
+            val next = ask(gamers[index])
+            if (next) index++
+        } while (index < gamers.size)
+    }
+
+    private fun distribute(gamers: List<Gamer>) {
+        repeat(gamers.size) {
+            val gamer = gamers[it]
+            repeat(2) { gamer.addCard(dealer.getCard()) }
+            println(gamer)
+        }
+    }
+
+    private fun introduceGamers(gamers: List<Gamer>) {
+        val guide = gamers.joinToString(", ") { it.name }
+        println("${guide}에게 2장의 나누었습니다.")
     }
 }
