@@ -40,7 +40,7 @@ internal class PlayerTest {
         player.addCard(card5D)
         player.addCard(card9C)
 
-        player.getTotalScore() shouldBe 14
+        player.totalScore shouldBe 14
     }
 
     @DisplayName("Ace 카드가 포함된 경우 21에 가장 가까운 값으로 점수가 계산된다.")
@@ -53,6 +53,6 @@ internal class PlayerTest {
         player.addCard(cardAD)
         player.addCard(card9C)
 
-        player.getTotalScore() shouldBe 20
+        player.totalScore shouldBe 20
     }
 }

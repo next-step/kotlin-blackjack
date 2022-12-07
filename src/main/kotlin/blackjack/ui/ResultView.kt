@@ -22,16 +22,20 @@ class ResultView {
 
     private fun distribute(players: List<Player>) {
         repeat(players.size) {
-            val gamer = players[it]
-            repeat(2) { gamer.addCard(dealer.extractCard()) }
-            println(gamer)
+            val player = players[it]
+            repeat(2) { player.addCard(dealer.extractCard()) }
+            println(player)
         }
     }
 
     private fun relay(players: List<Player>) {
         var index = 0
         do {
-            val next = ask(players[index])
+            val player = players[index]
+            val next = ask(player)
+
+            if (player.isScoreExceedOrSame()) break
+
             if (next) index++
         } while (index < players.size)
     }
@@ -48,6 +52,9 @@ class ResultView {
         }
 
         player.addCard(dealer.extractCard())
+
+        if (player.isScoreExceedOrSame()) return true
+
         println(player)
 
         return ask(player)
@@ -56,7 +63,7 @@ class ResultView {
     private fun showResult(players: List<Player>) {
         repeat(players.size) {
             val gamer = players[it]
-            println("$gamer - 결과: ${gamer.getTotalScore()}")
+            println("$gamer - 결과: ${gamer.totalScore}")
         }
     }
 }

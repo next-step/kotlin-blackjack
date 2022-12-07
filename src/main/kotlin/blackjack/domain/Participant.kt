@@ -4,11 +4,16 @@ import kotlin.math.abs
 
 abstract class Participant(open val name: String, open val cards: Cards = Cards()) {
 
-    override fun toString(): String {
-        return "${name}카드: $cards"
-    }
+    val totalScore: Int
+        get() = calculate()
 
-    fun getTotalScore(): Int {
+    fun addCard(card: Card) = cards.addCard(card)
+
+    fun hasCard(card: Card): Boolean = cards.hasCard(card)
+
+    fun isScoreExceedOrSame(): Boolean = totalScore >= BLACK_JACK
+
+    private fun calculate(): Int {
         val totalScoreByAceEleven = cards.getTotalScore(isAceEleven = true)
         val diffByAceEleven = abs(totalScoreByAceEleven - BLACK_JACK)
         val totalScoreByAceOne = cards.getTotalScore(isAceEleven = false)
@@ -21,11 +26,7 @@ abstract class Participant(open val name: String, open val cards: Cards = Cards(
         }
     }
 
-    fun addCard(card: Card) = cards.addCard(card)
-
-    fun hasCard(card: Card): Boolean = cards.hasCard(card)
-
     companion object {
-        private const val BLACK_JACK = 21
+        const val BLACK_JACK = 21
     }
 }
