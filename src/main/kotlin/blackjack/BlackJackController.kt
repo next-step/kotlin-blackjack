@@ -16,11 +16,15 @@ fun main() {
     ResultView.printDrawResults(players)
 
     for (player in players) {
-        while (InputView.isDrawMoreCard(player)) {
-            player.addCard(deck.draw())
-            ResultView.printCardScoreDescription(player)
-        }
+        player.drawCardUntilWant(deck)
     }
 
     players.forEach { ResultView.printResults(it) }
+}
+
+private fun Player.drawCardUntilWant(deck: Deck) {
+    while (InputView.isDrawMoreCard(this)) {
+        this.addCard(deck.draw())
+        ResultView.printCardScoreDescription(this)
+    }
 }
