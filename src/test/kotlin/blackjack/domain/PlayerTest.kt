@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.CardNumber.*
-import blackjack.domain.Suit.*
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -20,8 +18,8 @@ internal class PlayerTest {
     @Test
     fun hasCard() {
         val player = Player("hjw")
-        val cardKD = Card(King, Diamond)
-        val cardQS = Card(Queen, Spade)
+        val cardKD = Card(CardNumber.King, Suit.Diamond)
+        val cardQS = Card(CardNumber.Queen, Suit.Spade)
 
         player.addCard(cardKD)
         player.addCard(cardQS)
@@ -34,8 +32,8 @@ internal class PlayerTest {
     @Test
     fun calculate() {
         val player = Player("hjw")
-        val card5D = Card(Five, Diamond)
-        val card9C = Card(Nine, Clover)
+        val card5D = Card(CardNumber.Five, Suit.Diamond)
+        val card9C = Card(CardNumber.Nine, Suit.Clover)
 
         player.addCard(card5D)
         player.addCard(card9C)
@@ -47,8 +45,8 @@ internal class PlayerTest {
     @Test
     fun calculateAce() {
         val player = Player("hjw")
-        val cardAD = Card(Ace, Diamond)
-        val card9C = Card(Nine, Clover)
+        val cardAD = Card(CardNumber.Ace, Suit.Diamond)
+        val card9C = Card(CardNumber.Nine, Suit.Clover)
 
         player.addCard(cardAD)
         player.addCard(card9C)
