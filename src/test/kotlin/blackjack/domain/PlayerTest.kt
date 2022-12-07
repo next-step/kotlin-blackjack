@@ -1,6 +1,8 @@
 package blackjack.domain
 
 import blackjack.domain.Number.ACE
+import blackjack.domain.Number.JACK
+import blackjack.domain.Number.QUEEN
 import blackjack.domain.Number.THREE
 import blackjack.domain.Number.TWO
 import blackjack.domain.Sharp.CLOVER
@@ -38,7 +40,7 @@ internal class PlayerTest {
         assertAll(
             { assertThat(player.cards.size).isEqualTo(3) },
             {
-                assertThat(player.cards.items).containsExactly(
+                assertThat(player.cards.elements).containsExactly(
                     Card(ACE, HEART),
                     Card(TWO, CLOVER),
                     Card(THREE, DIAMOND)
@@ -55,5 +57,29 @@ internal class PlayerTest {
         val resultScore = player.resultScore()
         // then
         assertThat(resultScore).isEqualTo(13)
+    }
+
+    @Test
+    internal fun `21점 이상이면 false를 반환한다`() {
+        // given
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(ACE, DIAMOND)))
+
+        // when
+        val ableMoreDrawCard = player.ableMoreDrawCard()
+
+        // then
+        assertThat(ableMoreDrawCard).isFalse
+    }
+
+    @Test
+    internal fun `21점 미만이면 true를 반환한다`() {
+        // given
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER)))
+
+        // when
+        val ableMoreDrawCard = player.ableMoreDrawCard()
+
+        // then
+        assertThat(ableMoreDrawCard).isTrue
     }
 }

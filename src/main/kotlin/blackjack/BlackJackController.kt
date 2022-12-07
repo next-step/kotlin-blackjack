@@ -23,7 +23,7 @@ fun main() {
 }
 
 private fun Player.drawCardUntilWant(deck: Deck) {
-    while (InputView.isDrawMoreCard(this)) {
+    while (this.ableMoreDrawCard() && InputView.checkWantDrawMoreCard(this)) {
         this.addCard(deck.draw())
         ResultView.printCardScoreDescription(this)
     }

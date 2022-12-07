@@ -1,19 +1,20 @@
 package blackjack.domain
 
+import blackjack.domain.Const.BLACKJACK_NUMBER
 import kotlin.math.abs
-
-private const val BLACKJACK_NUMBER = 21
 
 private const val ACE_VALUE_1 = 1
 private const val ACE_VALUE_2 = 11
 
 class Cards(
-    val items: MutableSet<Card>
+    private val items: MutableSet<Card>
 ) {
     constructor(vararg cards: Card) : this(cards.toMutableSet())
 
     val size: Int
         get() = items.size
+    val elements: Set<Card>
+        get() = items
 
     init {
         require(items.size >= MIN_SIZE) { "카드는 최소 2장 이상이어야 합니다." }
