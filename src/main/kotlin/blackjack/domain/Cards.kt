@@ -4,6 +4,10 @@ class Cards {
 
     private var cardList: MutableList<Card> = mutableListOf()
 
+    override fun toString(): String {
+        return cardList.joinToString(", ")
+    }
+
     fun getTotalScore(isAceEleven: Boolean = false): Int {
         return cardList.sumOf { card ->
             card.toInt(isAceEleven)
