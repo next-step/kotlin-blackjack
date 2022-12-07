@@ -1,11 +1,12 @@
 package blackjack.domain
 
-data class Gamer(val name: String, val cardList: List<Card>) {
+data class Gamer(val name: String, val cards: Cards = Cards()) {
 
-    fun calculate(isAceEleven: Boolean = false): Int {
-        val totalScore = cardList.sumOf { card ->
-            card.toInt(isAceEleven)
-        }
-        return totalScore
+    fun getTotalScore(isAceEleven: Boolean = false): Int {
+        return cards.getTotalScore(isAceEleven)
     }
+
+    fun addCard(card: Card) = cards.addCard(card)
+
+    fun hasCard(card: Card): Boolean = cards.hasCard(card)
 }

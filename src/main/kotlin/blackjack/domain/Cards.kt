@@ -2,23 +2,15 @@ package blackjack.domain
 
 class Cards {
 
-    private var cardList: List<Card> = initList()
+    private var cardList: MutableList<Card> = mutableListOf()
 
-    fun getCard(): Card {
-        val card = cardList[0]
-        cardList = cardList.drop(1)
-        return card
-    }
-
-    fun getCardList(): List<Card> = cardList.toList()
-
-    private fun initList(): List<Card> {
-        val result = mutableListOf<Card>()
-        for (number in CardNumbers().cardNumberList) {
-            for (suit in Suits().suitList) {
-                result.add(Card(cardNumber = number, suit = suit))
-            }
+    fun getTotalScore(isAceEleven: Boolean = false): Int {
+        return cardList.sumOf { card ->
+            card.toInt(isAceEleven)
         }
-        return result.shuffled()
     }
+
+    fun addCard(card: Card) = cardList.add(card)
+
+    fun hasCard(card: Card): Boolean = cardList.contains(card)
 }
