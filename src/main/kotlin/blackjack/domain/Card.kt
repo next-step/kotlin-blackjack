@@ -5,7 +5,6 @@ data class Card(
     val sharp: Sharp
 ) {
 
-    fun sumAllScore(): Int {
-        return number.values.sum()
-    }
+    fun sumAllScore() = number.values.sum()
+    fun isAce() = this.number == Number.ACE
 }

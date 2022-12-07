@@ -27,7 +27,7 @@ class Cards(
 
     fun score(): Int {
         val allSum = items.sumOf { card -> card.sumAllScore() }
-        val aceCount = items.count { card -> card.number == Number.ACE }
+        val aceCount = items.count { card -> card.isAce() }
 
         if (aceCount == 0) {
             return allSum
