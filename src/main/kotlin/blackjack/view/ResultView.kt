@@ -1,15 +1,16 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.Players
 
 private const val SEPARATOR = ", "
 
 object ResultView {
 
-    fun printDrawResults(players: List<Player>) {
-        println("${players.map { it.name }.joinToString { it }}에게 2장의 나누었습니다.")
+    fun printDrawResults(players: Players) {
+        println("${players.items.map { it.name }.joinToString { it }}에게 2장의 나누었습니다.")
 
-        players.forEach {
+        players.items.forEach {
             println(it.cardScoreDescription())
         }
     }
