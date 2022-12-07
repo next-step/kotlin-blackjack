@@ -33,18 +33,19 @@ class Cards(
             return allSum
         }
 
-        return (0 until aceCount).fold(allSum) { acc, _ ->
-            val candidate1 = acc - ACE_VALUE_1
-            val candidate2 = acc - ACE_VALUE_2
-
-            if (candidate1.isNearBlackJackThan(candidate2)) {
-                candidate1
-            } else {
-                candidate2
-            }
-        }
+        return (0 until aceCount).fold(allSum) { acc, _ -> minusAceNumberCaseOne(acc) }
     }
 
+    private fun minusAceNumberCaseOne(acc: Int): Int {
+        val candidate1 = acc - ACE_VALUE_1
+        val candidate2 = acc - ACE_VALUE_2
+
+        return if (candidate1.isNearBlackJackThan(candidate2)) {
+            candidate1
+        } else {
+            candidate2
+        }
+    }
     private fun Int.isNearBlackJackThan(candidate2: Int) =
         abs(this - BLACKJACK_NUMBER) < abs(candidate2 - BLACKJACK_NUMBER)
 
