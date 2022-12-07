@@ -1,13 +1,13 @@
 package blackjack
 
-import blackjack.domain.Gamer
+import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
     val inputView = InputView()
-    val gamers: List<Gamer> = inputView.inputNames()
+    val players: List<Player> = inputView.inputNames()
 
     val resultView = ResultView()
-    resultView.show(gamers)
+    resultView.show(players)
 }
