@@ -1,6 +1,6 @@
 package blackjack.io
 
-import blackjack.Player
+import blackjack.domain.Player
 
 class Output {
     fun printPlayersCard(players: List<Player>) {
@@ -21,6 +21,6 @@ class Output {
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name} 카드 : ${player.hand.joinToString(",") { it.shape.name + it.denomination.name }} - 결과 : ${player.score()}")
+        println("${player.name} 카드 : ${player.hand.joinToString(",")} - 결과 : ${player.score()}")
     }
 }

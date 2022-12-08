@@ -1,17 +1,18 @@
 package blackjack
 
+import blackjack.domain.Deck
+import blackjack.domain.Player
 import blackjack.io.Input
 import blackjack.io.Output
 
 class Game(val input: Input, val output: Output) {
     lateinit var players: List<Player>
-    lateinit var deck: Deck
+    private var deck: Deck = Deck()
 
     fun init() {
         players = input.getPlayers()
             .map { Player(it) }
 
-        deck = Deck()
         deck.shuffle()
     }
 

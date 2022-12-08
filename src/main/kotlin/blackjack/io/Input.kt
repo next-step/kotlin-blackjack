@@ -1,6 +1,6 @@
 package blackjack.io
 
-import blackjack.Player
+import blackjack.domain.Player
 
 class Input {
     fun getPlayers(): List<String> {

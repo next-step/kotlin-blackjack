@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Deck {
     lateinit var cards: MutableList<Card>
