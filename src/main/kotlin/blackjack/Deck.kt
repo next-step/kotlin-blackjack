@@ -3,15 +3,11 @@ package blackjack
 class Deck {
     lateinit var cards: MutableList<Card>
 
-    init {
-        shuffle()
-    }
-
     fun draw(): Card {
         return cards.removeFirst()
     }
 
-    private fun shuffle() {
+    fun shuffle() {
         cards = Shape.values()
             .asSequence()
             .map { getCardsByShape(it) }
