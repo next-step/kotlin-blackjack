@@ -11,9 +11,8 @@ class Cards {
     }
 
     fun bestScore(): Int {
-        return optimizeScore(mutableCards.sumOf{it + 0})
+        return optimizeScore(mutableCards.sumOf { it + 0 })
     }
-
 
     private fun optimizeScore(defaultScore: Int): Int {
         var baseScore = defaultScore
@@ -28,6 +27,4 @@ class Cards {
     }
 
     private fun aceNumber() = mutableCards.count { it.number == CardNumber.ACE }
-
 }
-

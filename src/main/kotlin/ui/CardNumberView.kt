@@ -18,7 +18,7 @@ enum class CardNumberView(val cardNumber: CardNumber, val ui: String) {
     JACK(CardNumber.JACK, "잭"),
     ACE(CardNumber.ACE, "에이스"), ;
 
-    companion object{
+    companion object {
         fun valueOf(cardNumber: CardNumber): String = values().find { it.cardNumber == cardNumber }!!.ui
     }
 }

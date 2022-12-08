@@ -14,5 +14,4 @@ enum class CardNumber(val score: Score) {
     QUEEN(Score(10, null)),
     JACK(Score(10, null)),
     ACE(Score(1, 10));
-
 }

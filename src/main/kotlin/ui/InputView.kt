@@ -2,7 +2,6 @@ package ui
 
 import domain.Player
 
-
 object InputView {
     private const val DEFAULT_DELIMITER = ","
 
@@ -11,9 +10,8 @@ object InputView {
         return readln().split(DEFAULT_DELIMITER).map { it.trim() }
     }
 
-    fun askDrawCardOrNot(player: Player) :String {
+    fun askDrawCardOrNot(player: Player): String {
         println("${player.name.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln()
     }
-
 }

@@ -6,10 +6,6 @@ class Players(players: List<Player>) {
 
     fun currentPlayer(): Player {
         val currentPlayer = players.removeFirst()
-        if (!currentPlayer.canDrawCard()) {
-            quitGame(currentPlayer)
-            return currentPlayer
-        }
         players.addLast(currentPlayer)
         return currentPlayer
     }

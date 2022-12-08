@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test
 
 class PlayersTest {
 
-
     @Test
-    fun `ÇöÀç Â÷·ÊÀÇ ÇÃ·¹ÀÌ¾î°¡ ¹ÝÈ¯µË´Ï´Ù`() {
+    fun `ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½È¯ï¿½Ë´Ï´ï¿½`() {
         val players = Players(listOf(Player.withName("pobi"), Player.withName("crong")))
 
         players.currentPlayer() shouldBe Player.withName("pobi")
@@ -15,7 +14,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `ÇÃ·¹ÀÌ¾î°¡ °ÔÀÓÀ» ±×¸¸µÑ ¼ö ÀÖ½À´Ï´Ù`() {
+    fun `ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½`() {
         val players = Players(listOf(Player.withName("pobi"), Player.withName("crong")))
         val currentPlayer = players.currentPlayer()
 

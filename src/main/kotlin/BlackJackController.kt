@@ -4,9 +4,9 @@ import domain.Players
 import ui.InputView
 import ui.OutputView
 
-
 private const val YES = "y"
 private const val NO = "n"
+private const val INITIAL_CARD_NUMBER = 2
 
 fun main() {
     val playerNames = InputView.askPlayerNames()
@@ -14,28 +14,34 @@ fun main() {
     val cardDeck = CardDeck()
     OutputView.printGameStartMsg(playerNames)
 
-    repeat(2 * playerNames.size) {
+    repeat(INITIAL_CARD_NUMBER * playerNames.size) {
         val currentPlayer = players.currentPlayer()
         currentPlayer.takeCard(cardDeck.draw())
     }
     OutputView.printCardStatus(players)
 
+    val finishPlayers = mutableListOf<Player>()
     while (players.isNotEmpty()) {
         val currentPlayer = players.currentPlayer()
-        val answer = getAnswer(currentPlayer)
-        if (answer == YES) {
-            currentPlayer.takeCard(cardDeck.draw())
-            OutputView.printCardStatus(currentPlayer)
-            continue;
+        if (!currentPlayer.canDrawCard()) {
+            players.quitGame(currentPlayer)
+            finishPlayers.add(currentPlayer)
+            continue
         }
-        players.quitGame(currentPlayer)
+        if (getAnswer(currentPlayer) == NO) {
+            players.quitGame(currentPlayer)
+            finishPlayers.add(currentPlayer)
+            continue
+        }
+        currentPlayer.takeCard(cardDeck.draw())
+        OutputView.printCardStatus(currentPlayer)
     }
-}
 
+    OutputView.printCardStatus(Players(finishPlayers.toList()), showResult = true)
+}
 
 fun getAnswer(player: Player): String {
     val answer = InputView.askDrawCardOrNot(player)
     require(answer == YES || answer == NO) { "대답은 $YES 또는 $NO 만 가능합니다" }
     return answer
 }
-

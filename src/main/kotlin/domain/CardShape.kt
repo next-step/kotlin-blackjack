@@ -6,6 +6,4 @@ enum class CardShape {
     HEART,
     SPACE,
     DIAMOND
-
-
 }

@@ -14,5 +14,4 @@ class CardDeck {
         cardNumbers.shuffle()
         cardShapes.shuffle()
     }
-
 }
