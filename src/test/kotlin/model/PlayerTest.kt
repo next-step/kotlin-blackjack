@@ -24,4 +24,36 @@ class PlayerTest : StringSpec({
         // then
         player.cards.count() shouldBe 1
     }
+
+    "플레이어의 점수가 딜러보다 높으면, 승리를 반환한다" {
+        // given
+        val player = Player("나잘함")
+        player.hit(Card(PokerNumber.ACE, PokerShape.HEART))
+        player.hit(Card(PokerNumber.TEN, PokerShape.HEART))
+        val dealer = Dealer()
+        dealer.hit(Card(PokerNumber.TEN, PokerShape.HEART))
+        dealer.hit(Card(PokerNumber.TWO, PokerShape.HEART))
+
+        // when
+        val winOrLose = player.winOrLose(dealer)
+
+        // then
+        winOrLose shouldBe WinOrLose.WIN
+    }
+
+    "플레이어의 점수가 딜러보다 낮으면, 패배를 반환한다" {
+        // given
+        val player = Player("나잘함")
+        player.hit(Card(PokerNumber.TWO, PokerShape.HEART))
+        player.hit(Card(PokerNumber.THREE, PokerShape.HEART))
+        val dealer = Dealer()
+        dealer.hit(Card(PokerNumber.TEN, PokerShape.HEART))
+        dealer.hit(Card(PokerNumber.TWO, PokerShape.HEART))
+
+        // when
+        val winOrLose = player.winOrLose(dealer)
+
+        // then
+        winOrLose shouldBe WinOrLose.LOSE
+    }
 })

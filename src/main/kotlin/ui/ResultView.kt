@@ -1,6 +1,8 @@
 package ui
 
+import model.Dealer
 import model.Player
+import model.Players
 import model.PokerGame
 import model.PokerScore
 
@@ -27,5 +29,25 @@ object ResultView {
 
     private fun playerScore(player: Player) {
         println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
+    }
+
+    fun resultFinalVictory(pokerGame: PokerGame) {
+        println()
+        println("## 최종 승패")
+
+        dealerWinOrLose(pokerGame.players, pokerGame.dealer)
+        pokerGame.getPlayers().forEach { player ->
+            playerWinOrLose(player, pokerGame.dealer)
+        }
+    }
+
+    private fun dealerWinOrLose(players: Players, dealer: Dealer) {
+        val (win, lose) = players.winOrLose(dealer)
+        println("딜러 : ${win}승  ${lose}패")
+    }
+
+    private fun playerWinOrLose(player: Player, dealer: Dealer) {
+        val winOrLose = player.winOrLose(dealer)
+        println("${player.name} : ${winOrLose.desc} ")
     }
 }

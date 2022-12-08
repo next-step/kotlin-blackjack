@@ -25,7 +25,7 @@ object InputView {
 
     private fun inputDealerHit(dealer: Dealer) {
         val pokerScore = PokerScore(dealer.cards)
-        if(pokerScore.score < 17){
+        if (pokerScore.score < 17) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             dealer.hit(dealer.pick())
         }

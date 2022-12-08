@@ -1,6 +1,7 @@
 import model.PokerGame
 import ui.InputView.inputPlayerQuestion
 import ui.InputView.inputPlayers
+import ui.ResultView.resultFinalVictory
 import ui.ResultView.resultInitPokerGame
 import ui.ResultView.resultPokerGameScore
 
@@ -12,6 +13,7 @@ class PokerGameController {
         resultInitPokerGame(pokerGame)
         inputPlayerQuestion(pokerGame)
         resultPokerGameScore(pokerGame)
+        resultFinalVictory(pokerGame)
     }
 }
 
