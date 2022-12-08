@@ -16,6 +16,19 @@ class CardProvider {
         }
     }
 
+    fun play() {
+        players.forEach { player ->
+            do {
+                if (player.func().equals("y", true)) {
+                    takeCard(player, 1)
+                } else {
+                    break
+                }
+                val cardCalculator = CardCalculator(player.takeCards)
+            } while (cardCalculator.sum() < CardCalculator.STD_NUMBER)
+        }
+    }
+
     private fun takeCard(player: Player, count: Int) {
         repeat(count) {
             player.takeCard(Card())

@@ -28,4 +28,16 @@ sealed class CardNumber {
         override val name: String
             get() = "King"
     }
+
+    companion object {
+        fun create(): CardNumber {
+            return when (val cardValue = (1..13).random()) {
+                1 -> Ace()
+                11 -> Jack()
+                12 -> Queen()
+                13 -> King()
+                else -> Default(cardValue)
+            }
+        }
+    }
 }
