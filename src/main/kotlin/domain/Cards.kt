@@ -11,11 +11,9 @@ class Cards {
     }
 
     fun bestScore(): Int {
-        val defaultScore = mutableCards
-            .map { it.number.score }
-            .sumOf { it.defaultScore }
-        return optimizeScore(defaultScore)
+        return optimizeScore(mutableCards.sumOf{it + 0})
     }
+
 
     private fun optimizeScore(defaultScore: Int): Int {
         var baseScore = defaultScore
@@ -32,3 +30,4 @@ class Cards {
     private fun aceNumber() = mutableCards.count { it.number == CardNumber.ACE }
 
 }
+
