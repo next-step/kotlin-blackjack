@@ -18,4 +18,26 @@ class PlayingCards(list: List<PlayingCard>) {
         }
         _list.add(card)
     }
+
+    fun isBust(): Boolean {
+        return _list.sumOf { it.denomination.score(it) } > WINNING_NUMBER
+    }
+
+    fun isBlackjack(): Boolean {
+        val isSizeOfBlackjack = _list.size == BLACKJACK_SIZE
+        val isAceAndTen = _list.any { it.denomination == Denomination.ACE } && _list.any { it.denomination.score(it) == TEN }
+        return isSizeOfBlackjack && isAceAndTen
+    }
+
+    fun isStay(): Boolean {
+        val isBiggerThanBlackjackSize = _list.size >= BLACKJACK_SIZE
+        val isLessThanWinningNumber = _list.sumOf { it.denomination.score(it) } <= WINNING_NUMBER
+        return isBiggerThanBlackjackSize && isLessThanWinningNumber
+    }
+
+    companion object {
+        private const val WINNING_NUMBER = 21
+        private const val BLACKJACK_SIZE = 2
+        private const val TEN = 10
+    }
 }

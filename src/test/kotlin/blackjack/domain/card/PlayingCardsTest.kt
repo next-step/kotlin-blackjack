@@ -3,6 +3,8 @@ package blackjack.domain.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class PlayingCardsTest {
     @Test
@@ -55,5 +57,47 @@ class PlayingCardsTest {
 
         // then
         assertThat(exception.message).isEqualTo("카드가 없습니다.")
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["ACE,JACK,QUEEN:false", "TWO,JACK,QUEEN:true"], delimiter = ':')
+    fun `카드 목록 - Bust 여부 확인 테스트`(given: String, expected: Boolean) {
+        // given
+        val denominations = given.split(",").map { Denomination.valueOf(it) }
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+
+        // when
+        val actual = playingCards.isBust()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["ACE,JACK,QUEEN:false", "ACE:false", "ACE,ACE:false", "ACE,TEN:true", "ACE,JACK:true", "ACE,QUEEN:true", "ACE,KING:true"], delimiter = ':')
+    fun `카드 목록 - BlackJack 여부 확인 테스트`(given: String, expected: Boolean) {
+        // given
+        val denominations = given.split(",").map { Denomination.valueOf(it) }
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+
+        // when
+        val actual = playingCards.isBlackjack()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["ACE,JACK,QUEEN:true", "TWO,JACK,QUEEN:false"], delimiter = ':')
+    fun `카드 목록 - Stay 여부 확인 테스트`(given: String, expected: Boolean) {
+        // given
+        val denominations = given.split(",").map { Denomination.valueOf(it) }
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+
+        // when
+        val actual = playingCards.isStay()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
     }
 }

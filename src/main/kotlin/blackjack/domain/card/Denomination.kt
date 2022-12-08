@@ -14,4 +14,8 @@ enum class Denomination(private val score: Int) {
     JACK(10),
     QUEEN(10),
     KING(10);
+
+    fun score(playingCard: PlayingCard): Int {
+        return playingCard.denomination.score
+    }
 }
