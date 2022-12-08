@@ -10,6 +10,8 @@ data class Player(val name: PlayerName) {
 
     fun choiceBestScore(): Int = cards.bestScore()
 
+    fun canDrawCard() = choiceBestScore() < 21
+
     companion object {
         fun withName(name: String): Player = Player(PlayerName(name))
     }
