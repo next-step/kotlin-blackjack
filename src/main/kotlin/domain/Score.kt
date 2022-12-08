@@ -1,6 +1,6 @@
 package domain
 
-class Score(val defaultScore: Int , val secondScore : Int? ){
+class Score(val defaultScore: Int, val secondScore: Int?) {
 
 
     companion object {
