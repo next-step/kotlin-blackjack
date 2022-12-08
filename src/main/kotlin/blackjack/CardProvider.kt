@@ -1,31 +1,26 @@
 package blackjack
 
-class CardProvider {
-    var players = emptyList<Player>()
-        private set
-
-    fun addPlayer(player: Player) {
-        players = players.toMutableList().apply {
-            add(player)
-        }
-    }
-
+class CardProvider(private val players: List<Player>) {
     fun start() {
         players.forEach { player ->
             takeCard(player, START_TAKE_CARD_COUNT)
         }
     }
 
-    fun play() {
+    fun play(result: (player: Player) -> Unit) {
         players.forEach { player ->
-            play(player)
+            play(player, result)
         }
     }
 
-    private fun play(player: Player) {
+    private fun play(player: Player, result: (player: Player) -> Unit) {
         while (CardCalculator(player.takeCards).sum() < CardCalculator.STD_NUMBER) {
-            if (playerAllow(player).not())
+            if (playerAllow(player).not()) {
+                result(player)
                 break
+            }
+
+            result(player)
         }
     }
 

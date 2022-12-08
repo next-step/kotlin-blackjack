@@ -22,7 +22,7 @@ class CardTest : StringSpec({
     "카드 숫자 중 1은 Ace로 표시한다" {
         val card = Card(CARD_SHAPE.Clover, CardNumber.Ace())
 
-        card.number.name shouldBe "Ace"
+        card.number.name shouldBe "A"
     }
 
     "카드 숫자 중 11은 Jack, 12는 Queen, 13은 King 으로 표시한다" {
@@ -30,8 +30,8 @@ class CardTest : StringSpec({
         val cardQueen = Card(CARD_SHAPE.Clover, CardNumber.Queen())
         val cardKing = Card(CARD_SHAPE.Clover, CardNumber.King())
 
-        cardJack.number.name shouldBe "Jack"
-        cardQueen.number.name shouldBe "Queen"
-        cardKing.number.name shouldBe "King"
+        cardJack.number.name shouldBe "J"
+        cardQueen.number.name shouldBe "Q"
+        cardKing.number.name shouldBe "K"
     }
 })

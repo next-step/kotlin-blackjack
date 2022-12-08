@@ -8,9 +8,8 @@ class CardProviderTest : StringSpec({
 
     "시작하면 플레이어는 두장의 카드를 지급 받는다" {
         val player = Player("player1") { "y" }
-        val cardProvider = CardProvider()
+        val cardProvider = CardProvider(listOf(player))
 
-        cardProvider.addPlayer(player)
         cardProvider.start()
 
         player.takeCards.size shouldBe 2
@@ -18,9 +17,8 @@ class CardProviderTest : StringSpec({
 
     "플레이어는 카드의 합이 21이 넘지 않는 경우 원한다면 카드를 계속 받을 수 있다" {
         val player = Player("player1") { "y" }
-        val cardProvider = CardProvider()
+        val cardProvider = CardProvider(listOf(player))
 
-        cardProvider.addPlayer(player)
         cardProvider.start()
         cardProvider.play()
 

@@ -11,7 +11,7 @@ sealed class CardNumber {
 
     data class Ace(override val value: Int = ACE_VALUE_FIRST) : CardNumber() {
         override val name: String
-            get() = "Ace"
+            get() = "A"
 
         companion object {
             fun diffValue(): Int = ACE_VALUE_LAST - ACE_VALUE_FIRST
@@ -20,17 +20,17 @@ sealed class CardNumber {
 
     data class Jack(override val value: Int = JACK_VALUE) : CardNumber() {
         override val name: String
-            get() = "Jack"
+            get() = "J"
     }
 
     data class Queen(override val value: Int = QUEEN_VALUE) : CardNumber() {
         override val name: String
-            get() = "Queen"
+            get() = "Q"
     }
 
     data class King(override val value: Int = KING_VALUE) : CardNumber() {
         override val name: String
-            get() = "King"
+            get() = "K"
     }
 
     companion object {
