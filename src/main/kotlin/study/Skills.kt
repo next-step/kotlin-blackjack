@@ -1,21 +1,21 @@
 package study
 
 class SkillBuilder {
-    private var softs: MutableList<String> = mutableListOf()
-    private var hards: MutableList<String> = mutableListOf()
+    private val skills: MutableList<Skill> = mutableListOf()
 
     fun soft(value: String) {
-        softs.add(value)
+        skills.add(SoftSkill(value))
     }
 
     fun hard(value: String) {
-        hards.add(value)
+        skills.add(HardSkill(value))
     }
 
-    fun build(): Skills {
-        return Skills(softs, hards)
+    fun build(): List<Skill> {
+        return skills
     }
-
 }
 
-data class Skills(val softs: List<String>, val hards: List<String>)
+sealed class Skill(open val value: String)
+data class SoftSkill(override val value: String) : Skill(value)
+data class HardSkill(override val value: String) : Skill(value)

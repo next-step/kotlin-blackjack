@@ -1,6 +1,5 @@
 package study
 
-
 class LanguagesBuilder {
     private var targets: MutableList<Language> = mutableListOf()
 
@@ -11,8 +10,6 @@ class LanguagesBuilder {
     fun build(): List<Language> {
         return targets
     }
-
 }
-
 
 data class Language(val type: String, val level: Int)
