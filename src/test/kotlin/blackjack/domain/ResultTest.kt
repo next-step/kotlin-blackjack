@@ -43,15 +43,15 @@ class ResultTest {
             listOf(
                 Player("winner1", Cards(Card(QUEEN, DIAMOND), Card(NINE, HEART))),
                 Player("winner2", Cards(Card(ACE, DIAMOND), Card(QUEEN, HEART))),
+                Player("winner3", Cards(Card(EIGHT, DIAMOND), Card(NINE, HEART))),
                 Player("loser1", Cards(Card(ACE, DIAMOND), Card(NINE, HEART), Card(EIGHT, CLOVER))),
-                Player("loser2", Cards(Card(EIGHT, DIAMOND), Card(NINE, HEART))),
-                Player("loser3", Cards(Card(SEVEN, DIAMOND), Card(EIGHT, HEART)))
+                Player("loser2", Cards(Card(SEVEN, DIAMOND), Card(EIGHT, HEART)))
             )
         )
         // when
         val result = Result.init(dealer, players)
         // then
-        assertThat(result.winner).hasSize(2)
-        assertThat(result.loser).hasSize(3)
+        assertThat(result.winner).hasSize(3)
+        assertThat(result.loser).hasSize(2)
     }
 }

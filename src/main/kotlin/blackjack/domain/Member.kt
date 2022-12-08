@@ -3,7 +3,7 @@ package blackjack.domain
 import kotlin.math.abs
 
 sealed interface Member {
-
+    val name: String
     val cards: Cards
 
     val cardElements: Set<Card>
@@ -14,9 +14,24 @@ sealed interface Member {
     }
 
     fun resultScore() = this.cards.score()
+    fun isOverBlackjackNumber() = resultScore() > Const.BLACKJACK_NUMBER
+    fun isEqualsBlackjackNumber() = resultScore() == Const.BLACKJACK_NUMBER
 
     fun isNearBlackJackThan(otherMember: Member) =
-        abs(this.resultScore() - Const.BLACKJACK_NUMBER) <= abs(otherMember.resultScore() - Const.BLACKJACK_NUMBER)
+        abs(this.resultScore() - Const.BLACKJACK_NUMBER) < abs(otherMember.resultScore() - Const.BLACKJACK_NUMBER)
+
+    fun isEqualNumberThan(otherMember: Member) = this.resultScore() == otherMember.resultScore()
+
+    fun isWin(otherMember: Member): Boolean {
+        if (isOverBlackjackNumber()) {
+            return false
+        }
+
+        return conditionOfWin(otherMember)
+    }
+
+    fun isLose(otherMember: Member) = !isWin(otherMember)
 
     fun ableMoreDrawCard(): Boolean
+    fun conditionOfWin(otherMember: Member): Boolean
 }

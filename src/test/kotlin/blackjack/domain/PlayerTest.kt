@@ -70,9 +70,9 @@ internal class PlayerTest {
     }
 
     @Test
-    internal fun `21점 이상이면 false를 반환한다`() {
+    internal fun `21점 초과이면 false를 반환한다`() {
         // given
-        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(ACE, DIAMOND)))
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(TWO, DIAMOND)))
 
         // when
         val ableMoreDrawCard = player.ableMoreDrawCard()
