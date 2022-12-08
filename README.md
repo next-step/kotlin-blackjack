@@ -12,6 +12,7 @@
 - Player
     - Player은 이름과 카드 목록을 가지고 있다.
     - 승리자 플레이어
+    - 카드 점수의 합이 21이상이면 게임에서 패한다.
 
 - Sharp는 HEART, SPADE, DIAMOND, CLOVER 으로 구성된다.
 - Number 은 ACE TWO, ... JACK, KING, QUEEN 으로 구성된다.
