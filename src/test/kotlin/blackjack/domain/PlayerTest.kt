@@ -60,6 +60,16 @@ internal class PlayerTest {
     }
 
     @Test
+    internal fun `블랙잭에 가까운 유저를 반환한다`() {
+        // given
+        val player1 = Player("user1", Cards(Card(QUEEN, HEART), Card(THREE, CLOVER)))
+        val player2 = Player("user2", Cards(Card(QUEEN, HEART), Card(TWO, CLOVER)))
+
+        // when, then
+        assertThat(player1.isNearBlackJackThan(player2)).isTrue
+    }
+
+    @Test
     internal fun `21점 이상이면 false를 반환한다`() {
         // given
         val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(ACE, DIAMOND)))
