@@ -1,19 +1,19 @@
 package domain
 
-enum class Card(score: Score) {
+enum class Card(val score: Score) {
 
-    TWO(Score(2)),
-    THREE(Score(3)),
-    FOUR(Score(4)),
-    FIVE(Score(5)),
-    SIX(Score(6)),
-    SEVEN(Score(7)),
-    EIGHT(Score(8)),
-    NINE(Score(9)),
-    TEN(Score(10)),
-    KING(Score(10)),
-    QUEEN(Score(10)),
-    JACK(Score(10)),
-    ACE(Score(1, 10))
+    TWO(Score(2, null)),
+    THREE(Score(3, null)),
+    FOUR(Score(4, null)),
+    FIVE(Score(5, null)),
+    SIX(Score(6, null)),
+    SEVEN(Score(7, null)),
+    EIGHT(Score(8, null)),
+    NINE(Score(9, null)),
+    TEN(Score(10, null)),
+    KING(Score(10, null)),
+    QUEEN(Score(10, null)),
+    JACK(Score(10, null)),
+    ACE(Score(1, 10));
 
 }

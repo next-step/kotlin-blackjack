@@ -7,4 +7,6 @@ class Player(val name: PlayerName) {
     fun takeCard(card:Card){
         cards.add(card)
     }
+
+    fun choiceBestScore() :Int = cards.bestScore()
 }
