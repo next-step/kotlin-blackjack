@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 internal class PlayerTest {
 
     @Test
-    fun `»ç¿ëÀÚ°¡ Ä«µå¸¦ »Ì¾Æ º¸°üÇÕ´Ï´Ù`() {
+    fun `ì‚¬ìš©ìê°€ ì¹´ë“œë¥¼ ë½‘ì•„ ë³´ê´€í•©ë‹ˆë‹¤`() {
         val player = Player(PlayerName("chansoo"))
 
         player.takeCard(Card(CardNumber.ACE, CardShape.SPACE))
@@ -16,7 +16,7 @@ internal class PlayerTest {
     }
 
     @Test
-    fun `ÃÖÀûÀÇ Á¡¼ö¸¦ ¹İÈ¯ÇÕ´Ï´Ù`() {
+    fun `ìµœì ì˜ ì ìˆ˜ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤`() {
         val player = Player(PlayerName("chansoo"))
 
         player.takeCard(Card(CardNumber.ACE, CardShape.SPACE))

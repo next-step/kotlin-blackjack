@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class CardDeckTest {
 
     @Test
-    fun `Ä«µå µ¦¿¡¼­ ·£´ı Ä«µå°¡ ¹İÈ¯µË´Ï´Ù`() {
+    fun `ì¹´ë“œ ë±ì—ì„œ ëœë¤ ì¹´ë“œê°€ ë°˜í™˜ë©ë‹ˆë‹¤`() {
         val cardDeck = CardDeck()
         cardDeck.draw() shouldNotBe null
     }
