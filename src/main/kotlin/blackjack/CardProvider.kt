@@ -18,14 +18,23 @@ class CardProvider {
 
     fun play() {
         players.forEach { player ->
-            do {
-                if (player.func().equals("y", true)) {
-                    takeCard(player, 1)
-                } else {
-                    break
-                }
-                val cardCalculator = CardCalculator(player.takeCards)
-            } while (cardCalculator.sum() < CardCalculator.STD_NUMBER)
+            play(player)
+        }
+    }
+
+    private fun play(player: Player) {
+        while (CardCalculator(player.takeCards).sum() < CardCalculator.STD_NUMBER) {
+            if (playerAllow(player).not())
+                break
+        }
+    }
+
+    private fun playerAllow(player: Player): Boolean {
+        return if (player.allowed().equals("y", true)) {
+            takeCard(player, 1)
+            true
+        } else {
+            false
         }
     }
 

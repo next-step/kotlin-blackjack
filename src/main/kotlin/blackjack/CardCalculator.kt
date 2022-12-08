@@ -10,12 +10,15 @@ class CardCalculator(private val cards: List<Card>) {
 
     private fun sumChangeAce(sum: Int): Int {
         var changeSum = sum
-        cards.filter { it.number is CardNumber.Ace }.forEach { _ ->
+        val aceCards = cards.filter { it.number is CardNumber.Ace }
+
+        aceCards.forEach { _ ->
             val sumDiff = abs(STD_NUMBER - sum)
-            val changeSumDiff = abs(STD_NUMBER - (changeSum + 10))
+            val changeSumDiff = abs(STD_NUMBER - (changeSum + CardNumber.Ace.diffValue()))
             if (sumDiff > changeSumDiff)
-                changeSum += 10
+                changeSum += CardNumber.Ace.diffValue()
         }
+
         return changeSum
     }
 

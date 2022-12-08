@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(val name: String, val func: () -> String) {
+class Player(val name: String, val allowed: () -> String) {
     var takeCards = emptyList<Card>()
         private set
 
