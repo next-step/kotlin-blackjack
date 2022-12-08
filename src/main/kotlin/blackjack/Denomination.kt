@@ -1,7 +1,11 @@
 package blackjack
 
 enum class Denomination(val score: Int) {
-    ACE(1),
+    ACE(1) {
+        override fun toString(): String {
+            return "에이스"
+        }
+    },
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -10,7 +14,24 @@ enum class Denomination(val score: Int) {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
-    JACK(10),
-    KING(10),
-    QUEEN(10);
+    TEN(10),
+    JACK(10) {
+        override fun toString(): String {
+            return "잭"
+        }
+    },
+    KING(10) {
+        override fun toString(): String {
+            return "킹"
+        }
+    },
+    QUEEN(10) {
+        override fun toString(): String {
+            return "퀸"
+        }
+    };
+
+    override fun toString(): String {
+        return this.score.toString()
+    }
 }
