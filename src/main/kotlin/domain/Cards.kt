@@ -12,7 +12,7 @@ class Cards {
 
     fun bestScore(): Int {
         val defaultScore = mutableCards
-            .map { it.score }
+            .map { it.number.score }
             .sumOf { it.defaultScore }
         return optimizeScore(defaultScore)
     }
@@ -20,7 +20,7 @@ class Cards {
     private fun optimizeScore(defaultScore: Int): Int {
         var baseScore = defaultScore
         repeat(aceNumber()) {
-            val anotherScore = defaultScore + Card.ACE.score.secondScore!!
+            val anotherScore = defaultScore + CardNumber.ACE.score.secondScore!!
             if (anotherScore > Score.MAX_SCORE) {
                 return baseScore
             }
@@ -29,6 +29,6 @@ class Cards {
         return baseScore
     }
 
-    private fun aceNumber() = mutableCards.count { it == Card.ACE }
+    private fun aceNumber() = mutableCards.count { it.number == CardNumber.ACE }
 
 }

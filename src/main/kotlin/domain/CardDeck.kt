@@ -2,11 +2,17 @@ package domain
 
 class CardDeck {
 
-    val cardDeck = Card.values()
+    private val cardNumbers = CardNumber.values()
+    private val cardShapes = CardShape.values()
 
-    fun drawCard(): Card {
-        cardDeck.shuffle()
-        return cardDeck[0]
+    fun draw(): Card {
+        shuffle()
+        return Card(cardNumbers[0], cardShapes[0])
+    }
+
+    private fun shuffle() {
+        cardNumbers.shuffle()
+        cardShapes.shuffle()
     }
 
 }
