@@ -7,30 +7,17 @@ class CardProvider(private val players: List<Player>) {
         }
     }
 
-    fun play(result: (player: Player) -> Unit) {
-        players.forEach { player ->
-            play(player, result)
-        }
-    }
-
-    private fun play(player: Player, result: (player: Player) -> Unit) {
-        while (CardCalculator(player.takeCards).sum() < CardCalculator.STD_NUMBER) {
-            if (playerAllow(player).not()) {
-                result(player)
-                break
-            }
-
-            result(player)
-        }
-    }
-
-    private fun playerAllow(player: Player): Boolean {
-        return if (player.allowed().equals("y", true)) {
-            takeCard(player, 1)
-            true
+    fun hasAllowTakeCard(player: Player, allow: String): Boolean {
+        return if (allow.equals(Player.ALLOW_TEXT, true)) {
+            hasNextTakeCard(player)
         } else {
             false
         }
+    }
+
+    private fun hasNextTakeCard(player: Player): Boolean {
+        takeCard(player, DEFAULT_TAKE_CARD_COUNT)
+        return CardCalculator(player.takeCards).sum() < CardCalculator.STD_NUMBER
     }
 
     private fun takeCard(player: Player, count: Int) {
@@ -40,6 +27,7 @@ class CardProvider(private val players: List<Player>) {
     }
 
     companion object {
+        private const val DEFAULT_TAKE_CARD_COUNT = 1
         private const val START_TAKE_CARD_COUNT = 2
     }
 }

@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(val name: String, val allowed: () -> String) {
+class Player(val name: String) {
     var takeCards = emptyList<Card>()
         private set
 
@@ -8,5 +8,9 @@ class Player(val name: String, val allowed: () -> String) {
         takeCards = takeCards.toMutableList().apply {
             add(card)
         }
+    }
+
+    companion object {
+        const val ALLOW_TEXT = "y"
     }
 }

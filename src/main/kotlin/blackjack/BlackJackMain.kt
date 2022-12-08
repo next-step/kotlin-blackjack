@@ -9,12 +9,19 @@ fun main() {
 
     val inputNames = inputView.playersName()
     val names = inputNames.split(",")
-    val players = names.map { Player(it.trim()) { inputView.takeCardAllow(it.trim()) } }
+    val players = names.map { Player(it.trim()) }
 
     val cardProvider = CardProvider(players)
     cardProvider.start()
     resultView.startTakeCardPlayers(players)
 
-    cardProvider.play { resultView.takeCardPlayer(it) }
+    players.forEach { player ->
+        do {
+            val allow = inputView.takeCardAllow(player.name)
+            val hasNext = cardProvider.hasAllowTakeCard(player, allow)
+            resultView.takeCardPlayer(player)
+        } while (hasNext)
+    }
+
     resultView.playersResult(players)
 }
