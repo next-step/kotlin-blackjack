@@ -5,13 +5,25 @@ import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleOutput
 
 class BlackjackController {
-    fun playGame() {
-        val players = ConsoleInput().inputPlayers()
-        val game = Game(players)
-        ConsoleOutput().printInitialCards(game.players)
+    private val inputView = ConsoleInput
+    private val outputView = ConsoleOutput
 
-        game.play()
-        ConsoleOutput().printGameResult(game)
+    fun playGame() {
+        val players = inputView.inputPlayers()
+        val game = Game(players)
+        outputView.printInitialCards(game.players)
+        scratchPlayers(game)
+        outputView.printGameResult(game.players)
+    }
+
+    private fun scratchPlayers(game: Game) {
+        game.getPlayers().forEach {
+            while (!it.isBurst() && ConsoleInput.inputScratch(it)) {
+                it.hit(game.dealer.divide())
+                ConsoleOutput.printPlayerCards(it)
+            }
+        }
+        ConsoleOutput.printLine()
     }
 }
 

@@ -1,26 +1,14 @@
 package blackjack.domain
 
-import blackjack.domain.Constants.INITIAL_CARD_COUNT
-import blackjack.view.ConsoleInput
-import blackjack.view.ConsoleOutput
+const val INITIAL_CARD_COUNT = 2
 
-class Game(val players: Players, val dealer: Dealer = Dealer()) {
+class Game(val players: Players, val dealer: Dealer = Dealer(Deck().cards)) {
 
     init {
         initialCard()
     }
 
-    fun play() {
-        players.list.map { scratch(it) }
-        ConsoleOutput().printLine()
-    }
-
-    private fun scratch(player: Player) {
-        while (!player.isBurst() && ConsoleInput().inputScratch(player)) {
-            player.hit(dealer.divide())
-            ConsoleOutput().printPlayerCards(player)
-        }
-    }
+    fun getPlayers(): List<Player> = players.list
 
     private fun initialCard() {
         dealer.shuffle()
