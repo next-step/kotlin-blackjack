@@ -23,7 +23,7 @@ class ResultView {
     private fun distribute(players: List<Player>) {
         repeat(players.size) {
             val player = players[it]
-            repeat(2) { player.addCard(dealer.extractCard()) }
+            repeat(2) { player.receive(dealer.draw()) }
             println(player)
         }
     }
@@ -51,7 +51,7 @@ class ResultView {
             return true
         }
 
-        player.addCard(dealer.extractCard())
+        player.receive(dealer.draw())
 
         if (player.isScoreExceedOrSame()) return true
 

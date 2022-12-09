@@ -13,8 +13,8 @@ internal class CardsTest {
         val cardKD = Card(CardNumber.King, Suit.Diamond)
         val cardQS = Card(CardNumber.Queen, Suit.Spade)
 
-        cards.addCard(cardKD)
-        cards.addCard(cardQS)
+        cards.add(cardKD)
+        cards.add(cardQS)
 
         cards.hasCard(cardKD) shouldBe true
         cards.hasCard(cardQS) shouldBe true
@@ -27,8 +27,8 @@ internal class CardsTest {
         val card5D = Card(CardNumber.Five, Suit.Diamond)
         val card9C = Card(CardNumber.Nine, Suit.Clover)
 
-        cards.addCard(card5D)
-        cards.addCard(card9C)
+        cards.add(card5D)
+        cards.add(card9C)
 
         cards.getTotalScore() shouldBe 14
     }
@@ -40,8 +40,8 @@ internal class CardsTest {
         val cardAD = Card(CardNumber.Ace, Suit.Diamond)
         val card9C = Card(CardNumber.Nine, Suit.Clover)
 
-        cards.addCard(cardAD)
-        cards.addCard(card9C)
+        cards.add(cardAD)
+        cards.add(card9C)
 
         cards.getTotalScore(isAceEleven = false) shouldBe 10
         cards.getTotalScore(isAceEleven = true) shouldBe 20

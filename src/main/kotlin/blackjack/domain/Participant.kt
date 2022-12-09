@@ -1,19 +1,19 @@
 package blackjack.domain
 
-abstract class Participant(open val name: String, open val cards: Cards = Cards()) {
+abstract class Participant(open val name: String, open val myCards: Cards = Cards()) {
 
     val totalScore: Int
         get() = calculate()
 
-    fun addCard(card: Card) = cards.addCard(card)
+    fun receive(card: Card) = myCards.add(card)
 
-    fun hasCard(card: Card): Boolean = cards.hasCard(card)
+    fun hasCard(card: Card): Boolean = myCards.hasCard(card)
 
     fun isScoreExceedOrSame(): Boolean = totalScore >= BLACK_JACK
 
     private fun calculate(): Int {
-        val totalScore = cards.getTotalScore()
-        val hasAce = cards.hasAce()
+        val totalScore = myCards.getTotalScore()
+        val hasAce = myCards.hasAce()
         return if (totalScore <= BONUS_ACE_SCORE && hasAce) {
             totalScore + 10
         } else {

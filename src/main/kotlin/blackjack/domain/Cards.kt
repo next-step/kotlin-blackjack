@@ -14,7 +14,7 @@ class Cards {
         }
     }
 
-    fun addCard(card: Card) = cardList.add(card)
+    fun add(card: Card) = cardList.add(card)
 
     fun hasCard(card: Card): Boolean = cardList.contains(card)
 

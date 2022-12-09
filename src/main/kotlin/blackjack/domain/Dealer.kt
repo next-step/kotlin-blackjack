@@ -2,14 +2,14 @@ package blackjack.domain
 
 data class Dealer(
     override val name: String = "dealer",
-    override val cards: Cards = Cards()
-) : Participant(name, cards) {
+    override val myCards: Cards = Cards()
+) : Participant(name, myCards) {
 
-    private val dealerCards: DealerCards = DealerCards()
+    private val cardDeck: CardDeck = CardDeck()
 
     override fun toString(): String {
-        return "${name}카드: $cards"
+        return "${name}카드: $myCards"
     }
 
-    fun extractCard(): Card = dealerCards.getCard()
+    fun draw(): Card = cardDeck.draw()
 }

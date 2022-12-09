@@ -2,10 +2,10 @@ package blackjack.domain
 
 data class Player(
     override val name: String,
-    override val cards: Cards = Cards()
-) : Participant(name, cards) {
+    override val myCards: Cards = Cards()
+) : Participant(name, myCards) {
 
     override fun toString(): String {
-        return "${name}카드: $cards"
+        return "${name}카드: $myCards"
     }
 }

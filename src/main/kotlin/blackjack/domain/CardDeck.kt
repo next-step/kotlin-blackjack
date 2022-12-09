@@ -1,10 +1,10 @@
 package blackjack.domain
 
-class DealerCards {
+class CardDeck {
 
     private var cardList: List<Card> = initList()
 
-    fun getCard(): Card {
+    fun draw(): Card {
         val card = cardList[0]
         cardList = cardList.drop(1)
         return card
