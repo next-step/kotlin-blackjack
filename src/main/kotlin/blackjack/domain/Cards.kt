@@ -10,7 +10,7 @@ class Cards {
 
     fun getTotalScore(isAceEleven: Boolean = false): Int {
         return cardList.sumOf { card ->
-            card.toInt(isAceEleven)
+            card.getScore(isAceEleven)
         }
     }
 
