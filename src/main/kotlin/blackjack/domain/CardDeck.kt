@@ -13,12 +13,12 @@ class CardDeck {
     fun getCardList(): List<Card> = cardList.toList()
 
     private fun initList(): List<Card> {
-        val result = mutableListOf<Card>()
-        for (number in CardNumbers().cardNumberList) {
-            for (suit in Suits().suitList) {
-                result.add(Card(cardNumber = number, suit = suit))
+        return CardNumber.values()
+            .flatMap { cardNumber ->
+                Suit.values().map { suit ->
+                    Card(cardNumber = cardNumber, suit = suit)
+                }
             }
-        }
-        return result.shuffled()
+            .shuffled()
     }
 }
