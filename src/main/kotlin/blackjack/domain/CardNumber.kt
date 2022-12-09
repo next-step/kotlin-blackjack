@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumber(val rawValue: String, val getScore: (Boolean) -> Int) {
+enum class CardNumber(val symbol: String, val getScore: (Boolean) -> Int) {
 
     Ace("A", { if (it) 11 else 1 }),
     Two("2", { 2 }),
