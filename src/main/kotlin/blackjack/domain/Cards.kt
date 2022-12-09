@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Cards {
 
-    private var cardList: MutableList<Card> = mutableListOf()
+    private val cardList: MutableList<Card> = mutableListOf()
 
     override fun toString(): String {
         return cardList.joinToString(", ")
