@@ -1,6 +1,8 @@
 package blackjack.domain
 
-class Dealer(deck: Cards = Deck().cards) {
+import blackjack.domain.Card.Companion.CARD_DECK
+
+class Dealer(deck: Cards = Cards(CARD_DECK)) {
     private var _list: MutableList<Card> = deck.list.toMutableList()
 
     val deck: Cards
