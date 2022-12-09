@@ -12,12 +12,7 @@ object Tokenizer {
     }
 
     private fun internalTokenize(input: String): List<String> {
-        val result: List<String>? = customTokenize(input)
-        if (result != null) {
-            return result
-        }
-
-        return input.split(tokenRegex)
+        return customTokenize(input) ?: input.split(tokenRegex)
     }
 
     private fun customTokenize(text: String): List<String>? {
