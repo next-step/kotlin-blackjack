@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.Dealer
-import blackjack.domain.Member
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.domain.Result
+import blackjack.domain.GameResult
+import blackjack.domain.member.Dealer
+import blackjack.domain.member.Member
+import blackjack.domain.member.Player
+import blackjack.domain.member.Players
 
 object ResultView {
 
@@ -16,6 +16,7 @@ object ResultView {
         players.items.forEach {
             println(it.cardScoreDescription())
         }
+        println()
     }
 
     fun printCardScoreDescription(player: Player) {
@@ -23,7 +24,6 @@ object ResultView {
     }
 
     fun printDealerDrawCardDescription() {
-        println()
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         println()
     }
@@ -39,12 +39,12 @@ object ResultView {
     private fun Dealer.firstCardInfo() = "딜러: ${this.firstCardDescription()}"
     private fun Dealer.firstCardDescription() = this.cardElements.map { c -> c.number.desc + c.sharp.desc }.first()
 
-    fun printGamResult(result: Result) {
+    fun printGamResult(gameResult: GameResult) {
         println()
         println("## 최종 승패")
-        println("딜러: ${result.dealerWinCount}승 ${result.dealerLoseCount}패")
+        println("딜러: ${gameResult.dealerWinCount}승 ${gameResult.dealerLoseCount}패")
 
-        result.winner.forEach { println("${it.name}: 승") }
-        result.loser.forEach { println("${it.name}: 패") }
+        gameResult.winPlayers.forEach { println("${it.name}: 승") }
+        gameResult.losePlayers.forEach { println("${it.name}: 패") }
     }
 }

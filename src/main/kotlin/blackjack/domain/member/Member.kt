@@ -1,5 +1,8 @@
-package blackjack.domain
+package blackjack.domain.member
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
+import blackjack.domain.Const
 import kotlin.math.abs
 
 sealed interface Member {

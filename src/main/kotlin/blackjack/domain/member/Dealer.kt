@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.member
+
+import blackjack.domain.Cards
+import blackjack.domain.Deck
 
 class Dealer(
     override val cards: Cards

@@ -13,10 +13,13 @@ import blackjack.domain.Number.TWO
 import blackjack.domain.Sharp.CLOVER
 import blackjack.domain.Sharp.DIAMOND
 import blackjack.domain.Sharp.HEART
+import blackjack.domain.member.Dealer
+import blackjack.domain.member.GamePlayer
+import blackjack.domain.member.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResultTest {
+class GameResultTest {
 
     @Test
     internal fun `딜러가 21을 초과하면 남아있는 플레이어들은 모두 승리한다`() {
@@ -24,15 +27,15 @@ class ResultTest {
         val dealer = Dealer(Cards(Card(FIVE, HEART), Card(NINE, CLOVER), Card(EIGHT, DIAMOND)))
         val players = Players(
             listOf(
-                Player("koi", Cards(Card(TWO, DIAMOND), Card(THREE, HEART))),
-                Player("kim", Cards(Card(QUEEN, DIAMOND), Card(JACK, HEART), Card(FOUR, CLOVER)))
+                GamePlayer("koi", Cards(Card(TWO, DIAMOND), Card(THREE, HEART))),
+                GamePlayer("kim", Cards(Card(QUEEN, DIAMOND), Card(JACK, HEART), Card(FOUR, CLOVER)))
             )
         )
         // when
-        val result = Result.init(dealer, players)
+        val gameResult = GameResult.init(dealer, players)
         // then
-        assertThat(result.winner).hasSize(2)
-        assertThat(result.loser).isEmpty()
+        assertThat(gameResult.winPlayers.size).isEqualTo(2)
+        assertThat(gameResult.losePlayers.size).isEqualTo(0)
     }
 
     @Test
@@ -41,17 +44,17 @@ class ResultTest {
         val dealer = Dealer(Cards(Card(EIGHT, HEART), Card(NINE, CLOVER)))
         val players = Players(
             listOf(
-                Player("winner1", Cards(Card(QUEEN, DIAMOND), Card(NINE, HEART))),
-                Player("winner2", Cards(Card(ACE, DIAMOND), Card(QUEEN, HEART))),
-                Player("winner3", Cards(Card(EIGHT, DIAMOND), Card(NINE, HEART))),
-                Player("loser1", Cards(Card(ACE, DIAMOND), Card(NINE, HEART), Card(EIGHT, CLOVER))),
-                Player("loser2", Cards(Card(SEVEN, DIAMOND), Card(EIGHT, HEART)))
+                GamePlayer("winner1", Cards(Card(QUEEN, DIAMOND), Card(NINE, HEART))),
+                GamePlayer("winner2", Cards(Card(ACE, DIAMOND), Card(QUEEN, HEART))),
+                GamePlayer("loser1", Cards(Card(ACE, DIAMOND), Card(NINE, HEART), Card(EIGHT, CLOVER))),
+                GamePlayer("loser2", Cards(Card(SEVEN, DIAMOND), Card(EIGHT, HEART))),
+                GamePlayer("loser3", Cards(Card(EIGHT, DIAMOND), Card(NINE, HEART)))
             )
         )
         // when
-        val result = Result.init(dealer, players)
+        val gameResult = GameResult.init(dealer, players)
         // then
-        assertThat(result.winner).hasSize(3)
-        assertThat(result.loser).hasSize(2)
+        assertThat(gameResult.winPlayers.size).isEqualTo(3)
+        assertThat(gameResult.losePlayers.size).isEqualTo(2)
     }
 }

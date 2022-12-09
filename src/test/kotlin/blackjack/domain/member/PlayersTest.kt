@@ -1,5 +1,9 @@
-package blackjack.domain
+package blackjack.domain.member
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
+import blackjack.domain.Number
+import blackjack.domain.Sharp
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
@@ -11,7 +15,7 @@ internal class PlayersTest {
         assertThatIllegalArgumentException().isThrownBy { Players(emptyList()) }
         assertThatIllegalArgumentException().isThrownBy {
             Players(
-                listOf(Player("koi", Cards(Card(Number.TWO, Sharp.DIAMOND), Card(Number.THREE, Sharp.HEART))))
+                listOf(GamePlayer("koi", Cards(Card(Number.TWO, Sharp.DIAMOND), Card(Number.THREE, Sharp.HEART))))
             )
         }
     }
