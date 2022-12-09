@@ -3,7 +3,8 @@ package blackjack.view
 import blackjack.domain.Player
 import blackjack.domain.Players
 
-class ConsoleInput {
+object ConsoleInput {
+    private const val DELIMITER_NAMES = ","
 
     fun inputPlayers(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
@@ -25,8 +26,4 @@ class ConsoleInput {
 
     private fun getPlayers(names: String): Players = Players(splitNames(names).map { Player(it) })
     private fun splitNames(names: String): List<String> = names.split(DELIMITER_NAMES).map { it.trim() }
-
-    companion object {
-        const val DELIMITER_NAMES = ","
-    }
 }
