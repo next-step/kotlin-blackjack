@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import kotlin.math.abs
-
 abstract class Participant(open val name: String, open val cards: Cards = Cards()) {
 
     val totalScore: Int
@@ -14,19 +12,17 @@ abstract class Participant(open val name: String, open val cards: Cards = Cards(
     fun isScoreExceedOrSame(): Boolean = totalScore >= BLACK_JACK
 
     private fun calculate(): Int {
-        val totalScoreByAceEleven = cards.getTotalScore(isAceEleven = true)
-        val diffByAceEleven = abs(totalScoreByAceEleven - BLACK_JACK)
-        val totalScoreByAceOne = cards.getTotalScore(isAceEleven = false)
-        val diffByAceOne = abs(totalScoreByAceOne - BLACK_JACK)
-
-        return if (diffByAceEleven < diffByAceOne) {
-            totalScoreByAceEleven
+        val totalScore = cards.getTotalScore()
+        val hasAce = cards.hasAce()
+        return if (totalScore <= BONUS_ACE_SCORE && hasAce) {
+            totalScore + 10
         } else {
-            totalScoreByAceOne
+            totalScore
         }
     }
 
     companion object {
-        const val BLACK_JACK = 21
+        private const val BLACK_JACK = 21
+        private const val BONUS_ACE_SCORE = 11
     }
 }
