@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Constants.INITIAL_CARD_COUNT
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
