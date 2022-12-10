@@ -21,5 +21,10 @@ class Cards(values: List<Card> = emptyList()) {
         return Denomination.sum(values.map { it.denomination })
     }
 
+    override fun toString(): String {
+        return values
+            .joinToString(", ") { it.toString() }
+    }
+
     private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 }
