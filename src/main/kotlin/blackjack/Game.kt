@@ -17,7 +17,7 @@ class Game(private val input: Input, private val output: Output) {
 
     fun start() {
         repeat(INIT_HAND_COUNT) {
-            players.forEach { it.draw(deck) }
+            players.forEach { it.addCard(deck.draw()) }
         }
         output.printPlayersCard(players)
     }
@@ -38,8 +38,7 @@ class Game(private val input: Input, private val output: Output) {
             if (!input.moreDraw(player)) {
                 break
             }
-            player.hand
-                .add(deck.draw())
+            player.addCard(deck.draw())
         }
     }
 

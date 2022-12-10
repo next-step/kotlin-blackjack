@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Player(val name: String, val hand: MutableList<Card> = mutableListOf()) {
+class Player(val name: String) {
+    private val _hand: MutableList<Card> = mutableListOf()
+    val hand: List<Card> = _hand
+
     fun score(): Int {
         val score = hand.sumOf { it.denomination.score }
 
@@ -11,8 +14,8 @@ class Player(val name: String, val hand: MutableList<Card> = mutableListOf()) {
         return calculateScoreWithAce(score)
     }
 
-    fun draw(deck: Deck) {
-        hand.add(deck.draw())
+    fun addCard(card: Card) {
+        _hand.add(card)
     }
 
     private fun calculateScoreWithAce(score: Int): Int {
