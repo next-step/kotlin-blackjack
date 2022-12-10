@@ -1,7 +1,8 @@
-package blackjack
+package blackjack.controller
 
 import blackjack.domain.Person
-import blackjack.domain.util.Parser
+import blackjack.domain.PockerMachine
+import blackjack.util.Parser
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

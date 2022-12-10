@@ -1,4 +1,4 @@
-package blackjack.domain.util
+package blackjack.util
 
 object Parser {
     private const val DELIMITER = ","

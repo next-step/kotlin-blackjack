@@ -1,8 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
-import blackjack.domain.Person
 import blackjack.domain.strategy.SequentialCardPickStrategy
 
 class PockerMachine(
