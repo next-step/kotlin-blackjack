@@ -17,5 +17,9 @@ class Cards(values: List<Card> = emptyList()) {
         return card
     }
 
+    fun getScore(): Int {
+        return Denomination.sum(values.map { it.denomination })
+    }
+
     private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 }
