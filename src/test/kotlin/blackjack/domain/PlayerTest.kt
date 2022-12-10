@@ -13,30 +13,4 @@ internal class PlayerTest {
 
         player.name shouldBe "hjw"
     }
-
-    @DisplayName("카드 숫자 합계를 계산해서 알고 있다.")
-    @Test
-    fun calculate() {
-        val player = Player("hjw")
-        val card5D = Card(CardNumber.Five, Suit.Diamond)
-        val card9C = Card(CardNumber.Nine, Suit.Clover)
-
-        player.receive(card5D)
-        player.receive(card9C)
-
-        player.totalScore shouldBe 14
-    }
-
-    @DisplayName("Ace 카드가 포함된 경우 21에 가장 가까운 값으로 점수가 계산된다.")
-    @Test
-    fun calculateAce() {
-        val player = Player("hjw")
-        val cardAD = Card(CardNumber.Ace, Suit.Diamond)
-        val card9C = Card(CardNumber.Nine, Suit.Clover)
-
-        player.receive(cardAD)
-        player.receive(card9C)
-
-        player.totalScore shouldBe 20
-    }
 }
