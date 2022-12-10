@@ -8,17 +8,11 @@ internal class DeckTest : BehaviorSpec({
         `when`("최초로 게임을 시작했을 때") {
             val deck = Deck()
             then("52장의 카드 덱을 가진다.") {
-                deck.cards.size shouldBe 52
+                deck.cards.values.size shouldBe 52
             }
-        }
-    }
 
-    given("게임을 최초로 시작했을 때 또는 게임 중간에") {
-        val deck = Deck()
-        `when`("플레이어에게 한 장을 주면") {
-            deck.pick()
-            then("덱의 카드 수가 1 줄어든다.") {
-                deck.cards.size shouldBe 51
+            then("중복없는 플레잉 카드를 가진다.") {
+                deck.cards shouldBe Cards(Card.DECK)
             }
         }
     }
