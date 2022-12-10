@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Cards {
+class Cards(cards: List<Card> = emptyList()) {
 
-    private val cardList: MutableList<Card> = mutableListOf()
+    private val cardList: MutableList<Card> = cards.toMutableList()
 
     val totalScore: Int
         get() = calculate()
