@@ -1,6 +1,9 @@
 package blackjack.domain
 
 data class Card(val suite: Suite, val denomination: Denomination) {
+    override fun toString(): String {
+        return "${denomination.value}${suite.value}"
+    }
     companion object {
         val DECK = Suite.values()
             .flatMap { suite ->
