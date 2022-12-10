@@ -29,7 +29,6 @@ object OutputView {
             printCardStatus(it)
             println("- 결과: ${it.choiceBestScore()}")
         }
-
     }
 
     private fun cardView(card: Card) = CardNumberView.valueOf(card.number) + CardShapeView.valueOf(card.shape)

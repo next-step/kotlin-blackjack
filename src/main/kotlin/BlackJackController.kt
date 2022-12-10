@@ -4,7 +4,6 @@ import domain.Players
 import ui.InputView
 import ui.OutputView
 
-
 private const val INITIAL_CARD_NUMBER = 2
 
 fun main() {
@@ -14,7 +13,7 @@ fun main() {
     OutputView.printGameStartMsg(playerNames)
 
     repeat(playerNames.size) {
-        val currentPlayer = players.currentPlayer();
+        val currentPlayer = players.currentPlayer()
         currentPlayer.takeCards(cardDeck.draw(), cardDeck.draw())
     }
     OutputView.printCardStatus(players)
@@ -36,4 +35,4 @@ fun main() {
 
 private fun isPlayerStopGame(currentPlayer: Player) =
     InputView.askDrawCardOrNot(currentPlayer.name.name) == InputView.NO ||
-            currentPlayer.canDrawCard().not()
+        currentPlayer.canDrawCard().not()
