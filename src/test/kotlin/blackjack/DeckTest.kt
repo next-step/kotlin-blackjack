@@ -12,7 +12,7 @@ internal class DeckTest : BehaviorSpec({
             }
 
             then("중복없는 플레잉 카드를 가진다.") {
-                deck.cards shouldBe Cards(Card.DECK)
+                deck.cards.values shouldBe Card.DECK
             }
         }
     }
