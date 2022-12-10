@@ -1,8 +1,7 @@
 package blackjack.domain
 
-data class Player(val name: String, val cards: Cards = Cards()) {
-    fun getCards(card: Card): Player {
-        val addedCards = cards.add(card)
-        return this.copy(cards = addedCards)
+data class Player(val name: String, var cards: Cards = Cards()) {
+    fun getCards(card: Card) {
+        cards = cards.add(card)
     }
 }
