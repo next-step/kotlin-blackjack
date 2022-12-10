@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.model.CardShape
 import blackjack.model.CardType
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -14,6 +15,9 @@ internal class CardTest {
     @ParameterizedTest
     @MethodSource("provideValidCard")
     fun validate(card: Card, value: String, score: Int, shape: String) {
+        Assertions.assertThat(card.type.value).isEqualTo(value)
+        Assertions.assertThat(card.type.score).isEqualTo(score)
+        Assertions.assertThat(card.shape.text).isEqualTo(shape)
     }
 
     companion object {
