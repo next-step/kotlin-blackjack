@@ -20,7 +20,7 @@ internal class CardsTest {
         cards.hasCard(cardQS) shouldBe true
     }
 
-    @DisplayName("카드 숫자 합계를 계산해서 알고 있다.")
+    @DisplayName("다이아몬드 5, 클로버 9의 합계는 총 14점이다")
     @Test
     fun calculate() {
         val cards = Cards()
@@ -30,10 +30,10 @@ internal class CardsTest {
         cards.add(card5D)
         cards.add(card9C)
 
-        cards.getTotalScore() shouldBe 14
+        cards.totalScore shouldBe 14
     }
 
-    @DisplayName("Ace 카드는 1과 11로 합계를 계산할 수 있다.")
+    @DisplayName("다이아몬드 에이스, 클로버 9의 합계는 총 20점이다")
     @Test
     fun calculateAce() {
         val cards = Cards()
@@ -43,7 +43,6 @@ internal class CardsTest {
         cards.add(cardAD)
         cards.add(card9C)
 
-        cards.getTotalScore(isAceEleven = false) shouldBe 10
-        cards.getTotalScore(isAceEleven = true) shouldBe 20
+        cards.totalScore shouldBe 20
     }
 }
