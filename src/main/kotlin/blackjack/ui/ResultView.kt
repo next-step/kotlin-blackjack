@@ -34,7 +34,7 @@ class ResultView {
             val player = players[index]
             val next = ask(player)
 
-            if (player.isScoreExceedOrSame()) break
+            if (player.canDraw().not()) break
 
             if (next) index++
         } while (index < players.size)
@@ -53,7 +53,7 @@ class ResultView {
 
         player.receive(dealer.draw())
 
-        if (player.isScoreExceedOrSame()) return true
+        if (player.canDraw().not()) return true
 
         println(player)
 

@@ -9,7 +9,7 @@ abstract class Participant(open val name: String, open val myCards: Cards = Card
 
     fun hasCard(card: Card): Boolean = myCards.hasCard(card)
 
-    fun isScoreExceedOrSame(): Boolean = totalScore >= BLACK_JACK
+    fun canDraw(): Boolean = totalScore < BLACK_JACK
 
     private fun calculate(): Int {
         val totalScore = myCards.getTotalScore()
