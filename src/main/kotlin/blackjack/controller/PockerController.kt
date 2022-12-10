@@ -24,9 +24,19 @@ class PockerController {
         OutputView.printResult(people)
     }
 
-    private fun retryOrNot() = { person: Person -> InputView.readRetry(person.name) == RETRY }
+    private fun retryOrNot() = { person: Person ->
+        val input = InputView.readRetry(person.name)
+        validateRetryInput(input)
+        input == RETRY
+    }
+
+    private fun validateRetryInput(input: String) {
+        require(input in listOf(RETRY, RETRY_NOT)) { RETRY_INPUT_EXCEPTION }
+    }
 
     companion object {
         private const val RETRY = "y"
+        private const val RETRY_NOT = "n"
+        private const val RETRY_INPUT_EXCEPTION = "y 혹은 n을 입력해야만해요."
     }
 }
