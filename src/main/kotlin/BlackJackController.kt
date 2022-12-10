@@ -4,8 +4,7 @@ import domain.Players
 import ui.InputView
 import ui.OutputView
 
-private const val YES = "y"
-private const val NO = "n"
+
 private const val INITIAL_CARD_NUMBER = 2
 
 fun main() {
@@ -28,7 +27,7 @@ fun main() {
             finishPlayers.add(currentPlayer)
             continue
         }
-        if (getAnswer(currentPlayer) == NO) {
+        if (isPlayerStopGame(currentPlayer)) {
             players.quitGame(currentPlayer)
             finishPlayers.add(currentPlayer)
             continue
@@ -40,8 +39,5 @@ fun main() {
     OutputView.printCardStatus(Players(finishPlayers.toList()), showResult = true)
 }
 
-fun getAnswer(player: Player): String {
-    val answer = InputView.askDrawCardOrNot(player)
-    require(answer == YES || answer == NO) { "대답은 $YES 또는 $NO 만 가능합니다" }
-    return answer
-}
+private fun isPlayerStopGame(currentPlayer: Player) = InputView.askDrawCardOrNot(currentPlayer) == InputView.NO
+
