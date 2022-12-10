@@ -35,6 +35,10 @@ class PlayingCards(list: List<PlayingCard>) {
         return isBiggerThanBlackjackSize && isLessThanWinningNumber
     }
 
+    fun size(): Int {
+        return _list.size
+    }
+
     companion object {
         private const val WINNING_NUMBER = 21
         private const val BLACKJACK_SIZE = 2
