@@ -1,7 +1,7 @@
 package blackjack.domain
 
 data class Cards(
-    private val cards: MutableList<Card> = mutableListOf(),
+    val cards: MutableList<Card> = mutableListOf(),
 ) {
     override fun toString(): String {
         return cards.joinToString(DELIMITER)
@@ -9,6 +9,10 @@ data class Cards(
 
     fun add(card: Card) {
         cards.add(card)
+    }
+
+    fun pickFirst(): Card {
+        return cards.removeFirst()
     }
 
     fun calculate(): Int {

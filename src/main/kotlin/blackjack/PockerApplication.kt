@@ -1,5 +1,5 @@
 package blackjack
 
 fun main() {
-    PockerMachine().execute()
+    PockerController().execute()
 }

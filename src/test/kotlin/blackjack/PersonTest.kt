@@ -14,7 +14,9 @@ internal class PersonTest : BehaviorSpec({
         When("카드를 추가하면 ") {
             person1.addCard(Card(CardShape.CLOVER, CardNumber.QUEEN))
             Then("정상적으로 카드를 추가한다.") {
-                person1.toString() shouldBe "길상현카드: Q클로버"
+                person1.name shouldBe "길상현"
+                person1.cards.cards.first().cardShape shouldBe CardShape.CLOVER
+                person1.cards.cards.first().cardNumber shouldBe CardNumber.QUEEN
             }
         }
 
