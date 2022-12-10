@@ -17,11 +17,11 @@ class BlackjackController {
 
     private fun start() {
         Game.players.forEach {
-            draw(it)
+            drawOrNot(it)
         }
     }
 
-    private fun draw(player: Player) {
+    private fun drawOrNot(player: Player) {
         while (true) {
             if (!InputView.inputIsGetCard(player)) break
             Game.hit(player)
