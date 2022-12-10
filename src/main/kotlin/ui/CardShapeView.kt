@@ -10,6 +10,6 @@ enum class CardShapeView(val cardShape: CardShape, val ui: String) {
     DIAMOND(CardShape.DIAMOND, "다이아");
 
     companion object {
-        fun valueOf(cardShape: CardShape) = values().find { it.cardShape == cardShape }!!.ui
+        fun valueOf(cardShape: CardShape) = values().single { it.cardShape == cardShape }.ui
     }
 }
