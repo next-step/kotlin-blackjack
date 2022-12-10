@@ -1,7 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.*
 
 class ResultView {
 
@@ -24,7 +23,7 @@ class ResultView {
         repeat(players.size) {
             val player = players[it]
             repeat(2) { player.receive(dealer.draw()) }
-            println(player)
+            printPlayer(player)
         }
     }
 
@@ -55,7 +54,7 @@ class ResultView {
 
         if (player.canDraw().not()) return true
 
-        println(player)
+        printPlayer(player)
 
         return ask(player)
     }
@@ -64,6 +63,47 @@ class ResultView {
         repeat(players.size) {
             val gamer = players[it]
             println("$gamer - 결과: ${gamer.totalScore}")
+        }
+    }
+
+    private fun printPlayer(player: Player) {
+        println("${player.name}카드: ${printCards(player.myCards)}")
+    }
+
+    private fun printCards(cards: Cards): String {
+        return cards.getCardList().joinToString(", ") { card ->
+            getCardString(card)
+        }
+    }
+
+    private fun getCardString(card: Card): String {
+        return getCardNumberString(card) + getCardSuitString(card)
+    }
+
+    private fun getCardNumberString(card: Card): String {
+        return when (card.cardNumber) {
+            CardNumber.Ace -> "A"
+            CardNumber.Two -> "2"
+            CardNumber.Three -> "3"
+            CardNumber.Four -> "4"
+            CardNumber.Five -> "5"
+            CardNumber.Six -> "6"
+            CardNumber.Seven -> "7"
+            CardNumber.Eight -> "8"
+            CardNumber.Nine -> "9"
+            CardNumber.TEN -> "10"
+            CardNumber.King -> "10"
+            CardNumber.Queen -> "10"
+            CardNumber.Jack -> "10"
+        }
+    }
+
+    private fun getCardSuitString(card: Card): String {
+        return when (card.suit) {
+            Suit.Spade -> "스페이드"
+            Suit.Diamond -> "다이아몬드"
+            Suit.Heart -> "하트"
+            Suit.Clover -> "클로버"
         }
     }
 }

@@ -1,10 +1,10 @@
 package blackjack.domain
 
-enum class Suit(val rawValue: String) {
+enum class Suit {
 
-    Spade("스페이드"),
-    Diamond("다이아몬드"),
-    Heart("하트"),
-    Clover("클로버")
+    Spade,
+    Diamond,
+    Heart,
+    Clover
     ;
 }

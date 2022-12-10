@@ -4,9 +4,7 @@ class Cards {
 
     private val cardList: MutableList<Card> = mutableListOf()
 
-    override fun toString(): String {
-        return cardList.joinToString(", ")
-    }
+    fun getCardList(): List<Card> = cardList.toList()
 
     fun getTotalScore(isAceEleven: Boolean = false): Int {
         return cardList.sumOf { card ->

@@ -1,19 +1,19 @@
 package blackjack.domain
 
-enum class CardNumber(val symbol: String, val getScore: (Boolean) -> Int) {
+enum class CardNumber(val score: Int) {
 
-    Ace("A", { if (it) 11 else 1 }),
-    Two("2", { 2 }),
-    Three("3", { 3 }),
-    Four("4", { 4 }),
-    Five("5", { 5 }),
-    Six("6", { 6 }),
-    Seven("7", { 7 }),
-    Eight("8", { 8 }),
-    Nine("9", { 9 }),
-    TEN("10", { 10 }),
-    King("K", { 10 }),
-    Queen("Q", { 10 }),
-    Jack("J", { 10 })
+    Ace(1),
+    Two(2),
+    Three(3),
+    Four(4),
+    Five(5),
+    Six(6),
+    Seven(7),
+    Eight(8),
+    Nine(9),
+    TEN(10),
+    King(10),
+    Queen(10),
+    Jack(10)
     ;
 }
