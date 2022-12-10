@@ -7,10 +7,10 @@ class Players(
 
     fun hit(dealer: Dealer) = players.forEach { player -> player.hit(dealer.pick()) }
 
-    fun winOrLose(dealer: Dealer): Pair<Int, Int> {
-        val win = players.map { it.winOrLose(dealer) }.count { it == WinOrLose.WIN }
-        val lose = players.map { it.winOrLose(dealer) }.count { it == WinOrLose.LOSE }
+    fun competeWith(dealer: Dealer): CompeteResult {
+        val lose = players.map { it.competeWith(dealer) }.count { it == WinOrLose.WIN }
+        val win = players.map { it.competeWith(dealer) }.count { it == WinOrLose.LOSE }
 
-        return win to lose
+        return CompeteResult(win, lose)
     }
 }

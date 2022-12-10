@@ -1,9 +1,17 @@
 package model
 
-class Dealer(
-    name: String = "딜러",
+private const val BASE_SCORE_DEALER_MORE_HIT = 17
+
+class Dealer : Player(name = "딜러") {
+
     private val deck: Deck = Deck()
-) : Player(name) {
     fun pick(): Card = deck.pick()
     fun cardCount(): Int = deck.count()
+
+    fun finish() {
+        val pokerScore = PokerScore(cards)
+        if (pokerScore.score < BASE_SCORE_DEALER_MORE_HIT) {
+            hit(pick())
+        }
+    }
 }

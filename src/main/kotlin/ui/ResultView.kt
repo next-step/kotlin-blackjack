@@ -10,7 +10,7 @@ object ResultView {
     fun resultInitPokerGame(pokerGame: PokerGame) {
         val playerNames = pokerGame.getPlayers().map { it.name }
         println()
-        println("딜러와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
+        println("${pokerGame.dealer.name}와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
         resultPlayerCard(pokerGame.dealer)
         pokerGame.getPlayers().forEach { player -> resultPlayerCard(player) }
     }
@@ -42,12 +42,12 @@ object ResultView {
     }
 
     private fun dealerWinOrLose(players: Players, dealer: Dealer) {
-        val (win, lose) = players.winOrLose(dealer)
-        println("딜러 : ${win}승  ${lose}패")
+        val competeResult = players.competeWith(dealer)
+        println("딜러 : ${competeResult.win}승  ${competeResult.lose}패")
     }
 
     private fun playerWinOrLose(player: Player, dealer: Dealer) {
-        val winOrLose = player.winOrLose(dealer)
-        println("${player.name} : ${winOrLose.desc} ")
+        val winOrLose = player.competeWith(dealer)
+        println("${player.name} : ${winOrLose.description} ")
     }
 }
