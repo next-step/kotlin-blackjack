@@ -19,6 +19,15 @@ object InputView {
         pokerGame.getPlayers().forEach {
             inputQuestionHit(it, pokerGame.dealer)
         }
+        inputDealerHit(pokerGame.dealer)
+    }
+
+    private fun inputDealerHit(dealer: Dealer) {
+        dealer.finish()
+
+        if (dealer.cards.count() == 3) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        }
     }
 
     private fun inputQuestionHit(player: Player, dealer: Dealer) {
