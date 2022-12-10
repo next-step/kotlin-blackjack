@@ -7,31 +7,34 @@ import blackjack.Point.Companion.SPECIAL_ACE_USABLE_BOUNDARY
 import blackjack.Point.Companion.ZERO
 
 class PlayingCards(
-    val cards: MutableSet<Card> = mutableSetOf(),
+    private val _cards: MutableSet<Card> = mutableSetOf(),
 ) {
+    val cards: Set<Card>
+        get() = _cards.toSet()
+
     fun calculatePoint(): Point {
         val sumPoint = sumPoint()
         return if (sumPoint > MAX) ZERO else sumPoint
     }
 
     private fun sumPoint(): Point {
-        if (noAce()) return cards.sumOf { it.point }
+        if (noAce()) return _cards.sumOf { it.point }
 
-        val sumWithoutSpecialAce = cards.sumOf { it.point } - ACE
+        val sumWithoutSpecialAce = _cards.sumOf { it.point } - ACE
         if (sumWithoutSpecialAce > SPECIAL_ACE_USABLE_BOUNDARY) {
             return sumWithoutSpecialAce + ACE
         }
         return sumWithoutSpecialAce + SPECIAL_ACE
     }
 
-    private fun noAce() = !cards.any { it.isAce() }
+    private fun noAce() = !_cards.any { it.isAce() }
 
     fun addOne(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun addAll(cards: Set<Card>) {
-        this.cards.addAll(cards)
+        this._cards.addAll(cards)
     }
 }
 
