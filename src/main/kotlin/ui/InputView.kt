@@ -1,7 +1,5 @@
 package ui
 
-import domain.Player
-
 object InputView {
     private const val DEFAULT_DELIMITER = ","
     const val YES = "y"
@@ -12,8 +10,8 @@ object InputView {
         return readln().split(DEFAULT_DELIMITER).map { it.trim() }
     }
 
-    fun askDrawCardOrNot(player: Player): String {
-        println("${player.name.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askDrawCardOrNot(playerName: String): String {
+        println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln()
         require(answer == YES || answer == NO) { "대답은 $YES 또는 $NO 만 가능합니다" }
         return answer

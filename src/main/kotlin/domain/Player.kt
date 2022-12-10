@@ -1,5 +1,6 @@
 package domain
 
+// data 클래스여야만 하는 이유가 있는가?
 data class Player(val name: PlayerName) {
 
     val cards: Cards = Cards()

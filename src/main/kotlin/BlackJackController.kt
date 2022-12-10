@@ -39,5 +39,5 @@ fun main() {
     OutputView.printCardStatus(Players(finishPlayers.toList()), showResult = true)
 }
 
-private fun isPlayerStopGame(currentPlayer: Player) = InputView.askDrawCardOrNot(currentPlayer) == InputView.NO
+private fun isPlayerStopGame(currentPlayer: Player) = InputView.askDrawCardOrNot(currentPlayer.name.name) == InputView.NO
 
