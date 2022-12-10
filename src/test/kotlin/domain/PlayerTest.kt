@@ -6,23 +6,25 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
 
+    lateinit var playerPobi: Player
+
+    beforeTest {
+        playerPobi = Player.withName("pobi")
+    }
+
     "사용자가 카드를 뽑아 보관합니다" {
-        val player = Player(PlayerName("chansoo"))
+        playerPobi.takeCards(Card(CardNumber.ACE, CardShape.SPACE))
 
-        player.takeCards(Card(CardNumber.ACE, CardShape.SPACE))
-
-        player.cards.cards shouldContain Card(CardNumber.ACE, CardShape.SPACE)
+        playerPobi.cards.cards shouldContain Card(CardNumber.ACE, CardShape.SPACE)
     }
 
     "최적의 점수를 반환합니다" {
-        val player = Player(PlayerName("chansoo"))
-
-        player.takeCards(
+        playerPobi.takeCards(
             Card(CardNumber.ACE, CardShape.SPACE),
             Card(CardNumber.ACE, CardShape.SPACE),
             Card(CardNumber.TEN, CardShape.SPACE)
         )
 
-        player.choiceBestScore() shouldBe 12
+        playerPobi.choiceBestScore() shouldBe 12
     }
 })
