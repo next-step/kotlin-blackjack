@@ -1,87 +1,77 @@
 package blackjack.ui
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.Cards
+import blackjack.domain.Casino
+import blackjack.domain.Player
+import blackjack.domain.Suit
 
 class ResultView {
 
-    private val dealer = Dealer()
+    fun show(casino: Casino) {
+        casino.distribute()
 
-    fun show(players: List<Player>) {
-        introduceGamers(players)
-        distribute(players)
-        println()
-        relay(players)
-        showResult(players)
-    }
+        val names = casino.players.joinToString(", ") { it.name }
+        println("${names}에게 2장의 나누었습니다.")
 
-    private fun introduceGamers(players: List<Player>) {
-        val guide = players.joinToString(", ") { it.name }
-        println("${guide}에게 2장의 나누었습니다.")
-    }
-
-    private fun distribute(players: List<Player>) {
-        repeat(players.size) {
-            val player = players[it]
-            repeat(2) { player.receive(dealer.draw()) }
-            printPlayer(player)
+        repeat(casino.players.size) {
+            casino.players[it].print()
         }
+
+        relay(casino)
+
+        showResult(casino)
     }
 
-    private fun relay(players: List<Player>) {
+    private fun relay(casino: Casino) {
         var index = 0
         do {
-            val player = players[index]
-            val next = ask(player)
+            val player = casino.players[index]
+            val next = ask(casino, player)
 
             if (player.canDraw().not()) break
 
             if (next) index++
-        } while (index < players.size)
+        } while (index < casino.players.size)
     }
 
-    private fun ask(player: Player): Boolean {
+    private fun ask(casino: Casino, player: Player): Boolean {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readLine()
-        if (answer.isNullOrBlank()) {
-            return true
-        }
+        if (answer.isNullOrBlank()) return true
+        if (answer == NO) return true
 
-        if (answer == "n") {
-            return true
-        }
-
-        player.receive(dealer.draw())
+        casino.draw(player)
 
         if (player.canDraw().not()) return true
 
-        printPlayer(player)
+        player.print()
 
-        return ask(player)
+        return ask(casino, player)
     }
 
-    private fun showResult(players: List<Player>) {
-        repeat(players.size) {
-            val gamer = players[it]
-            println("$gamer - 결과: ${gamer.totalScore}")
+    private fun showResult(casino: Casino) {
+        repeat(casino.players.size) {
+            val player = casino.players[it]
+            println("${player.getString()} - 결과: ${player.totalScore}")
         }
     }
 
-    private fun printPlayer(player: Player) {
-        println("${player.name}카드: ${printCards(player.myCards)}")
+    private fun Player.print() = println(getString())
+
+    private fun Player.getString(): String {
+        return "${this.name}카드: ${this.myCards.getString()}"
     }
 
-    private fun printCards(cards: Cards): String {
-        return cards.getCardList().joinToString(", ") { card ->
-            getCardString(card)
-        }
+    private fun Cards.getString(): String {
+        return getCardList().joinToString(", ") { card -> card.getString() }
     }
 
-    private fun getCardString(card: Card): String {
-        return getCardNumberString(card) + getCardSuitString(card)
-    }
+    private fun Card.getString(): String = getCardNumberString() + getCardSuitString()
 
-    private fun getCardNumberString(card: Card): String {
-        return when (card.cardNumber) {
+    private fun Card.getCardNumberString(): String {
+        return when (cardNumber) {
             CardNumber.Ace -> "A"
             CardNumber.Two -> "2"
             CardNumber.Three -> "3"
@@ -98,12 +88,16 @@ class ResultView {
         }
     }
 
-    private fun getCardSuitString(card: Card): String {
-        return when (card.suit) {
+    private fun Card.getCardSuitString(): String {
+        return when (suit) {
             Suit.Spade -> "스페이드"
             Suit.Diamond -> "다이아몬드"
             Suit.Heart -> "하트"
             Suit.Clover -> "클로버"
         }
+    }
+
+    companion object {
+        private const val NO = "n"
     }
 }
