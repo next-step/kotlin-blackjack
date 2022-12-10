@@ -5,19 +5,18 @@ import blackjack.domain.Player
 import blackjack.io.Input
 import blackjack.io.Output
 
-class Game(val input: Input, val output: Output) {
-    lateinit var players: List<Player>
-    private var deck: Deck = Deck()
+class Game(private val input: Input, private val output: Output) {
+    private val players: List<Player> by lazy {
+        makePlayers()
+    }
+    private val deck: Deck = Deck()
 
     fun init() {
-        players = input.getPlayers()
-            .map { Player(it) }
-
         deck.shuffle()
     }
 
     fun start() {
-        repeat(2) {
+        repeat(INIT_HAND_COUNT) {
             players.forEach { it.draw(deck) }
         }
         output.printPlayersCard(players)
@@ -25,17 +24,28 @@ class Game(val input: Input, val output: Output) {
 
     fun draw() {
         players.forEach { player ->
-            while (player.score() < 21) {
-                if (!input.moreDraw(player)) {
-                    break
-                }
-                player.draw(deck)
-            }
+            playerDraw(player)
             output.printPlayerCard(player)
         }
     }
 
     fun result() {
         output.printPlayersResult(players)
+    }
+
+    private fun playerDraw(player: Player) {
+        while (player.score() < 21) {
+            if (!input.moreDraw(player)) {
+                break
+            }
+            player.hand
+                .add(deck.draw())
+        }
+    }
+
+    private fun makePlayers() = input.getPlayers().map { Player(it) }
+
+    companion object {
+        private const val INIT_HAND_COUNT = 2
     }
 }
