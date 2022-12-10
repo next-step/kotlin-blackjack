@@ -13,8 +13,8 @@ object OutputView {
     fun printCardStatus(players: Players) {
         players.players.forEach {
             this.printCardStatus(it)
+            println()
         }
-        println()
     }
 
     fun printCardStatus(player: Player) {

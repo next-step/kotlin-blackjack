@@ -4,8 +4,6 @@ import domain.Players
 import ui.InputView
 import ui.OutputView
 
-private const val INITIAL_CARD_NUMBER = 2
-
 fun main() {
     val playerNames = InputView.askPlayerNames()
     val players = Players(playerNames.map { Player.withName(it) })
