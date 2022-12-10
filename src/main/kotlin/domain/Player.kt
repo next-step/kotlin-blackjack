@@ -5,8 +5,8 @@ data class Player(val name: PlayerName) {
 
     val cards: Cards = Cards()
 
-    fun takeCard(card: Card) {
-        cards.add(card)
+    fun takeCards(vararg cards: Card) {
+        cards.forEach { this.cards.add(it) }
     }
 
     fun choiceBestScore(): Int = cards.bestScore()
