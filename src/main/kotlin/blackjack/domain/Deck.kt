@@ -1,3 +1,9 @@
 package blackjack.domain
 
-class Deck(val cards: Cards = Cards(Card.DECK))
+object Deck {
+    private val cards = Cards(Card.DECK)
+
+    fun draw(): Card {
+        return cards.pick()
+    }
+}

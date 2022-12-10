@@ -36,9 +36,7 @@ class BlackjackController {
 
     private fun addPlayers(names: List<String>) {
         val players = names.map { Player(it) }
-        players.forEach {
-            Game.addPlayer(it)
-        }
+        Game.players.addAll(players)
     }
 }
 
