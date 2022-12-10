@@ -1,24 +1,29 @@
 package blackjack.domain
 
 class Deck {
-    lateinit var cards: MutableList<Card>
+    private val cards: MutableList<Card> by lazy {
+        makeCards()
+    }
 
     fun draw(): Card {
+        check(cards.isNotEmpty()) {
+            "카드를 전부 뽑았습니다."
+        }
+
         return cards.removeFirst()
     }
 
     fun shuffle() {
-        cards = Shape.values()
-            .asSequence()
-            .map { getCardsByShape(it) }
-            .reduce { acc, cards -> acc.plus(cards) }
-            .shuffled()
-            .toMutableList()
+        cards.shuffle()
     }
+
+    private fun makeCards() = Shape.values()
+        .map { getCardsByShape(it) }
+        .reduce { acc, cards -> acc.plus(cards) }
+        .toMutableList()
 
     private fun getCardsByShape(shape: Shape): List<Card> {
         return Denomination.values()
-            .asSequence()
             .map { Card(shape, it) }
             .toMutableList()
     }
