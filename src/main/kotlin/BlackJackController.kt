@@ -13,11 +13,10 @@ fun main() {
     val cardDeck = CardDeck()
     OutputView.printGameStartMsg(playerNames)
 
-    repeat(playerNames.size){
+    repeat(playerNames.size) {
         val currentPlayer = players.currentPlayer();
-        currentPlayer.takeCards(cardDeck.draw(),cardDeck.draw())
+        currentPlayer.takeCards(cardDeck.draw(), cardDeck.draw())
     }
-
     OutputView.printCardStatus(players)
 
     val finishPlayers = mutableListOf<Player>()
@@ -32,7 +31,7 @@ fun main() {
         OutputView.printCardStatus(currentPlayer)
     }
 
-    OutputView.printCardStatus(Players(finishPlayers.toList()), showResult = true)
+    OutputView.printCardStatusWithResult(finishPlayers.toList())
 }
 
 private fun isPlayerStopGame(currentPlayer: Player) =

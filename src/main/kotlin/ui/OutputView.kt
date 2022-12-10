@@ -10,21 +10,27 @@ object OutputView {
         println("${playerNames.joinToString()} 에게 2장의 나누었습니다.")
     }
 
-    fun printCardStatus(players: Players, showResult: Boolean = false) {
+    fun printCardStatus(players: Players) {
         players.players.forEach {
-            this.printCardStatus(it, showResult)
+            this.printCardStatus(it)
         }
+        println()
     }
 
-    fun printCardStatus(player: Player, showResult: Boolean = false) {
+    fun printCardStatus(player: Player) {
         val cardViews = player.cards.cards.map {
             cardView(it)
         }
-        println("${player.name.name}카드 : ${cardViews.joinToString()} ${resultView(showResult, player)}")
+        print("${player.name.name}카드 : ${cardViews.joinToString()}")
     }
 
-    private fun resultView(showResult: Boolean, player: Player) =
-        if (showResult) "- 결과:" + player.choiceBestScore() else ""
+    fun printCardStatusWithResult(players: List<Player>) {
+        players.forEach {
+            printCardStatus(it)
+            println("- 결과: ${it.choiceBestScore()}")
+        }
+
+    }
 
     private fun cardView(card: Card) = CardNumberView.valueOf(card.number) + CardShapeView.valueOf(card.shape)
 }
