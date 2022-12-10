@@ -27,7 +27,7 @@ class PockerController {
     private fun retryOrNot() = { person: Person ->
         val input = InputView.readRetry(person.name)
         validateRetryInput(input)
-        input == RETRY
+        person.getScore() < MAXIMUM_SCORE && input == RETRY
     }
 
     private fun validateRetryInput(input: String) {
@@ -35,6 +35,7 @@ class PockerController {
     }
 
     companion object {
+        private const val MAXIMUM_SCORE = 21
         private const val RETRY = "y"
         private const val RETRY_NOT = "n"
         private const val RETRY_INPUT_EXCEPTION = "y 혹은 n을 입력해야만해요."
