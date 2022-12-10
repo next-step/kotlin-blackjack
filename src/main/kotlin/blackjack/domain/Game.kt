@@ -10,10 +10,10 @@ object Game {
 
     fun isFinished(): Boolean {
         players.forEach {
-            if (isStop(it.cards.getScore())) return true
+            if (bust(it.cards.getScore())) return true
         }
         return false
     }
 
-    private fun isStop(score: Int) = score >= STOP_NUMBER
+    private fun bust(score: Int) = score >= STOP_NUMBER
 }
