@@ -13,10 +13,17 @@ data class Point(val value: Int) {
         return this.value - compared.value
     }
 
+    fun soft(): Point {
+        if (this > SPECIAL_ACE) {
+            return this
+        }
+        return this + SPECIAL_ACE_ADDED
+    }
+
     companion object{
         val ZERO = Point(0)
         val ACE = Point(1)
-        val SPECIAL_ACE_USABLE_BOUNDARY = Point(10)
+        val SPECIAL_ACE_ADDED = Point(10)
         val SPECIAL_ACE = Point(11)
         val MAX = Point(21)
     }

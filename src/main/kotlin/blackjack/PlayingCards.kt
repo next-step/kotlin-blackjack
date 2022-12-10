@@ -1,9 +1,6 @@
 package blackjack
 
-import blackjack.Point.Companion.ACE
 import blackjack.Point.Companion.MAX
-import blackjack.Point.Companion.SPECIAL_ACE
-import blackjack.Point.Companion.SPECIAL_ACE_USABLE_BOUNDARY
 import blackjack.Point.Companion.ZERO
 
 class PlayingCards(
@@ -18,16 +15,12 @@ class PlayingCards(
     }
 
     private fun sumPoint(): Point {
-        if (noAce()) return _cards.sumOf { it.point }
-
-        val sumWithoutSpecialAce = _cards.sumOf { it.point } - ACE
-        if (sumWithoutSpecialAce > SPECIAL_ACE_USABLE_BOUNDARY) {
-            return sumWithoutSpecialAce + ACE
-        }
-        return sumWithoutSpecialAce + SPECIAL_ACE
+        if (hard()) return _cards.sumOf { it.point }
+        return _cards.sumOf { it.point }
+            .soft()
     }
 
-    private fun noAce() = !_cards.any { it.isAce() }
+    private fun hard() = !_cards.any { it.isAce() }
 
     fun addOne(card: Card) {
         _cards.add(card)
