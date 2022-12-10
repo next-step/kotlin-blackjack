@@ -13,7 +13,7 @@ object Game {
         players.add(player)
     }
 
-    fun givePlayer(player: Player) {
+    fun hit(player: Player) {
         player.getCards(deck.cards.pick())
     }
 

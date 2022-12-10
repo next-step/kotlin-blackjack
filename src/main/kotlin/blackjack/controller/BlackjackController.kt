@@ -24,7 +24,7 @@ class BlackjackController {
     private fun draw(player: Player) {
         while (true) {
             if (!InputView.inputIsGetCard(player)) break
-            Game.givePlayer(player)
+            Game.hit(player)
             ResultView.printPlayerStatus(player)
         }
     }
