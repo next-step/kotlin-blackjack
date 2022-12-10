@@ -7,8 +7,6 @@ abstract class Participant(open val name: String, open val myCards: Cards = Card
 
     fun receive(card: Card) = myCards.add(card)
 
-    fun hasCard(card: Card): Boolean = myCards.hasCard(card)
-
     fun canDraw(): Boolean = totalScore < BLACK_JACK
 
     private fun calculate(): Int {

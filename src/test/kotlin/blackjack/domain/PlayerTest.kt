@@ -14,20 +14,6 @@ internal class PlayerTest {
         player.name shouldBe "hjw"
     }
 
-    @DisplayName("받은 카드 목록을 가지고 있다.")
-    @Test
-    fun hasCard() {
-        val player = Player("hjw")
-        val cardKD = Card(CardNumber.King, Suit.Diamond)
-        val cardQS = Card(CardNumber.Queen, Suit.Spade)
-
-        player.receive(cardKD)
-        player.receive(cardQS)
-
-        player.hasCard(cardKD) shouldBe true
-        player.hasCard(cardQS) shouldBe true
-    }
-
     @DisplayName("카드 숫자 합계를 계산해서 알고 있다.")
     @Test
     fun calculate() {
