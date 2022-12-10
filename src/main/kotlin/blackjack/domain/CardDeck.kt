@@ -15,9 +15,6 @@ class CardDeck private constructor(val cards: Stack<Card>) {
     }
 
     companion object {
-        const val BLACK_JACk_NUMBER = 21
-
-        fun empty(): CardDeck = CardDeck(Stack<Card>())
         fun shuffle(): CardDeck = CardDeck(init())
 
         private fun init() = Suit.values()

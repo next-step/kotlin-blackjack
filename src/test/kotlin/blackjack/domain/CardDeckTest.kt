@@ -9,7 +9,9 @@ class CardDeckTest : StringSpec({
 
     "뽑을 카드가 없다면 예외가 발생한다." {
         val message = shouldThrow<IllegalStateException> {
-            CardDeck.empty().draw()
+            val cardDeck = CardDeck.shuffle()
+
+            while (true) cardDeck.draw()
         }
 
         message shouldHaveMessage "뽑을 카드가 없습니다."
@@ -22,15 +24,5 @@ class CardDeckTest : StringSpec({
         cardDeck.draw()
 
         cardDeck.cards shouldHaveSize initCount.dec()
-    }
-
-    "카드를 얻으면 총 카드 숫가 1 만큼 증가된다." {
-        val cardDeck = CardDeck.empty()
-        val initCount = cardDeck.cards.size
-
-        val card = Card(Suit.CLUB, Number.ACE)
-        cardDeck.add(card)
-
-        cardDeck.cards shouldHaveSize initCount.inc()
     }
 })

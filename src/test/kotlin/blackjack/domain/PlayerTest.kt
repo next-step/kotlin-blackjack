@@ -9,7 +9,13 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 
 class PlayerTest : StringSpec({
     "참여자 이름은 공백이면 예외가 발생한다." {
-        val message = shouldThrow<IllegalArgumentException> { Player("") }
+        val cardList = listOf(
+            Card(Suit.SPADE, Number.TWO),
+            Card(Suit.HEART, Number.TWO)
+        )
+        val cards = Cards(cardList)
+
+        val message = shouldThrow<IllegalArgumentException> { Player("", cards) }
         message shouldHaveMessage "Player 이름은 필수 입력입니다."
     }
 
@@ -31,68 +37,40 @@ class PlayerTest : StringSpec({
                 ),
                 false
             )
-        ) { cards, isBust ->
-            val player = Player("테스터")
-
-            cards.forEach { card ->
-                player.hit(card)
-            }
+        ) { cardList, isBust ->
+            val cards = Cards(cardList)
+            val player = Player("테스터", cards)
 
             player.isBust() shouldBe isBust
         }
     }
 
-    "참여자의 카드 포인트가 총합을 계산하다." {
-        forAll(
-            row(
-                listOf(
-                    Card(Suit.CLUB, Number.SIX),
-                    Card(Suit.DIAMOND, Number.SIX),
-                    Card(Suit.HEART, Number.SIX),
-                    Card(Suit.SPADE, Number.SIX)
-                ),
-                24
-            ),
-            row(
-                listOf(
-                    Card(Suit.CLUB, Number.SIX),
-                    Card(Suit.DIAMOND, Number.SIX)
-                ),
-                12
-            )
-        ) { cards, point ->
-            val player = Player("테스터")
-
-            cards.forEach { card ->
-                player.hit(card)
-            }
-
-            player.point shouldBe point
-        }
-    }
-
     "Ace 는 블랙잭 숫자보다 합산이 작을 경우엔 포인트가 11로 계산된다." {
-        val player = Player("테스터")
+        val cardList = listOf(
+            Card(Suit.SPADE, Number.TWO),
+            Card(Suit.HEART, Number.TWO)
+        )
+        val cards = Cards(cardList)
+        val player = Player("테스터", cards)
         val card = Card(Suit.SPADE, Number.ACE)
 
         player.hit(card)
 
-        player.point shouldBe 11
+        player.point shouldBe 15
     }
 
     "Ace 는 블랙잭 숫자보다 합산이 클 경우엔 포인트가 1로 계산된다." {
-        val player = Player("테스터")
-
-        val cards = listOf(
-            Card(Suit.HEART, Number.NINE),
-            Card(Suit.DIAMOND, Number.NINE),
-            Card(Suit.SPADE, Number.ACE)
+        val cards = Cards(
+            listOf(
+                Card(Suit.HEART, Number.NINE),
+                Card(Suit.DIAMOND, Number.NINE),
+            )
         )
 
-        cards.forEach { card ->
-            player.hit(card)
-        }
+        val player = Player("테스터", cards)
+        val card = Card(Suit.SPADE, Number.ACE)
 
+        player.hit(card)
         player.point shouldBe 19
     }
 })

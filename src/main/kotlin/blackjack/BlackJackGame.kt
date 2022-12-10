@@ -1,47 +1,38 @@
 package blackjack
 
 import blackjack.domain.CardDeck
+import blackjack.domain.Cards
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackJackGame {
     fun play(cardDeck: CardDeck) {
-        val players: List<Player> = loadPlayers(cardDeck)
+        val players: List<Player> = getPlayers(cardDeck)
+        printCurrentState(players)
         hitCard(players, cardDeck)
         printResult(players)
     }
 
-    private fun loadPlayers(cardDeck: CardDeck): List<Player> {
-        val players: List<Player> = getPlayers()
-        ResultView.newLine()
-
-        ResultView.printHit(players.map { it.name })
-        repeat(INIT_HIT_COUNT) {
-            players.forEach { player ->
-                val card = cardDeck.draw()
-                player.hit(card)
-            }
-        }
-
-        printCurrentState(players)
-        ResultView.newLine()
-        return players
-    }
-
-    private fun getPlayers(): List<Player> {
+    private fun getPlayers(cardDeck: CardDeck): List<Player> {
         ResultView.printMessage(ResultView.Message.REQUEST_PLAYERS)
         val names: List<String> = InputView.requestStringList()
+        val initCards = List(INIT_HIT_COUNT) { cardDeck.draw() }
 
-        return names.map { name -> Player(name) }
+        return names.map { name -> Player(name, Cards(initCards)) }
     }
 
     private fun printCurrentState(players: List<Player>) {
+        ResultView.newLine()
+        ResultView.printHit(players.map { it.name })
+
         players.forEach { player ->
             val cards = toCardNames(player)
 
             ResultView.printState(player.name, cards)
         }
+
+        ResultView.newLine()
     }
 
     private fun hitCard(players: List<Player>, cardDeck: CardDeck) {
@@ -85,7 +76,7 @@ class BlackJackGame {
     }
 
     private fun toCardNames(player: Player): List<String> =
-        player.cardDeck.cards.map { card -> "${card.number.value}${card.suit.value}" }
+        player.cards.cardStack.map { card -> "${card.number.value}${card.suit.value}" }
 
     companion object {
         private const val INIT_HIT_COUNT = 2

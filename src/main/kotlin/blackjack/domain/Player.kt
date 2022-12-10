@@ -1,35 +1,18 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    val cardDeck = CardDeck.empty()
+class Player(val name: String, val cards: Cards) {
     var point = 0
         private set
 
     init {
         require(name.isNotBlank()) { "Player 이름은 필수 입력입니다." }
+        point = cards.point()
     }
 
     fun hit(card: Card) {
-        cardDeck.add(card.copy())
-        point = point()
+        cards.add(card.copy())
+        point = cards.point()
     }
 
-    private fun point(): Int =
-        cardDeck.cards.fold(0) { acc, card ->
-            val totalPoint = acc + card.number.value
-
-            if (card.number.isAce()) {
-                val maxValue = acc + card.number.orValue
-                val cardPoint = if (maxValue < CardDeck.BLACK_JACk_NUMBER) card.number.orValue else card.number.value
-
-                return@fold acc + cardPoint
-            }
-
-            totalPoint
-        }
-
-    fun isBust(): Boolean = point > CardDeck.BLACK_JACk_NUMBER
-
-    companion object {
-    }
+    fun isBust(): Boolean = point > Cards.BLACK_JACk_NUMBER
 }
