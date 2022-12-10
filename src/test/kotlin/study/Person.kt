@@ -39,8 +39,10 @@ class PersonBuilder {
 }
 
 sealed class Skill {
-    data class Soft(private val skill: String) : Skill()
-    data class Hard(private val skill: String) : Skill()
+    abstract val value: String
+
+    data class Soft(override val value: String) : Skill()
+    data class Hard(override val value: String) : Skill()
 }
 
 data class Skills(
