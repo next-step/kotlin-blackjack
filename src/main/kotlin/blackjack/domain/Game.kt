@@ -5,19 +5,19 @@ object Game {
     private const val STOP_NUMBER = 21
     private val deck = Deck()
     val players: MutableList<Player> = mutableListOf()
-    val isFinished: Boolean = checkPlayersScore()
 
     fun addPlayer(player: Player) {
-        var newPlayer = player
-
         repeat(START_CARD_SIZE) {
-            val getCardPlayer = newPlayer.getCards(deck.cards.pick())
-            newPlayer = getCardPlayer
+            player.getCards(deck.cards.pick())
         }
-        players.add(newPlayer)
+        players.add(player)
     }
 
-    private fun checkPlayersScore(): Boolean {
+    fun givePlayer(player: Player) {
+        player.getCards(deck.cards.pick())
+    }
+
+    fun isFinished(): Boolean {
         players.forEach {
             if (isStop(it.cards.getScore())) return true
         }
