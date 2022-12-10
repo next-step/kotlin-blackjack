@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.domain.Game
+import blackjack.domain.Player
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 

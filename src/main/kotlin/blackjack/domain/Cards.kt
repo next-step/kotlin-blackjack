@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Cards(values: List<Card> = emptyList()) {
     private var _values: List<Card> = values.deepCopy()

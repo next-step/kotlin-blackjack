@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Suite(val value: String) {
     SPADE("스페이드"),

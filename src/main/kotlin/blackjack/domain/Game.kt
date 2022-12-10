@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 object Game {
     private const val START_CARD_SIZE = 2

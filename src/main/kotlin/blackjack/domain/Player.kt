@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Player(val name: String, val cards: Cards = Cards()) {
     fun getCards(card: Card): Player {

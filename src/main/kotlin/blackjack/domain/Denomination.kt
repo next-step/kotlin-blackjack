@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Denomination(val value: String, val score: Int) {
     ACE("A", 0),
