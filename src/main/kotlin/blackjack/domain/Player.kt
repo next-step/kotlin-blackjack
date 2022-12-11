@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.model.Card
+
 class Player(val name: String, val cards: Cards = Cards()) {
     init {
         require(name.isNotBlank()) { "Player 이름은 공백이 될 수 없습니다. 유효한 Player 명을 입력해주세요." }

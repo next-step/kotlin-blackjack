@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import org.assertj.core.api.Assertions

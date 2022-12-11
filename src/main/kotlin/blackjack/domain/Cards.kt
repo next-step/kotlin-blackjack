@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.model.Card
 import blackjack.model.CardType
 
 const val BLACKJACK_SCORE = 21

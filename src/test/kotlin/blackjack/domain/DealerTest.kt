@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.model.DEFAULT_CARD_DECK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,8 +24,9 @@ internal class DealerTest {
     @Test
     fun deliverCard() {
         val (cardDeck, firstCard) = DEFAULT_CARD_DECK to DEFAULT_CARD_DECK.first()
-        val deck = Cards(cardDeck)
-        val dealer = Dealer(deck).apply { shuffle() }
+        val resultCount = cardDeck.size - 1
+        val dealer = Dealer(Cards(cardDeck))
         assertThat(dealer.deliverCard()).isEqualTo(firstCard)
+        assertThat(dealer.deck.size).isEqualTo(resultCount)
     }
 }
