@@ -30,9 +30,9 @@ internal class CardsTest {
     @DisplayName("카드 목록 총 점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCardsToSum")
-    fun sum(initialCards: List<Card>) {
+    fun sum(initialCards: List<Card>, totalScore: Int) {
         val cards = Cards(initialCards.toMutableList())
-        assertThat(cards.sum()).isEqualTo(21)
+        assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
     @DisplayName("카드 목록 중에 ACE 포함되어 있고 총합이 21 이상인 경우 ACE default Score 1을 합산에 포함시킨다.")
