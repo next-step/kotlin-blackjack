@@ -11,5 +11,9 @@ class Cards(
 
     fun shuffle() = _value.shuffle()
 
+    fun sum() {
+        TODO("Not Implementation")
+    }
+
     fun add(card: Card) = _value.add(card)
 }
