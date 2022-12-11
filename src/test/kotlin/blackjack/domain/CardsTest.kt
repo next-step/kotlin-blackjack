@@ -3,7 +3,9 @@ package blackjack.domain
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -49,6 +51,21 @@ internal class CardsTest {
     fun sumWithAceSpecialScore(initialCards: List<Card>, totalScore: Int) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
+    }
+
+    @DisplayName("카드 목록 중에 첫번쨰 카드를 가져올 수 있다.")
+    @Test
+    fun successToFirst() {
+        val firstCard = Card(CardType.JACK, CardShape.CLOVER)
+        val cards = Cards(mutableListOf(firstCard, Card(CardType.QUEEN, CardShape.CLOVER)))
+        assertThat(cards.first()).isEqualTo(firstCard)
+    }
+
+    @DisplayName("빈 카드 목록에서 첫번쨰 카드 가져오게 되면 에러가 발생한다.")
+    @Test
+    fun failToFirst() {
+        val cards = Cards()
+        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { cards.first() }
     }
 
     companion object {

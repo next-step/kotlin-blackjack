@@ -23,6 +23,10 @@ class Cards(
             _value.sumOf { it.type.score }
         }
 
+    fun first(): Card {
+        TODO()
+    }
+
     private fun shouldCountWithAce(): Boolean = _value.any { it.type == CardType.ACE }
 
     private fun sumWithAce(): Int {
