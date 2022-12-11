@@ -28,7 +28,8 @@ class Deck(
                     Sharp.values().map { sharp ->
                         Card(number, sharp)
                     }
-                }.toHashSet()
+                }.shuffled()
+                    .toSet()
             )
         }
     }

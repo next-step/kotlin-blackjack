@@ -1,5 +1,7 @@
-package blackjack.domain
+package blackjack.domain.member
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
 import blackjack.domain.Number.ACE
 import blackjack.domain.Number.JACK
 import blackjack.domain.Number.QUEEN
@@ -60,9 +62,19 @@ internal class PlayerTest {
     }
 
     @Test
-    internal fun `21점 이상이면 false를 반환한다`() {
+    internal fun `블랙잭에 가까운 유저를 반환한다`() {
         // given
-        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(ACE, DIAMOND)))
+        val player1 = Player("user1", Cards(Card(QUEEN, HEART), Card(THREE, CLOVER)))
+        val player2 = Player("user2", Cards(Card(QUEEN, HEART), Card(TWO, CLOVER)))
+
+        // when, then
+        assertThat(player1.isNearBlackJackThan(player2)).isTrue
+    }
+
+    @Test
+    internal fun `21점 초과이면 false를 반환한다`() {
+        // given
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(TWO, DIAMOND)))
 
         // when
         val ableMoreDrawCard = player.ableMoreDrawCard()

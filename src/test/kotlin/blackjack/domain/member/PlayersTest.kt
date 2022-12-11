@@ -1,5 +1,9 @@
-package blackjack.domain
+package blackjack.domain.member
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
+import blackjack.domain.Number
+import blackjack.domain.Sharp
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
 
