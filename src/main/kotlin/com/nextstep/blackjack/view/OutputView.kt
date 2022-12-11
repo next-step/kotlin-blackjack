@@ -9,8 +9,8 @@ object OutputView {
 
     fun printInitialStateMessage(players: List<Player>) {
         val sb = StringBuilder()
-        val map = players.map { it.name }
-        sb.append("${map.joinToString(", ")}에게 2장의 카드를 나누었습니다.\n")
+        val playerNames = players.map { it.name }
+        sb.append("${playerNames.joinToString(", ")}에게 2장의 카드를 나누었습니다.\n")
         players.forEach {
             sb.append("${it.name}카드: ${it.getCards().joinToString(", ")}\n")
         }
