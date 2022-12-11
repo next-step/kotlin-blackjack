@@ -18,4 +18,14 @@ enum class Denomination(private val score: Int) {
     fun score(playingCard: PlayingCard): Int {
         return playingCard.denomination.score
     }
+
+    override fun toString(): String {
+        return when (this) {
+            ACE -> "A"
+            JACK -> "J"
+            QUEEN -> "Q"
+            KING -> "K"
+            else -> score.toString()
+        }
+    }
 }

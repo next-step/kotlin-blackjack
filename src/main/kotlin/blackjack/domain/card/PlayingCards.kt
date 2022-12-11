@@ -35,6 +35,10 @@ class PlayingCards(list: List<PlayingCard>) {
         return isBiggerThanBlackjackSize && isLessThanWinningNumber
     }
 
+    fun cards(): List<String> {
+        return _list.map { it.toString() }
+    }
+
     fun size(): Int {
         return _list.size
     }
