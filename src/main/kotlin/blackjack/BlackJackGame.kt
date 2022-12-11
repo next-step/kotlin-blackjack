@@ -3,12 +3,13 @@ package blackjack
 import blackjack.domain.CardDeck
 import blackjack.domain.Cards
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackJackGame {
     fun play(cardDeck: CardDeck) {
-        val players: List<Player> = getPlayers(cardDeck)
+        val players = getPlayers(cardDeck)
         printCurrentState(players)
         hitCard(players, cardDeck)
         players.forEach(ResultView::printResult)
@@ -18,11 +19,7 @@ class BlackJackGame {
         ResultView.printMessage(ResultView.Message.REQUEST_PLAYERS)
         val names: List<String> = InputView.requestStringList()
 
-        return names.map { name ->
-            val initCards = List(INIT_HIT_COUNT) { cardDeck.draw() }
-            val cards = Cards(initCards)
-            Player(name, cards)
-        }
+        return Players(names, cardDeck).players
     }
 
     private fun printCurrentState(players: List<Player>) {
@@ -63,9 +60,6 @@ class BlackJackGame {
         }
     }
 
-    companion object {
-        private const val INIT_HIT_COUNT = 2
-    }
 }
 
 fun main() {
