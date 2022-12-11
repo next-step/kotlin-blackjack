@@ -9,8 +9,15 @@ class Cards(
     val value: List<Card>
         get() = _value.toList()
 
+    val size: Int
+        get() = _value.size
+
+    fun shuffle() = _value.shuffle()
+
     companion object {
-        val CARD_DECK: List<Card> = CardType.values()
+        val CARD_DECK: Cards = CardType.values()
             .flatMap { type -> CardShape.values().map { shape -> Card(type = type, shape = shape) } }
+            .toMutableList()
+            .let(::Cards)
     }
 }
