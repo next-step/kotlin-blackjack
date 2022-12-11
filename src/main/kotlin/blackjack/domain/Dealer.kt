@@ -7,4 +7,6 @@ class Dealer(
         get() = _deck
 
     fun shuffle() {
+        TODO("Not Implementation")
+    }
 }

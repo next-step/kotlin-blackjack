@@ -10,4 +10,12 @@ internal class DealerTest {
     fun deck() {
         assertThat(Dealer().deck.size).isEqualTo(52)
     }
+
+    @DisplayName("딜러는 게임 시작 전 카드덱을 셔플 한다.")
+    @Test
+    fun shuffle() {
+        val deck = Cards(DEFAULT_CARD_DECK)
+        val dealer = Dealer(deck).apply { shuffle() }
+        assertThat(dealer.deck).isEqualTo(deck)
+    }
 }
