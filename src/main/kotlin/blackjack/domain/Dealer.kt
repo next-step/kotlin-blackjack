@@ -6,7 +6,5 @@ class Dealer(
     val deck: Cards
         get() = _deck
 
-    fun shuffle() {
-        TODO("Not Implementation")
-    }
+    fun shuffle() = _deck.shuffle()
 }
