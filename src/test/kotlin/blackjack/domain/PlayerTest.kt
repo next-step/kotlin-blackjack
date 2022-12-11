@@ -6,6 +6,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.EmptySource
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -42,6 +43,17 @@ internal class PlayerTest {
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { player.readyToPlay(cards) }
     }
 
+    @DisplayName("Player 히트를 외치면 카드 한장을 더 받는다.")
+    @ParameterizedTest
+    @MethodSource("provideHitCard")
+    fun hit(initialCards: List<Card>, hitCard: Card) {
+        val player = Player("고니").apply {
+            readyToPlay(initialCards)
+            hit(hitCard)
+        }
+        assertThat(player.cards.value.last()).isEqualTo(hitCard)
+    }
+
     companion object {
         @JvmStatic
         fun provideInitialCardS(): Stream<List<Card>> =
@@ -50,5 +62,14 @@ internal class PlayerTest {
         @JvmStatic
         fun provideInitialInvalidCardS(): Stream<List<Card>> =
             Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER)), listOf())
+
+        @JvmStatic
+        fun provideHitCard(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(
+                    listOf(Card(CardType.THREE, CardShape.CLOVER), Card(CardType.EIGHT, CardShape.HEART)),
+                    Card(CardType.JACK, CardShape.DIAMOND)
+                )
+            )
     }
 }
