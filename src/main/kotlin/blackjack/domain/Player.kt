@@ -14,6 +14,10 @@ class Player(val name: String, val cards: Cards = Cards()) {
 
     fun sumCards(): Int = cards.sum()
 
+    fun burst(): Boolean {
+        TODO("Not Implementation")
+    }
+
     companion object {
         private const val INITIAL_CARDS_COUNT = 2
     }
