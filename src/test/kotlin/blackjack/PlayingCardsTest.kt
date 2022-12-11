@@ -3,7 +3,6 @@ package blackjack
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.assertAll
 
 class PlayingCardsTest : StringSpec({
     "플레잉 카드가 2Clover 3Spade일 때 카드 점수를 계산하면 5이다." {
