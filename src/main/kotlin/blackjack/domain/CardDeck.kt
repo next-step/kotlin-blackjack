@@ -10,10 +10,6 @@ class CardDeck private constructor(val cards: Stack<Card>) {
         return cards.pop()
     }
 
-    fun add(card: Card) {
-        cards.push(card.copy())
-    }
-
     companion object {
         fun shuffle(): CardDeck = CardDeck(init())
 

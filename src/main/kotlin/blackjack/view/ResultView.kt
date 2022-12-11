@@ -1,5 +1,9 @@
 package blackjack.view
 
+import blackjack.domain.Card
+import blackjack.domain.Player
+import java.util.Stack
+
 object ResultView {
 
     enum class Message(val context: String) {
@@ -18,17 +22,20 @@ object ResultView {
         println("${playNames}에게 2장의 나누었습니다.")
     }
 
-    fun printState(player: String, cards: List<String>) {
-        val cardString: String = cards.joinToString(", ")
+    fun printState(player: Player) {
+        val cardString: String = toCardNames(player.cards.cardStack)
 
         println("${player}카드: $cardString")
     }
 
-    fun printResult(player: String, cards: List<String>, point: Int) {
-        val cardString: String = cards.joinToString(", ")
+    fun printResult(player: Player) {
+        val cardString: String = toCardNames(player.cards.cardStack)
 
-        println("${player}카드: $cardString - 결과: $point")
+        println("${player}카드: $cardString - 결과: ${player.point}")
     }
+
+    private fun toCardNames(cards: Stack<Card>): String =
+        cards.joinToString(". ") { card -> "${card.number.value}${card.suit.value}" }
 
     fun newLine() = println()
 }
