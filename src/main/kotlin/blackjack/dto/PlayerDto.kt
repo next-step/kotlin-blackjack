@@ -11,4 +11,8 @@ value class PlayerDto(private val player: Player) {
     fun getCards(): List<String> {
         return player.cards.cards()
     }
+
+    fun getScore(): Int {
+        return player.getScore()
+    }
 }

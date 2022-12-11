@@ -22,6 +22,10 @@ data class Player(val name: Name, val cards: PlayingCards) : PlayerRole() {
         return state.stay()
     }
 
+    override fun getScore(): Int {
+        return cards.getScore()
+    }
+
     private fun initState() {
         if (cards.isBlackjack()) {
             state = Blackjack(cards)

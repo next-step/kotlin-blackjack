@@ -8,5 +8,7 @@ interface Role {
 
     fun stay(): State
 
+    fun getScore(): Int
+
     fun isDealer(): Boolean
 }

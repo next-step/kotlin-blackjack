@@ -14,6 +14,18 @@ object ResultView {
     }
 
     fun printPlayerCards(player: PlayerDto) {
-        println(player.getName() + CARD + player.getCards().joinToString(", "))
+        println(getNameAndCards(player))
+    }
+
+    fun printResultWithScore(player: PlayerDto) {
+        println(getNameAndCards(player) + GAME_RESULT_MESSAGE + player.getScore())
+    }
+
+    fun printLineFeed() {
+        println()
+    }
+
+    private fun getNameAndCards(player: PlayerDto): String {
+        return player.getName() + CARD + player.getCards().joinToString(", ")
     }
 }

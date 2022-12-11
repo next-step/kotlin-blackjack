@@ -20,7 +20,7 @@ class PlayingCards(list: List<PlayingCard>) {
     }
 
     fun isBust(): Boolean {
-        return _list.sumOf { it.denomination.score(it) } > WINNING_NUMBER
+        return _list.sumOf { it.denomination.score(it) } > BLACKJACK_NUMBER
     }
 
     fun isBlackjack(): Boolean {
@@ -31,8 +31,15 @@ class PlayingCards(list: List<PlayingCard>) {
 
     fun isStay(): Boolean {
         val isBiggerThanBlackjackSize = _list.size >= BLACKJACK_SIZE
-        val isLessThanWinningNumber = _list.sumOf { it.denomination.score(it) } <= WINNING_NUMBER
+        val isLessThanWinningNumber = _list.sumOf { it.denomination.score(it) } <= BLACKJACK_NUMBER
         return isBiggerThanBlackjackSize && isLessThanWinningNumber
+    }
+
+    fun getScore(): Int {
+        if (isBlackjack()) {
+            return BLACKJACK_NUMBER
+        }
+        return _list.sumOf { it.denomination.score(it) }
     }
 
     fun cards(): List<String> {
@@ -44,7 +51,7 @@ class PlayingCards(list: List<PlayingCard>) {
     }
 
     companion object {
-        private const val WINNING_NUMBER = 21
+        private const val BLACKJACK_NUMBER = 21
         private const val BLACKJACK_SIZE = 2
         private const val TEN = 10
     }
