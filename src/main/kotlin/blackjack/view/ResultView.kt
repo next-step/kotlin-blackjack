@@ -44,7 +44,7 @@ object ResultView {
         println("## 최종 승패")
         println("딜러: ${gameResult.dealerWinCount}승 ${gameResult.dealerLoseCount}패")
 
-        gameResult.winPlayers.forEach { println("${it.name}: 승") }
-        gameResult.losePlayers.forEach { println("${it.name}: 패") }
+        gameResult.winnerPlayers.items.forEach { println("${it.name}: 승") }
+        gameResult.losePlayers.items.forEach { println("${it.name}: 승") }
     }
 }

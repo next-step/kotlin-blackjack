@@ -26,14 +26,14 @@ internal class PlayerTest {
 
         // when, then
         assertThatIllegalArgumentException().isThrownBy {
-            GamePlayer(input, Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
+            Player(input, Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
         }
     }
 
     @Test
     internal fun `플레이어의 카드가 더해진다`() {
         // given
-        val player = GamePlayer("user", Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
+        val player = Player("user", Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
 
         // when
         player.addCard(Card(THREE, DIAMOND))
@@ -54,7 +54,7 @@ internal class PlayerTest {
     @Test
     internal fun `보유 카드 점수 합을 반환한다`() {
         // given
-        val player = GamePlayer("user", Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
+        val player = Player("user", Cards(Card(ACE, HEART), Card(TWO, CLOVER)))
         // when
         val resultScore = player.resultScore()
         // then
@@ -64,8 +64,8 @@ internal class PlayerTest {
     @Test
     internal fun `블랙잭에 가까운 유저를 반환한다`() {
         // given
-        val player1 = GamePlayer("user1", Cards(Card(QUEEN, HEART), Card(THREE, CLOVER)))
-        val player2 = GamePlayer("user2", Cards(Card(QUEEN, HEART), Card(TWO, CLOVER)))
+        val player1 = Player("user1", Cards(Card(QUEEN, HEART), Card(THREE, CLOVER)))
+        val player2 = Player("user2", Cards(Card(QUEEN, HEART), Card(TWO, CLOVER)))
 
         // when, then
         assertThat(player1.isNearBlackJackThan(player2)).isTrue
@@ -74,7 +74,7 @@ internal class PlayerTest {
     @Test
     internal fun `21점 초과이면 false를 반환한다`() {
         // given
-        val player = GamePlayer("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(TWO, DIAMOND)))
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER), Card(TWO, DIAMOND)))
 
         // when
         val ableMoreDrawCard = player.ableMoreDrawCard()
@@ -86,7 +86,7 @@ internal class PlayerTest {
     @Test
     internal fun `21점 미만이면 true를 반환한다`() {
         // given
-        val player = GamePlayer("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER)))
+        val player = Player("user", Cards(Card(QUEEN, HEART), Card(JACK, CLOVER)))
 
         // when
         val ableMoreDrawCard = player.ableMoreDrawCard()

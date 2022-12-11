@@ -1,5 +1,7 @@
 package blackjack.domain.member
 
+import blackjack.domain.Deck
+
 class Players(
     val items: List<Player>
 ) {
@@ -10,16 +12,15 @@ class Players(
     val size: Int
         get() = items.size
 
-    fun toResultPlayers(dealer: Dealer): List<Player> {
-        if (dealer.isOverBlackjackNumber()) {
-            return items.map { WinPlayer.init(it) }
-        }
-
-        return items.map { it.toResultPlayer(dealer) }
-    }
-
     companion object {
         private const val MIN_SIZE = 2
+        fun init(usersNames: List<String>, deck: Deck): Players {
+            return usersNames.map { name ->
+                val cards = deck.drawInitAssignCards()
+                Player(name, cards)
+            }.toPlayers()
+        }
+
         fun List<Player>.toPlayers() = Players(this)
     }
 }

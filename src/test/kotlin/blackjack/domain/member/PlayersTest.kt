@@ -15,7 +15,7 @@ internal class PlayersTest {
         assertThatIllegalArgumentException().isThrownBy { Players(emptyList()) }
         assertThatIllegalArgumentException().isThrownBy {
             Players(
-                listOf(GamePlayer("koi", Cards(Card(Number.TWO, Sharp.DIAMOND), Card(Number.THREE, Sharp.HEART))))
+                listOf(Player("koi", Cards(Card(Number.TWO, Sharp.DIAMOND), Card(Number.THREE, Sharp.HEART))))
             )
         }
     }
