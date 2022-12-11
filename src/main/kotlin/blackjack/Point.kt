@@ -1,6 +1,7 @@
 package blackjack
 
-data class Point(val value: Int) {
+@JvmInline
+value class Point(val value: Int) {
 
     operator fun plus(adder: Point): Point {
         return Point(value + adder.value)
