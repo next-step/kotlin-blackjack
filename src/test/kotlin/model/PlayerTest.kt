@@ -34,7 +34,7 @@ class PlayerTest : StringSpec({
         val winOrLose = player.competeWith(dealer)
 
         // then
-        winOrLose shouldBe WinOrLose.WIN
+        winOrLose shouldBe BlackJackGameResult.WIN
     }
 
     "플레이어의 점수가 딜러보다 낮으면, 패배를 반환한다" {
@@ -46,7 +46,19 @@ class PlayerTest : StringSpec({
         val winOrLose = player.competeWith(dealer)
 
         // then
-        winOrLose shouldBe WinOrLose.LOSE
+        winOrLose shouldBe BlackJackGameResult.LOSE
+    }
+
+    "플레이어의 점수가 딜러와 같으면, 무승부를 반환한다" {
+        // given
+        val player = createPlayer(listOf(PokerNumber.TWO, PokerNumber.TEN))
+        val dealer = createDealer()
+
+        // when
+        val winOrLose = player.competeWith(dealer)
+
+        // then
+        winOrLose shouldBe BlackJackGameResult.DRAW
     }
 })
 

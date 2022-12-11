@@ -1,28 +1,28 @@
 package ui
 
+import model.BlackJackGame
 import model.Dealer
 import model.Player
 import model.Players
-import model.PokerGame
 import model.PokerScore
 
 object ResultView {
-    fun resultInitPokerGame(pokerGame: PokerGame) {
-        val playerNames = pokerGame.getPlayers().map { it.name }
+    fun resultInitPokerGame(blackJackGame: BlackJackGame) {
+        val playerNames = blackJackGame.getPlayers().map { it.name }
         println()
-        println("${pokerGame.dealer.name}와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
-        resultPlayerCard(pokerGame.dealer)
-        pokerGame.getPlayers().forEach { player -> resultPlayerCard(player) }
+        println("${blackJackGame.dealer.name}와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
+        resultPlayerCard(blackJackGame.dealer)
+        blackJackGame.getPlayers().forEach { player -> resultPlayerCard(player) }
     }
 
     fun resultPlayerCard(player: Player) {
         println("${player.name} 카드: ${player.cards}")
     }
 
-    fun resultPokerGameScore(pokerGame: PokerGame) {
+    fun resultPokerGameScore(blackJackGame: BlackJackGame) {
         println()
-        playerScore(pokerGame.dealer)
-        pokerGame.getPlayers().forEach { player ->
+        playerScore(blackJackGame.dealer)
+        blackJackGame.getPlayers().forEach { player ->
             playerScore(player)
         }
     }
@@ -31,19 +31,19 @@ object ResultView {
         println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
     }
 
-    fun resultFinalVictory(pokerGame: PokerGame) {
+    fun resultFinalVictory(blackJackGame: BlackJackGame) {
         println()
         println("## 최종 승패")
 
-        dealerWinOrLose(pokerGame.players, pokerGame.dealer)
-        pokerGame.getPlayers().forEach { player ->
-            playerWinOrLose(player, pokerGame.dealer)
+        dealerWinOrLose(blackJackGame.players, blackJackGame.dealer)
+        blackJackGame.getPlayers().forEach { player ->
+            playerWinOrLose(player, blackJackGame.dealer)
         }
     }
 
     private fun dealerWinOrLose(players: Players, dealer: Dealer) {
         val competeResult = players.competeWith(dealer)
-        println("딜러 : ${competeResult.win}승  ${competeResult.lose}패")
+        println("딜러 : ${competeResult.win}승 ${competeResult.draw}무 ${competeResult.lose}패")
     }
 
     private fun playerWinOrLose(player: Player, dealer: Dealer) {

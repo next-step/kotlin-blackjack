@@ -8,16 +8,20 @@ open class Player(
 ) {
     fun hit(card: Card) = cards.add(card)
 
-    fun competeWith(dealer: Dealer): WinOrLose {
+    fun competeWith(dealer: Dealer): BlackJackGameResult {
         val dealerScore = PokerScore(dealer.cards).score
         val playerScore = PokerScore(cards).score
 
         if (dealerScore > BLACK_JACK_MAX_SCORE ||
-            playerScore in dealerScore..BLACK_JACK_MAX_SCORE
+            (playerScore in (dealerScore + 1)..BLACK_JACK_MAX_SCORE)
         ) {
-            return WinOrLose.WIN
+            return BlackJackGameResult.WIN
         }
 
-        return WinOrLose.LOSE
+        if (dealerScore == playerScore) {
+            return BlackJackGameResult.DRAW
+        }
+
+        return BlackJackGameResult.LOSE
     }
 }

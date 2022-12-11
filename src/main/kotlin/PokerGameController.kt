@@ -1,4 +1,4 @@
-import model.PokerGame
+import model.BlackJackGame
 import ui.InputView.inputPlayerQuestion
 import ui.InputView.inputPlayers
 import ui.ResultView.resultFinalVictory
@@ -9,11 +9,11 @@ class PokerGameController {
     fun process() {
         val inputPlayers = inputPlayers()
 
-        val pokerGame = PokerGame(players = inputPlayers)
-        resultInitPokerGame(pokerGame)
-        inputPlayerQuestion(pokerGame)
-        resultPokerGameScore(pokerGame)
-        resultFinalVictory(pokerGame)
+        val blackJackGame = BlackJackGame(players = inputPlayers)
+        resultInitPokerGame(blackJackGame)
+        inputPlayerQuestion(blackJackGame)
+        resultPokerGameScore(blackJackGame)
+        resultFinalVictory(blackJackGame)
     }
 }
 
