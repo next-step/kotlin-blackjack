@@ -60,6 +60,16 @@ class PlayerTest : StringSpec({
         // then
         winOrLose shouldBe BlackJackGameResult.DRAW
     }
+    "플레이어는 베팅 금액을 추가할 수 있다갖는다" {
+        // given
+        val player = createPlayer(listOf(PokerNumber.TWO))
+
+        // when
+        player.bet = 1000
+
+        // then
+        player.bet shouldBe 1000
+    }
 })
 
 private fun createPlayer(pokerNumbers: List<PokerNumber>): Player {
