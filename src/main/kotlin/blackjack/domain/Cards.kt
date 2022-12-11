@@ -24,7 +24,8 @@ class Cards(
         }
 
     fun first(): Card {
-        TODO()
+        require(_value.isNotEmpty()) { "잘못된 호출입니다. 먼저 카드 목록에 카드를 채우세요." }
+        return _value.first()
     }
 
     private fun shouldCountWithAce(): Boolean = _value.any { it.type == CardType.ACE }
