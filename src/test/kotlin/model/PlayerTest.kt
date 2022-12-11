@@ -1,5 +1,7 @@
 package model
 
+import helper.PlayerFixture.createDealer
+import helper.PlayerFixture.createPlayer
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -71,18 +73,3 @@ class PlayerTest : StringSpec({
         player.bet shouldBe 1000
     }
 })
-
-private fun createPlayer(pokerNumbers: List<PokerNumber>): Player {
-    val player = Player("나잘함")
-    pokerNumbers.forEach {
-        player.hit(Card(it, PokerShape.HEART))
-    }
-    return player
-}
-
-private fun createDealer(): Dealer {
-    val dealer = Dealer()
-    dealer.hit(Card(PokerNumber.TEN, PokerShape.HEART))
-    dealer.hit(Card(PokerNumber.TWO, PokerShape.HEART))
-    return dealer
-}

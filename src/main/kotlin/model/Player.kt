@@ -1,6 +1,6 @@
 package model
 
-private const val BLACK_JACK_MAX_SCORE = 21
+const val BLACK_JACK_MAX_SCORE = 21
 
 open class Player(
     val name: String,
@@ -11,8 +11,8 @@ open class Player(
     fun hit(card: Card) = cards.add(card)
 
     fun competeWith(dealer: Dealer): BlackJackGameResult {
-        val dealerScore = PokerScore(dealer.cards).score
-        val playerScore = PokerScore(cards).score
+        val dealerScore = BlackJackScore(dealer.cards).score
+        val playerScore = BlackJackScore(cards).score
 
         if (dealerScore > BLACK_JACK_MAX_SCORE ||
             (playerScore in (dealerScore + 1)..BLACK_JACK_MAX_SCORE)
@@ -26,4 +26,6 @@ open class Player(
 
         return BlackJackGameResult.LOSE
     }
+
+    fun bettingReward(dealer: Dealer): Int = BlackJackBettingRewardCalculator(player = this, dealer = dealer).reward()
 }

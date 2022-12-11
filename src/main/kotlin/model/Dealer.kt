@@ -9,8 +9,8 @@ class Dealer : Player(name = "딜러") {
     fun cardCount(): Int = deck.count()
 
     fun hitIfRequired() {
-        val pokerScore = PokerScore(cards)
-        if (pokerScore.score < BASE_SCORE_DEALER_MORE_HIT) {
+        val blackJackScore = BlackJackScore(cards)
+        if (blackJackScore.score < BASE_SCORE_DEALER_MORE_HIT) {
             hit(pick())
         }
     }

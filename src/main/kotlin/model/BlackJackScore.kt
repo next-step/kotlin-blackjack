@@ -1,10 +1,10 @@
 package model
 
-private const val BLACKJACK_MAX_SCORE = 21
+const val BLACKJACK_MAX_SCORE = 21
 
-private const val ACE_SPECIAL_MINUS_SCORE = 10
+const val ACE_SPECIAL_MINUS_SCORE = 10
 
-class PokerScore(private val cards: Cards) {
+class BlackJackScore(private val cards: Cards) {
     val score: Int = score()
 
     private fun score(): Int {

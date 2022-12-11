@@ -1,10 +1,10 @@
 package ui
 
 import model.BlackJackGame
+import model.BlackJackScore
 import model.Dealer
 import model.Player
 import model.Players
-import model.PokerScore
 
 object ResultView {
     fun resultInitPokerGame(blackJackGame: BlackJackGame) {
@@ -28,7 +28,7 @@ object ResultView {
     }
 
     private fun playerScore(player: Player) {
-        println("${player.name} 카드: ${player.cards} - 결과 ${PokerScore(player.cards).score}")
+        println("${player.name} 카드: ${player.cards} - 결과 ${BlackJackScore(player.cards).score}")
     }
 
     fun resultFinalVictory(blackJackGame: BlackJackGame) {
