@@ -30,24 +30,24 @@ internal class CardsTest {
     @DisplayName("카드 목록 총 점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCardsToSum")
-    fun sum(cards: List<Card>) {
-        val cards = Cards().apply { cards.forEach(::add) }
+    fun sum(initialCards: List<Card>) {
+        val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(21)
     }
 
     @DisplayName("카드 목록 중에 ACE 포함되어 있고 총합이 21 이상인 경우 ACE default Score 1을 합산에 포함시킨다.")
     @ParameterizedTest
     @MethodSource("provideSumWithAce")
-    fun sumWithAceDefaultScore(cards: List<Card>, totalScore: Int) {
-        val cards = Cards(cards.toMutableList())
+    fun sumWithAceDefaultScore(initialCards: List<Card>, totalScore: Int) {
+        val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
     @DisplayName("카드 목록 중에 ACE 포함되어 있고 총합이 21 이하인 경우 ACE Special Score 11을 합산에 포함시킨다.")
     @ParameterizedTest
     @MethodSource("provideSumWithAceSpecialScore")
-    fun sumWithAceSpecialScore(cards: List<Card>, totalScore: Int) {
-        val cards = Cards(cards.toMutableList())
+    fun sumWithAceSpecialScore(initialCards: List<Card>, totalScore: Int) {
+        val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
