@@ -31,23 +31,23 @@ object ResultView {
         println("${player.name} 카드: ${player.cards} - 결과 ${BlackJackScore(player.cards).score}")
     }
 
-    fun resultFinalVictory(blackJackGame: BlackJackGame) {
+    fun resultProfit(blackJackGame: BlackJackGame) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
 
-        dealerWinOrLose(blackJackGame.players, blackJackGame.dealer)
+        dealerProfit(blackJackGame.players, blackJackGame.dealer)
         blackJackGame.getPlayers().forEach { player ->
-            playerWinOrLose(player, blackJackGame.dealer)
+            playerProfit(player, blackJackGame.dealer)
         }
     }
 
-    private fun dealerWinOrLose(players: Players, dealer: Dealer) {
-        val competeResult = players.competeWith(dealer)
-        println("딜러 : ${competeResult.win}승 ${competeResult.draw}무 ${competeResult.lose}패")
+    private fun dealerProfit(players: Players, dealer: Dealer) {
+        val dealerProfit = players.dealerProfit(dealer)
+        println("${dealer.name} : $dealerProfit")
     }
 
-    private fun playerWinOrLose(player: Player, dealer: Dealer) {
-        val winOrLose = player.competeWith(dealer)
-        println("${player.name} : ${winOrLose.description} ")
+    private fun playerProfit(player: Player, dealer: Dealer) {
+        val profit = player.bettingReward(dealer)
+        println("${player.name} : $profit ")
     }
 }

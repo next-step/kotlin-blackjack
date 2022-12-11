@@ -15,6 +15,19 @@ object InputView {
         return Players(playerNames)
     }
 
+    fun inputPlayersBetting(blackJackGame: BlackJackGame) {
+        blackJackGame.getPlayers().forEach { player ->
+            inputPlayerBetting(player)
+        }
+    }
+
+    private fun inputPlayerBetting(player: Player) {
+        println("${player.name}의 배팅 금액은?")
+        val bettingAmount: String = readLine() ?: throw IllegalArgumentException("배팅금액을 입력해야 합니다")
+
+        player.bet = bettingAmount.toIntOrNull() ?: throw IllegalArgumentException("숫자만 입력 가능합니다")
+    }
+
     fun inputPlayerQuestion(blackJackGame: BlackJackGame) {
         blackJackGame.getPlayers().forEach {
             inputQuestionHit(it, blackJackGame.dealer)

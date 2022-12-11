@@ -7,11 +7,5 @@ class Players(
 
     fun hit(dealer: Dealer) = players.forEach { player -> player.hit(dealer.pick()) }
 
-    fun competeWith(dealer: Dealer): CompeteResult {
-        val lose = players.map { it.competeWith(dealer) }.count { it == BlackJackGameResult.WIN }
-        val win = players.map { it.competeWith(dealer) }.count { it == BlackJackGameResult.LOSE }
-        val draw = players.map { it.competeWith(dealer) }.count { it == BlackJackGameResult.DRAW }
-
-        return CompeteResult(win, draw, lose)
-    }
+    fun dealerProfit(dealer: Dealer): Int = players.sumOf { it.bettingReward(dealer) } * -1
 }
