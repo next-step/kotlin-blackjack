@@ -11,7 +11,5 @@ class Dealer(
 
     fun shuffle() = _deck.shuffle()
 
-    fun deliverCard(): Card {
-        TODO()
-    }
+    fun deliverCard(): Card = _deck.first()
 }
