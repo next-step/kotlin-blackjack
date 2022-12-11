@@ -10,4 +10,12 @@ object InputParser {
         require(names.size == names.distinct().size) { "중복된 이름은 입력할 수 없습니다." }
         return names
     }
+
+    fun parseHitOrStay(input: String): Boolean {
+        return when (input) {
+            "y" -> true
+            "n" -> false
+            else -> throw IllegalArgumentException("y 또는 n을 입력해주세요.")
+        }
+    }
 }

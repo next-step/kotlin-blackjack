@@ -10,7 +10,7 @@ object InputView {
         return readln()
     }
 
-    fun inputHitOrStand(name: String): String {
+    fun inputHitOrStay(name: String): String {
         println(name + INPUT_HIT_OR_STAY_MESSAGE)
         return readln()
     }

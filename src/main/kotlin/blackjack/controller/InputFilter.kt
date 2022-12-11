@@ -13,4 +13,13 @@ object InputFilter {
             inputPlayer()
         }
     }
+
+    fun inputHitOrStay(name: String): Boolean {
+        return try {
+            InputParser.parseHitOrStay(InputView.inputHitOrStay(name))
+        } catch (e: Exception) {
+            InputView.printError(e.message!!)
+            inputHitOrStay(name)
+        }
+    }
 }
