@@ -1,7 +1,9 @@
 package nextstep.blackjack
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.shouldBe
 import nextstep.blackjack.Card.CLOVER_ACE
 import nextstep.blackjack.Card.CLOVER_EIGHT
 import nextstep.blackjack.Card.CLOVER_FIVE
@@ -126,4 +128,65 @@ class CardTest : StringSpec({
         )
     }
 
+    "카드 모양상관없이 2~10은 번호만큼의 점수, King, Queen, Jack은 10점이 될 수 있다." {
+        listOf(
+            HEART_ONE to 1,
+            HEART_TWO to 2,
+            HEART_THREE to 3,
+            HEART_FOUR to 4,
+            HEART_FIVE to 5,
+            HEART_SIX to 6,
+            HEART_SEVEN to 7,
+            HEART_EIGHT to 8,
+            HEART_NINE to 9,
+            HEART_TEN to 10,
+            HEART_JACK to 10,
+            HEART_QUEEN to 10,
+            HEART_KING to 10,
+
+            DIAMOND_ONE to 1,
+            DIAMOND_TWO to 2,
+            DIAMOND_THREE to 3,
+            DIAMOND_FOUR to 4,
+            DIAMOND_FIVE to 5,
+            DIAMOND_SIX to 6,
+            DIAMOND_SEVEN to 7,
+            DIAMOND_EIGHT to 8,
+            DIAMOND_NINE to 9,
+            DIAMOND_TEN to 10,
+            DIAMOND_JACK to 10,
+            DIAMOND_QUEEN to 10,
+            DIAMOND_KING to 10,
+
+            SPADE_ONE to 1,
+            SPADE_TWO to 2,
+            SPADE_THREE to 3,
+            SPADE_FOUR to 4,
+            SPADE_FIVE to 5,
+            SPADE_SIX to 6,
+            SPADE_SEVEN to 7,
+            SPADE_EIGHT to 8,
+            SPADE_NINE to 9,
+            SPADE_TEN to 10,
+            SPADE_JACK to 10,
+            SPADE_QUEEN to 10,
+            SPADE_KING to 10,
+
+            CLOVER_ONE to 1,
+            CLOVER_TWO to 2,
+            CLOVER_THREE to 3,
+            CLOVER_FOUR to 4,
+            CLOVER_FIVE to 5,
+            CLOVER_SIX to 6,
+            CLOVER_SEVEN to 7,
+            CLOVER_EIGHT to 8,
+            CLOVER_NINE to 9,
+            CLOVER_TEN to 10,
+            CLOVER_JACK to 10,
+            CLOVER_QUEEN to 10,
+            CLOVER_KING to 10,
+        ).forAll { (card: Card, point: Int) ->
+            card.getPoint() shouldBe point
+        }
+    }
 })
