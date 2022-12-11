@@ -7,4 +7,8 @@ class Dealer(
         get() = _deck
 
     fun shuffle() = _deck.shuffle()
+
+    fun deliverCard(): Card {
+        TODO()
+    }
 }

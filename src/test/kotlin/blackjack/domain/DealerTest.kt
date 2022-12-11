@@ -18,4 +18,13 @@ internal class DealerTest {
         val dealer = Dealer(deck).apply { shuffle() }
         assertThat(dealer.deck).isEqualTo(deck)
     }
+
+    @DisplayName("딜러는 플레이어에게 카드 한장을 전달 할 수 있다.")
+    @Test
+    fun deliverCard() {
+        val (cardDeck, firstCard) = DEFAULT_CARD_DECK to DEFAULT_CARD_DECK.first()
+        val deck = Cards(cardDeck)
+        val dealer = Dealer(deck).apply { shuffle() }
+        assertThat(dealer.deliverCard()).isEqualTo(firstCard)
+    }
 }
