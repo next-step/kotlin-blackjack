@@ -10,6 +10,8 @@ class Player(val name: String, val cards: Cards = Cards()) {
         initialCards.forEach(cards::add)
     }
 
+    fun hit(card: Card) = cards.add(card)
+
     companion object {
         private const val INITIAL_CARDS_COUNT = 2
     }
