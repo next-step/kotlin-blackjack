@@ -32,10 +32,7 @@ class PlayingCards(
 }
 
 private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {
-    var sum = Point(0)
-    for (element in this) {
-        sum += function(element)
-    }
-    return sum
+    return this.map(function)
+        .reduce { acc, point -> acc + point }
 }
 
