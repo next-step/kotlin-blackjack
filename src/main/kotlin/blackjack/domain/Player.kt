@@ -12,6 +12,8 @@ class Player(val name: String, val cards: Cards = Cards()) {
 
     fun hit(card: Card) = cards.add(card)
 
+    fun sumCards(): Int = cards.sum()
+
     companion object {
         private const val INITIAL_CARDS_COUNT = 2
     }
