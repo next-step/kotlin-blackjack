@@ -2,24 +2,20 @@ package blackjack.domain
 
 const val BLACKJACK_SCORE = 21
 
-class Cards(list: List<Card> = listOf()) {
-    private val _list: MutableList<Card> = list.toMutableList()
-
-    val list: List<Card>
-        get() = _list.sortedBy { it.number.ordinal }
+class Cards(val list: List<Card> = listOf()) {
 
     override fun toString(): String = list.joinToString()
 
-    fun add(card: Card) {
-        _list.add(card)
-    }
+    fun add(card: Card): Cards = Cards(this.list + card)
+
+    fun addAll(cards: Cards): Cards = Cards(this.list + cards.list)
 
     fun count(): Int = list.size
 
     fun countingCard(): Int {
-        var score = _list.sumOf { it.number.score }
+        var score = list.sumOf { it.number.score }
 
-        score += countingMaxAceCard(score, _list.count { it.number == CardNumber.ACE })
+        score += countingMaxAceCard(score, list.count { it.number == CardNumber.ACE })
         return score
     }
 
@@ -36,5 +32,9 @@ class Cards(list: List<Card> = listOf()) {
             }
         }
         return aceScore
+    }
+
+    companion object {
+        fun empty() = Cards(emptyList())
     }
 }

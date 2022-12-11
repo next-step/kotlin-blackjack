@@ -5,6 +5,10 @@ class Players(val list: List<Player>) {
         require(list.size <= MAX_PLAYER_COUNT) { "게임 정원을 초과하였습니다." }
     }
 
+    fun initialCard(deck: Deck): Players {
+        return Players(list.map { it.initialCard(deck.divideInitialCards()) })
+    }
+
     companion object {
         const val MAX_PLAYER_COUNT = 8
     }

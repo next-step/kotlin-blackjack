@@ -18,10 +18,8 @@ class PlayerTest {
 
     @Test
     fun `참가자는 카드를 받을 수 있다`() {
-        val player = Player("pobi")
         val card = Card.of(CardNumber.FIVE, CardShape.CLOVER)
-        player.cards.count() shouldBe 0
-        player.hit(card)
+        val player = Player("pobi").hit(card)
         player.cards.count() shouldBe 1
         player.cards.list shouldContain card
     }
