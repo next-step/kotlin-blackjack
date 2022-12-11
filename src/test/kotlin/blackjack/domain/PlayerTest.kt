@@ -26,9 +26,21 @@ internal class PlayerTest {
         assertThat(player.cards.size).isEqualTo(cards.size)
     }
 
+    @DisplayName("Player 게임 시작 전 2개의 카드를 받지 않으면 에러가 발생한다.")
+    @ParameterizedTest
+    @MethodSource("provideInitialInvalidCardS")
+    fun failToReadyToPlayGameWithInitialCards(cards: List<Card>) {
+        val player = Player("고니")
+        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { player.readyToPlay(cards) }
+    }
+
     companion object {
         @JvmStatic
         fun provideInitialCardS(): Stream<List<Card>> =
             Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER), Card(CardType.ACE, CardShape.CLOVER)))
+
+        @JvmStatic
+        fun provideInitialInvalidCardS(): Stream<List<Card>> =
+            Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER)), listOf())
     }
 }
