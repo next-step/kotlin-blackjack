@@ -8,6 +8,6 @@ internal class DealerTest {
     @DisplayName("딜러는 총 52장의 카드 덱을 가지고 게임을 시작해야 한다.")
     @Test
     fun deck() {
-        assertThat(Dealer().deck).isEqualTo(52)
+        assertThat(Dealer().deck.size).isEqualTo(52)
     }
 }
