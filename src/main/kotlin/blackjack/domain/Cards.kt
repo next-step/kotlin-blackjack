@@ -1,10 +1,7 @@
 package blackjack.domain
 
-import blackjack.model.CardShape
-import blackjack.model.CardType
-
 class Cards(
-    private val _value: MutableList<Card> = mutableListOf(),
+    private val _value: MutableList<Card> = DEFAULT_CARD_DECK,
 ) {
     val value: List<Card>
         get() = _value.toList()
@@ -13,11 +10,4 @@ class Cards(
         get() = _value.size
 
     fun shuffle() = _value.shuffle()
-
-    companion object {
-        val CARD_DECK: Cards = CardType.values()
-            .flatMap { type -> CardShape.values().map { shape -> Card(type = type, shape = shape) } }
-            .toMutableList()
-            .let(::Cards)
-    }
 }
