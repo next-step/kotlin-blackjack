@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.model.Card
 
 class Player(val name: String, val cards: Cards = Cards()) {
@@ -19,8 +20,4 @@ class Player(val name: String, val cards: Cards = Cards()) {
     fun burst(): Boolean = cards.sum() > BLACKJACK_SCORE
 
     fun blackjack(): Boolean = cards.sum() == BLACKJACK_SCORE
-
-    companion object {
-        private const val INITIAL_CARDS_COUNT = 2
-    }
 }
