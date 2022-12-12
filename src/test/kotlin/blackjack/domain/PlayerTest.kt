@@ -6,6 +6,7 @@ import blackjack.model.CardType
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.EmptySource
@@ -75,6 +76,14 @@ internal class PlayerTest {
             hit(hitCard)
         }
         assertThat(player.burst()).isFalse
+    }
+
+    @DisplayName("Player 카드 합산이 21이면 블랙잭 완성")
+    @Test
+    fun blackjack() {
+        val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
+        val player = Player("고니", cards)
+        assertThat(player.blackjack()).isTrue
     }
 
     companion object {
