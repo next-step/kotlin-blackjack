@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Bet
 import blackjack.domain.Deck
 import blackjack.domain.member.Dealer
 import blackjack.domain.member.Player
@@ -32,7 +33,7 @@ fun main() {
 private fun initPlayer(name: String, deck: Deck): Player {
     val inputBetMoney = InputView.inputBetMoney(name)
     val assignCards = deck.drawInitAssignCards()
-    return Player(name, assignCards, inputBetMoney)
+    return Player(name, assignCards, Bet.of(inputBetMoney))
 }
 
 private fun Player.drawCardUntilWant(deck: Deck) {
