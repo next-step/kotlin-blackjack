@@ -1,8 +1,10 @@
 package nextstep.blackjack
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.inspectors.forAll
-import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.Exhaustive
+import io.kotest.property.arbitrary.int
+import io.kotest.property.exhaustive.exhaustive
 import io.kotest.property.forAll
 import nextstep.blackjack.Card.CLOVER_ACE
 import nextstep.blackjack.Card.CLOVER_EIGHT
@@ -64,17 +66,26 @@ import nextstep.blackjack.Card.SPADE_TWO
 class CardTest : StringSpec({
 
     "카드는 각 하트, 클로버, 다이아몬드, 스페이드 모양의 ACE, 2~10, King, Queen, Jack을 갖는다." {
-        forAll<Card> { card -> cards.contains(card) }
+        forAll<Card> { card -> CARDS.contains(card) }
     }
 
-    "카드 모양상관없이 2~10은 번호만큼의 점수, King, Queen, Jack은 10점이 될 수 있다." {
-        cardToPoints.forAll { (card: Card, point: Int) ->
-            card.getPoint() shouldBe point
+    "카드 모양상관없이 2~10은 번호만큼의 점수, King, Queen, Jack은 10점이 될 수 있다.2" {
+        forAll(CARD_TO_POINTS_EXCLUDING_ACES.exhaustive(), Arb.int()) { cardToPoint, random ->
+            cardToPoint.first.getPoint(random) == cardToPoint.second
+        }
+    }
+
+    "카드 ACE는 11점으로 계산하되 플레이어의 점수 총합이 21이 넘으면 1로 계산한다." {
+        val aceCards: Exhaustive<Card> = listOf(HEART_ACE, CLOVER_ACE, DIAMOND_ACE, SPADE_ACE).exhaustive()
+        val currentPointToAcePoints: Exhaustive<Pair<Int, Int>> = listOf(11 to 1, 10 to 11).exhaustive()
+
+        forAll(aceCards, currentPointToAcePoints) { aceCard, currentPointToAcePoint ->
+            aceCard.getPoint(currentPointToAcePoint.first) == currentPointToAcePoint.second
         }
     }
 })
 
-private val cards: List<Card> = listOf(
+private val CARDS: List<Card> = listOf(
     HEART_ACE,
     HEART_ONE,
     HEART_TWO,
@@ -136,7 +147,7 @@ private val cards: List<Card> = listOf(
     CLOVER_KING,
 )
 
-private val cardToPoints: List<Pair<Card, Int>> = listOf(
+private val CARD_TO_POINTS_EXCLUDING_ACES: List<Pair<Card, Int>> = listOf(
     HEART_ONE to 1,
     HEART_TWO to 2,
     HEART_THREE to 3,

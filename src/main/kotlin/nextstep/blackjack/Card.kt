@@ -62,7 +62,13 @@ enum class Card(private val point: Int) {
     CLOVER_KING(10),
     ;
 
-    fun getPoint(): Int {
-        return this.point
+    fun getPoint(currentPoint: Int): Int = when {
+        ACE_CARDS.contains(this).not() -> this.point
+        this.point + currentPoint > 21 -> 1
+        else -> this.point
+    }
+
+    companion object {
+        private val ACE_CARDS: Set<Card> = setOf(DIAMOND_ACE, CLOVER_ACE, HEART_ACE, SPADE_ACE)
     }
 }
