@@ -11,8 +11,9 @@ fun main() {
     val usersNames = InputView.inputUsersNames()
     val deck = Deck.init()
 
+    val players = Players(usersNames.map { name -> initPlayer(name, deck) })
+
     val dealer = Dealer.init(deck)
-    val players = Players.init(usersNames, deck)
     ResultView.printDrawResults(dealer, players)
 
     for (player in players.items) {
@@ -26,6 +27,12 @@ fun main() {
     dealer.gameResult(players)
     val gameResult = dealer.gameResult(players)
     ResultView.printGamResult(gameResult)
+}
+
+private fun initPlayer(name: String, deck: Deck): Player {
+    val inputBetMoney = InputView.inputBetMoney(name)
+    val assignCards = deck.drawInitAssignCards()
+    return Player(name, assignCards, inputBetMoney)
 }
 
 private fun Player.drawCardUntilWant(deck: Deck) {

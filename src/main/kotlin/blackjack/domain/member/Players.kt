@@ -1,7 +1,5 @@
 package blackjack.domain.member
 
-import blackjack.domain.Deck
-
 class Players(
     val items: List<Player>
 ) {
@@ -14,13 +12,5 @@ class Players(
 
     companion object {
         private const val MIN_SIZE = 2
-        fun init(usersNames: List<String>, deck: Deck): Players {
-            return usersNames.map { name ->
-                val cards = deck.drawInitAssignCards()
-                Player(name, cards)
-            }.toPlayers()
-        }
-
-        fun List<Player>.toPlayers() = Players(this)
     }
 }
