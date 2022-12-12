@@ -17,7 +17,11 @@ class Cards(values: List<Card> = emptyList()) {
     }
 
     fun getScore(): Int {
-        return Denomination.sum(values.map { it.denomination })
+        val sum = values.sumOf { it.denomination.score }
+        val hasAceCard = values.any { it.denomination == Denomination.ACE }
+
+        return if (hasAceCard && (sum + ACE_BONUS_SCORE == WIN_SCORE)) WIN_SCORE
+        else sum
     }
 
     override fun toString(): String {
@@ -26,4 +30,9 @@ class Cards(values: List<Card> = emptyList()) {
     }
 
     private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
+
+    companion object {
+        private const val ACE_BONUS_SCORE = 10
+        private const val WIN_SCORE = 21
+    }
 }
