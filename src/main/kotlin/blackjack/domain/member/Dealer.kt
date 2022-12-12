@@ -12,11 +12,11 @@ class Dealer(
 
     override fun ableMoreDrawCard() = resultScore() < DRAW_LIMIT_SCORE
     override fun conditionOfWin(otherMember: Member): Boolean {
-        if (this.isEqualNumberThan(otherMember)) {
+        if (isEqualNumberThan(otherMember)) {
             return true
         }
 
-        return this.isNearBlackJackThan(otherMember)
+        return isNearBlackJackThan(otherMember)
     }
 
     fun gameResult(players: Players): GameResult {

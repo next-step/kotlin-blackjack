@@ -12,6 +12,6 @@ class Player(
 
     override fun ableMoreDrawCard() = !(isEqualsBlackjackNumber() || isOverBlackjackNumber())
     override fun conditionOfWin(otherMember: Member): Boolean {
-        return this.isNearBlackJackThan(otherMember)
+        return isNearBlackJackThan(otherMember)
     }
 }
