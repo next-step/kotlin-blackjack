@@ -11,7 +11,7 @@ class Output {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name} 카드 : ${player.hand.joinToString(",") { it.shape.name + it.denomination.name }}")
+        println("${player.name} 카드 : ${player.hand.joinToString(",")}")
     }
 
     fun printPlayersResult(players: List<Player>) {
