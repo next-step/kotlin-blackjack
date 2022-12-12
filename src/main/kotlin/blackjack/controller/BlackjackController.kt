@@ -28,13 +28,10 @@ class BlackjackController {
     }
 
     private fun setPlayers() {
-        addPlayers(InputView.inputPlayersName())
-        ResultView.printInitialStatus()
-    }
-
-    private fun addPlayers(names: List<String>) {
+        val names = InputView.inputPlayersName()
         val players = names.map { Player(it) }
         Game.players.addAll(players)
+        ResultView.printInitialStatus()
     }
 }
 
