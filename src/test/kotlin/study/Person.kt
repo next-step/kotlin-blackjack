@@ -4,7 +4,8 @@ fun introduce(block: PersonBuilder.() -> Unit) = PersonBuilder().apply(block).bu
 
 class PersonBuilder {
     private lateinit var name: String
-    private lateinit var company: String
+    private var company: String? = null
+    private var skills: Skills? = null
 
     fun name(value: String) {
         name = value
@@ -14,7 +15,11 @@ class PersonBuilder {
         company = value
     }
 
-    fun build() = Person(name, company)
+    fun skills(block: SkillsBuilder.() -> Unit) {
+        skills = SkillsBuilder().apply(block).build()
+    }
+
+    fun build() = Person(name, company, skills)
 }
 
-data class Person(val name: String, val company: String)
+data class Person(val name: String, val company: String?, val skills: Skills?)
