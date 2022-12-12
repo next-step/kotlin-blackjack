@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Deck(val values: Cards = Cards(Card.DECK)) {
+class Deck(val values: Cards = Cards(Card.ALL_CARDS)) {
 
     fun draw(): Card {
         return values.pick()
@@ -11,6 +11,7 @@ class Deck(val values: Cards = Cards(Card.DECK)) {
         repeat(START_CARD_SIZE) {
             cards.add(values.pick())
         }
+
         return Cards(cards.toList())
     }
 

@@ -5,12 +5,12 @@ data class Card(val suite: Suite, val denomination: Denomination) {
         return "${denomination.value}${suite.value}"
     }
     companion object {
-        val DECK = Suite.values()
+        val ALL_CARDS = Suite.values()
             .flatMap { suite ->
                 Denomination.values()
                     .map {
                         Card(suite, it)
                     }
-            }
+            }.shuffled()
     }
 }

@@ -14,7 +14,7 @@ internal class DeckTest : BehaviorSpec({
             }
 
             then("중복없는 플레잉 카드를 가진다.") {
-                deck.values.values shouldBe Card.DECK
+                deck.values.values shouldBe Card.ALL_CARDS
             }
         }
     }

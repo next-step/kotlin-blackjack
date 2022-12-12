@@ -10,9 +10,9 @@ class Cards(values: List<Card> = emptyList()) {
     }
 
     fun pick(): Card {
-        val shuffledCards = values.shuffled().toMutableList()
-        val card = shuffledCards.removeFirst()
-        _values = shuffledCards.deepCopy()
+        val mutableCards = _values.toMutableList()
+        val card = mutableCards.removeFirst()
+        _values = mutableCards.deepCopy()
         return card
     }
 
