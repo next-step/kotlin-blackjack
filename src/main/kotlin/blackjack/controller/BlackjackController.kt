@@ -8,22 +8,20 @@ import blackjack.view.ResultView
 class BlackjackController {
     fun run() {
         setPlayers()
-        while (true) {
-            start()
-            if (Game.isFinished()) break
+        while (Game.isFinished()) {
+            round()
         }
         ResultView.printResult()
     }
 
-    private fun start() {
+    private fun round() {
         Game.players.forEach {
             drawOrNot(it)
         }
     }
 
     private fun drawOrNot(player: Player) {
-        while (true) {
-            if (!InputView.inputIsGetCard(player)) break
+        while (!InputView.inputIsGetCard(player)) {
             Game.hit(player)
             ResultView.printPlayerStatus(player)
         }
