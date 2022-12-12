@@ -1,16 +1,13 @@
 package blackjack.domain
 
 data class Player(val name: String, var cards: Cards = Cards()) {
-    init {
-        repeat(START_CARD_SIZE) {
-            getCards(Deck.draw())
-        }
-    }
     fun getCards(card: Card) {
         cards = cards.add(card)
     }
 
+    fun isBust() = cards.getScore() >= TWENTY_ONE
+
     companion object {
-        private const val START_CARD_SIZE = 2
+        private const val TWENTY_ONE = 21
     }
 }

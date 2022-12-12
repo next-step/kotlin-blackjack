@@ -6,13 +6,12 @@ class Cards(values: List<Card> = emptyList()) {
         get() = _values.deepCopy()
 
     fun add(card: Card): Cards {
-        return Cards(listOf(card) + values)
+        return Cards(values + card)
     }
 
     fun pick(): Card {
         val shuffledCards = values.shuffled().toMutableList()
         val card = shuffledCards.removeFirst()
-        shuffledCards.remove(card)
         _values = shuffledCards.deepCopy()
         return card
     }
