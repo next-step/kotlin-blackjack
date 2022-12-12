@@ -1,18 +1,21 @@
 package blackjack.domain
 
-class Card(val number: CardNumber, val shape: CardShape) {
+class Card(private val number: CardNumber, private val shape: CardShape) {
     override fun toString(): String = number.value + shape.label
 
+    fun getScore(): Int = number.score
+
+    fun isAce(): Boolean = number == CardNumber.ACE
+
     companion object {
-        val CARD_DECK = CardShape.values().flatMap { shape ->
+        val ALL_CARDS = CardShape.values().flatMap { shape ->
             CardNumber.values().map { number -> Card(number, shape) }
         }
 
         fun of(number: CardNumber, shape: CardShape): Card {
-            return CARD_DECK.asSequence()
+            return ALL_CARDS.asSequence()
                 .filter { it.shape == shape }
-                .find { it.number == number }
-                ?: throw IllegalArgumentException("찾을 수 없는 카드입니다.")
+                .first { it.number == number }
         }
     }
 }

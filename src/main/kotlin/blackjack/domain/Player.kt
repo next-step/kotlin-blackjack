@@ -5,9 +5,9 @@ data class Player(val name: String, val cards: Cards = Cards.empty()) {
         require(!name.isNullOrBlank()) { "이름은 빈값이 될 수 없습니다." }
     }
 
-    fun initialCard(cards: Cards): Player = this.copy(cards = this.cards.addAll(cards))
+    fun initialCard(cards: Cards): Player = this.copy(cards = this.cards.plus(cards))
 
-    fun hit(card: Card): Player = this.copy(name = this.name, cards = this.cards.add(card))
+    fun hit(card: Card): Player = this.copy(name = this.name, cards = this.cards.plus(card))
 
     fun countingCard(): Int = cards.countingCard()
 
