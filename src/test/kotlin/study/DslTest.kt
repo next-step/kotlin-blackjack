@@ -14,10 +14,15 @@ class DslTest {
                 soft("Good communication skills")
                 hard("Kotlin")
             }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         person.name shouldBe "손진영"
         person.company shouldBe "네카라쿠배"
         person.skills?.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.skills?.hard shouldBe listOf("Kotlin")
+        person.languages shouldBe Languages(listOf(Language("Korean", 5), Language("English", 3)))
     }
 }
