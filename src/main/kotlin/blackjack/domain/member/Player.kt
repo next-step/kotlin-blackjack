@@ -12,7 +12,7 @@ class Player(
         require(name.isNotBlank()) { "이름은 빈 값이 올 수 없어요" }
     }
 
-    override fun ableMoreDrawCard() = !(isEqualsBlackjackNumber() || isOverBlackjackNumber())
+    override fun ableMoreDrawCard() = !(blackjack() || isOverBlackjackNumber())
     override fun conditionOfWin(otherMember: Member): Boolean {
         return isNearBlackJackThan(otherMember)
     }
