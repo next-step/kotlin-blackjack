@@ -26,7 +26,7 @@ class PlayerTest : StringSpec({
         player.cards.count() shouldBe 1
     }
 
-    "플레이어는 베팅 금액을 추가할 수 있다갖는다" {
+    "플레이어는 베팅 금액을 추가할 수 있다" {
         // given
         val player = createPlayer(listOf(PokerNumber.TWO))
 

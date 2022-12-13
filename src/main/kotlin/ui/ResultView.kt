@@ -7,7 +7,7 @@ import model.Player
 import model.Players
 
 object ResultView {
-    fun resultInitPokerGame(blackJackGame: BlackJackGame) {
+    fun resultInitBlackJackGame(blackJackGame: BlackJackGame) {
         val playerNames = blackJackGame.getPlayers().map { it.name }
         println()
         println("${blackJackGame.dealer.name}와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
@@ -19,7 +19,7 @@ object ResultView {
         println("${player.name} 카드: ${player.cards}")
     }
 
-    fun resultPokerGameScore(blackJackGame: BlackJackGame) {
+    fun resultBlackJackGameScore(blackJackGame: BlackJackGame) {
         println()
         playerScore(blackJackGame.dealer)
         blackJackGame.getPlayers().forEach { player ->

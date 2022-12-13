@@ -1,6 +1,6 @@
 package model
 
-const val BLACK_JACK_MAX_SCORE = 21
+const val BLACK_JACK_SCORE = 21
 const val ACE_SPECIAL_MINUS_SCORE = 10
 
 class BlackJackScore(private val cards: Cards) {
@@ -13,7 +13,7 @@ class BlackJackScore(private val cards: Cards) {
     }
 
     private fun specialAceRule(aceCard: Boolean, score: Int): Int {
-        if (aceCard && score > BLACK_JACK_MAX_SCORE) {
+        if (aceCard && score > BLACK_JACK_SCORE) {
             return score - ACE_SPECIAL_MINUS_SCORE
         }
         return score
