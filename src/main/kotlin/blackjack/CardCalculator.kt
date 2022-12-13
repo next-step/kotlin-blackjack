@@ -1,7 +1,5 @@
 package blackjack
 
-import kotlin.math.abs
-
 class CardCalculator(private val cards: List<Card>) {
     fun sum(): Int {
         val sum = cards.sumOf { it.number.value }
@@ -10,15 +8,13 @@ class CardCalculator(private val cards: List<Card>) {
 
     private fun sumChangeAce(sum: Int): Int {
         var changeSum = sum
-        val aceCards = cards.filter { it.number is CardNumber.Ace }
+        val aceCount = cards.count { it.number is CardNumber.Ace }
+        val aceDiffValue = CardNumber.Ace.diffValue()
 
-        aceCards.forEach { _ ->
-            val sumDiff = abs(STD_NUMBER - sum)
-            val changeSumDiff = abs(STD_NUMBER - (changeSum + CardNumber.Ace.diffValue()))
-            if (sumDiff > changeSumDiff)
-                changeSum += CardNumber.Ace.diffValue()
+        repeat(aceCount) {
+            if (changeSum + aceDiffValue < STD_NUMBER)
+                changeSum += aceDiffValue
         }
-
         return changeSum
     }
 
