@@ -1,6 +1,6 @@
 package blackjack
 
-class CardProvider(private val players: List<Player>) {
+class CardProvider(private val players: List<Player>, private val cardRepository: CardRepository) {
     fun start() {
         players.forEach { player ->
             takeCard(player, START_TAKE_CARD_COUNT)
@@ -22,7 +22,7 @@ class CardProvider(private val players: List<Player>) {
 
     private fun takeCard(player: Player, count: Int) {
         repeat(count) {
-            player.takeCard(Card())
+            player.takeCard(cardRepository.getCard())
         }
     }
 

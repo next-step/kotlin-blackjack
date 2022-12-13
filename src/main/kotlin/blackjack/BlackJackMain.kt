@@ -11,7 +11,7 @@ fun main() {
     val names = inputNames.split(",")
     val players = names.map { Player(it.trim()) }
 
-    val cardProvider = CardProvider(players)
+    val cardProvider = CardProvider(players, CardRepository())
     cardProvider.start()
     resultView.startTakeCardPlayers(players)
 

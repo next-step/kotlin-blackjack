@@ -8,13 +8,13 @@ import io.kotest.matchers.shouldBe
 class CardTest : StringSpec({
 
     "카드 모양은 Spade, Hart, Diamond, Clover 4개의 모양이 있다" {
-        val card = Card()
+        val card = Card(Card.CardShape.Clover, CardNumber.create(3))
 
         card.cardShape shouldBeIn Card.CardShape.values()
     }
 
     "카드의 숫자는 1-13까지 부여 받을 수 있다" {
-        val card = Card()
+        val card = Card(Card.CardShape.Clover, CardNumber.create(3))
 
         card.number.value shouldBeInRange (1..13)
     }

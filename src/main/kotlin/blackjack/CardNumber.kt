@@ -34,9 +34,6 @@ sealed class CardNumber {
     }
 
     companion object {
-        private const val MAX_RANGE_VALUE = 13
-        private const val MIN_RANGE_VALUE = 1
-
         private const val ACE_NUMBER = 1
         private const val JACK_NUMBER = 11
         private const val QUEEN_NUMBER = 12
@@ -48,13 +45,13 @@ sealed class CardNumber {
         private const val QUEEN_VALUE = 10
         private const val KING_VALUE = 10
 
-        fun create(): CardNumber {
-            return when (val cardValue = (MIN_RANGE_VALUE..MAX_RANGE_VALUE).random()) {
+        fun create(value: Int): CardNumber {
+            return when (value) {
                 ACE_NUMBER -> Ace()
                 JACK_NUMBER -> Jack()
                 QUEEN_NUMBER -> Queen()
                 KING_NUMBER -> King()
-                else -> Default(cardValue)
+                else -> Default(value)
             }
         }
     }
