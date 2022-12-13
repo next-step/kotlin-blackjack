@@ -15,21 +15,21 @@ object BlackjackController {
         ResultView.handingOutCards(participantResult.players)
         ResultView.getCurrentStatus(participantResult.players)
 
-        hitAndStay(participantResult.players)
+        participantResult.players.forEach {
+            hitAndStay(it)
+        }
 
         ResultView.getTotalScore(participantResult.players)
     }
 
-    private fun hitAndStay(players: List<Player>) {
-        players.forEach {
-            while (true) {
-                val stayResult = InputView.stay(it.name)
-                if (!stayResult.isStay || BlackJack.isOverScore(it)) break
-                val card = BlackJack.pick()
-                it.cards.add(card)
-                ResultView.getCurrentStatus(listOf(it))
-            }
-            it.score = BlackJack.getScore(it)
+    private fun hitAndStay(player: Player) {
+        while (true) {
+            val stayResult = InputView.stay(player.name)
+            if (!stayResult.isStay || BlackJack.isOverScore(player)) break
+            val card = BlackJack.pick()
+            player.cards.add(card)
+            ResultView.getCurrentStatus(listOf(player))
         }
+        player.score = BlackJack.getScore(player)
     }
 }
