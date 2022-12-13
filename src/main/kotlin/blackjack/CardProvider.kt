@@ -8,7 +8,7 @@ class CardProvider(private val players: List<Player>, private val cardRepository
     }
 
     fun hasAllowTakeCard(player: Player, allow: String): Boolean {
-        return if (allow.equals(Player.ALLOW_TEXT, true)) {
+        return if (allow.equals(ALLOW_TEXT, true)) {
             hasNextTakeCard(player)
         } else {
             false
@@ -29,5 +29,6 @@ class CardProvider(private val players: List<Player>, private val cardRepository
     companion object {
         private const val DEFAULT_TAKE_CARD_COUNT = 1
         private const val START_TAKE_CARD_COUNT = 2
+        const val ALLOW_TEXT = "y"
     }
 }

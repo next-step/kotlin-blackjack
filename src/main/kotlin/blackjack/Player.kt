@@ -8,8 +8,4 @@ class Player(val name: String) {
     }
 
     fun getTakeCards(): List<Card> = takeCards
-
-    companion object {
-        const val ALLOW_TEXT = "y"
-    }
 }

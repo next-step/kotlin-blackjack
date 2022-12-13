@@ -21,7 +21,7 @@ class CardProviderTest : StringSpec({
 
         cardProvider.start()
         do {
-            val hasNext = cardProvider.hasAllowTakeCard(player, Player.ALLOW_TEXT)
+            val hasNext = cardProvider.hasAllowTakeCard(player, CardProvider.ALLOW_TEXT)
         } while (hasNext)
 
         CardCalculator(player.getTakeCards()).sum() shouldNotBeLessThan 20
