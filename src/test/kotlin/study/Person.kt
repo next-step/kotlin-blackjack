@@ -39,14 +39,19 @@ class PersonBuilder {
 }
 
 sealed class Skill {
-    data class Soft(private val skill: String) : Skill()
-    data class Hard(private val skill: String) : Skill()
+    abstract val value: String
+
+    data class Soft(override val value: String) : Skill()
+    data class Hard(override val value: String) : Skill()
 }
 
 data class Skills(
-    val value: MutableList<Skill> = mutableListOf()
+    private val _value: MutableList<Skill> = mutableListOf()
 ) {
-    fun add(skill: Skill) = value.add(skill)
+    val value: List<Skill>
+        get() = _value.toList()
+
+    fun add(skill: Skill) = _value.add(skill)
 }
 
 class SkillBuilder {
@@ -76,9 +81,12 @@ class LanguageBuilder {
 data class Language(private val language: String, private val level: Int)
 
 data class Languages(
-    val value: MutableList<Language> = mutableListOf()
+    private val _value: MutableList<Language> = mutableListOf()
 ) {
-    fun add(language: Language) = this.value.add(language)
+    val value: List<Language>
+        get() = _value.toList()
+
+    fun add(language: Language) = _value.add(language)
 }
 
 
