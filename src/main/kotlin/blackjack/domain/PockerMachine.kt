@@ -12,10 +12,15 @@ class PockerMachine(
         }
     }
 
-    fun addCard(func: (person: Person) -> Boolean, person: Person) {
-        while (func(person)) {
+    fun addCard(
+        retryFunc: (person: Person) -> Boolean,
+        person: Person,
+        printFunc: (person: Person) -> Unit
+    ) {
+        while (retryFunc(person)) {
             val card = dealer.pickCard(cardDeck)
             person.addCard(card)
+            printFunc(person)
         }
     }
 

@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Person
 import blackjack.domain.PockerMachine
+import blackjack.view.OutputView
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -17,7 +18,7 @@ internal class PockerMachineTest : BehaviorSpec({
         }
 
         When("카드를 추가하면 조건만큼 ") {
-            pockerMachine.addCard({ person: Person -> person.cards.cards.size <= 2 }, person)
+            pockerMachine.addCard({ person: Person -> person.cards.cards.size <= 2 }, person, OutputView::printCardState)
             Then("카드를 추가한다.") {
                 person.cards.cards.size shouldBe 3
             }
