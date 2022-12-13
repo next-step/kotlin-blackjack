@@ -17,6 +17,8 @@ data class Cards(private val list: List<Card> = listOf()) {
         return score
     }
 
+    fun contains(card: Card) = list.contains(card)
+
     private fun countingMaxAceCard(score: Int, countOfAceCard: Int): Int {
         if (countOfAceCard == 0) {
             return 0
@@ -24,9 +26,9 @@ data class Cards(private val list: List<Card> = listOf()) {
 
         var aceScore = 0
         repeat(countOfAceCard) {
-            val tmp = score + aceScore + ACE_CARD_MAX_SCORE - 1
+            val tmp = score + aceScore + ACE_CARD_MAX_SCORE - CardNumber.ACE.score
             if (tmp <= BLACKJACK_SCORE) {
-                aceScore = ACE_CARD_MAX_SCORE - 1
+                aceScore = ACE_CARD_MAX_SCORE - CardNumber.ACE.score
             }
         }
         return aceScore
