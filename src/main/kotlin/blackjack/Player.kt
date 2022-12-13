@@ -8,4 +8,6 @@ class Player(val name: String) {
     }
 
     fun getTakeCards(): List<Card> = takeCards
+
+    fun score(): Int = CardCalculator(takeCards).sum()
 }
