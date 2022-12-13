@@ -8,7 +8,7 @@ class Card(private val number: CardNumber, private val shape: CardShape) {
     fun isAce(): Boolean = number == CardNumber.ACE
 
     companion object {
-        val ALL_CARDS = CardShape.values().flatMap { shape ->
+        val ALL_CARDS: List<Card> = CardShape.values().flatMap { shape ->
             CardNumber.values().map { number -> Card(number, shape) }
         }
 

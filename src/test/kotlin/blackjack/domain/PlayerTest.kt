@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,6 +20,6 @@ class PlayerTest {
         val card = Card.of(CardNumber.FIVE, CardShape.CLOVER)
         val player = Player("pobi").hit(card)
         player.cards.count() shouldBe 1
-        player.cards.list shouldContain card
+        player.cards.contains(card) shouldBe true
     }
 }
