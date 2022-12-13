@@ -25,7 +25,8 @@ fun main() {
     ResultView.printPlayerResults(dealer)
     players.items.forEach { ResultView.printPlayerResults(it) }
 
-    // TODO
+    val gameResultPlayers = dealer.gameResultPlayers(players)
+    ResultView.printGameResult(dealer, gameResultPlayers)
 }
 
 private fun initPlayer(name: String, deck: Deck): Player {

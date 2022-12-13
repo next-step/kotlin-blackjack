@@ -20,6 +20,8 @@ import blackjack.domain.Sharp.HEART
 import blackjack.domain.member.Dealer
 import blackjack.domain.member.Player
 import blackjack.domain.member.Players
+import blackjack.domain.member.ResultPlayer
+import blackjack.domain.member.ResultPlayers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -139,5 +141,30 @@ class DealerTest {
 
         // then
         assertThat(gameResultPlayers.items).extracting("gameState").containsExactly(WIN_BLACKJACK, WIN, LOSE, LOSE)
+    }
+
+    @Test
+    internal fun `딜러의 수익은 플레이어의 이익만큼 마이너스이다`() {
+        // given
+        val dealer = Dealer(Cards(Card(ACE, HEART), Card(SIX, CLOVER)))
+        val resultPlayers = ResultPlayers(
+            listOf(
+                ResultPlayer(
+                    Player("blackjack", Cards(Card(ACE, HEART), Card(JACK, CLOVER)), Bet.of(1000)),
+                    WIN
+                ),
+
+                ResultPlayer(
+                    Player("winner", Cards(Card(JACK, HEART), Card(EIGHT, CLOVER)), Bet.of(1000)),
+                    WIN
+                )
+            )
+        )
+
+        // when
+        val benefit = dealer.benefit(resultPlayers)
+
+        // then
+        assertThat(benefit).isEqualTo(-2000.0)
     }
 }

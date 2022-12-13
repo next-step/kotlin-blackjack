@@ -4,6 +4,7 @@ import blackjack.domain.member.Dealer
 import blackjack.domain.member.Member
 import blackjack.domain.member.Player
 import blackjack.domain.member.Players
+import blackjack.domain.member.ResultPlayers
 
 object ResultView {
 
@@ -37,4 +38,13 @@ object ResultView {
 
     private fun Dealer.firstCardInfo() = "딜러: ${this.firstCardDescription()}"
     private fun Dealer.firstCardDescription() = this.cardElements.map { c -> c.number.desc + c.sharp.desc }.first()
+    fun printGameResult(dealer: Dealer, gameResultPlayers: ResultPlayers) {
+        println()
+        println("## 최종 수익")
+        println("${dealer.name}: ${dealer.benefit(gameResultPlayers)}")
+
+        gameResultPlayers.items.forEach {
+            println("${it.player.name}: ${it.benefit()}")
+        }
+    }
 }

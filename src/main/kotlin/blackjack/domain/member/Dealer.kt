@@ -57,6 +57,10 @@ class Dealer(
         )
     }
 
+    fun benefit(gameResultPlayers: ResultPlayers): Double {
+        return gameResultPlayers.items.fold(0.0) { sum, resultPlayer -> sum + resultPlayer.benefit() }.unaryMinus()
+    }
+
     companion object {
         fun init(deck: Deck): Dealer {
             val cards = deck.drawInitAssignCards()
