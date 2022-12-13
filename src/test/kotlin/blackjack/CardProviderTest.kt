@@ -12,7 +12,7 @@ class CardProviderTest : StringSpec({
 
         cardProvider.start()
 
-        player.takeCards.size shouldBe 2
+        player.getTakeCards().size shouldBe 2
     }
 
     "플레이어는 카드의 합이 21이 넘지 않는 경우 원한다면 카드를 계속 받을 수 있다" {
@@ -24,6 +24,6 @@ class CardProviderTest : StringSpec({
             val hasNext = cardProvider.hasAllowTakeCard(player, Player.ALLOW_TEXT)
         } while (hasNext)
 
-        CardCalculator(player.takeCards).sum() shouldNotBeLessThan 20
+        CardCalculator(player.getTakeCards()).sum() shouldNotBeLessThan 20
     }
 })

@@ -17,7 +17,7 @@ class CardProvider(private val players: List<Player>, private val cardRepository
 
     private fun hasNextTakeCard(player: Player): Boolean {
         takeCard(player, DEFAULT_TAKE_CARD_COUNT)
-        return CardCalculator(player.takeCards).sum() < CardCalculator.STD_NUMBER
+        return CardCalculator(player.getTakeCards()).sum() < CardCalculator.STD_NUMBER
     }
 
     private fun takeCard(player: Player, count: Int) {

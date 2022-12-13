@@ -1,14 +1,13 @@
 package blackjack
 
 class Player(val name: String) {
-    var takeCards = emptyList<Card>()
-        private set
+    private val takeCards = ArrayList<Card>()
 
     fun takeCard(card: Card) {
-        takeCards = takeCards.toMutableList().apply {
-            add(card)
-        }
+        takeCards.add(card)
     }
+
+    fun getTakeCards(): List<Card> = takeCards
 
     companion object {
         const val ALLOW_TEXT = "y"
