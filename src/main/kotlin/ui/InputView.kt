@@ -1,9 +1,9 @@
 package ui
 
+import model.BlackJackGame
 import model.Dealer
 import model.Player
 import model.Players
-import model.PokerGame
 import ui.ResultView.resultPlayerCard
 
 object InputView {
@@ -15,15 +15,28 @@ object InputView {
         return Players(playerNames)
     }
 
-    fun inputPlayerQuestion(pokerGame: PokerGame) {
-        pokerGame.getPlayers().forEach {
-            inputQuestionHit(it, pokerGame.dealer)
+    fun inputPlayersBetting(blackJackGame: BlackJackGame) {
+        blackJackGame.getPlayers().forEach { player ->
+            inputPlayerBetting(player)
         }
-        inputDealerHit(pokerGame.dealer)
+    }
+
+    private fun inputPlayerBetting(player: Player) {
+        println("${player.name}의 배팅 금액은?")
+        val bettingAmount: String = readLine() ?: throw IllegalArgumentException("배팅금액을 입력해야 합니다")
+
+        player.bet = bettingAmount.toIntOrNull() ?: throw IllegalArgumentException("숫자만 입력 가능합니다")
+    }
+
+    fun inputPlayerQuestion(blackJackGame: BlackJackGame) {
+        blackJackGame.getPlayers().forEach {
+            inputQuestionHit(it, blackJackGame.dealer)
+        }
+        inputDealerHit(blackJackGame.dealer)
     }
 
     private fun inputDealerHit(dealer: Dealer) {
-        dealer.finish()
+        dealer.hitIfRequired()
 
         if (dealer.cards.count() == 3) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")

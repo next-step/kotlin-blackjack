@@ -1,5 +1,6 @@
 package model
 
+import helper.PlayerFixture.createPlayer
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -25,42 +26,14 @@ class PlayerTest : StringSpec({
         player.cards.count() shouldBe 1
     }
 
-    "플레이어의 점수가 딜러보다 높으면, 승리를 반환한다" {
+    "플레이어는 베팅 금액을 추가할 수 있다" {
         // given
-        val player = createPlayer(listOf(PokerNumber.TEN, PokerNumber.ACE))
-        val dealer = createDealer()
+        val player = createPlayer(listOf(PokerNumber.TWO))
 
         // when
-        val winOrLose = player.competeWith(dealer)
+        player.bet = 1000
 
         // then
-        winOrLose shouldBe WinOrLose.WIN
-    }
-
-    "플레이어의 점수가 딜러보다 낮으면, 패배를 반환한다" {
-        // given
-        val player = createPlayer(listOf(PokerNumber.TWO, PokerNumber.THREE))
-        val dealer = createDealer()
-
-        // when
-        val winOrLose = player.competeWith(dealer)
-
-        // then
-        winOrLose shouldBe WinOrLose.LOSE
+        player.bet shouldBe 1000
     }
 })
-
-private fun createPlayer(pokerNumbers: List<PokerNumber>): Player {
-    val player = Player("나잘함")
-    pokerNumbers.forEach {
-        player.hit(Card(it, PokerShape.HEART))
-    }
-    return player
-}
-
-private fun createDealer(): Dealer {
-    val dealer = Dealer()
-    dealer.hit(Card(PokerNumber.TEN, PokerShape.HEART))
-    dealer.hit(Card(PokerNumber.TWO, PokerShape.HEART))
-    return dealer
-}
