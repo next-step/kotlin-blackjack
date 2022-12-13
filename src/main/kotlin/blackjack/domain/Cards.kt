@@ -11,8 +11,6 @@ class Cards(cards: List<Card> = emptyList()) {
 
     fun add(card: Card) = cardList.add(card)
 
-    fun hasCard(card: Card): Boolean = cardList.contains(card)
-
     private fun hasAce(): Boolean {
         return cardList.any { card -> card.cardNumber == CardNumber.Ace }
     }
