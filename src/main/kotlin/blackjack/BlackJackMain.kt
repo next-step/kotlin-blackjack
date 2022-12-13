@@ -9,7 +9,7 @@ fun main() {
 
     val inputNames = inputView.playersName()
     val names = inputNames.split(",")
-    val players = names.map { Player(it.trim()) }
+    val players = names.map { Player(it.trim(), Cards()) }
 
     val cardProvider = CardProvider(players, CardRepository())
     cardProvider.start()

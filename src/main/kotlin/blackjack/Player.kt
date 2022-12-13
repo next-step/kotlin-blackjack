@@ -1,13 +1,9 @@
 package blackjack
 
-class Player(val name: String) {
-    private val takeCards = ArrayList<Card>()
-
+class Player(val name: String, val cards: Cards) {
     fun takeCard(card: Card) {
-        takeCards.add(card)
+        cards.takeCard(card)
     }
 
-    fun getTakeCards(): List<Card> = takeCards
-
-    fun score(): Int = CardCalculator(takeCards).sum()
+    fun score(): Int = cards.sum()
 }

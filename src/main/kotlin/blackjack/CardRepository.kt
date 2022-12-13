@@ -2,7 +2,7 @@ package blackjack
 
 class CardRepository {
 
-    private val cards: List<Card> = createDefaultCards()
+    private val cards: List<Card> = createDefaultCards().shuffled()
     private var index = 0
 
     fun getCard() = cards[index++]
@@ -19,7 +19,7 @@ class CardRepository {
                 }
                 cards.addAll(shapeCards)
             }
-            return cards.shuffled()
+            return cards
         }
     }
 }
