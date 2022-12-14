@@ -18,9 +18,10 @@ class GameTest {
 
     @Test
     fun `최초 2장씩 카드를 참가자와 딜러에게 나눈다`() {
-        val game = Game(FakePlayers.players).initialCard()
-        val players = game.players.list + game.getDealer()
-        players.map { it.cards.count() shouldBe 2 }
+        val game = Game(FakePlayers.players)
+        val players = game.initialCard()
+        val list = players.list + game.getDealer()
+        list.map { it.cards.count() shouldBe 2 }
         game.deck.count() shouldBe 46 // 52-(3명*2)
     }
 }
