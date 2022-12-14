@@ -9,7 +9,7 @@ interface Player {
     }
 
     fun hit(deck: Deck): Player {
-        check(!isBurst()) { "카드를 받을 수 없습니다." }
+        check(canHit()) { "카드를 받을 수 없습니다." }
         return this.copy(cards = this.cards.plus(deck.draw()))
     }
 
@@ -17,7 +17,20 @@ interface Player {
 
     fun countingCard(): Int = cards.countingCard()
 
+    fun compareTo(player: Player): GameResult {
+        val gap = getScore(this) - getScore(player)
+        return when {
+            gap > 0 -> GameResult.WIN
+            gap == 0 -> GameResult.DRAW
+            else -> GameResult.LOSE
+        }
+    }
+
     fun copy(name: Name = this.name, cards: Cards): Player
 
     private fun isBurst(): Boolean = countingCard() > BLACKJACK_SCORE
+
+    private fun getScore(player: Player): Int {
+        return if (player.isBurst()) 0 else player.countingCard()
+    }
 }
