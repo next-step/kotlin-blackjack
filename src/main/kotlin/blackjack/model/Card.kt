@@ -8,4 +8,8 @@ class Card(val suit: Suit, val denomination: Denomination) {
     fun getScore(): Int {
         return denomination.score
     }
+
+    fun getDisplayName(): String {
+        return "${denomination.displayName}${suit.displayName}"
+    }
 }
