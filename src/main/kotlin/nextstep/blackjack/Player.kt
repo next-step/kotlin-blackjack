@@ -1,6 +1,6 @@
 package nextstep.blackjack
 
-class Player(cards: Set<Card>) {
+class Player(cards: Set<Card> = emptySet()) {
 
     private val nonAceCards: MutableSet<Card> = cards.filter { it.isAce().not() }.toMutableSet()
     private val aceCards: MutableSet<Card> = cards.filter { it.isAce() }.toMutableSet()
