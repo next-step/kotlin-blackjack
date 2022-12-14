@@ -14,8 +14,14 @@ import nextstep.blackjack.Card.SPADE_ACE
 
 class PlayerTest : StringSpec({
 
+    "플레이어는 이름을 가진다." {
+        val player = Player("jack")
+
+        player.name shouldBe "jack"
+    }
+
     "플레이어는 N장의 카드를 가진다." {
-        val player = Player(setOf(SPADE_ACE, HEART_ACE, DIAMOND_ACE, CLOVER_ACE))
+        val player = Player("jack", setOf(SPADE_ACE, HEART_ACE, DIAMOND_ACE, CLOVER_ACE))
 
         player.cards shouldBe setOf(SPADE_ACE, HEART_ACE, DIAMOND_ACE, CLOVER_ACE)
     }
@@ -29,14 +35,14 @@ class PlayerTest : StringSpec({
             setOf(CLOVER_ACE, SPADE_ACE, HEART_NINE) to 21,
             setOf(CLOVER_ACE, SPADE_ACE, HEART_TEN) to 12,
         ).forAll { (cards: Set<Card>, totalPoint: Int) ->
-            val player = Player(cards)
+            val player = Player("jack", cards)
 
             player.calculateTotalPoint() shouldBe totalPoint
         }
     }
 
     "플레이어는 가진 카드의 총합이 21점이 이하라면 언제든지 1장의 카드를 추가로 뽑을 수 있다." {
-        val player = Player(setOf(CLOVER_JACK, CLOVER_TEN))
+        val player = Player("jack", setOf(CLOVER_JACK, CLOVER_TEN))
 
         player.hit(HEART_ACE)
 
