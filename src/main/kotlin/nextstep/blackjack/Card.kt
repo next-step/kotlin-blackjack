@@ -68,6 +68,8 @@ enum class Card(private val point: Int) {
         else -> this.point
     }
 
+    fun isAce(): Boolean = ACE_CARDS.contains(this)
+
     companion object {
         private val ACE_CARDS: Set<Card> = setOf(DIAMOND_ACE, CLOVER_ACE, HEART_ACE, SPADE_ACE)
     }

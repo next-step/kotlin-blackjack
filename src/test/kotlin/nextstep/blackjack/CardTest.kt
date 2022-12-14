@@ -1,6 +1,8 @@
 package nextstep.blackjack
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.inspectors.forAll
+import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
 import io.kotest.property.Exhaustive
 import io.kotest.property.arbitrary.int
@@ -69,7 +71,7 @@ class CardTest : StringSpec({
         forAll<Card> { card -> CARDS.contains(card) }
     }
 
-    "카드 모양상관없이 2~10은 번호만큼의 점수, King, Queen, Jack은 10점이 될 수 있다.2" {
+    "카드 모양상관없이 2~10은 번호만큼의 점수, King, Queen, Jack은 10점이 될 수 있다." {
         forAll(CARD_TO_POINTS_EXCLUDING_ACES.exhaustive(), Arb.int()) { cardToPoint, random ->
             cardToPoint.first.getPoint(random) == cardToPoint.second
         }
@@ -82,6 +84,16 @@ class CardTest : StringSpec({
         forAll(aceCards, currentPointToAcePoints) { aceCard, currentPointToAcePoint ->
             aceCard.getPoint(currentPointToAcePoint.first) == currentPointToAcePoint.second
         }
+    }
+
+    "카드가 ACE인지 확인한다." {
+        listOf(
+            DIAMOND_ACE to true,
+            CLOVER_ACE to true,
+            HEART_ACE to true,
+            SPADE_ACE to true,
+            DIAMOND_EIGHT to false
+        ).forAll { (card: Card, expect: Boolean) -> card.isAce() shouldBe expect }
     }
 })
 
