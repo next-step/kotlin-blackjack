@@ -2,7 +2,7 @@ package blackjack.model
 
 class CardDeck() {
     var cards = Suit.values()
-        .flatMap { suit -> Denomination.values().map { Card.of(suit, it) } }
+        .flatMap { suit -> Denomination.values().map { Card(suit, it) } }
         .toMutableList()
         private set
 

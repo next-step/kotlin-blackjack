@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.service.FinalScoreCalculator
+
 class Player(val name: String) {
     var cards = mutableListOf<Card>()
 
@@ -14,10 +16,10 @@ class Player(val name: String) {
     }
 
     fun getScore(): Int {
-        return cards.sumOf { it.denomination.value }
+        return cards.sumOf { it.getScore() }
     }
 
     fun getFinalScore(): Int {
-        TODO("결과점수 계산 알고리즘 구현")
+        return FinalScoreCalculator.calculate(cards)
     }
 }

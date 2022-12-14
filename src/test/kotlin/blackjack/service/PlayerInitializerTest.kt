@@ -1,6 +1,6 @@
 package blackjack.service
 
-import blackjack.service.PlayerInitializer.Companion.fromString
+import blackjack.service.PlayerInitializer.fromString
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

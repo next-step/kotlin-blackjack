@@ -1,7 +1,7 @@
 package blackjack.model
 
-enum class Denomination(val value: Int) {
-    ACE(1),
+enum class Denomination(val score: Int, val specialScore: Int? = null) {
+    ACE(1, 11),
     TWO(2),
     THREE(3),
     FOUR(4),
