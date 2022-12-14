@@ -11,7 +11,7 @@ class Game(val players: List<Player>) {
         }
     }
 
-    fun drawTo(playerName: String) {
-        players.first { it.name == playerName }.also { it.hit(cardPack.draw()) }
+    fun drawTo(player: Player) {
+        players.first { it.name == player.name }.also { it.hit(cardPack.draw()) }
     }
 }

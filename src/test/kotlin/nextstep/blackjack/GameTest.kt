@@ -15,7 +15,7 @@ class GameTest : StringSpec({
     "플레이어가 원하면 특정 플레이어에게 카드 1장을 추가로 지급한다." {
         val game = Game(listOf(Player("jack"), Player("pobi")))
 
-        game.drawTo("jack")
+        game.drawTo(Player("jack"))
 
         game.players.first { it.name == "jack" }.cards.size shouldBe 3
     }
