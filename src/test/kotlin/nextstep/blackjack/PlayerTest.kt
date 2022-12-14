@@ -3,7 +3,14 @@ package nextstep.blackjack
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import nextstep.blackjack.Card.*
+import nextstep.blackjack.Card.CLOVER_ACE
+import nextstep.blackjack.Card.CLOVER_JACK
+import nextstep.blackjack.Card.CLOVER_TEN
+import nextstep.blackjack.Card.DIAMOND_ACE
+import nextstep.blackjack.Card.HEART_ACE
+import nextstep.blackjack.Card.HEART_NINE
+import nextstep.blackjack.Card.HEART_TEN
+import nextstep.blackjack.Card.SPADE_ACE
 
 class PlayerTest : StringSpec({
 
