@@ -18,7 +18,7 @@ sealed interface Member {
 
     fun resultScore() = this.cards.score()
     fun isOverBlackjackNumber() = resultScore() > Const.BLACKJACK_NUMBER
-    fun blackjack() = resultScore() == Const.BLACKJACK_NUMBER
+    fun blackjack() = this.cards.blackJack()
 
     fun isNearBlackJackThan(otherMember: Member) =
         abs(this.resultScore() - Const.BLACKJACK_NUMBER) < abs(otherMember.resultScore() - Const.BLACKJACK_NUMBER)
