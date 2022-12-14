@@ -2,14 +2,19 @@ package blackjack.service
 
 import blackjack.model.Card
 import blackjack.model.Denomination.ACE
+import blackjack.model.Player
+import blackjack.model.Player.Companion.FAIL_THRESHOLD
 import kotlin.math.max
 
 object FinalScoreCalculator {
     private const val FAIL_SCORE = 0
-    private const val FAIL_THRESHOLD = 21
     private const val INDEX_INCREMENT = 1
 
-    fun calculate(cards: List<Card>, index: Int = 0, accumulator: Int = 0): Int {
+    fun finalScoreOf(player: Player): Int {
+        return calculate(player.cards)
+    }
+
+    private fun calculate(cards: List<Card>, index: Int = 0, accumulator: Int = 0): Int {
         if (accumulator > FAIL_THRESHOLD) {
             return FAIL_SCORE
         }

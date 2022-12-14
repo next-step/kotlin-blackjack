@@ -1,25 +1,27 @@
 package blackjack.model
 
-import blackjack.service.FinalScoreCalculator
-
 class Player(val name: String) {
     var cards = mutableListOf<Card>()
 
     fun addCard(card: Card) {
-        check(getScore() < 21)
+        check(isPickable())
         cards.add(card)
     }
 
     fun addCards(cards: List<Card>) {
-        check(getScore() < 21)
+        check(isPickable())
         cards.forEach(::addCard)
     }
 
-    fun getScore(): Int {
+    fun isPickable(): Boolean {
+        return getScore() < FAIL_THRESHOLD
+    }
+
+    private fun getScore(): Int {
         return cards.sumOf { it.getScore() }
     }
 
-    fun getFinalScore(): Int {
-        return FinalScoreCalculator.calculate(cards)
+    companion object {
+        const val FAIL_THRESHOLD = 21
     }
 }
