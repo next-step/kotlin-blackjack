@@ -1,6 +1,8 @@
 package blackjack.controller
 
+import blackjack.domain.Deck
 import blackjack.domain.Game
+import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.ConsoleInput
@@ -13,30 +15,38 @@ class BlackjackController {
     fun playGame() {
         val game = Game(inputView.inputPlayers())
         val dealer = game.getDealer()
-//        outputView.printInitialCards(game)
-//
-//        val players = scratchPlayers(game)
-//        val dealer = scratchDealer(game)
+        val players = game.initialCard()
+        outputView.printInitialCards(dealer, players)
 
-        outputView.printGameResult(dealer, players)
+        val playersCards = scratchPlayers(players, game.deck)
+        val dealerCards = scratchDealer(dealer, game.deck)
+
+        outputView.printResultCards(dealerCards, playersCards)
+
+        println("## 최종 승패")
+        val resultDealer: Map<GameResult, Int> =
+            playersCards.list.groupingBy { dealer.compareTo(it) }.eachCount()
+        println("딜러:${resultDealer.toSortedMap().map { " ${it.value}${it.key.label}" }}")
+
+        playersCards.list.map { println("${it.name.value}: ${it.compareTo(dealer).label}") }
     }
 
-    private fun scratchDealer(game: Game): Player {
-        return if (game.getDealer().canHit()) {
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-            game.getDealer().hit(game.deck)
+    private fun scratchDealer(dealer: Player, deck: Deck): Player {
+        return if (dealer.canHit()) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+            dealer.hit(deck)
         } else {
-            println("딜러는 17이상이라 카드를 받지 않았습니다.")
-            game.getDealer()
+            println("딜러는 17이상이라 카드를 받지 않았습니다.\n")
+            dealer
         }
     }
 
-    private fun scratchPlayers(game: Game): Players {
+    private fun scratchPlayers(players: Players, deck: Deck): Players {
         val result = mutableListOf<Player>()
-        game.players.list.map {
+        players.list.map {
             var player = it
             while (player.canHit() && ConsoleInput.inputScratch(player)) {
-                player = player.hit(game.deck)
+                player = player.hit(deck)
                 ConsoleOutput.printPlayerCards(player)
             }
             result.add(player)
