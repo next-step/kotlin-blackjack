@@ -11,6 +11,7 @@ class CardTest {
     fun `A,K,Q,J,2~9 중 하나와 4종류의 모양 중 하나를 가진다`(number: String, shape: String) {
         val card = Card.of(CardNumber.of(number), CardShape.valueOf(shape))
         card.getScore() shouldBe CardNumber.of(number).score
+        card.shape shouldBe CardShape.valueOf(shape)
     }
 
     @CsvSource("1,HEART", "11,CLOVER", "B,DIAMOND", "12,HEART", "2,STAR")

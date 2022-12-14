@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Card(private val number: CardNumber, private val shape: CardShape) {
+class Card private constructor(val number: CardNumber, val shape: CardShape) {
     override fun toString(): String = number.value + shape.label
 
     fun getScore(): Int = number.score
