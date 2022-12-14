@@ -1,11 +1,9 @@
 package blackjack.domain
 
-const val INITIAL_CARD_COUNT = 2
-
-class Deck(private val values: List<Card> = DEFAULT_CARDS) {
+class Deck(values: List<Card> = DEFAULT_CARDS) {
 
     private val _values: MutableList<Card> = values.toMutableList()
-    
+
     fun draw(): Card {
         check(_values.isNotEmpty()) { "뽑을 수 있는 카드가 없습니다." }
         return _values.removeFirst()

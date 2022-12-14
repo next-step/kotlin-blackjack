@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.GamePlayer
 import blackjack.domain.Player
 import blackjack.domain.Players
 
@@ -18,12 +19,12 @@ object ConsoleInput {
     }
 
     fun inputScratch(player: Player): Boolean {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        val isHit = readln()
+        println("${player.name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val isHit = readln().lowercase()
         require(isHit in listOf("y", "n")) { "y 또는 n으로 의사를 입력해주세요." }
         return "y" == isHit
     }
 
-    private fun getPlayers(names: String): Players = Players(splitNames(names).map { Player(it) })
+    private fun getPlayers(names: String): Players = Players(splitNames(names).map { GamePlayer(it) })
     private fun splitNames(names: String): List<String> = names.split(DELIMITER_NAMES).map { it.trim() }
 }
