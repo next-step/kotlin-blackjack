@@ -1,26 +1,14 @@
 package study
 
+import dsl.HardSkill
 import dsl.Language
 import dsl.Person
+import dsl.Skills
+import dsl.SoftSkill
 import dsl.introduce
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-/*
-introduce {
-  name("윤영빈")
-  company("KSD")
-  skills {
-    soft("A passion for problem solving")
-    soft("Good communication skills")
-    hard("Kotlin")
-  }
-  languages {
-    "Korean" level 5
-    "English" level 3
-  }
-}
- */
 class DslTest {
     @Test
     fun name() {
@@ -43,26 +31,29 @@ class DslTest {
     @Test
     fun skills() {
         val person: Person = introduce {
+            name("윤영빈")
             skills {
-                name("윤영빈")
                 soft("A passion for problem solving")
                 soft("Good communication skills")
                 hard("Kotlin")
             }
         }
-        person.skills?.hardSkills?.hardSkills shouldBe listOf("Kotlin")
-        person.skills?.softSkills?.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.skills shouldBe Skills(
+            listOf(
+                SoftSkill("A passion for problem solving"),
+                SoftSkill("Good communication skills"),
+                HardSkill("Kotlin"),
+            )
+        )
     }
 
     @Test
     fun languages() {
         val person: Person = introduce {
-            skills {
-                name("윤영빈")
-                languages {
-                    "Korean" level 3
-                    "English" level 1
-                }
+            name("윤영빈")
+            languages {
+                "Korean" level 3
+                "English" level 1
             }
         }
         person.languages?.languages shouldBe listOf(

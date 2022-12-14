@@ -1,44 +1,23 @@
 package dsl
 
-class SkillsBuilder {
-    private var softSkills = SoftSkills()
-    private var hardSkills = HardSkills()
-
+class SkillsBuilder(
+    private val skills: MutableList<Skill> = mutableListOf()
+) {
     fun soft(value: String) {
-        val newSoftSkills = softSkills.add(value)
-        softSkills = newSoftSkills
+        skills.add(SoftSkill(value))
     }
 
     fun hard(value: String) {
-        val newHardSkills = hardSkills.add(value)
-        hardSkills = newHardSkills
+        skills.add(HardSkill(value))
     }
 
     fun build(): Skills {
-        return Skills(hardSkills, softSkills)
+        return Skills(skills.toList())
     }
 }
 
-class Skills(val hardSkills: HardSkills, val softSkills: SoftSkills)
+data class Skills(val skills: List<Skill> = emptyList())
+sealed class Skill(open val name: String)
 
-class HardSkills(hardSkills: List<String> = emptyList()) {
-    private val _hardSkills: MutableList<String> = hardSkills.toMutableList()
-    val hardSkills: List<String>
-        get() = _hardSkills.toList()
-
-    fun add(name: String): HardSkills {
-        _hardSkills.add(name)
-        return HardSkills(_hardSkills.toList())
-    }
-}
-
-class SoftSkills(softSkills: List<String> = emptyList()) {
-    private val _softSkills: MutableList<String> = softSkills.toMutableList()
-    val softSkills: List<String>
-        get() = _softSkills.toList()
-
-    fun add(name: String): SoftSkills {
-        _softSkills.add(name)
-        return SoftSkills(_softSkills.toList())
-    }
-}
+data class SoftSkill(override val name: String) : Skill(name)
+data class HardSkill(override val name: String) : Skill(name)

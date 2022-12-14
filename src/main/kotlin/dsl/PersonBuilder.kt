@@ -1,6 +1,6 @@
 package dsl
 
-class PersonBuilder {
+class PersonBuilder() {
     private lateinit var name: String
     private var company: String? = null
     private var skills: Skills? = null
