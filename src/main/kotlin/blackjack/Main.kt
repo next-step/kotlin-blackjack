@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Casino
+import blackjack.controller.Casino
 import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView

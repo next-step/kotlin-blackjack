@@ -1,9 +1,9 @@
 package blackjack.ui
 
+import blackjack.controller.Casino
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Cards
-import blackjack.domain.Casino
 import blackjack.domain.Player
 import blackjack.domain.Suit
 
@@ -12,50 +12,26 @@ class ResultView {
     fun show(casino: Casino) {
         casino.distribute()
 
-        val names = casino.players.joinToString(", ") { it.name }
+        val names = casino.names()
         println("${names}에게 2장의 나누었습니다.")
 
-        repeat(casino.players.size) {
-            casino.players[it].print()
-        }
+        casino.printAllPlayers { player -> player.print() }
 
-        relay(casino)
+        casino.relay(
+            questionAction = question@{ player ->
+                println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+                val answer = readlnOrNull()
+                if (answer.isNullOrBlank()) return@question true
+                if (answer == NO) return@question true
+                return@question false
+            },
+            printAction = { player -> player.print() }
+        )
 
-        showResult(casino)
-    }
-
-    private fun relay(casino: Casino) {
-        var index = 0
-        do {
-            val player = casino.players[index]
-            val next = ask(casino, player)
-
-            if (player.canDraw().not()) break
-
-            if (next) index++
-        } while (index < casino.players.size)
-    }
-
-    private fun ask(casino: Casino, player: Player): Boolean {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        val answer = readlnOrNull()
-        if (answer.isNullOrBlank()) return true
-        if (answer == NO) return true
-
-        casino.draw(player)
-
-        if (player.canDraw().not()) return true
-
-        player.print()
-
-        return ask(casino, player)
-    }
-
-    private fun showResult(casino: Casino) {
-        repeat(casino.players.size) {
-            val player = casino.players[it]
+        casino.printAllResult { player ->
             println("${player.getString()} - 결과: ${player.totalScore}")
         }
+
     }
 
     private fun Player.print() = println(getString())
