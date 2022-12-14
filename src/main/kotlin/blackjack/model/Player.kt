@@ -8,11 +8,6 @@ class Player(val name: String) {
         cards.add(card)
     }
 
-    fun addCards(cards: List<Card>) {
-        check(isPickable())
-        cards.forEach(::addCard)
-    }
-
     fun isPickable(): Boolean {
         return getScore() < FAIL_THRESHOLD
     }

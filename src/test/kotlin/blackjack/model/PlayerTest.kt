@@ -20,8 +20,8 @@ class PlayerTest {
     @Test
     internal fun `카드를 뽑으면 플레이어 카드목록에 추가된다`() {
         val player = Player("jason")
-        val deck = CardDeck()
-        player.addCards(deck.getCards(2))
+        player.addCard(Card(SPADE, TEN))
+        player.addCard(Card(SPADE, QUEEN))
         assertThat(player.cards.size).isEqualTo(2)
     }
 

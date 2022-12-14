@@ -10,8 +10,4 @@ class CardDeck() {
         cards.shuffle()
         return cards.removeFirst()
     }
-
-    fun getCards(count: Int): List<Card> {
-        return List(count) { getSingleCard() }
-    }
 }
