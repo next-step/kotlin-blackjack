@@ -21,18 +21,18 @@ value class PlayingCards private constructor(private val list: MutableList<Playi
     }
 
     fun isBust(): Boolean {
-        return list.sumOf { it.denomination.score(it) } > BLACKJACK_NUMBER
+        return list.sumOf { it.score() } > BLACKJACK_NUMBER
     }
 
     fun isBlackjack(): Boolean {
         val isSizeOfBlackjack = list.size == BLACKJACK_SIZE
-        val isAceAndTen = list.any { it.denomination == Denomination.ACE } && list.any { it.denomination.score(it) == TEN }
+        val isAceAndTen = list.any { it.denomination == Denomination.ACE } && list.any { it.score() == TEN }
         return isSizeOfBlackjack && isAceAndTen
     }
 
     fun isStay(): Boolean {
         val isBiggerThanBlackjackSize = list.size >= BLACKJACK_SIZE
-        val isLessThanWinningNumber = list.sumOf { it.denomination.score(it) } <= BLACKJACK_NUMBER
+        val isLessThanWinningNumber = list.sumOf { it.score() } <= BLACKJACK_NUMBER
         return isBiggerThanBlackjackSize && isLessThanWinningNumber
     }
 
@@ -40,7 +40,7 @@ value class PlayingCards private constructor(private val list: MutableList<Playi
         if (isBlackjack()) {
             return BLACKJACK_NUMBER
         }
-        return list.sumOf { it.denomination.score(it) }
+        return list.sumOf { it.score() }
     }
 
     fun cards(): List<String> {
