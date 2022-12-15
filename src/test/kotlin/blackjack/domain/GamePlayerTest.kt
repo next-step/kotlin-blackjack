@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-
 class GamePlayerTest {
     @Test
     fun `참가자는 카드를 받을 수 있다`() {

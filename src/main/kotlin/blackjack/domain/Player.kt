@@ -18,12 +18,8 @@ interface Player {
     fun countingCard(): Int = cards.countingCard()
 
     fun compareTo(player: Player): GameResult {
-        val gap = getScore(this) - getScore(player)
-        return when {
-            gap > 0 -> GameResult.WIN
-            gap == 0 -> GameResult.DRAW
-            else -> GameResult.LOSE
-        }
+        val score = getScore(this) - getScore(player)
+        return GameResult.of(score)
     }
 
     fun copy(name: Name = this.name, cards: Cards): Player
