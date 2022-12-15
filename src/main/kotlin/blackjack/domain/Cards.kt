@@ -1,20 +1,15 @@
 package blackjack.domain
 
 class Cards(values: List<Card> = emptyList()) {
-    private var _values: List<Card> = values.deepCopy()
+    private var _values: MutableList<Card> = values.toMutableList()
     val values: List<Card>
-        get() = _values.deepCopy()
+        get() = _values.toList()
 
     fun add(card: Card): Cards {
         return Cards(values + card)
     }
 
-    fun pick(): Card {
-        val mutableCards = _values.toMutableList()
-        val card = mutableCards.removeFirst()
-        _values = mutableCards.deepCopy()
-        return card
-    }
+    fun pick() = _values.removeFirst()
 
     fun getScore(): Int {
         val sum = values.sumOf { it.denomination.score }
@@ -28,8 +23,6 @@ class Cards(values: List<Card> = emptyList()) {
         return values
             .joinToString(", ") { it.toString() }
     }
-
-    private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 
     companion object {
         private const val ACE_BONUS_SCORE = 10
