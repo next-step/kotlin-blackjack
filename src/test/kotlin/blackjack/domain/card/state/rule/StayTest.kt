@@ -16,7 +16,7 @@ class StayTest {
     fun `스테이 - 생성 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val hit = Hit(PlayingCards(denominations.map { PlayingCard(Suit.CLUBS, it) }))
+        val hit = Hit(PlayingCards.of(denominations.map { PlayingCard(Suit.CLUBS, it) }))
 
         // when
         val actual = hit.cards.isStay()
@@ -34,7 +34,7 @@ class StayTest {
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            Stay(PlayingCards(playingCardList))
+            Stay(PlayingCards.of(playingCardList))
         }
 
         // then

@@ -12,6 +12,6 @@ data class Deck(private val deckGenerateStrategy: DeckGenerateStrategy) {
     }
 
     fun getCardsByNumberOfCards(numberOfCards: Int): PlayingCards {
-        return PlayingCards((1..numberOfCards).map { cards.get() })
+        return PlayingCards.of((1..numberOfCards).map { cards.get() })
     }
 }

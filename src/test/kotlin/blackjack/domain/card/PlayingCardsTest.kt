@@ -10,19 +10,20 @@ class PlayingCardsTest {
     @Test
     fun `카드 목록 - 추가 테스트`() {
         // given
-        val playingCards = PlayingCards(listOf())
+        val playingCards = PlayingCards()
 
         // when
         playingCards.add(PlayingCard(Suit.CLUBS, Denomination.ACE))
+        val expected = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE))
 
         // then
-        assertThat(playingCards.list).isEqualTo(listOf(PlayingCard(Suit.CLUBS, Denomination.ACE)))
+        assertThat(playingCards).isEqualTo(expected)
     }
 
     @Test
     fun `카드 목록 - 추가 실패 예외처리 테스트, 카드를 중복 입력하는 경우`() {
         // given
-        val playingCards = PlayingCards(listOf(PlayingCard(Suit.CLUBS, Denomination.ACE)))
+        val playingCards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE))
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
@@ -36,19 +37,19 @@ class PlayingCardsTest {
     @Test
     fun `카드 목록 - 삭제 테스트`() {
         // given
-        val playingCards = PlayingCards(listOf(PlayingCard(Suit.SPADES, Denomination.ACE)))
+        val playingCards = PlayingCards.of(PlayingCard(Suit.SPADES, Denomination.ACE))
 
         // when
         playingCards.get()
 
         // then
-        assertThat(playingCards.list).isEmpty()
+        assertThat(playingCards.size()).isEqualTo(0)
     }
 
     @Test
     fun `카드 목록 - 삭제 실패 예외처리 테스트, 카드가 없는 경우에 삭제하는 경우`() {
         // given
-        val playingCards = PlayingCards(listOf())
+        val playingCards = PlayingCards()
 
         // when
         val exception = assertThrows<NoSuchElementException> {
@@ -64,7 +65,7 @@ class PlayingCardsTest {
     fun `카드 목록 - Bust 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isBust()
@@ -78,7 +79,7 @@ class PlayingCardsTest {
     fun `카드 목록 - BlackJack 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isBlackjack()
@@ -92,7 +93,7 @@ class PlayingCardsTest {
     fun `카드 목록 - Stay 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isStay()

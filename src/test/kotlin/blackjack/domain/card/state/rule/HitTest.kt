@@ -11,12 +11,7 @@ class HitTest {
     @Test
     fun `히트 - 드로우 테스트, Bust 객체 반환 확인`() {
         // given
-        val playingCards = PlayingCards(
-            listOf(
-                PlayingCard(Suit.CLUBS, Denomination.TEN),
-                PlayingCard(Suit.CLUBS, Denomination.JACK)
-            )
-        )
+        val playingCards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val hit = Hit(playingCards)
 
         // when
@@ -29,12 +24,7 @@ class HitTest {
     @Test
     fun `히트 - 드로우 테스트, Hit 객체 반환 확인`() {
         // given
-        val playingCards = PlayingCards(
-            listOf(
-                PlayingCard(Suit.CLUBS, Denomination.ACE),
-                PlayingCard(Suit.CLUBS, Denomination.TWO)
-            )
-        )
+        val playingCards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.TWO))
         val hit = Hit(playingCards)
 
         // when
@@ -47,12 +37,7 @@ class HitTest {
     @Test
     fun `히트 - 스테이 테스트, Stay 객체 반환 확인`() {
         // given
-        val playingCards = PlayingCards(
-            listOf(
-                PlayingCard(Suit.CLUBS, Denomination.ACE),
-                PlayingCard(Suit.CLUBS, Denomination.TEN)
-            )
-        )
+        val playingCards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.TEN))
         val hit = Hit(playingCards)
 
         // when

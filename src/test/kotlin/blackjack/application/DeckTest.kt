@@ -10,28 +10,21 @@ import org.junit.jupiter.api.assertThrows
 
 class DeckTest {
     @Test
-    fun `카드 덱 - 카드 생성 테스트`() {
+    fun `카드 덱 - 카드 분배 테스트`() {
         // given
-        val deck = Deck {
-            PlayingCards(Suit.values().flatMap { suit -> Denomination.values().map { denomination -> PlayingCard(suit, denomination) } })
-        }
+        val deck = Deck { PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE)) }
 
         // when
-        val playingCards = PlayingCards(listOf())
-        repeat(NUMBER_OF_PLAYING_CARDS) {
-            playingCards.add(deck.getCard())
-        }
+        val expected = PlayingCard(Suit.CLUBS, Denomination.ACE)
 
         // then
-        assertThat(playingCards.list).isEqualTo(Suit.values().flatMap { suit -> Denomination.values().map { denomination -> PlayingCard(suit, denomination) } })
+        assertThat(deck.getCard()).isEqualTo(expected)
     }
 
     @Test
     fun `카드 덱 - 카드 분배 예외처리 테스트, 카드가 없는 경우에 카드를 뽑는 경우`() {
         // given
-        val deck = Deck {
-            PlayingCards(listOf())
-        }
+        val deck = Deck { PlayingCards() }
 
         // when
         val exception = assertThrows<NoSuchElementException> {
