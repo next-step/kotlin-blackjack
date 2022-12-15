@@ -25,6 +25,6 @@ object ResultView {
     }
 
     private fun getNameAndCards(player: PlayerDto): String {
-        return player.getName() + CARD + player.getCards().joinToString(", ")
+        return player.getName() + CARD + player.getCards()
     }
 }

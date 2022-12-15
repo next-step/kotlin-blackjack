@@ -9,6 +9,6 @@ value class PlayersDto(private val players: Players) {
     }
 
     fun getNames(): List<String> {
-        return players.values.map { it.name.value }
+        return players.values.map { it.name.toString() }
     }
 }

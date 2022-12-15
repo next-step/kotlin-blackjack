@@ -43,12 +43,12 @@ value class PlayingCards private constructor(private val list: MutableList<Playi
         return list.sumOf { it.score() }
     }
 
-    fun cards(): List<String> {
-        return list.map { it.toString() }
-    }
-
     fun size(): Int {
         return list.size
+    }
+
+    override fun toString(): String {
+        return list.joinToString(", ")
     }
 
     companion object {
