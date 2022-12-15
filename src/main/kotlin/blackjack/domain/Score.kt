@@ -17,17 +17,17 @@ object Score {
     }
 
     private fun totalScore(player: Player): List<Int> {
-        val numbers = player.cards.list.map { it.number }
+        val numbers = player.cards.map { it.number }
         return calculate(numbers)
     }
 
-    fun isBust(player: Player): Boolean {
+    fun isHigherThanWinScore(player: Player): Boolean {
         val totalScore = totalScore(player)
         return totalScore.minOf { it >= BlackJack.WIN_SCORE }
     }
 
     fun getFinalScore(player: Player): Int {
-        val numbers = player.cards.list.map { it.number }
+        val numbers = player.cards.map { it.number }
         val scoreList = calculate(numbers)
         val min = scoreList.minOf { abs(it - BlackJack.WIN_SCORE) }
 

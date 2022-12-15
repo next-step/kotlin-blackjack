@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
-import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -17,9 +16,9 @@ internal class ScoreTest {
             Card(CardNumber.NINE, CardType.CLOVER),
             Card(CardNumber.TEEN, CardType.CLOVER),
         )
-        val cards = Cards(cardList)
-        val player = Player("홍길동", cards)
-        val isOver = Score.isBust(player)
+        val player = Player("홍길동")
+        cardList.forEach { player.enroll(it) }
+        val isOver = Score.isHigherThanWinScore(player)
 
         assertThat(isOver).isFalse
     }
@@ -32,9 +31,9 @@ internal class ScoreTest {
             Card(CardNumber.TEEN, CardType.CLOVER),
             Card(CardNumber.TEEN, CardType.CLOVER)
         )
-        val cards = Cards(cardList)
-        val player = Player("홍길동", cards)
-        val isOver = Score.isBust(player)
+        val player = Player("홍길동")
+        cardList.forEach { player.enroll(it) }
+        val isOver = Score.isHigherThanWinScore(player)
 
         assertThat(isOver).isTrue
     }
@@ -47,8 +46,8 @@ internal class ScoreTest {
             Card(CardNumber.ACE, CardType.CLOVER),
             Card(CardNumber.ACE, CardType.CLOVER)
         )
-        val cards = Cards(cardList)
-        val player = Player("홍길동", cards)
+        val player = Player("홍길동")
+        cardList.forEach { player.enroll(it) }
         val finalScore = Score.getFinalScore(player)
 
         assertThat(finalScore).isEqualTo(23)
