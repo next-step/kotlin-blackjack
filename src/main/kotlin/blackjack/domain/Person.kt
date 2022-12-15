@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Person(
+class Person(
     val name: String,
     val cards: Cards = Cards()
 ) {
