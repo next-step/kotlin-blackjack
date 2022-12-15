@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-object Deck {
+class Deck {
 
     private val usedCards = mutableListOf<Card>()
 

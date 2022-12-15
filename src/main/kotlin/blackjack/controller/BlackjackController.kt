@@ -3,16 +3,20 @@ package blackjack.controller
 import blackjack.domain.BlackJack
 import blackjack.domain.Player
 import blackjack.domain.Score
+import blackjack.domain.card.Deck
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 object BlackjackController {
 
+    private val deck = Deck()
+    private val blackJack = BlackJack(deck)
+
     fun start() {
         val participantResult = InputView.enterNameOfParticipant()
 
         participantResult.players.forEach {
-            BlackJack.firstPick(it)
+            blackJack.firstPick(it)
         }
 
         ResultView.handingOutCards(participantResult.players)
@@ -33,9 +37,9 @@ object BlackjackController {
     private fun hitAndStay(player: Player) {
         while (true) {
             val stayResult = InputView.stay(player.name)
-            if (BlackJack.stay(stayResult)) break
-            if (BlackJack.bust(player)) break
-            BlackJack.hit(player)
+            if (blackJack.stay(stayResult)) break
+            if (blackJack.bust(player)) break
+            blackJack.hit(player)
             ResultView.getCurrentStatus(player)
         }
     }
