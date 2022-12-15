@@ -4,9 +4,10 @@ class GameParticipators(players: List<GameParticipator>) {
 
     val participators: ArrayDeque<GameParticipator>
 
+    private val finishParticipators :MutableList<GameParticipator> = mutableListOf()
     init {
         participators = ArrayDeque(players)
-        participators.add(Dealer())
+        participators.addLast(Dealer())
     }
     fun currentParticipator(): GameParticipator {
         val currentParticipator = participators.removeFirst()
@@ -15,7 +16,16 @@ class GameParticipators(players: List<GameParticipator>) {
     }
 
     fun quitGame(participator: GameParticipator) {
-        participators.removeIf { it == participator }
+        val isRemoved = participators.removeIf { it == participator }
+        if (isRemoved.not()) {
+            return
+        }
+        finishParticipators.add(participator)
+    }
+
+    fun finishParticipators(): List<GameParticipator> {
+        finishParticipators.addAll(participators);
+        return finishParticipators.toList()
     }
 
     fun size() = participators.size
@@ -24,7 +34,9 @@ class GameParticipators(players: List<GameParticipator>) {
         if (this.participators.isEmpty()) {
             return true
         }
-        val dealer = this.participators.single { it is Dealer } as Dealer;
-        return dealer.isLoser()
+        this.participators.find { it is Dealer } ?.let{
+            return (it as Dealer).isLoser()
+        }
+        return false
     }
 }

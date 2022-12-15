@@ -11,7 +11,7 @@ object InputView {
     }
 
     fun askDrawCardOrNot(playerName: String): String {
-        println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 $YES, 아니오는 $NO)")
+        println("\n $playerName 는 한장의 카드를 더 받겠습니까?(예는 $YES, 아니오는 $NO)")
         val answer = readln()
         require((answer == YES).or(answer == NO)) { "대답은 $YES 또는 $NO 만 가능합니다" }
         return answer
