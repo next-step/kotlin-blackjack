@@ -17,22 +17,22 @@ fun main() {
     }
     OutputView.printCardStatus(participators)
 
-    val finishPlayers = mutableListOf<GameParticipator>()
-    while (participators.isNotEmpty()) {
-        val currentPlayer = participators.currentParticipator()
-        if (isPlayerStopGame(currentPlayer)) {
-            participators.quitGame(currentPlayer)
-            finishPlayers.add(currentPlayer)
+    val finishParticipators = mutableListOf<GameParticipator>()
+    while (participators.isGameEnd()) {
+        val currentParticipator = participators.currentParticipator()
+        if (isParticipatorStopGame(currentParticipator)) {
+            participators.quitGame(currentParticipator)
+            finishParticipators.add(currentParticipator)
             continue
         }
-        currentPlayer.takeCards(cardDeck.draw())
-        OutputView.printCardStatus(currentPlayer)
+        currentParticipator.takeCards(cardDeck.draw())
+        OutputView.printCardStatus(currentParticipator)
     }
 
-    OutputView.printCardStatusWithResult(finishPlayers.toList())
+    OutputView.printCardStatusWithResult(finishParticipators.toList())
 }
 
-private fun isPlayerStopGame(currentParticipator: GameParticipator): Boolean {
+private fun isParticipatorStopGame(currentParticipator: GameParticipator): Boolean {
     if (currentParticipator is Player) {
         return InputView.askDrawCardOrNot(currentParticipator.name.name) == InputView.NO
     }

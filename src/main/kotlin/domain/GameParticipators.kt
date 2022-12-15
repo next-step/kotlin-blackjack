@@ -20,5 +20,11 @@ class GameParticipators(players: List<GameParticipator>) {
 
     fun size() = participators.size
 
-    fun isNotEmpty() = participators.isNotEmpty()
+    fun isGameEnd(): Boolean {
+        if (this.participators.isEmpty()) {
+            return true
+        }
+        val dealer = this.participators.single { it is Dealer } as Dealer;
+        return dealer.isLoser()
+    }
 }
