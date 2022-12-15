@@ -29,7 +29,7 @@ class PlayerTest {
         val player = Player("jason")
         player.addCard(Card(SPADE, TEN))
         player.addCard(Card(SPADE, QUEEN))
-        assertThat(player.size).isEqualTo(2)
+        assertThat(player.cards.size).isEqualTo(2)
     }
 
     @Test

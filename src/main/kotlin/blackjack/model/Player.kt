@@ -2,11 +2,13 @@ package blackjack.model
 
 class Player(
     val name: String,
-    private val cards: MutableList<Card> = mutableListOf()
-) : List<Card> by cards {
+) {
+    private val _cards = mutableListOf<Card>()
+    val cards: List<Card> = _cards
+
     fun addCard(card: Card) {
         check(isPickable())
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun isPickable(): Boolean {
@@ -14,7 +16,7 @@ class Player(
     }
 
     private fun getScore(): Int {
-        return cards.sumOf { it.getScore() }
+        return _cards.sumOf { it.getScore() }
     }
 
     companion object {
