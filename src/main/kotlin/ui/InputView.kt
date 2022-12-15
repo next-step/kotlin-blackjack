@@ -2,7 +2,7 @@ package ui
 
 object InputView {
     private const val DEFAULT_DELIMITER = ","
-    const val YES = "y"
+    private const val YES = "y"
     const val NO = "n"
 
     fun askPlayerNames(): List<String> {
