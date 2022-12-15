@@ -20,6 +20,6 @@ internal class ParticipantResultTest {
         val names = "홍길동, 심봉사"
         val players = ParticipantResult(names).players
 
-        assertThat(players).contains(Player("홍길동"), Player("심봉사"))
+        assertThat(players.map { it.name }).isEqualTo(listOf("홍길동", "심봉사"))
     }
 }
