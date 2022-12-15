@@ -1,11 +1,11 @@
 package blackjack.domain
 
-import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 
-internal class CardsTest : BehaviorSpec({
-    given("여러 장의 카드를 가졌을 때") {
+internal class CardsTest : StringSpec({
+    "카드 뭉치에서 랜덤으로 1장의 카드를 뽑는다면 카드 뭉치의 사이즈는 1 줄어든다." {
+        // given
         val list = listOf(
             Card(Suite.SPADE, Denomination.ACE),
             Card(Suite.CLOVER, Denomination.EIGHT),
@@ -13,34 +13,85 @@ internal class CardsTest : BehaviorSpec({
         )
         val cards = Cards(list)
 
-        `when`("랜덤으로 1장의 카드를 뽑는다면") {
-            cards.pick()
+        // when
+        cards.pick()
 
-            then("카드 리스트의 사이즈는 줄어든다.") {
-                cards.values.size shouldBe 2
-            }
-        }
+        // then
+        cards.values.size shouldBe list.size - 1
     }
 
-    given("카드들의 점수를 카운팅할 때") {
-        `when`("ACE 를 가지고 있고") {
-            val list = mutableListOf(
-                Card(Suite.CLOVER, Denomination.ACE)
-            )
+    "ACE 카드가 11점으로 계산되어 21점을 초과한다면 1점으로 계산된다." {
+        // given
+        val containsAceList = listOf(
+            Card(Suite.HEART, Denomination.ACE),
+            Card(Suite.HEART, Denomination.FIVE),
+            Card(Suite.CLOVER, Denomination.JACK)
+        )
+        val excludedAceList = listOf(
+            Card(Suite.HEART, Denomination.FIVE),
+            Card(Suite.CLOVER, Denomination.JACK)
+        )
+        val cards = Cards(containsAceList)
 
-            and("1점으로 계산한 결과가 21을 초과하지 않을 때") {
-                list.add(Card(Suite.CLOVER, Denomination.SEVEN))
-                list.add(Card(Suite.CLOVER, Denomination.FOUR))
-                val cards = Cards(list)
+        // when
+        val aceScore = cards.getScore() - excludedAceList.sumOf { it.denomination.score }
 
-                and("보너스 점수 10점을 더해서 21점이라면") {
-                    val result = cards.getScore()
+        // then
+        aceScore shouldBe 1
+    }
 
-                    then("카드 점수의 총 합은 21점이다.") {
-                        result shouldNotBe 21
-                    }
-                }
-            }
-        }
+    "ACE 카드가 포함되었을 때 총 합이 21점 미만이라면 11점으로 계산된다." {
+        // given
+        val containsAceList = listOf(
+            Card(Suite.HEART, Denomination.ACE),
+            Card(Suite.HEART, Denomination.TWO),
+            Card(Suite.CLOVER, Denomination.FOUR)
+        )
+        val excludedAceList = listOf(
+            Card(Suite.HEART, Denomination.TWO),
+            Card(Suite.CLOVER, Denomination.FOUR)
+        )
+        val cards = Cards(containsAceList)
+
+        // when
+        val aceScore = cards.getScore() - excludedAceList.sumOf { it.denomination.score }
+
+        // then
+        aceScore shouldBe 11
+    }
+
+    "ACE 카드가 포함되었을 때 총 합이 21점이라면 11점으로 계산된다." {
+        // given
+        val containsAceList = listOf(
+            Card(Suite.HEART, Denomination.ACE),
+            Card(Suite.HEART, Denomination.JACK)
+        )
+        val excludedAceList = listOf(
+            Card(Suite.HEART, Denomination.JACK),
+        )
+        val cards = Cards(containsAceList)
+
+        // when
+        val aceScore = cards.getScore() - excludedAceList.sumOf { it.denomination.score }
+
+        // then
+        aceScore shouldBe 11
+    }
+
+    "ACE 카드가 포함되지 않은 카드뭉치의 총 합을 구하면 각 카드의 점수가 더해진 결과가 나온다." {
+        // given
+        val list = listOf(
+            Card(Suite.HEART, Denomination.FIVE),
+            Card(Suite.SPADE, Denomination.NINE),
+            Card(Suite.CLOVER, Denomination.TWO),
+            Card(Suite.CLOVER, Denomination.FOUR)
+        )
+        val cards = Cards(list)
+
+        // when
+        val result = cards.getScore()
+
+        // then
+        result shouldBe 20
     }
 })

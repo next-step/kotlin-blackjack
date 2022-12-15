@@ -15,7 +15,7 @@ class Cards(values: List<Card> = emptyList()) {
         val sum = values.sumOf { it.denomination.score }
         val hasAceCard = values.any { it.denomination == Denomination.ACE }
 
-        return if (hasAceCard && (sum + ACE_BONUS_SCORE == WIN_SCORE)) WIN_SCORE
+        return if (hasAceCard && (sum + ACE_BONUS_SCORE <= WIN_SCORE)) sum + ACE_BONUS_SCORE
         else sum
     }
 
