@@ -9,7 +9,7 @@ object BlackjackApplication {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val deck = CardDeck()
+        val deck = CardDeck.defaultDeck()
         val players = InputView.readPlayers()
         players.forEach { player -> repeat(INIT_CARD_COUNT) { player.addCard(deck.getSingleCard()) } }
 

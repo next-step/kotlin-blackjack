@@ -1,13 +1,19 @@
 package blackjack.model
 
-class CardDeck() {
-    var cards = Suit.values()
-        .flatMap { suit -> Denomination.values().map { Card(suit, it) } }
-        .toMutableList()
-        private set
-
+class CardDeck private constructor(
+    private val cards: MutableList<Card>
+) : List<Card> by cards {
     fun getSingleCard(): Card {
         cards.shuffle()
         return cards.removeFirst()
+    }
+
+    companion object {
+        fun defaultDeck(): CardDeck {
+            return Suit.values()
+                .flatMap { suit -> Denomination.values().map { Card(suit, it) } }
+                .toMutableList()
+                .let(::CardDeck)
+        }
     }
 }

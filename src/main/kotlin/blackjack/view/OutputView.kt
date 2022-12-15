@@ -24,7 +24,7 @@ object OutputView {
     }
 
     private fun cardDetailsOf(player: Player): String {
-        val cardsString = player.cards.joinToString(",") { it.getDisplayName() }
+        val cardsString = player.joinToString(",") { it.getDisplayName() }
         return "${player.name}카드: $cardsString"
     }
 }

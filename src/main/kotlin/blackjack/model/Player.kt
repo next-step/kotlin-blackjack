@@ -1,15 +1,16 @@
 package blackjack.model
 
-class Player(val name: String) {
-    var cards = mutableListOf<Card>()
-
+class Player(
+    val name: String,
+    private val cards: MutableList<Card> = mutableListOf()
+) : List<Card> by cards {
     fun addCard(card: Card) {
         check(isPickable())
         cards.add(card)
     }
 
     fun isPickable(): Boolean {
-        return getScore() < FAIL_THRESHOLD
+        return getScore() < BLACKJACK_SCORE
     }
 
     private fun getScore(): Int {
@@ -17,6 +18,11 @@ class Player(val name: String) {
     }
 
     companion object {
-        const val FAIL_THRESHOLD = 21
+        const val BLACKJACK_SCORE = 21
+        private const val DELIMITER = ","
+
+        fun playersOf(input: String): List<Player> {
+            return input.split(DELIMITER).map(::Player)
+        }
     }
 }
