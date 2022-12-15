@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Deck.Companion.INITIAL_CARD_COUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.PlayersResult
 
 object ConsoleOutput {
     fun printInitialCards(dealer: Player, players: Players) {
@@ -14,10 +15,16 @@ object ConsoleOutput {
 
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player))
 
-    fun printResultCards(dealer: Player, players: Players) {
-        printResultCards(dealer)
-        players.list.map { printResultCards(it) }
+    fun printResultCards(playersResult: PlayersResult) {
+        printResultCards(playersResult.dealer)
+        playersResult.players.list.map { printResultCards(it) }
         println()
+    }
+
+    fun printGameResult(playersResult: PlayersResult) {
+        println("## 최종 승패")
+        println("딜러: ${playersResult.getDealerResult().map { "${it.value}${it.key.label}" }.joinToString(" ")}")
+        playersResult.getGamePlayersResult().map { println("${it.key.name.value}: ${it.value.label}") }
     }
 
     private fun printResultCards(player: Player) {
