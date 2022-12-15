@@ -27,7 +27,7 @@ class DeckTest : FunSpec({
 
         test("최초 드로우 2장시 카드가 2장 미만이라면 예외 발생") {
             val deck = Deck.createDeck()
-            repeat(51) {
+            repeat(Deck.SIZE - 1) {
                 deck.draw()
             }
 
@@ -37,7 +37,7 @@ class DeckTest : FunSpec({
 
         test("최초 이후 게임진행시 일반적인 드로우 시 덱이 비어있다면 예외 발생") {
             val deck = Deck.createDeck()
-            repeat(52) {
+            repeat(Deck.SIZE) {
                 deck.draw()
             }
 

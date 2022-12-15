@@ -1,26 +1,26 @@
 package com.nextstep.blackjack.domain
 
-import com.nextstep.blackjack.domain.Card.Companion.BLACKJACK_ACE_CORRECTION
-import com.nextstep.blackjack.domain.Card.Companion.BLACKJACK_ACE_JUDGE_THRESHOLD
-import com.nextstep.blackjack.domain.Card.Companion.BLACKJACK_NUMBER
+import com.nextstep.blackjack.domain.BlackJackConstants.BLACKJACK_ACE_CORRECTION
+import com.nextstep.blackjack.domain.BlackJackConstants.BLACKJACK_ACE_JUDGE_THRESHOLD
+import com.nextstep.blackjack.domain.BlackJackConstants.BLACKJACK_NUMBER
 
 data class Player(val name: String) {
-    private var _cards: List<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
+    val cards: List<Card>
+        get() {
+            return _cards.toList()
+        }
 
     fun draw(drawCards: List<Card>) {
-        _cards = _cards.plus(drawCards)
+        _cards.addAll(drawCards)
     }
 
     fun isBust(): Boolean {
         return calculateScore() > BLACKJACK_NUMBER
     }
 
-    fun getCards(): List<Card> {
-        return _cards.toList()
-    }
-
     fun calculateScore(): Int {
-        val scoreBeforeAceCorrection = _cards.sumOf { it.cardNumber.number }
+        val scoreBeforeAceCorrection = _cards.sumOf { it.getNumber() }
         if (!containsAce()) {
             return scoreBeforeAceCorrection
         }

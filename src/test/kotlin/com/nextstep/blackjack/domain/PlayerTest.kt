@@ -21,7 +21,7 @@ class PlayerTest : FunSpec({
                 val player = Player("jay")
                 player.draw(it)
 
-                player.isBust() == false
+                player.isBust() shouldBe false
             }
         }
 
@@ -41,7 +41,7 @@ class PlayerTest : FunSpec({
                 val player = Player("jay")
                 player.draw(it)
 
-                player.isBust() == true
+                player.isBust() shouldBe true
             }
         }
 

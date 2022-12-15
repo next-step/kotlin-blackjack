@@ -2,6 +2,7 @@ package com.nextstep.blackjack.controller
 
 import com.nextstep.blackjack.domain.Deck
 import com.nextstep.blackjack.domain.Player
+import com.nextstep.blackjack.domain.Players
 import com.nextstep.blackjack.view.InputView
 import com.nextstep.blackjack.view.InputView.CONTINUE
 import com.nextstep.blackjack.view.InputView.STOP
@@ -11,23 +12,14 @@ fun main() {
     OutputView.printStartMessage()
 
     val playersInput = InputView.inputMessageSplitWithComma()
-    val players = playersInput.map { Player(it) }
+    val players = Players(playersInput.map { Player(it) })
     val deck = Deck.createDeck()
 
-    setInitialState(players, deck)
+    players.initState(deck)
 
     OutputView.printInitialStateMessage(players)
 
-    play(players, deck)
-
-    OutputView.printPlayerStatusMessage(players)
-}
-
-private fun play(
-    players: List<Player>,
-    deck: Deck
-) {
-    players.forEach {
+    players.players.forEach {
         while (!it.isBust()) {
             OutputView.printOngoingMessage(it.name)
             val continueInput = InputView.inputMessage()
@@ -40,13 +32,6 @@ private fun play(
             }
         }
     }
-}
 
-private fun setInitialState(
-    players: List<Player>,
-    deck: Deck
-) {
-    players.forEach {
-        it.draw(deck.initialDraw())
-    }
+    OutputView.printPlayerStatusMessage(players)
 }
