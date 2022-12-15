@@ -1,8 +1,6 @@
 package ui
 
-import domain.Card
-import domain.Player
-import domain.Players
+import domain.*
 
 object OutputView {
 
@@ -10,22 +8,26 @@ object OutputView {
         println("${playerNames.joinToString()} 에게 2장의 나누었습니다.")
     }
 
-    fun printCardStatus(players: Players) {
-        players.players.forEach {
+    fun printCardStatus(participators : GameParticipators) {
+        participators.participators.forEach {
             this.printCardStatus(it)
             println()
         }
     }
 
-    fun printCardStatus(player: Player) {
-        val cardViews = player.cards.cards.map {
+    fun printCardStatus(participator: GameParticipator) {
+        val cardViews = participator.cards.cards.map {
             cardView(it)
         }
-        print("${player.name.name}카드 : ${cardViews.joinToString()}")
+        if (participator is Player){
+            print("${participator.name.name}카드 : ${cardViews.joinToString()}")
+            return
+        }
+        print("딜러카드 : ${cardViews.joinToString()}")
     }
 
-    fun printCardStatusWithResult(players: List<Player>) {
-        players.forEach {
+    fun printCardStatusWithResult(participators: List<GameParticipator>) {
+        participators.forEach {
             printCardStatus(it)
             println("- 결과: ${it.choiceBestScore()}")
         }

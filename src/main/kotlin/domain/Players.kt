@@ -1,18 +1,24 @@
 package domain
 
-class Players(players: List<Player>) {
+class GameParticipators(players: List<GameParticipator>) {
 
-    val players: ArrayDeque<Player> = ArrayDeque(players)
+    val participators: ArrayDeque<GameParticipator>
 
-    fun currentPlayer(): Player {
-        val currentPlayer = players.removeFirst()
-        players.addLast(currentPlayer)
-        return currentPlayer
+    init {
+        participators = ArrayDeque(players)
+        participators.add(Dealer())
+    }
+    fun currentParticipator(): GameParticipator {
+        val currentParticipator = participators.removeFirst()
+        participators.addLast(currentParticipator)
+        return currentParticipator
     }
 
-    fun quitGame(player: Player) {
-        players.removeIf { it == player }
+    fun quitGame(participator: GameParticipator) {
+        participators.removeIf { it == participator }
     }
 
-    fun isNotEmpty() = players.isNotEmpty()
+    fun size() = participators.size
+
+    fun isNotEmpty() = participators.isNotEmpty()
 }

@@ -1,26 +1,27 @@
 import domain.CardDeck
+import domain.GameParticipator
+import domain.GameParticipators
 import domain.Player
-import domain.Players
 import ui.InputView
 import ui.OutputView
 
 fun main() {
     val playerNames = InputView.askPlayerNames()
-    val players = Players(playerNames.map { Player.withName(it) })
+    val participators = GameParticipators(playerNames.map { Player.withName(it) })
     val cardDeck = CardDeck()
     OutputView.printGameStartMsg(playerNames)
 
-    repeat(playerNames.size) {
-        val currentPlayer = players.currentPlayer()
+    repeat(participators.size()) {
+        val currentPlayer = participators.currentParticipator()
         currentPlayer.takeCards(cardDeck.draw(), cardDeck.draw())
     }
-    OutputView.printCardStatus(players)
+    OutputView.printCardStatus(participators)
 
-    val finishPlayers = mutableListOf<Player>()
-    while (players.isNotEmpty()) {
-        val currentPlayer = players.currentPlayer()
+    val finishPlayers = mutableListOf<GameParticipator>()
+    while (participators.isNotEmpty()) {
+        val currentPlayer = participators.currentParticipator()
         if (isPlayerStopGame(currentPlayer)) {
-            players.quitGame(currentPlayer)
+            participators.quitGame(currentPlayer)
             finishPlayers.add(currentPlayer)
             continue
         }
@@ -31,6 +32,9 @@ fun main() {
     OutputView.printCardStatusWithResult(finishPlayers.toList())
 }
 
-private fun isPlayerStopGame(currentPlayer: Player) =
-    InputView.askDrawCardOrNot(currentPlayer.name.name) == InputView.NO ||
-        currentPlayer.canDrawCard().not()
+private fun isPlayerStopGame(currentParticipator: GameParticipator): Boolean {
+    if (currentParticipator is Player) {
+        return InputView.askDrawCardOrNot(currentParticipator.name.name) == InputView.NO
+    }
+    return currentParticipator.canDrawCard().not()
+}
