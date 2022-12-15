@@ -18,15 +18,5 @@ enum class CardNumber(val text: String, vararg val value: Int) {
     companion object {
         fun getRandomNumber() = values().random()
 
-        fun calculate(numbers: List<CardNumber>): List<Int> {
-            val sum = numbers.sumOf { it.value.first() }
-            val countOfAce = numbers.count { it == ACE }
-
-            val result = mutableListOf(sum)
-            repeat(countOfAce) {
-                result.add(result[it] + ACE.value[1] - ACE.value[0])
-            }
-            return result
-        }
     }
 }
