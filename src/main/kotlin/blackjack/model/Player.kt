@@ -7,7 +7,7 @@ class Player(
     val cards: List<Card> = _cards
 
     fun addCard(card: Card) {
-        check(isPickable())
+        check(isPickable()) { "플레이어의 점수가 이미 21을 넘었습니다" }
         _cards.add(card)
     }
 
