@@ -8,12 +8,6 @@ class Dealer(override val cards: Cards = Cards()) : Player {
 
     override fun canHit(): Boolean = cards.countingCard() < DEALER_HIT_RULE_SCORE
 
-//    fun finish(deck: Deck): Player {
-//        return if (this.canHit()) {
-//            this.copy(cards = cards.plus(deck.draw()))
-//        } else this
-//    }
-
     companion object {
         val NAME: Name = Name("딜러")
         const val DEALER_HIT_RULE_SCORE = 17
