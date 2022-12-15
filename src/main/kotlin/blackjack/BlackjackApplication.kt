@@ -6,6 +6,7 @@ import blackjack.view.OutputView
 
 object BlackjackApplication {
     private const val INIT_CARD_COUNT = 2
+    private const val CARD_PICK_DENY_SYMBOL = "n"
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -18,7 +19,7 @@ object BlackjackApplication {
         players.forEach {
             while (it.isPickable()) {
                 val answer = InputView.readPlayerPickAnswer(it)
-                if (answer == "n") {
+                if (answer == CARD_PICK_DENY_SYMBOL) {
                     break
                 }
                 it.addCard(deck.getSingleCard())
