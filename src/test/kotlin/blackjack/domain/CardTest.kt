@@ -1,8 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.Denomination
-import blackjack.domain.Suite
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
