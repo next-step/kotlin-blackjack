@@ -5,8 +5,8 @@ import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.Suit
 
-class ShuffledDeckGenerateStrategy : DeckGenerateStrategy {
-    override fun generate(): PlayingCards {
+class RandomShuffleStrategy : ShuffleStrategy {
+    override fun shuffle(): PlayingCards {
         return PlayingCards.of(
             Suit.values().flatMap { suit -> Denomination.values().map { denomination -> PlayingCard(suit, denomination) } }.shuffled()
         )

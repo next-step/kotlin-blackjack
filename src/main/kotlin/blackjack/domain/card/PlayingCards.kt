@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import blackjack.domain.card.strategy.ShuffleStrategy
+
 @JvmInline
 value class PlayingCards private constructor(private val list: MutableList<PlayingCard>) {
     constructor() : this(mutableListOf())
@@ -56,6 +58,10 @@ value class PlayingCards private constructor(private val list: MutableList<Playi
 
         fun of(cards: List<PlayingCard>): PlayingCards {
             return PlayingCards(cards.toMutableList())
+        }
+
+        fun shuffle(shuffleStrategy: ShuffleStrategy): PlayingCards {
+            return shuffleStrategy.shuffle()
         }
 
         private const val BLACKJACK_NUMBER = 21

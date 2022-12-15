@@ -12,7 +12,7 @@ class DeckTest {
     @Test
     fun `카드 덱 - 카드 분배 테스트`() {
         // given
-        val deck = Deck { PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE)) }
+        val deck = Deck(PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE)))
 
         // when
         val expected = PlayingCard(Suit.CLUBS, Denomination.ACE)
@@ -24,7 +24,7 @@ class DeckTest {
     @Test
     fun `카드 덱 - 카드 분배 예외처리 테스트, 카드가 없는 경우에 카드를 뽑는 경우`() {
         // given
-        val deck = Deck { PlayingCards() }
+        val deck = Deck(PlayingCards())
 
         // when
         val exception = assertThrows<NoSuchElementException> {

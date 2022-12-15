@@ -1,7 +1,8 @@
 package blackjack.controller
 
 import blackjack.application.Deck
-import blackjack.domain.card.strategy.ShuffledDeckGenerateStrategy
+import blackjack.domain.card.PlayingCards
+import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerFactory
 import blackjack.domain.player.Players
@@ -13,7 +14,8 @@ object Controller {
     private const val MINIMUM_NUMBER_OF_CARDS = 2
 
     fun start() {
-        val deck = Deck(ShuffledDeckGenerateStrategy())
+        val cards = PlayingCards.shuffle(RandomShuffleStrategy())
+        val deck = Deck(cards)
         val names = InputFilter.inputPlayer()
         val players = PlayerFactory.create(names, deck)
 
