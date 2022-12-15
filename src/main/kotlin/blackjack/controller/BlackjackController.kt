@@ -15,6 +15,12 @@ class BlackjackController {
         ResultView.printResult(players)
     }
 
+    private fun setPlayers(deck: Deck): Players {
+        val names = InputView.inputPlayersName()
+        val players = names.map { Player(it, deck.drawInitCards()) }
+        return Players(players)
+    }
+
     private fun play(deck: Deck, players: Players) {
         players.values.forEach {
             if (it.isBust()) return@forEach
@@ -28,12 +34,6 @@ class BlackjackController {
             ResultView.printPlayerStatus(player)
             if (player.isBust()) break
         }
-    }
-
-    private fun setPlayers(deck: Deck): Players {
-        val names = InputView.inputPlayersName()
-        val players = names.map { Player(it, deck.drawInitCards()) }
-        return Players(players)
     }
 }
 
