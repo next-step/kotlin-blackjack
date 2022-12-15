@@ -2,4 +2,12 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-data class Player(val name: String, val cards: MutableList<Card> = mutableListOf(), var score: Int = 0)
+class Player(val name: String, cards: List<Card> = emptyList()) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val cards: List<Card>
+        get() = _cards.toList()
+
+    fun enroll(card: Card) {
+        _cards.add(card)
+    }
+}
