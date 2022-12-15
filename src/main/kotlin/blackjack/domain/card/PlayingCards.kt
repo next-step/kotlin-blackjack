@@ -26,7 +26,7 @@ value class PlayingCards private constructor(private val list: MutableList<Playi
 
     fun isBlackjack(): Boolean {
         val isSizeOfBlackjack = list.size == BLACKJACK_SIZE
-        val isAceAndTen = list.any { it.denomination == Denomination.ACE } && list.any { it.score() == TEN }
+        val isAceAndTen = list.any { it.isAce() } && list.any { it.score() == TEN }
         return isSizeOfBlackjack && isAceAndTen
     }
 
