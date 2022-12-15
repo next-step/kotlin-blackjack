@@ -17,7 +17,7 @@ class PockerMachine(
         person: Person,
         printFunc: (person: Person) -> Unit
     ) {
-        while (retryFunc(person)) {
+        while (person.getScore() < MAXIMUM_SCORE && retryFunc(person)) {
             val card = dealer.pickCard(cardDeck)
             person.addCard(card)
             printFunc(person)
@@ -26,5 +26,6 @@ class PockerMachine(
 
     companion object {
         private const val BASIC_CARD_COUNT = 2
+        private const val MAXIMUM_SCORE = 21
     }
 }
