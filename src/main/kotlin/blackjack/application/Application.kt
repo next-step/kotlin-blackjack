@@ -17,6 +17,6 @@ class Application {
     fun run() {
         val playerNames = inputView.inputPlayers()
         val players = playerGenerator.generate(playerNames)
-        BlackJackGame(inputView, cardManager, players)
+        val blackJackGame = BlackJackGame(inputView, cardManager, players)
     }
 }

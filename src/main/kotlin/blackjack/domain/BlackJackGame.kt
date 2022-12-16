@@ -12,7 +12,7 @@ class BlackJackGame(
         repeat(INITIAL_CARD_SIZE) {
             setUp()
         }
-        // inputView.printSetUp(players)
+        inputView.printSetUp(players)
     }
 
     private fun setUp() {
