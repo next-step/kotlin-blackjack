@@ -2,6 +2,13 @@ package blackjack.domain
 
 class CardGenerator {
     fun generate(): List<Card> {
-        TODO()
+        return CardSuit.values()
+            .map { suit ->
+                CardNumber.values()
+                    .map { number ->
+                        Card(suit, number)
+                    }
+            }.flatten()
+            .shuffled()
     }
 }

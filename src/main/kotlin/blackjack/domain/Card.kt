@@ -1,5 +1,7 @@
 package blackjack.domain
 
-class Card(
+data class Card(
+    val cardSuit: CardSuit,
+    val cardNumber: CardNumber
 ) {
 }
