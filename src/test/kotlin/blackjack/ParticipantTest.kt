@@ -4,7 +4,10 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Cards
+import blackjack.domain.Dealer
 import blackjack.domain.Participant
+import blackjack.domain.WinOrLose
+import blackjack.domain.strategy.SequentialCardPickStrategy
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -25,6 +28,37 @@ internal class ParticipantTest : BehaviorSpec({
             val score = participant2.getScore()
             Then("정상적으로 점수를 계산한다.") {
                 score shouldBe 10
+            }
+        }
+
+        val participant3 = Participant("길상현", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_9))))
+        When("승패를 계산할 때, 딜러보다 21에 가까우면 ") {
+            val dealer = Dealer("딜러", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_8))), SequentialCardPickStrategy())
+            val gameResult = participant3.getGameResult(dealer)
+            Then("이긴다.") {
+                dealer.getScore() shouldBe 18
+                participant3.getScore() shouldBe 19
+                gameResult shouldBe WinOrLose.WIN
+            }
+        }
+
+        When("승패를 계산할 때, 딜러가 21을 초과하면 ") {
+            val dealer = Dealer("딜러", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.QUEEN))), SequentialCardPickStrategy())
+            val gameResult = participant3.getGameResult(dealer)
+            Then("이긴다.") {
+                dealer.getScore() shouldBe 30
+                participant3.getScore() shouldBe 19
+                gameResult shouldBe WinOrLose.WIN
+            }
+        }
+
+        When("승패를 계산할 때, 딜러가 21에 더 가깝다면 ") {
+            val dealer = Dealer("딜러", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.QUEEN))), SequentialCardPickStrategy())
+            val gameResult = participant3.getGameResult(dealer)
+            Then("진다.") {
+                dealer.getScore() shouldBe 20
+                participant3.getScore() shouldBe 19
+                gameResult shouldBe WinOrLose.LOSE
             }
         }
     }
