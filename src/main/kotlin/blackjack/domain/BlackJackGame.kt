@@ -24,7 +24,18 @@ class BlackJackGame(
     }
 
     fun play() {
-        TODO()
+        while (true) {
+            val allAnswerNo = players.map {
+                val answer = inputView.inputMoreCardAnswer(it)
+                if (answer == MoreCardAnswer.YES) {
+                    it.give(cardManager.getCard())
+                }
+                answer
+            }.all { it == MoreCardAnswer.NO }
+            if (allAnswerNo) {
+                break
+            }
+        }
     }
 
     companion object {
