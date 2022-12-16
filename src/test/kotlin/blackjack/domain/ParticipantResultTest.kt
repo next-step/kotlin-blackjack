@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.dto.ParticipantResult
+import blackjack.domain.enums.WinOrLose
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 

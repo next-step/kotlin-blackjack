@@ -1,6 +1,6 @@
 package blackjack.domain.dto
 
-import blackjack.domain.WinOrLose
+import blackjack.domain.enums.WinOrLose
 
 data class ParticipantResult(
     val name: String,

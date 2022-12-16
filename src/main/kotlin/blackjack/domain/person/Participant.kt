@@ -1,7 +1,7 @@
 package blackjack.domain.person
 
-import blackjack.domain.WinOrLose
 import blackjack.domain.card.Cards
+import blackjack.domain.enums.WinOrLose
 
 class Participant(
     name: String,

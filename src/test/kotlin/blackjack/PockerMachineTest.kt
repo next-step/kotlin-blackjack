@@ -1,11 +1,11 @@
 package blackjack
 
 import blackjack.domain.PockerMachine
-import blackjack.domain.WinOrLose
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
+import blackjack.domain.enums.WinOrLose
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player

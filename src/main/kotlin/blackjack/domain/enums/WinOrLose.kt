@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.enums
 
 enum class WinOrLose(
     val description: String,
