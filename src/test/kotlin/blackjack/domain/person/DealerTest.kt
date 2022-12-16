@@ -1,6 +1,5 @@
-package blackjack
+package blackjack.domain.person
 
-import blackjack.domain.Dealer
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardNumber

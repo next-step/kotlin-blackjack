@@ -1,12 +1,12 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
 import blackjack.domain.WinOrLose
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
+import blackjack.domain.person.Dealer
+import blackjack.domain.person.Participant
 import blackjack.domain.strategy.SequentialCardPickStrategy
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe

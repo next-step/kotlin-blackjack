@@ -1,6 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.person.Dealer
+import blackjack.domain.person.Participant
+import blackjack.domain.person.Player
 
 class PockerMachine(
     private val cardDeck: CardDeck = CardDeck(),

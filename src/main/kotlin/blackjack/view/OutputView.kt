@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.Dealer
 import blackjack.domain.GameResult
-import blackjack.domain.Player
+import blackjack.domain.person.Dealer
+import blackjack.domain.person.Player
 
 object OutputView {
     private const val DELIMITER = "\n"
