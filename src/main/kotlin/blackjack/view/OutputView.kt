@@ -7,15 +7,17 @@ class OutputView {
     fun printSetUp(players: List<Player>) {
         val cardSize = players[0].cards.size
         val playerNames = players.map { it.name }.joinToString(", ")
+        println()
         println("${playerNames}에게 ${cardSize}장의 카드를 나누었습니다.")
 
         players.forEach {
             printEachPlayer(it)
         }
+        println()
     }
 
-    private fun printEachPlayer(player: Player) {
-        val cards = player.cards.map { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }.joinToString(", ")
+    fun printEachPlayer(player: Player) {
+        val cards = player.cards.joinToString(", ") { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
         println("${player.name}카드: $cards")
     }
 }

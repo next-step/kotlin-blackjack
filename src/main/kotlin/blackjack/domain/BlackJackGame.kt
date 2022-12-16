@@ -4,17 +4,20 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackGame(
-    val inputView: InputView,
-    val outputView: OutputView,
-    val cardManager: CardManager,
-    val players: List<Player>
+    private val inputView: InputView,
+    private val outputView: OutputView,
+    private val cardManager: CardManager,
+    private val players: List<Player>
 ) {
+    private var stopCountDown: Int
+
     init {
         require(players.size >= MINIMUM_PLAYERS) { "플레이어는 최소 2명 이상 필요합니다." }
         repeat(INITIAL_CARD_SIZE) {
             setUp()
         }
         outputView.printSetUp(players)
+        stopCountDown = players.size
     }
 
     private fun setUp() {
@@ -24,18 +27,25 @@ class BlackJackGame(
     }
 
     fun play() {
-        while (true) {
-            val allAnswerNo = players.map {
-                val answer = inputView.inputMoreCardAnswer(it)
-                if (answer == MoreCardAnswer.YES) {
-                    it.give(cardManager.getCard())
-                }
-                answer
-            }.all { it == MoreCardAnswer.NO }
-            if (allAnswerNo) {
-                break
+        while (stopCountDown > 0) {
+            players.forEach {
+                playEachRound(it)
             }
         }
+    }
+
+    private fun playEachRound(player: Player) {
+        if (player.stop) {
+            return
+        }
+        val answer = inputView.inputMoreCardAnswer(player)
+        if (answer == MoreCardAnswer.NO) {
+            stopCountDown--
+            player.stopGame()
+            return
+        }
+        player.give(cardManager.getCard())
+        outputView.printEachPlayer(player)
     }
 
     companion object {
