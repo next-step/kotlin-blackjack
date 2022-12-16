@@ -22,6 +22,9 @@ class PockerController {
         pockerMachine.addCard(retryOrNot(), OutputView::printCardState)
         OutputView.printDealerPickOneMoreCard(dealer)
         OutputView.printResult(players)
+
+        val gameResult = pockerMachine.getGameResult()
+        OutputView.printGameResult(gameResult)
     }
 
     private fun retryOrNot() = { player: Player -> InputView.retryOrNot(player.name) }
