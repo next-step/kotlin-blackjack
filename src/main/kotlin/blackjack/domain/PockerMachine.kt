@@ -17,7 +17,11 @@ class PockerMachine(
         person: Person,
         printFunc: (person: Person) -> Unit
     ) {
-        while (person.getScore() < MAXIMUM_SCORE && retryFunc(person)) {
+        while (person.getScore() < MAXIMUM_SCORE) {
+            if (!retryFunc(person)) {
+                printFunc(person)
+                return
+            }
             val card = dealer.pickCard(cardDeck)
             person.addCard(card)
             printFunc(person)
