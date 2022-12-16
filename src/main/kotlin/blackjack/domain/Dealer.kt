@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Cards
 import blackjack.domain.strategy.CardPickStrategy
 
 class Dealer(

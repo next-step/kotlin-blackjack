@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Cards
+
 class Participant(
     name: String,
     cards: Cards = Cards()

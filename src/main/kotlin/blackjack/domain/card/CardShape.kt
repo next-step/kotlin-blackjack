@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardShape(
     val description: String

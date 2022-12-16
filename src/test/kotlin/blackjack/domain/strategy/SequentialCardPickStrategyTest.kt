@@ -1,7 +1,6 @@
-package blackjack.strategy
+package blackjack.domain.strategy
 
-import blackjack.domain.CardDeck
-import blackjack.domain.strategy.SequentialCardPickStrategy
+import blackjack.domain.card.CardDeck
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 

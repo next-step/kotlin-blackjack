@@ -1,14 +1,14 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardShape
-import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.PockerMachine
 import blackjack.domain.WinOrLose
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.Cards
 import blackjack.domain.strategy.SequentialCardPickStrategy
 import blackjack.view.OutputView
 import io.kotest.core.spec.style.BehaviorSpec
