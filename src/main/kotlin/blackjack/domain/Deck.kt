@@ -1,22 +1,22 @@
 package blackjack.domain
 
-const val INITIAL_CARD_COUNT = 2
+class Deck(values: List<Card> = DEFAULT_CARDS) {
 
-class Deck {
-    private var _cards = mutableListOf<Card>()
+    private val _values: MutableList<Card> = values.toMutableList()
 
-    init {
-        _cards = Card.CARD_DECK.shuffled().toMutableList()
+    fun draw(): Card {
+        check(_values.isNotEmpty()) { "뽑을 수 있는 카드가 없습니다." }
+        return _values.removeFirst()
     }
 
-    fun count(): Int = _cards.size
-
-    fun divideInitialCards(): Cards {
+    fun drawInitCards(): Cards {
         return Cards((1..INITIAL_CARD_COUNT).map { draw() })
     }
 
-    fun draw(): Card {
-        check(_cards.size > 0) { "뽑을 수 있는 카드가 없습니다." }
-        return _cards.removeFirst()
+    fun count() = _values.count()
+
+    companion object {
+        val DEFAULT_CARDS = Card.ALL_CARDS.shuffled()
+        const val INITIAL_CARD_COUNT = 2
     }
 }

@@ -6,7 +6,7 @@ class Players(val list: List<Player>) {
     }
 
     fun initialCard(deck: Deck): Players {
-        return Players(list.map { it.initialCard(deck.divideInitialCards()) })
+        return Players(list.map { it.initialCard(deck) })
     }
 
     companion object {

@@ -1,15 +1,32 @@
 package blackjack.domain
 
-data class Player(val name: String, val cards: Cards = Cards.empty()) {
-    init {
-        require(!name.isNullOrBlank()) { "이름은 빈값이 될 수 없습니다." }
+interface Player {
+    val name: Name
+    val cards: Cards
+
+    fun initialCard(deck: Deck): Player {
+        return this.copy(cards = this.cards.plus(deck.drawInitCards()))
     }
 
-    fun initialCard(cards: Cards): Player = this.copy(cards = this.cards.addAll(cards))
+    fun hit(deck: Deck): Player {
+        check(canHit()) { "카드를 받을 수 없습니다." }
+        return this.copy(cards = this.cards.plus(deck.draw()))
+    }
 
-    fun hit(card: Card): Player = this.copy(name = this.name, cards = this.cards.add(card))
+    fun canHit(): Boolean = !isBurst()
 
     fun countingCard(): Int = cards.countingCard()
 
-    fun isBurst(): Boolean = countingCard() > BLACKJACK_SCORE
+    fun compareTo(player: Player): GameResult {
+        val score = getScore(this) - getScore(player)
+        return GameResult.of(score)
+    }
+
+    fun copy(name: Name = this.name, cards: Cards): Player
+
+    private fun isBurst(): Boolean = countingCard() > BLACKJACK_SCORE
+
+    private fun getScore(player: Player): Int {
+        return if (player.isBurst()) 0 else player.countingCard()
+    }
 }

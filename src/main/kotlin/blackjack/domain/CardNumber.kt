@@ -1,11 +1,10 @@
 package blackjack.domain
 
 const val SPECIAL_CARD_SCORE = 10
-const val ACE_CARD_MIN_SCORE = 1
 const val ACE_CARD_MAX_SCORE = 11
 
 enum class CardNumber(val value: String, val score: Int) {
-    ACE("A", ACE_CARD_MIN_SCORE),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

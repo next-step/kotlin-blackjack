@@ -2,22 +2,22 @@ package blackjack.domain
 
 const val BLACKJACK_SCORE = 21
 
-class Cards(val list: List<Card> = listOf()) {
+data class Cards(private val list: List<Card> = listOf()) {
 
-    override fun toString(): String = list.joinToString()
+    operator fun plus(card: Card): Cards = Cards(this.list + card)
 
-    fun add(card: Card): Cards = Cards(this.list + card)
-
-    fun addAll(cards: Cards): Cards = Cards(this.list + cards.list)
+    operator fun plus(cards: Cards): Cards = Cards(this.list + cards.list)
 
     fun count(): Int = list.size
 
     fun countingCard(): Int {
-        var score = list.sumOf { it.number.score }
+        var score = list.sumOf { it.getScore() }
 
-        score += countingMaxAceCard(score, list.count { it.number == CardNumber.ACE })
+        score += countingMaxAceCard(score, list.count { it.isAce() })
         return score
     }
+
+    fun contains(card: Card) = list.contains(card)
 
     private fun countingMaxAceCard(score: Int, countOfAceCard: Int): Int {
         if (countOfAceCard == 0) {
@@ -26,13 +26,15 @@ class Cards(val list: List<Card> = listOf()) {
 
         var aceScore = 0
         repeat(countOfAceCard) {
-            val tmp = score + aceScore - ACE_CARD_MIN_SCORE + ACE_CARD_MAX_SCORE
+            val tmp = score + aceScore + ACE_CARD_MAX_SCORE - CardNumber.ACE.score
             if (tmp <= BLACKJACK_SCORE) {
-                aceScore = ACE_CARD_MAX_SCORE - ACE_CARD_MIN_SCORE
+                aceScore = ACE_CARD_MAX_SCORE - CardNumber.ACE.score
             }
         }
         return aceScore
     }
+
+    override fun toString(): String = list.joinToString()
 
     companion object {
         fun empty() = Cards(emptyList())

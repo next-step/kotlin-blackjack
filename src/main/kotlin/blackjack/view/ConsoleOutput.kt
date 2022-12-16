@@ -1,23 +1,35 @@
 package blackjack.view
 
-import blackjack.domain.INITIAL_CARD_COUNT
+import blackjack.domain.Deck.Companion.INITIAL_CARD_COUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.PlayersResult
 
 object ConsoleOutput {
-    fun printInitialCards(players: Players) {
-        println("${players.list.joinToString { it.name }}에게 ${INITIAL_CARD_COUNT}장의 카드를 나누었습니다.")
-        players.list.map { println(getPlayerInfo(it)) }
+    fun printInitialCards(dealer: Player, players: Players) {
+        println("달러와 ${players.list.joinToString { it.name.value }}에게 ${INITIAL_CARD_COUNT}장의 카드를 나누었습니다.")
+        printPlayerCards(dealer)
+        players.list.map { printPlayerCards(it) }
         println()
     }
 
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player))
 
-    fun printGameResult(players: Players) {
-        players.list.map { println("${getPlayerInfo(it)} - 결과: ${it.countingCard()}") }
+    fun printResultCards(playersResult: PlayersResult) {
+        printResultCards(playersResult.dealer)
+        playersResult.players.list.map { printResultCards(it) }
+        println()
     }
 
-    fun printLine() = println()
+    fun printGameResult(playersResult: PlayersResult) {
+        println("## 최종 승패")
+        println("딜러: ${playersResult.getDealerResult().map { "${it.value}${it.key.label}" }.joinToString(" ")}")
+        playersResult.getGamePlayersResult().map { println("${it.key.name.value}: ${it.value.label}") }
+    }
 
-    private fun getPlayerInfo(player: Player) = "${player.name}카드: ${player.cards}"
+    private fun printResultCards(player: Player) {
+        println("${getPlayerInfo(player)} - 결과: ${player.countingCard()}")
+    }
+
+    private fun getPlayerInfo(player: Player) = "${player.name.value} 카드: ${player.cards}"
 }
