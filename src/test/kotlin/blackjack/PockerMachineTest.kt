@@ -1,9 +1,14 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardShape
+import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.PockerMachine
+import blackjack.domain.WinOrLose
 import blackjack.domain.strategy.SequentialCardPickStrategy
 import blackjack.view.OutputView
 import io.kotest.core.spec.style.BehaviorSpec
@@ -25,6 +30,21 @@ internal class PockerMachineTest : BehaviorSpec({
             pockerMachine.addCard({ player: Player -> player.cards.cards.size <= 2 }, OutputView::printCardState)
             Then("카드를 추가한다.") {
                 participant.cards.cards.size shouldBe 3
+            }
+        }
+
+        val hasCardDealer = Dealer("딜러", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_8))), SequentialCardPickStrategy())
+        val hasCardParticipant = Participant("길상현", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_9))))
+        val secondPockerMachine = PockerMachine(
+            dealer = hasCardDealer,
+            players = listOf(hasCardParticipant, hasCardDealer)
+        )
+        When("결과를 조회하면 ") {
+            val gameResult = secondPockerMachine.getGameResult()
+            Then("결과를 가져온다.") {
+                gameResult.dealerName shouldBe "딜러"
+                gameResult.participantResult.first().name shouldBe "길상현"
+                gameResult.participantResult.first().winOrLose shouldBe WinOrLose.WIN
             }
         }
     }

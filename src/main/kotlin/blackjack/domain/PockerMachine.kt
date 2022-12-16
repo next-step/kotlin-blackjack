@@ -23,6 +23,13 @@ class PockerMachine(
         }
     }
 
+    fun getGameResult(): GameResult {
+        return GameResult(
+            dealerName = dealer.name,
+            participantResult = players.filterIsInstance<Participant>().map { ParticipantResult(it.name, it.getGameResult(dealer)) }
+        )
+    }
+
     private fun pickOrNot(
         player: Player,
         retryFunc: (player: Player) -> Boolean,
