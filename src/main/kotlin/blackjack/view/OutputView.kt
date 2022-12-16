@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
+import blackjack.domain.dto.GameResult
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
 

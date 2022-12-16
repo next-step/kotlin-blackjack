@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.dto
 
 data class GameResult(
     val dealerName: String,

@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.dto
+
+import blackjack.domain.WinOrLose
 
 data class ParticipantResult(
     val name: String,
