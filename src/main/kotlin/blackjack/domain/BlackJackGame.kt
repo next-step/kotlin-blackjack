@@ -1,9 +1,11 @@
 package blackjack.domain
 
 import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class BlackJackGame(
     val inputView: InputView,
+    val outputView: OutputView,
     val cardManager: CardManager,
     val players: List<Player>
 ) {
@@ -12,7 +14,7 @@ class BlackJackGame(
         repeat(INITIAL_CARD_SIZE) {
             setUp()
         }
-        inputView.printSetUp(players)
+        outputView.printSetUp(players)
     }
 
     private fun setUp() {

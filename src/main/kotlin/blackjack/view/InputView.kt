@@ -1,16 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.Player
-
 class InputView {
     fun inputPlayers(): List<String> {
         println(PLAYER_NAMES_INPUT_GUIDE)
         val names = readln()
         return names.split(PLAYER_NAMES_DELIMITER)
-    }
-
-    fun printSetUp(players: List<Player>) {
-        TODO()
     }
 
     companion object {

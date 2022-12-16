@@ -54,7 +54,7 @@ fun introduce(function: PersonBuilder.() -> Unit): Person {
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private lateinit var skills: Skills
+    private var skills: Skills = Skills(emptyList(), emptyList())
     private val languagesBuilder = LanguagesBuilder()
 
     fun name(value: String) {
@@ -110,6 +110,6 @@ class LanguagesBuilder {
 
 data class Skills(val softSkills: List<String>, val hardSkills: List<String>)
 
-data class Person(val name: String, val company: String?, val skills: Skills, val languages: List<Language>)
+data class Person(val name: String, val company: String? = "우아한형제들", val skills: Skills = Skills(emptyList(), emptyList()), val languages: List<Language> = emptyList())
 
 data class Language(val language: String, val level: Int)
