@@ -3,13 +3,20 @@ package blackjack.application
 import blackjack.domain.BlackJackGame
 import blackjack.domain.CardGenerator
 import blackjack.domain.CardManager
-import blackjack.domain.Player
+import blackjack.domain.PlayerGenerator
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class Application {
+
+    private val inputView = InputView()
+    private val outputView = OutputView()
+    private val playerGenerator = PlayerGenerator()
+    private val cardManager = CardManager(CardGenerator())
+
     fun run() {
-        val dealer = Player("pobi")
-        val player = Player("jason")
-        val cardManager = CardManager(CardGenerator())
-        BlackJackGame(cardManager, listOf(dealer, player))
+        val playerNames = inputView.inputPlayers()
+        val players = playerGenerator.generate(playerNames)
+        BlackJackGame(cardManager, players)
     }
 }
