@@ -2,7 +2,7 @@ package domain
 
 class CardDeck {
 
-    val cards: List<Card>
+    private var cards: List<Card>
 
     init {
         val mutableCardList = mutableListOf<Card>()
@@ -13,5 +13,16 @@ class CardDeck {
             }
         }
         cards = mutableCardList.toList()
+    }
+
+    fun shuffle() {
+        val mutableList = this.cards.toMutableList()
+        mutableList.shuffle()
+        this.cards = mutableList.toList()
+    }
+
+    fun topCard(): Card {
+        check(this.cards.isNotEmpty()) { "카드가 다 떨어졌습니다." }
+        return this.cards[0]
     }
 }
