@@ -21,4 +21,13 @@ internal class CardDeckTest {
         val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards)
         assertThat(cardDeck.cards).isEqualTo(shuffledCards)
     }
+
+    @Test
+    fun `카드 덱에서 카드 한장을 뺄수 있다`() {
+        val defaultCards = DEFAULT_CARD_DECK
+        val shuffledCards = defaultCards.shuffled()
+        val card = shuffledCards.first()
+        val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards)
+        assertThat(cardDeck.takeOutFirsㅑㅅtCard()).isEqualTo(card)
+    }
 }
