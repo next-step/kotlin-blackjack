@@ -7,6 +7,12 @@ class CardDeck(
     initialCard: List<Card> = DEFAULT_CARD_DECK,
 ) : CardDeckPlay {
 
+    private val _cards: MutableList<Card> =
+        MutableList(initialCard.size) { index -> initialCard[index].copy() }
+
+    val cards: List<Card>
+        get() = _cards.toList()
+
     override fun shuffle() {
         TODO("Not yet implemented")
     }
