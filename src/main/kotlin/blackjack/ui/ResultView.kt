@@ -18,7 +18,7 @@ class ResultView {
         casino.printAllPlayers { player -> player.print() }
 
         casino.relay(
-            questionAction = question@{ player ->
+            queryAction = question@{ player ->
                 println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
                 val answer = readlnOrNull()
                 if (answer.isNullOrBlank()) return@question true
