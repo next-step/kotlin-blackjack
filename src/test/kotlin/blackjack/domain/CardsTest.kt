@@ -60,14 +60,14 @@ internal class CardsTest {
     fun successToFirst() {
         val firstCard = Card(CardType.JACK, CardShape.CLOVER)
         val cards = Cards(mutableListOf(firstCard, Card(CardType.QUEEN, CardShape.CLOVER)))
-        assertThat(cards.first()).isEqualTo(firstCard)
+        assertThat(cards.takeOutCard()).isEqualTo(firstCard)
     }
 
     @DisplayName("빈 카드 목록에서 첫번쨰 카드 가져오게 되면 에러가 발생한다.")
     @Test
     fun failToFirst() {
         val cards = Cards()
-        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { cards.first() }
+        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { cards.takeOutCard() }
     }
 
     companion object {

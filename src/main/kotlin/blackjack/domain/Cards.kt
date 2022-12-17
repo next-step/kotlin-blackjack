@@ -27,7 +27,7 @@ class Cards(
             _value.sumOf { it.type.score }
         }
 
-    fun first(): Card {
+    fun takeOutCard(): Card {
         require(_value.isNotEmpty()) { "잘못된 호출입니다. 먼저 카드 목록에 카드를 채우세요." }
         return _value.removeFirst()
     }
