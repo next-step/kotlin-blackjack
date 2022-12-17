@@ -16,4 +16,8 @@ class CardManager(
     fun getCard(): Card {
         return cards.pop()
     }
+
+    fun isCardEmpty(): Boolean {
+        return cards.isEmpty()
+    }
 }

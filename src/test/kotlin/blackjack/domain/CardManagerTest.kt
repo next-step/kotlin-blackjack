@@ -42,6 +42,14 @@ class CardManagerTest : StringSpec({
     }
 
     "카드 유무 테스트" {
-        TODO()
+        // given
+        val cards = listOf(Card(CardSuit.DIAMOND, CardNumber.EIGHT))
+        every { mockCardGenerator.generate() } returns cards
+        // when
+        val cardManager = CardManager(mockCardGenerator)
+        // then
+        cardManager.isCardEmpty() shouldBe false
+        cardManager.getCard()
+        cardManager.isCardEmpty() shouldBe true
     }
 })

@@ -1,9 +1,23 @@
 package blackjack.domain
 
-class Score(
+import kotlin.math.abs
+
+data class Score(
     val value: Int
 ) {
     init {
-        require(value > 0) { "점수값은 0보다 커야합니다." }
+        require(value >= 0) { "점수값은 음수가 될 수 없습니다." }
     }
+
+    fun differenceValue(other: Score): Int {
+        return abs(other.value - value)
+    }
+
+    override fun toString(): String {
+        return "$value"
+    }
+}
+
+fun Int.toScore(): Score {
+    return Score(this)
 }

@@ -28,4 +28,16 @@ class Player(
     fun stopGame() {
         this._stop = true
     }
+
+    fun totalScore(): Score {
+        val minScore = _cards.sumOf { it.cardNumber.minScore.value }.toScore()
+        val maxScore = _cards.sumOf { it.cardNumber.maxScore.value }.toScore()
+        return listOf(minScore, maxScore)
+            .minByOrNull { it.differenceValue(GOAL_SCORE) }!!
+    }
+
+    companion object {
+        private val GOAL_SCORE = Score(21)
+    }
 }
+

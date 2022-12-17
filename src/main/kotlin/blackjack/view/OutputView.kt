@@ -17,7 +17,23 @@ class OutputView {
     }
 
     fun printEachPlayer(player: Player) {
-        val cards = player.cards.joinToString(", ") { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
+        val cards = playerCards(player)
         println("${player.name}카드: $cards")
+    }
+
+    private fun playerCards(player: Player) =
+        player.cards.joinToString(", ") { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
+
+    fun printResult(players: List<Player>) {
+        println()
+        players.forEach {
+            val cards = playerCards(it)
+            val score = playerCardsScore(it)
+            println("${it.name}카드: $cards - 결과: $score")
+        }
+    }
+
+    private fun playerCardsScore(player: Player): String {
+        return player.totalScore().toString()
     }
 }

@@ -2,6 +2,8 @@ package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
@@ -37,5 +39,22 @@ class PlayerTest : StringSpec({
         player.give(Card(CardSuit.SPADE, CardNumber.TEN))
         // then
         player.cards shouldBe listOf(Card(CardSuit.CLUB, CardNumber.THREE), Card(CardSuit.SPADE, CardNumber.TEN))
+    }
+
+    "플레이어에 점수 계산 테스트" {
+        forAll(
+            row(listOf(Card(CardSuit.CLUB, CardNumber.FIVE), Card(CardSuit.CLUB, CardNumber.EIGHT)), 13.toScore()),
+            row(listOf(Card(CardSuit.CLUB, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.QUEEN)), 21.toScore()),
+            row(listOf(Card(CardSuit.CLUB, CardNumber.ACE), Card(CardSuit.DIAMOND, CardNumber.QUEEN), Card(CardSuit.SPADE, CardNumber.JACK)), 21.toScore()),
+        ) { cards, expectedScore ->
+            // given
+            val player = Player("kim")
+            // when
+            cards.forEach {
+                player.give(it)
+            }
+            // then
+            player.totalScore() shouldBe expectedScore
+        }
     }
 })

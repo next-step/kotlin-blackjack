@@ -2,7 +2,8 @@ package blackjack.domain
 
 enum class CardNumber(
     val displayName: String,
-    vararg scores: Score
+    val minScore: Score,
+    val maxScore: Score = minScore
 ) {
     ACE("A", Score(1), Score(11)),
     TWO("2", Score(2)),

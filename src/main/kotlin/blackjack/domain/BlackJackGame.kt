@@ -35,7 +35,7 @@ class BlackJackGame(
     }
 
     private fun playEachRound(player: Player) {
-        if (player.stop) {
+        if (player.stop || cardManager.isCardEmpty()) {
             return
         }
         val answer = inputView.inputMoreCardAnswer(player)

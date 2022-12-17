@@ -9,13 +9,6 @@ class ScoreTest : StringSpec({
         val exception = shouldThrowExactly<IllegalArgumentException> {
             Score(-1)
         }
-        exception.message shouldBe "점수값은 0보다 커야합니다."
-    }
-
-    "Score의 값이 0이면 에러 발생" {
-        val exception = shouldThrowExactly<IllegalArgumentException> {
-            Score(0)
-        }
-        exception.message shouldBe "점수값은 0보다 커야합니다."
+        exception.message shouldBe "점수값은 음수가 될 수 없습니다."
     }
 })
