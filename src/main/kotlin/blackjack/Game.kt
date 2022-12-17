@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.io.Input
@@ -7,8 +8,9 @@ import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
     private val players: List<Player> by lazy {
-        makePlayers()
+        makePlayers() + Dealer()
     }
+    private val dealer: Dealer = Dealer()
     private val deck: Deck = Deck()
 
     fun init() {
@@ -16,13 +18,18 @@ class Game(private val input: Input, private val output: Output) {
     }
 
     fun start() {
+        output.printDistribution()
         repeat(INIT_HAND_COUNT) {
+            dealer.addCard(deck.draw())
             players.forEach { it.addCard(deck.draw()) }
         }
+        output.printPlayerResult(dealer)
         output.printPlayersCard(players)
     }
 
     fun draw() {
+        dealerDraw()
+        output.printPlayerCard(dealer)
         players.forEach { player ->
             playerDraw(player)
             output.printPlayerCard(player)
@@ -30,11 +37,18 @@ class Game(private val input: Input, private val output: Output) {
     }
 
     fun result() {
+        output.printPlayerResult(dealer)
         output.printPlayersResult(players)
     }
 
+    private fun dealerDraw() {
+        while (dealer.canDraw()) {
+            dealer.addCard(deck.draw())
+        }
+    }
+
     private fun playerDraw(player: Player) {
-        while (player.score() < 21) {
+        while (player.canDraw()) {
             if (!input.moreDraw(player)) {
                 break
             }

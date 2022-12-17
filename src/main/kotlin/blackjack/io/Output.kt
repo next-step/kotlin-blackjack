@@ -10,6 +10,10 @@ class Output {
         }
     }
 
+    fun printDistribution() {
+        println()
+    }
+
     fun printPlayerCard(player: Player) {
         println("${player.name} 카드 : ${player.hand.joinToString(",")}")
     }
@@ -20,7 +24,7 @@ class Output {
         }
     }
 
-    private fun printPlayerResult(player: Player) {
+    fun printPlayerResult(player: Player) {
         println("${player.name} 카드 : ${player.hand.joinToString(",")} - 결과 : ${player.score()}")
     }
 }
