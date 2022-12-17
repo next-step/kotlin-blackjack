@@ -13,7 +13,7 @@ class FakeCardDeck(
         // do nothing
     }
 
-    override fun takeFirstCard(): Card {
+    override fun takeOutFirstCard(): Card {
         TODO("Not yet implemented")
     }
 
