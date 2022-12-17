@@ -9,9 +9,13 @@ class FakeCardDeck(
     override val cards: List<Card>
         get() = shuffledCards
 
-    override fun shuffle(): List<Card> = shuffledCards
+    override fun shuffle() {
+        // do nothing
+    }
 
     override fun takeFirstCard(): Card {
         TODO("Not yet implemented")
     }
+
+    fun aa() {}
 }

@@ -18,7 +18,7 @@ internal class CardDeckTest {
     fun `카드 덱을 셔플 할 수 있다`() {
         val defaultCards = DEFAULT_CARD_DECK
         val shuffledCards = defaultCards.shuffled()
-        val cardDeck = FakeCardDeck(shuffledCards)
+        val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards)
         assertThat(cardDeck.cards).isEqualTo(shuffledCards)
     }
 }
