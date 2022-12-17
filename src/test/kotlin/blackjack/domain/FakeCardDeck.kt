@@ -6,9 +6,10 @@ class FakeCardDeck(
     private val shuffledCards: List<Card>,
 ) : CardDeckPlay {
 
-    override fun shuffle(): List<Card> {
-        TODO("Not yet implemented")
-    }
+    override val cards: List<Card>
+        get() = shuffledCards
+
+    override fun shuffle(): List<Card> = shuffledCards
 
     override fun takeFirstCard(): Card {
         TODO("Not yet implemented")

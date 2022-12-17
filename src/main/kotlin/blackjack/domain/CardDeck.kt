@@ -10,7 +10,7 @@ class CardDeck(
     private val _cards: MutableList<Card> =
         MutableList(initialCard.size) { index -> initialCard[index].copy() }
 
-    val cards: List<Card>
+    override val cards: List<Card>
         get() = _cards.toList()
 
     override fun shuffle(): List<Card> {
@@ -23,6 +23,7 @@ class CardDeck(
 }
 
 interface CardDeckPlay {
+    val cards: List<Card>
     fun shuffle(): List<Card>
     fun takeFirstCard(): Card
 }
