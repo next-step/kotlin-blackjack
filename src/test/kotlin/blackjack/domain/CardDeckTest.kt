@@ -23,11 +23,13 @@ internal class CardDeckTest {
     }
 
     @Test
-    fun `카드 덱에서 카드 한장을 뺄수 있다`() {
-        val defaultCards = DEFAULT_CARD_DECK
-        val shuffledCards = defaultCards.shuffled()
-        val card = shuffledCards.first()
+    fun `카드 덱에서 카드 한장을 뺄 수 있다`() {
+        val shuffledCards = DEFAULT_CARD_DECK.map { it.copy() }
+            .shuffled()
+            .toMutableList()
+        val card = shuffledCards.removeFirst()
         val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards)
-        assertThat(cardDeck.takeOutFirsㅑㅅtCard()).isEqualTo(card)
+        assertThat(cardDeck.takeOutFirstCard()).isEqualTo(card)
+        assertThat(cardDeck.cards.size).isEqualTo(shuffledCards.size)
     }
 }

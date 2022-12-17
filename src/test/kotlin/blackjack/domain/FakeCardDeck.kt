@@ -1,9 +1,12 @@
 package blackjack.domain
 
 import blackjack.model.Card
+import blackjack.model.CardShape
+import blackjack.model.CardType
 
 class FakeCardDeck(
     private val shuffledCards: List<Card>,
+    private val firstCard: Card = Card(CardType.ACE, CardShape.DIAMOND),
 ) : CardDeckPlay {
 
     override val cards: List<Card>
@@ -13,9 +16,5 @@ class FakeCardDeck(
         // do nothing
     }
 
-    override fun takeOutFirstCard(): Card {
-        TODO("Not yet implemented")
-    }
-
-    fun aa() {}
+    override fun takeOutFirstCard(): Card = firstCard
 }
