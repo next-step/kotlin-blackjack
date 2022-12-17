@@ -13,7 +13,7 @@ data class Cards(private val list: List<Card> = listOf()) {
     fun countingCard(): Int {
         var score = list.sumOf { it.getScore() }
 
-        score += countingMaxAceCard(score, list.count { it.isAce() })
+        score += countingMaxAceCard(score, list.count { it.number.isAce() })
         return score
     }
 

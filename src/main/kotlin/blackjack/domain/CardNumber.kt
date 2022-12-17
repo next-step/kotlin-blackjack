@@ -18,6 +18,8 @@ enum class CardNumber(val value: String, val score: Int) {
     QUEEN("Q", SPECIAL_CARD_SCORE),
     KING("K", SPECIAL_CARD_SCORE);
 
+    fun isAce(): Boolean = this.name == ACE.name
+
     companion object {
         fun of(value: String): CardNumber {
             return CardNumber.values().find { it.value == value }
