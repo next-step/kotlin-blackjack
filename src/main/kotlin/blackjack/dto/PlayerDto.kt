@@ -2,17 +2,10 @@ package blackjack.dto
 
 import blackjack.domain.player.Player
 
-@JvmInline
-value class PlayerDto(private val player: Player) {
-    fun getName(): String {
-        return player.name.toString()
-    }
-
-    fun getCards(): String {
-        return player.cards.toString()
-    }
-
-    fun getScore(): Int {
-        return player.getScore()
+data class PlayerDto(val name: String, val cards: String, val score: Int) {
+    companion object {
+        fun from(player: Player): PlayerDto {
+            return PlayerDto(player.name.toString(), player.cards.toString(), player.getScore())
+        }
     }
 }

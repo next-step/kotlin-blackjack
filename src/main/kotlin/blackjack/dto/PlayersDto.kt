@@ -3,12 +3,14 @@ package blackjack.dto
 import blackjack.domain.player.Players
 
 @JvmInline
-value class PlayersDto(private val players: Players) {
-    fun getPlayers(): List<PlayerDto> {
-        return players.values.map { PlayerDto(it) }
+value class PlayersDto(val players: List<PlayerDto>) {
+    fun getNames(): List<String> {
+        return players.map { it.name }
     }
 
-    fun getNames(): List<String> {
-        return players.values.map { it.name.toString() }
+    companion object {
+        fun from(players: Players): PlayersDto {
+            return PlayersDto(players.values.map { PlayerDto.from(it) })
+        }
     }
 }

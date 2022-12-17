@@ -26,8 +26,8 @@ object Controller {
     }
 
     private fun init(players: Players) {
-        ResultView.printGameStartMessage(PlayersDto(players).getNames())
-        PlayersDto(players).getPlayers().forEach {
+        ResultView.printGameStartMessage(PlayersDto.from(players).getNames())
+        PlayersDto.from(players).players.forEach {
             ResultView.printPlayerCards(it)
         }
         ResultView.printLineFeed()
@@ -54,19 +54,19 @@ object Controller {
     }
 
     private fun doHitOrStay(player: Player, deck: Deck) {
-        while (InputFilter.inputHitOrStay(PlayerDto(player).getName())) {
+        while (InputFilter.inputHitOrStay(PlayerDto.from(player).name)) {
             player.draw(deck.getCard())
-            ResultView.printPlayerCards(PlayerDto(player))
+            ResultView.printPlayerCards(PlayerDto.from(player))
         }
         if (player.cards.size() == MINIMUM_NUMBER_OF_CARDS) {
-            ResultView.printPlayerCards(PlayerDto(player))
+            ResultView.printPlayerCards(PlayerDto.from(player))
         }
     }
 
     private fun end(players: Players) {
         ResultView.printLineFeed()
         players.values.forEach {
-            ResultView.printResultWithScore(PlayerDto(it))
+            ResultView.printResultWithScore(PlayerDto.from(it))
         }
     }
 }
