@@ -11,4 +11,7 @@ class Cards {
         mutableList.add(card)
         this.cards = mutableList.toList()
     }
+
+    fun score(): Int = this.cards.sumOf { it.number.primaryValue }
+    fun secondaryScore(): Int = this.cards.sumOf { it.number.secondaryValue }
 }
