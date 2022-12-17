@@ -28,7 +28,7 @@ internal class CardDeckTest {
             .shuffled()
             .toMutableList()
         val card = shuffledCards.removeFirst()
-        val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards)
+        val cardDeck: CardDeckPlay = FakeCardDeck(shuffledCards, card)
         assertThat(cardDeck.takeOutFirstCard()).isEqualTo(card)
         assertThat(cardDeck.cards.size).isEqualTo(shuffledCards.size)
     }
