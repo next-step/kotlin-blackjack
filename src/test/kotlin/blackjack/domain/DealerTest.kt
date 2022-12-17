@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.model.DEFAULT_CARD_DECK
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 internal class DealerTest {
@@ -13,7 +12,7 @@ internal class DealerTest {
 
     @Test
     fun `딜러는 게임 시작 전 카드덱을 셔플 한다`() {
-        val deck = Cards(DEFAULT_CARD_DECK)
+        val deck = CardDeck(DEFAULT_CARD_DECK)
         val dealer = Dealer(deck).apply { shuffle() }
         assertThat(dealer.deck).isEqualTo(deck)
     }
@@ -22,7 +21,7 @@ internal class DealerTest {
     fun `딜러는 플레이어에게 카드 한장을 전달 할 수 있다`() {
         val (cardDeck, firstCard) = DEFAULT_CARD_DECK to DEFAULT_CARD_DECK.first()
         val resultCount = cardDeck.size - 1
-        val dealer = Dealer(Cards(cardDeck))
+        val dealer = Dealer(CardDeck(cardDeck))
         assertThat(dealer.deliverCard()).isEqualTo(firstCard)
         assertThat(dealer.deck.size).isEqualTo(resultCount)
     }
