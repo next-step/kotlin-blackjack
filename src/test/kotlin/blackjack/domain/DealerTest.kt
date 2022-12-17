@@ -14,7 +14,7 @@ internal class DealerTest {
     fun `딜러는 게임 시작 전 카드덱을 셔플 한다`() {
         val deck = CardDeck(DEFAULT_CARD_DECK)
         val dealer = Dealer(deck).apply { shuffle() }
-        assertThat(dealer.deck).isEqualTo(deck)
+        assertThat(dealer.deck.cards).isEqualTo(deck.cards)
     }
 
     @Test
