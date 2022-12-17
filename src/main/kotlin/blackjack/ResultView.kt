@@ -3,7 +3,11 @@ package blackjack
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.model.Card
+import blackjack.model.CardShape
+import blackjack.model.CardShape.CLOVER
+import blackjack.model.CardShape.DIAMOND
+import blackjack.model.CardShape.HEART
+import blackjack.model.CardShape.SPADE
 
 object ResultView {
     fun printInitialCards(players: Players) {
@@ -18,5 +22,13 @@ object ResultView {
         players.value.map { println("${getPlayerInfo(it)} - 결과: ${it.sumCards()}") }
     }
 
-    private fun getPlayerInfo(player: Player) = "${player.name}카드: ${player.cards.value.joinToString { "${it.type.value}${it.shape.text}" }}"
+    private fun getPlayerInfo(player: Player) =
+        "${player.name}카드: ${player.cards.value.joinToString { "${it.type.value}${it.shape.string()}" }}"
+
+    private fun CardShape.string() = when (this) {
+        SPADE -> "스페이드"
+        HEART -> "하트"
+        DIAMOND -> "다이아"
+        CLOVER -> "클로버"
+    }
 }

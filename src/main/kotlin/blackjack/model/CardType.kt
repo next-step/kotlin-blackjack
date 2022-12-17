@@ -17,10 +17,10 @@ enum class CardType(val value: String, val score: Int, val specialScore: Int = 0
     ;
 }
 
-enum class CardShape(val text: String) {
-    SPADE("스페이드"),
-    HEART("하트"),
-    DIAMOND("다이아"),
-    CLOVER("클로버"),
+enum class CardShape {
+    SPADE,
+    HEART,
+    DIAMOND,
+    CLOVER,
     ;
 }
