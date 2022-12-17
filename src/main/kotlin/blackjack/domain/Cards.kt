@@ -6,8 +6,11 @@ import blackjack.model.CardType
 const val BLACKJACK_SCORE = 21
 
 class Cards(
-    private val _value: MutableList<Card> = mutableListOf(),
+    initialValue: List<Card> = emptyList(),
 ) {
+    private val _value: MutableList<Card> =
+        MutableList(initialValue.size) { index -> initialValue[index].copy() }
+
     val value: List<Card>
         get() = _value.toList()
 
