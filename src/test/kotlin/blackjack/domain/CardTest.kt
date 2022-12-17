@@ -21,8 +21,8 @@ class CardTest : FreeSpec({
         }
 
         "Ace 카드는 1 또는 11로 계산할 수 있어야 한다" {
-            CardNumber.ACE.primaryValue shouldBe 1
-            CardNumber.ACE.secondaryValue shouldBe 11
+            CardNumber.ACE.primaryScore shouldBe 1
+            CardNumber.ACE.secondaryScore shouldBe 11
         }
     }
 })

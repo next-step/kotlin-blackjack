@@ -3,7 +3,6 @@ package domain
 class Dealer(
     val deck: CardDeck = CardDeck()
 ) {
-
     init {
         deck.shuffle()
     }
