@@ -4,7 +4,8 @@ import blackjack.model.Card
 
 class Dealer(
     private val _deck: CardDeck = CardDeckImpl(),
-): GamePlay {
+    val cards: Cards = Cards(),
+) : GamePlay {
     val deck: CardDeck
         get() = _deck
 
