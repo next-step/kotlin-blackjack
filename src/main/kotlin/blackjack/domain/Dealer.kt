@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.model.Card
 
 class Dealer(
-    private val _deck: CardDeck = CardDeck(),
+    private val _deck: CardDeck = CardDeckImpl(),
 ) {
     val deck: CardDeck
         get() = _deck

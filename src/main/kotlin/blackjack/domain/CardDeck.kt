@@ -3,14 +3,21 @@ package blackjack.domain
 import blackjack.model.Card
 import blackjack.model.DEFAULT_CARD_DECK
 
-class CardDeck(
+interface CardDeck {
+    val cards: List<Card>
+    val size: Int
+    fun shuffle()
+    fun takeOutFirstCard(): Card
+}
+
+class CardDeckImpl(
     initialCard: List<Card> = DEFAULT_CARD_DECK,
-) : CardDeckPlay {
+) : CardDeck {
 
     private val _cards: MutableList<Card> =
         MutableList(initialCard.size) { index -> initialCard[index].copy() }
 
-    val size: Int
+    override val size: Int
         get() = _cards.size
 
     override val cards: List<Card>
@@ -21,8 +28,3 @@ class CardDeck(
     override fun takeOutFirstCard(): Card = _cards.removeFirst()
 }
 
-interface CardDeckPlay {
-    val cards: List<Card>
-    fun shuffle()
-    fun takeOutFirstCard(): Card
-}
