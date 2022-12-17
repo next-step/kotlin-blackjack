@@ -10,6 +10,9 @@ class CardDeck(
     private val _cards: MutableList<Card> =
         MutableList(initialCard.size) { index -> initialCard[index].copy() }
 
+    val size: Int
+        get() = _cards.size
+
     override val cards: List<Card>
         get() = _cards.toList()
 
