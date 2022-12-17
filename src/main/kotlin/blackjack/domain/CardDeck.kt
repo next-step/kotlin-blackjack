@@ -15,9 +15,7 @@ class CardDeck(
 
     override fun shuffle() = _cards.shuffle()
 
-    override fun takeOutFirstCard(): Card {
-        TODO("Not yet implemented")
-    }
+    override fun takeOutFirstCard(): Card = _cards.removeFirst()
 }
 
 interface CardDeckPlay {
