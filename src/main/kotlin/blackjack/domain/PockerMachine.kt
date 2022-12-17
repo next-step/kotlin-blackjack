@@ -1,30 +1,41 @@
 package blackjack.domain
 
-import blackjack.domain.strategy.SequentialCardPickStrategy
-
 class PockerMachine(
     private val cardDeck: CardDeck = CardDeck(),
-    private val dealer: Dealer = Dealer(SequentialCardPickStrategy())
+    private val dealer: Dealer,
+    private val players: List<Player>
 ) {
-    fun initialize(person: Person) {
+    fun initialize() {
         List(BASIC_CARD_COUNT) {
-            person.apply { addCard(dealer.pickCard(cardDeck)) }
+            players.map { player -> player.addCard(dealer.pickCard(cardDeck)) }
         }
     }
 
     fun addCard(
-        retryFunc: (person: Person) -> Boolean,
-        person: Person,
-        printFunc: (person: Person) -> Unit
+        retryFunc: (person: Player) -> Boolean,
+        printFunc: (person: Player) -> Unit
     ) {
-        while (person.getScore() < MAXIMUM_SCORE) {
-            if (!retryFunc(person)) {
-                printFunc(person)
+        players.map { player ->
+            when (player) {
+                is Dealer -> player.pickIfRequired(cardDeck)
+                is Participant -> pickOrNot(player, retryFunc, printFunc)
+            }
+        }
+    }
+
+    private fun pickOrNot(
+        player: Player,
+        retryFunc: (player: Player) -> Boolean,
+        printFunc: (player: Player) -> Unit
+    ) {
+        while (player.getScore() < MAXIMUM_SCORE) {
+            if (!retryFunc(player)) {
+                printFunc(player)
                 return
             }
             val card = dealer.pickCard(cardDeck)
-            person.addCard(card)
-            printFunc(person)
+            player.addCard(card)
+            printFunc(player)
         }
     }
 

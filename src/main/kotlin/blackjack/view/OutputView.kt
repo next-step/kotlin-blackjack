@@ -1,24 +1,36 @@
 package blackjack.view
 
-import blackjack.domain.Person
+import blackjack.domain.Dealer
+import blackjack.domain.Player
 
 object OutputView {
     private const val DELIMITER = "\n"
+    private const val INITIAL_CARD_SIZE = 2
 
-    fun printInitialState(people: List<Person>) {
-        println("${people.joinToString(", ") { it.name }}에게 ${people.size}장을 나누어 주었습니다.")
-        people.map { println(printPerson(it)) }
+    fun printInitialState(players: List<Player>) {
+        println("${players.joinToString(", ") { it.name }}에게 2장을 나누어 주었습니다.")
+        players.map { println(printPerson(it)) }
+        println()
     }
 
-    fun printCardState(person: Person) {
-        println(printPerson(person))
+    fun printCardState(player: Player) {
+        println(printPerson(player))
+        println()
     }
 
-    fun printResult(people: List<Person>) {
-        println(people.joinToString(DELIMITER) { "${printPerson(it)} - ${it.getScore()}" })
+    fun printResult(players: List<Player>) {
+        println(players.joinToString(DELIMITER) { "${printPerson(it)} - ${it.getScore()}" })
+        println()
     }
 
-    private fun printPerson(person: Person): String {
-        return "${person.name}카드: ${person.cards}"
+    fun printDealerPickOneMoreCard(dealer: Dealer) {
+        if (dealer.cards.cards.size <= INITIAL_CARD_SIZE)
+            return
+        println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
+        println()
+    }
+
+    private fun printPerson(player: Player): String {
+        return "${player.name}카드: ${player.cards}"
     }
 }
