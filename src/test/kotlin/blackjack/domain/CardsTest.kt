@@ -16,56 +16,49 @@ import java.util.stream.Stream
 
 internal class CardsTest {
 
-    @DisplayName("카드 모양, 종류를 조합하여 총 52장의 카드(덱) 생성할 수 있다.")
     @ParameterizedTest
     @ValueSource(ints = [52])
-    fun cardDeck(cardDeckCount: Int) {
+    fun `카드 모양, 종류를 조합하여 총 52장의 카드(덱) 생성할 수 있다`(cardDeckCount: Int) {
         assertThat(Cards(DEFAULT_CARD_DECK).value.size).isEqualTo(cardDeckCount)
     }
 
-    @DisplayName("카드 목록에 카드를 추가할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCard")
-    fun addCard(card: Card) {
+    fun `카드 목록에 카드를 추가할 수 있다`(card: Card) {
         val cards = Cards().apply { add(card) }
         assertThat(cards.value.first()).isEqualTo(card)
     }
 
-    @DisplayName("카드 목록 총 점수를 계산할 수 있다.")
     @ParameterizedTest
     @MethodSource("provideCardsToSum")
-    fun sum(initialCards: List<Card>, totalScore: Int) {
+    fun `카드 목록 총 점수를 계산할 수 있다`(initialCards: List<Card>, totalScore: Int) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
-    @DisplayName("카드 목록 중에 ACE 포함되어 있고 총합이 21 이상인 경우 ACE default Score 1을 합산에 포함시킨다.")
     @ParameterizedTest
     @MethodSource("provideSumWithAce")
-    fun sumWithAceDefaultScore(initialCards: List<Card>, totalScore: Int) {
+    fun `카드 목록 중에 ACE 포함되어 있고 총합이 21 이상인 경우 ACE default Score 1을 합산에 포함시킨다`(initialCards: List<Card>, totalScore: Int) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
-    @DisplayName("카드 목록 중에 ACE 포함되어 있고 총합이 21 이하인 경우 ACE Special Score 11을 합산에 포함시킨다.")
     @ParameterizedTest
     @MethodSource("provideSumWithAceSpecialScore")
-    fun sumWithAceSpecialScore(initialCards: List<Card>, totalScore: Int) {
+    fun `카드 목록 중에 ACE 포함되어 있고 총합이 21 이하인 경우 ACE Special Score 11을 합산에 포함시킨다`(initialCards: List<Card>, totalScore: Int) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
 
-    @DisplayName("카드 목록 중에 첫번쨰 카드를 가져올 수 있다.")
     @Test
-    fun successToFirst() {
+    fun `카드 목록 중에 첫번쨰 카드를 가져올 수 있다`() {
         val firstCard = Card(CardType.JACK, CardShape.CLOVER)
         val cards = Cards(mutableListOf(firstCard, Card(CardType.QUEEN, CardShape.CLOVER)))
         assertThat(cards.takeOutCard()).isEqualTo(firstCard)
     }
 
-    @DisplayName("빈 카드 목록에서 첫번쨰 카드 가져오게 되면 에러가 발생한다.")
     @Test
-    fun failToFirst() {
+    fun `빈 카드 목록에서 첫번쨰 카드 가져오게 되면 에러가 발생한다`() {
         val cards = Cards()
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { cards.takeOutCard() }
     }

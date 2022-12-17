@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -12,10 +11,9 @@ import java.util.stream.Stream
 
 internal class CardTest {
 
-    @DisplayName("각 카드 타입 별로 유효한 값(value)과 점수 및 모양을 가지고 있다.")
     @ParameterizedTest
     @MethodSource("provideValidCard")
-    fun validate(card: Card, value: String, score: Int, shape: String) {
+    fun `각 카드 타입 별로 유효한 값(value)과 점수 및 모양을 가지고 있다`(card: Card, value: String, score: Int, shape: String) {
         Assertions.assertThat(card.type.value).isEqualTo(value)
         Assertions.assertThat(card.type.score).isEqualTo(score)
         Assertions.assertThat(card.shape.text).isEqualTo(shape)

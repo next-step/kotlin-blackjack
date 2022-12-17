@@ -6,9 +6,8 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 internal class GameTest {
-    @DisplayName("게임이 생성되면 딜러는 각 플에이어에게 2장의 카드를 나눠준다.")
     @Test
-    fun initialize() {
+    fun `게임이 생성되면 딜러는 각 플에이어에게 2장의 카드를 나눠준다`() {
         val firstPlayer = Player("고니")
         val secondPlayer = Player("아귀")
 
