@@ -13,7 +13,7 @@ class CardDeck(
     val cards: List<Card>
         get() = _cards.toList()
 
-    override fun shuffle() {
+    override fun shuffle(): List<Card> {
         TODO("Not yet implemented")
     }
 
@@ -23,6 +23,6 @@ class CardDeck(
 }
 
 interface CardDeckPlay {
-    fun shuffle()
+    fun shuffle(): List<Card>
     fun takeFirstCard(): Card
 }
