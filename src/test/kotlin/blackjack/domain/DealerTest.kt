@@ -8,7 +8,9 @@ import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 internal class DealerTest {
     @Test
@@ -83,5 +85,50 @@ internal class DealerTest {
         val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
         val dealer = Dealer(cards = cards)
         assertThat(dealer.blackjack()).isTrue
+    }
+
+    companion object {
+        @JvmStatic
+        fun provideInitialCardS(): Stream<List<Card>> =
+            Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER), Card(CardType.ACE, CardShape.CLOVER)))
+
+        @JvmStatic
+        fun provideInitialInvalidCardS(): Stream<List<Card>> =
+            Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER)), listOf())
+
+        @JvmStatic
+        fun provideHitCard(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(
+                    listOf(Card(CardType.THREE, CardShape.CLOVER), Card(CardType.EIGHT, CardShape.HEART)),
+                    Card(CardType.JACK, CardShape.DIAMOND)
+                )
+            )
+
+        @JvmStatic
+        fun provideBurstCards(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.QUEEN, CardShape.CLOVER)),
+                    Card(CardType.TWO, CardShape.SPADE)
+                ),
+                Arguments.of(
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.QUEEN, CardShape.CLOVER)),
+                    Card(CardType.NINE, CardShape.SPADE)
+                )
+            )
+
+        @JvmStatic
+        fun provideNotBurstCards(): Stream<Arguments> =
+            Stream.of(
+                Arguments.of(
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.FIVE, CardShape.CLOVER)),
+                    Card(CardType.ACE, CardShape.SPADE)
+                ),
+                Arguments.of(
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.TWO, CardShape.CLOVER)),
+                    Card(CardType.FOUR, CardShape.SPADE)
+                )
+            )
     }
 }
