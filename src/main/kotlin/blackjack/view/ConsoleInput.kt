@@ -17,13 +17,13 @@ object ConsoleInput {
             val players = getPlayers(names)
             println()
             players
-        }
-            .fold(
-                onSuccess = { it }, onFailure = { e ->
-                    println(e.message)
-                    inputPlayers()
-                }
-            )
+        }.fold(
+            onSuccess = { it },
+            onFailure = { e ->
+                println(e.message)
+                inputPlayers()
+            }
+        )
     }
 
     tailrec fun inputScratch(player: Player): Boolean {
