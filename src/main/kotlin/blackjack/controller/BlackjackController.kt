@@ -1,6 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Dealer
+import blackjack.domain.Deck
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -13,10 +16,29 @@ class BlackjackController {
         game.setInitPlayers(names)
 
         ResultView.printInitialStatus(game)
-        game.play()
+
+        game.players.forEach {
+            playUser(it, game.deck)
+            if (it.isBust()) game.addPlayerResultWhenBust(it)
+        }
+        playDealer(game.dealer, game.deck)
+
         game.calculateResult()
         ResultView.printStatus(game)
         ResultView.printResults(game)
+    }
+
+    private fun playUser(player: Player, deck: Deck) {
+        while (!player.isBust() && InputView.inputIsGetCard(player)) {
+            player.hit(deck.draw())
+            ResultView.printPlayerStatus(player)
+        }
+    }
+
+    private fun playDealer(dealer: Dealer, deck: Deck) {
+        val isHit = dealer.isHit()
+        if (isHit) dealer.hit(deck.draw())
+        ResultView.printDealerHitOrStay(isHit)
     }
 }
 

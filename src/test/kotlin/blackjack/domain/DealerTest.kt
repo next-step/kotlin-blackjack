@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 internal class DealerTest : StringSpec({
@@ -184,5 +185,32 @@ internal class DealerTest : StringSpec({
         val result = dealer.isHit()
 
         result shouldBe false
+    }
+
+    "플레이어가 승리했다면 딜러는 패한다." {
+        val dealer = Dealer()
+        val playerResult = ResultStatus.WIN
+
+        dealer.calculateResult(playerResult)
+
+        dealer.results shouldContain ResultStatus.LOSE
+    }
+
+    "플레이어가 패했다면 딜러는 승리한다." {
+        val dealer = Dealer()
+        val playerResult = ResultStatus.LOSE
+
+        dealer.calculateResult(playerResult)
+
+        dealer.results shouldContain ResultStatus.WIN
+    }
+
+    "플레이어의 결과가 무승부라면 딜러도 무승부의 결과를 가진다." {
+        val dealer = Dealer()
+        val playerResult = ResultStatus.DRAW
+
+        dealer.calculateResult(playerResult)
+
+        dealer.results shouldContain ResultStatus.DRAW
     }
 })

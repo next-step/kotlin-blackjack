@@ -9,14 +9,14 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
         if (this.isBust()) return ResultStatus.WIN
         if (player.isBust()) return ResultStatus.LOSE
         val result = player.score match this.score
-        addResult(result)
+        calculateResult(result)
 
         return result
     }
 
     fun isHit() = this.score <= DEALER_HIT_SCORE
 
-    private fun addResult(result: ResultStatus) {
+    fun calculateResult(result: ResultStatus) {
         val dealerResult = when (result) {
             ResultStatus.WIN -> ResultStatus.LOSE
             ResultStatus.LOSE -> ResultStatus.WIN

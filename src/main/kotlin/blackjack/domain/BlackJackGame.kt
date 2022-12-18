@@ -1,14 +1,15 @@
 package blackjack.domain
 
-import blackjack.view.InputView
-import blackjack.view.ResultView
-
 class BlackJackGame(
-    private val deck: Deck = Deck(),
+    val deck: Deck = Deck(),
     val dealer: Dealer = Dealer(),
     var players: List<Player> = emptyList(),
-    var playerResults: List<PlayerResult> = emptyList()
+    playerResults: List<PlayerResult> = emptyList()
 ) {
+    private val _playerResults: MutableList<PlayerResult> = playerResults.toMutableList()
+    val playerResults: List<PlayerResult>
+        get() = _playerResults.toList()
+
     fun setInitDealer() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
@@ -19,29 +20,17 @@ class BlackJackGame(
         this.players = names.map { Player(it, deck.drawInitCards()) }
     }
 
-    fun play() {
-        players.forEach {
-            if (it.isBust()) return@forEach
-            drawOrNot(it, deck)
-        }
-        hitOrStayForDealer(dealer)
-    }
-
     fun calculateResult() {
-        playerResults = players.map {
-            PlayerResult.from(it, dealer)
+        val notBustPlayers = players - playerResults.map { it.player }.toSet()
+        notBustPlayers.forEach {
+            val result = PlayerResult.from(it, dealer)
+            _playerResults.add(result)
         }
     }
 
-    private fun hitOrStayForDealer(dealer: Dealer) {
-        if (dealer.isHit()) dealer.hit(deck.draw())
-    }
-
-    private fun drawOrNot(player: Player, deck: Deck) {
-        while (InputView.inputIsGetCard(player)) {
-            player.hit(deck.draw())
-            ResultView.printPlayerStatus(player)
-            if (player.isBust()) break
-        }
+    fun addPlayerResultWhenBust(player: Player) {
+        val playerResult = ResultStatus.LOSE
+        _playerResults.add(PlayerResult(player, ResultStatus.LOSE))
+        dealer.calculateResult(playerResult)
     }
 }

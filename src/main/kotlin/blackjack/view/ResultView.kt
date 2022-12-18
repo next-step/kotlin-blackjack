@@ -35,6 +35,13 @@ object ResultView {
         println("${player.name} 카드: ${player.cards}")
     }
 
+    fun printDealerHitOrStay(isHit: Boolean) {
+        when (isHit) {
+            true -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            false -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
+        }
+    }
+
     fun printResults(game: BlackJackGame) {
         println("\n## 최종 승패")
         printDealerResults(game.dealer)
