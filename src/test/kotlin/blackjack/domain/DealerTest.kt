@@ -138,21 +138,25 @@ internal class DealerTest : StringSpec({
     }
 
     "세 명의 플레이어와 대결 할 때 딜러가 두 명의 플레이어한테는 승리하고 한 명과는 무승부였다면 2승 1무의 결과를 가진다." {
+        // 21 점
         val dealer = Dealer(
             Card(Suite.HEART, Denomination.QUEEN),
             Card(Suite.DIAMOND, Denomination.ACE)
         )
 
+        // 15점
         val player1 = Player(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
+        // 16점
         val player2 = Player(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.SIX)
         )
 
+        // 21점
         val player3 = Player(
             Card(Suite.SPADE, Denomination.KING),
             Card(Suite.HEART, Denomination.ACE)
@@ -212,5 +216,38 @@ internal class DealerTest : StringSpec({
         dealer.calculateResult(playerResult)
 
         dealer.results shouldContain ResultStatus.DRAW
+    }
+
+    "딜러가 블랙잭이면 블랙잭이 아닌 플레이어는 패한다." {
+        val dealer = Dealer(
+            Card(Suite.DIAMOND, Denomination.ACE),
+            Card(Suite.SPADE, Denomination.KING)
+        )
+
+        val player = Player(
+            Card(Suite.SPADE, Denomination.EIGHT),
+            Card(Suite.SPADE, Denomination.THREE),
+            Card(Suite.CLOVER, Denomination.KING)
+        )
+
+        val result = dealer.getMatchResult(player)
+
+        result shouldBe ResultStatus.LOSE
+    }
+
+    "딜러가 블랙잭이고 플레이어도 블랙잭이라면 무승부다." {
+        val dealer = Dealer(
+            Card(Suite.DIAMOND, Denomination.ACE),
+            Card(Suite.SPADE, Denomination.KING)
+        )
+
+        val player = Player(
+            Card(Suite.SPADE, Denomination.ACE),
+            Card(Suite.CLOVER, Denomination.KING)
+        )
+
+        val result = dealer.getMatchResult(player)
+
+        result shouldBe ResultStatus.DRAW
     }
 })

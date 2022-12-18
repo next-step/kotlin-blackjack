@@ -6,12 +6,10 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
         get() = _results.toList()
 
     fun getMatchResult(player: Player): ResultStatus {
-        if (this.isBust()) return ResultStatus.WIN
-        if (player.isBust()) return ResultStatus.LOSE
-        val result = player.score match this.score
-        calculateResult(result)
+        val playerResult = getPlayerResult(player)
+        calculateResult(playerResult)
 
-        return result
+        return playerResult
     }
 
     fun isHit() = this.score <= DEALER_HIT_SCORE
@@ -23,6 +21,17 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
             else -> ResultStatus.DRAW
         }
         _results.add(dealerResult)
+    }
+
+    private fun getPlayerResult(player: Player): ResultStatus {
+        if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
+        if (this.isBust()) return ResultStatus.WIN
+        return player.score match this.score
+    }
+
+    private fun getPlayerResultWhenDealerBlackJack(player: Player): ResultStatus {
+        if (player.isBlackJack()) return ResultStatus.DRAW
+        return ResultStatus.LOSE
     }
 
     companion object {
