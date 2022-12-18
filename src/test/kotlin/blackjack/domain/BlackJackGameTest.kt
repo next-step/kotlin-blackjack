@@ -19,5 +19,12 @@ internal class BlackJackGameTest : StringSpec() {
                 it.cards.values.size shouldBe 2
             }
         }
+
+        "딜러가 게임을 시작할 때 2장의 카드를 지급한다." {
+            val dealer = game.makeDealer()
+            val initialCardSize = dealer.cards.values.size
+
+            initialCardSize shouldBe 2
+        }
     }
 }

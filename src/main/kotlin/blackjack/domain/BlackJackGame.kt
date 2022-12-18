@@ -4,6 +4,15 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackJackGame(private val deck: Deck = Deck()) {
+    fun makeDealer(): Dealer {
+        val dealer = Dealer()
+        deck.drawInitCards().values.forEach {
+            dealer.drawCard(it)
+        }
+
+        return dealer
+    }
+
     fun makePlayers(names: List<String>): Players {
         return Players(names.map { Player(it, deck.drawInitCards()) })
     }
