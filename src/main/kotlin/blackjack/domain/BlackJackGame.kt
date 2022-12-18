@@ -25,6 +25,12 @@ class BlackJackGame(private val deck: Deck = Deck()) {
         hitOrStayForDealer(dealer)
     }
 
+    fun getResult(players: List<Player>, dealer: Dealer): List<PlayerResult> {
+        return players.map {
+            PlayerResult.from(it, dealer)
+        }
+    }
+
     private fun hitOrStayForDealer(dealer: Dealer) {
         if (dealer.isHit()) dealer.drawCard(deck.draw())
     }

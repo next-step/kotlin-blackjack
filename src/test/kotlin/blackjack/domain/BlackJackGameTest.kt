@@ -50,6 +50,17 @@ internal class BlackJackGameTest : StringSpec() {
 
             dealer.cards.values.size shouldBe 2
         }
+
+        "플레이어 수만큼의 플레이어 결과를 반환한다." {
+            val players = listOf(
+                Player(), Player(), Player()
+            )
+            val dealer = Dealer()
+
+            val playerResults = game.getResult(players, dealer)
+
+            playerResults.size shouldBe 3
+        }
     }
 
     companion object {
