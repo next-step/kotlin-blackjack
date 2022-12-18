@@ -4,20 +4,16 @@ enum class WinStatus {
 
     WIN,
     LOSE,
-    TIE
-    ;
+    TIE;
 
     companion object {
 
-        fun valueOf(winner :GameParticipator?) : WinStatus{
-            if (winner == null){
-                return TIE
+        fun valueOf(winner: GameParticipator?): WinStatus {
+            return when (winner) {
+                null -> TIE
+                is Player -> WIN
+                is Dealer -> LOSE
             }
-            if (winner is Player){
-                return WIN
-            }
-            return LOSE
         }
-
     }
 }

@@ -12,7 +12,6 @@ class DealerTest : StringSpec({
         dealer.takeCards(Card(CardNumber.TEN, CardShape.CLOVER))
 
         dealer.canDrawCard() shouldBe true
-
     }
     "딜러는 카드 뽑기 조건 불만족시 카드를 뽑지않습니다" {
         val dealer = Dealer()
@@ -46,5 +45,4 @@ class DealerTest : StringSpec({
 
         dealer.pickWinner(player).shouldBeNull()
     }
-
 })

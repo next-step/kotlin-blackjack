@@ -1,6 +1,10 @@
 package ui
 
-import domain.*
+import domain.Card
+import domain.GameParticipator
+import domain.GameParticipators
+import domain.Player
+import domain.WinStatus
 
 object OutputView {
 
@@ -25,6 +29,7 @@ object OutputView {
         }
         print("딜러카드 : ${cardViews.joinToString()}")
     }
+    private fun cardView(card: Card) = CardNumberView.valueOf(card.number) + CardShapeView.valueOf(card.shape)
 
     fun printCardStatusWithResult(participators: List<GameParticipator>) {
         println()
@@ -34,7 +39,6 @@ object OutputView {
         }
     }
 
-    private fun cardView(card: Card) = CardNumberView.valueOf(card.number) + CardShapeView.valueOf(card.shape)
     fun printWinner(winners: Map<Player, WinStatus>) {
         println("## 최종 승패")
         printDealerWinStatus(winners)

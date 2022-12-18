@@ -29,13 +29,13 @@ fun main() {
     OutputView.printCardStatusWithResult(participators.finishParticipators())
 
     val winners = participators.findWinner()
-    OutputView.printWinner(winners);
+    OutputView.printWinner(winners)
 }
 
 private fun isParticipatorStopGame(participator: GameParticipator): Boolean {
     if (participator is Player) {
         return participator.canDrawCard().not() ||
-                InputView.askDrawCardOrNot(participator.name.name) == InputView.NO
+            InputView.askDrawCardOrNot(participator.name.name) == InputView.NO
     }
     return participator.canDrawCard().not()
 }

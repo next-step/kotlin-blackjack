@@ -1,6 +1,6 @@
 package domain
 
-abstract class GameParticipator {
+sealed class GameParticipator {
 
     val cards: Cards = Cards()
 
@@ -11,6 +11,5 @@ abstract class GameParticipator {
     fun choiceBestScore(): Int = cards.bestScore()
     fun isLoser() = choiceBestScore() > Score.MAX_SCORE
 
-    abstract fun canDrawCard() : Boolean
-    
+    abstract fun canDrawCard(): Boolean
 }

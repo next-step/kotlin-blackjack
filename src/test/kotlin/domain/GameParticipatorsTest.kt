@@ -82,5 +82,4 @@ class GameParticipatorsTest : StringSpec({
             playerCrong to WinStatus.WIN
         )
     }
-
 })
