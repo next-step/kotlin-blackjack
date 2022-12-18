@@ -15,7 +15,6 @@ class BlackJackController : Executable {
         val blackJackGame = BlackJackGame(players = participants)
 
         init(blackJackGame)
-
         showAllParticipantsHands(blackJackGame)
 
         queryReceiveCard(blackJackGame)
@@ -43,28 +42,32 @@ class BlackJackController : Executable {
     }
 
     private fun cardInfo(player: Player): String {
-        return player.hands.cardList().map {
+        return player.hands.cardList().joinToString(", ") {
             val number = it.number.nameValue
             val name = it.shape.nameValue
             "${number}${name}"
-        }.joinToString(", ")
+        }
     }
 
     private fun queryReceiveCard(blackJackGame: BlackJackGame) {
         OutputConsole.printNewLine()
         val players = blackJackGame.allPlayers()
         players.forEach { player ->
-            var isReceive = InputConsole.queryReceiveCard(player.name)
-            while (isReceive) {
-                blackJackGame.receiveCard(player)
-                val cardInfo = cardInfo(player)
-                OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
-                isReceive = InputConsole.queryReceiveCard(player.name)
-            }
-            if (!isReceive) {
-                val cardInfo = cardInfo(player)
-                OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
-            }
+            receiveCard(player = player, blackJackGame = blackJackGame)
+        }
+    }
+
+    private fun receiveCard(player: Player, blackJackGame: BlackJackGame) {
+        var isReceive = InputConsole.queryReceiveCard(player.name)
+        while (isReceive) {
+            blackJackGame.receiveCard(player)
+            val cardInfo = cardInfo(player)
+            OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
+            isReceive = InputConsole.queryReceiveCard(player.name)
+        }
+        if (!isReceive) {
+            val cardInfo = cardInfo(player)
+            OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
         }
     }
 
