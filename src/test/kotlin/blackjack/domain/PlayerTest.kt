@@ -71,10 +71,23 @@ internal class PlayerTest {
     }
 
     @Test
-    fun `Player 카드 합산이 21이면 블랙잭 완성`() {
+    fun `Player 카드가 2장이고 합산이 21이면 블랙잭 완성`() {
         val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
         val player = Player("고니", cards)
         assertThat(player.blackjack()).isTrue
+    }
+
+    @Test
+    fun `Player 카드가 2장이상 합산이 21이면 블랙잭이 아니다`() {
+        val cards = Cards(
+            listOf(
+                Card(CardType.THREE, CardShape.HEART),
+                Card(CardType.EIGHT, CardShape.DIAMOND),
+                Card(CardType.TEN, CardShape.SPADE)
+            )
+        )
+        val player = Player("고니", cards)
+        assertThat(player.blackjack()).isFalse
     }
 
     companion object {
