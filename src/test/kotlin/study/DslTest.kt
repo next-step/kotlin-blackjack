@@ -30,6 +30,10 @@ class DslTest {
                 soft("test")
                 hard("test")
             }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         person.name shouldBe "이름"
         person.company.shouldBeNull()
@@ -45,6 +49,10 @@ class DslTest {
                 soft("test")
                 hard("test")
             }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         person.name shouldBe "이름"
         person.company shouldBe "회사"
@@ -59,6 +67,10 @@ class DslTest {
                 soft("A passion for problem solving")
                 soft("Good communication skills")
                 hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
             }
         }
         person.skills.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
