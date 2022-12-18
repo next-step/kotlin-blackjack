@@ -1,5 +1,6 @@
 package study
 
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -51,7 +52,7 @@ class DslTest {
 
     @Test
     fun skills() {
-        introduce {
+        val person = introduce {
             name("이름")
             company("회사")
             skills {
@@ -60,13 +61,13 @@ class DslTest {
                 hard("Kotlin")
             }
         }
+        person.skills.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.skills.hard shouldBe listOf("Kotlin")
     }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
-    val personBuilder: PersonBuilder = PersonBuilder()
-    personBuilder.block()
-    return personBuilder.build()
+    return PersonBuilder().apply(block).build()
 }
 
 class PersonBuilder {
@@ -92,15 +93,15 @@ class PersonBuilder {
 }
 
 class SkillsBuilder {
-    private lateinit var soft: String
-    private lateinit var hard: String
+    private var soft: MutableList<String> = mutableListOf()
+    private var hard: MutableList<String> = mutableListOf()
 
     fun soft(value: String) {
-        this.soft = value
+        this.soft.add(value)
     }
 
     fun hard(value: String) {
-        this.hard = value
+        this.hard.add(value)
     }
 
     fun build(): Skills {
@@ -110,4 +111,4 @@ class SkillsBuilder {
 
 data class Person(val name: String, val company: String?, val skills: Skills)
 
-data class Skills(val soft: String, val hard: String)
+data class Skills(val soft: List<String>, val hard: List<String>)
