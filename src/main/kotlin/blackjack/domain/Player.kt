@@ -22,6 +22,18 @@ open class Player(val name: String) {
         return score() <= BURST_SCORE
     }
 
+    fun result(dealer: Dealer): Result {
+        if (dealer.score() > 21) {
+            return Result.WIN
+        }
+
+        if (score() > 21) {
+            return Result.LOSE
+        }
+
+        return if (score() > dealer.score()) Result.WIN else Result.LOSE
+    }
+
     private fun calculateScoreWithAce(score: Int): Int {
         if (score <= 11) {
             return score + 10

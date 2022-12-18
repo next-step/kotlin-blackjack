@@ -34,4 +34,19 @@ internal class PlayerTest {
         player.name shouldBe "최원준"
         player.score() shouldBe 21
     }
+
+    @Test
+    fun `딜러와의 승패를 구분할 수 있다`() {
+        val player = Player("최원준")
+        player.addCard(Card(Shape.CLUB, Denomination.TEN))
+        player.addCard(Card(Shape.CLUB, Denomination.ACE))
+
+        val dealer = Dealer()
+        dealer.addCard(Card(Shape.CLUB, Denomination.TEN))
+        dealer.addCard(Card(Shape.CLUB, Denomination.NINE))
+
+        val result = player.result(dealer)
+
+        result shouldBe Result.WIN
+    }
 }

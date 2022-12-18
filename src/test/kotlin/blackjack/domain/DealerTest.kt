@@ -16,4 +16,24 @@ internal class DealerTest {
 
         dealer.canDraw() shouldBe false
     }
+
+    @Test
+    fun `딜러와 플레이어들 사이에서의 승패를 구분할 수 있다`() {
+        val dealer = Dealer()
+        dealer.addCard(Card(Shape.DIAMOND, Denomination.TEN))
+        dealer.addCard(Card(Shape.DIAMOND, Denomination.SEVEN))
+
+        val player1 = Player("Player1")
+        player1.addCard(Card(Shape.DIAMOND, Denomination.TEN))
+        player1.addCard(Card(Shape.DIAMOND, Denomination.EIGHT))
+
+        val player2 = Player("Player2")
+        player2.addCard(Card(Shape.DIAMOND, Denomination.TEN))
+        player2.addCard(Card(Shape.DIAMOND, Denomination.SIX))
+
+        val result = dealer.result(listOf(player1, player2))
+
+        result.count { it == Result.WIN } shouldBe 1
+        result.count { it == Result.LOSE } shouldBe 1
+    }
 }
