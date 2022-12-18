@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.INITIAL_CARD_COUNT
+
 data class Dealer(
     override val name: Name = NAME,
     override val cards: Cards = Cards()
@@ -7,7 +9,7 @@ data class Dealer(
     constructor(cards: Cards) : this(NAME, cards)
 
     override fun initialCard(deck: Deck): Player {
-        return this.copy(cards = cards + deck.drawInitCards())
+        return this.copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))
     }
 
     override fun hit(deck: Deck): Player {

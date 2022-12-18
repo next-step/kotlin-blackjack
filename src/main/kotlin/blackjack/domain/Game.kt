@@ -9,4 +9,8 @@ class Game(
     fun initialCard(): Players {
         return players.initialCard(deck)
     }
+
+    companion object {
+        const val INITIAL_CARD_COUNT = 2
+    }
 }
