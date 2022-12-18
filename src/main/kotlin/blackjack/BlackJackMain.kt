@@ -6,9 +6,8 @@ import blackjack.view.OutputView
 fun main() {
 
     val names = InputView.askNames()
-    val deck = CardDeck()
 
-    val game = BlackJackGame(names.map { Player(it) }, deck)
+    val game = BlackJackGame(names.map { Player(it) }, Dealer(), CardDeck())
     val playerDtos = game.start()
 
     OutputView.printFirstDeal(names)
@@ -18,6 +17,9 @@ fun main() {
     names.forEach {
         dealByPlayer(it, game)
     }
+    val hitCount = game.hitDealer()
+
+    OutputView.printHitDealerResult(hitCount)
     OutputView.printResult(game.result())
 }
 
