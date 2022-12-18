@@ -36,14 +36,14 @@ internal class DealerTest {
 
     // Dealer GamePlay 경우 Player 동일해야 한다.
     @ParameterizedTest
-    @MethodSource("provideInitialCardS")
+    @MethodSource("provideInitialCards")
     fun `Dealer 게임 시작 전 2개의 카드를 받는다`(cards: List<Card>) {
         val player = Player("고니").apply { readyToPlay(cards) }
         assertThat(player.cards.size).isEqualTo(cards.size)
     }
 
     @ParameterizedTest
-    @MethodSource("provideInitialInvalidCardS")
+    @MethodSource("provideInitialInvalidCards")
     fun `Dealer 게임 시작 전 2개의 카드를 받지 않으면 에러가 발생한다`(cards: List<Card>) {
         val dealer = Dealer()
         Assertions.assertThatExceptionOfType(IllegalArgumentException::class.java)
@@ -81,19 +81,48 @@ internal class DealerTest {
     }
 
     @Test
-    fun `Dealer 카드 합산이 21이면 블랙잭 완성`() {
+    fun `Dealer 카드가 2장이고 합산이 21이면 블랙잭 완성`() {
         val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
         val dealer = Dealer(cards = cards)
         assertThat(dealer.blackjack()).isTrue
     }
 
+    @Test
+    fun `Dealer 카드가 2장 초과이고 합산이 21이면 블랙잭 완성이 아님`() {
+        val cards = Cards(
+            listOf(
+                Card(CardType.THREE, CardShape.HEART),
+                Card(CardType.EIGHT, CardShape.DIAMOND),
+                Card(CardType.TEN, CardShape.SPADE)
+            )
+        )
+        val dealer = Dealer(cards = cards)
+        assertThat(dealer.blackjack()).isFalse
+    }
+
+    // END: GamePlay
+
+    @Test
+    fun `Dealer 카드 합이 17이상이면 stay 상태로 게임을 중단한다`() {
+        val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SEVEN, CardShape.DIAMOND))
+        val dealer = Dealer().apply { readyToPlay(cards) }
+        assertThat(dealer.stay()).isTrue
+    }
+
+    @Test
+    fun `Dealer 카드 합이 17이상이면 stay 상태가 아니므로 카드를 추가로 받을 수 있다`() {
+        val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SIX, CardShape.DIAMOND))
+        val dealer = Dealer().apply { readyToPlay(cards) }
+        assertThat(dealer.stay()).isFalse
+    }
+
     companion object {
         @JvmStatic
-        fun provideInitialCardS(): Stream<List<Card>> =
+        fun provideInitialCards(): Stream<List<Card>> =
             Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER), Card(CardType.ACE, CardShape.CLOVER)))
 
         @JvmStatic
-        fun provideInitialInvalidCardS(): Stream<List<Card>> =
+        fun provideInitialInvalidCards(): Stream<List<Card>> =
             Stream.of(listOf(Card(CardType.JACK, CardShape.CLOVER)), listOf())
 
         @JvmStatic

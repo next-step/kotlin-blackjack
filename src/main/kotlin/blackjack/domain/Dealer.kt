@@ -17,6 +17,8 @@ class Dealer(
         initialCards.forEach(cards::add)
     }
 
+    fun stay() = cards.sum() >= STAY_CARDS_SUM
+
     override fun hit(card: Card) = cards.add(card)
 
     override fun sumCards(): Int = cards.sum()
@@ -24,4 +26,9 @@ class Dealer(
     override fun burst(): Boolean = cards.sum() > BLACKJACK_SCORE
 
     override fun blackjack(): Boolean = cards.sum() == BLACKJACK_SCORE
+
+    companion object {
+        const val MIN_CARDS_SUM = 16
+        private const val STAY_CARDS_SUM = 17
+    }
 }
