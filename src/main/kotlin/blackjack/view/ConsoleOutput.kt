@@ -1,9 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.Deck.Companion.INITIAL_CARD_COUNT
+import blackjack.domain.Game.Companion.INITIAL_CARD_COUNT
+import blackjack.domain.GameResult
 import blackjack.domain.Player
+import blackjack.domain.PlayerResult
 import blackjack.domain.Players
-import blackjack.domain.PlayersResult
 
 object ConsoleOutput {
     fun printInitialCards(dealer: Player, players: Players) {
@@ -15,16 +16,19 @@ object ConsoleOutput {
 
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player))
 
-    fun printResultCards(playersResult: PlayersResult) {
-        printResultCards(playersResult.dealer)
-        playersResult.players.list.map { printResultCards(it) }
+    fun printResultCards(dealer: Player, players: Players) {
+        printResultCards(dealer)
+        players.list.map { printResultCards(it) }
         println()
     }
 
-    fun printGameResult(playersResult: PlayersResult) {
+    fun printGameResult(dealer: Player, players: Players) {
         println("## 최종 승패")
-        println("딜러: ${playersResult.getDealerResult().map { "${it.value}${it.key.label}" }.joinToString(" ")}")
-        playersResult.getGamePlayersResult().map { println("${it.key.name.value}: ${it.value.label}") }
+        val dealerGameResult = groupingDealerResult(PlayerResult.ofDealer(dealer, players))
+        println("딜러: ${dealerGameResult.joinToString()}")
+
+        val playersResult = PlayerResult.ofGamePlayers(dealer, players)
+        playersResult.map { println("${it.player.name.value}: ${it.gameResult[0].label}") }
     }
 
     private fun printResultCards(player: Player) {
@@ -32,4 +36,13 @@ object ConsoleOutput {
     }
 
     private fun getPlayerInfo(player: Player) = "${player.name.value} 카드: ${player.cards}"
+
+    private fun groupingDealerResult(dealerResult: PlayerResult): Map<GameResult, Int> {
+        return dealerResult.gameResult.groupingBy { it }.eachCount()
+    }
+
+    private fun Map<GameResult, Int>.joinToString(): String {
+        return this.map { "${it.value}${it.key.label}" }.joinToString(" ")
+    }
+
 }

@@ -4,7 +4,6 @@ import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.PlayersResult
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleOutput
 
@@ -21,12 +20,10 @@ class BlackjackController {
         val playersResult = scratchPlayers(players, game.deck)
         val dealerResult = scratchDealer(dealer, game.deck)
 
-        val gameResult = PlayersResult(dealerResult, playersResult)
-
-        outputView.printResultCards(gameResult)
-        outputView.printGameResult(gameResult)
+        outputView.printResultCards(dealerResult, playersResult)
+        outputView.printGameResult(dealerResult, playersResult)
     }
-    
+
     private fun scratchDealer(dealer: Player, deck: Deck): Player {
         return if (dealer.canHit()) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")

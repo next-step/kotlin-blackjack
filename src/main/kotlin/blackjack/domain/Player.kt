@@ -12,14 +12,5 @@ interface Player {
 
     fun countingCard(): Int = cards.countingCard()
 
-    fun compareTo(player: Player): GameResult {
-        val score = getScore(this) - getScore(player)
-        return GameResult.of(score)
-    }
-
-    private fun isBurst(): Boolean = countingCard() > BLACKJACK_SCORE
-
-    private fun getScore(player: Player): Int {
-        return if (player.isBurst()) 0 else player.countingCard()
-    }
+    fun isBurst(): Boolean = countingCard() > BLACKJACK_SCORE
 }
