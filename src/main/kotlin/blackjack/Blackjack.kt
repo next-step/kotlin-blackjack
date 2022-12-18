@@ -18,7 +18,7 @@ private fun playBlackJack(game: Game) {
         .forEach { player ->
             while (!player.blackjack() &&
                 !player.burst() &&
-                InputView.inputHitOrStop(player)
+                InputView.shouldHit(player)
             ) {
                 player.hit(game.dealer.deliverCard())
                 ResultView.printPlayerCards(player)

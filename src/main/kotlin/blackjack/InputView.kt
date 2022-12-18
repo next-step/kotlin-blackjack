@@ -18,7 +18,7 @@ object InputView {
         return players
     }
 
-    fun inputHitOrStop(player: Player): Boolean {
+    fun shouldHit(player: Player): Boolean {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val hit = readln()
         require(hit in listOf("y", "n")) { "y 또는 n으로 의사를 입력해주세요." }
