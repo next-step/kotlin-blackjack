@@ -14,4 +14,5 @@ class Cards {
 
     fun score(): Int = this.cards.sumOf { it.number.primaryScore }
     fun secondaryScore(): Int = this.cards.sumOf { it.number.secondaryScore }
+    fun cardList(): List<Card> = this.cards
 }
