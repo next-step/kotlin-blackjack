@@ -27,6 +27,9 @@ fun main() {
         OutputView.printCardStatus(currentParticipator)
     }
     OutputView.printCardStatusWithResult(participators.finishParticipators())
+
+    val winners = participators.findWinner()
+    OutputView.printWinner(winners);
 }
 
 private fun isParticipatorStopGame(participator: GameParticipator): Boolean {

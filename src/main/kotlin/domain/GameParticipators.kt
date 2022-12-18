@@ -28,6 +28,16 @@ class GameParticipators(players: List<GameParticipator>) {
         return finishParticipators.toList()
     }
 
+    fun findWinner(): Map<Player, WinStatus> {
+        val dealer = finishParticipators.single { it is Dealer } as Dealer
+        return finishParticipators.filterIsInstance<Player>().associateWith {
+            val winner = dealer.pickWinner(it)
+            WinStatus.valueOf(winner)
+        }
+
+    }
+
+
     fun size() = participators.size
 
     fun isGameEnd(): Boolean {

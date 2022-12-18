@@ -2,6 +2,7 @@ package domain
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.maps.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
@@ -57,6 +58,29 @@ class GameParticipatorsTest : StringSpec({
         }
 
         participators.finishParticipators() shouldContainAll listOf(playerPobi, playerCrong, dealer)
+    }
+
+    "딜러와 비교하여 플레이어 승리여부가 반환됩니다" {
+        val participators = GameParticipators(listOf(playerPobi, playerCrong))
+        val dealer = participators.participators.single { it is Dealer }
+
+        dealer.takeCards(
+            Card(CardNumber.ACE, CardShape.CLOVER)
+        )
+        playerCrong.takeCards(
+            Card(CardNumber.ACE, CardShape.CLOVER),
+            Card(CardNumber.TEN, CardShape.CLOVER),
+        )
+        playerPobi.takeCards(
+            Card(CardNumber.TEN, CardShape.CLOVER),
+        )
+
+        participators.finishParticipators()
+        val winners = participators.findWinner()
+        winners shouldContainExactly mapOf(
+            playerPobi to WinStatus.LOSE,
+            playerCrong to WinStatus.WIN
+        )
     }
 
 })
