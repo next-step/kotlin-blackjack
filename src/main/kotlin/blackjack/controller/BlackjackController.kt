@@ -9,14 +9,14 @@ class BlackjackController {
         val game = BlackJackGame()
 
         val names = InputView.inputPlayersName()
-        val players = game.makePlayers(names)
-        val dealer = game.makeDealer()
+        game.setInitDealer()
+        game.setInitPlayers(names)
 
-        ResultView.printInitialStatus(players, dealer)
-        game.play(players, dealer)
-        val results = game.getResult(players, dealer)
-        ResultView.printStatus(players, dealer)
-        ResultView.printResults(results, dealer)
+        ResultView.printInitialStatus(game)
+        game.play()
+        game.calculateResult()
+        ResultView.printStatus(game)
+        ResultView.printResults(game)
     }
 }
 

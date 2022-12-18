@@ -1,20 +1,20 @@
 package blackjack.view
 
+import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.PlayerResult
 import blackjack.domain.ResultStatus
 
 object ResultView {
-    fun printInitialStatus(players: List<Player>, dealer: Dealer) {
-        printPlayersName(dealer, players)
-        printPlayersStatus(dealer, players)
+    fun printInitialStatus(game: BlackJackGame) {
+        printPlayersName(game.dealer, game.players)
+        printPlayersStatus(game.dealer, game.players)
     }
 
-    fun printStatus(players: List<Player>, dealer: Dealer) {
+    fun printStatus(game: BlackJackGame) {
         println()
-        println("${dealer.name} 카드: ${dealer.cards} - 결과: ${dealer.score}")
-        players.forEach {
+        println("${game.dealer.name} 카드: ${game.dealer.cards} - 결과: ${game.dealer.score}")
+        game.players.forEach {
             println("${it.name} 카드: ${it.cards} - 결과: ${it.score}")
         }
     }
@@ -35,10 +35,10 @@ object ResultView {
         println("${player.name} 카드: ${player.cards}")
     }
 
-    fun printResults(playerResults: List<PlayerResult>, dealer: Dealer) {
+    fun printResults(game: BlackJackGame) {
         println("\n## 최종 승패")
-        printDealerResults(dealer)
-        playerResults.forEach {
+        printDealerResults(game.dealer)
+        game.playerResults.forEach {
             println("${it.player.name}: ${it.result.value}")
         }
     }

@@ -13,16 +13,16 @@ internal class BlackJackGameTest : StringSpec() {
 
         "2명의 참가자가 게임을 시작할 때 카드를 2장씩 지급한다." {
             val names = listOf("플레이어2", "플레이어2")
-            val players = game.makePlayers(names)
+            game.setInitPlayers(names)
 
-            players.forEach {
+            game.players.forEach {
                 it.cards.values.size shouldBe 2
             }
         }
 
         "딜러가 게임을 시작할 때 2장의 카드를 지급한다." {
-            val dealer = game.makeDealer()
-            val initialCardSize = dealer.cards.values.size
+            game.setInitDealer()
+            val initialCardSize = game.dealer.cards.values.size
 
             initialCardSize shouldBe 2
         }
@@ -33,10 +33,14 @@ internal class BlackJackGameTest : StringSpec() {
                 Card(Suite.SPADE, Denomination.SIX),
                 Card(Suite.HEART, Denomination.SIX)
             )
+            val game = BlackJackGame(
+                dealer = dealer,
+                players = players
+            )
 
-            game.play(players, dealer)
+            game.play()
 
-            dealer.cards.values.size shouldBe 3
+            game.dealer.cards.values.size shouldBe 3
         }
 
         "딜러가 17점 이상이면 스테이한다." {
@@ -45,10 +49,14 @@ internal class BlackJackGameTest : StringSpec() {
                 Card(Suite.SPADE, Denomination.SEVEN),
                 Card(Suite.HEART, Denomination.KING)
             )
+            val game = BlackJackGame(
+                dealer = dealer,
+                players = players
+            )
 
-            game.play(players, dealer)
+            game.play()
 
-            dealer.cards.values.size shouldBe 2
+            game.dealer.cards.values.size shouldBe 2
         }
 
         "플레이어 수만큼의 플레이어 결과를 반환한다." {
@@ -56,10 +64,14 @@ internal class BlackJackGameTest : StringSpec() {
                 Player(), Player(), Player()
             )
             val dealer = Dealer()
+            val game = BlackJackGame(
+                dealer = dealer,
+                players = players
+            )
 
-            val playerResults = game.getResult(players, dealer)
+            game.calculateResult()
 
-            playerResults.size shouldBe 3
+            game.playerResults.size shouldBe 3
         }
     }
 

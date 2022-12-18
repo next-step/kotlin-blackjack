@@ -3,21 +3,23 @@ package blackjack.domain
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
-class BlackJackGame(private val deck: Deck = Deck()) {
-    fun makeDealer(): Dealer {
-        val dealer = Dealer()
+class BlackJackGame(
+    private val deck: Deck = Deck(),
+    val dealer: Dealer = Dealer(),
+    var players: List<Player> = emptyList(),
+    var playerResults: List<PlayerResult> = emptyList()
+) {
+    fun setInitDealer() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
         }
-
-        return dealer
     }
 
-    fun makePlayers(names: List<String>): List<Player> {
-        return names.map { Player(it, deck.drawInitCards()) }
+    fun setInitPlayers(names: List<String>) {
+        this.players = names.map { Player(it, deck.drawInitCards()) }
     }
 
-    fun play(players: List<Player>, dealer: Dealer) {
+    fun play() {
         players.forEach {
             if (it.isBust()) return@forEach
             drawOrNot(it, deck)
@@ -25,8 +27,8 @@ class BlackJackGame(private val deck: Deck = Deck()) {
         hitOrStayForDealer(dealer)
     }
 
-    fun getResult(players: List<Player>, dealer: Dealer): List<PlayerResult> {
-        return players.map {
+    fun calculateResult() {
+        playerResults = players.map {
             PlayerResult.from(it, dealer)
         }
     }
