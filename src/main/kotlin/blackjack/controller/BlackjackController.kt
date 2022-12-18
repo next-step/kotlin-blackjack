@@ -13,7 +13,7 @@ object BlackjackController {
     private val blackJack = BlackJack(deck)
 
     fun start() {
-        val participantResult = InputView.enterNameOfParticipant()
+        val participantResult = InputView.enterNameOfPlayer()
 
         participantResult.players.forEach {
             blackJack.firstPick(it)

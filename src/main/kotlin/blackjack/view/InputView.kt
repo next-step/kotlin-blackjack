@@ -1,15 +1,15 @@
 package blackjack.view
 
-import blackjack.domain.ParticipantResult
+import blackjack.dto.PlayerResult
 import blackjack.dto.StayResult
 
 object InputView {
 
-    fun enterNameOfParticipant(): ParticipantResult {
+    fun enterNameOfPlayer(): PlayerResult {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val participant = readlnOrNull() ?: throw IllegalArgumentException("값을 입력하세요.")
+        val players = readlnOrNull() ?: throw IllegalArgumentException("값을 입력하세요.")
 
-        return ParticipantResult(participant)
+        return PlayerResult(players)
     }
 
     fun stay(name: String): StayResult {
