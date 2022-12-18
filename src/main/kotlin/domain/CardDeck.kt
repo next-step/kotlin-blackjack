@@ -21,8 +21,12 @@ class CardDeck {
         this.cards = mutableList.toList()
     }
 
-    fun topCard(): Card {
+    fun getTopCard(): Card {
         check(this.cards.isNotEmpty()) { "카드가 다 떨어졌습니다." }
-        return this.cards[0]
+        val card = this.cards[0]
+        val mutableList = this.cards.toMutableList()
+        mutableList.remove(card)
+        this.cards = mutableList.toList()
+        return card
     }
 }
