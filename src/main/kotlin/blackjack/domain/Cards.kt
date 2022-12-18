@@ -5,8 +5,8 @@ class Cards(values: List<Card> = emptyList()) {
     val values: List<Card>
         get() = _values.toList()
 
-    fun add(card: Card): Cards {
-        return Cards(values + card)
+    fun add(card: Card) {
+        _values.add(card)
     }
 
     fun pick() = _values.removeFirst()
