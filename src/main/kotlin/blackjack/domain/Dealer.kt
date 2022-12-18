@@ -14,10 +14,6 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
         return result
     }
 
-    fun drawCard(card: Card) {
-        this.cards.add(card)
-    }
-
     fun isHit() = this.score <= DEALER_HIT_SCORE
 
     private fun addResult(result: ResultStatus) {

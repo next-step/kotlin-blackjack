@@ -3,7 +3,7 @@ package blackjack.domain
 fun Dealer(vararg values: Card): Dealer {
     val dealer = Dealer()
     values.forEach {
-        dealer.drawCard(it)
+        dealer.hit(it)
     }
 
     return dealer

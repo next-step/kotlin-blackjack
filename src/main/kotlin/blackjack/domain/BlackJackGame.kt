@@ -7,7 +7,7 @@ class BlackJackGame(private val deck: Deck = Deck()) {
     fun makeDealer(): Dealer {
         val dealer = Dealer()
         deck.drawInitCards().values.forEach {
-            dealer.drawCard(it)
+            dealer.hit(it)
         }
 
         return dealer
@@ -32,7 +32,7 @@ class BlackJackGame(private val deck: Deck = Deck()) {
     }
 
     private fun hitOrStayForDealer(dealer: Dealer) {
-        if (dealer.isHit()) dealer.drawCard(deck.draw())
+        if (dealer.isHit()) dealer.hit(deck.draw())
     }
 
     private fun drawOrNot(player: Player, deck: Deck) {
