@@ -18,6 +18,8 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
         this.cards.add(card)
     }
 
+    fun isHit() = this.score <= DEALER_HIT_SCORE
+
     private fun addResult(result: ResultStatus) {
         val dealerResult = when (result) {
             ResultStatus.WIN -> ResultStatus.LOSE
@@ -25,5 +27,9 @@ class Dealer(results: List<ResultStatus> = emptyList()) : Player("딜러") {
             else -> ResultStatus.DRAW
         }
         _results.add(dealerResult)
+    }
+
+    companion object {
+        private const val DEALER_HIT_SCORE = 16
     }
 }

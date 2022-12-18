@@ -163,4 +163,26 @@ internal class DealerTest : StringSpec({
 
         dealer.results shouldBe listOf(ResultStatus.WIN, ResultStatus.WIN, ResultStatus.DRAW)
     }
+
+    "딜러의 점수가 16점이라면 카드를 더 뽑는다 (= true)" {
+        val dealer = Dealer(
+            Card(Suite.HEART, Denomination.FIVE),
+            Card(Suite.DIAMOND, Denomination.JACK)
+        )
+
+        val result = dealer.isHit()
+
+        result shouldBe true
+    }
+
+    "딜러의 점수가 17점 이라면 카드를 더 뽑을 수 없다. (= false)" {
+        val dealer = Dealer(
+            Card(Suite.HEART, Denomination.SEVEN),
+            Card(Suite.DIAMOND, Denomination.JACK)
+        )
+
+        val result = dealer.isHit()
+
+        result shouldBe false
+    }
 })
