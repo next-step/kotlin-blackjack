@@ -35,10 +35,11 @@ class Cards(
     private fun shouldCountWithAce(): Boolean = _value.any { it.type == CardType.ACE }
 
     private fun sumWithAce(): Int {
-        val filteredCardsSum = _value.filterNot { it.type == CardType.ACE }
-            .sumOf { it.type.score }
+        val filteredCardsSum = filterAceCard().sumOf { it.type.score }
         return filteredCardsSum.takeIf { BLACKJACK_SCORE - it < CardType.ACE.specialScore }
             ?.let { it + CardType.ACE.score }
             ?: run { filteredCardsSum + CardType.ACE.specialScore }
     }
+
+    private fun filterAceCard(): List<Card> = _value.filter { it.type == CardType.ACE }
 }
