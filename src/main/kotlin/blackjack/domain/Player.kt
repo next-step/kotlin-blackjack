@@ -10,4 +10,8 @@ class Player(val name: String, cards: List<Card> = emptyList()) {
     fun enroll(card: Card) {
         _cards.add(card)
     }
+
+    fun bust(): Boolean {
+        return Score.isHigherThanWinScore(this)
+    }
 }

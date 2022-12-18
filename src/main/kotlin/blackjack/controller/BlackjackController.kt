@@ -38,7 +38,7 @@ object BlackjackController {
         while (true) {
             val stayResult = InputView.stay(player.name)
             if (blackJack.stay(stayResult)) break
-            if (blackJack.bust(player)) break
+            if (player.bust()) break
             blackJack.hit(player)
             ResultView.getCurrentStatus(player)
         }

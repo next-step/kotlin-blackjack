@@ -20,10 +20,6 @@ class BlackJack(private val deck: Deck) {
         return !stayResult.isStay
     }
 
-    fun bust(player: Player): Boolean {
-        return Score.isHigherThanWinScore(player)
-    }
-
     companion object {
         const val WIN_SCORE: Int = 21
     }

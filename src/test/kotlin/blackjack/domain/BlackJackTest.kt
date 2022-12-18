@@ -59,7 +59,7 @@ internal class BlackJackTest {
         )
         val player = Player("홍길동")
         cardList.forEach { player.enroll(it) }
-        val isBust = blackJack.bust(player)
+        val isBust = player.bust()
 
         assertThat(isBust).isTrue
     }
