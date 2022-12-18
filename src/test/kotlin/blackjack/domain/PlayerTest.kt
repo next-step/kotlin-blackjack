@@ -62,7 +62,7 @@ internal class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("provideNotBurstCards")
-    fun `Player 카드 합산이 21 이상일 떄 burst 상태가 되어 게임을 계속 할 수있다`(initialCards: List<Card>, hitCard: Card) {
+    fun `Player 카드 합산이 21 미만일떄 burst 상태가 되어 게임을 계속 할 수있다`(initialCards: List<Card>, hitCard: Card) {
         val player = Player("고니").apply {
             readyToPlay(initialCards)
             hit(hitCard)
@@ -78,7 +78,7 @@ internal class PlayerTest {
     }
 
     @Test
-    fun `Player 카드가 2장이상 합산이 21이면 블랙잭이 아니다`() {
+    fun `Player 카드가 2장 쵸과 합산이 21이면 블랙잭이 아니다`() {
         val cards = Cards(
             listOf(
                 Card(CardType.THREE, CardShape.HEART),
