@@ -1,9 +1,9 @@
 package blackjack.domain
 
-enum class ResultStatus {
-    WIN,
-    LOSE,
-    DRAW;
+enum class ResultStatus(val value: String) {
+    WIN("승"),
+    LOSE("패"),
+    DRAW("무");
 }
 
 infix fun Int.match(value: Int): ResultStatus {

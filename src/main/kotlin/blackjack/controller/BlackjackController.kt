@@ -12,9 +12,11 @@ class BlackjackController {
         val players = game.makePlayers(names)
         val dealer = game.makeDealer()
 
-        ResultView.printInitialStatus(players)
+        ResultView.printInitialStatus(players, dealer)
         game.play(players, dealer)
-        ResultView.printResult(players)
+        val results = game.getResult(players, dealer)
+        ResultView.printStatus(players, dealer)
+        ResultView.printResults(results, dealer)
     }
 }
 
