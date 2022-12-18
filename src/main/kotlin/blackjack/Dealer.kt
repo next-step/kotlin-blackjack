@@ -1,6 +1,7 @@
 package blackjack
 
-class Dealer(name: String = "딜러", playingCards: PlayingCards = PlayingCards()) : Player(name, playingCards) {
+class Dealer(playingCards: PlayingCards = PlayingCards()) : Player("딜러", playingCards) {
+
     fun hitUntil(deck: CardDeck): Int {
         var count = 0
         while(playingCards.calculatePoint() < Point.DEALER_MIN_POINT){
