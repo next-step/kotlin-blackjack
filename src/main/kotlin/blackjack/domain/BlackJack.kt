@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Deck
+import blackjack.dto.StayResult
 
 class BlackJack(private val deck: Deck) {
 
