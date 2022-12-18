@@ -8,7 +8,7 @@ class Dealer(
     }
 
     fun giveCard(player: Player) {
-        val card = deck.topCard()
+        val card = deck.getTopCard()
         player.receiveCard(card = card)
     }
 }
