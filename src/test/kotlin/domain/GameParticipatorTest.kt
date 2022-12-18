@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec({
+class GameParticipatorTest : StringSpec({
 
     lateinit var playerPobi: Player
 
@@ -12,7 +12,7 @@ class PlayerTest : StringSpec({
         playerPobi = Player.withName("pobi")
     }
 
-    "사용자가 카드를 뽑아 보관합니다" {
+    "게암 참여자가 카드를 뽑아 보관합니다" {
         playerPobi.takeCards(Card(CardNumber.ACE, CardShape.SPACE))
 
         playerPobi.cards.cards shouldContain Card(CardNumber.ACE, CardShape.SPACE)
@@ -26,5 +26,15 @@ class PlayerTest : StringSpec({
         )
 
         playerPobi.choiceBestScore() shouldBe 12
+    }
+
+    "21점을 초과하면 패배입니다" {
+        playerPobi.takeCards(
+            Card(CardNumber.TEN, CardShape.SPACE),
+            Card(CardNumber.TEN, CardShape.SPACE),
+            Card(CardNumber.TWO, CardShape.SPACE)
+        )
+
+        playerPobi.isLoser() shouldBe true
     }
 })

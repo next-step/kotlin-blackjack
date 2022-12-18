@@ -1,36 +1,41 @@
 import domain.CardDeck
+import domain.GameParticipator
+import domain.GameParticipators
 import domain.Player
-import domain.Players
 import ui.InputView
 import ui.OutputView
 
 fun main() {
     val playerNames = InputView.askPlayerNames()
-    val players = Players(playerNames.map { Player.withName(it) })
+    val participators = GameParticipators(playerNames.map { Player.withName(it) })
     val cardDeck = CardDeck()
     OutputView.printGameStartMsg(playerNames)
 
-    repeat(playerNames.size) {
-        val currentPlayer = players.currentPlayer()
+    repeat(participators.size()) {
+        val currentPlayer = participators.currentParticipator()
         currentPlayer.takeCards(cardDeck.draw(), cardDeck.draw())
     }
-    OutputView.printCardStatus(players)
+    OutputView.printCardStatus(participators)
 
-    val finishPlayers = mutableListOf<Player>()
-    while (players.isNotEmpty()) {
-        val currentPlayer = players.currentPlayer()
-        if (isPlayerStopGame(currentPlayer)) {
-            players.quitGame(currentPlayer)
-            finishPlayers.add(currentPlayer)
+    while (participators.isGameEnd().not()) {
+        val currentParticipator = participators.currentParticipator()
+        if (isParticipatorStopGame(currentParticipator)) {
+            participators.quitGame(currentParticipator)
             continue
         }
-        currentPlayer.takeCards(cardDeck.draw())
-        OutputView.printCardStatus(currentPlayer)
+        currentParticipator.takeCards(cardDeck.draw())
+        OutputView.printCardStatus(currentParticipator)
     }
+    OutputView.printCardStatusWithResult(participators.finishParticipators())
 
-    OutputView.printCardStatusWithResult(finishPlayers.toList())
+    val winners = participators.findWinner()
+    OutputView.printWinner(winners)
 }
 
-private fun isPlayerStopGame(currentPlayer: Player) =
-    InputView.askDrawCardOrNot(currentPlayer.name.name) == InputView.NO ||
-        currentPlayer.canDrawCard().not()
+private fun isParticipatorStopGame(participator: GameParticipator): Boolean {
+    if (participator is Player) {
+        return participator.canDrawCard().not() ||
+            InputView.askDrawCardOrNot(participator.name.name) == InputView.NO
+    }
+    return participator.canDrawCard().not()
+}
