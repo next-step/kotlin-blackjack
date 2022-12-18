@@ -94,4 +94,27 @@ internal class CardsTest : StringSpec({
         // then
         result shouldBe 20
     }
+
+    "점수가 21점이고 ACE 카드를 포함하고 있다면 블랙잭이다." {
+        val cards = Cards(listOf(
+            Card(Suite.SPADE, Denomination.ACE),
+            Card(Suite.CLOVER, Denomination.JACK)
+        ))
+
+        val result = cards.isBlackJack()
+
+        result shouldBe true
+    }
+
+    "점수가 21점이지만 ACE 카드를 포함하고 있지 않다면 블랙직이 아니다." {
+        val cards = Cards(listOf(
+            Card(Suite.SPADE, Denomination.THREE),
+            Card(Suite.CLOVER, Denomination.JACK),
+            Card(Suite.DIAMOND, Denomination.EIGHT)
+        ))
+
+        val result = cards.isBlackJack()
+
+        result shouldBe false
+    }
 })

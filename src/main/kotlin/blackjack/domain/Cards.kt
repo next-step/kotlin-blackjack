@@ -13,10 +13,17 @@ class Cards(values: List<Card> = emptyList()) {
 
     fun getScore(): Int {
         val sum = values.sumOf { it.denomination.score }
-        val hasAceCard = values.any { it.denomination == Denomination.ACE }
 
-        return if (hasAceCard && (sum + ACE_BONUS_SCORE <= WIN_SCORE)) sum + ACE_BONUS_SCORE
+        return if (hasAce() && (sum + ACE_BONUS_SCORE <= WIN_SCORE)) sum + ACE_BONUS_SCORE
         else sum
+    }
+
+    fun isBlackJack(): Boolean {
+        return getScore() == WIN_SCORE && hasAce()
+    }
+
+    private fun hasAce(): Boolean {
+        return values.any { it.denomination == Denomination.ACE }
     }
 
     override fun toString(): String {
