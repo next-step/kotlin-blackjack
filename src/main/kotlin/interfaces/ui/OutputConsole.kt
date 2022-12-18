@@ -5,7 +5,7 @@ object OutputConsole {
     private const val NAME_DELIMITER = ", "
 
     fun printCard(playerName: String, cardInfo: String) {
-        println("${playerName}카드: ${cardInfo}")
+        println("${playerName}카드: $cardInfo")
     }
 
     fun printNewLine() {
@@ -13,7 +13,7 @@ object OutputConsole {
     }
 
     fun printCardWithResult(playerName: String, cardInfo: String, result: String) {
-        println("${playerName}카드: ${cardInfo} - 결과: ${result}")
+        println("${playerName}카드: $cardInfo - 결과: $result")
     }
 
     fun printInit(playerNames: List<String>) {

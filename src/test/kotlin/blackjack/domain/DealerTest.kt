@@ -17,6 +17,6 @@ class DealerTest : FreeSpec({
         val player = Player("ep")
         val beforeCardCount = player.handsCardCount
         dealer.giveCard(player = player)
-        beforeCardCount + 1 shouldBe  player.handsCardCount
+        beforeCardCount + 1 shouldBe player.handsCardCount
     }
 })

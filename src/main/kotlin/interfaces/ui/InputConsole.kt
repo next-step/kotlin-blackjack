@@ -19,7 +19,7 @@ object InputConsole {
         val isReceiveCardString = readln().trim()
         if (isReceiveCardString == "y") {
             return true
-        } else if(isReceiveCardString == "n") {
+        } else if (isReceiveCardString == "n") {
             return false
         }
         throw RuntimeException("")

@@ -45,7 +45,7 @@ class BlackJackController : Executable {
         return player.hands.cardList().joinToString(", ") {
             val number = it.number.nameValue
             val name = it.shape.nameValue
-            "${number}${name}"
+            "${number}$name"
         }
     }
 
