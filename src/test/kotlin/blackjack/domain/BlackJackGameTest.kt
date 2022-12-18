@@ -15,7 +15,7 @@ internal class BlackJackGameTest : StringSpec() {
             val names = listOf("플레이어2", "플레이어2")
             val players = game.makePlayers(names)
 
-            players.values.forEach {
+            players.forEach {
                 it.cards.values.size shouldBe 2
             }
         }
@@ -28,7 +28,7 @@ internal class BlackJackGameTest : StringSpec() {
         }
 
         "딜러가 16점 이하라면 카드 한 장을 뽑는다." {
-            val players = Players(listOf(bustPlayer))
+            val players = listOf(bustPlayer)
             val dealer = Dealer(
                 Card(Suite.SPADE, Denomination.SIX),
                 Card(Suite.HEART, Denomination.SIX)
@@ -40,7 +40,7 @@ internal class BlackJackGameTest : StringSpec() {
         }
 
         "딜러가 17점 이상이면 스테이한다." {
-            val players = Players(listOf(bustPlayer))
+            val players = listOf(bustPlayer)
             val dealer = Dealer(
                 Card(Suite.SPADE, Denomination.SEVEN),
                 Card(Suite.HEART, Denomination.KING)

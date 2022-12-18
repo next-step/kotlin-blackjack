@@ -13,12 +13,12 @@ class BlackJackGame(private val deck: Deck = Deck()) {
         return dealer
     }
 
-    fun makePlayers(names: List<String>): Players {
-        return Players(names.map { Player(it, deck.drawInitCards()) })
+    fun makePlayers(names: List<String>): List<Player> {
+        return names.map { Player(it, deck.drawInitCards()) }
     }
 
-    fun play(players: Players, dealer: Dealer) {
-        players.values.forEach {
+    fun play(players: List<Player>, dealer: Dealer) {
+        players.forEach {
             if (it.isBust()) return@forEach
             drawOrNot(it, deck)
         }
