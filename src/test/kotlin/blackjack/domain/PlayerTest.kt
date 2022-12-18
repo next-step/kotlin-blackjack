@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,7 +18,7 @@ class PlayerTest {
     @Test
     @DisplayName("플레이어가 카드 한장을 받으면 카드를 1장 가지고 있음")
     fun `Players have one card when they receive one card`() {
-        val card = Card.generate()
+        val card = Deck().draw()
         val player = Player("홍길동")
         player.enroll(card)
 

@@ -14,9 +14,4 @@ enum class CardNumber(val text: String, vararg val value: Int) {
     KING("K", 10),
     QUEEN("Q", 10),
     JACK("J", 10);
-
-    companion object {
-        fun getRandomNumber() = values().random()
-
-    }
 }
