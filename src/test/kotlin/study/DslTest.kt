@@ -1,6 +1,5 @@
 package study
 
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
