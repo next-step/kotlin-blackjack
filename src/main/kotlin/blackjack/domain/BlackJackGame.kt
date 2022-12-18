@@ -17,11 +17,16 @@ class BlackJackGame(private val deck: Deck = Deck()) {
         return Players(names.map { Player(it, deck.drawInitCards()) })
     }
 
-    fun play(players: Players) {
+    fun play(players: Players, dealer: Dealer) {
         players.values.forEach {
             if (it.isBust()) return@forEach
             drawOrNot(it, deck)
         }
+        hitOrStayForDealer(dealer)
+    }
+
+    private fun hitOrStayForDealer(dealer: Dealer) {
+        if (dealer.isHit()) dealer.drawCard(deck.draw())
     }
 
     private fun drawOrNot(player: Player, deck: Deck) {
