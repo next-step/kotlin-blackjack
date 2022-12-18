@@ -35,7 +35,7 @@ class GameParticipators(players: List<GameParticipator>) {
             return true
         }
         this.participators.find { it is Dealer } ?.let{
-            return (it as Dealer).isLoser()
+            return it.isLoser()
         }
         return false
     }

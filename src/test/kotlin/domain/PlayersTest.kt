@@ -1,6 +1,7 @@
 package domain
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
@@ -43,4 +44,19 @@ class GameParticipatorsTest : StringSpec({
 
         participators.isGameEnd() shouldBe true
     }
+
+    "게임이 종료된 플레이어 리스트가 반환됩니다" {
+        val participators = GameParticipators(listOf(playerPobi, playerCrong))
+        val dealer = participators.participators.single { it is Dealer }
+
+        participators.participators.forEach {
+            it.takeCards(
+                Card(CardNumber.TEN, CardShape.CLOVER),
+                Card(CardNumber.ACE, CardShape.CLOVER),
+            )
+        }
+
+        participators.finishParticipators() shouldContainAll listOf(playerPobi, playerCrong, dealer)
+    }
+
 })

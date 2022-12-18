@@ -9,7 +9,7 @@ abstract class GameParticipator {
     }
 
     fun choiceBestScore(): Int = cards.bestScore()
-
+    fun isLoser() = choiceBestScore() > Score.MAX_SCORE
 
     abstract fun canDrawCard() : Boolean
     

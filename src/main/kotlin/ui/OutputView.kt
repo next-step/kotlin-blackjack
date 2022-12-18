@@ -27,6 +27,7 @@ object OutputView {
     }
 
     fun printCardStatusWithResult(participators: List<GameParticipator>) {
+        println()
         participators.forEach {
             printCardStatus(it)
             println("- 결과: ${it.choiceBestScore()}")
