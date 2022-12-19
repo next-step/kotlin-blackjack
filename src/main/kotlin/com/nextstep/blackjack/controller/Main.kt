@@ -12,7 +12,7 @@ fun main() {
     OutputView.printStartMessage()
 
     val playersInput = InputView.inputMessageSplitWithComma()
-    val players = Players(playersInput.map { Player(it) })
+    val players = Players(playersInput.map(::Player))
     val deck = Deck.createDeck()
 
     players.initState(deck)
