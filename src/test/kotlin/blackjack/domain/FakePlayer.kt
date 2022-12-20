@@ -1,6 +1,8 @@
 package blackjack.domain
 
 import blackjack.model.Card
+import blackjack.model.CardShape
+import blackjack.model.CardType
 import java.util.UUID
 
 class FakePlayer(
@@ -28,11 +30,23 @@ class FakePlayer(
 class FakeDealer(
     override val name: String = "딜러",
     override val cards: Cards = Cards(),
+    private val deliveredCard: Card = Card(CardType.ACE, CardShape.CLOVER),
+    private val stay: Boolean = false,
     private val hit: Boolean = false,
     private val sumCards: Int = 0,
     private val burst: Boolean = false,
     private val blackjack: Boolean = false,
-) : Player {
+) : Dealer {
+    override val deck: CardDeck
+        get() = CardDeckImpl()
+
+    override fun shuffle() {
+        // do nothing
+    }
+
+    override fun deliverCard(): Card = deliveredCard
+
+    override fun stay(): Boolean = stay
 
     override fun readyToPlay(initialCards: List<Card>) {
         // do nothing
