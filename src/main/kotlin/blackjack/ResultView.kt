@@ -1,7 +1,8 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
-import blackjack.domain.GamePlayer
+import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.model.Card
 import blackjack.model.CardShape
@@ -12,25 +13,25 @@ import blackjack.model.CardShape.SPADE
 
 object ResultView {
     fun printInitialCards(players: Players, dealer: Dealer) {
-        println("${Dealer.NAME}와 ${players.gamePlayers.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
+        println("${dealer.name}와 ${players.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
         println(
-            "${Dealer.NAME}: ${
-                getPlayerInfo(
-                    Dealer.NAME,
-                    dealer.cards.value.filterIndexed { index, _ -> index != 0 })
+            "${dealer.name}: ${
+                dealer.cards
+                    .value[0]
+                    .let { "${it.type.value}${it.shape.string()}" }
             }"
         )
-        players.gamePlayers.forEach { println(getPlayerInfo(it.name, it.cards.value)) }
+        players.value.forEach { println(getPlayerInfo(it.name, it.cards.value)) }
         println()
     }
 
-    fun printPlayerCards(gamePlayer: GamePlayer) {
-        println(getPlayerInfo(gamePlayer.name, gamePlayer.cards.value))
+    fun printPlayerCards(player: Player) {
+        println(getPlayerInfo(player.name, player.cards.value))
     }
 
     fun printPlayerResult(players: Players, dealer: Dealer) {
-        println("${getPlayerInfo(Dealer.NAME, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
-        players.gamePlayers.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
+        println("${getPlayerInfo(dealer.name, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
+        players.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
     }
 
     private fun getPlayerInfo(name: String, cards: List<Card>) =

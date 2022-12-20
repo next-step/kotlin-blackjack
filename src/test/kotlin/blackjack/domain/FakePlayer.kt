@@ -4,7 +4,8 @@ import blackjack.model.Card
 import java.util.UUID
 
 class FakePlayer(
-    val name: String = UUID.randomUUID().toString(),
+    override val name: String = UUID.randomUUID().toString(),
+    override val cards: Cards = Cards(),
     private val hit: Boolean = false,
     private val sumCards: Int = 0,
     private val burst: Boolean = false,
@@ -25,6 +26,8 @@ class FakePlayer(
 }
 
 class FakeDealer(
+    override val name: String = "딜러",
+    override val cards: Cards = Cards(),
     private val hit: Boolean = false,
     private val sumCards: Int = 0,
     private val burst: Boolean = false,

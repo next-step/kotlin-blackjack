@@ -5,17 +5,17 @@ import blackjack.ResultView
 
 class Game(val players: Players, val dealer: Dealer) {
     init {
-        gameDealer.shuffle()
+        dealer.shuffle()
         deliverInitialCards()
     }
 
     private fun deliverInitialCards() {
-        players.gamePlayers.forEach {
+        players.value.forEach {
             List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
                 .let(it::readyToPlay)
         }
-        List(INITIAL_CARDS_COUNT) { gameDealer.deliverCard() }
-            .let(gameDealer::readyToPlay)
+        List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
+            .let(dealer::readyToPlay)
     }
 
     fun play() {
@@ -24,13 +24,13 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     private fun playPlayers(players: Players, dealer: Dealer) {
-        players.gamePlayers
+        players.value
             .forEach { player ->
                 while (!player.blackjack() &&
                     !player.burst() &&
                     InputView.shouldHit(player)
                 ) {
-                    player.hit(gameDealer.deliverCard())
+                    player.hit(dealer.deliverCard())
                     ResultView.printPlayerCards(player)
                 }
             }
