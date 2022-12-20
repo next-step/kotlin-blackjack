@@ -27,7 +27,7 @@ object ResultView {
 
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player.name, player.cards.value))
 
-    fun printResult(players: Players, dealer: Dealer) {
+    fun printPlayerResult(players: Players, dealer: Dealer) {
         println("${getPlayerInfo(Dealer.NAME, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
         players.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
     }

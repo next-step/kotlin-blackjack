@@ -9,6 +9,6 @@ fun main() {
     val game = Game(players, dealer)
     ResultView.printInitialCards(game.players, game.dealer)
     game.play()
-    ResultView.printResult(game.players, game.dealer)
+    ResultView.printPlayerResult(game.players, game.dealer)
 }
 
