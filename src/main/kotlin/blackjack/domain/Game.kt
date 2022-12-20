@@ -2,15 +2,16 @@ package blackjack.domain
 
 import blackjack.InputView
 import blackjack.ResultView
+import blackjack.model.GameResult
 
-class Game(val players: Players, val dealer: Dealer) {
+class Game(val gamePlayers: GamePlayers, val dealer: Dealer) {
     init {
         dealer.shuffle()
         deliverInitialCards()
     }
 
     private fun deliverInitialCards() {
-        players.value.forEach {
+        gamePlayers.value.forEach {
             List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
                 .let(it::readyToPlay)
         }
@@ -19,12 +20,12 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     fun play() {
-        playPlayers(players, dealer)
+        playPlayers(gamePlayers, dealer)
         playDealer(dealer)
     }
 
-    private fun playPlayers(players: Players, dealer: Dealer) {
-        players.value
+    private fun playPlayers(gamePlayers: GamePlayers, dealer: Dealer) {
+        gamePlayers.value
             .forEach { player ->
                 while (!player.blackjack() &&
                     !player.burst() &&

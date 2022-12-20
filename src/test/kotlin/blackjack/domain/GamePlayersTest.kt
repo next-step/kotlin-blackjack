@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-internal class PlayersTest {
+internal class GamePlayersTest {
 
     @ParameterizedTest
     @ValueSource(ints = [2, 5, 8])
@@ -16,8 +16,8 @@ internal class PlayersTest {
                 add(GamePlayer("$count"))
             }
         }
-        val players = Players(participants)
-        assertThat(players).isNotNull
+        val gamePlayers = GamePlayers(participants)
+        assertThat(gamePlayers).isNotNull
     }
 
     @Test
@@ -25,7 +25,7 @@ internal class PlayersTest {
         val participants: List<GamePlayer> = mutableListOf<GamePlayer>().apply {
             add(GamePlayer("고니"))
         }
-        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { Players(participants) }
+        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { GamePlayers(participants) }
     }
 
     @Test
@@ -36,7 +36,7 @@ internal class PlayersTest {
             }
         }
         assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy {
-            val players = Players(participants)
+            val gamePlayers = GamePlayers(participants)
         }
     }
 }
