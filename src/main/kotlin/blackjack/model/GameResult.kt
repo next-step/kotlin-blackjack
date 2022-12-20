@@ -7,7 +7,7 @@ enum class GameResult {
     ;
 }
 
-sealed class GamePlayerResult {
+sealed class PlayerGameResult {
     abstract val name: String
 
     data class Dealer(
@@ -15,7 +15,7 @@ sealed class GamePlayerResult {
         val win: Int,
         val lose: Int,
         val push: Int,
-    ) : GamePlayerResult()
+    ) : PlayerGameResult()
 
-    data class Player(override val name: String, val gameResult: GameResult) : GamePlayerResult()
+    data class Player(override val name: String, val gameResult: GameResult) : PlayerGameResult()
 }
