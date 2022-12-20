@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Dealer
+import blackjack.domain.GameDealer
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.domain.GamePlayer
 import blackjack.domain.GamePlayers
@@ -15,11 +15,11 @@ import blackjack.model.PlayerGameResult
 import blackjack.model.PlayerGameResults
 
 object ResultView {
-    fun printInitialCards(gamePlayers: GamePlayers, dealer: Dealer) {
-        println("${Dealer.NAME}와 ${gamePlayers.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
+    fun printInitialCards(gamePlayers: GamePlayers, gameDealer: GameDealer) {
+        println("${GameDealer.NAME}와 ${gamePlayers.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
         println(
-            "${Dealer.NAME}: ${
-                dealer.cards
+            "${GameDealer.NAME}: ${
+                gameDealer.cards
                     .value[0]
                     .let { "${it.type.value}${it.shape.string()}" }
             }"
@@ -33,8 +33,8 @@ object ResultView {
         println()
     }
 
-    fun printPlayerResult(gamePlayers: GamePlayers, dealer: Dealer) {
-        println("${getPlayerInfo(Dealer.NAME, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
+    fun printPlayerResult(gamePlayers: GamePlayers, gameDealer: GameDealer) {
+        println("${getPlayerInfo(GameDealer.NAME, gameDealer.cards.value)} - 결과: ${gameDealer.sumCards()}")
         gamePlayers.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
         println()
     }

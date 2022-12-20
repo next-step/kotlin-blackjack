@@ -4,44 +4,44 @@ import blackjack.InputView
 import blackjack.ResultView
 import blackjack.model.GameResult
 
-class Game(val gamePlayers: GamePlayers, val dealer: Dealer) {
+class Game(val gamePlayers: GamePlayers, val gameDealer: GameDealer) {
     init {
-        dealer.shuffle()
+        gameDealer.shuffle()
         deliverInitialCards()
     }
 
     private fun deliverInitialCards() {
         gamePlayers.value.forEach {
-            List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
+            List(INITIAL_CARDS_COUNT) { gameDealer.deliverCard() }
                 .let(it::readyToPlay)
         }
-        List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
-            .let(dealer::readyToPlay)
+        List(INITIAL_CARDS_COUNT) { gameDealer.deliverCard() }
+            .let(gameDealer::readyToPlay)
     }
 
     fun play() {
-        playPlayers(gamePlayers, dealer)
-        playDealer(dealer)
+        playPlayers(gamePlayers, gameDealer)
+        playDealer(gameDealer)
     }
 
-    private fun playPlayers(gamePlayers: GamePlayers, dealer: Dealer) {
+    private fun playPlayers(gamePlayers: GamePlayers, gameDealer: GameDealer) {
         gamePlayers.value
             .forEach { player ->
                 while (!player.blackjack() &&
                     !player.burst() &&
                     InputView.shouldHit(player)
                 ) {
-                    player.hit(dealer.deliverCard())
+                    player.hit(gameDealer.deliverCard())
                     ResultView.printPlayerCards(player)
                 }
             }
         println()
     }
 
-    private fun playDealer(dealer: Dealer) {
-        while (!dealer.blackjack() && !dealer.stay() && !dealer.burst()) {
+    private fun playDealer(gameDealer: GameDealer) {
+        while (!gameDealer.blackjack() && !gameDealer.stay() && !gameDealer.burst()) {
             InputView.printDealerHit()
-            dealer.hit(dealer.deliverCard())
+            gameDealer.hit(gameDealer.deliverCard())
         }
     }
 

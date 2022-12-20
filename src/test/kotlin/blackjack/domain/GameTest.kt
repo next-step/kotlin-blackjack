@@ -11,10 +11,10 @@ internal class GameTest {
         val secondGamePlayer = GamePlayer("아귀")
 
         val gamePlayers = GamePlayers(listOf(firstGamePlayer, secondGamePlayer))
-        val dealer = Dealer()
-        val game = Game(gamePlayers, dealer)
+        val gameDealer = GameDealer()
+        val game = Game(gamePlayers, gameDealer)
         assertThat(game.gamePlayers.value.all { it.cards.size == INITIAL_CARDS_COUNT }).isTrue
-        assertThat(game.dealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
+        assertThat(game.gameDealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
     }
 
     @Test
@@ -23,6 +23,6 @@ internal class GameTest {
         val dealer = FakeDealer()
         val game = Game(GamePlayers(player), dealer)
         assertThat(game.gamePlayers.value.all { it.cards.size == INITIAL_CARDS_COUNT }).isTrue
-        assertThat(game.dealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
+        assertThat(game.gameDealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
     }
 }
