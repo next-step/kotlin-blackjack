@@ -57,7 +57,7 @@ internal class GamePlayerTest {
             readyToPlay(initialCards)
             hit(hitCard)
         }
-        assertThat(gamePlayer.burst()).isTrue
+        assertThat(gamePlayer.bust()).isTrue
     }
 
     @ParameterizedTest
@@ -67,7 +67,7 @@ internal class GamePlayerTest {
             readyToPlay(initialCards)
             hit(hitCard)
         }
-        assertThat(gamePlayer.burst()).isFalse
+        assertThat(gamePlayer.bust()).isFalse
     }
 
     @Test

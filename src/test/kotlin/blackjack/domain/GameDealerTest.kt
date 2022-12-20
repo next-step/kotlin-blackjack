@@ -67,7 +67,7 @@ internal class GameDealerTest {
             readyToPlay(initialCards)
             hit(hitCard)
         }
-        assertThat(dealer.burst()).isTrue
+        assertThat(dealer.bust()).isTrue
     }
 
     @ParameterizedTest
@@ -77,7 +77,7 @@ internal class GameDealerTest {
             readyToPlay(initialCards)
             hit(hitCard)
         }
-        assertThat(dealer.burst()).isFalse
+        assertThat(dealer.bust()).isFalse
     }
 
     @Test

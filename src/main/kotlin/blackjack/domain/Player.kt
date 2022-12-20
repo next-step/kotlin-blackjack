@@ -9,7 +9,7 @@ interface Player {
     fun readyToPlay(initialCards: List<Card>)
     fun hit(card: Card): Boolean
     fun sumCards(): Int
-    fun burst(): Boolean
+    fun bust(): Boolean
     fun blackjack(): Boolean
 }
 

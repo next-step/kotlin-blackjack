@@ -63,9 +63,9 @@ internal class GameTest {
 
     @Test
     fun `딜러 버스트, 플레이어 버스트 상태 아닌 경우 플레이어 승`() {
-        val player = FakePlayer("고니", burst = false)
-        val dummyPlayer = FakePlayer("팽 경장", burst = false)
-        val dealer = FakeDealer(burst = true)
+        val player = FakePlayer("고니", bust = false)
+        val dummyPlayer = FakePlayer("팽 경장", bust = false)
+        val dealer = FakeDealer(bust = true)
         val game = Game(Players(listOf(player, dummyPlayer)), dealer)
         val result = game.results()
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
@@ -77,8 +77,8 @@ internal class GameTest {
 
     @Test
     fun `플레이어 버스트 상태이면 딜러 승`() {
-        val player = FakePlayer("고니", burst = true)
-        val dummyPlayer = FakePlayer("팽 경장", burst = true)
+        val player = FakePlayer("고니", bust = true)
+        val dummyPlayer = FakePlayer("팽 경장", bust = true)
         val dealer = FakeDealer()
         val game = Game(Players(listOf(player, dummyPlayer)), dealer)
         val result = game.results()

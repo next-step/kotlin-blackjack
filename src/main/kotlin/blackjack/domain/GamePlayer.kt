@@ -17,7 +17,7 @@ class GamePlayer(override val name: String, override val cards: Cards = Cards())
 
     override fun sumCards(): Int = cards.sum()
 
-    override fun burst(): Boolean = cards.sum() > BLACKJACK_SCORE
+    override fun bust(): Boolean = cards.sum() > BLACKJACK_SCORE
 
     override fun blackjack(): Boolean =
         cards.size == INITIAL_CARDS_COUNT && cards.sum() == BLACKJACK_SCORE

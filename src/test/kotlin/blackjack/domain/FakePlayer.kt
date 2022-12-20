@@ -10,7 +10,7 @@ class FakePlayer(
     override val cards: Cards = Cards(),
     private val hit: Boolean = false,
     private val sumCards: Int = 0,
-    private val burst: Boolean = false,
+    private val bust: Boolean = false,
     private val blackjack: Boolean = false,
 ) : Player {
 
@@ -22,7 +22,7 @@ class FakePlayer(
 
     override fun sumCards(): Int = sumCards
 
-    override fun burst(): Boolean = burst
+    override fun bust(): Boolean = bust
 
     override fun blackjack(): Boolean = blackjack
 }
@@ -34,7 +34,7 @@ class FakeDealer(
     private val stay: Boolean = false,
     private val hit: Boolean = false,
     private val sumCards: Int = 0,
-    private val burst: Boolean = false,
+    private val bust: Boolean = false,
     private val blackjack: Boolean = false,
 ) : Dealer {
     override val deck: CardDeck
@@ -56,7 +56,7 @@ class FakeDealer(
 
     override fun sumCards(): Int = sumCards
 
-    override fun burst(): Boolean = burst
+    override fun bust(): Boolean = bust
 
     override fun blackjack(): Boolean = blackjack
 }

@@ -56,8 +56,8 @@ class Game(val players: Players, val dealer: Dealer) {
         return when {
             player.blackjack() && dealer.blackjack() -> GameResult.PUSH
             dealer.blackjack() -> GameResult.LOSE
-            player.blackjack() || (dealer.burst() && !player.burst()) -> GameResult.WIN
-            player.burst() -> GameResult.LOSE
+            player.blackjack() || (dealer.bust() && !player.bust()) -> GameResult.WIN
+            player.bust() -> GameResult.LOSE
             playerSum == dealerSum -> GameResult.PUSH
             playerSum > dealerSum -> GameResult.WIN
             else -> GameResult.LOSE
@@ -68,7 +68,7 @@ class Game(val players: Players, val dealer: Dealer) {
         players.value
             .forEach { player ->
                 while (!player.blackjack() &&
-                    !player.burst() &&
+                    !player.bust() &&
                     InputView.shouldHit(player)
                 ) {
                     player.hit(dealer.deliverCard())
@@ -79,7 +79,7 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     private fun playDealer(dealer: Dealer) {
-        while (!dealer.blackjack() && !dealer.stay() && !dealer.burst()) {
+        while (!dealer.blackjack() && !dealer.stay() && !dealer.bust()) {
             InputView.printDealerHit()
             dealer.hit(dealer.deliverCard())
         }

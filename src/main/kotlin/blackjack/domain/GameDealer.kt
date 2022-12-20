@@ -24,7 +24,7 @@ class GameDealer(
 
     override fun sumCards(): Int = cards.sum()
 
-    override fun burst(): Boolean = cards.sum() > BLACKJACK_SCORE
+    override fun bust(): Boolean = cards.sum() > BLACKJACK_SCORE
 
     override fun blackjack(): Boolean = cards.sum() == BLACKJACK_SCORE
 
