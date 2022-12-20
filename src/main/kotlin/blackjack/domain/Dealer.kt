@@ -20,7 +20,7 @@ data class Dealer(
     override fun canHit(): Boolean = cards.countingCard() < DEALER_HIT_RULE_SCORE
 
     companion object {
-        private val NAME: Name = Name("딜러")
+        private const val NAME = "딜러"
         val DEALER_INFO: PlayerInfo = PlayerInfo(NAME)
         const val DEALER_HIT_RULE_SCORE = 17
     }

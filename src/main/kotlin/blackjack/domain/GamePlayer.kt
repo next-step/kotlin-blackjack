@@ -7,7 +7,8 @@ data class GamePlayer(
     override val cards: Cards = Cards.empty(),
 ) : Player {
 
-    constructor(name: String) : this(PlayerInfo(Name(name)))
+    constructor(name: String) : this(PlayerInfo(name))
+    constructor(name: String, bettingAmount: Int) : this(PlayerInfo(Name(name), BettingAmount(bettingAmount)))
 
     override fun initialCard(deck: Deck): Player {
         return copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))
