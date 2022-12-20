@@ -14,6 +14,8 @@ class Game(val players: Players, val dealer: Dealer) {
             List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
                 .let(it::readyToPlay)
         }
+        List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
+            .let(dealer::readyToPlay)
     }
 
     fun play() {
