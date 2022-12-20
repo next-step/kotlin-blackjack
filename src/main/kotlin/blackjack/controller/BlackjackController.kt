@@ -9,7 +9,7 @@ class BlackjackController {
     private val outputView = ConsoleOutput
 
     fun playGame() {
-        val game = Game(inputView.inputPlayers())
+        val game = Game(inputView.inputPlayersInfo())
         val dealer = game.getDealer()
         val players = game.initialCard()
         outputView.printInitialCards(dealer, players)
