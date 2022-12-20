@@ -1,13 +1,10 @@
 package blackjack.domain.card
 
-import kotlin.math.abs
-
 enum class CardNumber(
     val description: String,
     val calc: (Int) -> Int,
-    val sortOrder: Int = 0,
 ) {
-    ACE("A", { num -> if (abs(num - 20) < abs(num - 10)) num + 1 else num + 11 }, 1),
+    ACE("A", { num -> num + 1 }),
     NUM_2("2", { num -> num + 2 }),
     NUM_3("3", { num -> num + 3 }),
     NUM_4("4", { num -> num + 4 }),

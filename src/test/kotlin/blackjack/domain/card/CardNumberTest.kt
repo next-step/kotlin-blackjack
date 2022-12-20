@@ -8,8 +8,7 @@ internal class CardNumberTest : FunSpec({
     context("주어진 숫자를 기반으로 점수를 계산한다.") {
         withData(
             listOf(
-                CardNumberFixture(0, CardNumber.ACE, 11),
-                CardNumberFixture(20, CardNumber.ACE, 21),
+                CardNumberFixture(0, CardNumber.ACE, 1),
                 CardNumberFixture(0, CardNumber.NUM_2, 2),
                 CardNumberFixture(0, CardNumber.NUM_3, 3),
                 CardNumberFixture(0, CardNumber.NUM_4, 4),

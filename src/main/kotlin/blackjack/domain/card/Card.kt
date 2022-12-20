@@ -11,4 +11,8 @@ data class Card(
     fun calculate(score: Int): Int {
         return cardNumber.calc(score)
     }
+
+    fun isAce(): Boolean {
+        return cardNumber == CardNumber.ACE
+    }
 }

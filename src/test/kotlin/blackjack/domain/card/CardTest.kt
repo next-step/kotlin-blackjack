@@ -16,12 +16,14 @@ internal class CardTest : BehaviorSpec({
         }
 
         When("점수를 ") {
-            Then("계산할 수 있다. [ACE가 1로 활용될 경우]") {
+            Then("계산할 수 있다.") {
                 cloverAceCard.calculate(20) shouldBe 21
             }
+        }
 
-            Then("계산할 수 있다. [ACE가 11로 활용될 경우]") {
-                cloverAceCard.calculate(0) shouldBe 11
+        When("ACE일 때 ") {
+            Then("true를 반환한다.") {
+                cloverAceCard.isAce() shouldBe true
             }
         }
     }

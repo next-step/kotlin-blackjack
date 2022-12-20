@@ -16,11 +16,23 @@ data class Cards(
     }
 
     fun calculate(): Int {
-        return cards.sortedBy { it.cardNumber.sortOrder }
-            .fold(0) { acc, card -> card.calculate(acc) }
+        val aceCnt = cards.count { it.isAce() }
+        var score = cards.fold(0) { acc, card -> card.calculate(acc) }
+        repeat(aceCnt) {
+            score = calculateAceCard(score)
+        }
+        return score
+    }
+
+    private fun calculateAceCard(score: Int): Int {
+        if (score <= ACE_THRESHOLD) {
+            return score + ACE_THRESHOLD
+        }
+        return score
     }
 
     companion object {
         private const val DELIMITER = ", "
+        private const val ACE_THRESHOLD = 10
     }
 }
