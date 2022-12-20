@@ -9,7 +9,7 @@ data class Dealer(
     constructor(cards: Cards) : this(DEALER_INFO, cards)
 
     override fun initialCard(deck: Deck): Player {
-        return this.copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))
+        return copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))
     }
 
     override fun hit(deck: Deck): Player {
