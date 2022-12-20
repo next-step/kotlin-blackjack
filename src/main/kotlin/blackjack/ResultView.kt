@@ -13,8 +13,14 @@ import blackjack.model.CardShape.SPADE
 
 object ResultView {
     fun printInitialCards(players: Players, dealer: Dealer) {
-        println("딜러와 ${players.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
-        println("딜러: ${getPlayerInfo("딜러", dealer.cards.value.filterIndexed { index, _ -> index != 0 })}")
+        println("${Dealer.NAME}와 ${players.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
+        println(
+            "${Dealer.NAME}: ${
+                getPlayerInfo(
+                    Dealer.NAME,
+                    dealer.cards.value.filterIndexed { index, _ -> index != 0 })
+            }"
+        )
         players.value.forEach { println(getPlayerInfo(it.name, it.cards.value)) }
         println()
     }
@@ -22,7 +28,7 @@ object ResultView {
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player.name, player.cards.value))
 
     fun printResult(players: Players, dealer: Dealer) {
-        println("${getPlayerInfo("딜러", dealer.cards.value)} - 결과: ${dealer.sumCards()}")
+        println("${getPlayerInfo(Dealer.NAME, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
         players.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
     }
 

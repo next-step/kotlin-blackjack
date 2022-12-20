@@ -28,6 +28,7 @@ class Dealer(
     override fun blackjack(): Boolean = cards.sum() == BLACKJACK_SCORE
 
     companion object {
+        const val NAME = "딜러"
         const val MIN_CARDS_SUM = 16
         private const val STAY_CARDS_SUM = 17
     }
