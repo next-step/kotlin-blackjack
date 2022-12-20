@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.InputView
 import blackjack.ResultView
+import blackjack.model.PlayerGameResults
 
 class Game(val players: Players, val dealer: Dealer) {
     init {
@@ -21,6 +22,12 @@ class Game(val players: Players, val dealer: Dealer) {
     fun play() {
         playPlayers(players, dealer)
         playDealer(dealer)
+        println()
+    }
+
+    fun results(): PlayerGameResults {
+        TODO("게임 결과를 반환하는 기능 구현")
+    }
     }
 
     private fun playPlayers(players: Players, dealer: Dealer) {
