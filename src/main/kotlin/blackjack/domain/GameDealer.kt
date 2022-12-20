@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.model.Card
 
 class GameDealer(
@@ -26,7 +27,8 @@ class GameDealer(
 
     override fun bust(): Boolean = cards.sum() > BLACKJACK_SCORE
 
-    override fun blackjack(): Boolean = cards.sum() == BLACKJACK_SCORE
+    override fun blackjack(): Boolean =
+        cards.size == INITIAL_CARDS_COUNT && cards.sum() == BLACKJACK_SCORE
 
     companion object {
         private const val STAY_CARDS_SUM = 17
