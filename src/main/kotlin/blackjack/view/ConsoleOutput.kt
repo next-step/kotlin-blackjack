@@ -16,6 +16,11 @@ object ConsoleOutput {
 
     fun printPlayerCards(player: Player) = println(getPlayerInfo(player))
 
+    fun printDealerDrawOneMoreCard() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println()
+    }
+
     fun printResultCards(dealer: Player, players: Players) {
         printResultCards(dealer)
         players.list.map { printResultCards(it) }

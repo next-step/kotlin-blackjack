@@ -1,9 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
 import blackjack.domain.Game
-import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleOutput
 
@@ -17,36 +14,21 @@ class BlackjackController {
         val players = game.initialCard()
         outputView.printInitialCards(dealer, players)
 
-        val playersResult = scratchPlayers(players, game.deck)
-        val dealerResult = scratchDealer(dealer, game.deck)
+        val playersResult = game.scratchPlayers(
+            players,
+            inputScratch = { inputView.inputScratch(it) },
+            printPlayerCards = { outputView.printPlayerCards(it) }
+        )
+        println()
+        
+        val dealerResult =
+            game.scratchDealer(
+                dealer,
+                printDealerDrawOneMoreCard = { outputView.printDealerDrawOneMoreCard() }
+            )
 
         outputView.printResultCards(dealerResult, playersResult)
         outputView.printGameResult(dealerResult, playersResult)
-    }
-
-    private fun scratchDealer(dealer: Player, deck: Deck): Player {
-        return if (dealer.canHit()) {
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
-            dealer.hit(deck)
-        } else {
-            println("딜러는 17이상이라 카드를 받지 않았습니다.\n")
-            dealer
-        }
-    }
-
-    private fun scratchPlayers(players: Players, deck: Deck): Players {
-        val result = mutableListOf<Player>()
-        players.list.map {
-            var player = it
-            while (player.canHit() && ConsoleInput.inputScratch(player)) {
-                player = player.hit(deck)
-                ConsoleOutput.printPlayerCards(player)
-            }
-            result.add(player)
-        }
-
-        println()
-        return Players(result)
     }
 }
 

@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.GamePlayer
-import blackjack.domain.Player
 import blackjack.domain.Players
 
 object ConsoleInput {
@@ -26,15 +25,15 @@ object ConsoleInput {
         )
     }
 
-    tailrec fun inputScratch(player: Player): Boolean {
-        println("${player.name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    tailrec fun inputScratch(name: String): Boolean {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         val isHit = readln().lowercase()
         return if (isHit in listOf("y", "n")) {
             "y" == isHit
         } else {
             println("y 또는 n으로 의사를 입력해주세요.")
-            inputScratch(player)
+            inputScratch(name)
         }
     }
 
