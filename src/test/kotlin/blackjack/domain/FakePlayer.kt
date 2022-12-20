@@ -9,7 +9,7 @@ class FakePlayer(
     private val sumCards: Int = 0,
     private val burst: Boolean = false,
     private val blackjack: Boolean = false,
-) : GamePlay {
+) : Player {
 
     override fun readyToPlay(initialCards: List<Card>) {
         // do nothing
@@ -29,7 +29,7 @@ class FakeDealer(
     private val sumCards: Int = 0,
     private val burst: Boolean = false,
     private val blackjack: Boolean = false,
-) : GamePlay {
+) : Player {
 
     override fun readyToPlay(initialCards: List<Card>) {
         // do nothing

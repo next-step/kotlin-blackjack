@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.model.Card
 
-class GamePlayer(val name: String, val cards: Cards = Cards()) : GamePlay {
+class GamePlayer(val name: String, val cards: Cards = Cards()) : Player {
     init {
         require(name.isNotBlank()) { "Player 이름은 공백이 될 수 없습니다. 유효한 Player 명을 입력해주세요." }
     }

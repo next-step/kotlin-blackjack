@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.model.Card
 
-interface GamePlay {
+interface Player {
     fun readyToPlay(initialCards: List<Card>)
     fun hit(card: Card): Boolean
     fun sumCards(): Int
