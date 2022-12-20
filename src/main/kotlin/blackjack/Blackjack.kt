@@ -10,5 +10,6 @@ fun main() {
     ResultView.printInitialCards(game.players, game.dealer)
     game.play()
     ResultView.printPlayerResult(game.players, game.dealer)
+    ResultView.printGameResult(game.results())
 }
 

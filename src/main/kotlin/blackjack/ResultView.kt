@@ -10,6 +10,9 @@ import blackjack.model.CardShape.CLOVER
 import blackjack.model.CardShape.DIAMOND
 import blackjack.model.CardShape.HEART
 import blackjack.model.CardShape.SPADE
+import blackjack.model.GameResult
+import blackjack.model.PlayerGameResult
+import blackjack.model.PlayerGameResults
 
 object ResultView {
     fun printInitialCards(players: Players, dealer: Dealer) {
@@ -32,10 +35,28 @@ object ResultView {
     fun printPlayerResult(players: Players, dealer: Dealer) {
         println("${getPlayerInfo(dealer.name, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
         players.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
+        println()
+    }
+
+    fun printGameResult(results: PlayerGameResults) {
+        println("## 최종 승패")
+        results.value
+            .forEach {
+                when (it) {
+                    is PlayerGameResult.Player -> println("${it.name}: ${it.gameResult.string()}")
+                    is PlayerGameResult.Dealer -> println("${it.name}: ${it.win}승 ${it.push}무 ${it.lose}패")
+                }
+            }
     }
 
     private fun getPlayerInfo(name: String, cards: List<Card>) =
         "${name}카드: ${cards.joinToString { "${it.type.value}${it.shape.string()}" }}"
+
+    private fun GameResult.string() = when (this) {
+        GameResult.WIN -> "승"
+        GameResult.PUSH -> "무"
+        GameResult.LOSE -> "패"
+    }
 
     private fun CardShape.string() = when (this) {
         SPADE -> "스페이드"
