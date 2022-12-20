@@ -8,7 +8,7 @@ import blackjack.domain.Players
 
 object ConsoleOutput {
     fun printInitialCards(dealer: Player, players: Players) {
-        println("달러와 ${players.list.joinToString { it.name.value }}에게 ${INITIAL_CARD_COUNT}장의 카드를 나누었습니다.")
+        println("달러와 ${players.list.joinToString { it.getPlayerName() }}에게 ${INITIAL_CARD_COUNT}장의 카드를 나누었습니다.")
         printPlayerCards(dealer)
         players.list.map { printPlayerCards(it) }
         println()
@@ -33,14 +33,14 @@ object ConsoleOutput {
         println("딜러: ${dealerGameResult.joinToString()}")
 
         val playersResult = PlayerResult.ofGamePlayers(dealer, players)
-        playersResult.map { println("${it.player.name.value}: ${it.gameResult[0].label}") }
+        playersResult.map { println("${it.player.getPlayerName()}: ${it.gameResult[0].label}") }
     }
 
     private fun printResultCards(player: Player) {
         println("${getPlayerInfo(player)} - 결과: ${player.countingCard()}")
     }
 
-    private fun getPlayerInfo(player: Player) = "${player.name.value} 카드: ${player.cards}"
+    private fun getPlayerInfo(player: Player) = "${player.getPlayerName()} 카드: ${player.cards}"
 
     private fun groupingDealerResult(dealerResult: PlayerResult): Map<GameResult, Int> {
         return dealerResult.gameResult.groupingBy { it }.eachCount()

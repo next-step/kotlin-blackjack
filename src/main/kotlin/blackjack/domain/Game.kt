@@ -27,7 +27,7 @@ class Game(
         val result = mutableListOf<Player>()
         players.list.map {
             var player = it
-            while (player.canHit() && inputScratch(player.name.value)) {
+            while (player.canHit() && inputScratch(player.getPlayerName())) {
                 player = player.hit(deck)
                 printPlayerCards(player)
             }

@@ -1,8 +1,10 @@
 package blackjack.domain
 
 interface Player {
-    val name: Name
+    val playerInfo: PlayerInfo
     val cards: Cards
+
+    fun getPlayerName(): String = playerInfo.getName()
 
     fun initialCard(deck: Deck): Player
 

@@ -3,11 +3,11 @@ package blackjack.domain
 import blackjack.domain.Game.Companion.INITIAL_CARD_COUNT
 
 data class GamePlayer(
-    override val name: Name,
+    override val playerInfo: PlayerInfo,
     override val cards: Cards = Cards.empty(),
 ) : Player {
 
-    constructor(name: String) : this(Name(name))
+    constructor(name: String) : this(PlayerInfo(Name(name)))
 
     override fun initialCard(deck: Deck): Player {
         return copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))

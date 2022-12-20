@@ -20,7 +20,6 @@ class BlackjackController {
             printPlayerCards = { outputView.printPlayerCards(it) }
         )
         println()
-        
         val dealerResult =
             game.scratchDealer(
                 dealer,
