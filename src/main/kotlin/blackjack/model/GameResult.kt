@@ -19,3 +19,5 @@ sealed class PlayerGameResult {
 
     data class Player(override val name: String, val gameResult: GameResult) : PlayerGameResult()
 }
+
+data class PlayerGameResults(val value: List<PlayerGameResult>)
