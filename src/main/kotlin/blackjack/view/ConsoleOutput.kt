@@ -1,10 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Game.Companion.INITIAL_CARD_COUNT
-import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerResult
 import blackjack.domain.Players
+import blackjack.domain.Profit
 
 object ConsoleOutput {
     fun printInitialCards(dealer: Player, players: Players) {
@@ -28,12 +28,11 @@ object ConsoleOutput {
     }
 
     fun printGameResult(dealer: Player, players: Players) {
-        println("## 최종 승패")
-        val dealerGameResult = groupingDealerResult(PlayerResult.ofDealer(dealer, players))
-        println("딜러: ${dealerGameResult.joinToString()}")
+        println("## 최종 수익")
 
         val playersResult = PlayerResult.ofGamePlayers(dealer, players)
-        playersResult.map { println("${it.player.getPlayerName()}: ${it.gameResult[0].label}") }
+        println("딜러: ${Profit.ofDealer(playersResult)}")
+        playersResult.map { println("${it.player.getPlayerName()}: ${it.getProfit()}") }
     }
 
     private fun printResultCards(player: Player) {
@@ -41,13 +40,4 @@ object ConsoleOutput {
     }
 
     private fun getPlayerInfo(player: Player) = "${player.getPlayerName()} 카드: ${player.cards}"
-
-    private fun groupingDealerResult(dealerResult: PlayerResult): Map<GameResult, Int> {
-        return dealerResult.gameResult.groupingBy { it }.eachCount()
-    }
-
-    private fun Map<GameResult, Int>.joinToString(): String {
-        return this.map { "${it.value}${it.key.label}" }.joinToString(" ")
-    }
-
 }
