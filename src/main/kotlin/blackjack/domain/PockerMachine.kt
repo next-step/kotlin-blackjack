@@ -22,7 +22,7 @@ class PockerMachine(
         retryFunc: (person: Player) -> Boolean,
         printFunc: (person: Player) -> Unit
     ) {
-        players.map { player ->
+        players.forEach { player ->
             when (player) {
                 is Dealer -> player.pickIfRequired(cardDeck)
                 is Participant -> pickOrNot(player, retryFunc, printFunc)
@@ -37,20 +37,27 @@ class PockerMachine(
         )
     }
 
-    private fun pickOrNot(
+    private tailrec fun pickOrNot(
         player: Player,
         retryFunc: (player: Player) -> Boolean,
         printFunc: (player: Player) -> Unit
     ) {
-        while (player.getScore() < MAXIMUM_SCORE) {
-            if (!retryFunc(player)) {
-                printFunc(player)
-                return
-            }
-            val card = dealer.pickCard(cardDeck)
-            player.addCard(card)
-            printFunc(player)
+        // 최고 점수보다 많을시 종료
+        if (player.getScore() > MAXIMUM_SCORE) {
+            return
         }
+
+        // 사용자가 종료할시 종료
+        if (retryFunc(player).not()) {
+            printFunc(player)
+            return
+        }
+
+        val card = dealer.pickCard(cardDeck)
+        player.addCard(card)
+        printFunc(player)
+
+        pickOrNot(player, retryFunc, printFunc)
     }
 
     companion object {
