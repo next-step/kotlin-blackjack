@@ -10,7 +10,7 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     private fun deliverInitialCards() {
-        players.value.forEach {
+        players.gamePlayers.forEach {
             List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
                 .let(it::readyToPlay)
         }
@@ -24,7 +24,7 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     private fun playPlayers(players: Players, dealer: Dealer) {
-        players.value
+        players.gamePlayers
             .forEach { player ->
                 while (!player.blackjack() &&
                     !player.burst() &&
@@ -37,10 +37,10 @@ class Game(val players: Players, val dealer: Dealer) {
         println()
     }
 
-    private fun playDealer(gameDealer: GameDealer) {
-        while (!gameDealer.blackjack() && !gameDealer.stay() && !gameDealer.burst()) {
+    private fun playDealer(dealer: Dealer) {
+        while (!dealer.blackjack() && !dealer.stay() && !dealer.burst()) {
             InputView.printDealerHit()
-            gameDealer.hit(gameDealer.deliverCard())
+            dealer.hit(dealer.deliverCard())
         }
     }
 

@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.model.Card
 
-class GameDealer(
+class Dealer(
     private val _deck: CardDeck = CardDeckImpl(),
     val cards: Cards = Cards(),
 ) : Player {
