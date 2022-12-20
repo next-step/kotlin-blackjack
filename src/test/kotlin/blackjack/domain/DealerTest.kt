@@ -38,8 +38,8 @@ internal class DealerTest {
     @ParameterizedTest
     @MethodSource("provideInitialCards")
     fun `Dealer 게임 시작 전 2개의 카드를 받는다`(cards: List<Card>) {
-        val player = Player("고니").apply { readyToPlay(cards) }
-        assertThat(player.cards.size).isEqualTo(cards.size)
+        val gamePlayer = GamePlayer("고니").apply { readyToPlay(cards) }
+        assertThat(gamePlayer.cards.size).isEqualTo(cards.size)
     }
 
     @ParameterizedTest

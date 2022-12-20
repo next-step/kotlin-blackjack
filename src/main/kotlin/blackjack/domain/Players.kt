@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Players(val value: List<Player>) {
+class Players(val value: List<GamePlayer>) {
 
     init {
         require(value.size >= MIN_NUMBER_PLAYERS) { "우효하지 않는 플레이어 인원 수 입니다. 최소 2명 이상 입력해주세요." }

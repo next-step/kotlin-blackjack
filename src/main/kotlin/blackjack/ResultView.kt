@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
-import blackjack.domain.Player
+import blackjack.domain.GamePlayer
 import blackjack.domain.Players
 import blackjack.model.Card
 import blackjack.model.CardShape
@@ -10,6 +10,9 @@ import blackjack.model.CardShape.CLOVER
 import blackjack.model.CardShape.DIAMOND
 import blackjack.model.CardShape.HEART
 import blackjack.model.CardShape.SPADE
+import blackjack.model.GameResult
+import blackjack.model.PlayerGameResult
+import blackjack.model.PlayerGameResults
 
 object ResultView {
     fun printInitialCards(players: Players, dealer: Dealer) {
@@ -25,7 +28,9 @@ object ResultView {
         println()
     }
 
-    fun printPlayerCards(player: Player) = println(getPlayerInfo(player.name, player.cards.value))
+    fun printPlayerCards(gamePlayer: GamePlayer) {
+        println(getPlayerInfo(gamePlayer.name, gamePlayer.cards.value))
+    }
 
     fun printPlayerResult(players: Players, dealer: Dealer) {
         println("${getPlayerInfo(Dealer.NAME, dealer.cards.value)} - 결과: ${dealer.sumCards()}")

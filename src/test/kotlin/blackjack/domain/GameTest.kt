@@ -7,12 +7,21 @@ import org.junit.jupiter.api.Test
 internal class GameTest {
     @Test
     fun `게임이 생성되면 딜러는 각 플에이어에게 2장의 카드 전달하고 본인 자신도 2장의 카드를 가진다`() {
-        val firstPlayer = Player("고니")
-        val secondPlayer = Player("아귀")
+        val firstGamePlayer = GamePlayer("고니")
+        val secondGamePlayer = GamePlayer("아귀")
 
-        val players = Players(listOf(firstPlayer, secondPlayer))
+        val players = Players(listOf(firstGamePlayer, secondGamePlayer))
         val dealer = Dealer()
         val game = Game(players, dealer)
+        assertThat(game.players.value.all { it.cards.size == INITIAL_CARDS_COUNT }).isTrue
+        assertThat(game.dealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
+    }
+
+    @Test
+    fun `딜러와 플레이어가 블랙잭을 완성하였을 시 무승부(push)`() {
+        val player = FakePlayer("고니", sumCards = 21, blackjack = true)
+        val dealer = FakeDealer()
+        val game = Game(Players(player), dealer)
         assertThat(game.players.value.all { it.cards.size == INITIAL_CARDS_COUNT }).isTrue
         assertThat(game.dealer.cards.size).isEqualTo(INITIAL_CARDS_COUNT)
     }
