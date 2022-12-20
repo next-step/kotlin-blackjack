@@ -1,12 +1,12 @@
 package blackjack
 
 import blackjack.domain.GamePlayer
-import blackjack.domain.GamePlayers
+import blackjack.domain.Players
 
 object InputView {
     private const val DELIMITER_NAMES = ","
 
-    fun inputPlayers(): GamePlayers {
+    fun inputPlayers(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         val names = readln()
@@ -25,7 +25,7 @@ object InputView {
         return "y" == hit
     }
 
-    private fun createPlayers(names: List<String>): GamePlayers = GamePlayers(names.map { GamePlayer(it) })
+    private fun createPlayers(names: List<String>): Players = Players(names.map { GamePlayer(it) })
     private fun splitNames(names: String): List<String> = names.split(DELIMITER_NAMES).map { it.trim() }
     fun printDealerHit() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
 }
