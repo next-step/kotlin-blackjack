@@ -2,6 +2,8 @@ package blackjack.domain
 
 import blackjack.InputView
 import blackjack.ResultView
+import blackjack.model.GameResult
+import blackjack.model.PlayerGameResult
 import blackjack.model.PlayerGameResults
 
 class Game(val players: Players, val dealer: Dealer) {
@@ -26,8 +28,40 @@ class Game(val players: Players, val dealer: Dealer) {
     }
 
     fun results(): PlayerGameResults {
-        TODO("게임 결과를 반환하는 기능 구현")
+        val playerResults = calculatePlayerResult(players, dealer)
+        val gameDealerGameResult = calculateDealerResult(playerResults)
+        return PlayerGameResults(listOf(gameDealerGameResult) + playerResults)
     }
+
+    private fun calculatePlayerResult(players: Players, dealer: Dealer): List<PlayerGameResult> {
+        val playerResults = mutableListOf<PlayerGameResult>()
+        players.value.map { player ->
+            val result = calculateGameResult(player, dealer)
+            playerResults.add(PlayerGameResult.Player(player.name, result))
+        }
+        return playerResults
+    }
+
+    private fun calculateDealerResult(playerResults: List<PlayerGameResult>): PlayerGameResult.Dealer =
+        PlayerGameResult.Dealer(
+            name = dealer.name,
+            win = playerResults.count { it is PlayerGameResult.Player && it.gameResult == GameResult.LOSE },
+            push = playerResults.count { it is PlayerGameResult.Player && it.gameResult == GameResult.PUSH },
+            lose = playerResults.count { it is PlayerGameResult.Player && it.gameResult == GameResult.WIN },
+        )
+
+    private fun calculateGameResult(player: Player, dealer: Dealer): GameResult {
+        val playerSum = player.sumCards()
+        val dealerSum = dealer.sumCards()
+        return when {
+            player.blackjack() && dealer.blackjack() -> GameResult.PUSH
+            dealer.blackjack() -> GameResult.LOSE
+            player.blackjack() || (dealer.burst() && !player.burst()) -> GameResult.WIN
+            player.burst() -> GameResult.LOSE
+            playerSum == dealerSum -> GameResult.PUSH
+            playerSum > dealerSum -> GameResult.WIN
+            else -> GameResult.LOSE
+        }
     }
 
     private fun playPlayers(players: Players, dealer: Dealer) {
