@@ -1,7 +1,10 @@
 package com.nextstep.blackjack.domain
 
+import com.nextstep.blackjack.domain.BlackJackConstants.DEALER_INITIAL_DRAW_SIZE
+
 class Deck(cards: List<Card>) {
     private val _cards = cards.shuffled().toMutableList()
+
     fun initialDraw(): List<Card> {
         require(_cards.size > 2) { "deck이 2장 미만입니다." }
 
@@ -20,6 +23,10 @@ class Deck(cards: List<Card>) {
 
     fun isInitialState(): Boolean {
         return _cards.size == SIZE
+    }
+
+    fun isInitialPlayerState(): Boolean {
+        return _cards.size == SIZE - DEALER_INITIAL_DRAW_SIZE
     }
 
     companion object {

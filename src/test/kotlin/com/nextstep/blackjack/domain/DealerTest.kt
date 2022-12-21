@@ -5,8 +5,54 @@ import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : FunSpec({
-    context("Player") {
+class DealerTest : FunSpec({
+    context("Delaer") {
+        test("딜러 게임 상한선 16 테스트") {
+            listOf(
+                row(
+                    listOf(Card(Symbol.CLOVER, CardNumber.THREE)),
+                    true
+                ),
+                row(
+                    listOf(
+                        Card(Symbol.CLOVER, CardNumber.QUEEN),
+                        Card(Symbol.CLOVER, CardNumber.KING)
+                    ),
+                    false
+                )
+            ).forAll { (cards, expected) ->
+                run {
+                    val dealer = Dealer(Deck.createDeck())
+                    dealer.draw(cards)
+                    dealer.isUpperThreshold() == expected
+                }
+            }
+        }
+        test("플레이어와 승패 테스트") {
+            listOf(
+                row(
+                    listOf(Card(Symbol.CLOVER, CardNumber.THREE)),
+                    listOf(Card(Symbol.CLOVER, CardNumber.FOUR)),
+                    emptyList<Player>()
+                ),
+                row(
+                    listOf(Card(Symbol.CLOVER, CardNumber.FOUR)),
+                    listOf(Card(Symbol.CLOVER, CardNumber.THREE)),
+                    listOf(Player("jay"))
+                )
+            ).forAll { (dealerCards, playerCards, expected) ->
+                run {
+                    val dealer = Dealer(Deck.createDeck())
+                    dealer.draw(dealerCards)
+
+                    val player = Player("jay")
+                    player.draw(playerCards)
+
+                    val beatPlayers = dealer.getBeatPlayer(Players(listOf(player)))
+                    beatPlayers shouldBe expected
+                }
+            }
+        }
         test("카드 draw를 하고 bust가 아닌 경우.") {
             listOf(
                 listOf(
@@ -18,10 +64,10 @@ class PlayerTest : FunSpec({
                     Card(Symbol.CLOVER, CardNumber.ACE)
                 )
             ).forAll {
-                val player = Player("jay")
-                player.draw(it)
+                val dealer = Dealer(Deck.createDeck())
+                dealer.draw()
 
-                player.isBust() shouldBe false
+                dealer.isBust() shouldBe false
             }
         }
 
@@ -38,10 +84,10 @@ class PlayerTest : FunSpec({
                     Card(Symbol.CLOVER, CardNumber.QUEEN)
                 )
             ).forAll {
-                val player = Player("jay")
-                player.draw(it)
+                val dealer = Dealer(Deck.createDeck())
+                dealer.draw(it)
 
-                player.isBust() shouldBe true
+                dealer.isBust() shouldBe true
             }
         }
 
@@ -77,44 +123,10 @@ class PlayerTest : FunSpec({
                     21
                 )
             ).forAll { (cards, expected) ->
-                val player = Player("jay")
-                player.draw(cards)
-                player.calculateScore() shouldBe expected
+                val dealer = Dealer(Deck.createDeck())
+                dealer.draw(cards)
+                dealer.calculateScore() shouldBe expected
             }
-        }
-    }
-
-    test("dealer 와의 승패 테스트") {
-        listOf(
-            row(
-                listOf(
-                    Card(Symbol.DIAMOND, CardNumber.KING),
-                    Card(Symbol.SPADE, CardNumber.KING)
-                ),
-                listOf(
-                    Card(Symbol.DIAMOND, CardNumber.KING),
-                    Card(Symbol.SPADE, CardNumber.TWO)
-                ),
-                false
-            ),
-            row(
-                listOf(
-                    Card(Symbol.DIAMOND, CardNumber.THREE),
-                    Card(Symbol.SPADE, CardNumber.KING)
-                ),
-                listOf(
-                    Card(Symbol.DIAMOND, CardNumber.ACE),
-                    Card(Symbol.SPADE, CardNumber.KING)
-                ),
-                true
-            )
-        ).forAll { (dealerCards, playerCards, expected) ->
-            val player = Player("jay")
-            player.draw(playerCards)
-            val dealer = Dealer(Deck.createDeck())
-            dealer.draw(dealerCards)
-
-            player.isBeatDealer(dealer) shouldBe expected
         }
     }
 })
