@@ -4,17 +4,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class PlayingCardsTest {
     @Test
     fun `카드 목록 - 추가 테스트`() {
         // given
-        val playingCards = PlayingCards()
+        var playingCards = PlayingCards(listOf())
 
         // when
-        playingCards.add(PlayingCard(Suit.CLUBS, Denomination.ACE))
-        val expected = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE))
+        playingCards = playingCards.add(PlayingCard(Suit.CLUBS, Denomination.ACE))
+        val expected = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE))
 
         // then
         assertThat(playingCards).isEqualTo(expected)
@@ -23,7 +26,7 @@ class PlayingCardsTest {
     @Test
     fun `카드 목록 - 추가 실패 예외처리 테스트, 카드를 중복 입력하는 경우`() {
         // given
-        val playingCards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE))
+        val playingCards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE))
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
@@ -34,38 +37,12 @@ class PlayingCardsTest {
         assertThat(exception.message).isEqualTo("중복된 카드는 추가할 수 없습니다.")
     }
 
-    @Test
-    fun `카드 목록 - 삭제 테스트`() {
-        // given
-        val playingCards = PlayingCards.of(PlayingCard(Suit.SPADES, Denomination.ACE))
-
-        // when
-        playingCards.get()
-
-        // then
-        assertThat(playingCards.size()).isEqualTo(0)
-    }
-
-    @Test
-    fun `카드 목록 - 삭제 실패 예외처리 테스트, 카드가 없는 경우에 삭제하는 경우`() {
-        // given
-        val playingCards = PlayingCards()
-
-        // when
-        val exception = assertThrows<NoSuchElementException> {
-            playingCards.get()
-        }
-
-        // then
-        assertThat(exception.message).isEqualTo("카드가 없습니다.")
-    }
-
     @ParameterizedTest
     @CsvSource(value = ["ACE,JACK,QUEEN:false", "TWO,JACK,QUEEN:true"], delimiter = ':')
     fun `카드 목록 - Bust 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isBust()
@@ -75,11 +52,11 @@ class PlayingCardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["ACE,JACK,QUEEN:false", "ACE:false", "ACE,ACE:false", "ACE,TEN:true", "ACE,JACK:true", "ACE,QUEEN:true", "ACE,KING:true"], delimiter = ':')
+    @MethodSource("providePlayingCards")
     fun `카드 목록 - BlackJack 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isBlackjack()
@@ -88,12 +65,27 @@ class PlayingCardsTest {
         assertThat(actual).isEqualTo(expected)
     }
 
+    companion object {
+        @JvmStatic
+        private fun providePlayingCards(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of("ACE,JACK,QUEEN", false),
+                Arguments.of("ACE", false),
+                Arguments.of("ACE,ACE", false),
+                Arguments.of("ACE,TEN", true),
+                Arguments.of("ACE,JACK", true),
+                Arguments.of("ACE,QUEEN", true),
+                Arguments.of("ACE,KING", true)
+            )
+        }
+    }
+
     @ParameterizedTest
     @CsvSource(value = ["ACE,JACK,QUEEN:true", "TWO,JACK,QUEEN:false"], delimiter = ':')
     fun `카드 목록 - Stay 여부 확인 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards.of(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
 
         // when
         val actual = playingCards.isStay()

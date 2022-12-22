@@ -7,6 +7,8 @@ value class Players(val values: List<Player>) {
         require(values.distinct().size == values.size) { "플레이어는 중복될 수 없습니다." }
     }
 
+    constructor(vararg players: Player) : this(players.toList())
+
     companion object {
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
     }

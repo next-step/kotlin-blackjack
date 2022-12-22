@@ -14,7 +14,7 @@ class PlayerTest {
     @Test
     fun `플레이어 상태 - 생성 테스트, 블랙잭`() {
         // given
-        val cards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val player = Player(Name("pobi"), cards)
 
         // when, then
@@ -24,7 +24,7 @@ class PlayerTest {
     @Test
     fun `플레이어 상태 - 생성 테스트, 히트`() {
         // given
-        val cards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val player = Player(Name("pobi"), cards)
 
         // when, then

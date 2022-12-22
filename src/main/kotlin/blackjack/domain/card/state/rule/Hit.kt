@@ -5,9 +5,9 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.Running
 import blackjack.domain.card.state.State
 
-class Hit(override val cards: PlayingCards) : Running(cards) {
+class Hit(override var cards: PlayingCards) : Running(cards) {
     override fun draw(playingCard: PlayingCard): State {
-        cards.add(playingCard)
+        cards = cards.add(playingCard)
         if (cards.isBust()) {
             return Bust(cards)
         }

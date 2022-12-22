@@ -4,12 +4,21 @@ import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 
 @JvmInline
-value class Deck(private val cards: PlayingCards) {
+value class Deck(private val cards: MutableList<PlayingCard>) {
+    constructor(vararg card: PlayingCard) : this(card.toMutableList())
+
     fun getCard(): PlayingCard {
-        return cards.get()
+        if (cards.isEmpty()) {
+            throw NoSuchElementException("카드가 없습니다.")
+        }
+        return cards.removeAt(FIRST_INDEX)
     }
 
     fun getCardsByNumberOfCards(numberOfCards: Int): PlayingCards {
-        return PlayingCards.of((1..numberOfCards).map { cards.get() })
+        return PlayingCards((1..numberOfCards).map { this.getCard() })
+    }
+
+    companion object {
+        private const val FIRST_INDEX = 0
     }
 }

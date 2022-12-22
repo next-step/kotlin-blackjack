@@ -13,7 +13,7 @@ import blackjack.view.ResultView
 object Controller {
     fun start() {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
-        val deck = Deck(cards)
+        val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
         val players = PlayerFactory.create(names, deck)
 

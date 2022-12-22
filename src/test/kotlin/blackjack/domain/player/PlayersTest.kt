@@ -13,11 +13,11 @@ class PlayersTest {
     @Test
     fun `플레이어들 - 플레이어들 생성 테스트`() {
         // given, when
-        val cards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val player1 = Player(Name("pobi"), cards)
         val player2 = Player(Name("jason"), cards)
-        val actual = Players(listOf(player1, player2))
-        val expected = Players(listOf(player1, player2))
+        val actual = Players(player1, player2)
+        val expected = Players(player1, player2)
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -26,11 +26,11 @@ class PlayersTest {
     @Test
     fun `플레이어들 - 플레이어들 생성 실패 예외처리 테스트, 플레이어가 2명 미만인 경우`() {
         // given
-        val cards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val player = Player(Name("pobi"), cards)
 
         // when, then
-        assertThatThrownBy { Players(listOf(player)) }
+        assertThatThrownBy { Players(player) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("플레이어는 2명 이상이어야 합니다.")
     }
@@ -38,7 +38,7 @@ class PlayersTest {
     @Test
     fun `플레이어들 - 플레이어들 생성 실패 예외처리 테스트, 플레이어가 중복되는 경우`() {
         // given
-        val cards = PlayingCards.of(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
         val players = listOf(Player(Name("jason"), cards), Player(Name("jason"), cards))
 
         // when, then

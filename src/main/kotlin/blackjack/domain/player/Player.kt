@@ -8,14 +8,16 @@ import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.player.state.Name
 import blackjack.domain.player.state.role.PlayerRole
 
-data class Player(val name: Name, val cards: PlayingCards) : PlayerRole() {
+data class Player(val name: Name, var cards: PlayingCards) : PlayerRole() {
     init {
         require(cards.size() == NUMBER_OF_STARTING_CARDS) { "플레이어는 2장의 카드를 가지고 시작해야 합니다." }
         initState()
     }
 
     override fun draw(playingCard: PlayingCard): State {
-        return state.draw(playingCard)
+        val state = state.draw(playingCard)
+        cards = state.cards
+        return state
     }
 
     override fun stay(): State {

@@ -16,7 +16,7 @@ class BlackjackTest {
     fun `블랙잭 - 생성 테스트`(given: String, expected: Boolean) {
         // given
         val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val hit = Hit(PlayingCards.of(denominations.map { PlayingCard(Suit.CLUBS, it) }))
+        val hit = Hit(PlayingCards(denominations.map { PlayingCard(Suit.CLUBS, it) }))
 
         // when
         val actual = hit.cards.isBlackjack()
@@ -34,7 +34,7 @@ class BlackjackTest {
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            Blackjack(PlayingCards.of(playingCardList))
+            Blackjack(PlayingCards(playingCardList))
         }
 
         // then
