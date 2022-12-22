@@ -1,9 +1,5 @@
-package blackjack
+package blackjack.domain.card
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardShape
-import blackjack.domain.Cards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -33,7 +29,7 @@ internal class CardsTest : BehaviorSpec({
         When("카드의 점수를 ") {
             val score = firstCards.calculate()
             Then("계산할 수 있다. [ACE가 11로 사용]") {
-                score shouldBe 23
+                score shouldBe 13
             }
         }
 
@@ -48,6 +44,21 @@ internal class CardsTest : BehaviorSpec({
             val score = secondCards.calculate()
             Then("계산할 수 있다. [ACE가 1로 사용]") {
                 score shouldBe 21
+            }
+        }
+
+        val thirdCards = Cards(
+            mutableListOf(
+                Card(CardShape.CLOVER, CardNumber.ACE),
+                Card(CardShape.CLOVER, CardNumber.NUM_2),
+                Card(CardShape.CLOVER, CardNumber.KING),
+                Card(CardShape.CLOVER, CardNumber.ACE),
+            )
+        )
+        When("카드의 점수를 ") {
+            val score = thirdCards.calculate()
+            Then("계산할 수 있다. [ACE가 1, 11로 사용]") {
+                score shouldBe 14
             }
         }
 

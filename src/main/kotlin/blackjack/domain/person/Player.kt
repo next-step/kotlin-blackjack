@@ -1,6 +1,9 @@
-package blackjack.domain
+package blackjack.domain.person
 
-class Person(
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+
+sealed class Player(
     val name: String,
     val cards: Cards = Cards()
 ) {

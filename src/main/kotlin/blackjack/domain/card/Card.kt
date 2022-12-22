@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 data class Card(
     val cardShape: CardShape,
@@ -10,5 +10,9 @@ data class Card(
 
     fun calculate(score: Int): Int {
         return cardNumber.calc(score)
+    }
+
+    fun isAce(): Boolean {
+        return cardNumber == CardNumber.ACE
     }
 }

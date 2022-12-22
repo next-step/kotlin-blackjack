@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class CardDeck {
     val cards: Cards = getShuffledCards()
