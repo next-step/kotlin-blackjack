@@ -16,10 +16,7 @@ fun main() {
     casino.distribute()
 
     val resultView = ResultView()
-
     resultView.showPlayers(casino)
-
     casino.relay(resultView.ask(), resultView.showPlayerCards())
-
     resultView.showResult(casino)
 }

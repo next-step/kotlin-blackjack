@@ -1,7 +1,7 @@
 package blackjack.domain
 
 data class Dealer(
-    override val name: String = "dealer",
+    override val name: String,
     override val myCards: Cards = Cards()
 ) : Participant(name, myCards) {
 
@@ -9,7 +9,7 @@ data class Dealer(
 
     fun draw(): Card = cardDeck.draw()
 
-    fun distribute(players: List<Player>) {
+    fun distribute(players: List<Participant>) {
         repeat(players.size) {
             val player = players[it]
             repeat(INITIAL_CARD_DECK_SIZE) { player.receive(draw()) }

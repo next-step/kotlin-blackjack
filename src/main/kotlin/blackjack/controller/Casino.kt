@@ -2,15 +2,16 @@ package blackjack.controller
 
 import blackjack.NO
 import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.Participant
 
-typealias QueryAction = (Player) -> String
+typealias QueryAction = (Participant) -> String
 
-typealias PrintAction = (Player) -> Unit
+typealias PrintAction = (Participant) -> Unit
 
-class Casino(private val players: List<Player>) {
+class Casino(participants: List<Participant>) {
 
-    private val dealer = Dealer()
+    private val dealer = Dealer("딜러")
+    private val players: List<Participant> = participants.toMutableList().apply { add(0, dealer) }
 
     private lateinit var queryAction: QueryAction
     private lateinit var printAction: PrintAction
@@ -38,7 +39,7 @@ class Casino(private val players: List<Player>) {
         } while (index < players.size)
     }
 
-    private fun ask(player: Player): Boolean {
+    private fun ask(player: Participant): Boolean {
         val answer = queryAction(player)
         if (answer.isBlank()) return true
         if (answer == NO) return true
@@ -52,5 +53,5 @@ class Casino(private val players: List<Player>) {
         return ask(player)
     }
 
-    private fun draw(player: Player) = player.receive(dealer.draw())
+    private fun draw(player: Participant) = player.receive(dealer.draw())
 }
