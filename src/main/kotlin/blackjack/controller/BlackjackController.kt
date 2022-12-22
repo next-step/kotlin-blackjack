@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.view.InputView
@@ -21,7 +20,7 @@ class BlackjackController {
             playUser(it, game.deck)
             if (it.isBust()) game.addPlayerResultWhenBust(it)
         }
-        playDealer(game.dealer, game.deck)
+        playDealer(game)
 
         game.calculateResult()
         ResultView.printStatus(game)
@@ -35,10 +34,9 @@ class BlackjackController {
         }
     }
 
-    private fun playDealer(dealer: Dealer, deck: Deck) {
-        val isHit = dealer.isHit()
-        if (isHit) dealer.hit(deck.draw())
-        ResultView.printDealerHitOrStay(isHit)
+    private fun playDealer(game: BlackJackGame) {
+        game.playDealer()
+        ResultView.printDealerHitOrStay(game.isDealerDrawn())
     }
 }
 

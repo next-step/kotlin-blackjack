@@ -10,6 +10,8 @@ class BlackJackGame(
     val playerResults: List<PlayerResult>
         get() = _playerResults.toList()
 
+    private var isDealerDrawn: Boolean = false
+
     fun setInitDealer() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
@@ -33,4 +35,12 @@ class BlackJackGame(
         _playerResults.add(PlayerResult(player, ResultStatus.LOSE))
         dealer.calculateResult(playerResult)
     }
+
+    fun playDealer() {
+        val isHit = dealer.isHit()
+        if (isHit) dealer.hit(deck.draw())
+        isDealerDrawn = true
+    }
+
+    fun isDealerDrawn() = isDealerDrawn
 }
