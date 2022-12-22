@@ -9,29 +9,23 @@ import blackjack.domain.Suit
 
 class ResultView {
 
-    fun show(casino: Casino) {
-        casino.distribute()
-
+    fun showPlayers(casino: Casino) {
         val names = casino.names()
         println("${names}에게 2장의 나누었습니다.")
-
         casino.printAllPlayers { player -> player.print() }
+    }
 
-        casino.relay(
-            queryAction = question@{ player ->
-                println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-                val answer = readlnOrNull()
-                if (answer.isNullOrBlank()) return@question true
-                if (answer == NO) return@question true
-                return@question false
-            },
-            printAction = { player -> player.print() }
-        )
+    fun ask(): (Player) -> String = { player ->
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        readlnOrNull() ?: ""
+    }
 
+    fun showPlayerCards(): (Player) -> Unit = { player -> player.print() }
+
+    fun showResult(casino: Casino) {
         casino.printAllResult { player ->
             println("${player.getString()} - 결과: ${player.totalScore}")
         }
-
     }
 
     private fun Player.print() = println(getString())
@@ -71,9 +65,5 @@ class ResultView {
             Suit.Heart -> "하트"
             Suit.Clover -> "클로버"
         }
-    }
-
-    companion object {
-        private const val NO = "n"
     }
 }

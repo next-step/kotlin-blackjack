@@ -1,9 +1,10 @@
 package blackjack.controller
 
+import blackjack.NO
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 
-typealias QueryAction = (Player) -> Boolean
+typealias QueryAction = (Player) -> String
 
 typealias PrintAction = (Player) -> Unit
 
@@ -38,8 +39,9 @@ class Casino(private val players: List<Player>) {
     }
 
     private fun ask(player: Player): Boolean {
-        val result = queryAction(player)
-        if (result) return true
+        val answer = queryAction(player)
+        if (answer.isBlank()) return true
+        if (answer == NO) return true
 
         draw(player)
 
@@ -51,5 +53,4 @@ class Casino(private val players: List<Player>) {
     }
 
     private fun draw(player: Player) = player.receive(dealer.draw())
-
 }
