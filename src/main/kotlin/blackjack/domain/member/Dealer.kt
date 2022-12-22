@@ -2,7 +2,6 @@ package blackjack.domain.member
 
 import blackjack.domain.Cards
 import blackjack.domain.Deck
-import blackjack.domain.GameState
 
 class Dealer(
     override val cards: Cards
@@ -17,44 +16,6 @@ class Dealer(
         }
 
         return isNearBlackJackThan(otherMember)
-    }
-
-    fun gameResultPlayers(players: Players): ResultPlayers {
-        val blackjackPlayers = blackjackPlayers(players)
-
-        if (isOverBlackjackNumber()) {
-            return blackjackPlayers + nonBlackjackPlayers(players)
-        }
-
-        if (blackjack()) {
-            return blackjackPlayers.toWinnerPlayers() + losePlayers(players)
-        }
-
-        return blackjackPlayers + winnerPlayers(players) + losePlayers(players)
-    }
-
-    private fun winnerPlayers(players: Players): ResultPlayers {
-        return ResultPlayers(
-            players.items.filter { it.isWin(this) }.map { ResultPlayer(it, GameState.WIN) }
-        )
-    }
-
-    private fun losePlayers(players: Players): ResultPlayers {
-        return ResultPlayers(
-            players.items.filter { it.isLose(this) }.map { ResultPlayer(it, GameState.LOSE) }
-        )
-    }
-
-    private fun blackjackPlayers(players: Players): ResultPlayers {
-        return ResultPlayers(
-            players.items.filter { it.blackjack() }.map { ResultPlayer(it, GameState.WIN_BLACKJACK) }
-        )
-    }
-
-    private fun nonBlackjackPlayers(players: Players): ResultPlayers {
-        return ResultPlayers(
-            players.items.filter { !it.blackjack() }.map { ResultPlayer(it, GameState.WIN) }
-        )
     }
 
     fun benefit(gameResultPlayers: ResultPlayers): Double {

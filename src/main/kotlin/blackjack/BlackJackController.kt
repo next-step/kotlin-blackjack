@@ -25,7 +25,7 @@ fun main() {
     ResultView.printPlayerResults(dealer)
     players.items.forEach { ResultView.printPlayerResults(it) }
 
-    val gameResultPlayers = dealer.gameResultPlayers(players)
+    val gameResultPlayers = players.toResultPlayers(dealer)
     ResultView.printGameResult(dealer, gameResultPlayers)
 }
 
