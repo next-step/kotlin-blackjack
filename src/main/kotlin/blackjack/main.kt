@@ -10,10 +10,10 @@ fun main() {
     OutputView.printParticipantInfo(participant)
     participant.persons.forEach {
         do {
-            val drawYn = InputView.getDrawYn(it)
-            it.ownCards.addCard()
+            val drawYn = Draw.checkDrawable(InputView.getDrawYn(it))
+            it.ownCards.addCard(drawYn)
             OutputView.printOwnCards(it)
-        } while (Draw.checkDrawable(it.ownCards) && Draw.checkDrawable(drawYn))
+        } while (Draw.checkDrawable(it.ownCards) && drawYn)
     }
     OutputView.printResult(participant)
 }

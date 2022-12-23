@@ -26,7 +26,13 @@ class OwnCardsTest : StringSpec({
 
     "카드가 추가 됨을 확인한다" {
         val ownCards = OwnCards(listOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableList())
-        ownCards.addCard()
+        ownCards.addCard(true)
         ownCards.cards.size shouldBe 2
+    }
+
+    "카드가 추가 되지 않음을 확인한다" {
+        val ownCards = OwnCards(listOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableList())
+        ownCards.addCard(false)
+        ownCards.cards.size shouldBe 1
     }
 })

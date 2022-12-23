@@ -6,7 +6,7 @@ class OwnCards(var cards: MutableList<Card> = buildList { repeat(Draw.FIRST_DRAW
 
     fun getCardInfos() = cards.map { it.cardNumber.display + it.pattern.display }
 
-    fun addCard(){
-        cards.add(Card())
+    fun addCard(drawYn: Boolean) {
+        if (drawYn) cards.add(Card())
     }
 }
