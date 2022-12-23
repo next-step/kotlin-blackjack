@@ -11,7 +11,7 @@ class BlackjackApplication {
     fun play() {
         val deck = CardDeck.defaultDeck()
         val players = InputView.readPlayers()
-        players.forEach { player -> repeat(INIT_CARD_COUNT) { player.addCard(deck.getSingleCard()) } }
+        players.forEach { player -> repeat(INIT_CARD_COUNT) { player.addCard(deck.getCard()) } }
 
         OutputView.printInitCards(players)
 
@@ -21,7 +21,7 @@ class BlackjackApplication {
                 if (answer == CARD_PICK_DENY_SYMBOL) {
                     break
                 }
-                it.addCard(deck.getSingleCard())
+                it.addCard(deck.getCard())
             }
             OutputView.printPlayerCards(it)
         }

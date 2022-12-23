@@ -14,13 +14,13 @@ class CardDeckTest {
     @Test
     internal fun `하나의 카드를 지급한다`() {
         val deck = CardDeck.defaultDeck()
-        assertThat(deck.getSingleCard()).isNotNull
+        assertThat(deck.getCard()).isNotNull
     }
 
     @Test
     internal fun `지급 후 덱에서 카드가 없어진다`() {
         val deck = CardDeck.defaultDeck()
-        val cards = List(10) { deck.getSingleCard() }
+        val cards = List(10) { deck.getCard() }
         assertThat(deck.size).isEqualTo(42)
         assertThat(deck).doesNotContainAnyElementsOf(cards)
     }
@@ -28,7 +28,7 @@ class CardDeckTest {
     @Test
     internal fun `덱에 카드가 없으면 뽑을 수 없다`() {
         val deck = CardDeck.defaultDeck()
-        repeat(52) { deck.getSingleCard() }
-        assertThrows<NoSuchElementException> { deck.getSingleCard() }
+        repeat(52) { deck.getCard() }
+        assertThrows<NoSuchElementException> { deck.getCard() }
     }
 }
