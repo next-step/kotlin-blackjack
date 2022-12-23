@@ -3,12 +3,12 @@ package blackjack.domain.card.state
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 
-interface State {
-    val cards: PlayingCards
+sealed class State {
+    abstract val cards: PlayingCards
 
-    fun draw(playingCard: PlayingCard): State
+    abstract fun draw(playingCard: PlayingCard): State
 
-    fun stay(): State
+    abstract fun stay(): State
 
-    fun isFinished(): Boolean
+    abstract fun isFinished(): Boolean
 }
