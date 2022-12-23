@@ -17,5 +17,9 @@ enum class Denomination(
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K")
+    KING(10, "K");
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 }
