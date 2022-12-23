@@ -6,28 +6,28 @@ object OutputView {
     private const val SEPARATE_SYMBOL = ","
     private val messageSource = KoreanMessageSource()
 
-    fun printInitCards(players: List<Player>) {
+    val printInitCards: (List<Player>) -> Unit = { players ->
         println()
         val playerNames = players.joinToString(SEPARATE_SYMBOL) { it.name }
         println("${playerNames}에게 각각 2장의 카드를 나누었습니다.")
-        players.forEach(::printPlayerCards)
+        players.forEach(printPlayerCards)
         println()
     }
 
-    fun printPlayerCards(player: Player) {
+    val printPlayerCards: (Player) -> Unit = { player ->
         println(cardDetailsOf(player))
     }
 
-    fun printResult(players: List<Player>) {
+    val printResult: (List<Player>) -> Unit = { players ->
         println()
         players.forEach {
             println("${cardDetailsOf(it)} - 결과: ${it.getFinalScore()}")
         }
     }
 
-    private fun cardDetailsOf(player: Player): String {
+    private val cardDetailsOf: (Player) -> String = { player ->
         val cardsString = player.cards
             .joinToString(SEPARATE_SYMBOL) { messageSource.nameOf(it) }
-        return "${player.name}카드: $cardsString"
+        "${player.name}카드: $cardsString"
     }
 }

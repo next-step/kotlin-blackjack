@@ -1,30 +1,23 @@
 package blackjack
 
 import blackjack.model.CardDeck
+import blackjack.service.BlackjackGame
 import blackjack.view.InputView
 import blackjack.view.OutputView
-
-private const val INIT_CARD_COUNT = 2
-private const val CARD_PICK_DENY_SYMBOL = "n"
 
 class BlackjackApplication {
     fun play() {
         val deck = CardDeck.defaultDeck()
         val players = InputView.readPlayers()
-        players.forEach { player -> repeat(INIT_CARD_COUNT) { player.addCard(deck.getCard()) } }
+        val blackjackGame = BlackjackGame(deck, players)
 
-        OutputView.printInitCards(players)
+        OutputView.printInitCards(blackjackGame.players)
 
-        players.forEach {
-            while (it.isPickable()) {
-                val answer = InputView.readPlayerPickAnswer(it)
-                if (answer == CARD_PICK_DENY_SYMBOL) {
-                    break
-                }
-                it.addCard(deck.getCard())
-                OutputView.printPlayerCards(it)
-            }
-        }
+        blackjackGame.play(
+            InputView.readPlayerPickAnswer,
+            OutputView.printPlayerCards
+        )
+
         OutputView.printResult(players)
     }
 }
