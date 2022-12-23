@@ -4,12 +4,11 @@ import blackjack.model.CardDeck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-object BlackjackApplication {
-    private const val INIT_CARD_COUNT = 2
-    private const val CARD_PICK_DENY_SYMBOL = "n"
+private const val INIT_CARD_COUNT = 2
+private const val CARD_PICK_DENY_SYMBOL = "n"
 
-    @JvmStatic
-    fun main(args: Array<String>) {
+class BlackjackApplication {
+    fun play() {
         val deck = CardDeck.defaultDeck()
         val players = InputView.readPlayers()
         players.forEach { player -> repeat(INIT_CARD_COUNT) { player.addCard(deck.getSingleCard()) } }
@@ -28,4 +27,8 @@ object BlackjackApplication {
         }
         OutputView.printResult(players)
     }
+}
+
+fun main() {
+    BlackjackApplication().play()
 }
