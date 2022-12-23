@@ -22,8 +22,8 @@ class BlackjackApplication {
                     break
                 }
                 it.addCard(deck.getCard())
+                OutputView.printPlayerCards(it)
             }
-            OutputView.printPlayerCards(it)
         }
         OutputView.printResult(players)
     }
