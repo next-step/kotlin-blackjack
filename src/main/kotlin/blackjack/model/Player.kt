@@ -3,8 +3,9 @@ package blackjack.model
 class Player(
     val name: String,
 ) {
-    private val _cards = mutableListOf<Card>()
-    val cards: List<Card> = _cards
+    private val _cards = Cards()
+    val cards: List<Card>
+        get() = _cards
 
     fun addCard(card: Card) {
         check(isPickable()) { "플레이어의 점수가 이미 21을 넘었습니다" }
@@ -12,11 +13,11 @@ class Player(
     }
 
     fun isPickable(): Boolean {
-        return getScore() < BLACKJACK_SCORE
+        return _cards.getPickableScore() < BLACKJACK_SCORE
     }
 
-    private fun getScore(): Int {
-        return _cards.sumOf { it.getScore() }
+    fun getFinalScore(): Int {
+        return _cards.getFinalScore()
     }
 
     companion object {

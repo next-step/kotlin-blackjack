@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.Player
-import blackjack.service.FinalScoreCalculator.finalScoreOf
 
 object OutputView {
     fun printInitCards(players: List<Player>) {
@@ -19,7 +18,7 @@ object OutputView {
     fun printResult(players: List<Player>) {
         println()
         players.forEach {
-            println("${cardDetailsOf(it)} - 결과: ${finalScoreOf(it)}")
+            println("${cardDetailsOf(it)} - 결과: ${it.getFinalScore()}")
         }
     }
 
