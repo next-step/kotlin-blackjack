@@ -22,8 +22,8 @@ object Controller {
             end(players)
             return
         }
-        GameManager.play(players, deck)
-        end(players)
+        val newPlayers = GameManager.play(players, deck)
+        end(newPlayers)
     }
 
     private fun init(players: Players) {

@@ -2,11 +2,14 @@ package blackjack.domain.player.state.role
 
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.state.State
+import blackjack.domain.player.Player
 
 interface Role {
-    fun draw(playingCard: PlayingCard): State
+    val state: State
 
-    fun stay(): State
+    fun draw(playingCard: PlayingCard): Player
+
+    fun stay(): Player
 
     fun getScore(): Int
 

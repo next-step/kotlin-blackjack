@@ -13,24 +13,30 @@ object GameManager {
     fun checkBlackjack(players: Players): Boolean {
         var result = false
         players.values.forEach {
-            result = result or it.cards.isBlackjack()
+            result = result or it.isBlackjack()
         }
         return result
     }
 
-    fun play(players: Players, deck: Deck) {
-        players.values.forEach { player ->
-            doHitOrStay(player, deck)
+    fun play(players: Players, deck: Deck): Players {
+        val newPlayers = players.values.map {
+            doHitOrStay(it, deck)
         }
+        return Players(newPlayers)
     }
 
-    private fun doHitOrStay(player: Player, deck: Deck) {
+    private fun doHitOrStay(player: Player, deck: Deck): Player {
+        var newPlayer = player
         while (InputFilter.inputHitOrStay(PlayerDto.from(player).name)) {
-            player.draw(deck.getCard())
-            ResultView.printPlayerCards(PlayerDto.from(player))
+            newPlayer = player.draw(deck.getCard())
+            ResultView.printPlayerCards(PlayerDto.from(newPlayer))
         }
-        if (player.cards.size() == MINIMUM_NUMBER_OF_CARDS) {
-            ResultView.printPlayerCards(PlayerDto.from(player))
+        if (!player.isBust() || !player.isBlackjack()) {
+            newPlayer = player.stay()
         }
+        if (player.getCardsSize() == MINIMUM_NUMBER_OF_CARDS) {
+            ResultView.printPlayerCards(PlayerDto.from(newPlayer))
+        }
+        return newPlayer
     }
 }
