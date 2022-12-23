@@ -6,8 +6,8 @@ import blackjack.service.FinalScoreCalculator.finalScoreOf
 object OutputView {
     fun printInitCards(players: List<Player>) {
         println()
-        players.joinToString(",") { it.name }
-            .also { println("${it}에게 각각 2장의 카드를 나누었습니다.") }
+        val playerNames = players.joinToString(",") { it.name }
+        println("${playerNames}에게 각각 2장의 카드를 나누었습니다.")
         players.forEach(::printPlayerCards)
         println()
     }
