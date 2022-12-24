@@ -1,7 +1,9 @@
 package domain
 
+import domain.factory.DefaultCardsFactory
+
 class Dealer(
-    val deck: CardDeck = CardDeck()
+    val deck: CardDeck = CardDeck(cardsFactory = DefaultCardsFactory)
 ) {
     init {
         deck.shuffle()

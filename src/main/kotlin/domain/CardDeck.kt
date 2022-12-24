@@ -1,12 +1,12 @@
 package domain
 
-class CardDeck {
+import domain.factory.CardsFactory
 
-    private val cards: MutableList<Card> = CardShape.values().flatMap { shape ->
-        CardNumber.values().map { number ->
-            Card(shape, number)
-        }
-    }.toMutableList()
+class CardDeck(
+    cardsFactory: CardsFactory
+) {
+
+    private val cards: MutableList<Card> = cardsFactory.generate()
 
     fun shuffle() {
         this.cards.shuffle()
