@@ -12,40 +12,65 @@ import org.junit.jupiter.api.assertThrows
 class PlayerTest {
     @Test
     internal fun `플레이어 이름을 입력받는다`() {
+        // given
         val name = "jason"
+
+        // when
         val player = Player(name)
+
+        // then
         assertThat(player.name).isEqualTo(name)
     }
 
     @Test
     internal fun `플레이어 이름은 쉼표로 구분한다`() {
-        val players = Player.playersOf("pobi,jason")
-        val playerNames = players.map { it.name }
+        // given
+        val input = "pobi,jason"
+
+        // when
+        val playerNames = Player.playersOf(input).map { it.name }
+
+        // then
         assertThat(playerNames).containsExactly("pobi", "jason")
     }
 
     @Test
     internal fun `카드를 뽑으면 플레이어 카드목록에 추가된다`() {
+        // given
         val player = Player("jason")
+
+        // when
         player.addCard(Card(SPADE, TEN))
         player.addCard(Card(SPADE, QUEEN))
+
+        // then
         assertThat(player.cards.size).isEqualTo(2)
     }
 
     @Test
     internal fun `플레이어가 카드를 뽑을 수 있는지 판단한다`() {
+        // given
         val player = Player("jason")
+
+        // when
         player.addCard(Card(SPADE, TEN))
         player.addCard(Card(SPADE, QUEEN))
+
+        // then
         assertThat(player.isPickable()).isTrue
     }
 
     @Test
     internal fun `카드 합이 21을 넘을 경우 카드를 얻지 못한다`() {
+        // given
         val player = Player("jason")
+
+        // when
         player.addCard(Card(SPADE, ACE))
         player.addCard(Card(SPADE, JACK))
         player.addCard(Card(SPADE, QUEEN))
+
+        // then
         assertThat(player.isPickable()).isFalse
         assertThrows<IllegalStateException> { player.addCard(Card(SPADE, ACE)) }
     }
