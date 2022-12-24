@@ -12,16 +12,14 @@ class Game(
 ) {
     init {
         dealer.shuffle()
-        deliverInitialCards()
+        drawInitialCards()
     }
 
-    private fun deliverInitialCards() {
-        players.value.forEach {
-            List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
-                .let(it::readyToPlay)
+    private fun drawInitialCards() {
+        players.drawInitialCards(dealer)
+        repeat(INITIAL_CARDS_COUNT) {
+            dealer.deliverCard().let(dealer::draw)
         }
-        List(INITIAL_CARDS_COUNT) { dealer.deliverCard() }
-            .let(dealer::readyToPlay)
     }
 
     fun play() {
