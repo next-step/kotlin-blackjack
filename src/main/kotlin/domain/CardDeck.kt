@@ -12,7 +12,7 @@ class CardDeck(
         this.cards.shuffle()
     }
 
-    fun getTopCard(): Card {
+    fun pop(): Card {
         check(this.cards.isNotEmpty()) { "카드가 다 떨어졌습니다." }
         return this.cards.removeFirst()
     }
