@@ -76,7 +76,7 @@ internal class GameDealerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideNotBurstCards")
+    @MethodSource("provideNotBustCards")
     fun `Dealer 카드 합산이 21 이하 Hit 상태가 되어 게임을 계속 할 수 있다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
             initialCards.forEach(this::draw)
@@ -155,7 +155,7 @@ internal class GameDealerTest {
             )
 
         @JvmStatic
-        fun provideNotBurstCards(): Stream<Arguments> =
+        fun provideNotBustCards(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(
                     listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.FIVE, CardShape.CLOVER)),
