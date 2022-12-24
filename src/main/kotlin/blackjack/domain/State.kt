@@ -1,6 +1,10 @@
 package blackjack.domain
 
+import blackjack.domain.Finished.Blackjack
+import blackjack.domain.Finished.Bust
 import blackjack.domain.Finished.Stay
+import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
+import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 
 sealed interface State {
@@ -11,20 +15,21 @@ sealed interface State {
     fun stay(): State
 }
 
-interface Started : State {
+class Started(
+    override val cards: Cards = Cards()
+) : State {
     override val finished: Boolean
         get() = false
 
+    override fun stay(): State = Stay(cards)
     override fun draw(card: Card): State {
-        TODO("Not yet implemented")
+        cards.add(card)
+        return when {
+            cards.size == INITIAL_CARDS_COUNT && cards.sum() == BLACKJACK_SCORE -> Blackjack(cards)
+            cards.size == INITIAL_CARDS_COUNT -> Hit(cards)
+            else -> Started(cards)
+        }
     }
-
-    override fun stay(): State = TODO("Not yet implemented")
-
-    class Player(override val cards: Cards) : Started
-    class Dealer(override val cards: Cards) : Started
-
-    private fun copy(): Started = TODO("Not yet implemented")
 }
 
 sealed interface Playing : State {
@@ -33,12 +38,11 @@ sealed interface Playing : State {
 
     class Hit(override val cards: Cards = Cards()) : Playing {
         override fun draw(card: Card): State {
-            TODO("Not yet implemented")
+            cards.add(card)
+            return if (cards.sum() > BLACKJACK_SCORE) Bust(cards) else Hit(cards)
         }
 
         override fun stay(): State = Stay(cards)
-
-        private fun copy(): Hit = Hit(cards)
     }
 }
 

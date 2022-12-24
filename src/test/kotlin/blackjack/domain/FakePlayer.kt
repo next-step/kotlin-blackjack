@@ -7,7 +7,7 @@ import java.util.UUID
 
 class FakePlayer(
     override val name: String = UUID.randomUUID().toString(),
-    private val _state: State = Started.Player(Cards()),
+    private val _state: State = Started(),
     private val _finished: Boolean = false,
     private val readyToPlay: Boolean = true,
     private val sumCards: Int = 0,
@@ -37,7 +37,7 @@ class FakeDealer(
     override val name: String = "딜러",
     override val deck: CardDeck = GameCardDeck(),
     private val deliveredCard: Card = Card(CardType.ACE, CardShape.CLOVER),
-    private val _state: State = Started.Dealer(Cards()),
+    private val _state: State = Started(),
     private val _finished: Boolean = false,
     private val readyToPlay: Boolean = true,
     private val stay: Boolean = false,
