@@ -5,8 +5,6 @@ data class BlackJackGame(
     var dealer: Dealer = Dealer(),
     var players: Players = Players(),
 ) {
-    private var isDealerDrawn: Boolean = false
-
     fun drawInitCards() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
@@ -18,11 +16,26 @@ data class BlackJackGame(
         return players.calculateResult(dealer)
     }
 
-    fun playDealer() {
-        val isHit = dealer.isHit()
-        if (isHit) dealer.hit(deck.draw())
-        isDealerDrawn = true
-    }
+    fun playDealer(
+        printDealerHitOrStay: (Boolean) -> Unit
+    ) {
+        var isDrawn = false
 
-    fun isDealerDrawn() = isDealerDrawn
+        if (dealer.isHit()) {
+            dealer.hit(deck.draw())
+            isDrawn = true
+        }
+        printDealerHitOrStay(isDrawn)
+    }
+    fun play(
+        inputIsGetCard: (Player) -> Boolean,
+        printPlayerStatus: (Player) -> Unit
+    ) {
+        players.values.forEach {
+            while (it.isHit() && inputIsGetCard(it)) {
+                it.hit(deck.draw())
+                printPlayerStatus(it)
+            }
+        }
+    }
 }

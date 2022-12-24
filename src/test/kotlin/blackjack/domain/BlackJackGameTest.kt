@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.view.ResultView
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -43,7 +44,7 @@ internal class BlackJackGameTest : StringSpec({
         val dealer = Dealer(Card(Suite.SPADE, Denomination.JACK), Card(Suite.CLOVER, Denomination.THREE))
         val newGame = game.copy(dealer = dealer)
 
-        newGame.playDealer()
+        newGame.playDealer { ResultView.printDealerHitOrStay(it) }
         newGame.dealer.cards.values.size shouldBe 3
     }
 })
