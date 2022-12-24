@@ -11,16 +11,18 @@ sealed interface State {
     fun stay(): State
 }
 
-class Started(
-    override val cards: Cards = Cards()
-) : State {
-    override val finished: Boolean = false
+interface Started : State {
+    override val finished: Boolean
+        get() = false
 
     override fun draw(card: Card): State {
         TODO("Not yet implemented")
     }
 
     override fun stay(): State = TODO("Not yet implemented")
+
+    class Player(override val cards: Cards) : Started
+    class Dealer(override val cards: Cards) : Started
 
     private fun copy(): Started = TODO("Not yet implemented")
 }
