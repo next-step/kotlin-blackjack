@@ -1,6 +1,10 @@
 package domain
 
-class Cards {
+import domain.algorithm.ScoreOptimizationAlgorithm
+
+class Cards(
+    private val scoreOptimizationAlgorithm: ScoreOptimizationAlgorithm
+) {
     private var cards: List<Card> = listOf()
 
     val count: Int
@@ -12,12 +16,12 @@ class Cards {
         this.cards = mutableList.toList()
     }
 
-    fun score(): Int = this.cards.sumOf { it.number.primaryScore }
-    fun secondaryScore(): Int = this.cards.sumOf { it.number.secondaryScore }
+    fun score(): Int = scoreOptimizationAlgorithm.optimizeScore(this.cards, TARGET_HIGH_SCORE)
+
     fun cardList(): List<Card> = this.cards
-    fun isExceedsAvailableReceiveNumber(): Boolean = this.score() <= RECEIVE_LIMIT_SCORE
+    fun isExceedsAvailableReceiveNumber(): Boolean = this.score() <= TARGET_HIGH_SCORE
 
     private companion object {
-        const val RECEIVE_LIMIT_SCORE = 21
+        const val TARGET_HIGH_SCORE = 21
     }
 }

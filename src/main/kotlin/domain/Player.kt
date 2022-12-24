@@ -1,10 +1,12 @@
 package domain
 
+import domain.algorithm.DefaultScoreOptimizationAlgorithm
+
 class Player(
     val name: String
 ) {
 
-    val hands: Cards = Cards()
+    val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
 
     val handsCardCount: Int
         get() = hands.count
@@ -14,7 +16,6 @@ class Player(
     }
 
     fun handsCardScore(): Int = this.hands.score()
-    fun handsCardCountWithAceHighScore(): Int = this.hands.secondaryScore()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
