@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 internal class DealerTest : StringSpec({
 
-    "딜러의 점수가 21점을 초과하면 플레이어 점수에 상관없이 플레이어가 승리한다." {
+    "딜러의 점수가 21점을 초과하면 버스트되지 않은 플레이어는 승리한다." {
         val dealer = Dealer(
             Card(Suite.SPADE, Denomination.SIX),
             Card(Suite.CLOVER, Denomination.JACK),
@@ -14,8 +14,8 @@ internal class DealerTest : StringSpec({
         )
         val player = Player(
             Card(Suite.CLOVER, Denomination.SEVEN),
-            Card(Suite.SPADE, Denomination.JACK),
-            Card(Suite.CLOVER, Denomination.QUEEN)
+            Card(Suite.SPADE, Denomination.TWO),
+            Card(Suite.CLOVER, Denomination.FIVE)
         )
 
         val result = dealer.getMatchResult(player)
@@ -72,16 +72,19 @@ internal class DealerTest : StringSpec({
     }
 
     "두명의 플레이어와 대결할 때 딜려가 다 졌다면 2패의 결과를 가진다." {
+        //  18점
         val dealer = Dealer(
             Card(Suite.HEART, Denomination.QUEEN),
             Card(Suite.DIAMOND, Denomination.EIGHT)
         )
 
+        // 21점
         val player1 = Player(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
+        // 19점
         val player2 = Player(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.NINE)

@@ -10,9 +10,14 @@ fun Dealer(vararg values: Card): Dealer {
 }
 
 fun Player(vararg values: Card): Player {
-    val player = Player("플레이어")
+    val user = User("플레이어")
     values.forEach {
-        player.cards.add(it)
+        user.cards.add(it)
     }
-    return player
+    return user
+}
+
+fun Players(vararg names: String): Players {
+    val users = names.map { User(it) }
+    return Players(users)
 }

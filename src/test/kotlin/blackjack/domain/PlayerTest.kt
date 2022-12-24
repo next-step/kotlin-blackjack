@@ -1,24 +1,37 @@
 package blackjack.domain
 
-import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-internal class PlayerTest : BehaviorSpec({
-    given("플레이어가 가진 카드의 총합이") {
-        `when`("21 을 초과했을 때") {
-            val cards = Cards(
-                listOf(
-                    Card(Suite.CLOVER, Denomination.QUEEN),
-                    Card(Suite.CLOVER, Denomination.JACK),
-                    Card(Suite.CLOVER, Denomination.KING),
-                )
-            )
-            val player = Player("윤영빈", cards)
-            val result = player.isBust()
+internal class PlayerTest : StringSpec({
+    "플레이어의 카드 총합이 21을 초과하여 hit 을 할 수 없다면 버스트다." {
+        val player = Player(
+            Card(Suite.SPADE, Denomination.FIVE),
+            Card(Suite.HEART, Denomination.QUEEN),
+            Card(Suite.DIAMOND, Denomination.JACK)
+        )
 
-            then("true 를 반환한다. (버스트다)") {
-                result shouldBe true
-            }
-        }
+        val result = player.isHit()
+        result shouldBe false
+    }
+
+    "플레이어 카드 총합이 21 미만이라면 hit 을 할 수 있다." {
+        val player = Player(
+            Card(Suite.SPADE, Denomination.FIVE),
+            Card(Suite.HEART, Denomination.QUEEN)
+        )
+
+        val result = player.isHit()
+        result shouldBe true
+    }
+
+    "플레이어 카드 총합이 21점이고 ACE 카드를 포함한 2장이라면 블랙잭이다." {
+        val player = Player(
+            Card(Suite.DIAMOND, Denomination.ACE),
+            Card(Suite.SPADE, Denomination.JACK)
+        )
+
+        val result = player.isBlackJack()
+        result shouldBe true
     }
 })

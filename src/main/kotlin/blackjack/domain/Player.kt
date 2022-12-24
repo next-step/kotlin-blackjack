@@ -13,9 +13,7 @@ interface Player {
         cards.add(card)
     }
 
-    fun isHit() =  cards.getScore() < TWENTY_ONE
-
-    fun isBust() = cards.getScore() > TWENTY_ONE
+    fun isHit() = cards.getScore() <= TWENTY_ONE
 
     fun isBlackJack() = cards.isBlackJack()
 

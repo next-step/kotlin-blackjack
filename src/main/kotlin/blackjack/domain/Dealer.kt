@@ -11,6 +11,8 @@ class Dealer(
     override fun copy(name: Name, cards: Cards): Player {
         return Dealer(cards = cards)
     }
+
+    private fun isBust() = this.score > BLACKJACK_SCORE
     fun getMatchResult(player: Player): ResultStatus {
         val playerResult = getPlayerResult(player)
         calculateResult(playerResult)
@@ -21,7 +23,7 @@ class Dealer(
     private fun getPlayerResult(player: Player): ResultStatus {
         if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
         if (this.isBust()) return getPlayerResultWhenDealerBust(player)
-        if (player.isBust()) return ResultStatus.LOSE
+        if (!player.isHit()) return ResultStatus.LOSE
 
         return player.score match this.score
     }
@@ -41,12 +43,13 @@ class Dealer(
     }
 
     private fun getPlayerResultWhenDealerBust(player: Player): ResultStatus {
-        if (player.isBust()) return ResultStatus.DRAW
+        if (!player.isHit()) return ResultStatus.DRAW
         return ResultStatus.WIN
     }
 
     companion object {
         private const val DEALER_HIT_SCORE = 16
+        private const val BLACKJACK_SCORE = 21
         private val DEALER_NAME = Name("딜러")
     }
 }
