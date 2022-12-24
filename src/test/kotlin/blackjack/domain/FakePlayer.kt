@@ -40,15 +40,14 @@ class FakeDealer(
     private val _state: State = Started(),
     private val _finished: Boolean = false,
     private val readyToPlay: Boolean = true,
-    private val stay: Boolean = false,
     private val sumCards: Int = 0,
 ) : Dealer {
     override val cards: Cards
         get() = state.cards
     override val state: State
-        get() = TODO("Not yet implemented")
+        get() = _state
     override val finished: Boolean
-        get() = TODO("Not yet implemented")
+        get() = _finished
 
     override fun shuffle() {
         // do nothing
@@ -59,13 +58,8 @@ class FakeDealer(
     }
 
     override fun deliverCard(): Card = deliveredCard
-    override fun shouldStay(): Boolean = stay
 
     override fun shouldBeReadyToPlay(): Boolean = readyToPlay
-
-    override fun stay() {
-        // do nothing
-    }
 
     override fun sumCards(): Int = sumCards
 }
