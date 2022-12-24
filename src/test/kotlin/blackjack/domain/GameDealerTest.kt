@@ -65,7 +65,7 @@ internal class GameDealerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideBurstCards")
+    @MethodSource("provideBustCards")
     fun `Dealer 카드 합산이 21 초과 bust 상태가 되어 게임을 더이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
             initialCards.forEach(this::draw)
@@ -108,7 +108,7 @@ internal class GameDealerTest {
     // END: GamePlay
 
     @Test
-    fun `Dealer 카드 합이 17이상이면 stay 상태로 게임을 중단한다`() {
+    fun `Dealer 카드 합이 17 이상 stay 상태로 게임을 중단한다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SEVEN, CardShape.DIAMOND))
         val dealer = GameDealer().apply { cards.forEach(this::draw) }
         assertThat(dealer.state is Stay).isTrue
@@ -116,7 +116,7 @@ internal class GameDealerTest {
     }
 
     @Test
-    fun `Dealer 카드 합이 17이상이면 stay 상태가 아니므로 카드를 추가로 받을 수 있다`() {
+    fun `Dealer 카드 합이 16 이하 stay 상태가 아니므로 카드를 추가로 받을 수 있다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SIX, CardShape.DIAMOND))
         val dealer = GameDealer().apply { cards.forEach(this::draw) }
         assertThat(dealer.state is Stay).isFalse
@@ -142,14 +142,14 @@ internal class GameDealerTest {
             )
 
         @JvmStatic
-        fun provideBurstCards(): Stream<Arguments> =
+        fun provideBustCards(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(
-                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.QUEEN, CardShape.CLOVER)),
-                    Card(CardType.TWO, CardShape.SPADE)
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.FIVE, CardShape.CLOVER)),
+                    Card(CardType.TEN, CardShape.SPADE)
                 ),
                 Arguments.of(
-                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.QUEEN, CardShape.CLOVER)),
+                    listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.FOUR, CardShape.CLOVER)),
                     Card(CardType.NINE, CardShape.SPADE)
                 )
             )
