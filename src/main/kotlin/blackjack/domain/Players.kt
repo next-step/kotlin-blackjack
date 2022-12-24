@@ -19,6 +19,16 @@ class Players(val value: List<Player>) {
     }
 
     fun allReadyToPlay(): Boolean = value.all { it.shouldBeReadyToPlay() }
+
+    fun playGame(dealer: Dealer, hit: (Player) -> Boolean, printResult: (Player) -> Unit) {
+        value.forEach {
+            while (!it.finished && hit(it)) {
+                it.draw(dealer.deliverCard())
+                printResult(it)
+            }
+        }
+    }
+
     companion object {
         const val MIN_NUMBER_PLAYERS = 2
         const val MAX_NUMBER_PLAYERS = 8
