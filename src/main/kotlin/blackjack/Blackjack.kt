@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.domain.GameDealer
 import blackjack.domain.Game
+import blackjack.domain.GameDealer
 
 fun main() {
     val players = InputView.inputPlayers()
