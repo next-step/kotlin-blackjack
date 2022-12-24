@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.view.PlayerDto
+import blackjack.view.PlayerResultDto
 
 private const val INITIAL_CARD_COUNT = 2
 
@@ -9,21 +9,21 @@ class BlackJackGame(
     private val dealer: Dealer,
     private val deck: CardDeck,
 ) {
-    fun start(): List<PlayerDto> = dealerInit() + playerInit()
+    fun start(): List<PlayerResultDto> = dealerInit() + playerInit()
 
-    private fun dealerInit(): List<PlayerDto> {
+    private fun dealerInit(): List<PlayerResultDto> {
         dealer.addCard(deck.deal())
-        return listOf(PlayerDto(dealer))
+        return listOf(PlayerResultDto(dealer))
     }
 
     private fun playerInit() = players.map {
         val player = it.addCard(deck.deal(INITIAL_CARD_COUNT))
-        PlayerDto(player)
+        PlayerResultDto(player)
     }
 
-    fun addCard(name: String): PlayerDto = getPlayerBy(name)
+    fun addCard(name: String): PlayerResultDto = getPlayerBy(name)
         .addCard(deck.deal())
-        .let { PlayerDto(it) }
+        .let { PlayerResultDto(it) }
 
     private fun getPlayerBy(name: String): Player {
         return players.firstOrNull { it.name == name } ?: throw IllegalArgumentException("존재하지 않는 플레이어 이름입니다.")
@@ -33,10 +33,8 @@ class BlackJackGame(
         return dealer.hitUntil(deck)
     }
 
-    fun result(): List<PlayerDto> {
-        players.forEach {
-            it.flip(dealer)
-        }
-        return listOf(PlayerDto(dealer)) + players.map { PlayerDto(it) }
+    fun result(): List<PlayerResultDto> {
+        return BlackjackResultMaker.result(dealer, players)
+
     }
 }
