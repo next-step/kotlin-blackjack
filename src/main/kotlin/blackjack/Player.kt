@@ -16,17 +16,13 @@ open class Player(
 
     fun cardPoint() = playingCards.calculatePoint()
 
-    fun flip(dealer: Dealer) {
-        when {
-            this.cardPoint() > dealer.cardPoint() -> {
-                winningCount++
-                dealer.addLosingCount()
-            }
-
-            dealer.cardPoint() > this.cardPoint() -> {
-                dealer.addWinningCount()
-                losingCount++
-            }
+    fun flip(dealer: Dealer): GameResult {
+        return when {
+            bust() -> GameResult.LOSE
+            dealer.bust() -> GameResult.WIN
+            cardPoint() > dealer.cardPoint() -> GameResult.WIN
+            cardPoint() < dealer.cardPoint() -> GameResult.LOSE
+            else -> GameResult.TIE
         }
     }
 
