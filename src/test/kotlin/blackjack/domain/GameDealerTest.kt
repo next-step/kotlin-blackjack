@@ -1,10 +1,13 @@
 package blackjack.domain
 
+import blackjack.domain.Finished.Blackjack
+import blackjack.domain.Finished.Bust
+import blackjack.domain.Finished.Stay
+import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import blackjack.model.DEFAULT_CARD_DECK
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,7 +24,7 @@ internal class GameDealerTest {
     @Test
     fun `딜러는 게임 시작 전 카드덱을 셔플 한다`() {
         val deck = GameCardDeck(DEFAULT_CARD_DECK)
-        val dealer = GameDealer(deck).apply { shuffle() }
+        val dealer = GameDealer(_deck = deck).apply { shuffle() }
         assertThat(dealer.deck.cards).isEqualTo(deck.cards)
     }
 
@@ -29,7 +32,7 @@ internal class GameDealerTest {
     fun `딜러는 플레이어에게 카드 한장을 전달 할 수 있다`() {
         val (cardDeck, firstCard) = DEFAULT_CARD_DECK to DEFAULT_CARD_DECK.first()
         val resultCount = cardDeck.size - 1
-        val dealer = GameDealer(GameCardDeck(cardDeck))
+        val dealer = GameDealer(_deck = GameCardDeck(cardDeck))
         assertThat(dealer.deliverCard()).isEqualTo(firstCard)
         assertThat(dealer.deck.size).isEqualTo(resultCount)
     }
@@ -37,67 +40,69 @@ internal class GameDealerTest {
     // Dealer GamePlay 경우 Player 동일해야 한다.
     @ParameterizedTest
     @MethodSource("provideInitialCards")
-    fun `Dealer 게임 시작 전 2개의 카드를 받는다`(cards: List<Card>) {
-        val gamePlayer = GamePlayer("고니").apply { readyToPlay(cards) }
-        assertThat(gamePlayer.cards.size).isEqualTo(cards.size)
+    fun `Dealer 게임 시작 전 2개의 카드를 받으면 게임 시작 상태가 된다`(cards: List<Card>) {
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.cards.size).isEqualTo(cards.size)
+        assertThat(dealer.shouldBeReadyToPlay()).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("provideInitialInvalidCards")
-    fun `Dealer 게임 시작 전 2개의 카드를 받지 않으면 에러가 발생한다`(cards: List<Card>) {
-        val dealer = GameDealer()
-        Assertions.assertThatExceptionOfType(IllegalArgumentException::class.java)
-            .isThrownBy { dealer.readyToPlay(cards) }
+    fun `Dealer 게임 시작 전 2개의 카드를 받지 않으면 게임 시작할 수 있는 상태가 되지 않는다`(cards: List<Card>) {
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.cards.size).isEqualTo(cards.size)
+        assertThat(dealer.shouldBeReadyToPlay()).isFalse
     }
 
     @ParameterizedTest
     @MethodSource("provideHitCard")
     fun `Dealer 히트를 외치면 카드 한장을 더 받는다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
         assertThat(dealer.cards.value.last()).isEqualTo(hitCard)
     }
 
     @ParameterizedTest
     @MethodSource("provideBurstCards")
-    fun `Dealer 카드 합산이 21 초과 burst 상태가 되어 게임을 더이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
+    fun `Dealer 카드 합산이 21 초과 bust 상태가 되어 게임을 더이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
-        assertThat(dealer.bust()).isTrue
+        assertThat(dealer.state is Bust).isTrue
+        assertThat(dealer.finished).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("provideNotBurstCards")
-    fun `Dealer 카드 합산이 21 이상일 떄 burst 상태가 되어 게임을 계속 할 수있다`(initialCards: List<Card>, hitCard: Card) {
+    fun `Dealer 카드 합산이 21 이하 Hit 상태가 되어 게임을 계속 할 수 있다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
-        assertThat(dealer.bust()).isFalse
+        assertThat(dealer.state is Hit).isTrue
+        assertThat(dealer.finished).isFalse
     }
 
     @Test
-    fun `Dealer 카드가 2장이고 합산이 21이면 블랙잭 완성`() {
-        val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
-        val dealer = GameDealer(cards = cards)
-        assertThat(dealer.blackjack()).isTrue
+    fun `Dealer 최초 받은 카드가 2장의 합산이 21이면 블랙잭 완성`() {
+        val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND))
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.state is Blackjack).isTrue
+        assertThat(dealer.finished).isTrue
     }
 
     @Test
-    fun `Dealer 카드가 2장 초과이고 합산이 21이면 블랙잭 완성이 아님`() {
-        val cards = Cards(
-            listOf(
-                Card(CardType.THREE, CardShape.HEART),
-                Card(CardType.EIGHT, CardShape.DIAMOND),
-                Card(CardType.TEN, CardShape.SPADE)
-            )
+    fun `Dealer 받은 카드가 2장 초과이고 합산이 21이면 블랙잭 완성이 아님`() {
+        val cards = listOf(
+            Card(CardType.THREE, CardShape.HEART),
+            Card(CardType.EIGHT, CardShape.DIAMOND),
+            Card(CardType.TEN, CardShape.SPADE)
         )
-        val dealer = GameDealer(cards = cards)
-        assertThat(dealer.blackjack()).isFalse
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.state is Blackjack).isFalse
     }
 
     // END: GamePlay
@@ -105,15 +110,17 @@ internal class GameDealerTest {
     @Test
     fun `Dealer 카드 합이 17이상이면 stay 상태로 게임을 중단한다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SEVEN, CardShape.DIAMOND))
-        val dealer = GameDealer().apply { readyToPlay(cards) }
-        assertThat(dealer.stay()).isTrue
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.state is Stay).isTrue
+        assertThat(dealer.finished).isTrue
     }
 
     @Test
     fun `Dealer 카드 합이 17이상이면 stay 상태가 아니므로 카드를 추가로 받을 수 있다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SIX, CardShape.DIAMOND))
-        val dealer = GameDealer().apply { readyToPlay(cards) }
-        assertThat(dealer.stay()).isFalse
+        val dealer = GameDealer().apply { cards.forEach(this::draw) }
+        assertThat(dealer.state is Stay).isFalse
+        assertThat(dealer.finished).isFalse
     }
 
     companion object {
