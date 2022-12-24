@@ -7,56 +7,65 @@ import java.util.UUID
 
 class FakePlayer(
     override val name: String = UUID.randomUUID().toString(),
-    override val cards: Cards = Cards(),
-    private val hit: Boolean = false,
+    private val _state: State = Started(Cards()),
+    private val _finished: Boolean = false,
+    private val readyToPlay: Boolean = true,
     private val sumCards: Int = 0,
-    private val bust: Boolean = false,
-    private val blackjack: Boolean = false,
 ) : Player {
+    override val state: State
+        get() = _state
 
-    override fun readyToPlay(initialCards: List<Card>) {
-        // do nothing
+    override val cards: Cards
+        get() = state.cards
+    override val finished: Boolean
+        get() = _finished
+
+    override fun shouldBeReadyToPlay(): Boolean = readyToPlay
+
+    override fun draw(card: Card) {
+        TODO("Not yet implemented")
     }
 
-    override fun hit(card: Card): Boolean = hit
+    override fun stay() {
+        TODO("Not yet implemented")
+    }
 
     override fun sumCards(): Int = sumCards
-
-    override fun bust(): Boolean = bust
-
-    override fun blackjack(): Boolean = blackjack
 }
 
 class FakeDealer(
     override val name: String = "딜러",
-    override val cards: Cards = Cards(),
+    override val deck: CardDeck = GameCardDeck(),
     private val deliveredCard: Card = Card(CardType.ACE, CardShape.CLOVER),
+    private val _state: State = Started(Cards()),
+    private val _finished: Boolean = false,
+    private val readyToPlay: Boolean = true,
     private val stay: Boolean = false,
-    private val hit: Boolean = false,
     private val sumCards: Int = 0,
-    private val bust: Boolean = false,
-    private val blackjack: Boolean = false,
 ) : Dealer {
-    override val deck: CardDeck
-        get() = GameCardDeck()
+    override val cards: Cards
+        get() = state.cards
+    override val state: State
+        get() = TODO("Not yet implemented")
+    override val finished: Boolean
+        get() = TODO("Not yet implemented")
 
     override fun shuffle() {
         // do nothing
     }
 
+    override fun draw(card: Card) {
+        TODO("Not yet implemented")
+    }
+
     override fun deliverCard(): Card = deliveredCard
+    override fun shouldStay(): Boolean = stay
 
-    override fun stay(): Boolean = stay
+    override fun shouldBeReadyToPlay(): Boolean = readyToPlay
 
-    override fun readyToPlay(initialCards: List<Card>) {
+    override fun stay() {
         // do nothing
     }
 
-    override fun hit(card: Card): Boolean = hit
-
     override fun sumCards(): Int = sumCards
-
-    override fun bust(): Boolean = bust
-
-    override fun blackjack(): Boolean = blackjack
 }
