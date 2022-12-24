@@ -4,6 +4,7 @@ import blackjack.model.Card
 
 interface Player {
     val name: String
+    val cards: Cards
     val state: State
     val finished: Boolean
 
@@ -16,6 +17,7 @@ interface Player {
 interface Dealer {
     val deck: CardDeck
     val name: String
+    val cards: Cards
     val state: State
     val finished: Boolean
     fun deliverCard(): Card
