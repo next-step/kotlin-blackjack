@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Finished.Blackjack
+import blackjack.domain.Finished.Bust
 import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
@@ -28,66 +30,68 @@ internal class GamePlayerTest {
 
     @ParameterizedTest
     @MethodSource("provideInitialCardS")
-    fun `Player 게임 시작 전 2개의 카드를 받는다`(cards: List<Card>) {
-        val gamePlayer = GamePlayer("고니").apply { readyToPlay(cards) }
+    fun `Player 게임 시작 전 2개의 카드를 받으면 게임 참가할 수 있다`(cards: List<Card>) {
+        val gamePlayer = GamePlayer("고니").apply { cards.forEach(this::draw) }
         assertThat(gamePlayer.cards.size).isEqualTo(cards.size)
+        assertThat(gamePlayer.shouldBeReadyToPlay()).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("provideInitialInvalidCardS")
-    fun `Player 게임 시작 전 2개의 카드를 받지 않으면 에러가 발생한다`(cards: List<Card>) {
-        val gamePlayer = GamePlayer("고니")
-        assertThatExceptionOfType(IllegalArgumentException::class.java).isThrownBy { gamePlayer.readyToPlay(cards) }
+    fun `Player 게임 시작 전 2개의 카드를 받지 않으면 게임 참가할 상태가 되지 않는다`(cards: List<Card>) {
+        val gamePlayer = GamePlayer("고니").apply { cards.forEach(this::draw) }
+        assertThat(gamePlayer.shouldBeReadyToPlay()).isFalse
     }
 
     @ParameterizedTest
     @MethodSource("provideHitCard")
     fun `Player 히트를 외치면 카드 한장을 더 받는다`(initialCards: List<Card>, hitCard: Card) {
         val gamePlayer = GamePlayer("고니").apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
         assertThat(gamePlayer.cards.value.last()).isEqualTo(hitCard)
     }
 
     @ParameterizedTest
-    @MethodSource("provideBurstCards")
-    fun `Player 카드 합산이 21 초과 burst 상태가 되어 게임을 더이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
+    @MethodSource("provideBustCards")
+    fun `Player 카드 합산이 21 초과 bust 상태가 되어 게임을 더 이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
         val gamePlayer = GamePlayer("고니").apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
-        assertThat(gamePlayer.bust()).isTrue
+        assertThat(gamePlayer.state is Bust).isTrue
+        assertThat(gamePlayer.finished).isTrue
     }
 
     @ParameterizedTest
-    @MethodSource("provideNotBurstCards")
-    fun `Player 카드 합산이 21 미만일떄 burst 상태가 되어 게임을 계속 할 수있다`(initialCards: List<Card>, hitCard: Card) {
+    @MethodSource("provideNotBustCards")
+    fun `Player 카드 합산이 21 미만 bust 상태가 되어 게임을 계속 할 수있다`(initialCards: List<Card>, hitCard: Card) {
         val gamePlayer = GamePlayer("고니").apply {
-            readyToPlay(initialCards)
-            hit(hitCard)
+            initialCards.forEach(this::draw)
+            draw(hitCard)
         }
-        assertThat(gamePlayer.bust()).isFalse
+        assertThat(gamePlayer.state is Bust).isFalse
+        assertThat(gamePlayer.finished).isFalse
     }
 
     @Test
     fun `Player 카드가 2장이고 합산이 21이면 블랙잭 완성`() {
-        val cards = Cards(mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND)))
-        val gamePlayer = GamePlayer("고니", cards)
-        assertThat(gamePlayer.blackjack()).isTrue
+        val cards = listOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND))
+        val gamePlayer = GamePlayer("고니").apply { cards.forEach(this::draw) }
+        assertThat(gamePlayer.state is Blackjack).isTrue
+        assertThat(gamePlayer.finished).isTrue
     }
 
     @Test
     fun `Player 카드가 2장 쵸과 합산이 21이면 블랙잭이 아니다`() {
-        val cards = Cards(
-            listOf(
-                Card(CardType.THREE, CardShape.HEART),
-                Card(CardType.EIGHT, CardShape.DIAMOND),
-                Card(CardType.TEN, CardShape.SPADE)
-            )
+        val cards = listOf(
+            Card(CardType.THREE, CardShape.HEART),
+            Card(CardType.EIGHT, CardShape.DIAMOND),
+            Card(CardType.TEN, CardShape.SPADE)
         )
-        val gamePlayer = GamePlayer("고니", cards)
-        assertThat(gamePlayer.blackjack()).isFalse
+        val gamePlayer = GamePlayer("고니").apply { cards.forEach(this::draw) }
+        assertThat(gamePlayer.state is Blackjack).isFalse
     }
 
     companion object {
@@ -109,7 +113,7 @@ internal class GamePlayerTest {
             )
 
         @JvmStatic
-        fun provideBurstCards(): Stream<Arguments> =
+        fun provideBustCards(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(
                     listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.QUEEN, CardShape.CLOVER)),
@@ -122,7 +126,7 @@ internal class GamePlayerTest {
             )
 
         @JvmStatic
-        fun provideNotBurstCards(): Stream<Arguments> =
+        fun provideNotBustCards(): Stream<Arguments> =
             Stream.of(
                 Arguments.of(
                     listOf(Card(CardType.KING, CardShape.CLOVER), Card(CardType.FIVE, CardShape.CLOVER)),
