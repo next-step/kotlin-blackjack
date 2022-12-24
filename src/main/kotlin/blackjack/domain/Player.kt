@@ -21,11 +21,9 @@ interface Dealer {
     val state: State
     val finished: Boolean
     fun deliverCard(): Card
-    fun shouldStay(): Boolean
     fun shouldBeReadyToPlay(): Boolean
     fun shuffle()
 
     fun draw(card: Card)
-    fun stay()
     fun sumCards(): Int
 }
