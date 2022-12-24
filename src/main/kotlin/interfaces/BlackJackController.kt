@@ -67,10 +67,8 @@ class BlackJackController : Executable {
             OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
             isReceive = InputConsole.queryReceiveCard(player.name)
         }
-        if (!isReceive) {
-            val cardInfo = cardInfo(player)
-            OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
-        }
+        val cardInfo = cardInfo(player)
+        OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
     }
 
     private fun showFinalResult(blackJackGame: BlackJackGame) {
