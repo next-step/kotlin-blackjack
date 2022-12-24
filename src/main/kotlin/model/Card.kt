@@ -1,10 +1,6 @@
 package model
 
 class Card(val cardNumber: CardNumber, val cardShape: CardShape) {
-    fun hit(): Card {
-        return Card(selectCardNumber(), selectCardShape())
-    }
-
     constructor() : this(selectCardNumber(), selectCardShape())
 
     companion object {
