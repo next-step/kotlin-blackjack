@@ -1,41 +1,30 @@
 package model
 
-class Name(input: String) {
-    val names: List<String>
-
+class Name(val names: List<String>) {
     init {
-        names = splitInputValue(input)
         for (name in names) {
-            if (isBlank(name)) {
-                throw IllegalArgumentException("$ERROR_MESSAGE Blank")
-            }
-            checkValidNameLength(name)
+            require(name.isNotBlank()) { "$ERROR_MESSAGE 이름이 공백일 수 없습니다." }
+            validateNameLength(name)
         }
-        checkDuplicatedName()
+        validateDuplication()
     }
 
-    private fun splitInputValue(inputValue: String): List<String> {
-        return inputValue.split(INPUT_VALUE_DELIMITER)
+    constructor(value: String) : this(splitInputValue(value))
+
+    private fun validateNameLength(name: String) {
+        require(name.length < 5) { "$ERROR_MESSAGE 이름이 5글자 이상일 수 없습니다." }
     }
 
-    private fun isBlank(number: String): Boolean {
-        return number.isBlank()
-    }
-
-    private fun checkValidNameLength(name: String) {
-        if (name.length > 5) {
-            throw IllegalArgumentException("$ERROR_MESSAGE Invalid Length")
-        }
-    }
-
-    private fun checkDuplicatedName() {
-        if (names.size != names.distinct().count()) {
-            throw IllegalArgumentException("$ERROR_MESSAGE Duplicated Name")
-        }
+    private fun validateDuplication() {
+        require(names.size == names.distinct().count()) { "$ERROR_MESSAGE 이름이 중복될 수 없습니다." }
     }
 
     companion object {
-        const val ERROR_MESSAGE = "[ERROR]"
-        const val INPUT_VALUE_DELIMITER = ","
+        private const val ERROR_MESSAGE = "[ERROR]"
+        private const val NAME_VALUE_DELIMITER = ","
+
+        private fun splitInputValue(inputValue: String): List<String> {
+            return inputValue.split(NAME_VALUE_DELIMITER)
+        }
     }
 }
