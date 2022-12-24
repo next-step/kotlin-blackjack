@@ -6,10 +6,10 @@ import blackjack.domain.player.Player
 import kotlin.jvm.Throws
 
 enum class State(
-    override val isAbleToHit: Boolean,
-    override val isAbleToStay: Boolean,
+    val isAbleToHit: Boolean,
+    val isAbleToStay: Boolean,
     val isFinished: Boolean
-): PlayerAction {
+) : PlayerAction {
     IN_PROGRESS(true, true, false) {
         override fun hit(player: Player): State = when {
             player.cards.isBlackjack() -> HIT_AND_BLACKJACK
