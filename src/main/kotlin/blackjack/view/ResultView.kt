@@ -29,7 +29,7 @@ object ResultView {
     }
 
     private fun printPlayersStatus(dealer: Dealer, players: Players) {
-        println("${dealer.name.value} 카드: ${dealer.cards}")
+        println("${dealer.name.value} 카드: ${dealer.cards.values[0]}")
         players.values.forEach { printPlayerStatus(it) }
     }
 
