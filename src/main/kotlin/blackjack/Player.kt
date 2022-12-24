@@ -3,8 +3,6 @@ package blackjack
 open class Player(
     val name: String,
     val playingCards: PlayingCards = PlayingCards(),
-    var winningCount: Int = 0,
-    var losingCount: Int = 0,
 ) {
     fun addCard(deal: Card): Player {
         playingCards.addOne(deal)

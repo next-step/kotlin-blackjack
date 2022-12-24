@@ -15,14 +15,7 @@ class Dealer(playingCards: PlayingCards = PlayingCards()) {
 
     fun cardPoint(): Point = player.cardPoint()
 
-    private fun bust(): Boolean = player.bust()
-    fun addLosingCount() {
-        player.losingCount++
-    }
-
-    fun addWinningCount() {
-        player.winningCount++
-    }
+    fun bust(): Boolean = player.bust()
 
     fun addCard(deal: Card) {
         player.addCard(deal)

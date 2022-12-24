@@ -44,6 +44,9 @@ object OutputView {
         if (playerDto.winningCount != ZERO_COUNT) {
             print("${playerDto.winningCount}승 ")
         }
+        if (playerDto.tieCount != ZERO_COUNT) {
+            print("${playerDto.winningCount}무 ")
+        }
         if (playerDto.losingCount != ZERO_COUNT) {
             print("${playerDto.losingCount}패 ")
         }
