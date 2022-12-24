@@ -10,7 +10,7 @@ interface CardDeck {
     fun takeOutFirstCard(): Card
 }
 
-class CardDeckImpl(
+class GameCardDeck(
     initialCard: List<Card> = DEFAULT_CARD_DECK,
 ) : CardDeck {
 

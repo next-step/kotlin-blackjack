@@ -20,7 +20,7 @@ internal class GameDealerTest {
 
     @Test
     fun `딜러는 게임 시작 전 카드덱을 셔플 한다`() {
-        val deck = CardDeckImpl(DEFAULT_CARD_DECK)
+        val deck = GameCardDeck(DEFAULT_CARD_DECK)
         val dealer = GameDealer(deck).apply { shuffle() }
         assertThat(dealer.deck.cards).isEqualTo(deck.cards)
     }
@@ -29,7 +29,7 @@ internal class GameDealerTest {
     fun `딜러는 플레이어에게 카드 한장을 전달 할 수 있다`() {
         val (cardDeck, firstCard) = DEFAULT_CARD_DECK to DEFAULT_CARD_DECK.first()
         val resultCount = cardDeck.size - 1
-        val dealer = GameDealer(CardDeckImpl(cardDeck))
+        val dealer = GameDealer(GameCardDeck(cardDeck))
         assertThat(dealer.deliverCard()).isEqualTo(firstCard)
         assertThat(dealer.deck.size).isEqualTo(resultCount)
     }

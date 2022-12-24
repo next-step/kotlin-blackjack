@@ -4,10 +4,10 @@ import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.model.Card
 
 class GameDealer(
-    private val _deck: CardDeck = CardDeckImpl(),
     override val cards: Cards = Cards(),
     override val name: String = "딜러",
 ) : Dealer {
+    private val _deck: CardDeck = GameCardDeck()
     override val deck: CardDeck
         get() = _deck
 

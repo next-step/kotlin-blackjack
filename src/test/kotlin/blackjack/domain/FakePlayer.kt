@@ -38,7 +38,7 @@ class FakeDealer(
     private val blackjack: Boolean = false,
 ) : Dealer {
     override val deck: CardDeck
-        get() = CardDeckImpl()
+        get() = GameCardDeck()
 
     override fun shuffle() {
         // do nothing
