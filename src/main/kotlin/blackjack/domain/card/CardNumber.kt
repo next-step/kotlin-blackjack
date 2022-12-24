@@ -3,8 +3,9 @@ package blackjack.domain.card
 enum class CardNumber(
     val number: Int,
     private val description: String,
-    val candidateNumber: Int? = null
+    val candidateNumber: Int = number
 ) {
+
     ONE(1, "1"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -19,6 +20,9 @@ enum class CardNumber(
     QUEEN(10, "Q"),
     KING(10, "K"),
     ACE(11, "A", 1);
+
+    val candidateNumbers: Set<Int>
+        get() = setOf(number, candidateNumber)
 
     override fun toString(): String {
         return description
