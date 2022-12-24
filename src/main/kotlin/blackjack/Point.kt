@@ -26,7 +26,6 @@ value class Point(val value: Int) {
         val ACE = Point(1)
         val SPECIAL_ACE_ADDED = Point(10)
         val SPECIAL_ACE = Point(11)
-        val DEALER_MIN_POINT = Point(17)
         val MAX = Point(21)
     }
 }
