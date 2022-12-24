@@ -27,4 +27,8 @@ enum class CardNumber(
     override fun toString(): String {
         return description
     }
+
+    companion object {
+        val INT_RANGE: IntRange = (ONE.number..ACE.number)
+    }
 }

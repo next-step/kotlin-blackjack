@@ -2,9 +2,12 @@ package blackjack.domain.player
 
 import blackjack.domain.card.CardVendor
 import blackjack.domain.card.Cards
+import blackjack.domain.card.cardOf
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 class PlayerTest : FunSpec({
@@ -52,5 +55,40 @@ class PlayerTest : FunSpec({
                 )
             }
         }
+    }
+
+    context("21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다.") {
+        withData(
+            nameFn = { "$it" },
+            (2..20).map { initScore ->
+                PlayerDataSet.testDataWithTwoCards(initScore)
+            }
+        ) { player ->
+            val cardVendor = CardVendor()
+
+            player.isFinished() shouldBe false
+            assertDoesNotThrow {
+                player.hit(cardVendor.drawCard())
+            }
+        }
+    }
+
+    test("21을 초과할 경우, 더이상 게임을 진행하지 않는다.") {
+        val player = Player("username", Cards(listOf(cardOf(9), cardOf(9))))
+
+        player.hit(cardOf(4))
+
+        val beforeScore = player.score
+        val beforeCardSize = player.cards.size
+
+        player.score shouldBe beforeScore
+        player.cards.size shouldBe beforeCardSize
+        player.isFinished() shouldBe true
+    }
+
+    test("21인 경우, 더이상 hit 하지 않아도 된다.") {
+        val player = Player("username", Cards(listOf(cardOf(10), cardOf(11))))
+
+        player.isFinished() shouldBe true
     }
 })

@@ -6,10 +6,16 @@ import blackjack.domain.player.Players
 
 class Blackjack(
     val players: Players,
-    val cardVendor: CardVendor
+    private val cardVendor: CardVendor
 ) {
 
+    fun giveCardTo(player: Player) {
+        player.hit(cardVendor.drawCard())
+    }
+
     companion object {
+        const val BLACKJACK_BEST_SCORE = 21
+
         fun of(playerNames: List<String>): Blackjack {
             val cardVendor = CardVendor()
             val players = Players(

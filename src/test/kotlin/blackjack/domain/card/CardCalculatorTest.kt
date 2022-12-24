@@ -11,7 +11,7 @@ class CardCalculatorTest : FunSpec({
     context("CardCalculator가 정상적으로 블랙잭 카드 점수를 계산한다.") {
         withData(
             nameFn = { "${it.first} : ${it.second}점" },
-            (1..10).map { CardsDataSet.testData() }
+            (1..10).map { CardsDataSet.testDataWithTwoCards() }
                 .map { cards -> cards to cards.blackjackScore() }
         ) { (cards, expectedScore) ->
             CardCalculator.score(cards) shouldBe expectedScore

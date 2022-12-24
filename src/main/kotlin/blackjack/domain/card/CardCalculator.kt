@@ -1,9 +1,10 @@
 package blackjack.domain.card
 
+import blackjack.domain.Blackjack
 import kotlin.math.abs
 
 object CardCalculator {
-    const val BLACKJACK_BEST_SCORE: Int = 21
+    const val BLACKJACK_BEST_SCORE: Int = Blackjack.BLACKJACK_BEST_SCORE
 
     fun score(cards: Cards): Int =
         cards.map { it.candidateScores }
