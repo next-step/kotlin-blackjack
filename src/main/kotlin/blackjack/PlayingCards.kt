@@ -29,6 +29,8 @@ class PlayingCards(
     fun addAll(cards: Set<Card>) {
         this._cards.addAll(cards)
     }
+
+    fun bust(): Boolean = sumPoint() > MAX
 }
 
 private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {
