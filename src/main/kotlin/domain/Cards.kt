@@ -15,4 +15,9 @@ class Cards {
     fun score(): Int = this.cards.sumOf { it.number.primaryScore }
     fun secondaryScore(): Int = this.cards.sumOf { it.number.secondaryScore }
     fun cardList(): List<Card> = this.cards
+    fun isExceedsAvailableReceiveNumber(): Boolean = this.score() <= RECEIVE_LIMIT_SCORE
+
+    private companion object {
+        const val RECEIVE_LIMIT_SCORE = 21
+    }
 }

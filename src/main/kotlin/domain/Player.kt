@@ -30,4 +30,6 @@ class Player(
     override fun hashCode(): Int {
         return name.hashCode()
     }
+
+    fun isAvailableReceive(): Boolean = this.hands.isExceedsAvailableReceiveNumber()
 }
