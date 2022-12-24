@@ -21,4 +21,3 @@ class Dealer(playingCards: PlayingCards = PlayingCards()) {
         player.addCard(deal)
     }
 }
-

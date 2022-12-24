@@ -1,10 +1,5 @@
 package blackjack.view
 
-import blackjack.Card
-import blackjack.Dealer
-import blackjack.GameResult
-import blackjack.Player
-
 const val ZERO_COUNT = 0
 
 object OutputView {
@@ -54,4 +49,3 @@ object OutputView {
         println()
     }
 }
-

@@ -37,4 +37,3 @@ private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {
     return this.map(function)
         .reduce { acc, point -> acc + point }
 }
-

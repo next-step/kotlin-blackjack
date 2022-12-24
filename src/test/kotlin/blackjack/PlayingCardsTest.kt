@@ -24,5 +24,4 @@ class PlayingCardsTest : StringSpec({
             PlayingCards(mutableSetOf(Card.CLOVER_A, Card.HEART_A, Card.CLOVER_9)).calculatePoint() shouldBe Point(21)
         }
     }
-
 })
