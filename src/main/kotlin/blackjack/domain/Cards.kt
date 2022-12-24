@@ -37,6 +37,16 @@ class Cards(
         return (0 until aceCount).fold(allSum) { acc, _ -> minusAceNumberCaseOne(acc) }
     }
 
+    fun blackJack(): Boolean {
+        val firstCards = _items.toList().subList(0, MIN_SIZE)
+
+        if (!firstCards.any { it.isAce() }) {
+            return false
+        }
+
+        return firstCards.any { it.isTenNumberCard() }
+    }
+
     private fun minusAceNumberCaseOne(acc: Int): Int {
         val candidate1 = acc - ACE_VALUE_1
         val candidate2 = acc - ACE_VALUE_2

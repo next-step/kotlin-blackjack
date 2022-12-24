@@ -1,9 +1,13 @@
 package blackjack.domain
 
+import blackjack.domain.GameState.WIN
 import blackjack.domain.Number.ACE
+import blackjack.domain.Number.EIGHT
+import blackjack.domain.Number.JACK
 import blackjack.domain.Number.NINE
 import blackjack.domain.Number.QUEEN
 import blackjack.domain.Number.SEVEN
+import blackjack.domain.Number.SIX
 import blackjack.domain.Number.THREE
 import blackjack.domain.Number.TWO
 import blackjack.domain.Sharp.CLOVER
@@ -11,6 +15,8 @@ import blackjack.domain.Sharp.DIAMOND
 import blackjack.domain.Sharp.HEART
 import blackjack.domain.member.Dealer
 import blackjack.domain.member.Player
+import blackjack.domain.member.ResultPlayer
+import blackjack.domain.member.ResultPlayers
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -72,5 +78,30 @@ class DealerTest {
         // when, then
         assertThat(dealer.isWin(losePlayer)).isTrue
         assertThat(dealer.isWin(winPlayer)).isFalse
+    }
+
+    @Test
+    internal fun `딜러의 수익은 플레이어의 이익만큼 마이너스이다`() {
+        // given
+        val dealer = Dealer(Cards(Card(ACE, HEART), Card(SIX, CLOVER)))
+        val resultPlayers = ResultPlayers(
+            listOf(
+                ResultPlayer(
+                    Player("blackjack", Cards(Card(ACE, HEART), Card(JACK, CLOVER)), Bet.of(1000)),
+                    WIN
+                ),
+
+                ResultPlayer(
+                    Player("winner", Cards(Card(JACK, HEART), Card(EIGHT, CLOVER)), Bet.of(1000)),
+                    WIN
+                )
+            )
+        )
+
+        // when
+        val benefit = dealer.benefit(resultPlayers)
+
+        // then
+        assertThat(benefit).isEqualTo(-2000.0)
     }
 }

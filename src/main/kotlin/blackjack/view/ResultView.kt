@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.member.Dealer
 import blackjack.domain.member.Member
 import blackjack.domain.member.Player
 import blackjack.domain.member.Players
+import blackjack.domain.member.ResultPlayers
 
 object ResultView {
 
@@ -38,13 +38,13 @@ object ResultView {
 
     private fun Dealer.firstCardInfo() = "딜러: ${this.firstCardDescription()}"
     private fun Dealer.firstCardDescription() = this.cardElements.map { c -> c.number.desc + c.sharp.desc }.first()
-
-    fun printGamResult(gameResult: GameResult) {
+    fun printGameResult(dealer: Dealer, gameResultPlayers: ResultPlayers) {
         println()
-        println("## 최종 승패")
-        println("딜러: ${gameResult.dealerWinCount}승 ${gameResult.dealerLoseCount}패")
+        println("## 최종 수익")
+        println("${dealer.name}: ${dealer.benefit(gameResultPlayers)}")
 
-        gameResult.winnerPlayers.items.forEach { println("${it.name}: 승") }
-        gameResult.losePlayers.items.forEach { println("${it.name}: 승") }
+        gameResultPlayers.items.forEach {
+            println("${it.player.name}: ${it.benefit()}")
+        }
     }
 }

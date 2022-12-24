@@ -18,7 +18,7 @@ sealed interface Member {
 
     fun resultScore() = this.cards.score()
     fun isOverBlackjackNumber() = resultScore() > Const.BLACKJACK_NUMBER
-    fun isEqualsBlackjackNumber() = resultScore() == Const.BLACKJACK_NUMBER
+    fun blackjack() = this.cards.blackJack()
 
     fun isNearBlackJackThan(otherMember: Member) =
         abs(this.resultScore() - Const.BLACKJACK_NUMBER) < abs(otherMember.resultScore() - Const.BLACKJACK_NUMBER)
@@ -30,10 +30,10 @@ sealed interface Member {
             return false
         }
 
-        return conditionOfWin(otherMember)
+        return conditionOfWin(otherMember) && !blackjack()
     }
 
-    fun isLose(otherMember: Member) = !isWin(otherMember)
+    fun isLose(otherMember: Member) = !isWin(otherMember) && !blackjack()
 
     fun ableMoreDrawCard(): Boolean
     fun conditionOfWin(otherMember: Member): Boolean

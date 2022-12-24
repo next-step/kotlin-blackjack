@@ -1,6 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.Number.ACE
+import blackjack.domain.Number.EIGHT
+import blackjack.domain.Number.FOUR
+import blackjack.domain.Number.NINE
 import blackjack.domain.Number.QUEEN
 import blackjack.domain.Number.SIX
 import blackjack.domain.Number.TWO
@@ -14,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
+import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 
 internal class CardsTest {
@@ -45,6 +49,25 @@ internal class CardsTest {
 
         // then
         assertThat(cards.size).isEqualTo(3)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["KING", "QUEEN", "JACK"])
+    internal fun `처음 두 카드의 합이 21이면 블랙잭이다`(secondNumber: Number) {
+        // given
+        val cards = Cards(mutableSetOf(Card(ACE, CLOVER), Card(secondNumber, CLOVER)))
+
+        // when, then
+        assertThat(cards.blackJack()).isTrue
+    }
+
+    @Test
+    internal fun `처음 두 카드의 합이 21이 아니면 블랙잭이 아니다`() {
+        // given
+        val cards = Cards(mutableSetOf(Card(NINE, CLOVER), Card(EIGHT, CLOVER), Card(FOUR, CLOVER)))
+
+        // when, then
+        assertThat(cards.blackJack()).isFalse
     }
 
     @Test

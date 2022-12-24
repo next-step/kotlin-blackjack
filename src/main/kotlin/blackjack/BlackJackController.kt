@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Bet
 import blackjack.domain.Deck
 import blackjack.domain.member.Dealer
 import blackjack.domain.member.Player
@@ -11,8 +12,9 @@ fun main() {
     val usersNames = InputView.inputUsersNames()
     val deck = Deck.init()
 
+    val players = Players(usersNames.map { name -> initPlayer(name, deck) })
+
     val dealer = Dealer.init(deck)
-    val players = Players.init(usersNames, deck)
     ResultView.printDrawResults(dealer, players)
 
     for (player in players.items) {
@@ -23,9 +25,14 @@ fun main() {
     ResultView.printPlayerResults(dealer)
     players.items.forEach { ResultView.printPlayerResults(it) }
 
-    dealer.gameResult(players)
-    val gameResult = dealer.gameResult(players)
-    ResultView.printGamResult(gameResult)
+    val gameResultPlayers = players.toResultPlayers(dealer)
+    ResultView.printGameResult(dealer, gameResultPlayers)
+}
+
+private fun initPlayer(name: String, deck: Deck): Player {
+    val inputBetMoney = InputView.inputBetMoney(name)
+    val assignCards = deck.drawInitAssignCards()
+    return Player(name, assignCards, Bet.of(inputBetMoney))
 }
 
 private fun Player.drawCardUntilWant(deck: Deck) {
