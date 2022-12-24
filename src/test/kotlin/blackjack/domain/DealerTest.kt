@@ -23,6 +23,23 @@ internal class DealerTest : StringSpec({
         result shouldBe ResultStatus.WIN
     }
 
+    "딜러와 플레이어 둘 다 버스트한 경우에는 딜러가 승리한다." {
+        val dealer = Dealer(
+            Card(Suite.SPADE, Denomination.SIX),
+            Card(Suite.CLOVER, Denomination.JACK),
+            Card(Suite.SPADE, Denomination.SEVEN)
+        )
+        val player = Player(
+            Card(Suite.CLOVER, Denomination.SEVEN),
+            Card(Suite.SPADE, Denomination.EIGHT),
+            Card(Suite.CLOVER, Denomination.KING)
+        )
+
+        val result = dealer.getMatchResult(player)
+
+        result shouldBe ResultStatus.LOSE
+    }
+
     "딜러의 점수가 21점이고 플레이어도 21점이라면 무승부다." {
         val dealer = Dealer(
             Card(Suite.HEART, Denomination.QUEEN),

@@ -22,7 +22,7 @@ class Dealer(
 
     private fun getPlayerResult(player: Player): ResultStatus {
         if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
-        if (this.isBust()) return getPlayerResultWhenDealerBust(player)
+        if (this.isBust() && player.isHit()) return ResultStatus.WIN
         if (!player.isHit()) return ResultStatus.LOSE
 
         return player.score match this.score
@@ -40,11 +40,6 @@ class Dealer(
     private fun getPlayerResultWhenDealerBlackJack(player: Player): ResultStatus {
         if (player.isBlackJack()) return ResultStatus.DRAW
         return ResultStatus.LOSE
-    }
-
-    private fun getPlayerResultWhenDealerBust(player: Player): ResultStatus {
-        if (!player.isHit()) return ResultStatus.DRAW
-        return ResultStatus.WIN
     }
 
     companion object {
