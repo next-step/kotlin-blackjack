@@ -1,36 +1,42 @@
 package blackjack.domain
 
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
+import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 
 class GameDealer(
-    override val cards: Cards = Cards(),
-    override val name: String = "딜러",
-) : Dealer {
+    initialState: State = Started(),
     private val _deck: CardDeck = GameCardDeck()
+) : Dealer {
+    override val name: String = "딜러"
     override val deck: CardDeck
         get() = _deck
+    override val cards: Cards
+        get() = _state.cards
+
+    private var _state: State = initialState
+    override val state: State
+        get() = _state
+    override val finished: Boolean
+        get() = state.finished
+
+    override fun shouldBeReadyToPlay(): Boolean =
+        cards.size == INITIAL_CARDS_COUNT && state !is Started
+
+    override fun deliverCard(): Card = _deck.takeOutFirstCard()
 
     override fun shuffle() = _deck.shuffle()
 
-    override fun deliverCard(): Card = _deck.takeOutFirstCard()
-    override fun readyToPlay(initialCards: List<Card>) {
-        require(initialCards.size == Game.INITIAL_CARDS_COUNT) { "잘못된 초기 카드 개수 입니다. 최초 2장만 카드를 받을 수 있습니다." }
-        initialCards.forEach(cards::add)
+    override fun draw(card: Card) {
+        _state = state.draw(card)
+        if (shouldStay()) _state = state.stay()
     }
 
-    override fun stay() = cards.sum() >= STAY_CARDS_SUM
+    override fun sumCards(): Int = state.cards.sum()
 
-    override fun hit(card: Card) = cards.add(card)
-
-    override fun sumCards(): Int = cards.sum()
-
-    override fun bust(): Boolean = cards.sum() > BLACKJACK_SCORE
-
-    override fun blackjack(): Boolean =
-        cards.size == INITIAL_CARDS_COUNT && cards.sum() == BLACKJACK_SCORE
+    private fun shouldStay(): Boolean = state is Hit && cards.sum() >= STAY_SCORE
 
     companion object {
-        private const val STAY_CARDS_SUM = 17
+        private const val STAY_SCORE = 17
     }
 }
