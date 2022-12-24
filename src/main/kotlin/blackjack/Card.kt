@@ -16,7 +16,7 @@ enum class Card(
     HEART_7(Shape.HEART, Point(7), "7하트"),
     HEART_8(Shape.HEART, Point(8), "8하트"),
     HEART_9(Shape.HEART, Point(9), "9하트"),
-    HEART_10(Shape.HEART,Point(10), "10하트"),
+    HEART_10(Shape.HEART, Point(10), "10하트"),
     HEART_J(Shape.HEART, Point(10), "J하트"),
     HEART_Q(Shape.HEART, Point(10), "Q하트"),
     HEART_K(Shape.HEART, Point(10), "K하트"),

@@ -26,6 +26,7 @@ data class PlayerResultDto(
         dealer.player.playingCards.calculatePoint().value,
         winningCount, tieCount, losingCount
     )
+
     companion object {
         fun playerDtoOf(player: Player, gameResult: GameResult): PlayerResultDto {
             return when (gameResult) {
@@ -35,12 +36,14 @@ data class PlayerResultDto(
                     totalPoint = player.playingCards.calculatePoint().value,
                     winningCount = 1
                 )
+
                 GameResult.LOSE -> PlayerResultDto(
                     name = player.name,
                     cards = player.playingCards.cards,
                     totalPoint = player.playingCards.calculatePoint().value,
                     losingCount = 1
                 )
+
                 GameResult.TIE -> PlayerResultDto(
                     name = player.name,
                     cards = player.playingCards.cards,

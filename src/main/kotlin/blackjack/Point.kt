@@ -6,6 +6,7 @@ value class Point(val value: Int) {
     operator fun plus(adder: Point): Point {
         return Point(value + adder.value)
     }
+
     operator fun minus(adder: Point): Point {
         return Point(value - adder.value)
     }
@@ -21,7 +22,7 @@ value class Point(val value: Int) {
         return this + SPECIAL_ACE_ADDED
     }
 
-    companion object{
+    companion object {
         val ZERO = Point(0)
         val ACE = Point(1)
         val SPECIAL_ACE_ADDED = Point(10)
