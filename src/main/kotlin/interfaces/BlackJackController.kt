@@ -4,6 +4,7 @@ import application.BlackJackGame
 import common.Executable
 import domain.Participants
 import domain.Player
+import interfaces.ui.CardInfo
 import interfaces.ui.InputConsole
 import interfaces.ui.OutputConsole
 
@@ -41,11 +42,12 @@ class BlackJackController : Executable {
         }
     }
 
-    private fun cardInfo(player: Player): String {
-        return player.hands.cardList().joinToString(", ") {
-            val number = it.number.nameValue
-            val name = it.shape.nameValue
-            "${number}$name"
+    private fun cardInfo(player: Player): List<CardInfo> {
+        return player.hands.cardList().map {
+            CardInfo(
+                number = it.number.nameValue,
+                name = it.shape.nameValue
+            )
         }
     }
 
