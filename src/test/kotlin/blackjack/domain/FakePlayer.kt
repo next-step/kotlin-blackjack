@@ -23,11 +23,11 @@ class FakePlayer(
     override fun shouldBeReadyToPlay(): Boolean = readyToPlay
 
     override fun draw(card: Card) {
-        TODO("Not yet implemented")
+        // do nothing
     }
 
     override fun stay() {
-        TODO("Not yet implemented")
+        // do nothing
     }
 
     override fun sumCards(): Int = sumCards
@@ -54,7 +54,7 @@ class FakeDealer(
     }
 
     override fun draw(card: Card) {
-        TODO("Not yet implemented")
+        // do nothing
     }
 
     override fun deliverCard(): Card = deliveredCard
