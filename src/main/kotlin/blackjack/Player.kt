@@ -22,13 +22,16 @@ open class Player(
         when {
             this.cardPoint() > dealer.cardPoint() -> {
                 winningCount++
-                dealer.losingCount++
+                dealer.addLosingCount()
             }
 
             dealer.cardPoint() > this.cardPoint() -> {
-                dealer.winningCount++
+                dealer.addWinningCount()
                 losingCount++
             }
         }
     }
+
+    fun bust(): Boolean = playingCards.bust()
+
 }

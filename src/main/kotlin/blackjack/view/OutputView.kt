@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.Card
+import blackjack.Dealer
 import blackjack.Player
 
 private const val ZERO_COUNT = 0
@@ -64,4 +65,6 @@ data class PlayerDto(
         player.winningCount,
         player.losingCount,
     )
+
+    constructor(dealer: Dealer) : this(dealer.player)
 }
