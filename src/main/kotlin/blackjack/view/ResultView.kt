@@ -3,6 +3,8 @@ package blackjack.view
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.PlayerResult
+import blackjack.domain.Players
 import blackjack.domain.ResultStatus
 
 object ResultView {
@@ -13,26 +15,26 @@ object ResultView {
 
     fun printStatus(game: BlackJackGame) {
         println()
-        println("${game.dealer.name} 카드: ${game.dealer.cards} - 결과: ${game.dealer.score}")
-        game.players.forEach {
-            println("${it.name} 카드: ${it.cards} - 결과: ${it.score}")
+        println("${game.dealer.name.value} 카드: ${game.dealer.cards} - 결과: ${game.dealer.score}")
+        game.players.values.forEach {
+            println("${it.name.value} 카드: ${it.cards} - 결과: ${it.score}")
         }
     }
 
-    private fun printPlayersName(dealer: Dealer, players: List<Player>) {
-        val dealerName = dealer.name
-        val names = players.joinToString(", ") { it.name }
+    private fun printPlayersName(dealer: Dealer, players: Players) {
+        val dealerName = dealer.name.value
+        val names = players.values.joinToString(", ") { it.name.value }
 
         println("\n${"$dealerName ,$names"} 에게 2장의 카드를 나누었습니다.")
     }
 
-    private fun printPlayersStatus(dealer: Dealer, players: List<Player>) {
-        println("${dealer.name} 카드: ${dealer.cards}")
-        players.forEach { printPlayerStatus(it) }
+    private fun printPlayersStatus(dealer: Dealer, players: Players) {
+        println("${dealer.name.value} 카드: ${dealer.cards}")
+        players.values.forEach { printPlayerStatus(it) }
     }
 
     fun printPlayerStatus(player: Player) {
-        println("${player.name} 카드: ${player.cards}")
+        println("${player.name.value} 카드: ${player.cards}")
     }
 
     fun printDealerHitOrStay(isHit: Boolean) {
@@ -42,11 +44,11 @@ object ResultView {
         }
     }
 
-    fun printResults(game: BlackJackGame) {
+    fun printResults(playerResults: List<PlayerResult>, dealer: Dealer) {
         println("\n## 최종 승패")
-        printDealerResults(game.dealer)
-        game.playerResults.forEach {
-            println("${it.player.name}: ${it.result.value}")
+        printDealerResults(dealer)
+        playerResults.forEach {
+            println("${it.player.name.value}: ${it.result.value}")
         }
     }
 
@@ -55,6 +57,6 @@ object ResultView {
         val loseCount = dealer.results.count { it == ResultStatus.LOSE }
         val drawCount = dealer.results.count { it == ResultStatus.DRAW }
 
-        println("${dealer.name}: $winCount 승 $loseCount 패 $drawCount 무")
+        println("${dealer.name.value}: $winCount 승 $loseCount 패 $drawCount 무")
     }
 }
