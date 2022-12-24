@@ -5,14 +5,11 @@ class CardDeck {
     private var cards: List<Card>
 
     init {
-        val mutableCardList = mutableListOf<Card>()
-        CardShape.values().forEach { shape ->
-            CardNumber.values().forEach { number ->
-                val card = Card(shape = shape, number = number)
-                mutableCardList.add(card)
+        cards = CardShape.values().flatMap { shape ->
+            CardNumber.values().map { number ->
+                Card(shape, number)
             }
         }
-        cards = mutableCardList.toList()
     }
 
     fun shuffle() {
