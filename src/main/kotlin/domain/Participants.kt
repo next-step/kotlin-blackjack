@@ -11,9 +11,8 @@ class Participants(
 
     companion object {
         fun from(names: List<String>): Participants {
-            val players = mutableListOf<Player>()
-            names.forEach { name ->
-                players.add(Player(name))
+            val players = names.map { name ->
+                Player(name)
             }
             return Participants(players = players.toList())
         }
