@@ -2,28 +2,18 @@ package domain
 
 class CardDeck {
 
-    private var cards: List<Card>
-
-    init {
-        cards = CardShape.values().flatMap { shape ->
-            CardNumber.values().map { number ->
-                Card(shape, number)
-            }
+    private val cards: MutableList<Card> = CardShape.values().flatMap { shape ->
+        CardNumber.values().map { number ->
+            Card(shape, number)
         }
-    }
+    }.toMutableList()
 
     fun shuffle() {
-        val mutableList = this.cards.toMutableList()
-        mutableList.shuffle()
-        this.cards = mutableList.toList()
+        this.cards.shuffle()
     }
 
     fun getTopCard(): Card {
         check(this.cards.isNotEmpty()) { "카드가 다 떨어졌습니다." }
-        val card = this.cards[0]
-        val mutableList = this.cards.toMutableList()
-        mutableList.remove(card)
-        this.cards = mutableList.toList()
-        return card
+        return this.cards.removeFirst()
     }
 }
