@@ -1,39 +1,21 @@
 package blackjack.domain
 
-class BlackJackGame(
-    val deck: Deck = Deck(),
-    val dealer: Dealer = Dealer(),
-    var players: List<Player> = emptyList(),
-    playerResults: List<PlayerResult> = emptyList()
+data class BlackJackGame(
+    val deck: Deck,
+    var dealer: Dealer = Dealer(),
+    var players: Players = Players(),
 ) {
-    private val _playerResults: MutableList<PlayerResult> = playerResults.toMutableList()
-    val playerResults: List<PlayerResult>
-        get() = _playerResults.toList()
-
     private var isDealerDrawn: Boolean = false
 
-    fun setInitDealer() {
+    fun drawInitCards() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
         }
+        players = players.drawInitCards(deck)
     }
 
-    fun setInitPlayers(names: List<String>) {
-        this.players = names.map { Player(it, deck.drawInitCards()) }
-    }
-
-    fun calculateResult() {
-        val notBustPlayers = players - playerResults.map { it.player }.toSet()
-        notBustPlayers.forEach {
-            val result = PlayerResult.from(it, dealer)
-            _playerResults.add(result)
-        }
-    }
-
-    fun addPlayerResultWhenBust(player: Player) {
-        val playerResult = ResultStatus.LOSE
-        _playerResults.add(PlayerResult(player, ResultStatus.LOSE))
-        dealer.calculateResult(playerResult)
+    fun getPlayerResults(): List<PlayerResult> {
+        return players.calculateResult(dealer)
     }
 
     fun playDealer() {
