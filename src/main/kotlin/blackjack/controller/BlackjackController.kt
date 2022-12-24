@@ -1,34 +1,36 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.Players
+import blackjack.domain.User
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackjackController {
     fun run() {
-        val game = BlackJackGame()
-
         val names = InputView.inputPlayersName()
-        game.setInitDealer()
-        game.setInitPlayers(names)
+        val users = names.map { User(it) }
+        val game = BlackJackGame(deck = Deck(), dealer = Dealer(), players = Players(users))
 
+        game.drawInitCards()
         ResultView.printInitialStatus(game)
 
-        game.players.forEach {
+        game.players.values.forEach {
             playUser(it, game.deck)
-            if (it.isBust()) game.addPlayerResultWhenBust(it)
+            if (!it.isHit()) return@forEach
         }
         playDealer(game)
 
-        game.calculateResult()
+        val playerResults = game.getPlayerResults()
         ResultView.printStatus(game)
-        ResultView.printResults(game)
+        ResultView.printResults(playerResults, game.dealer)
     }
 
     private fun playUser(player: Player, deck: Deck) {
-        while (!player.isBust() && InputView.inputIsGetCard(player)) {
+        while (player.isHit() && InputView.inputIsGetCard(player)) {
             player.hit(deck.draw())
             ResultView.printPlayerStatus(player)
         }
