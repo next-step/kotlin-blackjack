@@ -43,7 +43,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 1. {InputView} 참여 인원 설정
 2. {Players} 카드 2장 씩 나누기
 3. {OutputView} 카드 공개하기
-4. {System} 블랙잭인지 검사
+4. {Players} 블랙잭인지 검사
    1. 블랙잭이 있다면 게임 종료
    2. 없다면 다음 로직으로
 5. {Player} 각자 카드 더 받을지 결정
@@ -61,8 +61,8 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - Player 도메인
   - Player: 게임을 진행하는 플레이어의 역할
   - Players: 플레이어 전체가 행동할 로직
-- System 도메인
-  - System : 게임 규칙에 대한 검사 역할
+- ~~System 도메인~~
+  - ~~System : 게임 규칙에 대한 검사 역할~~
 
 ### 구현 순서
 - [x] `CardShape`, `CardNumber` 구현
@@ -72,6 +72,9 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [x] `Deck` 구현
 - [x] `Player` 구현 및 테스트 코드 작성
 - [x] `Players` 구현 및 테스트 코드 작성
-- [x] `System` 구현 및 테스트 코드 작성
+- [x] `System` ~~구현 및 테스트 코드 작성~~
 - [x] `InputView`, `OutputView` 구현
 - [x] `Controller` 및 `main` 함수 구현
+
+### 리팩토링
+- `System`에 있던 blackJack 검사 로직을 `Players`로 이관

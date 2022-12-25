@@ -2,21 +2,21 @@ package blackjack.domain.card
 
 import blackjack.domain.ScoreOverFlowException
 import io.kotest.assertions.throwables.shouldThrowExactly
-import io.kotest.core.spec.style.ExpectSpec
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 
 /**
  * @see Cards
  */
-class CardsTest : ExpectSpec({
+class CardsTest : FunSpec({
 
-    context("Cards") {
+    context("fun isFull():") {
         val anyShape = mockk<CardShape>()
         val cardOfAce = Card(CardNumber.ACE, anyShape)
         val cardOfTen = Card(CardNumber.TEN, anyShape)
 
-        expect("카드를 추가 했을 때 합이 21 넘지 않으면 더 받을 수 있다.") {
+        test("21 미만이면 false를 반환한다.") {
             val cards = Cards()
 
             cards.add(cardOfTen)
@@ -25,7 +25,7 @@ class CardsTest : ExpectSpec({
             cards.isFull() shouldBe false
         }
 
-        expect("카드를 추가 했을 때 합이 21이상이 되면 더 받을 수 없다.") {
+        test("21 이상이면 true를 반환한다.") {
             val cards = Cards()
 
             cards.add(cardOfAce)
@@ -36,6 +36,30 @@ class CardsTest : ExpectSpec({
             shouldThrowExactly<ScoreOverFlowException> {
                 cards.add(cardOfAce)
             }
+        }
+    }
+
+    context("fun isBlackJack():") {
+        val anyCardShape = mockk<CardShape>()
+        val cardOfAce = Card(CardNumber.ACE, anyCardShape)
+        val cardOfTen = Card(CardNumber.TEN, anyCardShape)
+
+        test("블랙잭인 경우 true를 반환한다.") {
+            val blackJackCards = Cards()
+
+            blackJackCards.add(cardOfAce)
+            blackJackCards.add(cardOfTen)
+
+            blackJackCards.isBlackJack() shouldBe true
+        }
+
+        test("블랙잭이 아닌 경우 false 반환한다.") {
+            val nonBlackJackCards = Cards()
+
+            nonBlackJackCards.add(cardOfTen)
+            nonBlackJackCards.add(cardOfTen)
+
+            nonBlackJackCards.isBlackJack() shouldBe false
         }
     }
 })

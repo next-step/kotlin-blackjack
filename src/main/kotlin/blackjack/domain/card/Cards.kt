@@ -3,21 +3,28 @@ package blackjack.domain.card
 import blackjack.domain.ScoreOverFlowException
 
 class Cards {
-    private val _cards: MutableList<Card> = mutableListOf()
+    private val cards: MutableList<Card> = mutableListOf()
+    private val scoreCombination: ScoreCombination = ScoreCombination()
 
-    val cards: List<Card>
-        get() = _cards.toList()
-
-    private val scoreCombination = ScoreCombination()
+    fun getCards() = cards.toList()
 
     fun add(newCard: Card) {
         if (scoreCombination.isFUll()) throw ScoreOverFlowException()
 
-        _cards.add(newCard)
+        cards.add(newCard)
         scoreCombination.update(newCard)
     }
 
     fun getScore() = scoreCombination.calculateScore()
 
     fun isFull() = scoreCombination.isFUll()
+
+    fun isBlackJack(): Boolean {
+        return cards.size == BLACKJACK_CARD_COUNT && scoreCombination.calculateScore() == BLACKJACK_SCORE
+    }
+
+    companion object {
+        private const val BLACKJACK_CARD_COUNT = 2
+        private const val BLACKJACK_SCORE = 21
+    }
 }

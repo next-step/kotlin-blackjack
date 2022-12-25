@@ -3,13 +3,11 @@ package blackjack
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
-import blackjack.domain.system.System
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController(
     private val inputView: InputView = InputView,
-    private val gameSystem: System = System(),
     private val gameDeck: Deck = Deck
 ) {
 
@@ -24,9 +22,7 @@ class BlackJackController(
         OutputView.displayCards(players)
 
         // 블랙잭이 있는 경우 게임을 종료한다.
-        if (gameSystem.checkBlackJack(players)) {
-            gameEnd(players)
-        }
+        players.checkBlackJack()
 
         // 플레이어들이 각자 턴을 플레이
         players.playEachTurn()

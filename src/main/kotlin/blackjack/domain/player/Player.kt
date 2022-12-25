@@ -6,12 +6,12 @@ import blackjack.domain.card.Cards
 
 class Player(
     private val name: String,
-) {
     private val cards: Cards = Cards()
+) {
     private var finished: Boolean = false
 
     fun getName() = name
-    fun getCards() = cards.cards
+    fun getCards() = cards.getCards()
     fun isFinished() = finished
     fun getScore() = cards.getScore()
 
@@ -22,11 +22,13 @@ class Player(
         checkCardIsFull()
     }
 
+    private fun checkCardIsFull() {
+        if (cards.isFull()) this.finished = true
+    }
+
     fun stay() {
         this.finished = true
     }
 
-    private fun checkCardIsFull() {
-        if (cards.isFull()) this.finished = true
-    }
+    fun isBlackJack() = cards.isBlackJack()
 }

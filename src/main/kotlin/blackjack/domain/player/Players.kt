@@ -14,4 +14,10 @@ class Players(
             }
         }
     }
+
+    fun checkBlackJack() {
+        if (players.any { player -> player.isBlackJack() }) {
+            players.forEach { player -> player.stay() }
+        }
+    }
 }
