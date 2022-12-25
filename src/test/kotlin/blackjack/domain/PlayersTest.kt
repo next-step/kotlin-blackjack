@@ -50,7 +50,7 @@ internal class PlayersTest {
             repeat(2) { count ->
                 add(GamePlayer("$count").apply {
                     repeat(INITIAL_CARDS_COUNT) {
-                        draw(Card(CardType.SIX, CardShape.CLOVER))
+                        play.draw(Card(CardType.SIX, CardShape.CLOVER))
                     }
                 })
             }
@@ -66,7 +66,7 @@ internal class PlayersTest {
                 repeat(2) { count ->
                     add(GamePlayer("$count").apply {
                         repeat(INITIAL_CARDS_COUNT) {
-                            if (count == 1) draw(Card(CardType.SIX, CardShape.CLOVER))
+                            if (count == 1) play.draw(Card(CardType.SIX, CardShape.CLOVER))
                         }
                     })
                 }

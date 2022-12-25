@@ -7,7 +7,7 @@ import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
 import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 
-class GamePlay(
+open class GamePlay(
     initialState: State = Started()
 ) : Play {
 
@@ -23,6 +23,9 @@ class GamePlay(
     override val blackjack: Boolean
         get() = state is Blackjack
 
+    override val cards: Cards
+        get() = state.cards
+
     override fun shouldBeReadyToPlay(): Boolean =
         state.cards.size == INITIAL_CARDS_COUNT && state !is Started
 
@@ -37,12 +40,26 @@ class GamePlay(
     override fun score(): Int = state.cards.sum()
 }
 
+class DealerGamePlay: GamePlay() {
+    override fun draw(card: Card) {
+        super.draw(card)
+        if (shouldStay()) stay()
+    }
+    private fun shouldStay(): Boolean = hit && score() >= STAY_SCORE
+
+    companion object {
+        private const val STAY_SCORE = 17
+    }
+}
+
 interface Play {
     val finished: Boolean
     val hit: Boolean
     val stay: Boolean
     val bust: Boolean
     val blackjack: Boolean
+
+    val cards: Cards
 
     fun shouldBeReadyToPlay(): Boolean
     fun draw(card: Card)

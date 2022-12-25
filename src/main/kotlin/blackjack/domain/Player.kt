@@ -4,26 +4,14 @@ import blackjack.model.Card
 
 interface Player {
     val name: String
-    val cards: Cards
-    val state: State
-    val finished: Boolean
 
-    fun shouldBeReadyToPlay(): Boolean
-    fun draw(card: Card)
-    fun stay()
-    fun sumCards(): Int
+    val play: Play
 }
 
 interface Dealer {
     val deck: CardDeck
     val name: String
-    val cards: Cards
-    val state: State
-    val finished: Boolean
+    val play: Play
     fun deliverCard(): Card
-    fun shouldBeReadyToPlay(): Boolean
     fun shuffle()
-
-    fun draw(card: Card)
-    fun sumCards(): Int
 }

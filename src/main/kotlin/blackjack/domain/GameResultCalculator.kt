@@ -1,9 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Finished.Blackjack
-import blackjack.domain.Finished.Bust
-import blackjack.domain.Finished.Stay
-import blackjack.domain.Playing.Hit
 import blackjack.model.GameResult
 import blackjack.model.PlayerGameResult
 import blackjack.model.PlayerGameResults
@@ -34,29 +30,18 @@ class GameResultCalculator : ResultCalculator {
         )
 
     private fun calculateGameResult(dealer: Dealer, player: Player): GameResult {
-        val playerSum = player.sumCards()
-        val dealerSum = dealer.sumCards()
+        val playerSum = player.play.score()
+        val dealerSum = dealer.play.score()
         return when {
-            player.state.blackjack && dealer.state.blackjack -> GameResult.PUSH
-            dealer.state.blackjack -> GameResult.LOSE
-            player.state.blackjack || (dealer.state.bust && !player.state.bust) -> GameResult.WIN
-            player.state.bust -> GameResult.LOSE
+            player.play.blackjack && dealer.play.blackjack -> GameResult.PUSH
+            dealer.play.blackjack -> GameResult.LOSE
+            player.play.blackjack || (dealer.play.bust && !player.play.bust) -> GameResult.WIN
+            player.play.bust -> GameResult.LOSE
             playerSum == dealerSum -> GameResult.PUSH
             playerSum > dealerSum -> GameResult.WIN
             else -> GameResult.LOSE
         }
     }
-
-    private val State.blackjack: Boolean
-        get() = this is Blackjack
-    private val State.bust: Boolean
-        get() = this is Bust
-
-    private val State.hit: Boolean
-        get() = this is Hit
-
-    private val State.stay: Boolean
-        get() = this is Stay
 }
 
 interface ResultCalculator {

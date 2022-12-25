@@ -13,17 +13,17 @@ class Players(val value: List<Player>) {
         repeat(INITIAL_CARDS_COUNT) {
             value.forEach { player ->
                 dealer.deliverCard()
-                    .let(player::draw)
+                    .let(player.play::draw)
             }
         }
     }
 
-    fun allReadyToPlay(): Boolean = value.all { it.shouldBeReadyToPlay() }
+    fun allReadyToPlay(): Boolean = value.all { it.play.shouldBeReadyToPlay() }
 
     fun playGame(dealer: Dealer, hit: (Player) -> Boolean, printResult: (Player) -> Unit) {
         value.forEach {
-            while (!it.finished && hit(it)) {
-                it.draw(dealer.deliverCard())
+            while (!it.play.finished && hit(it)) {
+                it.play.draw(dealer.deliverCard())
                 printResult(it)
             }
         }

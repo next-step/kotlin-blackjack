@@ -15,7 +15,7 @@ class Game(
     private fun drawInitialCards() {
         players.drawInitialCards(dealer)
         repeat(INITIAL_CARDS_COUNT) {
-            dealer.deliverCard().let(dealer::draw)
+            dealer.deliverCard().let(dealer.play::draw)
         }
     }
 
@@ -28,10 +28,10 @@ class Game(
     }
 
     fun playDealer(printHit: () -> Unit) {
-        require(dealer.shouldBeReadyToPlay()) { "딜러가 게임을 시작할 준비가 되어야 합니다." }
-        while (!dealer.finished) {
+        require(dealer.play.shouldBeReadyToPlay()) { "딜러가 게임을 시작할 준비가 되어야 합니다." }
+        while (!dealer.play.finished) {
             printHit()
-            dealer.draw(dealer.deliverCard())
+            dealer.play.draw(dealer.deliverCard())
         }
     }
 

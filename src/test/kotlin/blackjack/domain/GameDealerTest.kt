@@ -1,9 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Finished.Blackjack
-import blackjack.domain.Finished.Bust
-import blackjack.domain.Finished.Stay
-import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
@@ -41,57 +37,56 @@ internal class GameDealerTest {
     @ParameterizedTest
     @MethodSource("provideInitialCards")
     fun `Dealer 게임 시작 전 2개의 카드를 받으면 게임 시작 상태가 된다`(cards: List<Card>) {
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.cards.size).isEqualTo(cards.size)
-        assertThat(dealer.shouldBeReadyToPlay()).isTrue
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.cards.size).isEqualTo(cards.size)
+        assertThat(dealer.play.shouldBeReadyToPlay()).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("provideInitialInvalidCards")
     fun `Dealer 게임 시작 전 2개의 카드를 받지 않으면 게임 시작할 수 있는 상태가 되지 않는다`(cards: List<Card>) {
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.cards.size).isEqualTo(cards.size)
-        assertThat(dealer.shouldBeReadyToPlay()).isFalse
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.shouldBeReadyToPlay()).isFalse
     }
 
     @ParameterizedTest
     @MethodSource("provideHitCard")
     fun `Dealer 히트를 외치면 카드 한장을 더 받는다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            initialCards.forEach(this::draw)
-            draw(hitCard)
+            initialCards.forEach(play::draw)
+            play.draw(hitCard)
         }
-        assertThat(dealer.cards.value.last()).isEqualTo(hitCard)
+        assertThat(dealer.play.cards.size).isEqualTo(3)
     }
 
     @ParameterizedTest
     @MethodSource("provideBustCards")
     fun `Dealer 카드 합산이 21 초과 bust 상태가 되어 게임을 더이상 참가할 수 없다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            initialCards.forEach(this::draw)
-            draw(hitCard)
+            initialCards.forEach(play::draw)
+            play.draw(hitCard)
         }
-        assertThat(dealer.state is Bust).isTrue
-        assertThat(dealer.finished).isTrue
+        assertThat(dealer.play.bust).isTrue
+        assertThat(dealer.play.finished).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("provideNotBustCards")
     fun `Dealer 카드 합산이 21 이하 Hit 상태가 되어 게임을 계속 할 수 있다`(initialCards: List<Card>, hitCard: Card) {
         val dealer = GameDealer().apply {
-            initialCards.forEach(this::draw)
-            draw(hitCard)
+            initialCards.forEach(play::draw)
+            play.draw(hitCard)
         }
-        assertThat(dealer.state is Hit).isTrue
-        assertThat(dealer.finished).isFalse
+        assertThat(dealer.play.hit).isTrue
+        assertThat(dealer.play.finished).isFalse
     }
 
     @Test
     fun `Dealer 최초 받은 카드가 2장의 합산이 21이면 블랙잭 완성`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.ACE, CardShape.DIAMOND))
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.state is Blackjack).isTrue
-        assertThat(dealer.finished).isTrue
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.blackjack).isTrue
+        assertThat(dealer.play.finished).isTrue
     }
 
     @Test
@@ -101,8 +96,8 @@ internal class GameDealerTest {
             Card(CardType.EIGHT, CardShape.DIAMOND),
             Card(CardType.TEN, CardShape.SPADE)
         )
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.state is Blackjack).isFalse
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.bust).isFalse
     }
 
     // END: GamePlay
@@ -110,17 +105,17 @@ internal class GameDealerTest {
     @Test
     fun `Dealer 카드 합이 17 이상 stay 상태로 게임을 중단한다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SEVEN, CardShape.DIAMOND))
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.state is Stay).isTrue
-        assertThat(dealer.finished).isTrue
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.stay).isTrue
+        assertThat(dealer.play.finished).isTrue
     }
 
     @Test
     fun `Dealer 카드 합이 16 이하 stay 상태가 아니므로 카드를 추가로 받을 수 있다`() {
         val cards = mutableListOf(Card(CardType.KING, CardShape.HEART), Card(CardType.SIX, CardShape.DIAMOND))
-        val dealer = GameDealer().apply { cards.forEach(this::draw) }
-        assertThat(dealer.state is Stay).isFalse
-        assertThat(dealer.finished).isFalse
+        val dealer = GameDealer().apply { cards.forEach(play::draw) }
+        assertThat(dealer.play.stay).isFalse
+        assertThat(dealer.play.finished).isFalse
     }
 
     companion object {

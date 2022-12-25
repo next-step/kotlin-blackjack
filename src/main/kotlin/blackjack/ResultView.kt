@@ -19,23 +19,24 @@ object ResultView {
         println("${dealer.name}와 ${players.value.joinToString { it.name }}에게 ${INITIAL_CARDS_COUNT}장의 카드를 나누었습니다.")
         println(
             "${dealer.name}: ${
-                dealer.cards
+                dealer.play
+                    .cards
                     .value[0]
                     .let { "${it.type.value}${it.shape.string()}" }
             }"
         )
-        players.value.forEach { println(getPlayerInfo(it.name, it.cards.value)) }
+        players.value.forEach { println(getPlayerInfo(it.name, it.play.cards.value)) }
         println()
     }
 
     fun printPlayerCards(player: Player) {
-        println(getPlayerInfo(player.name, player.cards.value))
+        println(getPlayerInfo(player.name, player.play.cards.value))
     }
 
     fun printPlayerResult(players: Players, dealer: Dealer) {
         println()
-        println("${getPlayerInfo(dealer.name, dealer.cards.value)} - 결과: ${dealer.sumCards()}")
-        players.value.forEach { println("${getPlayerInfo(it.name, it.cards.value)} - 결과: ${it.sumCards()}") }
+        println("${getPlayerInfo(dealer.name, dealer.play.cards.value)} - 결과: ${dealer.play.score()}")
+        players.value.forEach { println("${getPlayerInfo(it.name, it.play.cards.value)} - 결과: ${it.play.score()}") }
     }
 
     fun printGameResult(results: PlayerGameResults) {
