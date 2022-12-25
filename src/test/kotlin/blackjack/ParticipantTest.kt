@@ -31,6 +31,27 @@ internal class ParticipantTest : BehaviorSpec({
             }
         }
 
+        When("블랙잭 금액을 받으면 ") {
+            val score = participant2.getBlackJackMoney()
+            Then("1.5배의 금액을 받는다.") {
+                score shouldBe 15000L
+            }
+        }
+
+        When("승리 금액을 받으면 ") {
+            val score = participant2.getWinMoney()
+            Then("배당 금액을 받는다.") {
+                score shouldBe 10000L
+            }
+        }
+
+        When("패배한다면 ") {
+            val score = participant2.getLoseMoney()
+            Then("배당 금액을 지불한다.") {
+                score shouldBe -10000L
+            }
+        }
+
         // 딜러 18점, 참가자 19점 -> 참가자가 21에 더 가까운 경우 참가자 승리
         val participant3 = Participant("길상현", 10000L, Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_9))))
         When("승패를 계산할 때, 딜러보다 21에 가까우면 ") {

@@ -2,7 +2,9 @@ package blackjack.domain
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.dto.GameResult
+import blackjack.domain.dto.ParticipantMoneyResult
 import blackjack.domain.dto.ParticipantResult
+import blackjack.domain.enums.WinOrLose
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player
@@ -28,6 +30,11 @@ class PockerMachine(
                 is Participant -> pickOrNot(player, retryFunc, printFunc)
             }
         }
+    }
+
+    fun getBettingResult(): List<ParticipantMoneyResult> {
+        val participants = players.filterIsInstance<Participant>()
+        return participants.map { participant -> calculateBetting(participant) }
     }
 
     fun getGameResult(): GameResult {
@@ -58,6 +65,26 @@ class PockerMachine(
         printFunc(player)
 
         pickOrNot(player, retryFunc, printFunc)
+    }
+
+    private fun calculateBetting(participant: Participant): ParticipantMoneyResult {
+        if (dealer.isBlackJack() && participant.isBlackJack()) {
+            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+        }
+
+        if (participant.getCardSize() == BASIC_CARD_COUNT && participant.isBlackJack()) {
+            return ParticipantMoneyResult(participant.name, participant.getBlackJackMoney())
+        }
+
+        if (dealer.isBurst()) {
+            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+        }
+
+        if (participant.getGameResult(dealer) == WinOrLose.WIN) {
+            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+        }
+
+        return ParticipantMoneyResult(participant.name, participant.getLoseMoney())
     }
 
     companion object {
