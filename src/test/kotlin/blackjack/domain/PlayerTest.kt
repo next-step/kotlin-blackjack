@@ -66,4 +66,32 @@ class PlayerTest : FunSpec({
             player.state shouldBe PlayerState.Done.Stay
         }
     }
+    context("isNotDone()") {
+        test("Idle 상태일 경우, 게임 종료 여부를 거짓으로 반환한다.") {
+            val cards = linkedSetOf(Card(CardPattern.DIAMOND, CardValue.SEVEN), Card(CardPattern.DIAMOND, CardValue.TEN))
+            val player = Player("name", Cards(cards))
+
+            player.isNotDone() shouldBe true
+        }
+        test("Stay 상태일 경우, 게임 종료 여부를 참으로 반환한다.") {
+            val cards = linkedSetOf(Card(CardPattern.DIAMOND, CardValue.SEVEN), Card(CardPattern.DIAMOND, CardValue.TEN))
+            val player = Player("name", Cards(cards))
+            player.stay()
+
+            player.isNotDone() shouldBe false
+        }
+        test("카드 추가 상태에 따른 게임 종료 여부를 반환한다.") {
+            val cards = linkedSetOf(Card(CardPattern.DIAMOND, CardValue.SEVEN), Card(CardPattern.DIAMOND, CardValue.TEN))
+
+            table(
+                headers("player", "card", "expectedResult"),
+                row(Player("name", Cards(cards)), Card(CardPattern.DIAMOND, CardValue.FIVE), false),
+                row(Player("name", Cards(cards)), Card(CardPattern.CLOVER, CardValue.FOUR), false),
+                row(Player("name", Cards(cards)), Card(CardPattern.CLOVER, CardValue.TWO), true),
+            ).forAll { player, card, expectedResult ->
+                player.hit(card)
+                player.isNotDone() shouldBe expectedResult
+            }
+        }
+    }
 })

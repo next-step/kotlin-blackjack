@@ -5,6 +5,7 @@ class Player(val name: String, val cards: Cards) {
     val state: PlayerState
         get() = _state
 
+    constructor(name: String, cards: Set<Card>) : this(name, Cards(cards))
     init {
         require(name.isNotBlank()) { "name should not be blank" }
         require(cards.cards.size == 2) { "should have 2 cards" }
@@ -27,4 +28,6 @@ class Player(val name: String, val cards: Cards) {
     fun stay() {
         _state = PlayerState.Done.Stay
     }
+
+    fun isNotDone() = _state == PlayerState.Play.Idle || _state == PlayerState.Play.Hit
 }
