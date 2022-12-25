@@ -1,6 +1,6 @@
 package blackjack.dto
 
-import blackjack.domain.player.Participants
+import blackjack.domain.participant.Participants
 
 @JvmInline
 value class ParticipantsDto(val players: List<ParticipantDto>) {

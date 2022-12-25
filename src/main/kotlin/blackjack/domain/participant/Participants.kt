@@ -1,6 +1,6 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
-import blackjack.domain.player.state.role.Role
+import blackjack.domain.participant.state.role.Role
 
 @JvmInline
 value class Participants(val values: List<Role>) {

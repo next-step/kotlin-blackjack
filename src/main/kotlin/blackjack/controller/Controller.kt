@@ -4,8 +4,8 @@ import blackjack.application.Deck
 import blackjack.domain.GameManager
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.player.ParticipantFactory
-import blackjack.domain.player.Participants
+import blackjack.domain.participant.ParticipantFactory
+import blackjack.domain.participant.Participants
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ParticipantsDto
 import blackjack.view.ResultView

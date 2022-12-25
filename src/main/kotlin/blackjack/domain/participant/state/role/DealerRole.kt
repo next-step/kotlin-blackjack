@@ -1,6 +1,6 @@
-package blackjack.domain.player.state.role
+package blackjack.domain.participant.state.role
 
-import blackjack.domain.player.state.Name
+import blackjack.domain.participant.state.Name
 
 abstract class DealerRole : Role() {
     override val name: Name

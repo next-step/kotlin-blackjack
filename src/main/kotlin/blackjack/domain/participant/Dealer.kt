@@ -1,8 +1,8 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.state.State
-import blackjack.domain.player.state.role.DealerRole
+import blackjack.domain.participant.state.role.DealerRole
 
 data class Dealer(override val state: State) : DealerRole() {
     override fun draw(playingCard: PlayingCard): Player {

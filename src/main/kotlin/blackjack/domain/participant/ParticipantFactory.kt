@@ -1,12 +1,12 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
-import blackjack.domain.player.state.Name
-import blackjack.domain.player.state.role.Role
+import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.Role
 
 object ParticipantFactory {
     private const val NUMBER_OF_INIT_CARDS = 2

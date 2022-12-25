@@ -1,9 +1,9 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.state.State
-import blackjack.domain.player.state.Name
-import blackjack.domain.player.state.role.PlayerRole
+import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.PlayerRole
 
 data class Player(override val name: Name, override val state: State) : PlayerRole() {
     init {

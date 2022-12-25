@@ -2,8 +2,8 @@ package blackjack.domain
 
 import blackjack.application.Deck
 import blackjack.controller.InputFilter
-import blackjack.domain.player.Participants
-import blackjack.domain.player.state.role.Role
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.state.role.Role
 import blackjack.dto.ParticipantDto
 import blackjack.view.ResultView
 

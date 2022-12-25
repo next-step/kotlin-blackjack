@@ -1,9 +1,9 @@
-package blackjack.domain.player.state.role
+package blackjack.domain.participant.state.role
 
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.state.State
-import blackjack.domain.player.Player
-import blackjack.domain.player.state.Name
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.state.Name
 
 sealed class Role {
     abstract val name: Name

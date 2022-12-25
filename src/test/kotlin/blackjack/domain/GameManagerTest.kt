@@ -4,9 +4,9 @@ import blackjack.domain.card.Denomination
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.Suit
-import blackjack.domain.player.ParticipantFactory
-import blackjack.domain.player.Participants
-import blackjack.domain.player.state.Name
+import blackjack.domain.participant.ParticipantFactory
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.state.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

@@ -1,6 +1,6 @@
 package blackjack.dto
 
-import blackjack.domain.player.state.role.Role
+import blackjack.domain.participant.state.role.Role
 
 data class ParticipantDto(val name: String, val cards: List<String>, val score: Int) {
     companion object {
