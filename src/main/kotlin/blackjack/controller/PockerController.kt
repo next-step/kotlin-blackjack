@@ -13,7 +13,10 @@ class PockerController {
     fun execute() {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
         val nameList = Parser.parse(InputView.readName())
-        val players = listOf(dealer) + nameList.map { name -> Participant(name = name, money = 10000L) }
+        val players = listOf(dealer) + nameList.map { name ->
+            val money = InputView.readBettingMoney(name)
+            Participant(name = name, money = money)
+        }
         val pockerMachine = PockerMachine(dealer = dealer, players = players)
 
         pockerMachine.initialize()
@@ -25,6 +28,9 @@ class PockerController {
 
         val gameResult = pockerMachine.getGameResult()
         OutputView.printGameResult(gameResult)
+
+        val bettingMoneyResult = pockerMachine.getBettingResult()
+        OutputView.printBettingMoneyResult(bettingMoneyResult)
     }
 
     private fun retryOrNot() = { player: Player -> InputView.retryOrNot(player.name) }
