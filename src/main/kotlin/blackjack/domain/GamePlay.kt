@@ -29,7 +29,7 @@ class GamePlay(
         TODO("Not yet implemented")
     }
 
-    override fun currentPoints(): Int {
+    override fun score(): Int {
         TODO("Not yet implemented")
     }
 }
@@ -46,5 +46,5 @@ interface Play {
     fun shouldBeReadyToPlay(): Boolean
     fun draw(card: Card)
     fun stay()
-    fun currentPoints(): Int
+    fun score(): Int
 }
