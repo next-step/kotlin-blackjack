@@ -29,7 +29,7 @@ class Player(
         }
 
         cards.addCard(card)
-        state = state.hit(this)
+        state = state.hit(cards)
     }
 
     fun stay() {
@@ -37,12 +37,12 @@ class Player(
             "Player's state [${state.name}] should be able to stay"
         }
 
-        state = state.stay(this)
+        state = state.stay(cards)
     }
 
-    fun isFinished() = state.isFinished
-
     fun isNotFinished() = !isFinished()
+
+    fun isFinished() = state.isFinished
 
     override fun toString(): String {
         return "${name}카드: $cards"

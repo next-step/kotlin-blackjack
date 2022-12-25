@@ -3,7 +3,6 @@ package blackjack.domain.state
 import blackjack.domain.Blackjack
 import blackjack.domain.card.Cards
 import blackjack.domain.player.Player
-import kotlin.jvm.Throws
 
 enum class State(
     val isAbleToHit: Boolean,
@@ -11,9 +10,9 @@ enum class State(
     val isFinished: Boolean
 ) : PlayerAction {
     IN_PROGRESS(true, true, false) {
-        override fun hit(player: Player): State = when {
-            player.cards.isBlackjack() -> HIT_AND_BLACKJACK
-            player.cards.isBust() -> BUST
+        override fun hit(cards: Cards): State = when {
+            cards.isBlackjack() -> HIT_AND_BLACKJACK
+            cards.isBust() -> BUST
             else -> IN_PROGRESS
         }
     },
@@ -22,13 +21,12 @@ enum class State(
     BLACKJACK(false, true, true),
     BUST(false, false, true);
 
-    @Throws(UnsupportedOperationException::class)
-    override fun hit(player: Player): State {
+    override fun hit(cards: Cards): State {
         throw UnsupportedOperationException("hit is not supported when status is ${this.name}")
     }
 
-    override fun stay(player: Player): State =
-        if (isFinished) this else State.finalStateOf(player.cards)
+    override fun stay(cards: Cards): State =
+        if (isFinished) this else State.finalStateOf(cards)
 
     companion object {
         fun of(cards: Cards): State =

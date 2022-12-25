@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 enum class CardNumber(
     val number: Int,
-    private val description: String,
+    val description: String,
     val candidateNumber: Int = number
 ) {
 
@@ -23,10 +23,6 @@ enum class CardNumber(
 
     val candidateNumbers: Set<Int>
         get() = setOf(number, candidateNumber)
-
-    override fun toString(): String {
-        return description
-    }
 
     companion object {
         val INT_RANGE: IntRange = (ONE.number..ACE.number)

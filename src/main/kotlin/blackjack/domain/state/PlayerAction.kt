@@ -1,9 +1,9 @@
 package blackjack.domain.state
 
-import blackjack.domain.player.Player
+import blackjack.domain.card.Cards
 
 interface PlayerAction {
-    fun hit(player: Player): State
+    fun hit(cards: Cards): State
 
-    fun stay(player: Player): State
+    fun stay(cards: Cards): State
 }

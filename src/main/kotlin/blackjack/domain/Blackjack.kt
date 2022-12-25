@@ -9,7 +9,15 @@ class Blackjack(
     private val cardVendor: CardVendor
 ) {
 
-    fun giveCardTo(player: Player) {
+    fun hitOrStay(player: Player, isHit: Boolean): Unit =
+        when (isHit) {
+            true -> giveCardTo(player)
+            false -> acceptStayFrom(player)
+        }
+
+    fun notFinishedPlayers(): List<Player> = players.notFinishedPlayers()
+
+    private fun giveCardTo(player: Player) {
         check(player.isNotFinished()) {
             "Blackjack should not give card to this player which is finished. [$player]"
         }
@@ -17,7 +25,7 @@ class Blackjack(
         player.hit(cardVendor.drawCard())
     }
 
-    fun acceptStayFrom(player: Player) {
+    private fun acceptStayFrom(player: Player) {
         check(player.isNotFinished()) {
             "Player should be able to stay. [$player]"
         }

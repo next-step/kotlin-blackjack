@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.controller.BlackjackController
+import blackjack.config.BlackjackConfig
 
 fun main() {
-    BlackjackController().run()
+    BlackjackConfig().application().run()
 }
