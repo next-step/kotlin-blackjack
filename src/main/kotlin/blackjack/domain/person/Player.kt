@@ -5,6 +5,7 @@ import blackjack.domain.card.Cards
 
 sealed class Player(
     val name: String,
+    val money: Long = 0L,
     val cards: Cards = Cards()
 ) {
     fun addCard(card: Card) {

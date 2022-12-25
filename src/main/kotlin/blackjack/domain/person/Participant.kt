@@ -5,8 +5,9 @@ import blackjack.domain.enums.WinOrLose
 
 class Participant(
     name: String,
+    money: Long,
     cards: Cards = Cards()
-) : Player(name, cards) {
+) : Player(name, money, cards) {
     fun getGameResult(dealer: Dealer): WinOrLose {
         val dealerScore = dealer.getScore()
         val participantScore = this.getScore()

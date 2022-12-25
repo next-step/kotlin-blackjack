@@ -13,7 +13,7 @@ class PockerController {
     fun execute() {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
         val nameList = Parser.parse(InputView.readName())
-        val players = listOf(dealer) + nameList.map { name -> Participant(name = name) }
+        val players = listOf(dealer) + nameList.map { name -> Participant(name = name, money = 10000L) }
         val pockerMachine = PockerMachine(dealer = dealer, players = players)
 
         pockerMachine.initialize()

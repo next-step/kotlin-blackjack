@@ -7,9 +7,10 @@ import blackjack.domain.strategy.CardPickStrategy
 
 class Dealer(
     name: String,
+    money: Long = 0L,
     cards: Cards = Cards(),
     private val cardPickStrategy: CardPickStrategy,
-) : Player(name, cards) {
+) : Player(name, money, cards) {
 
     fun pickCard(cardDeck: CardDeck): Card {
         return cardPickStrategy.pick(cardDeck)

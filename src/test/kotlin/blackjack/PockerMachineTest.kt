@@ -17,7 +17,7 @@ import io.kotest.matchers.shouldBe
 internal class PockerMachineTest : BehaviorSpec({
     Given("초기 세팅에서 ") {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
-        val participant = Participant("길상현")
+        val participant = Participant("길상현", 10000L)
         val pockerMachine = PockerMachine(dealer = dealer, players = listOf(participant, dealer))
         When("진행하면 ") {
             pockerMachine.initialize()
@@ -33,8 +33,8 @@ internal class PockerMachineTest : BehaviorSpec({
             }
         }
 
-        val hasCardDealer = Dealer("딜러", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_8))), SequentialCardPickStrategy())
-        val hasCardParticipant = Participant("길상현", Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_9))))
+        val hasCardDealer = Dealer("딜러", 0L, Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_8))), SequentialCardPickStrategy())
+        val hasCardParticipant = Participant("길상현", 10000L, Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.NUM_9))))
         val secondPockerMachine = PockerMachine(
             dealer = hasCardDealer,
             players = listOf(hasCardParticipant, hasCardDealer)
