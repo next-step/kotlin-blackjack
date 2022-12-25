@@ -13,10 +13,7 @@ class BlackJackController {
     fun execute() {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
         val nameList = Parser.parse(InputView.readName())
-        val players = listOf(dealer) + nameList.map { name ->
-            val money = InputView.readBettingMoney(name)
-            Participant(name = name, money = money)
-        }
+        val players = listOf(dealer) + nameList.map { Participant(name = it, money = InputView.readBettingMoney(it)) }
         val blackJackMachine = BlackJackMachine(dealer = dealer, players = players)
 
         blackJackMachine.initialize()
