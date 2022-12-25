@@ -3,6 +3,7 @@ package blackjack.domain
 sealed class PlayerState {
 
     abstract fun isDone(): Boolean
+
     sealed class Play : PlayerState() {
         override fun isDone() = false
 

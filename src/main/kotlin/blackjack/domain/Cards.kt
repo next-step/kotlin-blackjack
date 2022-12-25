@@ -2,6 +2,7 @@ package blackjack.domain
 
 class Cards(cards: Set<Card> = emptySet()) {
     private val _cards: LinkedHashSet<Card> = cards.toMutableSet() as LinkedHashSet<Card>
+
     val cards: Set<Card>
         get() = _cards.toSet()
 
@@ -26,6 +27,7 @@ class Cards(cards: Set<Card> = emptySet()) {
 
         return addAceValue(sum, aceCards)
     }
+
     private tailrec fun addAceValue(sum: Int, aceCards: Set<Card>): Int {
         if (aceCards.isEmpty()) {
             return sum
@@ -40,5 +42,6 @@ class Cards(cards: Set<Card> = emptySet()) {
             addAceValue(sumIncludingAceValue, aceCards.minus(aceCard))
         }
     }
+
     private fun canAddAceBonusValue(sum: Int) = sum <= 10
 }
