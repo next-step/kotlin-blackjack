@@ -8,7 +8,6 @@ import io.kotest.data.headers
 import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
 
 class PlayerTest : FunSpec({
     context("객체 생성") {
@@ -21,10 +20,10 @@ class PlayerTest : FunSpec({
         test("초기 카드 2장의 합이 21일 경우, 블랙잭 상태로 변경된다.") {
             table(
                 headers("player", "expectedResult"),
-                row(Player("name1", Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.ACE)))), true),
-                row(Player("name2", Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.KING)))), false)
+                row(Player("name1", Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.ACE)))), PlayerState.Done.BlackJack),
+                row(Player("name2", Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.KING)))), PlayerState.Play.Idle)
             ).forAll { player, expectedResult ->
-                player.hasBlackJack() shouldBe expectedResult
+                player.state shouldBe expectedResult
             }
         }
         test("이름이 빈 문자열일 경우 예외가 발생한다.") {
@@ -39,6 +38,21 @@ class PlayerTest : FunSpec({
             shouldThrow<IllegalArgumentException> {
                 Player("name", Cards(oneCard))
                 Player("name", Cards(threeCards))
+            }
+        }
+    }
+    context("hit()") {
+        test("입력받은 카드를 추가하고 그에 따른 상태를 변경한다.") {
+            val cards = linkedSetOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.DIAMOND, CardValue.TEN))
+
+            table(
+                headers("player", "card", "expectedResult"),
+                row(Player("name", Cards(cards)), Card(CardPattern.DIAMOND, CardValue.FOUR), PlayerState.Done.Burst),
+                row(Player("name", Cards(cards)), Card(CardPattern.CLOVER, CardValue.THREE), PlayerState.Done.BlackJack),
+                row(Player("name", Cards(cards)), Card(CardPattern.CLOVER, CardValue.ACE), PlayerState.Play.Hit),
+            ).forAll { player, card, expectedResult ->
+                player.hit(card)
+                player.state shouldBe expectedResult
             }
         }
     }

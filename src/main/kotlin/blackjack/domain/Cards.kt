@@ -21,7 +21,7 @@ class Cards(cards: Set<Card> = emptySet()) {
             return _cards.sumOf { it.value.value }
         }
 
-        val sum = cards.minus(aceCards)
+        val sum = _cards.minus(aceCards)
             .sumOf { it.value.value }
 
         return addAceValue(sum, aceCards)
