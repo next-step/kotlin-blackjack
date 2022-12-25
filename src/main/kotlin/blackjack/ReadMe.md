@@ -65,7 +65,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   - System : 게임 규칙에 대한 검사 역할
 
 ### 구현 순서
-- [ ] `CardShape`, `CardNumber` 구현
+- [x] `CardShape`, `CardNumber` 구현
 - [ ] `Card` 구현 및 테스트 코드 작성
 - [ ] `ScoreCombination` 구현 및 테스트 코드 작성
 - [ ] `Cards` 구현 및 테스트 코드 작성
