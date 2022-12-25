@@ -50,8 +50,8 @@ sealed interface Finished : State {
     override val finished: Boolean
         get() = true
 
-    override fun draw(card: Card): State = TODO("Not yet implemented")
-    override fun stay(): State = TODO("Not yet implemented")
+    override fun draw(card: Card): State = throw IllegalStateException("이미 끝난 게임입니다.")
+    override fun stay(): State = throw IllegalStateException("이미 끝난 게임입니다.")
 
     class Stay(override val cards: Cards = Cards()) : Finished
     class Bust(override val cards: Cards = Cards()) : Finished
