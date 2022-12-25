@@ -17,5 +17,6 @@ enum class CardValue(val value: Int) {
 
     companion object {
         const val ACE_BONUS_VALUE = 10
+        const val BLACK_JACK_VALUE = 21
     }
 }

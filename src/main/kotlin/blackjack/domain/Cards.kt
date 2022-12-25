@@ -26,7 +26,6 @@ value class Cards(val cards: Set<Card>) {
 
         return addAceValue(sum, aceCards)
     }
-
     private tailrec fun addAceValue(sum: Int, aceCards: Set<Card>): Int {
         if (aceCards.isEmpty()) {
             return sum
