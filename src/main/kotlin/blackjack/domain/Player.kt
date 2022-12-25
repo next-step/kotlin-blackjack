@@ -6,5 +6,11 @@ class Player(val name: String, val cards: Cards) {
     init {
         require(name.isNotBlank()) { "name should not be blank" }
         require(cards.cards.size == 2) { "should have 2 cards" }
+
+        if (cards.sum() == CardValue.BLACK_JACK_VALUE) {
+            state = PlayerState.Done.BlackJack
+        }
     }
+
+    fun hasBlackJack() = state == PlayerState.Done.BlackJack
 }
