@@ -1,42 +1,43 @@
 package blackjack.domain
 
+import blackjack.domain.Finished.Blackjack
+import blackjack.domain.Finished.Bust
+import blackjack.domain.Finished.Stay
+import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
+import blackjack.domain.Playing.Hit
 import blackjack.model.Card
 
 class GamePlay(
-    override val state: State = Started()
-): Play {
+    initialState: State = Started()
+) : Play {
 
+    private var state: State = initialState
     override val finished: Boolean
-        get() = TODO("Not yet implemented")
+        get() = state.finished
     override val hit: Boolean
-        get() = TODO("Not yet implemented")
+        get() = state is Hit
     override val stay: Boolean
-        get() = TODO("Not yet implemented")
+        get() = state is Stay
     override val bust: Boolean
-        get() = TODO("Not yet implemented")
+        get() = state is Bust
     override val blackjack: Boolean
-        get() = TODO("Not yet implemented")
+        get() = state is Blackjack
 
-    override fun shouldBeReadyToPlay(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun shouldBeReadyToPlay(): Boolean =
+        state.cards.size == INITIAL_CARDS_COUNT && state !is Started
 
     override fun draw(card: Card) {
-        TODO("Not yet implemented")
+        state = state.draw(card)
     }
 
     override fun stay() {
-        TODO("Not yet implemented")
+        state = state.stay()
     }
 
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = state.cards.sum()
 }
 
 interface Play {
-    val state: State
-
     val finished: Boolean
     val hit: Boolean
     val stay: Boolean
