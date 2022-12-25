@@ -9,9 +9,7 @@ class Participant(
     cards: Cards = Cards()
 ) : Player(name, money, cards) {
     fun getGameResult(dealer: Dealer): WinOrLose {
-        val dealerScore = dealer.getScore()
-        val participantScore = this.getScore()
-        if (dealerScore > MAXIMUM_SCORE || participantScore in dealerScore..MAXIMUM_SCORE) {
+        if (dealer.isBurst() || this.getScore() in dealer.getScore()..MAXIMUM_SCORE) {
             return WinOrLose.WIN
         }
         return WinOrLose.LOSE

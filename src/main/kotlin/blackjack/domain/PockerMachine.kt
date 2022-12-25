@@ -43,7 +43,7 @@ class PockerMachine(
         printFunc: (player: Player) -> Unit
     ) {
         // 최고 점수보다 많을시 종료
-        if (player.getScore() > MAXIMUM_SCORE) {
+        if (player.isBurst()) {
             return
         }
 
@@ -62,6 +62,5 @@ class PockerMachine(
 
     companion object {
         private const val BASIC_CARD_COUNT = 2
-        private const val MAXIMUM_SCORE = 21
     }
 }

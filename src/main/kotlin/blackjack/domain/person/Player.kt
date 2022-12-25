@@ -15,4 +15,20 @@ sealed class Player(
     fun getScore(): Int {
         return cards.calculate()
     }
+
+    fun getCardSize(): Int {
+        return cards.getCardSize()
+    }
+
+    fun isBurst(): Boolean {
+        return cards.calculate() > MAXIMUM_SCORE
+    }
+
+    fun isBlackJack(): Boolean {
+        return cards.calculate() == MAXIMUM_SCORE
+    }
+
+    companion object {
+        private const val MAXIMUM_SCORE = 21
+    }
 }

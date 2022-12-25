@@ -15,6 +15,10 @@ data class Cards(
         return cards.removeFirst()
     }
 
+    fun getCardSize(): Int {
+        return cards.size
+    }
+
     fun calculate(): Int {
         val aceCnt = cards.count { it.isAce() }
         var score = cards.fold(0) { acc, card -> card.calculate(acc) }
