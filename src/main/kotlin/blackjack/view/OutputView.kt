@@ -26,7 +26,7 @@ object OutputView {
 
     fun printGameResult(gameResult: GameResult) {
         val winParticipantsCnt = gameResult.participantResult.count { it.isWin() }
-        val loseParticipantsCnt = gameResult.participantResult.count { !it.isWin() }
+        val loseParticipantsCnt = gameResult.participantResult.count { it.isLose() }
         println("## 최종 승패")
         println("${gameResult.dealerName}: ${loseParticipantsCnt}승 ${winParticipantsCnt}패")
         gameResult.participantResult.forEach { println("${it.name}: ${it.winOrLose.description}") }
