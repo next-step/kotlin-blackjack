@@ -13,16 +13,16 @@ class Cards(val cardStack: Stack<Card>) {
     }
 
     fun add(card: Card) {
-        cardStack.push(card.copy())
+        cardStack.push(card)
     }
 
     fun point(): Int =
         cardStack.fold(0) { acc, card ->
-            val totalPoint = acc + card.number.value
+            val totalPoint = acc + card.number
 
-            if (card.number.isAce()) {
-                val maxValue = acc + card.number.orValue
-                val cardPoint = if (maxValue < BLACK_JACk_NUMBER) card.number.orValue else card.number.value
+            if (card.isAce()) {
+                val maxValue = acc + card.otherNumber
+                val cardPoint = if (maxValue < BLACK_JACk_NUMBER) card.otherNumber else card.number
 
                 return@fold acc + cardPoint
             }

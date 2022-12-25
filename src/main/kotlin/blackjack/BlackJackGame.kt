@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.CardDeck
-import blackjack.domain.Cards
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
@@ -59,7 +58,6 @@ class BlackJackGame {
             ResultView.newLine()
         }
     }
-
 }
 
 fun main() {

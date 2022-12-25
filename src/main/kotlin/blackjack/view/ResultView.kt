@@ -35,7 +35,7 @@ object ResultView {
     }
 
     private fun toCardNames(cards: Stack<Card>): String =
-        cards.joinToString(". ") { card -> "${card.number.value}${card.suit.value}" }
+        cards.joinToString(". ") { card -> "${card.number}${card.suit.value}" }
 
     fun newLine() = println()
 }

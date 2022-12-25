@@ -1,3 +1,9 @@
 package blackjack.domain
 
-data class Card(val suit: Suit, val number: Number)
+class Card(val suit: Suit, number: Number) {
+    private val _number = number
+    val number = _number.value
+    val otherNumber = _number.orValue
+
+    fun isAce(): Boolean = _number == Number.ACE
+}

@@ -44,33 +44,4 @@ class PlayerTest : StringSpec({
             player.isBust() shouldBe isBust
         }
     }
-
-    "Ace 는 블랙잭 숫자보다 합산이 작을 경우엔 포인트가 11로 계산된다." {
-        val cardList = listOf(
-            Card(Suit.SPADE, Number.TWO),
-            Card(Suit.HEART, Number.TWO)
-        )
-        val cards = Cards(cardList)
-        val player = Player("테스터", cards)
-        val card = Card(Suit.SPADE, Number.ACE)
-
-        player.hit(card)
-
-        player.point shouldBe 15
-    }
-
-    "Ace 는 블랙잭 숫자보다 합산이 클 경우엔 포인트가 1로 계산된다." {
-        val cards = Cards(
-            listOf(
-                Card(Suit.HEART, Number.NINE),
-                Card(Suit.DIAMOND, Number.NINE),
-            )
-        )
-
-        val player = Player("테스터", cards)
-        val card = Card(Suit.SPADE, Number.ACE)
-
-        player.hit(card)
-        player.point shouldBe 19
-    }
 })

@@ -10,7 +10,7 @@ class Player(val name: String, val cards: Cards) {
     }
 
     fun hit(card: Card) {
-        cards.add(card.copy())
+        cards.add(card)
         point = cards.point()
     }
 
