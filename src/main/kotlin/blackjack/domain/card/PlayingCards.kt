@@ -40,8 +40,8 @@ value class PlayingCards(private val list: List<PlayingCard>) {
         return list.size
     }
 
-    override fun toString(): String {
-        return list.joinToString(", ")
+    fun toListString(): List<String> {
+        return list.map { it.toString() }
     }
 
     companion object {

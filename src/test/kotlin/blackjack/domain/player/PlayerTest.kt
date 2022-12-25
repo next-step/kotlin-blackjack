@@ -15,7 +15,7 @@ class PlayerTest {
     fun `플레이어 상태 - 생성 테스트, 블랙잭`() {
         // given
         val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
-        val player = PlayerFactory.create(Name("pobi"), cards)
+        val player = ParticipantFactory.create(Name("pobi"), cards)
 
         // when, then
         assertThat(player.state is Blackjack).isTrue
@@ -25,7 +25,7 @@ class PlayerTest {
     fun `플레이어 상태 - 생성 테스트, 히트`() {
         // given
         val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
-        val player = PlayerFactory.create(Name("pobi"), cards)
+        val player = ParticipantFactory.create(Name("pobi"), cards)
 
         // when, then
         assertThat(player.state is Hit).isTrue

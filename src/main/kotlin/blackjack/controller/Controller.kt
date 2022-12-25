@@ -4,10 +4,10 @@ import blackjack.application.Deck
 import blackjack.domain.GameManager
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.player.PlayerFactory
-import blackjack.domain.player.Players
-import blackjack.dto.PlayerDto
-import blackjack.dto.PlayersDto
+import blackjack.domain.player.ParticipantFactory
+import blackjack.domain.player.Participants
+import blackjack.dto.ParticipantDto
+import blackjack.dto.ParticipantsDto
 import blackjack.view.ResultView
 
 object Controller {
@@ -15,29 +15,29 @@ object Controller {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
-        val players = PlayerFactory.create(names, deck)
+        val participants = ParticipantFactory.create(names, deck)
 
-        init(players)
-        if (GameManager.checkBlackjack(players)) {
-            end(players)
+        init(participants)
+        if (GameManager.checkBlackjack(participants)) {
+            end(participants)
             return
         }
-        val newPlayers = GameManager.play(players, deck)
+        val newPlayers = GameManager.play(participants, deck)
         end(newPlayers)
     }
 
-    private fun init(players: Players) {
-        ResultView.printGameStartMessage(PlayersDto.from(players).getNames())
-        PlayersDto.from(players).players.forEach {
-            ResultView.printPlayerCards(it)
+    private fun init(participants: Participants) {
+        ResultView.printGameStartMessage(ParticipantsDto.from(participants.getPlayers()).getNames())
+        ParticipantsDto.from(participants).players.forEach {
+            ResultView.printParticipantCards(it)
         }
         ResultView.printLineFeed()
     }
 
-    private fun end(players: Players) {
+    private fun end(participants: Participants) {
         ResultView.printLineFeed()
-        players.values.forEach {
-            ResultView.printResultWithScore(PlayerDto.from(it))
+        participants.values.forEach {
+            ResultView.printResultWithScore(ParticipantDto.from(it))
         }
     }
 }

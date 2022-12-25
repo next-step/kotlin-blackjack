@@ -3,15 +3,36 @@ package blackjack.domain.player.state.role
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.state.State
 import blackjack.domain.player.Player
+import blackjack.domain.player.state.Name
 
-interface Role {
-    val state: State
+sealed class Role {
+    abstract val name: Name
 
-    fun draw(playingCard: PlayingCard): Player
+    abstract val state: State
 
-    fun stay(): Player
+    abstract fun draw(playingCard: PlayingCard): Player
 
-    fun getScore(): Int
+    abstract fun stay(): Player
 
-    fun isDealer(): Boolean
+    abstract fun isDealer(): Boolean
+
+    fun getScore(): Int {
+        return state.cards.getScore()
+    }
+
+    fun isBlackjack(): Boolean {
+        return state.cards.isBlackjack()
+    }
+
+    fun isBust(): Boolean {
+        return state.cards.isBust()
+    }
+
+    fun getCardsSize(): Int {
+        return state.cards.size()
+    }
+
+    fun getCardsAsListString(): List<String> {
+        return state.cards.toListString()
+    }
 }
