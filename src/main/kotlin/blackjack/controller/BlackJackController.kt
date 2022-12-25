@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.PockerMachine
+import blackjack.domain.BlackJackMachine
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player
@@ -9,7 +9,7 @@ import blackjack.util.Parser
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class PockerController {
+class BlackJackController {
     fun execute() {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
         val nameList = Parser.parse(InputView.readName())
@@ -17,19 +17,19 @@ class PockerController {
             val money = InputView.readBettingMoney(name)
             Participant(name = name, money = money)
         }
-        val pockerMachine = PockerMachine(dealer = dealer, players = players)
+        val blackJackMachine = BlackJackMachine(dealer = dealer, players = players)
 
-        pockerMachine.initialize()
+        blackJackMachine.initialize()
         OutputView.printInitialState(players)
 
-        pockerMachine.addCard(retryOrNot(), OutputView::printCardState)
+        blackJackMachine.addCard(retryOrNot(), OutputView::printCardState)
         OutputView.printDealerPickOneMoreCard(dealer)
         OutputView.printResult(players)
 
-        val gameResult = pockerMachine.getGameResult()
+        val gameResult = blackJackMachine.getGameResult()
         OutputView.printGameResult(gameResult)
 
-        val bettingMoneyResult = pockerMachine.getBettingResult()
+        val bettingMoneyResult = blackJackMachine.getBettingResult()
         OutputView.printBettingMoneyResult(bettingMoneyResult)
     }
 

@@ -10,7 +10,7 @@ import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player
 
-class PockerMachine(
+class BlackJackMachine(
     private val cardDeck: CardDeck = CardDeck(),
     private val dealer: Dealer,
     private val players: List<Player>
