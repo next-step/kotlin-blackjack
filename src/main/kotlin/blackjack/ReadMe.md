@@ -71,7 +71,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [x] `Cards` 구현 및 테스트 코드 작성
 - [x] `Deck` 구현
 - [x] `Player` 구현 및 테스트 코드 작성
-- [ ] `Players` 구현 및 테스트 코드 작성
+- [x] `Players` 구현 및 테스트 코드 작성
 - [ ] `System` 구현 및 테스트 코드 작성
 - [ ] `InputView`, `OutputView` 구현
 - [ ] `Controller` 구현 및 `main` 함수 구현
