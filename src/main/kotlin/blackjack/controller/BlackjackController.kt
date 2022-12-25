@@ -32,7 +32,7 @@ class BlackjackController(
         players.filter { it.isNotFinished() }
             .forEach { player ->
                 playerView.printlnHitYn(player)
-                hitAndStayProcess(blackjack, player)
+                askPlayerChoice(blackjack, player)
             }
 
         blackjackView.printNewLine()
@@ -42,13 +42,19 @@ class BlackjackController(
         }
     }
 
-    private fun hitAndStayProcess(blackjack: Blackjack, player: Player) {
-        while (player.isNotFinished() && blackjackInputReader.isHit()) {
-            blackjack.giveCardTo(player)
+    private fun askPlayerChoice(blackjack: Blackjack, player: Player) {
+        while (player.isNotFinished()) {
+            val playerHitYn = blackjackInputReader.readPlayerHitYn()
+            hitOrStay(playerHitYn, blackjack, player)
             playerView.printlnPlayer(player)
         }
-
-        player.stay()
     }
 
+    private fun hitOrStay(playerHitYn: String, blackjack: Blackjack, player: Player) {
+        when (playerHitYn) {
+            "y", "Y" -> blackjack.giveCardTo(player)
+            "n", "N" -> blackjack.acceptStayFrom(player)
+            else -> throw IllegalArgumentException("should input y or n [$playerHitYn]")
+        }
+    }
 }

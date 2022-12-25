@@ -24,16 +24,20 @@ class Player(
     }
 
     fun hit(card: Card) {
-        if (state.isAbleToHit) {
-            cards.addCard(card)
-            state = state.hit(this)
+        check(state.isAbleToHit) {
+            "Player's state [${state.name}] should be able to hit"
         }
+
+        cards.addCard(card)
+        state = state.hit(this)
     }
 
     fun stay() {
-        if (state.isAbleToStay) {
-            state = state.stay(this)
+        check(state.isAbleToStay) {
+            "Player's state [${state.name}] should be able to stay"
         }
+
+        state = state.stay(this)
     }
 
     fun isFinished() = state.isFinished

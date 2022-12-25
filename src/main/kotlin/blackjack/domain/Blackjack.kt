@@ -10,7 +10,19 @@ class Blackjack(
 ) {
 
     fun giveCardTo(player: Player) {
+        check(player.isNotFinished()) {
+            "Blackjack should not give card to this player which is finished. [$player]"
+        }
+
         player.hit(cardVendor.drawCard())
+    }
+
+    fun acceptStayFrom(player: Player) {
+        check(player.isNotFinished()) {
+            "Player should be able to stay. [$player]"
+        }
+
+        player.stay()
     }
 
     companion object {
