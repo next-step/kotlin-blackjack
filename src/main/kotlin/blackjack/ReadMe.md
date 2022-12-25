@@ -68,7 +68,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [x] `CardShape`, `CardNumber` 구현
 - [x] `Card` 구현 및 테스트 코드 작성
 - [x] `ScoreCombination` 구현 및 테스트 코드 작성
-- [ ] `Cards` 구현 및 테스트 코드 작성
+- [x] `Cards` 구현 및 테스트 코드 작성
 - [ ] `Deck` 구현 및 테스트 코드 작성
 - [ ] `Player` 구현 및 테스트 코드 작성
 - [ ] `Players` 구현 및 테스트 코드 작성
