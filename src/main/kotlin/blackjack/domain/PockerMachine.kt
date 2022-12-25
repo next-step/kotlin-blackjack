@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.dto.BettingMoneyResult
 import blackjack.domain.dto.GameResult
 import blackjack.domain.dto.ParticipantMoneyResult
 import blackjack.domain.dto.ParticipantResult
@@ -32,9 +33,12 @@ class PockerMachine(
         }
     }
 
-    fun getBettingResult(): List<ParticipantMoneyResult> {
+    fun getBettingResult(): BettingMoneyResult {
         val participants = players.filterIsInstance<Participant>()
-        return participants.map { participant -> calculateBetting(participant) }
+        return BettingMoneyResult(
+            dealerName = dealer.name,
+            participantMoneyResult = participants.map { participant -> calculateBetting(participant) }
+        )
     }
 
     fun getGameResult(): GameResult {

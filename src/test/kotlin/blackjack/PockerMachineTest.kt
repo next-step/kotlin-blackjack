@@ -5,6 +5,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
+import blackjack.domain.dto.BettingMoneyResult
 import blackjack.domain.dto.ParticipantMoneyResult
 import blackjack.domain.enums.WinOrLose
 import blackjack.domain.person.Dealer
@@ -57,7 +58,7 @@ internal class PockerMachineTest : BehaviorSpec({
         When("참가자가 처음 두 장의 카드 합이 21일 경우 ") {
             val machine = PockerMachine(dealer = dealer1, players = listOf(dealer1, participant1))
             Then("베팅 금액의 1.5배를 딜러에게 받는다.") {
-                machine.getBettingResult() shouldBe listOf(ParticipantMoneyResult("길상현", 15000L))
+                machine.getBettingResult() shouldBe BettingMoneyResult("딜러", listOf(ParticipantMoneyResult("길상현", 15000L)))
             }
         }
 
@@ -67,7 +68,7 @@ internal class PockerMachineTest : BehaviorSpec({
         When("참가자가 처음 두 장의 카드 합이 21일 경우 ") {
             val machine = PockerMachine(dealer = dealer2, players = listOf(dealer2, participant2))
             Then("베팅 금액의 1.5배를 딜러에게 받는다.") {
-                machine.getBettingResult() shouldBe listOf(ParticipantMoneyResult("길상현", 10000L))
+                machine.getBettingResult() shouldBe BettingMoneyResult("딜러", listOf(ParticipantMoneyResult("길상현", 10000L)))
             }
         }
 
@@ -77,7 +78,7 @@ internal class PockerMachineTest : BehaviorSpec({
         When("참가자가 처음 두 장의 카드 합이 21일 경우 ") {
             val machine = PockerMachine(dealer = dealer3, players = listOf(dealer3, participant3))
             Then("베팅 금액의 1.5배를 딜러에게 받는다.") {
-                machine.getBettingResult() shouldBe listOf(ParticipantMoneyResult("길상현", 10000L))
+                machine.getBettingResult() shouldBe BettingMoneyResult("딜러", listOf(ParticipantMoneyResult("길상현", 10000L)))
             }
         }
 
@@ -87,7 +88,7 @@ internal class PockerMachineTest : BehaviorSpec({
         When("참가자가 처음 두 장의 카드 합이 21일 경우 ") {
             val machine = PockerMachine(dealer = dealer4, players = listOf(dealer4, participant4))
             Then("베팅 금액의 1.5배를 딜러에게 받는다.") {
-                machine.getBettingResult() shouldBe listOf(ParticipantMoneyResult("길상현", 10000L))
+                machine.getBettingResult() shouldBe BettingMoneyResult("딜러", listOf(ParticipantMoneyResult("길상현", 10000L)))
             }
         }
 
@@ -97,7 +98,7 @@ internal class PockerMachineTest : BehaviorSpec({
         When("참가자가 처음 두 장의 카드 합이 21일 경우 ") {
             val machine = PockerMachine(dealer = dealer5, players = listOf(dealer5, participant5))
             Then("베팅 금액의 1.5배를 딜러에게 받는다.") {
-                machine.getBettingResult() shouldBe listOf(ParticipantMoneyResult("길상현", -10000L))
+                machine.getBettingResult() shouldBe BettingMoneyResult("딜러", listOf(ParticipantMoneyResult("길상현", -10000L)))
             }
         }
     }
