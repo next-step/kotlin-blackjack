@@ -23,4 +23,8 @@ class Player(val name: String, val cards: Cards) {
             else -> PlayerState.Done.Burst
         }
     }
+
+    fun stay() {
+        _state = PlayerState.Done.Stay
+    }
 }

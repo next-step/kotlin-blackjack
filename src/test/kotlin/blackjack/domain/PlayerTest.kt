@@ -56,4 +56,14 @@ class PlayerTest : FunSpec({
             }
         }
     }
+    context("stay()") {
+        test("stay 상태로 변경한다.") {
+            val cards = linkedSetOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.DIAMOND, CardValue.TEN))
+            val player = Player("name", Cards(cards))
+
+            player.stay()
+
+            player.state shouldBe PlayerState.Done.Stay
+        }
+    }
 })
