@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class NameTest {
     @ParameterizedTest
-    @ValueSource(strings = ["pobi", "jason"])
+    @ValueSource(strings = ["pobi", "jason", "딜러"])
     fun `플레이어 이름 - 이름 생성 테스트`(name: String) {
         // when, then
         assertThat(Name(name)).isEqualTo(Name(name))
@@ -32,11 +32,11 @@ class NameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["pobi1", "1pobi", "pobi!", "pobi@", "pobi#", "po#bi", "해나", "진이", "정"])
-    fun `플레이어 이름 - 이름에 알파벳 이외의 문자가 있는 경우에 대한 예외처리 테스트`(name: String) {
+    @ValueSource(strings = ["pobi1", "1pobi", "pobi!", "pobi@", "pobi#", "po#bi"])
+    fun `플레이어 이름 - 이름에 한글과 알파벳 이외의 문자가 있는 경우에 대한 예외처리 테스트`(name: String) {
         // when, then
         Assertions.assertThatThrownBy { Name(name) }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessageContaining("이름은 알파벳만 가능합니다.")
+            .hasMessageContaining("이름은 한글과 알파벳만 가능합니다.")
     }
 }
