@@ -16,7 +16,7 @@ class CardsTest : FunSpec({
             val cloverAce = Card(CardPattern.CLOVER, CardValue.ACE)
             val diamondAce = Card(CardPattern.DIAMOND, CardValue.ACE)
             shouldNotThrowAny {
-                Cards(setOf(cloverAce, diamondAce))
+                Cards(linkedSetOf(cloverAce, diamondAce))
             }
         }
     }
@@ -24,10 +24,10 @@ class CardsTest : FunSpec({
         test("카드의 값을 더한 결과를 반환한다.") {
             table(
                 headers("cards", "expectedResult"),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.QUEEN))), 20),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.QUEEN), Card(CardPattern.DIAMOND, CardValue.KING))), 20),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.KING), Card(CardPattern.DIAMOND, CardValue.TEN))), 20),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.TWO), Card(CardPattern.DIAMOND, CardValue.TEN))), 12),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.QUEEN))), 20),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.QUEEN), Card(CardPattern.DIAMOND, CardValue.KING))), 20),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.KING), Card(CardPattern.DIAMOND, CardValue.TEN))), 20),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.TWO), Card(CardPattern.DIAMOND, CardValue.TEN))), 12),
             ).forAll { cards, expectedResult ->
                 cards.sum() shouldBe expectedResult
             }
@@ -35,11 +35,11 @@ class CardsTest : FunSpec({
         test("ACE 제외 카드의 합이 10 이하일 경우 ACE = 11, 합이 10 초과일 경우 ACE = 1로 계산하여 카드의 값을 더한 결과를 반환한다.") {
             table(
                 headers("cards", "expectedResult"),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.TEN), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.QUEEN), Card(CardPattern.DIAMOND, CardValue.KING), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.DIAMOND, CardValue.TWO), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
-                row(Cards(setOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.CLOVER, CardValue.ACE), Card(CardPattern.DIAMOND, CardValue.ACE))), 20),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.JACK), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.TEN), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.QUEEN), Card(CardPattern.DIAMOND, CardValue.KING), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.DIAMOND, CardValue.TWO), Card(CardPattern.DIAMOND, CardValue.ACE))), 21),
+                row(Cards(linkedSetOf(Card(CardPattern.DIAMOND, CardValue.EIGHT), Card(CardPattern.CLOVER, CardValue.ACE), Card(CardPattern.DIAMOND, CardValue.ACE))), 20),
             ).forAll { cards, expectedResult ->
                 cards.sum() shouldBe expectedResult
             }
@@ -49,16 +49,16 @@ class CardsTest : FunSpec({
         test("입력받은 카드를 추가한다.") {
             val cloverAce = Card(CardPattern.CLOVER, CardValue.ACE)
             val diamondAce = Card(CardPattern.DIAMOND, CardValue.ACE)
-            val cards = Cards(setOf(cloverAce, diamondAce))
+            val cards = Cards(linkedSetOf(cloverAce, diamondAce))
 
-            val actual = cards.add(Card(CardPattern.HEART, CardValue.ACE))
+            cards.add(Card(CardPattern.HEART, CardValue.ACE))
 
-            actual.cards.size shouldBe 3
+            cards.cards.size shouldBe 3
         }
         test("입력받은 카드가 중복된 카드일 경우 예외가 발생한다.") {
             val cloverAce = Card(CardPattern.CLOVER, CardValue.ACE)
             val diamondAce = Card(CardPattern.DIAMOND, CardValue.ACE)
-            val cards = Cards(setOf(cloverAce, diamondAce))
+            val cards = Cards(linkedSetOf(cloverAce, diamondAce))
 
             shouldThrow<IllegalArgumentException> {
                 cards.add(cloverAce)

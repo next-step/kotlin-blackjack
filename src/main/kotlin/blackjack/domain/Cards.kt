@@ -1,24 +1,24 @@
 package blackjack.domain
 
-@JvmInline
-value class Cards(val cards: Set<Card>) {
+class Cards(cards: Set<Card> = emptySet()) {
+    private val _cards: LinkedHashSet<Card> = cards.toMutableSet() as LinkedHashSet<Card>
+    val cards: Set<Card>
+        get() = _cards.toSet()
 
-    fun add(card: Card): Cards {
-        if (cards.contains(card)) {
+    fun add(card: Card) {
+        if (_cards.contains(card)) {
             throw IllegalArgumentException("cards contain the card already")
         }
 
-        val addableCards = cards.toMutableSet()
-        addableCards.add(card)
-        return Cards(addableCards)
+        _cards.add(card)
     }
 
     fun sum(): Int {
-        val aceCards = cards.filter { it.value == CardValue.ACE }
+        val aceCards = _cards.filter { it.value == CardValue.ACE }
             .toSet()
 
         if (aceCards.isEmpty()) {
-            return cards.sumOf { it.value.value }
+            return _cards.sumOf { it.value.value }
         }
 
         val sum = cards.minus(aceCards)
