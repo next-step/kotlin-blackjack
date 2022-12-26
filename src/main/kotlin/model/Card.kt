@@ -1,6 +1,6 @@
 package model
 
-class Card(val cardNumber: CardNumber, val cardShape: CardShape) {
+data class Card(val cardNumber: CardNumber, val cardShape: CardShape) {
     companion object {
         private val cards = mutableListOf<Card>()
         private fun selectCardNumber(): CardNumber {
@@ -11,19 +11,21 @@ class Card(val cardNumber: CardNumber, val cardShape: CardShape) {
             return CardShape.values().toList().shuffled()[0]
         }
 
-        fun generateCard(): Card {
+        fun generate(): Card {
             var number = selectCardNumber()
             var shape = selectCardShape()
             while (isDuplicate(number, shape)) {
                 number = selectCardNumber()
                 shape = selectCardShape()
             }
-            return Card(number, shape)
+            val card = Card(number, shape)
+            cards.add(card)
+            return card
         }
 
         private fun isDuplicate(cardNumber: CardNumber, cardShape: CardShape): Boolean {
-            val card = cards.count { it.cardNumber == cardNumber && it.cardShape == cardShape }
-            return card != 0
+            val duplicatedCards = cards.count { it.cardNumber == cardNumber && it.cardShape == cardShape }
+            return duplicatedCards != 0
         }
     }
 }

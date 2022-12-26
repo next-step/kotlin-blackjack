@@ -11,7 +11,7 @@ class Players {
         players[name]?.add(card)
     }
 
-    fun get(): Map<String, MutableList<Card>> {
+    fun get(): Map<String, List<Card>> {
         return players
     }
 }

@@ -18,6 +18,7 @@ enum class CardNumber(val number: Int) {
     companion object {
         fun convertToString(value: CardNumber): String {
             return when (value) {
+                ACE -> "A"
                 JACK -> "J"
                 QUEEN -> "Q"
                 KING -> "K"

@@ -3,6 +3,7 @@ import model.CardNumber
 import model.CardNumberCalculator
 import model.CardShape
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.assertAll
 internal class BlackjackAllTest {
     @Test
     fun `카드 숫자가 문자열로 변환된다`() {
-        org.junit.jupiter.api.assertAll(
+        assertAll(
             {
                 assertEquals("K", CardNumber.convertToString(CardNumber.KING))
             },
@@ -22,7 +23,7 @@ internal class BlackjackAllTest {
 
     @Test
     fun `카드 모양이 한글 문자열로 변환된다`() {
-        org.junit.jupiter.api.assertAll(
+        assertAll(
             {
                 assertEquals("다이아몬드", CardShape.convertToString(CardShape.DIAMONDS))
             },
@@ -33,12 +34,12 @@ internal class BlackjackAllTest {
     }
 
     @Test
-    fun `중복 없이 카드를 뽑느다`() {
+    fun `중복 없이 카드를 뽑는다`() {
         val cards = mutableListOf<Card>()
         for (i in TOTAL_CARD_SIZE) {
-            cards.add(Card.generateCard())
+            cards.add(Card.generate())
         }
-        Assertions.assertThat(cards.toSet().size).isSameAs(52)
+        assertThat(cards.toSet().size).isSameAs(52)
     }
 
     @Test
