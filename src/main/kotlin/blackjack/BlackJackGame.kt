@@ -1,17 +1,36 @@
 package blackjack
 
-import blackjack.domain.CardDeck
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.CardDeck
+import blackjack.domain.participantion.Dealer
+import blackjack.domain.participantion.Participant
+import blackjack.domain.participantion.Player
+import blackjack.domain.participantion.Players
+import blackjack.domain.result.Winner
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackJackGame {
     fun play(cardDeck: CardDeck) {
         val players = getPlayers(cardDeck)
-        printCurrentState(players)
-        hitCard(players, cardDeck)
-        players.forEach(ResultView::printResult)
+        val dealer = Dealer(cardDeck)
+        val participants = listOf(dealer).plus(players)
+
+        printCurrentState(participants)
+        hitCard(dealer, players, cardDeck)
+
+        participants.forEach(ResultView::printResult)
+        printWinner(dealer, players)
+    }
+
+    private fun printWinner(dealer: Dealer, players: List<Player>) {
+        val winner = Winner(dealer, players)
+
+        ResultView.printMessage(ResultView.Message.WINNER)
+        ResultView.printRank(dealer.name, winner.gameResult())
+
+        players.forEach { player ->
+            ResultView.printWinner(player.name, winner.isWin(player))
+        }
     }
 
     private fun getPlayers(cardDeck: CardDeck): List<Player> {
@@ -21,21 +40,30 @@ class BlackJackGame {
         return Players(names, cardDeck).players
     }
 
-    private fun printCurrentState(players: List<Player>) {
+    private fun printCurrentState(participants: List<Participant>) {
         ResultView.newLine()
-        ResultView.printHit(players.map { it.name })
+        ResultView.printHit(participants.map { it.name })
 
-        players.forEach(ResultView::printState)
-
+        participants.forEach(ResultView::printState)
         ResultView.newLine()
     }
 
-    private fun hitCard(players: List<Player>, cardDeck: CardDeck) {
+    private fun hitCard(dealer: Dealer, players: List<Player>, cardDeck: CardDeck) {
         players.forEach { player ->
             hitCard(player, cardDeck)
         }
 
         ResultView.newLine()
+
+        hitCard(dealer, cardDeck)
+    }
+
+    private fun hitCard(dealer: Dealer, cardDeck: CardDeck) {
+        while (dealer.isHittable()) {
+            ResultView.printMessage(ResultView.Message.DEALER_HIT)
+            val card = cardDeck.draw()
+            dealer.hit(card)
+        }
     }
 
     private fun hitCard(player: Player, cardDeck: CardDeck) {
