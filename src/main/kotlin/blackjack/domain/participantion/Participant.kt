@@ -1,6 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participantion
 
-class Player(val name: String, val cards: Cards) {
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+
+sealed class Participant(val name: String, val cards: Cards) {
     var point = 0
         private set
 

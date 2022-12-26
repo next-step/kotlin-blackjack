@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class Number(val symbol: String, val value: Int, val orValue: Int = 0) {
     ACE("A", 1, 11),

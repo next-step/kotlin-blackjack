@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Card(val suit: Suit, number: Number) {
     private val _number = number

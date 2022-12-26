@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import java.util.Stack
 
@@ -6,6 +6,10 @@ class Cards(val cardStack: Stack<Card>) {
 
     constructor(cards: List<Card>) : this(
         cardStack = cards.toCollection(Stack())
+    )
+
+    constructor(cardDeck: CardDeck) : this(
+        List(INIT_COUNT) { cardDeck.draw() }
     )
 
     init {
