@@ -4,6 +4,7 @@ import blackjack.application.Deck
 import blackjack.controller.InputFilter
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
+import blackjack.domain.participant.state.result.Result
 import blackjack.domain.participant.state.role.Role
 import blackjack.dto.ParticipantDto
 import blackjack.view.ResultView
@@ -25,6 +26,17 @@ object GameManager {
         }
         val newDealers = doHitOrStay(participants.getDealer(), deck)
         return Participants(newDealers, *newPlayers.toTypedArray())
+    }
+
+    fun calculateResult(participants: Participants): Map<Role, Result> {
+        if (participants.getDealer().isBlackjack()) {
+            return participants.getPlayers().associateWith { Result.Lose }
+        }
+
+        if (participants.getDealer().isBust()) {
+            return participants.getPlayers().associateWith { Result.Win }
+        }
+        return participants.getPlayers().associateWith { it.calculateResult(participants.getDealer().getScore()) }
     }
 
     private fun doHitOrStay(role: Role, deck: Deck): Role {

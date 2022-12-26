@@ -8,6 +8,8 @@ import blackjack.domain.participant.ParticipantFactory
 import blackjack.domain.participant.Participants
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ParticipantsDto
+import blackjack.dto.ResultDto
+import blackjack.dto.ResultsDto
 import blackjack.view.ResultView
 
 object Controller {
@@ -40,5 +42,10 @@ object Controller {
         participants.getAll().forEach {
             ResultView.printResultWithScore(ParticipantDto.from(it))
         }
+
+        ResultView.printLineFeed()
+        val results = GameManager.calculateResult(participants)
+        val resultsDto = results.map { ResultDto.from(it.key, it.value) }
+        ResultView.printResult(ResultsDto(resultsDto))
     }
 }

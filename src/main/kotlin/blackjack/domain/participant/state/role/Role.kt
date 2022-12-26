@@ -5,6 +5,7 @@ import blackjack.domain.card.state.State
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.result.Result
 
 sealed class Role {
     abstract val name: Name
@@ -45,5 +46,14 @@ sealed class Role {
 
     fun getCardsAsListString(): List<String> {
         return state.cards.toListString()
+    }
+
+    fun calculateResult(score: Int): Result {
+        val playerScore = getScore()
+        return when {
+            playerScore > score -> Result.Win
+            playerScore == score -> Result.Draw
+            else -> Result.Lose
+        }
     }
 }
