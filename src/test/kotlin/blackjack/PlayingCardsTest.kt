@@ -27,4 +27,11 @@ class PlayingCardsTest : StringSpec({
             PlayingCards(mutableSetOf(Card.CLOVER_A, Card.HEART_A, Card.CLOVER_9)).calculatePoint() shouldBe Point(21)
         }
     }
+    "Clover 10, Clover K, Clover 2를 들고있으면 bust이다." {
+        PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_2)).bust() shouldBe true
+    }
+
+    "Clover 10, Clover K, Clover A를 들고있으면 bust가 아니다." {
+        PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_A)).bust() shouldBe false
+    }
 })
