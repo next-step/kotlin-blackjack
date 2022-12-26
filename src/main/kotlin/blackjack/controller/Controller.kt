@@ -27,7 +27,8 @@ object Controller {
     }
 
     private fun init(participants: Participants) {
-        ResultView.printGameStartMessage(ParticipantsDto.from(participants.getPlayers()).getNames())
+        val players = Participants(participants.getPlayers())
+        ResultView.printGameStartMessage(ParticipantsDto.from(players).getNames())
         ParticipantsDto.from(participants).players.forEach {
             ResultView.printParticipantCards(it)
         }
@@ -36,7 +37,7 @@ object Controller {
 
     private fun end(participants: Participants) {
         ResultView.printLineFeed()
-        participants.values.forEach {
+        participants.getAll().forEach {
             ResultView.printResultWithScore(ParticipantDto.from(it))
         }
     }

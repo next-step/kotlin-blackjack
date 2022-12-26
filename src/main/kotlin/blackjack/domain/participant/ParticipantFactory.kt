@@ -6,6 +6,7 @@ import blackjack.domain.card.state.State
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.DealerRole
 import blackjack.domain.participant.state.role.Role
 
 object ParticipantFactory {
@@ -18,6 +19,9 @@ object ParticipantFactory {
     }
 
     fun create(name: Name, playingCards: PlayingCards): Role {
+        if (name == Name(DealerRole.DEALER_NAME)) {
+            return Dealer(initState(playingCards))
+        }
         return Player(name, initState(playingCards))
     }
 

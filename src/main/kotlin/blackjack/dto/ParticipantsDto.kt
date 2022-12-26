@@ -10,7 +10,7 @@ value class ParticipantsDto(val players: List<ParticipantDto>) {
 
     companion object {
         fun from(participants: Participants): ParticipantsDto {
-            return ParticipantsDto(participants.values.map { ParticipantDto.from(it) })
+            return ParticipantsDto(participants.getAll().map { ParticipantDto.from(it) })
         }
     }
 }

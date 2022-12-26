@@ -10,24 +10,24 @@ import blackjack.domain.participant.state.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlayerTest {
+class DealerTest {
     @Test
-    fun `플레이어 - 생성 테스트, 블랙잭`() {
+    fun `딜러 - 생성 테스트, 블랙잭`() {
         // given
         val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
-        val player = ParticipantFactory.create(Name("pobi"), cards)
+        val dealer = ParticipantFactory.create(Name("딜러"), cards)
 
         // when, then
-        assertThat(player.state is Blackjack).isTrue
+        assertThat(dealer.state is Blackjack).isTrue
     }
 
     @Test
-    fun `플레이어 - 생성 테스트, 히트`() {
+    fun `딜러 - 생성 테스트, 히트`() {
         // given
         val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
-        val player = ParticipantFactory.create(Name("pobi"), cards)
+        val dealer = ParticipantFactory.create(Name("딜러"), cards)
 
         // when, then
-        assertThat(player.state is Hit).isTrue
+        assertThat(dealer.state is Hit).isTrue
     }
 }
