@@ -28,5 +28,6 @@ value class Point(val value: Int) {
         val SPECIAL_ACE_ADDED = Point(10)
         val SPECIAL_ACE = Point(11)
         val MAX = Point(21)
+        val BLACK_JACK = Point(21)
     }
 }
