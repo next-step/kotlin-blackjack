@@ -1,6 +1,6 @@
 package blackjack
 
-open class Player(
+class Player(
     val name: String,
     val playingCards: PlayingCards = PlayingCards(),
 ) {
