@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.Point.Companion.MAX
-import blackjack.Point.Companion.ZERO
+import blackjack.domain.Point.Companion.MAX
+import blackjack.domain.Point.Companion.ZERO
 
 data class PlayingCards(
     private val _cards: MutableSet<Card> = mutableSetOf(),

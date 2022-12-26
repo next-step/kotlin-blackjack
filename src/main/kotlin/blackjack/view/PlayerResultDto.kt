@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.Card
-import blackjack.Dealer
-import blackjack.GameResult
-import blackjack.Player
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.GameResult
+import blackjack.domain.Player
 
 data class PlayerResultDto(
     val name: String,
@@ -28,7 +28,7 @@ data class PlayerResultDto(
     )
 
     fun bust() = totalPoint == 0 && cards.size > 2
-    
+
     companion object {
         fun playerDtoOf(player: Player, gameResult: GameResult): PlayerResultDto {
             return when (gameResult) {

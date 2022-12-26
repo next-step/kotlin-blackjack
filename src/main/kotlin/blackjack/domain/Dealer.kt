@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 private val DEALER_MIN_POINT = Point(17)
 
