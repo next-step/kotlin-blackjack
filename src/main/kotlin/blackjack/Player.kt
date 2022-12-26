@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(
+data class Player(
     val name: String,
     val playingCards: PlayingCards = PlayingCards(),
 ) {
@@ -29,5 +29,6 @@ class Player(
     }
 
     fun bust(): Boolean = playingCards.bust()
+    fun firstCard(): Set<Card> = playingCards.firstCard()
 
 }

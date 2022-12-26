@@ -17,7 +17,13 @@ class Dealer(playingCards: PlayingCards = PlayingCards()) {
     fun blackJack(): Boolean = player.blackJack()
     fun bust(): Boolean = player.bust()
 
-    fun addCard(deal: Card) {
-        player.addCard(deal)
+    fun addCard(card: Card) {
+        player.addCard(card)
     }
+
+    fun addCard(cards: Set<Card>) {
+        player.addCard(cards)
+    }
+
+    fun firstCard(): Set<Card> = player.firstCard()
 }

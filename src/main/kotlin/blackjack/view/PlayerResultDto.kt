@@ -16,10 +16,10 @@ data class PlayerResultDto(
     constructor(player: Player) : this(
         player.name,
         player.playingCards.cards,
-        player.playingCards.calculatePoint().value,
+        player.cardPoint().value,
     )
 
-    constructor(dealer: Dealer) : this(dealer.player)
+    constructor(dealer: Dealer, firstCard: Set<Card>) : this(dealer.player.name, firstCard, dealer.cardPoint().value)
     constructor(dealer: Dealer, winningCount: Int, tieCount: Int, losingCount: Int) : this(
         dealer.player.name,
         dealer.player.playingCards.cards,

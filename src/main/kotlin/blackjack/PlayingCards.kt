@@ -3,7 +3,7 @@ package blackjack
 import blackjack.Point.Companion.MAX
 import blackjack.Point.Companion.ZERO
 
-class PlayingCards(
+data class PlayingCards(
     private val _cards: MutableSet<Card> = mutableSetOf(),
 ) {
     val cards: Set<Card>
@@ -31,6 +31,7 @@ class PlayingCards(
     }
 
     fun bust(): Boolean = sumPoint() > MAX
+    fun firstCard(): Set<Card> = setOf(_cards.first())
 }
 
 private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {
