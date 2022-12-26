@@ -6,6 +6,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
+import blackjack.domain.Report
 import blackjack.domain.Suit
 
 class ResultView {
@@ -31,8 +32,24 @@ class ResultView {
     }
 
     fun showResult(casino: Casino) {
+        println()
         casino.printAllResult { player ->
             println("${player.getString()} - 결과: ${player.totalScore}")
+        }
+    }
+
+    fun showReport(casino: Casino) {
+        val dealerReport = Report.report(casino.dealer, casino.players)
+        println("## 최종 승패")
+        println("딜러: ${dealerReport.victory}승 ${dealerReport.defeat}패")
+
+        repeat(casino.players.size) action@{ index ->
+            val player = casino.players[index]
+            val report = Report.report(player, casino.players)
+
+            val victoryText = if (report.victory == 0) "" else "승 "
+            val defeatText = if (report.defeat == 0) "" else "패"
+            println("${player.name}: $victoryText$defeatText")
         }
     }
 

@@ -21,4 +21,5 @@ fun main() {
     casino.relay(resultView.ask(), resultView.showPlayerCards())
 
     resultView.showResult(casino)
+    resultView.showReport(casino)
 }

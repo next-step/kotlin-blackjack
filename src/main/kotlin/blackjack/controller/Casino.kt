@@ -8,10 +8,9 @@ typealias QueryAction = (Participant) -> String
 
 typealias PrintAction = (Participant) -> Unit
 
-class Casino(participants: List<Participant>) {
+class Casino(val players: List<Participant>) {
 
-    private val dealer = Dealer("딜러")
-    private val players: List<Participant> = participants
+    val dealer = Dealer("딜러")
 
     fun distribute() = dealer.distribute(players)
 

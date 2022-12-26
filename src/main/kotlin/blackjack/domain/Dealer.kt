@@ -18,9 +18,10 @@ data class Dealer(
         repeat(INITIAL_CARD_DECK_SIZE) { this.receive(draw()) }
     }
 
-    override fun canDraw(): Boolean = myCards.totalScore <= 16
+    override fun canDraw(): Boolean = myCards.totalScore <= MIN_DRAW_SCORE
 
     companion object {
         private const val INITIAL_CARD_DECK_SIZE = 2
+        private const val MIN_DRAW_SCORE = 16
     }
 }

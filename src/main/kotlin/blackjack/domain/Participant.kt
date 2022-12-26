@@ -10,6 +10,6 @@ abstract class Participant(open val name: String, open val myCards: Cards = Card
     open fun canDraw(): Boolean = totalScore < BLACK_JACK
 
     companion object {
-        private const val BLACK_JACK = 21
+        const val BLACK_JACK = 21
     }
 }
