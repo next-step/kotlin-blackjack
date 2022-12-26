@@ -27,6 +27,8 @@ data class PlayerResultDto(
         winningCount, tieCount, losingCount
     )
 
+    fun bust() = totalPoint == 0 && cards.size > 2
+    
     companion object {
         fun playerDtoOf(player: Player, gameResult: GameResult): PlayerResultDto {
             return when (gameResult) {

@@ -25,10 +25,11 @@ fun main() {
 
 private fun dealByPlayer(name: String, game: BlackJackGame) {
     do {
-        val moreCard: Boolean = InputView.askMoreCard(name)
+        var moreCard: Boolean = InputView.askMoreCard(name)
         if (moreCard) {
             val playerDto = game.addCard(name)
             OutputView.printCardsByPlayer(playerDto)
+            moreCard = !playerDto.bust()
         }
     } while (moreCard)
 }
