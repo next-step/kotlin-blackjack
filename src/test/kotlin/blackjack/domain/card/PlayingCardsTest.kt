@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
@@ -37,29 +36,37 @@ class PlayingCardsTest {
         assertThat(exception.message).isEqualTo("중복된 카드는 추가할 수 없습니다.")
     }
 
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,JACK,QUEEN:false", "TWO,JACK,QUEEN:true"], delimiter = ':')
-    fun `카드 목록 - Bust 여부 확인 테스트`(given: String, expected: Boolean) {
+    @Test
+    fun `카드 목록 - Bust 여부 확인 테스트`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
+        val playingCards = PlayingCards(
+            PlayingCard(Suit.SPADES, Denomination.JACK),
+            PlayingCard(Suit.SPADES, Denomination.QUEEN),
+            PlayingCard(Suit.SPADES, Denomination.TWO)
+        )
 
-        // when
-        val actual = playingCards.isBust()
+        // when, then
+        assertThat(playingCards.isBust()).isTrue
+    }
 
-        // then
-        assertThat(actual).isEqualTo(expected)
+    @Test
+    fun `카드 목록 - Stay 여부 확인 테스트`() {
+        // given
+        val playingCards = PlayingCards(
+            PlayingCard(Suit.SPADES, Denomination.FIVE),
+            PlayingCard(Suit.SPADES, Denomination.SIX),
+            PlayingCard(Suit.SPADES, Denomination.JACK)
+        )
+
+        // when, then
+        assertThat(playingCards.isStay()).isTrue
     }
 
     @ParameterizedTest
     @MethodSource("providePlayingCards")
-    fun `카드 목록 - BlackJack 여부 확인 테스트`(given: String, expected: Boolean) {
-        // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
-
+    fun `카드 목록 - BlackJack 여부 확인 테스트`(given: PlayingCards, expected: Boolean) {
         // when
-        val actual = playingCards.isBlackjack()
+        val actual = given.isBlackjack()
 
         // then
         assertThat(actual).isEqualTo(expected)
@@ -69,28 +76,14 @@ class PlayingCardsTest {
         @JvmStatic
         private fun providePlayingCards(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of("ACE,JACK,QUEEN", false),
-                Arguments.of("ACE", false),
-                Arguments.of("ACE,ACE", false),
-                Arguments.of("ACE,TEN", true),
-                Arguments.of("ACE,JACK", true),
-                Arguments.of("ACE,QUEEN", true),
-                Arguments.of("ACE,KING", true)
+                Arguments.of(PlayingCards(SpadeAce, SpadeJack, SpadeQueen), false),
+                Arguments.of(PlayingCards(SpadeAce), false),
+                Arguments.of(PlayingCards(SpadeAce, SpadeAce), false),
+                Arguments.of(PlayingCards(SpadeAce, SpadeTen), true),
+                Arguments.of(PlayingCards(SpadeAce, SpadeJack), true),
+                Arguments.of(PlayingCards(SpadeAce, SpadeQueen), true),
+                Arguments.of(PlayingCards(SpadeAce, SpadeKing), true)
             )
         }
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,JACK,QUEEN:true", "TWO,JACK,QUEEN:false"], delimiter = ':')
-    fun `카드 목록 - Stay 여부 확인 테스트`(given: String, expected: Boolean) {
-        // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCards = PlayingCards(denominations.map { PlayingCard(Suit.SPADES, it) })
-
-        // when
-        val actual = playingCards.isStay()
-
-        // then
-        assertThat(actual).isEqualTo(expected)
     }
 }

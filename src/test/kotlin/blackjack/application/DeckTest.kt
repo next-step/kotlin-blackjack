@@ -2,6 +2,11 @@ package blackjack.application
 
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.PlayingCard
+import blackjack.domain.card.PlayingCards
+import blackjack.domain.card.SpadeAce
+import blackjack.domain.card.SpadeFour
+import blackjack.domain.card.SpadeThree
+import blackjack.domain.card.SpadeTwo
 import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,5 +37,16 @@ class DeckTest {
 
         // then
         assertThat(exception.message).isEqualTo("카드가 없습니다.")
+    }
+
+    @Test
+    fun `카드 덱 - ShuffleStrategy 테스트`() {
+        val cards = PlayingCards.shuffle { listOf(SpadeAce, SpadeTwo, SpadeThree, SpadeFour) }
+        val deck = Deck(cards.toMutableList())
+
+        assertThat(deck.getCard()).isEqualTo(SpadeAce)
+        assertThat(deck.getCard()).isEqualTo(SpadeTwo)
+        assertThat(deck.getCard()).isEqualTo(SpadeThree)
+        assertThat(deck.getCard()).isEqualTo(SpadeFour)
     }
 }
