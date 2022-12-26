@@ -2,11 +2,9 @@ package blackjack.model
 
 import kotlin.math.max
 
-class Cards(private val value: MutableList<Card> = mutableListOf()) : List<Card> by value {
-    fun add(card: Card) {
-        value.add(card)
-    }
-
+class Cards(
+    private val value: List<Card> = listOf()
+) : List<Card> by value {
     fun getPickableScore(): Int {
         return value.sumOf { it.getScore() }
     }
@@ -42,7 +40,7 @@ class Cards(private val value: MutableList<Card> = mutableListOf()) : List<Card>
         private const val INDEX_INCREMENT = 1
 
         fun of(vararg card: Card): Cards {
-            return Cards(card.toMutableList())
+            return Cards(card.toList())
         }
     }
 }

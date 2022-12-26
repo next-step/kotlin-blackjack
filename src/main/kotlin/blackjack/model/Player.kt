@@ -2,22 +2,21 @@ package blackjack.model
 
 class Player(
     val name: String,
+    initCards: Cards = Cards()
 ) {
-    private val _cards = Cards()
-    val cards: List<Card>
-        get() = _cards
+    var cards = initCards
 
     fun addCard(card: Card) {
         check(isPickable()) { "플레이어의 점수가 이미 21을 넘었습니다" }
-        _cards.add(card)
+        cards = Cards(cards.plus(card))
     }
 
     fun isPickable(): Boolean {
-        return _cards.getPickableScore() < BLACKJACK_SCORE
+        return cards.getPickableScore() < BLACKJACK_SCORE
     }
 
     fun getFinalScore(): Int {
-        return _cards.getFinalScore()
+        return cards.getFinalScore()
     }
 
     companion object {
