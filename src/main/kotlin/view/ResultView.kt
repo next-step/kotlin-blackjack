@@ -24,9 +24,8 @@ class ResultView {
             it.value.forEach { it ->
                 result += "${CardNumber.convertToString(it.cardNumber)}${CardShape.convertToString(it.cardShape)}, "
             }
-            result = result.substring(0, result.lastIndex - 1)
-            result += "\n"
+            result = result.substring(0, result.lastIndex - 1) + "\n"
         }
-        println(result)
+        print(result)
     }
 }

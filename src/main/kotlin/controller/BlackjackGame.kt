@@ -26,12 +26,16 @@ class BlackjackGame {
     }
 
     private fun dealOut(name: String) {
-        for (i in 1..2) {
+        for (i in DEAL_OUT) {
             hit(name)
         }
     }
 
     private fun hit(name: String) {
-        players.updateCard(name, Card())
+        players.updateCard(name, Card.generateCard())
+    }
+
+    companion object {
+        private val DEAL_OUT = 0..1
     }
 }

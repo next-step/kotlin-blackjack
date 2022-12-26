@@ -1,5 +1,7 @@
+import model.Card
 import model.CardNumber
 import model.CardShape
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -26,5 +28,14 @@ internal class BlackjackAllTest {
                 assertEquals("스페이드", CardShape.convertToString(CardShape.SPADES))
             }
         )
+    }
+
+    @Test
+    fun `중복 없이 카드를 뽑느다`() {
+        val cards = mutableListOf<Card>()
+        for (i in 1..52) {
+            cards.add(Card.generateCard())
+        }
+        Assertions.assertThat(cards.toSet().size).isSameAs(52)
     }
 }
