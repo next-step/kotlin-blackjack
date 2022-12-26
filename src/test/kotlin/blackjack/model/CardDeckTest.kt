@@ -15,12 +15,25 @@ class CardDeckTest {
     }
 
     @Test
-    internal fun `하나의 카드를 지급한다`() {
+    internal fun `하나의 카드를 뽑는다`() {
         // given, when
         val deck = CardDeck.defaultDeck()
 
         // then
-        assertThat(deck.getCard()).isNotNull
+        assertThat(deck.drawCard()).isNotNull
+    }
+
+    @Test
+    internal fun `여러개의 카드를 뽑는다`() {
+        // given
+        val deck = CardDeck.defaultDeck()
+
+        // when
+        val cards = deck.drawCards(30)
+
+        // then
+        assertThat(cards).isNotEmpty
+        assertThat(cards.size).isEqualTo(30)
     }
 
     @Test
@@ -29,7 +42,7 @@ class CardDeckTest {
         val deck = CardDeck.defaultDeck()
 
         // when
-        val cards = List(10) { deck.getCard() }
+        val cards = deck.drawCards(10)
 
         // then
         assertThat(deck.size).isEqualTo(42)
@@ -42,9 +55,9 @@ class CardDeckTest {
         val deck = CardDeck.defaultDeck()
 
         // when
-        repeat(52) { deck.getCard() }
+        deck.drawCards(52)
 
         // then
-        assertThrows<NoSuchElementException> { deck.getCard() }
+        assertThrows<NoSuchElementException> { deck.drawCard() }
     }
 }

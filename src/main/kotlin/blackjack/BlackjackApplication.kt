@@ -7,10 +7,10 @@ import blackjack.view.OutputView
 
 class BlackjackApplication {
     fun play() {
-        val players = InputView.readPlayers()
+        val playerNames = InputView.readPlayers()
         val cardDeck = CardDeck.defaultDeck()
-        initPlayers(players, cardDeck)
 
+        val players = initPlayers(playerNames, cardDeck)
         OutputView.printInitCards(players)
 
         playBlackjackGame(
@@ -22,10 +22,14 @@ class BlackjackApplication {
         OutputView.printResult(players)
     }
 
-    private fun initPlayers(players: List<Player>, cardDeck: CardDeck) {
-        repeat(INIT_CARD_COUNT) {
-            players.forEach { it.addCard(cardDeck.getCard()) }
+    fun initPlayers(names: String, deck: CardDeck): List<Player> {
+        return splitPlayerNames(names).map { name ->
+            Player(name, deck.drawCards(INIT_CARD_COUNT))
         }
+    }
+
+    private fun splitPlayerNames(names: String): List<String> {
+        return names.split(NAME_STRING_DELIMITER).map { it.trim() }
     }
 
     private fun playBlackjackGame(
@@ -51,7 +55,7 @@ class BlackjackApplication {
                 break
             }
 
-            player.addCard(cardDeck.getCard())
+            player.addCard(cardDeck.drawCard())
             cardsPrinter(player)
         }
     }
@@ -59,6 +63,7 @@ class BlackjackApplication {
     companion object {
         private const val INIT_CARD_COUNT = 2
         private const val CARD_PICK_STOP_SYMBOL = "n"
+        private const val NAME_STRING_DELIMITER = ","
     }
 }
 

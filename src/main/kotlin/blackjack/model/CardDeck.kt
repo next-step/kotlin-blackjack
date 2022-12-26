@@ -3,9 +3,13 @@ package blackjack.model
 class CardDeck private constructor(
     private val cards: MutableList<Card>
 ) : List<Card> by cards {
-    fun getCard(): Card {
+    fun drawCard(): Card {
         cards.shuffle()
         return cards.removeFirst()
+    }
+
+    fun drawCards(count: Int): Cards {
+        return Cards(List(count) { drawCard() })
     }
 
     companion object {

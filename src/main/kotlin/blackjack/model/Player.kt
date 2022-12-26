@@ -21,10 +21,5 @@ class Player(
 
     companion object {
         const val BLACKJACK_SCORE = 21
-        private const val DELIMITER = ","
-
-        fun playersOf(input: String): List<Player> {
-            return input.split(DELIMITER).map(::Player)
-        }
     }
 }

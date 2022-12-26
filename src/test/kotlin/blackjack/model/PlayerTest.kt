@@ -23,18 +23,6 @@ class PlayerTest {
     }
 
     @Test
-    internal fun `플레이어 이름은 쉼표로 구분한다`() {
-        // given
-        val input = "pobi,jason"
-
-        // when
-        val playerNames = Player.playersOf(input).map { it.name }
-
-        // then
-        assertThat(playerNames).containsExactly("pobi", "jason")
-    }
-
-    @Test
     internal fun `카드를 뽑으면 플레이어 카드목록에 추가된다`() {
         // given
         val player = Player("jason")
