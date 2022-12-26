@@ -15,7 +15,7 @@ import io.mockk.mockk
 class PlayersTest : FunSpec({
 
     context("fun startGame(): 게임 시작시 카드 2장을 준다.") {
-        val gameDeck = Deck
+        val gameDeck = Deck()
         val playerA = Player("A")
         val playerB = Player("B")
         val players = Players(listOf(playerA, playerB))

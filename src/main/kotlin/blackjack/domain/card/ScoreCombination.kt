@@ -24,7 +24,7 @@ class ScoreCombination {
      * 숫자 조합 중 21이 있거나 최소값이 21을 넘었으면 true
      * 이외에 false
      */
-    fun isFUll(): Boolean {
+    fun isFull(): Boolean {
         return combinations.first() >= LIMIT_SCORE ||
             combinations.any { combination -> combination == LIMIT_SCORE }
     }

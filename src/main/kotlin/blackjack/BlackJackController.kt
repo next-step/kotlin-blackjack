@@ -8,7 +8,7 @@ import blackjack.view.OutputView
 
 class BlackJackController(
     private val inputView: InputView = InputView,
-    private val gameDeck: Deck = Deck
+    private val gameDeck: Deck = Deck()
 ) {
 
     fun start() {
@@ -32,12 +32,11 @@ class BlackJackController(
     }
 
     private fun Players.playEachTurn() {
-        this.players.forEach { player ->
-            // 플레이어들이 각자 카드를 더 받을지 턴을 마칠지 결정
-            while (player.isFinished().not()) {
-                player.chooseDrawCard()
-                OutputView.displayCards(player)
-            }
+        // 게임이 끝나지 않은 유저가 있다면 게임을 지속한다.
+        while (this.isAllFinished().not()) {
+            val unfinishedPlayer = this.getUnfinishedPlayer()
+            unfinishedPlayer.chooseDrawCard()
+            OutputView.displayCards(unfinishedPlayer)
         }
     }
 

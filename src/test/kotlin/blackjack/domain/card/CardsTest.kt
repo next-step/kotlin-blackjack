@@ -20,8 +20,9 @@ class CardsTest : FunSpec({
             val cards = Cards()
 
             cards.add(cardOfTen)
+            cards.add(cardOfTen)
 
-            cards.getScore() shouldBe 10
+            cards.getScore() shouldBe 20
             cards.isFull() shouldBe false
         }
 

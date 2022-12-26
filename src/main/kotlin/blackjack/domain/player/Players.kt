@@ -8,16 +8,25 @@ class Players(
 
     fun startGame(gameDeck: Deck) {
         repeat(2) {
-            val newCard = gameDeck.draw()
             players.forEach { player ->
+                val newCard = gameDeck.draw()
                 player.hit(newCard)
             }
         }
     }
 
     fun checkBlackJack() {
-        if (players.any { player -> player.isBlackJack() }) {
+        val blackJackExist = players.any { player -> player.isBlackJack() }
+        if (blackJackExist) {
             players.forEach { player -> player.stay() }
         }
+    }
+
+    fun isAllFinished(): Boolean {
+        return players.all { player -> player.isFinished() }
+    }
+
+    fun getUnfinishedPlayer(): Player {
+        return players.first { player -> player.isFinished().not() }
     }
 }

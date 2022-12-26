@@ -9,7 +9,7 @@ class Cards {
     fun getCards() = cards.toList()
 
     fun add(newCard: Card) {
-        if (scoreCombination.isFUll()) throw ScoreOverFlowException()
+        if (scoreCombination.isFull()) throw ScoreOverFlowException()
 
         cards.add(newCard)
         scoreCombination.update(newCard)
@@ -17,7 +17,7 @@ class Cards {
 
     fun getScore() = scoreCombination.calculateScore()
 
-    fun isFull() = scoreCombination.isFUll()
+    fun isFull() = scoreCombination.isFull()
 
     fun isBlackJack(): Boolean {
         return cards.size == BLACKJACK_CARD_COUNT && scoreCombination.calculateScore() == BLACKJACK_SCORE

@@ -66,7 +66,7 @@ class ScoreCombinationTest : FunSpec({
 
             testScoreCombination.update(cardOfTen)
 
-            testScoreCombination.isFUll() shouldBe false
+            testScoreCombination.isFull() shouldBe false
         }
 
         test("숫자 조합 중 최소값이 21 이상이라면 true를 반환한다.") {
@@ -76,7 +76,7 @@ class ScoreCombinationTest : FunSpec({
             testScoreCombination.update(cardOfTen)
             testScoreCombination.update(cardOfTen)
 
-            testScoreCombination.isFUll() shouldBe true
+            testScoreCombination.isFull() shouldBe true
         }
     }
 })

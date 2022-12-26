@@ -5,12 +5,15 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 class Player(
-    private val name: String,
+    private val name: PlayerName,
     private val cards: Cards = Cards()
 ) {
     private var finished: Boolean = false
 
-    fun getName() = name
+    constructor(inputName: String) : this(name = PlayerName(inputName))
+    constructor(inputName: String, cards: Cards) : this(name = PlayerName(inputName), cards = cards)
+
+    fun getName() = name.getValue()
     fun getCards() = cards.getCards()
     fun isFinished() = finished
     fun getScore() = cards.getScore()
