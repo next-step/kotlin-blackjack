@@ -14,7 +14,11 @@ data class Dealer(
             val player = players[it]
             repeat(INITIAL_CARD_DECK_SIZE) { player.receive(draw()) }
         }
+
+        repeat(INITIAL_CARD_DECK_SIZE) { this.receive(draw()) }
     }
+
+    override fun canDraw(): Boolean = myCards.totalScore <= 16
 
     companion object {
         private const val INITIAL_CARD_DECK_SIZE = 2

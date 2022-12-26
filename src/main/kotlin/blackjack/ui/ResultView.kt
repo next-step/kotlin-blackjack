@@ -4,6 +4,7 @@ import blackjack.controller.Casino
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Cards
+import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.Suit
 
@@ -11,16 +12,23 @@ class ResultView {
 
     fun showPlayers(casino: Casino) {
         val names = casino.names()
-        println("${names}에게 2장의 나누었습니다.")
+        println("딜러와 ${names}에게 2장의 나누었습니다.")
         casino.printAllPlayers { player -> player.print() }
     }
 
     fun ask(): (Participant) -> String = { player ->
+        println()
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         readlnOrNull() ?: ""
     }
 
-    fun showPlayerCards(): (Participant) -> Unit = { player -> player.print() }
+    fun showPlayerCards(): (Participant) -> Unit = callback@{ player ->
+        if (player is Dealer) {
+            showDealer(player)
+            return@callback
+        }
+        player.print()
+    }
 
     fun showResult(casino: Casino) {
         casino.printAllResult { player ->
@@ -28,9 +36,15 @@ class ResultView {
         }
     }
 
+    private fun showDealer(dealer: Dealer) {
+        if (dealer.myCards.getCardList().size != 2 || dealer.canDraw().not()) return
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
     private fun Participant.print() = println(getString())
 
     private fun Participant.getString(): String {
+        if (this is Dealer) return "딜러: ${this.myCards.getString()}"
         return "${this.name}카드: ${this.myCards.getString()}"
     }
 

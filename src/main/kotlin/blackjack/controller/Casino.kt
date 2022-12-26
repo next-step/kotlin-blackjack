@@ -11,27 +11,30 @@ typealias PrintAction = (Participant) -> Unit
 class Casino(participants: List<Participant>) {
 
     private val dealer = Dealer("딜러")
-    private val players: List<Participant> = participants.toMutableList().apply { add(0, dealer) }
-
-    private lateinit var queryAction: QueryAction
-    private lateinit var printAction: PrintAction
+    private val players: List<Participant> = participants
 
     fun distribute() = dealer.distribute(players)
 
     fun names(): String = players.joinToString(", ") { player -> player.name }
 
-    fun printAllPlayers(printAction: PrintAction) = repeat(players.size) { index -> printAction(players[index]) }
+    fun printAllPlayers(printAction: PrintAction) {
+        printAction(dealer)
+        repeat(players.size) { index -> printAction(players[index]) }
+    }
 
-    fun printAllResult(printAction: PrintAction) = repeat(players.size) { index -> printAction(players[index]) }
+    fun printAllResult(printAction: PrintAction) {
+        printAction(dealer)
+        repeat(players.size) { index -> printAction(players[index]) }
+    }
 
     fun relay(queryAction: QueryAction, printAction: PrintAction) {
-        this.queryAction = queryAction
-        this.printAction = printAction
-
         var index = 0
         do {
             val player = players[index]
-            val next = ask(player)
+
+            if (player is Dealer && player.canDraw()) printAction(player)
+
+            val next = ask(player, queryAction, printAction)
 
             if (player.canDraw().not()) break
 
@@ -39,10 +42,9 @@ class Casino(participants: List<Participant>) {
         } while (index < players.size)
     }
 
-    private fun ask(player: Participant): Boolean {
-        val answer = queryAction(player)
-        if (answer.isBlank()) return true
-        if (answer == NO) return true
+    private fun ask(player: Participant, queryAction: QueryAction, printAction: PrintAction): Boolean {
+        val skip = question(player, queryAction)
+        if (skip) return true
 
         draw(player)
 
@@ -50,7 +52,17 @@ class Casino(participants: List<Participant>) {
 
         printAction(player)
 
-        return ask(player)
+        return ask(player, queryAction, printAction)
+    }
+
+    private fun question(player: Participant, queryAction: QueryAction): Boolean {
+        if (player is Dealer) return false
+
+        val answer = queryAction(player)
+        if (answer.isBlank()) return true
+        if (answer == NO) return true
+
+        return false
     }
 
     private fun draw(player: Participant) = player.receive(dealer.draw())
