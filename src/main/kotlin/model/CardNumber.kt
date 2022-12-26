@@ -1,6 +1,6 @@
 package model
 
-enum class CardNumber(private val number: Int) {
+enum class CardNumber(val number: Int) {
     ACE(1),
     TWO(2),
     THREE(3),
