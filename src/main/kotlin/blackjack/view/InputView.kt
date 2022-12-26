@@ -11,7 +11,7 @@ object InputView {
     }
 
     fun inputIsGetCard(player: Player): Boolean {
-        println("${player.name}(은)는 한장의 카드를 더 받겠습니까? (예는 $YES, 아니오는 $NO)")
+        println("${player.name.value}(은)는 한장의 카드를 더 받겠습니까? (예는 $YES, 아니오는 $NO)")
         val answer = validateAnswer(readln())
         return answer == YES
     }

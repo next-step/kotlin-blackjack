@@ -1,11 +1,23 @@
 package blackjack.domain
 
-data class Player(val name: String, var cards: Cards = Cards()) {
+interface Player {
+    val name: Name
+    val cards: Cards
+    val score: Int
+        get() = cards.getScore()
+
+    fun drawInitialCards(deck: Deck): Player {
+        return this.copy(cards = deck.drawInitCards())
+    }
     fun hit(card: Card) {
-        cards = cards.add(card)
+        cards.add(card)
     }
 
-    fun isBust() = cards.getScore() >= TWENTY_ONE
+    fun isHit() = cards.getScore() <= TWENTY_ONE
+
+    fun isBlackJack() = cards.isBlackJack()
+
+    fun copy(name: Name = this.name, cards: Cards): Player
 
     companion object {
         private const val TWENTY_ONE = 21

@@ -1,35 +1,35 @@
 package blackjack.domain
 
 class Cards(values: List<Card> = emptyList()) {
-    private var _values: List<Card> = values.deepCopy()
+    private var _values: MutableList<Card> = values.toMutableList()
     val values: List<Card>
-        get() = _values.deepCopy()
+        get() = _values.toList()
 
-    fun add(card: Card): Cards {
-        return Cards(values + card)
+    fun add(card: Card) {
+        _values.add(card)
     }
 
-    fun pick(): Card {
-        val mutableCards = _values.toMutableList()
-        val card = mutableCards.removeFirst()
-        _values = mutableCards.deepCopy()
-        return card
-    }
+    fun pick() = _values.removeFirst()
 
     fun getScore(): Int {
         val sum = values.sumOf { it.denomination.score }
-        val hasAceCard = values.any { it.denomination == Denomination.ACE }
 
-        return if (hasAceCard && (sum + ACE_BONUS_SCORE == WIN_SCORE)) WIN_SCORE
+        return if (hasAce() && (sum + ACE_BONUS_SCORE <= WIN_SCORE)) sum + ACE_BONUS_SCORE
         else sum
+    }
+
+    fun isBlackJack(): Boolean {
+        return getScore() == WIN_SCORE && hasAce()
+    }
+
+    private fun hasAce(): Boolean {
+        return values.any { it.denomination == Denomination.ACE }
     }
 
     override fun toString(): String {
         return values
             .joinToString(", ") { it.toString() }
     }
-
-    private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
 
     companion object {
         private const val ACE_BONUS_SCORE = 10
