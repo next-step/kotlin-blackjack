@@ -7,8 +7,9 @@ object OutputView {
     private val messageSource = KoreanMessageSource()
 
     val printInitCards: (List<Player>) -> Unit = { players ->
-        println()
         val playerNames = players.joinToString(SEPARATE_SYMBOL) { it.name }
+
+        println()
         println("${playerNames}에게 각각 2장의 카드를 나누었습니다.")
         players.forEach(printPlayerCards)
         println()
