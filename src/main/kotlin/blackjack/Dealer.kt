@@ -1,7 +1,8 @@
 package blackjack
 
+private val DEALER_MIN_POINT = Point(17)
+
 class Dealer(playingCards: PlayingCards = PlayingCards()) {
-    private val DEALER_MIN_POINT = Point(17)
     val player = Player("딜러", playingCards)
 
     fun hitUntil(deck: CardDeck): Int {
