@@ -6,7 +6,7 @@ class Dealer(playingCards: PlayingCards = PlayingCards()) {
 
     fun hitUntil(deck: CardDeck): Int {
         var count = 0
-        while (cardPoint() < DEALER_MIN_POINT && !bust()) {
+        while (cardPoint() < DEALER_MIN_POINT && !player.bust()) {
             player.addCard(deck.deal())
             count++
         }
