@@ -31,13 +31,14 @@ class Cards(
 
         return max(
             calculate(cards, index + INDEX_INCREMENT, accumulator + Denomination.ACE.score),
-            calculate(cards, index + INDEX_INCREMENT, accumulator + Denomination.ACE.specialScore!!)
+            calculate(cards, index + INDEX_INCREMENT, accumulator + ACE_SPECIAL_SCORE)
         )
     }
 
     companion object {
         private const val FAIL_SCORE = 0
         private const val INDEX_INCREMENT = 1
+        private const val ACE_SPECIAL_SCORE = 11
 
         fun of(vararg card: Card): Cards {
             return Cards(card.toList())
