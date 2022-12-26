@@ -39,17 +39,17 @@ class ResultView {
     }
 
     fun showReport(casino: Casino) {
-        val dealerReport = Report.report(casino.dealer, casino.players)
+        println()
         println("## 최종 승패")
+
+        val dealerReport = Report.calculateByDealer(casino.dealer, casino.players)
         println("딜러: ${dealerReport.victory}승 ${dealerReport.defeat}패")
 
         repeat(casino.players.size) action@{ index ->
             val player = casino.players[index]
-            val report = Report.report(player, casino.players)
-
-            val victoryText = if (report.victory == 0) "" else "승 "
-            val defeatText = if (report.defeat == 0) "" else "패"
-            println("${player.name}: $victoryText$defeatText")
+            val report = Report.calculate(player, casino.dealer, casino.players)
+            val result = if (report) "승" else "패"
+            println("${player.name}: $result")
         }
     }
 

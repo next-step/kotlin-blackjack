@@ -1,20 +1,33 @@
 package blackjack.domain
 
+import blackjack.domain.Participant.Companion.BLACK_JACK
+
 object Report {
 
-    fun report(player: Participant, others: List<Participant>): VictoryOrDefeat {
-        if (player.totalScore > Participant.BLACK_JACK) {
-            return VictoryOrDefeat(0, 1)
-        }
+    fun calculate(player: Participant, dealer: Dealer, others: List<Participant>): Boolean {
+        if (dealer.totalScore > BLACK_JACK) return true
+        if (dealer.totalScore == BLACK_JACK) return false
+        if (player.totalScore > BLACK_JACK) return false
+        if (player.totalScore == BLACK_JACK) return true
 
         var win = 0
         var lose = 0
         repeat(others.size) action@{ index ->
-            if (others[index].totalScore > player.totalScore) {
-                lose++
-                return@action
-            }
+            if (others[index].totalScore > player.totalScore) lose++
             if (others[index].totalScore < player.totalScore) win++
+        }
+
+        return lose != 0 && dealer.totalScore < player.totalScore
+    }
+
+    fun calculateByDealer(dealer: Dealer, players: List<Participant>): VictoryOrDefeat {
+        if (dealer.totalScore > BLACK_JACK) return VictoryOrDefeat(0, players.size)
+
+        var win = 0
+        var lose = 0
+        repeat(players.size) action@{ index ->
+            if (players[index].totalScore > dealer.totalScore) lose++
+            if (players[index].totalScore < dealer.totalScore) win++
         }
         return VictoryOrDefeat(win, lose)
     }
