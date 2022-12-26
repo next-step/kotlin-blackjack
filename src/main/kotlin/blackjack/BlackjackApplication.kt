@@ -5,9 +5,6 @@ import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-private const val INIT_CARD_COUNT = 2
-private const val CARD_PICK_STOP_SYMBOL = "n"
-
 class BlackjackApplication {
     fun play() {
         val players = InputView.readPlayers()
@@ -57,6 +54,11 @@ class BlackjackApplication {
             player.addCard(cardDeck.getCard())
             cardsPrinter(player)
         }
+    }
+
+    companion object {
+        private const val INIT_CARD_COUNT = 2
+        private const val CARD_PICK_STOP_SYMBOL = "n"
     }
 }
 
