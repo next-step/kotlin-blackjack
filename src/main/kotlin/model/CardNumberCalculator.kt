@@ -7,14 +7,17 @@ class CardNumberCalculator {
         return totalNumber(cards) < BLACK_JACK
     }
 
-    private fun totalNumber(cards: List<Card>): Int {
+    fun totalNumber(cards: List<Card>): Int {
         var total = 0
+        var isAce = false
         cards.forEach {
             if (it.cardNumber != CardNumber.ACE) {
                 total += it.cardNumber.number
+            } else {
+                isAce = true
             }
         }
-        total += decideAceCardNumber(total)
+        if (isAce) total += decideAceCardNumber(total)
         return total
     }
 
