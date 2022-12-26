@@ -47,11 +47,19 @@ class BlackjackGame {
         }
 
         usersUnderTwentyTwo.forEach {
-            if (inputView.getExtraCard(it.key) == YES) {
+            if (isNeedToExtraCard(it.key)) {
                 hit(it.key)
                 resultView.showSpecificUserCardState(it.key, it.value)
             }
         }
+    }
+
+    private fun isNeedToExtraCard(name: String): Boolean {
+        var inputValue = ""
+        while (inputValue != YES && inputValue != NO) {
+            inputValue = inputView.getExtraCard(name)
+        }
+        return inputValue == YES
     }
 
     private fun printPlayerCard() {
@@ -63,5 +71,6 @@ class BlackjackGame {
     companion object {
         private val DEAL_OUT = 0..1
         private const val YES = "y"
+        private const val NO = "n"
     }
 }
