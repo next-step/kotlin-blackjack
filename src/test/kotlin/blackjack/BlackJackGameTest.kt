@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class BlackJackGameTest : StringSpec({
-    "게임을 시작하면 딜러에게 카드를 한장 플레이어에게 카드를 두장씩 나눠준다." {
+    "게임을 시작하면 딜러에게 카드를 두장 (딜러는 한 장만 보여준다) 플레이어에게 카드를 두장씩 나눠준다." {
         //given
         val game = BlackJackGame(
             listOf(Player("harris")),
