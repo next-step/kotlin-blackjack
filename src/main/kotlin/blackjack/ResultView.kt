@@ -41,14 +41,9 @@ object ResultView {
 
     fun printGameResult(results: PlayerGameResults) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
         results.value
-            .forEach {
-                when (it) {
-                    is PlayerGameResult.Player -> println("${it.name}: ${it.gameResult.string()}")
-                    is PlayerGameResult.Dealer -> println("${it.name}: ${it.win}승 ${it.push}무 ${it.lose}패")
-                }
-            }
+            .forEach {println("${it.name}: ${it.profit}") }
     }
 
     fun printDealerHit() {
@@ -63,6 +58,7 @@ object ResultView {
         GameResult.WIN -> "승"
         GameResult.PUSH -> "무"
         GameResult.LOSE -> "패"
+        else -> "I don't know"
     }
 
     private fun CardShape.string() = when (this) {
