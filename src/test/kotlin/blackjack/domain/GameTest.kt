@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.InputView
 import blackjack.ResultView
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
+import blackjack.model.Bet
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
@@ -23,7 +24,7 @@ internal class GameTest {
     @Test
     fun `각 플에이어에게 2장의 카드 전달하지 않고 게임을 시작하면 에러가 발생한다`() {
         val firstGamePlayer = GamePlayer("고니")
-        val secondGamePlayer = FakePlayer("아귀", play = FakeGamePlay(readyToPlay = false))
+        val secondGamePlayer = FakePlayer("아귀", play = FakeGamePlay(readyToPlay = false), bet = Bet(1000))
 
         val players = Players(listOf(firstGamePlayer, secondGamePlayer))
         val dealer = GameDealer()

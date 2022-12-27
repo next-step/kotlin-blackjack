@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.Finished.Blackjack
+import blackjack.domain.Finished.Stay
+import blackjack.model.Bet
 import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
@@ -8,6 +11,7 @@ import java.util.UUID
 class FakePlayer(
     override val name: String = UUID.randomUUID().toString(),
     override val play: Play = FakeGamePlay(),
+    override val bet: Bet,
 ) : Player
 
 class FakeDealer(
@@ -33,6 +37,7 @@ class FakeGamePlay(
     private val _blackjack: Boolean = false,
     private val readyToPlay: Boolean = false,
     private val score: Int = 0,
+    private val profit: Double? = null,
 ) : Play {
     override val finished: Boolean
         get() = _finished
@@ -59,4 +64,9 @@ class FakeGamePlay(
     }
 
     override fun score(): Int = score
+    override fun profit(bet: Int): Double = profit ?: when {
+        blackjack -> Blackjack().profit(bet)
+        stay -> Stay().profit(bet)
+        else -> 0.0
+    }
 }
