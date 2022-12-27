@@ -24,7 +24,6 @@ class BlackjackController {
 
         val gameResult = game.finish(dealerResult, playersResult)
         outputView.printGameResult(gameResult)
-
     }
 }
 

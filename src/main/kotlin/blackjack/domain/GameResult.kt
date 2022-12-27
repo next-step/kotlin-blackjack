@@ -31,6 +31,5 @@ enum class GameResult(
                 else -> LOSE
             }
         }
-
     }
 }
