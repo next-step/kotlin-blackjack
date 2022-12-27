@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.getScore
+
 enum class GameResult(
     val label: String,
     val profit: (player: Player) -> Profit
@@ -9,7 +11,7 @@ enum class GameResult(
     DRAW("무", { Profit.of(0) });
 
     companion object {
-        fun getGamePlayerResult(dealer: Player, player: Player): GameResult {
+        fun getGamePlayerResult(dealer: Dealer, player: Player): GameResult {
             return when (getGameResultOfDealer(dealer, player)) {
                 WIN -> LOSE
                 LOSE -> WIN
@@ -17,7 +19,7 @@ enum class GameResult(
             }
         }
 
-        fun getGameResultOfDealer(dealer: Player, player: Player): GameResult {
+        fun getGameResultOfDealer(dealer: Dealer, player: Player): GameResult {
             val score = getScore(dealer) - getScore(player)
             return of(score)
         }
@@ -30,8 +32,5 @@ enum class GameResult(
             }
         }
 
-        private fun getScore(player: Player): Int {
-            return if (player.isBurst()) 0 else player.countingCard()
-        }
     }
 }
