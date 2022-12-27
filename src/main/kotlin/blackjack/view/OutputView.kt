@@ -17,13 +17,13 @@ object OutputView {
     }
 
     fun printOwnCards(person: Person) {
-        print("${person.name}카드: ${person.ownCards.getCardInfos().joinToString(", ")}")
+        print("${person.name}카드: ${person.ownCards.cards.joinToString(", ") { it.cardNumber.display + it.pattern.display }}")
     }
 
-    fun printResult(participant: Participant){
+    fun printResult(participant: Participant) {
         println()
         println()
-        participant.persons.forEach{
+        participant.persons.forEach {
             printOwnCards(it)
             println(" - 결과: ${it.ownCards.sumCardNumber()}")
         }

@@ -11,4 +11,10 @@ class CardTest : StringSpec({
         card.cardNumber.display shouldBe "A"
         card.pattern.name shouldBe "CLOVER"
     }
+
+    "카드의 동등성을 확인한다" {
+        val card1 = Card(CardNumber.ACE, Pattern.CLOVER)
+        val card2 = Card(CardNumber.ACE, Pattern.CLOVER)
+        card1 shouldBe card2
+    }
 })

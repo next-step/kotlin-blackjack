@@ -11,9 +11,9 @@ fun main() {
     participant.persons.forEach {
         do {
             val drawYn = Draw.checkDrawable(InputView.getDrawYn(it))
-            it.ownCards.addCard(drawYn)
+            it.addCard(drawYn)
             OutputView.printOwnCards(it)
-        } while (Draw.checkDrawable(it.ownCards) && drawYn)
+        } while (it.checkDrawable(drawYn))
     }
     OutputView.printResult(participant)
 }

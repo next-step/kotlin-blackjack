@@ -10,28 +10,30 @@ class OwnCardsTest : StringSpec({
     }
 
     "보유한 카드의 합을 반환한다" {
-        val ownCards = OwnCards(
-            listOf(
-                Card(CardNumber.ACE, Pattern.CLOVER),
-                Card(CardNumber.EIGHT, Pattern.CLOVER)
-            ).toMutableList()
-        )
+        val ownCards =
+            OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER), Card(CardNumber.EIGHT, Pattern.CLOVER)).toMutableSet())
         ownCards.sumCardNumber() shouldBe 19
     }
 
     "보유한 카드의 정보를 반환한다" {
-        val ownCards = OwnCards(listOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableList())
-        ownCards.getCardInfos() shouldBe listOf("A클로버")
+        val ownCards = OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableSet())
+        ownCards.cards.map { it.cardNumber.display + it.pattern.display } shouldBe listOf("A클로버")
+    }
+
+    "중복되어 카드가 발급되지 않는다" {
+        val ownCards =
+            OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER), Card(CardNumber.ACE, Pattern.CLOVER)).toMutableSet())
+        ownCards.cards.size shouldBe 1
     }
 
     "카드가 추가 됨을 확인한다" {
-        val ownCards = OwnCards(listOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableList())
+        val ownCards = OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableSet())
         ownCards.addCard(true)
         ownCards.cards.size shouldBe 2
     }
 
     "카드가 추가 되지 않음을 확인한다" {
-        val ownCards = OwnCards(listOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableList())
+        val ownCards = OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableSet())
         ownCards.addCard(false)
         ownCards.cards.size shouldBe 1
     }
