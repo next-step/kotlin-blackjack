@@ -14,20 +14,17 @@ class BlackjackController {
         val players = game.initialCard()
         outputView.printInitialCards(dealer, players)
 
-        val playersResult = game.scratchPlayers(
-            players,
+        val playersResult = game.playPlayers(
+            players = players,
             inputScratch = { inputView.inputScratch(it) },
             printPlayerCards = { outputView.printPlayerCards(it) }
         )
-        println()
-        val dealerResult =
-            game.scratchDealer(
-                dealer,
-                printDealerDrawOneMoreCard = { outputView.printDealerDrawOneMoreCard() }
-            )
 
-        outputView.printResultCards(dealerResult, playersResult)
-        outputView.printGameResult(dealerResult, playersResult)
+        val dealerResult = game.playDealer(dealer).also { outputView.printDealerDrawOneMoreCard(it) }
+
+        val gameResult = game.finish(dealerResult, playersResult)
+        outputView.printGameResult(gameResult)
+
     }
 }
 
