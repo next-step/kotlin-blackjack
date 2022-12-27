@@ -4,7 +4,7 @@ import blackjack.model.Bet
 
 class GamePlayer(
     override val name: String,
-    override val bet: Bet = Bet(1000),
+    override val bet: Bet,
     override val play: Play = GamePlay(),
 ) : Player {
     init {

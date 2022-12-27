@@ -11,7 +11,7 @@ import java.util.UUID
 class FakePlayer(
     override val name: String = UUID.randomUUID().toString(),
     override val play: Play = FakeGamePlay(),
-    override val bet: Bet,
+    override val bet: Bet = Bet(1000),
 ) : Player
 
 class FakeDealer(
