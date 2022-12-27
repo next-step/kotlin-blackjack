@@ -1,33 +1,28 @@
 package blackjack
 
-import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.GameDealer
 
-class Blackjack {
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            val players = InputView.inputPlayers()
-            val dealer = Dealer()
-            val game = Game(players, dealer)
-            ResultView.printInitialCards(game.players)
-            playBlackJack(game)
-            ResultView.printResult(game.players)
-        }
-
-        private fun playBlackJack(game: Game) {
-            game.players
-                .value
-                .forEach { player ->
-                    while (!player.blackjack() &&
-                        !player.burst() &&
-                        InputView.inputHitOrStop(player)
-                    ) {
-                        player.hit(game.dealer.deliverCard())
-                        ResultView.printPlayerCards(player)
-                    }
-                }
-            println()
-        }
-    }
+fun main() {
+    val game = createGame()
+    ResultView.printInitialCards(game.players, game.dealer)
+    playBlackjack(game)
+    printGameResults(game)
 }
+
+private fun createGame(): Game {
+    val players = InputView.inputPlayers()
+    val dealer = GameDealer()
+    return Game(players, dealer)
+}
+
+private fun playBlackjack(game: Game) {
+    game.playPlayers(hit = InputView::shouldHit, printResult = ResultView::printPlayerCards)
+    game.playDealer(ResultView::printDealerHit)
+}
+
+private fun printGameResults(game: Game) {
+    ResultView.printPlayerResult(game.players, game.dealer)
+    ResultView.printGameResult(game.results())
+}
+
