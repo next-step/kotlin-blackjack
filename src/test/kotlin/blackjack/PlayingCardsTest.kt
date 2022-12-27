@@ -1,9 +1,11 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.PlayingCards
+import blackjack.domain.Point
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.assertAll
 
 class PlayingCardsTest : StringSpec({
     "플레잉 카드가 2Clover 3Spade일 때 카드 점수를 계산하면 5이다." {
@@ -25,5 +27,11 @@ class PlayingCardsTest : StringSpec({
             PlayingCards(mutableSetOf(Card.CLOVER_A, Card.HEART_A, Card.CLOVER_9)).calculatePoint() shouldBe Point(21)
         }
     }
+    "Clover 10, Clover K, Clover 2를 들고있으면 bust이다." {
+        PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_2)).bust() shouldBe true
+    }
 
+    "Clover 10, Clover K, Clover A를 들고있으면 bust가 아니다." {
+        PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_A)).bust() shouldBe false
+    }
 })
