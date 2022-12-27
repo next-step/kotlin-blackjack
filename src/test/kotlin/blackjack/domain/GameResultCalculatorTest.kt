@@ -21,8 +21,8 @@ internal class GameResultCalculatorTest {
 
     @Test
     fun `딜러와 플레이어가 블랙잭을 완성하였을 시 무승부(push)`() {
-        val fakeDealer = FakeDealer(play = FakeGamePlay(state = Blackjack()))
-        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(state = Blackjack())) })
+        val fakeDealer = FakeDealer(play = FakeGamePlay(_blackjack = true))
+        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_blackjack = true)) })
         val result = resultCalculator.calculate(fakeDealer, fakePlayers)
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
         val playerResult = result.value.filterIsInstance<PlayerGameResult.Player>()
@@ -56,8 +56,8 @@ internal class GameResultCalculatorTest {
     }
 
     @Test
-    fun `딜러 Hit 상태, 플레이어가 블랙잭 완성하였을 시 플레이어 승`() {
-        val fakeDealer = FakeDealer(play = FakeGamePlay(_hit = true))
+    fun `딜러 Stay 상태, 플레이어가 블랙잭 완성하였을 시 플레이어 승`() {
+        val fakeDealer = FakeDealer(play = FakeGamePlay(_stay = true))
         val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_blackjack = true)) })
         val result = resultCalculator.calculate(fakeDealer, fakePlayers)
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
@@ -80,9 +80,9 @@ internal class GameResultCalculatorTest {
     }
 
     @Test
-    fun `딜러 Hit 상태, 플레이어 Bust 상태 시 딜러 승`() {
-        val fakeDealer = FakeDealer(play = FakeGamePlay(_hit = true))
-        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_bust = true)) })
+    fun `딜러 Stay 상태, 플레이어 Bust 상태 시 딜러 승`() {
+        val fakeDealer = FakeDealer(play = FakeGamePlay(_stay = true, score = 19))
+        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_bust = true, score = 24)) })
         val result = resultCalculator.calculate(fakeDealer, fakePlayers)
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
         val playerResult = result.value.filterIsInstance<PlayerGameResult.Player>()
@@ -93,8 +93,8 @@ internal class GameResultCalculatorTest {
 
     @Test
     fun `딜러 Bust 상태, 플레이어 Bust 시 딜러 승`() {
-        val fakeDealer = FakeDealer(play = FakeGamePlay(_bust = true))
-        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_bust = true)) })
+        val fakeDealer = FakeDealer(play = FakeGamePlay(_bust = true, score = 24))
+        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_bust = true, score = 24)) })
         val result = resultCalculator.calculate(fakeDealer, fakePlayers)
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
         val playerResult = result.value.filterIsInstance<PlayerGameResult.Player>()
@@ -104,9 +104,9 @@ internal class GameResultCalculatorTest {
     }
 
     @Test
-    fun `딜러 Bust 상태, 플레이어 Hit 시 플레이어 승`() {
+    fun `딜러 Bust 상태, 플레이어 Stay 시 플레이어 승`() {
         val fakeDealer = FakeDealer(play = FakeGamePlay(_bust = true))
-        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_hit = true)) })
+        val fakePlayers = Players(List(2) { FakePlayer(play = FakeGamePlay(_stay = true)) })
         val result = resultCalculator.calculate(fakeDealer, fakePlayers)
         val dealerResult = result.value.filterIsInstance<PlayerGameResult.Dealer>().first()
         val playerResult = result.value.filterIsInstance<PlayerGameResult.Player>()

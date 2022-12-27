@@ -14,7 +14,7 @@ class GameResultCalculator : ResultCalculator {
 
     private fun calculatePlayerResult(dealer: Dealer, players: Players): List<PlayerGameResult> {
         val playerResults = mutableListOf<PlayerGameResult>()
-        players.value.map { player ->
+        players.value.forEach { player ->
             val result = calculateGameResult(dealer, player)
             playerResults.add(PlayerGameResult.Player(player.name, result))
         }
@@ -33,14 +33,22 @@ class GameResultCalculator : ResultCalculator {
         val playerSum = player.play.score()
         val dealerSum = dealer.play.score()
         return when {
-            player.play.blackjack && dealer.play.blackjack -> GameResult.PUSH
-            dealer.play.blackjack -> GameResult.LOSE
-            player.play.blackjack || (dealer.play.bust && !player.play.bust) -> GameResult.WIN
-            player.play.bust -> GameResult.LOSE
-            playerSum == dealerSum -> GameResult.PUSH
-            playerSum > dealerSum -> GameResult.WIN
+            dealer.play.blackjack && player.play.blackjack -> GameResult.PUSH
+            player.play.blackjack -> GameResult.WIN
+            (dealer.play.bust && !player.play.bust) ||
+                isPlayerWinWithStay(dealer.play.stay, player.play.stay, playerSum > dealerSum) -> GameResult.WIN
+
+            isPlayerEvenWithStay(dealer.play.stay, player.play.stay, playerSum == dealerSum) -> GameResult.PUSH
             else -> GameResult.LOSE
         }
+    }
+
+    private fun isPlayerWinWithStay(dealerStay: Boolean, playerStay: Boolean, win: Boolean): Boolean {
+        return dealerStay && playerStay && win
+    }
+
+    private fun isPlayerEvenWithStay(dealerStay: Boolean, playerStay: Boolean, even: Boolean): Boolean {
+        return dealerStay && playerStay && even
     }
 }
 
