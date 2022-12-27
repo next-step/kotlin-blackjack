@@ -27,7 +27,7 @@ data class BlackJackGame(
         }
         printDealerHitOrStay(isDrawn)
     }
-    fun play(
+    fun playPlayers(
         inputIsGetCard: (Player) -> Boolean,
         printPlayerStatus: (Player) -> Unit
     ) {

@@ -17,7 +17,7 @@ class BlackjackController {
         game.drawInitCards()
         ResultView.printInitialStatus(game)
 
-        game.play(
+        game.playPlayers(
             inputIsGetCard = { InputView.inputIsGetCard(it) },
             printPlayerStatus = { ResultView.printPlayerStatus(it) }
         )
