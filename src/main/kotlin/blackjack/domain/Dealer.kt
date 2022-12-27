@@ -8,11 +8,11 @@ data class Dealer(
 ) : Player {
     constructor(cards: Cards) : this(DEALER_INFO, cards)
 
-    override fun initialCard(deck: Deck): Player {
+    override fun initialCard(deck: Deck): Dealer {
         return copy(cards = cards + deck.draw(INITIAL_CARD_COUNT))
     }
 
-    override fun hit(deck: Deck): Player {
+    override fun hit(deck: Deck): Dealer {
         check(canHit()) { "카드를 받을 수 없습니다." }
         return this.copy(cards = cards + deck.draw())
     }

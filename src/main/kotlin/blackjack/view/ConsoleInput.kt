@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.BettingAmount
 import blackjack.domain.GamePlayer
 import blackjack.domain.Name
+import blackjack.domain.Player
 import blackjack.domain.PlayerInfo
 import blackjack.domain.Players
 
@@ -41,15 +42,15 @@ object ConsoleInput {
         return bettingAmount
     }
 
-    tailrec fun inputScratch(name: String): Boolean {
-        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    tailrec fun inputScratch(player: Player): Boolean {
+        println("${player.getPlayerName()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         val isHit = readln().lowercase()
         return if (isHit in listOf("y", "n")) {
             "y" == isHit
         } else {
             println("y 또는 n으로 의사를 입력해주세요.")
-            inputScratch(name)
+            inputScratch(player)
         }
     }
 
