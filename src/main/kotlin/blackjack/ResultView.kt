@@ -53,14 +53,7 @@ object ResultView {
 
     private fun getPlayerInfo(name: String, cards: List<Card>) =
         "${name}카드: ${cards.joinToString { "${it.type.value}${it.shape.string()}" }}"
-
-    private fun GameResult.string() = when (this) {
-        GameResult.WIN -> "승"
-        GameResult.PUSH -> "무"
-        GameResult.LOSE -> "패"
-        else -> "I don't know"
-    }
-
+    
     private fun CardShape.string() = when (this) {
         SPADE -> "스페이드"
         HEART -> "하트"
