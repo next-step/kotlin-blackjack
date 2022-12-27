@@ -57,12 +57,6 @@ class DslTest {
         person.name shouldBe "김성빈"
         person.company shouldBe "LINE"
         person.skills shouldHaveSize 3
-
-        person.addSkill("java")
-        person.skills shouldHaveSize 4
-
-        (person.skills as MutableList).add("python")
-        person.skills shouldHaveSize 4
     }
 
     @Test
@@ -84,12 +78,6 @@ class DslTest {
         person.company shouldBe "LINE"
         person.skills shouldHaveSize 3
         person.languages shouldHaveSize 2
-
-        person.addLanguage("German" to 1)
-        person.languages shouldHaveSize 3
-
-        (person.languages as MutableList).add("Spanish" to 4)
-        person.languages shouldHaveSize 3
     }
 }
 
@@ -100,7 +88,7 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skills: List<String> = emptyList()
+    private var skills: List<Skill> = emptyList()
     private var languages: List<Pair<String, Int>> = emptyList()
 
     fun name(value: String) {
@@ -124,21 +112,24 @@ class PersonBuilder {
     }
 }
 
-class SkillBuilder(private val skills: MutableList<String> = mutableListOf()) {
+class SkillBuilder {
+    private val skills: MutableList<Skill> = mutableListOf()
+
     fun soft(softSkill: String) {
-        skills.add(softSkill)
+        skills.add(Soft(softSkill))
     }
 
     fun hard(hardSkill: String) {
-        skills.add(hardSkill)
+        skills.add(Hard(hardSkill))
     }
 
-    fun build(): List<String> {
+    fun build(): List<Skill> {
         return skills.toList()
     }
 }
 
-class LanguageBuilder(private val languages: MutableList<Pair<String, Int>> = mutableListOf()) {
+class LanguageBuilder {
+    private val languages: MutableList<Pair<String, Int>> = mutableListOf()
 
     infix fun String.level(level: Int) {
         languages.add(Pair(this, level))
@@ -149,19 +140,8 @@ class LanguageBuilder(private val languages: MutableList<Pair<String, Int>> = mu
     }
 }
 
-class Person(val name: String, val company: String?, skills: List<String>, languages: List<Pair<String, Int>>) {
-    private val _skills: MutableList<String> = skills.toMutableList()
-    private val _languages: MutableList<Pair<String, Int>> = languages.toMutableList()
-    val skills: List<String>
-        get() = _skills.toList()
-    val languages: List<Pair<String, Int>>
-        get() = _languages.toList()
+class Person(val name: String, val company: String?, val skills: List<Skill>, val languages: List<Pair<String, Int>>)
 
-    fun addSkill(skill: String) {
-        _skills.add(skill)
-    }
-
-    fun addLanguage(language: Pair<String, Int>) {
-        _languages.add(language)
-    }
-}
+sealed interface Skill
+data class Soft(val softSkill: String) : Skill
+data class Hard(val hardSkill: String) : Skill
