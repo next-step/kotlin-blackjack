@@ -53,10 +53,11 @@ object ResultView {
     }
 
     private fun printDealerResults(dealer: Dealer) {
-        val winCount = dealer.results.count { it == ResultStatus.WIN }
-        val loseCount = dealer.results.count { it == ResultStatus.LOSE }
-        val drawCount = dealer.results.count { it == ResultStatus.DRAW }
+        val dealerResults = dealer.results.groupingBy { it }.eachCount()
+        val results = ResultStatus.values()
+            .map { it to dealerResults[it] }
+            .joinToString(" ") { "${if (it.second == null) 0 else it.second} ${it.first.value}" }
 
-        println("${dealer.name.value}: $winCount 승 $loseCount 패 $drawCount 무")
+        println("${dealer.name.value}: $results")
     }
 }
