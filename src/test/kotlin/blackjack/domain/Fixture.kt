@@ -9,8 +9,8 @@ fun Dealer(vararg values: Card): Dealer {
     return dealer
 }
 
-fun User(vararg values: Card): User {
-    val user = User(name = Name("플레이어"), betAmount = BetAmount(0))
+fun User(vararg values: Card, betAmount: BetAmount = BetAmount(0)): User {
+    val user = User(name = Name("플레이어"), betAmount = betAmount)
     values.forEach {
         user.cards.add(it)
     }

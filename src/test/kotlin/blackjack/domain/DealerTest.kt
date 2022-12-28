@@ -270,4 +270,30 @@ internal class DealerTest : StringSpec({
 
         result shouldBe ResultStatus.DRAW
     }
+
+    /**
+     * 딜러의 수익 계산 테스트
+     */
+    "딜러가 블랙잭이라면 블랙잭이 아닌 모든 플레이어의 베팅금액을 수거한다." {
+        val blackJackUser = User(
+            Card(Suite.HEART, Denomination.KING), Card(Suite.HEART, Denomination.ACE),
+            betAmount = BetAmount(10000)
+        )
+        val loser1 = User(
+            Card(Suite.SPADE, Denomination.EIGHT), Card(Suite.DIAMOND, Denomination.TWO),
+            betAmount = BetAmount(10000)
+        )
+        val loser2 = User(
+            Card(Suite.CLOVER, Denomination.FIVE), Card(Suite.DIAMOND, Denomination.QUEEN),
+            betAmount = BetAmount(10000)
+        )
+        val dealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.QUEEN))
+        val users = Users(listOf(blackJackUser, loser1, loser2))
+
+        val userResults = users.calculateResult(dealer)
+        val changedDealer = dealer.calculateProfit(userResults)
+        val result = changedDealer.profit.value
+
+        result shouldBe users.values.filter { !it.isBlackJack() }.sumOf { it.betAmount.value }
+    }
 })
