@@ -20,14 +20,6 @@ class Dealer(
         return playerResult
     }
 
-    private fun getPlayerResult(player: Player): ResultStatus {
-        if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
-        if (this.isBust() && player.isHit()) return ResultStatus.WIN
-        if (!player.isHit()) return ResultStatus.LOSE
-
-        return player.score match this.score
-    }
-
     fun calculateResult(playerResult: ResultStatus) {
         val dealerResult = when (playerResult) {
             ResultStatus.WIN -> ResultStatus.LOSE
@@ -35,6 +27,14 @@ class Dealer(
             else -> ResultStatus.DRAW
         }
         results.add(dealerResult)
+    }
+
+    private fun getPlayerResult(player: Player): ResultStatus {
+        if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
+        if (this.isBust() && player.isHit()) return ResultStatus.WIN
+        if (!player.isHit()) return ResultStatus.LOSE
+
+        return player.match(this.score)
     }
 
     private fun getPlayerResultWhenDealerBlackJack(player: Player): ResultStatus {

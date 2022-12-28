@@ -5,12 +5,3 @@ enum class ResultStatus(val value: String) {
     LOSE("패"),
     DRAW("무");
 }
-
-infix fun Int.match(value: Int): ResultStatus {
-    if (this == value) return ResultStatus.DRAW
-
-    return when (this > value) {
-        true -> ResultStatus.WIN
-        false -> ResultStatus.LOSE
-    }
-}
