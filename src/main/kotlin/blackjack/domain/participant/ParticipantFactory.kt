@@ -14,7 +14,7 @@ object ParticipantFactory {
 
     fun create(names: Array<Name>, deck: Deck): Participants {
         val dealer = createDealer(deck)
-        val players = names.map { Player(it, initState(deck.getCardsByNumberOfCards(NUMBER_OF_INIT_CARDS))) }
+        val players = names.map { Player(it, initState(deck.getCards(NUMBER_OF_INIT_CARDS))) }
         return Participants(dealer, *players.toTypedArray())
     }
 
@@ -33,6 +33,6 @@ object ParticipantFactory {
     }
 
     private fun createDealer(deck: Deck): Dealer {
-        return Dealer(initState(deck.getCardsByNumberOfCards(NUMBER_OF_INIT_CARDS)))
+        return Dealer(initState(deck.getCards(NUMBER_OF_INIT_CARDS)))
     }
 }

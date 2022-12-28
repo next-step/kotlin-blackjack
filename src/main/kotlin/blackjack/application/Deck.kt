@@ -14,8 +14,8 @@ value class Deck(private val cards: MutableList<PlayingCard>) {
         return cards.removeAt(FIRST_INDEX)
     }
 
-    fun getCardsByNumberOfCards(numberOfCards: Int): PlayingCards {
-        return PlayingCards((1..numberOfCards).map { this.getCard() })
+    fun getCards(amount: Int): PlayingCards {
+        return PlayingCards((1..amount).map { this.getCard() })
     }
 
     companion object {
