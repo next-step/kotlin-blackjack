@@ -12,7 +12,7 @@ class BlackJackGame(
     fun start(): List<PlayerResultDto> = dealerInit() + playerInit()
 
     private fun dealerInit(): List<PlayerResultDto> {
-        dealer.addCard(deck.deal(2))
+        dealer.addCard(deck.deal(INITIAL_CARD_COUNT))
         return listOf(PlayerResultDto(dealer, dealer.firstCard()))
     }
 
