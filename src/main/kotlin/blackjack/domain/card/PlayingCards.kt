@@ -32,7 +32,8 @@ data class PlayingCards(private val list: List<PlayingCard>) {
         if (isBlackjack()) {
             return BLACKJACK_NUMBER
         }
-        return list.sumOf { it.score() }
+        val sum = list.sumOf { it.score() }
+        return sum + calculateSoft(sum)
     }
 
     fun size(): Int {
@@ -41,6 +42,10 @@ data class PlayingCards(private val list: List<PlayingCard>) {
 
     fun toListString(): List<String> {
         return list.map { it.toString() }
+    }
+
+    private fun calculateSoft(sum: Int): Int {
+        return if (list.any { it.isAce() } && sum + TEN <= BLACKJACK_NUMBER) TEN else 0
     }
 
     companion object {
