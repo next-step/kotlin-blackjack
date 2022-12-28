@@ -23,7 +23,7 @@ class PlayingCardsTest {
         var cards = PlayingCards(listOf())
 
         // when
-        cards = cards.add(SpadeAce)
+        cards = cards.plus(SpadeAce)
         val expected = PlayingCards(SpadeAce)
 
         // then
@@ -37,7 +37,7 @@ class PlayingCardsTest {
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            cards.add(SpadeAce)
+            cards.plus(SpadeAce)
         }
 
         // then
