@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import blackjack.domain.*
 import io.kotest.core.spec.style.StringSpec

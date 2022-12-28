@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import blackjack.domain.CardDeck
 import io.kotest.assertions.throwables.shouldThrow
