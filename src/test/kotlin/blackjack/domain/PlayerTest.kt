@@ -34,4 +34,38 @@ internal class PlayerTest : StringSpec({
         val result = player.isBlackJack()
         result shouldBe true
     }
+
+    "플레이어의 점수보다 비교할 점수가 더 크다면 LOSE 다." {
+        val player = Player(
+            Card(Suite.SPADE, Denomination.EIGHT),
+            Card(Suite.SPADE, Denomination.JACK),
+        )
+        val dealerScore = 20
+
+        val result = player.match(dealerScore)
+        result shouldBe ResultStatus.LOSE
+    }
+
+    "플레이어의 점수보다 딜러의 점수가 더 작다면 WIN 이다." {
+        val player = Player(
+            Card(Suite.SPADE, Denomination.EIGHT),
+            Card(Suite.SPADE, Denomination.JACK),
+        )
+        val dealerScore = 15
+
+        val result = player.match(dealerScore)
+        result shouldBe ResultStatus.WIN
+    }
+
+    // 둘 다 블랙잭인 상황은 다른 로직에서 판별한다.
+    "플레이어의 점수와 딜러의 점수가 같다면 DRAW 다." {
+        val player = Player(
+            Card(Suite.SPADE, Denomination.EIGHT),
+            Card(Suite.SPADE, Denomination.JACK),
+        )
+        val dealerScore = 18
+
+        val result = player.match(dealerScore)
+        result shouldBe ResultStatus.DRAW
+    }
 })
