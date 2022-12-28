@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Game.Companion.INITIAL_CARD_COUNT
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -13,7 +14,7 @@ class DeckTest {
     fun `덱에서 한장 혹은 최초 카드 수 만큼 나눌 수 있다`() {
         val deck = Deck()
         deck.count() shouldBe 52
-        deck.drawInitCards()
+        deck.draw(INITIAL_CARD_COUNT)
         deck.count() shouldBe 50
         deck.draw()
         deck.count() shouldBe 49

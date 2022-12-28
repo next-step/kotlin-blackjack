@@ -1,33 +1,49 @@
 package blackjack.view
 
+import blackjack.domain.BettingAmount
 import blackjack.domain.GamePlayer
+import blackjack.domain.Name
 import blackjack.domain.Player
+import blackjack.domain.PlayerInfo
 import blackjack.domain.Players
 
 object ConsoleInput {
     private const val DELIMITER_NAMES = ","
 
-    fun inputPlayers(): Players {
+    fun inputPlayersInfo(): Players {
+        val names = inputPlayerNames()
+        val gamePlayers = names.map { GamePlayer(PlayerInfo(it, inputBettingAmount(it.value))) }
+        return Players(gamePlayers)
+    }
+
+    private fun inputPlayerNames(): List<Name> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         return runCatching {
-            val names = readln()
-            require(names.isNotBlank()) { "잘못된 입력값입니다." }
+            val value = readln()
+            require(value.isNotBlank()) { "잘못된 입력값입니다." }
 
-            val players = getPlayers(names)
+            val names = getPlayerNames(value)
             println()
-            players
-        }
-            .fold(
-                onSuccess = { it }, onFailure = { e ->
-                    println(e.message)
-                    inputPlayers()
-                }
-            )
+            names
+        }.fold(
+            onSuccess = { it },
+            onFailure = { e ->
+                println(e.message)
+                inputPlayerNames()
+            }
+        )
+    }
+
+    private fun inputBettingAmount(name: String): BettingAmount {
+        println("${name}의 배팅 금액은?")
+        val bettingAmount = BettingAmount(readln().toInt())
+        println()
+        return bettingAmount
     }
 
     tailrec fun inputScratch(player: Player): Boolean {
-        println("${player.name.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${player.getPlayerName()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         val isHit = readln().lowercase()
         return if (isHit in listOf("y", "n")) {
@@ -38,6 +54,6 @@ object ConsoleInput {
         }
     }
 
-    private fun getPlayers(names: String): Players = Players(splitNames(names).map { GamePlayer(it) })
+    private fun getPlayerNames(names: String): List<Name> = splitNames(names).map { Name(it) }
     private fun splitNames(names: String): List<String> = names.split(DELIMITER_NAMES).map { it.trim() }
 }

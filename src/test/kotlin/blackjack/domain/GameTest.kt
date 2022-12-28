@@ -13,7 +13,7 @@ class GameTest {
     fun `게임은 참가자들과 딜러와 덱을 가진다`() {
         val game = Game(FakePlayers.players)
         game.players.list.size shouldBe 2
-        game.getDealer().name.value shouldBe "딜러"
+        game.getDealer().getPlayerName() shouldBe "딜러"
     }
 
     @Test

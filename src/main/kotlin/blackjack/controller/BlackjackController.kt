@@ -1,10 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
 import blackjack.domain.Game
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.domain.PlayersResult
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleOutput
 
@@ -13,43 +9,21 @@ class BlackjackController {
     private val outputView = ConsoleOutput
 
     fun playGame() {
-        val game = Game(inputView.inputPlayers())
+        val game = Game(inputView.inputPlayersInfo())
         val dealer = game.getDealer()
         val players = game.initialCard()
         outputView.printInitialCards(dealer, players)
 
-        val playersResult = scratchPlayers(players, game.deck)
-        val dealerResult = scratchDealer(dealer, game.deck)
+        val playersResult = game.playPlayers(
+            players = players,
+            inputScratch = { inputView.inputScratch(it) },
+            printPlayerCards = { outputView.printPlayerCards(it) }
+        )
 
-        val gameResult = PlayersResult(dealerResult, playersResult)
+        val dealerResult = game.playDealer(dealer).also { outputView.printDealerDrawOneMoreCard(it) }
 
-        outputView.printResultCards(gameResult)
+        val gameResult = game.finish(dealerResult, playersResult)
         outputView.printGameResult(gameResult)
-    }
-    
-    private fun scratchDealer(dealer: Player, deck: Deck): Player {
-        return if (dealer.canHit()) {
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
-            dealer.hit(deck)
-        } else {
-            println("딜러는 17이상이라 카드를 받지 않았습니다.\n")
-            dealer
-        }
-    }
-
-    private fun scratchPlayers(players: Players, deck: Deck): Players {
-        val result = mutableListOf<Player>()
-        players.list.map {
-            var player = it
-            while (player.canHit() && ConsoleInput.inputScratch(player)) {
-                player = player.hit(deck)
-                ConsoleOutput.printPlayerCards(player)
-            }
-            result.add(player)
-        }
-
-        println()
-        return Players(result)
     }
 }
 

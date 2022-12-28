@@ -9,7 +9,7 @@ class DealerTest {
 
     @Test
     fun `딜러라는 이름을 가진다`() {
-        Dealer().name.value shouldBe "딜러"
+        Dealer().getPlayerName() shouldBe "딜러"
     }
 
     @Test
