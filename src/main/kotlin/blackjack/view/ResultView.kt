@@ -4,31 +4,31 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.PlayerResult
-import blackjack.domain.Players
 import blackjack.domain.ResultStatus
+import blackjack.domain.Users
 
 object ResultView {
     fun printInitialStatus(game: BlackJackGame) {
-        printPlayersName(game.dealer, game.players)
-        printPlayersStatus(game.dealer, game.players)
+        printPlayersName(game.dealer, game.users)
+        printPlayersStatus(game.dealer, game.users)
     }
 
     fun printStatus(game: BlackJackGame) {
         println()
         println("${game.dealer.name.value} 카드: ${game.dealer.cards} - 결과: ${game.dealer.score}")
-        game.players.values.forEach {
+        game.users.values.forEach {
             println("${it.name.value} 카드: ${it.cards} - 결과: ${it.score}")
         }
     }
 
-    private fun printPlayersName(dealer: Dealer, players: Players) {
+    private fun printPlayersName(dealer: Dealer, players: Users) {
         val dealerName = dealer.name.value
         val names = players.values.joinToString(", ") { it.name.value }
 
         println("\n${"$dealerName ,$names"} 에게 2장의 카드를 나누었습니다.")
     }
 
-    private fun printPlayersStatus(dealer: Dealer, players: Players) {
+    private fun printPlayersStatus(dealer: Dealer, players: Users) {
         println("${dealer.name.value} 카드: ${dealer.cards.values[0]}")
         players.values.forEach { printPlayerStatus(it) }
     }

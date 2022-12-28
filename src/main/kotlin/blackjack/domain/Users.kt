@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Players(val values: List<Player> = emptyList()) {
-    fun drawInitCards(deck: Deck): Players {
-        return Players(values.map { it.drawInitialCards(deck) })
+class Users(val values: List<User> = emptyList()) {
+    fun drawInitCards(deck: Deck): Users {
+        return Users(values.map { it.drawInitialCards(deck) })
     }
 
     fun calculateResult(dealer: Dealer): List<PlayerResult> {

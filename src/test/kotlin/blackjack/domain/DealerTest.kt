@@ -12,13 +12,13 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.JACK),
             Card(Suite.SPADE, Denomination.SEVEN)
         )
-        val player = Player(
+        val user = User(
             Card(Suite.CLOVER, Denomination.SEVEN),
             Card(Suite.SPADE, Denomination.TWO),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.WIN
     }
@@ -29,13 +29,13 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.JACK),
             Card(Suite.SPADE, Denomination.SEVEN)
         )
-        val player = Player(
+        val user = User(
             Card(Suite.CLOVER, Denomination.SEVEN),
             Card(Suite.SPADE, Denomination.EIGHT),
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.LOSE
     }
@@ -46,12 +46,12 @@ internal class DealerTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.ACE)
         )
 
-        val player = Player(
+        val user = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.DRAW
     }
@@ -62,12 +62,12 @@ internal class DealerTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.EIGHT)
         )
 
-        val player = Player(
+        val user = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.NINE)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.WIN
     }
@@ -78,12 +78,12 @@ internal class DealerTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.NINE)
         )
 
-        val player = Player(
+        val user = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.SEVEN)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.LOSE
     }
@@ -96,19 +96,19 @@ internal class DealerTest : StringSpec({
         )
 
         // 21점
-        val player1 = Player(
+        val user1 = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
         // 19점
-        val player2 = Player(
+        val user2 = User(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.NINE)
         )
 
-        dealer.getMatchResult(player1)
-        dealer.getMatchResult(player2)
+        dealer.getMatchResult(user1)
+        dealer.getMatchResult(user2)
 
         dealer.results shouldBe listOf(ResultStatus.LOSE, ResultStatus.LOSE)
     }
@@ -119,18 +119,18 @@ internal class DealerTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.EIGHT)
         )
 
-        val player1 = Player(
+        val user1 = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
-        val player2 = Player(
+        val user2 = User(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.NINE)
         )
 
-        dealer.getMatchResult(player1)
-        dealer.getMatchResult(player2)
+        dealer.getMatchResult(user1)
+        dealer.getMatchResult(user2)
 
         dealer.results shouldBe listOf(ResultStatus.WIN, ResultStatus.LOSE)
     }
@@ -141,18 +141,18 @@ internal class DealerTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.EIGHT)
         )
 
-        val player1 = Player(
+        val user1 = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
-        val player2 = Player(
+        val user2 = User(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.SIX)
         )
 
-        dealer.getMatchResult(player1)
-        dealer.getMatchResult(player2)
+        dealer.getMatchResult(user1)
+        dealer.getMatchResult(user2)
 
         dealer.results shouldBe listOf(ResultStatus.WIN, ResultStatus.WIN)
     }
@@ -165,26 +165,26 @@ internal class DealerTest : StringSpec({
         )
 
         // 15점
-        val player1 = Player(
+        val user1 = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
         // 16점
-        val player2 = Player(
+        val user2 = User(
             Card(Suite.SPADE, Denomination.JACK),
             Card(Suite.HEART, Denomination.SIX)
         )
 
         // 21점
-        val player3 = Player(
+        val user3 = User(
             Card(Suite.SPADE, Denomination.KING),
             Card(Suite.HEART, Denomination.ACE)
         )
 
-        dealer.getMatchResult(player1)
-        dealer.getMatchResult(player2)
-        dealer.getMatchResult(player3)
+        dealer.getMatchResult(user1)
+        dealer.getMatchResult(user2)
+        dealer.getMatchResult(user3)
 
         dealer.results shouldBe listOf(ResultStatus.WIN, ResultStatus.WIN, ResultStatus.DRAW)
     }
@@ -244,13 +244,13 @@ internal class DealerTest : StringSpec({
             Card(Suite.SPADE, Denomination.KING)
         )
 
-        val player = Player(
+        val user = User(
             Card(Suite.SPADE, Denomination.EIGHT),
             Card(Suite.SPADE, Denomination.THREE),
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.LOSE
     }
@@ -261,12 +261,12 @@ internal class DealerTest : StringSpec({
             Card(Suite.SPADE, Denomination.KING)
         )
 
-        val player = Player(
+        val user = User(
             Card(Suite.SPADE, Denomination.ACE),
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(player)
+        val result = dealer.getMatchResult(user)
 
         result shouldBe ResultStatus.DRAW
     }

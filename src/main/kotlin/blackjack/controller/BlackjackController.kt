@@ -3,16 +3,17 @@ package blackjack.controller
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.Players
+import blackjack.domain.Name
 import blackjack.domain.User
+import blackjack.domain.Users
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackjackController {
     fun run() {
         val names = InputView.inputPlayersName()
-        val users = names.map { User(it) }
-        val game = BlackJackGame(deck = Deck(), dealer = Dealer(), players = Players(users))
+        val users = names.map { User(Name(it)) }
+        val game = BlackJackGame(deck = Deck(), dealer = Dealer(), users = Users(users))
 
         game.drawInitCards()
         ResultView.printInitialStatus(game)

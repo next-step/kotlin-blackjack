@@ -11,7 +11,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
-        val player = Player(
+        val player = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.NINE)
         )
@@ -27,7 +27,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
-        val player = Player(
+        val player = User(
             Card(Suite.SPADE, Denomination.QUEEN),
             Card(Suite.CLOVER, Denomination.FIVE)
         )
@@ -42,7 +42,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.DIAMOND, Denomination.SIX)
         )
 
-        val player = Player(
+        val player = User(
             Card(Suite.SPADE, Denomination.KING),
             Card(Suite.CLOVER, Denomination.SIX)
         )

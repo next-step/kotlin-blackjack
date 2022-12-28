@@ -2,18 +2,18 @@ package blackjack.domain
 
 data class BlackJackGame(
     val deck: Deck,
-    var dealer: Dealer = Dealer(),
-    var players: Players = Players(),
+    var dealer: Dealer,
+    var users: Users,
 ) {
     fun drawInitCards() {
         deck.drawInitCards().values.forEach {
             dealer.hit(it)
         }
-        players = players.drawInitCards(deck)
+        users = users.drawInitCards(deck)
     }
 
     fun getPlayerResults(): List<PlayerResult> {
-        return players.calculateResult(dealer)
+        return users.calculateResult(dealer)
     }
 
     fun playDealer(
@@ -31,7 +31,7 @@ data class BlackJackGame(
         inputIsGetCard: (Player) -> Boolean,
         printPlayerStatus: (Player) -> Unit
     ) {
-        players.values.forEach {
+        users.values.forEach {
             while (it.isHit() && inputIsGetCard(it)) {
                 it.hit(deck.draw())
                 printPlayerStatus(it)

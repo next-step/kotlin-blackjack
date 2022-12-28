@@ -9,14 +9,15 @@ internal class BlackJackGameTest : StringSpec({
 
     beforeEach {
         val names = listOf("플레이어2", "플레이어2")
-        val users = names.map { User(it) }
-        game = BlackJackGame(deck = Deck(), players = Players(users))
+        val users = names.map { User(Name(it)) }
+        val dealer = Dealer()
+        game = BlackJackGame(deck = Deck(), users = Users(users), dealer = dealer)
     }
 
     "2명의 참가자가 게임을 시작할 때 카드를 2장씩 지급한다." {
         game.drawInitCards()
 
-        game.players.values.forEach {
+        game.users.values.forEach {
             it.cards.values.size shouldBe 2
         }
     }
@@ -29,11 +30,11 @@ internal class BlackJackGameTest : StringSpec({
     }
 
     "플레이어 수만큼의 플레이어 결과를 반환한다." {
-        val players = listOf(
-            Player(), Player(), Player()
+        val users = listOf(
+            User(Name("1")), User(Name("2")), User(Name("3"))
         )
         val dealer = Dealer()
-        val newGame = BlackJackGame(deck = Deck(), dealer = dealer, players = Players(players))
+        val newGame = BlackJackGame(deck = Deck(), dealer = dealer, users = Users(users))
 
         val playerResults = newGame.getPlayerResults()
 

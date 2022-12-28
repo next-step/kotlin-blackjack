@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Dealer(
     override val name: Name = DEALER_NAME,
-    override var cards: Cards = Cards(),
+    override var cards: Cards = Cards()
 ) : Player {
     var results: MutableList<ResultStatus> = mutableListOf()
 
