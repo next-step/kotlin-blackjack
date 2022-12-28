@@ -5,7 +5,8 @@ import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Participant
 import blackjack.domain.participantion.Player
 import blackjack.domain.participantion.Players
-import blackjack.domain.result.Winner
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.Winners
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -13,7 +14,7 @@ class BlackJackGame {
     fun play(cardDeck: CardDeck) {
         val players = getPlayers(cardDeck)
         val dealer = Dealer(cardDeck)
-        val participants = listOf(dealer).plus(players)
+        val participants = listOf(dealer) + players
 
         printCurrentState(participants)
         hitCard(dealer, players, cardDeck)
@@ -23,13 +24,13 @@ class BlackJackGame {
     }
 
     private fun printWinner(dealer: Dealer, players: List<Player>) {
-        val winner = Winner(dealer, players)
+        val winners = Winners.from(dealer, players)
 
         ResultView.printMessage(ResultView.Message.WINNER)
-        ResultView.printRank(dealer.name, winner.gameResult())
+        ResultView.printRank(dealer.name, GameResult.from(dealer, players))
 
         players.forEach { player ->
-            ResultView.printWinner(player.name, winner.isWin(player))
+            ResultView.printWinner(player.name, winners.exist(player.name))
         }
     }
 

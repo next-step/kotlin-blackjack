@@ -22,11 +22,12 @@ class Cards(val cardStack: Stack<Card>) {
 
     fun point(): Int =
         cardStack.fold(0) { acc, card ->
-            val totalPoint = acc + card.number
+            val cardNumber = card.number
+            val totalPoint = acc + cardNumber.value
 
             if (card.isAce()) {
-                val maxValue = acc + card.otherNumber
-                val cardPoint = if (maxValue < BLACK_JACk_NUMBER) card.otherNumber else card.number
+                val maxValue = acc + cardNumber.orValue
+                val cardPoint = if (maxValue < BLACK_JACk_NUMBER) cardNumber.orValue else cardNumber.value
 
                 return@fold acc + cardPoint
             }
