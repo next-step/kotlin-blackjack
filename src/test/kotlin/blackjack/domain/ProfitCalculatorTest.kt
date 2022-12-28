@@ -24,7 +24,7 @@ internal class ProfitCalculatorTest : StringSpec({
         val result = ProfitCalculator().calculate(user, userResultStatus)
 
         userResultStatus shouldBe ResultStatus.WIN
-        result.value shouldBe user.betAmount.value * 2.5
+        result.value + user.betAmount.value shouldBe user.betAmount.value * 2.5
     }
 
     "플레이어가 승리하면 베팅금액의 2배를 받는다." {

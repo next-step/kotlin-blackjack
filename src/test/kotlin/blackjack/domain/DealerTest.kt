@@ -287,13 +287,30 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.FIVE), Card(Suite.DIAMOND, Denomination.QUEEN),
             betAmount = BetAmount(10000)
         )
-        val dealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.QUEEN))
+        val blackJackDealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.QUEEN))
         val users = Users(listOf(blackJackUser, loser1, loser2))
 
-        val userResults = users.calculateResult(dealer)
-        val changedDealer = dealer.calculateProfit(userResults)
+        val userResults = users.calculateResult(blackJackDealer)
+        val changedDealer = blackJackDealer.calculateProfit(userResults)
         val result = changedDealer.profit.value
 
         result shouldBe users.values.filter { !it.isBlackJack() }.sumOf { it.betAmount.value }
+    }
+
+    "플레이어가 블랙잭으로 우승했다면 플레이어 베팅금액의 2.5배를 플레이어에게 지급하고 딜러는 그만큼 수익에서 차감된다." {
+        val blackJackUser = User(
+            Card(Suite.HEART, Denomination.KING), Card(Suite.HEART, Denomination.ACE),
+            betAmount = BetAmount(10000)
+        )
+        val dealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.FIVE))
+
+        val userResultStatus = dealer.getMatchResult(blackJackUser)
+        val userProfit = ProfitCalculator().calculate(blackJackUser, userResultStatus)
+        val userResult = PlayerResult(blackJackUser, userResultStatus, userProfit)
+
+        val changedDealer = dealer.calculateProfit(listOf(userResult))
+        val result = changedDealer.profit.value
+
+        result shouldBe -userProfit.value
     }
 })

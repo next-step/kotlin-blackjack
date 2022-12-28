@@ -10,7 +10,9 @@ class ProfitCalculator {
     }
 
     private fun calculateProfitWhenUserWin(user: User): Profit {
-        if (user.isBlackJack()) return Profit((user.betAmount.value * RATE_OF_BLACK_JACK_PROFIT).toInt())
+        if (user.isBlackJack()){
+            return Profit((user.betAmount.value * RATE_OF_BLACK_JACK_PROFIT - user.betAmount.value).toInt())
+        }
 
         return Profit(user.betAmount.value)
     }
