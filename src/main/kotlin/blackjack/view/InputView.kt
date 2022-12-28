@@ -18,8 +18,7 @@ object InputView {
 
     fun askBettingAmount(name: String): Int {
         println("${name}의 베팅 금액은?")
-        val amount = readln().toIntOrNull()
-        requireNotNull(amount) { "베팅 금액은 숫자로 입력해야 합니다." }
+        val amount = readln().toIntOrNull() ?: throw IllegalArgumentException("베팅 금액은 숫자로 입력해야 합니다.")
         require(amount > 0) { "베팅 금액은 0보다 큰 숫자여야 합니다." }
         return amount
     }
