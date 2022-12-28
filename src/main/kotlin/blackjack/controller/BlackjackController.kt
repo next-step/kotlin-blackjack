@@ -12,7 +12,8 @@ import blackjack.view.ResultView
 class BlackjackController {
     fun run() {
         val names = InputView.inputPlayersName()
-        val users = names.map { User(Name(it)) }
+        val users = names.map { name -> User(name = Name(name), betAmount = InputView.inputBetAmount(name)) }
+
         val game = BlackJackGame(deck = Deck(), dealer = Dealer(), users = Users(users))
 
         game.drawInitCards()
