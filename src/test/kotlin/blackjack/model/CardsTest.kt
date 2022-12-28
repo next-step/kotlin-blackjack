@@ -17,7 +17,7 @@ class CardsTest {
         val cards = Cards.of(*cardArray)
 
         // then
-        assertThat(cards.getFinalScore()).isEqualTo(17)
+        assertThat(cards.getScore()).isEqualTo(17)
     }
 
     @Test
@@ -34,6 +34,6 @@ class CardsTest {
         val cards = Cards.of(*cardArray)
 
         // then
-        assertThat(cards.getFinalScore()).isEqualTo(14)
+        assertThat(cards.getScore()).isEqualTo(14)
     }
 }

@@ -10,14 +10,21 @@ class Player(
     }
 
     fun isPickable(): Boolean {
-        return cards.getPickableScore() < BLACKJACK_SCORE
+        val score = cards.getScore()
+        if (score == null) {
+            return UNABLE_TO_PICK
+        }
+
+        return score < STOP_SCORE
     }
 
     fun getFinalScore(): Int {
-        return cards.getFinalScore()
+        return cards.getScore() ?: FAIL_SCORE
     }
 
     companion object {
-        const val BLACKJACK_SCORE = 21
+        const val FAIL_SCORE = 0
+        const val STOP_SCORE = 21
+        private const val UNABLE_TO_PICK = false
     }
 }

@@ -1,9 +1,11 @@
 package blackjack.model
 
 import blackjack.model.Denomination.ACE
-import blackjack.model.Denomination.JACK
+import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.QUEEN
 import blackjack.model.Denomination.TEN
+import blackjack.model.Suit.CLOVER
+import blackjack.model.Suit.HEART
 import blackjack.model.Suit.SPADE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -54,9 +56,9 @@ class PlayerTest {
         val player = Player("jason")
 
         // when
-        player.addCard(Card(SPADE, ACE))
-        player.addCard(Card(SPADE, JACK))
-        player.addCard(Card(SPADE, QUEEN))
+        player.addCard(Card(SPADE, NINE))
+        player.addCard(Card(HEART, NINE))
+        player.addCard(Card(CLOVER, NINE))
 
         // then
         assertThat(player.isPickable()).isFalse
