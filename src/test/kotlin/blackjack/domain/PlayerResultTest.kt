@@ -16,7 +16,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.CLOVER, Denomination.NINE)
         )
 
-        val playerResult = PlayerResult.from(player, dealer)
+        val playerResult = PlayerResult.of(player, dealer)
         playerResult.result shouldBe ResultStatus.WIN
     }
 
@@ -32,7 +32,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
-        val playerResult = PlayerResult.from(player, dealer)
+        val playerResult = PlayerResult.of(player, dealer)
         playerResult.result shouldBe ResultStatus.LOSE
     }
 
@@ -47,7 +47,7 @@ internal class PlayerResultTest : StringSpec({
             Card(Suite.CLOVER, Denomination.SIX)
         )
 
-        val playerResult = PlayerResult.from(player, dealer)
+        val playerResult = PlayerResult.of(player, dealer)
         playerResult.result shouldBe ResultStatus.DRAW
     }
 })
