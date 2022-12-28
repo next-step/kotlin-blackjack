@@ -18,22 +18,10 @@ class PlayerTest : StringSpec({
         harris.cardPoint() shouldBe Point(10)
     }
 
-    "19점인 플레이어와 21점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과는 LOSE이다." {
-        //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
-        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)))
-
-        //when
-        val result = harris.flip(dealer)
-
-        //then
-        result.gameResultTitle shouldBe GameResultTitle.LOSE
-    }
-
     "bust인 플레이어와 bust인 딜러가 있을 때 플레이어는 항상 진다." {
         //given
         val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
-        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3)))
+        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3)), 10000)
 
         //when
         val result = harris.flip(dealer)
@@ -42,12 +30,13 @@ class PlayerTest : StringSpec({
         dealer.bust() shouldBe true
         harris.bust() shouldBe true
         result.gameResultTitle shouldBe GameResultTitle.LOSE
+        result.winningAmount shouldBe -10000
     }
 
     "19점인 플레이어와 bust인 딜러가 있을 때 플레이어는 승리한다." {
         //given
         val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
-        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2)))
+        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2)), 10000)
 
         //when
         val result = harris.flip(dealer)
@@ -55,16 +44,32 @@ class PlayerTest : StringSpec({
         //then
         dealer.bust() shouldBe true
         result.gameResultTitle shouldBe GameResultTitle.WIN
+        result.winningAmount shouldBe 10000
     }
+
+    "19점인 플레이어와 21점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과는 LOSE이다." {
+        //given
+        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
+        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)), 10000)
+
+        //when
+        val result = harris.flip(dealer)
+
+        //then
+        result.gameResultTitle shouldBe GameResultTitle.LOSE
+        result.winningAmount shouldBe -10000
+    }
+
     "19점인 플레이어와 19점인 딜러가 있을 때 결과는 무승부이다.." {
         //given
         val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_9, Card.CLOVER_10)))
-        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10)))
+        val harris = Player("harris", playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10)), 10000)
 
         //when
         val result = harris.flip(dealer)
 
         //then
         result.gameResultTitle shouldBe GameResultTitle.TIE
+        result.winningAmount shouldBe 0
     }
 })
