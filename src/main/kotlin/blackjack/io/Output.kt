@@ -1,6 +1,8 @@
 package blackjack.io
 
+import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Result
 
 class Output {
     fun printPlayersCard(players: List<Player>) {
@@ -10,7 +12,7 @@ class Output {
         }
     }
 
-    fun printDistribution() {
+    fun printEmptyLine() {
         println()
     }
 
@@ -18,13 +20,27 @@ class Output {
         println("${player.name} 카드 : ${player.hand.joinToString(",")}")
     }
 
-    fun printPlayersResult(players: List<Player>) {
+    fun printPlayersHandAndScore(players: List<Player>) {
         players.forEach {
-            printPlayerResult(it)
+            printPlayerHandAndScore(it)
         }
     }
 
-    fun printPlayerResult(player: Player) {
+    fun printPlayerHandAndScore(player: Player) {
         println("${player.name} 카드 : ${player.hand.joinToString(",")} - 결과 : ${player.score()}")
+    }
+
+    fun printDealerResult(dealer: Dealer, result: List<Result>) {
+        println("${dealer.name} : ${Result.WIN.value} ${result.count { it == Result.WIN }} ${Result.LOSE.value} ${result.count { it == Result.LOSE }}")
+    }
+
+    fun printPlayersResult(players: List<Player>, dealer: Dealer) {
+        players.forEach {
+            println("${it.name} : ${it.result(dealer).value}")
+        }
+    }
+
+    fun printDealerDraw() {
+        println("딜러는 ${Dealer.DEALERS_HIT_RULE}이하라 한장의 카드를 더 받았습니다.")
     }
 }

@@ -8,7 +8,7 @@ import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
     private val players: List<Player> by lazy {
-        makePlayers() + Dealer()
+        makePlayers()
     }
     private val dealer: Dealer = Dealer()
     private val deck: Deck = Deck()
@@ -18,31 +18,39 @@ class Game(private val input: Input, private val output: Output) {
     }
 
     fun start() {
-        output.printDistribution()
         repeat(INIT_HAND_COUNT) {
             dealer.addCard(deck.draw())
             players.forEach { it.addCard(deck.draw()) }
         }
-        output.printPlayerResult(dealer)
-        output.printPlayersCard(players)
+
+        output.printPlayersCard(listOf(dealer) + players)
     }
 
     fun draw() {
-        dealerDraw()
-        output.printPlayerCard(dealer)
+        output.printEmptyLine()
+
         players.forEach { player ->
             playerDraw(player)
-            output.printPlayerCard(player)
         }
+
+        dealerDraw()
     }
 
     fun result() {
-        output.printPlayerResult(dealer)
-        output.printPlayersResult(players)
+        output.printEmptyLine()
+
+        output.printPlayerHandAndScore(dealer)
+        output.printPlayersHandAndScore(players)
+
+        output.printEmptyLine()
+
+        output.printDealerResult(dealer, dealer.result(players))
+        output.printPlayersResult(players, dealer)
     }
 
     private fun dealerDraw() {
         while (dealer.canDraw()) {
+            output.printDealerDraw()
             dealer.addCard(deck.draw())
         }
     }
@@ -53,6 +61,7 @@ class Game(private val input: Input, private val output: Output) {
                 break
             }
             player.addCard(deck.draw())
+            output.printPlayerCard(player)
         }
     }
 

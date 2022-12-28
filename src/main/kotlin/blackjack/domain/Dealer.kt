@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Dealer : Player("딜러") {
     override fun canDraw(): Boolean {
-        return score() < DEALERS_HIT_RULE
+        return score() <= DEALERS_HIT_RULE
     }
 
     fun result(players: List<Player>): List<Result> {
@@ -17,6 +17,6 @@ class Dealer : Player("딜러") {
     }
 
     companion object {
-        private const val DEALERS_HIT_RULE = 17
+        const val DEALERS_HIT_RULE = 16
     }
 }
