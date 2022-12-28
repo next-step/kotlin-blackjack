@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -30,9 +31,11 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        dealer.bust() shouldBe true
-        harris.bust() shouldBe true
-        result shouldBe -10000
+        assertSoftly {
+            dealer.bust() shouldBe true
+            harris.bust() shouldBe true
+            result shouldBe -10000
+        }
     }
 
     "19점인 플레이어와 bust인 딜러가 있을 때 플레이어는 승리한다." {
@@ -48,8 +51,10 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        dealer.bust() shouldBe true
-        result shouldBe 10000
+        assertSoftly {
+            dealer.bust() shouldBe true
+            result shouldBe 10000
+        }
     }
 
     "BlackJack인 플레이어와 21점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 BlackJack으로(상금 1.5배) 승리한다." {

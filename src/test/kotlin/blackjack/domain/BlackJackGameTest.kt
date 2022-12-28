@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -19,9 +20,11 @@ class BlackJackGameTest : StringSpec({
         val playerDtos = game.start()
 
         //then
-        playerDtos.size shouldBe 2
-        playerDtos[0].cards.size shouldBe 1
-        playerDtos[1].cards.size shouldBe 2
+        assertSoftly {
+            playerDtos.size shouldBe 2
+            playerDtos[0].cards.size shouldBe 1
+            playerDtos[1].cards.size shouldBe 2
+        }
     }
 
     "플레이어 이름으로 addCard 함수를 호출하면 플레이어의 카드가 세장이 됨을 확인한다." {
@@ -89,9 +92,11 @@ class BlackJackGameTest : StringSpec({
         val harris = playerDtos[1]
 
         //then
-        playerDtos.size shouldBe 2
-        harris.winningAmount shouldBe 10000
-        dealer.winningAmount shouldBe -10000
+        assertSoftly {
+            playerDtos.size shouldBe 2
+            harris.winningAmount shouldBe 10000
+            dealer.winningAmount shouldBe -10000
+        }
     }
 
 })
