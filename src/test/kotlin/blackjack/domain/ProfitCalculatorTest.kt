@@ -10,9 +10,9 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.EIGHT), Card(Suite.SPADE, Denomination.FOUR))
 
         val userResultStatus = dealer.getMatchResult(user)
-        userResultStatus shouldBe ResultStatus.DRAW
-
         val result = ProfitCalculator().calculate(user, userResultStatus)
+
+        userResultStatus shouldBe ResultStatus.DRAW
         result shouldBe Profit(0)
     }
 
@@ -21,9 +21,9 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.TWO), Card(Suite.HEART, Denomination.NINE))
 
         val userResultStatus = dealer.getMatchResult(user)
-        userResultStatus shouldBe ResultStatus.WIN
-
         val result = ProfitCalculator().calculate(user, userResultStatus)
+
+        userResultStatus shouldBe ResultStatus.WIN
         result.value shouldBe user.betAmount.value * 2.5
     }
 
@@ -32,9 +32,22 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.TWO), Card(Suite.HEART, Denomination.NINE))
 
         val userResultStatus = dealer.getMatchResult(user)
-        userResultStatus shouldBe ResultStatus.WIN
-
         val result = ProfitCalculator().calculate(user, userResultStatus)
+
+        userResultStatus shouldBe ResultStatus.WIN
         result.value shouldBe user.betAmount.value * 2
+    }
+
+    "플레이어가 패배하면 베팅 금액을 잃는다." {
+        // 16
+        val user = User(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.FIVE))
+        // 19
+        val dealer = Dealer(Card(Suite.CLOVER, Denomination.JACK), Card(Suite.HEART, Denomination.NINE))
+
+        val userResultStatus = dealer.getMatchResult(user)
+        val result = ProfitCalculator().calculate(user, userResultStatus)
+
+        userResultStatus shouldBe ResultStatus.LOSE
+        result.value shouldBe -user.betAmount.value
     }
 })
