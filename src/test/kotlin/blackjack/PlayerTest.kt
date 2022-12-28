@@ -27,7 +27,7 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result shouldBe GameResult.LOSE
+        result.gameResultTitle shouldBe GameResultTitle.LOSE
     }
 
     "bust인 플레이어와 bust인 딜러가 있을 때 플레이어는 항상 진다." {
@@ -41,7 +41,7 @@ class PlayerTest : StringSpec({
         //then
         dealer.bust() shouldBe true
         harris.bust() shouldBe true
-        result shouldBe GameResult.LOSE
+        result.gameResultTitle shouldBe GameResultTitle.LOSE
     }
 
     "19점인 플레이어와 bust인 딜러가 있을 때 플레이어는 승리한다." {
@@ -54,7 +54,7 @@ class PlayerTest : StringSpec({
 
         //then
         dealer.bust() shouldBe true
-        result shouldBe GameResult.WIN
+        result.gameResultTitle shouldBe GameResultTitle.WIN
     }
     "19점인 플레이어와 19점인 딜러가 있을 때 결과는 무승부이다.." {
         //given
@@ -65,6 +65,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result shouldBe GameResult.TIE
+        result.gameResultTitle shouldBe GameResultTitle.TIE
     }
 })
