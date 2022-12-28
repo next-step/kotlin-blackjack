@@ -4,27 +4,31 @@ import blackjack.model.CardDeck
 import blackjack.model.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.impl.ConsoleInputView
+import blackjack.view.impl.StandardOutputView
 
-class BlackjackApplication {
+class BlackjackApplication(
+    private val cardDeck: CardDeck = CardDeck.defaultDeck(),
+    private val inputView: InputView = ConsoleInputView(),
+    private val outputView: OutputView = StandardOutputView()
+) {
     fun play() {
-        val playerNames = InputView.readPlayers()
-        val cardDeck = CardDeck.defaultDeck()
-
-        val players = initPlayers(playerNames, cardDeck)
-        OutputView.printInitCards(players)
+        val playerNames = inputView.readPlayers()
+        val players = initPlayers(playerNames)
+        outputView.printInitCards(players)
 
         playBlackjackGame(
             players, cardDeck,
-            InputView.readPlayerPickAnswer,
-            OutputView.printPlayerCards
+            inputView.readPlayerAnswer,
+            outputView.printPlayerCards
         )
 
-        OutputView.printResult(players)
+        outputView.printResult(players)
     }
 
-    fun initPlayers(names: String, deck: CardDeck): List<Player> {
+    private fun initPlayers(names: String): List<Player> {
         return splitPlayerNames(names).map { name ->
-            Player(name, deck.drawCards(INIT_CARD_COUNT))
+            Player(name, cardDeck.drawCards(INIT_CARD_COUNT))
         }
     }
 

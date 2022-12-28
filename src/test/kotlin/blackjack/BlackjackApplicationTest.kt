@@ -1,21 +1,93 @@
 package blackjack
 
+import blackjack.model.Card
 import blackjack.model.CardDeck
+import blackjack.model.Denomination.ACE
+import blackjack.model.Denomination.EIGHT
+import blackjack.model.Denomination.NINE
+import blackjack.model.Denomination.SEVEN
+import blackjack.model.Denomination.TEN
+import blackjack.model.Player
+import blackjack.model.Suit.CLOVER
+import blackjack.model.Suit.DIAMOND
+import blackjack.model.Suit.HEART
+import blackjack.model.Suit.SPADE
+import blackjack.view.InputView
+import blackjack.view.OutputView
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class BlackjackApplicationTest {
-
     @Test
-    internal fun `플레이어 이름은 쉼표로 구분한다`() {
+    internal fun `전부 y로 응답하는 play 테스트`() {
         // given
-        val input = "pobi,jason"
-        val cardDeck = CardDeck.defaultDeck()
-
-        // when
-        val players = BlackjackApplication().initPlayers(input, cardDeck)
+        val cardDeck = listOf(
+            Card(SPADE, ACE),
+            Card(HEART, TEN),
+            Card(CLOVER, TEN),
+        )
+        val inputView = object : InputView {
+            override val readPlayers: () -> String = { "pobi" }
+            override val readPlayerAnswer: (Player) -> String = { "y" }
+        }
 
         // then
-        assertThat(players.map { it.name }).containsExactly("pobi", "jason")
+        val assertionView = object : OutputView {
+            override val printInitCards: (List<Player>) -> Unit = { players ->
+                val playerNames = players.map { it.name }
+                assertThat(players.size).isEqualTo(1)
+                assertThat(playerNames).containsExactly("pobi")
+            }
+            override val printPlayerCards: (Player) -> Unit = { player ->
+                assertThat(player.cards.size).isEqualTo(3)
+                assertThat(cardDeck.containsAll(player.cards)).isTrue
+            }
+            override val printResult: (List<Player>) -> Unit = { players ->
+                val sumOfFinalScore = players.sumOf { it.getFinalScore() }
+                assertThat(sumOfFinalScore).isEqualTo(21)
+            }
+        }
+
+        // when
+        val clonedCardDeck = CardDeck.of(cardDeck)
+        val application = BlackjackApplication(clonedCardDeck, inputView, assertionView)
+        application.play()
+    }
+
+    @Test
+    internal fun `전부 n으로 응답하는 play 테스트`() {
+        // given
+        val cardDeck = listOf(
+            Card(SPADE, TEN),
+            Card(HEART, NINE),
+            Card(CLOVER, EIGHT),
+            Card(DIAMOND, SEVEN)
+        )
+        val inputView = object : InputView {
+            override val readPlayers: () -> String = { "pobi, jason" }
+            override val readPlayerAnswer: (Player) -> String = { "n" }
+        }
+
+        // then
+        val assertionView = object : OutputView {
+            override val printInitCards: (List<Player>) -> Unit = { players ->
+                val playerNames = players.map { it.name }
+                assertThat(players.size).isEqualTo(2)
+                assertThat(playerNames).containsExactly("pobi", "jason")
+            }
+            override val printPlayerCards: (Player) -> Unit = { player ->
+                assertThat(player.cards.size).isEqualTo(2)
+                assertThat(cardDeck.containsAll(player.cards)).isTrue
+            }
+            override val printResult: (List<Player>) -> Unit = { players ->
+                val sumOfFinalScore = players.sumOf { it.getFinalScore() }
+                assertThat(sumOfFinalScore).isEqualTo(34)
+            }
+        }
+
+        // when
+        val clonedCardDeck = CardDeck.of(cardDeck)
+        val application = BlackjackApplication(clonedCardDeck, inputView, assertionView)
+        application.play()
     }
 }
