@@ -313,4 +313,30 @@ internal class DealerTest : StringSpec({
 
         result shouldBe -userProfit.value
     }
+
+    "딜러가 2승 1패라면 승리한 플레이어들에게 베팅금액의 2배를 지급하고 패배한 플레이어의 베팅금액을 수거한다." {
+        val loser1 = User(
+            Card(Suite.HEART, Denomination.KING), Card(Suite.HEART, Denomination.FOUR),
+            betAmount = BetAmount(10000)
+        )
+        val loser2 = User(
+            Card(Suite.CLOVER, Denomination.KING), Card(Suite.HEART, Denomination.FIVE),
+            betAmount = BetAmount(20000)
+        )
+        val winner = User(
+            Card(Suite.HEART, Denomination.KING), Card(Suite.HEART, Denomination.NINE),
+            betAmount = BetAmount(30000)
+        )
+        val dealer = Dealer(Card(Suite.SPADE, Denomination.EIGHT), Card(Suite.CLOVER, Denomination.QUEEN))
+        val users = Users(listOf(loser1, loser2, winner))
+
+        val userResults = users.calculateResult(dealer)
+        val changedDealer = dealer.calculateProfit(userResults)
+        val result = changedDealer.profit.value
+
+        userResults.find { it.user == loser1}!!.profit.value shouldBe -loser1.betAmount.value
+        userResults.find { it.user == loser2}!!.profit.value shouldBe -loser2.betAmount.value
+        userResults.find { it.user == winner}!!.profit.value shouldBe winner.betAmount.value
+        result shouldBe -userResults.sumOf { it.profit.value }
+    }
 })
