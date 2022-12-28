@@ -5,7 +5,9 @@ import blackjack.domain.dto.BettingMoneyResult
 import blackjack.domain.dto.GameResult
 import blackjack.domain.dto.ParticipantMoneyResult
 import blackjack.domain.dto.ParticipantResult
-import blackjack.domain.enums.WinOrLose
+import blackjack.domain.money.BlackJackMoney
+import blackjack.domain.money.LoseMoney
+import blackjack.domain.money.WinMoney
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player
@@ -72,26 +74,27 @@ class BlackJackMachine(
     }
 
     private fun calculateBetting(participant: Participant): ParticipantMoneyResult {
-        if (dealer.isBlackJack() && participant.isBlackJack()) {
-            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+        if (dealer.isSameWithMaximumScore() && participant.isSameWithMaximumScore()) {
+            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
         }
 
-        if (participant.getCardSize() == BASIC_CARD_COUNT && participant.isBlackJack()) {
-            return ParticipantMoneyResult(participant.name, participant.getBlackJackMoney())
+        if (participant.countCards() == BASIC_CARD_COUNT && participant.isSameWithMaximumScore()) {
+            return ParticipantMoneyResult(participant.name, BlackJackMoney(participant.money).get())
         }
 
         if (dealer.isBurst()) {
-            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
         }
 
-        if (participant.getGameResult(dealer) == WinOrLose.WIN) {
-            return ParticipantMoneyResult(participant.name, participant.getWinMoney())
+        if (participant.getScore() in dealer.getScore()..MAXIMUM_SCORE) {
+            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
         }
 
-        return ParticipantMoneyResult(participant.name, participant.getLoseMoney())
+        return ParticipantMoneyResult(participant.name, LoseMoney(participant.money).get())
     }
 
     companion object {
         private const val BASIC_CARD_COUNT = 2
+        private const val MAXIMUM_SCORE = 21
     }
 }

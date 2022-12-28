@@ -28,7 +28,7 @@ internal class PlayerTest : BehaviorSpec({
         }
 
         When("카드의 개수를 계산할 수 ") {
-            val size = participant2.getCardSize()
+            val size = participant2.countCards()
             Then("있다.") {
                 size shouldBe 1
             }
@@ -46,8 +46,8 @@ internal class PlayerTest : BehaviorSpec({
 
         val participant4 = Participant("길상현", 10000L, Cards(mutableListOf(Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.QUEEN), Card(CardShape.CLOVER, CardNumber.ACE))))
         When("블랙잭인지 확인할 수 ") {
-            val notBlackJack = participant2.isBlackJack()
-            val blackJack = participant4.isBlackJack()
+            val notBlackJack = participant2.isSameWithMaximumScore()
+            val blackJack = participant4.isSameWithMaximumScore()
             Then("있다.") {
                 notBlackJack shouldBe false
                 blackJack shouldBe true

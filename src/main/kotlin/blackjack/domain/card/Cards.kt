@@ -15,7 +15,7 @@ data class Cards(
         return cards.removeFirst()
     }
 
-    fun getCardSize(): Int {
+    fun countCards(): Int {
         return cards.size
     }
 
@@ -29,15 +29,16 @@ data class Cards(
     }
 
     private fun calculateAceCard(score: Int): Int {
-        if (score <= ACE_THRESHOLD) {
-            return score + ACE_EXTRA_SCORE
+        val calculatedScore = score + ACE_EXTRA_SCORE
+        if (calculatedScore > MAXIMUM_SCORE) {
+            return score
         }
-        return score
+        return calculatedScore
     }
 
     companion object {
         private const val DELIMITER = ", "
-        private const val ACE_THRESHOLD = 11
+        private const val MAXIMUM_SCORE = 21
         private const val ACE_EXTRA_SCORE = 10
     }
 }

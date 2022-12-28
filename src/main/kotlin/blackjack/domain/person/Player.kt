@@ -16,15 +16,15 @@ sealed class Player(
         return cards.calculate()
     }
 
-    fun getCardSize(): Int {
-        return cards.getCardSize()
+    fun countCards(): Int {
+        return cards.countCards()
     }
 
     fun isBurst(): Boolean {
         return cards.calculate() > MAXIMUM_SCORE
     }
 
-    fun isBlackJack(): Boolean {
+    fun isSameWithMaximumScore(): Boolean {
         return cards.calculate() == MAXIMUM_SCORE
     }
 

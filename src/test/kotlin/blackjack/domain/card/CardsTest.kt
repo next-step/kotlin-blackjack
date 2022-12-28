@@ -70,7 +70,7 @@ internal class CardsTest : BehaviorSpec({
 
         When("카드의 개수들을 ") {
             Then("가져올 수 있다.") {
-                secondCards.getCardSize() shouldBe 3
+                secondCards.countCards() shouldBe 3
             }
         }
     }
