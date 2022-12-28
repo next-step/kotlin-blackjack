@@ -1,12 +1,12 @@
 package blackjack.domain
 
+import blackjack.SpadeAce
+import blackjack.SpadeEight
+import blackjack.SpadeJack
+import blackjack.SpadeNine
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.SpadeAce
-import blackjack.domain.card.SpadeEight
-import blackjack.domain.card.SpadeJack
-import blackjack.domain.card.SpadeNine
 import blackjack.domain.card.Suit
 import blackjack.domain.participant.ParticipantFactory
 import blackjack.domain.participant.Participants

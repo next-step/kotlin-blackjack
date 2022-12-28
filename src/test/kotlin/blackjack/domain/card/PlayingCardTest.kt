@@ -3,20 +3,6 @@ package blackjack.domain.card
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-val SpadeAce = SpadeCard(Denomination.ACE)
-val SpadeTwo = SpadeCard(Denomination.TWO)
-val SpadeThree = SpadeCard(Denomination.THREE)
-val SpadeFour = SpadeCard(Denomination.FOUR)
-val SpadeFive = SpadeCard(Denomination.FIVE)
-val SpadeSix = SpadeCard(Denomination.SIX)
-val SpadeSeven = SpadeCard(Denomination.SEVEN)
-val SpadeEight = SpadeCard(Denomination.EIGHT)
-val SpadeNine = SpadeCard(Denomination.NINE)
-val SpadeTen = SpadeCard(Denomination.TEN)
-val SpadeJack = SpadeCard(Denomination.JACK)
-val SpadeQueen = SpadeCard(Denomination.QUEEN)
-val SpadeKing = SpadeCard(Denomination.KING)
-
 class PlayingCardTest {
     @Test
     fun `카드 - 생성 테스트`() {

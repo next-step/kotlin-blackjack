@@ -1,9 +1,9 @@
 package blackjack.domain.participant
 
+import blackjack.SpadeAce
+import blackjack.SpadeJack
 import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.SpadeAce
-import blackjack.domain.card.SpadeJack
 import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.state.Name
 import org.assertj.core.api.Assertions.assertThat

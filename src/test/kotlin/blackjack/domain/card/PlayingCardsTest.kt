@@ -1,5 +1,10 @@
 package blackjack.domain.card
 
+import blackjack.SpadeAce
+import blackjack.SpadeJack
+import blackjack.SpadeKing
+import blackjack.SpadeQueen
+import blackjack.SpadeTen
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

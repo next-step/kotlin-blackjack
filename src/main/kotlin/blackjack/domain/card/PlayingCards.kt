@@ -2,9 +2,9 @@ package blackjack.domain.card
 
 import blackjack.domain.card.strategy.ShuffleStrategy
 
-fun PlayingCards(vararg cards: PlayingCard): PlayingCards = PlayingCards(cards.toList())
-
 data class PlayingCards(private val list: List<PlayingCard>) {
+    constructor(vararg cards: PlayingCard) : this(cards.toList())
+
     fun add(card: PlayingCard): PlayingCards {
         if (list.contains(card)) {
             throw IllegalArgumentException("중복된 카드는 추가할 수 없습니다.")

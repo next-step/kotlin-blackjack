@@ -1,12 +1,12 @@
 package blackjack.application
 
+import blackjack.SpadeAce
+import blackjack.SpadeFour
+import blackjack.SpadeThree
+import blackjack.SpadeTwo
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.SpadeAce
-import blackjack.domain.card.SpadeFour
-import blackjack.domain.card.SpadeThree
-import blackjack.domain.card.SpadeTwo
 import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
