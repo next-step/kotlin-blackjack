@@ -1,7 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.SpadeAce
-import blackjack.SpadeJack
 import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
@@ -10,21 +8,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class ParticipantFactoryTest {
-    @Test
-    fun `참가자 - 생성 테스트`() {
-        // given
-        val cards = PlayingCards(SpadeAce, SpadeJack)
-        val name = Name("pobi")
-
-        // when
-        val actual = ParticipantFactory.create(name, cards)
-
-        // then
-        assertThat(actual).isInstanceOf(Player::class.java)
-        assertThat(actual.name).isEqualTo(name)
-        assertThat(actual.state.cards).isEqualTo(cards)
-    }
-
     @Test
     fun `참가자 - 복수 생성 테스트`() {
         // given

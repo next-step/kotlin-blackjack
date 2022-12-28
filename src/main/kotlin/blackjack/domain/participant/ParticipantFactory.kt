@@ -6,8 +6,6 @@ import blackjack.domain.card.state.State
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.participant.state.Name
-import blackjack.domain.participant.state.role.DealerRole
-import blackjack.domain.participant.state.role.Role
 
 object ParticipantFactory {
     private const val NUMBER_OF_INIT_CARDS = 2
@@ -18,14 +16,7 @@ object ParticipantFactory {
         return Participants(dealer, *players.toTypedArray())
     }
 
-    fun create(name: Name, playingCards: PlayingCards): Role {
-        if (name == Name(DealerRole.DEALER_NAME)) {
-            return Dealer(initState(playingCards))
-        }
-        return Player(name, initState(playingCards))
-    }
-
-    private fun initState(cards: PlayingCards): State {
+    fun initState(cards: PlayingCards): State {
         if (cards.isBlackjack()) {
             return Blackjack(cards)
         }

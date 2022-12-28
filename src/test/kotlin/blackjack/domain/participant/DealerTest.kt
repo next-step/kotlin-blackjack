@@ -6,7 +6,6 @@ import blackjack.SpadeTen
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
-import blackjack.domain.participant.state.Name
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,7 +14,7 @@ class DealerTest {
     fun `딜러 - 생성 테스트, Blackjack`() {
         // given
         val cards = PlayingCards(SpadeAce, SpadeJack)
-        val dealer = ParticipantFactory.create(Name("딜러"), cards)
+        val dealer = Dealer(cards)
 
         // when, then
         assertThat(dealer.state is Blackjack).isTrue
@@ -25,7 +24,7 @@ class DealerTest {
     fun `딜러 - 생성 테스트, Hit`() {
         // given
         val cards = PlayingCards(SpadeTen, SpadeJack)
-        val dealer = ParticipantFactory.create(Name("딜러"), cards)
+        val dealer = Dealer(cards)
 
         // when, then
         assertThat(dealer.state is Hit).isTrue
