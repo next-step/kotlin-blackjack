@@ -334,9 +334,9 @@ internal class DealerTest : StringSpec({
         val changedDealer = dealer.calculateProfit(userResults)
         val result = changedDealer.profit.value
 
-        userResults.find { it.user == loser1}!!.profit.value shouldBe -loser1.betAmount.value
-        userResults.find { it.user == loser2}!!.profit.value shouldBe -loser2.betAmount.value
-        userResults.find { it.user == winner}!!.profit.value shouldBe winner.betAmount.value
+        userResults.find { it.user == loser1 }!!.profit.value shouldBe -loser1.betAmount.value
+        userResults.find { it.user == loser2 }!!.profit.value shouldBe -loser2.betAmount.value
+        userResults.find { it.user == winner }!!.profit.value shouldBe winner.betAmount.value
         result shouldBe -userResults.sumOf { it.profit.value }
     }
 })
