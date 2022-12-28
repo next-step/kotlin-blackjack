@@ -1,8 +1,6 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.CardDeck
-import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -10,12 +8,16 @@ import blackjack.view.OutputView
 fun main() {
 
     val names = InputView.askNames()
+    val players = names.map {
+        val amount = InputView.askBettingAmount(it)
+        Player(name = it, bettingAmount = amount)
+    }
 
-    val game = BlackJackGame(names.map { Player(it) }, Dealer(), CardDeck())
+    val game = BlackJackGame(players)
     val playerDtos = game.start()
 
     OutputView.printFirstDeal(names)
-    OutputView.printCardsByPlayer(playerDtos)
+    OutputView.printCardsInit(playerDtos)
 
 
     names.forEach {
@@ -31,9 +33,9 @@ private fun dealByPlayer(name: String, game: BlackJackGame) {
     do {
         var moreCard: Boolean = InputView.askMoreCard(name)
         if (moreCard) {
-            val playerDto = game.addCard(name)
-            OutputView.printCardsByPlayer(playerDto)
-            moreCard = !playerDto.bust()
+            val addCardResult = game.addCard(name)
+            OutputView.printCardsAdded(addCardResult)
+            moreCard = !addCardResult.bust
         }
     } while (moreCard)
 }
