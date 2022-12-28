@@ -15,4 +15,15 @@ internal class ProfitCalculatorTest: StringSpec({
         val result = ProfitCalculator().calculate(user, userResultStatus)
         result shouldBe Profit(0)
     }
+
+    "플레이어가 블랙잭일 때 딜러가 블랙잭이 아니라면 플레이어는 베팅금액의 2.5배를 받는다." {
+        val user = User(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.KING))
+        val dealer = Dealer(Card(Suite.CLOVER, Denomination.TWO), Card(Suite.HEART, Denomination.NINE))
+
+        val userResultStatus = dealer.getMatchResult(user)
+        userResultStatus shouldBe ResultStatus.WIN
+
+        val result = ProfitCalculator().calculate(user, userResultStatus)
+        result.value shouldBe user.betAmount.value * 2.5
+    }
 })
