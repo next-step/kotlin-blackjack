@@ -13,7 +13,14 @@ data class BlackJackGame(
     }
 
     fun getPlayerResults(): List<PlayerResult> {
-        return users.calculateResult(dealer)
+        val playerResults = users.calculateResult(dealer)
+        calculateDealerProfit(playerResults)
+
+        return playerResults
+    }
+
+    private fun calculateDealerProfit(playerResults: List<PlayerResult>) {
+        dealer = dealer.calculateProfit(playerResults)
     }
 
     fun playDealer(
