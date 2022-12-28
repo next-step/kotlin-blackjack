@@ -1,5 +1,10 @@
 package blackjack.view
 
+import blackjack.domain.Card
+import blackjack.view.dto.AddCardResult
+import blackjack.view.dto.PlayerGameResult
+import blackjack.view.dto.InitResult
+
 const val ZERO_COUNT = 0
 
 object OutputView {
@@ -7,13 +12,17 @@ object OutputView {
         println("딜러와 ${players.joinToString(", ")} 에게 2장의 카드를 나누었습니다.")
     }
 
-    fun printCardsByPlayer(playerDtos: List<PlayerResultDto>) {
-        playerDtos.forEach { printCardsByPlayer(it) }
+    fun printCardsInit(initResults: List<InitResult>) {
+        initResults.forEach { printCardsByPlayer(it.name, it.cards) }
     }
 
-    fun printCardsByPlayer(playerDto: PlayerResultDto) {
-        print("${playerDto.name}카드: ")
-        println(playerDto.cards.joinToString(", ") { it.korean })
+    fun printCardsAdded(addCardResult: AddCardResult) {
+        printCardsByPlayer(addCardResult.name, addCardResult.cards)
+    }
+
+    private fun printCardsByPlayer(name: String, cards: Set<Card>) {
+        print("${name}카드: ")
+        println(cards.joinToString(", ") { it.korean })
     }
 
     fun printHitDealerResult(count: Int) {
@@ -22,30 +31,22 @@ object OutputView {
         }
     }
 
-    fun printResult(playerDtos: List<PlayerResultDto>) {
+    fun printResult(playerDtos: List<PlayerGameResult>) {
         playerDtos.forEach { printResultByPlayer(it) }
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
         playerDtos.forEach { printWinnings(it) }
     }
 
-    private fun printResultByPlayer(playerDto: PlayerResultDto) {
+    private fun printResultByPlayer(playerDto: PlayerGameResult) {
         print("${playerDto.name}카드: ")
         print(playerDto.cards.joinToString(", ") { it.korean })
-        println(" - 결과: ${playerDto.totalPoint}")
+        println(" - 결과: ${playerDto.totalPoint.value}")
     }
 
-    private fun printWinnings(playerDto: PlayerResultDto) {
+    private fun printWinnings(playerDto: PlayerGameResult) {
         print("${playerDto.name}: ")
-        if (playerDto.winningCount != ZERO_COUNT) {
-            print("${playerDto.winningCount}승 ")
-        }
-        if (playerDto.tieCount != ZERO_COUNT) {
-            print("${playerDto.winningCount}무 ")
-        }
-        if (playerDto.losingCount != ZERO_COUNT) {
-            print("${playerDto.losingCount}패 ")
-        }
+        print(playerDto.winningAmount)
         println()
     }
 }
