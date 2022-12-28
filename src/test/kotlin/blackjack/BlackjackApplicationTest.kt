@@ -8,6 +8,7 @@ import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.SEVEN
 import blackjack.model.Denomination.TEN
 import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.model.Suit.CLOVER
 import blackjack.model.Suit.DIAMOND
 import blackjack.model.Suit.HEART
@@ -33,7 +34,7 @@ internal class BlackjackApplicationTest {
 
         // then
         val assertionView = object : OutputView {
-            override val printInitCards: (List<Player>) -> Unit = { players ->
+            override val printInitCards: (Players) -> Unit = { players ->
                 val playerNames = players.map { it.name }
                 assertThat(players.size).isEqualTo(1)
                 assertThat(playerNames).containsExactly("pobi")
@@ -42,7 +43,7 @@ internal class BlackjackApplicationTest {
                 assertThat(player.cards.size).isEqualTo(3)
                 assertThat(cardDeck.containsAll(player.cards)).isTrue
             }
-            override val printResult: (List<Player>) -> Unit = { players ->
+            override val printResult: (Players) -> Unit = { players ->
                 val sumOfFinalScore = players.sumOf { it.getFinalScore() }
                 assertThat(sumOfFinalScore).isEqualTo(21)
             }
@@ -70,7 +71,7 @@ internal class BlackjackApplicationTest {
 
         // then
         val assertionView = object : OutputView {
-            override val printInitCards: (List<Player>) -> Unit = { players ->
+            override val printInitCards: (Players) -> Unit = { players ->
                 val playerNames = players.map { it.name }
                 assertThat(players.size).isEqualTo(2)
                 assertThat(playerNames).containsExactly("pobi", "jason")
@@ -79,7 +80,7 @@ internal class BlackjackApplicationTest {
                 assertThat(player.cards.size).isEqualTo(2)
                 assertThat(cardDeck.containsAll(player.cards)).isTrue
             }
-            override val printResult: (List<Player>) -> Unit = { players ->
+            override val printResult: (Players) -> Unit = { players ->
                 val sumOfFinalScore = players.sumOf { it.getFinalScore() }
                 assertThat(sumOfFinalScore).isEqualTo(34)
             }

@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.model.CardDeck
 import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.impl.ConsoleInputView
@@ -26,18 +27,20 @@ class BlackjackApplication(
         outputView.printResult(players)
     }
 
-    private fun initPlayers(names: String): List<Player> {
-        return splitPlayerNames(names).map { name ->
-            Player(name, cardDeck.drawCards(INIT_CARD_COUNT))
-        }
+    private fun initPlayers(names: String): Players {
+        return Players(splitNames(names).map { initPlayer(it) })
     }
 
-    private fun splitPlayerNames(names: String): List<String> {
+    private fun initPlayer(name: String): Player {
+        return Player(name, cardDeck.drawCards(INIT_CARD_COUNT))
+    }
+
+    private fun splitNames(names: String): List<String> {
         return names.split(NAME_STRING_DELIMITER).map { it.trim() }
     }
 
     private fun playBlackjackGame(
-        players: List<Player>,
+        players: Players,
         cardDeck: CardDeck,
         answerReader: (Player) -> String,
         cardsPrinter: (Player) -> Unit

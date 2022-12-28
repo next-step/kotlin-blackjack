@@ -1,13 +1,14 @@
 package blackjack.view.impl
 
 import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.KoreanMessageSource
 import blackjack.view.OutputView
 
 class StandardOutputView(
     private val messageSource: KoreanMessageSource = KoreanMessageSource()
 ) : OutputView {
-    override val printInitCards: (List<Player>) -> Unit = { players ->
+    override val printInitCards: (Players) -> Unit = { players ->
         val playerNames = players.joinToString(SEPARATE_SYMBOL) { it.name }
 
         println()
@@ -20,7 +21,7 @@ class StandardOutputView(
         println(cardDetailsOf(player))
     }
 
-    override val printResult: (List<Player>) -> Unit = { players ->
+    override val printResult: (Players) -> Unit = { players ->
         println()
         players.forEach {
             println("${cardDetailsOf(it)} - 결과: ${it.getFinalScore()}")
