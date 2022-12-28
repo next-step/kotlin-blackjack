@@ -9,7 +9,9 @@ class Cards(values: List<Card> = emptyList()) {
         _values.add(card)
     }
 
-    fun pick() = _values.removeFirst()
+    fun pick(): Card {
+        return _values.removeFirst()
+    }
 
     fun getScore(): Int {
         val sum = values.sumOf { it.denomination.score }
