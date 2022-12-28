@@ -4,5 +4,5 @@ import blackjack.model.Player
 
 interface InputView {
     val readPlayers: () -> String
-    val readPlayerAnswer: (Player) -> String
+    val readPickAnswer: (Player) -> Boolean
 }

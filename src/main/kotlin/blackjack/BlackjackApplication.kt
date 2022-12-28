@@ -18,12 +18,7 @@ class BlackjackApplication(
         val players = initPlayers(playerNames)
         outputView.printInitCards(players)
 
-        playBlackjackGame(
-            players, cardDeck,
-            inputView.readPlayerAnswer,
-            outputView.printPlayerCards
-        )
-
+        playBlackjackGame(players)
         outputView.printResult(players)
     }
 
@@ -39,37 +34,25 @@ class BlackjackApplication(
         return names.split(NAME_STRING_DELIMITER).map { it.trim() }
     }
 
-    private fun playBlackjackGame(
-        players: Players,
-        cardDeck: CardDeck,
-        answerReader: (Player) -> String,
-        cardsPrinter: (Player) -> Unit
-    ) {
+    private fun playBlackjackGame(players: Players) {
         players.forEach { player ->
-            pickCardsUntilStopAnswered(player, cardDeck, answerReader, cardsPrinter)
+            pickCardsUntilStopAnswered(player)
         }
     }
 
-    private fun pickCardsUntilStopAnswered(
-        player: Player,
-        cardDeck: CardDeck,
-        answerReader: (Player) -> String,
-        cardsPrinter: (Player) -> Unit
-    ) {
+    private fun pickCardsUntilStopAnswered(player: Player) {
         while (player.isPickable()) {
-            val answer = answerReader(player)
-            if (answer == CARD_PICK_STOP_SYMBOL) {
+            if (!inputView.readPickAnswer(player)) {
                 break
             }
 
             player.addCard(cardDeck.drawCard())
-            cardsPrinter(player)
+            outputView.printPlayerCards(player)
         }
     }
 
     companion object {
         private const val INIT_CARD_COUNT = 2
-        private const val CARD_PICK_STOP_SYMBOL = "n"
         private const val NAME_STRING_DELIMITER = ","
     }
 }

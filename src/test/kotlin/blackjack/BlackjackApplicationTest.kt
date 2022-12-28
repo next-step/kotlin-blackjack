@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.model.Card
 import blackjack.model.CardDeck
-import blackjack.model.Denomination.ACE
 import blackjack.model.Denomination.EIGHT
 import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.SEVEN
@@ -23,13 +22,13 @@ internal class BlackjackApplicationTest {
     internal fun `전부 y로 응답하는 play 테스트`() {
         // given
         val cardDeck = listOf(
-            Card(SPADE, ACE),
+            Card(SPADE, TEN),
             Card(HEART, TEN),
             Card(CLOVER, TEN),
         )
         val inputView = object : InputView {
             override val readPlayers: () -> String = { "pobi" }
-            override val readPlayerAnswer: (Player) -> String = { "y" }
+            override val readPickAnswer: (Player) -> Boolean = { true }
         }
 
         // then
@@ -45,7 +44,7 @@ internal class BlackjackApplicationTest {
             }
             override val printResult: (Players) -> Unit = { players ->
                 val sumOfFinalScore = players.sumOf { it.getFinalScore() }
-                assertThat(sumOfFinalScore).isEqualTo(21)
+                assertThat(sumOfFinalScore).isEqualTo(0)
             }
         }
 
@@ -66,7 +65,7 @@ internal class BlackjackApplicationTest {
         )
         val inputView = object : InputView {
             override val readPlayers: () -> String = { "pobi, jason" }
-            override val readPlayerAnswer: (Player) -> String = { "n" }
+            override val readPickAnswer: (Player) -> Boolean = { false }
         }
 
         // then
