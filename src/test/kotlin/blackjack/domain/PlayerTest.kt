@@ -33,7 +33,6 @@ class PlayerTest : StringSpec({
         //then
         dealer.bust() shouldBe true
         harris.bust() shouldBe true
-        result.gameResultTitle shouldBe GameResultTitle.LOSE
         result.winningAmount shouldBe -10000
     }
 
@@ -47,7 +46,6 @@ class PlayerTest : StringSpec({
 
         //then
         dealer.bust() shouldBe true
-        result.gameResultTitle shouldBe GameResultTitle.WIN
         result.winningAmount shouldBe 10000
     }
 
@@ -60,7 +58,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.BLACK_JACK
         result.winningAmount shouldBe 15000
     }
 
@@ -73,7 +70,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.TIE
         result.winningAmount shouldBe 0
     }
 
@@ -90,7 +86,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.LOSE
         result.winningAmount shouldBe -10000
     }
 
@@ -103,7 +98,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.LOSE
         result.winningAmount shouldBe -10000
     }
 
@@ -116,7 +110,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.WIN
         result.winningAmount shouldBe 10000
     }
 
@@ -129,7 +122,6 @@ class PlayerTest : StringSpec({
         val result = harris.flip(dealer)
 
         //then
-        result.gameResultTitle shouldBe GameResultTitle.TIE
         result.winningAmount shouldBe 0
     }
 })

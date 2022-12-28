@@ -36,7 +36,3 @@ data class Player(
     fun firstCard(): Set<Card> = playingCards.firstCard()
 
 }
-
-enum class GameResultTitle {
-    WIN, LOSE, TIE, BLACK_JACK
-}
