@@ -1,9 +1,9 @@
 package blackjack.domain.participant
 
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
+import blackjack.SpadeAce
+import blackjack.SpadeJack
+import blackjack.SpadeTen
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.participant.state.Name
@@ -12,9 +12,9 @@ import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `딜러 - 생성 테스트, 블랙잭`() {
+    fun `딜러 - 생성 테스트, Blackjack`() {
         // given
-        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.ACE), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(SpadeAce, SpadeJack)
         val dealer = ParticipantFactory.create(Name("딜러"), cards)
 
         // when, then
@@ -22,9 +22,9 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러 - 생성 테스트, 히트`() {
+    fun `딜러 - 생성 테스트, Hit`() {
         // given
-        val cards = PlayingCards(PlayingCard(Suit.CLUBS, Denomination.TEN), PlayingCard(Suit.CLUBS, Denomination.JACK))
+        val cards = PlayingCards(SpadeTen, SpadeJack)
         val dealer = ParticipantFactory.create(Name("딜러"), cards)
 
         // when, then

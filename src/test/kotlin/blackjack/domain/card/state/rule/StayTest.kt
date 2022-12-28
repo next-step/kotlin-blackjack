@@ -1,43 +1,41 @@
 package blackjack.domain.card.state.rule
 
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
+import blackjack.SpadeAce
+import blackjack.SpadeFive
+import blackjack.SpadeFour
+import blackjack.SpadeJack
+import blackjack.SpadeSix
+import blackjack.SpadeTen
+import blackjack.SpadeThree
+import blackjack.SpadeTwo
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
+import org.junit.jupiter.api.Test
 
 class StayTest {
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,TEN,JACK:true", "ACE,TWO,THREE,FOUR,FIVE,SIX:true"], delimiter = ':')
-    fun `스테이 - 생성 테스트`(given: String, expected: Boolean) {
+    @Test
+    fun `Stay(Ace + Two + Three + Four + Five + Six = 21)`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val hit = Hit(PlayingCards(denominations.map { PlayingCard(Suit.CLUBS, it) }))
+        val cards = PlayingCards(SpadeAce, SpadeTwo, SpadeThree, SpadeFour, SpadeFive, SpadeSix)
+        val hit = Hit(cards)
 
         // when
-        val actual = hit.cards.isStay()
+        val actual = hit.stay()
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isInstanceOf(Stay::class.java)
+        assertThat(actual.cards.getScore()).isEqualTo(21)
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN", "TEN"])
-    fun `스테이 - 생성 예외처리 테스트`(given: String) {
-        // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCardList = denominations.map { PlayingCard(Suit.CLUBS, it) }
+    @Test
+    fun `Not Stay(Ten + Jack + Two = 22)`() {
+        // / given
+        val cards = PlayingCards(SpadeTen, SpadeJack, SpadeTwo)
 
-        // when
-        val exception = assertThrows<IllegalArgumentException> {
-            Stay(PlayingCards(playingCardList))
-        }
-
-        // then
-        assertThat(exception.message).isEqualTo("스테이가 아닙니다.")
+        // when, then
+        Assertions.assertThatThrownBy { Stay(cards) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("스테이가 아닙니다.")
     }
 }

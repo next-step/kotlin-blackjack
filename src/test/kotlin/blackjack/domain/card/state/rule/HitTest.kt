@@ -14,8 +14,8 @@ class HitTest {
     @Test
     fun `Bust(Ten + Jack + Two = 22)`() {
         // given
-        val playingCards = PlayingCards(ClubTen, ClubJack)
-        val hit = Hit(playingCards)
+        val cards = PlayingCards(ClubTen, ClubJack)
+        val hit = Hit(cards)
 
         // when
         val actual = hit.draw(ClubTwo)
@@ -28,8 +28,8 @@ class HitTest {
     @Test
     fun `Hit(Ace + Two + Three = 16`() {
         // given
-        val playingCards = PlayingCards(ClubAce, ClubTwo)
-        val hit = Hit(playingCards)
+        val cards = PlayingCards(ClubAce, ClubTwo)
+        val hit = Hit(cards)
 
         // when
         val actual = hit.draw(ClubThree)
@@ -42,8 +42,8 @@ class HitTest {
     @Test
     fun `Stay(Nine + Ten = 19)`() {
         // given
-        val playingCards = PlayingCards(ClubNine, ClubTen)
-        val hit = Hit(playingCards)
+        val cards = PlayingCards(ClubNine, ClubTen)
+        val hit = Hit(cards)
 
         // when
         val actual = hit.stay()
@@ -56,10 +56,10 @@ class HitTest {
     @Test
     fun `Soft(Ace + Ace = 12)`() {
         // given
-        val playingCards = PlayingCards(ClubAce, ClubAce)
+        val cards = PlayingCards(ClubAce, ClubAce)
 
         // when
-        val actual = Hit(playingCards)
+        val actual = Hit(cards)
 
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)
@@ -69,10 +69,10 @@ class HitTest {
     @Test
     fun `Soft(Ace + Ace + Ten = 12)`() {
         // given
-        val playingCards = PlayingCards(ClubAce, ClubAce, ClubTen)
+        val cards = PlayingCards(ClubAce, ClubAce, ClubTen)
 
         // when
-        val actual = Hit(playingCards)
+        val actual = Hit(cards)
 
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)

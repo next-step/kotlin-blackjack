@@ -1,43 +1,37 @@
 package blackjack.domain.card.state.rule
 
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
+import blackjack.ClubAce
+import blackjack.ClubJack
+import blackjack.ClubTen
+import blackjack.ClubTwo
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.junit.jupiter.api.Test
 
 class BustTest {
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,TEN:false", "ACE,TEN,JACK:false", "ACE,TWO,THREE,FOUR,FIVE,SIX,SEVEN:true"], delimiter = ':')
-    fun `버스트 - 생성 테스트`(given: String, expected: Boolean) {
+    @Test
+    fun `Bust(Ten + Jack + Two = 22)`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val hit = Hit(PlayingCards(denominations.map { PlayingCard(Suit.CLUBS, it) }))
+        val cards = PlayingCards(ClubTen, ClubJack)
+        val hit = Hit(cards)
 
         // when
-        val actual = hit.cards.isBust()
+        val actual = hit.draw(ClubTwo)
 
         // then
-        Assertions.assertThat(actual).isEqualTo(expected)
+        assertThat(actual).isInstanceOf(Bust::class.java)
+        assertThat(actual.cards.getScore()).isEqualTo(22)
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["ACE,TWO,THREE,FOUR,FIVE,SIX", "TEN", "TEN,JACK", "ACE,TEN", "ACE,TEN,JACK"])
-    fun `버스트 - 생성 예외처리 테스트`(given: String) {
+    @Test
+    fun `Not Bust(Ten + Jack + ACE = 21)`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCardList = denominations.map { PlayingCard(Suit.CLUBS, it) }
+        val cards = PlayingCards(ClubTen, ClubJack, ClubAce)
 
-        // when
-        val exception = assertThrows<IllegalArgumentException> {
-            Bust(PlayingCards(playingCardList))
-        }
-
-        // then
-        Assertions.assertThat(exception.message).isEqualTo("버스트가 아닙니다.")
+        // when, then
+        assertThatThrownBy { Bust(cards) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("버스트가 아닙니다.")
     }
 }

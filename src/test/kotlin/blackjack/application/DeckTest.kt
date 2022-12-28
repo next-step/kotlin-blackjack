@@ -4,10 +4,7 @@ import blackjack.SpadeAce
 import blackjack.SpadeFour
 import blackjack.SpadeThree
 import blackjack.SpadeTwo
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,13 +13,10 @@ class DeckTest {
     @Test
     fun `카드 덱 - 카드 분배 테스트`() {
         // given
-        val deck = Deck(PlayingCard(Suit.CLUBS, Denomination.ACE))
+        val deck = Deck(SpadeAce)
 
-        // when
-        val expected = PlayingCard(Suit.CLUBS, Denomination.ACE)
-
-        // then
-        assertThat(deck.getCard()).isEqualTo(expected)
+        // when, then
+        assertThat(deck.getCard()).isEqualTo(SpadeAce)
     }
 
     @Test
