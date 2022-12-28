@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.PlayerResult
-import blackjack.domain.ResultStatus
 import blackjack.domain.Users
 
 object ResultView {
@@ -45,19 +44,17 @@ object ResultView {
     }
 
     fun printResults(playerResults: List<PlayerResult>, dealer: Dealer) {
-        println("\n## 최종 승패")
-        printDealerResults(dealer)
-        playerResults.forEach {
-            println("${it.player.name.value}: ${it.result.value}")
-        }
+        println("\n## 최종 수익")
+        printDealerProfit(dealer)
+        printUsersProfit(playerResults)
+    }
+    private fun printDealerProfit(dealer: Dealer) {
+        println("${dealer.name.value}: ${dealer.profit.value}")
     }
 
-    private fun printDealerResults(dealer: Dealer) {
-        val dealerResults = dealer.results.groupingBy { it }.eachCount()
-        val results = ResultStatus.values()
-            .map { it to dealerResults[it] }
-            .joinToString(" ") { "${if (it.second == null) 0 else it.second} ${it.first.value}" }
-
-        println("${dealer.name.value}: $results")
+    private fun printUsersProfit(playerResults: List<PlayerResult>) {
+        playerResults.forEach {
+            println("${it.user.name.value}: ${it.profit.value}")
+        }
     }
 }
