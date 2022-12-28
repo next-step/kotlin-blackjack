@@ -25,6 +25,22 @@ class BlackJackGameTest : StringSpec({
         playerDtos[1].cards.size shouldBe 2
     }
 
+    "플레이어 이름으로 addCard 함수를 호출하면 플레이어의 카드가 세장이 됨을 확인한다." {
+        //given
+        val game = BlackJackGame(
+            listOf(Player("harris")),
+            Dealer(),
+            CardDeck(),
+        )
+
+        //when
+        game.start()
+        val addCardResult = game.addCard("harris")
+
+        //then
+        addCardResult.cards.size shouldBe 3
+    }
+
     "유효하지 않은 플레이어 이름으로 addCard 함수를 호출하면 IllegalArgumentException이 발생한다." {
         //given
         val game = BlackJackGame(
