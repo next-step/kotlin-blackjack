@@ -34,6 +34,8 @@ class Cards(
 
     companion object {
         val ALL: Cards = Cards(Card.ALL_CARD_LIST)
+
+        fun of(vararg cards: Card): Cards = Cards(cards.toList())
     }
 }
 

@@ -1,19 +1,20 @@
-package blackjack.domain.card
+package blackjack.domain.card.vendor
 
-import blackjack.domain.player.Player
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.player.CardHolder
 
-class CardVendor {
+class DefaultCardVendor : CardVendor {
     private val cards: Cards = Cards.ALL
 
     private var iterator: Iterator<Card> = cards.shuffled().iterator()
 
-    fun drawPlayerFirstTwoCards(): Cards = Cards(
-        (1..Player.INIT_CARD_COUNT)
+    override fun drawPlayerFirstTwoCards(): Cards = Cards(
+        (1..CardHolder.INIT_CARD_COUNT)
             .map { drawCard() }
     )
 
-
-    fun drawCard(): Card {
+    override fun drawCard(): Card {
         if (!iterator.hasNext()) {
             init()
         }
@@ -24,5 +25,4 @@ class CardVendor {
     private fun init() {
         iterator = cards.iterator()
     }
-
 }
