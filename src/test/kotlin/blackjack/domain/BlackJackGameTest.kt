@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -73,7 +72,13 @@ class BlackJackGameTest : StringSpec({
     "harris가 베팅금액 10000으로 딜러에게 이겼을 때 수익은 10000이다." {
         //given
         val game = BlackJackGame(
-            listOf(Player("harris", playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)), 10000)),
+            listOf(
+                Player(
+                    "harris",
+                    playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)),
+                    BettingAmount(10000)
+                )
+            ),
             Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_7))),
             CardDeck(),
         )

@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Player
+import blackjack.domain.BettingAmount
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -10,7 +11,7 @@ fun main() {
     val names = InputView.askNames()
     val players = names.map {
         val amount = InputView.askBettingAmount(it)
-        Player(name = it, bettingAmount = amount)
+        Player(name = it, bettingAmount = BettingAmount(amount))
     }
 
     val game = BlackJackGame(players)
