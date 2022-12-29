@@ -50,11 +50,11 @@ object Controller {
     private fun doHitOrStay(role: Role, deck: Deck): Role {
         var newPlayer = role
         while (InputFilter.inputHitOrStay(ParticipantDto.from(role).name)) {
-            newPlayer = role.draw(deck.getCard())
+            newPlayer = newPlayer.draw(deck.getCard())
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
         if (!newPlayer.isBust() && !newPlayer.isBlackjack()) {
-            newPlayer = role.stay()
+            newPlayer = newPlayer.stay()
         }
         if (newPlayer.getCardsSize() == NUMBER_OF_INIT_CARDS) {
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
