@@ -12,7 +12,7 @@ import blackjack.view.ResultView
 object GameManager {
     private const val MINIMUM_NUMBER_OF_CARDS = 2
 
-    fun checkBlackjack(participants: Participants): Boolean {
+    fun isBlackjack(participants: Participants): Boolean {
         var result = false
         participants.getAll().forEach {
             result = result or it.isBlackjack()
@@ -21,6 +21,9 @@ object GameManager {
     }
 
     fun play(participants: Participants, deck: Deck): Participants {
+        if (isBlackjack(participants)) {
+            return participants
+        }
         val newPlayers = participants.getPlayers().map {
             doHitOrStay(it, deck)
         }

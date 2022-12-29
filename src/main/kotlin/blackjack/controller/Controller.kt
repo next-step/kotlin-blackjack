@@ -23,10 +23,6 @@ object Controller {
         val participants = players.plus(dealer)
 
         init(participants)
-        if (GameManager.checkBlackjack(participants)) {
-            end(participants)
-            return
-        }
         val newPlayers = GameManager.play(participants, deck)
         end(newPlayers)
     }

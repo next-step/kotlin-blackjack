@@ -22,7 +22,7 @@ class GameManagerTest {
         val participants = Participants(player1, player2)
 
         // when, then
-        assertThat(GameManager.checkBlackjack(participants)).isTrue
+        assertThat(GameManager.isBlackjack(participants)).isTrue
     }
 
     @Test
