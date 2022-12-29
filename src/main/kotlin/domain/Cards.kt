@@ -11,9 +11,7 @@ class Cards(
         get() = this.cards.size
 
     fun add(card: Card) {
-        val mutableList = this.cards.toMutableList()
-        mutableList.add(card)
-        this.cards = mutableList.toList()
+        this.cards += card
     }
 
     fun score(): Int = scoreOptimizationAlgorithm.optimizeScore(this.cards, TARGET_HIGH_SCORE)
