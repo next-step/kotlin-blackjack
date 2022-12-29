@@ -4,8 +4,9 @@ import blackjack.application.Deck
 import blackjack.domain.GameManager
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.participant.ParticipantFactory
+import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Participants.Companion.NUMBER_OF_INIT_CARDS
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ParticipantsDto
 import blackjack.dto.ResultDto
@@ -17,7 +18,9 @@ object Controller {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
-        val participants = ParticipantFactory.create(names, deck)
+        val dealer = Dealer(deck.getCards(NUMBER_OF_INIT_CARDS))
+        val players = Participants.createPlayers(names, deck)
+        val participants = players.plus(dealer)
 
         init(participants)
         if (GameManager.checkBlackjack(participants)) {

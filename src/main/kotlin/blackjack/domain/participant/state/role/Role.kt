@@ -1,7 +1,10 @@
 package blackjack.domain.participant.state.role
 
 import blackjack.domain.card.PlayingCard
+import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
+import blackjack.domain.card.state.rule.Blackjack
+import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.state.Name
@@ -54,6 +57,15 @@ sealed class Role {
             playerScore > score -> Result.Win
             playerScore == score -> Result.Draw
             else -> Result.Lose
+        }
+    }
+
+    companion object {
+        fun initState(cards: PlayingCards): State {
+            if (cards.isBlackjack()) {
+                return Blackjack(cards)
+            }
+            return Hit(cards)
         }
     }
 }

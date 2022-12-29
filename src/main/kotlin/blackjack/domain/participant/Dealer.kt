@@ -2,7 +2,6 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
-import blackjack.domain.participant.ParticipantFactory.initState
 import blackjack.domain.participant.state.role.DealerRole
 
 data class Dealer(override val state: State) : DealerRole() {
