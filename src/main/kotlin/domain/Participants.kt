@@ -4,7 +4,11 @@ class Participants(
     private var players: List<Player>
 ) {
     fun receiveCard(dealer: Dealer) {
-        this.players.forEach { dealer.giveCard(it) }
+        this.players.forEach {
+            if (it.isAvailableReceive()) {
+                dealer.giveCard(it)
+            }
+        }
     }
 
     fun allPlayers(): List<Player> = this.players.toList()
