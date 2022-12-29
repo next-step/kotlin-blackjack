@@ -16,12 +16,13 @@ object InputConsole {
     }
 
     private fun queryReceiveCard(): Boolean {
-        val isReceiveCardString = readln().trim()
-        if (isReceiveCardString == "y") {
-            return true
-        } else if (isReceiveCardString == "n") {
-            return false
+        return when (readln().trim()) {
+            "y" -> true
+            "n" -> false
+            else -> {
+                println("명령어는 y, n 으로 입력해주세요")
+                return queryReceiveCard()
+            }
         }
-        throw RuntimeException("")
     }
 }
