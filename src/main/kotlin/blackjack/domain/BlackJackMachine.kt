@@ -74,22 +74,35 @@ class BlackJackMachine(
     }
 
     private fun calculateBetting(participant: Participant): ParticipantMoneyResult {
-        if (dealer.isSameWithMaximumScore() && participant.isSameWithMaximumScore()) {
-            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
+        return when (isWinOrBlackJack(participant)) {
+            true -> getBlackJackMoneyOrWinMoneyByParticipant(participant)
+            false -> getLoseMoney(participant)
         }
+    }
 
-        if (participant.countCards() == BASIC_CARD_COUNT && participant.isSameWithMaximumScore()) {
-            return ParticipantMoneyResult(participant.name, BlackJackMoney(participant.money).get())
+    private fun isWinOrBlackJack(participant: Participant): Boolean {
+        return dealer.isBurst() || participant.getScore() in dealer.getScore()..MAXIMUM_SCORE
+    }
+
+    private fun getBlackJackMoneyOrWinMoneyByParticipant(participant: Participant): ParticipantMoneyResult {
+        return when (participant.isBlackJack()) {
+            true -> getBlackJackMoneyOrWinMoneyByDealer(participant)
+            false -> getWinMoney(participant)
         }
+    }
 
-        if (dealer.isBurst()) {
-            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
+    private fun getBlackJackMoneyOrWinMoneyByDealer(participant: Participant): ParticipantMoneyResult {
+        return when (dealer.isBlackJack()) {
+            true -> ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
+            false -> ParticipantMoneyResult(participant.name, BlackJackMoney(participant.money).get())
         }
+    }
 
-        if (participant.getScore() in dealer.getScore()..MAXIMUM_SCORE) {
-            return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
-        }
+    private fun getWinMoney(participant: Participant): ParticipantMoneyResult {
+        return ParticipantMoneyResult(participant.name, WinMoney(participant.money).get())
+    }
 
+    private fun getLoseMoney(participant: Participant): ParticipantMoneyResult {
         return ParticipantMoneyResult(participant.name, LoseMoney(participant.money).get())
     }
 
