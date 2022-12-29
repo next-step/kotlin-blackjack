@@ -1,6 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participantion
 
-class Player(val name: String, val cards: Cards) {
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+
+sealed class Participant(val name: String, val cards: Cards) {
     var point = 0
         private set
 
@@ -10,7 +13,7 @@ class Player(val name: String, val cards: Cards) {
     }
 
     fun hit(card: Card) {
-        cards.add(card.copy())
+        cards.add(card)
         point = cards.point()
     }
 

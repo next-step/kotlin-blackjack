@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class Number(val symbol: String, val value: Int, val orValue: Int = 0) {
     ACE("A", 1, 11),
@@ -14,6 +14,4 @@ enum class Number(val symbol: String, val value: Int, val orValue: Int = 0) {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10);
-
-    fun isAce() = this == ACE
 }

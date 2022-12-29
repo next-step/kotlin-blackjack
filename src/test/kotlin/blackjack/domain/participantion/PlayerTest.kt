@@ -1,5 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participantion
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Number
+import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -43,34 +47,5 @@ class PlayerTest : StringSpec({
 
             player.isBust() shouldBe isBust
         }
-    }
-
-    "Ace 는 블랙잭 숫자보다 합산이 작을 경우엔 포인트가 11로 계산된다." {
-        val cardList = listOf(
-            Card(Suit.SPADE, Number.TWO),
-            Card(Suit.HEART, Number.TWO)
-        )
-        val cards = Cards(cardList)
-        val player = Player("테스터", cards)
-        val card = Card(Suit.SPADE, Number.ACE)
-
-        player.hit(card)
-
-        player.point shouldBe 15
-    }
-
-    "Ace 는 블랙잭 숫자보다 합산이 클 경우엔 포인트가 1로 계산된다." {
-        val cards = Cards(
-            listOf(
-                Card(Suit.HEART, Number.NINE),
-                Card(Suit.DIAMOND, Number.NINE),
-            )
-        )
-
-        val player = Player("테스터", cards)
-        val card = Card(Suit.SPADE, Number.ACE)
-
-        player.hit(card)
-        player.point shouldBe 19
     }
 })
