@@ -3,9 +3,9 @@ package blackjack.dto
 import blackjack.domain.participant.Participants
 
 @JvmInline
-value class ParticipantsDto(val players: List<ParticipantDto>) {
+value class ParticipantsDto(val participants: List<ParticipantDto>) {
     fun getNames(): List<String> {
-        return players.map { it.name }
+        return participants.map { it.name }
     }
 
     companion object {

@@ -1,5 +1,7 @@
 package blackjack.domain.participant
 
+import blackjack.ClubJack
+import blackjack.ClubTwo
 import blackjack.SpadeAce
 import blackjack.SpadeJack
 import blackjack.application.Deck
@@ -96,5 +98,20 @@ class ParticipantsTest {
         assertThat(actual.getDealer().isDealer()).isTrue
         assertThat(actual.getPlayers().map { it.name.toString() }).containsExactly("pobi", "jason")
         assertThat(actual.getAll()).size().isEqualTo(3)
+    }
+
+    @Test
+    fun `참가자 - 블랙잭 확인 테스트`() {
+        // given
+        val players = Participants(
+            Player("pobi", PlayingCards(SpadeAce, SpadeJack)),
+            Player("jason", PlayingCards(ClubTwo, ClubJack))
+        )
+
+        // when
+        val actual = players.isBlackjack()
+
+        // then
+        assertThat(actual).isTrue
     }
 }

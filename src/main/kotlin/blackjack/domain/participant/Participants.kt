@@ -22,7 +22,7 @@ value class Participants(private val values: List<Role>) {
         return Participants(values.plus(role))
     }
 
-    fun getPlayers(): List<Role> {
+    fun getPlayers(): List<Player> {
         return values.filter { !it.isDealer() }.map { it as Player }
     }
 
@@ -32,6 +32,10 @@ value class Participants(private val values: List<Role>) {
 
     fun getAll(): List<Role> {
         return values
+    }
+
+    fun isBlackjack(): Boolean {
+        return values.any { it.isBlackjack() }
     }
 
     companion object {
