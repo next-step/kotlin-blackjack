@@ -16,21 +16,9 @@ class DefaultScoreOptimizationAlgorithmTest : BehaviorSpec({
             val cardC = Card(CardShape.DIAMOND, CardNumber.ACE)
             val cards = listOf(cardA, cardB, cardC)
 
-            then("최적화 된 값은 23이다.") {
+            then("최적화 된 값은 13이다.") {
                 val optimizeScore = DefaultScoreOptimizationAlgorithm.optimizeScore(cards, targetScore)
-                optimizeScore shouldBe 23
-            }
-        }
-
-        `when`("ACE 카드가 3장일 때") {
-            val cardA = Card(CardShape.HEART, CardNumber.ACE)
-            val cardB = Card(CardShape.CLOVER, CardNumber.ACE)
-            val cardC = Card(CardShape.DIAMOND, CardNumber.ACE)
-            val cards = listOf(cardA, cardB, cardC)
-
-            then("최적화 된 값은 23이다.") {
-                val optimizeScore = DefaultScoreOptimizationAlgorithm.optimizeScore(cards, targetScore)
-                optimizeScore shouldBe 23
+                optimizeScore shouldBe 13
             }
         }
 
@@ -39,9 +27,9 @@ class DefaultScoreOptimizationAlgorithmTest : BehaviorSpec({
             val cardB = Card(CardShape.CLOVER, CardNumber.ACE)
             val cards = listOf(cardA, cardB)
 
-            then("최적화 된 값은 22이다.") {
+            then("최적화 된 값은 12이다.") {
                 val optimizeScore = DefaultScoreOptimizationAlgorithm.optimizeScore(cards, targetScore)
-                optimizeScore shouldBe 22
+                optimizeScore shouldBe 12
             }
         }
 

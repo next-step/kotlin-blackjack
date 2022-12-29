@@ -2,7 +2,6 @@ package domain.algorithm
 
 import domain.Card
 import domain.CardNumber
-import kotlin.math.absoluteValue
 
 sealed interface ScoreOptimizationAlgorithm {
     fun optimizeScore(cards: List<Card>, targetScore: Int): Int
@@ -14,9 +13,9 @@ object DefaultScoreOptimizationAlgorithm : ScoreOptimizationAlgorithm {
 
         var baseScore = cards.sumOf { it.number.primaryScore }
         aceCardList.forEach {
-            val absPrimaryDiff = (targetScore - (baseScore)).absoluteValue
-            val absSecondaryDiff = (targetScore - (baseScore - it.number.primaryScore + it.number.secondaryScore)).absoluteValue
-            if (absPrimaryDiff > absSecondaryDiff) {
+            val primaryDiff = targetScore - baseScore
+            val secondaryDiff = targetScore - (baseScore - it.number.primaryScore + it.number.secondaryScore)
+            if (secondaryDiff in 0 until primaryDiff) {
                 baseScore -= it.number.primaryScore
                 baseScore += it.number.secondaryScore
             }
