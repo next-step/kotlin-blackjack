@@ -4,7 +4,7 @@ import domain.Card
 import domain.CardNumber
 import domain.CardShape
 
-sealed interface CardsFactory {
+interface CardsFactory {
     fun generate(): MutableList<Card>
 }
 

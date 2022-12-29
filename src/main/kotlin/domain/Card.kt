@@ -3,7 +3,25 @@ package domain
 class Card(
     val shape: CardShape,
     val number: CardNumber
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Card
+
+        if (shape != other.shape) return false
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = shape.hashCode()
+        result = 31 * result + number.hashCode()
+        return result
+    }
+}
 
 enum class CardNumber(
     val primaryScore: Int,
