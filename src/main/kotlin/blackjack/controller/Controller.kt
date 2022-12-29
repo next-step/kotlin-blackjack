@@ -49,7 +49,7 @@ object Controller {
 
     private fun doHitOrStay(role: Role, deck: Deck): Role {
         var newPlayer = role
-        while (InputFilter.inputHitOrStay(ParticipantDto.from(role).name)) {
+        while (InputFilter.inputHitOrStay(ParticipantDto.from(role).name) && !newPlayer.isBust()) {
             newPlayer = newPlayer.draw(deck.getCard())
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
