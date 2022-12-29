@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.PockerMachine
+import blackjack.domain.BlackJackMachine
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Participant
 import blackjack.domain.person.Player
@@ -9,22 +9,25 @@ import blackjack.util.Parser
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class PockerController {
+class BlackJackController {
     fun execute() {
         val dealer = Dealer(name = "딜러", cardPickStrategy = SequentialCardPickStrategy())
         val nameList = Parser.parse(InputView.readName())
-        val players = listOf(dealer) + nameList.map { name -> Participant(name = name) }
-        val pockerMachine = PockerMachine(dealer = dealer, players = players)
+        val players = listOf(dealer) + nameList.map { Participant(name = it, money = InputView.readBettingMoney(it)) }
+        val blackJackMachine = BlackJackMachine(dealer = dealer, players = players)
 
-        pockerMachine.initialize()
+        blackJackMachine.initialize()
         OutputView.printInitialState(players)
 
-        pockerMachine.addCard(retryOrNot(), OutputView::printCardState)
+        blackJackMachine.addCard(retryOrNot(), OutputView::printCardState)
         OutputView.printDealerPickOneMoreCard(dealer)
         OutputView.printResult(players)
 
-        val gameResult = pockerMachine.getGameResult()
+        val gameResult = blackJackMachine.getGameResult()
         OutputView.printGameResult(gameResult)
+
+        val bettingMoneyResult = blackJackMachine.getBettingResult()
+        OutputView.printBettingMoneyResult(bettingMoneyResult)
     }
 
     private fun retryOrNot() = { player: Player -> InputView.retryOrNot(player.name) }

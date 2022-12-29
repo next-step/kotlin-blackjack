@@ -9,4 +9,8 @@ data class ParticipantResult(
     fun isWin(): Boolean {
         return winOrLose == WinOrLose.WIN
     }
+
+    fun isLose(): Boolean {
+        return winOrLose == WinOrLose.LOSE
+    }
 }

@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.dto.BettingMoneyResult
 import blackjack.domain.dto.GameResult
 import blackjack.domain.person.Dealer
 import blackjack.domain.person.Player
@@ -26,10 +27,18 @@ object OutputView {
 
     fun printGameResult(gameResult: GameResult) {
         val winParticipantsCnt = gameResult.participantResult.count { it.isWin() }
-        val loseParticipantsCnt = gameResult.participantResult.count { !it.isWin() }
+        val loseParticipantsCnt = gameResult.participantResult.count { it.isLose() }
         println("## 최종 승패")
         println("${gameResult.dealerName}: ${loseParticipantsCnt}승 ${winParticipantsCnt}패")
         gameResult.participantResult.forEach { println("${it.name}: ${it.winOrLose.description}") }
+        println()
+    }
+
+    fun printBettingMoneyResult(bettingMoneyResult: BettingMoneyResult) {
+        val dealerBettingMoney = getDealerBettingMoney(bettingMoneyResult)
+        println("## 최종 승패")
+        println("${bettingMoneyResult.dealerName}: $dealerBettingMoney")
+        bettingMoneyResult.participantMoneyResult.forEach { println("${it.name}: ${it.money}") }
     }
 
     fun printDealerPickOneMoreCard(dealer: Dealer) {
@@ -41,5 +50,9 @@ object OutputView {
 
     private fun printPerson(player: Player): String {
         return "${player.name}카드: ${player.cards}"
+    }
+
+    private fun getDealerBettingMoney(bettingMoneyResult: BettingMoneyResult): Long {
+        return bettingMoneyResult.participantMoneyResult.sumOf { it.money } * -1
     }
 }

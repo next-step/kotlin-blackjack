@@ -67,5 +67,11 @@ internal class CardsTest : BehaviorSpec({
                 secondCards.toString() shouldBe "A클로버, Q클로버, K클로버"
             }
         }
+
+        When("카드의 개수들을 ") {
+            Then("가져올 수 있다.") {
+                secondCards.countCards() shouldBe 3
+            }
+        }
     }
 })

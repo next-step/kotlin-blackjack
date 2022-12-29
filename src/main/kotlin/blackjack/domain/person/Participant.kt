@@ -5,12 +5,11 @@ import blackjack.domain.enums.WinOrLose
 
 class Participant(
     name: String,
+    money: Long,
     cards: Cards = Cards()
-) : Player(name, cards) {
+) : Player(name, money, cards) {
     fun getGameResult(dealer: Dealer): WinOrLose {
-        val dealerScore = dealer.getScore()
-        val participantScore = this.getScore()
-        if (dealerScore > MAXIMUM_SCORE || participantScore in dealerScore..MAXIMUM_SCORE) {
+        if (dealer.isBurst() || this.getScore() in dealer.getScore()..MAXIMUM_SCORE) {
             return WinOrLose.WIN
         }
         return WinOrLose.LOSE
@@ -18,5 +17,6 @@ class Participant(
 
     companion object {
         private const val MAXIMUM_SCORE = 21
+        private const val LOSE_DIVIDEND_RATE = -1.0
     }
 }
