@@ -32,6 +32,9 @@ data class PlayingCards(private val list: List<PlayingCard>) {
         if (isBlackjack()) {
             return BLACKJACK_NUMBER
         }
+        if (isBust()) {
+            return ZERO
+        }
         val sum = list.sumOf { it.score() }
         return sum + calculateSoft(sum)
     }
@@ -45,16 +48,17 @@ data class PlayingCards(private val list: List<PlayingCard>) {
     }
 
     private fun calculateSoft(sum: Int): Int {
-        return if (list.any { it.isAce() } && sum + TEN <= BLACKJACK_NUMBER) TEN else 0
+        return if (list.any { it.isAce() } && sum + TEN <= BLACKJACK_NUMBER) TEN else ZERO
     }
 
     companion object {
-        fun shuffle(shuffleStrategy: ShuffleStrategy): List<PlayingCard> {
-            return shuffleStrategy.shuffle()
-        }
-
         private const val BLACKJACK_NUMBER = 21
         private const val BLACKJACK_SIZE = 2
         private const val TEN = 10
+        private const val ZERO = 0
+
+        fun shuffle(shuffleStrategy: ShuffleStrategy): List<PlayingCard> {
+            return shuffleStrategy.shuffle()
+        }
     }
 }

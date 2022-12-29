@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 
 class BustTest {
     @Test
-    fun `Bust(Ten + Jack + Two = 22)`() {
+    fun `Bust(Ten + Jack + Two = 0)`() {
         // given
         val cards = PlayingCards(ClubTen, ClubJack)
         val hit = Hit(cards)
@@ -21,7 +21,7 @@ class BustTest {
 
         // then
         assertThat(actual).isInstanceOf(Bust::class.java)
-        assertThat(actual.cards.getScore()).isEqualTo(22)
+        assertThat(actual.cards.getScore()).isEqualTo(0)
     }
 
     @Test
