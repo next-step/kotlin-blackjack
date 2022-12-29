@@ -60,7 +60,7 @@ class BlackJackController : Executable {
     }
 
     private fun receiveCard(player: Player, blackJackGame: BlackJackGame) {
-        while (blackJackGame.availableReceivePlayer(player) && InputConsole.queryReceiveCard(player.name)) {
+        while (player.isAvailableReceive() && InputConsole.queryReceiveCard(player.name)) {
             blackJackGame.receiveCard(player)
             val cardInfo = cardInfo(player)
             OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)

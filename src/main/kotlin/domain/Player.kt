@@ -32,5 +32,5 @@ class Player(
         return name.hashCode()
     }
 
-    fun isAvailableReceive(): Boolean = this.hands.isExceedsAvailableReceiveNumber()
+    fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber()
 }

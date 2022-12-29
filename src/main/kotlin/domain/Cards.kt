@@ -19,7 +19,7 @@ class Cards(
     fun score(): Int = scoreOptimizationAlgorithm.optimizeScore(this.cards, TARGET_HIGH_SCORE)
 
     fun cardList(): List<Card> = this.cards
-    fun isExceedsAvailableReceiveNumber(): Boolean = this.score() <= TARGET_HIGH_SCORE
+    fun isAvailableReceiveNumber(): Boolean = this.score() <= TARGET_HIGH_SCORE
 
     private companion object {
         const val TARGET_HIGH_SCORE = 21

@@ -22,8 +22,6 @@ class BlackJackGame(
         return this.players.allPlayers()
     }
 
-    fun availableReceivePlayer(player: Player): Boolean = player.isAvailableReceive()
-
     private companion object {
         const val INIT_CARD_COUNT = 2
     }
