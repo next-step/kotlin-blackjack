@@ -22,6 +22,12 @@ class BlackJackGame(
         return this.players.allPlayers()
     }
 
+    fun playsTurn(player: Player, queryReceiveCard: (Player) -> Boolean) {
+        while (player.isAvailableReceive() && queryReceiveCard(player)) {
+            receiveCard(player)
+        }
+    }
+
     private companion object {
         const val INIT_CARD_COUNT = 2
     }

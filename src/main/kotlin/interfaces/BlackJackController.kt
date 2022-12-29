@@ -53,17 +53,11 @@ class BlackJackController : Executable {
 
     private fun queryReceiveCard(blackJackGame: BlackJackGame) {
         OutputConsole.printNewLine()
-        val players = blackJackGame.allPlayers()
-        players.forEach { player ->
-            receiveCard(player = player, blackJackGame = blackJackGame)
-        }
-    }
-
-    private fun receiveCard(player: Player, blackJackGame: BlackJackGame) {
-        while (player.isAvailableReceive() && InputConsole.queryReceiveCard(player.name)) {
-            blackJackGame.receiveCard(player)
-            val cardInfo = cardInfo(player)
-            OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
+        val allPlayers = blackJackGame.allPlayers()
+        allPlayers.forEach {
+            blackJackGame.playsTurn(player = it) { player -> InputConsole.queryReceiveCard(player.name) }
+            val cardInfo = cardInfo(it)
+            OutputConsole.printCard(playerName = it.name, cardInfo = cardInfo)
         }
     }
 
