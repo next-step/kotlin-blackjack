@@ -15,7 +15,7 @@ class BlackJackController : Executable {
         val participants = queryParticipants()
         val blackJackGame = BlackJackGame(players = participants)
 
-        init(blackJackGame)
+        initGame(blackJackGame)
         showAllParticipantsHands(blackJackGame)
 
         queryReceiveCard(blackJackGame)
@@ -23,7 +23,7 @@ class BlackJackController : Executable {
         showFinalResult(blackJackGame)
     }
 
-    private fun init(blackJackGame: BlackJackGame) {
+    private fun initGame(blackJackGame: BlackJackGame) {
         blackJackGame.init()
         val playerNames = blackJackGame.allPlayers().map { it.name }
         OutputConsole.printInit(playerNames = playerNames)
