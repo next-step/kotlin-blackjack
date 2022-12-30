@@ -17,8 +17,6 @@ class Cards(
     val size: Int
         get() = _value.size
 
-    fun shuffle() = _value.shuffle()
-
     fun add(card: Card) = _value.add(card)
     fun sum(): Int =
         if (shouldCountWithAce()) {
