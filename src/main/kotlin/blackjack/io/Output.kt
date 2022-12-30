@@ -17,17 +17,17 @@ class Output {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name} 카드 : ${player.hand.joinToString(",")}")
+        println("${player.name} 카드 : ${player.open().joinToString(",")}")
     }
 
-    fun printPlayersHandAndScore(players: List<Player>) {
-        players.forEach {
-            printPlayerHandAndScore(it)
+    fun printPlayersHandWithScore(players: List<Player>) {
+        players.forEach { player ->
+            println("${player.name} 카드 : ${player.open().joinToString(",")} - 결과 : ${player.score().value}")
         }
     }
 
-    fun printPlayerHandAndScore(player: Player) {
-        println("${player.name} 카드 : ${player.hand.joinToString(",")} - 결과 : ${player.score()}")
+    fun printDealerHandWithScore(dealer: Dealer) {
+        println("${dealer.name} 카드 : ${dealer.allOpen().joinToString(",")} - 결과 : ${dealer.score().value}")
     }
 
     fun printDealerResult(dealer: Dealer, result: List<Result>) {
@@ -36,7 +36,7 @@ class Output {
 
     fun printPlayersResult(players: List<Player>, dealer: Dealer) {
         players.forEach {
-            println("${it.name} : ${it.result(dealer).value}")
+            println("${it.name} : ${it.result(dealer.score()).value}")
         }
     }
 
