@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.util.BlackjackResultMaker
 import blackjack.view.dto.AddCardResult
 import blackjack.view.dto.InitResult
 import blackjack.view.dto.PlayerGameResult
@@ -37,7 +36,7 @@ class BlackJackGame(
     }
 
     fun result(): List<PlayerGameResult> {
-        return BlackjackResultMaker.result(dealer, players)
+        return dealer.result(players)
 
     }
 }
