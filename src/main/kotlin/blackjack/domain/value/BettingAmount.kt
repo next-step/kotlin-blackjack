@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.value
 
 private const val BLACK_JACK_WINNING_AMOUNT_RATE = 1.5
 private const val NO_AMOUNT = 0

@@ -1,6 +1,7 @@
 package blackjack.view.dto
 
-import blackjack.domain.*
+import blackjack.domain.card.Card
+import blackjack.domain.holder.Player
 
 data class AddCardResult(
     val name: String,
@@ -9,7 +10,7 @@ data class AddCardResult(
 ) {
     constructor(player: Player) : this(
         player.name,
-        player.playingCards.cards,
+        player.hands.cards,
         player.bust()
     )
 }

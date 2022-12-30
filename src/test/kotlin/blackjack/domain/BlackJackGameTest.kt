@@ -1,5 +1,11 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.holder.Dealer
+import blackjack.domain.holder.Hands
+import blackjack.domain.holder.Player
+import blackjack.domain.value.BettingAmount
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -63,7 +69,7 @@ class BlackJackGameTest : StringSpec({
         //given
         val game = BlackJackGame(
             listOf(),
-            Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_6))),
+            Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_6))),
             CardDeck()
         )
         //when
@@ -78,11 +84,11 @@ class BlackJackGameTest : StringSpec({
             listOf(
                 Player(
                     "harris",
-                    playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)),
+                    hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)),
                     BettingAmount(10000)
                 )
             ),
-            Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_7))),
+            Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_7))),
             CardDeck(),
         )
 

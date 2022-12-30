@@ -1,5 +1,11 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.holder.Dealer
+import blackjack.domain.holder.Hands
+import blackjack.domain.holder.Player
+import blackjack.domain.value.BettingAmount
+import blackjack.domain.value.Point
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -20,10 +26,10 @@ class PlayerTest : StringSpec({
 
     "bust인 플레이어와 bust인 딜러가 있을 때 플레이어는 항상 진다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3)),
             BettingAmount(10000)
         )
 
@@ -40,10 +46,10 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 bust인 딜러가 있을 때 플레이어는 승리한다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2)),
             BettingAmount(10000)
         )
 
@@ -59,10 +65,10 @@ class PlayerTest : StringSpec({
 
     "BlackJack인 플레이어와 21점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 BlackJack으로(상금 1.5배) 승리한다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_5, Card.DIAMOND_5, Card.CLOVER_A)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.DIAMOND_5, Card.CLOVER_A)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
             BettingAmount(10000)
         )
 
@@ -75,10 +81,10 @@ class PlayerTest : StringSpec({
 
     "BlackJack인 플레이어와 BlackJack인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 결과는 무승부다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
             BettingAmount(10000)
         )
 
@@ -91,10 +97,10 @@ class PlayerTest : StringSpec({
 
     "21점인 플레이어와 BlackJack인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 패배한다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_5, Card.CLOVER_5, Card.CLOVER_A)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_5, Card.CLOVER_5, Card.CLOVER_A)),
             BettingAmount(10000)
         )
 
@@ -107,10 +113,10 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 20점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 패배한다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_J)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_J)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
             BettingAmount(10000)
         )
 
@@ -123,10 +129,10 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 18점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 승리한다." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_10, Card.CLOVER_8)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_8)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
             BettingAmount(10000)
         )
 
@@ -139,10 +145,10 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 19점인 딜러가 있을 때 결과는 무승부이다.." {
         //given
-        val dealer = Dealer(playingCards = PlayingCards(mutableSetOf(Card.CLOVER_9, Card.CLOVER_10)))
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_9, Card.CLOVER_10)))
         val harris = Player(
             "harris",
-            playingCards = PlayingCards(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10)),
+            hands = Hands(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10)),
             BettingAmount(10000)
         )
 

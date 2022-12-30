@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.holder
 
-import blackjack.domain.Point.Companion.MAX
-import blackjack.domain.Point.Companion.ZERO
+import blackjack.domain.card.Card
+import blackjack.domain.value.Point
 
-data class PlayingCards(
+data class Hands(
     private val _cards: MutableSet<Card> = mutableSetOf(),
 ) {
     val cards: Set<Card>
@@ -11,7 +11,7 @@ data class PlayingCards(
 
     fun calculatePoint(): Point {
         val sumPoint = sumPoint()
-        return if (sumPoint > MAX) ZERO else sumPoint
+        return if (sumPoint > Point.MAX) Point.ZERO else sumPoint
     }
 
     private fun sumPoint(): Point {
@@ -30,7 +30,7 @@ data class PlayingCards(
         this._cards.addAll(cards)
     }
 
-    fun bust(): Boolean = sumPoint() > MAX
+    fun bust(): Boolean = sumPoint() > Point.MAX
     fun firstCard(): Set<Card> = setOf(_cards.first())
 }
 

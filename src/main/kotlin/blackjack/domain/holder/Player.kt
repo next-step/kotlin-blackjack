@@ -1,22 +1,26 @@
-package blackjack.domain
+package blackjack.domain.holder
+
+import blackjack.domain.card.Card
+import blackjack.domain.value.BettingAmount
+import blackjack.domain.value.Point
 
 data class Player(
     val name: String,
-    val playingCards: PlayingCards = PlayingCards(),
+    val hands: Hands = Hands(),
     val bettingAmount: BettingAmount = BettingAmount(0),
 ) {
     fun addCard(deal: Card): Player {
-        playingCards.addOne(deal)
+        hands.addOne(deal)
         return this
     }
 
     fun addCard(cards: Set<Card>): Player {
-        playingCards.addAll(cards)
+        hands.addAll(cards)
         return this
     }
 
-    fun cardPoint() = playingCards.calculatePoint()
-    fun blackJack() = playingCards.cards.size == 2 && playingCards.calculatePoint() == Point.BLACK_JACK
+    fun cardPoint() = hands.calculatePoint()
+    fun blackJack() = hands.cards.size == 2 && hands.calculatePoint() == Point.BLACK_JACK
 
     fun flip(dealer: Dealer): Int {
         return when {
@@ -30,7 +34,7 @@ data class Player(
         }
     }
 
-    fun bust(): Boolean = playingCards.bust()
-    fun firstCard(): Set<Card> = playingCards.firstCard()
+    fun bust(): Boolean = hands.bust()
+    fun firstCard(): Set<Card> = hands.firstCard()
 
 }

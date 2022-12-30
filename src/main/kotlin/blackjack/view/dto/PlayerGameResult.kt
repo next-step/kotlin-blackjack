@@ -1,6 +1,9 @@
 package blackjack.view.dto
 
-import blackjack.domain.*
+import blackjack.domain.card.Card
+import blackjack.domain.holder.Dealer
+import blackjack.domain.holder.Player
+import blackjack.domain.value.Point
 
 data class PlayerGameResult(
     val name: String,
@@ -10,15 +13,15 @@ data class PlayerGameResult(
 ) {
     constructor(player: Player, winningAmount: Int) : this(
         player.name,
-        player.playingCards.cards,
-        player.playingCards.calculatePoint(),
+        player.hands.cards,
+        player.hands.calculatePoint(),
         winningAmount,
     )
 
     constructor(dealer: Dealer, dealerBettingAmount: Int) : this(
         dealer.name,
-        dealer.playingCards.cards,
-        dealer.playingCards.calculatePoint(),
+        dealer.hands.cards,
+        dealer.hands.calculatePoint(),
         dealerBettingAmount,
     )
 }

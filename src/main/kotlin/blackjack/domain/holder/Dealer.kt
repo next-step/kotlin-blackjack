@@ -1,15 +1,18 @@
-package blackjack.domain
+package blackjack.domain.holder
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.value.Point
 import blackjack.view.dto.PlayerGameResult
 
 private val DEALER_MIN_POINT = Point(17)
 
-class Dealer(playingCards: PlayingCards = PlayingCards()) {
-    private val player = Player("딜러", playingCards)
+class Dealer(hands: Hands = Hands()) {
+    private val player = Player("딜러", hands)
     val name: String
         get() = player.name
-    val playingCards: PlayingCards
-        get() = player.playingCards
+    val hands: Hands
+        get() = player.hands
 
     fun hitUntil(deck: CardDeck): Int {
         var count = 0

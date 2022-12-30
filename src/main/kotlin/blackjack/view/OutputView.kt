@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Card
+import blackjack.domain.card.Card
 import blackjack.view.dto.AddCardResult
 import blackjack.view.dto.PlayerGameResult
 import blackjack.view.dto.InitResult
