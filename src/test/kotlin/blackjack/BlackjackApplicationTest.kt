@@ -22,6 +22,16 @@ import org.junit.jupiter.api.Test
 
 internal class BlackjackApplicationTest {
     @Test
+    internal fun `딜러의 초기 카드 합이 16 이하면 1장을 추가로 받는다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Test
+    internal fun `딜러의 초기 카드 합이 17 이상이면 추가로 받지 않는다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Test
     internal fun `전부 y로 응답하는 play 테스트`() {
         // given
         val cardDeck = listOf(

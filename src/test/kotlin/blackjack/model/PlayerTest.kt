@@ -64,4 +64,14 @@ class PlayerTest {
         assertThat(player.isPickable()).isFalse
         assertThrows<IllegalStateException> { player.addCard(Card(SPADE, ACE)) }
     }
+
+    @Test
+    internal fun `다른 플레이어보다 점수가 더 높으면 승리한다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Test
+    internal fun `버스트 되었다면 무조건 패배한다`() {
+        TODO("Not yet implemented")
+    }
 }
