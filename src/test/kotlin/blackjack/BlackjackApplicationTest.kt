@@ -8,6 +8,10 @@ import blackjack.model.Denomination.KING
 import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.SEVEN
 import blackjack.model.Denomination.TEN
+import blackjack.model.DualResult.LOSE
+import blackjack.model.DualResult.PUSH
+import blackjack.model.DualResult.WIN
+import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.model.Suit.CLOVER
@@ -24,6 +28,40 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class BlackjackApplicationTest {
+    @Test
+    internal fun `게임 결과를 확인한다`() {
+        // given
+        val cardDeck = CardDeck.of(
+            Card(SPADE, EIGHT), Card(SPADE, EIGHT), Card(SPADE, EIGHT),
+            Card(HEART, EIGHT), Card(HEART, EIGHT), Card(HEART, EIGHT),
+            Card(CLOVER, EIGHT), Card(CLOVER, EIGHT), Card(CLOVER, EIGHT)
+        )
+        val inputView = object : InputView {
+            override val readPlayers: () -> String = { "pobi, jason" }
+            override val readPickAnswer: (Player) -> Boolean = { true }
+        }
+
+        val outputView = mockk<OutputView>(relaxed = true)
+        val playersAfterEnd = slot<Players>()
+        val gameResultAfterEnd = slot<GameResult>()
+
+        // when
+        BlackjackApplication(cardDeck, inputView, outputView).play()
+        verify { outputView.printGameResult(capture(playersAfterEnd), capture(gameResultAfterEnd)) }
+
+        val players = playersAfterEnd.captured
+        val gameResult = gameResultAfterEnd.captured
+        val playerNames = players.map { it.name }
+
+        // then
+        assertThat(playerNames).containsExactly("pobi", "jason")
+        assertThat(gameResult.getDealerResultCountOf(WIN)).isNull()
+        assertThat(gameResult.getDealerResultCountOf(PUSH)).isNull()
+        assertThat(gameResult.getDealerResultCountOf(LOSE)).isEqualTo(2)
+        assertThat(gameResult.getPlayerDualResultOf(players.last())).isSameAs(LOSE)
+        assertThat(gameResult.getPlayerDualResultOf(players.first())).isSameAs(LOSE)
+    }
+
     @Test
     internal fun `딜러의 초기 카드 합이 16 이하면 1장을 추가로 받는다`() {
         // given
