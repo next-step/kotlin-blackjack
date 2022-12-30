@@ -10,7 +10,7 @@ object Draw {
         var card: Card
         do {
             card = Card()
-        } while (Deck.isDrawable(card))
+        } while (Deck.isDrawn(card))
         Deck.draw(card)
         return card
     }

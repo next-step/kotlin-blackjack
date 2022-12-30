@@ -12,7 +12,7 @@ object Deck {
         }
     }.toMutableMap()
 
-    fun isDrawable(card: Card): Boolean = (this.cards[card] != false)
+    fun isDrawn(card: Card): Boolean = (this.cards[card] != false)
 
     fun draw(card: Card) {
         cards[card] = true
