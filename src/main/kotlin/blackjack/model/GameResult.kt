@@ -1,12 +1,32 @@
 package blackjack.model
 
+import blackjack.domain.Dealer
+import blackjack.domain.Player
+
 enum class GameResult {
+    NONE,
     WIN,
     PUSH,
     LOSE,
     BLACKJACK,
-    PUSH_WITH_BLACKJACK,
+    EVEN_MONEY,
     ;
+
+    companion object {
+        fun of(dealer: Dealer, player: Player): GameResult {
+            val playerSum = player.play.score()
+            val dealerSum = dealer.play.score()
+            return when {
+                dealer.play.blackjack && player.play.blackjack -> EVEN_MONEY
+                player.play.blackjack -> BLACKJACK
+                (dealer.play.bust && !player.play.bust) ||
+                    (dealer.play.stay && player.play.stay && playerSum > dealerSum) -> WIN
+
+                dealer.play.stay && player.play.stay && playerSum == dealerSum -> PUSH
+                else -> LOSE
+            }
+        }
+    }
 }
 
 sealed class PlayerGameResult {

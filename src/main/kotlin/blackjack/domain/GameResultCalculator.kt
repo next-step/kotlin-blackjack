@@ -27,12 +27,13 @@ class GameResultCalculator : ResultCalculator {
                 player.play.profit(player.bet.value)
             }
 
-            GameResult.PUSH_WITH_BLACKJACK -> player.bet.value
+            GameResult.EVEN_MONEY -> player.bet.value
             GameResult.LOSE -> {
                 -player.bet.value
             }
 
             GameResult.PUSH -> 0.0
+            else -> throw IllegalArgumentException("유효하지 않은 게임 결과입니다.")
         }.toDouble()
 
     private fun calculateDealerProfit(result: GameResult, player: Player): Double =
@@ -52,7 +53,7 @@ class GameResultCalculator : ResultCalculator {
         val playerSum = player.play.score()
         val dealerSum = dealer.play.score()
         return when {
-            dealer.play.blackjack && player.play.blackjack -> GameResult.PUSH_WITH_BLACKJACK
+            dealer.play.blackjack && player.play.blackjack -> GameResult.EVEN_MONEY
             player.play.blackjack -> GameResult.WIN
             (dealer.play.bust && !player.play.bust) ||
                 isPlayerWinWithStay(dealer.play.stay, player.play.stay, playerSum > dealerSum) -> GameResult.WIN
