@@ -1,6 +1,7 @@
 package blackjack.domain.participantion
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Card.Companion.BLACK_JACk_NUMBER
 import blackjack.domain.card.Cards
 
 sealed class Participant(val name: String, val cards: Cards) {
@@ -17,5 +18,7 @@ sealed class Participant(val name: String, val cards: Cards) {
         point = cards.point()
     }
 
-    fun isBust(): Boolean = point > Cards.BLACK_JACk_NUMBER
+    fun isWin(participant: Participant): Boolean = this.point > participant.point
+
+    fun isBust(): Boolean = point > BLACK_JACk_NUMBER
 }

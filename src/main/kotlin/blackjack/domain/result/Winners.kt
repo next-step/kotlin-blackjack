@@ -12,9 +12,7 @@ class Winners(
 
     companion object {
         fun from(dealer: Dealer, players: List<Player>): Winners {
-            val winners = players.filter { player ->
-                player.point > dealer.point
-            }
+            val winners = players.filter { player -> player.isWin(dealer) }
 
             return Winners(winners)
         }
