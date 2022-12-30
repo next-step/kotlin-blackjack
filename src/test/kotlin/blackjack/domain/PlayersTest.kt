@@ -77,4 +77,22 @@ internal class PlayersTest {
         val players = Players(participants)
         assertThat(players.allReadyToPlay()).isFalse
     }
+
+    @Test
+    fun `모든 플레이들의 수익률을 확인할 수 있다`() {
+        // given
+        val dealer = FakeDealer()
+        val participants = mutableListOf<Player>().apply {
+            repeat(2) { count ->
+                add(FakePlayer(name = count.toString(), profit = 1000.0))
+            }
+        }
+
+        // when
+        val players = Players(participants)
+        val result = players.allPlayerProfits(dealer)
+
+        // then
+        assertThat(result.value.sumOf { it.profit }).isEqualTo(2000.0)
+    }
 }

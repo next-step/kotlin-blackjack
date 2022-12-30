@@ -4,7 +4,6 @@ import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import blackjack.model.DEFAULT_CARD_DECK
-import blackjack.model.TWENTY
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test

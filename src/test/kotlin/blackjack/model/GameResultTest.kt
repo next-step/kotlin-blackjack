@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 internal class GameResultTest {
     @Test
-    fun `딜러와 플레이어가 블랙잭을 완성하였을 시 플레이어 이븐머니`() {
+    fun `딜러와 플레이어가 블랙잭을 완성하였을 시 PUSH(무)`() {
         // given
         val fakeDealer = FakeDealer(play = FakeGamePlay(_blackjack = true))
         val fakePlayer = FakePlayer(play = FakeGamePlay(_blackjack = true))
@@ -18,7 +18,7 @@ internal class GameResultTest {
         val result = GameResult.of(fakeDealer, fakePlayer)
 
         // then
-        assertThat(result).isEqualTo(GameResult.EVEN_MONEY)
+        assertThat(result).isEqualTo(GameResult.PUSH)
     }
 
     @Test

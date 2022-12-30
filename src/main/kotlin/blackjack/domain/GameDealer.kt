@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.model.Card
+import blackjack.model.PlayerProfit
 
 class GameDealer(
     override val play: Play = DealerGamePlay(),
@@ -13,6 +14,13 @@ class GameDealer(
     override fun deliverCard(): Card = _deck.takeOutFirstCard()
 
     override fun shuffle() = _deck.shuffle()
+
+    override fun profit(gamePlayerProfits: List<PlayerProfit.Player>): PlayerProfit.Dealer =
+        gamePlayerProfits
+            .sumOf { -it.profit }
+            .let {
+                PlayerProfit.Dealer(name, it)
+            }
 
     companion object {
         private const val STAY_SCORE = 17

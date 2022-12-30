@@ -4,12 +4,10 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 enum class GameResult {
-    NONE,
     WIN,
     PUSH,
     LOSE,
     BLACKJACK,
-    EVEN_MONEY,
     ;
 
     companion object {
@@ -17,7 +15,7 @@ enum class GameResult {
             val playerSum = player.play.score()
             val dealerSum = dealer.play.score()
             return when {
-                dealer.play.blackjack && player.play.blackjack -> EVEN_MONEY
+                dealer.play.blackjack && player.play.blackjack -> PUSH
                 player.play.blackjack -> BLACKJACK
                 (dealer.play.bust && !player.play.bust) ||
                     (dealer.play.stay && player.play.stay && playerSum > dealerSum) -> WIN
@@ -29,19 +27,19 @@ enum class GameResult {
     }
 }
 
-sealed class PlayerGameResult {
+sealed class PlayerProfit {
     abstract val name: String
     abstract val profit: Double
 
     data class Dealer(
         override val name: String,
         override val profit: Double = 0.0,
-    ) : PlayerGameResult()
+    ) : PlayerProfit()
 
     data class Player(
         override val name: String,
         override val profit: Double = 0.0,
-    ) : PlayerGameResult()
+    ) : PlayerProfit()
 }
 
-data class PlayerGameResults(val value: List<PlayerGameResult>)
+data class PlayerProfits(val value: List<PlayerProfit>)
