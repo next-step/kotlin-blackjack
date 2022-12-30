@@ -1,9 +1,7 @@
 package blackjack
 
 import blackjack.model.CardDeck
-import blackjack.model.MatchResult.LOSE
-import blackjack.model.MatchResult.PUSH
-import blackjack.model.MatchResult.WIN
+import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.InputView
@@ -26,13 +24,8 @@ class BlackjackApplication(
         drawDealerCardOrNot(dealer)
         outputView.printCardResult(dealer, players)
 
-        val dealerResult = listOf(
-            WIN to players.count { dealer.wins(it) == WIN },
-            LOSE to players.count { dealer.wins(it) == LOSE },
-            PUSH to players.count { dealer.wins(it) == PUSH }
-        ).toMap()
-        val playersResult = players.associateWith { it.wins(dealer) }
-        outputView.printGameResult(dealerResult, playersResult)
+        val gameResult = GameResult.of(dealer, players)
+        outputView.printGameResult(players, gameResult)
     }
 
     private fun drawDealerCardOrNot(dealer: Player) {

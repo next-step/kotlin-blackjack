@@ -1,10 +1,10 @@
 package blackjack.model
 
-enum class MatchResult {
-    WIN, LOSE, PUSH;
+enum class DualResult {
+    WIN, PUSH, LOSE;
 
     companion object {
-        fun of(score: Int, otherScore: Int): MatchResult {
+        fun of(score: Int, otherScore: Int): DualResult {
             if (score == otherScore) {
                 return PUSH
             }

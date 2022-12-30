@@ -1,6 +1,7 @@
 package blackjack.view.impl
 
-import blackjack.model.MatchResult
+import blackjack.model.DualResult
+import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.KoreanMessageSource
@@ -45,27 +46,23 @@ class StandardOutputView(
         "${player.name}카드: $cardsString"
     }
 
-    override val printGameResult: (
-        Map<MatchResult, Int>, Map<Player, MatchResult>
-    ) -> Unit = { dealerResult, playersResult ->
+    override val printGameResult: (Players, GameResult) -> Unit = { players, gameResult ->
         println()
-        println("딜러: ${getDealerResultMessage(dealerResult)}")
-        println(getPlayersResultMessage(playersResult))
+        println("딜러: ${getDealerResultMessage(gameResult)}")
+        println(getPlayersResultMessage(players, gameResult))
     }
 
-    private fun getPlayersResultMessage(playersResult: Map<Player, MatchResult>): String {
-        return playersResult.entries
-            .joinToString("\n") {
-                val player = it.key
-                val playerResult = playersResult[player]
-                "${player.name}: ${messageSource.nameOf(playerResult!!)}"
-            }
+    private fun getDealerResultMessage(gameResult: GameResult): String {
+        return DualResult.values()
+            .map { it to gameResult.getDealerResultCountOf(it) }
+            .filterNot { it.second == null }
+            .joinToString(" ") { "${it.second}${messageSource.nameOf(it.first)}" }
     }
 
-    private fun getDealerResultMessage(dealerResult: Map<MatchResult, Int>): String {
-        return dealerResult.entries
-            .filterNot { it.value == 0 }
-            .joinToString(" ") { "${it.value}${messageSource.nameOf(it.key)}" }
+    private fun getPlayersResultMessage(players: Players, gameResult: GameResult): String {
+        return players.joinToString("\n") {
+            "${it.name}: ${messageSource.nameOf(gameResult.getPlayerDualResultOf(it))}"
+        }
     }
 
     companion object {
