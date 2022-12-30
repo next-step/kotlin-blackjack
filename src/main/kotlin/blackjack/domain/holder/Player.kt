@@ -25,8 +25,8 @@ data class Player(
     fun flip(dealer: Dealer): Int {
         return when {
             bust() -> bettingAmount.lose()
-            dealer.bust() -> bettingAmount.win()
             blackJack() && !dealer.blackJack() -> bettingAmount.blackJack()
+            dealer.bust() -> bettingAmount.win()
             dealer.blackJack() && !blackJack() -> bettingAmount.lose()
             cardPoint() > dealer.cardPoint() -> bettingAmount.win()
             cardPoint() < dealer.cardPoint() -> bettingAmount.lose()
