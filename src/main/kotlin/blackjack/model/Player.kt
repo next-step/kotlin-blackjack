@@ -22,6 +22,10 @@ class Player(
         return cards.getScore() ?: FAIL_SCORE
     }
 
+    fun wins(other: Player): Boolean {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         const val FAIL_SCORE = 0
         const val STOP_SCORE = 21

@@ -67,11 +67,30 @@ class PlayerTest {
 
     @Test
     internal fun `다른 플레이어보다 점수가 더 높으면 승리한다`() {
-        TODO("Not yet implemented")
+        // given
+        val winCards = Cards.of(Card(SPADE, ACE), Card(SPADE, TEN))
+        val loseCards = Cards.of(Card(SPADE, TEN), Card(HEART, TEN))
+
+        // when
+        val loser = Player("loser", winCards)
+        val winner = Player("winner", loseCards)
+
+        // then
+        assertThat(loser.wins(winner)).isFalse
+        assertThat(winner.wins(loser)).isTrue
     }
 
     @Test
     internal fun `버스트 되었다면 무조건 패배한다`() {
-        TODO("Not yet implemented")
+        // given
+        val cards = Cards.of(Card(SPADE, TEN), Card(CLOVER, TEN), Card(HEART, TEN))
+
+        // when
+        val bustPlayer = Player("loser", cards)
+        val bustPlayer2 = Player("loser", cards)
+
+        // then
+        assertThat(bustPlayer.wins(bustPlayer2)).isFalse
+        assertThat(bustPlayer2.wins(bustPlayer)).isFalse
     }
 }

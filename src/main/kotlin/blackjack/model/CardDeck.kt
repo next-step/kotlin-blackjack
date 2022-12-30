@@ -17,6 +17,10 @@ class CardDeck private constructor(
             return CardDeck(cards.toMutableList())
         }
 
+        fun of(vararg cards: Card): CardDeck {
+            return of(cards.toList())
+        }
+
         fun defaultDeck(): CardDeck {
             return of(
                 Suit.values().flatMap { suit -> Denomination.values().map { Card(suit, it) } }

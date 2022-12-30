@@ -8,7 +8,7 @@ import blackjack.view.OutputView
 class StandardOutputView(
     private val messageSource: KoreanMessageSource = KoreanMessageSource()
 ) : OutputView {
-    override val printInitCards: (Players) -> Unit = { players ->
+    override val printInitCards: (Player, Players) -> Unit = { dealer, players ->
         val playerNames = players.joinToString(SEPARATE_SYMBOL) { it.name }
 
         println()

@@ -16,7 +16,8 @@ class BlackjackApplication(
     fun play() {
         val playerNames = inputView.readPlayers()
         val players = initPlayers(playerNames)
-        outputView.printInitCards(players)
+        val dealer = initPlayer(DEALER_NAME)
+        outputView.printInitCards(dealer, players)
 
         playBlackjackGame(players)
         outputView.printResult(players)
@@ -52,6 +53,7 @@ class BlackjackApplication(
     }
 
     companion object {
+        private const val DEALER_NAME = "딜러"
         private const val INIT_CARD_COUNT = 2
         private const val NAME_STRING_DELIMITER = ","
     }
