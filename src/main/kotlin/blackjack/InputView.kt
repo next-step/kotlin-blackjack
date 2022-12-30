@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.GamePlayer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.model.Bet
 
 object InputView {
     private const val DELIMITER_NAMES = ","
@@ -26,6 +27,14 @@ object InputView {
         return "y" == hit
     }
 
-    private fun createPlayers(names: List<String>): Players = Players(names.map { GamePlayer(it) })
+    private fun createPlayers(names: List<String>): Players =
+        names.map {
+            println("${it}의 배팅 금액은?")
+
+            val bet = readln()
+            require(bet.isNotBlank()) { "배팅 금액은 공백이 될 수 없습니다." }
+            GamePlayer(it, Bet(bet.toInt()))
+        }.let(::Players)
+
     private fun splitNames(names: String): List<String> = names.split(DELIMITER_NAMES).map { it.trim() }
 }

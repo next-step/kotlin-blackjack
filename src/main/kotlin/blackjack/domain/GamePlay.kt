@@ -38,14 +38,19 @@ open class GamePlay(
     }
 
     override fun score(): Int = state.cards.sum()
+
+    override fun profit(bet: Int): Double = state.profit(bet)
 }
 
-class DealerGamePlay: GamePlay() {
+class DealerGamePlay : GamePlay() {
     override fun draw(card: Card) {
         super.draw(card)
         if (shouldStay()) stay()
     }
+
     private fun shouldStay(): Boolean = hit && score() >= STAY_SCORE
+
+    override fun profit(bet: Int): Double = throw IllegalStateException("딜러는 배팅금액이 없습니다")
 
     companion object {
         private const val STAY_SCORE = 17
@@ -65,4 +70,6 @@ interface Play {
     fun draw(card: Card)
     fun stay()
     fun score(): Int
+
+    fun profit(bet: Int): Double
 }

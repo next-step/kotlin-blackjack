@@ -6,7 +6,6 @@ import blackjack.model.CardType
 import blackjack.model.DEFAULT_CARD_DECK
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -45,7 +44,10 @@ internal class CardsTest {
 
     @ParameterizedTest
     @MethodSource("provideSumWithAceSpecialScore")
-    fun `카드 목록 중에 ACE 포함되어 있고 총합이 21 이하인 경우 ACE Special Score 11을 합산에 포함시킨다`(initialCards: List<Card>, totalScore: Int) {
+    fun `카드 목록 중에 ACE 포함되어 있고 총합이 21 이하인 경우 ACE Special Score 11을 합산에 포함시킨다`(
+        initialCards: List<Card>,
+        totalScore: Int
+    ) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
     }
