@@ -2,5 +2,6 @@ package blackjack.domain
 
 data class Card(
     val cardNumber: CardNumber = CardNumber.values().random(),
-    val pattern: Pattern = Pattern.values().random()
+    val pattern: Pattern = Pattern.values().random(),
+    var cardNumberSubValue: Int? = null
 )

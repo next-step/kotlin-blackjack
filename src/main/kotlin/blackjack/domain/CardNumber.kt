@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumber(val display: String, val value: Int, var isSmall: Boolean = false) {
+enum class CardNumber(val display: String, val value: Int) {
     ACE("A", 11),
     KING("K", 10),
     QUEEN("Q", 10),
@@ -14,4 +14,8 @@ enum class CardNumber(val display: String, val value: Int, var isSmall: Boolean 
     THREE("3", 3),
     TWO("2", 2),
     ;
+
+    companion object {
+        const val ACE_SUB_VALUE: Int = 1
+    }
 }
