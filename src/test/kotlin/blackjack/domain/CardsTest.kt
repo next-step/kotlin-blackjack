@@ -4,6 +4,7 @@ import blackjack.model.Card
 import blackjack.model.CardShape
 import blackjack.model.CardType
 import blackjack.model.DEFAULT_CARD_DECK
+import blackjack.model.TWENTY
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatExceptionOfType
 import org.junit.jupiter.api.Test
@@ -50,6 +51,17 @@ internal class CardsTest {
     ) {
         val cards = Cards(initialCards.toMutableList())
         assertThat(cards.sum()).isEqualTo(totalScore)
+    }
+
+    @Test
+    fun `카드 목록 중에 ACE 1개 이상 포함 되어 있을 시에 1장만 soft count 허용한다`() {
+        val eighteenCards = listOf(
+            Card(CardType.ACE, CardShape.CLOVER),
+            Card(CardType.SIX, CardShape.DIAMOND),
+            Card(CardType.ACE, CardShape.DIAMOND)
+        )
+        val cards = Cards(eighteenCards)
+        assertThat(cards.sum()).isEqualTo(18)
     }
 
     @Test
