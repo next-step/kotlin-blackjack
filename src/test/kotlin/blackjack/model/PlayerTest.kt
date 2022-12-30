@@ -4,9 +4,9 @@ import blackjack.model.Denomination.ACE
 import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.QUEEN
 import blackjack.model.Denomination.TEN
-import blackjack.model.GameResult.LOSE
-import blackjack.model.GameResult.PUSH
-import blackjack.model.GameResult.WIN
+import blackjack.model.MatchResult.LOSE
+import blackjack.model.MatchResult.PUSH
+import blackjack.model.MatchResult.WIN
 import blackjack.model.Suit.CLOVER
 import blackjack.model.Suit.HEART
 import blackjack.model.Suit.SPADE

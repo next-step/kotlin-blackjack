@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Denomination
+import blackjack.model.MatchResult
 import blackjack.model.Suit
 
 class KoreanMessageSource {
@@ -27,6 +28,16 @@ class KoreanMessageSource {
         Denomination.QUEEN to "Q",
         Denomination.KING to "K"
     )
+
+    private val matchResultMap = hashMapOf(
+        MatchResult.WIN to "승",
+        MatchResult.LOSE to "패",
+        MatchResult.PUSH to "무",
+    )
+
+    fun nameOf(matchResult: MatchResult): String {
+        return matchResultMap[matchResult] ?: matchResult.name
+    }
 
     fun nameOf(card: Card): String {
         return nameOf(card.denomination) + nameOf(card.suit)

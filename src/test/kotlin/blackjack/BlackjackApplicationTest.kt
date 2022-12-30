@@ -73,7 +73,7 @@ internal class BlackjackApplicationTest {
 
         // when
         BlackjackApplication(cardDeck, inputView, outputView).play()
-        verify { outputView.printResult(capture(dealerAfterInit), any()) }
+        verify { outputView.printCardResult(capture(dealerAfterInit), any()) }
 
         val dealerCardCount = dealerAfterInit.captured.cards.size
         val dealerScore = dealerAfterInit.captured.getFinalScore()
@@ -109,7 +109,7 @@ internal class BlackjackApplicationTest {
         BlackjackApplication(clonedCardDeck, inputView, outputView).play()
         verify { outputView.printInitCards(any(), capture(playersAfterInit)) }
         verify { outputView.printPlayerCards(capture(playersAfterCardPick)) }
-        verify { outputView.printResult(any(), capture(playersAfterGameEnd)) }
+        verify { outputView.printCardResult(any(), capture(playersAfterGameEnd)) }
 
         val playersCount = playersAfterInit.captured.size
         val playerNames = playersAfterInit.captured.map { it.name }
@@ -149,7 +149,7 @@ internal class BlackjackApplicationTest {
         // when
         BlackjackApplication(clonedCardDeck, inputView, outputView).play()
         verify { outputView.printInitCards(any(), capture(playersAfterInit)) }
-        verify { outputView.printResult(any(), capture(playersAfterGameEnd)) }
+        verify { outputView.printCardResult(any(), capture(playersAfterGameEnd)) }
 
         val playersCount = playersAfterInit.captured.size
         val playerNames = playersAfterInit.captured.map { it.name }

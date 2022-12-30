@@ -1,6 +1,6 @@
 package blackjack.model
 
-import blackjack.model.GameResult.LOSE
+import blackjack.model.MatchResult.LOSE
 
 class Player(
     val name: String,
@@ -24,14 +24,14 @@ class Player(
         return cards.getScore() ?: FAIL_SCORE
     }
 
-    fun wins(other: Player): GameResult {
+    fun wins(other: Player): MatchResult {
         val score = getFinalScore()
         val otherScore = other.getFinalScore()
         if (score == FAIL_SCORE) {
             return LOSE
         }
 
-        return GameResult.of(score, otherScore)
+        return MatchResult.of(score, otherScore)
     }
 
     companion object {
