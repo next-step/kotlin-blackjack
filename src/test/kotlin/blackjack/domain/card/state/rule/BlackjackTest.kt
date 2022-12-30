@@ -1,40 +1,32 @@
 package blackjack.domain.card.state.rule
 
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.PlayingCard
+import blackjack.SpadeAce
+import blackjack.SpadeJack
+import blackjack.SpadeTen
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.card.Suit
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class BlackjackTest {
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,TEN:true", "ACE,JACK:true", "ACE,QUEEN:true", "ACE,KING:true", "TWO,KING:false"], delimiter = ':')
-    fun `블랙잭 - 생성 테스트`(given: String, expected: Boolean) {
+    @Test
+    fun `Blackjack(Ace + Jack = Blackjack)`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val hit = Hit(PlayingCards.of(denominations.map { PlayingCard(Suit.CLUBS, it) }))
+        val given = Blackjack(PlayingCards(SpadeAce, SpadeJack))
 
-        // when
-        val actual = hit.cards.isBlackjack()
-
-        // then
-        assertThat(actual).isEqualTo(expected)
+        // when, then
+        assertThat(given).isInstanceOf(Blackjack::class.java)
+        assertThat(given.cards.isBlackjack()).isTrue
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["ACE,ACE", "TEN,JACK", "ACE,JACK,QUEEN"])
-    fun `블랙잭 - 생성 예외처리 테스트`(given: String) {
+    @Test
+    fun `Not Blackjack(ACE + Jack + Ten = 21)`() {
         // given
-        val denominations = given.split(",").map { Denomination.valueOf(it) }
-        val playingCardList = denominations.map { PlayingCard(Suit.CLUBS, it) }
+        val cards = PlayingCards(SpadeAce, SpadeJack, SpadeTen)
 
         // when
         val exception = assertThrows<IllegalArgumentException> {
-            Blackjack(PlayingCards.of(playingCardList))
+            Blackjack(cards)
         }
 
         // then

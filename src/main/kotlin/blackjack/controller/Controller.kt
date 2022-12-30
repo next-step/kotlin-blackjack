@@ -3,70 +3,82 @@ package blackjack.controller
 import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerFactory
-import blackjack.domain.player.Players
-import blackjack.dto.PlayerDto
-import blackjack.dto.PlayersDto
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Participants.Companion.NUMBER_OF_INIT_CARDS
+import blackjack.domain.participant.state.result.Result.Companion.calculateResult
+import blackjack.domain.participant.state.role.Role
+import blackjack.dto.ParticipantDto
+import blackjack.dto.ParticipantsDto
+import blackjack.dto.ResultDto
+import blackjack.dto.ResultsDto
 import blackjack.view.ResultView
 
 object Controller {
-    private const val MINIMUM_NUMBER_OF_CARDS = 2
-
     fun start() {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
-        val deck = Deck(cards)
+        val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
-        val players = PlayerFactory.create(names, deck)
+        val dealer = Dealer(deck.getCards(NUMBER_OF_INIT_CARDS))
+        val players = Participants.createPlayers(names, deck)
 
-        init(players)
-        checkBlackjack(players)
-        play(players, deck)
-        end(players)
+        printPlayerNames(players)
+        printParticipantsCards(players.plus(dealer))
+        val newPlayers = doPlayerHitOrStay(players, deck)
+        val newDealer = doDealerHitOrStay(dealer, deck)
+        printFinalResult(newPlayers.plus(newDealer))
     }
 
-    private fun init(players: Players) {
-        ResultView.printGameStartMessage(PlayersDto.from(players).getNames())
-        PlayersDto.from(players).players.forEach {
-            ResultView.printPlayerCards(it)
+    private fun printPlayerNames(players: Participants) {
+        ResultView.printGameStartMessage(ParticipantsDto.from(players).getNames())
+    }
+
+    private fun printParticipantsCards(participants: Participants) {
+        ParticipantsDto.from(participants).participants.forEach {
+            ResultView.printParticipantCards(it)
         }
         ResultView.printLineFeed()
     }
 
-    private fun checkBlackjack(players: Players) {
-        if (hasBlackjack(players)) {
-            end(players)
+    private fun doPlayerHitOrStay(players: Participants, deck: Deck): Participants {
+        if (players.isBlackjack()) {
+            return players
         }
+        return Participants(players.getPlayers().map { doHitOrStay(it, deck) })
     }
 
-    private fun hasBlackjack(players: Players): Boolean {
-        var result = false
-        players.values.forEach {
-            result = result or it.cards.isBlackjack()
+    private fun doHitOrStay(role: Role, deck: Deck): Role {
+        var newPlayer = role
+        while (InputFilter.inputHitOrStay(ParticipantDto.from(role).name) && !newPlayer.isBust()) {
+            newPlayer = newPlayer.draw(deck.getCard())
+            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
-        return result
+        if (!newPlayer.isBust() && !newPlayer.isBlackjack()) {
+            newPlayer = newPlayer.stay()
+        }
+        if (newPlayer.getCardsSize() == NUMBER_OF_INIT_CARDS) {
+            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
+        }
+        return newPlayer
     }
 
-    private fun play(players: Players, deck: Deck) {
-        players.values.forEach { player ->
-            doHitOrStay(player, deck)
+    private fun doDealerHitOrStay(role: Role, deck: Deck): Role {
+        if (role.getScore() <= Dealer.STOP_SCORE) {
+            ResultView.printDealerDrawMessage()
+            return role.draw(deck.getCard())
         }
+        return role.stay()
     }
 
-    private fun doHitOrStay(player: Player, deck: Deck) {
-        while (InputFilter.inputHitOrStay(PlayerDto.from(player).name)) {
-            player.draw(deck.getCard())
-            ResultView.printPlayerCards(PlayerDto.from(player))
-        }
-        if (player.cards.size() == MINIMUM_NUMBER_OF_CARDS) {
-            ResultView.printPlayerCards(PlayerDto.from(player))
-        }
-    }
-
-    private fun end(players: Players) {
+    private fun printFinalResult(participants: Participants) {
         ResultView.printLineFeed()
-        players.values.forEach {
-            ResultView.printResultWithScore(PlayerDto.from(it))
+        participants.getAll().forEach {
+            ResultView.printResultWithScore(ParticipantDto.from(it))
         }
+
+        ResultView.printLineFeed()
+        val results = calculateResult(participants)
+        val resultsDto = results.map { ResultDto.from(it.key, it.value) }
+        ResultView.printResult(ResultsDto(resultsDto))
     }
 }

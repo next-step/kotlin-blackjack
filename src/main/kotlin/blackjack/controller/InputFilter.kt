@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.player.state.Name
+import blackjack.domain.participant.state.Name
 import blackjack.view.InputView
 
 object InputFilter {
