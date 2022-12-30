@@ -21,7 +21,11 @@ class StandardOutputView(
         println(cardDetailsOf(player))
     }
 
-    override val printResult: (Players) -> Unit = { players ->
+    override val printDealerDraw: (Player) -> Unit = { player ->
+        println("${player.name}는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    override val printResult: (Player, Players) -> Unit = { player, players ->
         println()
         players.forEach {
             println("${cardDetailsOf(it)} - 결과: ${it.getFinalScore()}")

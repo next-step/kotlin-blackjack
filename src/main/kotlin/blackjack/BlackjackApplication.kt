@@ -20,7 +20,18 @@ class BlackjackApplication(
         outputView.printInitCards(dealer, players)
 
         playBlackjackGame(players)
-        outputView.printResult(players)
+        drawDealerCardOrNot(dealer)
+
+        outputView.printResult(dealer, players)
+    }
+
+    private fun drawDealerCardOrNot(dealer: Player) {
+        if (dealer.getFinalScore() > DEALER_DRAW_SCORE) {
+            return
+        }
+
+        dealer.addCard(cardDeck.drawCard())
+        outputView.printDealerDraw(dealer)
     }
 
     private fun initPlayers(names: String): Players {
@@ -54,6 +65,7 @@ class BlackjackApplication(
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_DRAW_SCORE = 16
         private const val INIT_CARD_COUNT = 2
         private const val NAME_STRING_DELIMITER = ","
     }

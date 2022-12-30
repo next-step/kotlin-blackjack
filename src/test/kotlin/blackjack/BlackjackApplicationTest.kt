@@ -6,6 +6,7 @@ import blackjack.model.Denomination.EIGHT
 import blackjack.model.Denomination.JACK
 import blackjack.model.Denomination.KING
 import blackjack.model.Denomination.NINE
+import blackjack.model.Denomination.SEVEN
 import blackjack.model.Denomination.TEN
 import blackjack.model.Player
 import blackjack.model.Players
@@ -15,6 +16,7 @@ import blackjack.model.Suit.HEART
 import blackjack.model.Suit.SPADE
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
@@ -29,7 +31,8 @@ internal class BlackjackApplicationTest {
             Card(SPADE, EIGHT),
             Card(HEART, EIGHT),
             Card(CLOVER, EIGHT),
-            Card(DIAMOND, EIGHT)
+            Card(DIAMOND, EIGHT),
+            Card(DIAMOND, SEVEN)
         )
         val inputView = object : InputView {
             override val readPlayers: () -> String = { "pobi" }
@@ -41,14 +44,14 @@ internal class BlackjackApplicationTest {
 
         // when
         BlackjackApplication(cardDeck, inputView, outputView).play()
-        verify { outputView.printInitCards(capture(dealerAfterInit), any()) }
+        verify { outputView.printDealerDraw(capture(dealerAfterInit)) }
 
         val dealerCardCount = dealerAfterInit.captured.cards.size
         val dealerScore = dealerAfterInit.captured.getFinalScore()
 
         // then
         assertThat(dealerCardCount).isEqualTo(3)
-        assertThat(dealerScore == 0 || dealerScore > 16).isTrue
+        assertThat(dealerScore).isEqualTo(0)
     }
 
     @Test
@@ -70,12 +73,13 @@ internal class BlackjackApplicationTest {
 
         // when
         BlackjackApplication(cardDeck, inputView, outputView).play()
-        verify { outputView.printInitCards(capture(dealerAfterInit), any()) }
+        verify { outputView.printResult(capture(dealerAfterInit), any()) }
 
         val dealerCardCount = dealerAfterInit.captured.cards.size
         val dealerScore = dealerAfterInit.captured.getFinalScore()
 
         // then
+        verify { outputView.printDealerDraw wasNot Called }
         assertThat(dealerCardCount).isEqualTo(2)
         assertThat(dealerScore).isEqualTo(18)
     }
@@ -105,7 +109,7 @@ internal class BlackjackApplicationTest {
         BlackjackApplication(clonedCardDeck, inputView, outputView).play()
         verify { outputView.printInitCards(any(), capture(playersAfterInit)) }
         verify { outputView.printPlayerCards(capture(playersAfterCardPick)) }
-        verify { outputView.printResult(capture(playersAfterGameEnd)) }
+        verify { outputView.printResult(any(), capture(playersAfterGameEnd)) }
 
         val playersCount = playersAfterInit.captured.size
         val playerNames = playersAfterInit.captured.map { it.name }
@@ -145,7 +149,7 @@ internal class BlackjackApplicationTest {
         // when
         BlackjackApplication(clonedCardDeck, inputView, outputView).play()
         verify { outputView.printInitCards(any(), capture(playersAfterInit)) }
-        verify { outputView.printResult(capture(playersAfterGameEnd)) }
+        verify { outputView.printResult(any(), capture(playersAfterGameEnd)) }
 
         val playersCount = playersAfterInit.captured.size
         val playerNames = playersAfterInit.captured.map { it.name }
