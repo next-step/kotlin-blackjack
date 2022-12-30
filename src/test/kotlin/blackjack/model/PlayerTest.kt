@@ -4,6 +4,9 @@ import blackjack.model.Denomination.ACE
 import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.QUEEN
 import blackjack.model.Denomination.TEN
+import blackjack.model.GameResult.LOSE
+import blackjack.model.GameResult.PUSH
+import blackjack.model.GameResult.WIN
 import blackjack.model.Suit.CLOVER
 import blackjack.model.Suit.HEART
 import blackjack.model.Suit.SPADE
@@ -72,12 +75,12 @@ class PlayerTest {
         val loseCards = Cards.of(Card(SPADE, TEN), Card(HEART, TEN))
 
         // when
-        val loser = Player("loser", winCards)
-        val winner = Player("winner", loseCards)
+        val loser = Player("loser", loseCards)
+        val winner = Player("winner", winCards)
 
         // then
-        assertThat(loser.wins(winner)).isFalse
-        assertThat(winner.wins(loser)).isTrue
+        assertThat(loser.wins(winner)).isSameAs(LOSE)
+        assertThat(winner.wins(loser)).isSameAs(WIN)
     }
 
     @Test
@@ -90,7 +93,20 @@ class PlayerTest {
         val bustPlayer2 = Player("loser", cards)
 
         // then
-        assertThat(bustPlayer.wins(bustPlayer2)).isFalse
-        assertThat(bustPlayer2.wins(bustPlayer)).isFalse
+        assertThat(bustPlayer.wins(bustPlayer2)).isSameAs(LOSE)
+        assertThat(bustPlayer2.wins(bustPlayer)).isSameAs(LOSE)
+    }
+
+    @Test
+    internal fun `점수가 같다면 동점으로 판단한다`() {
+        // given
+        val cards = Cards.of(Card(SPADE, TEN), Card(CLOVER, TEN))
+
+        // when
+        val player1 = Player("loser", cards)
+        val player2 = Player("loser", cards)
+
+        // then
+        assertThat(player1.wins(player2)).isSameAs(PUSH)
     }
 }
