@@ -95,6 +95,22 @@ class PlayerTest : StringSpec({
         result shouldBe 0
     }
 
+    "BlackJack인 플레이어와 BUST 딜러가 있을 때 플레이어는 베팅한 금액의 1.5배를 받는다." {
+        //given
+        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_9, Card.CLOVER_3)))
+        val harris = Player(
+            "harris",
+            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
+            BettingAmount(10000)
+        )
+
+        //when
+        val result = harris.flip(dealer)
+
+        //then
+        result shouldBe 15000
+    }
+
     "21점인 플레이어와 BlackJack인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 패배한다." {
         //given
         val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
