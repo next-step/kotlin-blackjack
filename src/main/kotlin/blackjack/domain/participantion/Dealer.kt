@@ -3,7 +3,7 @@ package blackjack.domain.participantion
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 
-class Dealer(name: String, cards: Cards) : Participant(name, cards) {
+class Dealer(name: String, cards: Cards) : Participant(name, cards, Price(0)) {
     constructor(cardDeck: CardDeck) : this(
         name = DEFAULT_NAME,
         cards = Cards(cardDeck)
