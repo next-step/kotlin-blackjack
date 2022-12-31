@@ -11,26 +11,24 @@ data class Player(
     val name: String,
     val hands: Hands = Hands(),
     val bettingAmount: BettingAmount = BettingAmount(0),
-    var state: State = Hit(),
+    var state: State = Hit(hands),
 ) {
     //first turn
     //state : hit, stay, blackjack, bust
     fun addCard(deal: Card): Player {
         hands.addOne(deal)
+        state = state.draw(setOf(deal))
         return this
     }
 
     fun firstTurn(cards: Set<Card>): Player {
         hands.addAll(cards)
-        if (hands.blackJack()) {
-            state = BlackJack()
-        }
-
+        state = state.draw(cards)
         return this
     }
 
-    fun cardPoint() = hands.calculatePoint()
-    fun blackJack() = hands.blackJack()
+    fun cardPoint() = state.hands.calculatePoint()
+    fun blackJack() = state.hands.blackJack()
 
     fun flip(dealer: Dealer): Int {
         return when {
@@ -44,7 +42,7 @@ data class Player(
         }
     }
 
-    fun bust(): Boolean = hands.bust()
-    fun firstCard(): Set<Card> = hands.firstCard()
+    fun bust(): Boolean = state.hands.bust()
+    fun firstCard(): Set<Card> = state.hands.firstCard()
 
 }
