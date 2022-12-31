@@ -18,4 +18,10 @@ enum class Denomination(
     KING("K", 10),
     QUEEN("Q", 10),
     JACK("J", 10);
+
+    companion object {
+        fun random(): Denomination {
+            return values().random()
+        }
+    }
 }
