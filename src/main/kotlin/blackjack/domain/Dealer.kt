@@ -3,7 +3,7 @@ package blackjack.domain
 data class Dealer(
     override val name: Name = DEALER_NAME,
     override var cards: Cards = Cards(),
-    val profit: Profit = INITIAL_PROFIT
+    val profit: Profit = Profit()
 ) : Player {
     var results: MutableList<ResultStatus> = mutableListOf()
 
@@ -56,6 +56,5 @@ data class Dealer(
         private const val DEALER_HIT_SCORE = 16
         private const val BLACKJACK_SCORE = 21
         private val DEALER_NAME = Name("딜러")
-        private val INITIAL_PROFIT = Profit(0)
     }
 }
