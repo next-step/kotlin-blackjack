@@ -1,6 +1,8 @@
 package blackjack.domain.holder
 
 import blackjack.domain.card.Card
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
 import blackjack.domain.value.BettingAmount
 import blackjack.domain.value.Point
 
@@ -8,13 +10,16 @@ data class Player(
     val name: String,
     val hands: Hands = Hands(),
     val bettingAmount: BettingAmount = BettingAmount(0),
+    val state: State = Hit(),
 ) {
+    //first turn
+    //state : hit, stay, blackjack, bust
     fun addCard(deal: Card): Player {
         hands.addOne(deal)
         return this
     }
 
-    fun addCard(cards: Set<Card>): Player {
+    fun firstTurn(cards: Set<Card>): Player {
         hands.addAll(cards)
         return this
     }

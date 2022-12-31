@@ -4,13 +4,38 @@ import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
 import blackjack.domain.holder.Hands
 import blackjack.domain.holder.Player
+import blackjack.domain.state.Hit
 import blackjack.domain.value.BettingAmount
 import blackjack.domain.value.Point
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class PlayerTest : StringSpec({
+
+    "처음 생성한 플레이어의 상태는 Hit이다." {
+        //given
+        val player = Player("harris")
+        //when
+        val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
+        //then
+        playerAfterFirstTurn.name shouldBe "harris"
+        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
+        playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
+    }
+
+    "firstTurn 함수는 두장의 카드를 입력았을 때 player의 상태는 Hit 임을 확인한다." {
+        //given
+        val player = Player("harris")
+        //when
+        val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
+        //then
+        playerAfterFirstTurn.name shouldBe "harris"
+        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
+        playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
+    }
 
     "addCard 함수로 5점인 카드 두개를 추가하면 카드 포인트는 10이다." {
         //given

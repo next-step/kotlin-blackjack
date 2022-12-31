@@ -28,7 +28,7 @@ class Dealer(hands: Hands = Hands()) {
     fun bust(): Boolean = player.bust()
 
     fun addCard(cards: Set<Card>) {
-        player.addCard(cards)
+        player.firstTurn(cards)
     }
 
     fun firstCard(): Set<Card> = player.firstCard()

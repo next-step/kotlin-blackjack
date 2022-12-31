@@ -22,7 +22,7 @@ class BlackJackGame(
     }
 
     private fun playerInit(): List<InitResult> = players.map {
-        val player = it.addCard(deck.deal(INITIAL_CARD_COUNT))
+        val player = it.firstTurn(deck.deal(INITIAL_CARD_COUNT))
         InitResult(player)
     }
 
