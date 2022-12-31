@@ -3,22 +3,17 @@ package blackjack.domain.result
 import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Player
 
-class GameResult private constructor(val winnerCount: Int, val loseCount: Int) {
+class GameResult(private val winners: Winners, private val losers: Losers) {
+    operator fun component1() = winners
+    operator fun component2() = losers
 
     companion object {
+
         fun from(dealer: Dealer, players: List<Player>): GameResult {
-            val winnerCount = players.count { player ->
-                dealer.point > player.point
-            }
+            val winners = Winners.from(dealer, players)
+            val losers = Losers.from(dealer, players)
 
-            val loseCount = players.count { player ->
-                dealer.point < player.point
-            }
-
-            return GameResult(
-                winnerCount = if (dealer.isBust()) 0 else winnerCount,
-                loseCount = if (dealer.isBust()) players.size else loseCount
-            )
+            return GameResult(winners, losers)
         }
     }
 }

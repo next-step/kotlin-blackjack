@@ -25,6 +25,8 @@ class Cards(val cardStack: Stack<Card>) {
             acc + card.getPoint(acc)
         }
 
+    fun isBlackJack() = cardStack.size == INIT_COUNT && point() == Card.BLACK_JACk_NUMBER
+
     companion object {
         const val INIT_COUNT = 2
     }

@@ -3,12 +3,7 @@ package blackjack.domain.result
 import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Player
 
-class Winners(
-    private val players: List<Player>
-) {
-
-    fun exist(name: String): Boolean =
-        players.any { player -> player.name == name }
+class Winners(players: List<Player>) : Rank(players) {
 
     companion object {
         fun from(dealer: Dealer, players: List<Player>): Winners {
