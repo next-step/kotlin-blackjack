@@ -13,8 +13,4 @@ class Hit(override val hand: Hand) : State {
 
         return Hit(newHand)
     }
-
-    fun toStay(): Stay {
-        return Stay(hand)
-    }
 }

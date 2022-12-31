@@ -5,6 +5,7 @@ import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 
 class Dealer(override var state: State) : Player("딜러", state) {
+
     override fun canDraw(): Boolean {
         return state is Hit && state.hand.score <= DEALERS_HIT_RULE
     }

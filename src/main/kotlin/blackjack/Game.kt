@@ -65,8 +65,4 @@ class Game(private val input: Input, private val output: Output) {
             output.printPlayerCard(player)
         }
     }
-
-    companion object {
-        private const val INIT_HAND_COUNT = 2
-    }
 }
