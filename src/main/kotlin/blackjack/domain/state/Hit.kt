@@ -7,10 +7,10 @@ class Hit(override val hand: Hand) : State {
     override fun draw(card: Card): State {
         val newHand = Hand(hand.cards + card)
 
-        if (newHand.isBust) {
-            return Bust(newHand)
+        return when {
+            newHand.isBust -> Bust(newHand)
+            newHand.isBlackjack -> Blackjack(newHand)
+            else -> Hit(newHand)
         }
-
-        return Hit(newHand)
     }
 }

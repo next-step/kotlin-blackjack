@@ -15,11 +15,15 @@ internal class DealerTest {
 
         val dealer = Dealer(FirstTurn.draw(firstCard, secondCard))
 
-        dealer.draw(secondCard)
-
         dealer.canDraw() shouldBe true
+    }
 
-        dealer.draw(Card(Shape.DIAMOND, Denomination.ACE))
+    @Test
+    fun `딜러는 카드 총합이 16초과하면 카드를 더 뽑지 않는다`() {
+        val firstCard = Card(Shape.DIAMOND, Denomination.TEN)
+        val secondCard = Card(Shape.DIAMOND, Denomination.SEVEN)
+
+        val dealer = Dealer(FirstTurn.draw(firstCard, secondCard))
 
         dealer.canDraw() shouldBe false
     }
