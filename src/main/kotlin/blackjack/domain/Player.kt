@@ -1,28 +1,19 @@
 package blackjack.domain
 
-open class Player(val name: String, protected val hand: Hand = Hand()) {
-    open fun canDraw(): Boolean {
-        return !score().isBurst()
-    }
+import blackjack.domain.card.Card
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
 
-    open fun open(): List<Card> {
-        return hand.cards()
+open class Player(val name: String, open var state: State) {
+    open fun canDraw(): Boolean {
+        return state is Hit
     }
 
     fun draw(card: Card) {
-        hand.addCard(card)
+        state = state.draw(card)
     }
 
-    fun score(): Score {
-        return hand.score()
-    }
-
-    fun result(dealerScore: Score): Result {
-        return when {
-            dealerScore.isBurst() -> Result.WIN
-            score().isBurst() -> Result.LOSE
-            score().value > dealerScore.value -> Result.WIN
-            else -> Result.LOSE
-        }
+    fun score(): Int {
+        return state.hand.score
     }
 }

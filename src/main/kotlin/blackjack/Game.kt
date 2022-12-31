@@ -3,25 +3,26 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.Result
+import blackjack.domain.state.FirstTurn
 import blackjack.io.Input
 import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
-    private val players: List<Player> by lazy { makePlayers() }
-    private val dealer: Dealer = Dealer()
+    private val players: List<Player>
+    private val dealer: Dealer
     private val deck: Deck = Deck()
 
-    fun init() {
+    init {
         deck.shuffle()
+        players = input.getPlayers().map { name -> Player(name, FirstTurn.draw(deck.draw(), deck.draw())) }
+        dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
     }
 
     fun start() {
-        repeat(INIT_HAND_COUNT) {
-            dealer.draw(deck.draw())
-            players.forEach { it.draw(deck.draw()) }
-        }
-
-        output.printPlayersCard(listOf(dealer) + players)
+        output.printDistribute(listOf(dealer) + players)
+        output.printDealerCard(dealer)
+        output.printPlayersCard(players)
     }
 
     fun draw() {
@@ -42,8 +43,10 @@ class Game(private val input: Input, private val output: Output) {
 
         output.printEmptyLine()
 
-        output.printDealerResult(dealer, dealer.result(players.map { it.score() }))
-        output.printPlayersResult(players, dealer)
+        output.printDealerResult(Result.dealerResult(dealer, players))
+        players.forEach { player: Player ->
+            output.printPlayerResult(player, Result.playerResult(dealer, player))
+        }
     }
 
     private fun dealerDraw() {
@@ -62,8 +65,6 @@ class Game(private val input: Input, private val output: Output) {
             output.printPlayerCard(player)
         }
     }
-
-    private fun makePlayers() = input.getPlayers().map { Player(it) }
 
     companion object {
         private const val INIT_HAND_COUNT = 2

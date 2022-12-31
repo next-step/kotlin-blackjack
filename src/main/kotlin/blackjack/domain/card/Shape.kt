@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class Shape(val values: String) {
     SPADE("스페이드"),
