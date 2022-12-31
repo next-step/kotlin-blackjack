@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.BetAmount
 import blackjack.domain.Player
 
 object InputView {
@@ -11,9 +10,9 @@ object InputView {
         return readln().split(",")
     }
 
-    fun inputBetAmount(name: String): BetAmount {
+    fun inputBetAmount(name: String): Int {
         println("$name 의 베팅 금액은?")
-        return BetAmount(readln().toInt())
+        return readln().toInt()
     }
 
     fun inputIsGetCard(player: Player): Boolean {
