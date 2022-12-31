@@ -12,7 +12,7 @@ class Dealer(hands: Hands = Hands()) {
     val name: String
         get() = player.name
     val hands: Hands
-        get() = player.hands
+        get() = player.state.hands
 
     fun hitUntil(deck: CardDeck): Int {
         var count = 0

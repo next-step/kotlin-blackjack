@@ -1,28 +1,26 @@
 package blackjack.domain.holder
 
 import blackjack.domain.card.Card
-import blackjack.domain.state.BlackJack
 import blackjack.domain.state.Hit
 import blackjack.domain.state.State
 import blackjack.domain.value.BettingAmount
-import blackjack.domain.value.Point
 
 data class Player(
     val name: String,
-    val hands: Hands = Hands(),
+    var state: State = Hit(Hands()),
     val bettingAmount: BettingAmount = BettingAmount(0),
-    var state: State = Hit(hands),
 ) {
+    constructor(name: String, hands: Hands, bettingAmount: BettingAmount) : this(name, Hit(hands), bettingAmount)
+    constructor(name: String, hands: Hands) : this(name, Hit(hands))
+
     //first turn
     //state : hit, stay, blackjack, bust
     fun addCard(deal: Card): Player {
-        hands.addOne(deal)
         state = state.draw(setOf(deal))
         return this
     }
 
     fun firstTurn(cards: Set<Card>): Player {
-        hands.addAll(cards)
         state = state.draw(cards)
         return this
     }

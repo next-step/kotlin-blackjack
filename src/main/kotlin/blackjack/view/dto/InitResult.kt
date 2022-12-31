@@ -10,7 +10,7 @@ data class InitResult(
 ) {
     constructor(player: Player) : this(
         player.name,
-        player.hands.cards,
+        player.state.hands.cards,
     )
 
     constructor(dealer: Dealer, firstCard: Set<Card>) : this(dealer.name, firstCard)

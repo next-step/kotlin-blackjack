@@ -24,7 +24,7 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
+        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
         playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
     }
 
@@ -35,7 +35,7 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
+        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
         playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
     }
 
@@ -46,7 +46,7 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_J))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_J))
+        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_J))
         playerAfterFirstTurn.state.shouldBeInstanceOf<BlackJack>()
     }
 
