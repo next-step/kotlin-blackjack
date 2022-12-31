@@ -305,7 +305,7 @@ internal class DealerTest : StringSpec({
         val dealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.FIVE))
 
         val userResultStatus = dealer.getMatchResult(blackJackUser)
-        val userProfit = ProfitCalculator().calculate(blackJackUser, userResultStatus)
+        val userProfit = ProfitCalculator(blackJackUser, userResultStatus)
         val userResult = PlayerResult(blackJackUser, userResultStatus, userProfit)
 
         val changedDealer = dealer.calculateProfit(listOf(userResult))

@@ -10,7 +10,7 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.EIGHT), Card(Suite.SPADE, Denomination.FOUR))
 
         val userResultStatus = dealer.getMatchResult(user)
-        val result = ProfitCalculator().calculate(user, userResultStatus)
+        val result = ProfitCalculator(user, userResultStatus)
 
         userResultStatus shouldBe ResultStatus.DRAW
         result shouldBe Profit(0)
@@ -21,7 +21,7 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.TWO), Card(Suite.HEART, Denomination.NINE))
 
         val userResultStatus = dealer.getMatchResult(user)
-        val result = ProfitCalculator().calculate(user, userResultStatus)
+        val result = ProfitCalculator(user, userResultStatus)
 
         userResultStatus shouldBe ResultStatus.WIN
         result.value + user.betAmount.value shouldBe user.betAmount.value * 2.5
@@ -32,7 +32,7 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.TWO), Card(Suite.HEART, Denomination.NINE))
 
         val userResultStatus = dealer.getMatchResult(user)
-        val result = ProfitCalculator().calculate(user, userResultStatus)
+        val result = ProfitCalculator(user, userResultStatus)
 
         userResultStatus shouldBe ResultStatus.WIN
         result.value shouldBe user.betAmount.value * 2
@@ -45,7 +45,7 @@ internal class ProfitCalculatorTest : StringSpec({
         val dealer = Dealer(Card(Suite.CLOVER, Denomination.JACK), Card(Suite.HEART, Denomination.NINE))
 
         val userResultStatus = dealer.getMatchResult(user)
-        val result = ProfitCalculator().calculate(user, userResultStatus)
+        val result = ProfitCalculator(user, userResultStatus)
 
         userResultStatus shouldBe ResultStatus.LOSE
         result.value shouldBe -user.betAmount.value

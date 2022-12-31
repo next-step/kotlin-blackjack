@@ -1,7 +1,10 @@
 package blackjack.domain
 
-class ProfitCalculator {
-    fun calculate(user: User, status: ResultStatus): Profit {
+object ProfitCalculator {
+    private const val RATE_OF_BLACK_JACK_PROFIT = 2.5
+    private val DRAW_PROFIT = Profit(0)
+
+    operator fun invoke(user: User, status: ResultStatus): Profit {
         return when (status) {
             ResultStatus.WIN -> calculateProfitWhenUserWin(user)
             ResultStatus.LOSE -> Profit(-user.betAmount.value)
@@ -15,10 +18,5 @@ class ProfitCalculator {
         }
 
         return Profit(user.betAmount.value)
-    }
-
-    companion object {
-        private const val RATE_OF_BLACK_JACK_PROFIT = 2.5
-        private val DRAW_PROFIT = Profit(0)
     }
 }
