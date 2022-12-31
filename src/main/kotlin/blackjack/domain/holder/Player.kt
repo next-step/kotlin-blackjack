@@ -29,11 +29,7 @@ data class Player(
 
     fun cardPoint() = state.hands.calculatePoint()
     fun blackJack() = state.hands.blackJack()
-
-    fun flip(dealer: Dealer): Int {
-        return state.earning(dealer, bettingAmount)
-    }
-
+    fun flip(dealer: Dealer): Int = state.earning(dealer, bettingAmount)
     fun bust(): Boolean = state.hands.bust()
     fun firstCard(): Set<Card> = state.hands.firstCard()
 
