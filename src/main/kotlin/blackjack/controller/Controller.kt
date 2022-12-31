@@ -23,10 +23,10 @@ object Controller {
         val players = Participants.createPlayers(names, deck)
 
         printPlayerNames(players)
-        printParticipantsCards(players.plus(dealer))
+        printParticipantsCards(players + dealer)
         val newPlayers = doPlayerHitOrStay(players, deck)
         val newDealer = doDealerHitOrStay(dealer, deck)
-        printFinalResult(newPlayers.plus(newDealer))
+        printFinalResult(newPlayers + newDealer)
     }
 
     private fun printPlayerNames(players: Participants) {

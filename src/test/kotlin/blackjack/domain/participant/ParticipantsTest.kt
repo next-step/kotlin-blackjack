@@ -92,7 +92,7 @@ class ParticipantsTest {
         val players = Participants(Player("pobi", cards), Player("jason", cards))
 
         // when
-        val actual = players.plus(dealer)
+        val actual = players + dealer
 
         // then
         assertThat(actual.getDealer().isDealer()).isTrue

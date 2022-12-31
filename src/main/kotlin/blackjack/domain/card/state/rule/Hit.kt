@@ -7,7 +7,7 @@ import blackjack.domain.card.state.State
 
 class Hit(cards: PlayingCards) : Running(cards) {
     override fun draw(playingCard: PlayingCard): State {
-        val newCards = cards.plus(playingCard)
+        val newCards = cards + playingCard
         if (newCards.isBust()) {
             return Bust(newCards)
         }

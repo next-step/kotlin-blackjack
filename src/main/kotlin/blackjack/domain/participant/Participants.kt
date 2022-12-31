@@ -19,7 +19,7 @@ value class Participants(private val values: List<Role>) {
             participants.add(0, role)
             return Participants(participants)
         }
-        return Participants(values.plus(role))
+        return Participants(values + role)
     }
 
     fun getPlayers(): List<Player> {
