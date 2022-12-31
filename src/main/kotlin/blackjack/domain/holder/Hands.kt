@@ -32,6 +32,8 @@ data class Hands(
 
     fun bust(): Boolean = sumPoint() > Point.MAX
     fun firstCard(): Set<Card> = setOf(_cards.first())
+
+    fun blackJack() = cards.size == 2 && calculatePoint() == Point.BLACK_JACK
 }
 
 private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {

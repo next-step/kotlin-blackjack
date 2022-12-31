@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
 import blackjack.domain.holder.Hands
 import blackjack.domain.holder.Player
+import blackjack.domain.state.BlackJack
 import blackjack.domain.state.Hit
 import blackjack.domain.value.BettingAmount
 import blackjack.domain.value.Point
@@ -26,7 +27,7 @@ class PlayerTest : StringSpec({
         playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
     }
 
-    "firstTurn 함수는 두장의 카드를 입력았을 때 player의 상태는 Hit 임을 확인한다." {
+    "firstTurn 함수로 두장의 카드를 입력았을 때 player의 상태는 Hit 임을 확인한다." {
         //given
         val player = Player("harris")
         //when
@@ -35,6 +36,17 @@ class PlayerTest : StringSpec({
         playerAfterFirstTurn.name shouldBe "harris"
         playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
         playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
+    }
+
+    "firstTurn 함수로 두장의 카드를 입력받았을 때 Ace, J이면 player의 상태는 BlackJack 임을 확인한다." {
+        //given
+        val player = Player("harris")
+        //when
+        val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_J))
+        //then
+        playerAfterFirstTurn.name shouldBe "harris"
+        playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_J))
+        playerAfterFirstTurn.state.shouldBeInstanceOf<BlackJack>()
     }
 
     "addCard 함수로 5점인 카드 두개를 추가하면 카드 포인트는 10이다." {
