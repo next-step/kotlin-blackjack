@@ -53,6 +53,17 @@ internal class CardsTest {
     }
 
     @Test
+    fun `카드 목록 중에 ACE 1개 이상 포함 되어 있을 시에 1장만 soft count 허용한다`() {
+        val eighteenCards = listOf(
+            Card(CardType.ACE, CardShape.CLOVER),
+            Card(CardType.SIX, CardShape.DIAMOND),
+            Card(CardType.ACE, CardShape.DIAMOND)
+        )
+        val cards = Cards(eighteenCards)
+        assertThat(cards.sum()).isEqualTo(18)
+    }
+
+    @Test
     fun `카드 목록 중에 첫번쨰 카드를 가져올 수 있다`() {
         val firstCard = Card(CardType.JACK, CardShape.CLOVER)
         val cards = Cards(mutableListOf(firstCard, Card(CardType.QUEEN, CardShape.CLOVER)))

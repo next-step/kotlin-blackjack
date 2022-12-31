@@ -23,6 +23,6 @@ private fun playBlackjack(game: Game) {
 
 private fun printGameResults(game: Game) {
     ResultView.printPlayerResult(game.players, game.dealer)
-    ResultView.printGameResult(game.results())
+    ResultView.printGameProfits(game.profits())
 }
 

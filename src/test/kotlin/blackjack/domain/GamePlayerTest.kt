@@ -16,6 +16,7 @@ import java.util.stream.Stream
 
 internal class GamePlayerTest {
     private val randomBet = (1..1000000).random().let(::Bet)
+
     @ParameterizedTest
     @EmptySource
     fun `Player 이름은 공백이 될 수 없다`(name: String) {
@@ -92,6 +93,20 @@ internal class GamePlayerTest {
         )
         val gamePlayer = GamePlayer("고니", randomBet).apply { cards.forEach(play::draw) }
         assertThat(gamePlayer.play.blackjack).isFalse
+    }
+
+    @Test
+    fun `Player는 본인의 수익률을 확인할 수 있다`() {
+        val dealer = FakeDealer(play = FakeGamePlay(_stay = true, score = 21))
+        val cards = listOf(
+            Card(CardType.TWO, CardShape.HEART),
+            Card(CardType.EIGHT, CardShape.DIAMOND),
+            Card(CardType.TEN, CardShape.SPADE)
+        )
+        val gamePlayer = GamePlayer("고니", randomBet).apply { cards.forEach(play::draw) }
+        val playerProfit = gamePlayer.profit(dealer)
+
+        assertThat(playerProfit.profit).isEqualTo(-randomBet.value.toDouble())
     }
 
     companion object {

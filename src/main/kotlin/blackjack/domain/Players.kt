@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.Game.Companion.INITIAL_CARDS_COUNT
+import blackjack.model.PlayerProfits
 
 class Players(val value: List<Player>) {
 
@@ -28,6 +29,10 @@ class Players(val value: List<Player>) {
             }
         }
     }
+
+    fun allPlayerProfits(dealer: Dealer): PlayerProfits =
+        value.map { it.profit(dealer) }
+            .let(::PlayerProfits)
 
     companion object {
         const val MIN_NUMBER_PLAYERS = 2

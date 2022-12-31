@@ -17,8 +17,6 @@ class Cards(
     val size: Int
         get() = _value.size
 
-    fun shuffle() = _value.shuffle()
-
     fun add(card: Card) = _value.add(card)
     fun sum(): Int =
         if (shouldCountWithAce()) {
@@ -35,11 +33,17 @@ class Cards(
     private fun shouldCountWithAce(): Boolean = _value.any { it.type == CardType.ACE }
 
     private fun sumWithAce(): Int {
-        val filteredCardsSum = filterNotAceCard().sumOf { it.type.score }
-        return filteredCardsSum.takeIf { BLACKJACK_SCORE - it < CardType.ACE.specialScore }
+        val countOfAce = value.count { it.type == CardType.ACE }
+        val cardsSum = filterNotAceCard().sumOf { it.type.score } +
+            if (countOfAce > ALLOWED_SOFT_ACE_COUNT) CardType.ACE.score * countOfAce - ALLOWED_SOFT_ACE_COUNT else 0
+        return cardsSum.takeIf { BLACKJACK_SCORE - it < CardType.ACE.specialScore }
             ?.let { it + CardType.ACE.score }
-            ?: run { filteredCardsSum + CardType.ACE.specialScore }
+            ?: run { cardsSum + CardType.ACE.specialScore }
     }
 
     private fun filterNotAceCard(): List<Card> = _value.filterNot { it.type == CardType.ACE }
+
+    companion object {
+        private const val ALLOWED_SOFT_ACE_COUNT = 1
+    }
 }

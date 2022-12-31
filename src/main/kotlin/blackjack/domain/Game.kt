@@ -1,11 +1,11 @@
 package blackjack.domain
 
-import blackjack.model.PlayerGameResults
+import blackjack.model.PlayerProfit
+import blackjack.model.PlayerProfits
 
 class Game(
     val players: Players,
-    val dealer: Dealer,
-    private val resultCalculator: ResultCalculator = GameResultCalculator()
+    val dealer: Dealer
 ) {
     init {
         dealer.shuffle()
@@ -19,8 +19,13 @@ class Game(
         }
     }
 
-    fun results(): PlayerGameResults =
-        resultCalculator.calculate(dealer, players)
+    fun profits(): PlayerProfits {
+        val playerProfits = players.allPlayerProfits(dealer)
+            .value
+            .filterIsInstance<PlayerProfit.Player>()
+        val dealerProfit = dealer.profit(playerProfits)
+        return PlayerProfits(listOf(dealerProfit) + playerProfits)
+    }
 
     fun playPlayers(hit: (Player) -> Boolean, printResult: (Player) -> Unit) {
         require(players.allReadyToPlay()) { "모든 플레이어가 게임을 시작할 준비가 되어야 합니다." }
