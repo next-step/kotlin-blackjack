@@ -1,34 +1,40 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Denomination
+import blackjack.domain.card.Shape
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 internal class HandTest {
     @Test
     fun `카드합을 계산할 수 있다`() {
-        val hand = Hand()
-        hand.addCard(Card(Shape.CLUB, Denomination.SEVEN))
-        hand.addCard(Card(Shape.CLUB, Denomination.JACK))
+        val firstCard = Card(Shape.CLUB, Denomination.SEVEN)
+        val secondCard = Card(Shape.CLUB, Denomination.JACK)
 
-        hand.score().value shouldBe 17
+        val hand = Hand(firstCard, secondCard)
+
+        hand.score shouldBe 17
     }
 
     @Test
-    fun `기존 카드의 합계가 11 이상이면 Ace카드는 1로 계산된다`() {
-        val hand = Hand()
-        hand.addCard(Card(Shape.CLUB, Denomination.TWO))
-        hand.addCard(Card(Shape.CLUB, Denomination.NINE))
-        hand.addCard(Card(Shape.CLUB, Denomination.ACE))
+    fun `Ace카드는 1로 계산된다`() {
+        val firstCard = Card(Shape.CLUB, Denomination.TWO)
+        val secondCard = Card(Shape.CLUB, Denomination.NINE)
+        val thirdCard = Card(Shape.CLUB, Denomination.ACE)
 
-        hand.score().value shouldBe 12
+        val hand = Hand(firstCard, secondCard, thirdCard)
+
+        hand.score shouldBe 12
     }
 
     @Test
-    fun `Ace카드는 11로 계산될 수 있다`() {
-        val hand = Hand()
-        hand.addCard(Card(Shape.CLUB, Denomination.TEN))
-        hand.addCard(Card(Shape.CLUB, Denomination.ACE))
+    fun `Ace카드는 카드의 합이 10 이하일 경우 11로 계산될 수 있다`() {
+        val firstCard = Card(Shape.CLUB, Denomination.TEN)
+        val secondCard = Card(Shape.CLUB, Denomination.ACE)
 
-        hand.score().value shouldBe 21
+        val hand = Hand(firstCard, secondCard)
+
+        hand.score shouldBe 21
     }
 }

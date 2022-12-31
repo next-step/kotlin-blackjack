@@ -1,33 +1,28 @@
 package blackjack.domain
 
-class Hand(private val cards: MutableList<Card> = mutableListOf()) {
-    fun score(): Score {
-        val sum = cards.sumOf { it.denomination.score }
+import blackjack.domain.card.Card
 
-        if (!hasAce()) {
-            return Score(sum)
+class Hand(val cards: List<Card>) {
+    val score: Int
+        get() {
+            val sum = cards.sumOf { it.score }
+
+            if (isSoft(sum)) {
+                return sum + ACE_ADDITIONAL_SCORE
+            }
+
+            return sum
         }
 
-        return Score(calculateWithAce(sum))
-    }
+    val isBust: Boolean = score > BLACKJACK_SCORE
+    val isBlackjack: Boolean = score == BLACKJACK_SCORE
 
-    fun addCard(card: Card) {
-        cards.add(card)
-    }
+    constructor(vararg cards: Card) : this(cards.toList())
 
-    fun cards(): List<Card> {
-        return cards.toList()
-    }
+    private fun isSoft(sum: Int): Boolean = cards.any { it.isAce } && sum + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE
 
-    private fun calculateWithAce(sum: Int): Int {
-        if (sum <= 11) {
-            return sum + 10
-        }
-
-        return sum
-    }
-
-    private fun hasAce(): Boolean {
-        return cards.any { it.denomination == Denomination.ACE }
+    companion object {
+        private const val ACE_ADDITIONAL_SCORE = 10
+        private const val BLACKJACK_SCORE = 21
     }
 }
