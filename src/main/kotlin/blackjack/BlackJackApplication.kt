@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.controller.BlackJackController
+import blackjack.controller.BlackJackMachine
 
 fun main() {
-    BlackJackController().execute()
+    BlackJackMachine().execute()
 }
