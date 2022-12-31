@@ -21,6 +21,7 @@ class DealerTest : StringSpec({
         val count = dealer.hitUntil(cardDeck)
 
         //then
+        println(dealer.hands.cards)
         count shouldBe 1
     }
 
@@ -114,14 +115,16 @@ class DealerTest : StringSpec({
         val result = dealer.result(players)
 
         //then
-        result[0].winningAmount shouldBe -20000
-        result[0].totalPoint shouldBe Point(19)
-        result[1].winningAmount shouldBe -10000
-        result[1].totalPoint shouldBe Point(0)
-        result[2].winningAmount shouldBe 30000
-        result[2].totalPoint shouldBe Point(21)
-        result[3].winningAmount shouldBe 0
-        result[3].totalPoint shouldBe Point(19)
+        assertSoftly {
+            result[0].winningAmount shouldBe -20000
+            result[0].totalPoint shouldBe Point(19)
+            result[1].winningAmount shouldBe -10000
+            result[1].totalPoint shouldBe Point(0)
+            result[2].winningAmount shouldBe 30000
+            result[2].totalPoint shouldBe Point(21)
+            result[3].winningAmount shouldBe 0
+            result[3].totalPoint shouldBe Point(19)
+        }
     }
 
     "(플레이어 다수) 딜러 bust, 플레이어1 bust 베팅 10000, 플레이어2 bust 20000 일 때 딜러의 상금은 30000원이다." {

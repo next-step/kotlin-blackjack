@@ -13,11 +13,8 @@ data class Player(
     constructor(name: String, hands: Hands, bettingAmount: BettingAmount) : this(name, Hit(hands), bettingAmount)
     constructor(name: String, hands: Hands) : this(name, Hit(hands))
 
-    //first turn
-    //state : hit, stay, blackjack, bust
-    fun addCard(deal: Card): Player {
-        state = state.draw(setOf(deal))
-        return this
+    init {
+        state = state.init()
     }
 
     fun firstTurn(cards: Set<Card>): Player {
@@ -25,19 +22,16 @@ data class Player(
         return this
     }
 
+    fun addCard(deal: Card): Player {
+        state = state.draw(setOf(deal))
+        return this
+    }
+
     fun cardPoint() = state.hands.calculatePoint()
     fun blackJack() = state.hands.blackJack()
 
     fun flip(dealer: Dealer): Int {
-        return when {
-            bust() -> bettingAmount.lose()
-            blackJack() && !dealer.blackJack() -> bettingAmount.blackJack()
-            dealer.bust() -> bettingAmount.win()
-            dealer.blackJack() && !blackJack() -> bettingAmount.lose()
-            cardPoint() > dealer.cardPoint() -> bettingAmount.win()
-            cardPoint() < dealer.cardPoint() -> bettingAmount.lose()
-            else -> bettingAmount.tie()
-        }
+        return state.earning(dealer, bettingAmount)
     }
 
     fun bust(): Boolean = state.hands.bust()
