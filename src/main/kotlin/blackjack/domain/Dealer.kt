@@ -14,11 +14,11 @@ data class Dealer(
     }
 
     private fun isBust() = this.score > BLACKJACK_SCORE
-    fun getMatchResult(player: Player): ResultStatus {
-        val playerResult = getPlayerResult(player)
+    fun getMatchResult(user: User): PlayerResult {
+        val playerResult = getPlayerResult(user)
         calculateResult(playerResult)
 
-        return playerResult
+        return PlayerResult(user, playerResult)
     }
 
     fun calculateResult(playerResult: ResultStatus) {

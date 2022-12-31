@@ -1,8 +1,10 @@
 package blackjack.domain
 
 @JvmInline
-value class Profit(val value: Int = DEFAULT_PROFIT) {
+value class Profit(val value: Int = DEFAULT) {
+
     companion object {
-        private const val DEFAULT_PROFIT = 0
+        private const val DEFAULT = 0
+        val ZERO = Profit(0)
     }
 }

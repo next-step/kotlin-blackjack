@@ -7,7 +7,7 @@ class Users(val values: List<User> = emptyList()) {
 
     fun calculateResult(dealer: Dealer): List<PlayerResult> {
         return values.map {
-            PlayerResult.of(it, dealer)
+            dealer.getMatchResult(it)
         }
     }
 }

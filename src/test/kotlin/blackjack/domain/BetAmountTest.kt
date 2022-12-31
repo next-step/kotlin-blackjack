@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -17,7 +18,7 @@ internal class BetAmountTest : StringSpec({
         val betAmounts = listOf(0, 1000, 100000)
 
         betAmounts.forAll {
-            BetAmount(it)
+            shouldNotThrowAny { BetAmount(it) }
         }
     }
 })

@@ -18,9 +18,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.FIVE)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.WIN
+        userResult.result shouldBe ResultStatus.WIN
     }
 
     "딜러와 플레이어 둘 다 버스트한 경우에는 딜러가 승리한다." {
@@ -35,9 +35,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.LOSE
+        userResult.result shouldBe ResultStatus.LOSE
     }
 
     "딜러의 점수가 21점이고 플레이어도 21점이라면 무승부다." {
@@ -51,9 +51,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.ACE)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.DRAW
+        userResult.result shouldBe ResultStatus.DRAW
     }
 
     "딜러의 점수보다 플레이어의 점수가 21에 더 가깝다면 플레이어가 승리한다." {
@@ -67,9 +67,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.NINE)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.WIN
+        userResult.result shouldBe ResultStatus.WIN
     }
 
     "플레이어의 점수보다 딜러가 21에 더 가깝다면 플레이어는 패배한다." {
@@ -83,9 +83,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.SEVEN)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.LOSE
+        userResult.result shouldBe ResultStatus.LOSE
     }
 
     "두명의 플레이어와 대결할 때 딜려가 다 졌다면 2패의 결과를 가진다." {
@@ -250,9 +250,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.LOSE
+        userResult.result shouldBe ResultStatus.LOSE
     }
 
     "딜러가 블랙잭이고 플레이어도 블랙잭이라면 무승부다." {
@@ -266,9 +266,9 @@ internal class DealerTest : StringSpec({
             Card(Suite.CLOVER, Denomination.KING)
         )
 
-        val result = dealer.getMatchResult(user)
+        val userResult = dealer.getMatchResult(user)
 
-        result shouldBe ResultStatus.DRAW
+        userResult.result shouldBe ResultStatus.DRAW
     }
 
     /**
@@ -304,14 +304,11 @@ internal class DealerTest : StringSpec({
         )
         val dealer = Dealer(Card(Suite.SPADE, Denomination.ACE), Card(Suite.CLOVER, Denomination.FIVE))
 
-        val userResultStatus = dealer.getMatchResult(blackJackUser)
-        val userProfit = ProfitCalculator(blackJackUser, userResultStatus)
-        val userResult = PlayerResult(blackJackUser, userResultStatus, userProfit)
-
+        val userResult = dealer.getMatchResult(blackJackUser)
         val changedDealer = dealer.calculateProfit(listOf(userResult))
         val result = changedDealer.profit.value
 
-        result shouldBe -userProfit.value
+        result shouldBe -userResult.profit.value
     }
 
     "딜러가 2승 1패라면 승리한 플레이어들에게 베팅금액의 2배를 지급하고 패배한 플레이어의 베팅금액을 수거한다." {
@@ -338,5 +335,52 @@ internal class DealerTest : StringSpec({
         userResults.find { it.user == loser2 }!!.profit.value shouldBe -loser2.betAmount.value
         userResults.find { it.user == winner }!!.profit.value shouldBe winner.betAmount.value
         result shouldBe -userResults.sumOf { it.profit.value }
+    }
+
+    "플레이어가 딜러와의 대결에서 승리하면 승리한 결과를 가진다." {
+        val dealer = Dealer(
+            Card(Suite.HEART, Denomination.QUEEN),
+            Card(Suite.DIAMOND, Denomination.SIX),
+            Card(Suite.CLOVER, Denomination.ACE)
+        )
+
+        val user = User(
+            Card(Suite.SPADE, Denomination.QUEEN),
+            Card(Suite.CLOVER, Denomination.NINE)
+        )
+
+        val userResult = dealer.getMatchResult(user)
+        userResult.result shouldBe ResultStatus.WIN
+    }
+
+    "플레이어가 딜러와의 대결에서 패하면 패한 결과를 가진다." {
+        val dealer = Dealer(
+            Card(Suite.HEART, Denomination.QUEEN),
+            Card(Suite.DIAMOND, Denomination.SIX),
+            Card(Suite.CLOVER, Denomination.ACE)
+        )
+
+        val user = User(
+            Card(Suite.SPADE, Denomination.QUEEN),
+            Card(Suite.CLOVER, Denomination.FIVE)
+        )
+
+        val userResult = dealer.getMatchResult(user)
+        userResult.result shouldBe ResultStatus.LOSE
+    }
+
+    "플레이어가 딜러와의 대결에서 무승부라면 무승부한 결과를 가진다." {
+        val dealer = Dealer(
+            Card(Suite.HEART, Denomination.QUEEN),
+            Card(Suite.DIAMOND, Denomination.SIX)
+        )
+
+        val user = User(
+            Card(Suite.SPADE, Denomination.KING),
+            Card(Suite.CLOVER, Denomination.SIX)
+        )
+
+        val userResult = dealer.getMatchResult(user)
+        userResult.result shouldBe ResultStatus.DRAW
     }
 })
