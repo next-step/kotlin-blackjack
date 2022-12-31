@@ -13,7 +13,18 @@ class Player(
     val finalResult: PlayerResult
         get() = playerResult
 
-    override fun takeResult(playerResult: PlayerResult) {
+    fun takeResult(otherCards: Cards): PlayerResult {
+        val playerResult = calculateResult(otherCards)
+
+        saveResult(playerResult)
+
+        return playerResult
+    }
+
+    private fun calculateResult(otherCards: Cards): PlayerResult =
+        PlayerResult.of(cards, otherCards)
+
+    private fun saveResult(playerResult: PlayerResult) {
         this.playerResult = playerResult
     }
 }

@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Cards
 import blackjack.domain.card.vendor.CardVendor
+import blackjack.domain.player.result.DealerResult
 import blackjack.domain.player.result.PlayerResult
 
 class Dealer(
@@ -10,44 +11,29 @@ class Dealer(
     private val cardVendor: CardVendor
 ) : CardHolder(name, cards), CardVendor by cardVendor {
 
-    private val results: MutableList<PlayerResult> = mutableListOf()
+    private val results: MutableList<DealerResult> = mutableListOf()
 
     fun takeFinalCards() {
         while (isNotReady()) {
-            hit()
+            hit(drawCard())
         }
     }
 
-    override fun takeResult(playerResult: PlayerResult) {
+    fun takeResult(player: Player): PlayerResult {
         checkReady()
 
-        results.add(playerResult)
-    }
+        val playerResult: PlayerResult = player.takeResult(cards)
 
-    fun result(player: Player): PlayerResult {
-        checkReady()
-
-        val playerResult = PlayerResult.of(
-            playerCards = player.cards,
-            dealerCards = cards
-        )
-
-        val dealerResult: PlayerResult = playerResult.opposite
-
-        player.takeResult(playerResult)
-
-        takeResult(dealerResult)
+        savePlayerResult(playerResult)
 
         return playerResult
     }
 
     fun isAddedCards(): Boolean = cards.size > INIT_CARD_COUNT
 
-    fun getWinCount(): Int = results.count { it == PlayerResult.WIN }
+    fun getWinCount(): Int = results.count { it == DealerResult.WIN }
 
-    fun getLoseCount(): Int = results.count { it == PlayerResult.LOSE }
-
-    private fun hit(): Unit = hit(drawCard())
+    fun getLoseCount(): Int = results.count { it == DealerResult.LOSE }
 
     private fun checkReady() {
         if (isNotReady()) {
@@ -55,9 +41,16 @@ class Dealer(
         }
     }
 
+    private fun isNotReady(): Boolean = !isReady()
+
     private fun isReady(): Boolean = score > DEALER_REQUIRED_MIN_SCORE
 
-    private fun isNotReady(): Boolean = !isReady()
+    private fun savePlayerResult(playerResult: PlayerResult): Unit =
+        saveResult(playerResult.opposite)
+
+    private fun saveResult(dealerResult: DealerResult) {
+        results.add(dealerResult)
+    }
 
     companion object {
         const val DEFAULT_DEALER_NAME = "딜러"

@@ -9,6 +9,14 @@ class Cards(
     val score: Int
         get() = score()
 
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
+
+    fun isBust(): Boolean = score > Blackjack.BLACKJACK_BEST_SCORE
+
+    fun isBlackjack(): Boolean = score == Blackjack.BLACKJACK_BEST_SCORE
+
     private fun score(): Int =
         cards.map { it.candidateScores }
             .cartesianProduct()
@@ -24,20 +32,14 @@ class Cards(
             .minWithOrNull(compareBy { abs(Blackjack.BLACKJACK_BEST_SCORE - it) })
             ?: (Blackjack.BLACKJACK_BEST_SCORE + 1)
 
-    fun addCard(card: Card) {
-        cards.add(card)
-    }
-
-    fun isBust(): Boolean = score > Blackjack.BLACKJACK_BEST_SCORE
-
-    fun isBlackjack(): Boolean = score == Blackjack.BLACKJACK_BEST_SCORE
-
     companion object {
         val ALL: Cards = Cards(Card.ALL_CARD_LIST)
 
         fun of(vararg cards: Card): Cards = Cards(cards.toList())
     }
 }
+
+fun List<Card>.toCards(): Cards = Cards(this)
 
 private fun <T> Collection<Iterable<T>>.cartesianProduct(): List<List<T>> =
     if (isEmpty()) emptyList()

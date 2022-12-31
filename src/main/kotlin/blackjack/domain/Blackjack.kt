@@ -4,6 +4,7 @@ import blackjack.domain.card.vendor.CardVendor
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.player.toPlayers
 
 class Blackjack(
     val dealer: Dealer,
@@ -15,29 +16,21 @@ class Blackjack(
             false -> acceptStayFrom(player)
         }
 
-    fun notFinishedPlayers(): List<Player> = players.notFinishedPlayers()
+    fun notFinishedPlayers(): Players = players.notFinishedPlayers()
 
     fun complete() {
         dealer.takeFinalCards()
 
-        players.map {
-            dealer.result(it)
+        players.forEach {
+            dealer.takeResult(it)
         }
     }
 
     private fun giveCardTo(player: Player) {
-        check(player.isNotFinished()) {
-            "Blackjack should not give card to this player which is finished. [$player]"
-        }
-
         player.hit(dealer.drawCard())
     }
 
     private fun acceptStayFrom(player: Player) {
-        check(player.isNotFinished()) {
-            "Player should be able to stay. [$player]"
-        }
-
         player.stay()
     }
 
@@ -47,18 +40,16 @@ class Blackjack(
         fun of(dealerName: String, playerNames: List<String>, cardVendor: CardVendor): Blackjack {
             val dealer = Dealer(
                 name = dealerName,
-                cards = cardVendor.drawPlayerFirstTwoCards(),
+                cards = cardVendor.drawCards(),
                 cardVendor = cardVendor
             )
 
-            val players = Players(
-                playerNames.map { playerName ->
-                    Player(
-                        name = playerName,
-                        cards = cardVendor.drawPlayerFirstTwoCards()
-                    )
-                }
-            )
+            val players: Players = playerNames.map { playerName ->
+                Player(
+                    name = playerName,
+                    cards = cardVendor.drawCards()
+                )
+            }.toPlayers()
 
             return Blackjack(dealer, players)
         }

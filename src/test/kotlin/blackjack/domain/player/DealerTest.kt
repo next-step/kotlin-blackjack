@@ -24,7 +24,7 @@ class DealerTest : FunSpec({
 
         val dealer = Dealer(
             "dealer",
-            givenCardVendor.drawPlayerFirstTwoCards(),
+            givenCardVendor.drawCards(),
             givenCardVendor
         )
 
@@ -42,7 +42,7 @@ class DealerTest : FunSpec({
             assertThrows<IllegalArgumentException> {
                 Dealer(
                     blankName,
-                    givenCardVendor.drawPlayerFirstTwoCards(),
+                    givenCardVendor.drawCards(),
                     givenCardVendor
                 )
             }
@@ -59,7 +59,7 @@ class DealerTest : FunSpec({
             val players = (2..21).map { PlayerDataSet.testDataWithTwoCards(it) }
 
             val playerResults = players.map { givenPlayer ->
-                val result = dealer.result(givenPlayer)
+                val result = dealer.takeResult(givenPlayer)
 
                 result shouldNotBe null
                 result shouldBeOneOf listOf(
@@ -152,6 +152,20 @@ class DealerTest : FunSpec({
 
         assertThrows<IllegalStateException> {
             dealer.hit(dealer.drawCard())
+        }
+    }
+
+    test("stay 이미 한번 한 경우, hit 혹은 stay 불가능하다.") {
+        val dealer = DealerDataSet.testDataWithTwoCards(20)
+
+        dealer.stay()
+
+        assertThrows<IllegalStateException> {
+            dealer.hit(dealer.drawCard())
+        }
+
+        assertThrows<IllegalStateException> {
+            dealer.stay()
         }
     }
 })

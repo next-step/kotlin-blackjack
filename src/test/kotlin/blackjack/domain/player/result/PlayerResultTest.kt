@@ -14,10 +14,24 @@ class PlayerResultTest : FunSpec({
         withData(
             nameFn = { "${it.first}.opposite = ${it.second}" },
             listOf(
-                PlayerResult.WIN to PlayerResult.LOSE,
-                PlayerResult.LOSE to PlayerResult.WIN,
-                PlayerResult.DRAW to PlayerResult.DRAW,
-                PlayerResult.NOT_FINISHED to PlayerResult.NOT_FINISHED
+                PlayerResult.WIN to DealerResult.LOSE,
+                PlayerResult.LOSE to DealerResult.WIN,
+                PlayerResult.DRAW to DealerResult.DRAW,
+                PlayerResult.NOT_FINISHED to DealerResult.NOT_FINISHED
+            )
+        ) { (fromResult, toResult) ->
+            fromResult.opposite shouldBe toResult
+        }
+    }
+
+    context("DealerResult opposite 정상 작동") {
+        withData(
+            nameFn = { "${it.first}.opposite = ${it.second}" },
+            listOf(
+                DealerResult.WIN to PlayerResult.LOSE,
+                DealerResult.LOSE to PlayerResult.WIN,
+                DealerResult.DRAW to PlayerResult.DRAW,
+                DealerResult.NOT_FINISHED to PlayerResult.NOT_FINISHED
             )
         ) { (fromResult, toResult) ->
             fromResult.opposite shouldBe toResult

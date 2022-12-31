@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.player.result.PlayerResult
 import blackjack.domain.state.State
 
 abstract class CardHolder(
@@ -12,21 +11,23 @@ abstract class CardHolder(
     val score: Int
         get() = cards.score
 
-    var state: State = State.of(cards)
+    private var state: State = State.of(cards)
 
     init {
         require(name.isNotBlank()) {
-            "Player's name should not be blank"
+            "${this.javaClass.simpleName}'s name should not be blank"
         }
 
         require(cards.size == INIT_CARD_COUNT) {
-            "CardHolder should have $INIT_CARD_COUNT cards before starting game [${cards.size}]"
+            "${this.javaClass.simpleName} should have $INIT_CARD_COUNT cards before starting game [${cards.size}]"
         }
     }
 
-    abstract fun takeResult(playerResult: PlayerResult)
-
     fun hit(card: Card) {
+        check(isNotFinished()) {
+            "${this.javaClass.simpleName} is already finished."
+        }
+
         check(state.isAbleToHit) {
             "Player's state [${state.name}] should be able to hit"
         }
@@ -36,8 +37,12 @@ abstract class CardHolder(
     }
 
     fun stay() {
+        check(isNotFinished()) {
+            "${this.javaClass.simpleName} is already finished."
+        }
+
         check(state.isAbleToStay) {
-            "Player's state [${state.name}] should be able to stay"
+            "${this.javaClass.simpleName}'s state [${state.name}] should be able to stay"
         }
 
         state = state.stay(cards)

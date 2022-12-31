@@ -22,7 +22,7 @@ class PlayerTest : FunSpec({
 
         val player = Player(
             "username",
-            givenCardVendor.drawPlayerFirstTwoCards()
+            givenCardVendor.drawCards()
         )
 
         player shouldNotBe null
@@ -39,7 +39,7 @@ class PlayerTest : FunSpec({
             assertThrows<IllegalArgumentException> {
                 Player(
                     blankName,
-                    givenCardVendor.drawPlayerFirstTwoCards()
+                    givenCardVendor.drawCards()
                 )
             }
         }
@@ -136,6 +136,21 @@ class PlayerTest : FunSpec({
 
         assertThrows<IllegalStateException> {
             player.hit(givenCardVendor.drawCard())
+        }
+    }
+
+    test("stay 이미 한번 한 경우, hit 혹은 stay 불가능하다.") {
+        val player = Player("username", Cards(listOf(cardOf(10), cardOf(10))))
+        val givenCardVendor: CardVendor = DefaultCardVendor()
+
+        player.stay()
+
+        assertThrows<IllegalStateException> {
+            player.hit(givenCardVendor.drawCard())
+        }
+
+        assertThrows<IllegalStateException> {
+            player.stay()
         }
     }
 })
