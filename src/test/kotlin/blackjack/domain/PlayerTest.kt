@@ -5,6 +5,7 @@ import blackjack.domain.holder.Dealer
 import blackjack.domain.holder.Hands
 import blackjack.domain.holder.Player
 import blackjack.domain.state.BlackJack
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.value.BettingAmount
 import blackjack.domain.value.Point
@@ -47,6 +48,17 @@ class PlayerTest : StringSpec({
         playerAfterFirstTurn.name shouldBe "harris"
         playerAfterFirstTurn.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_J))
         playerAfterFirstTurn.state.shouldBeInstanceOf<BlackJack>()
+    }
+
+    "카드의 총 합이 21이 초과하면 bust 임을 확인한다." {
+        //given
+        val player = Player("harris")
+        //when
+        val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_K, Card.CLOVER_J))
+        playerAfterFirstTurn.addCard(Card.CLOVER_2)
+        //then
+        playerAfterFirstTurn.name shouldBe "harris"
+        playerAfterFirstTurn.state.shouldBeInstanceOf<Bust>()
     }
 
     "addCard 함수로 5점인 카드 두개를 추가하면 카드 포인트는 10이다." {
