@@ -34,6 +34,7 @@ data class BlackJackGame(
         }
         printDealerHitOrStay(isDrawn)
     }
+
     fun playPlayers(
         inputIsGetCard: (Player) -> Boolean,
         printPlayerStatus: (Player) -> Unit
