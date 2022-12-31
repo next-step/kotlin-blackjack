@@ -1,20 +1,13 @@
 package blackjack.domain
 
-fun Dealer(vararg values: Card): Dealer {
-    val dealer = Dealer()
-    values.forEach {
-        dealer.hit(it)
-    }
-
-    return dealer
-}
+fun Dealer(vararg values: Card): Dealer = Dealer(cards = values.toCards())
 
 fun User(vararg values: Card, betAmount: BetAmount = BetAmount(0)): User {
-    val user = User(name = Name("플레이어"), betAmount = betAmount)
-    values.forEach {
-        user.cards.add(it)
-    }
-    return user
+    return User(
+        name = Name("플레이어"),
+        cards = values.toCards(),
+        betAmount = betAmount,
+    )
 }
 
 fun userOf(name: String): User {
@@ -25,3 +18,5 @@ fun Users(vararg names: String): Users {
     val users = names.map { User(name = Name(it), betAmount = BetAmount(0)) }
     return Users(users)
 }
+
+private fun Array<out Card>.toCards(): Cards = Cards(this.toList())
