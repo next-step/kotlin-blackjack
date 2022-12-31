@@ -5,8 +5,9 @@ import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Participant
 import blackjack.domain.participantion.Player
 import blackjack.domain.participantion.Players
+import blackjack.domain.participantion.Price
 import blackjack.domain.result.GameResult
-import blackjack.domain.result.Winners
+import blackjack.domain.result.Income
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -20,25 +21,34 @@ class BlackJackGame {
         hitCard(dealer, players, cardDeck)
 
         participants.forEach(ResultView::printResult)
-        printWinner(dealer, players)
+        printIncome(dealer, players)
     }
 
-    private fun printWinner(dealer: Dealer, players: List<Player>) {
-        val winners = Winners.from(dealer, players)
+    private fun printIncome(dealer: Dealer, players: List<Player>) {
+        val (winners, losers) = GameResult.from(dealer, players)
+        val income = Income(winners, losers)
+        val dealerIncome = income.getAmount(dealer)
 
-        ResultView.printMessage(ResultView.Message.WINNER)
-        ResultView.printRank(dealer.name, GameResult.from(dealer, players))
+        ResultView.printMessage(ResultView.Message.INCOME)
+        ResultView.printIncome(dealer.name, dealerIncome)
 
         players.forEach { player ->
-            ResultView.printWinner(player.name, winners.exist(player.name))
+            val playerIncome = income.getAmount(player)
+            ResultView.printIncome(player.name, playerIncome)
         }
     }
 
     private fun getPlayers(cardDeck: CardDeck): List<Player> {
         ResultView.printMessage(ResultView.Message.REQUEST_PLAYERS)
         val names: List<String> = InputView.requestStringList()
+        val prices: List<Price> = names.map { name ->
+            ResultView.printRequestPrice(name)
+            val amount = InputView.requestPositiveNumber()
 
-        return Players(names, cardDeck).players
+            Price(amount)
+        }
+
+        return Players(names, cardDeck, prices).players
     }
 
     private fun printCurrentState(participants: List<Participant>) {

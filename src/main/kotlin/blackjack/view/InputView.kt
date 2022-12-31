@@ -5,6 +5,16 @@ object InputView {
     private const val YES = "Y"
     private const val NO = "N"
 
+    fun requestPositiveNumber(): Int {
+        val input: String = requestString()
+        val number = input.toIntOrNull()
+
+        require(number != null) { "숫자를 입력 해주세요." }
+        require(number > 0) { "양수를 입력 해주세요." }
+
+        return number
+    }
+
     fun requestStringList(): List<String> =
         requestString()
             .split(DELIMITER)
