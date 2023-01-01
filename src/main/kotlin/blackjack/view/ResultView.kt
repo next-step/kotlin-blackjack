@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.state.role.Dealer
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ResultsDto
 

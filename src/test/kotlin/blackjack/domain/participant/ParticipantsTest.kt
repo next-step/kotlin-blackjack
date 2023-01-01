@@ -8,9 +8,11 @@ import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.participant.Participants.Companion.NUMBER_OF_INIT_CARDS
 import blackjack.domain.participant.Participants.Companion.createPlayers
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.Dealer
+import blackjack.domain.participant.state.role.Player
+import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
@@ -81,7 +83,7 @@ class ParticipantsTest {
 
         // then
         assertThat(actual.getPlayers().map { it.name }).containsAll(names)
-        assertThat(actual.getPlayers().map { it.state }).allMatch { it.cards.size() == NUMBER_OF_INIT_CARDS }
+        assertThat(actual.getPlayers().map { it.state }).allMatch { it.cards.size() == NUMBER_OF_STARTING_CARDS }
     }
 
     @Test

@@ -3,11 +3,11 @@ package blackjack.controller
 import blackjack.application.Deck
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
-import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
-import blackjack.domain.participant.Participants.Companion.NUMBER_OF_INIT_CARDS
 import blackjack.domain.participant.state.result.Result.Companion.calculateResult
+import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Role
+import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ParticipantsDto
 import blackjack.dto.ResultDto
@@ -19,7 +19,7 @@ object Controller {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
-        val dealer = Dealer(deck.getCards(NUMBER_OF_INIT_CARDS))
+        val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
         val players = Participants.createPlayers(names, deck)
 
         printPlayerNames(players)
@@ -56,7 +56,7 @@ object Controller {
         if (!newPlayer.isBust() && !newPlayer.isBlackjack()) {
             newPlayer = newPlayer.stay()
         }
-        if (newPlayer.getCardsSize() == NUMBER_OF_INIT_CARDS) {
+        if (newPlayer.getCardsSize() == NUMBER_OF_STARTING_CARDS) {
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
         return newPlayer

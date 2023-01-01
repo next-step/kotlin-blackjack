@@ -5,8 +5,6 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
 import blackjack.domain.participant.state.Name
 import blackjack.domain.participant.state.result.Result
 
@@ -61,6 +59,8 @@ sealed class Role {
     }
 
     companion object {
+        internal const val NUMBER_OF_STARTING_CARDS = 2
+
         fun initState(cards: PlayingCards): State {
             if (cards.isBlackjack()) {
                 return Blackjack(cards)

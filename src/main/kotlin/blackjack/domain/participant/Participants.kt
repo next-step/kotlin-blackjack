@@ -2,7 +2,10 @@ package blackjack.domain.participant
 
 import blackjack.application.Deck
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.Dealer
+import blackjack.domain.participant.state.role.Player
 import blackjack.domain.participant.state.role.Role
+import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
 
 @JvmInline
 value class Participants(private val values: List<Role>) {
@@ -39,11 +42,10 @@ value class Participants(private val values: List<Role>) {
     }
 
     companion object {
-        const val NUMBER_OF_INIT_CARDS = 2
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
 
         fun createPlayers(names: Array<Name>, deck: Deck): Participants {
-            return Participants(names.map { Player(it.toString(), deck.getCards(NUMBER_OF_INIT_CARDS)) })
+            return Participants(names.map { Player(it.toString(), deck.getCards(NUMBER_OF_STARTING_CARDS)) })
         }
     }
 }

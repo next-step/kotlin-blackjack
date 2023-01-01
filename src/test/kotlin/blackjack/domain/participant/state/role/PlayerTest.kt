@@ -1,4 +1,4 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.state.role
 
 import blackjack.SpadeAce
 import blackjack.SpadeJack

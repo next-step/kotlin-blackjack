@@ -1,18 +1,25 @@
-package blackjack.domain.participant
+package blackjack.domain.participant.state.role
 
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
-import blackjack.domain.participant.state.role.DealerRole
+import blackjack.domain.participant.state.Name
 
-data class Dealer(override val state: State) : DealerRole() {
+data class Dealer(override val state: State) : Role() {
+    override val name: Name
+        get() = Name(DEALER_NAME)
+
     constructor(cards: PlayingCards) : this(initState(cards))
 
     init {
         require(state.cards.size() >= NUMBER_OF_STARTING_CARDS) { "딜러는 2장의 카드를 가지고 시작해야 합니다." }
     }
 
+    override fun isDealer(): Boolean {
+        return true
+    }
+
     companion object {
-        private const val NUMBER_OF_STARTING_CARDS = 2
         const val STOP_SCORE = 16
+        const val DEALER_NAME = "딜러"
     }
 }
