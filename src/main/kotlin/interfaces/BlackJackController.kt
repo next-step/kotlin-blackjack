@@ -3,7 +3,7 @@ package interfaces
 import application.BlackJackGame
 import common.Executable
 import domain.player.Participants
-import domain.player.Player
+import domain.player.Playable
 import interfaces.ui.CardInfo
 import interfaces.ui.InputConsole
 import interfaces.ui.OutputConsole
@@ -20,6 +20,8 @@ class BlackJackController : Executable {
 
         queryReceiveCard(blackJackGame)
 
+        dealerReceiveCard(blackJackGame)
+
         showFinalResult(blackJackGame)
     }
 
@@ -35,6 +37,10 @@ class BlackJackController : Executable {
     }
 
     private fun showAllParticipantsHands(blackJackGame: BlackJackGame) {
+        val dealer = blackJackGame.dealer()
+        val dealerCardInfo = cardInfo(dealer)
+        OutputConsole.printCard(playerName = "딜러", cardInfo = dealerCardInfo)
+
         val players = blackJackGame.allPlayers()
         players.forEach { player ->
             val cardInfo = cardInfo(player)
@@ -42,8 +48,8 @@ class BlackJackController : Executable {
         }
     }
 
-    private fun cardInfo(player: Player): List<CardInfo> {
-        return player.hands.cardList().map {
+    private fun cardInfo(playable: Playable): List<CardInfo> {
+        return playable.hands.cardList().map {
             CardInfo(
                 number = it.number.nameValue,
                 name = it.shape.nameValue
@@ -61,13 +67,48 @@ class BlackJackController : Executable {
         }
     }
 
+    private fun dealerReceiveCard(blackJackGame: BlackJackGame) {
+        val dealer = blackJackGame.dealer()
+        val availableReceiveCard = blackJackGame.availableReceiveCard(dealer)
+        if (availableReceiveCard) {
+            blackJackGame.receiveCard(dealer)
+            OutputConsole.printDealerMoreReceiveCard()
+        }
+    }
+
     private fun showFinalResult(blackJackGame: BlackJackGame) {
         OutputConsole.printNewLine()
+
+        val dealer = blackJackGame.dealer()
+        val dealerCardInfo = cardInfo(dealer)
+        val resultDealerScore = dealer.handsCardScore()
+        OutputConsole.printCardWithResult(playerName = "딜러", cardInfo = dealerCardInfo, result = resultDealerScore.toString())
+
         val players = blackJackGame.allPlayers()
         players.forEach { player ->
             val cardInfo = cardInfo(player)
             val resultScore = player.handsCardScore()
             OutputConsole.printCardWithResult(playerName = player.name, cardInfo = cardInfo, result = resultScore.toString())
         }
+
+        var dealerWinCount = 0
+        val resultPlayerBoards = blackJackGame.allPlayers().map {
+            val isPlayerWin = dealer.isWin(it)
+            if (!isPlayerWin) dealerWinCount++
+            ResultPlayerBoard(name = it.name, isWin = isPlayerWin)
+        }
+        val resultDealerBoard = ResultDealerBoard(players.size, dealerWinCount)
+
+        OutputConsole.printFinalResult(resultDealerBoard, resultPlayerBoards)
     }
+
+    data class ResultDealerBoard(
+        val totalCount: Int,
+        val winCount: Int
+    )
+
+    data class ResultPlayerBoard(
+        val name: String,
+        val isWin: Boolean
+    )
 }

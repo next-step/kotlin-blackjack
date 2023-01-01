@@ -3,6 +3,7 @@ package application
 import domain.card.Cards
 import domain.player.Dealer
 import domain.player.Participants
+import domain.player.Playable
 import domain.player.Player
 
 class BlackJackGame(
@@ -10,14 +11,18 @@ class BlackJackGame(
     private val players: Participants
 ) {
     fun init() {
-        repeat(INIT_CARD_COUNT) { players.receiveCard(dealer) }
+        repeat(INIT_CARD_COUNT) {
+            dealer.giveCard(dealer)
+            players.receiveCard(dealer)
+        }
     }
 
-    fun receiveCard(player: Player) {
-        dealer.giveCard(player = player)
+    fun receiveCard(playable: Playable) {
+        dealer.giveCard(playable = playable)
     }
 
     fun hands(player: Player): Cards = player.hands
+    fun dealer(): Dealer = this.dealer
     fun allPlayers(): List<Player> {
         return this.players.allPlayers()
     }
@@ -27,6 +32,8 @@ class BlackJackGame(
             receiveCard(player)
         }
     }
+
+    fun availableReceiveCard(playable: Playable): Boolean = playable.isAvailableReceive()
 
     private companion object {
         const val INIT_CARD_COUNT = 2
