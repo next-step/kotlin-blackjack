@@ -4,10 +4,8 @@ class Participants(
     private var players: List<Player>
 ) {
     fun receiveCard(dealer: Dealer) {
-        this.players.forEach {
-            if (it.isAvailableReceive()) {
-                dealer.giveCard(it)
-            }
+        this.players.filter { it.isAvailableReceive() }.forEach {
+            dealer.giveCard(it)
         }
     }
 
