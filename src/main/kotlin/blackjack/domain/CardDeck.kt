@@ -12,7 +12,8 @@ class CardDeck {
             Denomination.values().filterNot { it == Denomination.ACE_10 }.map { cardNumber ->
                 Card(cardShape, cardNumber)
             }
-        }.toMutableList().apply { this.shuffle() }
+        }.toMutableList()
+
         return Cards(cards.apply { this.shuffle() })
     }
 }
