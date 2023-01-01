@@ -16,7 +16,5 @@ open class Player(val name: String, state: State) {
         state = state.draw(card)
     }
 
-    fun score(): Int {
-        return state.hand.score
-    }
+    fun score() = state.score
 }

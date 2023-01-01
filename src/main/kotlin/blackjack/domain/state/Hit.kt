@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.Hand
 import blackjack.domain.card.Card
 
-class Hit(override val hand: Hand) : State {
+class Hit(override val hand: Hand) : State(hand) {
     override fun draw(card: Card): State {
         val newHand = Hand(hand.cards + card)
 

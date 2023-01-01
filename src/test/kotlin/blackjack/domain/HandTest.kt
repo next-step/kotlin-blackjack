@@ -37,4 +37,14 @@ internal class HandTest {
 
         hand.score shouldBe 21
     }
+
+    @Test
+    fun `Ace카드가 두장이면 12로 계산된다`() {
+        val firstCard = Card(Shape.CLUB, Denomination.ACE)
+        val secondCard = Card(Shape.CLUB, Denomination.ACE)
+
+        val hand = Hand(firstCard, secondCard)
+
+        hand.score shouldBe 12
+    }
 }
