@@ -2,7 +2,6 @@ package blackjack.io
 
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.Result
 
 class Output {
     fun printPlayersCard(players: List<Player>) {
@@ -35,14 +34,6 @@ class Output {
 
     fun printDealerDraw() {
         println("딜러는 ${Dealer.DEALERS_HIT_RULE}이하라 한장의 카드를 더 받았습니다.")
-    }
-
-    fun printDealerResult(result: List<Result>) {
-        println("딜러 : ${Result.WIN.value} ${result.count { it == Result.WIN }} ${Result.LOSE.value} ${result.count { it == Result.LOSE }}")
-    }
-
-    fun printPlayerResult(player: Player, result: Result) {
-        println("${player.name} : ${result.value}")
     }
 
     fun printDealerCard(dealer: Dealer) {

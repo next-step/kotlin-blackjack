@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.Result
 import blackjack.domain.card.Deck
 import blackjack.domain.state.FirstTurn
 import blackjack.io.Input
@@ -42,11 +41,6 @@ class Game(private val input: Input, private val output: Output) {
         output.printPlayersHandWithScore(players)
 
         output.printEmptyLine()
-
-        output.printDealerResult(Result.dealerResult(dealer, players))
-        players.forEach { player: Player ->
-            output.printPlayerResult(player, Result.playerResult(dealer, player))
-        }
     }
 
     private fun dealerDraw() {
