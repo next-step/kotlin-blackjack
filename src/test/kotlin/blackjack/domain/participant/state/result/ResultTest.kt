@@ -1,4 +1,4 @@
-package blackjack.domain.card.state.result
+package blackjack.domain.participant.state.result
 
 import blackjack.SpadeAce
 import blackjack.SpadeEight
@@ -14,7 +14,6 @@ import blackjack.SpadeTen
 import blackjack.SpadeTwo
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.participant.Participants
-import blackjack.domain.participant.state.result.Result
 import blackjack.domain.participant.state.result.Result.Companion.calculateResult
 import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Player
