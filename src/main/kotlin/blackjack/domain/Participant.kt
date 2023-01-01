@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.common.Policy
+
 class Participant(
     val name: String,
     val cards: Cards = Cards(),
@@ -11,11 +13,11 @@ class Participant(
     }
 
     fun isBust(): Boolean {
-        return score > 21
+        return score > Policy.BUST_SCORE
     }
 
     fun isBlackJack(): Boolean {
-        return score == 21 && cards.cards.size == 2
+        return score == Policy.BUST_SCORE && cards.cards.size == 2
     }
 
     fun isHit(): Boolean {
