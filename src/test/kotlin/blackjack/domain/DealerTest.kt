@@ -16,7 +16,7 @@ class DealerTest : FreeSpec({
     "딜러는 플레이어한테 카드를 줄 수 있다" {
         val player = Player("ep")
         val beforeCardCount = player.handsCardCount
-        dealer.giveCard(player = player)
+        dealer.giveCard(playable = player)
         beforeCardCount + 1 shouldBe player.handsCardCount
     }
 })

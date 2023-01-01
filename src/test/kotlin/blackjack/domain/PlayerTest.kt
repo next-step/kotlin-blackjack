@@ -66,7 +66,7 @@ class PlayerTest : FreeSpec({
             player.receiveCard(aceCardA)
             player.receiveCard(aceCardB)
             player.receiveCard(aceCardC)
-            player.handsCardScore() shouldBe 23
+            player.handsCardScore() shouldBe 13
         }
     }
 })

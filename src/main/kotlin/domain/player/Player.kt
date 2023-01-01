@@ -1,21 +1,16 @@
-package domain
+package domain.player
 
 import domain.algorithm.DefaultScoreOptimizationAlgorithm
+import domain.card.Cards
 
 class Player(
     val name: String
-) {
+) : Playable {
 
-    val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
+    override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
 
     val handsCardCount: Int
         get() = hands.count
-
-    fun receiveCard(card: Card) {
-        this.hands.add(card)
-    }
-
-    fun handsCardScore(): Int = this.hands.score()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -32,5 +27,9 @@ class Player(
         return name.hashCode()
     }
 
-    fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber()
+    override fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber(AVAILABLE_TARGET_NUMBER)
+
+    private companion object {
+        const val AVAILABLE_TARGET_NUMBER = 21
+    }
 }
