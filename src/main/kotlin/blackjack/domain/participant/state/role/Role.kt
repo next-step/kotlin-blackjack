@@ -58,6 +58,10 @@ sealed class Role {
         }
     }
 
+    fun hasOnlyTwoCards(): Boolean {
+        return state.cards.size() == NUMBER_OF_STARTING_CARDS
+    }
+
     companion object {
         internal const val NUMBER_OF_STARTING_CARDS = 2
 

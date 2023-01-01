@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.application.Deck
+import blackjack.domain.GameManager
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.Participants
@@ -24,9 +25,37 @@ object Controller {
 
         printPlayerNames(players)
         printParticipantsCards(players + dealer)
-        val newPlayers = doPlayerHitOrStay(players, deck)
-        val newDealer = doDealerHitOrStay(dealer, deck)
+        val newPlayers = Participants(players.getPlayers().map { playPlayer(it, deck) })
+        val newDealer = playDealer(dealer, deck)
         printFinalResult(newPlayers + newDealer)
+    }
+
+    private fun playPlayer(player: Role, deck: Deck): Role {
+        var newPlayer = player
+        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) && isPlayerBust(newPlayer)) {
+            newPlayer = GameManager.hit(newPlayer, deck)
+            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
+        }
+        if (newPlayer.hasOnlyTwoCards()) {
+            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
+        }
+        return GameManager.stay(newPlayer)
+    }
+
+    private fun playDealer(dealer: Dealer, deck: Deck): Role {
+        if (GameManager.canDealerHit(dealer)) {
+            ResultView.printDealerDrawMessage()
+            return dealer.draw(deck.getCard())
+        }
+        return dealer.stay()
+    }
+
+    private fun isPlayerBust(player: Role): Boolean {
+        if (player.isBust()) {
+            ResultView.printPlayerBust(player.name.toString())
+            return false
+        }
+        return true
     }
 
     private fun printPlayerNames(players: Participants) {
@@ -38,36 +67,6 @@ object Controller {
             ResultView.printParticipantCards(it)
         }
         ResultView.printLineFeed()
-    }
-
-    private fun doPlayerHitOrStay(players: Participants, deck: Deck): Participants {
-        if (players.isBlackjack()) {
-            return players
-        }
-        return Participants(players.getPlayers().map { doHitOrStay(it, deck) })
-    }
-
-    private fun doHitOrStay(role: Role, deck: Deck): Role {
-        var newPlayer = role
-        while (InputFilter.inputHitOrStay(ParticipantDto.from(role).name) && !newPlayer.isBust()) {
-            newPlayer = newPlayer.draw(deck.getCard())
-            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
-        }
-        if (!newPlayer.isBust() && !newPlayer.isBlackjack()) {
-            newPlayer = newPlayer.stay()
-        }
-        if (newPlayer.getCardsSize() == NUMBER_OF_STARTING_CARDS) {
-            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
-        }
-        return newPlayer
-    }
-
-    private fun doDealerHitOrStay(role: Role, deck: Deck): Role {
-        if (role.getScore() <= Dealer.STOP_SCORE) {
-            ResultView.printDealerDrawMessage()
-            return role.draw(deck.getCard())
-        }
-        return role.stay()
     }
 
     private fun printFinalResult(participants: Participants) {

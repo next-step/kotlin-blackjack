@@ -25,8 +25,8 @@ value class Participants(private val values: List<Role>) {
         return Participants(values + role)
     }
 
-    fun getPlayers(): List<Player> {
-        return values.filter { !it.isDealer() }.map { it as Player }
+    fun getPlayers(): List<Role> {
+        return values.filter { !it.isDealer() }.map { it }
     }
 
     fun getDealer(): Dealer {

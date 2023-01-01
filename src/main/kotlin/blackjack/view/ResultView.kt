@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.participant.state.role.Dealer
 import blackjack.dto.ParticipantDto
 import blackjack.dto.ResultsDto
 
@@ -11,7 +10,8 @@ object ResultView {
     private const val COLON = ": "
     private const val GAME_RESULT_MESSAGE = " - 결과: "
     private const val DEALER_NAME = "딜러"
-    private const val DEALER_DRAW_MESSAGE = "딜러는 ${Dealer.STOP_SCORE}이하라 한장의 카드를 더 받았습니다."
+    private const val PLAYER_BUST = "는 버스트되었습니다."
+    private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val GAME_RESULT_TITLE = "## 최종 승패"
     private const val LINE_FEED = "\r\n"
     private const val SPACE = " "
@@ -74,5 +74,9 @@ object ResultView {
             }
         }
         return DEALER_NAME + COLON + winCount + "승 " + loseCount + "패"
+    }
+
+    fun printPlayerBust(name: String) {
+        println(name + PLAYER_BUST)
     }
 }
