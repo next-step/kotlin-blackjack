@@ -9,14 +9,19 @@ class OutputView {
         println("\n${playerNames}에게 2장의 나누었습니다.")
     }
 
-    fun printStatus(player: Players) {
-        player.players.forEach {
-            println("${it.name}카드: ${it.cards.joinToString(separator = ", ")}")
+    fun printStatus(vararg players: Player) {
+        players.forEach {
+            println(createStatusMessage(it))
         }
+        println()
     }
 
     fun printResult(players: List<Player>) {
-        println("pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21")
-        TODO()
+        println()
+        players.forEach {
+            println(createStatusMessage(it) + " - 결과: ${it.calculateScore()}")
+        }
     }
+
+    private fun createStatusMessage(player: Player) = "${player.name} 카드: ${player.cards.joinToString(separator = ", ")}"
 }
