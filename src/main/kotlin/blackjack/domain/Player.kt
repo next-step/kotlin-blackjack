@@ -1,32 +1,22 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    private val _hand: MutableList<Card> = mutableListOf()
-    val hand: List<Card> = _hand
+import blackjack.domain.card.Card
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
+
+open class Player(val name: String, state: State) {
+    open var state: State = state
+        protected set
+
+    open fun canDraw(): Boolean {
+        return state is Hit
+    }
+
+    fun draw(card: Card) {
+        state = state.draw(card)
+    }
 
     fun score(): Int {
-        val score = hand.sumOf { it.denomination.score }
-
-        if (!hasAce()) {
-            return score
-        }
-
-        return calculateScoreWithAce(score)
-    }
-
-    fun addCard(card: Card) {
-        _hand.add(card)
-    }
-
-    private fun calculateScoreWithAce(score: Int): Int {
-        if (score <= 11) {
-            return score + 10
-        }
-
-        return score
-    }
-
-    private fun hasAce(): Boolean {
-        return hand.any { it.denomination == Denomination.ACE }
+        return state.hand.score
     }
 }

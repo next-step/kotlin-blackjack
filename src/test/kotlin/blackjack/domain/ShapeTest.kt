@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Shape
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -12,9 +13,9 @@ internal class ShapeTest {
 
     @Test
     fun `모양은 한글로 변환 가능하다`() {
-        Shape.SPADE.toString() shouldBe "스페이드"
-        Shape.DIAMOND.toString() shouldBe "다이아몬드"
-        Shape.CLUB.toString() shouldBe "클로버"
-        Shape.HEART.toString() shouldBe "하트"
+        Shape.SPADE.values shouldBe "스페이드"
+        Shape.DIAMOND.values shouldBe "다이아몬드"
+        Shape.CLUB.values shouldBe "클로버"
+        Shape.HEART.values shouldBe "하트"
     }
 }

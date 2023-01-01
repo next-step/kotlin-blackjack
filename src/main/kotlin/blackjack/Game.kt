@@ -1,50 +1,68 @@
 package blackjack
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.Result
+import blackjack.domain.state.FirstTurn
 import blackjack.io.Input
 import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
-    private val players: List<Player> by lazy {
-        makePlayers()
-    }
+    private val players: List<Player>
+    private val dealer: Dealer
     private val deck: Deck = Deck()
 
-    fun init() {
+    init {
         deck.shuffle()
+        players = input.getPlayers().map { name -> Player(name, FirstTurn.draw(deck.draw(), deck.draw())) }
+        dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
     }
 
     fun start() {
-        repeat(INIT_HAND_COUNT) {
-            players.forEach { it.addCard(deck.draw()) }
-        }
+        output.printDistribute(listOf(dealer) + players)
+        output.printDealerCard(dealer)
         output.printPlayersCard(players)
     }
 
     fun draw() {
+        output.printEmptyLine()
+
         players.forEach { player ->
             playerDraw(player)
-            output.printPlayerCard(player)
         }
+
+        dealerDraw()
     }
 
     fun result() {
-        output.printPlayersResult(players)
-    }
+        output.printEmptyLine()
 
-    private fun playerDraw(player: Player) {
-        while (player.score() < 21) {
-            if (!input.moreDraw(player)) {
-                break
-            }
-            player.addCard(deck.draw())
+        output.printDealerHandWithScore(dealer)
+        output.printPlayersHandWithScore(players)
+
+        output.printEmptyLine()
+
+        output.printDealerResult(Result.dealerResult(dealer, players))
+        players.forEach { player: Player ->
+            output.printPlayerResult(player, Result.playerResult(dealer, player))
         }
     }
 
-    private fun makePlayers() = input.getPlayers().map { Player(it) }
+    private fun dealerDraw() {
+        while (dealer.canDraw()) {
+            output.printDealerDraw()
+            dealer.draw(deck.draw())
+        }
+    }
 
-    companion object {
-        private const val INIT_HAND_COUNT = 2
+    private fun playerDraw(player: Player) {
+        while (player.canDraw()) {
+            if (!input.moreDraw(player)) {
+                break
+            }
+            player.draw(deck.draw())
+            output.printPlayerCard(player)
+        }
     }
 }
