@@ -1,18 +1,18 @@
 package com.nextstep.blackjack.view
 
 import com.nextstep.blackjack.domain.Player
+import com.nextstep.blackjack.domain.Players
 
 class OutputView {
-    fun printAfterDealing(players: List<Player>) {
-        println("pobi, jason에게 2장의 나누었습니다.")
-        TODO()
+    fun printAfterDealing(players: Players) {
+        val playerNames = players.names().joinToString(", ")
+        println("\n${playerNames}에게 2장의 나누었습니다.")
     }
 
-    fun printStatus(players: List<Player>) {
-        players.forEach {
-            println("${it.name}카드: 2하트, 8스페이드")
+    fun printStatus(player: Players) {
+        player.players.forEach {
+            println("${it.name}카드: ${it.cards.joinToString(separator = ", ")}")
         }
-        TODO()
     }
 
     fun printResult(players: List<Player>) {
