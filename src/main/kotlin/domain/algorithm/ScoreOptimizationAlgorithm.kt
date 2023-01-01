@@ -1,7 +1,7 @@
 package domain.algorithm
 
-import domain.Card
-import domain.CardNumber
+import domain.card.Card
+import domain.card.CardNumber
 
 sealed interface ScoreOptimizationAlgorithm {
     fun optimizeScore(cards: List<Card>, targetScore: Int): Int

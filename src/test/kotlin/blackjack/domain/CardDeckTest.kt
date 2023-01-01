@@ -1,9 +1,9 @@
 package blackjack.domain
 
-import domain.Card
-import domain.CardDeck
-import domain.CardNumber
-import domain.CardShape
+import domain.card.Card
+import domain.card.CardDeck
+import domain.card.CardNumber
+import domain.card.CardShape
 import domain.factory.CardsFactory
 import domain.factory.DefaultCardsFactory
 import io.kotest.assertions.throwables.shouldNotThrowAny

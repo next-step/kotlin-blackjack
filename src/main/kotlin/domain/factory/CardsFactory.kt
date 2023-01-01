@@ -1,8 +1,8 @@
 package domain.factory
 
-import domain.Card
-import domain.CardNumber
-import domain.CardShape
+import domain.card.Card
+import domain.card.CardNumber
+import domain.card.CardShape
 
 interface CardsFactory {
     fun generate(): MutableList<Card>

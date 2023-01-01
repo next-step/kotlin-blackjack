@@ -1,9 +1,9 @@
 package blackjack.application
 
 import application.BlackJackGame
-import domain.Dealer
-import domain.Participants
-import domain.Player
+import domain.player.Dealer
+import domain.player.Participants
+import domain.player.Player
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

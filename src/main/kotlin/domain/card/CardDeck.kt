@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 import domain.factory.CardsFactory
 

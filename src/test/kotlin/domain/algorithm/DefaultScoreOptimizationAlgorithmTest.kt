@@ -1,8 +1,8 @@
 package domain.algorithm
 
-import domain.Card
-import domain.CardNumber
-import domain.CardShape
+import domain.card.Card
+import domain.card.CardNumber
+import domain.card.CardShape
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 

@@ -1,4 +1,4 @@
-package domain
+package domain.player
 
 class Participants(
     private var players: List<Player>

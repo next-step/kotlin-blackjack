@@ -2,8 +2,8 @@ package interfaces
 
 import application.BlackJackGame
 import common.Executable
-import domain.Participants
-import domain.Player
+import domain.player.Participants
+import domain.player.Player
 import interfaces.ui.CardInfo
 import interfaces.ui.InputConsole
 import interfaces.ui.OutputConsole

@@ -1,9 +1,9 @@
 package application
 
-import domain.Cards
-import domain.Dealer
-import domain.Participants
-import domain.Player
+import domain.card.Cards
+import domain.player.Dealer
+import domain.player.Participants
+import domain.player.Player
 
 class BlackJackGame(
     private val dealer: Dealer = Dealer(),

@@ -1,8 +1,8 @@
 package blackjack.domain
 
-import domain.Card
-import domain.CardNumber
-import domain.CardShape
+import domain.card.Card
+import domain.card.CardNumber
+import domain.card.CardShape
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

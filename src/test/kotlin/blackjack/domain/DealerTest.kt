@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import domain.Dealer
-import domain.Player
+import domain.player.Dealer
+import domain.player.Player
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
