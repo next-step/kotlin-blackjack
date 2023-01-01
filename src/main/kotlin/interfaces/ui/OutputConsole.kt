@@ -1,5 +1,7 @@
 package interfaces.ui
 
+import interfaces.BlackJackController
+
 object OutputConsole {
 
     private const val NAME_DELIMITER = ", "
@@ -19,7 +21,25 @@ object OutputConsole {
     fun printInit(playerNames: List<String>) {
         val playerNameString = playerNames.joinToString(NAME_DELIMITER)
         println()
-        println("${playerNameString}에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${playerNameString}에게 2장의 카드를 나누었습니다.")
+    }
+
+    fun printDealerMoreReceiveCard() {
+        println()
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printFinalResult(
+        resultDealerBoard: BlackJackController.ResultDealerBoard,
+        resultPlayerBoards: List<BlackJackController.ResultPlayerBoard>
+    ) {
+        println()
+        println("## 최종 승패")
+        println("딜러: ${resultDealerBoard.winCount}승 ${resultDealerBoard.totalCount - resultDealerBoard.winCount}패")
+        resultPlayerBoards.forEach {
+            val result = if (it.isWin) "승" else "패"
+            println("${it.name}: $result")
+        }
     }
 }
 
