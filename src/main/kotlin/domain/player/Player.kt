@@ -9,9 +9,6 @@ class Player(
 
     override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
 
-    val handsCardCount: Int
-        get() = hands.count
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
