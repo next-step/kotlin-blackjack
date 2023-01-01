@@ -1,9 +1,9 @@
 package blackjack
 
 import blackjack.domain.Dealer
-import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Result
+import blackjack.domain.card.Deck
 import blackjack.domain.state.FirstTurn
 import blackjack.io.Input
 import blackjack.io.Output

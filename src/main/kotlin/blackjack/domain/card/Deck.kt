@@ -1,8 +1,4 @@
-package blackjack.domain
-
-import blackjack.domain.card.Card
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.Shape
+package blackjack.domain.card
 
 class Deck {
     private val cards: MutableList<Card> by lazy {

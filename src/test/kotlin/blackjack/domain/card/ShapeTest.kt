@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.card.Shape
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
