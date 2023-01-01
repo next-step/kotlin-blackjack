@@ -35,7 +35,7 @@ class Dealer(
     }
 
     private companion object {
-        const val AVAILABLE_TARGET_NUMBER = 16
+        const val AVAILABLE_TARGET_NUMBER = 17
         const val WIN_SCORE = 21
     }
 }
