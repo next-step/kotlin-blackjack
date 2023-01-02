@@ -20,6 +20,7 @@ object Controller {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = InputFilter.inputPlayer()
+        val bets = names.map { InputFilter.inputBettingMoney(it.toString()) }
         val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
         val players = Participants.createPlayers(names, deck)
 

@@ -11,6 +11,12 @@ object InputParser {
         return names
     }
 
+    fun parseBettingMoney(inputBettingMoney: String): Int {
+        val bettingMoney = inputBettingMoney.toIntOrNull() ?: throw IllegalArgumentException("숫자 이외의 값은 입력할 수 없습니다.")
+        require(bettingMoney > 0) { "0보다 큰 금액을 입력해주세요." }
+        return bettingMoney
+    }
+
     fun parseHitOrStay(input: String): Boolean {
         return when (input) {
             "y" -> true
