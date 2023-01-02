@@ -1,6 +1,7 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.Point.Companion.ACE
+import blackjack.domain.value.Point
+import blackjack.domain.value.Point.Companion.ACE
 
 enum class Card(
     val shape: Shape,

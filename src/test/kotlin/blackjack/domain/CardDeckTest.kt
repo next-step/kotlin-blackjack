@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.CardDeck
+import blackjack.domain.card.CardDeck
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.throwable.shouldHaveMessage
