@@ -19,4 +19,6 @@ interface BlackjackView {
     fun printlnBlackjackFinalResult(blackjack: Blackjack)
 
     fun printlnDealerAddedCards(dealer: Dealer)
+
+    fun printlnBlackjackFinalProfit(blackjack: Blackjack)
 }

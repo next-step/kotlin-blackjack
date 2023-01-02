@@ -40,8 +40,8 @@ class PlayersTest : FunSpec({
             val players =
                 testDataWithFinishedPlayer(totalPlayerCount, finishedPlayerCount)
 
-            players.notFinishedPlayers() shouldHaveSize totalPlayerCount - finishedPlayerCount
-            players.notFinishedPlayers() shouldContainAll players.filter { it.isNotFinished() }
+            players.getNotFinishedPlayers() shouldHaveSize totalPlayerCount - finishedPlayerCount
+            players.getNotFinishedPlayers() shouldContainAll players.filter { it.isNotFinished() }
         }
     }
 })

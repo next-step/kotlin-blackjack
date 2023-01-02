@@ -17,6 +17,10 @@ class ConsoleBlackjackInputReader(
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
+    override fun printlnPlayerBettingAmountInputPrompt(playerName: String) {
+        println("${playerName}의 베팅 금액은?")
+    }
+
     override fun readPlayerNames(): List<String> {
         printlnPlayerNamesInputPrompt()
 
@@ -26,7 +30,7 @@ class ConsoleBlackjackInputReader(
     override fun readPlayersHitOrStay(blackjack: Blackjack, playerActionWhenHitYn: (Player, Boolean) -> Unit) {
         println()
 
-        blackjack.notFinishedPlayers()
+        blackjack.getNotFinishedPlayers()
             .forEach { player ->
                 printlnPlayerHitYnInputPrompt(player)
                 askPlayerChoice(player, playerActionWhenHitYn)
@@ -37,6 +41,13 @@ class ConsoleBlackjackInputReader(
 
     override fun readPlayerHitYn(): String =
         readln().trim()
+
+    override fun readPlayerBettingAmounts(playerNames: List<String>): List<Double> =
+        playerNames.map { playerName ->
+            printlnPlayerBettingAmountInputPrompt(playerName)
+
+            readln().trim().toDouble()
+        }
 
     private fun askPlayerChoice(player: Player, playerActionWhenHitYn: (Player, Boolean) -> Unit) {
         while (player.isNotFinished()) {

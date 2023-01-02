@@ -2,6 +2,9 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Cards
 import blackjack.domain.card.vendor.CardVendor
+import blackjack.domain.player.betting.Profit
+import blackjack.domain.player.betting.plus
+import blackjack.domain.player.betting.unaryMinus
 import blackjack.domain.player.result.DealerResult
 import blackjack.domain.player.result.PlayerResult
 
@@ -12,6 +15,8 @@ class Dealer(
 ) : CardHolder(name, cards), CardVendor by cardVendor {
 
     private val results: MutableList<DealerResult> = mutableListOf()
+
+    private var profits: MutableList<Profit> = mutableListOf()
 
     fun takeFinalCards() {
         while (isNotReady()) {
@@ -24,7 +29,11 @@ class Dealer(
 
         val playerResult: PlayerResult = player.takeResult(cards)
 
+        val dealerProfit: Profit = -player.getProfit()
+
         savePlayerResult(playerResult)
+
+        addProfit(dealerProfit)
 
         return playerResult
     }
@@ -34,6 +43,8 @@ class Dealer(
     fun getWinCount(): Int = results.count { it == DealerResult.WIN }
 
     fun getLoseCount(): Int = results.count { it == DealerResult.LOSE }
+
+    fun getProfit(): Profit = profits.reduce(Profit::plus)
 
     private fun checkReady() {
         if (isNotReady()) {
@@ -50,6 +61,10 @@ class Dealer(
 
     private fun saveResult(dealerResult: DealerResult) {
         results.add(dealerResult)
+    }
+
+    private fun addProfit(profit: Profit) {
+        profits.add(profit)
     }
 
     companion object {

@@ -6,7 +6,7 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.player.toPlayers
 
-class Blackjack(
+class Blackjack private constructor(
     val dealer: Dealer,
     val players: Players,
 ) {
@@ -16,7 +16,7 @@ class Blackjack(
             false -> acceptStayFrom(player)
         }
 
-    fun notFinishedPlayers(): Players = players.notFinishedPlayers()
+    fun getNotFinishedPlayers(): Players = players.getNotFinishedPlayers()
 
     fun complete() {
         dealer.takeFinalCards()
@@ -37,17 +37,22 @@ class Blackjack(
     companion object {
         const val BLACKJACK_BEST_SCORE = 21
 
-        fun of(dealerName: String, playerNames: List<String>, cardVendor: CardVendor): Blackjack {
+        fun of(dealerName: String, playerNames: List<String>, playerBettingAmounts: List<Double>, cardVendor: CardVendor): Blackjack {
+            require(playerNames.size == playerBettingAmounts.size) {
+                "playerNames and playerBettings should have the same size"
+            }
+
             val dealer = Dealer(
                 name = dealerName,
                 cards = cardVendor.drawCards(),
                 cardVendor = cardVendor
             )
 
-            val players: Players = playerNames.map { playerName ->
+            val players: Players = playerNames.withIndex().map { (playerIndex, playerName) ->
                 Player(
                     name = playerName,
-                    cards = cardVendor.drawCards()
+                    cards = cardVendor.drawCards(),
+                    betting = playerBettingAmounts[playerIndex]
                 )
             }.toPlayers()
 

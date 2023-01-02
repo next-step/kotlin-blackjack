@@ -6,7 +6,7 @@ data class Players(
 
     fun names(): List<String> = players.map { it.name }
 
-    fun notFinishedPlayers(): Players = players.filter { it.isNotFinished() }.toPlayers()
+    fun getNotFinishedPlayers(): Players = players.filter { it.isNotFinished() }.toPlayers()
 }
 
 fun List<Player>.toPlayers(): Players =
