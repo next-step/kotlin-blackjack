@@ -38,5 +38,9 @@ class Player(
         const val FAIL_SCORE = 0
         const val STOP_SCORE = 21
         private const val UNABLE_TO_PICK = false
+
+        fun init(name: String, cardDeck: CardDeck, initCardCount: Int): Player {
+            return Player(name, cardDeck.drawCards(initCardCount))
+        }
     }
 }

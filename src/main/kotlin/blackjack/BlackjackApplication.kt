@@ -16,8 +16,8 @@ class BlackjackApplication(
 ) {
     fun play() {
         val playerNames = inputView.readPlayers()
-        val players = initPlayers(playerNames)
-        val dealer = initPlayer(DEALER_NAME)
+        val players = Players.init(playerNames, cardDeck, INIT_CARD_COUNT)
+        val dealer = Player.init(DEALER_NAME, cardDeck, INIT_CARD_COUNT)
         outputView.printInitCards(dealer, players)
 
         playBlackjackGame(players)
@@ -35,18 +35,6 @@ class BlackjackApplication(
 
         dealer.addCard(cardDeck.drawCard())
         outputView.printDealerDraw(dealer)
-    }
-
-    private fun initPlayers(names: String): Players {
-        return Players(splitNames(names).map { initPlayer(it) })
-    }
-
-    private fun initPlayer(name: String): Player {
-        return Player(name, cardDeck.drawCards(INIT_CARD_COUNT))
-    }
-
-    private fun splitNames(names: String): List<String> {
-        return names.split(NAME_STRING_DELIMITER).map { it.trim() }
     }
 
     private fun playBlackjackGame(players: Players) {
@@ -70,7 +58,6 @@ class BlackjackApplication(
         private const val DEALER_NAME = "딜러"
         private const val DEALER_DRAW_SCORE = 16
         private const val INIT_CARD_COUNT = 2
-        private const val NAME_STRING_DELIMITER = ","
     }
 }
 
