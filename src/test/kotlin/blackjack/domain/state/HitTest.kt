@@ -17,18 +17,18 @@ internal class HitTest {
     }
 
     @Test
-    fun `새로 뽑은 카드까지 포함하여 21점일 경우 BlackJack으로 변화한다`() {
-        val state = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.TEN)))
-        val actual = state.draw(Card(Shape.CLUB, Denomination.ACE))
-
-        actual.shouldBeInstanceOf<Blackjack>()
-    }
-
-    @Test
     fun `새로 뽑은 카드까지 포함하여 21점미만이면 Hit이다`() {
         val state = Hit(Hand(Card(Shape.CLUB, Denomination.TWO), Card(Shape.CLUB, Denomination.THREE)))
         val actual = state.draw(Card(Shape.CLUB, Denomination.FOUR))
 
         actual.shouldBeInstanceOf<Hit>()
+    }
+
+    @Test
+    fun `Stay로 변경할 수 있다`() {
+        val state = Hit(Hand(Card(Shape.CLUB, Denomination.TWO), Card(Shape.CLUB, Denomination.THREE)))
+        val actual = state.stay()
+
+        actual.shouldBeInstanceOf<Stay>()
     }
 }

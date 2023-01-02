@@ -16,7 +16,7 @@ internal class PlayerTest {
         val player = Player("최원준", FirstTurn.draw(firstCard, secondCard))
 
         player.name shouldBe "최원준"
-        player.state.hand.cards shouldContainInOrder listOf(firstCard, secondCard)
+        player.state.cards() shouldContainInOrder listOf(firstCard, secondCard)
     }
 
     @Test

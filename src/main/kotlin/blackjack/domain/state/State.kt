@@ -1,11 +1,12 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hand
 import blackjack.domain.card.Card
 
-abstract class State(open val hand: Hand) {
-    val score: Int
-        get() = hand.score
-
-    abstract fun draw(card: Card): State
+interface State {
+    fun draw(card: Card): State
+    fun stay(): State
+    fun score(): Int
+    fun isFinished(): Boolean
+    fun cards(): List<Card>
+    fun profit(money: Double): Double
 }

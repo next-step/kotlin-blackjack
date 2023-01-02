@@ -19,17 +19,17 @@ class Output {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name} 카드 : ${player.state.hand.cards.joinToString(",")}")
+        println("${player.name} 카드 : ${player.state.cards().joinToString(",")}")
     }
 
     fun printPlayersHandWithScore(players: List<Player>) {
         players.forEach { player ->
-            println("${player.name} 카드 : ${player.state.hand.cards.joinToString(",")} - 결과 : ${player.score()}")
+            println("${player.name} 카드 : ${player.state.cards().joinToString(",")} - 결과 : ${player.score()}")
         }
     }
 
     fun printDealerHandWithScore(dealer: Dealer) {
-        println("${dealer.name} 카드 : ${dealer.allOpen().joinToString(",")} - 결과 : ${dealer.score()}")
+        println("${dealer.name} 카드 : ${dealer.state.cards().joinToString(",")} - 결과 : ${dealer.score()}")
     }
 
     fun printDealerDraw() {
@@ -37,7 +37,7 @@ class Output {
     }
 
     fun printDealerCard(dealer: Dealer) {
-        println("딜러 카드 : ${dealer.state.hand.cards.first()}")
+        println("딜러 카드 : ${dealer.state.cards().first()}")
     }
 
     fun printProfitHeader() {
