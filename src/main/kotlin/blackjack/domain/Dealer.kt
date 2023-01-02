@@ -33,7 +33,7 @@ data class Dealer(
     fun calculateProfit(playerResults: List<PlayerResult>): Dealer {
         val profit = Profit(
             playerResults.sumOf {
-                profit.value + (-it.profit.value)
+                profit + (-it.profit)
             }
         )
         return this.copy(profit = profit)
