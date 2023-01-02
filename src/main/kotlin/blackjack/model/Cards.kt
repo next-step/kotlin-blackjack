@@ -1,21 +1,15 @@
 package blackjack.model
 
-import kotlin.math.max
-
 class Cards(
     private val value: List<Card> = listOf()
 ) : List<Card> by value {
-    fun getPickableScore(): Int {
-        return value.sumOf { it.getScore() }
-    }
-
-    fun getFinalScore(): Int {
+    fun getScore(): Int? {
         return calculate(value)
     }
 
-    private fun calculate(cards: List<Card>, index: Int = 0, accumulator: Int = 0): Int {
-        if (accumulator > Player.BLACKJACK_SCORE) {
-            return FAIL_SCORE
+    private fun calculate(cards: List<Card>, index: Int = 0, accumulator: Int = 0): Int? {
+        if (accumulator > BUST_SCORE) {
+            return null
         }
         if (index == cards.size) {
             return accumulator
@@ -24,19 +18,19 @@ class Cards(
         return handleDfsBranch(cards, index, accumulator)
     }
 
-    private fun handleDfsBranch(cards: List<Card>, index: Int, accumulator: Int): Int {
+    private fun handleDfsBranch(cards: List<Card>, index: Int, accumulator: Int): Int? {
         if (!cards[index].isAce()) {
             return calculate(cards, index + INDEX_INCREMENT, accumulator + cards[index].getScore())
         }
 
-        return max(
-            calculate(cards, index + INDEX_INCREMENT, accumulator + Denomination.ACE.score),
+        return listOfNotNull(
+            calculate(cards, index + INDEX_INCREMENT, accumulator + cards[index].getScore()),
             calculate(cards, index + INDEX_INCREMENT, accumulator + ACE_SPECIAL_SCORE)
-        )
+        ).maxOrNull()
     }
 
     companion object {
-        private const val FAIL_SCORE = 0
+        private const val BUST_SCORE = 21
         private const val INDEX_INCREMENT = 1
         private const val ACE_SPECIAL_SCORE = 11
 

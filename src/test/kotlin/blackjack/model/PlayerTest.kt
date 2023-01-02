@@ -1,9 +1,14 @@
 package blackjack.model
 
 import blackjack.model.Denomination.ACE
-import blackjack.model.Denomination.JACK
+import blackjack.model.Denomination.NINE
 import blackjack.model.Denomination.QUEEN
 import blackjack.model.Denomination.TEN
+import blackjack.model.DualResult.LOSE
+import blackjack.model.DualResult.PUSH
+import blackjack.model.DualResult.WIN
+import blackjack.model.Suit.CLOVER
+import blackjack.model.Suit.HEART
 import blackjack.model.Suit.SPADE
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -54,12 +59,55 @@ class PlayerTest {
         val player = Player("jason")
 
         // when
-        player.addCard(Card(SPADE, ACE))
-        player.addCard(Card(SPADE, JACK))
-        player.addCard(Card(SPADE, QUEEN))
+        player.addCard(Card(SPADE, NINE))
+        player.addCard(Card(HEART, NINE))
+        player.addCard(Card(CLOVER, NINE))
 
         // then
         assertThat(player.isPickable()).isFalse
         assertThrows<IllegalStateException> { player.addCard(Card(SPADE, ACE)) }
+    }
+
+    @Test
+    internal fun `다른 플레이어보다 점수가 더 높으면 승리한다`() {
+        // given
+        val winCards = Cards.of(Card(SPADE, ACE), Card(SPADE, TEN))
+        val loseCards = Cards.of(Card(SPADE, TEN), Card(HEART, TEN))
+
+        // when
+        val loser = Player("loser", loseCards)
+        val winner = Player("winner", winCards)
+
+        // then
+        assertThat(loser.wins(winner)).isSameAs(LOSE)
+        assertThat(winner.wins(loser)).isSameAs(WIN)
+    }
+
+    @Test
+    internal fun `버스트 되었다면 무조건 패배한다`() {
+        // given
+        val cards = Cards.of(Card(SPADE, TEN), Card(CLOVER, TEN), Card(HEART, TEN))
+
+        // when
+        val bustPlayer = Player("loser", cards)
+        val bustPlayer2 = Player("loser", cards)
+
+        // then
+        assertThat(bustPlayer.wins(bustPlayer2)).isSameAs(LOSE)
+        assertThat(bustPlayer2.wins(bustPlayer)).isSameAs(LOSE)
+    }
+
+    @Test
+    internal fun `점수가 같다면 동점으로 판단한다`() {
+        // given
+        val cards = Cards.of(Card(SPADE, TEN), Card(CLOVER, TEN))
+
+        // when
+        val player1 = Player("loser", cards)
+        val player2 = Player("loser", cards)
+
+        // then
+        assertThat(player1.wins(player2)).isSameAs(PUSH)
+        assertThat(player2.wins(player1)).isSameAs(PUSH)
     }
 }

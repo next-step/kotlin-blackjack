@@ -119,7 +119,6 @@ class PersonBuilder() {
 
     fun languages(block: LanguagesBuilder.() -> Unit) {
         this.languages = LanguagesBuilder().apply(block).build()
-
     }
 
     fun build(): Person {

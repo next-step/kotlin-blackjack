@@ -1,69 +1,60 @@
 package blackjack
 
 import blackjack.model.CardDeck
+import blackjack.model.Dealer
+import blackjack.model.GameResult
 import blackjack.model.Player
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
+import blackjack.view.impl.ConsoleInputView
+import blackjack.view.impl.StandardOutputView
 
-class BlackjackApplication {
+class BlackjackApplication(
+    private val cardDeck: CardDeck = CardDeck.defaultDeck(),
+    private val inputView: InputView = ConsoleInputView(),
+    private val outputView: OutputView = StandardOutputView()
+) {
     fun play() {
-        val playerNames = InputView.readPlayers()
-        val cardDeck = CardDeck.defaultDeck()
+        val playerNames = inputView.readPlayers()
+        val players = Players.init(playerNames, cardDeck, INIT_CARD_COUNT)
+        val dealer = Dealer.init(cardDeck, INIT_CARD_COUNT)
+        outputView.printInitCards(dealer, players)
 
-        val players = initPlayers(playerNames, cardDeck)
-        OutputView.printInitCards(players)
+        playBlackjackGame(players)
+        drawDealerCardOrNot(dealer)
+        outputView.printCardResult(dealer, players)
 
-        playBlackjackGame(
-            players, cardDeck,
-            InputView.readPlayerPickAnswer,
-            OutputView.printPlayerCards
-        )
-
-        OutputView.printResult(players)
+        val gameResult = GameResult.of(dealer, players)
+        outputView.printGameResult(players, gameResult)
     }
 
-    fun initPlayers(names: String, deck: CardDeck): List<Player> {
-        return splitPlayerNames(names).map { name ->
-            Player(name, deck.drawCards(INIT_CARD_COUNT))
+    private fun drawDealerCardOrNot(dealer: Dealer) {
+        if (dealer.isPickable()) {
+            dealer.addCard(cardDeck.drawCard())
+            outputView.printDealerDraw(dealer)
         }
     }
 
-    private fun splitPlayerNames(names: String): List<String> {
-        return names.split(NAME_STRING_DELIMITER).map { it.trim() }
-    }
-
-    private fun playBlackjackGame(
-        players: List<Player>,
-        cardDeck: CardDeck,
-        answerReader: (Player) -> String,
-        cardsPrinter: (Player) -> Unit
-    ) {
+    private fun playBlackjackGame(players: Players) {
         players.forEach { player ->
-            pickCardsUntilStopAnswered(player, cardDeck, answerReader, cardsPrinter)
+            pickCardsUntilStopAnswered(player)
         }
     }
 
-    private fun pickCardsUntilStopAnswered(
-        player: Player,
-        cardDeck: CardDeck,
-        answerReader: (Player) -> String,
-        cardsPrinter: (Player) -> Unit
-    ) {
+    private fun pickCardsUntilStopAnswered(player: Player) {
         while (player.isPickable()) {
-            val answer = answerReader(player)
-            if (answer == CARD_PICK_STOP_SYMBOL) {
+            if (!inputView.readPickAnswer(player)) {
                 break
             }
 
             player.addCard(cardDeck.drawCard())
-            cardsPrinter(player)
+            outputView.printPlayerCards(player)
         }
     }
 
     companion object {
         private const val INIT_CARD_COUNT = 2
-        private const val CARD_PICK_STOP_SYMBOL = "n"
-        private const val NAME_STRING_DELIMITER = ","
     }
 }
 

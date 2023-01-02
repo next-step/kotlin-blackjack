@@ -13,11 +13,18 @@ class CardDeck private constructor(
     }
 
     companion object {
+        fun of(vararg cards: Card): CardDeck {
+            return of(cards.toList())
+        }
+
+        fun of(cards: List<Card>): CardDeck {
+            return CardDeck(cards.toMutableList())
+        }
+
         fun defaultDeck(): CardDeck {
-            return Suit.values()
-                .flatMap { suit -> Denomination.values().map { Card(suit, it) } }
-                .toMutableList()
-                .let(::CardDeck)
+            return of(
+                Suit.values().flatMap { suit -> Denomination.values().map { Card(suit, it) } }
+            )
         }
     }
 }
