@@ -1,8 +1,7 @@
 package com.nextstep.blackjack.domain
 
 import com.nextstep.blackjack.domain.card.Card
-
-private fun List<Card>.deepCopy(): List<Card> = map { it.copy() }
+import com.nextstep.blackjack.domain.card.deepCopy
 
 class Player(val name: String, cards: List<Card>) {
     private val _cards: MutableList<Card> = cards.deepCopy().toMutableList()
@@ -30,4 +29,6 @@ class Player(val name: String, cards: List<Card>) {
 
         return calculatedScore
     }
+
+    fun canTakeMoreCard(): Boolean = calculateScore() < 21
 }

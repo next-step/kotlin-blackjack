@@ -1,7 +1,7 @@
 package com.nextstep.blackjack.domain.card
 
 enum class CardNumber(val score: Int) {
-    ACE(1), // or 11
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),

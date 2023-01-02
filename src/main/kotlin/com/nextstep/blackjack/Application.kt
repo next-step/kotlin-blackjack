@@ -6,33 +6,37 @@ import com.nextstep.blackjack.domain.card.CardDeck
 import com.nextstep.blackjack.view.InputView
 import com.nextstep.blackjack.view.OutputView
 
-fun main() {
-    val inputView = InputView()
-    val outputView = OutputView()
+private const val YES = "y"
+private val inputView = InputView()
+private val outputView = OutputView()
 
+fun main() {
     val names = inputView.inputNames()
     val players = Players(names)
     val cards = CardDeck()
 
-    cards.deal(*players.players)
-    cards.deal(*players.players)
+    dealFirstCards(cards, players)
 
     outputView.printAfterDealing(players)
     outputView.printStatus(*players.players)
 
-    for (player in players.players) {
-        while (needMoreCard(player, inputView)) {
-            cards.deal(player)
-            outputView.printStatus(player)
-        }
-    }
+    dealExtraCards(players, cards)
 
     outputView.printResult(*players.players)
 }
 
-fun needMoreCard(player: Player, inputView: InputView): Boolean {
-    if (player.calculateScore() < 21) {
-        return inputView.askMoreCard(player.name) == "y"
-    }
-    return false
+private fun dealFirstCards(cards: CardDeck, players: Players) {
+    cards.deal(*players.players)
+    cards.deal(*players.players)
 }
+
+private fun dealExtraCards(players: Players, cards: CardDeck) = players.players.forEach { dealExtraCard(it, cards) }
+
+private fun dealExtraCard(player: Player, cards: CardDeck) {
+    while (player.canTakeMoreCard() && wantMoreCard(player)) {
+        cards.deal(player)
+        outputView.printStatus(player)
+    }
+}
+
+private fun wantMoreCard(player: Player) = inputView.askMoreCard(player.name) == YES

@@ -1,11 +1,14 @@
 package com.nextstep.blackjack.domain
 
 import com.nextstep.blackjack.domain.card.Card
+import com.nextstep.blackjack.domain.card.CardDeck
 import com.nextstep.blackjack.domain.card.CardNumber.ACE
 import com.nextstep.blackjack.domain.card.CardNumber.FOUR
 import com.nextstep.blackjack.domain.card.CardNumber.KING
 import com.nextstep.blackjack.domain.card.CardNumber.TEN
 import com.nextstep.blackjack.domain.card.CardNumber.TWO
+import com.nextstep.blackjack.domain.card.CardPattern.CLOVER
+import com.nextstep.blackjack.domain.card.CardPattern.HEART
 import com.nextstep.blackjack.domain.card.CardPattern.SPADE
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -53,6 +56,23 @@ class PlayerTest : BehaviorSpec({
 
                     player.calculateScore() shouldBe score
                 }
+            }
+        }
+    }
+
+    Given("Player.canTakeMoreCard") {
+        When("가지고 있는 카드의 점수가 21보다 작으면") {
+            Then("카드를 더 받을 수 있다") {
+                val cardDeck = CardDeck(listOf(Card(TEN, SPADE), Card(TEN, CLOVER), Card(ACE, HEART)))
+                val player = Player("수진")
+
+                player.canTakeMoreCard() shouldBe true
+
+                cardDeck.deal(player)
+                cardDeck.deal(player)
+                cardDeck.deal(player)
+
+                player.canTakeMoreCard() shouldBe false
             }
         }
     }
