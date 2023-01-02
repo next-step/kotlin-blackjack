@@ -3,6 +3,9 @@ package com.nextstep.blackjack.domain
 import com.nextstep.blackjack.domain.card.Card
 import com.nextstep.blackjack.domain.card.deepCopy
 
+private const val TWENTY_ONE = 21
+private const val EXTRA_SCORE_FOR_ACE = 10
+
 class Player(val name: String, cards: List<Card>) {
     private val _cards: MutableList<Card> = cards.deepCopy().toMutableList()
     val cards: List<Card>
@@ -24,11 +27,11 @@ class Player(val name: String, cards: List<Card>) {
 
         val aceCount = _cards.count { it.isAce() }
         repeat(aceCount) {
-            if (calculatedScore + 10 <= 21) calculatedScore += 10
+            if (calculatedScore + EXTRA_SCORE_FOR_ACE <= TWENTY_ONE) calculatedScore += EXTRA_SCORE_FOR_ACE
         }
 
         return calculatedScore
     }
 
-    fun canTakeMoreCard(): Boolean = calculateScore() < 21
+    fun canTakeMoreCard(): Boolean = calculateScore() < TWENTY_ONE
 }
