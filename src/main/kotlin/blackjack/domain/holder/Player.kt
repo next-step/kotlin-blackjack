@@ -10,6 +10,7 @@ data class Player(
     val bettingAmount: BettingAmount = BettingAmount(0),
 ) {
     var hands: Hands = Hit(mutableSetOf())
+        private set
 
     fun firstTurn(cards: Set<Card>): Player {
         hands = hands.draw(cards)
