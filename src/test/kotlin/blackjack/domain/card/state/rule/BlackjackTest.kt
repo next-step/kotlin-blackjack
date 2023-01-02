@@ -32,4 +32,13 @@ class BlackjackTest {
         // then
         assertThat(exception.message).isEqualTo("블랙잭이 아닙니다.")
     }
+
+    @Test
+    fun `베팅 금액 테스트`() {
+        // given
+        val given = Blackjack(PlayingCards(SpadeAce, SpadeJack))
+
+        // when, then
+        assertThat(given.earningRate(1000)).isEqualTo(1500.0)
+    }
 }

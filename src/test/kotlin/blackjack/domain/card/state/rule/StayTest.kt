@@ -38,4 +38,13 @@ class StayTest {
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("스테이가 아닙니다.")
     }
+
+    @Test
+    fun `베팅 금액 테스트`() {
+        // given
+        val given = Stay(PlayingCards(SpadeTen, SpadeJack))
+
+        // when, then
+        assertThat(given.earningRate(1000)).isEqualTo(1000.0)
+    }
 }

@@ -34,4 +34,13 @@ class BustTest {
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("버스트가 아닙니다.")
     }
+
+    @Test
+    fun `베팅 금액 테스트`() {
+        // given
+        val given = Bust(PlayingCards(ClubTen, ClubJack, ClubTwo))
+
+        // when, then
+        assertThat(given.earningRate(1000)).isEqualTo(0.0)
+    }
 }

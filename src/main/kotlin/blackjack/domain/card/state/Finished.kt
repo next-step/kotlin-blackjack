@@ -15,4 +15,8 @@ abstract class Finished(override val cards: PlayingCards) : State() {
     override fun isFinished(): Boolean {
         return true
     }
+
+    override fun earningRate(money: Int): Double {
+        return money * rate
+    }
 }

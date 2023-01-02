@@ -6,9 +6,13 @@ import blackjack.domain.card.PlayingCards
 sealed class State {
     abstract val cards: PlayingCards
 
+    abstract val rate: Double
+
     abstract fun draw(playingCard: PlayingCard): State
 
     abstract fun stay(): State
 
     abstract fun isFinished(): Boolean
+
+    abstract fun earningRate(money: Int): Double
 }
