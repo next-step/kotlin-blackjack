@@ -32,7 +32,7 @@ object Controller {
 
     private fun playPlayer(player: Role, deck: Deck): Role {
         var newPlayer = player
-        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) && isPlayerBust(newPlayer)) {
+        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) && canPlayerHit(newPlayer)) {
             newPlayer = GameManager.hit(newPlayer, deck)
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
@@ -50,9 +50,13 @@ object Controller {
         return dealer.stay()
     }
 
-    private fun isPlayerBust(player: Role): Boolean {
+    private fun canPlayerHit(player: Role): Boolean {
         if (player.isBust()) {
             ResultView.printPlayerBust(player.name.toString())
+            return false
+        }
+        if (player.isBlackjack()) {
+            ResultView.printPlayerBlackjack(player.name.toString())
             return false
         }
         return true

@@ -11,6 +11,7 @@ object ResultView {
     private const val GAME_RESULT_MESSAGE = " - 결과: "
     private const val DEALER_NAME = "딜러"
     private const val PLAYER_BUST = "는 버스트되었습니다."
+    private const val PLAYER_BLACKJACK = "는 블랙잭입니다."
     private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val GAME_RESULT_TITLE = "## 최종 승패"
     private const val LINE_FEED = "\r\n"
@@ -78,5 +79,9 @@ object ResultView {
 
     fun printPlayerBust(name: String) {
         println(name + PLAYER_BUST)
+    }
+
+    fun printPlayerBlackjack(name: String) {
+        println(name + PLAYER_BLACKJACK)
     }
 }
