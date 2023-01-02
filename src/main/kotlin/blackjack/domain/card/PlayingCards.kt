@@ -23,9 +23,9 @@ data class PlayingCards(private val list: List<PlayingCard>) {
     }
 
     fun isStay(): Boolean {
-        val isBiggerThanBlackjackSize = list.size >= BLACKJACK_SIZE
+        val isNotBlackjack = !isBlackjack()
         val isLessThanWinningNumber = list.sumOf { it.score() } <= BLACKJACK_NUMBER
-        return isBiggerThanBlackjackSize && isLessThanWinningNumber
+        return isNotBlackjack && isLessThanWinningNumber
     }
 
     fun getScore(): Int {

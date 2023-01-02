@@ -44,6 +44,10 @@ sealed class Role {
         return state.cards.isBust()
     }
 
+    fun isStay(): Boolean {
+        return state.cards.isStay()
+    }
+
     fun getCardsAsListString(): List<String> {
         return state.cards.toListString()
     }
