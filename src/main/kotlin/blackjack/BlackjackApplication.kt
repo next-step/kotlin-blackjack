@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.model.CardDeck
+import blackjack.model.Dealer
 import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
@@ -17,7 +18,7 @@ class BlackjackApplication(
     fun play() {
         val playerNames = inputView.readPlayers()
         val players = Players.init(playerNames, cardDeck, INIT_CARD_COUNT)
-        val dealer = Player.init(DEALER_NAME, cardDeck, INIT_CARD_COUNT)
+        val dealer = Dealer.init(cardDeck, INIT_CARD_COUNT)
         outputView.printInitCards(dealer, players)
 
         playBlackjackGame(players)
@@ -28,7 +29,7 @@ class BlackjackApplication(
         outputView.printGameResult(players, gameResult)
     }
 
-    private fun drawDealerCardOrNot(dealer: Player) {
+    private fun drawDealerCardOrNot(dealer: Dealer) {
         if (dealer.getFinalScore() > DEALER_DRAW_SCORE) {
             return
         }
@@ -55,7 +56,6 @@ class BlackjackApplication(
     }
 
     companion object {
-        private const val DEALER_NAME = "딜러"
         private const val DEALER_DRAW_SCORE = 16
         private const val INIT_CARD_COUNT = 2
     }

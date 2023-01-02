@@ -1,6 +1,9 @@
 package blackjack.view.impl
 
+import blackjack.model.Cards
+import blackjack.model.Dealer
 import blackjack.model.DualResult
+import blackjack.model.Gambler
 import blackjack.model.GameResult
 import blackjack.model.Player
 import blackjack.model.Players
@@ -10,40 +13,42 @@ import blackjack.view.OutputView
 class StandardOutputView(
     private val messageSource: KoreanMessageSource = KoreanMessageSource()
 ) : OutputView {
-    override val printInitCards: (Player, Players) -> Unit = { dealer, players ->
+    override val printInitCards: (Dealer, Players) -> Unit = { dealer, players ->
         val playerNames = players.joinToString(SEPARATE_SYMBOL) { it.name }
 
         println()
-        println("${dealer.name}와 ${playerNames}에게 각각 2장의 카드를 나누었습니다.")
+        println("딜러와 ${playerNames}에게 각각 2장의 카드를 나누었습니다.")
 
-        printPlayerCards(dealer)
-        players.forEach(printPlayerCards)
+        println("딜러카드: ${cardsDetailOf(dealer.cards)}")
+        players.forEach {
+            println("${it.name}카드: ${cardsDetailOf(it.cards)}")
+        }
         println()
     }
 
     override val printPlayerCards: (Player) -> Unit = { player ->
-        println(cardDetailsOf(player))
+        println("${player.name}카드: ${cardsDetailOf(player.cards)}")
     }
 
-    override val printDealerDraw: (Player) -> Unit = { player ->
-        println()
-        println("${player.name}는 16이하라 한장의 카드를 더 받았습니다.")
-    }
-
-    override val printCardResult: (Player, Players) -> Unit = { dealer, players ->
-        val message: (Player) -> String = { "${cardDetailsOf(it)} - 결과: ${it.getFinalScore()}" }
+    override val printCardResult: (Dealer, Players) -> Unit = { dealer, players ->
+        val message: (String, Gambler) -> String = { name, player ->
+            "${name}카드: ${cardsDetailOf(player.cards)} - 결과: ${player.getFinalScore()}"
+        }
 
         println()
-        println(message(dealer))
+        println(message("딜러", dealer))
         players.forEach {
-            println(message(it))
+            println(message(it.name, it))
         }
     }
 
-    private val cardDetailsOf: (Player) -> String = { player ->
-        val cardsString = player.cards
-            .joinToString(SEPARATE_SYMBOL) { messageSource.nameOf(it) }
-        "${player.name}카드: $cardsString"
+    override val printDealerDraw: (Dealer) -> Unit = {
+        println()
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    private val cardsDetailOf: (Cards) -> String = { cards ->
+        cards.joinToString(SEPARATE_SYMBOL) { messageSource.nameOf(it) }
     }
 
     override val printGameResult: (Players, GameResult) -> Unit = { players, gameResult ->

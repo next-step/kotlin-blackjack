@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.model.Card
 import blackjack.model.CardDeck
+import blackjack.model.Dealer
 import blackjack.model.Denomination.EIGHT
 import blackjack.model.Denomination.JACK
 import blackjack.model.Denomination.KING
@@ -78,7 +79,7 @@ internal class BlackjackApplicationTest {
         }
 
         val outputView = mockk<OutputView>(relaxed = true)
-        val dealerAfterInit = slot<Player>()
+        val dealerAfterInit = slot<Dealer>()
 
         // when
         BlackjackApplication(cardDeck, inputView, outputView).play()
@@ -107,7 +108,7 @@ internal class BlackjackApplicationTest {
         }
 
         val outputView = mockk<OutputView>(relaxed = true)
-        val dealerAfterInit = slot<Player>()
+        val dealerAfterInit = slot<Dealer>()
 
         // when
         BlackjackApplication(cardDeck, inputView, outputView).play()

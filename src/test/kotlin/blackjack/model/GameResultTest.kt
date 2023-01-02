@@ -17,7 +17,7 @@ class GameResultTest {
         val player1Cards = Cards.of(Card(SPADE, TEN), Card(HEART, TEN))
         val player2Cards = Cards.of(Card(SPADE, TEN), Card(HEART, NINE))
         val player3Cards = Cards.of(Card(SPADE, ACE), Card(HEART, JACK))
-        val dealer = Player("딜러", dealerCards)
+        val dealer = Dealer(dealerCards)
         val player1 = Player("A", player1Cards)
         val player2 = Player("B", player2Cards)
         val player3 = Player("C", player3Cards)
