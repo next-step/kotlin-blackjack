@@ -1,21 +1,21 @@
-package blackjack.domain.card
+package blackjack.domain.card.data
 
 import blackjack.domain.Blackjack
-import blackjack.domain.player.Player
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.domain.card.Cards
 
 class CardsDataSet {
     companion object {
-        fun testDataWithTwoCards(): Cards {
-            val cardVendor = CardVendor()
+        private val twoCardsScoreRange: IntRange = (2..Blackjack.BLACKJACK_BEST_SCORE)
 
-            val size = (Player.INIT_CARD_COUNT..Player.INIT_CARD_COUNT + 2).random()
-
-            return Cards((1..size).map { cardVendor.drawCard() })
-        }
+        fun testDataWithTwoCards(): Cards =
+            testDataWithTwoCards(twoCardsScoreRange.random())
 
         fun testDataWithTwoCards(score: Int): Cards {
-            require(score in (2..Blackjack.BLACKJACK_BEST_SCORE)) {
-                "score [$score] should be in ${(2..Blackjack.BLACKJACK_BEST_SCORE)}"
+            require(score in twoCardsScoreRange) {
+                "score [$score] should be in $twoCardsScoreRange"
             }
 
             val lowerBound = score / 2
@@ -26,6 +26,12 @@ class CardsDataSet {
                     cardOf(randomCardNumber),
                     cardOf(score - randomCardNumber)
                 )
+            )
+        }
+
+        fun testData(vararg cardNumbers: CardNumber): Cards {
+            return Cards(
+                cardNumbers.map { Card(it, CardShape.values().random()) }
             )
         }
     }

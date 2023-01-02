@@ -1,13 +1,12 @@
 package blackjack.domain.card
 
-import blackjack.domain.Blackjack
-import blackjack.domain.player.Player
+import blackjack.domain.player.CardHolder
+import blackjack.view.console.toContentString
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import kotlin.math.abs
 
 class CardsTest : FunSpec({
     test("모든 카드는 총 56장이다.") {
@@ -20,80 +19,94 @@ class CardsTest : FunSpec({
 
     context("Cards가 정상적으로 블랙잭 카드 점수를 계산한다.") {
         withData(
-            nameFn = { "${it.first} : ${it.second}점" },
-            (1..10).map { CardsDataSet.testDataWithTwoCards() }
-                .map { cards -> cards to cards.blackjackScore() }
+            nameFn = { "cards: ${it.first.toContentString()}, score: ${it.second}점" },
+            listOf(
+                Cards.of(
+                    Card(CardNumber.TEN, CardShape.HEART),
+                    Card(CardNumber.KING, CardShape.SPADE)
+                ) to 20,
+                Cards.of(
+                    Card(CardNumber.FIVE, CardShape.HEART),
+                    Card(CardNumber.SIX, CardShape.SPADE),
+                    Card(CardNumber.QUEEN, CardShape.CLUB),
+                ) to 21,
+                Cards.of(
+                    Card(CardNumber.ONE, CardShape.CLUB),
+                    Card(CardNumber.FOUR, CardShape.HEART),
+                    Card(CardNumber.JACK, CardShape.SPADE),
+                    Card(CardNumber.TWO, CardShape.SPADE)
+                ) to 17,
+                Cards.of(
+                    Card(CardNumber.THREE, CardShape.HEART),
+                    Card(CardNumber.KING, CardShape.SPADE),
+                    Card(CardNumber.SEVEN, CardShape.SPADE),
+                ) to 20,
+                Cards.of(
+                    Card(CardNumber.QUEEN, CardShape.HEART),
+                    Card(CardNumber.NINE, CardShape.DIAMOND),
+                    Card(CardNumber.TEN, CardShape.HEART)
+                ) to 29
+            )
         ) { (cards, expectedScore) ->
             cards.score shouldBe expectedScore
-            cards shouldHaveAtLeastSize Player.INIT_CARD_COUNT
+            cards shouldHaveAtLeastSize CardHolder.INIT_CARD_COUNT
         }
     }
 
     context("Cards가 정상적으로 블랙잭 카드 점수를 계산한다. (ACE 예외 상황)") {
         withData(
-            nameFn = { "${it.first} : ${it.second}점" },
+            nameFn = { "cards: ${it.first.toContentString()}, score: ${it.second}점" },
             listOf(
-                Cards(
-                    listOf(
-                        Card(CardNumber.ACE, CardShape.HEART),
-                        Card(CardNumber.ACE, CardShape.SPADE)
-                    )
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.ACE, CardShape.SPADE)
                 ) to 12,
-                Cards(
-                    listOf(
-                        Card(CardNumber.ACE, CardShape.HEART),
-                        Card(CardNumber.NINE, CardShape.SPADE)
-                    )
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.NINE, CardShape.SPADE)
                 ) to 20,
-                Cards(
-                    listOf(
-                        Card(CardNumber.QUEEN, CardShape.CLUB),
-                        Card(CardNumber.ACE, CardShape.HEART),
-                        Card(CardNumber.KING, CardShape.SPADE)
-                    )
+                Cards.of(
+                    Card(CardNumber.QUEEN, CardShape.CLUB),
+                    Card(CardNumber.KING, CardShape.SPADE),
+                    Card(CardNumber.ACE, CardShape.HEART)
                 ) to 21,
-                Cards(
-                    listOf(
-                        Card(CardNumber.ACE, CardShape.HEART),
-                        Card(CardNumber.KING, CardShape.SPADE)
-                    )
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.KING, CardShape.SPADE)
                 ) to 21,
-                Cards(
-                    listOf(
-                        Card(CardNumber.QUEEN, CardShape.CLUB),
-                        Card(CardNumber.ACE, CardShape.HEART),
-                        Card(CardNumber.SIX, CardShape.DIAMOND),
-                        Card(CardNumber.FOUR, CardShape.HEART)
-                    )
+                Cards.of(
+                    Card(CardNumber.QUEEN, CardShape.CLUB),
+                    Card(CardNumber.SIX, CardShape.DIAMOND),
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.FOUR, CardShape.HEART)
+                ) to 21,
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.SEVEN, CardShape.DIAMOND),
+                    Card(CardNumber.QUEEN, CardShape.CLUB),
+                    Card(CardNumber.ACE, CardShape.DIAMOND),
+                    Card(CardNumber.TWO, CardShape.CLUB),
+                ) to 21,
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.SIX, CardShape.DIAMOND),
+                    Card(CardNumber.KING, CardShape.CLUB),
+                    Card(CardNumber.ACE, CardShape.DIAMOND),
+                    Card(CardNumber.ACE, CardShape.SPADE),
+                    Card(CardNumber.TWO, CardShape.HEART),
+                ) to 21,
+                Cards.of(
+                    Card(CardNumber.ACE, CardShape.HEART),
+                    Card(CardNumber.SEVEN, CardShape.DIAMOND),
+                    Card(CardNumber.JACK, CardShape.CLUB),
+                    Card(CardNumber.ACE, CardShape.DIAMOND),
+                    Card(CardNumber.ACE, CardShape.CLUB),
+                    Card(CardNumber.ACE, CardShape.SPADE)
                 ) to 21
             )
         ) { (cards, expectedScore) ->
             cards.score shouldBe expectedScore
-            cards shouldHaveAtLeastSize Player.INIT_CARD_COUNT
+            cards shouldHaveAtLeastSize CardHolder.INIT_CARD_COUNT
         }
     }
 })
-
-fun Cards.blackjackScore(): Int =
-    cards.map { it.candidateScores }
-        .cartesianProduct()
-        .map { it.sum() }
-        .filter { it <= Blackjack.BLACKJACK_BEST_SCORE }
-        .minWithOrNull(compareBy { Blackjack.BLACKJACK_BEST_SCORE - it })
-        ?: proximateScore()
-
-fun Cards.proximateScore(): Int =
-    cards.map { it.candidateScores }
-        .cartesianProduct()
-        .map { it.sum() }
-        .minWithOrNull(compareBy { abs(it - Blackjack.BLACKJACK_BEST_SCORE) })
-        ?: (Blackjack.BLACKJACK_BEST_SCORE + 1)
-
-private fun <T> Collection<Iterable<T>>.cartesianProduct(): List<List<T>> =
-    if (isEmpty()) emptyList()
-    else drop(1)
-        .fold(first().map(::listOf)) { acc, iterable ->
-            acc.flatMap { list ->
-                iterable.map(list::plus)
-            }
-        }

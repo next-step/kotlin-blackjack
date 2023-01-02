@@ -2,7 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.Blackjack
 import blackjack.domain.card.Cards
-import blackjack.domain.player.Player
+import blackjack.domain.player.CardHolder
 
 enum class State(
     val isAbleToHit: Boolean,
@@ -39,7 +39,7 @@ enum class State(
         fun finalStateOf(cards: Cards): State =
             when (cards.score) {
                 Blackjack.BLACKJACK_BEST_SCORE ->
-                    if (cards.size == Player.INIT_CARD_COUNT) BLACKJACK
+                    if (cards.size == CardHolder.INIT_CARD_COUNT) BLACKJACK
                     else HIT_AND_BLACKJACK
                 in (1 until Blackjack.BLACKJACK_BEST_SCORE) -> COMPLETED
                 else -> BUST

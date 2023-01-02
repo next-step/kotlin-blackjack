@@ -1,54 +1,30 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.state.State
+import blackjack.domain.player.result.PlayerResult
 
 class Player(
-    val name: String,
-    val cards: Cards
-) {
-    val score: Int
-        get() = cards.score
+    name: String,
+    cards: Cards,
+) : CardHolder(name, cards) {
 
-    private var state: State = State.of(cards)
+    private var playerResult: PlayerResult = PlayerResult.NOT_FINISHED
 
-    init {
-        require(cards.size == INIT_CARD_COUNT) {
-            "Player should have $INIT_CARD_COUNT cards before starting game [${cards.size}]"
-        }
+    val finalResult: PlayerResult
+        get() = playerResult
 
-        require(name.isNotBlank()) {
-            "Player's name should not be blank"
-        }
+    fun takeResult(otherCards: Cards): PlayerResult {
+        val playerResult = calculateResult(otherCards)
+
+        saveResult(playerResult)
+
+        return playerResult
     }
 
-    fun hit(card: Card) {
-        check(state.isAbleToHit) {
-            "Player's state [${state.name}] should be able to hit"
-        }
+    private fun calculateResult(otherCards: Cards): PlayerResult =
+        PlayerResult.of(cards, otherCards)
 
-        cards.addCard(card)
-        state = state.hit(cards)
-    }
-
-    fun stay() {
-        check(state.isAbleToStay) {
-            "Player's state [${state.name}] should be able to stay"
-        }
-
-        state = state.stay(cards)
-    }
-
-    fun isNotFinished() = !isFinished()
-
-    fun isFinished() = state.isFinished
-
-    override fun toString(): String {
-        return "${name}카드: $cards"
-    }
-
-    companion object {
-        const val INIT_CARD_COUNT = 2
+    private fun saveResult(playerResult: PlayerResult) {
+        this.playerResult = playerResult
     }
 }
