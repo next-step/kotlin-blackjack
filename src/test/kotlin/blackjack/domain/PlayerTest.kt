@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
-import blackjack.domain.holder.Hands
 import blackjack.domain.holder.Player
 import blackjack.domain.state.BlackJack
 import blackjack.domain.state.Bust
@@ -13,7 +12,6 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class PlayerTest : StringSpec({
 
@@ -24,8 +22,8 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
-        playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
+        playerAfterFirstTurn.hands.cards shouldBe setOf(Card.CLOVER_A, Card.CLOVER_4)
+        playerAfterFirstTurn.hands.shouldBeInstanceOf<Hit>()
     }
 
     "firstTurn 함수로 두장의 카드를 입력았을 때 player의 상태는 Hit 임을 확인한다." {
@@ -35,8 +33,8 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_4))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_4))
-        playerAfterFirstTurn.state.shouldBeInstanceOf<Hit>()
+        playerAfterFirstTurn.hands.cards shouldBe setOf(Card.CLOVER_A, Card.CLOVER_4)
+        playerAfterFirstTurn.hands.shouldBeInstanceOf<Hit>()
     }
 
     "firstTurn 함수로 두장의 카드를 입력받았을 때 Ace, J이면 player의 상태는 BlackJack 임을 확인한다." {
@@ -46,8 +44,8 @@ class PlayerTest : StringSpec({
         val playerAfterFirstTurn = player.firstTurn(setOf(Card.CLOVER_A, Card.CLOVER_J))
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.state.hands shouldBe Hands(mutableSetOf(Card.CLOVER_A, Card.CLOVER_J))
-        playerAfterFirstTurn.state.shouldBeInstanceOf<BlackJack>()
+        playerAfterFirstTurn.hands.cards shouldBe setOf(Card.CLOVER_A, Card.CLOVER_J)
+        playerAfterFirstTurn.hands.shouldBeInstanceOf<BlackJack>()
     }
 
     "카드의 총 합이 21이 초과하면 bust 임을 확인한다." {
@@ -58,7 +56,7 @@ class PlayerTest : StringSpec({
         playerAfterFirstTurn.addCard(Card.CLOVER_2)
         //then
         playerAfterFirstTurn.name shouldBe "harris"
-        playerAfterFirstTurn.state.shouldBeInstanceOf<Bust>()
+        playerAfterFirstTurn.hands.shouldBeInstanceOf<Bust>()
     }
 
     "addCard 함수로 5점인 카드 두개를 추가하면 카드 포인트는 10이다." {
@@ -75,12 +73,12 @@ class PlayerTest : StringSpec({
 
     "bust인 플레이어와 bust인 딜러가 있을 때 플레이어는 항상 진다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9, Card.DIAMOND_3))
+
 
         //when
         val result = harris.flip(dealer)
@@ -95,12 +93,12 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 bust인 딜러가 있을 때 플레이어는 승리한다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_5, Card.CLOVER_10, Card.CLOVER_K))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_2, Card.CLOVER_2))
+
 
         //when
         val result = harris.flip(dealer)
@@ -114,12 +112,12 @@ class PlayerTest : StringSpec({
 
     "BlackJack인 플레이어와 21점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 BlackJack으로(상금 1.5배) 승리한다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_5, Card.DIAMOND_5, Card.CLOVER_A)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_5, Card.DIAMOND_5, Card.CLOVER_A))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A))
+
 
         //when
         val result = harris.flip(dealer)
@@ -130,12 +128,12 @@ class PlayerTest : StringSpec({
 
     "BlackJack인 플레이어와 BlackJack인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 결과는 무승부다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A))
+
 
         //when
         val result = harris.flip(dealer)
@@ -146,12 +144,12 @@ class PlayerTest : StringSpec({
 
     "BlackJack인 플레이어와 BUST 딜러가 있을 때 플레이어는 베팅한 금액의 1.5배를 받는다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_9, Card.CLOVER_3)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.CLOVER_9, Card.CLOVER_3))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_A))
+
 
         //when
         val result = harris.flip(dealer)
@@ -162,12 +160,12 @@ class PlayerTest : StringSpec({
 
     "21점인 플레이어와 BlackJack인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 패배한다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.CLOVER_A))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_5, Card.CLOVER_5, Card.CLOVER_A)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_5, Card.CLOVER_5, Card.CLOVER_A))
+
 
         //when
         val result = harris.flip(dealer)
@@ -178,12 +176,12 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 20점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 패배한다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_J)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.CLOVER_J))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9))
+
 
         //when
         val result = harris.flip(dealer)
@@ -194,12 +192,12 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 18점인 딜러가 있을 때 플레이어가 flip 함수를 호출한 결과 플레이어가 승리한다." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.CLOVER_8)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.CLOVER_8))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_10, Card.CLOVER_9))
+
 
         //when
         val result = harris.flip(dealer)
@@ -210,12 +208,12 @@ class PlayerTest : StringSpec({
 
     "19점인 플레이어와 19점인 딜러가 있을 때 결과는 무승부이다.." {
         //given
-        val dealer = Dealer(hands = Hands(mutableSetOf(Card.CLOVER_9, Card.CLOVER_10)))
+        val dealer = Dealer().firstTurn(mutableSetOf(Card.CLOVER_9, Card.CLOVER_10))
         val harris = Player(
             "harris",
-            hands = Hands(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10)),
-            BettingAmount(10000)
-        )
+            BettingAmount(10000),
+        ).firstTurn(mutableSetOf(Card.DIAMOND_9, Card.DIAMOND_10))
+
 
         //when
         val result = harris.flip(dealer)

@@ -10,7 +10,7 @@ data class AddCardResult(
 ) {
     constructor(player: Player) : this(
         player.name,
-        player.state.hands.cards,
+        player.hands.cards,
         player.bust()
     )
 }

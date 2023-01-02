@@ -1,11 +1,12 @@
-package blackjack.domain.holder
+package blackjack.domain.state
 
 import blackjack.domain.card.Card
+import blackjack.domain.holder.Dealer
+import blackjack.domain.value.BettingAmount
 import blackjack.domain.value.Point
 
-data class Hands(
-    private val _cards: MutableSet<Card> = mutableSetOf(),
-) {
+interface Hands {
+    val _cards: MutableSet<Card>
     val cards: Set<Card>
         get() = _cards.toSet()
 
@@ -22,10 +23,6 @@ data class Hands(
 
     private fun hard() = !_cards.any { it.isAce() }
 
-    fun addOne(card: Card) {
-        _cards.add(card)
-    }
-
     fun addAll(cards: Set<Card>) {
         this._cards.addAll(cards)
     }
@@ -34,6 +31,9 @@ data class Hands(
     fun firstCard(): Set<Card> = setOf(_cards.first())
 
     fun blackJack() = cards.size == 2 && calculatePoint() == Point.BLACK_JACK
+    fun draw(cards: Set<Card>): Hands
+    fun earning(dealer: Dealer, bettingAmount: BettingAmount): Int
+    fun init(): Hands
 }
 
 private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {

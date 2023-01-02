@@ -13,8 +13,8 @@ data class PlayerGameResult(
 ) {
     constructor(player: Player, winningAmount: Int) : this(
         player.name,
-        player.state.hands.cards,
-        player.state.hands.calculatePoint(),
+        player.hands.cards,
+        player.hands.calculatePoint(),
         winningAmount,
     )
 

@@ -3,8 +3,8 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.holder.Dealer
-import blackjack.domain.holder.Hands
 import blackjack.domain.holder.Player
+import blackjack.domain.state.Hit
 import blackjack.domain.value.BettingAmount
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
@@ -69,7 +69,7 @@ class BlackJackGameTest : StringSpec({
         //given
         val game = BlackJackGame(
             listOf(),
-            Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_6))),
+            Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_6)),
             CardDeck()
         )
         //when
@@ -84,11 +84,10 @@ class BlackJackGameTest : StringSpec({
             listOf(
                 Player(
                     "harris",
-                    hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)),
                     BettingAmount(10000)
-                )
+                ).firstTurn(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_8)),
             ),
-            Dealer(hands = Hands(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_7))),
+            Dealer().firstTurn(mutableSetOf(Card.CLOVER_10, Card.DIAMOND_7)),
             CardDeck(),
         )
 

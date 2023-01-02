@@ -2,33 +2,32 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
-import blackjack.domain.holder.Hands
 import blackjack.domain.value.BettingAmount
 
-class Hit(override val hands: Hands) : State {
-    override fun draw(cards: Set<Card>): State {
-        hands.addAll(cards)
+class Hit(override val _cards: MutableSet<Card>) : Hands {
+    override fun draw(cards: Set<Card>): Hands {
+        _cards.addAll(cards)
         return transfer()
     }
 
     private fun transfer() = when {
-        hands.blackJack() -> BlackJack(hands)
-        hands.bust() -> Bust(hands)
+        blackJack() -> BlackJack(_cards)
+        bust() -> Bust(_cards)
         else -> this
     }
 
     override fun earning(dealer: Dealer, bettingAmount: BettingAmount): Int {
         return when {
             dealer.blackJack() -> bettingAmount.lose()
-            dealer.cardPoint() > hands.calculatePoint() -> bettingAmount.lose()
-            dealer.cardPoint() == hands.calculatePoint() -> bettingAmount.tie()
-            dealer.cardPoint() < hands.calculatePoint() -> bettingAmount.win()
+            dealer.cardPoint() > calculatePoint() -> bettingAmount.lose()
+            dealer.cardPoint() == calculatePoint() -> bettingAmount.tie()
+            dealer.cardPoint() < calculatePoint() -> bettingAmount.win()
             else -> throw IllegalStateException("수익 금액을 계산할 수 없습니다.")
         }
     }
 
-    override fun init(): State {
-        if (hands.cards.isEmpty()) {
+    override fun init(): Hands {
+        if (cards.isEmpty()) {
             return this
         }
         return transfer()

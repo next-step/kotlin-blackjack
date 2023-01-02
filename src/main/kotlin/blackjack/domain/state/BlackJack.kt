@@ -2,11 +2,10 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
-import blackjack.domain.holder.Hands
 import blackjack.domain.value.BettingAmount
 
-class BlackJack(override val hands: Hands) : State {
-    override fun draw(cards: Set<Card>): State {
+class BlackJack(override val _cards: MutableSet<Card>) : Hands {
+    override fun draw(cards: Set<Card>): Hands {
         throw IllegalStateException("더이상 카드를 받을 수 없습니다.")
     }
 
@@ -14,5 +13,5 @@ class BlackJack(override val hands: Hands) : State {
         return if (dealer.blackJack()) 0 else bettingAmount.blackJack()
     }
 
-    override fun init(): State = this
+    override fun init(): Hands = this
 }
