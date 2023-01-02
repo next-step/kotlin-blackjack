@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 
-class Bet(private val player: Player, private val money: Double) {
+class Bet(val player: Player, private val money: Double) {
     fun profit(dealer: Dealer): Double {
         return when {
             dealer.state is Blackjack && player.state is Blackjack -> 0.0

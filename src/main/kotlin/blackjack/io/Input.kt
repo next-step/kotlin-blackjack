@@ -3,6 +3,11 @@ package blackjack.io
 import blackjack.domain.Player
 
 class Input {
+    fun getBet(player: Player): Double {
+        println("${player.name}의 배팅금액은?")
+        return readln().toDouble()
+    }
+
     fun getPlayers(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln().split(',')

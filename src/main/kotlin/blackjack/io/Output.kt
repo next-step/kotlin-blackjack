@@ -39,4 +39,12 @@ class Output {
     fun printDealerCard(dealer: Dealer) {
         println("딜러 카드 : ${dealer.state.hand.cards.first()}")
     }
+
+    fun printProfitHeader() {
+        println("## 최종수익")
+    }
+
+    fun printProfit(player: Player, profit: Double) {
+        println("${player.name} : $profit")
+    }
 }

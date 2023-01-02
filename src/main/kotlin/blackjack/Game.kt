@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Bet
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.card.Deck
@@ -11,11 +12,15 @@ class Game(private val input: Input, private val output: Output) {
     private val players: List<Player>
     private val dealer: Dealer
     private val deck: Deck = Deck()
+    private val bets: List<Bet>
 
     init {
         deck.shuffle()
         players = input.getPlayers().map { name -> Player(name, FirstTurn.draw(deck.draw(), deck.draw())) }
         dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
+        bets = players.map { player: Player ->
+            Bet(player, bet(player))
+        }
     }
 
     fun start() {
@@ -41,6 +46,12 @@ class Game(private val input: Input, private val output: Output) {
         output.printPlayersHandWithScore(players)
 
         output.printEmptyLine()
+
+        output.printProfitHeader()
+        output.printProfit(dealer, bets.sumOf { -it.profit(dealer) })
+        bets.forEach { bet: Bet ->
+            output.printProfit(bet.player, bet.profit(dealer))
+        }
     }
 
     private fun dealerDraw() {
@@ -59,4 +70,6 @@ class Game(private val input: Input, private val output: Output) {
             output.printPlayerCard(player)
         }
     }
+
+    private fun bet(player: Player) = input.getBet(player)
 }
