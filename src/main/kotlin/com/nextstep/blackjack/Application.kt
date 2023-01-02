@@ -14,11 +14,11 @@ fun main() {
     val players = Players(names)
     val cards = CardDeck()
 
-    cards.deal(*players.players.toTypedArray())
-    cards.deal(*players.players.toTypedArray())
+    cards.deal(*players.players)
+    cards.deal(*players.players)
 
     outputView.printAfterDealing(players)
-    outputView.printStatus(*players.players.toTypedArray())
+    outputView.printStatus(*players.players)
 
     for (player in players.players) {
         while (needMoreCard(player, inputView)) {
@@ -27,7 +27,7 @@ fun main() {
         }
     }
 
-    outputView.printResult(players.players)
+    outputView.printResult(*players.players)
 }
 
 fun needMoreCard(player: Player, inputView: InputView): Boolean {

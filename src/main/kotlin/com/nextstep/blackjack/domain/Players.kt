@@ -1,9 +1,9 @@
 package com.nextstep.blackjack.domain
 
-import com.nextstep.blackjack.domain.card.CardDeck
-
 class Players(names: List<String>) {
-    val players: List<Player> = names.map { Player(it) }
+    val players: Array<Player> = names.map { Player(it) }.toTypedArray()
+
+    constructor(vararg names: String) : this(names.toList())
 
     fun names() = players.map { it.name }
 }

@@ -16,7 +16,7 @@ class OutputView {
         println()
     }
 
-    fun printResult(players: List<Player>) {
+    fun printResult(vararg players: Player) {
         println()
         players.forEach {
             println(createStatusMessage(it) + " - 결과: ${it.calculateScore()}")
