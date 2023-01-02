@@ -17,5 +17,5 @@ sealed class Rank(
             acc + price
         }
 
-    fun getBlackJackPlayers(): List<Player> = players.filter { player -> player.cards.isBlackJack() }
+    fun getBlackJackPlayers(): List<Player> = players.filter { player -> player.isBlackJack() }
 }

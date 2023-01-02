@@ -4,6 +4,8 @@ import java.util.Stack
 
 class Cards(val cardStack: Stack<Card>) {
 
+    val size = cardStack.size
+
     constructor(cards: List<Card>) : this(
         cardStack = cards.toCollection(Stack())
     )
@@ -24,8 +26,6 @@ class Cards(val cardStack: Stack<Card>) {
         cardStack.fold(0) { acc, card ->
             acc + card.getPoint(acc)
         }
-
-    fun isBlackJack() = cardStack.size == INIT_COUNT && point() == Card.BLACK_JACk_NUMBER
 
     companion object {
         const val INIT_COUNT = 2

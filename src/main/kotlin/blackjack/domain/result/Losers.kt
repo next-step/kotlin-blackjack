@@ -3,7 +3,7 @@ package blackjack.domain.result
 import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Player
 
-class Losers(players: List<Player>) : Rank(players) {
+class Losers(val players: List<Player>) : Rank(players) {
 
     companion object {
         fun from(dealer: Dealer, players: List<Player>): Losers {

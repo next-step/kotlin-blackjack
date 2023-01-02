@@ -26,15 +26,12 @@ class BlackJackGame {
 
     private fun printIncome(dealer: Dealer, players: List<Player>) {
         val (winners, losers) = GameResult.from(dealer, players)
-        val income = Income(winners, losers)
-        val dealerIncome = income.getAmount(dealer)
+        val incomes = Income.from(winners, losers, dealer)
 
         ResultView.printMessage(ResultView.Message.INCOME)
-        ResultView.printIncome(dealer.name, dealerIncome)
 
-        players.forEach { player ->
-            val playerIncome = income.getAmount(player)
-            ResultView.printIncome(player.name, playerIncome)
+        incomes.forEach { (participant, incomePrice) ->
+            ResultView.printIncome(participant.name, incomePrice.amount)
         }
     }
 

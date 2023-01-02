@@ -17,7 +17,7 @@ class PriceTest : StringSpec({
         val price = Price(100)
 
         val message = shouldThrow<IllegalArgumentException> {
-            price.inc(Price(-1))
+            price.increase(Price(-1))
         }
 
         message shouldHaveMessage "금액은 0 이상 입니다."
@@ -27,7 +27,7 @@ class PriceTest : StringSpec({
         val price = Price(100)
 
         val message = shouldThrow<IllegalArgumentException> {
-            price.dec(Price(-1))
+            price.decrease(Price(-1))
         }
 
         message shouldHaveMessage "금액은 0 이상 입니다."

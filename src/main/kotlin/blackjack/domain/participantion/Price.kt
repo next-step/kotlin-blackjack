@@ -8,12 +8,16 @@ class Price(amount: Int) {
         require(amount >= 0) { VALID_MESSAGE }
     }
 
-    fun inc(price: Price) {
+    fun unaryMinus() {
+        this.amount = amount.unaryMinus()
+    }
+
+    fun increase(price: Price) {
         require(price.amount >= 0) { VALID_MESSAGE }
         this.amount += price.amount
     }
 
-    fun dec(price: Price) {
+    fun decrease(price: Price) {
         require(price.amount >= 0) { VALID_MESSAGE }
         this.amount -= price.amount
     }
