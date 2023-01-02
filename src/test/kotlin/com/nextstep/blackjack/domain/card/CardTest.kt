@@ -1,6 +1,8 @@
 package com.nextstep.blackjack.domain.card
 
-import com.nextstep.blackjack.domain.card.CardNumber.*
+import com.nextstep.blackjack.domain.card.CardNumber.ACE
+import com.nextstep.blackjack.domain.card.CardNumber.KING
+import com.nextstep.blackjack.domain.card.CardNumber.TWO
 import com.nextstep.blackjack.domain.card.CardPattern.SPADE
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
@@ -10,9 +12,9 @@ import io.kotest.matchers.shouldBe
 class CardTest : FunSpec({
     test("카드가 Ace 인지 아닌지 알 수 있다") {
         forAll(
-            row(ACE,true),
-            row(TWO,false),
-            row(KING,false),
+            row(ACE, true),
+            row(TWO, false),
+            row(KING, false),
         ) {
             cardNumber, expected ->
             val card = Card(cardNumber, SPADE)

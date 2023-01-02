@@ -47,7 +47,7 @@ class PlayerTest : BehaviorSpec({
                     row(listOf(ACE, TWO), 13),
                     row(listOf(ACE, ACE, TWO), 14),
                 ) {
-                        cardNumbers, score ->
+                    cardNumbers, score ->
                     val cards = cardNumbers.map { Card(it, SPADE) }
                     val player = Player("플레이어", cards)
 

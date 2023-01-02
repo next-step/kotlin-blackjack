@@ -14,15 +14,15 @@ fun main() {
     val players = Players(names)
     val cards = CardDeck()
 
-    players.dealCards(cards)
-    players.dealCards(cards)
+    cards.deal(*players.players.toTypedArray())
+    cards.deal(*players.players.toTypedArray())
 
     outputView.printAfterDealing(players)
     outputView.printStatus(*players.players.toTypedArray())
 
     for (player in players.players) {
         while (needMoreCard(player, inputView)) {
-            player.addCard(cards.draw())
+            cards.deal(player)
             outputView.printStatus(player)
         }
     }
