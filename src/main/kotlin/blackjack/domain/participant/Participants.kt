@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.application.Deck
+import blackjack.domain.bet.Bet
 import blackjack.domain.participant.state.Name
 import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Player
@@ -42,8 +43,8 @@ value class Participants(private val values: List<Role>) {
     companion object {
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
 
-        fun createPlayers(names: Array<Name>, deck: Deck): Participants {
-            return Participants(names.map { Player(it.toString(), deck.getCards(NUMBER_OF_STARTING_CARDS)) })
+        fun createPlayers(names: Array<Name>, deck: Deck, bets: Array<Bet>): Participants {
+            return Participants(names.mapIndexed { index, name -> Player(name.toString(), deck.getCards(NUMBER_OF_STARTING_CARDS), bets[index]) })
         }
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain.participant.state.result
 
+import blackjack.Player
 import blackjack.SpadeAce
 import blackjack.SpadeEight
 import blackjack.SpadeFive
@@ -16,7 +17,6 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.state.result.Result.Companion.calculateResult
 import blackjack.domain.participant.state.role.Dealer
-import blackjack.domain.participant.state.role.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

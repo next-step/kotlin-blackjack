@@ -2,16 +2,17 @@ package blackjack.domain.participant
 
 import blackjack.ClubJack
 import blackjack.ClubTwo
+import blackjack.Player
 import blackjack.SpadeAce
 import blackjack.SpadeJack
 import blackjack.application.Deck
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.Participants.Companion.createPlayers
 import blackjack.domain.participant.state.Name
 import blackjack.domain.participant.state.role.Dealer
-import blackjack.domain.participant.state.role.Player
 import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -77,9 +78,10 @@ class ParticipantsTest {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = listOf("pobi", "jason").map { Name(it) }
+        val bets = listOf(10000, 20000).map { Bet(it) }.toTypedArray()
 
         // when
-        val actual = createPlayers(names.toTypedArray(), deck)
+        val actual = createPlayers(names.toTypedArray(), deck, bets)
 
         // then
         assertThat(actual.getPlayers().map { it.name }).containsAll(names)

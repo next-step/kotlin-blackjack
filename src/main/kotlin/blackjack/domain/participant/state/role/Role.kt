@@ -1,5 +1,6 @@
 package blackjack.domain.participant.state.role
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
@@ -13,20 +14,22 @@ sealed class Role {
 
     abstract val state: State
 
+    abstract val bet: Bet
+
     abstract fun isDealer(): Boolean
 
     fun draw(playingCard: PlayingCard): Role {
         if (isDealer()) {
             return Dealer(state.draw(playingCard))
         }
-        return Player(name, state.draw(playingCard))
+        return Player(name, state.draw(playingCard), bet)
     }
 
     fun stay(): Role {
         if (isDealer()) {
             return Dealer(state.stay())
         }
-        return Player(name, state.stay())
+        return Player(name, state.stay(), bet)
     }
 
     fun getScore(): Int {
@@ -39,10 +42,6 @@ sealed class Role {
 
     fun isBust(): Boolean {
         return state.cards.isBust()
-    }
-
-    fun getCardsSize(): Int {
-        return state.cards.size()
     }
 
     fun getCardsAsListString(): List<String> {

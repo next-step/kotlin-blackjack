@@ -1,8 +1,13 @@
 package blackjack
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.PlayingCard
+import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.Suit
+import blackjack.domain.participant.state.role.Player
+
+fun Player(name: String, cards: PlayingCards): Player = Player(name, cards, Bet(0))
 
 fun SpadeCard(denomination: Denomination): PlayingCard = PlayingCard(Suit.SPADES, denomination)
 
