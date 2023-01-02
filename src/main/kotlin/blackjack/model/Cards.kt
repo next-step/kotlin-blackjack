@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.model.Player.Companion.STOP_SCORE
-
 class Cards(
     private val value: List<Card> = listOf()
 ) : List<Card> by value {
@@ -10,7 +8,7 @@ class Cards(
     }
 
     private fun calculate(cards: List<Card>, index: Int = 0, accumulator: Int = 0): Int? {
-        if (accumulator > STOP_SCORE) {
+        if (accumulator > BUST_SCORE) {
             return null
         }
         if (index == cards.size) {
@@ -32,6 +30,7 @@ class Cards(
     }
 
     companion object {
+        private const val BUST_SCORE = 21
         private const val INDEX_INCREMENT = 1
         private const val ACE_SPECIAL_SCORE = 11
 
