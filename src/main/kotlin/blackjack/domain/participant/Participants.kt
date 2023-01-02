@@ -18,9 +18,7 @@ value class Participants(private val values: List<Role>) {
 
     operator fun plus(role: Role): Participants {
         if (role is Dealer) {
-            val participants = values.toMutableList()
-            participants.add(0, role)
-            return Participants(participants)
+            return Participants(listOf(role) + values)
         }
         return Participants(values + role)
     }
