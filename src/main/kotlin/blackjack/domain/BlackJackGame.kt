@@ -17,8 +17,9 @@ class BlackJackGame(
     fun start(): List<InitResult> = dealerInit() + playerInit()
 
     private fun dealerInit(): List<InitResult> {
-        dealer.firstTurn(deck.deal(INITIAL_CARD_COUNT))
-        return listOf(InitResult(dealer, dealer.firstCard()))
+        val cards = deck.deal(INITIAL_CARD_COUNT)
+        dealer.firstTurn(cards)
+        return listOf(InitResult(dealer, setOf(cards.first())))
     }
 
     private fun playerInit(): List<InitResult> = players.map {

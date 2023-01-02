@@ -1,6 +1,8 @@
 package blackjack.domain.holder
 
 import blackjack.domain.card.Card
+import blackjack.domain.state.BlackJack
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Hands
 import blackjack.domain.value.BettingAmount
@@ -23,9 +25,7 @@ data class Player(
     }
 
     fun cardPoint() = hands.calculatePoint()
-    fun blackJack() = hands.blackJack()
+    fun blackJack() = hands is BlackJack
+    fun bust(): Boolean = hands is Bust
     fun flip(dealer: Dealer): Int = hands.earning(dealer, bettingAmount)
-    fun bust(): Boolean = hands.bust()
-    fun firstCard(): Set<Card> = hands.firstCard()
-
 }

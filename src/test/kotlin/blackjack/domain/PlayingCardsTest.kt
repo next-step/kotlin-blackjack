@@ -1,11 +1,13 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.value.Point
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class PlayingCardsTest : StringSpec({
     "플레잉 카드가 2Clover 3Spade일 때 카드 점수를 계산하면 5이다." {
@@ -28,10 +30,10 @@ class PlayingCardsTest : StringSpec({
         }
     }
     "Clover 10, Clover K, Clover 2를 들고있으면 bust이다." {
-        Hit(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_2)).bust() shouldBe true
+        Hit(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K)).draw(setOf( Card.CLOVER_2)).shouldBeInstanceOf<Bust>()
     }
 
     "Clover 10, Clover K, Clover A를 들고있으면 bust가 아니다." {
-        Hit(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K, Card.CLOVER_A)).bust() shouldBe false
+        Hit(mutableSetOf(Card.CLOVER_10, Card.CLOVER_K)).draw(setOf( Card.CLOVER_A)).shouldBeInstanceOf<Hit>()
     }
 })

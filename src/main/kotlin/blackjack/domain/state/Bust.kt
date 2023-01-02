@@ -3,8 +3,12 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
 import blackjack.domain.value.BettingAmount
+import blackjack.domain.value.Point
 
-class Bust(override val _cards: MutableSet<Card>) : Hands {
+class Bust(_cards: MutableSet<Card>) : Hands(_cards) {
+
+    override fun sumPoint(): Point = Point.ZERO
+
     override fun draw(cards: Set<Card>): Hands {
         throw IllegalStateException("더이상 카드를 받을 수 없습니다.")
     }

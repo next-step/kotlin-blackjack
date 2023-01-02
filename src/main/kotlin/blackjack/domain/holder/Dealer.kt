@@ -28,12 +28,12 @@ class Dealer {
         }
         return count
     }
+
     fun cardPoint(): Point = player.cardPoint()
     fun blackJack(): Boolean = player.blackJack()
 
     fun bust(): Boolean = player.bust()
 
-    fun firstCard(): Set<Card> = player.firstCard()
     fun result(players: List<Player>): List<PlayerGameResult> {
         val playerGameResults = players.map { PlayerGameResult(it, it.flip(this)) }
         val dealerBettingAmount = -playerGameResults.sumOf { it.winningAmount }

@@ -3,8 +3,18 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.holder.Dealer
 import blackjack.domain.value.BettingAmount
+import blackjack.domain.value.Point
 
-class Hit(override val _cards: MutableSet<Card>) : Hands {
+class Hit(private val _cards: MutableSet<Card>) : Hands(_cards) {
+
+    override fun sumPoint(): Point {
+        if (hard()) return _cards.sumOf { it.point }
+        return _cards.sumOf { it.point }
+            .soft()
+    }
+
+    private fun hard() = !_cards.any { it.isAce() }
+
     override fun draw(cards: Set<Card>): Hands {
         _cards.addAll(cards)
         return transfer()
@@ -15,6 +25,9 @@ class Hit(override val _cards: MutableSet<Card>) : Hands {
         bust() -> Bust(_cards)
         else -> this
     }
+
+    private fun blackJack() = cards.size == 2 && calculatePoint() == Point.BLACK_JACK
+    private fun bust(): Boolean = sumPoint() > Point.MAX
 
     override fun earning(dealer: Dealer, bettingAmount: BettingAmount): Int {
         return when {
@@ -32,4 +45,9 @@ class Hit(override val _cards: MutableSet<Card>) : Hands {
         }
         return transfer()
     }
+}
+
+private fun <E> Set<E>.sumOf(function: (E) -> Point): Point {
+    return this.map(function)
+        .reduce { acc, point -> acc + point }
 }
