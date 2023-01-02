@@ -1,11 +1,9 @@
 package blackjack.domain
 
-import io.kotest.core.spec.style.FreeSpec
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
 import io.kotest.matchers.shouldBe
 
-class OwnCardsTest : FreeSpec({
+class OwnCardsTest : StringSpec({
 
     "최초의 2개의 카드를 발급 받는다" {
         OwnCards(Draw.FIRST_DRAW_COUNT).cards.size shouldBe 2
@@ -36,7 +34,6 @@ class OwnCardsTest : FreeSpec({
             ownCards.sumCardNumber() shouldBe sum
         }
     }
-
 
     "보유한 카드의 정보를 반환한다" {
         val ownCards = OwnCards(setOf(Card(CardNumber.ACE, Pattern.CLOVER)).toMutableSet())

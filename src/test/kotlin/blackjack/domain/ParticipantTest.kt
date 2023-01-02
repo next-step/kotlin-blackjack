@@ -7,6 +7,6 @@ class ParticipantTest : StringSpec({
 
     "쉼표로 참여자를 구분한다" {
         val participant = Participant("a,b,c")
-        participant.getParticipantNames() shouldBe listOf("a", "b", "c")
+        participant.getParticipantNames() shouldBe listOf("딜러", "a", "b", "c")
     }
 })
