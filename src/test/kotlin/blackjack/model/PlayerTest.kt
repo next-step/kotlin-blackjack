@@ -108,5 +108,6 @@ class PlayerTest {
 
         // then
         assertThat(player1.wins(player2)).isSameAs(PUSH)
+        assertThat(player2.wins(player1)).isSameAs(PUSH)
     }
 }
