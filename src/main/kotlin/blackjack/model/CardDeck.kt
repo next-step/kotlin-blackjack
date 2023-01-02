@@ -13,12 +13,12 @@ class CardDeck private constructor(
     }
 
     companion object {
-        fun of(cards: List<Card>): CardDeck {
-            return CardDeck(cards.toMutableList())
-        }
-
         fun of(vararg cards: Card): CardDeck {
             return of(cards.toList())
+        }
+
+        fun of(cards: List<Card>): CardDeck {
+            return CardDeck(cards.toMutableList())
         }
 
         fun defaultDeck(): CardDeck {
