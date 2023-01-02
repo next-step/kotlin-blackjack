@@ -2,6 +2,7 @@ package blackjack.application
 
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
+import blackjack.domain.card.strategy.RandomShuffleStrategy
 
 @JvmInline
 value class Deck(private val cards: MutableList<PlayingCard>) {
@@ -9,7 +10,7 @@ value class Deck(private val cards: MutableList<PlayingCard>) {
 
     fun getCard(): PlayingCard {
         if (cards.isEmpty()) {
-            throw NoSuchElementException("카드가 없습니다.")
+            cards.addAll(PlayingCards.shuffle(RandomShuffleStrategy()))
         }
         return cards.removeAt(FIRST_INDEX)
     }

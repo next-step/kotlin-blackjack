@@ -4,10 +4,10 @@ import blackjack.SpadeAce
 import blackjack.SpadeFour
 import blackjack.SpadeThree
 import blackjack.SpadeTwo
+import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class DeckTest {
     @Test
@@ -20,17 +20,15 @@ class DeckTest {
     }
 
     @Test
-    fun `카드 덱 - 카드 분배 예외처리 테스트, 카드가 없는 경우에 카드를 뽑는 경우`() {
+    fun `카드 덱 - 카드가 없는 경우에 카드를 뽑는 경우, 덱 내부에서 카드를 자동 생성`() {
         // given
         val deck = Deck(mutableListOf())
 
         // when
-        val exception = assertThrows<NoSuchElementException> {
-            deck.getCard()
-        }
+        val actual = deck.getCard()
 
         // then
-        assertThat(exception.message).isEqualTo("카드가 없습니다.")
+        assertThat(actual).isInstanceOf(PlayingCard::class.java)
     }
 
     @Test
