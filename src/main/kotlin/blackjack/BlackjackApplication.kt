@@ -30,12 +30,10 @@ class BlackjackApplication(
     }
 
     private fun drawDealerCardOrNot(dealer: Dealer) {
-        if (dealer.getFinalScore() > DEALER_DRAW_SCORE) {
-            return
+        if (dealer.isPickable()) {
+            dealer.addCard(cardDeck.drawCard())
+            outputView.printDealerDraw(dealer)
         }
-
-        dealer.addCard(cardDeck.drawCard())
-        outputView.printDealerDraw(dealer)
     }
 
     private fun playBlackjackGame(players: Players) {
@@ -56,7 +54,6 @@ class BlackjackApplication(
     }
 
     companion object {
-        private const val DEALER_DRAW_SCORE = 16
         private const val INIT_CARD_COUNT = 2
     }
 }
