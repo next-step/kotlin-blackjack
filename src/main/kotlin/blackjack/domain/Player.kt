@@ -12,6 +12,8 @@ open class Player(val name: String, state: State) {
         state = state.draw(card)
     }
 
+    fun profit(money: Double) = state.profit(money)
+
     fun canDraw() = state is Running
 
     fun score() = state.score()
