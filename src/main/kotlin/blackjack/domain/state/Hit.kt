@@ -7,7 +7,7 @@ import blackjack.domain.value.Point
 
 class Hit(private val _cards: MutableSet<Card>) : Hands(_cards) {
 
-    override fun sumPoint(): Point {
+    override fun calculatePoint(): Point {
         if (hard()) return _cards.sumOf { it.point }
         return _cards.sumOf { it.point }
             .soft()
@@ -27,7 +27,7 @@ class Hit(private val _cards: MutableSet<Card>) : Hands(_cards) {
     }
 
     private fun blackJack() = cards.size == 2 && calculatePoint() == Point.BLACK_JACK
-    private fun bust(): Boolean = sumPoint() > Point.MAX
+    private fun bust(): Boolean = calculatePoint() > Point.MAX
 
     override fun earning(dealer: Dealer, bettingAmount: BettingAmount): Int {
         return when {
@@ -37,13 +37,6 @@ class Hit(private val _cards: MutableSet<Card>) : Hands(_cards) {
             dealer.cardPoint() < calculatePoint() -> bettingAmount.win()
             else -> throw IllegalStateException("수익 금액을 계산할 수 없습니다.")
         }
-    }
-
-    override fun init(): Hands {
-        if (cards.isEmpty()) {
-            return this
-        }
-        return transfer()
     }
 }
 

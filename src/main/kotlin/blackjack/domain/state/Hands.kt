@@ -9,15 +9,10 @@ abstract class Hands(private val _cards: MutableSet<Card>) {
     val cards: Set<Card>
         get() = _cards.toSet()
 
-    fun calculatePoint(): Point {
-        val sumPoint = sumPoint()
-        return if (sumPoint > Point.MAX) Point.ZERO else sumPoint
-    }
+//    fun calculatePoint(): Point = sumPoint()
 
-    abstract fun sumPoint(): Point
+    abstract fun calculatePoint(): Point
 
     abstract fun draw(cards: Set<Card>): Hands
     abstract fun earning(dealer: Dealer, bettingAmount: BettingAmount): Int
-    abstract fun init(): Hands
 }
-
