@@ -9,6 +9,8 @@ import blackjack.domain.participant.state.role.Player
 
 fun Player(name: String, cards: PlayingCards): Player = Player(name, cards, Bet(0))
 
+fun Player(name: String, cards: PlayingCards, bet: Int): Player = Player(name, cards, Bet(bet))
+
 fun SpadeCard(denomination: Denomination): PlayingCard = PlayingCard(Suit.SPADES, denomination)
 
 fun ClubCard(denomination: Denomination): PlayingCard = PlayingCard(Suit.CLUBS, denomination)
