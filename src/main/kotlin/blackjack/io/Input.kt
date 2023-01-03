@@ -1,9 +1,9 @@
 package blackjack.io
 
-import blackjack.domain.Player
+import blackjack.domain.player.User
 
 class Input {
-    fun getBet(player: Player): Double {
+    fun getBet(player: User): Double {
         println("${player.name}의 배팅금액은?")
         return readln().toDouble()
     }
@@ -13,7 +13,7 @@ class Input {
         return readln().split(',')
     }
 
-    fun moreDraw(player: Player): Boolean {
+    fun moreDraw(player: User): Boolean {
         println("${player.name}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln() == "y"
     }

@@ -1,27 +1,26 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.card.Deck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.User
 import blackjack.domain.state.FirstTurn
-import blackjack.domain.state.Running
 import blackjack.io.Input
 import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
-    private val players: List<Player>
+    private val players: List<User>
     private val dealer: Dealer
     private val deck: Deck = Deck()
 
     init {
         deck.shuffle()
-        players = input.getPlayers().map { name -> Player(name, FirstTurn.draw(deck.draw(), deck.draw())) }
+        players = input.getPlayers().map { name -> User(name, FirstTurn.draw(deck.draw(), deck.draw())) }
         dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
         batPlayers()
     }
 
     private fun batPlayers() {
-        players.forEach { player: Player ->
+        players.forEach { player: User ->
             player.bat(input.getBet(player))
         }
     }
@@ -62,12 +61,9 @@ class Game(private val input: Input, private val output: Output) {
             output.printDealerDraw()
             dealer.draw(deck.draw())
         }
-        if (dealer.state is Running) {
-            dealer.stay()
-        }
     }
 
-    private fun playerDraw(player: Player) {
+    private fun playerDraw(player: User) {
         while (player.canDraw()) {
             if (!input.moreDraw(player)) {
                 player.stay()

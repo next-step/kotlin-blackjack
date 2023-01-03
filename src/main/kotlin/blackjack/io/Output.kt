@@ -1,10 +1,11 @@
 package blackjack.io
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.User
 
 class Output {
-    fun printPlayersCard(players: List<Player>) {
+    fun printPlayersCard(players: List<User>) {
         players.forEach {
             printPlayerCard(it)
         }
@@ -18,11 +19,11 @@ class Output {
         println()
     }
 
-    fun printPlayerCard(player: Player) {
+    fun printPlayerCard(player: User) {
         println("${player.name} 카드 : ${player.state.cards().joinToString(",")}")
     }
 
-    fun printPlayersHandWithScore(players: List<Player>) {
+    fun printPlayersHandWithScore(players: List<User>) {
         players.forEach { player ->
             println("${player.name} 카드 : ${player.state.cards().joinToString(",")} - 결과 : ${player.score()}")
         }

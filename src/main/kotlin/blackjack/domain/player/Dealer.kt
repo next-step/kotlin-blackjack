@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.state.State
 
-class Dealer(override var state: State) : Player("딜러", state) {
+class Dealer(state: State) : Player("딜러", state) {
     init {
         if (canDraw()) dealersHitToStay()
     }

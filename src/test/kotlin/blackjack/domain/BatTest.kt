@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.Denomination
 import blackjack.domain.card.Shape
+import blackjack.domain.player.Dealer
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
