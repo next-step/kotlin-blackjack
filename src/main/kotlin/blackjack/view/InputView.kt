@@ -10,6 +10,11 @@ object InputView {
         return readln().split(",")
     }
 
+    fun inputBetAmount(name: String): Int {
+        println("$name 의 베팅 금액은?")
+        return readln().toInt()
+    }
+
     fun inputIsGetCard(player: Player): Boolean {
         println("${player.name.value}(은)는 한장의 카드를 더 받겠습니까? (예는 $YES, 아니오는 $NO)")
         val answer = validateAnswer(readln())

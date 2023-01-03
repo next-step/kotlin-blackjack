@@ -19,6 +19,15 @@ interface Player {
 
     fun copy(name: Name = this.name, cards: Cards): Player
 
+    fun match(score: Int): ResultStatus {
+        if (this.score == score) return ResultStatus.DRAW
+
+        return when (this.score > score) {
+            true -> ResultStatus.WIN
+            false -> ResultStatus.LOSE
+        }
+    }
+
     companion object {
         private const val TWENTY_ONE = 21
     }

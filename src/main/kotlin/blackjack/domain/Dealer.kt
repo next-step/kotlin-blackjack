@@ -1,8 +1,9 @@
 package blackjack.domain
 
-class Dealer(
+data class Dealer(
     override val name: Name = DEALER_NAME,
     override var cards: Cards = Cards(),
+    val profit: Profit = Profit()
 ) : Player {
     var results: MutableList<ResultStatus> = mutableListOf()
 
@@ -13,19 +14,11 @@ class Dealer(
     }
 
     private fun isBust() = this.score > BLACKJACK_SCORE
-    fun getMatchResult(player: Player): ResultStatus {
-        val playerResult = getPlayerResult(player)
+    fun getMatchResult(user: User): PlayerResult {
+        val playerResult = getPlayerResult(user)
         calculateResult(playerResult)
 
-        return playerResult
-    }
-
-    private fun getPlayerResult(player: Player): ResultStatus {
-        if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
-        if (this.isBust() && player.isHit()) return ResultStatus.WIN
-        if (!player.isHit()) return ResultStatus.LOSE
-
-        return player.score match this.score
+        return PlayerResult(user, playerResult)
     }
 
     fun calculateResult(playerResult: ResultStatus) {
@@ -35,6 +28,23 @@ class Dealer(
             else -> ResultStatus.DRAW
         }
         results.add(dealerResult)
+    }
+
+    fun calculateProfit(playerResults: List<PlayerResult>): Dealer {
+        val profit = Profit(
+            playerResults.sumOf {
+                profit + (-it.profit)
+            }
+        )
+        return this.copy(profit = profit)
+    }
+
+    private fun getPlayerResult(player: Player): ResultStatus {
+        if (this.isBlackJack()) return getPlayerResultWhenDealerBlackJack(player)
+        if (this.isBust() && player.isHit()) return ResultStatus.WIN
+        if (!player.isHit()) return ResultStatus.LOSE
+
+        return player.match(this.score)
     }
 
     private fun getPlayerResultWhenDealerBlackJack(player: Player): ResultStatus {
