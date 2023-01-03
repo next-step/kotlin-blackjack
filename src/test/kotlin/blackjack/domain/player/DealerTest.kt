@@ -59,6 +59,10 @@ class DealerTest : FunSpec({
             val players = (2..21).map { PlayerDataSet.testDataWithTwoCards(it) }
 
             val playerResults = players.map { givenPlayer ->
+                if (givenPlayer.isNotFinished()) {
+                    givenPlayer.stay()
+                }
+
                 val result = dealer.takeResult(givenPlayer)
 
                 result shouldNotBe null

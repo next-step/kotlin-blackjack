@@ -9,6 +9,7 @@ import blackjack.domain.player.CardHolder
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.player.betting.Profit
 import blackjack.domain.player.result.PlayerResult
 import blackjack.view.BlackjackView
 
@@ -54,6 +55,13 @@ class ConsoleBlackjackView : BlackjackView {
     override fun printlnDealerAddedCards(dealer: Dealer) {
         println("${dealer.name}는 ${Dealer.DEALER_REQUIRED_MIN_SCORE}이하라 한장의 카드를 더 받았습니다.\n")
     }
+
+    override fun printlnBlackjackFinalProfit(blackjack: Blackjack) {
+        println("## 최종 수익")
+        println(blackjack.dealer.toProfitString())
+        println(blackjack.players.toProfitString())
+        println()
+    }
 }
 
 fun Players.toContentString(): String =
@@ -61,6 +69,9 @@ fun Players.toContentString(): String =
 
 fun Players.toFinalResultString(): String =
     joinToString("\n") { it.toFinalResultString() }
+
+fun Players.toProfitString(): String =
+    joinToString("\n") { it.toProfitString() }
 
 fun CardHolder.toResultString(): String =
     "${name}카드: ${cards.toContentString()} - 결과: $score"
@@ -71,11 +82,17 @@ fun Player.toContentString(): String =
 fun Player.toFinalResultString(): String =
     "$name: ${finalResult.toContentString()}"
 
+fun Player.toProfitString(): String =
+    "$name: ${getProfit().toContentString()}"
+
 fun Dealer.toContentString(): String =
     "$name: ${cards[0].toContentString()}"
 
 fun Dealer.toFinalResultString(): String =
     "$name: ${getWinCount()}승 ${getLoseCount()}패"
+
+fun Dealer.toProfitString(): String =
+    "$name: ${getProfit().toContentString()}"
 
 fun Cards.toContentString(): String =
     joinToString(", ") { card ->
@@ -95,3 +112,6 @@ fun PlayerResult.toContentString(): String = when (this) {
     PlayerResult.DRAW -> "무"
     else -> throw UnsupportedOperationException("${PlayerResult.NOT_FINISHED}.toString() does not supported")
 }
+
+fun Profit.toContentString(): String =
+    "${amount.toLong()}"

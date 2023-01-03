@@ -16,7 +16,9 @@ class BlackjackController(
         val playerNames = blackjackInputReader.readPlayerNames()
         val dealerName = Dealer.DEFAULT_DEALER_NAME
 
-        val blackjack = Blackjack.of(dealerName, playerNames, cardVendor)
+        val playerBettingAmounts = blackjackInputReader.readPlayerBettingAmounts(playerNames)
+
+        val blackjack = Blackjack.of(dealerName, playerNames, playerBettingAmounts, cardVendor)
         val dealer = blackjack.dealer
         val players = blackjack.players
 
@@ -34,6 +36,6 @@ class BlackjackController(
 
         blackjackView.printlnBlackjackResult(blackjack)
 
-        blackjackView.printlnBlackjackFinalResult(blackjack)
+        blackjackView.printlnBlackjackFinalProfit(blackjack)
     }
 }

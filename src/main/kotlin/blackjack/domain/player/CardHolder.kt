@@ -48,9 +48,21 @@ abstract class CardHolder(
         state = state.stay(cards)
     }
 
-    fun isNotFinished() = !isFinished()
+    fun isNotFinished(): Boolean = !isFinished()
 
-    fun isFinished() = state.isFinished
+    fun isFinished(): Boolean = state.isFinished
+
+    fun isBlackjack(): Boolean = cards.isBlackjack()
+
+    fun isNotBust(): Boolean = !isBust()
+
+    fun isBust(): Boolean = cards.isBust()
+
+    fun checkFinished() {
+        if (isNotFinished()) {
+            stay()
+        }
+    }
 
     companion object {
         const val INIT_CARD_COUNT: Int = 2
