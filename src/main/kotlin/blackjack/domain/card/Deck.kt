@@ -25,6 +25,5 @@ class Deck {
     private fun getCardsByShape(shape: Shape): List<Card> {
         return Denomination.values()
             .map { Card(shape, it) }
-            .toMutableList()
     }
 }
