@@ -29,11 +29,11 @@ internal class BlackjackTest {
     }
 
     @Test
-    fun `Blackjack의 수익률은 배팅금액의 일점오배다`() {
+    fun `Blackjack의 수익률은 배팅금액의 일점오 입니다`() {
         val firstCard = Card(Shape.CLUB, Denomination.ACE)
         val secondCard = Card(Shape.CLUB, Denomination.TEN)
         val actual = Blackjack(Hand(firstCard, secondCard))
 
-        actual.profit(10000.0) shouldBe 15000.0
+        actual.earningRate() shouldBe 1.5
     }
 }

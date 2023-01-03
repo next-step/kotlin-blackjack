@@ -12,8 +12,4 @@ abstract class Finished(override val hand: Hand) : Started(hand) {
     override fun stay(): State {
         throw IllegalStateException("이미 완료된 상태에서 완료 상태로 변경할 수 없습니다.")
     }
-
-    override fun profit(money: Double) = money * earningRate()
-
-    abstract fun earningRate(): Double
 }

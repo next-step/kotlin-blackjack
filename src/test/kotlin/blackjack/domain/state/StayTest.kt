@@ -29,11 +29,11 @@ internal class StayTest {
     }
 
     @Test
-    fun `Stay의 수익률은 배팅금액입니다`() {
+    fun `Stay의 수익계산식은 베팅금액 그대로입니다`() {
         val firstCard = Card(Shape.CLUB, Denomination.SEVEN)
         val secondCard = Card(Shape.CLUB, Denomination.TEN)
         val actual = Stay(Hand(firstCard, secondCard))
 
-        actual.profit(10000.0) shouldBe 10000.0
+        actual.earningRate() shouldBe 1.0
     }
 }

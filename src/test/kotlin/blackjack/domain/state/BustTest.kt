@@ -34,6 +34,6 @@ internal class BustTest {
         val secondCard = Card(Shape.CLUB, Denomination.TEN)
         val actual = Bust(Hand(firstCard, secondCard))
 
-        actual.profit(10000.0) shouldBe -10000.0
+        actual.earningRate() shouldBe -1.0
     }
 }

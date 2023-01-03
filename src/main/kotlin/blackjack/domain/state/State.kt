@@ -8,5 +8,5 @@ interface State {
     fun score(): Int
     fun isFinished(): Boolean
     fun cards(): List<Card>
-    fun profit(money: Double): Double
+    fun earningRate(): Double
 }

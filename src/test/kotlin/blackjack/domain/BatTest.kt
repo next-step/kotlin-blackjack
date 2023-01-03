@@ -6,46 +6,44 @@ import blackjack.domain.card.Shape
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
+import blackjack.domain.state.Stay
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class BetTest {
+internal class BatTest {
     @Test
-    fun `Blackjack 이면 베팅 금액의 절반을 더하여 딜러에게 받는다`() {
+    fun `Blackjack 이면 베팅 금액의 일점오배를 딜러에게 받는다`() {
         val blackjack = Blackjack(Hand(Card(Shape.CLUB, Denomination.ACE), Card(Shape.CLUB, Denomination.TEN)))
         val hit = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
 
-        val player = Player("player", blackjack)
         val dealer = Dealer(hit)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 15000.0
+        bat.profit(blackjack, dealer) shouldBe 15000.0
     }
 
     @Test
     fun `딜러와 플레이어 둘다 Blackjack이면 베팅금액을 돌려받는다`() {
         val blackjack = Blackjack(Hand(Card(Shape.CLUB, Denomination.ACE), Card(Shape.CLUB, Denomination.TEN)))
 
-        val player = Player("player", blackjack)
         val dealer = Dealer(blackjack)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 0.0
+        bat.profit(blackjack, dealer) shouldBe 0.0
     }
 
     @Test
     fun `딜러가 Blackjack 이면 베팅금액을 잃는다`() {
         val blackjack = Blackjack(Hand(Card(Shape.CLUB, Denomination.ACE), Card(Shape.CLUB, Denomination.TEN)))
-        val hit = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
+        val stay = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
 
-        val player = Player("player", hit)
         val dealer = Dealer(blackjack)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe -10000.0
+        bat.profit(stay, dealer) shouldBe -10000.0
     }
 
     @Test
@@ -60,12 +58,11 @@ internal class BetTest {
 
         val hit = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
 
-        val player = Player("player", hit)
         val dealer = Dealer(bust)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 10000.0
+        bat.profit(hit, dealer) shouldBe 10000.0
     }
 
     @Test
@@ -78,12 +75,11 @@ internal class BetTest {
             )
         )
 
-        val player = Player("player", bust)
         val dealer = Dealer(bust)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 10000.0
+        bat.profit(bust, dealer) shouldBe 10000.0
     }
 
     @Test
@@ -97,49 +93,45 @@ internal class BetTest {
         )
         val hit = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
 
-        val player = Player("player", bust)
         val dealer = Dealer(hit)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe -10000.0
+        bat.profit(bust, dealer) shouldBe -10000.0
     }
 
     @Test
     fun `플레이어와 딜러의 점수가 같으면 플레이어가 베팅금액을 받는다`() {
-        val hit = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
+        val stay = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
 
-        val player = Player("player", hit)
-        val dealer = Dealer(hit)
+        val dealer = Dealer(stay)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 10000.0
+        bat.profit(stay, dealer) shouldBe 10000.0
     }
 
     @Test
     fun `플레이어가 딜러보다 점수가 높으면 플레이어가 베팅 금액을 받는다`() {
-        val seventeen = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
-        val sixteen = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SIX)))
+        val seventeen = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
+        val sixteen = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SIX)))
 
-        val player = Player("player", seventeen)
         val dealer = Dealer(sixteen)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe 10000.0
+        bat.profit(seventeen, dealer) shouldBe 10000.0
     }
 
     @Test
     fun `딜러가 플레이어보다 점수가 높으면 베팅금액을 잃는다`() {
-        val seventeen = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
-        val sixteen = Hit(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SIX)))
+        val seventeen = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SEVEN)))
+        val sixteen = Stay(Hand(Card(Shape.CLUB, Denomination.TEN), Card(Shape.CLUB, Denomination.SIX)))
 
-        val player = Player("player", sixteen)
         val dealer = Dealer(seventeen)
 
-        val bet = Bet(player, 10000.0)
+        val bat = Bat(10000.0)
 
-        bet.profit(dealer) shouldBe -10000.0
+        bat.profit(sixteen, dealer) shouldBe -10000.0
     }
 }
