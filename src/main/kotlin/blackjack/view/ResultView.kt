@@ -13,7 +13,7 @@ object ResultView {
     private const val PLAYER_BUST = "는 버스트되었습니다."
     private const val PLAYER_BLACKJACK = "는 블랙잭입니다."
     private const val DEALER_DRAW_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val GAME_RESULT_TITLE = "## 최종 승패"
+    private const val GAME_RESULT_TITLE = "## 최종 수익"
     private const val LINE_FEED = "\r\n"
     private const val SPACE = " "
     private const val FIRST_INDEX = 0
@@ -30,19 +30,27 @@ object ResultView {
         println(getNameAndCards(participant, false) + GAME_RESULT_MESSAGE + participant.score)
     }
 
+    fun printResult(results: ResultsDto) {
+        println(GAME_RESULT_TITLE)
+        results.values.forEach {
+            println(it.name + COLON + it.profit)
+        }
+    }
+
+    fun printPlayerBust(name: String) {
+        println(name + PLAYER_BUST)
+    }
+
+    fun printPlayerBlackjack(name: String) {
+        println(name + PLAYER_BLACKJACK)
+    }
+
     fun printDealerDrawMessage() {
         println(LINE_FEED + DEALER_DRAW_MESSAGE)
     }
 
     fun printLineFeed() {
         println()
-    }
-
-    fun printResult(results: ResultsDto) {
-        println(GAME_RESULT_TITLE)
-        val dealerResult = generateDealerResult(results)
-        val playersResult = generatePlayersResult(results)
-        println(dealerResult + LINE_FEED + playersResult)
     }
 
     private fun getNameAndCards(participant: ParticipantDto, hiddenDealerCards: Boolean): String {
@@ -57,31 +65,5 @@ object ResultView {
             return participant.name + COLON + participant.cards[FIRST_INDEX]
         }
         return participant.name + SPACE + CARD + participant.cards.joinToString()
-    }
-
-    private fun generatePlayersResult(results: ResultsDto): String {
-        return results.values.joinToString(LINE_FEED) { it.name + COLON + it.result }
-    }
-
-    private fun generateDealerResult(results: ResultsDto): String {
-        var winCount = 0
-        var loseCount = 0
-        results.values.forEach {
-            if (it.result == "승") {
-                loseCount++
-            }
-            if (it.result == "패") {
-                winCount++
-            }
-        }
-        return DEALER_NAME + COLON + winCount + "승 " + loseCount + "패"
-    }
-
-    fun printPlayerBust(name: String) {
-        println(name + PLAYER_BUST)
-    }
-
-    fun printPlayerBlackjack(name: String) {
-        println(name + PLAYER_BLACKJACK)
     }
 }

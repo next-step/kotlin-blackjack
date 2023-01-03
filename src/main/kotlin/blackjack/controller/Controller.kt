@@ -5,7 +5,7 @@ import blackjack.domain.GameManager
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.Participants
-import blackjack.domain.participant.state.result.Result.Companion.calculateResult
+import blackjack.domain.participant.state.result.Result.Companion.calculateProfit
 import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Role
 import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
@@ -81,8 +81,8 @@ object Controller {
         }
 
         ResultView.printLineFeed()
-        val results = calculateResult(participants)
-        val resultsDto = results.map { ResultDto.from(it.key, it.value) }
+        val results = calculateProfit(participants)
+        val resultsDto = results.map { ResultDto.from(it.key, it.value.toInt()) }
         ResultView.printResult(ResultsDto(resultsDto))
     }
 }
