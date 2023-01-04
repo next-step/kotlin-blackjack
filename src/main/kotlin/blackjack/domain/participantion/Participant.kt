@@ -5,7 +5,7 @@ import blackjack.domain.card.Card.Companion.BLACK_JACk_NUMBER
 import blackjack.domain.card.Cards
 
 sealed class Participant(val name: String, val cards: Cards, val price: Price) {
-    var point: Int = 0
+    var point: Int = cards.point()
         private set
 
     val priceAmount: Int
@@ -13,12 +13,10 @@ sealed class Participant(val name: String, val cards: Cards, val price: Price) {
 
     init {
         require(name.isNotBlank()) { "Player 이름은 필수 입력입니다." }
-        point = cards.point()
     }
 
     fun hit(card: Card) {
         cards.add(card)
-        point = cards.point()
     }
 
     fun isWin(participant: Participant): Boolean {

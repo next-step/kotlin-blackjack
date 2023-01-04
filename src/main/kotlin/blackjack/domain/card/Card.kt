@@ -6,8 +6,7 @@ class Card(val suit: Suit, val number: Number) {
 
     fun getPoint(totalPoint: Int = 0): Int {
         if (isAce()) {
-            val maxValue = totalPoint + number.orValue
-            return if (maxValue < BLACK_JACk_NUMBER) number.orValue else number.value
+            return if (totalPoint > ACE_NUMBER) number.value else number.orValue
         }
 
         return number.value
@@ -15,5 +14,6 @@ class Card(val suit: Suit, val number: Number) {
 
     companion object {
         const val BLACK_JACk_NUMBER = 21
+        const val ACE_NUMBER = 11
     }
 }

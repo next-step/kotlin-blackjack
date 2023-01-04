@@ -2,6 +2,7 @@ package blackjack.domain.participantion
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
+import java.lang.constant.ConstantDescs.DEFAULT_NAME
 
 class Dealer(name: String, cards: Cards) : Participant(name, cards, Price(0)) {
     constructor(cardDeck: CardDeck) : this(
@@ -10,6 +11,8 @@ class Dealer(name: String, cards: Cards) : Participant(name, cards, Price(0)) {
     )
 
     fun isHittable() = cards.point() <= HIT_LIMIT_POINT
+
+    fun earn(price: Price) = this.price.increase(price)
 
     companion object {
         private const val HIT_LIMIT_POINT = 16

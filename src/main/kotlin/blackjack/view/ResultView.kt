@@ -40,8 +40,8 @@ object ResultView {
         println("${playerName}의 베팅 금액은?")
     }
 
-    fun printIncome(dealerName: String, priceAmount: Int) {
-        println("$dealerName: $priceAmount")
+    fun printIncome(participant: Participant) {
+        println("${participant.name}: ${participant.priceAmount}")
     }
 
     private fun toCardNames(cards: Stack<Card>): String =

@@ -5,60 +5,52 @@ import blackjack.domain.participantion.Participant
 import blackjack.domain.participantion.Player
 import blackjack.domain.participantion.Price
 
-class Income(private val participant: Participant, private val price: Price) {
-    operator fun component1() = participant
-    operator fun component2() = price
+object Income {
+    private const val BLACK_JACK_TIMES = 0.5
 
-    companion object {
-        private const val BLACK_JACK_TIMES = 0.5
+    fun settle(winners: Winners, losers: Losers, dealer: Dealer): List<Participant> {
+        val dealerIncomePrice = Price(getAmount(winners, losers, dealer))
+        dealer.earn(dealerIncomePrice)
 
-        fun from(winners: Winners, losers: Losers, dealer: Dealer): List<Income> {
-            val dealerIncomePrice = Price(getAmount(winners, losers, dealer))
-            val dealerIncome = Income(dealer, dealerIncomePrice)
-
-            val winnersIncome = winners.players
-                .map { player -> Income(player, player.price) }
-
-            val losersIncome = losers.players
-                .map { player ->
-                    player.losePrice()
-                    Income(player, player.price)
-                }
-
-            return listOf(dealerIncome) + winnersIncome + losersIncome
-        }
-
-        private fun getAmount(winners: Winners, losers: Losers, dealer: Dealer): Int {
-            if (dealer.isBust()) {
-                return dealer.priceAmount
+        val settledLosers = losers.players
+            .map { player ->
+                player.losePrice()
+                player
             }
 
-            val winnersTotalPrice = winners.getTotalPrice()
-            dealer.price.decrease(winnersTotalPrice)
+        return listOf(dealer) + winners.players + settledLosers
+    }
 
-            val losersTotalPrice = losers.getTotalPrice()
-            dealer.price.increase(losersTotalPrice)
-
-            val blackJackPlayers = winners.getBlackJackPlayers()
-            if (blackJackPlayers.isNotEmpty()) {
-                blackJackIncome(blackJackPlayers, dealer)
-            }
-
+    private fun getAmount(winners: Winners, losers: Losers, dealer: Dealer): Int {
+        if (dealer.isBust()) {
             return dealer.priceAmount
         }
 
-        private fun blackJackIncome(blackJackPlayers: List<Player>, dealer: Dealer) {
-            if (dealer.isBlackJack()) {
-                return
-            }
+        val winnersTotalPrice = winners.getTotalPrice()
+        dealer.price.decrease(winnersTotalPrice)
 
-            blackJackPlayers.forEach { player ->
-                val price = player.price
-                val timesAmount = price.amount.times(BLACK_JACK_TIMES)
-                val blackJackIncome = Price(timesAmount.toInt())
+        val losersTotalPrice = losers.getTotalPrice()
+        dealer.price.increase(losersTotalPrice)
 
-                dealer.price.decrease(blackJackIncome)
-            }
+        val blackJackPlayers = winners.getBlackJackPlayers()
+        if (blackJackPlayers.isNotEmpty()) {
+            blackJackIncome(blackJackPlayers, dealer)
+        }
+
+        return dealer.priceAmount
+    }
+
+    private fun blackJackIncome(blackJackPlayers: List<Player>, dealer: Dealer) {
+        if (dealer.isBlackJack()) {
+            return
+        }
+
+        blackJackPlayers.forEach { player ->
+            val price = player.price
+            val timesAmount = price.amount.times(BLACK_JACK_TIMES)
+            val blackJackIncome = Price(timesAmount.toInt())
+
+            dealer.price.decrease(blackJackIncome)
         }
     }
 }
