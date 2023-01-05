@@ -1,9 +1,7 @@
 package model
 
-import kotlin.math.abs
-
 class CardNumberCalculator {
-    fun isUnderTwentyOne(cards: List<Card>): Boolean {
+    fun isGetExtraCard(cards: List<Card>): Boolean {
         return totalNumber(cards) < BLACK_JACK
     }
 
@@ -21,16 +19,18 @@ class CardNumberCalculator {
         return total
     }
 
-    fun decideAceCardNumber(semiTotal: Int): Int {
-        val ace = if (abs(BLACK_JACK - (semiTotal + 1)) <= abs(BLACK_JACK - (semiTotal + 11))) {
-            1
-        } else {
-            11
+    fun decideAceCardNumber(totalExceptAce: Int): Int {
+        val ace = when (totalExceptAce) {
+            in RANGE_FOR_ACE_11 -> 11
+            in RANGE_FOR_ACE_1 -> 1
+            else -> 1
         }
         return ace
     }
 
     companion object {
         private const val BLACK_JACK = 21
+        private val RANGE_FOR_ACE_11 = 2..10
+        private val RANGE_FOR_ACE_1 = 11..20
     }
 }

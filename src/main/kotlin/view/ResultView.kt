@@ -21,7 +21,7 @@ class ResultView {
         var result = ""
         players.forEach {
             result += "${it.key}카드: "
-            it.value.forEach { it ->
+            it.value.forEach {
                 result += "${CardNumber.convertToString(it.cardNumber)}${CardShape.convertToString(it.cardShape)}, "
             }
             result = result.substring(0, result.lastIndex - 1) + "\n"

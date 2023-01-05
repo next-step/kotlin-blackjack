@@ -3,7 +3,7 @@ package model
 class Players {
     private val players = mutableMapOf<String, MutableList<Card>>()
 
-    fun add(name: String, card: MutableList<Card>) {
+    private fun add(name: String, card: MutableList<Card>) {
         players[name] = card
     }
 
@@ -13,5 +13,11 @@ class Players {
 
     fun get(): Map<String, List<Card>> {
         return players
+    }
+
+    fun generate(names: List<String>) {
+        names.forEach {
+            add(it, mutableListOf())
+        }
     }
 }

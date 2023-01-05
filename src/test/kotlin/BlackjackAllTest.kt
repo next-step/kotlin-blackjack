@@ -2,7 +2,7 @@ import model.Card
 import model.CardNumber
 import model.CardNumberCalculator
 import model.CardShape
-import org.assertj.core.api.Assertions
+import model.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -35,19 +35,19 @@ internal class BlackjackAllTest {
 
     @Test
     fun `중복 없이 카드를 뽑는다`() {
-        val cards = mutableListOf<Card>()
+        val cards = Cards()
         for (i in TOTAL_CARD_SIZE) {
             cards.add(Card.generate())
         }
-        assertThat(cards.toSet().size).isSameAs(52)
+        assertThat(cards.get().toSet().size).isEqualTo(52)
     }
 
     @Test
-    fun `카드 숫자 합이 21이하 인지 판단한다`() {
+    fun `추가 카드 받기 가능 여부를 판단한다`() {
         assertAll(
             {
-                Assertions.assertThat(
-                    CardNumberCalculator().isUnderTwentyOne(
+                assertThat(
+                    CardNumberCalculator().isGetExtraCard(
                         listOf(
                             Card(
                                 CardNumber.FIVE,
@@ -58,8 +58,8 @@ internal class BlackjackAllTest {
                 ).isSameAs(true)
             },
             {
-                Assertions.assertThat(
-                    CardNumberCalculator().isUnderTwentyOne(
+                assertThat(
+                    CardNumberCalculator().isGetExtraCard(
                         listOf(
                             Card(CardNumber.TEN, CardShape.SPADES),
                             Card(CardNumber.KING, CardShape.HEARTS),
@@ -67,6 +67,30 @@ internal class BlackjackAllTest {
                         )
                     )
                 ).isSameAs(false)
+            }
+        )
+    }
+
+    @Test
+    fun `ACE 카드 값을 11로 결정한다`() {
+        assertAll(
+            {
+                assertThat(CardNumberCalculator().decideAceCardNumber(2)).isSameAs(11)
+            },
+            {
+                assertThat(CardNumberCalculator().decideAceCardNumber(10)).isSameAs(11)
+            }
+        )
+    }
+
+    @Test
+    fun `ACE 카드 값을 1로 결정한다`() {
+        assertAll(
+            {
+                assertThat(CardNumberCalculator().decideAceCardNumber(11)).isSameAs(1)
+            },
+            {
+                assertThat(CardNumberCalculator().decideAceCardNumber(20)).isSameAs(1)
             }
         )
     }
