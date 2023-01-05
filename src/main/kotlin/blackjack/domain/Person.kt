@@ -11,10 +11,15 @@ open class Person(
     fun addCard(drawYn: Boolean) {
         if (drawYn) {
             ownCards.addCard(Card())
-            _state =
-                if (ownCards.sumCardNumber() > Draw.DRAW_LIMIT) State.LOSE
-                else if (ownCards.sumCardNumber() == Draw.DRAW_LIMIT) State.WIN
-                else State.CONTINUE
+            _state = changeState(ownCards.sumCardNumber())
+        }
+    }
+
+    private fun changeState(cardNumberSum: Int): State {
+        return when {
+            cardNumberSum > Draw.DRAW_LIMIT -> State.LOSE
+            cardNumberSum == Draw.DRAW_LIMIT -> State.WIN
+            else -> State.CONTINUE
         }
     }
 

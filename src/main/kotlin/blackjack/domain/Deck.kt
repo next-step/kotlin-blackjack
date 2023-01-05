@@ -2,20 +2,20 @@ package blackjack.domain
 
 class Deck {
     companion object {
-        private val cards: MutableMap<Card, Boolean> = buildMap {
+        private val cards: MutableSet<Card> = buildSet {
             val cardNumbers = CardNumber.values()
             val patterns = Pattern.values()
             for (cardNumberIndex in cardNumbers.indices) {
                 for (patternIndex in patterns.indices) {
-                    put(Card(cardNumbers[cardNumberIndex], patterns[patternIndex]), false)
+                    add(Card(cardNumbers[cardNumberIndex], patterns[patternIndex]))
                 }
             }
-        }.toMutableMap()
+        }.toMutableSet()
 
-        fun isDrawn(card: Card): Boolean = (this.cards[card] != false)
+        fun isDrawn(card: Card): Boolean = !cards.contains(card)
 
         fun draw(card: Card) {
-            cards[card] = true
+            cards.remove(card)
         }
     }
 }

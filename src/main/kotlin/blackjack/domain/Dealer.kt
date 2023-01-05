@@ -1,10 +1,13 @@
 package blackjack.domain
 
-class Dealer(val states: MutableList<State> = mutableListOf()) : Person(name = "딜러") {
+class Dealer(private val _states: MutableList<State> = mutableListOf()) : Person(name = "딜러") {
+
+    val states: MutableList<State>
+        get() = _states
 
     override fun checkDrawable(): Boolean = (ownCards.sumCardNumber() <= LEAST_CARD_SUM)
 
-    fun checkResult(gamer: List<Gamer>) {
+    fun changeResult(gamer: List<Gamer>) {
         gamer.forEach {
             states.add(convertGamerStateToCheckDealerState(it.state))
         }

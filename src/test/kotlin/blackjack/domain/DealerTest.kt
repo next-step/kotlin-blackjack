@@ -1,7 +1,8 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.containExactly
+import io.kotest.matchers.should
 
 class DealerTest : StringSpec({
 
@@ -13,9 +14,8 @@ class DealerTest : StringSpec({
         val gamer4 = Gamer("d").apply { changeState(false) }
         val gamerList = listOf(gamer1, gamer2, gamer3, gamer4)
 
-        dealer.checkResult(gamerList)
+        dealer.changeResult(gamerList)
 
-        dealer.states.count { it == State.WIN } shouldBe 1
-        dealer.states.count { it == State.LOSE } shouldBe 3
+        dealer.states should containExactly(State.LOSE, State.LOSE, State.LOSE, State.WIN)
     }
 })
