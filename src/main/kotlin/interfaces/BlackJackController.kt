@@ -68,10 +68,8 @@ class BlackJackController : Executable {
     }
 
     private fun dealerReceiveCard(blackJackGame: BlackJackGame) {
-        val dealer = blackJackGame.dealer()
-        val availableReceiveCard = blackJackGame.availableReceiveCard(dealer)
-        if (availableReceiveCard) {
-            blackJackGame.receiveCard(dealer)
+        val isReceiveCard = blackJackGame.tryDealerReceiveCard()
+        if (isReceiveCard) {
             OutputConsole.printDealerMoreReceiveCard()
         }
     }

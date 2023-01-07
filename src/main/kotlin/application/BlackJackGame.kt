@@ -33,7 +33,15 @@ class BlackJackGame(
         }
     }
 
-    fun availableReceiveCard(playable: Playable): Boolean = playable.isAvailableReceive()
+    private fun availableReceiveCard(playable: Playable): Boolean = playable.isAvailableReceive()
+
+    fun tryDealerReceiveCard(): Boolean {
+        val availableReceiveCard = availableReceiveCard(dealer)
+        if (availableReceiveCard) {
+            receiveCard(dealer)
+        }
+        return availableReceiveCard
+    }
 
     private companion object {
         const val INIT_CARD_COUNT = 2
