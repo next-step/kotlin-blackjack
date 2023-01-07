@@ -9,7 +9,7 @@ class Dealer(
     val deck: CardDeck = CardDeck(cardsFactory = DefaultCardsFactory)
 ) : Playable {
 
-    override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
+    override val hands: Cards = Cards()
 
     init {
         deck.shuffle()

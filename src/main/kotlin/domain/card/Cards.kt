@@ -1,9 +1,10 @@
 package domain.card
 
+import domain.algorithm.DefaultScoreOptimizationAlgorithm
 import domain.algorithm.ScoreOptimizationAlgorithm
 
 class Cards(
-    private val scoreOptimizationAlgorithm: ScoreOptimizationAlgorithm
+    private val scoreOptimizationAlgorithm: ScoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm
 ) {
     private var cards: List<Card> = listOf()
 
