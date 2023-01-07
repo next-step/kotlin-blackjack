@@ -5,22 +5,24 @@ import blackjack.common.Policy
 class Participant(
     val name: String,
     val cards: Cards = Cards(),
-    var score: Int = 0,
 ) {
     fun addCard(card: Card) {
         cards.add(card)
-        score += card.denomination.calc(score)
     }
 
     fun isBust(): Boolean {
-        return score > Policy.BUST_SCORE
+        return cards.getScore() > Policy.BUST_SCORE
     }
 
     fun isBlackJack(): Boolean {
-        return score == Policy.BUST_SCORE && cards.cards.size == 2
+        return cards.getScore() == Policy.BUST_SCORE && cards.size == Policy.INITIAL_CARD_COUNT
     }
 
-    fun isHit(): Boolean {
-        return score < 16
+    fun isMaxScore(): Boolean {
+        return cards.getScore() == Policy.BUST_SCORE
+    }
+
+    fun getScore(): Int {
+        return cards.getScore()
     }
 }

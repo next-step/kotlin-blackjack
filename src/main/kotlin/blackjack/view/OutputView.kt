@@ -15,10 +15,10 @@ object OutputView {
     }
 
     fun printGameResult(players: List<Participant>) {
-        println(players.joinToString("\n") { "${it.name}카드: ${cards(it)} - 결과: ${it.score}" })
+        println(players.joinToString("\n") { "${it.name}카드: ${cards(it)} - 결과: ${it.getScore()}" })
     }
 
     private fun cards(player: Participant): String {
-        return player.cards.cards.joinToString(", ") { it.toString() }
+        return player.cards.joinToString(", ") { it.toString() }
     }
 }

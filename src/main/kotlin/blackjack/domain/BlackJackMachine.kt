@@ -1,36 +1,26 @@
-package blackjack.controller
+package blackjack.domain
 
 import blackjack.common.Policy.INITIAL_CARD_COUNT
-import blackjack.domain.CardDeck
-import blackjack.domain.Participant
-import blackjack.view.InputView
-import blackjack.view.OutputView
 
 class BlackJackMachine(
     private val cardDeck: CardDeck = CardDeck(),
     private val players: List<Participant>,
 ) {
-    fun initialize(): List<Participant> {
+    fun initialize() {
         players.forEach { player ->
             repeat(INITIAL_CARD_COUNT) {
                 player.addCard(cardDeck.hit())
             }
         }
-        OutputView.printInitialCards(players)
-
-        return players
     }
 
-    fun execute() {
-        playGame()
-    }
-
-    private fun playGame() {
+    fun execute(
+        retryFunc: (player: Participant) -> Boolean,
+        playerCardResultFunc: (player: Participant) -> Unit,
+    ) {
         players.forEach {
-            hitOrNot(it, retryOrNot(), playerCardResult())
+            hitOrNot(it, retryFunc, playerCardResultFunc)
         }
-
-        OutputView.printGameResult(players)
     }
 
     private tailrec fun hitOrNot(
@@ -38,6 +28,12 @@ class BlackJackMachine(
         retryFunc: (player: Participant) -> Boolean,
         printFunc: (player: Participant) -> Unit,
     ) {
+        if (player.isBlackJack())
+            return
+
+        if (player.isMaxScore())
+            return
+
         if (player.isBust())
             return
 
@@ -48,8 +44,4 @@ class BlackJackMachine(
         printFunc(player)
         hitOrNot(player, retryFunc, printFunc)
     }
-
-    private fun retryOrNot() = { player: Participant -> InputView.hitOrNot(player.name) }
-
-    private fun playerCardResult() = OutputView::printPlayerCards
 }

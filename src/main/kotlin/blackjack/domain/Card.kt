@@ -13,6 +13,6 @@ data class Card(
     }
 
     fun isAce(): Boolean {
-        return denomination == Denomination.ACE_1 || denomination == Denomination.ACE_10
+        return denomination == Denomination.ACE
     }
 }

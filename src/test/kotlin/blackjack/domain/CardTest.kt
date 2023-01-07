@@ -5,7 +5,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 internal class CardTest : FunSpec({
-    context("Denomination이 ACE_1 또는 ACE_10 이면 ace 카드이다.") {
+    context("Denomination이 ACE 이면 isAce()가 true이다.") {
         data class CardTestData(
             val cardSuit: CardSuit,
             val denomination: Denomination,
@@ -13,8 +13,8 @@ internal class CardTest : FunSpec({
 
         withData(
             ts = listOf(
-                CardTestData(cardSuit = CardSuit.HEART, denomination = Denomination.ACE_1),
-                CardTestData(cardSuit = CardSuit.CLOVER, denomination = Denomination.ACE_10),
+                CardTestData(cardSuit = CardSuit.HEART, denomination = Denomination.ACE),
+                CardTestData(cardSuit = CardSuit.CLOVER, denomination = Denomination.ACE),
             )
         ) { (cardSuit, denomination) ->
             Card(cardSuit, denomination).isAce() shouldBe true
@@ -24,8 +24,7 @@ internal class CardTest : FunSpec({
     context("Denomination에 따라 카드 점수를 계산할 수 있다.") {
         withData(
             ts = listOf(
-                Denomination.ACE_1 to 1,
-                Denomination.ACE_10 to 10,
+                Denomination.ACE to 1,
                 Denomination.TWO to 2,
                 Denomination.THREE to 3,
                 Denomination.FOUR to 4,
