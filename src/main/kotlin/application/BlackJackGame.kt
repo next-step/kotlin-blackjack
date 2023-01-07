@@ -1,6 +1,5 @@
 package application
 
-import domain.card.Cards
 import domain.player.Dealer
 import domain.player.Participants
 import domain.player.Playable
@@ -21,7 +20,6 @@ class BlackJackGame(
         dealer.giveCard(playable = playable)
     }
 
-    fun hands(player: Player): Cards = player.hands
     fun dealer(): Dealer = this.dealer
     fun allPlayers(): List<Player> {
         return this.players.allPlayers()

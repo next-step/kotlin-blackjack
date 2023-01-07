@@ -40,11 +40,9 @@ class BlackJackGameTest : BehaviorSpec({
         }
 
         `when`("플레이어의 카드 패 정보를") {
-            val playerAHands = blackJackGame.hands(playerA)
-            val playerBHands = blackJackGame.hands(playerB)
             then("확인할 수 있다") {
-                playerAHands.count shouldBe 3
-                playerBHands.count shouldBe 2
+                playerA.hands.count shouldBe 3
+                playerB.hands.count shouldBe 2
             }
         }
     }
