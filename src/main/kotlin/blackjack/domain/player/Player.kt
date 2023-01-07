@@ -4,18 +4,9 @@ import blackjack.domain.card.Card
 import blackjack.domain.state.Running
 import blackjack.domain.state.State
 
-abstract class Player(val name: String, state: State) {
-    open var state: State = state
-        protected set
-
-    open fun draw(card: Card) {
-        state = state.draw(card)
-    }
-
-    fun stay() {
-        state = state.stay()
-    }
-
+abstract class Player(open val name: String, open val state: State) {
+    abstract fun draw(card: Card): Player
+    abstract fun stay(): Player
     fun canDraw() = state is Running
     fun score() = state.score()
 }

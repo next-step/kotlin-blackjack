@@ -8,69 +8,68 @@ import blackjack.io.Input
 import blackjack.io.Output
 
 class Game(private val input: Input, private val output: Output) {
-    private val players: List<User>
-    private val dealer: Dealer
     private val deck: Deck = Deck()
 
     init {
         deck.shuffle()
-        players = input.getPlayers().map { name -> User(name, FirstTurn.draw(deck.draw(), deck.draw())) }
-        dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
-        batPlayers()
     }
 
-    private fun batPlayers() {
-        players.forEach { player: User ->
-            player.bat(input.getBet(player))
-        }
-    }
+    fun run() {
+        val names = input.getPlayers()
+        output.printDistribute(names)
 
-    fun start() {
-        output.printDistribute(listOf(dealer) + players)
+        val dealer = Dealer(FirstTurn.draw(deck.draw(), deck.draw()))
+
+        val users = names
+            .asSequence()
+            .map { name -> User(name, FirstTurn.draw(deck.draw(), deck.draw())) }
+            .map { it.bat(input.getBet(it)) }
+            .toList()
+
+        output.printUsersCard(users)
         output.printDealerCard(dealer)
-        output.printPlayersCard(players)
+
+        draw(users, dealer)
     }
 
-    fun draw() {
-        output.printEmptyLine()
-
-        players.forEach { player ->
-            playerDraw(player)
-        }
-
-        dealerDraw()
+    private fun draw(users: List<User>, dealer: Dealer) {
+        return result(users.map { userDraw(it) }, dealerDraw(dealer))
     }
 
-    fun result() {
-        output.printEmptyLine()
-
+    private fun result(users: List<User>, dealer: Dealer) {
         output.printDealerHandWithScore(dealer)
-        output.printPlayersHandWithScore(players)
-
-        output.printEmptyLine()
-
+        output.printUsersHandWithScore(users)
         output.printProfitHeader()
-        output.printProfit(dealer, players.sumOf { -it.profit(dealer) })
-        players.forEach {
+        output.printProfit(dealer, users.sumOf { -it.profit(dealer) })
+        users.forEach {
             output.printProfit(it, it.profit(dealer))
         }
     }
 
-    private fun dealerDraw() {
-        while (dealer.canDraw()) {
-            output.printDealerDraw()
-            dealer.draw(deck.draw())
+    private fun dealerDraw(dealer: Dealer): Dealer {
+        if (!dealer.canDraw()) {
+            return dealer
         }
+
+        if (dealer.isDealersHit()) {
+            output.printDealerDraw()
+            return dealer.draw(deck.draw())
+        }
+
+        return dealer.stay()
     }
 
-    private fun playerDraw(player: User) {
-        while (player.canDraw()) {
-            if (!input.moreDraw(player)) {
-                player.stay()
-                break
-            }
-            player.draw(deck.draw())
-            output.printPlayerCard(player)
+    private fun userDraw(user: User): User {
+        if (!user.canDraw()) {
+            return user
         }
+
+        if (input.moreDraw(user)) {
+            val drawUser = user.draw(deck.draw())
+            output.printPlayerCard(drawUser)
+            return this.userDraw(drawUser)
+        }
+
+        return user.stay()
     }
 }

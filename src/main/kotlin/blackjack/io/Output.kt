@@ -5,14 +5,14 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.User
 
 class Output {
-    fun printPlayersCard(players: List<User>) {
+    fun printUsersCard(players: List<User>) {
         players.forEach {
             printPlayerCard(it)
         }
     }
 
-    fun printDistribute(players: List<Player>) {
-        println("${players.joinToString(",") { it.name }}에게 2장의 나누었습니다.")
+    fun printDistribute(names: List<String>) {
+        println("딜러와 ${names.joinToString(",")}에게 2장의 나누었습니다.")
     }
 
     fun printEmptyLine() {
@@ -23,7 +23,7 @@ class Output {
         println("${player.name} 카드 : ${player.state.cards().joinToString(",")}")
     }
 
-    fun printPlayersHandWithScore(players: List<User>) {
+    fun printUsersHandWithScore(players: List<User>) {
         players.forEach { player ->
             println("${player.name} 카드 : ${player.state.cards().joinToString(",")} - 결과 : ${player.score()}")
         }
