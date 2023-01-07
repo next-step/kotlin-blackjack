@@ -19,7 +19,7 @@ class CardDeckTest : FreeSpec({
     "카드덱은 가장 위에있는 카드를 꺼낼 수 있다" {
         val deck = CardDeck(
             object : CardsFactory {
-                override fun generate(): MutableList<Card> =  mutableListOf(
+                override fun generate(): MutableList<Card> = mutableListOf(
                     Card(CardShape.HEART, CardNumber.ACE),
                     Card(CardShape.HEART, CardNumber.TWO)
                 )
