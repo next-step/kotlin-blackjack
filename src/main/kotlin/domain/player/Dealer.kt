@@ -34,6 +34,10 @@ class Dealer(
         return playable.handsCardScore() > this.handsCardScore()
     }
 
+    fun drawCard() {
+        giveCard(this)
+    }
+
     private companion object {
         const val AVAILABLE_TARGET_NUMBER = 17
         const val WIN_SCORE = 21

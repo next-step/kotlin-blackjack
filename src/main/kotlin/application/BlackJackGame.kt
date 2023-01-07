@@ -12,7 +12,7 @@ class BlackJackGame(
 ) {
     fun init() {
         repeat(INIT_CARD_COUNT) {
-            dealer.giveCard(dealer)
+            dealer.drawCard()
             players.receiveCard(dealer)
         }
     }
