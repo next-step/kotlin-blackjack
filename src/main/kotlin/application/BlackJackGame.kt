@@ -6,7 +6,7 @@ import domain.player.Playable
 import domain.player.Player
 
 class BlackJackGame(
-    private val dealer: Dealer = Dealer(),
+    val dealer: Dealer = Dealer(),
     private val players: Participants
 ) {
     fun init() {
@@ -20,7 +20,6 @@ class BlackJackGame(
         dealer.giveCard(playable = playable)
     }
 
-    fun dealer(): Dealer = this.dealer
     fun allPlayers(): List<Player> {
         return this.players.allPlayers()
     }

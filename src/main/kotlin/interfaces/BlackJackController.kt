@@ -37,7 +37,7 @@ class BlackJackController : Executable {
     }
 
     private fun showAllParticipantsHands(blackJackGame: BlackJackGame) {
-        val dealer = blackJackGame.dealer()
+        val dealer = blackJackGame.dealer
         val dealerCardInfo = cardInfo(dealer)
         OutputConsole.printCard(playerName = "딜러", cardInfo = dealerCardInfo)
 
@@ -77,7 +77,7 @@ class BlackJackController : Executable {
     private fun showFinalResult(blackJackGame: BlackJackGame) {
         OutputConsole.printNewLine()
 
-        val dealer = blackJackGame.dealer()
+        val dealer = blackJackGame.dealer
         val dealerCardInfo = cardInfo(dealer)
         val resultDealerScore = dealer.handsCardScore()
         OutputConsole.printCardWithResult(playerName = "딜러", cardInfo = dealerCardInfo, result = resultDealerScore.toString())
