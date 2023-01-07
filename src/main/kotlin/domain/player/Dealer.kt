@@ -1,6 +1,5 @@
 package domain.player
 
-import domain.algorithm.DefaultScoreOptimizationAlgorithm
 import domain.card.CardDeck
 import domain.card.Cards
 import domain.factory.DefaultCardsFactory
@@ -39,7 +38,7 @@ class Dealer(
     }
 
     private companion object {
-        const val AVAILABLE_TARGET_NUMBER = 17
+        const val AVAILABLE_TARGET_NUMBER = 16
         const val WIN_SCORE = 21
     }
 }
