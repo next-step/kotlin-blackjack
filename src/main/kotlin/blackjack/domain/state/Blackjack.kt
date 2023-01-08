@@ -1,10 +1,11 @@
 package blackjack.domain.state
 
 import blackjack.domain.Hand
-import blackjack.domain.card.Card
 
-class Blackjack(override val hand: Hand) : State {
-    override fun draw(card: Card): State {
-        throw IllegalStateException("카드를 더 받을 수 없습니다.")
+class Blackjack(override val hand: Hand) : Finished(hand) {
+    override fun earningRate() = BLACKJACK_EARNING_RATE
+
+    companion object {
+        private const val BLACKJACK_EARNING_RATE = 1.5
     }
 }

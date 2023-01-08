@@ -1,8 +1,4 @@
-package blackjack.domain
-
-import blackjack.domain.card.Card
-import blackjack.domain.card.Denomination
-import blackjack.domain.card.Shape
+package blackjack.domain.card
 
 class Deck {
     private val cards: MutableList<Card> by lazy {
@@ -29,6 +25,5 @@ class Deck {
     private fun getCardsByShape(shape: Shape): List<Card> {
         return Denomination.values()
             .map { Card(shape, it) }
-            .toMutableList()
     }
 }

@@ -8,7 +8,5 @@ fun main() {
     val output = Output()
     val game = Game(input, output)
 
-    game.start()
-    game.draw()
-    game.result()
+    game.run()
 }
