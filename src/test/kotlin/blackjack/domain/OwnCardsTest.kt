@@ -9,35 +9,30 @@ class OwnCardsTest : StringSpec({
         OwnCards(Draw.FIRST_DRAW_COUNT).cards.size shouldBe 2
     }
 
-    "보유한 카드의 합을 반환한다1" {
-        val ownCards = OwnCards()
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.SPADE))
-        ownCards.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
-        ownCards.sumCardNumber() shouldBe 19
-    }
-
-    "보유한 카드의 합을 반환한다2" {
-        val ownCards = OwnCards()
-        ownCards.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
-        ownCards.addCard(Card(CardNumber.EIGHT, Pattern.DIAMOND))
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.SPADE))
-        ownCards.sumCardNumber() shouldBe 17
-    }
-
-    "보유한 카드의 합을 반환한다3" {
-        val ownCards = OwnCards()
-        ownCards.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.SPADE))
-        ownCards.sumCardNumber() shouldBe 19
-    }
-
-    "보유한 카드의 합을 반환한다4" {
-        val ownCards = OwnCards()
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.CLOVER))
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.DIAMOND))
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.SPADE))
-        ownCards.addCard(Card(CardNumber.ACE, Pattern.HEART))
-        ownCards.sumCardNumber() shouldBe 14
+    "보유한 카드의 합을 반환한다" {
+        listOf(
+            OwnCards().apply {
+                this.addCard(Card(CardNumber.ACE, Pattern.SPADE))
+                this.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
+            } to 19,
+            OwnCards().apply {
+                this.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
+                this.addCard(Card(CardNumber.EIGHT, Pattern.DIAMOND))
+                this.addCard(Card(CardNumber.ACE, Pattern.SPADE))
+            } to 17,
+            OwnCards().apply {
+                this.addCard(Card(CardNumber.EIGHT, Pattern.CLOVER))
+                this.addCard(Card(CardNumber.ACE, Pattern.SPADE))
+            } to 19,
+            OwnCards().apply {
+                this.addCard(Card(CardNumber.ACE, Pattern.CLOVER))
+                this.addCard(Card(CardNumber.ACE, Pattern.DIAMOND))
+                this.addCard(Card(CardNumber.ACE, Pattern.SPADE))
+                this.addCard(Card(CardNumber.ACE, Pattern.HEART))
+            } to 14
+        ).forEach { (ownCards: OwnCards, sum: Int) ->
+            ownCards.sumCardNumber() shouldBe sum
+        }
     }
 
     "보유한 카드의 정보를 반환한다" {

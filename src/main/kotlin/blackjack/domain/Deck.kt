@@ -1,20 +1,21 @@
 package blackjack.domain
 
-object Deck {
-
-    private val cards: MutableMap<Card, Boolean> = buildMap {
-        val cardNumbers = CardNumber.values()
-        val patterns = Pattern.values()
-        for (cardNumberIndex in cardNumbers.indices) {
-            for (patternIndex in patterns.indices) {
-                put(Card(cardNumbers[cardNumberIndex], patterns[patternIndex]), false)
+class Deck {
+    companion object {
+        private val cards: MutableSet<Card> = buildSet {
+            val cardNumbers = CardNumber.values()
+            val patterns = Pattern.values()
+            for (cardNumberIndex in cardNumbers.indices) {
+                for (patternIndex in patterns.indices) {
+                    add(Card(cardNumbers[cardNumberIndex], patterns[patternIndex]))
+                }
             }
+        }.toMutableSet()
+
+        fun isDrawn(card: Card): Boolean = !cards.contains(card)
+
+        fun draw(card: Card) {
+            cards.remove(card)
         }
-    }.toMutableMap()
-
-    fun isDrawn(card: Card): Boolean = (this.cards[card] != false)
-
-    fun draw(card: Card) {
-        cards[card] = true
     }
 }

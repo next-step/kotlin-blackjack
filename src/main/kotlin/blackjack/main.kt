@@ -1,19 +1,23 @@
 package blackjack
 
 import blackjack.domain.Draw
-import blackjack.domain.Participant
+import blackjack.domain.Game
+import blackjack.domain.Gamer
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val participant = Participant(InputView.getPerson())
-    OutputView.printParticipantInfo(participant)
-    participant.persons.forEach {
+    val game = Game(InputView.getPersons().map { Gamer(it) })
+    OutputView.printParticipantInfo(game)
+    game.gamerList.forEach {
         do {
             val drawYn = Draw.checkDrawable(InputView.getDrawYn(it))
             it.addCard(drawYn)
             OutputView.printOwnCards(it)
-        } while (it.checkDrawable(drawYn))
+        } while (it.checkDrawable() && drawYn)
     }
-    OutputView.printResult(participant)
+    game.dealer.addCard(OutputView.printDealerCardAddYn(game))
+    OutputView.printCardInfo(game)
+    game.changeResult()
+    OutputView.printResult(game)
 }
