@@ -2,34 +2,37 @@ package blackjack.controller
 
 import blackjack.NO
 import blackjack.domain.Dealer
-import blackjack.domain.Participant
+import blackjack.domain.Game
+import blackjack.domain.Player
 
-typealias QueryAction = (Participant) -> String
+typealias QueryAction = (Player) -> String
 
-typealias PrintAction = (Participant) -> Unit
+typealias PrintAction = (Player) -> Unit
 
-class Casino(val players: List<Participant>) {
+class Casino(val gamers: List<Player>) {
 
     val dealer = Dealer("딜러")
+    val game = Game()
 
-    fun distribute() = dealer.distribute(players)
+    fun init() = game.init(gamers)
+    fun distribute() = game.distribute(gamers)
 
-    fun names(): String = players.joinToString(", ") { player -> player.name }
+    fun names(): String = gamers.joinToString(", ") { player -> player.name }
 
     fun printAllPlayers(printAction: PrintAction) {
         printAction(dealer)
-        repeat(players.size) { index -> printAction(players[index]) }
+        repeat(gamers.size) { index -> printAction(gamers[index]) }
     }
 
     fun printAllResult(printAction: PrintAction) {
         printAction(dealer)
-        repeat(players.size) { index -> printAction(players[index]) }
+        repeat(gamers.size) { index -> printAction(gamers[index]) }
     }
 
     fun relay(queryAction: QueryAction, printAction: PrintAction) {
         var index = 0
         do {
-            val player = players[index]
+            val player = gamers[index]
 
             if (player is Dealer && player.canDraw()) printAction(player)
 
@@ -38,10 +41,10 @@ class Casino(val players: List<Participant>) {
             if (player.canDraw().not()) break
 
             if (next) index++
-        } while (index < players.size)
+        } while (index < gamers.size)
     }
 
-    private fun ask(player: Participant, queryAction: QueryAction, printAction: PrintAction): Boolean {
+    private fun ask(player: Player, queryAction: QueryAction, printAction: PrintAction): Boolean {
         val skip = question(player, queryAction)
         if (skip) return true
 
@@ -54,7 +57,7 @@ class Casino(val players: List<Participant>) {
         return ask(player, queryAction, printAction)
     }
 
-    private fun question(player: Participant, queryAction: QueryAction): Boolean {
+    private fun question(player: Player, queryAction: QueryAction): Boolean {
         if (player is Dealer) return false
 
         val answer = queryAction(player)
@@ -64,5 +67,7 @@ class Casino(val players: List<Participant>) {
         return false
     }
 
-    private fun draw(player: Participant) = player.receive(dealer.draw())
+    private fun draw(player: Player): Boolean {
+        return player.receive(game.draw())
+    }
 }

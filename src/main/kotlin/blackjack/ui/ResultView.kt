@@ -5,7 +5,7 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
-import blackjack.domain.Participant
+import blackjack.domain.Player
 import blackjack.domain.Report
 import blackjack.domain.Suit
 
@@ -17,13 +17,13 @@ class ResultView {
         casino.printAllPlayers { player -> player.print() }
     }
 
-    fun ask(): (Participant) -> String = { player ->
+    fun ask(): (Player) -> String = { player ->
         println()
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         readlnOrNull() ?: ""
     }
 
-    fun showPlayerCards(): (Participant) -> Unit = callback@{ player ->
+    fun showPlayerCards(): (Player) -> Unit = callback@{ player ->
         if (player is Dealer) {
             showDealer(player)
             return@callback
@@ -42,12 +42,12 @@ class ResultView {
         println()
         println("## 최종 승패")
 
-        val dealerReport = Report.calculateByDealer(casino.dealer, casino.players)
+        val dealerReport = Report.calculateByDealer(casino.dealer, casino.gamers)
         println("딜러: ${dealerReport.victory}승 ${dealerReport.defeat}패")
 
-        repeat(casino.players.size) action@{ index ->
-            val player = casino.players[index]
-            val report = Report.calculate(player, casino.dealer, casino.players)
+        repeat(casino.gamers.size) action@{ index ->
+            val player = casino.gamers[index]
+            val report = Report.calculate(player, casino.dealer, casino.gamers)
             val result = if (report) "승" else "패"
             println("${player.name}: $result")
         }
@@ -58,9 +58,9 @@ class ResultView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    private fun Participant.print() = println(getString())
+    private fun Player.print() = println(getString())
 
-    private fun Participant.getString(): String {
+    private fun Player.getString(): String {
         if (this is Dealer) return "딜러: ${this.myCards.getString()}"
         return "${this.name}카드: ${this.myCards.getString()}"
     }

@@ -5,12 +5,20 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-internal class PlayerTest {
+internal class GamerTest {
 
     @DisplayName("참여자는 이름을 가지고 있다")
     @Test
     fun hasName() {
-        val player = Player("hjw")
+        val player = Gamer(
+            "hjw", Cards(
+                listOf(
+                    Card(CardNumber.Seven, Suit.Heart),
+                    Card(CardNumber.Seven, Suit.Diamond),
+                    Card(CardNumber.Seven, Suit.Spade)
+                )
+            )
+        )
 
         player.name shouldBe "hjw"
     }
@@ -18,7 +26,15 @@ internal class PlayerTest {
     @DisplayName("플레이어는 하트 7 카드를 받아서 가지고 있다")
     @Test
     fun receiveCard() {
-        val player = Player("hjw")
+        val player = Gamer(
+            "hjw", Cards(
+                listOf(
+                    Card(CardNumber.Seven, Suit.Heart),
+                    Card(CardNumber.Seven, Suit.Diamond),
+                    Card(CardNumber.Seven, Suit.Spade)
+                )
+            )
+        )
         val card = Card(CardNumber.Seven, Suit.Heart)
 
         player.receive(card)
@@ -29,7 +45,7 @@ internal class PlayerTest {
     @DisplayName("플레이어는 카드 합계가 21 미만이면 카드를 뽑을 수 있다")
     @Test
     internal fun canDraw() {
-        val player = Player(
+        val player = Gamer(
             name = "hjw",
             myCards = Cards(
                 listOf(
@@ -45,7 +61,7 @@ internal class PlayerTest {
     @DisplayName("플레이어는 카드 합계가 21이 넘으면 카드를 뽑을 수 없다")
     @Test
     internal fun canNotDraw() {
-        val player = Player(
+        val player = Gamer(
             name = "hjw",
             myCards = Cards(
                 listOf(

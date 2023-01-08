@@ -1,15 +1,27 @@
 package blackjack.domain
 
-abstract class Participant(open val name: String, open val myCards: Cards = Cards()) {
+abstract class Player(val name: String, val myCards: Cards = Cards()) {
 
     val totalScore: Int
         get() = myCards.totalScore
 
+    abstract fun canDraw(): Boolean
+
+    fun draw(cardDeck: CardDeck): Card {
+        return cardDeck.draw()
+    }
+
     fun receive(card: Card): Boolean = myCards.add(card)
+}
 
-    open fun canDraw(): Boolean = totalScore < BLACK_JACK
+class Dealer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
+    override fun canDraw(): Boolean {
+        return totalScore <= MIN_DRAW_SCORE
+    }
+}
 
-    companion object {
-        const val BLACK_JACK = 21
+class Gamer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
+    override fun canDraw(): Boolean {
+        return totalScore <= BLACK_JACK
     }
 }
