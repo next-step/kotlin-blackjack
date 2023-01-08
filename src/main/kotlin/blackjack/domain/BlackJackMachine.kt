@@ -9,7 +9,7 @@ class BlackJackMachine(
     fun initialize() {
         players.forEach { player ->
             repeat(INITIAL_CARD_COUNT) {
-                player.addCard(cardDeck.hit())
+                player.hit(cardDeck.pop())
             }
         }
     }
@@ -28,19 +28,13 @@ class BlackJackMachine(
         retryFunc: (player: Participant) -> Boolean,
         printFunc: (player: Participant) -> Unit,
     ) {
-        if (player.isBlackJack())
-            return
-
-        if (player.isMaxScore())
-            return
-
-        if (player.isBust())
+        if (!player.canHit())
             return
 
         if (!retryFunc(player))
             return
 
-        player.addCard(cardDeck.hit())
+        player.hit(cardDeck.pop())
         printFunc(player)
         hitOrNot(player, retryFunc, printFunc)
     }

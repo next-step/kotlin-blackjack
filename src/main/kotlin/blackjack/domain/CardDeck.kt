@@ -1,13 +1,13 @@
 package blackjack.domain
 
 class CardDeck {
-    val cards: Cards = getShuffledCards().shuffleCards()
+    val cards: Cards = makeCards().shuffleCards()
 
-    fun hit(): Card {
+    fun pop(): Card {
         return cards.pop()
     }
 
-    private fun getShuffledCards(): MutableList<Card> {
+    private fun makeCards(): MutableList<Card> {
         val cards = CardSuit.values().flatMap { cardShape ->
             Denomination.values().map { cardNumber ->
                 Card(cardShape, cardNumber)

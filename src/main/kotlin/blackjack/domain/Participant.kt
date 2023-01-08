@@ -6,19 +6,23 @@ class Participant(
     val name: String,
     val cards: Cards = Cards(),
 ) {
-    fun addCard(card: Card) {
+    fun hit(card: Card) {
         cards.add(card)
     }
 
-    fun isBust(): Boolean {
+    fun canHit(): Boolean {
+        return !(isBust() || isBlackJack() || isMaxScore())
+    }
+
+    private fun isBust(): Boolean {
         return cards.getScore() > Policy.BUST_SCORE
     }
 
-    fun isBlackJack(): Boolean {
+    private fun isBlackJack(): Boolean {
         return cards.getScore() == Policy.BUST_SCORE && cards.size == Policy.INITIAL_CARD_COUNT
     }
 
-    fun isMaxScore(): Boolean {
+    private fun isMaxScore(): Boolean {
         return cards.getScore() == Policy.BUST_SCORE
     }
 
