@@ -5,7 +5,8 @@ import domain.algorithm.ScoreOptimizationAlgorithm
 
 class Cards(
     private val scoreOptimizationAlgorithm: ScoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm,
-    private var cards: List<Card> = listOf()
+    private var cards: List<Card> = listOf(),
+    private val limitReceiveScore: Int
 ) {
 
     val count: Int
@@ -18,7 +19,7 @@ class Cards(
     fun score(): Int = scoreOptimizationAlgorithm.optimizeScore(this.cards, TARGET_HIGH_SCORE)
 
     fun cardList(): List<Card> = this.cards
-    fun isAvailableReceiveNumber(limitReceiveScore: Int): Boolean = this.score() < limitReceiveScore
+    fun isAvailableReceiveNumber(): Boolean = this.score() < limitReceiveScore
 
     private companion object {
         const val TARGET_HIGH_SCORE = 21

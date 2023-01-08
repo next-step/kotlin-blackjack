@@ -27,7 +27,7 @@ class PlayerTest : FreeSpec({
         val cards = listOf(
             Card(CardShape.HEART, CardNumber.ACE)
         )
-        val player = Player("ep", Cards(cards = cards))
+        val player = Player("ep", Cards(cards = cards, limitReceiveScore = 21))
         val beforeCount = player.hands.count
 
         val card = Card(CardShape.HEART, CardNumber.TWO)
@@ -39,7 +39,7 @@ class PlayerTest : FreeSpec({
         val cards = listOf(
             Card(CardShape.HEART, CardNumber.ACE)
         )
-        val player = Player("ep", Cards(cards = cards))
+        val player = Player("ep", Cards(cards = cards, limitReceiveScore = 21))
         player.handsCardScore() shouldBe 11
     }
 
@@ -50,7 +50,7 @@ class PlayerTest : FreeSpec({
                 Card(CardShape.HEART, CardNumber.ACE),
                 Card(CardShape.DIAMOND, CardNumber.JACK)
             )
-            val player = Player("ep", Cards(cards = cards))
+            val player = Player("ep", Cards(cards = cards, limitReceiveScore = 21))
             player.handsCardScore() shouldBe 21
         }
 
@@ -62,7 +62,7 @@ class PlayerTest : FreeSpec({
                 Card(CardShape.DIAMOND, CardNumber.QUEEN)
             )
 
-            val player = Player("ep2", Cards(cards = cards))
+            val player = Player("ep2", Cards(cards = cards, limitReceiveScore = 21))
             player.handsCardScore() shouldBe 21
         }
 
@@ -72,7 +72,7 @@ class PlayerTest : FreeSpec({
                 Card(CardShape.DIAMOND, CardNumber.ACE),
                 Card(CardShape.CLOVER, CardNumber.ACE)
             )
-            val player = Player("ep3", hands = Cards(cards = cards))
+            val player = Player("ep3", hands = Cards(cards = cards, limitReceiveScore = 21))
             player.handsCardScore() shouldBe 13
         }
     }
@@ -84,7 +84,7 @@ class PlayerTest : FreeSpec({
                 Card(CardShape.HEART, CardNumber.JACK),
                 Card(CardShape.DIAMOND, CardNumber.QUEEN)
             )
-            val player = Player("ep3", hands = Cards(cards = cards))
+            val player = Player("ep3", hands = Cards(cards = cards, limitReceiveScore = 21))
             player.isAvailableReceive().shouldBeTrue()
         }
 
@@ -94,7 +94,7 @@ class PlayerTest : FreeSpec({
                 Card(CardShape.DIAMOND, CardNumber.QUEEN),
                 Card(CardShape.CLOVER, CardNumber.TWO)
             )
-            val player = Player("ep3", hands = Cards(cards = cards))
+            val player = Player("ep3", hands = Cards(cards = cards, limitReceiveScore = 21))
             player.isAvailableReceive().shouldNotBeTrue()
         }
     }

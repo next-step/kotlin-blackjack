@@ -8,7 +8,7 @@ class Dealer(
     val deck: CardDeck = CardDeck(cardsFactory = DefaultCardsFactory)
 ) : Playable {
 
-    override val hands: Cards = Cards()
+    override val hands: Cards = Cards(limitReceiveScore = AVAILABLE_TARGET_NUMBER)
 
     init {
         deck.shuffle()
@@ -19,7 +19,7 @@ class Dealer(
         playable.receiveCard(card = card)
     }
 
-    override fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber(AVAILABLE_TARGET_NUMBER)
+    override fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber()
 
     fun isWin(playable: Playable): Boolean {
         if (this.handsCardScore() > WIN_SCORE) {

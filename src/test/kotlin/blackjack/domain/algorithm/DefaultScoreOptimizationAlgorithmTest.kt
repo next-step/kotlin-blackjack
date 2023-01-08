@@ -1,5 +1,6 @@
-package domain.algorithm
+package blackjack.domain.algorithm
 
+import domain.algorithm.DefaultScoreOptimizationAlgorithm
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.CardShape

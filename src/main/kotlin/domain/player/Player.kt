@@ -5,7 +5,7 @@ import domain.card.Cards
 
 class Player(
     val name: String,
-    override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
+    override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm, limitReceiveScore = AVAILABLE_TARGET_NUMBER)
 ) : Playable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -22,7 +22,7 @@ class Player(
         return name.hashCode()
     }
 
-    override fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber(AVAILABLE_TARGET_NUMBER)
+    override fun isAvailableReceive(): Boolean = this.hands.isAvailableReceiveNumber()
 
     private companion object {
         const val AVAILABLE_TARGET_NUMBER = 21
