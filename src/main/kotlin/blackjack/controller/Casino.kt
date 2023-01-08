@@ -7,16 +7,10 @@ import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
-class Casino(private val inputView: InputView, private val resultView: ResultView) {
+class Casino(val dealer: Dealer, private val inputView: InputView, private val resultView: ResultView) {
 
-    val dealer = Dealer()
-    lateinit var gamers: List<Gamer>
-        private set
+    val gamers: List<Gamer> = inputView.inputNames()
     private val game = Game()
-
-    fun prepare() {
-        gamers = inputView.inputNames()
-    }
 
     fun drawTwoCards() {
         repeat(gamers.size) {
@@ -42,12 +36,9 @@ class Casino(private val inputView: InputView, private val resultView: ResultVie
     fun relay() {
         var index = 0
         do {
-            val player = gamers[index]
-
-            val next = ask(player)
-
-            if (player.canDraw().not()) break
-
+            val gamer = gamers[index]
+            val next = ask(gamer)
+            if (gamer.canDraw().not()) break
             if (next) index++
         } while (index < gamers.size)
 
