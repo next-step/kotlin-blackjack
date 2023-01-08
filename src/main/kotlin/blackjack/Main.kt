@@ -6,17 +6,11 @@ import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
-    val inputView = InputView()
-    val gamers: List<Gamer> = inputView.inputNames()
-
-    val casino = Casino(gamers)
+    val casino = Casino(InputView(), ResultView())
+    casino.prepare()
     casino.drawTwoCards()
-
-    val resultView = ResultView()
-    resultView.showPlayers(casino)
-
-    casino.relay(inputView.ask(), resultView.showPlayer())
-
-    resultView.showResult(casino)
-    resultView.showReport(casino)
+    casino.showPlayers()
+    casino.relay()
+    casino.showResult(casino)
+    casino.showReport(casino)
 }

@@ -12,7 +12,7 @@ abstract class Player(val name: String, val myCards: Cards = Cards()) {
     }
 }
 
-class Dealer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
+class Dealer(name: String = "딜러", myCards: Cards = Cards()) : Player(name, myCards) {
     override fun canDraw(): Boolean {
         return totalScore <= MIN_DRAW_SCORE
     }

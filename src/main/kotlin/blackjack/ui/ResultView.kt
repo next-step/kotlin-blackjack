@@ -18,10 +18,10 @@ class ResultView {
         repeat(casino.gamers.size) { index -> casino.gamers[index].print() }
     }
 
-    fun showPlayer(): (Player) -> Unit = callback@{ player ->
+    fun showPlayer(player: Player) {
         if (player is Dealer) {
             showDealer(player)
-            return@callback
+            return
         }
         player.print()
     }

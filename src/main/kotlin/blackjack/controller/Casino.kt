@@ -2,16 +2,21 @@ package blackjack.controller
 
 import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.Gamer
 import blackjack.domain.Player
+import blackjack.ui.InputView
+import blackjack.ui.ResultView
 
-typealias QueryAction = (Player) -> String
+class Casino(private val inputView: InputView, private val resultView: ResultView) {
 
-typealias PrintAction = (Player) -> Unit
-
-class Casino(val gamers: List<Player>) {
-
-    val dealer = Dealer("딜러")
+    val dealer = Dealer()
+    lateinit var gamers: List<Gamer>
+        private set
     private val game = Game()
+
+    fun prepare() {
+        gamers = inputView.inputNames()
+    }
 
     fun drawTwoCards() {
         repeat(gamers.size) {
@@ -22,12 +27,24 @@ class Casino(val gamers: List<Player>) {
 
     fun names(): String = gamers.joinToString(", ") { player -> player.name }
 
-    fun relay(queryAction: QueryAction, printAction: PrintAction) {
+    fun showPlayers() {
+        resultView.showPlayers(this)
+    }
+
+    fun showResult(casino: Casino) {
+        resultView.showResult(casino)
+    }
+
+    fun showReport(casino: Casino) {
+        resultView.showReport(casino)
+    }
+
+    fun relay() {
         var index = 0
         do {
             val player = gamers[index]
 
-            val next = ask(player, queryAction, printAction)
+            val next = ask(player)
 
             if (player.canDraw().not()) break
 
@@ -35,26 +52,26 @@ class Casino(val gamers: List<Player>) {
         } while (index < gamers.size)
 
         if (dealer.canDraw()) {
-            printAction(dealer)
+            resultView.showPlayer(dealer)
             game.draw(dealer)
         }
     }
 
-    private fun ask(player: Player, queryAction: QueryAction, printAction: PrintAction): Boolean {
-        val skip = question(player, queryAction)
+    private fun ask(player: Player): Boolean {
+        val skip = question(player)
         if (skip) return true
 
         game.draw(player)
 
         if (player.canDraw().not()) return true
 
-        printAction(player)
+        resultView.showPlayer(player)
 
-        return ask(player, queryAction, printAction)
+        return ask(player)
     }
 
-    private fun question(player: Player, queryAction: QueryAction): Boolean {
-        val answer = queryAction(player)
+    private fun question(player: Player): Boolean {
+        val answer = inputView.ask(player)
         if (answer.isBlank()) return true
         if (answer == No) return true
 
