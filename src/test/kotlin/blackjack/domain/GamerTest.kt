@@ -37,7 +37,7 @@ internal class GamerTest {
         )
         val card = Card(CardNumber.Seven, Suit.Heart)
 
-        player.receive(card)
+        player.draw(card)
 
         player.myCards.getCardList() shouldContain card
     }

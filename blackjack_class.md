@@ -4,7 +4,7 @@ title: Blackjack Player Hierarchy
 ---
 classDiagram
     class Player {
-        draw()
+        draw(card: Card)
         canDraw()* Boolean
     }
     <<Abstract>> Player

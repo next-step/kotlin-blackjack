@@ -8,7 +8,7 @@ class Game(val cardDeck: CardDeck = CardDeck()) {
 
     fun draw(player: Player, drawCount: Int = 1) {
         repeat(drawCount) {
-            player.receive(cardDeck.draw())
+            player.draw(cardDeck.draw())
         }
     }
 }

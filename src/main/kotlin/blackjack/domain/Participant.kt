@@ -7,11 +7,9 @@ abstract class Player(val name: String, val myCards: Cards = Cards()) {
 
     abstract fun canDraw(): Boolean
 
-    fun draw(cardDeck: CardDeck): Card {
-        return cardDeck.draw()
+    fun draw(card: Card) {
+        myCards.add(card)
     }
-
-    fun receive(card: Card): Boolean = myCards.add(card)
 }
 
 class Dealer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
@@ -22,6 +20,6 @@ class Dealer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
 
 class Gamer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
     override fun canDraw(): Boolean {
-        return totalScore <= BLACK_JACK
+        return totalScore < BLACK_JACK
     }
 }
