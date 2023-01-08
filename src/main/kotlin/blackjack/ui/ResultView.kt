@@ -14,7 +14,8 @@ class ResultView {
     fun showPlayers(casino: Casino) {
         val names = casino.names()
         println("딜러와 ${names}에게 2장의 나누었습니다.")
-        casino.printAllPlayers { player -> player.print() }
+        casino.dealer.print()
+        repeat(casino.gamers.size) { index -> casino.gamers[index].print() }
     }
 
     fun showPlayer(): (Player) -> Unit = callback@{ player ->
@@ -27,9 +28,12 @@ class ResultView {
 
     fun showResult(casino: Casino) {
         println()
-        casino.printAllResult { player ->
-            println("${player.getString()} - 결과: ${player.totalScore}")
-        }
+        showPlayerResult(casino.dealer)
+        repeat(casino.gamers.size) { index -> showPlayerResult(casino.gamers[index]) }
+    }
+
+    private fun showPlayerResult(player: Player) {
+        println("${player.getString()} - 결과: ${player.totalScore}")
     }
 
     fun showReport(casino: Casino) {

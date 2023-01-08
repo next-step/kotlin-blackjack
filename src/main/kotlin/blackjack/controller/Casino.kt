@@ -22,16 +22,6 @@ class Casino(val gamers: List<Player>) {
 
     fun names(): String = gamers.joinToString(", ") { player -> player.name }
 
-    fun printAllPlayers(printAction: PrintAction) {
-        printAction(dealer)
-        repeat(gamers.size) { index -> printAction(gamers[index]) }
-    }
-
-    fun printAllResult(printAction: PrintAction) {
-        printAction(dealer)
-        repeat(gamers.size) { index -> printAction(gamers[index]) }
-    }
-
     fun relay(queryAction: QueryAction, printAction: PrintAction) {
         var index = 0
         do {
