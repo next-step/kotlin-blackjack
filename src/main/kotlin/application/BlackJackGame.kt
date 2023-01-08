@@ -9,6 +9,8 @@ class BlackJackGame(
     val dealer: Dealer = Dealer(),
     private val players: Participants
 ) {
+    private lateinit var gameResult: GameResult
+
     fun init() {
         repeat(INIT_CARD_COUNT) {
             dealer.drawCard()
@@ -39,6 +41,38 @@ class BlackJackGame(
         }
         return availableReceiveCard
     }
+
+    fun complete(): GameResult {
+        this.gameResult = GameResult()
+        return this.gameResult
+    }
+
+    inner class GameResult {
+        val resultPlayerBoards: List<ResultPlayerBoard>
+        val resultDealerBoard: ResultDealerBoard
+
+        init {
+            var dealerWinCount = 0
+            this.resultPlayerBoards = allPlayers().map {
+                val isPlayerWin = dealer.isWin(it)
+                if (!isPlayerWin) dealerWinCount++
+                ResultPlayerBoard(name = it.name, isWin = isPlayerWin)
+              }
+
+            this.resultDealerBoard = ResultDealerBoard(allPlayers().size, dealerWinCount)
+        }
+
+    }
+
+    data class ResultDealerBoard(
+        val totalCount: Int,
+        val winCount: Int
+    )
+
+    data class ResultPlayerBoard(
+        val name: String,
+        val isWin: Boolean
+    )
 
     private companion object {
         const val INIT_CARD_COUNT = 2

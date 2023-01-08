@@ -1,6 +1,6 @@
 package interfaces.ui
 
-import interfaces.BlackJackController
+import application.BlackJackGame
 
 object OutputConsole {
 
@@ -30,8 +30,8 @@ object OutputConsole {
     }
 
     fun printFinalResult(
-        resultDealerBoard: BlackJackController.ResultDealerBoard,
-        resultPlayerBoards: List<BlackJackController.ResultPlayerBoard>
+        resultDealerBoard: BlackJackGame.ResultDealerBoard,
+        resultPlayerBoards: List<BlackJackGame.ResultPlayerBoard>
     ) {
         println()
         println("## 최종 승패")

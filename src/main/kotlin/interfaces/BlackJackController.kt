@@ -89,24 +89,10 @@ class BlackJackController : Executable {
             OutputConsole.printCardWithResult(playerName = player.name, cardInfo = cardInfo, result = resultScore.toString())
         }
 
-        var dealerWinCount = 0
-        val resultPlayerBoards = blackJackGame.allPlayers().map {
-            val isPlayerWin = dealer.isWin(it)
-            if (!isPlayerWin) dealerWinCount++
-            ResultPlayerBoard(name = it.name, isWin = isPlayerWin)
-        }
-        val resultDealerBoard = ResultDealerBoard(players.size, dealerWinCount)
+        val gameResult = blackJackGame.complete()
+        val resultPlayerBoards = gameResult.resultPlayerBoards
+        val resultDealerBoard = gameResult.resultDealerBoard
 
         OutputConsole.printFinalResult(resultDealerBoard, resultPlayerBoards)
     }
-
-    data class ResultDealerBoard(
-        val totalCount: Int,
-        val winCount: Int
-    )
-
-    data class ResultPlayerBoard(
-        val name: String,
-        val isWin: Boolean
-    )
 }
