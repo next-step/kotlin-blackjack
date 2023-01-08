@@ -19,7 +19,7 @@ class ResultView {
 
     fun showPlayer(player: Player) {
         if (player is Dealer) {
-            showDealer(player)
+            showDealer()
             return
         }
         player.print()
@@ -52,8 +52,8 @@ class ResultView {
         }
     }
 
-    private fun showDealer(dealer: Dealer) {
-        if (dealer.myCards.getCardList().size < 2 || dealer.canDraw().not()) return
+    private fun showDealer() {
+        println()
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
