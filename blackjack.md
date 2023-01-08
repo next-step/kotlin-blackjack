@@ -38,9 +38,6 @@ flowchart TD
     checkBlackjack --> |YES| endGame
     checkBlackjack --> |NO| draw
 
-    draw --> |check score again| checkOver21
-    draw --> |check score again| checkBlackjack
-
-    quit --> endGame
+    
 
 ```

@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.NO
 import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.Player
@@ -12,10 +11,14 @@ typealias PrintAction = (Player) -> Unit
 class Casino(val gamers: List<Player>) {
 
     val dealer = Dealer("딜러")
-    val game = Game()
+    private val game = Game()
 
-    fun init() = game.init(gamers)
-    fun distribute() = game.distribute(gamers)
+    fun drawTwoCards() {
+        repeat(gamers.size) {
+            game.drawTwoCards(gamers[it])
+        }
+        game.drawTwoCards(dealer)
+    }
 
     fun names(): String = gamers.joinToString(", ") { player -> player.name }
 
@@ -34,21 +37,24 @@ class Casino(val gamers: List<Player>) {
         do {
             val player = gamers[index]
 
-            if (player is Dealer && player.canDraw()) printAction(player)
-
             val next = ask(player, queryAction, printAction)
 
             if (player.canDraw().not()) break
 
             if (next) index++
         } while (index < gamers.size)
+
+        if (dealer.canDraw()) {
+            printAction(dealer)
+            game.draw(dealer)
+        }
     }
 
     private fun ask(player: Player, queryAction: QueryAction, printAction: PrintAction): Boolean {
         val skip = question(player, queryAction)
         if (skip) return true
 
-        draw(player)
+        game.draw(player)
 
         if (player.canDraw().not()) return true
 
@@ -58,16 +64,14 @@ class Casino(val gamers: List<Player>) {
     }
 
     private fun question(player: Player, queryAction: QueryAction): Boolean {
-        if (player is Dealer) return false
-
         val answer = queryAction(player)
         if (answer.isBlank()) return true
-        if (answer == NO) return true
+        if (answer == No) return true
 
         return false
     }
 
-    private fun draw(player: Player): Boolean {
-        return player.receive(game.draw())
+    companion object {
+        private const val No = "n"
     }
 }

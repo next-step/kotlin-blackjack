@@ -1,6 +1,6 @@
 ```mermaid
 ---
-title: Blackjack Player Hierachy
+title: Blackjack Player Hierarchy
 ---
 classDiagram
     class Player {
@@ -12,4 +12,8 @@ classDiagram
     Player <|-- Gamer
     Player <|-- Dealer
     
+    class Game {
+        cardDeck CardDeck
+    }
+
 ```

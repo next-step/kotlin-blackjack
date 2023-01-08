@@ -23,7 +23,7 @@ class ResultView {
         readlnOrNull() ?: ""
     }
 
-    fun showPlayerCards(): (Player) -> Unit = callback@{ player ->
+    fun showPlayer(): (Player) -> Unit = callback@{ player ->
         if (player is Dealer) {
             showDealer(player)
             return@callback
@@ -54,7 +54,7 @@ class ResultView {
     }
 
     private fun showDealer(dealer: Dealer) {
-        if (dealer.myCards.getCardList().size != 2 || dealer.canDraw().not()) return
+        if (dealer.myCards.getCardList().size < 2 || dealer.canDraw().not()) return
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
