@@ -4,11 +4,9 @@ import domain.algorithm.DefaultScoreOptimizationAlgorithm
 import domain.card.Cards
 
 class Player(
-    val name: String
-) : Playable {
-
+    val name: String,
     override val hands: Cards = Cards(scoreOptimizationAlgorithm = DefaultScoreOptimizationAlgorithm)
-
+) : Playable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
