@@ -47,7 +47,7 @@ class ResultView {
             val gamer = casino.gamers[index]
             val report = gamer.makeReport(others.filter { it.name != gamer.name })
 
-            val result = if (report.loseCount == 0 || casino.dealer.isBlackjack().not()) "승" else "패"
+            val result = if (report.loseCount == 0 && casino.dealer.isBlackjack().not()) "승" else "패"
             println("${gamer.name}: $result")
         }
     }
