@@ -6,7 +6,6 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.Report
 import blackjack.domain.Suit
 
 class ResultView {
@@ -40,14 +39,16 @@ class ResultView {
         println()
         println("## 최종 승패")
 
-        val dealerReport = Report.calculateByDealer(casino.dealer, casino.gamers)
-        println("딜러: ${dealerReport.victory}승 ${dealerReport.defeat}패")
+        val dealerReport = casino.dealer.makeReport(casino.gamers)
+        println("딜러: ${dealerReport.winCount}승 ${dealerReport.loseCount}패")
 
+        val others: List<Player> = casino.dealer + casino.gamers
         repeat(casino.gamers.size) action@{ index ->
-            val player = casino.gamers[index]
-            val report = Report.calculate(player, casino.dealer, casino.gamers)
-            val result = if (report) "승" else "패"
-            println("${player.name}: $result")
+            val gamer = casino.gamers[index]
+            val report = gamer.makeReport(others.filter { it.name != gamer.name })
+
+            val result = if (report.loseCount == 0 || casino.dealer.isBlackjack().not()) "승" else "패"
+            println("${gamer.name}: $result")
         }
     }
 
