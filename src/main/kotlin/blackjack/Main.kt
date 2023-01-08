@@ -15,7 +15,7 @@ fun main() {
     val resultView = ResultView()
     resultView.showPlayers(casino)
 
-    casino.relay(resultView.ask(), resultView.showPlayer())
+    casino.relay(inputView.ask(), resultView.showPlayer())
 
     resultView.showResult(casino)
     resultView.showReport(casino)

@@ -17,12 +17,6 @@ class ResultView {
         casino.printAllPlayers { player -> player.print() }
     }
 
-    fun ask(): (Player) -> String = { player ->
-        println()
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        readlnOrNull() ?: ""
-    }
-
     fun showPlayer(): (Player) -> Unit = callback@{ player ->
         if (player is Dealer) {
             showDealer(player)

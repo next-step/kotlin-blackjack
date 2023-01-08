@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.Tokenizer
 import blackjack.domain.Gamer
+import blackjack.domain.Player
 
 class InputView {
 
@@ -14,5 +15,11 @@ class InputView {
             .map { name ->
                 Gamer(name)
             }
+    }
+
+    fun ask(): (Player) -> String = { player ->
+        println()
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        readlnOrNull() ?: ""
     }
 }
