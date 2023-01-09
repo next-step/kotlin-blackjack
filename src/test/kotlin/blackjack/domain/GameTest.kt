@@ -15,7 +15,7 @@ class GameTest : StringSpec({
         val gamer1 = Gamer("a")
         val gamer2 = Gamer("b")
         val gamerList = listOf(gamer1, gamer2)
-        val game = Game(dealer, gamerList)
-        game.getParticipant() shouldBe listOf(dealer, gamer1, gamer2)
+        val game = Game(gamerList, dealer)
+        game.participant shouldBe listOf(dealer, gamer1, gamer2)
     }
 })

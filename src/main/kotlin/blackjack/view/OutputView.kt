@@ -1,6 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Dealer
+import blackjack.domain.Draw
+import blackjack.domain.Game
+import blackjack.domain.Gamer
+import blackjack.domain.Person
+import blackjack.domain.State
 
 object OutputView {
 
@@ -8,7 +13,7 @@ object OutputView {
         println()
         val participantNames = game.getParticipantNames().joinToString(",")
         println("${participantNames}에게 ${Draw.FIRST_DRAW_COUNT}장의 카드를 나누었습니다.")
-        game.getParticipant().forEach {
+        game.participant.forEach {
             printOwnCards(it)
             println()
         }
@@ -31,7 +36,7 @@ object OutputView {
 
     fun printCardInfo(game: Game) {
         println()
-        game.getParticipant().forEach {
+        game.participant.forEach {
             printOwnCards(it)
             println(" - 결과: ${it.ownCards.sumCardNumber()}")
         }

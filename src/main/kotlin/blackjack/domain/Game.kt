@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Game(private val _dealer: Dealer, private val _gamerList: List<Gamer>) {
+class Game(private val _gamerList: List<Gamer>, private val _dealer: Dealer = Dealer()) {
 
     val dealer: Dealer
         get() = _dealer
@@ -8,18 +8,10 @@ class Game(private val _dealer: Dealer, private val _gamerList: List<Gamer>) {
     val gamerList: List<Gamer>
         get() = _gamerList
 
-    constructor(gamerList: List<Gamer>) : this(Dealer(), gamerList)
-
-    fun getParticipant(): List<Person> = buildList {
-        add(dealer)
-        gamerList.forEach { add(it) }
-    }
+    val participant = gamerList + dealer
 
     fun getParticipantNames(): List<String> {
-        return buildList {
-            add(dealer.name)
-            gamerList.forEach { add(it.name) }
-        }
+        return participant.map { it.name }
     }
 
     fun changeResult() {
