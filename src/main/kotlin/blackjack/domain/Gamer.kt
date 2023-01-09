@@ -1,13 +1,14 @@
 package blackjack.domain
 
-class Dealer(name: String = "딜러", myCards: Cards = Cards()) : Player(name, myCards) {
+class Gamer(name: String, myCards: Cards = Cards()) : Player(name, myCards) {
 
     override fun canDraw(): Boolean {
-        return totalScore <= MIN_DRAW_SCORE
+        return totalScore < BLACK_JACK
     }
 
     override fun makeReport(others: List<Player>): Report {
         if (totalScore > BLACK_JACK) return Report(0, others.size)
+        if (totalScore == BLACK_JACK) return Report(others.size, 0)
 
         var win = 0
         var lose = 0
@@ -17,9 +18,5 @@ class Dealer(name: String = "딜러", myCards: Cards = Cards()) : Player(name, m
             if (totalScore > other.totalScore) win++
         }
         return Report(win, lose)
-    }
-
-    fun isBlackjack(): Boolean {
-        return totalScore == BLACK_JACK
     }
 }

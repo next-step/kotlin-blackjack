@@ -1,15 +1,21 @@
 package blackjack.domain
 
-abstract class Participant(open val name: String, open val myCards: Cards = Cards()) {
+abstract class Player(val name: String, val myCards: Cards = Cards()) {
 
     val totalScore: Int
         get() = myCards.totalScore
 
-    fun receive(card: Card) = myCards.add(card)
+    abstract fun canDraw(): Boolean
 
-    fun canDraw(): Boolean = totalScore < BLACK_JACK
+    abstract fun makeReport(others: List<Player>): Report
 
-    companion object {
-        private const val BLACK_JACK = 21
+    fun draw(card: Card) {
+        myCards.add(card)
+    }
+
+    operator fun plus(players: List<Player>): List<Player> {
+        val list = players.toMutableList()
+        list.add(this)
+        return list
     }
 }

@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -14,7 +15,9 @@ internal class CardsTest {
         val cardQS = Card(CardNumber.Queen, Suit.Spade)
         cards.add(cardQS)
 
-        cards.hasCard(cardQS) shouldBe true
+        val expected = listOf(Card(CardNumber.King, Suit.Diamond), Card(CardNumber.Queen, Suit.Spade))
+
+        cards.getCardList() shouldContainInOrder expected
     }
 
     @DisplayName("받은 카드 목록을 가지고 있다.")
@@ -25,8 +28,7 @@ internal class CardsTest {
 
         val cards = Cards(listOf(cardKD, cardQS))
 
-        cards.hasCard(cardKD) shouldBe true
-        cards.hasCard(cardQS) shouldBe true
+        cards.getCardList() shouldContainInOrder listOf(cardKD, cardQS)
     }
 
     @DisplayName("다이아몬드 5, 클로버 9의 합계는 총 14점이다")

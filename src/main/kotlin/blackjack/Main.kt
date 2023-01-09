@@ -1,16 +1,15 @@
 package blackjack
 
-import blackjack.domain.Casino
-import blackjack.domain.Player
+import blackjack.controller.Casino
+import blackjack.domain.Dealer
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
-    val inputView = InputView()
-    val players: List<Player> = inputView.inputNames()
-
-    val casino = Casino(players)
-
-    val resultView = ResultView()
-    resultView.show(casino)
+    val casino = Casino(Dealer(), InputView(), ResultView())
+    casino.drawTwoCards()
+    casino.showPlayers()
+    casino.relay()
+    casino.showResult(casino)
+    casino.showReport(casino)
 }

@@ -1,66 +1,66 @@
 package blackjack.ui
 
+import blackjack.controller.Casino
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Cards
-import blackjack.domain.Casino
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Suit
 
 class ResultView {
 
-    fun show(casino: Casino) {
-        casino.distribute()
+    fun showPlayers(casino: Casino) {
+        val names = casino.names()
+        println("딜러와 ${names}에게 2장의 나누었습니다.")
+        casino.dealer.print()
+        repeat(casino.gamers.size) { index -> casino.gamers[index].print() }
+    }
 
-        val names = casino.players.joinToString(", ") { it.name }
-        println("${names}에게 2장의 나누었습니다.")
-
-        repeat(casino.players.size) {
-            casino.players[it].print()
+    fun showPlayer(player: Player) {
+        if (player is Dealer) {
+            showDealer()
+            return
         }
-
-        relay(casino)
-
-        showResult(casino)
-    }
-
-    private fun relay(casino: Casino) {
-        var index = 0
-        do {
-            val player = casino.players[index]
-            val next = ask(casino, player)
-
-            if (player.canDraw().not()) break
-
-            if (next) index++
-        } while (index < casino.players.size)
-    }
-
-    private fun ask(casino: Casino, player: Player): Boolean {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        val answer = readLine()
-        if (answer.isNullOrBlank()) return true
-        if (answer == NO) return true
-
-        casino.draw(player)
-
-        if (player.canDraw().not()) return true
-
         player.print()
-
-        return ask(casino, player)
     }
 
-    private fun showResult(casino: Casino) {
-        repeat(casino.players.size) {
-            val player = casino.players[it]
-            println("${player.getString()} - 결과: ${player.totalScore}")
+    fun showResult(casino: Casino) {
+        println()
+        showPlayerResult(casino.dealer)
+        repeat(casino.gamers.size) { index -> showPlayerResult(casino.gamers[index]) }
+    }
+
+    private fun showPlayerResult(player: Player) {
+        println("${player.getString()} - 결과: ${player.totalScore}")
+    }
+
+    fun showReport(casino: Casino) {
+        println()
+        println("## 최종 승패")
+
+        val dealerReport = casino.dealer.makeReport(casino.gamers)
+        println("딜러: ${dealerReport.winCount}승 ${dealerReport.loseCount}패")
+
+        val others: List<Player> = casino.dealer + casino.gamers
+        repeat(casino.gamers.size) action@{ index ->
+            val gamer = casino.gamers[index]
+            val report = gamer.makeReport(others.filter { it.name != gamer.name })
+
+            val result = if (report.loseCount == 0 && casino.dealer.isBlackjack().not()) "승" else "패"
+            println("${gamer.name}: $result")
         }
+    }
+
+    private fun showDealer() {
+        println()
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
     private fun Player.print() = println(getString())
 
     private fun Player.getString(): String {
+        if (this is Dealer) return "딜러: ${this.myCards.getString()}"
         return "${this.name}카드: ${this.myCards.getString()}"
     }
 
@@ -95,9 +95,5 @@ class ResultView {
             Suit.Heart -> "하트"
             Suit.Clover -> "클로버"
         }
-    }
-
-    companion object {
-        private const val NO = "n"
     }
 }
