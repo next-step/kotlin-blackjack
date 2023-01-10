@@ -37,7 +37,7 @@ object Controller {
             newPlayer = GameManager.hit(newPlayer, deck)
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
-        if (newPlayer.hasOnlyTwoCards()) {
+        if (newPlayer.hasOnlyTwoCards) {
             ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
         }
         return GameManager.stay(newPlayer)
@@ -52,11 +52,11 @@ object Controller {
     }
 
     private fun canPlayerHit(player: Role): Boolean {
-        if (player.isBust()) {
+        if (player.isBust) {
             ResultView.printPlayerBust(player.name.toString())
             return false
         }
-        if (player.isBlackjack()) {
+        if (player.isBlackjack) {
             ResultView.printPlayerBlackjack(player.name.toString())
             return false
         }

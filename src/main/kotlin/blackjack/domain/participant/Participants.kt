@@ -25,11 +25,11 @@ value class Participants(private val values: List<Role>) {
     }
 
     fun getPlayers(): List<Role> {
-        return values.filter { !it.isDealer() }.map { it }
+        return values.filter { !it.isDealer }.map { it }
     }
 
     fun getDealer(): Dealer {
-        return values.filter { it.isDealer() }.map { it as Dealer }.first()
+        return values.filter { it.isDealer }.map { it as Dealer }.first()
     }
 
     fun getAll(): List<Role> {
@@ -37,7 +37,7 @@ value class Participants(private val values: List<Role>) {
     }
 
     fun isBlackjack(): Boolean {
-        return values.any { it.isBlackjack() }
+        return values.any { it.isBlackjack }
     }
 
     companion object {

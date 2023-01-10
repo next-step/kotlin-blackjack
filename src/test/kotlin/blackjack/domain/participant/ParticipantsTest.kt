@@ -68,7 +68,7 @@ class ParticipantsTest {
         val participants = Participants(dealer, player1, player2)
 
         // when, then
-        assertThat(participants.getDealer().isDealer()).isTrue
+        assertThat(participants.getDealer().isDealer).isTrue
         assertThat(participants.getPlayers().map { it.name.toString() }).containsExactly("pobi", "jason")
     }
 
@@ -85,7 +85,7 @@ class ParticipantsTest {
 
         // then
         assertThat(actual.getPlayers().map { it.name }).containsAll(names)
-        assertThat(actual.getPlayers().map { it.state }).allMatch { it.cards.size() == NUMBER_OF_STARTING_CARDS }
+        assertThat(actual.getPlayers().map { it.state }).allMatch { it.cards.size == NUMBER_OF_STARTING_CARDS }
     }
 
     @Test
@@ -99,7 +99,7 @@ class ParticipantsTest {
         val actual = players + dealer
 
         // then
-        assertThat(actual.getDealer().isDealer()).isTrue
+        assertThat(actual.getDealer().isDealer).isTrue
         assertThat(actual.getPlayers().map { it.name.toString() }).containsExactly("pobi", "jason")
         assertThat(actual.getAll()).size().isEqualTo(3)
     }

@@ -16,53 +16,47 @@ sealed class Role {
 
     abstract val money: Money
 
-    abstract fun isDealer(): Boolean
+    abstract val isDealer: Boolean
+
+    val score: Int
+        get() = state.cards.getScore()
+
+    val isBlackjack: Boolean
+        get() = state.cards.isBlackjack()
+
+    val isBust: Boolean
+        get() = state.cards.isBust()
+
+    val isStay: Boolean
+        get() = state.cards.isStay()
+
+    val cards: List<String>
+        get() = state.cards.toListString()
+
+    val hasOnlyTwoCards: Boolean
+        get() = state.cards.size == NUMBER_OF_STARTING_CARDS
 
     fun draw(playingCard: PlayingCard): Role {
-        if (isDealer()) {
+        if (isDealer) {
             return Dealer(state.draw(playingCard))
         }
         return Player(name, state.draw(playingCard), money)
     }
 
     fun stay(): Role {
-        if (isDealer()) {
+        if (isDealer) {
             return Dealer(state.stay())
         }
         return Player(name, state.stay(), money)
     }
 
-    fun getScore(): Int {
-        return state.cards.getScore()
-    }
-
-    fun isBlackjack(): Boolean {
-        return state.cards.isBlackjack()
-    }
-
-    fun isBust(): Boolean {
-        return state.cards.isBust()
-    }
-
-    fun isStay(): Boolean {
-        return state.cards.isStay()
-    }
-
-    fun getCardsAsListString(): List<String> {
-        return state.cards.toListString()
-    }
-
-    fun calculateResult(score: Int): Result {
-        val playerScore = getScore()
+    fun calculateResult(inputScore: Int): Result {
+        val playerScore = score
         return when {
-            playerScore > score -> Result.Win
-            playerScore == score -> Result.Draw
+            playerScore > inputScore -> Result.Win
+            playerScore == inputScore -> Result.Draw
             else -> Result.Lose
         }
-    }
-
-    fun hasOnlyTwoCards(): Boolean {
-        return state.cards.size() == NUMBER_OF_STARTING_CARDS
     }
 
     companion object {

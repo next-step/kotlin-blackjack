@@ -18,20 +18,20 @@ sealed class Result {
 
     companion object {
         fun calculateResult(participants: Participants): Map<Role, Result> {
-            if (participants.getDealer().isBlackjack()) {
+            if (participants.getDealer().isBlackjack) {
                 return participants.getPlayers().associateWith { Lose }
             }
-            if (participants.getDealer().isBust()) {
+            if (participants.getDealer().isBust) {
                 return participants.getPlayers().associateWith { Win }
             }
-            return participants.getPlayers().associateWith { it.calculateResult(participants.getDealer().getScore()) }
+            return participants.getPlayers().associateWith { it.calculateResult(participants.getDealer().score) }
         }
 
         fun calculateProfit(participants: Participants): Map<Role, Double> {
-            if (participants.getDealer().isBlackjack()) {
+            if (participants.getDealer().isBlackjack) {
                 return calculateProfitFromDealerBlackjack(participants)
             }
-            if (participants.getDealer().isBust()) {
+            if (participants.getDealer().isBust) {
                 return calculateProfitFromDealerBust(participants)
             }
             return calculateProfitFromPlayersResult(participants)
@@ -41,10 +41,10 @@ sealed class Result {
             val playersResult: MutableMap<Role, Double> = mutableMapOf()
             var dealerMoney = 0.0
 
-            participants.getPlayers().filter { it.isBlackjack() }.forEach {
+            participants.getPlayers().filter { it.isBlackjack }.forEach {
                 playersResult += it to 0.0
             }
-            participants.getPlayers().filter { !it.isBlackjack() }.forEach {
+            participants.getPlayers().filter { !it.isBlackjack }.forEach {
                 playersResult += it to it.money.toDouble() * -1
                 dealerMoney += it.money.toDouble()
             }
@@ -57,15 +57,15 @@ sealed class Result {
             val playersResult: MutableMap<Role, Double> = mutableMapOf()
             var dealerMoney = 0.0
 
-            participants.getPlayers().filter { it.isBlackjack() }.forEach {
+            participants.getPlayers().filter { it.isBlackjack }.forEach {
                 playersResult += it to it.state.earningRate(it.money)
                 dealerMoney += it.state.earningRate(it.money) * -1
             }
-            participants.getPlayers().filter { it.isStay() }.forEach {
+            participants.getPlayers().filter { it.isStay }.forEach {
                 playersResult += it to it.money.toDouble()
                 dealerMoney += it.money.toDouble() * -1
             }
-            participants.getPlayers().filter { it.isBust() }.forEach {
+            participants.getPlayers().filter { it.isBust }.forEach {
                 playersResult += it to it.money.toDouble() * -1
                 dealerMoney += it.money.toDouble()
             }
@@ -79,15 +79,15 @@ sealed class Result {
             val dealer = participants.getDealer()
             var dealerMoney = 0.0
 
-            participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Win }.forEach {
+            participants.getPlayers().filter { it.calculateResult(dealer.score) is Win }.forEach {
                 playersResult += it to it.state.earningRate(it.money)
                 dealerMoney += it.state.earningRate(it.money) * -1
             }
-            participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Lose }.forEach {
+            participants.getPlayers().filter { it.calculateResult(dealer.score) is Lose }.forEach {
                 playersResult += it to it.money.toDouble() * -1
                 dealerMoney += it.money.toDouble()
             }
-            participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Draw }.forEach {
+            participants.getPlayers().filter { it.calculateResult(dealer.score) is Draw }.forEach {
                 playersResult += it to 0.0
             }
 

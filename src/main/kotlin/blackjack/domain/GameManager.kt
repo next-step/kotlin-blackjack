@@ -10,11 +10,11 @@ object GameManager {
     }
 
     fun canDealerHit(dealer: Dealer): Boolean {
-        return dealer.getScore() <= Dealer.STOP_SCORE
+        return dealer.score <= Dealer.STOP_SCORE
     }
 
     fun stay(role: Role): Role {
-        if (!role.isBust() && !role.isBlackjack()) {
+        if (!role.isBust && !role.isBlackjack) {
             return role.stay()
         }
         return role
