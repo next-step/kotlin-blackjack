@@ -9,11 +9,10 @@ import views.Output.printResult
 fun main() {
     val playerNames = getPlayerNames()
     val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
-    val firstDrawCount = 2
-    printFirstDrawCards(playerNames, firstDrawCount)
 
     val gameRule = GameRule(deck = deck)
-    val players = gameRule.createPlayers(firstDrawCount, playerNames)
+    printFirstDrawCards(playerNames, GameRule.FIRST_DRAW_COUNT)
+    val players = gameRule.createPlayers(playerNames)
 
     players.forEach { gameRule.drawCard(it) }
     players.forEach {

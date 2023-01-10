@@ -15,4 +15,8 @@ enum class PokerNumber(val displayName: String, val number: Int) {
     QUEEN("Q", 10),
     KING("K", 10)
     ;
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 }

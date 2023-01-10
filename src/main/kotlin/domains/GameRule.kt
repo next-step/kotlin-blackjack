@@ -4,10 +4,11 @@ import views.Input.answerDrawCard
 import views.Output.printHasCards
 
 class GameRule(private val deck: Deck) {
-    fun createPlayers(firstDrawCount: Int, playerNames: List<String>): List<Player> {
+    fun createPlayers(playerNames: List<String>): List<Player> {
         return playerNames.map { playerName ->
-            val cards = Cards((1..firstDrawCount).map { deck.drawCard() }.toMutableList())
-            val player = Player(name = playerName, cards = cards)
+            val cards = Cards((1..FIRST_DRAW_COUNT).map { deck.drawCard() }.toMutableList())
+            val player = Player(name = playerName)
+            player.startGame(cards)
             printHasCards(player.name, player.cards)
             player
         }
@@ -21,16 +22,17 @@ class GameRule(private val deck: Deck) {
             val isRequestDraw = answerDrawCard(player.name)
             if (!isRequestDraw) break
 
-            player.addCard(deck.drawCard())
+            player.drawCard(deck.drawCard())
             printHasCards(player.name, player.cards)
         }
     }
 
     fun sumOfCards(player: Player): Int {
-        return player.cards.sumOfNumbers(MAXIMUM_NUMBER_OF_DEFEAT)
+        return ScoreCalculator(player.cards).sumOfNumbers(MAXIMUM_NUMBER_OF_DEFEAT)
     }
 
     companion object {
         const val MAXIMUM_NUMBER_OF_DEFEAT = 21
+        const val FIRST_DRAW_COUNT = 2
     }
 }

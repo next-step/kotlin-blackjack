@@ -11,11 +11,10 @@ internal class GameRuleTest {
         // Arrange
         val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
         val gameRule = GameRule(deck)
-        val drawCount = 1
         val playerNames = listOf("a", "b", "c")
 
         // Act
-        val players = gameRule.createPlayers(firstDrawCount = drawCount, playerNames = playerNames)
+        val players = gameRule.createPlayers(playerNames = playerNames)
 
         // Assert
         assertThat(players.size).isEqualTo(playerNames.size)

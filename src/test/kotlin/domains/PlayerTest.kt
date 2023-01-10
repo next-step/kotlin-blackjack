@@ -12,9 +12,9 @@ internal class PlayerTest {
         val player = Player("modernflow", Cards())
 
         // Act
-        player.addCard(Card(PokerNumber.ACE, PokerShape.CLOVER))
+        player.drawCard(Card(PokerNumber.ACE, PokerShape.CLOVER))
 
         // Assert
-        assertThat(player.cards.cards.size).isEqualTo(1)
+        assertThat(player.cards.values.size).isEqualTo(1)
     }
 }
