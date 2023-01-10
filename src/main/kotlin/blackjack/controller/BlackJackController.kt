@@ -2,13 +2,14 @@ package blackjack.controller
 
 import blackjack.domain.BlackJackMachine
 import blackjack.domain.Participant
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackController {
     fun execute() {
         val playerNameList = InputView.readName().split(",")
-        val players = playerNameList.map { Participant(name = it) }
+        val players = playerNameList.map { Player(name = it) }
         val blackJackMachine = BlackJackMachine(players = players)
 
         blackJackMachine.initialize()

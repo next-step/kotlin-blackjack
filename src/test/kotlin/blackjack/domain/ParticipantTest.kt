@@ -12,7 +12,7 @@ internal class ParticipantTest : StringSpec({
                 Card(cardSuit = CardSuit.DIAMOND, denomination = Denomination.FIVE),
             )
         )
-        val player = Participant("abc", cards)
+        val player = Player("abc", cards)
 
         player.canHit() shouldBe false
     }
@@ -24,7 +24,7 @@ internal class ParticipantTest : StringSpec({
                 Card(cardSuit = CardSuit.DIAMOND, denomination = Denomination.ACE),
             )
         )
-        val player = Participant("abc", cards)
+        val player = Player("abc", cards)
 
         player.canHit() shouldBe false
     }
@@ -37,7 +37,7 @@ internal class ParticipantTest : StringSpec({
                 Card(CardSuit.DIAMOND, Denomination.ACE)
             )
         )
-        val player = Participant("abc", cards)
+        val player = Player("abc", cards)
 
         player.canHit() shouldBe false
     }

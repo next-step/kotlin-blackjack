@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.common.Policy
 
-class Participant(
+abstract class Participant(
     val name: String,
     val cards: Cards = Cards(),
 ) {
@@ -10,19 +10,17 @@ class Participant(
         cards.add(card)
     }
 
-    fun canHit(): Boolean {
-        return !(isBust() || isBlackJack() || isMaxScore())
-    }
+    abstract fun canHit(): Boolean
 
-    private fun isBust(): Boolean {
+    internal fun isBust(): Boolean {
         return cards.getScore() > Policy.BUST_SCORE
     }
 
-    private fun isBlackJack(): Boolean {
+    internal fun isBlackJack(): Boolean {
         return cards.getScore() == Policy.BUST_SCORE && cards.size == Policy.INITIAL_CARD_COUNT
     }
 
-    private fun isMaxScore(): Boolean {
+    internal fun isMaxScore(): Boolean {
         return cards.getScore() == Policy.BUST_SCORE
     }
 
