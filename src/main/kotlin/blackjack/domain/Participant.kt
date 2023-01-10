@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.common.Policy
 
-abstract class Participant(
+sealed class Participant(
     val name: String,
     val cards: Cards = Cards(),
 ) {

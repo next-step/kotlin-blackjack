@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.common.Policy
+
 class Dealer(
     name: String,
     cards: Cards = Cards(),
@@ -8,6 +10,6 @@ class Dealer(
     cards = cards,
 ) {
     override fun canHit(): Boolean {
-        return cards.getScore() < 17
+        return cards.getScore() <= Policy.DEALER_INIT_MAX_SCORE
     }
 }

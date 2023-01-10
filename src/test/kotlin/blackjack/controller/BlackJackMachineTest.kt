@@ -16,7 +16,7 @@ internal class BlackJackMachineTest : StringSpec({
     "게임을 시작하면 참여자들은 카드 2장을 받는다." {
         val player = Player(name = "lisa")
         val cardDeck = CardDeck()
-        val blackJackMachine = BlackJackMachine(cardDeck = cardDeck, players = listOf(player))
+        val blackJackMachine = BlackJackMachine(cardDeck = cardDeck, participants = listOf(player))
 
         blackJackMachine.initialize()
 
@@ -36,11 +36,12 @@ internal class BlackJackMachineTest : StringSpec({
             )
         )
         every { spy["makeCards"]() } returns cards
-        val blackJackMachine = BlackJackMachine(cardDeck = spy, players = listOf(player))
+        val blackJackMachine = BlackJackMachine(cardDeck = spy, participants = listOf(player))
 
         blackJackMachine.execute(
             retryFunc = { player -> player.cards.size < 4 },
-            playerCardResultFunc = { player -> println(player) }
+            playerCardResultFunc = { player -> println(player) },
+            dealerCardResultFunc = { dealer -> println(dealer) }
         )
 
         player.cards.size shouldBe 4
