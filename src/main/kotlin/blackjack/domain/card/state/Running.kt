@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 
 abstract class Running(override val cards: PlayingCards) : State() {
@@ -7,7 +8,7 @@ abstract class Running(override val cards: PlayingCards) : State() {
         return false
     }
 
-    override fun earningRate(money: Int): Double {
+    override fun earningRate(money: Money): Double {
         throw IllegalStateException("아직 게임이 끝나지 않았습니다.")
     }
 }

@@ -4,6 +4,7 @@ import blackjack.ClubAce
 import blackjack.ClubJack
 import blackjack.ClubTen
 import blackjack.ClubTwo
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -40,7 +41,10 @@ class BustTest {
         // given
         val given = Bust(PlayingCards(ClubTen, ClubJack, ClubTwo))
 
-        // when, then
-        assertThat(given.earningRate(1000)).isEqualTo(0.0)
+        // when
+        val actual = given.earningRate(Money(1000))
+
+        // then
+        assertThat(actual).isEqualTo(0.0)
     }
 }

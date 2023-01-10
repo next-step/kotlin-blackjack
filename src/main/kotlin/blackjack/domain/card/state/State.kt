@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 
@@ -14,5 +15,5 @@ sealed class State {
 
     abstract fun isFinished(): Boolean
 
-    abstract fun earningRate(money: Int): Double
+    abstract fun earningRate(money: Money): Double
 }

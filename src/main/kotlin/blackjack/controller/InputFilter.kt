@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.bet.Bet
+import blackjack.domain.bet.Money
 import blackjack.domain.participant.state.Name
 import blackjack.view.InputView
 
@@ -15,9 +15,9 @@ object InputFilter {
         }
     }
 
-    fun inputBettingMoney(name: String): Bet {
+    fun inputBettingMoney(name: String): Money {
         return try {
-            Bet(InputParser.parseBettingMoney(InputView.inputBettingMoney(name)))
+            Money(InputParser.parseBettingMoney(InputView.inputBettingMoney(name)))
         } catch (e: Exception) {
             InputView.printError(e.message!!)
             inputBettingMoney(name)

@@ -1,5 +1,6 @@
 package blackjack.domain.card.state
 
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 
@@ -16,7 +17,7 @@ abstract class Finished(override val cards: PlayingCards) : State() {
         return true
     }
 
-    override fun earningRate(money: Int): Double {
-        return money * rate
+    override fun earningRate(money: Money): Double {
+        return money.toDouble() * rate
     }
 }

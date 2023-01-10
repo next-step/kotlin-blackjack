@@ -8,6 +8,7 @@ import blackjack.SpadeSix
 import blackjack.SpadeTen
 import blackjack.SpadeThree
 import blackjack.SpadeTwo
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -44,7 +45,10 @@ class StayTest {
         // given
         val given = Stay(PlayingCards(SpadeTen, SpadeJack))
 
-        // when, then
-        assertThat(given.earningRate(1000)).isEqualTo(1000.0)
+        // when
+        val actual = given.earningRate(Money(1000))
+
+        // then
+        assertThat(actual).isEqualTo(1000.0)
     }
 }

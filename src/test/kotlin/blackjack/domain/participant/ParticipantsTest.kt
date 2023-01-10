@@ -6,7 +6,7 @@ import blackjack.Player
 import blackjack.SpadeAce
 import blackjack.SpadeJack
 import blackjack.application.Deck
-import blackjack.domain.bet.Bet
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.strategy.RandomShuffleStrategy
@@ -78,10 +78,10 @@ class ParticipantsTest {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
         val names = listOf("pobi", "jason").map { Name(it) }
-        val bets = listOf(10000, 20000).map { Bet(it) }.toTypedArray()
+        val monies = listOf(10000, 20000).map { Money(it) }.toTypedArray()
 
         // when
-        val actual = createPlayers(names.toTypedArray(), deck, bets)
+        val actual = createPlayers(names.toTypedArray(), deck, monies)
 
         // then
         assertThat(actual.getPlayers().map { it.name }).containsAll(names)

@@ -21,7 +21,6 @@ sealed class Result {
             if (participants.getDealer().isBlackjack()) {
                 return participants.getPlayers().associateWith { Lose }
             }
-
             if (participants.getDealer().isBust()) {
                 return participants.getPlayers().associateWith { Win }
             }
@@ -46,8 +45,8 @@ sealed class Result {
                 playersResult += it to 0.0
             }
             participants.getPlayers().filter { !it.isBlackjack() }.forEach {
-                playersResult += it to it.bet.toDouble() * -1
-                dealerMoney += it.bet.toDouble()
+                playersResult += it to it.money.toDouble() * -1
+                dealerMoney += it.money.toDouble()
             }
 
             val dealerResult = mutableMapOf(participants.getDealer() to dealerMoney)
@@ -59,16 +58,16 @@ sealed class Result {
             var dealerMoney = 0.0
 
             participants.getPlayers().filter { it.isBlackjack() }.forEach {
-                playersResult += it to it.state.earningRate(it.bet.toInt())
-                dealerMoney += it.state.earningRate(it.bet.toInt()) * -1
+                playersResult += it to it.state.earningRate(it.money)
+                dealerMoney += it.state.earningRate(it.money) * -1
             }
             participants.getPlayers().filter { it.isStay() }.forEach {
-                playersResult += it to it.bet.toDouble()
-                dealerMoney += it.bet.toDouble() * -1
+                playersResult += it to it.money.toDouble()
+                dealerMoney += it.money.toDouble() * -1
             }
             participants.getPlayers().filter { it.isBust() }.forEach {
-                playersResult += it to it.bet.toDouble() * -1
-                dealerMoney += it.bet.toDouble()
+                playersResult += it to it.money.toDouble() * -1
+                dealerMoney += it.money.toDouble()
             }
 
             val dealerResult = mutableMapOf(participants.getDealer() to dealerMoney)
@@ -81,12 +80,12 @@ sealed class Result {
             var dealerMoney = 0.0
 
             participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Win }.forEach {
-                playersResult += it to it.state.earningRate(it.bet.toInt())
-                dealerMoney += it.state.earningRate(it.bet.toInt()) * -1
+                playersResult += it to it.state.earningRate(it.money)
+                dealerMoney += it.state.earningRate(it.money) * -1
             }
             participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Lose }.forEach {
-                playersResult += it to it.bet.toDouble() * -1
-                dealerMoney += it.bet.toDouble()
+                playersResult += it to it.money.toDouble() * -1
+                dealerMoney += it.money.toDouble()
             }
             participants.getPlayers().filter { it.calculateResult(dealer.getScore()) is Draw }.forEach {
                 playersResult += it to 0.0
