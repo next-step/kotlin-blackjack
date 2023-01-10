@@ -15,15 +15,17 @@ enum class CardNumber(val number: Int) {
     QUEEN(10),
     KING(10);
 
-    companion object {
-        fun convertToString(value: CardNumber): String {
-            return when (value) {
-                ACE -> "A"
-                JACK -> "J"
-                QUEEN -> "Q"
-                KING -> "K"
-                else -> value.number.toString()
-            }
+    fun isAce(): Boolean {
+        return this == ACE
+    }
+
+    override fun toString(): String {
+        return when (this) {
+            ACE -> "A"
+            JACK -> "J"
+            QUEEN -> "Q"
+            KING -> "K"
+            TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN -> this.number.toString()
         }
     }
 }

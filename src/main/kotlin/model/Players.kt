@@ -15,8 +15,8 @@ class Players {
         return players
     }
 
-    fun generate(names: List<String>) {
-        names.forEach {
+    fun generate(names: Names) {
+        names.values.forEach {
             add(it, mutableListOf())
         }
     }

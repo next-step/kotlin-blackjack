@@ -6,9 +6,7 @@ enum class CardShape(private val shape: String) {
     HEARTS("하트"),
     SPADES("스페이드");
 
-    companion object {
-        fun convertToString(value: CardShape): String {
-            return value.shape
-        }
+    override fun toString(): String {
+        return this.shape
     }
 }

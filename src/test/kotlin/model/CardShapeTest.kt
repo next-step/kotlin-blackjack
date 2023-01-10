@@ -1,18 +1,18 @@
 package model
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 internal class CardShapeTest {
     @Test
-    fun `카드 모양이 한글 문자열로 변환된다`() {
+    fun `카드 모양이 문자열로 변경된다`() {
         assertAll(
             {
-                assertEquals("다이아몬드", CardShape.convertToString(CardShape.DIAMONDS))
+                assertThat(CardShape.DIAMONDS.toString()).isEqualTo("다이아몬드")
             },
             {
-                assertEquals("스페이드", CardShape.convertToString(CardShape.SPADES))
+                assertThat(CardShape.CLUBS.toString()).isEqualTo("클로버")
             }
         )
     }

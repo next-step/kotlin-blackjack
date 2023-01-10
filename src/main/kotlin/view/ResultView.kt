@@ -1,13 +1,13 @@
 package view
 
 import model.Card
-import model.CardNumber
-import model.CardShape
+import model.CardVendor
+import model.Names
 
 class ResultView {
-    fun showDistributedCard(names: List<String>) {
+    fun showDistributedCard(names: Names) {
         var result = ""
-        for ((index, name) in names.withIndex()) {
+        for ((index, name) in names.values.withIndex()) {
             if (index == 0) {
                 result += name
                 continue
@@ -21,8 +21,8 @@ class ResultView {
         var result = ""
         players.forEach {
             result += "${it.key}카드: "
-            it.value.forEach {
-                result += "${CardNumber.convertToString(it.cardNumber)}${CardShape.convertToString(it.cardShape)}, "
+            it.value.forEach { card ->
+                result += "${card.cardNumber}${card.cardShape}, "
             }
             result = result.substring(0, result.lastIndex - 1) + "\n"
         }
@@ -32,18 +32,20 @@ class ResultView {
     fun showSpecificUserCardState(name: String, cards: List<Card>) {
         var result = "${name}카드: "
         cards.forEach {
-            result += "${CardNumber.convertToString(it.cardNumber)}${CardShape.convertToString(it.cardShape)}, "
+            result += "${it.cardNumber}${it.cardShape}, "
         }
         result = result.substring(0, result.lastIndex - 1) + "\n"
         println(result)
     }
 
-    fun showPlayerCardStateResult(name: String, cards: List<Card>, total: Int) {
-        var result = "${name}카드: "
-        cards.forEach {
-            result += "${CardNumber.convertToString(it.cardNumber)}${CardShape.convertToString(it.cardShape)}, "
+    fun showPlayerCardStateResult(players: Map<String, List<Card>>, cardVendor: CardVendor) {
+        players.forEach {
+            var result = "${it.key}카드: "
+            it.value.forEach { card ->
+                result += "${card.cardNumber}${card.cardShape}, "
+            }
+            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(it.value)}"
+            println(result)
         }
-        result = result.substring(0, result.lastIndex - 1) + " - 결과: $total"
-        println(result)
     }
 }

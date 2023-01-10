@@ -1,8 +1,9 @@
 import controller.BlackjackGame
-import model.CardNumberCalculator
 import model.CardVendor
 import model.Players
+import view.InputView
+import view.ResultView
 
 fun main() {
-    BlackjackGame(Players(), CardNumberCalculator(), CardVendor()).start()
+    BlackjackGame(Players(), CardVendor(), InputView(), ResultView()).start()
 }

@@ -1,32 +1,52 @@
 package controller
 
-import model.CardNumberCalculator
 import model.CardVendor
-import model.Name
+import model.Names
 import model.Players
 import view.InputView
 import view.ResultView
 
-class BlackjackGame(private val players: Players, private val cardNumberCalculator: CardNumberCalculator, private val cardVendor: CardVendor) {
-    private val inputView = InputView()
-    private val resultView = ResultView()
-
+class BlackjackGame(
+    private val players: Players,
+    private val cardVendor: CardVendor,
+    private val inputView: InputView,
+    private val resultView: ResultView
+) {
     fun start() {
-        val names = Name(inputView.getUserName()).names
-        resultView.showDistributedCard(names)
-        players.generate(names)
-
-        cardVendor.giveCardToPlayer(players, names)
-        resultView.showPlayerCardState(players.get())
-
-        cardVendor.checkExtraCard(players, cardNumberCalculator)
-
+        val names = inputNames()
+        createPlayer(names)
+        giveCard(names)
+        giveExtraCard()
         printPlayerCard()
     }
 
+    private fun inputNames(): Names {
+        return Names(inputView.getUserName())
+    }
+
+    private fun createPlayer(names: Names) {
+        resultView.showDistributedCard(names)
+        players.generate(names)
+    }
+
+    private fun giveCard(names: Names) {
+        cardVendor.giveCardToPlayer(players, names)
+        resultView.showPlayerCardState(players.get())
+    }
+
+    private fun giveExtraCard() {
+        cardVendor.giveExtraCard(
+            players,
+            { name ->
+                inputView.getExtraCard(name)
+            },
+            { name, cards ->
+                resultView.showSpecificUserCardState(name, cards)
+            }
+        )
+    }
+
     private fun printPlayerCard() {
-        players.get().forEach {
-            resultView.showPlayerCardStateResult(it.key, it.value, cardNumberCalculator.totalNumber(it.value))
-        }
+        resultView.showPlayerCardStateResult(players.get(), cardVendor)
     }
 }
