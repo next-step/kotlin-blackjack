@@ -10,7 +10,7 @@ object InputFilter {
             val parsedInput = InputParser.parseWithDelimiter(InputView.inputName())
             parsedInput.map { Name(it) }.toTypedArray()
         }.onFailure { e ->
-            InputView.printError(e.message!!)
+            e.message?.let(InputView::printError)
         }.getOrElse {
             inputPlayer()
         }
@@ -20,7 +20,7 @@ object InputFilter {
         return runCatching {
             Money(InputParser.parseBettingMoney(InputView.inputBettingMoney(name)))
         }.onFailure { e ->
-            InputView.printError(e.message!!)
+            e.message?.let(InputView::printError)
         }.getOrElse {
             inputBettingMoney(name)
         }
@@ -30,7 +30,7 @@ object InputFilter {
         return runCatching {
             InputParser.parseHitOrStay(InputView.inputHitOrStay(name))
         }.onFailure { e ->
-            InputView.printError(e.message!!)
+            e.message?.let(InputView::printError)
         }.getOrElse {
             inputHitOrStay(name)
         }
