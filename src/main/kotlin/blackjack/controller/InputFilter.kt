@@ -6,29 +6,32 @@ import blackjack.view.InputView
 
 object InputFilter {
     fun inputPlayer(): Array<Name> {
-        return try {
+        return runCatching {
             val parsedInput = InputParser.parseWithDelimiter(InputView.inputName())
             parsedInput.map { Name(it) }.toTypedArray()
-        } catch (e: Exception) {
+        }.onFailure { e ->
             InputView.printError(e.message!!)
+        }.getOrElse {
             inputPlayer()
         }
     }
 
     fun inputBettingMoney(name: String): Money {
-        return try {
+        return runCatching {
             Money(InputParser.parseBettingMoney(InputView.inputBettingMoney(name)))
-        } catch (e: Exception) {
+        }.onFailure { e ->
             InputView.printError(e.message!!)
+        }.getOrElse {
             inputBettingMoney(name)
         }
     }
 
     fun inputHitOrStay(name: String): Boolean {
-        return try {
+        return runCatching {
             InputParser.parseHitOrStay(InputView.inputHitOrStay(name))
-        } catch (e: Exception) {
+        }.onFailure { e ->
             InputView.printError(e.message!!)
+        }.getOrElse {
             inputHitOrStay(name)
         }
     }
