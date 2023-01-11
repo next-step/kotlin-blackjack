@@ -27,14 +27,14 @@ sealed class Role {
     val isBust: Boolean
         get() = state.cards.isBust()
 
-    val isStay: Boolean
-        get() = state.cards.isStay()
-
     val cards: List<String>
         get() = state.cards.toListString()
 
     val hasOnlyTwoCards: Boolean
         get() = state.cards.size == NUMBER_OF_STARTING_CARDS
+
+    val earningRate: Double
+        get() = state.earningRate(money)
 
     fun draw(playingCard: PlayingCard): Role {
         if (isDealer) {
