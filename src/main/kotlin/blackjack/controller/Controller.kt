@@ -16,6 +16,11 @@ import blackjack.dto.ResultsDto
 import blackjack.view.ResultView
 
 object Controller {
+    private val printDealerDrawMessage = { ResultView.printDealerDrawMessage() }
+    private val printParticipantCards = { players: Role -> ResultView.printParticipantCards(ParticipantDto.from(players)) }
+    private val printPlayerBust = { player: Role -> ResultView.printPlayerBust(player.name.toString()) }
+    private val printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) }
+
     fun start() {
         val cards = PlayingCards.shuffle(RandomShuffleStrategy())
         val deck = Deck(cards.toMutableList())
@@ -26,41 +31,22 @@ object Controller {
 
         printPlayerNames(players)
         printParticipantsCards(players + dealer)
-        val newPlayers = Participants(players.getPlayers().map { playPlayer(it, deck) })
-        val newDealer = playDealer(dealer, deck)
+        val newPlayers = Participants(players.getPlayers().map { inputPlayersHitOrStay(it, deck) })
+        val newDealer = GameManager.playDealer(dealer, deck, printDealerDrawMessage)
         printFinalResult(newPlayers + newDealer)
     }
 
-    private fun playPlayer(player: Role, deck: Deck): Role {
+    private fun inputPlayersHitOrStay(player: Role, deck: Deck): Role {
         var newPlayer = player
-        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) && canPlayerHit(newPlayer)) {
-            newPlayer = GameManager.hit(newPlayer, deck)
-            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
+        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) &&
+            GameManager.canPlayerHit(newPlayer, printPlayerBust, printPlayerBlackjack)
+        ) {
+            newPlayer = GameManager.playPlayer(newPlayer, deck, printParticipantCards)
         }
         if (newPlayer.hasOnlyTwoCards) {
-            ResultView.printParticipantCards(ParticipantDto.from(newPlayer))
+            printParticipantCards(newPlayer)
         }
         return GameManager.stay(newPlayer)
-    }
-
-    private fun playDealer(dealer: Dealer, deck: Deck): Role {
-        if (GameManager.canDealerHit(dealer)) {
-            ResultView.printDealerDrawMessage()
-            return dealer.draw(deck.getCard())
-        }
-        return dealer.stay()
-    }
-
-    private fun canPlayerHit(player: Role): Boolean {
-        if (player.isBust) {
-            ResultView.printPlayerBust(player.name.toString())
-            return false
-        }
-        if (player.isBlackjack) {
-            ResultView.printPlayerBlackjack(player.name.toString())
-            return false
-        }
-        return true
     }
 
     private fun printPlayerNames(players: Participants) {

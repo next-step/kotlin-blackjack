@@ -5,12 +5,30 @@ import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Role
 
 object GameManager {
-    fun hit(role: Role, deck: Deck): Role {
-        return role.draw(deck.getCard())
+    fun playPlayer(player: Role, deck: Deck, printParticipantCards: (Role) -> Unit): Role {
+        val newPlayer = player.draw(deck.getCard())
+        printParticipantCards(newPlayer)
+        return newPlayer
     }
 
-    fun canDealerHit(dealer: Dealer): Boolean {
-        return dealer.score <= Dealer.STOP_SCORE
+    fun canPlayerHit(player: Role, printPlayerBust: (Role) -> Unit, printPlayerBlackjack: (Role) -> Unit): Boolean {
+        if (player.isBust) {
+            printPlayerBust(player)
+            return false
+        }
+        if (player.isBlackjack) {
+            printPlayerBlackjack(player)
+            return false
+        }
+        return true
+    }
+
+    fun playDealer(dealer: Dealer, deck: Deck, printDealerDrawMessage: () -> Unit): Role {
+        if (dealer.score <= Dealer.STOP_SCORE) {
+            printDealerDrawMessage()
+            return dealer.draw(deck.getCard())
+        }
+        return dealer.stay()
     }
 
     fun stay(role: Role): Role {
