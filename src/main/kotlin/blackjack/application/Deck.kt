@@ -3,23 +3,26 @@ package blackjack.application
 import blackjack.domain.card.PlayingCard
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
+import blackjack.domain.card.strategy.ShuffleStrategy
 
-@JvmInline
-value class Deck(private val cards: MutableList<PlayingCard>) {
-    constructor(vararg card: PlayingCard) : this(card.toMutableList())
+object Deck {
+    private const val FIRST_INDEX = 0
+    private var shuffleStrategy: ShuffleStrategy = RandomShuffleStrategy()
+    private var cards = mutableListOf<PlayingCard>()
+
+    fun setShuffleStrategy(shuffleStrategy: ShuffleStrategy) {
+        this.shuffleStrategy = shuffleStrategy
+        cards.addAll(PlayingCards.shuffle(this.shuffleStrategy))
+    }
 
     fun getCard(): PlayingCard {
         if (cards.isEmpty()) {
-            cards.addAll(PlayingCards.shuffle(RandomShuffleStrategy()))
+            cards.addAll(PlayingCards.shuffle(this.shuffleStrategy))
         }
         return cards.removeAt(FIRST_INDEX)
     }
 
     fun getCards(amount: Int): PlayingCards {
         return PlayingCards((1..amount).map { this.getCard() })
-    }
-
-    companion object {
-        private const val FIRST_INDEX = 0
     }
 }

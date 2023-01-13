@@ -9,7 +9,6 @@ import blackjack.application.Deck
 import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.rule.Blackjack
-import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.Participants.Companion.createPlayers
 import blackjack.domain.participant.state.Name
 import blackjack.domain.participant.state.role.Dealer
@@ -75,13 +74,11 @@ class ParticipantsTest {
     @Test
     fun `참가자 - 복수 참가자 생성 테스트`() {
         // given
-        val cards = PlayingCards.shuffle(RandomShuffleStrategy())
-        val deck = Deck(cards.toMutableList())
         val names = listOf("pobi", "jason").map { Name(it) }
         val monies = listOf(10000, 20000).map { Money(it) }.toTypedArray()
 
         // when
-        val actual = createPlayers(names.toTypedArray(), deck, monies)
+        val actual = createPlayers(names.toTypedArray(), Deck, monies)
 
         // then
         assertThat(actual.getPlayers().map { it.name }).containsAll(names)
