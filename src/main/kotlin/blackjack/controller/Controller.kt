@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.application.Deck
 import blackjack.domain.GameManager
+import blackjack.domain.card.Deck
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.state.result.Result.Companion.calculateProfit
 import blackjack.domain.participant.state.role.Dealer

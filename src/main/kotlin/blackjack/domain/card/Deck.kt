@@ -1,7 +1,5 @@
-package blackjack.application
+package blackjack.domain.card
 
-import blackjack.domain.card.PlayingCard
-import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.card.strategy.ShuffleStrategy
 
@@ -23,6 +21,6 @@ object Deck {
     }
 
     fun getCards(amount: Int): PlayingCards {
-        return PlayingCards((1..amount).map { this.getCard() })
+        return PlayingCards((1..amount).map { getCard() })
     }
 }

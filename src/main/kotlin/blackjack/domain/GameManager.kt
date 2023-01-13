@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.application.Deck
+import blackjack.domain.card.Deck
 import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Role
 
