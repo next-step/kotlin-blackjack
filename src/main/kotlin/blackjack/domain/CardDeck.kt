@@ -1,7 +1,9 @@
 package blackjack.domain
 
-class CardDeck {
-    val cards: Cards = makeCards().shuffleCards()
+class CardDeck(
+    cards: Cards = Cards(),
+) {
+    val cards = cards.takeIf { it.isNotEmpty() } ?: makeCards().shuffleCards()
 
     fun pop(): Card {
         return cards.pop()

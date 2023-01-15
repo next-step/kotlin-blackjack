@@ -9,8 +9,6 @@ import blackjack.domain.Denomination
 import blackjack.domain.Player
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.spyk
 
 internal class BlackJackMachineTest : StringSpec({
     "게임을 시작하면 참여자들은 카드 2장을 받는다." {
@@ -25,7 +23,6 @@ internal class BlackJackMachineTest : StringSpec({
     }
 
     "카드 덱에서 retryFunc 횟수만큼 카드를 가져온다." {
-        val spy = spyk<CardDeck>(recordPrivateCalls = true)
         val player = Player(name = "lisa")
         val cards = Cards(
             mutableListOf(
@@ -35,8 +32,8 @@ internal class BlackJackMachineTest : StringSpec({
                 Card(CardSuit.SPADE, Denomination.TWO),
             )
         )
-        every { spy["makeCards"]() } returns cards
-        val blackJackMachine = BlackJackMachine(cardDeck = spy, participants = listOf(player))
+        val cardDeck = CardDeck(cards)
+        val blackJackMachine = BlackJackMachine(cardDeck = cardDeck, participants = listOf(player))
 
         blackJackMachine.execute(
             retryFunc = { player -> player.cards.size < 4 },
