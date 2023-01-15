@@ -50,4 +50,21 @@ internal class CardsTest {
         // Assert
         assertThat(isDrawable).isFalse
     }
+
+    @Test
+    @DisplayName("현재 가진 카드의 합이 조건값과 같으면 카드를 뽑을 수 없다")
+    fun `sut is not drawable if condition value and sum of value are same`() {
+        // Arrange
+        val condition = 21
+        val cards = Cards()
+        cards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
+        cards.addCard(Card(PokerNumber.TEN, PokerShape.DIAMOND))
+        cards.addCard(Card(PokerNumber.ACE, PokerShape.HEART))
+
+        // Act
+        val isDrawable = cards.isDrawable(condition)
+
+        // Assert
+        assertThat(isDrawable).isFalse
+    }
 }

@@ -10,6 +10,7 @@ class GameRule(private val deck: Deck) {
             val player = Player(name = playerName)
             player.startGame(cards)
             printHasCards(player.name, player.cards)
+            cards.addCard(Card(PokerNumber.ACE, PokerShape.DIAMOND))
             player
         }
     }

@@ -1,16 +1,14 @@
 package domains
 
-@JvmInline
-value class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
-    val values: List<Card>
-        get() = _cards
+class Cards(cards: List<Card> = listOf()) {
+    val values: MutableList<Card> = cards.toMutableList()
 
     override fun toString(): String {
         return values.joinToString { it.toString() }
     }
 
     fun addCard(card: Card) {
-        _cards.add(card)
+        values.add(card)
     }
 
     fun isDrawable(condition: Int): Boolean {
