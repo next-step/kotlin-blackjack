@@ -1,4 +1,4 @@
-package domains
+package blackjack.domains
 
 class ScoreCalculator(private val cards: Cards) {
 

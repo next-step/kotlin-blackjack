@@ -1,4 +1,4 @@
-package domains
+package blackjack.domains
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName

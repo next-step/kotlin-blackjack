@@ -1,7 +1,7 @@
-package domains
+package blackjack.domains
 
-import views.Input.answerDrawCard
-import views.Output.printHasCards
+import blackjack.views.Input.answerDrawCard
+import blackjack.views.Output.printHasCards
 
 class GameRule(private val deck: Deck) {
     fun createPlayers(playerNames: List<String>): List<Player> {

@@ -1,4 +1,4 @@
-package domains
+package blackjack.domains
 
 enum class PokerNumber(val displayName: String, val number: Int) {
     ACE("A", 1),

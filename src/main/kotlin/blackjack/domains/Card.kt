@@ -1,4 +1,4 @@
-package domains
+package blackjack.domains
 
 data class Card(val pokerNumber: PokerNumber, val pokerShape: PokerShape) {
     override fun toString(): String {

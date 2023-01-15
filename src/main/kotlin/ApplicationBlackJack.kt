@@ -1,10 +1,10 @@
-import domains.Deck
-import domains.GameRule
-import domains.PokerNumber
-import domains.PokerShape
-import views.Input.getPlayerNames
-import views.Output.printFirstDrawCards
-import views.Output.printResult
+import blackjack.domains.Deck
+import blackjack.domains.GameRule
+import blackjack.domains.PokerNumber
+import blackjack.domains.PokerShape
+import blackjack.views.Input.getPlayerNames
+import blackjack.views.Output.printFirstDrawCards
+import blackjack.views.Output.printResult
 
 fun main() {
     val playerNames = getPlayerNames()

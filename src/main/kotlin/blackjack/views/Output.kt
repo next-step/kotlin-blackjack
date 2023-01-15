@@ -1,6 +1,6 @@
-package views
+package blackjack.views
 
-import domains.Cards
+import blackjack.domains.Cards
 
 object Output {
     fun printFirstDrawCards(playerNames: List<String>, drawCount: Int) {
