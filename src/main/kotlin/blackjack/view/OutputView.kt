@@ -1,8 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
+import blackjack.domain.JudgmentResult
 import blackjack.domain.Participant
 import blackjack.domain.Player
+import blackjack.domain.PlayerResult
 
 object OutputView {
     fun printInitialCards(players: List<Participant>) {
@@ -22,6 +24,14 @@ object OutputView {
 
     fun printGameResult(players: List<Participant>) {
         println(players.joinToString("\n") { "${it.name}카드: ${cards(it)} - 결과: ${it.getScore()}" })
+    }
+
+    fun printPlayerResult(playerResults: List<PlayerResult>, dealer: Dealer) {
+        println("## 최종 승패")
+        val dealerWinCount = playerResults.count { it.result == JudgmentResult.LOSE }
+        val dealerLoseCount = playerResults.count { it.result == JudgmentResult.WIN }
+        println("${dealer.name}: ${dealerWinCount}승 ${dealerLoseCount}패")
+        println(playerResults.joinToString("\n") { "${it.name}: ${it.result.description}" })
     }
 
     private fun cards(player: Participant): String {
