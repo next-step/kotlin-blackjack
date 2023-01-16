@@ -3,7 +3,7 @@ package blackjack.domain.result
 import blackjack.domain.participantion.Dealer
 import blackjack.domain.participantion.Player
 
-class Losers(val players: List<Player>) : Rank(players) {
+class Losers(private val players: List<Player>) : Rank(players) {
 
     companion object {
         fun from(dealer: Dealer, players: List<Player>): Losers {
@@ -12,4 +12,10 @@ class Losers(val players: List<Player>) : Rank(players) {
             return Losers(losers)
         }
     }
+
+    fun settle(): List<Player> =
+        players.map { player ->
+            player.losePrice()
+            player
+        }
 }

@@ -26,5 +26,6 @@ class Price(amount: Int) {
 
     companion object {
         private const val VALID_MESSAGE = "금액은 0 이상 입니다."
+        val ZERO = Price(0)
     }
 }
