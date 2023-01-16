@@ -4,6 +4,8 @@ import java.util.Stack
 
 class Cards(val cardStack: Stack<Card>) {
 
+    val size = cardStack.size
+
     constructor(cards: List<Card>) : this(
         cardStack = cards.toCollection(Stack())
     )
@@ -22,21 +24,10 @@ class Cards(val cardStack: Stack<Card>) {
 
     fun point(): Int =
         cardStack.fold(0) { acc, card ->
-            val cardNumber = card.number
-            val totalPoint = acc + cardNumber.value
-
-            if (card.isAce()) {
-                val maxValue = acc + cardNumber.orValue
-                val cardPoint = if (maxValue < BLACK_JACk_NUMBER) cardNumber.orValue else cardNumber.value
-
-                return@fold acc + cardPoint
-            }
-
-            totalPoint
+            acc + card.getPoint(acc)
         }
 
     companion object {
-        const val BLACK_JACk_NUMBER = 21
         const val INIT_COUNT = 2
     }
 }

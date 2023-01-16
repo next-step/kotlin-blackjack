@@ -18,8 +18,9 @@ class PlayerTest : StringSpec({
             Card(Suit.HEART, Number.TWO)
         )
         val cards = Cards(cardList)
+        val price = Price(0)
 
-        val message = shouldThrow<IllegalArgumentException> { Player("", cards) }
+        val message = shouldThrow<IllegalArgumentException> { Player("", cards, price) }
         message shouldHaveMessage "Player 이름은 필수 입력입니다."
     }
 
@@ -43,7 +44,8 @@ class PlayerTest : StringSpec({
             )
         ) { cardList, isBust ->
             val cards = Cards(cardList)
-            val player = Player("테스터", cards)
+            val price = Price(0)
+            val player = Player("테스터", cards, price)
 
             player.isBust() shouldBe isBust
         }
