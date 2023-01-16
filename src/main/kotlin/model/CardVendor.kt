@@ -1,36 +1,34 @@
 package model
 
 class CardVendor {
-    fun giveCardToPlayer(players: Players, names: Names) {
-        names.values.forEach {
-            dealOut(players, it)
+    fun giveCardToPlayer(players: Players) {
+        players.get().forEach {
+            dealOut(it)
         }
     }
 
-    private fun dealOut(players: Players, name: String) {
+    private fun dealOut(player: Player) {
         repeat(DEAL_OUT) {
-            hit(players, name)
+            hit(player)
         }
     }
 
-    fun giveExtraCard(players: Players, isNeedExtraCard: (String) -> Boolean, showSpecificUserCardState: (String, List<Card>) -> Unit) {
-        findUsersWhoNeedExtraCard(players).forEach {
-            if (isNeedExtraCard(it.key)) {
-                hit(players, it.key)
-                showSpecificUserCardState(it.key, it.value)
+    private fun hit(player: Player) {
+        player.addCard(Deck.selectCard())
+    }
+
+    fun giveExtraCard(
+        players: Players,
+        isNeedExtraCard: (String) -> Boolean,
+        showSpecificUserCardState: (String, List<Card>) -> Unit
+    ) {
+        players.get().forEach { player ->
+            if (isGetExtraCard(player.getCard())) {
+                if (isNeedExtraCard(player.getName())) {
+                    hit(player)
+                    showSpecificUserCardState(player.getName(), player.getCard())
+                }
             }
-        }
-    }
-
-    private fun hit(players: Players, name: String) {
-        players.updateCard(name, Deck.getCard())
-    }
-
-    private fun findUsersWhoNeedExtraCard(
-        players: Players
-    ): Map<String, List<Card>> {
-        return players.get().filter {
-            isGetExtraCard(it.value)
         }
     }
 

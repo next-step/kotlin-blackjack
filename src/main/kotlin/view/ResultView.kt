@@ -3,6 +3,7 @@ package view
 import model.Card
 import model.CardVendor
 import model.Names
+import model.Player
 
 class ResultView {
     fun showDistributedCard(names: Names) {
@@ -17,11 +18,11 @@ class ResultView {
         println("${result}에게 2장의 카드를 나누었습니다.")
     }
 
-    fun showPlayerCardState(players: Map<String, List<Card>>) {
+    fun showPlayerCardState(players: List<Player>) {
         var result = ""
-        players.forEach {
-            result += "${it.key}카드: "
-            it.value.forEach { card ->
+        players.forEach { player ->
+            result += "${player.getName()}카드: "
+            player.getCard().forEach { card ->
                 result += "${card.cardNumber}${card.cardShape}, "
             }
             result = result.substring(0, result.lastIndex - 1) + "\n"
@@ -38,13 +39,13 @@ class ResultView {
         println(result)
     }
 
-    fun showPlayerCardStateResult(players: Map<String, List<Card>>, cardVendor: CardVendor) {
-        players.forEach {
-            var result = "${it.key}카드: "
-            it.value.forEach { card ->
+    fun showPlayerCardStateResult(players: List<Player>, cardVendor: CardVendor) {
+        players.forEach { player ->
+            var result = "${player.getName()}카드: "
+            player.getCard().forEach { card ->
                 result += "${card.cardNumber}${card.cardShape}, "
             }
-            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(it.value)}"
+            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(player.getCard())}"
             println(result)
         }
     }

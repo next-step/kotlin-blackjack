@@ -1,23 +1,12 @@
 package model
-
 class Players {
-    private val players = mutableMapOf<String, MutableList<Card>>()
+    private val players = mutableListOf<Player>()
 
-    private fun add(name: String, card: MutableList<Card>) {
-        players[name] = card
+    fun add(player: Player): Boolean {
+        return players.add(player)
     }
 
-    fun updateCard(name: String, card: Card) {
-        players[name]?.add(card)
-    }
-
-    fun get(): Map<String, List<Card>> {
+    fun get(): List<Player> {
         return players
-    }
-
-    fun generate(names: Names) {
-        names.values.forEach {
-            add(it, mutableListOf())
-        }
     }
 }

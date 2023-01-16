@@ -2,9 +2,6 @@ import model.Card
 import model.CardNumber
 import model.CardShape
 import model.CardVendor
-import model.Deck
-import model.Names
-import model.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -68,7 +65,35 @@ internal class BlackjackGameTest {
                 assertThat(
                     CardVendor().isGetExtraCard(
                         listOf(
+                            Card(
+                                CardNumber.THREE,
+                                CardShape.HEARTS
+                            )
+                        )
+                    )
+                ).isTrue()
+            }
+        )
+    }
+
+    @Test
+    fun `카드 숫자 합이 21 초과일 경우 추가 카드 받기가 불가능하다`() {
+        assertAll(
+            {
+                assertThat(
+                    CardVendor().isGetExtraCard(
+                        listOf(
                             Card(CardNumber.TEN, CardShape.SPADES),
+                            Card(CardNumber.KING, CardShape.HEARTS),
+                            Card(CardNumber.ACE, CardShape.CLUBS)
+                        )
+                    )
+                ).isFalse()
+            },
+            {
+                assertThat(
+                    CardVendor().isGetExtraCard(
+                        listOf(
                             Card(CardNumber.KING, CardShape.HEARTS),
                             Card(CardNumber.ACE, CardShape.CLUBS)
                         )
@@ -91,7 +116,7 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `나머지 카드 숫자 합이 0이상 10이하가 아닌 경우 ACE 카드 값을 1로 결정한다`() {
+    fun `나머지 카드 숫자 합이 11이상일 경우 ACE 카드 값을 1로 결정한다`() {
         assertAll(
             {
                 assertThat(CardVendor().decideAceCardNumber(11)).isEqualTo(1)
@@ -222,27 +247,5 @@ internal class BlackjackGameTest {
                 ).isEqualTo(20)
             }
         )
-    }
-
-    @Test
-    fun `중복 없이 모든 카드를 뽑는다`() {
-        var cards = mutableListOf<Card>()
-        val totalCard = CardNumber.values().flatMap {
-            CardShape.values().map {
-            }
-        }
-
-        totalCard.forEach { _ ->
-            cards.add(Deck.getCard())
-        }
-
-        assertThat(cards.size).isEqualTo(totalCard.size)
-    }
-
-    @Test
-    fun `입력한 이름으로 플레이어가 생성된다`() {
-        val players = Players()
-        players.generate(Names("a,b,c"))
-        assertThat(players.get().keys.toString()).isEqualTo("[a, b, c]")
     }
 }

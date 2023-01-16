@@ -13,9 +13,9 @@ internal class DeckTest {
         }
 
         totalCard.forEach { _ ->
-            cards.add(Deck.getCard())
+            cards.add(Deck.selectCard())
         }
 
-        assertThat(cards.size).isEqualTo(totalCard.size)
+        assertThat(cards.toSet().size).isEqualTo(totalCard.size)
     }
 }

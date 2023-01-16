@@ -24,6 +24,24 @@ internal class CardVendorTest {
                 assertThat(
                     CardVendor().isGetExtraCard(
                         listOf(
+                            Card(
+                                CardNumber.THREE,
+                                CardShape.HEARTS
+                            )
+                        )
+                    )
+                ).isTrue()
+            }
+        )
+    }
+
+    @Test
+    fun `카드 숫자 합이 21 초과일 경우 추가 카드 받기가 불가능하다`() {
+        assertAll(
+            {
+                assertThat(
+                    CardVendor().isGetExtraCard(
+                        listOf(
                             Card(CardNumber.TEN, CardShape.SPADES),
                             Card(CardNumber.KING, CardShape.HEARTS),
                             Card(CardNumber.ACE, CardShape.CLUBS)
@@ -45,7 +63,7 @@ internal class CardVendorTest {
     }
 
     @Test
-    fun `나머지 카드 숫자 합이 0이상 10이하 일 경우 ACE 카드 값을 11로 결정한다`() {
+    fun `나머지 카드 숫자 합이 0 이상 10이하일 경우 ACE 카드 값을 11로 결정한다`() {
         assertAll(
             {
                 assertThat(CardVendor().decideAceCardNumber(0)).isEqualTo(11)
@@ -57,7 +75,7 @@ internal class CardVendorTest {
     }
 
     @Test
-    fun `나머지 카드 숫자 합이 0이상 10이하가 아닌 경우 ACE 카드 값을 1로 결정한다`() {
+    fun `나머지 카드 숫자 합이 11이상일 경우 ACE 카드 값을 1로 결정한다`() {
         assertAll(
             {
                 assertThat(CardVendor().decideAceCardNumber(11)).isEqualTo(1)

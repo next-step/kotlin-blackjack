@@ -8,7 +8,7 @@ class Deck {
             }
         }.shuffled().toMutableList()
 
-        fun getCard(): Card {
+        fun selectCard(): Card {
             return cards.removeAt(0)
         }
     }
