@@ -1,9 +1,11 @@
 package blackjack.domains.participants
 
 import blackjack.GameScoreType
-import blackjack.domains.deck.*
+import blackjack.domains.deck.Card
+import blackjack.domains.deck.Cards
+import blackjack.domains.deck.PokerNumber
+import blackjack.domains.deck.PokerShape
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
@@ -17,7 +19,6 @@ internal class DealerTest {
         cards.addCard(Card(PokerNumber.SIX, PokerShape.DIAMOND))
 
         val dealer = Dealer(name = "딜러", cards = cards)
-        dealer.setSummedCardNumbers(16)
 
         // Act
         val act = dealer.isDrawable()
@@ -36,7 +37,6 @@ internal class DealerTest {
         cards.addCard(Card(PokerNumber.FIVE, PokerShape.HEART))
 
         val dealer = Dealer(name = "딜러", cards = cards)
-        dealer.setSummedCardNumbers(25)
 
         // Act
         val act = dealer.isOver21()
@@ -55,22 +55,19 @@ internal class DealerTest {
         dealerCards.addCard(Card(PokerNumber.TWO, PokerShape.DIAMOND))
 
         val dealer = Dealer(name = "딜러", cards = dealerCards)
-        dealer.setSummedCardNumbers(17)
 
         val playerCards = Cards()
         playerCards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
         playerCards.addCard(Card(PokerNumber.FIVE, PokerShape.HEART))
         playerCards.addCard(Card(PokerNumber.FIVE, PokerShape.DIAMOND))
         val player = Player(name = "modernflow", cards = playerCards)
-        player.setSummedCardNumbers(20)
 
         // Act
-        val act = dealer.calculatePlayerResult(20)
+        val act = dealer.calculatePlayerResult(player.summedCardNumbers)
 
         // Assert
         assertThat(act.toString()).isEqualTo(GameScoreType.WIN.toString())
     }
-
 
     @Test
     @DisplayName("딜러가 몇번 우승했는지 알려준다")

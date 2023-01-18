@@ -28,7 +28,7 @@ object Output {
         println("## 최종 승패")
         println(
             "딜러: ${dealer.getScoreCounts(GameScoreType.WIN)}승 ${dealer.getScoreCounts(GameScoreType.DRAW)}무 " +
-                    "${dealer.getScoreCounts(GameScoreType.LOSE)}패"
+                "${dealer.getScoreCounts(GameScoreType.LOSE)}패"
         )
         players.forEach {
             println("${ it.name }: ${it.gameScore.displayName}")

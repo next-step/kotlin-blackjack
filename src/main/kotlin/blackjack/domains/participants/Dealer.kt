@@ -7,7 +7,8 @@ import blackjack.domains.deck.Cards
 import blackjack.views.Output.printDealerDraw
 
 class Dealer(
-    override val name: String = "딜러", override val cards: Cards = Cards()
+    override val name: String = "딜러",
+    override val cards: Cards = Cards()
 ) : User(name, cards) {
 
     private val gameScores = mutableListOf<GameScoreType>()

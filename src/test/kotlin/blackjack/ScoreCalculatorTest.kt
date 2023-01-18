@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.ScoreCalculator
 import blackjack.domains.deck.Card
 import blackjack.domains.deck.Cards
 import blackjack.domains.deck.PokerNumber
