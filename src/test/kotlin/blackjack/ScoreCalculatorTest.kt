@@ -1,4 +1,4 @@
-package blackjack.domains
+package blackjack
 
 import blackjack.ScoreCalculator
 import blackjack.domains.deck.Card
@@ -20,10 +20,10 @@ internal class ScoreCalculatorTest {
         cards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
         cards.addCard(Card(PokerNumber.TEN, PokerShape.DIAMOND))
         cards.addCard(Card(PokerNumber.TEN, PokerShape.HEART))
-        val sut = ScoreCalculator(cards)
+        val sut = ScoreCalculator
 
         // Act
-        val actual = sut.sumOfNumbers(blackJack)
+        val actual = sut.sumOfNumbers(cards, blackJack)
 
         // Assert
         assertThat(actual).isEqualTo(30)
@@ -37,10 +37,10 @@ internal class ScoreCalculatorTest {
         val cards = Cards()
         cards.addCard(Card(PokerNumber.ACE, PokerShape.CLOVER))
         cards.addCard(Card(PokerNumber.TWO, PokerShape.CLOVER))
-        val sut = ScoreCalculator(cards)
+        val sut = ScoreCalculator
 
         // Act
-        val actual = sut.sumOfNumbers(blackJack)
+        val actual = sut.sumOfNumbers(cards, blackJack)
 
         // Assert
         assertThat(actual).isEqualTo(13)
@@ -55,10 +55,10 @@ internal class ScoreCalculatorTest {
         cards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
         cards.addCard(Card(PokerNumber.TEN, PokerShape.DIAMOND))
         cards.addCard(Card(PokerNumber.ACE, PokerShape.DIAMOND))
-        val sut = ScoreCalculator(cards)
+        val sut = ScoreCalculator
 
         // Act
-        val actual = sut.sumOfNumbers(blackJack)
+        val actual = sut.sumOfNumbers(cards, blackJack)
 
         // Assert
         assertThat(actual).isEqualTo(21)
@@ -73,10 +73,10 @@ internal class ScoreCalculatorTest {
         cards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
         cards.addCard(Card(PokerNumber.FOUR, PokerShape.DIAMOND))
         cards.addCard(Card(PokerNumber.ACE, PokerShape.DIAMOND))
-        val sut = ScoreCalculator(cards)
+        val sut = ScoreCalculator
 
         // Act
-        val actual = sut.sumOfNumbers(blackJack)
+        val actual = sut.sumOfNumbers(cards, blackJack)
 
         // Assert
         assertThat(actual).isEqualTo(15)

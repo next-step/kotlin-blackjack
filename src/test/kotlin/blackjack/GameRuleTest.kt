@@ -1,8 +1,8 @@
-package blackjack.domains
+package blackjack
 
-import blackjack.GameRule
-import blackjack.domains.deck.*
-import blackjack.domains.participants.Player
+import blackjack.domains.deck.Deck
+import blackjack.domains.deck.PokerNumber
+import blackjack.domains.deck.PokerShape
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,28 +23,5 @@ internal class GameRuleTest {
         assertThat(players.getDealer()).isNotNull
         assertThat(players.getPlayers().size).isEqualTo(playerNames.size)
         assertThat(players.getPlayers().map { it.name }).isEqualTo(playerNames)
-    }
-
-    @Test
-    @DisplayName("player가 가진 카드의 합계를 구한다")
-    fun `sut calculate sum of cards`() {
-        // Arrange
-        val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
-        val gameRule = GameRule(deck)
-        val player = Player(
-            name = "modernflow",
-            cards = Cards(
-                mutableListOf(
-                    Card(PokerNumber.TWO, PokerShape.CLOVER),
-                    Card(PokerNumber.TEN, PokerShape.CLOVER)
-                )
-            )
-        )
-
-        // Act
-        val summed = gameRule.sumOfCards(player)
-
-        // Assert
-        assertThat(summed).isEqualTo(12)
     }
 }

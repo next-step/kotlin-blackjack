@@ -1,5 +1,8 @@
 package blackjack.domains.deck
 
+import blackjack.GameRule
+import blackjack.ScoreCalculator.sumOfNumbers
+
 class Cards(cards: List<Card> = listOf()) {
     val values: MutableList<Card> = cards.toMutableList()
 
@@ -17,5 +20,9 @@ class Cards(cards: List<Card> = listOf()) {
 
     fun hasAce(): Boolean {
         return values.singleOrNull { it.pokerNumber.isAce() }?.let { true } ?: false
+    }
+
+    fun sumOfCards(): Int {
+        return sumOfNumbers(this, GameRule.BLACKJACK)
     }
 }

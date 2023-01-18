@@ -16,7 +16,7 @@ fun main() {
     val gamers = gameRule.initUsers(playerNames)
 
     gamers.drawCard(gameRule = gameRule)
-    gamers.calculateScore(gameRule = gameRule)
+    gamers.printScores()
     ResultCalculator(gamers).setUserRanks()
     printVictoryOrDefeat(gamers.getDealer(), gamers.getPlayers())
 }

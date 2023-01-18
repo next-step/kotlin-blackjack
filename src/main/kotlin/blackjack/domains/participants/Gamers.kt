@@ -17,10 +17,8 @@ value class Gamers(private val values: List<User>) {
         values.forEach { gameRule.drawCard(it) }
     }
 
-    fun calculateScore(gameRule: GameRule) {
+    fun printScores() {
         values.forEach {
-            val summed = gameRule.sumOfCards(it)
-            it.setSummedCardNumbers(summed)
             printSummedCards(it.name, it.cards, it.summedCardNumbers)
         }
     }

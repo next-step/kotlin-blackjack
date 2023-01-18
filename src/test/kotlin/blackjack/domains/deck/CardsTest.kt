@@ -1,4 +1,4 @@
-package blackjack.domains
+package blackjack.domains.deck
 
 import blackjack.domains.deck.Card
 import blackjack.domains.deck.Cards
@@ -70,5 +70,20 @@ internal class CardsTest {
 
         // Assert
         assertThat(isDrawable).isFalse
+    }
+
+    @Test
+    @DisplayName("카드의 합을 계산한다")
+    fun `sut should calculate sum of cards`() {
+        // Arrange
+        val sut = Cards()
+        sut.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
+        sut.addCard(Card(PokerNumber.TEN, PokerShape.DIAMOND))
+
+        // Act
+        val act = sut.sumOfCards()
+
+        // Assert
+        assertThat(act).isEqualTo(20)
     }
 }

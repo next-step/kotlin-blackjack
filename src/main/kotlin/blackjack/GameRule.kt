@@ -25,10 +25,6 @@ class GameRule(private val deck: Deck) {
         }
     }
 
-    fun sumOfCards(player: User): Int {
-        return ScoreCalculator(player.cards).sumOfNumbers(BLACKJACK)
-    }
-
     private fun initUser(playerName: String, isDealer: Boolean): User {
         val cards = Cards((1..FIRST_DRAW_COUNT).map { deck.drawCard() }.toMutableList())
         val user = if (isDealer) Dealer(name = playerName) else Player(playerName)
