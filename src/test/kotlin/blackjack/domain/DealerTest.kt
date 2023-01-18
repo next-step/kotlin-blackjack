@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import domain.Dealer
-import domain.Player
+import domain.player.Dealer
+import domain.player.Player
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -15,8 +15,8 @@ class DealerTest : FreeSpec({
 
     "딜러는 플레이어한테 카드를 줄 수 있다" {
         val player = Player("ep")
-        val beforeCardCount = player.handsCardCount
-        dealer.giveCard(player = player)
-        beforeCardCount + 1 shouldBe player.handsCardCount
+        val beforeCardCount = player.hands.count
+        dealer.giveCard(playable = player)
+        beforeCardCount + 1 shouldBe player.hands.count
     }
 })

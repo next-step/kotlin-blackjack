@@ -2,9 +2,7 @@ package interfaces
 
 import application.BlackJackGame
 import common.Executable
-import domain.Participants
-import domain.Player
-import interfaces.ui.CardInfo
+import domain.player.Participants
 import interfaces.ui.InputConsole
 import interfaces.ui.OutputConsole
 
@@ -20,13 +18,9 @@ class BlackJackController : Executable {
 
         queryReceiveCard(blackJackGame)
 
-        showFinalResult(blackJackGame)
-    }
+        dealerReceiveCard(blackJackGame)
 
-    private fun initGame(blackJackGame: BlackJackGame) {
-        blackJackGame.init()
-        val playerNames = blackJackGame.allPlayers().map { it.name }
-        OutputConsole.printInit(playerNames = playerNames)
+        showFinalResult(blackJackGame)
     }
 
     private fun queryParticipants(): Participants {
@@ -34,40 +28,45 @@ class BlackJackController : Executable {
         return Participants.from(names = nameList)
     }
 
-    private fun showAllParticipantsHands(blackJackGame: BlackJackGame) {
-        val players = blackJackGame.allPlayers()
-        players.forEach { player ->
-            val cardInfo = cardInfo(player)
-            OutputConsole.printCard(playerName = player.name, cardInfo = cardInfo)
-        }
+    private fun initGame(blackJackGame: BlackJackGame) {
+        blackJackGame.init()
+        val allPlayers = blackJackGame.allPlayers()
+        OutputConsole.printInit(allPlayers = allPlayers)
     }
 
-    private fun cardInfo(player: Player): List<CardInfo> {
-        return player.hands.cardList().map {
-            CardInfo(
-                number = it.number.nameValue,
-                name = it.shape.nameValue
-            )
-        }
+    private fun showAllParticipantsHands(blackJackGame: BlackJackGame) {
+        val dealer = blackJackGame.dealer
+        OutputConsole.printDealerCard(dealer = dealer)
+
+        val players = blackJackGame.allPlayers()
+        OutputConsole.printPlayerCard(players)
     }
 
     private fun queryReceiveCard(blackJackGame: BlackJackGame) {
-        OutputConsole.printNewLine()
         val allPlayers = blackJackGame.allPlayers()
         allPlayers.forEach {
             blackJackGame.playsTurn(player = it) { player -> InputConsole.queryReceiveCard(player.name) }
-            val cardInfo = cardInfo(it)
-            OutputConsole.printCard(playerName = it.name, cardInfo = cardInfo)
+            OutputConsole.printCard(it)
+        }
+    }
+
+    private fun dealerReceiveCard(blackJackGame: BlackJackGame) {
+        val isReceiveCard = blackJackGame.tryDealerReceiveCard()
+        if (isReceiveCard) {
+            OutputConsole.printDealerMoreReceiveCard()
         }
     }
 
     private fun showFinalResult(blackJackGame: BlackJackGame) {
-        OutputConsole.printNewLine()
+        val dealer = blackJackGame.dealer
+        OutputConsole.printCardWithDealerResult(dealer = dealer)
+
         val players = blackJackGame.allPlayers()
-        players.forEach { player ->
-            val cardInfo = cardInfo(player)
-            val resultScore = player.handsCardScore()
-            OutputConsole.printCardWithResult(playerName = player.name, cardInfo = cardInfo, result = resultScore.toString())
-        }
+        OutputConsole.printCardWithResult(players)
+
+        val gameResult = blackJackGame.complete()
+        val resultPlayerBoards = gameResult.resultPlayerBoards
+        val resultDealerBoard = gameResult.resultDealerBoard
+        OutputConsole.printFinalResult(resultDealerBoard, resultPlayerBoards)
     }
 }

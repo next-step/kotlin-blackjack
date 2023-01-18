@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 class Card(
     val shape: CardShape,

@@ -1,9 +1,9 @@
 package blackjack.application
 
 import application.BlackJackGame
-import domain.Dealer
-import domain.Participants
-import domain.Player
+import domain.player.Dealer
+import domain.player.Participants
+import domain.player.Player
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -21,14 +21,14 @@ class BlackJackGameTest : BehaviorSpec({
         `when`("게임이 시작하면") {
             blackJackGame.init()
             then("플레이어는 카드를 두장씩 받는다") {
-                playerA.handsCardCount shouldBe 2
+                playerA.hands.count shouldBe 2
             }
         }
 
         `when`("플레이어는") {
             blackJackGame.receiveCard(playerA)
             then("카드를 한 장씩 받을 수 있다") {
-                playerA.handsCardCount shouldBe 3
+                playerA.hands.count shouldBe 3
             }
         }
 
@@ -40,11 +40,9 @@ class BlackJackGameTest : BehaviorSpec({
         }
 
         `when`("플레이어의 카드 패 정보를") {
-            val playerAHands = blackJackGame.hands(playerA)
-            val playerBHands = blackJackGame.hands(playerB)
             then("확인할 수 있다") {
-                playerAHands.count shouldBe 3
-                playerBHands.count shouldBe 2
+                playerA.hands.count shouldBe 3
+                playerB.hands.count shouldBe 2
             }
         }
     }
