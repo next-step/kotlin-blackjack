@@ -1,4 +1,4 @@
-package blackjack.domains
+package blackjack.domains.deck
 
 class Deck(
     private val pokerNumbers: List<PokerNumber>,
