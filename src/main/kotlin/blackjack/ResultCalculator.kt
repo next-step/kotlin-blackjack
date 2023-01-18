@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.GameRule.Companion.BLACKJACK
 import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
@@ -14,6 +15,9 @@ class ResultCalculator(private val users: Gamers) {
             return
         }
         players.forEach { player ->
+            if (player.summedCardNumbers > BLACKJACK) {
+                return@forEach playerLose(dealer, player)
+            }
             when (dealer.calculatePlayerResult(player.summedCardNumbers)) {
                 GameScoreType.WIN -> playerWin(dealer, player)
                 GameScoreType.LOSE -> playerLose(dealer, player)
