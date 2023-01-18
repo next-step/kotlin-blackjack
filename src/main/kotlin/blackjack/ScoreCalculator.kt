@@ -1,4 +1,6 @@
-package blackjack.domains
+package blackjack
+
+import blackjack.domains.deck.Cards
 
 class ScoreCalculator(private val cards: Cards) {
 
