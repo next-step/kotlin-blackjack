@@ -1,5 +1,5 @@
 import controller.BlackjackGame
-import model.CardVendor
+import controller.CardVendor
 import model.Players
 import view.InputView
 import view.ResultView

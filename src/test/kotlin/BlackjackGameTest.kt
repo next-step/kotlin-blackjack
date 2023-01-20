@@ -1,7 +1,8 @@
+import controller.CardNumberCalculator
+import controller.CardVendor
 import model.Card
 import model.CardNumber
 import model.CardShape
-import model.CardVendor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -47,7 +48,7 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `카드 숫자 합이 21 미만일 경우 추가 카드 받기가 가능하다`() {
+    fun `플레이어 카드 숫자 합이 21미만일 경우 추가 카드 받기가 가능하다`() {
         assertAll(
             {
                 assertThat(
@@ -77,7 +78,7 @@ internal class BlackjackGameTest {
     }
 
     @Test
-    fun `카드 숫자 합이 21 초과일 경우 추가 카드 받기가 불가능하다`() {
+    fun `플레이어 카드 숫자 합이 21초과일 경우 추가 카드 받기가 불가능하다`() {
         assertAll(
             {
                 assertThat(
@@ -104,13 +105,39 @@ internal class BlackjackGameTest {
     }
 
     @Test
+    fun `딜러 카드 숫자 합이 16이하일 경우 추가 카드 받기가 가능하다`() {
+        assertAll(
+            {
+                assertThat(
+                    CardVendor().isGetExtraCardForDealer(
+                        listOf(
+                            Card(CardNumber.TWO, CardShape.SPADES),
+                            Card(CardNumber.KING, CardShape.HEARTS)
+                        )
+                    )
+                ).isTrue
+            },
+            {
+                assertThat(
+                    CardVendor().isGetExtraCardForDealer(
+                        listOf(
+                            Card(CardNumber.THREE, CardShape.HEARTS),
+                            Card(CardNumber.ACE, CardShape.CLUBS)
+                        )
+                    )
+                ).isTrue
+            }
+        )
+    }
+
+    @Test
     fun `나머지 카드 숫자 합이 0이상 10이하 일 경우 ACE 카드 값을 11로 결정한다`() {
         assertAll(
             {
-                assertThat(CardVendor().decideAceCardNumber(2)).isEqualTo(11)
+                assertThat(CardNumberCalculator().decideAceCardNumber(2)).isEqualTo(11)
             },
             {
-                assertThat(CardVendor().decideAceCardNumber(10)).isEqualTo(11)
+                assertThat(CardNumberCalculator().decideAceCardNumber(10)).isEqualTo(11)
             }
         )
     }
@@ -119,10 +146,10 @@ internal class BlackjackGameTest {
     fun `나머지 카드 숫자 합이 11이상일 경우 ACE 카드 값을 1로 결정한다`() {
         assertAll(
             {
-                assertThat(CardVendor().decideAceCardNumber(11)).isEqualTo(1)
+                assertThat(CardNumberCalculator().decideAceCardNumber(11)).isEqualTo(1)
             },
             {
-                assertThat(CardVendor().decideAceCardNumber(20)).isEqualTo(1)
+                assertThat(CardNumberCalculator().decideAceCardNumber(20)).isEqualTo(1)
             }
         )
     }
@@ -132,7 +159,7 @@ internal class BlackjackGameTest {
         assertAll(
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator().sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -152,7 +179,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator().sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -176,7 +203,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator().sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -200,7 +227,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator().sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.QUEEN,
@@ -224,7 +251,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator().sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,

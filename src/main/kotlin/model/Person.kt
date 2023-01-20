@@ -2,6 +2,7 @@ package model
 
 open class Person {
     private val cards: MutableList<Card> = mutableListOf()
+    private var result: String = ""
     protected var name: String = ""
 
     fun receiveCard(card: Card): Boolean {
@@ -10,6 +11,14 @@ open class Person {
 
     fun openCard(): List<Card> {
         return cards
+    }
+
+    fun notifyResult(): String {
+        return result
+    }
+
+    fun updateResult(result: String) {
+        this.result = result
     }
 
     fun notifyName(): String {

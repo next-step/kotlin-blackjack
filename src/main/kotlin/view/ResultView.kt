@@ -1,10 +1,9 @@
 package view
 
+import controller.CardNumberCalculator
 import model.Card
-import model.CardVendor
 import model.Names
 import model.Person
-import model.Player
 
 class ResultView {
     fun showDistributedCard(names: Names) {
@@ -40,13 +39,13 @@ class ResultView {
         println(result)
     }
 
-    fun showPlayerCardStateResult(players: List<Person>, cardVendor: CardVendor) {
+    fun showPlayerCardStateResult(players: List<Person>) {
         players.forEach { player ->
             var result = "${player.notifyName()}카드: "
             player.openCard().forEach { card ->
                 result += "${card.cardNumber}${card.cardShape}, "
             }
-            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(player.openCard())}"
+            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${CardNumberCalculator().sumCardNumbers(player.openCard())}"
             println(result)
         }
     }

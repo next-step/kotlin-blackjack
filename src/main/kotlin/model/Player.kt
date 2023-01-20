@@ -1,7 +1,7 @@
 package model
 
-class Player(name: String) : Person() {
+class Player(playerName: String) : Person() {
     init {
-        this.name = name
+        name = playerName
     }
 }

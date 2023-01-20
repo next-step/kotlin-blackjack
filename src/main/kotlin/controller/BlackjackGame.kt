@@ -1,6 +1,5 @@
 package controller
 
-import model.CardVendor
 import model.Dealer
 import model.Names
 import model.Player
@@ -21,6 +20,7 @@ class BlackjackGame(
         giveCard(names)
         giveExtraCard()
         printPlayerCard()
+        decideGameResult()
     }
 
     private fun inputNames(): Names {
@@ -56,6 +56,10 @@ class BlackjackGame(
     }
 
     private fun printPlayerCard() {
-        resultView.showPlayerCardStateResult(players.get(), cardVendor)
+        resultView.showPlayerCardStateResult(players.get())
+    }
+
+    private fun decideGameResult() {
+        GameResultReader().decideResult(players.get())
     }
 }
