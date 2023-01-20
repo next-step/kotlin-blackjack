@@ -21,6 +21,7 @@ class BlackjackGame(
         giveExtraCard()
         printPlayerCard()
         decideGameResult()
+        printGameResult()
     }
 
     private fun inputNames(): Names {
@@ -61,5 +62,9 @@ class BlackjackGame(
 
     private fun decideGameResult() {
         GameResultReader().decideResult(players.get())
+    }
+
+    private fun printGameResult() {
+        resultView.showGameResult(players.get())
     }
 }

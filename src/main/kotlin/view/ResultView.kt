@@ -49,4 +49,12 @@ class ResultView {
             println(result)
         }
     }
+
+    fun showGameResult(players: List<Person>) {
+        println("\n## 최종 승패")
+        players.forEach { player ->
+            var result = "${player.notifyName()}: ${player.notifyResult()}"
+            println(result)
+        }
+    }
 }
