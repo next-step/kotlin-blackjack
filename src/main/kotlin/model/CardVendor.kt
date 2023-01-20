@@ -7,14 +7,14 @@ class CardVendor {
         }
     }
 
-    private fun dealOut(player: Player) {
+    private fun dealOut(player: Person) {
         repeat(DEAL_OUT) {
             hit(player)
         }
     }
 
-    private fun hit(player: Player) {
-        player.addCard(Deck.selectCard())
+    private fun hit(player: Person) {
+        player.receiveCard(Deck.selectCard())
     }
 
     fun giveExtraCard(
@@ -22,18 +22,30 @@ class CardVendor {
         isNeedExtraCard: (String) -> Boolean,
         showSpecificUserCardState: (String, List<Card>) -> Unit
     ) {
+        var isDealerGetExtraCard = false
         players.get().forEach { player ->
-            if (isGetExtraCard(player.getCard())) {
-                if (isNeedExtraCard(player.getName())) {
-                    hit(player)
-                    showSpecificUserCardState(player.getName(), player.getCard())
-                }
+            if (isGetExtraCardForDealer(player.notifyName(), player.openCard())) {
+                hit(player)
+                isDealerGetExtraCard = true
             }
+
+            while (isGetExtraCard(player.openCard()) && isNeedExtraCard(player.notifyName())) {
+                hit(player)
+                showSpecificUserCardState(player.notifyName(), player.openCard())
+            }
+        }
+        if (isDealerGetExtraCard) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+            isDealerGetExtraCard = false
         }
     }
 
     fun isGetExtraCard(cards: List<Card>): Boolean {
         return sumCardNumbers(cards) < BLACK_JACK
+    }
+
+    fun isGetExtraCardForDealer(name: String, cards: List<Card>): Boolean {
+        return name == "딜러" && sumCardNumbers(cards) <= DEALER_INITIAL_SUM
     }
 
     fun sumCardNumbers(cards: List<Card>): Int {
@@ -59,6 +71,7 @@ class CardVendor {
     companion object {
         private const val DEAL_OUT: Int = 2
         private const val BLACK_JACK = 21
+        private const val DEALER_INITIAL_SUM = 16
         private val RANGE_FOR_ACE_11 = 0..10
     }
 }

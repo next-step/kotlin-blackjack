@@ -3,6 +3,7 @@ package view
 import model.Card
 import model.CardVendor
 import model.Names
+import model.Person
 import model.Player
 
 class ResultView {
@@ -15,14 +16,14 @@ class ResultView {
             }
             result += ", $name"
         }
-        println("${result}에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${result}에게 2장의 카드를 나누었습니다.")
     }
 
-    fun showPlayerCardState(players: List<Player>) {
+    fun showPlayerCardState(players: List<Person>) {
         var result = ""
         players.forEach { player ->
-            result += "${player.getName()}카드: "
-            player.getCard().forEach { card ->
+            result += "${player.notifyName()}카드: "
+            player.openCard().forEach { card ->
                 result += "${card.cardNumber}${card.cardShape}, "
             }
             result = result.substring(0, result.lastIndex - 1) + "\n"
@@ -39,13 +40,13 @@ class ResultView {
         println(result)
     }
 
-    fun showPlayerCardStateResult(players: List<Player>, cardVendor: CardVendor) {
+    fun showPlayerCardStateResult(players: List<Person>, cardVendor: CardVendor) {
         players.forEach { player ->
-            var result = "${player.getName()}카드: "
-            player.getCard().forEach { card ->
+            var result = "${player.notifyName()}카드: "
+            player.openCard().forEach { card ->
                 result += "${card.cardNumber}${card.cardShape}, "
             }
-            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(player.getCard())}"
+            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${cardVendor.sumCardNumbers(player.openCard())}"
             println(result)
         }
     }

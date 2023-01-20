@@ -1,6 +1,7 @@
 package controller
 
 import model.CardVendor
+import model.Dealer
 import model.Names
 import model.Player
 import model.Players
@@ -15,8 +16,9 @@ class BlackjackGame(
 ) {
     fun start() {
         val names = inputNames()
+        createDealer()
         createPlayer(names)
-        giveCard()
+        giveCard(names)
         giveExtraCard()
         printPlayerCard()
     }
@@ -25,14 +27,18 @@ class BlackjackGame(
         return Names(inputView.getUserName())
     }
 
+    private fun createDealer() {
+        players.add(Dealer())
+    }
+
     private fun createPlayer(names: Names) {
-        resultView.showDistributedCard(names)
         names.values.forEach {
             players.add(Player(it))
         }
     }
 
-    private fun giveCard() {
+    private fun giveCard(names: Names) {
+        resultView.showDistributedCard(names)
         cardVendor.giveCardToPlayer(players)
         resultView.showPlayerCardState(players.get())
     }

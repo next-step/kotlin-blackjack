@@ -8,7 +8,7 @@ class InputView {
 
     fun getExtraCard(name: String): Boolean {
         var inputValue = ""
-        while (inputValue != YES && inputValue != NO) {
+        while (inputValue != YES && inputValue != NO && name != DEALER) {
             println("${name}님 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             inputValue = readln()
         }
@@ -18,5 +18,6 @@ class InputView {
     companion object {
         private const val YES = "y"
         private const val NO = "n"
+        private const val DEALER = "딜러"
     }
 }

@@ -7,19 +7,19 @@ internal class PlayerTest {
     @Test
     fun `플레이어 카드를 추가한다`() {
         val player = Player("Jake")
-        assertThat(player.addCard(Card(CardNumber.THREE, CardShape.SPADES))).isTrue
+        assertThat(player.receiveCard(Card(CardNumber.THREE, CardShape.SPADES))).isTrue
     }
 
     @Test
     fun `플레이어 카드를 가져온다`() {
         val player = Player("Jake")
-        player.addCard(Card(CardNumber.THREE, CardShape.SPADES))
-        assertThat(player.getCard()[0]).isEqualTo(Card(CardNumber.THREE, CardShape.SPADES))
+        player.receiveCard(Card(CardNumber.THREE, CardShape.SPADES))
+        assertThat(player.openCard()[0]).isEqualTo(Card(CardNumber.THREE, CardShape.SPADES))
     }
 
     @Test
     fun `플레이어 이름을 가져온다`() {
         val player = Player("Jake")
-        assertThat(player.getName()).isEqualTo("Jake")
+        assertThat(player.notifyName()).isEqualTo("Jake")
     }
 }
