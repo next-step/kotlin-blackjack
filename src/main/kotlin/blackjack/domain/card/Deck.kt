@@ -1,17 +1,9 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.card.strategy.ShuffleStrategy
 
-object Deck {
-    private const val FIRST_INDEX = 0
-    private var shuffleStrategy: ShuffleStrategy = RandomShuffleStrategy()
+class Deck(private val shuffleStrategy: ShuffleStrategy) {
     private var cards = mutableListOf<PlayingCard>()
-
-    fun setShuffleStrategy(shuffleStrategy: ShuffleStrategy) {
-        this.shuffleStrategy = shuffleStrategy
-        cards.addAll(PlayingCards.shuffle(this.shuffleStrategy))
-    }
 
     fun getCard(): PlayingCard {
         if (cards.isEmpty()) {
@@ -22,5 +14,9 @@ object Deck {
 
     fun getCards(amount: Int): PlayingCards {
         return PlayingCards((1..amount).map { getCard() })
+    }
+
+    companion object {
+        private const val FIRST_INDEX = 0
     }
 }

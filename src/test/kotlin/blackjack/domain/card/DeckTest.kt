@@ -13,12 +13,12 @@ class DeckTest {
     @Test
     fun `카드 덱 - 카드 분배 테스트`() {
         // given
-        Deck.setShuffleStrategy(StraightShuffleStrategy())
+        val deck = Deck(StraightShuffleStrategy())
 
         // when, then
-        assertThat(Deck.getCard()).isEqualTo(SpadeAce)
-        assertThat(Deck.getCard()).isEqualTo(SpadeTwo)
-        assertThat(Deck.getCard()).isEqualTo(SpadeThree)
-        assertThat(Deck.getCards(2)).isEqualTo(PlayingCards(SpadeFour, SpadeFive))
+        assertThat(deck.getCard()).isEqualTo(SpadeAce)
+        assertThat(deck.getCard()).isEqualTo(SpadeTwo)
+        assertThat(deck.getCard()).isEqualTo(SpadeThree)
+        assertThat(deck.getCards(2)).isEqualTo(PlayingCards(SpadeFour, SpadeFive))
     }
 }

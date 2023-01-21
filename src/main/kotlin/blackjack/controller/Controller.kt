@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.GameManager
 import blackjack.domain.card.Deck
+import blackjack.domain.card.strategy.RandomShuffleStrategy
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.state.result.Result.Companion.calculateProfit
 import blackjack.domain.participant.state.role.Dealer
@@ -20,15 +21,16 @@ object Controller {
     private val printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) }
 
     fun start() {
+        val deck = Deck(RandomShuffleStrategy())
         val names = InputFilter.inputPlayer()
         val bets = names.map { InputFilter.inputBettingMoney(it.toString()) }.toTypedArray()
-        val dealer = Dealer(Deck.getCards(NUMBER_OF_STARTING_CARDS))
-        val players = Participants.createPlayers(names, Deck, bets)
+        val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
+        val players = Participants.createPlayers(names, deck, bets)
 
         printPlayerNames(players)
         printParticipantsCards(players + dealer)
-        val newPlayers = Participants(players.getPlayers().map { inputPlayersHitOrStay(it, Deck) })
-        val newDealer = GameManager.playDealer(dealer, Deck, printDealerDrawMessage)
+        val newPlayers = Participants(players.getPlayers().map { inputPlayersHitOrStay(it, deck) })
+        val newDealer = GameManager.playDealer(dealer, deck, printDealerDrawMessage)
         printFinalResult(newPlayers + newDealer)
     }
 
