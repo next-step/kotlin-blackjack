@@ -44,10 +44,10 @@ sealed class Role {
     }
 
     fun stay(): Role {
-        if (isDealer) {
-            return Dealer(state.stay())
+        if (!isBust && !isBlackjack) {
+            return doStay()
         }
-        return Player(name, state.stay(), money)
+        return this
     }
 
     fun calculateResult(inputScore: Int): Result {
@@ -57,6 +57,13 @@ sealed class Role {
             playerScore == inputScore -> Result.Draw
             else -> Result.Lose
         }
+    }
+
+    private fun doStay(): Role {
+        if (isDealer) {
+            return Dealer(state.stay())
+        }
+        return Player(name, state.stay(), money)
     }
 
     companion object {

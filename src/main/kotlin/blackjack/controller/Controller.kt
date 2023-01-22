@@ -15,36 +15,26 @@ import blackjack.dto.ResultsDto
 import blackjack.view.ResultView
 
 object Controller {
-    private val printDealerDrawMessage = { ResultView.printDealerDrawMessage() }
-    private val printParticipantCards = { players: Role -> ResultView.printParticipantCards(ParticipantDto.from(players)) }
-    private val printPlayerBust = { player: Role -> ResultView.printPlayerBust(player.name.toString()) }
-    private val printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) }
-
     fun start() {
         val deck = Deck(RandomShuffleStrategy())
         val names = InputFilter.inputPlayer()
         val bets = names.map { InputFilter.inputBettingMoney(it.toString()) }.toTypedArray()
-        val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
         val players = Participants.createPlayers(names, deck, bets)
+        val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
 
         printPlayerNames(players)
         printParticipantsCards(players + dealer)
-        val newPlayers = Participants(players.getPlayers().map { inputPlayersHitOrStay(it, deck) })
-        val newDealer = GameManager.playDealer(dealer, deck, printDealerDrawMessage)
-        printFinalResult(newPlayers + newDealer)
-    }
 
-    private fun inputPlayersHitOrStay(player: Role, deck: Deck): Role {
-        var newPlayer = player
-        while (InputFilter.inputHitOrStay(newPlayer.name.toString()) &&
-            GameManager.canPlayerHit(newPlayer, printPlayerBust, printPlayerBlackjack)
-        ) {
-            newPlayer = GameManager.playPlayer(newPlayer, deck, printParticipantCards)
-        }
-        if (newPlayer.hasOnlyTwoCards) {
-            printParticipantCards(newPlayer)
-        }
-        return GameManager.stay(newPlayer)
+        val resultPlayers = GameManager.play(
+            players,
+            deck,
+            askHit = { player: Role -> InputFilter.inputHitOrStay(player.name.toString()) },
+            printParticipantCards = { player: Role -> ResultView.printParticipantCards(ParticipantDto.from(player)) },
+            printPlayerBust = { player: Role -> ResultView.printPlayerBust(player.name.toString()) },
+            printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) }
+        )
+        val newDealer = GameManager.playDealer(dealer, deck, ResultView::printDealerDrawMessage)
+        printFinalResult(resultPlayers + newDealer)
     }
 
     private fun printPlayerNames(players: Participants) {
