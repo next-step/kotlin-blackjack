@@ -5,25 +5,22 @@ import blackjack.domain.participant.Participants
 import blackjack.domain.participant.state.role.Dealer
 import blackjack.domain.participant.state.role.Role
 
-object GameManager {
-    private lateinit var askHit: (Role) -> Boolean
-    private lateinit var printParticipantCards: (Role) -> Unit
-    private lateinit var printPlayerBust: (Role) -> Unit
-    private lateinit var printPlayerBlackjack: (Role) -> Unit
-
-    fun play(players: Participants, deck: Deck, askHit: (Role) -> Boolean, printParticipantCards: (Role) -> Unit, printPlayerBust: (Role) -> Unit, printPlayerBlackjack: (Role) -> Unit): Participants {
-        this.askHit = askHit
-        this.printParticipantCards = printParticipantCards
-        this.printPlayerBust = printPlayerBust
-        this.printPlayerBlackjack = printPlayerBlackjack
-
+class GameManager(
+    private val askHit: (Role) -> Boolean,
+    private val printParticipantCards: (Role) -> Unit,
+    private val printPlayerBust: (Role) -> Unit,
+    private val printPlayerBlackjack: (Role) -> Unit,
+    private val printDealerDrawMessage: () -> Unit
+) {
+    fun play(players: Participants, deck: Deck): Participants {
         val newPlayers = players.getPlayers().map { player ->
             inputPlayersHitOrStay(player, deck)
         }
-        return Participants(newPlayers)
+        val newDealer = playDealer(players.getDealer(), deck)
+        return Participants(newPlayers) + newDealer
     }
 
-    fun playDealer(dealer: Dealer, deck: Deck, printDealerDrawMessage: () -> Unit): Role {
+    private fun playDealer(dealer: Dealer, deck: Deck): Role {
         if (dealer.score <= Dealer.STOP_SCORE) {
             printDealerDrawMessage()
             return dealer.draw(deck.getCard())

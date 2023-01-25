@@ -21,20 +21,16 @@ object Controller {
         val bets = names.map { InputFilter.inputBettingMoney(it.toString()) }.toTypedArray()
         val players = Participants.createPlayers(names, deck, bets)
         val dealer = Dealer(deck.getCards(NUMBER_OF_STARTING_CARDS))
-
-        printPlayerNames(players)
-        printParticipantsCards(players + dealer)
-
-        val resultPlayers = GameManager.play(
-            players,
-            deck,
+        val gameManager = GameManager(
             askHit = { player: Role -> InputFilter.inputHitOrStay(player.name.toString()) },
             printParticipantCards = { player: Role -> ResultView.printParticipantCards(ParticipantDto.from(player)) },
             printPlayerBust = { player: Role -> ResultView.printPlayerBust(player.name.toString()) },
-            printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) }
+            printPlayerBlackjack = { player: Role -> ResultView.printPlayerBlackjack(player.name.toString()) },
+            printDealerDrawMessage = { ResultView.printDealerDrawMessage() }
         )
-        val newDealer = GameManager.playDealer(dealer, deck, ResultView::printDealerDrawMessage)
-        printFinalResult(resultPlayers + newDealer)
+        printPlayerNames(players)
+        printParticipantsCards(players + dealer)
+        printFinalResult(gameManager.play(players + dealer, deck))
     }
 
     private fun printPlayerNames(players: Participants) {
