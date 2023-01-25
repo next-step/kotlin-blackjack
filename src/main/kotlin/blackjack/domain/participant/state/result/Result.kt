@@ -14,17 +14,9 @@ sealed class Result {
             val players = participants.getPlayers()
             val result = mutableMapOf<Role, Result>()
 
-            if (dealer.isBlackjack) {
-                players.filter(Role::isBlackjack).forEach { result[it] = Draw }
-                players.filterNot(Role::isBlackjack).forEach { result[it] = Lose }
-                return result
+            players.forEach { player ->
+                result[player] = dealer.calculateResult(player)
             }
-            if (dealer.isBust) {
-                players.filter(Role::isBust).forEach { result[it] = Lose }
-                players.filterNot(Role::isBust).forEach { result[it] = Win }
-                return result
-            }
-            players.forEach { result[it] = it.calculateResult(dealer.score) }
             return result
         }
 

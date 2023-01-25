@@ -4,6 +4,7 @@ import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.card.state.State
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.result.Result
 
 data class Dealer(override val state: State) : Role() {
     override val name: Name = Name(DEALER_NAME)
@@ -16,6 +17,30 @@ data class Dealer(override val state: State) : Role() {
 
     init {
         require(state.cards.size >= NUMBER_OF_STARTING_CARDS) { "딜러는 2장의 카드를 가지고 시작해야 합니다." }
+    }
+
+    fun calculateResult(player: Role): Result {
+        if (isBlackjack && player.isBlackjack) {
+            return Result.Draw
+        }
+        if (isBlackjack && !player.isBlackjack) {
+            return Result.Lose
+        }
+        if (isBust && player.isBust) {
+            return Result.Lose
+        }
+        if (isBust && !player.isBust) {
+            return Result.Win
+        }
+        return this.compareScore(player.score)
+    }
+
+    private fun compareScore(playerScore: Int): Result {
+        return when {
+            playerScore > score -> Result.Win
+            playerScore == score -> Result.Draw
+            else -> Result.Lose
+        }
     }
 
     companion object {

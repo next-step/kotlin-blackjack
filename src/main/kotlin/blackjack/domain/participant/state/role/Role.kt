@@ -7,7 +7,6 @@ import blackjack.domain.card.state.State
 import blackjack.domain.card.state.rule.Blackjack
 import blackjack.domain.card.state.rule.Hit
 import blackjack.domain.participant.state.Name
-import blackjack.domain.participant.state.result.Result
 
 sealed class Role {
     abstract val name: Name
@@ -48,15 +47,6 @@ sealed class Role {
             return doStay()
         }
         return this
-    }
-
-    fun calculateResult(inputScore: Int): Result {
-        val playerScore = score
-        return when {
-            playerScore > inputScore -> Result.Win
-            playerScore == inputScore -> Result.Draw
-            else -> Result.Lose
-        }
     }
 
     private fun doStay(): Role {
