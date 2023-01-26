@@ -1,10 +1,7 @@
 package blackjack.domain
 
 object Judgment {
-    fun execute(participants: List<Participant>): List<PlayerResult> {
-        val players = participants.filterIsInstance<Player>()
-        val dealer = participants.filterIsInstance<Dealer>().first()
-
+    fun execute(players: List<Player>, dealer: Dealer): List<PlayerResult> {
         return players.map { player ->
             when {
                 dealer.isBust() -> PlayerResult(name = player.name, result = JudgmentResult.WIN)

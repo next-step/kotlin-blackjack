@@ -11,16 +11,17 @@ class BlackJackController {
     fun execute() {
         val playerNameList = InputView.readName().split(",")
         val dealer = Dealer("딜러")
-        val participants = playerNameList.map { Player(name = it) }.plus(dealer)
-        val blackJackMachine = BlackJackMachine(participants = participants)
+        val players = playerNameList.map { Player(name = it) }
+        val blackJackMachine = BlackJackMachine(players = players, dealer = dealer)
 
         blackJackMachine.initialize()
-        OutputView.printInitialCards(participants)
+        OutputView.printInitialCards(players.plus(dealer))
 
-        blackJackMachine.execute(retryOrNot(), playerCardResult(), dealerCardResultFunc())
-        OutputView.printGameResult(participants)
+        blackJackMachine.executePlayer(retryOrNot(), playerCardResult())
+        blackJackMachine.executeDealer(dealerCardResultFunc())
+        OutputView.printGameResult(players.plus(dealer))
 
-        val playerResults = Judgment.execute(participants)
+        val playerResults = Judgment.execute(players, dealer)
         OutputView.printPlayerResult(playerResults, dealer)
     }
 

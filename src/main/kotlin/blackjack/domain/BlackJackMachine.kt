@@ -4,31 +4,33 @@ import blackjack.common.Policy.INITIAL_CARD_COUNT
 
 class BlackJackMachine(
     private val cardDeck: CardDeck = CardDeck(),
-    private val participants: List<Participant>,
+    private val players: List<Player>,
+    private val dealer: Dealer,
 ) {
     fun initialize() {
-        participants.forEach { player ->
+        players.forEach { player ->
             repeat(INITIAL_CARD_COUNT) {
                 player.hit(cardDeck.pop())
             }
         }
+
+        repeat(INITIAL_CARD_COUNT) {
+            dealer.hit(cardDeck.pop())
+        }
     }
 
-    fun execute(
+    fun executePlayer(
         retryFunc: (player: Player) -> Boolean,
         playerCardResultFunc: (player: Player) -> Unit,
+    ) {
+        players.forEach { hitOrNot(it, retryFunc, playerCardResultFunc) }
+    }
+
+    fun executeDealer(
         dealerCardResultFunc: (dealer: Dealer) -> Unit,
     ) {
-        participants
-            .filterIsInstance<Player>()
-            .forEach {
-                hitOrNot(it, retryFunc, playerCardResultFunc)
-            }
-
-        participants
-            .filterIsInstance<Dealer>()
-            .filter { it.canHit() }
-            .forEach {
+        dealer.takeIf { it.canHit() }
+            ?.let {
                 it.hit(cardDeck.pop())
                 dealerCardResultFunc(it)
             }

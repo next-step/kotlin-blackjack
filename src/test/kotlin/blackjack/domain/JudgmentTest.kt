@@ -26,7 +26,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -43,7 +43,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -59,7 +59,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -75,7 +75,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -104,7 +104,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -121,7 +121,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -137,7 +137,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -153,7 +153,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -181,7 +181,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -198,7 +198,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -214,7 +214,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -230,7 +230,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -258,7 +258,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -275,7 +275,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -291,7 +291,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
@@ -307,7 +307,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 패배한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.LOSE))
             }
@@ -323,7 +323,7 @@ internal class JudgmentTest : BehaviorSpec({
                     )
                 )
             )
-            val result = Judgment.execute(listOf(player, dealer))
+            val result = Judgment.execute(players = listOf(player), dealer = dealer)
             Then("플레이어가 승리한다.") {
                 result shouldBe listOf(PlayerResult(name = player.name, result = JudgmentResult.WIN))
             }
