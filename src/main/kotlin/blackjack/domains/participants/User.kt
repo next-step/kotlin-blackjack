@@ -22,8 +22,6 @@ abstract class User(
 
     abstract fun isDrawable(): Boolean
 
-    abstract fun printHasCards()
-
     abstract fun win()
     abstract fun lose()
     abstract fun draw()

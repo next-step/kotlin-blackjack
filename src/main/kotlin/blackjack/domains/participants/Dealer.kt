@@ -4,7 +4,6 @@ import blackjack.GameRule.Companion.BLACKJACK
 import blackjack.GameRule.Companion.DEALER_DRAW_CONDITION
 import blackjack.GameScoreType
 import blackjack.domains.deck.Cards
-import blackjack.views.Output.printDealerDraw
 
 class Dealer(
     override val name: String = "딜러",
@@ -16,10 +15,6 @@ class Dealer(
     override fun isDrawable(): Boolean {
         if (!cards.isDrawable(DEALER_DRAW_CONDITION)) return false
         return true
-    }
-
-    override fun printHasCards() {
-        printDealerDraw()
     }
 
     override fun win() {
@@ -34,7 +29,7 @@ class Dealer(
         gameScores.add(GameScoreType.DRAW)
     }
 
-    fun isOver21(): Boolean {
+    fun isOverBlackjack(): Boolean {
         return summedCardNumbers > BLACKJACK
     }
 

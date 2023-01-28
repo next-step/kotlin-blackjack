@@ -39,7 +39,7 @@ internal class DealerTest {
         val dealer = Dealer(name = "딜러", cards = cards)
 
         // Act
-        val act = dealer.isOver21()
+        val act = dealer.isOverBlackjack()
 
         // Assert
         assertThat(act).isTrue

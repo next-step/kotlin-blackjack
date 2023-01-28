@@ -10,7 +10,7 @@ class ResultCalculator(private val users: Gamers) {
     fun setUserRanks() {
         val dealer = users.getDealer()
         val players = users.getPlayers()
-        if (dealer.isOver21()) {
+        if (dealer.isOverBlackjack()) {
             players.forEach { player -> playerWin(dealer, player) }
             return
         }

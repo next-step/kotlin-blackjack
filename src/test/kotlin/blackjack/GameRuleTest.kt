@@ -17,7 +17,7 @@ internal class GameRuleTest {
         val playerNames = listOf("a", "b", "c")
 
         // Act
-        val players = gameRule.initUsers(playerNames = playerNames)
+        val players = gameRule.initGame(playerNames = playerNames)
 
         // Assert
         assertThat(players.getDealer()).isNotNull

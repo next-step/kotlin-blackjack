@@ -6,10 +6,11 @@ import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
 import blackjack.domains.participants.User
+import blackjack.views.Output.printDealerDraw
 import blackjack.views.Output.printHaveCards
 
 class GameRule(private val deck: Deck) {
-    fun initUsers(playerNames: List<String>): Gamers {
+    fun initGame(playerNames: List<String>): Gamers {
         val dealer = initUser(playerName = "딜러", isDealer = true)
         val players = playerNames.map { playerName ->
             initUser(playerName = playerName, isDealer = false)
@@ -21,7 +22,11 @@ class GameRule(private val deck: Deck) {
         while (true) {
             if (!user.isDrawable()) break
             user.drawCard(deck.drawCard())
-            user.printHasCards()
+            when (user) {
+                is Dealer -> printDealerDraw()
+                is Player -> printHaveCards(user.name, user.cards)
+                else -> throw IllegalArgumentException("Unknown User Type")
+            }
         }
     }
 

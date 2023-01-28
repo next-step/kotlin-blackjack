@@ -13,7 +13,7 @@ fun main() {
 
     val gameRule = GameRule(deck = deck)
     printFirstDrawCards(playerNames, GameRule.FIRST_DRAW_COUNT)
-    val gamers = gameRule.initUsers(playerNames)
+    val gamers = gameRule.initGame(playerNames)
 
     gamers.drawCard(gameRule = gameRule)
     gamers.printScores()
