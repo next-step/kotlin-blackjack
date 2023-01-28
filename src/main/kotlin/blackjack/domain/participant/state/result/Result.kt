@@ -12,12 +12,8 @@ sealed class Result {
         fun calculateResult(participants: Participants): Map<Role, Result> {
             val dealer = participants.getDealer()
             val players = participants.getPlayers()
-            val result = mutableMapOf<Role, Result>()
 
-            players.forEach { player ->
-                result[player] = dealer.calculateResult(player)
-            }
-            return result
+            return players.associateWith(dealer::calculateResult)
         }
 
         fun calculateProfit(participants: Participants): Map<Role, Double> {
