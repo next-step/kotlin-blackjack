@@ -20,19 +20,13 @@ data class Dealer(override val state: State) : Role() {
     }
 
     fun calculateResult(player: Role): Result {
-        if (isBlackjack && player.isBlackjack) {
-            return Result.Draw
+        return when {
+            isBlackjack && player.isBlackjack -> Result.Draw
+            isBlackjack && !player.isBlackjack -> Result.Lose
+            isBust && player.isBust -> Result.Lose
+            isBust && !player.isBust -> Result.Win
+            else -> this.compareScore(player.score)
         }
-        if (isBlackjack && !player.isBlackjack) {
-            return Result.Lose
-        }
-        if (isBust && player.isBust) {
-            return Result.Lose
-        }
-        if (isBust && !player.isBust) {
-            return Result.Win
-        }
-        return this.compareScore(player.score)
     }
 
     private fun compareScore(playerScore: Int): Result {
