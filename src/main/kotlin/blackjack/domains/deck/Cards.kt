@@ -1,16 +1,17 @@
-package domains
+package blackjack.domains.deck
 
-@JvmInline
-value class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
-    val values: List<Card>
-        get() = _cards
+import blackjack.GameRule
+import blackjack.ScoreCalculator.sumOfNumbers
+
+class Cards(cards: List<Card> = listOf()) {
+    val values: MutableList<Card> = cards.toMutableList()
 
     override fun toString(): String {
         return values.joinToString { it.toString() }
     }
 
     fun addCard(card: Card) {
-        _cards.add(card)
+        values.add(card)
     }
 
     fun isDrawable(condition: Int): Boolean {
@@ -19,5 +20,9 @@ value class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
 
     fun hasAce(): Boolean {
         return values.singleOrNull { it.pokerNumber.isAce() }?.let { true } ?: false
+    }
+
+    fun sumOfCards(): Int {
+        return sumOfNumbers(this, GameRule.BLACKJACK)
     }
 }

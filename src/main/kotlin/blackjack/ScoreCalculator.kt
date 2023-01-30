@@ -1,15 +1,17 @@
-package domains
+package blackjack
 
-class ScoreCalculator(private val cards: Cards) {
+import blackjack.domains.deck.Cards
 
-    fun sumOfNumbers(defeatedMaxNumber: Int): Int {
+object ScoreCalculator {
+
+    fun sumOfNumbers(cards: Cards, defeatedMaxNumber: Int): Int {
         if (cards.hasAce()) {
-            return sumWithAce(defeatedMaxNumber)
+            return sumWithAce(cards, defeatedMaxNumber)
         }
         return cards.values.sumOf { it.pokerNumber.number }
     }
 
-    private fun sumWithAce(defeatedMaxNumber: Int): Int {
+    private fun sumWithAce(cards: Cards, defeatedMaxNumber: Int): Int {
         val summedNumber = cards.values.sumOf { it.pokerNumber.number }
         if (summedNumber + 10 <= defeatedMaxNumber) {
             return summedNumber + 10

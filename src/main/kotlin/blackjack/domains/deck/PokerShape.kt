@@ -1,4 +1,4 @@
-package domains
+package blackjack.domains.deck
 
 enum class PokerShape(val displayName: String) {
     HEART("하트"),
