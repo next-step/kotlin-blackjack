@@ -5,7 +5,6 @@ import blackjack.domain.Draw
 import blackjack.domain.Game
 import blackjack.domain.Gamer
 import blackjack.domain.Person
-import blackjack.domain.State
 
 object OutputView {
 
@@ -25,7 +24,7 @@ object OutputView {
 
     fun printDealerCardAddYn(game: Game): Boolean {
         println()
-        return if (game.dealer.checkDrawable()) {
+        return if (game.dealer.isDrawable) {
             println()
             println("딜러는 ${Dealer.LEAST_CARD_SUM}이하라 한장의 카드를 더 받았습니다.")
             true
@@ -44,10 +43,10 @@ object OutputView {
 
     fun printResult(game: Game) {
         println()
-        println("## 최종 승페")
+        println("## 최종 수익")
         val dealer: Dealer = game.dealer
         val gamer: List<Gamer> = game.gamerList
-        println("${dealer.name}: ${dealer.states.count { it == State.WIN }}승 ${dealer.states.count { it == State.LOSE }}패")
-        gamer.forEach { println("${it.name}: ${if (it.state == State.WIN) "승" else "패"}") }
+        println("${dealer.name}: ${dealer.money}")
+        gamer.forEach { println("${it.name}: ${it.money}") }
     }
 }

@@ -2,30 +2,29 @@ package blackjack.domain
 
 open class Person(
     open val name: String = "",
-    val ownCards: OwnCards = OwnCards(Draw.FIRST_DRAW_COUNT),
-    private var _state: State = State.CONTINUE
+    open val ownCards: OwnCards = OwnCards(Draw.FIRST_DRAW_COUNT),
+    private var _money: Double = 0.0,
+    open val isBlackJack: Boolean = (ownCards.sumCardNumber() == Draw.DRAW_LIMIT),
+    private var _isDrawable: Boolean = true
 ) {
-    val state: State
-        get() = _state
+    val money: Double
+        get() = _money
+
+    val isDrawable: Boolean
+        get() = _isDrawable
 
     fun addCard(drawYn: Boolean) {
         if (drawYn) {
             ownCards.addCard(Card())
-            _state = changeState(ownCards.sumCardNumber())
+            changeDrawable()
         }
     }
 
-    private fun changeState(cardNumberSum: Int): State {
-        return when {
-            cardNumberSum > Draw.DRAW_LIMIT -> State.LOSE
-            cardNumberSum == Draw.DRAW_LIMIT -> State.WIN
-            else -> State.CONTINUE
-        }
+    fun changeDrawable(isDrawable: Boolean = (ownCards.sumCardNumber() < Draw.DRAW_LIMIT)) {
+        _isDrawable = isDrawable
     }
 
-    fun changeState(isWin: Boolean) {
-        _state = if (isWin) State.WIN else State.LOSE
+    fun changeMoney(money: Double) {
+        _money += money
     }
-
-    open fun checkDrawable(): Boolean = (_state == State.CONTINUE)
 }
