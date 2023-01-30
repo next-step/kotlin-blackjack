@@ -7,8 +7,11 @@ import blackjack.views.Input.answerDrawCard
 
 class Player(
     override val name: String,
-    override val cards: Cards = Cards()
+    override val cards: Cards = Cards(),
 ) : User(name, cards) {
+    var bettingAmount: Int = 0
+        private set
+
     lateinit var gameScore: GameScoreType
         private set
 
@@ -28,5 +31,13 @@ class Player(
 
     override fun draw() {
         gameScore = GameScoreType.DRAW
+    }
+
+    override fun calcEarningAmount(earningAmount: Int) {
+        this.earningAmount = earningAmount
+    }
+
+    fun makeABet(bettingAmount: Int) {
+        this.bettingAmount = bettingAmount
     }
 }

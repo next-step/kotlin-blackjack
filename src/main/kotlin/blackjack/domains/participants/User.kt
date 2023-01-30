@@ -7,9 +7,11 @@ abstract class User(
     open val name: String,
     open val cards: Cards = Cards(),
 ) {
+    var earningAmount: Int = 0
+        protected set
 
     var summedCardNumbers = 0
-        private set
+        protected set
         get() = cards.sumOfCards()
 
     fun startGame(cards: Cards) {
@@ -25,4 +27,6 @@ abstract class User(
     abstract fun win()
     abstract fun lose()
     abstract fun draw()
+
+    abstract fun calcEarningAmount(earningAmount: Int)
 }

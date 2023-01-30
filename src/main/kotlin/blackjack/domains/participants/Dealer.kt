@@ -29,6 +29,10 @@ class Dealer(
         gameScores.add(GameScoreType.DRAW)
     }
 
+    override fun calcEarningAmount(earningAmount: Int) {
+        this.earningAmount += earningAmount
+    }
+
     fun isOverBlackjack(): Boolean {
         return summedCardNumbers > BLACKJACK
     }

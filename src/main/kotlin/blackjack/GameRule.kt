@@ -6,11 +6,12 @@ import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
 import blackjack.domains.participants.User
+import blackjack.views.Input.getBatingAmount
 import blackjack.views.Output.printDealerDraw
 import blackjack.views.Output.printHaveCards
 
 class GameRule(private val deck: Deck) {
-    fun initGame(playerNames: List<String>): Gamers {
+    fun initGamers(playerNames: List<String>): Gamers {
         val dealer = initUser(playerName = "딜러", isDealer = true)
         val players = playerNames.map { playerName ->
             initUser(playerName = playerName, isDealer = false)
@@ -30,13 +31,19 @@ class GameRule(private val deck: Deck) {
         }
     }
 
-    private fun initUser(playerName: String, isDealer: Boolean): User {
+    fun makeABet(player: Player) {
+        val battingAmount = getBatingAmount(player.name)
+        player.makeABet(battingAmount)
+    }
+
+    fun playGame(user: User) {
         val cards = Cards((1..FIRST_DRAW_COUNT).map { deck.drawCard() }.toMutableList())
-        val user = if (isDealer) Dealer(name = playerName) else Player(playerName)
         user.startGame(cards)
         printHaveCards(user.name, user.cards)
-        return user
     }
+
+    private fun initUser(playerName: String, isDealer: Boolean) =
+        if (isDealer) Dealer(name = playerName) else Player(name = playerName)
 
     companion object {
         const val BLACKJACK = 21

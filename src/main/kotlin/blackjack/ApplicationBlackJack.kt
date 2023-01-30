@@ -5,18 +5,23 @@ import blackjack.domains.deck.PokerNumber
 import blackjack.domains.deck.PokerShape
 import blackjack.views.Input.getPlayerNames
 import blackjack.views.Output.printFirstDrawCards
-import blackjack.views.Output.printVictoryOrDefeat
+import blackjack.views.Output.printResultEarningRate
 
 fun main() {
-    val playerNames = getPlayerNames()
-    val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
+    val playerNames: List<String> = getPlayerNames()
 
+    val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
     val gameRule = GameRule(deck = deck)
+
+    val gamers = gameRule.initGamers(playerNames)
+    val players = gamers.getPlayers()
+    players.forEach { gameRule.makeABet(it) }
+    players.forEach { gameRule.playGame(it) }
+
     printFirstDrawCards(playerNames, GameRule.FIRST_DRAW_COUNT)
-    val gamers = gameRule.initGame(playerNames)
 
     gamers.drawCard(gameRule = gameRule)
     gamers.printScores()
     ResultCalculator(gamers).setUserRanks()
-    printVictoryOrDefeat(gamers.getDealer(), gamers.getPlayers())
+    printResultEarningRate(gamers)
 }
