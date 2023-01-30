@@ -1,5 +1,5 @@
 package blackjack.domain
 
 enum class State {
-    WIN, CONTINUE, LOSE
+    WIN, DRAW, LOSE, BLACKJACK
 }

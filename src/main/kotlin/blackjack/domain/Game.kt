@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Game(private val _dealer: Dealer, private val _gamerList: List<Gamer>) {
+class Game(private val _gamerList: List<Gamer>, private val _dealer: Dealer = Dealer()) {
 
     val dealer: Dealer
         get() = _dealer
@@ -8,22 +8,36 @@ class Game(private val _dealer: Dealer, private val _gamerList: List<Gamer>) {
     val gamerList: List<Gamer>
         get() = _gamerList
 
-    constructor(gamerList: List<Gamer>) : this(Dealer(), gamerList)
-
-    fun getParticipant(): List<Person> = buildList {
-        add(dealer)
-        gamerList.forEach { add(it) }
-    }
+    val participant = gamerList + dealer
 
     fun getParticipantNames(): List<String> {
-        return buildList {
-            add(dealer.name)
-            gamerList.forEach { add(it.name) }
-        }
+        return participant.map { it.name }
     }
 
     fun changeResult() {
-        gamerList.forEach { gamer -> gamer.changeState(gamer.isWin(dealer)) }
-        dealer.changeResult(gamerList)
+        gamerList.forEach { gamer -> gamer.changeState(dealer) }
+    }
+
+    fun settle() {
+        gamerList.forEach { gamer ->
+            when (gamer.state) {
+                State.WIN -> {
+                    dealer.changeMoney(gamer.money.unaryMinus())
+                    gamer.changeMoney(0.0)
+                }
+                State.BLACKJACK -> {
+                    dealer.changeMoney((gamer.money + gamer.money / 2).unaryMinus())
+                    gamer.changeMoney(gamer.money / 2)
+                }
+                State.LOSE -> {
+                    dealer.changeMoney(gamer.money)
+                    gamer.changeMoney(gamer.money.unaryMinus() * 2)
+                }
+                else -> {
+                    dealer.changeMoney(0.0)
+                    gamer.changeMoney(0.0)
+                }
+            }
+        }
     }
 }

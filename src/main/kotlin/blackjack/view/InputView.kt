@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Gamer
 import blackjack.domain.Person
 
 object InputView {
@@ -13,5 +14,13 @@ object InputView {
         println()
         println("${person.name} - 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln()
+    }
+
+    fun getMoney(gamers: List<Gamer>) {
+        gamers.forEach {
+            println()
+            println("${it.name}의 베팅 금액은?")
+            it.changeMoney(readln().toDouble())
+        }
     }
 }

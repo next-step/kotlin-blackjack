@@ -7,10 +7,7 @@ object Draw {
     fun checkDrawable(drawYn: String): Boolean = (drawYn == "y")
 
     fun draw(): Card {
-        var card: Card
-        do {
-            card = Card()
-        } while (Deck.isDrawn(card))
+        val card = Card()
         Deck.draw(card)
         return card
     }

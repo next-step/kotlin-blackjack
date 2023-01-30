@@ -12,8 +12,6 @@ class Deck {
             }
         }.toMutableSet()
 
-        fun isDrawn(card: Card): Boolean = !cards.contains(card)
-
         fun draw(card: Card) {
             cards.remove(card)
         }
