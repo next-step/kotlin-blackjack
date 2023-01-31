@@ -1,11 +1,11 @@
 package view
 
-import controller.CardNumberCalculator
-import model.Card
+import model.CardNumberCalculator
+import model.Dealer
 import model.Names
-import model.Person
+import model.Participant
 
-class ResultView {
+object ResultView {
     fun showDistributedCard(names: Names) {
         var result = ""
         for ((index, name) in names.values.withIndex()) {
@@ -18,43 +18,55 @@ class ResultView {
         println("딜러와 ${result}에게 2장의 카드를 나누었습니다.")
     }
 
-    fun showPlayerCardState(players: List<Person>) {
-        var result = ""
+    fun showPlayersCardState(players: List<Participant>) {
         players.forEach { player ->
-            result += "${player.notifyName()}카드: "
-            player.openCard().forEach { card ->
-                result += "${card.cardNumber}${card.cardShape}, "
-            }
-            result = result.substring(0, result.lastIndex - 1) + "\n"
+            showPlayerCardState(player)
         }
-        print(result)
     }
 
-    fun showSpecificUserCardState(name: String, cards: List<Card>) {
-        var result = "${name}카드: "
-        cards.forEach {
-            result += "${it.cardNumber}${it.cardShape}, "
+    fun showPlayerCardState(player: Participant) {
+        var result = ""
+        result += "${player.name}카드: "
+        player.cards.forEach { card ->
+            result += "${card.cardNumber}${card.cardShape}, "
         }
-        result = result.substring(0, result.lastIndex - 1) + "\n"
+        result = result.substring(0, result.lastIndex - 1)
         println(result)
     }
 
-    fun showPlayerCardStateResult(players: List<Person>) {
+    fun showPlayersCardStateResult(players: List<Participant>) {
         players.forEach { player ->
-            var result = "${player.notifyName()}카드: "
-            player.openCard().forEach { card ->
-                result += "${card.cardNumber}${card.cardShape}, "
-            }
-            result = result.substring(0, result.lastIndex - 1) + " - 결과: ${CardNumberCalculator().sumCardNumbers(player.openCard())}"
-            println(result)
+            showPlayerCardStateResult(player)
         }
     }
 
-    fun showGameResult(players: List<Person>) {
-        println("\n## 최종 승패")
-        players.forEach { player ->
-            var result = "${player.notifyName()}: ${player.notifyResult()}"
-            println(result)
+    fun showPlayerCardStateResult(player: Participant) {
+        var result = "${player.name}카드: "
+        player.cards.forEach { card ->
+            result += "${card.cardNumber}${card.cardShape}, "
         }
+        result = result.substring(
+            0,
+            result.lastIndex - 1
+        ) + " - 결과: ${CardNumberCalculator.sumCardNumbers(player.cards)}"
+        println(result)
+    }
+
+    fun showGameResult(dealer: Dealer, players: List<Participant>) {
+        println("\n## 최종 승패")
+        showPersonalGameResult(dealer)
+        players.forEach { player ->
+            showPersonalGameResult(player)
+        }
+    }
+
+    private fun showPersonalGameResult(dealer: Participant) {
+        val result =
+            "${dealer.name}: ${dealer.notifyGameResultState().win}승 ${dealer.notifyGameResultState().lose}패 ${dealer.notifyGameResultState().draw}무"
+        println(result)
+    }
+
+    fun showReceivedCardByDealer() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 }

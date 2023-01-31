@@ -1,12 +1,18 @@
 package model
 class Players {
-    private val players = mutableListOf<Person>()
+    private val players = mutableListOf<Player>()
 
-    fun add(player: Person): Boolean {
+    fun create(names: Names) {
+        names.values.forEach {
+            add(Player(it))
+        }
+    }
+
+    fun add(player: Player): Boolean {
         return players.add(player)
     }
 
-    fun get(): List<Person> {
+    fun get(): List<Player> {
         return players
     }
 }

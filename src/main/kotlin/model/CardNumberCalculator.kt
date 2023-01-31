@@ -1,8 +1,8 @@
-package controller
+package model
 
-import model.Card
+object CardNumberCalculator {
+    private val RANGE_FOR_ACE_11 = 0..10
 
-class CardNumberCalculator {
     fun sumCardNumbers(cards: List<Card>): Int {
         var total = 0
         cards.forEach {
@@ -21,9 +21,5 @@ class CardNumberCalculator {
             else -> 1
         }
         return ace
-    }
-
-    companion object {
-        private val RANGE_FOR_ACE_11 = 0..10
     }
 }
