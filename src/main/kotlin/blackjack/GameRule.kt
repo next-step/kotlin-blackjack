@@ -11,8 +11,8 @@ import blackjack.views.Output.printDealerDraw
 import blackjack.views.Output.printHaveCards
 
 class GameRule(private val deck: Deck) {
-    fun initGamers(playerNames: List<String>): Gamers {
-        val dealer = initUser(playerName = "딜러", isDealer = true)
+    fun initGamers(dealerName: String, playerNames: List<String>): Gamers {
+        val dealer = initUser(playerName = dealerName, isDealer = true)
         val players = playerNames.map { playerName ->
             initUser(playerName = playerName, isDealer = false)
         }

@@ -13,7 +13,7 @@ fun main() {
     val deck = Deck(pokerNumbers = PokerNumber.values().toList(), pokerShapes = PokerShape.values().toList())
     val gameRule = GameRule(deck = deck)
 
-    val gamers = gameRule.initGamers(playerNames)
+    val gamers = gameRule.initGamers(dealerName = "딜러", playerNames = playerNames)
     val players = gamers.getPlayers()
     players.forEach { gameRule.makeABet(it) }
     players.forEach { gameRule.playGame(it) }
