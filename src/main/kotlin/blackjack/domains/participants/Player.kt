@@ -1,6 +1,6 @@
 package blackjack.domains.participants
 
-import blackjack.GameRule.Companion.BLACKJACK
+import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.GameScoreType
 import blackjack.domains.deck.Cards
 import blackjack.views.Input.answerDrawCard

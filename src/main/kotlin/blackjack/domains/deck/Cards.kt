@@ -1,6 +1,6 @@
 package blackjack.domains.deck
 
-import blackjack.GameRule
+import blackjack.domains.GameRule
 import blackjack.ScoreCalculator.sumOfNumbers
 
 class Cards(cards: List<Card> = listOf()) {

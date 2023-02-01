@@ -1,4 +1,4 @@
-import blackjack.GameRule
+import blackjack.domains.GameRule
 import blackjack.ResultCalculator
 import blackjack.domains.deck.Deck
 import blackjack.domains.deck.PokerNumber

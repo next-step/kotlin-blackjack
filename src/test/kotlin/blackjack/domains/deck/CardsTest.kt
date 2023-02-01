@@ -1,6 +1,6 @@
 package blackjack.domains.deck
 
-import blackjack.GameRule.Companion.BLACKJACK
+import blackjack.domains.GameRule.Companion.BLACKJACK
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

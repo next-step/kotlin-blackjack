@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.GameRule.Companion.BLACKJACK
+import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player

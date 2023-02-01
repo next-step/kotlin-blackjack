@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.GameRule.Companion.BLACKJACK
+import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.domains.deck.Card
 import blackjack.domains.deck.Cards
 import blackjack.domains.deck.PokerNumber

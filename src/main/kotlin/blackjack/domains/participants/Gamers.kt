@@ -1,6 +1,6 @@
 package blackjack.domains.participants
 
-import blackjack.GameRule
+import blackjack.domains.GameRule
 import blackjack.views.Output.printSummedCards
 
 @JvmInline
