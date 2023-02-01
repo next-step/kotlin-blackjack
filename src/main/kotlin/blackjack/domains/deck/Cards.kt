@@ -1,7 +1,7 @@
 package blackjack.domains.deck
 
-import blackjack.domains.GameRule
 import blackjack.ScoreCalculator.sumOfNumbers
+import blackjack.domains.GameRule
 
 class Cards(cards: List<Card> = listOf()) {
     val values: MutableList<Card> = cards.toMutableList()

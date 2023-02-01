@@ -1,8 +1,8 @@
 package blackjack.domains.participants
 
+import blackjack.GameScoreType
 import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.domains.GameRule.Companion.DEALER_DRAW_CONDITION
-import blackjack.GameScoreType
 import blackjack.domains.deck.Cards
 
 class Dealer(

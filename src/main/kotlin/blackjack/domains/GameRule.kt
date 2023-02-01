@@ -7,7 +7,6 @@ import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
 import blackjack.domains.participants.User
 import blackjack.views.Input.getBatingAmount
-import blackjack.views.Output.printDealerDraw
 import blackjack.views.Output.printHaveCards
 
 class GameRule(private val deck: Deck) {
@@ -17,18 +16,6 @@ class GameRule(private val deck: Deck) {
             initUser(playerName = playerName, isDealer = false)
         }
         return Gamers(players.plus(dealer))
-    }
-
-    fun drawCard(user: User) {
-        while (true) {
-            if (!user.isDrawable()) break
-            user.drawCard(deck.drawCard())
-            when (user) {
-                is Dealer -> printDealerDraw()
-                is Player -> printHaveCards(user.name, user.cards)
-                else -> throw IllegalArgumentException("Unknown User Type")
-            }
-        }
     }
 
     fun makeABet(player: Player) {
