@@ -28,8 +28,8 @@ internal class DealerTest {
     }
 
     @Test
-    @DisplayName("딜러가 가진 카드의 합이 21보다 크면 true를 반환한다")
-    fun `sut should return true when dealer's sum of cards is over 21 given`() {
+    @DisplayName("딜러가 가진 카드의 합이 BLACKJACK 보다 크면 true를 반환한다")
+    fun `sut should return true when dealer's sum of cards is over BLACKJACK given`() {
         // Arrange
         val cards = Cards()
         cards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
