@@ -2,10 +2,11 @@ package blackjack.controller
 
 import blackjack.domain.bet.Money
 import blackjack.domain.participant.state.Name
+import blackjack.dto.Input
 import blackjack.view.InputView
 
-object InputFilter {
-    fun inputPlayer(): Array<Name> {
+object InputFilter : Input {
+    override fun inputPlayer(): Array<Name> {
         return runCatching {
             val parsedInput = InputParser.parseWithDelimiter(InputView.inputName())
             parsedInput.map { Name(it) }.toTypedArray()
@@ -16,7 +17,7 @@ object InputFilter {
         }
     }
 
-    fun inputBettingMoney(name: String): Money {
+    override fun inputBettingMoney(name: String): Money {
         return runCatching {
             Money(InputParser.parseBettingMoney(InputView.inputBettingMoney(name)))
         }.onFailure { e ->
@@ -26,7 +27,7 @@ object InputFilter {
         }
     }
 
-    fun inputHitOrStay(name: String): Boolean {
+    override fun inputHitOrStay(name: String): Boolean {
         return runCatching {
             InputParser.parseHitOrStay(InputView.inputHitOrStay(name))
         }.onFailure { e ->
