@@ -15,6 +15,6 @@ internal class PlayersTest {
         val players = Players()
         val player = Player("Kim")
         players.add(player)
-        assertThat(players.get()[0]).isEqualTo(player)
+        assertThat(players.values[0]).isEqualTo(player)
     }
 }

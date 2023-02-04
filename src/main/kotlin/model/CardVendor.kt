@@ -25,7 +25,7 @@ class CardVendor(private val deck: Deck) {
         agreeToReceiveExtraCard: (String) -> Boolean,
         showSpecificUserCardState: (Participant) -> Unit
     ) {
-        players.get().forEach { player ->
+        players.values.forEach { player ->
             giveCard(player, agreeToReceiveExtraCard, showSpecificUserCardState)
         }
     }

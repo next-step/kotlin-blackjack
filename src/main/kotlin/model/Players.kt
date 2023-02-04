@@ -1,6 +1,7 @@
 package model
 class Players {
-    private val players = mutableListOf<Player>()
+    private val _players = mutableListOf<Player>()
+    val values get() = _players.toList()
 
     fun create(names: Names) {
         names.values.forEach {
@@ -9,10 +10,6 @@ class Players {
     }
 
     fun add(player: Player): Boolean {
-        return players.add(player)
-    }
-
-    fun get(): List<Player> {
-        return players
+        return _players.add(player)
     }
 }

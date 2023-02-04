@@ -1,6 +1,6 @@
 package model
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
@@ -9,10 +9,10 @@ internal class CardNumberCalculatorTest {
     fun `나머지 카드 숫자 합이 0 이상 10이하일 경우 ACE 카드 값을 11로 결정한다`() {
         assertAll(
             {
-                Assertions.assertThat(CardNumberCalculator.decideAceCardNumber(0)).isEqualTo(11)
+                assertThat(CardNumberCalculator.decideAceCardNumber(0)).isEqualTo(11)
             },
             {
-                Assertions.assertThat(CardNumberCalculator.decideAceCardNumber(10)).isEqualTo(11)
+                assertThat(CardNumberCalculator.decideAceCardNumber(10)).isEqualTo(11)
             }
         )
     }
@@ -21,10 +21,10 @@ internal class CardNumberCalculatorTest {
     fun `나머지 카드 숫자 합이 11이상일 경우 ACE 카드 값을 1로 결정한다`() {
         assertAll(
             {
-                Assertions.assertThat(CardNumberCalculator.decideAceCardNumber(11)).isEqualTo(1)
+                assertThat(CardNumberCalculator.decideAceCardNumber(11)).isEqualTo(1)
             },
             {
-                Assertions.assertThat(CardNumberCalculator.decideAceCardNumber(20)).isEqualTo(1)
+                assertThat(CardNumberCalculator.decideAceCardNumber(20)).isEqualTo(1)
             }
         )
     }
@@ -33,7 +33,7 @@ internal class CardNumberCalculatorTest {
     fun `카드 값 합계를 계산한다`() {
         assertAll(
             {
-                Assertions.assertThat(
+                assertThat(
                     CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
@@ -53,7 +53,7 @@ internal class CardNumberCalculatorTest {
                 ).isEqualTo(21)
             },
             {
-                Assertions.assertThat(
+                assertThat(
                     CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
@@ -77,7 +77,7 @@ internal class CardNumberCalculatorTest {
                 ).isEqualTo(22)
             },
             {
-                Assertions.assertThat(
+                assertThat(
                     CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
@@ -101,7 +101,7 @@ internal class CardNumberCalculatorTest {
                 ).isEqualTo(33)
             },
             {
-                Assertions.assertThat(
+                assertThat(
                     CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
@@ -125,7 +125,7 @@ internal class CardNumberCalculatorTest {
                 ).isEqualTo(41)
             },
             {
-                Assertions.assertThat(
+                assertThat(
                     CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(

@@ -8,7 +8,7 @@ class Deck(cards: List<Card> = initCards.shuffled()) {
     }
 }
 
-val initCards: List<Card> = CardNumber.values().flatMap { num ->
+private val initCards: List<Card> = CardNumber.values().flatMap { num ->
     CardShape.values().map { shape ->
         Card(num, shape)
     }
