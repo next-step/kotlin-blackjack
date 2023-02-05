@@ -3,6 +3,8 @@ package blackjack.domain.card
 import blackjack.domain.card.strategy.ShuffleStrategy
 
 data class PlayingCards(private val list: List<PlayingCard>) {
+    val size: Int = list.size
+
     constructor(vararg cards: PlayingCard) : this(cards.toList())
 
     operator fun plus(card: PlayingCard): PlayingCards {
@@ -13,19 +15,19 @@ data class PlayingCards(private val list: List<PlayingCard>) {
     }
 
     fun isBust(): Boolean {
-        return list.sumOf { it.score() } > BLACKJACK_NUMBER
+        return list.sumOf { it.score } > BLACKJACK_NUMBER
     }
 
     fun isBlackjack(): Boolean {
         val isSizeOfBlackjack = list.size == BLACKJACK_SIZE
-        val isAceAndTen = list.any { it.isAce() } && list.any { it.score() == TEN }
+        val isAceAndTen = list.any { it.isAce } && list.any { it.score == TEN }
         return isSizeOfBlackjack && isAceAndTen
     }
 
     fun isStay(): Boolean {
-        val isBiggerThanBlackjackSize = list.size >= BLACKJACK_SIZE
-        val isLessThanWinningNumber = list.sumOf { it.score() } <= BLACKJACK_NUMBER
-        return isBiggerThanBlackjackSize && isLessThanWinningNumber
+        val isNotBlackjack = !isBlackjack()
+        val isLessThanWinningNumber = list.sumOf { it.score } <= BLACKJACK_NUMBER
+        return isNotBlackjack && isLessThanWinningNumber
     }
 
     fun getScore(): Int {
@@ -35,12 +37,8 @@ data class PlayingCards(private val list: List<PlayingCard>) {
         if (isBust()) {
             return ZERO
         }
-        val sum = list.sumOf { it.score() }
+        val sum = list.sumOf { it.score }
         return sum + calculateSoft(sum)
-    }
-
-    fun size(): Int {
-        return list.size
     }
 
     fun toListString(): List<String> {
@@ -48,7 +46,7 @@ data class PlayingCards(private val list: List<PlayingCard>) {
     }
 
     private fun calculateSoft(sum: Int): Int {
-        return if (list.any { it.isAce() } && sum + TEN <= BLACKJACK_NUMBER) TEN else ZERO
+        return if (list.any { it.isAce } && sum + TEN <= BLACKJACK_NUMBER) TEN else ZERO
     }
 
     companion object {

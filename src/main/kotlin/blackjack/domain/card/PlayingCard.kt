@@ -1,15 +1,11 @@
 package blackjack.domain.card
 
 data class PlayingCard(private val suit: Suit, private val denomination: Denomination) {
-    override fun toString(): String {
-        return denomination.toString() + suit.symbol
-    }
+    val score: Int
+        get() = denomination.score
 
-    fun score(): Int {
-        return this.denomination.score
-    }
+    val isAce: Boolean
+        get() = denomination == Denomination.ACE
 
-    fun isAce(): Boolean {
-        return this.denomination == Denomination.ACE
-    }
+    override fun toString(): String = denomination.toString() + suit.symbol
 }

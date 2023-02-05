@@ -1,8 +1,12 @@
 package blackjack.domain.participant
 
-import blackjack.application.Deck
+import blackjack.domain.bet.Money
+import blackjack.domain.card.Deck
 import blackjack.domain.participant.state.Name
+import blackjack.domain.participant.state.role.Dealer
+import blackjack.domain.participant.state.role.Player
 import blackjack.domain.participant.state.role.Role
+import blackjack.domain.participant.state.role.Role.Companion.NUMBER_OF_STARTING_CARDS
 
 @JvmInline
 value class Participants(private val values: List<Role>) {
@@ -15,19 +19,17 @@ value class Participants(private val values: List<Role>) {
 
     operator fun plus(role: Role): Participants {
         if (role is Dealer) {
-            val participants = values.toMutableList()
-            participants.add(0, role)
-            return Participants(participants)
+            return Participants(listOf(role) + values)
         }
-        return Participants(values.plus(role))
+        return Participants(values + role)
     }
 
-    fun getPlayers(): List<Player> {
-        return values.filter { !it.isDealer() }.map { it as Player }
+    fun getPlayers(): List<Role> {
+        return values.filter { !it.isDealer }.map { it }
     }
 
     fun getDealer(): Dealer {
-        return values.filter { it.isDealer() }.map { it as Dealer }.first()
+        return values.filter { it.isDealer }.map { it as Dealer }.first()
     }
 
     fun getAll(): List<Role> {
@@ -35,15 +37,14 @@ value class Participants(private val values: List<Role>) {
     }
 
     fun isBlackjack(): Boolean {
-        return values.any { it.isBlackjack() }
+        return values.any { it.isBlackjack }
     }
 
     companion object {
-        const val NUMBER_OF_INIT_CARDS = 2
         private const val MINIMUM_NUMBER_OF_PLAYERS = 2
 
-        fun createPlayers(names: Array<Name>, deck: Deck): Participants {
-            return Participants(names.map { Player(it.toString(), deck.getCards(NUMBER_OF_INIT_CARDS)) })
+        fun createPlayers(names: Array<Name>, deck: Deck, monies: Array<Money>): Participants {
+            return Participants(names.mapIndexed { index, name -> Player(name.toString(), deck.getCards(NUMBER_OF_STARTING_CARDS), monies[index]) })
         }
     }
 }

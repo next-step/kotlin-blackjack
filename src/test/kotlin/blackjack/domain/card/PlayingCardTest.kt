@@ -29,7 +29,7 @@ class PlayingCardTest {
         val actual = SpadeAce
 
         // when, then
-        assertThat(actual.score()).isEqualTo(1)
+        assertThat(actual.score).isEqualTo(1)
     }
 
     @Test
@@ -38,6 +38,6 @@ class PlayingCardTest {
         val actual = SpadeAce
 
         // when, then
-        assertThat(actual.isAce()).isTrue
+        assertThat(actual.isAce).isTrue
     }
 }

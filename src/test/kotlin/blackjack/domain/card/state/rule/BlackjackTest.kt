@@ -3,6 +3,7 @@ package blackjack.domain.card.state.rule
 import blackjack.SpadeAce
 import blackjack.SpadeJack
 import blackjack.SpadeTen
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,5 +32,17 @@ class BlackjackTest {
 
         // then
         assertThat(exception.message).isEqualTo("블랙잭이 아닙니다.")
+    }
+
+    @Test
+    fun `베팅 금액 테스트`() {
+        // given
+        val given = Blackjack(PlayingCards(SpadeAce, SpadeJack))
+
+        // when
+        val actual = given.earningRate(Money(1000))
+
+        // then
+        assertThat(actual).isEqualTo(1500.0)
     }
 }

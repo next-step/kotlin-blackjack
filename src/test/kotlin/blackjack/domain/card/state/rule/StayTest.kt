@@ -8,6 +8,7 @@ import blackjack.SpadeSix
 import blackjack.SpadeTen
 import blackjack.SpadeThree
 import blackjack.SpadeTwo
+import blackjack.domain.bet.Money
 import blackjack.domain.card.PlayingCards
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -37,5 +38,17 @@ class StayTest {
         Assertions.assertThatThrownBy { Stay(cards) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("스테이가 아닙니다.")
+    }
+
+    @Test
+    fun `베팅 금액 테스트`() {
+        // given
+        val given = Stay(PlayingCards(SpadeTen, SpadeJack))
+
+        // when
+        val actual = given.earningRate(Money(1000))
+
+        // then
+        assertThat(actual).isEqualTo(1000.0)
     }
 }

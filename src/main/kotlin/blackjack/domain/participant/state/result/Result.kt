@@ -8,24 +8,26 @@ sealed class Result {
     object Lose : Result()
     object Draw : Result()
 
-    override fun toString(): String {
-        return when (this) {
-            is Win -> "승"
-            is Lose -> "패"
-            is Draw -> "무"
-        }
-    }
-
     companion object {
         fun calculateResult(participants: Participants): Map<Role, Result> {
-            if (participants.getDealer().isBlackjack()) {
-                return participants.getPlayers().associateWith { Result.Lose }
-            }
+            val dealer = participants.getDealer()
+            val players = participants.getPlayers()
 
-            if (participants.getDealer().isBust()) {
-                return participants.getPlayers().associateWith { Result.Win }
+            return players.associateWith(dealer::calculateResult)
+        }
+
+        fun calculateProfit(participants: Participants): Map<Role, Double> {
+            val result = calculateResult(participants)
+            val playersProfit = mutableMapOf<Role, Double>()
+            result.forEach { (role, result) ->
+                when (result) {
+                    is Win -> playersProfit[role] = role.earningRate
+                    is Lose -> playersProfit[role] = role.money.value * -1.0
+                    is Draw -> playersProfit[role] = 0.0
+                }
             }
-            return participants.getPlayers().associateWith { it.calculateResult(participants.getDealer().getScore()) }
+            val dealerProfit = mutableMapOf<Role, Double>(participants.getDealer() to playersProfit.values.sum() * -1.0)
+            return dealerProfit + playersProfit
         }
     }
 }
