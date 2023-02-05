@@ -8,10 +8,6 @@ data class Card(
         return denomination.description + cardSuit.description
     }
 
-    fun calculate(score: Int): Int {
-        return denomination.calc(score)
-    }
-
     fun isAce(): Boolean {
         return denomination == Denomination.ACE
     }

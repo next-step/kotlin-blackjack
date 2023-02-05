@@ -20,7 +20,7 @@ data class Cards(
 
     fun getScore(): Int {
         val aceCnt = cards.count { it.isAce() }
-        var score = cards.fold(ZERO) { acc, card -> card.calculate(acc) }
+        var score = cards.sumOf { it.denomination.score }
         repeat(aceCnt) { score += calculateAceCard(score) }
 
         return score
