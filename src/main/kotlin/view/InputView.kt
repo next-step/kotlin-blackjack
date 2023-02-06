@@ -1,6 +1,9 @@
 package view
 
-class InputView {
+object InputView {
+    private const val YES = "y"
+    private const val NO = "n"
+
     fun getUserName(): String {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln()
@@ -13,10 +16,5 @@ class InputView {
             inputValue = readln()
         }
         return inputValue == YES
-    }
-
-    companion object {
-        private const val YES = "y"
-        private const val NO = "n"
     }
 }

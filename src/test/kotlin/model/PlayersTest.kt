@@ -5,9 +5,16 @@ import org.junit.jupiter.api.Test
 
 internal class PlayersTest {
     @Test
-    fun `입력한 이름으로 플레이어가 생성된다`() {
+    fun `플레이어가 추가된다`() {
         val players = Players()
-        players.generate(Names("a,b,c"))
-        assertThat(players.get().keys.toString()).isEqualTo("[a, b, c]")
+        assertThat(players.add(Player("Kim"))).isTrue
+    }
+
+    @Test
+    fun `플레이어 목록을 가져온다`() {
+        val players = Players()
+        val player = Player("Kim")
+        players.add(player)
+        assertThat(players.values[0]).isEqualTo(player)
     }
 }

@@ -1,103 +1,30 @@
-import model.Card
-import model.CardNumber
-import model.CardShape
-import model.CardVendor
-import model.Deck
-import model.Names
-import model.Players
+package model
+
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-internal class BlackjackGameTest {
+internal class CardNumberCalculatorTest {
     @Test
-    fun `카드 번호가 ACE 인지 확인한다`() {
+    fun `나머지 카드 숫자 합이 0 이상 10이하일 경우 ACE 카드 값을 11로 결정한다`() {
         assertAll(
             {
-                assertThat(CardNumber.ACE.isAce()).isTrue
+                assertThat(CardNumberCalculator.decideAceCardNumber(0)).isEqualTo(11)
             },
             {
-                assertThat(CardNumber.KING.isAce()).isFalse
+                assertThat(CardNumberCalculator.decideAceCardNumber(10)).isEqualTo(11)
             }
         )
     }
 
     @Test
-    fun `카드 번호가 문자열로 변경된다`() {
+    fun `나머지 카드 숫자 합이 11이상일 경우 ACE 카드 값을 1로 결정한다`() {
         assertAll(
             {
-                assertThat(CardNumber.ACE.toString()).isEqualTo("A")
+                assertThat(CardNumberCalculator.decideAceCardNumber(11)).isEqualTo(1)
             },
             {
-                assertThat(CardNumber.KING.toString()).isEqualTo("K")
-            },
-            {
-                assertThat(CardNumber.TWO.toString()).isEqualTo("2")
-            }
-        )
-    }
-
-    @Test
-    fun `카드 모양이 문자열로 변경된다`() {
-        assertAll(
-            {
-                assertThat(CardShape.DIAMONDS.toString()).isEqualTo("다이아몬드")
-            },
-            {
-                assertThat(CardShape.CLUBS.toString()).isEqualTo("클로버")
-            }
-        )
-    }
-
-    @Test
-    fun `카드 숫자 합이 21 미만일 경우 추가 카드 받기가 가능하다`() {
-        assertAll(
-            {
-                assertThat(
-                    CardVendor().isGetExtraCard(
-                        listOf(
-                            Card(
-                                CardNumber.FIVE,
-                                CardShape.SPADES
-                            )
-                        )
-                    )
-                ).isTrue()
-            },
-            {
-                assertThat(
-                    CardVendor().isGetExtraCard(
-                        listOf(
-                            Card(CardNumber.TEN, CardShape.SPADES),
-                            Card(CardNumber.KING, CardShape.HEARTS),
-                            Card(CardNumber.ACE, CardShape.CLUBS)
-                        )
-                    )
-                ).isFalse()
-            }
-        )
-    }
-
-    @Test
-    fun `나머지 카드 숫자 합이 0이상 10이하 일 경우 ACE 카드 값을 11로 결정한다`() {
-        assertAll(
-            {
-                assertThat(CardVendor().decideAceCardNumber(2)).isEqualTo(11)
-            },
-            {
-                assertThat(CardVendor().decideAceCardNumber(10)).isEqualTo(11)
-            }
-        )
-    }
-
-    @Test
-    fun `나머지 카드 숫자 합이 0이상 10이하가 아닌 경우 ACE 카드 값을 1로 결정한다`() {
-        assertAll(
-            {
-                assertThat(CardVendor().decideAceCardNumber(11)).isEqualTo(1)
-            },
-            {
-                assertThat(CardVendor().decideAceCardNumber(20)).isEqualTo(1)
+                assertThat(CardNumberCalculator.decideAceCardNumber(20)).isEqualTo(1)
             }
         )
     }
@@ -107,7 +34,7 @@ internal class BlackjackGameTest {
         assertAll(
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -127,7 +54,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -151,7 +78,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -175,7 +102,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.QUEEN,
@@ -199,7 +126,7 @@ internal class BlackjackGameTest {
             },
             {
                 assertThat(
-                    CardVendor().sumCardNumbers(
+                    CardNumberCalculator.sumCardNumbers(
                         listOf(
                             Card(
                                 CardNumber.TWO,
@@ -222,27 +149,5 @@ internal class BlackjackGameTest {
                 ).isEqualTo(20)
             }
         )
-    }
-
-    @Test
-    fun `중복 없이 모든 카드를 뽑는다`() {
-        var cards = mutableListOf<Card>()
-        val totalCard = CardNumber.values().flatMap {
-            CardShape.values().map {
-            }
-        }
-
-        totalCard.forEach { _ ->
-            cards.add(Deck.getCard())
-        }
-
-        assertThat(cards.size).isEqualTo(totalCard.size)
-    }
-
-    @Test
-    fun `입력한 이름으로 플레이어가 생성된다`() {
-        val players = Players()
-        players.generate(Names("a,b,c"))
-        assertThat(players.get().keys.toString()).isEqualTo("[a, b, c]")
     }
 }

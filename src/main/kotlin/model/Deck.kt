@@ -1,15 +1,15 @@
 package model
 
-class Deck {
-    companion object {
-        private val cards = CardNumber.values().flatMap { num ->
-            CardShape.values().map { shape ->
-                Card(num, shape)
-            }
-        }.shuffled().toMutableList()
+class Deck(cards: List<Card> = initCards.shuffled()) {
+    private val cards: MutableList<Card> = cards.toMutableList()
 
-        fun getCard(): Card {
-            return cards.removeAt(0)
-        }
+    fun selectCard(): Card {
+        return cards.removeAt(0)
+    }
+}
+
+private val initCards: List<Card> = CardNumber.values().flatMap { num ->
+    CardShape.values().map { shape ->
+        Card(num, shape)
     }
 }
