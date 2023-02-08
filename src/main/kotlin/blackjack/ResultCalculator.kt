@@ -1,10 +1,11 @@
 package blackjack
 
+import blackjack.EarningCalculator.calculateEarningByWinnerDealer
+import blackjack.EarningCalculator.calculateEarningByWinnerPlayer
 import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
-import kotlin.math.roundToInt
 
 class ResultCalculator(private val users: Gamers) {
 
@@ -12,12 +13,16 @@ class ResultCalculator(private val users: Gamers) {
         val dealer = users.getDealer()
         val players = users.getPlayers()
         if (dealer.isOverBlackjack()) {
-            players.forEach { player -> playerWin(dealer, player) }
+            players.forEach { player ->
+                calculateEarningByWinnerPlayer(dealer, player)
+                playerWin(dealer, player)
+            }
             return
         }
         players.forEach { player ->
             if (player.summedCardNumbers > BLACKJACK) {
-                return@forEach playerLose(dealer, player)
+                calculateEarningByWinnerDealer(dealer, player)
+                playerLose(dealer, player)
             }
             when (dealer.calculatePlayerResult(player.summedCardNumbers)) {
                 GameScoreType.WIN -> playerWin(dealer, player)
@@ -28,15 +33,6 @@ class ResultCalculator(private val users: Gamers) {
     }
 
     private fun playerWin(dealer: Dealer, player: Player) {
-        val twoCardsWithBlackjack = player.cards.getCardSize() == 2 && player.cards.isBlackJack()
-        val playerBettingAmount = if (twoCardsWithBlackjack) {
-            (player.bettingAmount * 1.5).roundToInt()
-        } else {
-            player.bettingAmount
-        }
-
-        player.calcEarningAmount(playerBettingAmount)
-        dealer.calcEarningAmount(-playerBettingAmount)
         player.win()
         dealer.lose()
     }
@@ -47,9 +43,6 @@ class ResultCalculator(private val users: Gamers) {
     }
 
     private fun playerLose(dealer: Dealer, player: Player) {
-        val playerBettingAmount = player.bettingAmount
-        player.calcEarningAmount(-playerBettingAmount)
-        dealer.calcEarningAmount(playerBettingAmount)
         player.lose()
         dealer.win()
     }
