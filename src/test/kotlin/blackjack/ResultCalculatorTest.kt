@@ -105,4 +105,28 @@ internal class ResultCalculatorTest {
         assertThat(userA.gameScore).isEqualTo(GameScoreType.LOSE)
         assertThat(userB.gameScore).isEqualTo(GameScoreType.WIN)
     }
+
+    @Test
+    @DisplayName("player가 2장의 Blackjack으로 이긴다면 배팅 금액의 150%를 얻는다")
+    fun `sut player should earning 150% when player have two cards and blackjack`() {
+        // Arrange
+        val dealerCards = Cards()
+        dealerCards.addCard(Card(PokerNumber.TEN, PokerShape.CLOVER))
+        dealerCards.addCard(Card(PokerNumber.EIGHT, PokerShape.CLOVER))
+        val dealer = Dealer(name = "dealer", cards = dealerCards)
+
+        val userCards = Cards()
+        userCards.addCard(Card(PokerNumber.ACE, PokerShape.HEART))
+        userCards.addCard(Card(PokerNumber.KING, PokerShape.HEART))
+        val user = Player(name = "userA", cards = userCards)
+        user.makeABet(2_000)
+        val sut = ResultCalculator(Gamers(listOf(dealer, user)))
+
+        // Act
+        sut.setUserRanks()
+
+        // Assert
+        assertThat(dealer.earningAmount).isEqualTo(-3_000)
+        assertThat(user.earningAmount).isEqualTo(3_000)
+    }
 }

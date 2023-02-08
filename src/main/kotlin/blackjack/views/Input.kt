@@ -6,6 +6,11 @@ object Input {
         return readLine()?.split(",") ?: throw IllegalArgumentException("올바른 양식이 아닙니다")
     }
 
+    fun getBatingAmount(playerName: String): Int {
+        print("$playerName 의 배팅 금액은?\n")
+        return readLine()?.toInt() ?: throw IllegalArgumentException("올바른 양식이 아닙니다")
+    }
+
     fun answerDrawCard(playerName: String): Boolean {
         println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readLine()) {

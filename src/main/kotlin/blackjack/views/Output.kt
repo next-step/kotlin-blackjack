@@ -1,9 +1,7 @@
 package blackjack.views
 
-import blackjack.GameScoreType
 import blackjack.domains.deck.Cards
-import blackjack.domains.participants.Dealer
-import blackjack.domains.participants.Player
+import blackjack.domains.participants.Gamers
 
 object Output {
     fun printFirstDrawCards(playerNames: List<String>, drawCount: Int) {
@@ -23,15 +21,13 @@ object Output {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printVictoryOrDefeat(dealer: Dealer, players: List<Player>) {
+    fun printResultEarningRate(gamers: Gamers) {
+        val dealer = gamers.getDealer()
+        val players = gamers.getPlayers()
+
         println("")
-        println("## 최종 승패")
-        println(
-            "딜러: ${dealer.getScoreCounts(GameScoreType.WIN)}승 ${dealer.getScoreCounts(GameScoreType.DRAW)}무 " +
-                "${dealer.getScoreCounts(GameScoreType.LOSE)}패"
-        )
-        players.forEach {
-            println("${ it.name }: ${it.gameScore.displayName}")
-        }
+        println("## 최종 수익")
+        println("${dealer.name}: ${dealer.earningAmount}")
+        players.forEach { user -> println("${user.name}: ${user.earningAmount}") }
     }
 }

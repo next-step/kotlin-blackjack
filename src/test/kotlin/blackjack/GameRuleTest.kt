@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domains.GameRule
 import blackjack.domains.deck.Deck
 import blackjack.domains.deck.PokerNumber
 import blackjack.domains.deck.PokerShape
@@ -17,7 +18,7 @@ internal class GameRuleTest {
         val playerNames = listOf("a", "b", "c")
 
         // Act
-        val players = gameRule.initGame(playerNames = playerNames)
+        val players = gameRule.initGamers(dealerName = "딜러", playerNames = playerNames)
 
         // Assert
         assertThat(players.getDealer()).isNotNull

@@ -1,8 +1,8 @@
 package blackjack.domains.participants
 
-import blackjack.GameRule.Companion.BLACKJACK
-import blackjack.GameRule.Companion.DEALER_DRAW_CONDITION
 import blackjack.GameScoreType
+import blackjack.domains.GameRule.Companion.BLACKJACK
+import blackjack.domains.GameRule.Companion.DEALER_DRAW_CONDITION
 import blackjack.domains.deck.Cards
 
 class Dealer(
@@ -27,6 +27,10 @@ class Dealer(
 
     override fun draw() {
         gameScores.add(GameScoreType.DRAW)
+    }
+
+    override fun calcEarningAmount(earningAmount: Int) {
+        this.earningAmount += earningAmount
     }
 
     fun isOverBlackjack(): Boolean {

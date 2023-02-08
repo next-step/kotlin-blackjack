@@ -1,6 +1,8 @@
 package blackjack
 
-import blackjack.GameRule.Companion.BLACKJACK
+import blackjack.EarningCalculator.calculateEarningByWinnerDealer
+import blackjack.EarningCalculator.calculateEarningByWinnerPlayer
+import blackjack.domains.GameRule.Companion.BLACKJACK
 import blackjack.domains.participants.Dealer
 import blackjack.domains.participants.Gamers
 import blackjack.domains.participants.Player
@@ -11,12 +13,16 @@ class ResultCalculator(private val users: Gamers) {
         val dealer = users.getDealer()
         val players = users.getPlayers()
         if (dealer.isOverBlackjack()) {
-            players.forEach { player -> playerWin(dealer, player) }
+            players.forEach { player ->
+                calculateEarningByWinnerPlayer(dealer, player)
+                playerWin(dealer, player)
+            }
             return
         }
         players.forEach { player ->
             if (player.summedCardNumbers > BLACKJACK) {
-                return@forEach playerLose(dealer, player)
+                calculateEarningByWinnerDealer(dealer, player)
+                playerLose(dealer, player)
             }
             when (dealer.calculatePlayerResult(player.summedCardNumbers)) {
                 GameScoreType.WIN -> playerWin(dealer, player)

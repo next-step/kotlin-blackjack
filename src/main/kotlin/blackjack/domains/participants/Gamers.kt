@@ -1,10 +1,10 @@
 package blackjack.domains.participants
 
-import blackjack.GameRule
+import blackjack.CardDraw
 import blackjack.views.Output.printSummedCards
 
 @JvmInline
-value class Gamers(private val values: List<User>) {
+value class Gamers(val values: List<User>) {
     fun getDealer(): Dealer {
         return values.single { it is Dealer } as Dealer
     }
@@ -13,8 +13,8 @@ value class Gamers(private val values: List<User>) {
         return values.filterIsInstance<Player>()
     }
 
-    fun drawCard(gameRule: GameRule) {
-        values.forEach { gameRule.drawCard(it) }
+    fun drawCard(cardDraw: CardDraw) {
+        values.forEach { cardDraw.draw(it) }
     }
 
     fun printScores() {

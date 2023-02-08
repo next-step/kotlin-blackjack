@@ -1,7 +1,7 @@
 package blackjack.domains.deck
 
-import blackjack.GameRule
 import blackjack.ScoreCalculator.sumOfNumbers
+import blackjack.domains.GameRule
 
 class Cards(cards: List<Card> = listOf()) {
     val values: MutableList<Card> = cards.toMutableList()
@@ -24,5 +24,13 @@ class Cards(cards: List<Card> = listOf()) {
 
     fun sumOfCards(): Int {
         return sumOfNumbers(this, GameRule.BLACKJACK)
+    }
+
+    fun getCardSize(): Int {
+        return this.values.size
+    }
+
+    fun isBlackJack(): Boolean {
+        return this.sumOfCards() == GameRule.BLACKJACK
     }
 }
