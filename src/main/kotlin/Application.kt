@@ -15,6 +15,7 @@ fun main() {
     val names = inputNames()
 
     createPlayer(names, players)
+    betMoney(players)
     giveCardToDealer(dealer, cardVendor)
     giveCardToPlayers(players, cardVendor)
     giveExtraCardToPlayer(players, cardVendor)
@@ -37,6 +38,12 @@ private fun giveCardToDealer(dealer: Dealer, cardVendor: CardVendor) {
 private fun createPlayer(names: Names, players: Players) {
     players.create(names)
     ResultView.showDistributedCard(names)
+}
+
+private fun betMoney(players: Players) {
+    players.values.forEach { player ->
+        player.updateBettingMoney(InputView.getBettingMoney(player))
+    }
 }
 
 private fun giveCardToPlayers(players: Players, cardVendor: CardVendor) {
@@ -76,4 +83,5 @@ private fun decideGameResult(dealer: Dealer, players: Players) {
 
 private fun printGameResult(dealer: Dealer, players: Players) {
     ResultView.showGameResult(dealer, players.values)
+    ResultView.showGameProfitResult(dealer, players.values)
 }

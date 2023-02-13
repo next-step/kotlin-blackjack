@@ -2,7 +2,7 @@ package view
 
 import model.CardNumberCalculator
 import model.Dealer
-import model.GameResultState
+import model.GameResult
 import model.Names
 import model.Participant
 
@@ -56,17 +56,27 @@ object ResultView {
     }
 
     private fun showDealerGameResult(dealer: Participant, players: List<Participant>) {
-        var win = 0
-        var lose = 0
-        var draw = 0
+        val gameResult = GameResult()
         players.forEach { player ->
-            when (player.gameResultState) {
-                GameResultState.WIN -> lose++
-                GameResultState.LOSE -> win++
-                GameResultState.DRAW -> draw++
-            }
+            gameResult.update(player.gameResultState)
         }
-        println("${dealer.name}: ${win}승 ${lose}패 ${draw}무")
+        println("${dealer.name}: $gameResult")
+    }
+
+    fun showGameProfitResult(dealer: Dealer, players: List<Participant>) {
+        println("\n## 최종 수익")
+        showGameDealerProfitResult(dealer, players)
+        players.forEach { player ->
+            println("${player.name}: ${player.profit}")
+        }
+    }
+
+    private fun showGameDealerProfitResult(dealer: Dealer, players: List<Participant>) {
+        var dealerProfit = 0.0
+        players.forEach { player ->
+            dealerProfit += player.profit
+        }
+        println("${dealer.name}: ${-dealerProfit}")
     }
 
     private fun showPlayerGameResult(player: Participant) {

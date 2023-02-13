@@ -1,25 +1,34 @@
 package model
 
-private const val BLACK_JACK = 21
-
 class GameResultStateGenerator {
     fun generate(dealer: Dealer, players: List<Participant>) {
         val dealerTotalNumber: Int = dealer.sumOfCardNumber
         var playerTotalNumber: Int
+        val dealerScoreState: ScoreState = dealer.scoreState
+        var playerScoreState: ScoreState
 
         players.forEach { player ->
             playerTotalNumber = player.sumOfCardNumber
+            playerScoreState = player.scoreState
             when {
-                (playerTotalNumber > BLACK_JACK) -> {
-                    player.updateGameResult(GameResultState.LOSE)
-                }
-
-                (dealerTotalNumber > BLACK_JACK) -> {
+                (dealerScoreState == ScoreState.BUST) -> {
                     player.updateGameResult(GameResultState.WIN)
                 }
 
-                (dealerTotalNumber == BLACK_JACK && playerTotalNumber == BLACK_JACK) -> {
+                (playerScoreState == ScoreState.BUST) -> {
+                    player.updateGameResult(GameResultState.LOSE)
+                }
+
+                (dealerScoreState == ScoreState.BLACKJACK && playerScoreState == ScoreState.BLACKJACK) -> {
                     player.updateGameResult(GameResultState.DRAW)
+                }
+
+                (dealerScoreState == ScoreState.BLACKJACK) -> {
+                    player.updateGameResult(GameResultState.LOSE)
+                }
+
+                (playerScoreState == ScoreState.BLACKJACK) -> {
+                    player.updateGameResult(GameResultState.WIN)
                 }
 
                 (dealerTotalNumber > playerTotalNumber) -> {

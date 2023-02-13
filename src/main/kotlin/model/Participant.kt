@@ -6,6 +6,10 @@ open class Participant(val name: String) {
     val sumOfCardNumber get() = CardNumberCalculator.sumCardNumbers(cards)
     private var _gameResultState = GameResultState.DRAW
     val gameResultState get() = _gameResultState
+    val scoreState get() = ScoreStateGenerator().generate(sumOfCardNumber)
+    var bettingMoney: Int = 0
+        private set
+    val profit: Int get() = ProfitCalculator().getProfitResult(this)
 
     fun receiveCard(card: Card): Boolean {
         return _cards.add(card)
@@ -15,7 +19,7 @@ open class Participant(val name: String) {
         _gameResultState = result
     }
 
-    companion object {
-        const val BLACK_JACK = 21
+    fun updateBettingMoney(money: Int) {
+        bettingMoney = money
     }
 }

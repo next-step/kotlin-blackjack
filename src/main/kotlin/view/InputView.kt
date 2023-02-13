@@ -1,5 +1,7 @@
 package view
 
+import model.Player
+
 object InputView {
     private const val YES = "y"
     private const val NO = "n"
@@ -16,5 +18,10 @@ object InputView {
             inputValue = readln()
         }
         return inputValue == YES
+    }
+
+    fun getBettingMoney(player: Player): Int {
+        println("${player.name}의 배팅 금액은?")
+        return readln().toInt()
     }
 }
