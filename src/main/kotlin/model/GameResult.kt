@@ -1,8 +1,6 @@
 package model
 
-data class GameResult(private var win: Int, private var lose: Int, private var draw: Int) {
-    constructor() : this(0, 0, 0)
-
+data class GameResult(private var win: Int = 0, private var lose: Int = 0, private var draw: Int = 0) {
     fun update(gameResultState: GameResultState) {
         when (gameResultState) {
             GameResultState.WIN -> lose++

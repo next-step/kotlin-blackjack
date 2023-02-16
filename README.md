@@ -4,6 +4,7 @@
 - [x] 베팅 금액 입력 및 수익 결과 표시
 - [x] ScoreStateGenerator 테스트 코드 추가
 - [x] GameResultStateGenerator 테스트 코드 추가
+- [x] 6차 피드백 반영
 
 ## 3단계 기능 목록
 - [x] 3차 피드백 반영

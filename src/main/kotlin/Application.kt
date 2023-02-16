@@ -1,7 +1,6 @@
 import model.CardVendor
 import model.Dealer
 import model.Deck
-import model.GameResultStateGenerator
 import model.Names
 import model.Players
 import view.InputView
@@ -22,7 +21,6 @@ fun main() {
     giveExtraCardToDealer(dealer, cardVendor)
     printDealerCard(dealer)
     printPlayerCard(players)
-    decideGameResult(dealer, players)
     printGameResult(dealer, players)
 }
 
@@ -77,11 +75,6 @@ private fun printPlayerCard(players: Players) {
     ResultView.showPlayersCardStateResult(players.values)
 }
 
-private fun decideGameResult(dealer: Dealer, players: Players) {
-    GameResultStateGenerator().generate(dealer, players.values)
-}
-
 private fun printGameResult(dealer: Dealer, players: Players) {
-    ResultView.showGameResult(dealer, players.values)
     ResultView.showGameProfitResult(dealer, players.values)
 }

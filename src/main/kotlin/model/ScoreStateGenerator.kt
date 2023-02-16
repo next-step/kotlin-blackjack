@@ -1,7 +1,8 @@
 package model
 
 class ScoreStateGenerator {
-    fun generate(score: Int): ScoreState {
+    fun generate(cards: List<Card>): ScoreState {
+        val score = CardNumberCalculator.sumCardNumbers(cards)
         return when {
             score > BLACK_JACK -> ScoreState.BUST
             score == BLACK_JACK -> ScoreState.BLACKJACK

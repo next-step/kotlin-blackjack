@@ -2,7 +2,7 @@ package model
 
 class Dealer(dealerName: String = DEALER) : Participant(dealerName) {
     fun isExtraCard(): Boolean {
-        return sumOfCardNumber <= DEALER_INITIAL_SUM
+        return CardNumberCalculator.sumCardNumbers(cards) <= DEALER_INITIAL_SUM
     }
 
     companion object {
