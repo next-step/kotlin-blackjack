@@ -9,7 +9,7 @@ internal class DealerTest {
     fun `딜러 카드 숫자 합이 16이하일 경우 추가 카드 받기가 가능하다`() {
         assertAll(
             {
-                val dealer = Dealer("딜러")
+                val dealer = Dealer()
                 dealer.receiveCard(Card(CardNumber.TEN, CardShape.SPADES))
                 dealer.receiveCard(Card(CardNumber.FIVE, CardShape.HEARTS))
                 assertThat(
@@ -17,7 +17,7 @@ internal class DealerTest {
                 ).isTrue
             },
             {
-                val dealer = Dealer("딜러")
+                val dealer = Dealer()
                 dealer.receiveCard(Card(CardNumber.TEN, CardShape.HEARTS))
                 dealer.receiveCard(Card(CardNumber.SIX, CardShape.CLUBS))
                 assertThat(
@@ -31,7 +31,7 @@ internal class DealerTest {
     fun `딜러 카드 숫자 합이 16초과일 경우 추가 카드 받기가 불가능하다`() {
         assertAll(
             {
-                val dealer = Dealer("딜러")
+                val dealer = Dealer()
                 dealer.receiveCard(Card(CardNumber.TEN, CardShape.SPADES))
                 dealer.receiveCard(Card(CardNumber.SEVEN, CardShape.HEARTS))
                 assertThat(
@@ -39,7 +39,7 @@ internal class DealerTest {
                 ).isFalse
             },
             {
-                val dealer = Dealer("딜러")
+                val dealer = Dealer()
                 dealer.receiveCard(Card(CardNumber.TEN, CardShape.HEARTS))
                 dealer.receiveCard(Card(CardNumber.EIGHT, CardShape.CLUBS))
                 assertThat(

@@ -1,7 +1,6 @@
 import model.CardVendor
 import model.Dealer
 import model.Deck
-import model.GameResultStateGenerator
 import model.Names
 import model.Players
 import view.InputView
@@ -15,13 +14,13 @@ fun main() {
     val names = inputNames()
 
     createPlayer(names, players)
+    betMoney(players)
     giveCardToDealer(dealer, cardVendor)
     giveCardToPlayers(players, cardVendor)
     giveExtraCardToPlayer(players, cardVendor)
     giveExtraCardToDealer(dealer, cardVendor)
     printDealerCard(dealer)
     printPlayerCard(players)
-    decideGameResult(dealer, players)
     printGameResult(dealer, players)
 }
 
@@ -37,6 +36,12 @@ private fun giveCardToDealer(dealer: Dealer, cardVendor: CardVendor) {
 private fun createPlayer(names: Names, players: Players) {
     players.create(names)
     ResultView.showDistributedCard(names)
+}
+
+private fun betMoney(players: Players) {
+    players.values.forEach { player ->
+        player.updateBettingMoney(InputView.getBettingMoney(player))
+    }
 }
 
 private fun giveCardToPlayers(players: Players, cardVendor: CardVendor) {
@@ -70,10 +75,6 @@ private fun printPlayerCard(players: Players) {
     ResultView.showPlayersCardStateResult(players.values)
 }
 
-private fun decideGameResult(dealer: Dealer, players: Players) {
-    GameResultStateGenerator().generate(dealer, players.values)
-}
-
 private fun printGameResult(dealer: Dealer, players: Players) {
-    ResultView.showGameResult(dealer, players.values)
+    ResultView.showGameProfitResult(dealer, players.values)
 }

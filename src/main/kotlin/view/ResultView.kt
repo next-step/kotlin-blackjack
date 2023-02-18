@@ -2,9 +2,9 @@ package view
 
 import model.CardNumberCalculator
 import model.Dealer
-import model.GameResultState
 import model.Names
 import model.Participant
+import model.ProfitCalculator
 
 object ResultView {
     fun showDistributedCard(names: Names) {
@@ -47,31 +47,20 @@ object ResultView {
         println(playerCardState)
     }
 
-    fun showGameResult(dealer: Dealer, players: List<Participant>) {
-        println("\n## 최종 승패")
-        showDealerGameResult(dealer, players)
+    fun showGameProfitResult(dealer: Dealer, players: List<Participant>) {
+        println("\n## 최종 수익")
+        showGameDealerProfitResult(dealer, players)
         players.forEach { player ->
-            showPlayerGameResult(player)
+            println("${player.name}: ${ProfitCalculator().run(dealer, player)}")
         }
     }
 
-    private fun showDealerGameResult(dealer: Participant, players: List<Participant>) {
-        var win = 0
-        var lose = 0
-        var draw = 0
+    private fun showGameDealerProfitResult(dealer: Dealer, players: List<Participant>) {
+        var dealerProfit = 0
         players.forEach { player ->
-            when (player.gameResultState) {
-                GameResultState.WIN -> lose++
-                GameResultState.LOSE -> win++
-                GameResultState.DRAW -> draw++
-            }
+            dealerProfit += ProfitCalculator().run(dealer, player)
         }
-        println("${dealer.name}: ${win}승 ${lose}패 ${draw}무")
-    }
-
-    private fun showPlayerGameResult(player: Participant) {
-        val gameResult = "${player.name}: ${player.gameResultState.text}"
-        println(gameResult)
+        println("${dealer.name}: ${-dealerProfit}")
     }
 
     fun showReceivedCardByDealer() {
