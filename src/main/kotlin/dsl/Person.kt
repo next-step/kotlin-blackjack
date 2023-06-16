@@ -2,8 +2,7 @@ package dsl
 
 data class Person(val name: String, val company: String?, val languages: Languages?, val skills: Skills?)
 
-@PersonDsl
-class PersonBuilder {
+class PersonBuilder : DslBuilder<Person>() {
 
     private lateinit var name: String
     private var company: String? = null
@@ -26,7 +25,7 @@ class PersonBuilder {
         skills = SkillBuilder().apply(block = block).build()
     }
 
-    fun build(): Person {
+    override fun build(): Person {
         return Person(
             name = name,
             company = company,

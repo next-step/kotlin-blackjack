@@ -5,7 +5,7 @@ value class Languages(private val languages: List<Language>) : List<Language> by
 
 data class Language(val name: String, val level: Int)
 
-class LanguageBuilder: DslBuilder<Languages>() {
+class LanguageBuilder : DslBuilder<Languages>() {
 
     private val languages: MutableList<Language> = mutableListOf()
 
