@@ -18,7 +18,7 @@ class PlayingCardsTest : BehaviorSpec({
         )
 
         When(name = "주어진 카드 리스트를 등록하게 되면") {
-            val playingCards = PlayingCards(cards = expect)
+            val playingCards = MockPlayingCards(cards = expect)
 
             Then(name = "해당 카드 리스트가 들어가있다.") {
                 playingCards shouldBe expect
@@ -26,7 +26,7 @@ class PlayingCardsTest : BehaviorSpec({
         }
 
         val addExpect = Card(denomination = Denomination.FIVE, suit = Suit.CLUBS)
-        val playingCards = PlayingCards(cards = expect)
+        val playingCards = MockPlayingCards(cards = expect)
 
         When(name = "새로운 카드를 추가하면") {
             playingCards.add(card = addExpect)
