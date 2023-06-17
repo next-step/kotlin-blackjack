@@ -64,4 +64,25 @@ class PlayingCardsTest : BehaviorSpec({
             }
         }
     }
+
+    Given(name = "플레이 카드 리스트가 주어지면") {
+        val cards = mutableSetOf(
+            Card(denomination = Denomination.ACE, suit = Suit.CLUBS),
+            Card(denomination = Denomination.QUEEN, suit = Suit.DIAMONDS),
+        )
+
+        When(name = "최적의 점수를 계산할 수 있다.") {
+            val playingCards = MockPlayingCards(cards = cards)
+
+            Then(name = "ACE가 11로 판단되어도 21 미만이면 11로 판단한다.") {
+                playingCards.calculateOptimalScore() shouldBe 11 + 10
+            }
+
+            playingCards.add(card = Card(denomination = Denomination.QUEEN, suit = Suit.CLUBS))
+
+            Then(name = "ACE가 11로 판단되어 21 이상이면 1로 판단한다.") {
+                playingCards.calculateOptimalScore() shouldBe 1 + 10 + 10
+            }
+        }
+    }
 })
