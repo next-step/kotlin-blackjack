@@ -1,9 +1,9 @@
 package blackjack.domain.game
 
-import blackjack.domain.model.BlackJackErrorCode
-import io.kotest.assertions.throwables.shouldThrow
+import blackjack.domain.player.Player
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.throwable.shouldHaveMessage
+import io.kotest.matchers.collections.shouldHaveAtLeastSize
+import io.kotest.matchers.collections.shouldHaveSize
 
 class BlackJackGameTest : DescribeSpec({
 
@@ -11,17 +11,26 @@ class BlackJackGameTest : DescribeSpec({
         val playerNames = listOf("진원", "패자")
         val blackJackGame = BlackJackGame(playerNames = playerNames)
 
-        context(name = "사용자의 이름이 정해진 범위에 입력하지 않으면") {
-            val expect = "안녕하세요이름초과예요"
+        context(name = "게임을 시작하여 플레이어는 입력한 숫자만큼 생성된다.") {
+            val actual = blackJackGame.players
 
-            val exception = shouldThrow<IllegalArgumentException> {
-                BlackJackGame(playerNames = listOf("진원", expect))
+            it(name = "입력한 문자열과 생성된 플레이어가 같다.") {
+                actual shouldHaveSize playerNames.size
             }
+        }
 
-            it(name = "정해진 범위에 입력하지 않았다는 에러 메시지를 반환한다.") {
-                exception shouldHaveMessage BlackJackErrorCode.CAN_NOT_USED_RANGE_OF_NAME_LENGTH.message(
-                    arrayOf(1..10, expect)
-                )
+        context(name = "게임을 시작하여 이벤트를 입력하고 조건에 맞으면 이벤트가 실행된다.") {
+            val expect = mutableListOf<Player>()
+
+            val gameEvent = GameEvent(
+                hitOrNot = { true },
+                resultEvent = { expect.add(element = it) },
+            )
+
+            blackJackGame.start(gameEvent = gameEvent)
+
+            it(name = "무조건 실행 조건을 넣었을 때 이벤트는 무조건 한 번 이상 실행된다.") {
+                expect shouldHaveAtLeastSize 1
             }
         }
     }
