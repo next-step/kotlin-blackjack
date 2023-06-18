@@ -2,6 +2,3 @@ root = true
 
 [*]
 insert_final_newline = true
-
-[*.{kt,kts}]
-disabled_rules = import-ordering
