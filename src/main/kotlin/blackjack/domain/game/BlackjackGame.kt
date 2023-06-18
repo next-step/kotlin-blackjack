@@ -2,13 +2,13 @@ package blackjack.domain.game
 
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
-import blackjack.domain.player.PlayerResult
-import blackjack.domain.player.PlayerResults
-import blackjack.domain.player.Players
 import blackjack.domain.state.running.Hit
 import blackjack.event.GameEvent
+import blackjack.participant.Player
+import blackjack.participant.player.PlayerName
+import blackjack.participant.player.PlayerResult
+import blackjack.participant.player.PlayerResults
+import blackjack.participant.player.Players
 
 class BlackjackGame(
     playerNames: List<String>,

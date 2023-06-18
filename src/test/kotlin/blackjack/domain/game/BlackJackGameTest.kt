@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
-import blackjack.domain.player.Player
 import blackjack.event.GameEvent
+import blackjack.participant.Player
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.collections.shouldHaveSize

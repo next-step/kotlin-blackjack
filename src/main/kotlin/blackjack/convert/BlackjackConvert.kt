@@ -1,14 +1,14 @@
 package blackjack.convert
 
 import blackjack.domain.card.PlayingCards
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerResults
-import blackjack.domain.player.Players
 import blackjack.domain.view.model.CardView
 import blackjack.domain.view.model.PlayerView
 import blackjack.domain.view.model.PlayerViewResult
 import blackjack.domain.view.model.PlayerViewResults
 import blackjack.domain.view.model.PlayerViews
+import blackjack.participant.Player
+import blackjack.participant.player.PlayerResults
+import blackjack.participant.player.Players
 
 fun Players.convertView(): PlayerViews = this.map { it.convertView() }
     .run(::PlayerViews)

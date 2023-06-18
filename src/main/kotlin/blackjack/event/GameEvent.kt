@@ -1,6 +1,6 @@
 package blackjack.event
 
-import blackjack.domain.player.Player
+import blackjack.participant.Player
 
 private typealias HitOrNot = (String) -> Boolean
 private typealias ResultEvent = (Player) -> Unit

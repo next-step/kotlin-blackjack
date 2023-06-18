@@ -7,6 +7,8 @@ import blackjack.domain.game.BlackjackGame
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.running.Hit
 import blackjack.event.GameEvent
+import blackjack.participant.Player
+import blackjack.participant.player.PlayerName
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
