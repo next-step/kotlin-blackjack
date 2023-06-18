@@ -1,7 +1,7 @@
-package dsl
+package dsl.skill
 
-import dsl.SkillLevel.HARD
-import dsl.SkillLevel.SOFT
+import dsl.skill.SkillLevel.HARD
+import dsl.skill.SkillLevel.SOFT
 
 data class Skill(
     val skillLevel: SkillLevel,

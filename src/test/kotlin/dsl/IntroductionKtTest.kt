@@ -1,6 +1,8 @@
 package dsl
 
-import dsl.SkillLevel.SOFT
+import dsl.language.Language
+import dsl.skill.Skill
+import dsl.skill.SkillLevel.SOFT
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe

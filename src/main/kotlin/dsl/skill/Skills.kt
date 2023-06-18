@@ -1,7 +1,7 @@
-package dsl
+package dsl.skill
 
-import dsl.Skill.Companion.hardSkill
-import dsl.Skill.Companion.softSkill
+import dsl.skill.Skill.Companion.hardSkill
+import dsl.skill.Skill.Companion.softSkill
 
 @JvmInline
 value class Skills(

@@ -1,5 +1,10 @@
 package dsl
 
+import dsl.language.Languages
+import dsl.language.LanguagesBuilder
+import dsl.skill.Skills
+import dsl.skill.SkillsBuilder
+
 data class Person(
     val name: String,
     val company: String?,

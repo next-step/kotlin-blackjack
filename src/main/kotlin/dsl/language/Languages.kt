@@ -1,4 +1,4 @@
-package dsl
+package dsl.language
 
 @JvmInline
 value class Languages(
