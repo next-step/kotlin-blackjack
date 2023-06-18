@@ -3,7 +3,8 @@ package dsl
 import dsl.Skill.Companion.hardSkill
 import dsl.Skill.Companion.softSkill
 
-class Skills(
+@JvmInline
+value class Skills(
     val values: List<Skill> = listOf(),
 )
 

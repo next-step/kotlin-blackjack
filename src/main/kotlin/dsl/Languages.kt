@@ -1,6 +1,7 @@
 package dsl
 
-class Languages(
+@JvmInline
+value class Languages(
     val values: List<Language> = listOf(),
 )
 
