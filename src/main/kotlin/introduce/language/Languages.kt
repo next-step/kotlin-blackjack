@@ -1,6 +1,6 @@
-package dsl.language
+package introduce.language
 
-import dsl.IntroduceMaker
+import introduce.IntroduceMaker
 
 @JvmInline
 value class Languages(

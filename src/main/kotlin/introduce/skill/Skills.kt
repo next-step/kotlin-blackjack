@@ -1,8 +1,8 @@
-package dsl.skill
+package introduce.skill
 
-import dsl.IntroduceMaker
-import dsl.skill.Skill.Companion.hardSkill
-import dsl.skill.Skill.Companion.softSkill
+import introduce.IntroduceMaker
+import introduce.skill.Skill.Companion.hardSkill
+import introduce.skill.Skill.Companion.softSkill
 
 @JvmInline
 value class Skills(

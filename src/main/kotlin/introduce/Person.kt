@@ -1,9 +1,9 @@
-package dsl
+package introduce
 
-import dsl.language.Languages
-import dsl.language.LanguagesBuilder
-import dsl.skill.Skills
-import dsl.skill.SkillsBuilder
+import introduce.language.Languages
+import introduce.language.LanguagesBuilder
+import introduce.skill.Skills
+import introduce.skill.SkillsBuilder
 
 data class Person(
     val name: String,

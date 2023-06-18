@@ -1,4 +1,4 @@
-package dsl.language
+package introduce.language
 
 data class Language(
     val name: String,
