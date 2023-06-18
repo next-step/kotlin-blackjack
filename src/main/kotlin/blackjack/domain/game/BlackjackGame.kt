@@ -41,7 +41,6 @@ class BlackjackGame(
     }
 
     companion object {
-        const val BUST_SCORE: Int = 21
         const val INIT_HAND_COUNT: Int = 2
     }
 }
