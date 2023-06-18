@@ -15,7 +15,5 @@ class SkillsBuilder {
 
     fun hard(information: String) = values.add(hardSkill(information))
 
-    fun build(): Skills {
-        return Skills(values.toList())
-    }
+    fun build(): Skills = Skills(values.toList())
 }

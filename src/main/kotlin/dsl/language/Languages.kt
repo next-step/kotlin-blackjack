@@ -12,7 +12,5 @@ class LanguagesBuilder {
         values.add(Language(this, level))
     }
 
-    fun build(): Languages {
-        return Languages(values.toList())
-    }
+    fun build(): Languages = Languages(values.toList())
 }

@@ -34,7 +34,5 @@ class PersonBuilder {
         languages = LanguagesBuilder().apply(block).build()
     }
 
-    fun build(): Person {
-        return Person(name, company, skills, languages)
-    }
+    fun build(): Person = Person(name, company, skills, languages)
 }
