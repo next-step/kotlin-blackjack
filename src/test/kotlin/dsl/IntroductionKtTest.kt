@@ -25,10 +25,10 @@ class IntroductionKtTest : FunSpec({
 
             actual.name shouldBe "최진영"
             actual.company shouldBe "우아한형제들"
-            actual.skills!!.values shouldHaveSize 3
-            actual.skills!!.values[0] shouldBe Skill(SOFT, "A passion for problem solving")
-            actual.languages!!.values shouldHaveSize 2
-            actual.languages!!.values[0] shouldBe Language("Korean", 5)
+            actual.skills.values shouldHaveSize 3
+            actual.skills.values[0] shouldBe Skill(SOFT, "A passion for problem solving")
+            actual.languages.values shouldHaveSize 2
+            actual.languages.values[0] shouldBe Language("Korean", 5)
         }
     }
 })

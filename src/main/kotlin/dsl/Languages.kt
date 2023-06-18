@@ -1,7 +1,7 @@
 package dsl
 
 class Languages(
-    val values: List<Language>,
+    val values: List<Language> = listOf(),
 )
 
 class LanguagesBuilder {

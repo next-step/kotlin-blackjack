@@ -4,7 +4,7 @@ import dsl.Skill.Companion.hardSkill
 import dsl.Skill.Companion.softSkill
 
 class Skills(
-    val values: List<Skill>,
+    val values: List<Skill> = listOf(),
 )
 
 class SkillsBuilder {
