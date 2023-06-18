@@ -1,39 +1,31 @@
 package blackjack.participant
 
-import blackjack.domain.state.FinishState
+import blackjack.domain.game.result.ParticipantPlayResult
 import blackjack.domain.state.RunningState
 import blackjack.domain.state.State
-import blackjack.event.GameEvent
-import blackjack.participant.player.PlayerName
-import blackjack.participant.player.PlayerResult
+import blackjack.event.PlayerEvent
 
-class Player(playerName: PlayerName, state: State) : Participant<GameEvent>(playerName = playerName, state = state) {
+class Player(private val participantName: ParticipantName, state: State) : Participant(state = state) {
 
-    override fun play(gameEvent: GameEvent, drawingEvent: DrawingEvent): PlayerResult =
-        when (val playState = state) {
-            is RunningState -> hit(
-                gameEvent = gameEvent,
-                runningState = playState,
-                drawingEvent = drawingEvent,
-            )
-
-            is FinishState -> PlayerResult(
-                player = this,
-                score = playState.resultScore(),
-            )
-        }
+    fun play(playerEvent: PlayerEvent, drawingEvent: DrawingEvent): ParticipantPlayResult = playByState(
+        playEvent = {
+            hit(playerEvent = playerEvent, runningState = it, drawingEvent = drawingEvent)
+        },
+    )
 
     private fun hit(
-        gameEvent: GameEvent,
+        playerEvent: PlayerEvent,
         runningState: RunningState,
         drawingEvent: DrawingEvent,
-    ): PlayerResult = if (gameEvent.hitOrNot(getName())) {
+    ): ParticipantPlayResult = if (playerEvent.hitOrNot(getName())) {
         state = runningState.draw(card = drawingEvent())
-        gameEvent.resultEvent(this)
-        play(gameEvent = gameEvent) { drawingEvent() }
+        playerEvent.resultEvent(this)
+        play(playerEvent = playerEvent) { drawingEvent() }
     } else {
-        val finishState = runningState.stay()
-        state = finishState
-        PlayerResult(player = this, score = finishState.resultScore())
+        stayState(runningState = runningState)
     }
+
+
+
+    override fun getName(): String = participantName.name
 }

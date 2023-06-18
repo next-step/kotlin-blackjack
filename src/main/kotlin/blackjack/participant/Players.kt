@@ -1,6 +1,4 @@
-package blackjack.participant.player
-
-import blackjack.participant.Player
+package blackjack.participant
 
 @JvmInline
 value class Players(private val players: List<Player>) : List<Player> by players {

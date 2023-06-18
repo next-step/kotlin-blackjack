@@ -1,12 +1,12 @@
 package blackjack.domain.player
 
 import blackjack.domain.state.mockState
+import blackjack.participant.ParticipantName
 import blackjack.participant.Player
-import blackjack.participant.player.PlayerName
 
 fun mockPlayers(vararg names: String) = names.map(::mockPlayer)
 fun mockPlayer(name: String) = Player(
-    playerName = PlayerName(
+    participantName = ParticipantName(
         name = name,
     ),
     state = mockState,

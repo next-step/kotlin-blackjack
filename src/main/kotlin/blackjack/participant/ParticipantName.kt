@@ -1,7 +1,7 @@
-package blackjack.participant.player
+package blackjack.participant
 
 @JvmInline
-value class PlayerName(val name: String) {
+value class ParticipantName(val name: String) {
 
     init {
         require(value = name.length in NAME_LENGTH_RANGE) {

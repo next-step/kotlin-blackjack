@@ -1,17 +1,33 @@
 package blackjack.participant
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.PlayingCards
+import blackjack.domain.game.result.ParticipantPlayResult
+import blackjack.domain.state.FinishState
+import blackjack.domain.state.RunningState
 import blackjack.domain.state.State
-import blackjack.participant.player.PlayerName
-import blackjack.participant.player.PlayerResult
 
 typealias DrawingEvent = () -> Card
+private typealias PlayEvent = (RunningState) -> ParticipantPlayResult
 
-sealed class Participant<T>(private val playerName: PlayerName, protected var state: State) {
+sealed class Participant(protected var state: State) {
 
-    abstract fun play(gameEvent: T, drawingEvent: DrawingEvent): PlayerResult
+    protected fun playByState(playEvent: PlayEvent): ParticipantPlayResult = when (val playState = state) {
+        is RunningState -> playEvent(playState)
 
-    fun getName() = playerName.name
+        is FinishState -> ParticipantPlayResult(
+            participant = this,
+            finishState = playState,
+        )
+    }
 
-    fun getCards() = state.playingCards
+    protected fun stayState(runningState: RunningState): ParticipantPlayResult {
+        val finishState = runningState.stay()
+        state = finishState
+        return ParticipantPlayResult(participant = this, finishState = finishState)
+    }
+
+    fun getCards(): PlayingCards = state.playingCards
+
+    abstract fun getName(): String
 }
