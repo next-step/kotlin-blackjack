@@ -4,7 +4,9 @@ import blackjack.convert.convertView
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.view.InputView
 import blackjack.domain.view.ResultView
+import blackjack.event.DealerEvent
 import blackjack.event.GameEvent
+import blackjack.event.PlayerEvent
 
 fun main() {
     val blackJackGame = BlackjackGame(playerNames = InputView.readPlayers().playerNames)
@@ -16,10 +18,15 @@ fun main() {
 
     val playerResults = blackJackGame.start(
         gameEvent = GameEvent(
-            hitOrNot = { InputView.readHitOrNot(playerName = it) },
-            resultEvent = { ResultView.printPlayerCards(playerView = it.convertView()) },
-        ),
+            dealerEvent = DealerEvent { ResultView.printDealerHit() },
+
+            playerEvent = PlayerEvent(
+                hitOrNot = { InputView.readHitOrNot(playerName = it) },
+                resultEvent = { ResultView.printPlayerCards(playerView = it.convertView()) },
+            ),
+        )
     )
 
-    ResultView.printGameResults(playerViewResults = playerResults.convertView())
+    ResultView.printPlayResults(playerViewResults = playerResults.convertView())
+    ResultView.printMatchResults(matchResultViews = playerResults.totalMatchResult().convertView())
 }
