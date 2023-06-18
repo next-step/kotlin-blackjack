@@ -9,7 +9,7 @@ class BlackJackGameTest : DescribeSpec({
 
     describe(name = "블랙잭 게임에 플레이어 이름을 제공해서 게임을 시작할 수 있다.") {
         val playerNames = listOf("진원", "패자")
-        val blackJackGame = BlackJackGame(playerNames = playerNames)
+        val blackJackGame = BlackjackGame(playerNames = playerNames)
 
         context(name = "게임을 시작하여 플레이어는 입력한 숫자만큼 생성된다.") {
             val actual = blackJackGame.players

@@ -1,6 +1,6 @@
 package blackjack.domain.model
 
-enum class BlackJackErrorCode(val message: (Array<Any>) -> String) {
+enum class BlackjackErrorCode(val message: (Array<Any>) -> String) {
     CAN_NOT_ADD_DUPLICATE_CARD(
         message = { "중복된 카드를 추가할 수 없습니다. 카드 : %s".format(*it) },
     ),

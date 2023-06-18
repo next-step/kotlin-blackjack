@@ -1,13 +1,13 @@
 package blackjack.domain.player
 
-import blackjack.domain.model.BlackJackErrorCode
+import blackjack.domain.model.BlackjackErrorCode
 
 @JvmInline
 value class Players(private val players: List<Player>) : List<Player> by players {
 
     init {
         check(value = size in LIMIT_PLAYERS) {
-            BlackJackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
+            BlackjackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
                 arrayOf(LIMIT_PLAYERS, size)
             )
         }

@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-import blackjack.domain.model.BlackJackErrorCode
+import blackjack.domain.model.BlackjackErrorCode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -19,7 +19,7 @@ class PlayersTest : StringSpec({
                 Players(players = players)
             }
 
-            exception shouldHaveMessage BlackJackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
+            exception shouldHaveMessage BlackjackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
                 arrayOf(2..8, playerCount)
             )
         }

@@ -1,12 +1,14 @@
 package blackjack.domain.card
 
-import blackjack.domain.model.BlackJackErrorCode
+import blackjack.domain.deck.Denomination
+import blackjack.domain.game.BlackjackGame
+import blackjack.domain.model.BlackjackErrorCode
 
-abstract class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<Card> by cards {
+class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<Card> by cards {
 
     fun add(card: Card) {
         check(value = card !in cards) {
-            BlackJackErrorCode.CAN_NOT_ADD_DUPLICATE_CARD.message(
+            BlackjackErrorCode.CAN_NOT_ADD_DUPLICATE_CARD.message(
                 arrayOf(card)
             )
         }
@@ -14,24 +16,11 @@ abstract class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()
         cards.add(element = card)
     }
 
-    fun isBust(): Boolean = cards.sumOf { it.denomination.getMinimumScore() } > BUST_LIMIT
+    fun includeDenomination(denomination: Denomination): Boolean = cards.any { it.denomination == denomination }
 
-    fun calculateOptimalScore(): Int = cards.fold(initial = listOf(element = ZERO)) { acc, card ->
-        sumScores(sumScores = acc, card = card)
-    }.minBy { nearScore(score = it) }
+    fun sumScore(): Int = cards.sumOf { it.denomination.score }
 
-    private fun sumScores(sumScores: List<Int>, card: Card) = card.denomination.scores
-        .flatMap { score -> sumScore(sumScores = sumScores, score = score) }
+    fun isBust(): Boolean = sumScore() > BlackjackGame.BUST_SCORE
 
-    private fun sumScore(sumScores: List<Int>, score: Int) = sumScores.toList().map { it + score }
-
-    private fun nearScore(score: Int) = when {
-        score > BUST_LIMIT -> Int.MAX_VALUE
-        else -> BUST_LIMIT - score
-    }
-
-    companion object {
-        private const val ZERO: Int = 0
-        private const val BUST_LIMIT: Int = 21
-    }
+    fun isBlackjack(): Boolean = sumScore() == BlackjackGame.BUST_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
 }

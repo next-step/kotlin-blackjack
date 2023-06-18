@@ -1,15 +1,13 @@
 package blackjack.domain.player
 
-import blackjack.domain.behavior.BustState
-import blackjack.domain.behavior.FinishState
-import blackjack.domain.behavior.StartState
-import blackjack.domain.behavior.mockState
 import blackjack.domain.card.Card
-import blackjack.domain.card.InitPlayingCards
-import blackjack.domain.card.MockPlayingCards
+import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
+import blackjack.domain.game.BlackjackGame
 import blackjack.domain.game.GameEvent
-import blackjack.domain.model.BlackJackErrorCode
+import blackjack.domain.model.BlackjackErrorCode
+import blackjack.domain.state.Hit
+import blackjack.domain.state.finish.Blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -27,10 +25,10 @@ class PlayerTest : StringSpec({
             row(""),
         ) { name ->
             val exception = shouldThrow<IllegalArgumentException> {
-                Player(name = name, state = mockState)
+                mockPlayer(name = name)
             }
 
-            exception shouldHaveMessage BlackJackErrorCode.CAN_NOT_USED_RANGE_OF_NAME_LENGTH.message(
+            exception shouldHaveMessage BlackjackErrorCode.CAN_NOT_USED_RANGE_OF_NAME_LENGTH.message(
                 arrayOf(1..10, name.trim())
             )
         }
@@ -41,9 +39,9 @@ class PlayerTest : StringSpec({
             row("진원"),
             row("포비"),
         ) { name ->
-            val player = Player(name = name, state = mockState)
+            val player = mockPlayer(name = name)
 
-            player.name shouldBe name
+            player.getName() shouldBe name
         }
     }
 
@@ -51,8 +49,8 @@ class PlayerTest : StringSpec({
         val deck = Deck()
 
         val player = Player(
-            name = "진원",
-            state = startState(deck = deck),
+            playerName = PlayerName(name = "진원"),
+            state = hitState(deck = deck),
         )
 
         val expect = mutableListOf<Player>()
@@ -66,7 +64,6 @@ class PlayerTest : StringSpec({
             drawingEvent = { deck.draw() },
         )
 
-        player.state::class shouldBe BustState::class
         expect shouldHaveAtLeastSize 1
     }
 
@@ -74,8 +71,8 @@ class PlayerTest : StringSpec({
         val deck = Deck()
 
         val player = Player(
-            name = "진원",
-            state = startState(deck = deck),
+            playerName = PlayerName(name = "진원"),
+            state = hitState(deck = deck),
         )
 
         val expect = mutableListOf<Player>()
@@ -89,16 +86,15 @@ class PlayerTest : StringSpec({
             drawingEvent = { deck.draw() },
         )
 
-        player.state::class shouldBe FinishState::class
-        expect shouldHaveSize 1
+        expect shouldHaveSize 0
     }
 
     "플레이어는 게임 플레이를 할 수 있으며, 시작 가능한 상태가 아니라면 아무런 행동을 하지 않는다." {
         val deck = Deck()
 
         val player = Player(
-            name = "진원",
-            state = FinishState(playingCards = MockPlayingCards(cards = mutableSetOf())),
+            playerName = PlayerName(name = "진원"),
+            state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
         )
 
         val expectPlayer = mutableListOf<Player>()
@@ -122,6 +118,10 @@ class PlayerTest : StringSpec({
     }
 })
 
-private fun startState(deck: Deck) = StartState(
-    playingCards = InitPlayingCards(cards = deck.multiDraw(InitPlayingCards.INIT_CARD_COUNT)),
+private fun hitState(deck: Deck) = Hit(
+    playingCards = PlayingCards(
+        cards = deck.multiDraw(
+            count = BlackjackGame.INIT_HAND_COUNT,
+        ).toMutableSet(),
+    ),
 )

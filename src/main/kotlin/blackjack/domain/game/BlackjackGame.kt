@@ -1,12 +1,13 @@
 package blackjack.domain.game
 
-import blackjack.domain.behavior.StartState
-import blackjack.domain.card.InitPlayingCards
+import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
+import blackjack.domain.state.Hit
 
-class BlackJackGame(
+class BlackjackGame(
     playerNames: List<String>,
     private val deck: Deck = Deck(),
 ) {
@@ -16,16 +17,16 @@ class BlackJackGame(
     )
 
     private fun createPlayer(name: String) = Player(
-        name = name,
-        state = StartState(
+        playerName = PlayerName(name = name),
+        state = Hit(
             playingCards = initialCard(),
         ),
     )
 
-    private fun initialCard() = InitPlayingCards(
+    private fun initialCard() = PlayingCards(
         cards = deck.multiDraw(
-            count = InitPlayingCards.INIT_CARD_COUNT,
-        ),
+            count = INIT_HAND_COUNT,
+        ).toMutableSet(),
     )
 
     fun start(gameEvent: GameEvent) = players.forEach {
@@ -34,5 +35,10 @@ class BlackJackGame(
 
     private fun playTurn(player: Player, gameEvent: GameEvent) = player.play(gameEvent = gameEvent) {
         deck.draw()
+    }
+
+    companion object {
+        const val BUST_SCORE: Int = 21
+        const val INIT_HAND_COUNT: Int = 2
     }
 }
