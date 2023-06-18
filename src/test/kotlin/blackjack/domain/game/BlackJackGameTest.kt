@@ -1,5 +1,6 @@
 package blackjack.domain.game
 
+import blackjack.domain.player.Player
 import blackjack.event.GameEvent
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
@@ -20,11 +21,11 @@ class BlackJackGameTest : DescribeSpec({
         }
 
         context(name = "게임을 시작하여 이벤트를 입력하고 조건에 맞으면 이벤트가 실행된다.") {
-            val expect = mutableListOf<String>()
+            val expect = mutableListOf<Player>()
 
             val gameEvent = GameEvent(
                 hitOrNot = { true },
-                resultEvent = { name, _ -> expect.add(element = name) },
+                resultEvent = { expect.add(element = it) },
             )
 
             blackJackGame.start(gameEvent = gameEvent)

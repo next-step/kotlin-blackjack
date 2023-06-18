@@ -52,12 +52,12 @@ class PlayerTest : StringSpec({
             state = hitState(deck = deck),
         )
 
-        val expect = mutableListOf<String>()
+        val expect = mutableListOf<Player>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { true },
-                resultEvent = { name, _ -> expect.add(element = name) }
+                resultEvent = { expect.add(element = it) },
             ),
 
             drawingEvent = { deck.draw() },
@@ -74,12 +74,12 @@ class PlayerTest : StringSpec({
             state = hitState(deck = deck),
         )
 
-        val expect = mutableListOf<String>()
+        val expect = mutableListOf<Player>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { false },
-                resultEvent = { name, _ -> expect.add(element = name) }
+                resultEvent = { expect.add(element = it) },
             ),
 
             drawingEvent = { deck.draw() },
@@ -96,13 +96,13 @@ class PlayerTest : StringSpec({
             state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
         )
 
-        val expectPlayer = mutableListOf<String>()
+        val expectPlayer = mutableListOf<Player>()
         val expectCard = mutableListOf<Card>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { false },
-                resultEvent = { name, _ -> expectPlayer.add(element = name) }
+                resultEvent = { expectPlayer.add(element = it) }
             ),
 
             drawingEvent = {
