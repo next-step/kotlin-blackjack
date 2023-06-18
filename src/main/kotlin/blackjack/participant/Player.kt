@@ -25,7 +25,5 @@ class Player(private val participantName: ParticipantName, state: State) : Parti
         stayState(runningState = runningState)
     }
 
-
-
     override fun getName(): String = participantName.name
 }
