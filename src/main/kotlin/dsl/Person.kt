@@ -12,6 +12,7 @@ data class Person(
     val languages: Languages,
 )
 
+@IntroduceMaker
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null

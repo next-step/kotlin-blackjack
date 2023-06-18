@@ -1,5 +1,6 @@
 package dsl.skill
 
+import dsl.IntroduceMaker
 import dsl.skill.Skill.Companion.hardSkill
 import dsl.skill.Skill.Companion.softSkill
 
@@ -8,6 +9,7 @@ value class Skills(
     val values: List<Skill> = listOf(),
 )
 
+@IntroduceMaker
 class SkillsBuilder {
     private val values: MutableList<Skill> = mutableListOf()
 

@@ -1,10 +1,13 @@
 package dsl.language
 
+import dsl.IntroduceMaker
+
 @JvmInline
 value class Languages(
     val values: List<Language> = listOf(),
 )
 
+@IntroduceMaker
 class LanguagesBuilder {
     private val values: MutableList<Language> = mutableListOf()
 

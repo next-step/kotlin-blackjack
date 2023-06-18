@@ -32,5 +32,16 @@ class IntroductionKtTest : FunSpec({
             actual.languages.values shouldHaveSize 2
             actual.languages.values[0] shouldBe Language("Korean", 5)
         }
+
+        test("Person을 이름만 입력받아 생성한다") {
+            val actual = introduce {
+                name("최진영")
+            }
+
+            actual.name shouldBe "최진영"
+            actual.company shouldBe null
+            actual.skills.values shouldHaveSize 0
+            actual.languages.values shouldHaveSize 0
+        }
     }
 })
