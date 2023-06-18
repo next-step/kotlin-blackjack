@@ -5,7 +5,8 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
-import blackjack.domain.state.mockState
+import blackjack.domain.game.BlackjackGame
+import blackjack.domain.state.mockHitState
 import blackjack.domain.state.running.Hit
 import blackjack.event.DealerEvent
 import io.kotest.core.spec.style.StringSpec
@@ -15,7 +16,7 @@ import io.kotest.matchers.shouldNotBe
 class DealerTest : StringSpec({
 
     "딜러를 생성하면 이름은 딜러로 고정되어 있다." {
-        val dealer = Dealer(state = mockState)
+        val dealer = Dealer(state = mockHitState)
 
         dealer.getName() shouldBe "딜러"
     }
@@ -26,10 +27,9 @@ class DealerTest : StringSpec({
         val dealer = Dealer(
             state = Hit(
                 playingCards = PlayingCards(
-                    cards = mutableSetOf(
-                        Card(denomination = Denomination.ACE, suit = Suit.DIAMONDS),
-                        Card(denomination = Denomination.TWO, suit = Suit.DIAMONDS),
-                    ),
+                    cards = deck.multiDraw(
+                        count = BlackjackGame.INIT_HAND_COUNT,
+                    ).toMutableSet(),
                 ),
             ),
         )
