@@ -5,7 +5,6 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.game.GameEvent
-import blackjack.domain.model.BlackjackErrorCode
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.running.Hit
 import io.kotest.assertions.throwables.shouldThrow
@@ -20,6 +19,8 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 class PlayerTest : StringSpec({
 
     "플레이어 이름이 정해진 범위가 아니라면 정해진 범위가 아니라는 에러 메시지를 반환한다." {
+        val rangeLimit = 1..10
+
         forAll(
             row("안녕하세요이름초과예요"),
             row(""),
@@ -28,9 +29,7 @@ class PlayerTest : StringSpec({
                 mockPlayer(name = name)
             }
 
-            exception shouldHaveMessage BlackjackErrorCode.CAN_NOT_USED_RANGE_OF_NAME_LENGTH.message(
-                arrayOf(1..10, name.trim())
-            )
+            exception shouldHaveMessage "사용 가능한 이름 범위가 아닙니다. 범위 : $rangeLimit, 입력한 이름 : $name"
         }
     }
 

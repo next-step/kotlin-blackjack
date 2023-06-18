@@ -1,15 +1,11 @@
 package blackjack.domain.player
 
-import blackjack.domain.model.BlackjackErrorCode
-
 @JvmInline
 value class PlayerName(val name: String) {
 
     init {
         require(value = name.length in NAME_LENGTH_RANGE) {
-            BlackjackErrorCode.CAN_NOT_USED_RANGE_OF_NAME_LENGTH.message(
-                arrayOf(NAME_LENGTH_RANGE, name)
-            )
+            "사용 가능한 이름 범위가 아닙니다. 범위 : $NAME_LENGTH_RANGE, 입력한 이름 : $name"
         }
     }
 

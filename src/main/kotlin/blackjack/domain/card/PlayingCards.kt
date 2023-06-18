@@ -2,15 +2,12 @@ package blackjack.domain.card
 
 import blackjack.domain.deck.Denomination
 import blackjack.domain.game.BlackjackGame
-import blackjack.domain.model.BlackjackErrorCode
 
 class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<Card> by cards {
 
     fun add(card: Card) {
         check(value = card !in cards) {
-            BlackjackErrorCode.CAN_NOT_ADD_DUPLICATE_CARD.message(
-                arrayOf(card)
-            )
+            "중복된 카드를 추가할 수 없습니다. 카드 : $card"
         }
 
         cards.add(element = card)

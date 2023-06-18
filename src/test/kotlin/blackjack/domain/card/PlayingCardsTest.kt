@@ -2,7 +2,6 @@ package blackjack.domain.card
 
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
-import blackjack.domain.model.BlackjackErrorCode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContain
@@ -42,7 +41,7 @@ class PlayingCardsTest : BehaviorSpec({
             }
 
             Then(name = "중복된 카드를 등록할 수 없다는 에러가 발생한다.") {
-                exception shouldHaveMessage BlackjackErrorCode.CAN_NOT_ADD_DUPLICATE_CARD.message(arrayOf(addExpect))
+                exception shouldHaveMessage "중복된 카드를 추가할 수 없습니다. 카드 : $addExpect"
             }
         }
 

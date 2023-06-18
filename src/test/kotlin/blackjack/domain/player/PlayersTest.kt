@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.model.BlackjackErrorCode
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -11,6 +10,8 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 class PlayersTest : StringSpec({
 
     "플레이어를 생성할 때 정해진 범위의 플레이어 수가 아니라면 참석 가능한 플레이어 범위가 아니라는 에러가 발생한다." {
+        val rangeLimit = 2..8
+
         forAll(
             row(mockPlayers("진원"), 1),
             row(mockPlayers("진원", "포비", "태양", "천왕성", "해왕성", "목성", "토성", "세종", "태종"), 9),
@@ -19,9 +20,8 @@ class PlayersTest : StringSpec({
                 Players(players = players)
             }
 
-            exception shouldHaveMessage BlackjackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
-                arrayOf(2..8, playerCount)
-            )
+            exception shouldHaveMessage
+                    "참여 가능한 플레이어 범위가 아닙니다. 범위 : $rangeLimit, 참여한 플레이어 수 : $playerCount"
         }
     }
 

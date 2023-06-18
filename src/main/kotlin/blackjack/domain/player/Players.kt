@@ -1,15 +1,11 @@
 package blackjack.domain.player
 
-import blackjack.domain.model.BlackjackErrorCode
-
 @JvmInline
 value class Players(private val players: List<Player>) : List<Player> by players {
 
     init {
         check(value = size in LIMIT_PLAYERS) {
-            BlackjackErrorCode.CAN_NOT_PARTICIPATE_RANGE_OF_PLAYERS.message(
-                arrayOf(LIMIT_PLAYERS, size)
-            )
+            "참여 가능한 플레이어 범위가 아닙니다. 범위 : $LIMIT_PLAYERS, 참여한 플레이어 수 : $size"
         }
     }
 
