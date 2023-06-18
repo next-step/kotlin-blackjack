@@ -1,7 +1,7 @@
 package blackjack.domain.deck
 
 enum class Denomination(val exposeName: String, val score: Int, val bonus: Int = 0) {
-    ACE(exposeName = "A", score = 1, bonus = 11),
+    ACE(exposeName = "A", score = 1, bonus = 10),
     TWO(exposeName = "2", score = 2),
     THREE(exposeName = "3", score = 3),
     FOUR(exposeName = "4", score = 4),
