@@ -17,7 +17,11 @@ class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<C
 
     fun sumScore(): Int = cards.sumOf { it.denomination.score }
 
-    fun isBust(): Boolean = sumScore() > BlackjackGame.BUST_SCORE
+    fun isBust(): Boolean = sumScore() > ALLOWABLE_MAXIMUM_SCORE
 
-    fun isBlackjack(): Boolean = sumScore() == BlackjackGame.BUST_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
+    fun isBlackjack(): Boolean = sumScore() == ALLOWABLE_MAXIMUM_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
+
+    companion object {
+        const val ALLOWABLE_MAXIMUM_SCORE: Int = 21
+    }
 }

@@ -1,10 +1,10 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.game.GameEvent
 import blackjack.domain.state.FinishState
 import blackjack.domain.state.RunningState
 import blackjack.domain.state.State
+import blackjack.event.GameEvent
 
 private typealias DrawingEvent = () -> Card
 
@@ -29,11 +29,11 @@ class Player(private val playerName: PlayerName, private var state: State) {
         drawingEvent: DrawingEvent,
     ): PlayerResult = if (gameEvent.hitOrNot(playerName.name)) {
         state = runningState.draw(card = drawingEvent())
-        gameEvent.resultEvent(this.getName(), convertExposeCards())
+        gameEvent.resultEvent(this)
         play(gameEvent = gameEvent) { drawingEvent() }
     } else {
         val finishState = runningState.stay()
-        state = runningState.stay()
+        state = finishState
         PlayerResult(player = this, score = finishState.resultScore())
     }
 

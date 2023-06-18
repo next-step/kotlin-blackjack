@@ -8,6 +8,7 @@ import blackjack.domain.player.PlayerResult
 import blackjack.domain.player.PlayerResults
 import blackjack.domain.player.Players
 import blackjack.domain.state.running.Hit
+import blackjack.event.GameEvent
 
 class BlackjackGame(
     playerNames: List<String>,
