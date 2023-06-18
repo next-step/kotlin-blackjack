@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.game.GameEvent
+import blackjack.domain.state.FinishState
 import blackjack.domain.state.RunningState
 import blackjack.domain.state.State
 
@@ -9,23 +10,37 @@ private typealias DrawingEvent = () -> Card
 
 class Player(private val playerName: PlayerName, private var state: State) {
 
-    tailrec fun play(gameEvent: GameEvent, drawingEvent: DrawingEvent) {
-        val runningState = state as? RunningState
+    fun play(gameEvent: GameEvent, drawingEvent: DrawingEvent): PlayerResult = when (val playState = state) {
+        is RunningState -> hit(
+            gameEvent = gameEvent,
+            runningState = playState,
+            drawingEvent = drawingEvent,
+        )
 
-        when {
-            runningState == null -> Unit
-
-            gameEvent.hitOrNot(playerName.name) -> {
-                state = runningState.draw(card = drawingEvent())
-                gameEvent.resultEvent(this)
-                play(gameEvent = gameEvent) { drawingEvent() }
-            }
-
-            else -> {
-                state = runningState.stay()
-            }
-        }
+        is FinishState -> PlayerResult(
+            player = this,
+            score = playState.resultScore(),
+        )
     }
 
+    private fun hit(
+        gameEvent: GameEvent,
+        runningState: RunningState,
+        drawingEvent: DrawingEvent,
+    ): PlayerResult = if (gameEvent.hitOrNot(playerName.name)) {
+        state = runningState.draw(card = drawingEvent())
+        gameEvent.resultEvent(this.getName(), convertExposeCards())
+        play(gameEvent = gameEvent) { drawingEvent() }
+    } else {
+        val finishState = runningState.stay()
+        state = runningState.stay()
+        PlayerResult(player = this, score = finishState.resultScore())
+    }
+
+    private fun convertExposeCards(): List<Pair<String, String>> = this.getCards()
+        .map { it.denomination.exposeName to it.suit.exposeName }
+
     fun getName() = playerName.name
+
+    fun getCards() = state.playingCards
 }

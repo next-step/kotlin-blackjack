@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
+import blackjack.domain.state.running.Hit
 
 val mockState = Hit(
     playingCards = PlayingCards(

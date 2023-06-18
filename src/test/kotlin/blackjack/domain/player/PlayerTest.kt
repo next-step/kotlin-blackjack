@@ -6,8 +6,8 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.game.GameEvent
 import blackjack.domain.model.BlackjackErrorCode
-import blackjack.domain.state.Hit
 import blackjack.domain.state.finish.Blackjack
+import blackjack.domain.state.running.Hit
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -53,12 +53,12 @@ class PlayerTest : StringSpec({
             state = hitState(deck = deck),
         )
 
-        val expect = mutableListOf<Player>()
+        val expect = mutableListOf<String>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { true },
-                resultEvent = { expect.add(element = it) }
+                resultEvent = { name, _ -> expect.add(element = name) }
             ),
 
             drawingEvent = { deck.draw() },
@@ -75,12 +75,12 @@ class PlayerTest : StringSpec({
             state = hitState(deck = deck),
         )
 
-        val expect = mutableListOf<Player>()
+        val expect = mutableListOf<String>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { false },
-                resultEvent = { expect.add(element = it) }
+                resultEvent = { name, _ -> expect.add(element = name) }
             ),
 
             drawingEvent = { deck.draw() },
@@ -97,13 +97,13 @@ class PlayerTest : StringSpec({
             state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
         )
 
-        val expectPlayer = mutableListOf<Player>()
+        val expectPlayer = mutableListOf<String>()
         val expectCard = mutableListOf<Card>()
 
         player.play(
             gameEvent = GameEvent(
                 hitOrNot = { false },
-                resultEvent = { expectPlayer.add(element = it) }
+                resultEvent = { name, _ -> expectPlayer.add(element = name) }
             ),
 
             drawingEvent = {

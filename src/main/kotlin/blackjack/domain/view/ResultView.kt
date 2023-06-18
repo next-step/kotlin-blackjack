@@ -1,8 +1,11 @@
 package blackjack.domain.view
 
 import blackjack.domain.game.BlackjackGame
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.view.model.CardView
+import blackjack.domain.view.model.PlayerView
+import blackjack.domain.view.model.PlayerViewResult
+import blackjack.domain.view.model.PlayerViewResults
+import blackjack.domain.view.model.PlayerViews
 
 object ResultView {
 
@@ -12,8 +15,8 @@ object ResultView {
 
     private const val SEPARATOR = ", "
 
-    fun printStartBlackJackGame(players: Players) {
-        val playerNames = players.joinToString(separator = SEPARATOR) { it.getName() }
+    fun printStartBlackJackGame(playerViews: PlayerViews) {
+        val playerNames = playerViews.joinToString { it.name }
 
         println(
             message = START_BLACK_JACK_GAME_MESSAGE.format(
@@ -22,28 +25,37 @@ object ResultView {
             ),
         )
 
-        players.forEach { printPlayerCards(player = it) }
+        playerViews.forEach { printPlayerCards(playerView = it) }
     }
 
-    fun printPlayerCards(player: Player) = println(
+    fun printPlayerResultEvent(playerName: String, cards: List<Pair<String, String>>) = printPlayerCards(
+        playerView = PlayerView(
+            name = playerName,
+            cards = cards.map { CardView(denomination = it.first, suit = it.second) }
+        )
+    )
+
+    private fun printPlayerCards(playerView: PlayerView) = println(
         message = PLAYER_CARDS_MESSAGE.format(
-            player.getName(),
-            convertCardView(player = player),
+            playerView.name,
+            convertCardView(cards = playerView.cards),
         ),
     )
 
-    fun printGameResults(players: Players) {
+    fun printGameResults(playerViewResults: PlayerViewResults) {
         println()
-        players.forEach { printGameResult(player = it) }
+        playerViewResults.forEach { printGameResult(playerViewResult = it) }
     }
 
-    private fun printGameResult(player: Player) = println(
+    private fun printGameResult(playerViewResult: PlayerViewResult) = println(
         message = GAME_RESULT_MESSAGE.format(
-            player.getName(),
-            convertCardView(player = player),
-            1,
+            playerViewResult.name,
+            convertCardView(cards = playerViewResult.cards),
+            playerViewResult.score,
         ),
     )
 
-    private fun convertCardView(player: Player) = Unit
+    private fun convertCardView(cards: List<CardView>) = cards.joinToString(separator = SEPARATOR) { card ->
+        "${card.denomination}${card.suit}"
+    }
 }

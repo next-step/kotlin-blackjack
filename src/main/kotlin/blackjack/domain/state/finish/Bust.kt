@@ -1,6 +1,7 @@
 package blackjack.domain.state.finish
 
 import blackjack.domain.card.PlayingCards
+import blackjack.domain.state.FinishState
 
 class Bust(playingCards: PlayingCards) : FinishState(playingCards = playingCards) {
 

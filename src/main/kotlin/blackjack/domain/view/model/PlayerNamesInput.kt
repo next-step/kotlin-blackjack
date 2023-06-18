@@ -1,4 +1,4 @@
-package blackjack.domain.view
+package blackjack.domain.view.model
 
 class PlayerNamesInput(text: String) {
 

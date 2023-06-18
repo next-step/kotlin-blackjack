@@ -1,9 +1,7 @@
 package blackjack.domain.game
 
-import blackjack.domain.player.Player
-
 private typealias HitOrNot = (String) -> Boolean
-private typealias ResultEvent = (Player) -> Unit
+private typealias ResultEvent = (String, List<Pair<String, String>>) -> Unit
 
 class GameEvent(
     val hitOrNot: HitOrNot,

@@ -4,8 +4,10 @@ import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
+import blackjack.domain.player.PlayerResult
+import blackjack.domain.player.PlayerResults
 import blackjack.domain.player.Players
-import blackjack.domain.state.Hit
+import blackjack.domain.state.running.Hit
 
 class BlackjackGame(
     playerNames: List<String>,
@@ -29,11 +31,11 @@ class BlackjackGame(
         ).toMutableSet(),
     )
 
-    fun start(gameEvent: GameEvent) = players.forEach {
+    fun start(gameEvent: GameEvent): PlayerResults = players.map {
         playTurn(player = it, gameEvent = gameEvent)
-    }
+    }.run(::PlayerResults)
 
-    private fun playTurn(player: Player, gameEvent: GameEvent) = player.play(gameEvent = gameEvent) {
+    private fun playTurn(player: Player, gameEvent: GameEvent): PlayerResult = player.play(gameEvent = gameEvent) {
         deck.draw()
     }
 
