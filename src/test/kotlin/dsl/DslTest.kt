@@ -27,8 +27,3 @@ class DslTest : FunSpec({
         actual.languages?.contains(Language(value = "Korean", level = 5)) shouldBe true
     }
 })
-
-
-
-
-
