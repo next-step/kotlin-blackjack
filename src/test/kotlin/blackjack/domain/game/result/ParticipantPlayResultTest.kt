@@ -13,7 +13,7 @@ import io.kotest.matchers.shouldBe
 
 class ParticipantPlayResultTest : BehaviorSpec({
 
-    Given(name = "참가자 플레이 결과는 다른 플레이 결과와 비교를 제공하며") {
+    Given(name = "참가자 플레이 결과에서 다른 플레이 결과를 비교할 경우에") {
         val blackjack = ParticipantPlayResult(
             participant = mockPlayer(name = "진원"),
             finishState = mockBlackjackState,

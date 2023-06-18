@@ -14,7 +14,7 @@ import io.kotest.matchers.types.shouldBeTypeOf
 
 class StateTest : BehaviorSpec({
 
-    Given(name = "Hit 생성할 수 있다.") {
+    Given(name = "Hit 상태인 경우에") {
         val hit = Hit(
             playingCards = PlayingCards(
                 cards = mutableSetOf(
@@ -43,7 +43,7 @@ class StateTest : BehaviorSpec({
         }
     }
 
-    Given(name = "Blackjack 상태를 생성할 수 있다.") {
+    Given(name = "Blackjack 상태인 경우에") {
         val blackjack = Blackjack(playingCards = PlayingCards(cards = mutableSetOf()))
 
         When(name = "스코어 결과를 요청하게 되면") {
@@ -55,7 +55,7 @@ class StateTest : BehaviorSpec({
         }
     }
 
-    Given(name = "Stay 상태를 생성하는 카드가 주어진다.") {
+    Given(name = "Stay 상태인 경우에") {
         val expect21 = PlayingCards(
             cards = mutableSetOf(
                 Card(denomination = Denomination.ACE, suit = Suit.CLUBS),
