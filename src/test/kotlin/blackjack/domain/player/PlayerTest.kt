@@ -4,9 +4,9 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
-import blackjack.domain.game.GameEvent
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.running.Hit
+import blackjack.event.GameEvent
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll

@@ -1,5 +1,6 @@
 package blackjack.domain.game
 
+import blackjack.event.GameEvent
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.collections.shouldHaveSize
