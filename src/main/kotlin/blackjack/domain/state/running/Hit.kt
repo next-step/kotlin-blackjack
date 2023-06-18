@@ -22,7 +22,6 @@ class Hit(playingCards: PlayingCards) : RunningState(playingCards = playingCards
     }
 
     override fun stay(): FinishState = when {
-        playingCards.isBust() -> Bust(playingCards = playingCards)
         playingCards.isBlackjack() -> Blackjack(playingCards = playingCards)
         else -> Stay(playingCards = playingCards)
     }
