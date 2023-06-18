@@ -1,6 +1,5 @@
 package blackjack.domain.view
 
-import blackjack.domain.game.BlackjackGame
 import blackjack.domain.view.model.CardView
 import blackjack.domain.view.model.PlayerView
 import blackjack.domain.view.model.PlayerViewResult
@@ -15,14 +14,11 @@ object ResultView {
 
     private const val SEPARATOR = ", "
 
-    fun printStartBlackJackGame(playerViews: PlayerViews) {
+    fun printStartBlackJackGame(playerViews: PlayerViews, initHandCount: Int) {
         val playerNames = playerViews.joinToString { it.name }
 
         println(
-            message = START_BLACK_JACK_GAME_MESSAGE.format(
-                playerNames,
-                BlackjackGame.INIT_HAND_COUNT,
-            ),
+            message = START_BLACK_JACK_GAME_MESSAGE.format(playerNames, initHandCount),
         )
 
         playerViews.forEach { printPlayerCards(playerView = it) }

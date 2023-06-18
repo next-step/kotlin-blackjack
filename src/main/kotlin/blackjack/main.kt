@@ -9,7 +9,10 @@ import blackjack.domain.view.ResultView
 fun main() {
     val blackJackGame = BlackjackGame(playerNames = InputView.readPlayers().playerNames)
 
-    ResultView.printStartBlackJackGame(playerViews = blackJackGame.players.convertView())
+    ResultView.printStartBlackJackGame(
+        playerViews = blackJackGame.players.convertView(),
+        initHandCount = BlackjackGame.INIT_HAND_COUNT,
+    )
 
     val playerResults = blackJackGame.start(
         gameEvent = GameEvent(
