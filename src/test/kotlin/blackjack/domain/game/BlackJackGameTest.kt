@@ -1,6 +1,8 @@
 package blackjack.domain.game
 
+import blackjack.event.DealerEvent
 import blackjack.event.GameEvent
+import blackjack.event.PlayerEvent
 import blackjack.participant.Player
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
@@ -24,8 +26,12 @@ class BlackJackGameTest : DescribeSpec({
             val expect = mutableListOf<Player>()
 
             val gameEvent = GameEvent(
-                hitOrNot = { true },
-                resultEvent = { expect.add(element = it) },
+                playerEvent = PlayerEvent(
+                    hitOrNot = { true },
+                    resultEvent = { expect.add(element = it) },
+                ),
+
+                dealerEvent = DealerEvent { },
             )
 
             blackJackGame.start(gameEvent = gameEvent)
