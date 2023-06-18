@@ -37,9 +37,6 @@ class Player(private val playerName: PlayerName, private var state: State) {
         PlayerResult(player = this, score = finishState.resultScore())
     }
 
-    private fun convertExposeCards(): List<Pair<String, String>> = this.getCards()
-        .map { it.denomination.exposeName to it.suit.exposeName }
-
     fun getName() = playerName.name
 
     fun getCards() = state.playingCards
