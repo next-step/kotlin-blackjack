@@ -4,7 +4,7 @@ package blackjack.domain.player
 value class Players(private val players: List<Player>) : List<Player> by players {
 
     init {
-        check(value = size in LIMIT_PLAYERS) {
+        require(value = size in LIMIT_PLAYERS) {
             "참여 가능한 플레이어 범위가 아닙니다. 범위 : $LIMIT_PLAYERS, 참여한 플레이어 수 : $size"
         }
     }

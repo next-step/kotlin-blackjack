@@ -16,7 +16,7 @@ class PlayersTest : StringSpec({
             row(mockPlayers("진원"), 1),
             row(mockPlayers("진원", "포비", "태양", "천왕성", "해왕성", "목성", "토성", "세종", "태종"), 9),
         ) { players, playerCount ->
-            val exception = shouldThrow<IllegalStateException> {
+            val exception = shouldThrow<IllegalArgumentException> {
                 Players(players = players)
             }
 
