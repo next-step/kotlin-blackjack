@@ -1,19 +1,18 @@
 package introduce.language
 
-import introduce.IntroduceMaker
+import introduce.IntroduceBuilder
 
 @JvmInline
 value class Languages(
     val values: List<Language> = listOf(),
 )
 
-@IntroduceMaker
-class LanguagesBuilder {
+class LanguagesBuilder : IntroduceBuilder<Languages> {
     private val values: MutableList<Language> = mutableListOf()
 
     infix fun String.level(level: Int) {
         values.add(Language(this, level))
     }
 
-    fun build(): Languages = Languages(values.toList())
+    override fun build(): Languages = Languages(values.toList())
 }

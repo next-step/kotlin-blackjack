@@ -12,8 +12,7 @@ data class Person(
     val languages: Languages,
 )
 
-@IntroduceMaker
-class PersonBuilder {
+class PersonBuilder : IntroduceBuilder<Person> {
     private lateinit var name: String
     private var company: String? = null
     private var skills: Skills = Skills()
@@ -35,5 +34,5 @@ class PersonBuilder {
         languages = LanguagesBuilder().apply(block).build()
     }
 
-    fun build(): Person = Person(name, company, skills, languages)
+    override fun build(): Person = Person(name, company, skills, languages)
 }
