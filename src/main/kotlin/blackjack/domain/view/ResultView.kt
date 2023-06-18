@@ -24,14 +24,7 @@ object ResultView {
         playerViews.forEach { printPlayerCards(playerView = it) }
     }
 
-    fun printPlayerResultEvent(playerName: String, cards: List<Pair<String, String>>) = printPlayerCards(
-        playerView = PlayerView(
-            name = playerName,
-            cards = cards.map { CardView(denomination = it.first, suit = it.second) }
-        )
-    )
-
-    private fun printPlayerCards(playerView: PlayerView) = println(
+    fun printPlayerCards(playerView: PlayerView) = println(
         message = PLAYER_CARDS_MESSAGE.format(
             playerView.name,
             convertCardView(cards = playerView.cards),

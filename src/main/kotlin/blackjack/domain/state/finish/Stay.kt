@@ -20,16 +20,12 @@ class Stay(playingCards: PlayingCards) : FinishState(playingCards = playingCards
 
     private fun calculateOptimalScore(playingCards: PlayingCards, denomination: Denomination): Int {
         val score = playingCards.sumScore()
-        val bonusScore = score + denomination.bonus - denomination.score
+        val bonusScore = score + denomination.bonus
 
-        return if (bonusScore > BUST_LIMIT_SCORE) {
+        return if (bonusScore > PlayingCards.ALLOWABLE_MAXIMUM_SCORE) {
             score
         } else {
             bonusScore
         }
-    }
-
-    companion object {
-        private const val BUST_LIMIT_SCORE: Int = 21
     }
 }

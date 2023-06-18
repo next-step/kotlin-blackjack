@@ -2,9 +2,9 @@ package blackjack
 
 import blackjack.convert.convertView
 import blackjack.domain.game.BlackjackGame
-import blackjack.domain.game.GameEvent
 import blackjack.domain.view.InputView
 import blackjack.domain.view.ResultView
+import blackjack.event.GameEvent
 
 fun main() {
     val blackJackGame = BlackjackGame(playerNames = InputView.readPlayers().playerNames)
@@ -17,7 +17,7 @@ fun main() {
     val playerResults = blackJackGame.start(
         gameEvent = GameEvent(
             hitOrNot = { InputView.readHitOrNot(playerName = it) },
-            resultEvent = { name, cards -> ResultView.printPlayerResultEvent(playerName = name, cards = cards) },
+            resultEvent = { ResultView.printPlayerCards(playerView = it.convertView()) },
         ),
     )
 
