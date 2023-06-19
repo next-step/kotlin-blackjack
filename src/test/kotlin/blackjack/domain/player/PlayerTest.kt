@@ -8,6 +8,7 @@ import blackjack.domain.game.BlackjackGame
 import blackjack.domain.participant.ParticipantName
 import blackjack.domain.participant.Player
 import blackjack.domain.state.finish.Blackjack
+import blackjack.domain.state.mockBlackjackState
 import blackjack.domain.state.running.Hit
 import blackjack.event.PlayerEvent
 import io.kotest.assertions.throwables.shouldThrow
@@ -44,6 +45,22 @@ class PlayerTest : StringSpec({
             val player = mockPlayer(name = name)
 
             player.getName() shouldBe name
+        }
+    }
+
+    "플레이어는 배팅 금액을 지정하여 생성할 수 있다." {
+        forAll(
+            row("진원", 1000.0),
+            row("포비", 10000.0),
+        ) { name, betAmount ->
+            val player = Player(
+                participantName = ParticipantName(name = name),
+                bet = Bet(amount = betAmount),
+                state = mockBlackjackState,
+            )
+
+            player.getName() shouldBe name
+            player.bettingAmount() shouldBe betAmount
         }
     }
 
