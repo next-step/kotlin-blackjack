@@ -6,32 +6,32 @@ import blackjack.domain.game.result.ParticipantPlayResults
 import blackjack.domain.view.model.CardView
 import blackjack.domain.view.model.MatchResultView
 import blackjack.domain.view.model.MatchResultViews
-import blackjack.domain.view.model.PlayerView
-import blackjack.domain.view.model.PlayerViewResult
-import blackjack.domain.view.model.PlayerViewResults
-import blackjack.domain.view.model.PlayerViews
-import blackjack.participant.Player
+import blackjack.domain.view.model.ParticipantView
+import blackjack.domain.view.model.ParticipantViewResult
+import blackjack.domain.view.model.ParticipantViewResults
+import blackjack.domain.view.model.ParticipantViews
+import blackjack.participant.Participant
 import blackjack.participant.Players
 
-fun Players.convertView(): PlayerViews = this.map { it.convertView() }
-    .run(::PlayerViews)
+fun Players.convertView(): ParticipantViews = this.map { it.convertView() }
+    .run(::ParticipantViews)
 
-fun Player.convertView(): PlayerView = PlayerView(
+fun Participant.convertView(): ParticipantView = ParticipantView(
     name = this.getName(),
     cards = this.getCards().cardViews()
 )
 
-fun ParticipantPlayResults.convertView(): PlayerViewResults = this.participantPlayResults.map {
+fun ParticipantPlayResults.convertView(): ParticipantViewResults = this.participantPlayResults.map {
     val player = it.participant
 
-    PlayerViewResult(
+    ParticipantViewResult(
         name = player.getName(),
         cards = player.getCards().cardViews(),
         score = it.finishState.resultScore(),
     )
-}.run(::PlayerViewResults)
+}.run(::ParticipantViewResults)
 
-private fun PlayingCards.cardViews() = this.map {
+private fun PlayingCards.cardViews(): List<CardView> = this.map {
     CardView(
         denomination = it.denomination.exposeName,
         suit = it.suit.exposeName,

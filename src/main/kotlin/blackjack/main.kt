@@ -12,7 +12,8 @@ fun main() {
     val blackJackGame = BlackjackGame(playerNames = InputView.readPlayers().playerNames)
 
     ResultView.printStartBlackJackGame(
-        playerViews = blackJackGame.players.convertView(),
+        players = blackJackGame.players.convertView(),
+        dealer = blackJackGame.dealer.convertView(),
         initHandCount = BlackjackGame.INIT_HAND_COUNT,
     )
 
@@ -22,11 +23,11 @@ fun main() {
 
             playerEvent = PlayerEvent(
                 hitOrNot = { InputView.readHitOrNot(playerName = it) },
-                resultEvent = { ResultView.printPlayerCards(playerView = it.convertView()) },
+                resultEvent = { ResultView.printParticipantCards(participantView = it.convertView()) },
             ),
         )
     )
 
-    ResultView.printPlayResults(playerViewResults = playerResults.convertView())
+    ResultView.printPlayResults(participantViewResults = playerResults.convertView())
     ResultView.printMatchResults(matchResultViews = playerResults.totalMatchResult().convertView())
 }

@@ -21,7 +21,7 @@ class BlackjackGame(
         players = playerNames.map(this::createPlayer),
     )
 
-    private val dealer: Dealer = Dealer(
+    val dealer: Dealer = Dealer(
         state = Hit(playingCards = initialCard()),
     )
 
