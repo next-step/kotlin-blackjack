@@ -6,7 +6,9 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.running.Hit
-import blackjack.event.GameEvent
+import blackjack.event.PlayerEvent
+import blackjack.participant.ParticipantName
+import blackjack.participant.Player
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -48,14 +50,14 @@ class PlayerTest : StringSpec({
         val deck = Deck()
 
         val player = Player(
-            playerName = PlayerName(name = "진원"),
+            participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
         )
 
         val expect = mutableListOf<Player>()
 
         player.play(
-            gameEvent = GameEvent(
+            playerEvent = PlayerEvent(
                 hitOrNot = { true },
                 resultEvent = { expect.add(element = it) },
             ),
@@ -70,14 +72,14 @@ class PlayerTest : StringSpec({
         val deck = Deck()
 
         val player = Player(
-            playerName = PlayerName(name = "진원"),
+            participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
         )
 
         val expect = mutableListOf<Player>()
 
         player.play(
-            gameEvent = GameEvent(
+            playerEvent = PlayerEvent(
                 hitOrNot = { false },
                 resultEvent = { expect.add(element = it) },
             ),
@@ -92,7 +94,7 @@ class PlayerTest : StringSpec({
         val deck = Deck()
 
         val player = Player(
-            playerName = PlayerName(name = "진원"),
+            participantName = ParticipantName(name = "진원"),
             state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
         )
 
@@ -100,7 +102,7 @@ class PlayerTest : StringSpec({
         val expectCard = mutableListOf<Card>()
 
         player.play(
-            gameEvent = GameEvent(
+            playerEvent = PlayerEvent(
                 hitOrNot = { false },
                 resultEvent = { expectPlayer.add(element = it) }
             ),

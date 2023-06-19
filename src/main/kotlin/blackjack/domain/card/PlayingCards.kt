@@ -13,15 +13,36 @@ class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<C
         cards.add(element = card)
     }
 
-    fun includeDenomination(denomination: Denomination): Boolean = cards.any { it.denomination == denomination }
-
-    fun sumScore(): Int = cards.sumOf { it.denomination.score }
-
     fun isBust(): Boolean = sumScore() > ALLOWABLE_MAXIMUM_SCORE
 
     fun isBlackjack(): Boolean = sumScore() == ALLOWABLE_MAXIMUM_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
 
+    fun calculateAceOptimalScore(): Int {
+        val ace = Denomination.ACE
+
+        return when {
+            cards.any { it.denomination == ace } -> {
+                calculateOptimalScore(denomination = ace)
+            }
+
+            else -> sumScore()
+        }
+    }
+
+    private fun calculateOptimalScore(denomination: Denomination): Int {
+        val score = sumScore()
+        val bonusScore = score + denomination.bonus
+
+        return if (bonusScore > ALLOWABLE_MAXIMUM_SCORE) {
+            score
+        } else {
+            bonusScore
+        }
+    }
+
+    private fun sumScore(): Int = cards.sumOf { it.denomination.score }
+
     companion object {
-        const val ALLOWABLE_MAXIMUM_SCORE: Int = 21
+        private const val ALLOWABLE_MAXIMUM_SCORE: Int = 21
     }
 }

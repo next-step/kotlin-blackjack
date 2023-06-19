@@ -10,13 +10,13 @@ import io.kotest.matchers.throwable.shouldHaveMessage
 
 class PlayingCardsTest : BehaviorSpec({
 
-    Given(name = "게임에서 사용할 카드를 생성할 수 있다.") {
+    Given(name = "게임에서 사용할 카드가 주어진 경우에") {
         val expect = mutableSetOf(
             Card(denomination = Denomination.ACE, suit = Suit.CLUBS),
             Card(denomination = Denomination.QUEEN, suit = Suit.DIAMONDS),
         )
 
-        When(name = "주어진 카드 리스트를 등록하게 되면") {
+        When(name = "플레잉 카드 리스트에 등록하면") {
             val playingCards = PlayingCards(cards = expect)
 
             Then(name = "해당 카드 리스트가 들어가있다.") {
