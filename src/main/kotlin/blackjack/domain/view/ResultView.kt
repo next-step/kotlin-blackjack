@@ -1,11 +1,11 @@
 package blackjack.domain.view
 
-import blackjack.domain.view.model.CardView
-import blackjack.domain.view.model.MatchResultViews
-import blackjack.domain.view.model.ParticipantView
-import blackjack.domain.view.model.ParticipantViewResult
-import blackjack.domain.view.model.ParticipantViewResults
-import blackjack.domain.view.model.ParticipantViews
+import blackjack.domain.view.model.view.CardView
+import blackjack.domain.view.model.view.MatchResultViews
+import blackjack.domain.view.model.view.ParticipantView
+import blackjack.domain.view.model.view.ParticipantViewResult
+import blackjack.domain.view.model.view.ParticipantViewResults
+import blackjack.domain.view.model.view.ParticipantViews
 
 object ResultView {
 

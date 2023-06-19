@@ -1,6 +1,6 @@
 package blackjack.domain.game.result
 
-import blackjack.participant.Participant
+import blackjack.domain.participant.Participant
 
 open class MatchResult(
     val participant: Participant,

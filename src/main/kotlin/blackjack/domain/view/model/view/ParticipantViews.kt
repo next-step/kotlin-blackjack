@@ -1,4 +1,4 @@
-package blackjack.domain.view.model
+package blackjack.domain.view.model.view
 
 @JvmInline
 value class ParticipantViews(private val players: List<ParticipantView>) : List<ParticipantView> by players

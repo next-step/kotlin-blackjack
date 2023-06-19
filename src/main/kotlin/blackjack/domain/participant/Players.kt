@@ -1,4 +1,4 @@
-package blackjack.participant
+package blackjack.domain.participant
 
 @JvmInline
 value class Players(private val players: List<Player>) : List<Player> by players {

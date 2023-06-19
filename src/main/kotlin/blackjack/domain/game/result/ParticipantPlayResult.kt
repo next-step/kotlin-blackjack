@@ -1,10 +1,10 @@
 package blackjack.domain.game.result
 
+import blackjack.domain.participant.Participant
 import blackjack.domain.state.FinishState
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.finish.Bust
 import blackjack.domain.state.finish.Stay
-import blackjack.participant.Participant
 
 data class ParticipantPlayResult(val participant: Participant, val finishState: FinishState) {
 

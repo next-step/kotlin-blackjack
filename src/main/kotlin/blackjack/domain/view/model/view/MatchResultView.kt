@@ -1,4 +1,4 @@
-package blackjack.domain.view.model
+package blackjack.domain.view.model.view
 
 data class MatchResultView(
     val participantName: String,

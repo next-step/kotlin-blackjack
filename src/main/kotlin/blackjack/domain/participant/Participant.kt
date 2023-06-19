@@ -1,5 +1,6 @@
-package blackjack.participant
+package blackjack.domain.participant
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Card
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.game.result.ParticipantPlayResult
@@ -13,7 +14,7 @@ private typealias PlayEvent = () -> Unit
 private typealias PlayResultEvent = () -> ParticipantPlayResult
 private typealias StayEvent = () -> FinishState
 
-sealed class Participant(private var state: State) {
+sealed class Participant(private var state: State, private var bet: Bet) {
 
     protected fun playByState(
         hitEvent: HitEvent,

@@ -1,4 +1,4 @@
-package blackjack.domain.view.model
+package blackjack.domain.view.model.view
 
 open class ParticipantView(val name: String, val cards: List<CardView>)
 

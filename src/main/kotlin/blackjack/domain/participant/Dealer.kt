@@ -1,10 +1,11 @@
-package blackjack.participant
+package blackjack.domain.participant
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.game.result.ParticipantPlayResult
 import blackjack.domain.state.State
 import blackjack.event.DealerEvent
 
-class Dealer(state: State) : Participant(state = state) {
+class Dealer(bet: Bet = Bet(), state: State) : Participant(state = state, bet = bet) {
 
     fun play(dealerEvent: DealerEvent, drawingEvent: DrawingEvent): ParticipantPlayResult = playByState(
         hitEvent = { getCards().calculateAceOptimalScore() <= ADD_DRAW_CONDITIONS },
