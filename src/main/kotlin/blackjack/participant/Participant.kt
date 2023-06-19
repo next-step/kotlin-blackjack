@@ -8,12 +8,23 @@ import blackjack.domain.state.RunningState
 import blackjack.domain.state.State
 
 typealias DrawingEvent = () -> Card
-private typealias PlayEvent = (RunningState) -> ParticipantPlayResult
+typealias HitEvent = () -> Boolean
+private typealias PlayEvent = () -> Unit
+private typealias PlayResultEvent = () -> ParticipantPlayResult
+private typealias StayEvent = () -> FinishState
 
-sealed class Participant(protected var state: State) {
+sealed class Participant(private var state: State) {
 
-    protected fun playByState(playEvent: PlayEvent): ParticipantPlayResult = when (val playState = state) {
-        is RunningState -> playEvent(playState)
+    protected fun playByState(
+        hitEvent: HitEvent,
+        drawingEvent: DrawingEvent,
+        playEvent: PlayEvent,
+    ): ParticipantPlayResult = when (val playState = state) {
+        is RunningState -> hit(hitEvent = hitEvent, stayEvent = { playState.stay() }) {
+            state = playState.draw(card = drawingEvent())
+            playEvent()
+            playByState(hitEvent = hitEvent, drawingEvent = drawingEvent, playEvent = playEvent)
+        }
 
         is FinishState -> ParticipantPlayResult(
             participant = this,
@@ -21,10 +32,16 @@ sealed class Participant(protected var state: State) {
         )
     }
 
-    protected fun stayState(runningState: RunningState): ParticipantPlayResult {
-        val finishState = runningState.stay()
+    private fun hit(
+        hitEvent: HitEvent,
+        stayEvent: StayEvent,
+        playResultEvent: PlayResultEvent,
+    ): ParticipantPlayResult = if (hitEvent()) {
+        playResultEvent()
+    } else {
+        val finishState = stayEvent()
         state = finishState
-        return ParticipantPlayResult(participant = this, finishState = finishState)
+        ParticipantPlayResult(participant = this, finishState = finishState)
     }
 
     fun getCards(): PlayingCards = state.playingCards

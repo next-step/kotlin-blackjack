@@ -6,4 +6,4 @@ class ParticipantViewResult(
     name: String,
     cards: List<CardView>,
     val score: Int,
-): ParticipantView(name = name, cards = cards)
+) : ParticipantView(name = name, cards = cards)

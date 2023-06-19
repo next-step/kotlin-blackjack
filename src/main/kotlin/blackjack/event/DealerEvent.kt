@@ -1,5 +1,5 @@
 package blackjack.event
 
-private typealias HitEvent = () -> Unit
+private typealias HitMessageEvent = () -> Unit
 
-class DealerEvent(val hitEvent: HitEvent)
+class DealerEvent(val hitMessageEvent: HitMessageEvent)
