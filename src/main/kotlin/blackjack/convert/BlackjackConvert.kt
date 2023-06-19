@@ -43,8 +43,7 @@ private fun PlayingCards.cardViews(): List<CardView> = this.map {
 fun MatchResults.convertView(): MatchResultViews = this.map {
     MatchResultView(
         participantName = it.participant.getName(),
-        winScore = it.winScore,
-        loseScore = it.loseScore,
+        betResultAmount = it.betResultAmount,
     )
 }.run(::MatchResultViews)
 

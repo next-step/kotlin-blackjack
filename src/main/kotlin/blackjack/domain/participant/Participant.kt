@@ -14,7 +14,7 @@ private typealias PlayEvent = () -> Unit
 private typealias PlayResultEvent = () -> ParticipantPlayResult
 private typealias StayEvent = () -> FinishState
 
-sealed class Participant(private var state: State, private var bet: Bet) {
+sealed class Participant(private var state: State, private val bet: Bet) {
 
     protected fun playByState(
         hitEvent: HitEvent,
@@ -46,6 +46,8 @@ sealed class Participant(private var state: State, private var bet: Bet) {
     }
 
     fun getCards(): PlayingCards = state.playingCards
+
+    fun bettingAmount(): Double = bet.amount
 
     abstract fun getName(): String
 }

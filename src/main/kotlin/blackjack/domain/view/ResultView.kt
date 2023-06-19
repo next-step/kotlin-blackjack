@@ -14,9 +14,9 @@ object ResultView {
     private const val GAME_RESULT_MESSAGE = "%s 카드: %s - 결과: %s"
 
     private const val HIT_DEALER_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
-    private const val MATCH_RESULT_MESSAGE = "\n## 최종 승패"
+    private const val MATCH_RESULT_MESSAGE = "\n## 최종 수익"
 
-    private const val PARTICIPANT_RESULT_MESSAGE = "%s: %s승 %s패"
+    private const val PARTICIPANT_RESULT_MESSAGE = "%s: %s"
     private const val SEPARATOR = ", "
 
     fun printStartBlackJackGame(players: ParticipantViews, dealer: ParticipantView, initHandCount: Int) {
@@ -38,6 +38,7 @@ object ResultView {
     )
 
     fun printPlayResults(participantViewResults: ParticipantViewResults) {
+        println()
         participantViewResults.forEach { printGameResult(playerViewResult = it) }
     }
 
@@ -62,8 +63,7 @@ object ResultView {
             println(
                 message = PARTICIPANT_RESULT_MESSAGE.format(
                     it.participantName,
-                    it.winScore,
-                    it.loseScore
+                    it.betResultAmount,
                 ),
             )
         }

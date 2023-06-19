@@ -15,7 +15,8 @@ class PlayingCards(private val cards: MutableSet<Card> = mutableSetOf()) : Set<C
 
     fun isBust(): Boolean = sumScore() > ALLOWABLE_MAXIMUM_SCORE
 
-    fun isBlackjack(): Boolean = sumScore() == ALLOWABLE_MAXIMUM_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
+    fun isBlackjack(): Boolean =
+        calculateAceOptimalScore() == ALLOWABLE_MAXIMUM_SCORE && cards.size == BlackjackGame.INIT_HAND_COUNT
 
     fun calculateAceOptimalScore(): Int {
         val ace = Denomination.ACE
