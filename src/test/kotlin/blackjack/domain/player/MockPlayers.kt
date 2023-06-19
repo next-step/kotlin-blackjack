@@ -12,5 +12,5 @@ fun mockPlayer(name: String) = Player(
         name = name,
     ),
     state = mockHitState,
-    bet = Bet(),
+    bet = Bet(amount = 10000.0),
 )
