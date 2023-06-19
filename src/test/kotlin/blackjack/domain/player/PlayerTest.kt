@@ -1,14 +1,15 @@
 package blackjack.domain.player
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Card
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
+import blackjack.domain.participant.ParticipantName
+import blackjack.domain.participant.Player
 import blackjack.domain.state.finish.Blackjack
 import blackjack.domain.state.running.Hit
 import blackjack.event.PlayerEvent
-import blackjack.participant.ParticipantName
-import blackjack.participant.Player
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -52,6 +53,7 @@ class PlayerTest : StringSpec({
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
+            bet = Bet(),
         )
 
         val expect = mutableListOf<Player>()
@@ -74,6 +76,7 @@ class PlayerTest : StringSpec({
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
+            bet = Bet(),
         )
 
         val expect = mutableListOf<Player>()
@@ -96,6 +99,7 @@ class PlayerTest : StringSpec({
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
+            bet = Bet(),
         )
 
         val expectPlayer = mutableListOf<Player>()

@@ -6,6 +6,7 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.deck.Denomination
 import blackjack.domain.deck.Suit
 import blackjack.domain.game.BlackjackGame
+import blackjack.domain.participant.Dealer
 import blackjack.domain.state.mockHitState
 import blackjack.domain.state.running.Hit
 import blackjack.event.DealerEvent

@@ -1,10 +1,10 @@
 package blackjack.domain.game.result
 
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import blackjack.domain.player.mockPlayer
 import blackjack.domain.state.mockBlackjackState
 import blackjack.domain.state.mockBustState
-import blackjack.participant.Dealer
-import blackjack.participant.Player
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

@@ -1,9 +1,10 @@
 package blackjack.domain.game
 
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerInfo
 import blackjack.event.DealerEvent
 import blackjack.event.GameEvent
 import blackjack.event.PlayerEvent
-import blackjack.participant.Player
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldHaveAtLeastSize
 import io.kotest.matchers.collections.shouldHaveSize
@@ -11,14 +12,18 @@ import io.kotest.matchers.collections.shouldHaveSize
 class BlackJackGameTest : DescribeSpec({
 
     describe(name = "블랙잭 게임에 플레이어 이름을 제공해서 게임을 시작할 수 있다.") {
-        val playerNames = listOf("진원", "패자")
-        val blackJackGame = BlackjackGame(playerNames = playerNames)
+        val playerInfos = listOf(
+            PlayerInfo(name = "진원", betAmount = 0.0),
+            PlayerInfo(name = "패자", betAmount = 0.0),
+        )
+
+        val blackJackGame = BlackjackGame(playerInfos = playerInfos)
 
         context(name = "게임을 시작하여 플레이어는 입력한 숫자만큼 생성된다.") {
             val actual = blackJackGame.players
 
             it(name = "입력한 문자열과 생성된 플레이어가 같다.") {
-                actual shouldHaveSize playerNames.size
+                actual shouldHaveSize playerInfos.size
             }
         }
 
