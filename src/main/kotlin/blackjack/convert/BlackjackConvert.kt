@@ -3,15 +3,17 @@ package blackjack.convert
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.game.result.MatchResults
 import blackjack.domain.game.result.ParticipantPlayResults
-import blackjack.domain.view.model.CardView
-import blackjack.domain.view.model.MatchResultView
-import blackjack.domain.view.model.MatchResultViews
-import blackjack.domain.view.model.ParticipantView
-import blackjack.domain.view.model.ParticipantViewResult
-import blackjack.domain.view.model.ParticipantViewResults
-import blackjack.domain.view.model.ParticipantViews
-import blackjack.participant.Participant
-import blackjack.participant.Players
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.PlayerInfo
+import blackjack.domain.participant.Players
+import blackjack.domain.view.model.input.PlayersBetInput
+import blackjack.domain.view.model.view.CardView
+import blackjack.domain.view.model.view.MatchResultView
+import blackjack.domain.view.model.view.MatchResultViews
+import blackjack.domain.view.model.view.ParticipantView
+import blackjack.domain.view.model.view.ParticipantViewResult
+import blackjack.domain.view.model.view.ParticipantViewResults
+import blackjack.domain.view.model.view.ParticipantViews
 
 fun Players.convertView(): ParticipantViews = this.map { it.convertView() }
     .run(::ParticipantViews)
@@ -41,7 +43,10 @@ private fun PlayingCards.cardViews(): List<CardView> = this.map {
 fun MatchResults.convertView(): MatchResultViews = this.map {
     MatchResultView(
         participantName = it.participant.getName(),
-        winScore = it.winScore,
-        loseScore = it.loseScore,
+        betResultAmount = it.betResultAmount,
     )
 }.run(::MatchResultViews)
+
+fun PlayersBetInput.convertDomain(): List<PlayerInfo> = this.map {
+    PlayerInfo(name = it.name, betAmount = it.bettingAmount)
+}

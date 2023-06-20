@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.convert.convertDomain
 import blackjack.convert.convertView
 import blackjack.domain.game.BlackjackGame
 import blackjack.domain.view.InputView
@@ -9,7 +10,7 @@ import blackjack.event.GameEvent
 import blackjack.event.PlayerEvent
 
 fun main() {
-    val blackJackGame = BlackjackGame(playerNames = InputView.readPlayers().playerNames)
+    val blackJackGame = BlackjackGame(playerInfos = InputView.readPlayers().convertDomain())
 
     ResultView.printStartBlackJackGame(
         players = blackJackGame.players.convertView(),

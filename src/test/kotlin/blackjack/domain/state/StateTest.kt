@@ -53,6 +53,50 @@ class StateTest : BehaviorSpec({
                 resultScore shouldBe 21
             }
         }
+
+        When(name = "배팅 금액 이익금에 대해 요청하게 되면") {
+            val betAmount = 1000.0
+
+            val tieProfit = blackjack.profit(betAmount = betAmount, otherState = mockBlackjackState)
+
+            Then(name = "상대방도 블랙잭인 경우 무승부로 이익금이 없다.") {
+                tieProfit shouldBe betAmount * 0.0
+            }
+
+            val bustProfit = blackjack.profit(betAmount = betAmount, otherState = mockBustState)
+            val stayProfit = blackjack.profit(betAmount = betAmount, otherState = mockHitState.stay())
+
+            Then(name = "상대방이 블랙잭이 아닌 경우 항상 1.5배의 이익금을 얻는다.") {
+                bustProfit shouldBe betAmount * 1.5
+                stayProfit shouldBe betAmount * 1.5
+            }
+        }
+    }
+
+    Given(name = "Bust 상태인 경우에") {
+        val bust = mockBustState
+
+        When(name = "스코어 결과를 요청하게 되면") {
+            val resultScore = bust.resultScore()
+
+            Then(name = "버스트 점수인 0점을 반환한다.") {
+                resultScore shouldBe 0
+            }
+        }
+
+        When(name = "배팅 금액 이익금에 대해 요청하게 되면") {
+            val betAmount = 1000.0
+
+            val blackjackProfit = bust.profit(betAmount = betAmount, otherState = mockBlackjackState)
+            val bustProfit = bust.profit(betAmount = betAmount, otherState = mockBustState)
+            val stayProfit = bust.profit(betAmount = betAmount, otherState = mockHitState.stay())
+
+            Then(name = "어떤 상대라도 배팅 금액을 잃는다.") {
+                blackjackProfit shouldBe betAmount * -1.0
+                bustProfit shouldBe betAmount * -1.0
+                stayProfit shouldBe betAmount * -1.0
+            }
+        }
     }
 
     Given(name = "Stay 상태인 경우에") {
@@ -86,6 +130,29 @@ class StateTest : BehaviorSpec({
 
             Then(name = "에이스가 일반 점수로 들어가 기대하는 19점을 반환한다.") {
                 resultScore shouldBe 19
+            }
+        }
+
+        When(name = "배팅 금액 이익금에 대해 요청하게 되면") {
+            val betAmount = 1000.0
+
+            val largeStay = Stay(playingCards = expect21)
+            val smallStay = Stay(playingCards = expect19)
+
+            val smallProfit = smallStay.profit(betAmount = betAmount, otherState = largeStay)
+            val blackjackProfit = smallStay.profit(betAmount = betAmount, otherState = mockBlackjackState)
+
+            Then(name = "자기보다 크거나 상대방이 블랙잭인 경우 배팅금을 잃는다.") {
+                blackjackProfit shouldBe betAmount * -1.0
+                smallProfit shouldBe betAmount * -1.0
+            }
+
+            val largeProfit = largeStay.profit(betAmount = betAmount, otherState = smallStay)
+            val bustProfit = smallStay.profit(betAmount = betAmount, otherState = mockBustState)
+
+            Then(name = "자기보다 작거나 상대방이 버스트인 경우 배팅금을 얻는다.") {
+                largeProfit shouldBe betAmount * 1.0
+                bustProfit shouldBe betAmount * 1.0
             }
         }
     }

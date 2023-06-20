@@ -1,32 +1,35 @@
 package blackjack.domain.game
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.game.result.ParticipantPlayResult
 import blackjack.domain.game.result.ParticipantPlayResults
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.ParticipantName
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerInfo
+import blackjack.domain.participant.Players
 import blackjack.domain.state.running.Hit
 import blackjack.event.GameEvent
 import blackjack.event.PlayerEvent
-import blackjack.participant.Dealer
-import blackjack.participant.ParticipantName
-import blackjack.participant.Player
-import blackjack.participant.Players
 
 class BlackjackGame(
-    playerNames: List<String>,
+    playerInfos: List<PlayerInfo>,
     private val deck: Deck = Deck(),
 ) {
 
-    val players: Players = Players(
-        players = playerNames.map(this::createPlayer),
-    )
+    val players: Players = playerInfos.map {
+        createPlayer(name = it.name, betAmount = it.betAmount)
+    }.run(::Players)
 
     val dealer: Dealer = Dealer(
         state = Hit(playingCards = initialCard()),
     )
 
-    private fun createPlayer(name: String) = Player(
+    private fun createPlayer(name: String, betAmount: Double) = Player(
         participantName = ParticipantName(name = name),
+        bet = Bet(amount = betAmount),
         state = Hit(
             playingCards = initialCard(),
         ),

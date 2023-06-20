@@ -9,25 +9,24 @@ class ParticipantPlayResults(
 
     fun totalMatchResult(): MatchResults {
         val playerMatchResults = playerPlayResults.map {
-            createMatchResult(participantPlayResult = it)
+            val participant = it.participant
+
+            MatchResult(
+                participant = participant,
+                betResultAmount = it.finishState.profit(
+                    betAmount = participant.bettingAmount(),
+                    otherState = dealerPlayResult.finishState,
+                ),
+            )
         }
 
         val dealerMatchResult = MatchResult(
             participant = dealerPlayResult.participant,
-            winScore = playerMatchResults.filterIsInstance<LoseResult>().count(),
-            loseScore = playerMatchResults.filterIsInstance<WinResult>().count(),
+            betResultAmount = playerMatchResults.sumOf { it.betResultAmount }.unaryMinus(),
         )
 
         return MatchResults(
             matchResults = listOf(element = dealerMatchResult) + playerMatchResults,
         )
-    }
-
-    private fun createMatchResult(
-        participantPlayResult: ParticipantPlayResult,
-    ) = if (participantPlayResult.isWinner(otherFinishState = participantPlayResult.finishState)) {
-        WinResult(participant = participantPlayResult.participant)
-    } else {
-        LoseResult(participant = participantPlayResult.participant)
     }
 }

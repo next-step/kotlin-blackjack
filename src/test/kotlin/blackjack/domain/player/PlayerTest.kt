@@ -1,14 +1,16 @@
 package blackjack.domain.player
 
+import blackjack.domain.bet.Bet
 import blackjack.domain.card.Card
 import blackjack.domain.card.PlayingCards
 import blackjack.domain.deck.Deck
 import blackjack.domain.game.BlackjackGame
+import blackjack.domain.participant.ParticipantName
+import blackjack.domain.participant.Player
 import blackjack.domain.state.finish.Blackjack
+import blackjack.domain.state.mockBlackjackState
 import blackjack.domain.state.running.Hit
 import blackjack.event.PlayerEvent
-import blackjack.participant.ParticipantName
-import blackjack.participant.Player
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -46,12 +48,29 @@ class PlayerTest : StringSpec({
         }
     }
 
+    "플레이어는 배팅 금액을 지정하여 생성할 수 있다." {
+        forAll(
+            row("진원", 1000.0),
+            row("포비", 10000.0),
+        ) { name, betAmount ->
+            val player = Player(
+                participantName = ParticipantName(name = name),
+                bet = Bet(amount = betAmount),
+                state = mockBlackjackState,
+            )
+
+            player.getName() shouldBe name
+            player.bettingAmount() shouldBe betAmount
+        }
+    }
+
     "플레이어는 게임 플레이를 할 수 있으며, 시작 가능한 상태이고 hit 요청을 하면 드로잉 이벤트가 실행된다." {
         val deck = Deck()
 
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
+            bet = Bet(),
         )
 
         val expect = mutableListOf<Player>()
@@ -74,6 +93,7 @@ class PlayerTest : StringSpec({
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = hitState(deck = deck),
+            bet = Bet(),
         )
 
         val expect = mutableListOf<Player>()
@@ -96,6 +116,7 @@ class PlayerTest : StringSpec({
         val player = Player(
             participantName = ParticipantName(name = "진원"),
             state = Blackjack(playingCards = PlayingCards(cards = mutableSetOf())),
+            bet = Bet(),
         )
 
         val expectPlayer = mutableListOf<Player>()
