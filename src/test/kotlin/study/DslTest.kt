@@ -37,4 +37,16 @@ class DslTest {
         assertThat(person.skills[0]).isEqualTo(Skill.Soft("soft"))
         assertThat(person.skills[1]).isEqualTo(Skill.Hard("hard"))
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            languages {
+                "Korea" level 5
+                "English" level 3
+            }
+        }
+        assertThat(person.languages[0]).isEqualTo(Language("Korea", 5))
+        assertThat(person.languages[1]).isEqualTo(Language("English", 3))
+    }
 }
