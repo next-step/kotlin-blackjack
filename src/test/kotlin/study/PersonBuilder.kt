@@ -15,14 +15,12 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillsBuilder.() -> Unit) {
-        val skillsBuilder = SkillsBuilder()
-        skillsBuilder.block()
+        val skillsBuilder = SkillsBuilder().apply(block)
         skillsList.addAll(skillsBuilder.skillsList)
     }
 
     fun languages(block: LanguagesBuilder.() -> Unit) {
-        val languagesBuilder = LanguagesBuilder()
-        languagesBuilder.block()
+        val languagesBuilder = LanguagesBuilder().apply(block)
         languagesList.addAll(languagesBuilder.languagesList)
     }
 
