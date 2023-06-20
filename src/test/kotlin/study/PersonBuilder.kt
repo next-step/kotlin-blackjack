@@ -26,7 +26,6 @@ class PersonBuilder {
         languagesList.addAll(languagesBuilder.languagesList)
     }
 
-
     fun build(): Person {
         val skills = Skills(skillsList)
         val languages = Languages(languagesList)
