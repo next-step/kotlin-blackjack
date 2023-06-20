@@ -1,9 +1,11 @@
 package domain
 
+import dsl.domain.Hard
 import dsl.domain.Language
 import dsl.domain.Languages
 import dsl.domain.Person
 import dsl.domain.Skills
+import dsl.domain.Soft
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -11,7 +13,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 class PersonTest : BehaviorSpec({
     val name = "사용자"
     val company = "회사명"
-    val skills = Skills(listOf(Skill("테스트 작성능력", SkillType.SOFT)))
+    val skills = Skills(listOf(Soft("테스트 작성능력"), Hard("스프링 개발 능력")))
     val languages = Languages(listOf(Language("korean", 1)))
 
     given("사용자 명이 비어있다") {

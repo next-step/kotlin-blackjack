@@ -1,18 +1,19 @@
 package dsl.builder
 
+import dsl.domain.Hard
 import dsl.domain.Skill
-import dsl.domain.SkillType
 import dsl.domain.Skills
+import dsl.domain.Soft
 
 class SkillsBuilder {
     private val skills: MutableList<Skill> = mutableListOf()
 
     fun soft(description: String) {
-        skills.add(Skill(description, SkillType.SOFT))
+        skills.add(Soft(description))
     }
 
     fun hard(description: String) {
-        skills.add(Skill(description, SkillType.HARD))
+        skills.add(Hard(description))
     }
 
     fun build(): Skills {
