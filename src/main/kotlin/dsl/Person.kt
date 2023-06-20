@@ -1,11 +1,12 @@
 package dsl
 
-data class Person(val name: String, val company: String? = null)
+data class Person(val name: String, val company: String? = null, val skills: Skills? = null)
 
 class PersonBuilder {
 
     private lateinit var name: String
     private var company: String? = null
+    private var skills: Skills? = null
 
     fun name(value: String) {
         this.name = value
@@ -15,8 +16,12 @@ class PersonBuilder {
         this.company = value
     }
 
+    fun skill(block: SkillsBuilder.() -> Unit) {
+        this.skills = SkillsBuilder().apply(block).build()
+    }
+
     fun build(): Person {
-        return Person(name, company)
+        return Person(name, company, skills)
     }
 }
 
