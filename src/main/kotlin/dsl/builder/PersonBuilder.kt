@@ -6,7 +6,7 @@ import dsl.domain.Skills
 
 class PersonBuilder {
     private lateinit var name: String
-    private var company: String? = null
+    private lateinit var company: String
     private lateinit var skills: Skills
     private lateinit var languages: Languages
 
