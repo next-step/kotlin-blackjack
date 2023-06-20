@@ -14,7 +14,7 @@ class PersonTest {
         val person: Person = introduce {
             name(value)
         }
-        
+
         person.name shouldBe value
         person.company.shouldBeNull()
         person.skills shouldBe Skills()
@@ -76,5 +76,3 @@ class PersonTest {
         person.skills.hard shouldBe setOf("Kotlin")
     }
 }
-
-

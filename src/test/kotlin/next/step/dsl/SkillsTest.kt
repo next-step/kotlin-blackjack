@@ -11,7 +11,7 @@ class SkillsTest {
             soft("Good communication skills")
             hard("Kotlin")
         }
-        
+
         skills.soft shouldBe setOf("A passion for problem solving", "Good communication skills")
         skills.hard shouldBe setOf("Kotlin")
     }

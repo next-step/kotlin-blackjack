@@ -10,9 +10,8 @@ class LanguagesTest {
             "Korean" level 5
             "English" level 3
         }
-        
+
         languages.get("Korean") shouldBe 5
         languages.get("English") shouldBe 3
     }
-
 }

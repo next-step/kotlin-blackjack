@@ -16,5 +16,4 @@ class LanguagesBuilder() {
     }
 
     fun build(): Languages = Languages(languagesMap)
-
 }
