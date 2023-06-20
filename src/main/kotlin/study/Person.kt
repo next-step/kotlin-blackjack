@@ -3,12 +3,14 @@ package study
 data class Person(
     val name: String,
     val company: String,
+    val skills: Skills,
 ) {
 
     class Builder {
 
         private var name: String? = null
         private var company: String? = null
+        private var skills: Skills? = null
 
         fun name(value: String) {
             name = value
@@ -18,10 +20,15 @@ data class Person(
             company = value
         }
 
+        fun skills(block: Skills.Builder.() -> Unit) {
+            skills = Skills.Builder().apply(block).build()
+        }
+
         fun build(): Person {
             return Person(
                 name.orEmpty(),
                 company.orEmpty(),
+                skills.orEmpty(),
             )
         }
     }

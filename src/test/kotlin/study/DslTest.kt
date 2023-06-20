@@ -25,4 +25,16 @@ class DslTest {
         assertThat(person.name).isEqualTo("홍길동")
         assertThat(person.company).isEqualTo("우아한형제들")
     }
+
+    @Test
+    fun skills() {
+        val person = introduce {
+            skills {
+                soft("soft")
+                hard("hard")
+            }
+        }
+        assertThat(person.skills[0]).isEqualTo(Skill.Soft("soft"))
+        assertThat(person.skills[1]).isEqualTo(Skill.Hard("hard"))
+    }
 }
