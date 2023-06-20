@@ -24,9 +24,9 @@ import org.junit.jupiter.params.provider.ValueSource
 class DslTest {
     @ValueSource(strings = ["홍길동", "김태훈"])
     @ParameterizedTest
-    fun introduce(value: String) {
+    fun name(value: String) {
         val person: Person = introduce {
-            this.name(value)
+            name(value)
         }
         person.name shouldBe value
     }
@@ -34,33 +34,41 @@ class DslTest {
     @Test
     fun company() {
         val person: Person = introduce {
-            this.name("김태훈")
-            this.company("컴파니")
+            name("김태훈")
+            company("컴파니")
         }
+
         person.name shouldBe "김태훈"
         person.company shouldBe "컴파니"
+    }
+
+    @Test
+    fun skills() {
+        val person: Person = introduce {
+            name("김태훈")
+            company("컴파니")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        val soft: MutableList<String> = mutableListOf()
+        soft.add("A passion for problem solving")
+        soft.add("Good communication skills")
+
+        val hard: MutableList<String> = mutableListOf()
+        hard.add("Kotlin")
+
+        val skills = Skills(soft, hard)
+
+        person.name shouldBe "김태훈"
+        person.company shouldBe "컴파니"
+        person.skills shouldBe skills
     }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
-}
-
-class Person(val name: String, val company: String?)
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-
-    fun name(name: String) {
-        this.name = name
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun build(): Person {
-        return Person(name, company)
-    }
 }
