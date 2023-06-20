@@ -20,7 +20,7 @@ introduce {
 ### 기능 예상
 - [x] `introduce { }` ->  람다를 괄호 밖으로 빼내는 관례 이용 
 - [x] `name` -> 수신 객체 지정 람다
-- `company` -> 수신 객체 지정 람다
+- [x] `company` -> 수신 객체 지정 람다
 - `skills` -> 수신 객체 지정 람다 -> Skiil
   - `soft`, `hard` -> N개 등록 ?  
 - `languages` -> 수신 객체 지정 람다
