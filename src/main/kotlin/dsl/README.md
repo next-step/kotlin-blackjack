@@ -24,5 +24,5 @@ introduce {
 - [x] `skills` -> 수신 객체 지정 람다 
   - `this.skill` 로 적으면 PersonBuilder scope 의 메소드 인지 컴파일러가 체크 가능하지만, 그냥 `skill` 로 사용하면 해당 scope 의 함수인지 체크 하지 않는다. 
   - `soft`, `hard` -> N개 등록 ?  
-- `languages` -> 수신 객체 지정 람다
+- [x] `languages` -> 수신 객체 지정 람다
   - `Korean" level 5` -> 중위 표기
