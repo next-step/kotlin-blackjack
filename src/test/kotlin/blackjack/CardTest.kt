@@ -35,7 +35,7 @@ class CardTest {
 
     @Test
     fun `CardDeck은 다이아몬드, 하트, 클로버, 스페이드가 각각 13개의 끗수로 이루어져있다`() {
-        val deck = CardDeck().deck
+        val deck = CardDeck.cardDeck
         val validMap = mutableMapOf(*CardType.values().map { it to 0 }.toTypedArray())
 
         deck.forEach { card -> validMap[card.type] = validMap[card.type]!! + 1 }
