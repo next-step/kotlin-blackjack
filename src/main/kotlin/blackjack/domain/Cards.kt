@@ -11,18 +11,19 @@ class Cards private constructor(
         return Cards(newCards)
     }
 
-    fun maxSumOfTwoCards(): Int {
-        if (cards.size < 2) {
-            throw IllegalArgumentException("최소 2개의 카드가 있어야 합니다.")
-        }
+    fun copy(): Cards = Cards(this.cards)
 
-        return cards.flatMapIndexed { index, card1 ->
-            cards.subList(index + 1, cards.size)
-                .map { card2 -> card1.numbers.sum() + card2.numbers.sum() }
-        }.maxOrNull() ?: 0
+    fun sum(): Int {
+//        if (cards.size < 2) {
+//            throw IllegalArgumentException("최소 2개의 카드가 있어야 합니다.")
+//        }
+        //todo 구현 예정
+
+        return cards.sumOf { it.numbers[0] }
     }
 
     companion object {
+        const val MAX_SUM: Int = 21
         fun empty(): Cards = Cards(emptyList())
     }
 }
