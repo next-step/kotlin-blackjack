@@ -2,7 +2,10 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.Deck
+import blackjack.domain.User
 import blackjack.domain.Users
+import blackjack.io.InputView
+import blackjack.io.ResultView
 import blackjack.util.CardSelector
 import blackjack.util.RandomCardSelector
 import java.util.LinkedList
@@ -24,6 +27,20 @@ class BlackjackGame(
             val deck = Deck(cardList)
             user.initDeck(deck)
         }
+    }
+
+    fun dealCards() {
+        for (user in users) {
+            checkHit(user)
+        }
+    }
+
+    private fun checkHit(user: User) {
+        while (InputView.checkHit(user.name)) {
+            user.addCard(cardSelector.getCard())
+            ResultView.printUserDeck(user)
+        }
+        ResultView.printUserDeck(user)
     }
 
     companion object {

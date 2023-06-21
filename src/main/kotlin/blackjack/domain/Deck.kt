@@ -13,6 +13,10 @@ data class Deck(private val cardList: Queue<Card>) {
 
     fun getCard(): Card = checkNotNull(cardList.poll()) { EMPTY_DECK_ERROR_MESSAGE }
 
+    fun addCard(card: Card) {
+        cardList.add(card)
+    }
+
     override fun toString(): String {
         return cardList.joinToString(", ")
     }

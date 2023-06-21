@@ -33,12 +33,20 @@ class DeckTest : BehaviorSpec({
         `when`("덱에서 한장을 꺼내면") {
             then("카드가 꺼내진다") {
                 cardList.getCard() shouldBe card
+                cardList.size shouldBe 0
             }
         }
 
         `when`("덱에서 한장을 더 꺼내면") {
             then("에러가 던져진다") {
                 shouldThrow<IllegalStateException> { cardList.getCard() }
+            }
+        }
+
+        `when`("덱에 한장을 추가하면") {
+            cardList.addCard(card)
+            then("카드가 한장 늘어난다") {
+                cardList.size shouldBe 1
             }
         }
     }

@@ -6,4 +6,6 @@ fun main() {
     val users = InputView.getUsers()
     val game = BlackjackGame(users)
     ResultView.printUsersDeck(game.users)
+
+    game.dealCards()
 }
