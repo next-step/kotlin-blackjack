@@ -34,7 +34,7 @@ introduce {
 - [x] 문양은 스페이트, 클로버, 하트, 다이아몬드가 존재한다.
 
 ### card
-- [ ] 카드는 denomination과 suit의 조합으로 구성된다.
+- [x] 카드는 denomination과 suit의 조합으로 구성된다.
 
 ### cards
 - [ ] 카드 리스트에 카드가 중복되어 저장될 경우 예외가 발생한다.
