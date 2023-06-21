@@ -1,6 +1,5 @@
-package builder
+package dsl.builder
 
-import dsl.builder.LanguagesBuilder
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 

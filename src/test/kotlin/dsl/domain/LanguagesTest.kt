@@ -1,7 +1,5 @@
-package domain
+package dsl.domain
 
-import dsl.domain.Language
-import dsl.domain.Languages
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec

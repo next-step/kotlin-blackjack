@@ -1,11 +1,5 @@
-package domain
+package dsl.domain
 
-import dsl.domain.Hard
-import dsl.domain.Language
-import dsl.domain.Languages
-import dsl.domain.Person
-import dsl.domain.Skills
-import dsl.domain.Soft
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
