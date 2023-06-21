@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(
+data class Player(
     val name: String,
     val cards: Cards,
 )
