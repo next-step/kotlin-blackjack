@@ -13,6 +13,10 @@ class Deck(
         return Cards(List(count) { draw() })
     }
 
+    fun isNotEmpty(): Boolean {
+        return cards.isNotEmpty()
+    }
+
     companion object {
         fun init(): Deck {
             val cards = Denomination.values()

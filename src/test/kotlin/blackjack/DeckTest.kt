@@ -1,6 +1,7 @@
 package blackjack
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class DeckTest : FunSpec({
@@ -38,5 +39,15 @@ class DeckTest : FunSpec({
             Card(Denomination.TWO, Suit.HEARTS),
             Card(Denomination.JACK, Suit.SPADES),
         )
+    }
+
+    context("덱이 안 비어있는지 확인한다.") {
+        data class DeckNotEmpty(val deck: Deck, val expected: Boolean)
+        withData(
+            DeckNotEmpty(Deck(Card(Denomination.ACE, Suit.SPADES)), true),
+            DeckNotEmpty(Deck(), false),
+        ) { (deck, expected) ->
+            deck.isNotEmpty() shouldBe expected
+        }
     }
 })

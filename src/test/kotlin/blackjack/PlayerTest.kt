@@ -15,4 +15,21 @@ class PlayerTest : FunSpec({
         player.name shouldBe "pobi"
         player.cards shouldBe cards
     }
+
+    test("카드를 더 받는다.") {
+        val cards = Cards(
+            Card(Denomination.ACE, Suit.SPADES),
+            Card(Denomination.JACK, Suit.SPADES),
+        )
+        val card = Card(Denomination.TWO, Suit.HEARTS)
+        val player = Player("pobi", cards)
+
+        player.addCard(card)
+
+        player.cards shouldBe Cards(
+            Card(Denomination.ACE, Suit.SPADES),
+            Card(Denomination.JACK, Suit.SPADES),
+            Card(Denomination.TWO, Suit.HEARTS),
+        )
+    }
 })

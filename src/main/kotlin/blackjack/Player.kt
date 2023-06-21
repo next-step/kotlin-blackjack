@@ -2,5 +2,9 @@ package blackjack
 
 data class Player(
     val name: String,
-    val cards: Cards,
-)
+    var cards: Cards,
+) {
+    fun addCard(card: Card) {
+        cards += card
+    }
+}
