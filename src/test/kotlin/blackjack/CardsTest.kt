@@ -44,5 +44,11 @@ class CardsTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { cards.deal(Card(SPADE, THREE)) }
             exception.message shouldBe "이미 2장이상 가지고 있어 deal할 수 없다."
         }
+
+        test("deal할 수 있다.") {
+            val cards = Cards()
+            cards.deal(Card(SPADE, THREE))
+            cards.values() shouldHaveSize 1
+        }
     }
 })

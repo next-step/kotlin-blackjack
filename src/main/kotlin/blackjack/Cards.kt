@@ -2,7 +2,7 @@ package blackjack
 
 @JvmInline
 value class Cards(
-    private val values: MutableList<Card>,
+    private val values: MutableList<Card> = mutableListOf(),
 ) {
     init {
         require(values.size == values.toSet().size) { "중복된 카드가 저장될 수 없다." }
@@ -17,6 +17,7 @@ value class Cards(
 
     fun deal(card: Card) {
         check(values.size < CAN_DEAL_CARDS_SIZE) { "이미 2장이상 가지고 있어 deal할 수 없다." }
+        addCard(card)
     }
 
     fun values() = values.toList()
