@@ -1,9 +1,11 @@
 package blackjack.util
 
 import blackjack.BlackjackGame
+import blackjack.domain.AceCardNumber
 import blackjack.domain.Card
 import blackjack.domain.Deck
 import blackjack.domain.JackQueenKingCardNumber
+import blackjack.domain.NumberCardNumber
 import blackjack.domain.Suit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -15,14 +17,15 @@ class PointCalculatorTest : BehaviorSpec({
         val deck = Deck(
             LinkedList(
                 listOf(
-                    Card(Suit.SPADE, JackQueenKingCardNumber(11)),
-                    Card(Suit.SPADE, JackQueenKingCardNumber(12)),
+                    Card(Suit.SPADE, AceCardNumber(1)), // 이때는 11
+                    Card(Suit.SPADE, NumberCardNumber(9)),
+                    Card(Suit.HEART, AceCardNumber(1)), // 이때는 1
                 ),
             ),
         )
         `when`("해당덱의 점수를 구하면") {
             then("합이 반환된다") {
-                PointCalculator.calculateUserPoint(deck) shouldBe 20
+                PointCalculator.calculateUserPoint(deck) shouldBe 21
             }
         }
     }

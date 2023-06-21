@@ -16,18 +16,22 @@ class BlackjackGame(
     private val cardSelector: CardSelector = RandomCardSelector(),
 ) {
     init {
-        initialUsersDeck()
+        initUsersDeck()
     }
 
-    private fun initialUsersDeck() {
+    private fun initUsersDeck() {
         for (user in users) {
-            val cardList = LinkedList<Card>()
-            repeat(INITIAL_DECK_SIZE) {
-                cardList.add(cardSelector.getCard())
-            }
-            val deck = Deck(cardList)
+            val deck = getInitDeck()
             user.initDeck(deck)
         }
+    }
+
+    private fun getInitDeck(): Deck {
+        val cardList = LinkedList<Card>()
+        repeat(INITIAL_DECK_SIZE) {
+            cardList.add(cardSelector.getCard())
+        }
+        return Deck(cardList)
     }
 
     fun dealCards() {

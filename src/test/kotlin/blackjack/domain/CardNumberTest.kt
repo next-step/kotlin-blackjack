@@ -25,6 +25,15 @@ class CardNumberTest : BehaviorSpec({
         }
     }
 
+    given("Ace에 해당하지 않는 숫자가 주어졌다") {
+        val number = AceCardNumber.NUMBER_RANGE.last + 1
+        `when`("해당 숫자로 CardNumber를 만들면") {
+            then("에러가 던져진다") {
+                shouldThrow<IllegalArgumentException> { AceCardNumber(number) }
+            }
+        }
+    }
+
     AceCardNumber.NUMBER_RANGE.toList().forAll { number ->
         given("Ace에 해당하는 숫자($number)가 주어졌다") {
             `when`("해당 숫자로 CardNumber를 만들면") {
@@ -35,12 +44,30 @@ class CardNumberTest : BehaviorSpec({
         }
     }
 
+    given("숫자 카드에 해당하지 않는 숫자가 주어졌다") {
+        val number = NumberCardNumber.NUMBER_RANGE.last + 1
+        `when`("해당 숫자로 CardNumber를 만들면") {
+            then("에러가 던져진다") {
+                shouldThrow<IllegalArgumentException> { NumberCardNumber(number) }
+            }
+        }
+    }
+
     NumberCardNumber.NUMBER_RANGE.toList().forAll { number ->
-        given("숫자에 해당하는 숫자($number)가 주어졌다") {
+        given("숫자 카드에 해당하는 숫자($number)가 주어졌다") {
             `when`("해당 숫자로 CardNumber를 만들면") {
                 then("NumberCardNumber가 생성된다") {
                     CardNumber.of(number) shouldBe NumberCardNumber(number)
                 }
+            }
+        }
+    }
+
+    given("J,Q,K에 해당하지 않는 숫자가 주어졌다") {
+        val number = JackQueenKingCardNumber.NUMBER_RANGE.last + 1
+        `when`("해당 숫자로 CardNumber를 만들면") {
+            then("에러가 던져진다") {
+                shouldThrow<IllegalArgumentException> { JackQueenKingCardNumber(number) }
             }
         }
     }

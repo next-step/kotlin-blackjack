@@ -1,6 +1,5 @@
 package blackjack.io
 
-import blackjack.domain.User
 import blackjack.domain.Users
 
 object InputView {
@@ -13,7 +12,8 @@ object InputView {
     fun getUsers(): Users {
         println(USER_NAME_INPUT_MESSAGE)
         val nameList = requireNotNull(readlnOrNull()?.split(DELIMITER)) { INVALID_INPUT_ERROR_MESSAGE }
-        return Users(nameList.map { User(it) })
+
+        return Users(nameList)
     }
 
     fun checkHit(name: String): Boolean {

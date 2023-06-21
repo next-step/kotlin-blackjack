@@ -25,6 +25,10 @@ sealed interface CardNumber {
 data class AceCardNumber(override val number: Int) : CardNumber {
     override val points: List<Int> = listOf(11, 1)
 
+    init {
+        require(number in NUMBER_RANGE)
+    }
+
     override fun toString(): String = "A"
 
     companion object {
@@ -35,15 +39,23 @@ data class AceCardNumber(override val number: Int) : CardNumber {
 data class NumberCardNumber(override val number: Int) : CardNumber {
     override val points: List<Int> = listOf(number)
 
+    init {
+        require(number in NUMBER_RANGE)
+    }
+
     override fun toString(): String = number.toString()
 
     companion object {
-        val NUMBER_RANGE = 2..10
+        val NUMBER_RANGE = AceCardNumber.NUMBER_RANGE.last + 1 until JackQueenKingCardNumber.NUMBER_RANGE.first
     }
 }
 
 data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
     override val points: List<Int> = listOf(CARD_POINT)
+
+    init {
+        require(number in NUMBER_RANGE)
+    }
 
     override fun toString(): String = when (number) {
         JACK_NUMBER -> "J"
@@ -53,11 +65,11 @@ data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
     }
 
     companion object {
-        val NUMBER_RANGE = 11..CardNumber.MAX_CARD_NUMBER
-
         private const val CARD_POINT = 10
-        private const val JACK_NUMBER = 11
+        const val JACK_NUMBER = 11
         private const val QUEEN_NUMBER = 12
         private const val KING_NUMBER = 13
+
+        val NUMBER_RANGE = JACK_NUMBER..KING_NUMBER
     }
 }

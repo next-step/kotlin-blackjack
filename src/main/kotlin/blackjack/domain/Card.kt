@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Card(val suit: Suit, val cardNumber: CardNumber) {
+data class Card(private val suit: Suit, private val cardNumber: CardNumber) {
     val points: List<Int>
         get() = cardNumber.points
 

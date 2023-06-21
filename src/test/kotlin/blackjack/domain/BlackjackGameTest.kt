@@ -9,7 +9,7 @@ import java.util.LinkedList
 class BlackjackGameTest : BehaviorSpec({
 
     given("유저가 주어졌다") {
-        val users = Users(listOf(User("홍길동")))
+        val users = Users(setOf(User("홍길동")))
         `when`("해당 유저로 게임을 시작하면") {
             then("유저에게 초기덱이 주어진다") {
                 val game = BlackjackGame(users)
@@ -19,7 +19,7 @@ class BlackjackGameTest : BehaviorSpec({
     }
 
     given("게임이 하나 주어졌다") {
-        val users = Users(listOf(User("홍길동")))
+        val users = Users(setOf(User("홍길동")))
         val game = BlackjackGame(users)
 
         `when`("해당 게임에서 유저가 히트를 하지 않으면") {
@@ -39,19 +39,20 @@ class BlackjackGameTest : BehaviorSpec({
         }
     }
 
-    given("한 게임에서 이미 21점을 넘긴 유저가 있다") {
+    given("게임에서 히트를 하면 21점을 넘기는 유저가 있다") {
         val user = User("홍길동")
-        val users = Users(listOf(user))
+        val users = Users(setOf(user))
         val selectedCardList = listOf(
             Card(Suit.SPADE, JackQueenKingCardNumber(11)),
             Card(Suit.SPADE, JackQueenKingCardNumber(12)),
+            Card(Suit.SPADE, JackQueenKingCardNumber(13)),
         )
         val deck = Deck(LinkedList(selectedCardList))
         val game = BlackjackGame(users, FixedCardSelector(deck))
-        user.addCard(Card(Suit.SPADE, JackQueenKingCardNumber(13)))
 
         `when`("해당 게임에서 딜을 할때") {
-            then("유저는 히트를 할 수 없다") {
+            then("유저는 히트를 한번밖에 하지 못한다") {
+                System.setIn("Y".byteInputStream())
                 game.dealCards()
                 users.first().deck.size shouldBe BlackjackGame.INITIAL_DECK_SIZE + 1
             }

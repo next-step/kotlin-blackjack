@@ -27,7 +27,7 @@ data class Deck(private val cardList: LinkedList<Card>) {
     companion object {
         private const val EMPTY_DECK_ERROR_MESSAGE = "덱이 비어있습니다"
 
-        val DEFAULT_DECK: Deck by lazy {
+        private val DEFAULT_DECK: Deck by lazy {
             val list = LinkedList<Card>()
             for (suit in Suit.values()) {
                 list.addSuitCards(suit)
