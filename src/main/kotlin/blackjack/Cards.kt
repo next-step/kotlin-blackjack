@@ -23,6 +23,7 @@ value class Cards(
     fun hit(card: Card) {
         check(values.size >= CAN_DEAL_CARDS_SIZE) { "카드가 deal이 완료되지 않아 hit할 수 없다." }
         check(calculateScore() <= BUST_SCORE) { "카드가 bust되어 더이상 hit할 수 없다." }
+        addCard(card)
     }
 
     private fun calculateScore() = values.sumOf { it.denomination.score.min() }

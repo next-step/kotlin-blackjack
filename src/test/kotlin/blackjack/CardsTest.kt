@@ -54,7 +54,7 @@ class CardsTest : FunSpec({
             exception.message shouldBe "이미 존재하는 카드를 추가할 수 없다."
         }
 
-        test("deal할 수 있다.") {
+        test("카드를 deal할 수 있다.") {
             val cards = Cards()
             cards.deal(Card(SPADE, THREE))
             cards.values() shouldHaveSize 1
@@ -72,6 +72,18 @@ class CardsTest : FunSpec({
             val cards = Cards(mutableListOf(Card(SPADE, KING), Card(SPADE, QUEEN), Card(SPADE, JACK)))
             val exception = shouldThrowExactly<IllegalStateException> { cards.hit(Card(SPADE, ACE)) }
             exception.message shouldBe "카드가 bust되어 더이상 hit할 수 없다."
+        }
+
+        test("중복된 카드를 hit하는 경우 예외가 발생한다.") {
+            val cards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, TWO)))
+            val exception = shouldThrowExactly<IllegalArgumentException> { cards.hit(Card(SPADE, ACE)) }
+            exception.message shouldBe "이미 존재하는 카드를 추가할 수 없다."
+        }
+
+        test("카드를 hit 할 수 있다.") {
+            val cards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, KING), Card(SPADE, JACK)))
+            cards.hit(Card(SPADE, QUEEN))
+            cards.values() shouldHaveSize 4
         }
     }
 })
