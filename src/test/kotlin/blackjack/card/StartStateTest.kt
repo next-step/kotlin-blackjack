@@ -4,6 +4,7 @@ import domain.card.BlackjackCard
 import domain.card.CardNumber
 import domain.card.Suit
 import domain.state.Blackjack
+import domain.state.Hit
 import domain.state.StartState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,6 +28,18 @@ class StartStateTest {
     ) {
         val actual = StartState.start(card1, card2)
         assertThat(actual is Blackjack).isTrue
+    }
+
+    @ParameterizedTest
+    @MethodSource("getHitStateTestData")
+    fun `플레이어는 시작(Start) 상태에서 카드를 더 받으면 힛(Hit)이라는 진행 상태가 된다`(
+        card1: BlackjackCard,
+        card2: BlackjackCard,
+        newCard: BlackjackCard,
+    ) {
+        val startState = StartState.start(card1, card2)
+        val hitState = startState.draw(newCard)
+        assertThat(hitState is Hit).isTrue
     }
 
     companion object {
@@ -63,6 +76,25 @@ class StartStateTest {
             Arguments.of(
                 BlackjackCard(suit = Suit.SPADE, number = CardNumber.KING),
                 BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+            ),
+        )
+
+        @JvmStatic
+        fun getHitStateTestData(): List<Arguments> = listOf(
+            Arguments.of(
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+                BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
+                BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
+            ),
+            Arguments.of(
+                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.TEN),
+            ),
+            Arguments.of(
+                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TEN),
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.KING),
             ),
         )
     }
