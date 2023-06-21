@@ -20,6 +20,11 @@ class DslTest {
         val person = introduce {
             name("EJ")
             company("Microsoft")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
         }
         assertThat(person.name).isEqualTo("EJ")
         assertThat(person.company).isEqualTo("Microsoft")
