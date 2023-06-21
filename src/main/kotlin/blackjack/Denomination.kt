@@ -1,6 +1,6 @@
 package blackjack
 
-enum class Denomination(private val score: Int) {
+enum class Denomination(val score: Int) {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -15,4 +15,20 @@ enum class Denomination(private val score: Int) {
     QUEEN(10),
     KING(10),
     ;
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
+
+    fun maxScore(): Int {
+        if (this == ACE) {
+            return MAX_ACE_SCORE
+        }
+
+        return score
+    }
+
+    companion object {
+        private const val MAX_ACE_SCORE = 11
+    }
 }

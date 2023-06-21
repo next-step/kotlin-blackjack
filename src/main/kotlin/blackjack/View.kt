@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.vo.PlayerScoreVO
 import blackjack.vo.PlayerVO
 
 object InputView {
@@ -23,15 +24,32 @@ object InputView {
 
 object ResultView {
     private const val COMMA_SEPARATOR = ", "
+    private const val NEW_LINE = "\n"
 
     fun printPlayer(player: PlayerVO) {
-        val cards = player.cards.joinToString(COMMA_SEPARATOR) { "${it.denomination.symbol}${it.suit.name}" }
-        println("${player.name}카드: $cards")
+        println(playerText(player))
     }
 
     fun printCardHands(players: List<PlayerVO>) {
         val namesText = players.joinToString(COMMA_SEPARATOR) { it.name }
-        println("${namesText}에게 2장의 카드를 나누었습니다")
-        players.forEach(::printPlayer)
+        val playersText = players.joinToString(NEW_LINE, transform = ::playerText)
+        println(
+            """
+            |${namesText}에게 2장의 카드를 나누었습니다
+            |$playersText
+            |""".trimMargin()
+        )
+    }
+
+    fun printPlayerScores(players: List<PlayerScoreVO>) {
+        val playerScoresText = players.joinToString(NEW_LINE) {
+            "${playerText(it.playerVO)} - 결과:${it.score}"
+        }
+        println(playerScoresText)
+    }
+
+    private fun playerText(player: PlayerVO): String {
+        val cards = player.cards.joinToString(COMMA_SEPARATOR) { "${it.denomination.symbol}${it.suit.name}" }
+        return "${player.name}카드: $cards"
     }
 }

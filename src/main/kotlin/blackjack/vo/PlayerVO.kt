@@ -4,7 +4,7 @@ import blackjack.Player
 
 class PlayerVO(
     val name: String,
-    val cards: List<CardVO>
+    val cards: List<CardVO>,
 ) {
     companion object {
         operator fun invoke(player: Player): PlayerVO {

@@ -14,4 +14,14 @@ class CardsTest : FunSpec({
             Card(Denomination.JACK, Suit.SPADES),
         )
     }
+
+    test("Ace 카드 개수를 구한다.") {
+        val cards = Cards(
+            Card(Denomination.ACE, Suit.SPADES),
+            Card(Denomination.ACE, Suit.HEARTS),
+            Card(Denomination.JACK, Suit.CLUBS)
+        )
+
+        cards.countAces() shouldBe 2
+    }
 })

@@ -1,6 +1,7 @@
 package blackjack
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : FunSpec({
@@ -16,7 +17,7 @@ class PlayerTest : FunSpec({
         player.cards shouldBe cards
     }
 
-    test("카드를 더 받는다.") {
+    test("카드를 더 받는다(hit).") {
         val cards = Cards(
             Card(Denomination.ACE, Suit.SPADES),
             Card(Denomination.JACK, Suit.SPADES),
@@ -24,12 +25,37 @@ class PlayerTest : FunSpec({
         val card = Card(Denomination.TWO, Suit.HEARTS)
         val player = Player("pobi", cards)
 
-        player.addCard(card)
+        player.hit(card)
 
         player.cards shouldBe Cards(
             Card(Denomination.ACE, Suit.SPADES),
             Card(Denomination.JACK, Suit.SPADES),
             Card(Denomination.TWO, Suit.HEARTS),
         )
+    }
+
+    context("플레이어의 스코어를 계산한다.") {
+        data class PlayerScore(val cards: Cards, val score: Int)
+        withData(
+            nameFn = { "${it.cards.joinToString(" + ") { card -> card.denomination.name }} = ${it.score}" },
+            PlayerScore(
+                Cards(
+                    Card(Denomination.ACE, Suit.SPADES),
+                    Card(Denomination.JACK, Suit.SPADES),
+                    Card(Denomination.TWO, Suit.HEARTS),
+                ),
+                13
+            ),
+            PlayerScore(
+                Cards(
+                    Card(Denomination.ACE, Suit.SPADES),
+                    Card(Denomination.JACK, Suit.SPADES),
+                ),
+                21
+            )
+        ) { (cards, score) ->
+            val player = Player("pobi", cards)
+            player.calculateScore() shouldBe score
+        }
     }
 })
