@@ -29,7 +29,6 @@ class PersonTest {
                 "Korean" level 5
                 "English" level 3
             }
-
         }
         assertThat(person.name).isEqualTo("EJ")
         assertThat(person.company).isEqualTo("MS")
