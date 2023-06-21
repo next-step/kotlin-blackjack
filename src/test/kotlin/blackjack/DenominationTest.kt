@@ -26,5 +26,23 @@ class DenominationTest : FunSpec({
                 actual shouldBe listOf(10)
             }
         }
+
+        forAll(
+            row(Denomination.TWO, 2),
+            row(Denomination.THREE, 3),
+            row(Denomination.FOUR, 4),
+            row(Denomination.FIVE, 5),
+            row(Denomination.SIX, 6),
+            row(Denomination.SEVEN, 7),
+            row(Denomination.EIGHT, 8),
+            row(Denomination.NINE, 9),
+            row(Denomination.TEN, 10),
+        ) { input, expected ->
+            test("${input}은 score를 ${expected}를 가진다.") {
+                val actual = input.score
+
+                actual shouldBe listOf(expected)
+            }
+        }
     }
 })
