@@ -15,5 +15,13 @@ value class Cards(
         values.add(card)
     }
 
+    fun deal(card: Card) {
+        check(values.size < CAN_DEAL_CARDS_SIZE) { "이미 2장이상 가지고 있어 deal할 수 없다." }
+    }
+
     fun values() = values.toList()
+
+    companion object {
+        private const val CAN_DEAL_CARDS_SIZE = 2
+    }
 }

@@ -37,4 +37,12 @@ class CardsTest : FunSpec({
             cards.values() shouldHaveSize 3
         }
     }
+
+    context("deal") {
+        test("2장이상의 카드가 있는데 deal하는 경우 예외가 발생한다.") {
+            val cards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, TWO)))
+            val exception = shouldThrowExactly<IllegalStateException> { cards.deal(Card(SPADE, THREE)) }
+            exception.message shouldBe "이미 2장이상 가지고 있어 deal할 수 없다."
+        }
+    }
 })
