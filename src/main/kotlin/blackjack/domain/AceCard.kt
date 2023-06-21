@@ -2,7 +2,7 @@ package blackjack.domain
 
 import kotlin.math.abs
 
-class AceCard(override val symbol: SymbolType) : Card {
+data class AceCard(override val symbol: SymbolType) : Card {
     override val priority: Int = 3
 
     override fun name(): String = ACE_NAME
@@ -11,7 +11,7 @@ class AceCard(override val symbol: SymbolType) : Card {
         if (abs(THRESHOLD - (MIN_VALUE + acc)) < abs(THRESHOLD - (MAX_VALUE + acc))) MIN_VALUE else MAX_VALUE
 
     companion object {
-        private const val ACE_NAME = "A"
+        const val ACE_NAME = "A"
         const val MIN_VALUE = 1
         const val MAX_VALUE = 11
         const val THRESHOLD = 21

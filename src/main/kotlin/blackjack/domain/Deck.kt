@@ -28,4 +28,6 @@ class Deck(values: MutableSet<Card> = mutableSetOf()) {
 
         return result
     }
+
+    fun copy(): Deck = Deck(internalValues.toMutableSet())
 }

@@ -14,5 +14,3 @@ class GamersBuilder : Builder<Players> {
 
     override fun build(): Players = Players(values = gamers.toList())
 }
-
-fun buildGamers(block: GamersBuilder.() -> Unit): Players = GamersBuilder().apply(block).build()

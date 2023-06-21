@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class FaceCard(override val symbol: SymbolType, private val faceType: FaceType) : Card {
+data class FaceCard(override val symbol: SymbolType, private val faceType: FaceType) : Card {
     override val priority: Int = 2
 
     override fun name(): String = faceType.name.first().toString()

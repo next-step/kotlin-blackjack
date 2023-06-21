@@ -10,4 +10,16 @@ class AceCardTest : FunSpec({
         actual.score(20) shouldBe 1
         actual.score(10) shouldBe 11
     }
+
+    test("ACE 카드는 공통적으로 a라는 이름을 가진다.") {
+         val actual = listOf(
+             AceCard(symbol = SymbolType.DIAMOND),
+             AceCard(symbol = SymbolType.HEART),
+             AceCard(symbol = SymbolType.CLOVER)
+         )
+
+        actual.forEach {
+            it.name() shouldBe AceCard.ACE_NAME
+        }
+    }
 })
