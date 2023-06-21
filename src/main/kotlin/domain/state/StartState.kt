@@ -10,7 +10,7 @@ class StartState private constructor(private val cards: BlackjackCards) : State 
         return if (currentCards.isDrawable()) Hit(cards = currentCards) else Hit(currentCards)
     }
 
-    override fun stop(): State = StartState(cards)
+    override fun stop(): State = Stand(cards)
 
     override fun getCards(): BlackjackCards = this.cards
 

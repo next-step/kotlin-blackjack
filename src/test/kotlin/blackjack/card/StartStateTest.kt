@@ -5,6 +5,7 @@ import domain.card.CardNumber
 import domain.card.Suit
 import domain.state.Blackjack
 import domain.state.Hit
+import domain.state.Stand
 import domain.state.StartState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -40,6 +41,17 @@ class StartStateTest {
         val startState = StartState.start(card1, card2)
         val hitState = startState.draw(newCard)
         assertThat(hitState is Hit).isTrue
+    }
+
+    @ParameterizedTest
+    @MethodSource("getStartStateTestData")
+    fun `플레이어는 시작(Start) 상태에서 카드를 받지 않으면 스탠드(Stand)라는 종료 상태가 된다`(
+        card1: BlackjackCard,
+        card2: BlackjackCard,
+    ) {
+        val startState = StartState.start(card1, card2)
+        val actual = startState.stop()
+        assertThat(actual is Stand).isTrue
     }
 
     companion object {
