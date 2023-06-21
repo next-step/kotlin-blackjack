@@ -7,7 +7,7 @@ class BlackjackView {
         println("${names.joinToString(", ")}에게 2장을 나누었습니다.")
     }
 
-    fun printPlayersCard(name: String, cards: Cards) {
+    fun printPlayerCard(name: String, cards: Cards) {
         println("${name}카드: ${cards.cards.joinToString(", ")}")
     }
 }
