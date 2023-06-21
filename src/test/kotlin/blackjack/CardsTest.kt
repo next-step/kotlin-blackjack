@@ -22,4 +22,12 @@ class CardsTest : FunSpec({
             actual.values shouldHaveSize 2
         }
     }
+
+    context("addCard") {
+        test("중복된 카드를 추가하는 경우 예외가 발생한다.") {
+            val cards = Cards(listOf(Card(SPADE, ACE), Card(SPADE, TWO)))
+            val exception = shouldThrowExactly<IllegalArgumentException> { cards.addCard(Card(SPADE, ACE)) }
+            exception.message shouldBe "이미 존재하는 카드를 추가할 수 없다."
+        }
+    }
 })
