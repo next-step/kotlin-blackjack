@@ -4,7 +4,6 @@ import blackjack.domain.FaceCard
 import blackjack.domain.FaceType
 import blackjack.domain.SymbolType
 
-
 @BuilderMarker
 class FaceCardsBuilder : Builder<Set<FaceCard>> {
     val values = mutableSetOf<FaceCard>()

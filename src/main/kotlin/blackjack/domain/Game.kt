@@ -37,5 +37,4 @@ class Game(val players: Players, private val deck: Deck) {
                 }
             }
     }
-
 }

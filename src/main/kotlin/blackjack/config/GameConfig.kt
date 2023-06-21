@@ -17,5 +17,4 @@ object GameConfig {
     }
     private val gameOutput: GameOutput by lazy { GameOutputImpl }
     private val gameInput: GameInput by lazy { GameInputProxy(target = GameInputImpl) }
-
 }

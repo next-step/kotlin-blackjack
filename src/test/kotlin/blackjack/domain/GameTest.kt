@@ -49,5 +49,4 @@ class GameTest : FunSpec({
             game.deal(player = player)
         }
     }
-
 })

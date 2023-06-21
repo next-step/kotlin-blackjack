@@ -18,5 +18,4 @@ class DeckBuilder : Builder<Deck> {
     override fun build(): Deck = Deck(values = cards)
 }
 
-
 fun buildDeck(block: DeckBuilder.() -> Unit): Deck = DeckBuilder().apply(block).build()

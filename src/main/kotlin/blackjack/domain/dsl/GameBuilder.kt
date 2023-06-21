@@ -17,7 +17,6 @@ class GameBuilder : Builder<Game> {
         players = it
     }
 
-
     override fun build(): Game = Game(
         players = players ?: throw IllegalArgumentException(),
         deck = deck ?: throw IllegalArgumentException()

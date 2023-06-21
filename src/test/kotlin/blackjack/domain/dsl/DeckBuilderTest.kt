@@ -20,7 +20,6 @@ class DeckBuilderTest : FunSpec({
             }
         }
 
-
         val actual = deck.toList()
 
         actual shouldHaveSize 13
