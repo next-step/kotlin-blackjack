@@ -7,6 +7,7 @@ import blackjack.domain.Users
 import blackjack.io.InputView
 import blackjack.io.ResultView
 import blackjack.util.CardSelector
+import blackjack.util.PointCalculator
 import blackjack.util.RandomCardSelector
 import java.util.LinkedList
 
@@ -36,7 +37,7 @@ class BlackjackGame(
     }
 
     private fun checkHit(user: User) {
-        while (InputView.checkHit(user.name)) {
+        while (PointCalculator.calculateUserPoint(user.deck) != null && InputView.checkHit(user.name)) {
             user.addCard(cardSelector.getCard())
             ResultView.printUserDeck(user)
         }
@@ -45,5 +46,6 @@ class BlackjackGame(
 
     companion object {
         const val INITIAL_DECK_SIZE = 2
+        const val BLACKJACK_LIMIT = 21
     }
 }

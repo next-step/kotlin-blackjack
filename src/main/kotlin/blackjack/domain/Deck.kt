@@ -1,9 +1,8 @@
 package blackjack.domain
 
 import java.util.LinkedList
-import java.util.Queue
 
-data class Deck(private val cardList: Queue<Card>) {
+data class Deck(private val cardList: LinkedList<Card>) {
     val size: Int
         get() = cardList.size
 
@@ -15,6 +14,10 @@ data class Deck(private val cardList: Queue<Card>) {
 
     fun addCard(card: Card) {
         cardList.add(card)
+    }
+
+    operator fun get(index: Int): Card {
+        return cardList[index]
     }
 
     override fun toString(): String {
