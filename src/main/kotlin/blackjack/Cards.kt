@@ -20,6 +20,10 @@ value class Cards(
         addCard(card)
     }
 
+    fun hit(card: Card) {
+        check(values.size >= CAN_DEAL_CARDS_SIZE) { "카드가 deal이 완료되지 않아 hit할 수 없다." }
+    }
+
     fun values() = values.toList()
 
     companion object {
