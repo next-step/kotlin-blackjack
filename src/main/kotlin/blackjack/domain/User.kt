@@ -1,9 +1,14 @@
 package blackjack.domain
 
-@JvmInline
-value class User(val name: String) {
+data class User(val name: String) {
+    lateinit var deck: Deck
+
     init {
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
+    }
+
+    fun initDeck(deck: Deck) {
+        this.deck = deck
     }
 
     companion object {

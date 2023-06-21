@@ -4,8 +4,17 @@ import java.util.LinkedList
 import java.util.Queue
 
 data class Deck(private val cardList: Queue<Card>) {
+    val size: Int
+        get() = cardList.size
+
     init {
         require(cardList.size > 0) { EMPTY_DECK_ERROR_MESSAGE }
+    }
+
+    fun getCard(): Card = checkNotNull(cardList.poll()) { EMPTY_DECK_ERROR_MESSAGE }
+
+    override fun toString(): String {
+        return cardList.joinToString(", ")
     }
 
     companion object {

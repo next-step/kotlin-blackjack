@@ -1,10 +1,14 @@
 package blackjack.domain
 
-data class Users(private val userList: List<User>) {
+data class Users(private val userList: List<User>) : Iterable<User> {
     val size = userList.size
 
     init {
         require(userList.isNotEmpty()) { EMPTY_USER_LIST_ERROR_MESSAGE }
+    }
+
+    override fun iterator(): Iterator<User> {
+        return userList.iterator()
     }
 
     companion object {

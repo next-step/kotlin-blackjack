@@ -1,5 +1,9 @@
 import blackjack.BlackjackGame
+import blackjack.io.InputView
+import blackjack.io.ResultView
 
 fun main() {
-    BlackjackGame().start()
+    val users = InputView.getUsers()
+    val game = BlackjackGame(users)
+    ResultView.printUsersDeck(game.users)
 }

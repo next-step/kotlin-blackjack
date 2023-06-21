@@ -1,11 +1,32 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.Deck
 import blackjack.domain.Users
-import blackjack.io.InputView
+import blackjack.util.CardSelector
+import blackjack.util.RandomCardSelector
+import java.util.LinkedList
 
-class BlackjackGame {
-    private val users: Users = InputView.getUsers()
+class BlackjackGame(
+    val users: Users,
+    private val cardSelector: CardSelector = RandomCardSelector(),
+) {
+    init {
+        initialUsersDeck()
+    }
 
-    fun start() {
+    private fun initialUsersDeck() {
+        for (user in users) {
+            val cardList = LinkedList<Card>()
+            repeat(INITIAL_DECK_SIZE) {
+                cardList.add(cardSelector.getCard())
+            }
+            val deck = Deck(cardList)
+            user.initDeck(deck)
+        }
+    }
+
+    companion object {
+        const val INITIAL_DECK_SIZE = 2
     }
 }

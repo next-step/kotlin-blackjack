@@ -22,12 +22,16 @@ sealed interface CardNumber {
 
 data class AceCardNumber(override val number: Int) : CardNumber {
 
+    override fun toString(): String = "A"
+
     companion object {
         val NUMBER_RANGE = 1..1
     }
 }
 
 data class NumberCardNumber(override val number: Int) : CardNumber {
+
+    override fun toString(): String = number.toString()
 
     companion object {
         val NUMBER_RANGE = 2..10
@@ -36,7 +40,18 @@ data class NumberCardNumber(override val number: Int) : CardNumber {
 
 data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
 
+    override fun toString(): String = when (number) {
+        JACK_NUMBER -> "J"
+        QUEEN_NUMBER -> "Q"
+        KING_NUMBER -> "K"
+        else -> throw IllegalStateException()
+    }
+
     companion object {
         val NUMBER_RANGE = 11..CardNumber.MAX_CARD_NUMBER
+
+        private const val JACK_NUMBER = 11
+        private const val QUEEN_NUMBER = 12
+        private const val KING_NUMBER = 13
     }
 }
