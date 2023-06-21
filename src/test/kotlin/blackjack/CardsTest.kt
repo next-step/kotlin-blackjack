@@ -1,6 +1,9 @@
 package blackjack
 
 import blackjack.Denomination.ACE
+import blackjack.Denomination.JACK
+import blackjack.Denomination.KING
+import blackjack.Denomination.QUEEN
 import blackjack.Denomination.THREE
 import blackjack.Denomination.TWO
 import blackjack.Suit.SPADE
@@ -63,6 +66,12 @@ class CardsTest : FunSpec({
             val cards = Cards(mutableListOf(Card(SPADE, ACE)))
             val exception = shouldThrowExactly<IllegalStateException> { cards.hit(Card(SPADE, TWO)) }
             exception.message shouldBe "카드가 deal이 완료되지 않아 hit할 수 없다."
+        }
+
+        test("최소 계산된 점수가 21점 초과되는데 hit하는 경우 예외가 발생한다") {
+            val cards = Cards(mutableListOf(Card(SPADE, KING), Card(SPADE, QUEEN), Card(SPADE, JACK)))
+            val exception = shouldThrowExactly<IllegalStateException> { cards.hit(Card(SPADE, ACE)) }
+            exception.message shouldBe "카드가 bust되어 더이상 hit할 수 없다."
         }
     }
 })
