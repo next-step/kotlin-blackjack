@@ -26,4 +26,17 @@ class DeckTest : FunSpec({
 
         deck.draw() shouldBe Card(Denomination.TWO, Suit.HEARTS)
     }
+
+    test("카드를 여려장 뽑는다.") {
+        val deck = Deck(
+            Card(Denomination.ACE, Suit.SPADES),
+            Card(Denomination.JACK, Suit.SPADES),
+            Card(Denomination.TWO, Suit.HEARTS),
+        )
+
+        deck.draw(2) shouldBe Cards(
+            Card(Denomination.TWO, Suit.HEARTS),
+            Card(Denomination.JACK, Suit.SPADES),
+        )
+    }
 })

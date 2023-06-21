@@ -9,6 +9,10 @@ class Deck(
         return cards.removeLast()
     }
 
+    fun draw(count: Int): Cards {
+        return Cards(List(count) { draw() })
+    }
+
     companion object {
         fun init(): Deck {
             val cards = Denomination.values()
