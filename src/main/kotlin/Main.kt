@@ -8,4 +8,5 @@ fun main() {
     ResultView.printUsersDeck(game.users)
 
     game.dealCards()
+    ResultView.printUsersResult(game.users)
 }
