@@ -1,6 +1,6 @@
 package blackjack.domain
 
 @JvmInline
-value class Cards(
-    val cards: List<String>
+value class Cards private constructor(
+    val cards: List<Card>
 )
