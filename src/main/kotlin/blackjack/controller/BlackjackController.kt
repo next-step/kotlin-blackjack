@@ -10,7 +10,15 @@ class BlackjackController {
     fun run() {
         val players = inputView.inputPlayers()
 
-        blackjackView.printInitialTurn(players.players.map { it.name })
+        val initialDraw = 2
+        repeat(initialDraw) {
+            players.players.forEach { it.drawCard() }
+        }
+
+        blackjackView.printInitialTurn(players.players.map { it.name }, initialDraw)
+        players.players.forEach {
+            blackjackView.printPlayerCard(it)
+        }
     }
 }
 
