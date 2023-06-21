@@ -44,22 +44,21 @@ class DslTest {
     }
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-class Person(val name: String, val company: String? = null)
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-
-    fun name(name: String) {
-        this.name = name
-    }
-
-    fun company(value: String) {
-        company = value
+    @Test
+    fun skill() {
+        val person = introduce {
+            name("홍길동")
+            skill {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        person.name shouldBe "홍길동"
+        person.company.shouldBeNull()
+        person.skill.shouldNotBeNull()
+        person.skill.soft shouldContainAll listOf("A passion for problem solving", "Good communication skills")
+        person.skill.hard shouldContain "Kotlin"
     }
 
     fun build(): Person {
