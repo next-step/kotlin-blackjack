@@ -13,5 +13,16 @@ enum class CardNumber(val score: Int) {
     TEN(10),
     KING(10),
     QUEEN(10),
-    JACK(10)
+    JACK(10),
+    ;
+
+    fun isAce(): Boolean = when (this) {
+        ACE -> true
+        else -> false
+    }
+
+    fun isTenScore(): Boolean = when (this) {
+        TEN, KING, QUEEN, JACK -> true
+        else -> false
+    }
 }
