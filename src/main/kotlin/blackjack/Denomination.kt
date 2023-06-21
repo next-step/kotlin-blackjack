@@ -3,7 +3,6 @@ package blackjack
 enum class Denomination(
     val score: List<Int>,
 ) {
-
     ACE(listOf(1, 11)),
     TWO(listOf(2)),
     THREE(listOf(3)),
