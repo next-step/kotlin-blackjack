@@ -72,4 +72,11 @@ class CardsTest : FunSpec({
             cards.values() shouldHaveSize 4
         }
     }
+
+    context("of") {
+        test("card를 받아 생성한다.") {
+            val actual = Cards.of(Card(SPADE, ACE), Card(SPADE, KING))
+            actual.values() shouldHaveSize 2
+        }
+    }
 })

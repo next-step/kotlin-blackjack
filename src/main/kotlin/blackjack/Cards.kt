@@ -31,5 +31,7 @@ value class Cards(
     companion object {
         private const val CAN_DEAL_CARDS_SIZE = 2
         private const val BUST_SCORE = 21
+
+        fun of(vararg card: Card) = Cards(card.toMutableList())
     }
 }
