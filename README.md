@@ -35,8 +35,8 @@ introduce {
 
 
 ### 기능 목록 step2)
- - [ ] 카드는 다이아몬드 / 하트 / 클로버 / 스페이드가 각각 13개의 끗수로 이루어져있다
- - [ ] King, Queen Jack 카드는 10점 / Ace 카드는 1또는 11점을 가질 수 있다 <br />
+ - [x] 카드는 다이아몬드 / 하트 / 클로버 / 스페이드가 각각 13개의 끗수로 이루어져있다
+ - [x] King, Queen Jack 카드는 10점 / Ace 카드는 1또는 11점을 가질 수 있다 <br />
     ACE(1 or 11) / TWO(2) / THREE(3) / FOUR(4) / FIVE(5) / SIX(6) / SEVEN(7) / EIGHT(8) <br /> 
     / NINE(9) / TEN(10) / JACK(10) / QUEEN(10) / KING(10)
 
