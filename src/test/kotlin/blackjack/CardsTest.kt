@@ -45,6 +45,12 @@ class CardsTest : FunSpec({
             exception.message shouldBe "이미 2장이상 가지고 있어 deal할 수 없다."
         }
 
+        test("중복된 카드를 deal하는 경우 예외가 발생한다.") {
+            val cards = Cards(mutableListOf(Card(SPADE, ACE)))
+            val exception = shouldThrowExactly<IllegalArgumentException> { cards.deal(Card(SPADE, ACE)) }
+            exception.message shouldBe "이미 존재하는 카드를 추가할 수 없다."
+        }
+
         test("deal할 수 있다.") {
             val cards = Cards()
             cards.deal(Card(SPADE, THREE))
