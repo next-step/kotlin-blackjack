@@ -1,8 +1,9 @@
-package domain.player
+package blackjack.player
 
 import domain.card.BlackjackCard
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.player.Player
 import domain.state.Hit
 import domain.state.ProceedingState
 import domain.state.Stand
