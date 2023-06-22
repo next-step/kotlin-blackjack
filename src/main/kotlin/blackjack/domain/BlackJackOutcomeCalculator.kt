@@ -27,7 +27,7 @@ class BlackJackOutcomeCalculator : GameOutcomeCalculator {
         return when {
             dealerScore > Game.THRESHOLD -> PLAYER_WIN_PAIR
             playerScore > Game.THRESHOLD -> DEALER_WIN_PAIR
-            (abs(Game.THRESHOLD - dealer.calculateScore()) < abs(Game.THRESHOLD - playerScore)) -> DEALER_WIN_PAIR
+            (abs(Game.THRESHOLD - dealerScore) < abs(Game.THRESHOLD - playerScore)) -> DEALER_WIN_PAIR
             else -> PLAYER_WIN_PAIR
         }
     }
