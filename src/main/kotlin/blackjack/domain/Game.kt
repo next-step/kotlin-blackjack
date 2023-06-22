@@ -15,7 +15,7 @@ class Game(val players: Players, private val deck: Deck) {
     }
 
     companion object {
-        private const val INIT_TAKE_SIZE = 2
+        const val INIT_TAKE_SIZE = 2
         const val THRESHOLD = 21
 
         fun from(requestNames: List<String>): Game =
@@ -24,17 +24,7 @@ class Game(val players: Players, private val deck: Deck) {
                     requestNames.forEach { name(it) }
                 }
                 deck {
-                    aceCards(*SymbolType.values())
-                    numberCards {
-                        SymbolType.values().forEach {
-                            NumberCard.MIN_LIMIT..NumberCard.MAX_LIMIT from it
-                        }
-                    }
-                    faceCards {
-                        SymbolType.values().forEach {
-                            it to FaceType.KING and FaceType.QUEEN and FaceType.JACK
-                        }
-                    }
+                    Deck.create()
                 }
             }
     }
