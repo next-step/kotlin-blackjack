@@ -6,6 +6,7 @@ import domain.card.CardNumber
 import domain.card.Suit
 import domain.state.Burst
 import domain.state.Hit
+import domain.state.Stand
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -37,6 +38,16 @@ class HitTest {
         val newState = hit.draw(newCard)
 
         (newState is Burst) shouldBe true
+    }
+
+    @ParameterizedTest
+    @MethodSource("getStandStateTestData")
+    fun `플레이어는 힛(Hit) 상태에서 더 이상 카드를 받지 않는다고 하면 스탠드(Stand)라는 종료 상태`(cards: BlackjackCards) {
+        val hit = Hit(cards)
+
+        val newState = hit.stop()
+
+        (newState is Stand) shouldBe true
     }
 
     companion object {
@@ -96,6 +107,36 @@ class HitTest {
                     ),
                 ),
                 BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
+            ),
+        )
+
+        @JvmStatic
+        fun getStandStateTestData(): List<Arguments> = listOf(
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.KING),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.KING),
+                    ),
+                ),
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.JACK),
+                    ),
+                ),
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.TEN),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.TEN),
+                    ),
+                ),
             ),
         )
     }

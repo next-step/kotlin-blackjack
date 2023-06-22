@@ -10,5 +10,5 @@ class Hit(cards: BlackjackCards) : ProceedingState(cards) {
         return if (currentCards.isDrawable()) Hit(cards = currentCards) else Burst(currentCards)
     }
 
-    override fun stop(): State = Hit(BlackjackCards(emptyList()))
+    override fun stop(): State = Stand(BlackjackCards(getCards()))
 }
