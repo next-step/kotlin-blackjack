@@ -24,27 +24,32 @@ class DslTest {
         assertThat(person.name).isEqualTo("홍길동")
         assertThat(person.company).isEqualTo("활빈당")
     }
+
+    @Test
+    fun skills() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        assertThat(person.name).isEqualTo("홍길동")
+        assertThat(person.company).isEqualTo("활빈당")
+        assertThat(person.skills).isEqualTo(
+            Skills(
+                listOf(
+                    SoftSkill("A passion for problem solving"),
+                    SoftSkill("Good communication skills"),
+                    HardSkill("Kotlin")
+                )
+            )
+        )
+    }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun build(): Person {
-        return Person(name, company)
-    }
-}
-
-data class Person(val name: String, val company: String?)
