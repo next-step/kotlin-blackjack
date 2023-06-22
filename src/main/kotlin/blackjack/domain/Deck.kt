@@ -16,14 +16,22 @@ class Deck {
 
         graveyard[drawIndex] = true
         val pokerSymbol = PokerSymbol.getSymbolByDrawNumber(drawIndex)
+        val cardValue = (drawIndex + REALIZATION_NUMBER) % SYMBOL_COUNT
 
         return draw {
             symbol(pokerSymbol)
-            value(drawIndex)
+            value(cardValue)
+            isAce(cardValue)
         }
+    }
+
+    fun canDrawFromDeck(n: Int): Boolean {
+        return graveyard.filter { !it }.size >= n
     }
 
     companion object {
         private const val DECK_SIZE = 52
+        private const val SYMBOL_COUNT = 13
+        private const val REALIZATION_NUMBER = 1
     }
 }

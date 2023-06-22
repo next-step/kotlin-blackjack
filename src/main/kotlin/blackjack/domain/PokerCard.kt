@@ -1,3 +1,3 @@
 package blackjack.domain
 
-class PokerCard(val symbol: PokerSymbol, val value: Int)
+class PokerCard(val symbol: PokerSymbol, val value: Int, isAce: Boolean)
