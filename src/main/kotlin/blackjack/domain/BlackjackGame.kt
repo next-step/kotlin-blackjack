@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class BlackjackGame(val players: List<Player>, val deck: CardDeck) {
 

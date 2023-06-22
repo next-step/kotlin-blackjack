@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Denomination(val scores: Scores) {
     ACE(Scores(listOf(Score(1), Score(11)))),

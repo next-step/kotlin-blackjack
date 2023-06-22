@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Scores(val value: List<Score>) {
 

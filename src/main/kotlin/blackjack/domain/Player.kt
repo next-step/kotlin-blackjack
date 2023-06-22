@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import kotlin.math.max
 

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Cards(val value: MutableList<Card> = mutableListOf()) {
     fun initCards(cards: List<Card>) {

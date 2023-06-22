@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class PlayerStatus {
     RECEIVE, STAY, BUST, BLACK_JACK;

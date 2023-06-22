@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class CardDeck(val cards: MutableList<Card> = cardDeck.shuffled().toMutableList()) {
     fun getRandomCards(count: Int): MutableList<Card> {

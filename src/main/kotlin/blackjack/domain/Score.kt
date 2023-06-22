@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.domain
+
+import blackjack.ErrorCode
 
 class Score(val value: Int) {
     init {
