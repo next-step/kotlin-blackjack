@@ -1,17 +1,32 @@
 package domain.card
 
-@JvmInline
-value class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCard> by cards {
+class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCard> by cards {
 
-    val sum: Int
-        get() = cards.sumOf { it.number.score }
+    var sum: Int
+        private set
+
+    init {
+        sum = this.sum()
+    }
 
     fun isDrawable(): Boolean {
         val sum = cards.sumOf { it.number.score }
         return sum <= CARD_NUMBER_SUM_MAX
     }
 
+    private fun sum(): Int {
+        val (aceCards, nonAceCards) = cards.partition { it.number.isAce() }
+        val nonAceSum = nonAceCards.sumOf { it.number.score }
+
+        val (mins, maxs) = (0..aceCards.size)
+            .map { (aceCards.size - it) * ACE_SPECIAL_SCORE + (it * CardNumber.ACE.score) + nonAceSum }
+            .partition { it <= CARD_NUMBER_SUM_MAX }
+
+        return if (mins.isEmpty()) maxs.min() else mins.max()
+    }
+
     companion object {
-        const val CARD_NUMBER_SUM_MAX = 21
+        private const val CARD_NUMBER_SUM_MAX = 21
+        private const val ACE_SPECIAL_SCORE = 11
     }
 }

@@ -10,4 +10,6 @@ interface State {
     fun getCards(): BlackjackCards
     fun isDrawable(): Boolean
     fun isProceeding(): Boolean
+
+    fun getScoreSum(): Int
 }

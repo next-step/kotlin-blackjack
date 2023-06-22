@@ -13,7 +13,7 @@ class Deck {
             .toMutableList()
     }
 
-    fun getCard(): BlackjackCard = cards.removeAt(0)
+    fun issueCard(): BlackjackCard = cards.removeAt(0)
 
     private fun makeDeck(): List<BlackjackCard> {
         return Suit.values().map {

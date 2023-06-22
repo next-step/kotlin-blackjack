@@ -13,4 +13,6 @@ open class TerminationState(private val cards: BlackjackCards) : State {
     override fun isDrawable(): Boolean = false
 
     override fun isProceeding(): Boolean = false
+
+    override fun getScoreSum(): Int = this.cards.sum
 }

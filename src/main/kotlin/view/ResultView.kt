@@ -8,7 +8,7 @@ import domain.player.Players
 class ResultView {
 
     fun printInitPlayers(players: Players) {
-        val playerNames = players.map { it.name }.joinToString { "," }
+        val playerNames = players.map { it.name }.joinToString(SEPARATOR)
         println("$playerNames 에게 2장을 나누었습니다.")
         players.forEach { printPlayerCards(it) }
         println()
@@ -21,8 +21,12 @@ class ResultView {
     fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
         val playerCards = player.cards.map {
             "${CARD_NUMBER_SHAPE_MAP[it.number]}${CARD_SUIT_SHAPE_MAP[it.suit]}"
-        }.joinToString { DELIMITERS }
+        }.joinToString(SEPARATOR)
         println("${player.name}: $playerCards ${sumOfCardSum()}")
+    }
+
+    fun printCannotProceed(player: Player) {
+        println("${player.name} $CANNOT_PROCEED_GAME_MESSAGE")
     }
 
     companion object {
@@ -49,6 +53,8 @@ class ResultView {
             Suit.DIAMOND to "다이아몬드",
         )
 
-        private const val DELIMITERS = ","
+        private const val SEPARATOR = ", "
+
+        private const val CANNOT_PROCEED_GAME_MESSAGE = "은(는) 더 이상 게임을 진행할 수 없습니다."
     }
 }

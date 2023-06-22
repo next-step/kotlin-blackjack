@@ -18,7 +18,13 @@ class Player(name: String, card1: BlackjackCard, card2: BlackjackCard) {
         this.state = StartState.start(card1, card2)
     }
 
-    fun draw(card: BlackjackCard): State = state.draw(card)
+    fun draw(card: BlackjackCard): State {
+        this.state = state.draw(card)
+        return this.state
+    }
 
-    fun stop(): State = state.stop()
+    fun stop(): State {
+        this.state = state.stop()
+        return this.state
+    }
 }
