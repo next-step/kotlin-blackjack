@@ -9,8 +9,8 @@ value class CardDeck(
 ) {
     fun size() = values.size
 
-    fun deal(): Card {
-        check(values.isNotEmpty()) { "남은 카드가 없을 땐 deal할 수 없다" }
+    fun draw(): Card {
+        check(values.isNotEmpty()) { "남은 카드가 없을 땐 드로우할 수 없다" }
         return values.poll()
     }
 
