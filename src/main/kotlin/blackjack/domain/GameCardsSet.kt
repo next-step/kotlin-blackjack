@@ -6,7 +6,7 @@ object GameCardsSet {
     private val allCards: MutableList<Card> = generateCards()
     private val drawnCards: MutableSet<Card> = mutableSetOf()
 
-    val remainingCards: List<Card>
+    private val remainingCards: List<Card>
         get() = allCards.filter { it !in drawnCards }
 
     fun drawRandomCard(): Card? {
