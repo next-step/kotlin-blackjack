@@ -17,7 +17,9 @@ object BlackjackGame {
     private const val INITIAL_DEALING_COUNT: Int = 2
 
     private val DEALER_CARD_SELECTOR: (CardDeck) -> TrumpCard = { it.random() }
-    private val BLACKJACK_SCORE_JUDGE = BlackjackScoreJudge(21)
+
+    private const val BLACKJACK_SCORE_LIMIT = 21
+    private val BLACKJACK_SCORE_JUDGE = BlackjackScoreJudge(BLACKJACK_SCORE_LIMIT)
 
     fun start() {
         val players: Collection<BlackjackPlayer> = InputView.players.map { BlackjackPlayer(it) }
@@ -26,20 +28,6 @@ object BlackjackGame {
         dealInitialCount(players, dealer)
             .map { dealMoreCard(it, dealer) }
             .map { OutputView.printPlayerResult(it, BLACKJACK_SCORE_JUDGE.score(it.deck)) }
-    }
-
-    private fun dealMoreCard(player: BlackjackPlayer, dealer: BlackjackDealer): BlackjackPlayer {
-        var currentPlayer: BlackjackPlayer = player
-        var isReceivedMoreCard = false
-        while (InputView.isWantedMoreCard(currentPlayer.name)) {
-            currentPlayer = currentPlayer.addedCard(dealer.drawCardAndRemoved())
-            OutputView.printPlayerCards(currentPlayer)
-            isReceivedMoreCard = true
-        }
-        if (!isReceivedMoreCard) {
-            OutputView.printPlayerCards(currentPlayer)
-        }
-        return currentPlayer
     }
 
     private fun dealInitialCount(
@@ -53,6 +41,23 @@ object BlackjackGame {
         OutputView.printInitialDealing(dealtPlayers, INITIAL_DEALING_COUNT)
         return dealtPlayers
     }
+
+    private fun dealMoreCard(player: BlackjackPlayer, dealer: BlackjackDealer): BlackjackPlayer {
+        var currentPlayer: BlackjackPlayer = player
+        var isReceivedMoreCard = false
+        while (isLessScoreThanLimit(currentPlayer) && InputView.isWantedMoreCard(currentPlayer.name)) {
+            currentPlayer = currentPlayer.addedCard(dealer.drawCardAndRemoved())
+            OutputView.printPlayerCards(currentPlayer)
+            isReceivedMoreCard = true
+        }
+        if (!isReceivedMoreCard) {
+            OutputView.printPlayerCards(currentPlayer)
+        }
+        return currentPlayer
+    }
+
+    private fun isLessScoreThanLimit(currentPlayer: BlackjackPlayer): Boolean =
+        BLACKJACK_SCORE_JUDGE.score(currentPlayer.deck) < BLACKJACK_SCORE_LIMIT
 }
 
 fun main() {
