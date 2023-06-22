@@ -1,18 +1,31 @@
 package blackjack.domain
 
 class Player(val name: String) {
-    private val hands = mutableListOf<PokerCard>()
-
+    private val hand = mutableListOf<PokerCard>()
+    var wantToHit = true
     fun receiveCard(vararg pokerCards: PokerCard) {
         for (pokerCard in pokerCards) {
-            hands.add(pokerCard)
+            hand.add(pokerCard)
         }
+//        if (hand.total() > 21) wantToHit = false
     }
 
     fun hands(): List<PokerCard> {
-        return hands.toList()
+        return hand.toList()
     }
+    fun performAction(userChoice: Boolean, dealer: Dealer) {
+        if (userChoice) {
+            receiveCard(dealer.draw())
+        } else {
+            stay()
+        }
+    }
+
+    fun stay() {
+        this.wantToHit = false
+    }
+
     fun showHands(): String {
-        return hands.joinToString(transform = PokerCard::representCard)
+        return hand.joinToString(transform = PokerCard::representCard)
     }
 }
