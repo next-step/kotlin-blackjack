@@ -2,11 +2,12 @@ package blackjack.domain
 
 import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
-class BlackjackGame(val players: List<Player>, val deck: CardDeck) {
+class BlackjackGame(val players: Players, val deck: CardDeck) {
 
     fun initPlayers() {
-        players.forEach { player ->
+        players.value.forEach { player ->
             val cards = deck.getRandomCards(INIT_CARD_COUNT)
             cards.value.forEach { card -> player.receiveCard(card) }
         }

@@ -1,11 +1,11 @@
 package blackjack.view.output
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
-class GameSharedCardOutputView(players: List<Player>) {
+class GameSharedCardOutputView(players: Players) {
     init {
-        val playerNames = players.joinToString(SEPARATOR) { it.name.value }
+        val playerNames = players.value.joinToString(SEPARATOR) { it.name.value }
         println("${playerNames}에게 ${BlackjackGame.INIT_CARD_COUNT}장의 카드를 나누었습니다.")
     }
 
