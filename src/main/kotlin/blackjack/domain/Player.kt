@@ -1,3 +1,16 @@
 package blackjack.domain
 
-data class Player(val name: String)
+class Player(val name: String, size: Int) {
+
+    val cards: MutableList<Card> = mutableListOf()
+
+    init {
+        repeat(size) {
+            cards.add(BlackJackTable.hitCard())
+        }
+    }
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
+
+}
