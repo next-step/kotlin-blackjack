@@ -33,8 +33,8 @@ class Cards private constructor(
         var adjustedSum = sum
         var aceCount = cards.count { it.rank == Ranks.ACE }
 
-        while (0 < aceCount && adjustedSum + 10 <= TARGET_SUM) {
-            adjustedSum += 10
+        while (0 < aceCount && adjustedSum > TARGET_SUM) {
+            adjustedSum -= 10
             aceCount--
         }
 
