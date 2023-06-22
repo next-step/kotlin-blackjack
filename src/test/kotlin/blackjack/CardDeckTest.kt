@@ -10,7 +10,7 @@ class CardDeckTest {
         val deck = CardDeck()
 
         val randomCards = deck.getRandomCards(2)
-        val result = randomCards.any { deck.cards.contains(it) }
+        val result = randomCards.value.any { deck.cards.value.contains(it) }
 
         result shouldBe false
     }

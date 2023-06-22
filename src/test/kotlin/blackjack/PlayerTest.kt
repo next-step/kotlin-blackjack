@@ -23,23 +23,24 @@ class PlayerTest {
     @Test
     fun `게임 시작시 랜덤한 2장의 카드를 가지고 시작합니다`() {
         val deck = CardDeck()
-        val cards = Cards(deck.getRandomCards(2))
+        val cards = Cards(deck.getRandomCards(2).value)
+        val player = Player()
 
-        val player = Player(cards = cards)
+        cards.value.forEach { card -> player.receiveCard(card) }
 
         player.cards.value.size shouldBe 2
     }
 
     @Test
     fun `최초 카드를 받은 후 BLACK_JACK 이면 더이상 카드를 받을 수 없다`() {
+        val player = Player()
         val cards = Cards(
             mutableListOf(
                 Card(Denomination.ACE, CardType.CLUBS),
                 Card(Denomination.JACK, CardType.DIAMONDS),
             ),
         )
-
-        val player = Player(cards = cards)
+        cards.value.forEach { card -> player.receiveCard(card) }
 
         player.getOptimizedScore() shouldBe 21
         player.isBlackJack() shouldBe true
@@ -48,13 +49,14 @@ class PlayerTest {
 
     @Test
     fun `턴에 카드를 받은 후 BLACK_JACK score를 넘으면 더이상 카드를 받을 수 없다`() {
+        val player = Player()
         val cards = Cards(
             mutableListOf(
                 Card(Denomination.JACK, CardType.CLUBS),
                 Card(Denomination.JACK, CardType.DIAMONDS),
             ),
         )
-        val player = Player(cards = cards)
+        cards.value.forEach { card -> player.receiveCard(card) }
 
         player.receiveCard(Card(Denomination.TWO, CardType.DIAMONDS))
 

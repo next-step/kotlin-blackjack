@@ -1,14 +1,14 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Denomination
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.card.Denomination
 
 class Player(
     val name: Name = Name(),
-    val cards: Cards = Cards(),
     val scoreSet: MutableSet<Int> = mutableSetOf(INIT_SCORE),
 ) {
+    val cards: Cards = Cards()
     private var status: PlayerStatus = PlayerStatus.RECEIVE
 
     init {
@@ -31,16 +31,15 @@ class Player(
         updateStatus()
     }
 
-    fun updateScoreSet(card: Card) {
+    private fun updateScoreSet(card: Card) {
         val _scoreSet = setOf(*scoreSet.toTypedArray())
 
         val newScoreSet = _scoreSet.flatMap { score ->
-            val sumList = if (card.denom.symbol == Denomination.ACE.symbol) {
+            if (card.denom.symbol == Denomination.ACE.symbol) {
                 Denomination.ACE.getCardScoresValue().map { value -> score + value }
             } else {
                 listOf(score + card.denom.cardScores.value.first().value)
             }
-            sumList
         }.distinct().toSet()
 
         val finalScoreList =

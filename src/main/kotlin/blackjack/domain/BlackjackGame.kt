@@ -8,12 +8,12 @@ class BlackjackGame(val players: List<Player>, val deck: CardDeck) {
     fun initPlayers() {
         players.forEach { player ->
             val cards = deck.getRandomCards(INIT_CARD_COUNT)
-            cards.forEach { card -> player.receiveCard(card) }
+            cards.value.forEach { card -> player.receiveCard(card) }
         }
     }
 
     fun dealCards(player: Player) {
-        val card = deck.getRandomCards(SHARE_CARD_COUNT).first()
+        val card = deck.getRandomCards(SHARE_CARD_COUNT).value.first()
         player.receiveCard(card)
     }
 

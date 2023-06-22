@@ -50,13 +50,14 @@ class BlackjackGameTest {
     @Test
     fun `ACE는 1 또는 11 score로 계산될 수 있어서 21을 넘지 않는 가장 가까운 수로 계산된다`() {
         // 7, 17
+        val player = Player()
         val cards = Cards(
             mutableListOf(
                 Card(Denomination.ACE, CardType.CLUBS),
                 Card(Denomination.SIX, CardType.DIAMONDS),
             ),
         )
-        val player = Player(cards = cards)
+        cards.value.forEach { card -> player.receiveCard(card) }
 
         // 17, 27
         player.receiveCard(Card(Denomination.JACK, CardType.HEARTS))

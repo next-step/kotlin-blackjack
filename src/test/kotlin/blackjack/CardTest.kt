@@ -45,4 +45,16 @@ class CardTest {
 
         validMap.values shouldBe listOf(13, 13, 13, 13)
     }
+
+    @Test
+    fun `ACE 카드는 1 또는 11 score를 가질 수 있다`() {
+        val deck = CardDeck.cardDeck
+        val aceCard = deck.first { it.denom.symbol == Denomination.ACE.symbol }
+
+        with(aceCard.denom.cardScores.value) {
+            this.size shouldBe 2
+            this[0].value shouldBe 1
+            this[1].value shouldBe 11
+        }
+    }
 }
