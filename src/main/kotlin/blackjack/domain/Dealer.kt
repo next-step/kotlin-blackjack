@@ -1,15 +1,15 @@
 package blackjack.domain
 
-class Dealer(val deck: Deck) {
+class Dealer(private val deck: Deck = Deck()) {
     fun startRound(players: Array<Player>) {
         for (player in players) {
             require(deck.canDrawFromDeck(DOUBLE_DRAW)) { EMPTY_DECK_ERROR }
-            val firstRoundCards = listOf(deck.drawCard(), deck.drawCard())
-            player.hands.addAll(firstRoundCards)
+            val firstRoundCards = arrayOf(deck.drawCard(), deck.drawCard())
+            player.receiveCard(*firstRoundCards)
         }
     }
 
-    fun hit(): PokerCard {
+    fun draw(): PokerCard {
         require(deck.canDrawFromDeck(SINGLE_DRAW)) { EMPTY_DECK_ERROR }
         return deck.drawCard()
     }

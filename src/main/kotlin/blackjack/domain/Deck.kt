@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.draw
+import blackjack.drawNewCard
 import kotlin.random.Random
 
 class Deck {
@@ -18,10 +18,10 @@ class Deck {
         val pokerSymbol = PokerSymbol.getSymbolByDrawNumber(drawIndex)
         val cardValue = (drawIndex + REALIZATION_NUMBER) % SYMBOL_COUNT
 
-        return draw {
+        return drawNewCard {
             symbol(pokerSymbol)
             value(cardValue)
-            isAce(cardValue)
+            rank(cardValue)
         }
     }
 

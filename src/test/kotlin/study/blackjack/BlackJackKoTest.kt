@@ -17,13 +17,13 @@ class BlackJackKoTest : StringSpec({
         val dealer = Dealer(deck)
         val players = arrayOf(Player("test1"), Player("test2"))
         dealer.startRound(players)
-        players.forEach { it.hands.size shouldBe 2 }
+        players.forEach { it.hands().size shouldBe 2 }
     }
 
     "덱에서 한장을 뽑는다." {
         val deck = Deck()
         val dealer = Dealer(deck)
-        val cards = List(10) { dealer.hit() }
+        val cards = List(10) { dealer.draw() }
         val pokerSymbols = PokerSymbol.values().toList()
 
         cards.shouldNotBeNull()
@@ -36,7 +36,7 @@ class BlackJackKoTest : StringSpec({
     "덱이 소진되면 에러를 내보낸다." {
         val deck = Deck()
         val dealer = Dealer(deck)
-        val cards = List(52) { dealer.hit() }
+        val cards = List(52) { dealer.draw() }
         val pokerSymbols = PokerSymbol.values().toList()
 
         cards.shouldNotBeNull()
@@ -45,7 +45,7 @@ class BlackJackKoTest : StringSpec({
             it.value shouldBeInRange (1..11)
         }
         shouldThrow<IllegalArgumentException> {
-            dealer.hit()
+            dealer.draw()
         }.message shouldBe "모든 덱이 소진되었습니다."
     }
 })

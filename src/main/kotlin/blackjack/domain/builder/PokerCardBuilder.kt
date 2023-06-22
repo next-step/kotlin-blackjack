@@ -7,7 +7,7 @@ class PokerCardBuilder {
 
     private lateinit var symbol: PokerSymbol
     private var value: Int = 0
-    private var isAce = false
+    private lateinit var rank: String
 
     fun symbol(symbol: PokerSymbol) {
         this.symbol = symbol
@@ -15,25 +15,33 @@ class PokerCardBuilder {
 
     fun value(cardValue: Int) {
         this.value = when {
-            cardValue == KING_NUMBER -> FACE_CARD_VALUE
             cardValue == ACE_NUMBER -> ACE_VALUE
+            cardValue == KING_NUMBER -> FACE_CARD_VALUE
             cardValue > FACE_CARD_VALUE -> FACE_CARD_VALUE
             else -> cardValue
         }
     }
 
-    fun isAce(cardValue: Int) {
-        this.isAce = cardValue == ACE_NUMBER
-
+    fun rank(cardValue: Int) {
+        this.rank = when (cardValue) {
+            ACE_NUMBER -> "A"
+            JACK_NUMBER -> "J"
+            QUEEN_NUMBER -> "Q"
+            KING_NUMBER -> "K"
+            else -> cardValue.toString()
+        }
     }
+
     fun build(): PokerCard {
-        return PokerCard(symbol, value, isAce)
+        return PokerCard(symbol, value, rank)
     }
 
     companion object {
         private const val ACE_NUMBER = 1
         private const val ACE_VALUE = 11
         private const val FACE_CARD_VALUE = 10
+        private const val JACK_NUMBER = 11
+        private const val QUEEN_NUMBER = 12
         private const val KING_NUMBER = 0
     }
 }
