@@ -106,7 +106,7 @@ class StartStateTest {
             Arguments.of(
                 BlackjackCard(suit = Suit.SPADE, number = CardNumber.TEN),
                 BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.KING),
+                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
             ),
         )
     }

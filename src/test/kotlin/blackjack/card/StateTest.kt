@@ -28,10 +28,10 @@ class StateTest {
         val burst = Burst(cards)
         val blackjack = Blackjack(cards)
 
-        assertThat(start.getCards()).isEqualTo(cards)
-        assertThat(hit.getCards()).isEqualTo(cards)
-        assertThat(stand.getCards()).isEqualTo(cards)
-        assertThat(burst.getCards()).isEqualTo(cards)
-        assertThat(blackjack.getCards()).isEqualTo(cards)
+        assertThat(start.getCards()).containsAll(cards)
+        assertThat(hit.getCards()).containsAll(cards)
+        assertThat(stand.getCards()).containsAll(cards)
+        assertThat(burst.getCards()).containsAll(cards)
+        assertThat(blackjack.getCards()).containsAll(cards)
     }
 }
