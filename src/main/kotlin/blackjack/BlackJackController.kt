@@ -12,10 +12,10 @@ object BlackJackController {
         dealer.startRound(players)
         OutputView.roundStartNotice(players)
         players.forEach { player ->
-            while (player.wantToHit) {
-                val needDraw = InputView.wantToHit(player.name)
-                player.performAction(needDraw, dealer)
-                if (needDraw) handNotice(player)
+            while (player.ableToDraw) {
+                val wantToHit = InputView.wantToHit(player.name)
+                player.performAction(wantToHit, dealer)
+                if (wantToHit) handNotice(player)
             }
         }
     }

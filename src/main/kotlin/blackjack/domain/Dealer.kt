@@ -18,6 +18,5 @@ class Dealer(private val deck: Deck = Deck()) {
         private const val EMPTY_DECK_ERROR = "모든 덱이 소진되었습니다."
         private const val SINGLE_DRAW = 1
         private const val DOUBLE_DRAW = 2
-
     }
 }

@@ -62,7 +62,7 @@
 - [x] 카드는 번호와 심볼을 가지고 있다. - Card
 - [x] 플레이어의 손패를 공지한다. -OutputView
 - [x] 참여자는 추가로 카드를 받는 Hit과 더 이상 받지 않는 Stay를 선택할 수 있다. - Player
-- [ ] 참여자 손패의 카드합이 21이상이라면 Bust 더이상 카드를 받지 못한다. - HandsCalculator
-- [ ] 손패의 카드 합을 더한다. J, Q, K는 10이다. A는 1이거나 11이다. Hands
-- [ ] 손패 총합 값을 계산한다. - HandsCalculator
+- [x] 참여자 손패의 카드합이 21이상이라면 Bust 더이상 카드를 받지 못한다. - HandsCalculator
+- [x] 손패의 카드 합을 더한다. J, Q, K는 10이다. A는 1이거나 11이다. Hands
+- [x] 손패 총합 값을 계산한다. - HandsCalculator
 - [ ] 결과를 발표한다. -Game

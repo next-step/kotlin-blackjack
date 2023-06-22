@@ -1,28 +1,36 @@
 package blackjack.domain
 
+import blackjack.HandsCalculator
+
 class Player(val name: String) {
+
     private val hand = mutableListOf<PokerCard>()
-    var wantToHit = true
+    var ableToDraw = true
+
     fun receiveCard(vararg pokerCards: PokerCard) {
+        require(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
+
         for (pokerCard in pokerCards) {
             hand.add(pokerCard)
         }
-//        if (hand.total() > 21) wantToHit = false
+        val blackJackOrBust = HandsCalculator.calculateOptimalValue(hand) >= 21
+        if (blackJackOrBust) ableToDraw = false
     }
 
     fun hands(): List<PokerCard> {
         return hand.toList()
     }
-    fun performAction(userChoice: Boolean, dealer: Dealer) {
-        if (userChoice) {
+
+    fun performAction(wantToHit: Boolean, dealer: Dealer) {
+        if (wantToHit) {
             receiveCard(dealer.draw())
         } else {
-            stay()
+            this.ableToDraw = false
         }
     }
 
-    fun stay() {
-        this.wantToHit = false
+    fun optimalValue(): Int {
+        return HandsCalculator.calculateOptimalValue(hand)
     }
 
     fun showHands(): String {
