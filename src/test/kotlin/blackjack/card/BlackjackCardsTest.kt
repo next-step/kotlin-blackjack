@@ -17,6 +17,12 @@ class BlackjackCardsTest {
         cards.isDrawable() shouldBe true
     }
 
+    @ParameterizedTest
+    @MethodSource("getCardNumberSum")
+    fun `카드들은 총 합을 제공`(cards: BlackjackCards, expected: Int) {
+        cards.sum shouldBe expected
+    }
+
     companion object {
         @JvmStatic
         fun getCardNumberSumLessThanEquals21(): List<Arguments> = listOf(
@@ -37,6 +43,30 @@ class BlackjackCardsTest {
                         BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
                     ),
                 ),
+            ),
+        )
+
+        @JvmStatic
+        fun getCardNumberSum(): List<Arguments> = listOf(
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.TWO),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.THREE),
+                    ),
+                ),
+                6,
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.KING),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.NINE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                    ),
+                ),
+                20,
             ),
         )
     }
