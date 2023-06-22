@@ -1,6 +1,6 @@
 package blackjack.util
 
-import blackjack.BlackjackGame
+import blackjack.controller.BlackjackGame
 import blackjack.domain.AceCardNumber
 import blackjack.domain.Card
 import blackjack.domain.Deck

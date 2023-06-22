@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.controller
 
 import blackjack.domain.Card
 import blackjack.domain.Deck
@@ -12,11 +12,18 @@ import blackjack.util.RandomCardSelector
 import java.util.LinkedList
 
 class BlackjackGame(
-    val users: Users,
     private val cardSelector: CardSelector = RandomCardSelector(),
 ) {
+    var users: Users = InputView.getUsers()
+
     init {
         initUsersDeck()
+        ResultView.printUsersDeck(users)
+    }
+
+    fun start() {
+        dealCards()
+        ResultView.printUsersResult(users)
     }
 
     private fun initUsersDeck() {
