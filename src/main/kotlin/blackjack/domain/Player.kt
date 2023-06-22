@@ -9,8 +9,6 @@ class Player(val name: String) {
 
     fun showMyCards(): String = myCards.toString()
 
-    fun getMyCards(): Cards = myCards.copy()
-
     fun canDraw(): Boolean = myCards.sum() <= TARGET_SUM
 
     fun drawCard() {

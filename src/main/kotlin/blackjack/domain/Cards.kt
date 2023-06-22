@@ -11,8 +11,6 @@ class Cards private constructor(
         return Cards(newCards)
     }
 
-    fun copy(): Cards = Cards(this.cards)
-
     fun sum(): Int {
         val sum = calculateSum()
         return adjustAceSum(sum)
