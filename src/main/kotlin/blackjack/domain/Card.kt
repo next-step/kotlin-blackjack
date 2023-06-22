@@ -7,16 +7,16 @@ data class Card(val cardNumber: CardNumber, val cardType: CardType) {
 
     private fun validCardNumber(cardNumber: CardNumber): Boolean {
         return when (cardNumber) {
-            CardNumber.CARD_ACE.number -> true
+            CardNumber.CARD_ACE, CardNumber.CARD_KING, CardNumber.CARD_QUEEN, CardNumber.CARD_JACK -> true
             else -> {
                 isAvailableNumber(cardNumber)
             }
         }
     }
 
-    private fun isAvailableNumber(cardNumber: String): Boolean {
+    private fun isAvailableNumber(cardNumber: CardNumber): Boolean {
 
-        val number = cardNumber.toIntOrNull() ?: return false
+        val number = cardNumber.number.toIntOrNull() ?: return false
         return number in MINIMIUM..MAXIMIUM
     }
 

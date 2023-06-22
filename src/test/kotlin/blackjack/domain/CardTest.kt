@@ -14,6 +14,5 @@ class CardTest {
             Card(CardNumber.CARD_ACE, CardType.DIAMOND)
             Card(CardNumber.CARD_KING, CardType.HEART)
         }
-
     }
 }
