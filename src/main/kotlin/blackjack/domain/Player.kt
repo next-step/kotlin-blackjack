@@ -1,6 +1,6 @@
 package blackjack.domain
 
-interface Player {
+sealed interface Player {
     val name: String
     val deck: Deck
 

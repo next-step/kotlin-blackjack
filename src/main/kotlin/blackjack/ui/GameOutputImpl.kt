@@ -1,5 +1,8 @@
 package blackjack.ui
 
+import blackjack.domain.GameResult
+import blackjack.domain.OutcomeType.LOSE
+import blackjack.domain.OutcomeType.WIN
 import blackjack.domain.Player
 import blackjack.domain.Players
 
@@ -19,9 +22,10 @@ object GameOutputImpl : GameOutput {
         println("${player.name}카드: $cardResponse")
     }
 
-    override fun printAllDeckStatus(players: Players) {
+    override fun printAllDeckStatus(players: Players, dealer: Player) {
         buildString {
             append("\n")
+            append("딜러 카드: ${getCardResponse(dealer)} - 결과 ${dealer.calculateScore()}\n")
             players.forEach { player ->
                 append("${player.name}카드: ${getCardResponse(player)} - 결과: ${player.calculateScore()}\n")
             }
@@ -30,4 +34,21 @@ object GameOutputImpl : GameOutput {
 
     private fun getCardResponse(player: Player) =
         player.currentDeck().toList().map { symbol -> "${symbol.name()}${symbol.symbol.korName}" }
+
+    override fun printDealerOneMorePick() =
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+
+    override fun printOutcome(gameResult: GameResult) {
+        val dealerRecord = gameResult.dealerRecord
+        val playerRecords = gameResult.playerRecords
+        val result = buildString {
+            append("\n## 최종 승패\n")
+            append("딜러: ${dealerRecord[WIN] ?: 0}승 ${dealerRecord[LOSE] ?: 0}패\n")
+            playerRecords.forEach { entry ->
+                append("${entry.key.name}: ${entry.value.korName}\n")
+            }
+        }
+
+        println(result)
+    }
 }
