@@ -14,16 +14,35 @@ class Cards private constructor(
     fun copy(): Cards = Cards(this.cards)
 
     fun sum(): Int {
-//        if (cards.size < 2) {
-//            throw IllegalArgumentException("최소 2개의 카드가 있어야 합니다.")
-//        }
-        //todo 구현 예정
+        val sum = calculateSum()
+        return adjustAceSum(sum)
+    }
 
-        return cards.sumOf { it.numbers[0] }
+    private fun calculateSum(): Int {
+        var sum = 0
+
+        cards.forEach { card ->
+            val maxNumber = card.numbers.max()
+            sum += maxNumber
+        }
+
+        return sum
+    }
+
+    private fun adjustAceSum(sum: Int): Int {
+        var adjustedSum = sum
+        var aceCount = cards.count { it.rank == Ranks.ACE }
+
+        while (0 < aceCount && adjustedSum + 10 <= TARGET_SUM) {
+            adjustedSum += 10
+            aceCount--
+        }
+
+        return adjustedSum
     }
 
     companion object {
-        const val MAX_SUM: Int = 21
+        const val TARGET_SUM: Int = 21
         fun empty(): Cards = Cards(emptyList())
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.Cards.Companion.MAX_SUM
+import blackjack.domain.Cards.Companion.TARGET_SUM
 
 class Player(val name: String) {
     private var myCards: Cards = Cards.empty()
@@ -11,7 +11,7 @@ class Player(val name: String) {
 
     fun getMyCards(): Cards = myCards.copy()
 
-    fun canDraw(): Boolean = myCards.sum() < MAX_SUM
+    fun canDraw(): Boolean = myCards.sum() <= TARGET_SUM
 
     fun drawCard() {
         if (!canDraw()) {
