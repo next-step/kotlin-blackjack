@@ -34,11 +34,9 @@ class PlayerTest {
     @Test
     fun `최초 카드를 받은 후 BLACK_JACK 이면 더이상 카드를 받을 수 없다`() {
         val player = Player()
-        val cards = Cards(
-            mutableListOf(
-                Card(Denomination.ACE, CardType.CLUBS),
-                Card(Denomination.JACK, CardType.DIAMONDS),
-            ),
+        val cards = Cards.from(
+            Card(Denomination.ACE, CardType.CLUBS),
+            Card(Denomination.JACK, CardType.DIAMONDS),
         )
         cards.value.forEach { card -> player.receiveCard(card) }
 
@@ -50,11 +48,9 @@ class PlayerTest {
     @Test
     fun `턴에 카드를 받은 후 BLACK_JACK score를 넘으면 더이상 카드를 받을 수 없다`() {
         val player = Player()
-        val cards = Cards(
-            mutableListOf(
-                Card(Denomination.JACK, CardType.CLUBS),
-                Card(Denomination.JACK, CardType.DIAMONDS),
-            ),
+        val cards = Cards.from(
+            Card(Denomination.JACK, CardType.CLUBS),
+            Card(Denomination.JACK, CardType.DIAMONDS),
         )
         cards.value.forEach { card -> player.receiveCard(card) }
 
