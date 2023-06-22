@@ -1,13 +1,12 @@
 package blackjack.domain
 
+import blackjack.domain.Card.Companion.ALL_CARDS
 import kotlin.random.Random
 
 object GameCardsSet {
-    private val allCards: MutableList<Card> = generateCards()
     private val drawnCards: MutableSet<Card> = mutableSetOf()
-
     private val remainingCards: List<Card>
-        get() = allCards.filter { it !in drawnCards }
+        get() = ALL_CARDS.values.filter { it !in drawnCards }
 
     fun drawRandomCard(): Card? {
         if (remainingCards.isEmpty()) {
@@ -18,22 +17,5 @@ object GameCardsSet {
         val drawnCard = remainingCards[randomIndex]
         drawnCards.add(drawnCard)
         return drawnCard
-    }
-
-    private fun generateCards(): MutableList<Card> {
-        val generatedCards = mutableListOf<Card>()
-
-        Suits.values().forEach { suit ->
-            generateCardsForSuit(suit, generatedCards)
-        }
-
-        return generatedCards
-    }
-
-    private fun generateCardsForSuit(suit: Suits, generatedCards: MutableList<Card>) {
-        Ranks.values().forEach { rank ->
-            val card = Card.createCard(rank, suit)
-            generatedCards.add(card)
-        }
     }
 }

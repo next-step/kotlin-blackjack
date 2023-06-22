@@ -9,8 +9,18 @@ class Card private constructor(
     override fun toString(): String = "${rank.description}${suit.description}"
 
     companion object {
+        val ALL_CARDS = createAllCards()
+
         fun createCard(rank: Ranks, suit: Suits): Card {
-            return Card(rank, suit)
+            return ALL_CARDS[Pair(rank, suit)] ?: throw IllegalArgumentException("카드가 존재하지 않습니다.")
+        }
+
+        private fun createAllCards(): Map<Pair<Ranks, Suits>,Card> {
+            return Ranks.values().flatMap { rank ->
+                Suits.values().map { suit -> Card(rank, suit) }
+            }.associateBy {
+                Pair(it.rank, it.suit)
+            }
         }
     }
 }
