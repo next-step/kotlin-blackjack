@@ -56,8 +56,8 @@ object BlackjackGame {
         return currentPlayer
     }
 
-    private fun isLessScoreThanLimit(currentPlayer: BlackjackPlayer): Boolean =
-        BLACKJACK_SCORE_JUDGE.score(currentPlayer.deck) < BLACKJACK_SCORE_LIMIT
+    private fun isLessScoreThanLimit(player: BlackjackPlayer): Boolean =
+        BLACKJACK_SCORE_JUDGE.score(player.deck) < BLACKJACK_SCORE_LIMIT
 }
 
 fun main() {
