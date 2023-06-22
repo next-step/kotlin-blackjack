@@ -10,7 +10,5 @@ class Hit(
         TODO("Not yet implemented")
     }
 
-    override fun stay() {
-        TODO("Not yet implemented")
-    }
+    override fun stay() = Stay()
 }

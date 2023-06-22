@@ -6,5 +6,5 @@ interface GameState {
 
     fun draw(card: Card): GameState
 
-    fun stay()
+    fun stay(): Stay
 }
