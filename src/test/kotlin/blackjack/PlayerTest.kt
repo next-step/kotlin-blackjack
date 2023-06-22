@@ -9,6 +9,6 @@ class PlayerTest {
     fun `플레이어는 카드들을 가질 수 있다`() {
         val player1 = Player("사람1")
         player1.drawCard()
-        assertThat(player1.countCards()).isEqualTo(1)
+        assertThat(player1.countMyCards()).isEqualTo(1)
     }
 }
