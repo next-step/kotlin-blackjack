@@ -46,4 +46,26 @@ class DslTest {
         person.company shouldBe "활빈당"
         person.skills shouldNotBe null
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft(Skill("softSkill1"))
+                soft(Skill("softSkill2"))
+                hard(Skill("hardSkill1"))
+            }
+            languages {
+                "Korean" level 5
+                "English" level 0
+            }
+        }
+
+        person.name shouldBe "홍길동"
+        person.company shouldBe "활빈당"
+        person.skills shouldNotBe null
+        person.languages shouldNotBe null
+    }
 }
