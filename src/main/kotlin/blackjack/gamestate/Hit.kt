@@ -5,7 +5,7 @@ import blackjack.Cards
 
 class Hit(
     val cards: Cards,
-): GameState {
+) : GameState {
     override fun draw(card: Card): GameState {
         TODO("Not yet implemented")
     }
