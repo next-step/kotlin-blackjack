@@ -19,7 +19,7 @@ class BlackjackCardsTest {
 
     @ParameterizedTest
     @MethodSource("getCardNumberSum")
-    fun `카드들은 총 합을 제공`(cards: BlackjackCards, expected: Int) {
+    fun `카드들의 숫자 합은 21 또는 21에 가장 가까운 숫자를 가진다`(cards: BlackjackCards, expected: Int) {
         cards.sum shouldBe expected
     }
 
@@ -56,7 +56,7 @@ class BlackjackCardsTest {
                         BlackjackCard(suit = Suit.CLUB, number = CardNumber.THREE),
                     ),
                 ),
-                6,
+                16,
             ),
             Arguments.of(
                 BlackjackCards(
@@ -67,6 +67,59 @@ class BlackjackCardsTest {
                     ),
                 ),
                 20,
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.KING),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                    ),
+                ),
+                21,
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.DIAMOND, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.FIVE),
+                    ),
+                ),
+                12,
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.DIAMOND, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.FIVE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.FIVE),
+                    ),
+                ),
+                16,
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.TWO),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.THREE),
+                        BlackjackCard(suit = Suit.DIAMOND, number = CardNumber.FOUR),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.SIX),
+                    ),
+                ),
+                22,
             ),
         )
     }
