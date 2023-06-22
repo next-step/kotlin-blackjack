@@ -15,6 +15,7 @@ class ResultView {
     }
 
     fun printGameResult(players: Players) {
+        println()
         players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
     }
 

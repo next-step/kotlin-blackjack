@@ -1,6 +1,6 @@
-import domain.card.Deck
+import controller.BlackjackGameController
+import domain.game.BlackjackGame
 import domain.player.Player
-import domain.player.Players
 import view.Answer
 import view.InputView
 import view.ResultView
@@ -10,43 +10,31 @@ fun main() {
     val resultView = ResultView()
 
     val playerNames = inputView.getPlayerNames()
-    val deck = Deck()
-    val players = initGame(playerNames = playerNames, deck = deck)
+    val blackjackGameController = BlackjackGameController(BlackjackGame())
+
+    val players = blackjackGameController.initGame(playerNames)
 
     resultView.printInitPlayers(players = players)
 
     players.forEach {
-        gameStart(player = it, deck = deck, inputView = inputView, resultView = resultView)
+        gameStart(player = it, inputView = inputView, controller = blackjackGameController, resultView = resultView)
     }
 
     resultView.printGameResult(players = players)
 }
 
-private fun initGame(playerNames: List<String>, deck: Deck): Players =
-    Players(
-        playerNames.map {
-            Player(it, deck.issueCard(), deck.issueCard())
-        },
-    )
-
 private fun gameStart(
     player: Player,
     inputView: InputView,
-    deck: Deck,
-    resultView: ResultView
+    resultView: ResultView,
+    controller: BlackjackGameController
 ) {
-    while (true) {
-        val answer = inputView.askDraw(player.name)
-        if (Answer.YES != answer) {
-            return
+    while (!controller.isTerminatedPlayer(player)) {
+        when (inputView.askDraw(player.name)) {
+            Answer.YES -> controller.issueCard(player)
+            else -> controller.stopIssueCard(player)
         }
 
-        if (!player.state.isDrawable()) {
-            resultView.printCannotProceed(player)
-            return
-        }
-
-        player.draw(deck.issueCard())
         resultView.printPlayerCards(player)
     }
 }
