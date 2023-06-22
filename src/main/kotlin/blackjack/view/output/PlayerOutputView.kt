@@ -1,6 +1,6 @@
 package blackjack.view.output
 
-import blackjack.domain.Player
+import blackjack.domain.player.Player
 
 class PlayerOutputView(player: Player) {
     init {

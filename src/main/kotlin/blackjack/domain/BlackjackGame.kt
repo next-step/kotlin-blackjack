@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Player
+
 class BlackjackGame(val players: List<Player>, val deck: CardDeck) {
 
     fun initPlayers() {

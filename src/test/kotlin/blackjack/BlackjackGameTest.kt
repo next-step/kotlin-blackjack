@@ -1,9 +1,12 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
-import blackjack.domain.CardDeck
-import blackjack.domain.Player
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Denomination
+import blackjack.domain.player.Player
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
@@ -42,5 +45,22 @@ class BlackjackGameTest {
         blackjackGame.initPlayers()
 
         blackjackGame.players[0].cards.value.size shouldBe 2
+    }
+
+    @Test
+    fun `ACE는 1 또는 11 score로 계산될 수 있어서 21을 넘지 않는 가장 가까운 수로 계산된다`() {
+        // 7, 17
+        val cards = Cards(
+            mutableListOf(
+                Card(Denomination.ACE, CardType.CLUBS),
+                Card(Denomination.SIX, CardType.DIAMONDS),
+            ),
+        )
+        val player = Player(cards = cards)
+
+        // 17, 27
+        player.receiveCard(Card(Denomination.JACK, CardType.HEARTS))
+
+        player.getOptimizedScore() shouldBe 17
     }
 }

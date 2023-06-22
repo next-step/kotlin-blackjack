@@ -1,7 +1,7 @@
 package blackjack.view.output
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Player
+import blackjack.domain.player.Player
 
 class GameSharedCardOutputView(players: List<Player>) {
     init {

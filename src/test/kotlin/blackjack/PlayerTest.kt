@@ -1,11 +1,11 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.CardDeck
-import blackjack.domain.CardType
-import blackjack.domain.Cards
-import blackjack.domain.Denomination
-import blackjack.domain.Player
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Denomination
+import blackjack.domain.player.Player
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -16,7 +16,7 @@ class PlayerTest {
         val player = Player()
 
         player.cards.value shouldNotBe null
-        player.score shouldNotBe null
+        player.getOptimizedScore() shouldNotBe null
         player.name shouldNotBe null
     }
 
@@ -41,13 +41,13 @@ class PlayerTest {
 
         val player = Player(cards = cards)
 
-        player.score shouldBe 21
+        player.getOptimizedScore() shouldBe 21
         player.isBlackJack() shouldBe true
         player.isReceivable() shouldBe false
     }
 
     @Test
-    fun `턴에 카드를 받은 후 BLACK_JACK socre를 넘으면 더이상 카드를 받을 수 없다`() {
+    fun `턴에 카드를 받은 후 BLACK_JACK score를 넘으면 더이상 카드를 받을 수 없다`() {
         val cards = Cards(
             mutableListOf(
                 Card(Denomination.JACK, CardType.CLUBS),

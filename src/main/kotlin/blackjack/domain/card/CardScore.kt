@@ -1,8 +1,8 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import blackjack.ErrorCode
 
-class Score(val value: Int) {
+class CardScore(val value: Int) {
     init {
         require(value in SCORE_RANGE_START..SCORE_RANGE_END) { ErrorCode.INVALID_SCORE_VALUE.message }
     }

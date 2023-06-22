@@ -1,7 +1,7 @@
 package blackjack.view.input
 
 import blackjack.ErrorCode
-import blackjack.domain.Name
+import blackjack.domain.player.Name
 
 class GamePlayerReceiveInputView(name: Name) : InputView<GamePlayerReceiveInputResponse>() {
     override val message: String = "${name.value}는 한장의 카드를 더 받겠습니까? (예: y, 아니오: n)"
