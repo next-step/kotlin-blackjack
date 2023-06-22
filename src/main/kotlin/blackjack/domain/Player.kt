@@ -7,6 +7,6 @@ interface Player {
     fun addCard(card: Card)
     fun addCardAll(values: Collection<Card>)
     fun isAddable(): Boolean
-    fun score(): Int
+    fun calculateScore(): Int
     fun currentDeck(): Deck
 }

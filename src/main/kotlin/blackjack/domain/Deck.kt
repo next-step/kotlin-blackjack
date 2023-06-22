@@ -10,7 +10,6 @@ class Deck(values: MutableSet<Card> = mutableSetOf()) {
     fun toList(): List<Card> = internalValues.toList()
 
     fun pick(count: Int): Set<Card> {
-
         require(internalValues.size > count) {
             "더 이상 뽑을 카드가 없습니다. 현재 카드는 ${internalValues.size}개 남아있습니다."
         }

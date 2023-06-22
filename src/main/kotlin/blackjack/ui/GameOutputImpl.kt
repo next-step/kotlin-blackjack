@@ -23,7 +23,7 @@ object GameOutputImpl : GameOutput {
         buildString {
             append("\n")
             players.forEach { player ->
-                append("${player.name}카드: ${getCardResponse(player)} - 결과: ${player.score()}\n")
+                append("${player.name}카드: ${getCardResponse(player)} - 결과: ${player.calculateScore()}\n")
             }
         }.run(::println)
     }

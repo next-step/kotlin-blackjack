@@ -4,10 +4,8 @@ import blackjack.domain.dsl.buildGame
 
 class Game(val players: Players, private val deck: Deck) {
 
-    fun dealInitialCards(capacity: Int = 2) {
-        players.forEach { player ->
-            player.takeIf { it.isAddable() }?.addCardAll(deck.pick(capacity))
-        }
+    fun dealInitialCards() = players.forEach { player ->
+        player.takeIf { it.isAddable() }?.addCardAll(deck.pick(INIT_TAKE_SIZE))
     }
 
     fun deal(player: Player, capacity: Int = 1) {
@@ -17,13 +15,16 @@ class Game(val players: Players, private val deck: Deck) {
     }
 
     companion object {
+        private const val INIT_TAKE_SIZE = 2
+        const val THRESHOLD = 21
+
         fun from(requestNames: List<String>): Game =
             buildGame {
                 players {
                     requestNames.forEach { name(it) }
                 }
                 deck {
-                    aceCards(SymbolType.DIAMOND, SymbolType.HEART, SymbolType.CLOVER, SymbolType.SPADE)
+                    aceCards(*SymbolType.values())
                     numberCards {
                         SymbolType.values().forEach {
                             NumberCard.MIN_LIMIT..NumberCard.MAX_LIMIT from it

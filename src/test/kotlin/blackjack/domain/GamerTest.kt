@@ -21,7 +21,7 @@ class GamerTest : FunSpec({
         gamer.isAddable() shouldBe true
 
         gamer.addCard(targetCard)
-        gamer.score() shouldBe 25
+        gamer.calculateScore() shouldBe 15
     }
 
     test("현재 점수가 21점 이상이라면 카드를 추가할 수 없다.") {

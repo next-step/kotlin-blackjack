@@ -11,6 +11,12 @@ class AceCardTest : FunSpec({
         actual.score(10) shouldBe 11
     }
 
+    test("ACE 카드는 토탈 점수가 21점을 넘는다면 무조건 1을 반환한다.") {
+        val actual = AceCard(symbol = SymbolType.DIAMOND)
+
+        actual.score(15) shouldBe 1
+    }
+
     test("ACE 카드는 공통적으로 a라는 이름을 가진다.") {
         val actual = listOf(
             AceCard(symbol = SymbolType.DIAMOND),
