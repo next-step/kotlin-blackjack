@@ -1,9 +1,12 @@
 package blackjack.gamestate
 
 import blackjack.CardTest.Companion.SPADE_ACE
+import blackjack.CardTest.Companion.SPADE_TWO
+import blackjack.Cards
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
@@ -16,6 +19,14 @@ class InitialHandTest : FunSpec({
             val actual = gameState.draw(SPADE_ACE) as InitialHand
             actual.cards.values shouldHaveSize 1
             actual.cards.values shouldContain SPADE_ACE
+        }
+
+        test("카드 드로우 후 2장이 된 경우 Hit 상태가 된다.") {
+            val gameState = InitialHand(Cards.of(SPADE_ACE))
+
+            val actual = gameState.draw(SPADE_TWO) as Hit
+            actual.cards.values shouldHaveSize 2
+            actual.cards.values shouldContainAll listOf(SPADE_ACE, SPADE_TWO)
         }
     }
 

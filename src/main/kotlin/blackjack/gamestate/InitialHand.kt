@@ -9,6 +9,9 @@ class InitialHand(
 ): GameState {
     override fun draw(card: Card): GameState {
         val cards = this.cards.addCard(card)
+        if (cards.values.size == 2) {
+            return Hit(cards)
+        }
         return InitialHand(cards)
     }
 
