@@ -9,8 +9,17 @@ import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import java.lang.IllegalArgumentException
 
 class InitialHandTest : FunSpec({
+
+    context("init") {
+        test("상태 생성 시 2장이상인 경우 예외가 발생한다.") {
+            val exception =
+                shouldThrowExactly<IllegalArgumentException> { InitialHand(Cards.of(SPADE_ACE, SPADE_TWO)) }
+            exception.message shouldBe "초기 핸드는 2장 이상 가질 수 없다."
+        }
+    }
 
     context("draw") {
         test("카드를 드로우할 수 있다.") {
