@@ -25,7 +25,7 @@ object GameOutputImpl : GameOutput {
     override fun printAllDeckStatus(players: Players, dealer: Player) {
         buildString {
             append("\n")
-            append("딜러 카드: ${getCardResponse(dealer)} - 결과 ${dealer.calculateScore()}\n")
+            append("${dealer.name} 카드: ${getCardResponse(dealer)} - 결과 ${dealer.calculateScore()}\n")
             players.forEach { player ->
                 append("${player.name}카드: ${getCardResponse(player)} - 결과: ${player.calculateScore()}\n")
             }

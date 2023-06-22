@@ -3,9 +3,11 @@ package blackjack.domain
 import blackjack.domain.Game.Companion.INIT_TAKE_SIZE
 
 class Dealer(override val deck: Deck = Deck()) : Player {
+    override val name: String = DEFAULT_DEALER_NAME
+
     private val interDeck = deck.copy()
+
     private var cardsReceived: Boolean = false
-    override val name: String = "딜러"
 
     override fun addCard(card: Card) {
         require(isAddable()) {
@@ -29,5 +31,6 @@ class Dealer(override val deck: Deck = Deck()) : Player {
 
     companion object {
         const val THRESHOLD = 16
+        const val DEFAULT_DEALER_NAME = "딜러"
     }
 }
