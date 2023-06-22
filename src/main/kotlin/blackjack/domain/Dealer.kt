@@ -19,17 +19,13 @@ class Dealer(override val deck: Deck = Deck()) : Player {
         interDeck.add(card)
     }
 
-    override fun addCardAll(values: Collection<Card>) {
-        TODO("Not yet implemented")
-    }
+    override fun addCardAll(values: Collection<Card>) = values.forEach(::addCard)
 
     override fun isAddable(): Boolean = interDeck.score() <= THRESHOLD && !cardsReceived
 
     override fun calculateScore(): Int = interDeck.score()
 
-    override fun currentDeck(): Deck {
-        TODO("Not yet implemented")
-    }
+    override fun currentDeck(): Deck = interDeck.copy()
 
     companion object {
         const val THRESHOLD = 16
