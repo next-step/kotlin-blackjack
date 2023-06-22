@@ -25,6 +25,7 @@ class BlackjackController {
         NewLineOutputView()
 
         playerList.value.forEach { player -> dealCards(player, blackjackGame) }
+        NewLineOutputView()
         playerList.value.forEach { player -> PlayerResultOutputView(player) }
     }
 
