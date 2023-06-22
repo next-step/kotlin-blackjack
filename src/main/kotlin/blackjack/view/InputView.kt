@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 object InputView {
     fun getPlayerNames(): Array<String> {
