@@ -12,18 +12,8 @@ object InputView {
     }
 
     fun wantToHit(name: String): Boolean {
-        var continuePlaying: String
-        var attempts = 0
-        do {
-            if (attempts > 0) {
-                val chance = 3 - attempts
-                println("y 혹은 n를 입력해주세요. [남은 기회 : $chance]")
-            }
-            println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            continuePlaying = readln()
-            attempts++
-        } while ((continuePlaying != "y" && continuePlaying != "n") && attempts < 3)
-
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val continuePlaying = readln()
         require(continuePlaying == "y" || continuePlaying == "n") { "y 혹은 n를 입력해주세요." }
         return continuePlaying == "y"
     }

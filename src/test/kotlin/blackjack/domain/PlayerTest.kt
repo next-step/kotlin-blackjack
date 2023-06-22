@@ -11,26 +11,25 @@ class PlayerTest : StringSpec({
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 11, "A")
         player.hands().size shouldBe 0
-        player.receiveCard(pokerCard)
+        player.hit(pokerCard)
         player.hands().size shouldBe 1
     }
 
     "참여자의 손패가 21이상이라면 더이상 카드를 받지 못한다." {
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
-        player.receiveCard(pokerCard, pokerCard, pokerCard)
+        player.hit(pokerCard, pokerCard, pokerCard)
         shouldThrow<IllegalArgumentException> {
-            player.receiveCard(pokerCard)
+            player.hit(pokerCard)
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }
 
     "사용자가 스탑을 외치면 더이상 손패를 받지 않는다." {
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
-        val dealer = Dealer()
-        player.performAction(false, dealer)
+        player.stand()
         shouldThrow<IllegalArgumentException> {
-            player.receiveCard(pokerCard)
+            player.hit(pokerCard)
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }
 
@@ -47,7 +46,7 @@ class PlayerTest : StringSpec({
             arrayOf(seven, queen, ace, ace, ace, ace) to 21
         ).forAll { (input, expected) ->
             val player = Player("tester")
-            player.receiveCard(*input)
+            player.hit(*input)
 
             player.optimalValue() shouldBe expected
         }

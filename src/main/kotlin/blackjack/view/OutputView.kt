@@ -14,4 +14,13 @@ object OutputView {
         val showHands = player.showHands()
         println("${player.name}카드: $showHands")
     }
+
+    fun resultNotice(players: Array<Player>) {
+        println()
+        players.forEach {
+            val showHands = it.showHands()
+            val optimalValue = it.optimalValue()
+            println("${it.name}카드: $showHands - 결과: $optimalValue")
+        }
+    }
 }

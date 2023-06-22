@@ -5,7 +5,7 @@ class Dealer(private val deck: Deck = Deck()) {
         for (player in players) {
             require(deck.canDrawFromDeck(DOUBLE_DRAW)) { EMPTY_DECK_ERROR }
             val firstRoundCards = arrayOf(deck.drawCard(), deck.drawCard())
-            player.receiveCard(*firstRoundCards)
+            player.hit(*firstRoundCards)
         }
     }
 

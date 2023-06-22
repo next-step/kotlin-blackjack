@@ -65,4 +65,4 @@
 - [x] 참여자 손패의 카드합이 21이상이라면 Bust 더이상 카드를 받지 못한다. - HandsCalculator
 - [x] 손패의 카드 합을 더한다. J, Q, K는 10이다. A는 1이거나 11이다. Hands
 - [x] 손패 총합 값을 계산한다. - HandsCalculator
-- [ ] 결과를 발표한다. -Game
+- [x] 결과를 발표한다. -Table

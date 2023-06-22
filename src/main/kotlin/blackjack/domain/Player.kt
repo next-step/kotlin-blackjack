@@ -7,7 +7,7 @@ class Player(val name: String) {
     private val hand = mutableListOf<PokerCard>()
     var ableToDraw = true
 
-    fun receiveCard(vararg pokerCards: PokerCard) {
+    fun hit(vararg pokerCards: PokerCard) {
         require(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
 
         for (pokerCard in pokerCards) {
@@ -21,12 +21,8 @@ class Player(val name: String) {
         return hand.toList()
     }
 
-    fun performAction(wantToHit: Boolean, dealer: Dealer) {
-        if (wantToHit) {
-            receiveCard(dealer.draw())
-        } else {
-            this.ableToDraw = false
-        }
+    fun stand() {
+        this.ableToDraw = false
     }
 
     fun optimalValue(): Int {
