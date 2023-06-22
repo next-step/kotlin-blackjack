@@ -7,7 +7,7 @@ class Hit(cards: BlackjackCards) : ProceedingState(cards) {
 
     override fun draw(card: BlackjackCard): State {
         val currentCards = BlackjackCards(this.getCards().plus(card))
-        return if (currentCards.isDrawable()) Hit(cards = currentCards) else Hit(currentCards)
+        return if (currentCards.isDrawable()) Hit(cards = currentCards) else Burst(currentCards)
     }
 
     override fun stop(): State = Hit(BlackjackCards(emptyList()))

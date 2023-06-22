@@ -4,6 +4,7 @@ import domain.card.BlackjackCard
 import domain.card.BlackjackCards
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.state.Burst
 import domain.state.Hit
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,6 +24,19 @@ class HitTest {
         val newState = hit.draw(newCard)
 
         (newState is Hit) shouldBe true
+    }
+
+    @ParameterizedTest
+    @MethodSource("getBurstStateTestData")
+    fun `플레이어는 Hit 상태에서 카드를 더 받았을 때 합이 21 초과라면 Burst 라는 종료 상태`(
+        cards: BlackjackCards,
+        newCard: BlackjackCard,
+    ) {
+        val hit = Hit(cards)
+
+        val newState = hit.draw(newCard)
+
+        (newState is Burst) shouldBe true
     }
 
     companion object {
@@ -49,6 +63,39 @@ class HitTest {
                     ),
                 ),
                 BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
+            ),
+        )
+
+        @JvmStatic
+        fun getBurstStateTestData(): List<Arguments> = listOf(
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.KING),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.KING),
+                    ),
+                ),
+                BlackjackCard(suit = Suit.SPADE, number = CardNumber.FIVE),
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.ACE),
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                        BlackjackCard(suit = Suit.SPADE, number = CardNumber.JACK),
+                    ),
+                ),
+                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
+            ),
+            Arguments.of(
+                BlackjackCards(
+                    listOf(
+                        BlackjackCard(suit = Suit.CLUB, number = CardNumber.TEN),
+                        BlackjackCard(suit = Suit.HEART, number = CardNumber.TEN),
+                    ),
+                ),
+                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
             ),
         )
     }
