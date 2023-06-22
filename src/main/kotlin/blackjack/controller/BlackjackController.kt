@@ -3,27 +3,36 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.CardDeck
 import blackjack.domain.Player
+import blackjack.view.input.GamePlayerNameInputView
+import blackjack.view.input.GamePlayerReceiveInputView
+import blackjack.view.output.GameSharedCardOutputView
+import blackjack.view.output.NewLineOutputView
+import blackjack.view.output.PlayerOutputView
+import blackjack.view.output.PlayerResultOutputView
 
 class BlackjackController {
     fun start() {
-        val deck = CardDeck()
-        val player1 = Player()
-        val player2 = Player()
-        val blackjackGame = BlackjackGame(listOf(player1, player2), deck)
+        val playerNameList = GamePlayerNameInputView().value
+        NewLineOutputView()
 
-        // TODO: (Output) pobi, jason에게 2장의 나누었습니다.
+        val playerList = playerNameList.map { Player(it) }
+        val deck = CardDeck()
+        val blackjackGame = BlackjackGame(playerList, deck)
         blackjackGame.initPlayers()
-        // TODO: (Output) pobi카드: 2하트, 8스페이드
+        GameSharedCardOutputView(playerList)
+        playerList.forEach { player -> PlayerOutputView(player) }
+        NewLineOutputView()
+
+        playerList.forEach { player -> dealCards(player, blackjackGame) }
+        playerList.forEach { player -> PlayerResultOutputView(player) }
     }
 
-    fun shareCard(player: Player, blackjackGame: BlackjackGame) {
-        while (player.isReceivable())
-            // TODO: (Output) pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
-            // TODO: (Input) y
-            ;
-        val isReceiveCard = true
-        if (!isReceiveCard) return
-        blackjackGame.shareCard(player)
-        // TODO: (Output) pobi카드: 2하트, 8스페이드, A클로버
+    fun dealCards(player: Player, blackjackGame: BlackjackGame) {
+        while (player.isReceivable()) {
+            val response = GamePlayerReceiveInputView(player.name).value
+            if (!response.value) return
+            blackjackGame.dealCards(player)
+            PlayerOutputView(player)
+        }
     }
 }

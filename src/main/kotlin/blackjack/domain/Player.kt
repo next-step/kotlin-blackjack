@@ -31,10 +31,15 @@ class Player(val name: Name = Name(), val cards: Cards = Cards(), var score: Int
 
     private fun updateScore(card: Card) {
         val cardScores = card.denom.scores
-        with(cardScores.value) {
-            score += if (this.size > 1) {
+        val optimizeScore = getOptimizeScore(cardScores)
+        score += optimizeScore
+    }
+
+    private fun getOptimizeScore(scores: Scores): Int {
+        return with(scores.value) {
+            if (this.size > 1) {
                 this.map { it.value }.reduce { optimizeScore, curScore ->
-                    val isBustScore = score + curScore > PlayerStatus.BLACK_JACK_SCORE
+                    val isBustScore = score + curScore > blackjack.domain.PlayerStatus.BLACK_JACK_SCORE
                     if (!isBustScore) max(optimizeScore, curScore) else optimizeScore
                 }
             } else {

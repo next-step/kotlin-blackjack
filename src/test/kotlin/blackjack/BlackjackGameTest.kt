@@ -28,7 +28,7 @@ class BlackjackGameTest {
         val player = Player()
         val blackjackGame = BlackjackGame(listOf(player), deck)
 
-        blackjackGame.shareCard(player)
+        blackjackGame.dealCards(player)
 
         blackjackGame.players[0].cards.value.shouldBeInstanceOf<List<Card>>()
     }
