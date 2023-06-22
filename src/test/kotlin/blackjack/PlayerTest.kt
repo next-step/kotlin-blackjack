@@ -12,11 +12,12 @@ import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `'카드 리스트'와 '카드 총합 점수' 정보를 가지고 있다`() {
+    fun `'카드 리스트'와 '카드 총합 점수'와 '이름' 정보를 가지고 있다`() {
         val player = Player()
 
         player.cards.value shouldNotBe null
         player.score shouldNotBe null
+        player.name shouldNotBe null
     }
 
     @Test
@@ -24,7 +25,7 @@ class PlayerTest {
         val deck = CardDeck()
         val cards = Cards(deck.getRandomCards(2))
 
-        val player = Player(cards)
+        val player = Player(cards = cards)
 
         player.cards.value.size shouldBe 2
     }
@@ -38,7 +39,7 @@ class PlayerTest {
             ),
         )
 
-        val player = Player(cards)
+        val player = Player(cards = cards)
 
         player.score shouldBe 21
         player.isBlackJack() shouldBe true
@@ -53,7 +54,7 @@ class PlayerTest {
                 Card(Denomination.JACK, CardType.DIAMONDS),
             ),
         )
-        val player = Player(cards)
+        val player = Player(cards = cards)
 
         player.receiveCard(Card(Denomination.TWO, CardType.DIAMONDS))
 

@@ -2,7 +2,7 @@ package blackjack.domain
 
 import kotlin.math.max
 
-class Player(val cards: Cards = Cards(), var score: Int = INIT_SCORE) {
+class Player(val name: Name = Name(), val cards: Cards = Cards(), var score: Int = INIT_SCORE) {
     private var status: PlayerStatus = PlayerStatus.RECEIVE
 
     init {
