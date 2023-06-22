@@ -16,7 +16,7 @@ class CardsTest {
             .add(tenOfClubs)
             .add(jackOfHearts)
 
-        assertThat(cards.sum()).isEqualTo(20)
+        assertThat(cards.calculateOptimalSum()).isEqualTo(20)
     }
 
     @Test
@@ -27,13 +27,13 @@ class CardsTest {
             .add(aceOfClubs)
             .add(tenOfHearts)
 
-        assertThat(cards.sum()).isEqualTo(21)
+        assertThat(cards.calculateOptimalSum()).isEqualTo(21)
 
         val twoOfHearts = Card.createCard(Ranks.TWO, Suits.HEARTS)
         val cards2 = Cards.empty()
             .add(aceOfClubs)
             .add(twoOfHearts)
 
-        assertThat(cards2.sum()).isEqualTo(13)
+        assertThat(cards2.calculateOptimalSum()).isEqualTo(13)
     }
 }

@@ -7,11 +7,11 @@ class Player(val name: String) {
 
     fun countMyCards(): Int = myCards.cards.size
 
-    fun sumMyCards(): Int = myCards.sum()
+    fun sumMyCards(): Int = myCards.calculateOptimalSum()
 
     fun showMyCards(): String = myCards.toString()
 
-    fun canDraw(): Boolean = myCards.sum() <= TARGET_SUM
+    fun canDraw(): Boolean = myCards.calculateOptimalSum() <= TARGET_SUM
 
     fun drawCard() {
         if (!canDraw()) {

@@ -11,7 +11,7 @@ class Cards private constructor(
         return Cards(newCards)
     }
 
-    fun sum(): Int {
+    fun calculateOptimalSum(): Int {
         val sum = calculateSum()
         return adjustAceSum(sum)
     }
