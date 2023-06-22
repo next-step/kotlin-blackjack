@@ -1,17 +1,17 @@
 package blackjack
 
-enum class Denomination(val score: Int) {
-    ACE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7),
-    EIGHT(8),
-    NINE(9),
-    TEN(10),
-    JACK(10),
-    QUEEN(10),
-    KING(10),
+enum class Denomination(val scores: Scores) {
+    ACE(Scores(listOf(Score(1), Score(11)))),
+    TWO(Scores.from(2)),
+    THREE(Scores.from(3)),
+    FOUR(Scores.from(4)),
+    FIVE((Scores.from(5))),
+    SIX(Scores.from(6)),
+    SEVEN(Scores.from(7)),
+    EIGHT(Scores.from(8)),
+    NINE(Scores.from(9)),
+    TEN(Scores.from(10)),
+    JACK(Scores.from(10)),
+    QUEEN((Scores.from(10))),
+    KING(Scores.from(10)),
 }
