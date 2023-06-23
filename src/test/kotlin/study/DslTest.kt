@@ -63,6 +63,5 @@ class DslTest {
         person.language.shouldNotBeNull()
         person.language["Korean"] shouldBe 5
         person.language["English"] shouldBe 3
-
     }
 }

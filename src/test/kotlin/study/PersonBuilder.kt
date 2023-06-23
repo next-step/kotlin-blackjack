@@ -15,7 +15,7 @@ class PersonBuilder {
     }
 
     fun skill(block: SkillBuilder.() -> Unit) {
-        this.skill =  SkillBuilder().apply(block).build()
+        this.skill = SkillBuilder().apply(block).build()
     }
 
     fun languages(block: LanguageBuilder.() -> Unit) {
