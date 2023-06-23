@@ -6,5 +6,5 @@ import blackjack.domain.Deck
 abstract class CardSelector {
     abstract val deck: Deck
 
-    fun getCard(): Card = deck.getCard()
+    fun drawCard(): Card = deck.drawCard()
 }

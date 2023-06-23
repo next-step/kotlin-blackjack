@@ -70,6 +70,6 @@ object ResultView {
     }
 
     private fun deckToString(deck: Deck): String {
-        return deck.cardList.joinToString(", ", transform = ::cardToString)
+        return deck.joinToString(", ", transform = ::cardToString)
     }
 }

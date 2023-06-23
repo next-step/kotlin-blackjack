@@ -31,7 +31,7 @@ class BlackjackGame(
     private fun getInitDeck(): Deck {
         val cardList = LinkedList<Card>()
         repeat(INITIAL_DECK_SIZE) {
-            cardList.add(cardSelector.getCard())
+            cardList.add(cardSelector.drawCard())
         }
         return Deck(cardList)
     }
@@ -44,7 +44,7 @@ class BlackjackGame(
 
     private fun checkHit(user: User) {
         while (InputView.checkHit(user.name)) {
-            user.addCard(cardSelector.getCard())
+            user.addCard(cardSelector.drawCard())
             PointCalculator.calculateUserPoint(user.deck) ?: break
             ResultView.printUserDeck(user)
         }
