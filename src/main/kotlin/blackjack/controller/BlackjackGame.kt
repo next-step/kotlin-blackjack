@@ -14,23 +14,18 @@ import java.util.LinkedList
 class BlackjackGame(
     private val cardSelector: CardSelector = RandomCardSelector(),
 ) {
-    var users: Users = InputView.getUsers()
+    var users: Users
 
     init {
-        initUsersDeck()
-        ResultView.printUsersDeck(users)
+        val userNames = InputView.getUsers()
+        val userList = userNames.map { name -> User(name, getInitDeck()) }.toSet()
+        users = Users(userList)
     }
 
     fun start() {
+        ResultView.printUsersDeck(users)
         dealCards()
         ResultView.printUsersResult(users)
-    }
-
-    private fun initUsersDeck() {
-        for (user in users) {
-            val deck = getInitDeck()
-            user.initDeck(deck)
-        }
     }
 
     private fun getInitDeck(): Deck {
