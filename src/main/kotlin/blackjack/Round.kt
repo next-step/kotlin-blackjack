@@ -1,6 +1,6 @@
 package blackjack
 
-class Rule(private val trump: Trump = Trump()) {
+class Round(private val trump: Trump = Trump()) {
 
     fun getCard(): Card = trump.getCard()
 

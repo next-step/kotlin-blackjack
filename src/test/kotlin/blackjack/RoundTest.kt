@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.lang.IllegalStateException
 
-class RuleTest {
+class RoundTest {
     @Test
     fun `숫자 계산은 카드의 숫자를 기본으로 한다`() {
         val cards = listOf(
@@ -14,7 +14,7 @@ class RuleTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.HEART, CardValue.EIGHT),
         )
-        Rule.calculateSum(cards) shouldBe 19
+        Round.calculateSum(cards) shouldBe 19
     }
 
     @Test
@@ -25,7 +25,7 @@ class RuleTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.SPADE, CardValue.KING)
         )
-        Rule.calculateSum(cards) shouldBe 21
+        Round.calculateSum(cards) shouldBe 21
     }
 
     @Test
@@ -35,7 +35,7 @@ class RuleTest {
             Card.from(CardType.DIAMOND, CardValue.EIGHT),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        Rule.calculateSum(cards) shouldBe 21
+        Round.calculateSum(cards) shouldBe 21
     }
 
     @Test
@@ -45,16 +45,16 @@ class RuleTest {
             Card.from(CardType.DIAMOND, CardValue.KING),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        Rule.calculateSum(cards) shouldBe 21
+        Round.calculateSum(cards) shouldBe 21
     }
 
     @Test
     fun `카드는 52장 뽑을 수 있다`() {
         val cards = mutableListOf<Card>()
-        val rule = Rule()
+        val round = Round()
 
         repeat(52) {
-            cards.add(rule.getCard())
+            cards.add(round.getCard())
         }
 
         cards.size shouldBe 52
@@ -63,7 +63,7 @@ class RuleTest {
         cards.toSet().size shouldBe 52
 
         shouldThrow<IllegalStateException> {
-            rule.getCard()
+            round.getCard()
         }
     }
 }

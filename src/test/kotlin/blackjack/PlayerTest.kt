@@ -14,7 +14,7 @@ class PlayerTest {
     fun `플레이어가 가지고 있는 카드의 합을 구한다`() {
         val player = Player()
         val cards = player.cards
-        val expectedSum = Rule.calculateSum(cards)
+        val expectedSum = Round.calculateSum(cards)
 
         player.sum shouldBe expectedSum
     }
