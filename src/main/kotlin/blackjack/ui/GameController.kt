@@ -1,13 +1,11 @@
 package blackjack.ui
 
 import blackjack.domain.Game
-import blackjack.domain.GameOutcomeCalculator
 import blackjack.domain.Player
 
 class GameController(
     private val gameInput: GameInput,
-    private val gameOutput: GameOutput,
-    private val gameOutcomeCalculator: GameOutcomeCalculator
+    private val gameOutput: GameOutput
 ) {
 
     fun play() {
@@ -21,11 +19,11 @@ class GameController(
             progressPlayer(player = it, game = game)
         }
 
-        game.deaCardsToDealerAndTo {
+        game.dealCardsToDealerAndTo {
             gameOutput.printDealerOneMorePick()
         }
 
-        val gameResult = gameOutcomeCalculator.calculate(dealer = game.dealer, players = game.players)
+        val gameResult = game.dealer.calculate(players = game.players)
 
         gameOutput.printAllDeckStatus(players = game.players, dealer = game.dealer)
         gameOutput.printOutcome(gameResult)

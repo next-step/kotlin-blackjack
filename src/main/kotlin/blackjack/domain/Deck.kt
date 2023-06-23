@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.dsl.buildDeck
-
 class Deck(values: MutableSet<Card> = mutableSetOf()) {
     private val internalValues: MutableSet<Card> = values.toMutableSet()
 
@@ -34,20 +32,4 @@ class Deck(values: MutableSet<Card> = mutableSetOf()) {
     }
 
     fun copy(): Deck = Deck(internalValues.toMutableSet())
-
-    companion object {
-        fun create(): Deck = buildDeck {
-            aceCards(*SymbolType.values())
-            numberCards {
-                SymbolType.values().forEach {
-                    NumberCard.MIN_LIMIT..NumberCard.MAX_LIMIT from it
-                }
-            }
-            faceCards {
-                SymbolType.values().forEach {
-                    it to FaceType.KING and FaceType.QUEEN and FaceType.JACK
-                }
-            }
-        }
-    }
 }

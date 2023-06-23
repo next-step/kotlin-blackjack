@@ -22,7 +22,7 @@ class Game(val players: Players, private val deck: Deck, val dealer: Dealer) {
         }.addCardAll(deck.pick(capacity))
     }
 
-    fun deaCardsToDealerAndTo(block: () -> Unit) {
+    fun dealCardsToDealerAndTo(block: () -> Unit) {
         if (dealer.isAddable()) {
             deal(player = dealer)
             block()
