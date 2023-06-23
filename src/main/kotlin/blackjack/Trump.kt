@@ -1,7 +1,7 @@
 package blackjack
 
-class Cards {
-    val items: List<Card> = (SPADES + CLOVERS + DIAMONDS + HEARTS).shuffled()
+class Trump {
+    val cards: List<Card> = (SPADES + CLOVERS + DIAMONDS + HEARTS).shuffled()
 
     companion object {
         private val SPADES = Card.VALUES.map { Card.from(CardType.SPADE, it) }
