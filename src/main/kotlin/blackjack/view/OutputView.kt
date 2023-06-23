@@ -1,24 +1,30 @@
 package blackjack.view
 
+import blackjack.controller.BlackjackPlayerConsumer
+import blackjack.controller.BlackjackPlayersCardCountConsumer
+import blackjack.controller.BlackjackPlayersScoreConsumer
 import blackjack.model.BlackjackPlayer
+import blackjack.model.BlackjackPlayers
 import blackjack.model.TrumpCard
 import blackjack.model.TrumpCardNumber
 import blackjack.model.TrumpCardShape
 
-object OutputView {
+object OutputView : BlackjackPlayerConsumer, BlackjackPlayersCardCountConsumer, BlackjackPlayersScoreConsumer {
 
-    fun printInitialDealing(players: Collection<BlackjackPlayer>, count: Int) {
-        println("${players.joinToString { it.name.toString() }}에게 ${count}장의 나누었습니다.")
-        players.forEach { printPlayerCards(it) }
+    override fun consumePlayersCardCount(players: BlackjackPlayers, cardCount: Int) {
+        println("${players.players.joinToString { it.name.toString() }}에게 ${cardCount}장의 나누었습니다.")
+        players.players.forEach { consumePlayer(it) }
         println()
     }
 
-    fun printPlayerCards(player: BlackjackPlayer) {
+    override fun consumePlayer(player: BlackjackPlayer) {
         println(playerString(player))
     }
 
-    fun printPlayerResult(player: BlackjackPlayer, score: Int) {
-        println("${playerString(player)} - 결과: $score")
+    override fun consumePlayers(players: BlackjackPlayers) {
+        players.players.forEach {
+            println("${playerString(it)} - 결과: ${it.deckScore}")
+        }
     }
 
     private fun playerString(player: BlackjackPlayer): String {

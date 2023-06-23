@@ -11,20 +11,20 @@ class BlackjackDealerTest : StringSpec({
 
     "카드 덱과 카드 선택 방법으로 생성" {
         shouldNotThrowAny {
-            BlackjackDealer(emptyList()) { cards -> cards.first() }
+            BlackjackDealer(CardDeck(listOf(SPADE_ACE))) { cards -> cards.first() }
         }
     }
 
     "덱에서 카드를 가져오면서 카드 제외" {
         // given
-        val cardSelector: (CardDeck) -> TrumpCard = { cards -> cards.first() }
-        val dealer = BlackjackDealer(listOf(SPADE_ACE), cardSelector)
+        val cardSelector: (Collection<TrumpCard>) -> TrumpCard = { cards -> cards.first() }
+        val dealer = BlackjackDealer(CardDeck(listOf(SPADE_ACE)), cardSelector)
         // when
         val drawnCard: TrumpCard = dealer.drawCard()
         // then
         assertSoftly {
             drawnCard shouldBe SPADE_ACE
-            dealer shouldBe BlackjackDealer(emptyList(), cardSelector)
+            dealer shouldBe BlackjackDealer(CardDeck(emptyList()), cardSelector)
         }
     }
 })

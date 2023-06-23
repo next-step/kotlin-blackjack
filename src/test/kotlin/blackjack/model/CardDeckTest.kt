@@ -46,7 +46,7 @@ class CardDeckTest : StringSpec({
         // given
         val emptyDeck = CardDeck(emptyList())
         // when
-        shouldThrowExactly<IllegalStateException> {
+        shouldThrowExactly<IllegalArgumentException> {
             emptyDeck - SPADE_ACE
         }
     }

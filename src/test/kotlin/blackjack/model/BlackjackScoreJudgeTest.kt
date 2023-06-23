@@ -1,7 +1,5 @@
 package blackjack.model
 
-import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -9,23 +7,6 @@ import io.kotest.matchers.shouldBe
 
 @DisplayName("블랙잭 점수 심판")
 class BlackjackScoreJudgeTest : StringSpec({
-
-    "블랙잭 기준 점수로 생성" {
-        listOf(1, 21, Int.MAX_VALUE).forAll {
-            shouldNotThrowAny {
-                BlackjackScoreJudge(21)
-            }
-        }
-    }
-
-    "블랙잭 기준 점수는 반드시 0초과" {
-        listOf(Int.MIN_VALUE, -1, 0)
-            .forAll {
-                shouldThrowExactly<IllegalArgumentException> {
-                    BlackjackScoreJudge(it)
-                }
-            }
-    }
 
     "21점 카드 기준 점수 이하는 에이스 카드 점수 그대로 반환" {
         listOf(
@@ -36,10 +17,7 @@ class BlackjackScoreJudgeTest : StringSpec({
             HandDeck(listOf(HEART_ACE, DIAMOND_TWO, CLOVER_THREE)) to 16,
             HandDeck(listOf(SPADE_ACE, SPADE_KING, SPADE_TEN, CLOVER_THREE)) to 24,
         ).forAll {
-            // given
-            val twentyOneScoreLimitJudge = BlackjackScoreJudge(21)
-            // when & then
-            twentyOneScoreLimitJudge.score(it.first) shouldBe it.second
+            BlackjackScoreJudge.score(it.first) shouldBe it.second
         }
     }
 
@@ -49,10 +27,7 @@ class BlackjackScoreJudgeTest : StringSpec({
             HandDeck(listOf(SPADE_KING, SPADE_TEN, SPADE_ACE)) to 21,
             HandDeck(listOf(HEART_ACE, SPADE_KING, DIAMOND_TWO, CLOVER_THREE)) to 16,
         ).forAll {
-            // given
-            val twentyOneScoreLimitJudge = BlackjackScoreJudge(21)
-            // when & then
-            twentyOneScoreLimitJudge.score(it.first) shouldBe it.second
+            BlackjackScoreJudge.score(it.first) shouldBe it.second
         }
     }
 })

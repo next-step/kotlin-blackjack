@@ -1,15 +1,13 @@
 package blackjack.model
 
-@JvmInline
-value class BlackjackScoreJudge(private val limitScore: Int) {
+object BlackjackScoreJudge {
+    const val LIMIT_SCORE = 21
 
-    init {
-        require(limitScore > 0) { "limitScore must be greater than 0. but provided limitScore(`$limitScore`)" }
-    }
+    private const val ACE_PLUS_SCORE = 10
 
     fun score(deck: HandDeck): Int {
         val score: Int = deck.sumOf { cardNumberScore(it.number) }
-        if (score <= limitScore) {
+        if (score <= LIMIT_SCORE) {
             return score
         }
         return exceptedAceBonusScore(deck, score)
@@ -20,7 +18,7 @@ value class BlackjackScoreJudge(private val limitScore: Int) {
         var scoreWithAcePlus: Int = score
         repeat(aceCount) {
             scoreWithAcePlus -= ACE_PLUS_SCORE
-            if (scoreWithAcePlus <= limitScore) {
+            if (scoreWithAcePlus <= LIMIT_SCORE) {
                 return scoreWithAcePlus
             }
         }
@@ -41,9 +39,5 @@ value class BlackjackScoreJudge(private val limitScore: Int) {
         TrumpCardNumber.JACK -> 10
         TrumpCardNumber.QUEEN -> 10
         TrumpCardNumber.KING -> 10
-    }
-
-    companion object {
-        private const val ACE_PLUS_SCORE = 10
     }
 }
