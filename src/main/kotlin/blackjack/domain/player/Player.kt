@@ -5,10 +5,14 @@ import blackjack.domain.card.PlayerCardDeck
 import blackjack.domain.card.PlayerCardDeckCapture
 
 class Player(
-    name: PlayerName,
+    val name: PlayerName,
 ) {
 
     private val cardDeck = PlayerCardDeck(name)
+
+    fun pass(card: Card) {
+        cardDeck.insert(card)
+    }
 
     fun pass(cards: List<Card>) {
         cardDeck.insertAll(cards)

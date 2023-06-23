@@ -17,6 +17,10 @@ class BlackJackResultView {
             .forEach { playerCardDeckCaptureMessage -> println(playerCardDeckCaptureMessage) }
     }
 
+    fun display(playerCardDeckCapture: PlayerCardDeckCapture) {
+        println(playerCardDeckCapture.makeDisplayMessage())
+    }
+
     private fun CardDistributionResult.makeTitleMessage(): String {
         val names = playerNames.unWrappings().joinToString(", ")
         return "${names}에게 ${countOfCardDistribution}장씩 나누었습니다."
