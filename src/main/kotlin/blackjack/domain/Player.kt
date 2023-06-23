@@ -3,22 +3,24 @@ package blackjack.domain
 import kotlin.math.abs
 import kotlin.math.min
 
-class Player(val name: String) {
+class Player(val name: PlayerName) {
 
-    val cards: MutableList<Card> = mutableListOf()
+    val cards: Cards = Cards(mutableListOf())
 
-    fun addCard(card: Card) {
-        cards.add(card)
+    fun addCard(card: Card?) {
+        if (card != null) {
+            cards.cards.add(card)
+        }
     }
 
     fun getCardScore(): Int {
-        val minScore = cards.sumOf {
+        val minScore = cards.cards.sumOf {
             it.cardNumber.score
         }
-        val aceCards = cards.filter {
+        val hasAce = cards.cards.any {
             it.cardNumber == CardNumber.CARD_ACE
         }
-        val maxScore = minScore + if (aceCards.isNotEmpty()) MAX_ACE_SCORE else MIN_ACE_SCORE
+        val maxScore = minScore + if (hasAce) MAX_PLUS_SCORE else MIN_PLUS_SCORE
         if (maxScore > WIN_SCORE) {
             return minScore
         }
@@ -31,7 +33,7 @@ class Player(val name: String) {
 
     companion object {
         const val WIN_SCORE = 21
-        const val MAX_ACE_SCORE = 11
-        const val MIN_ACE_SCORE = 0
+        const val MAX_PLUS_SCORE = 10
+        const val MIN_PLUS_SCORE = 0
     }
 }

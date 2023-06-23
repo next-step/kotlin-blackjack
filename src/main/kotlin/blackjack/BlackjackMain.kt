@@ -2,36 +2,32 @@ package blackjack
 
 import blackjack.domain.BlackJackTable
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
-
-const val YES = "y"
+import blackjack.view.ViewCallback
 
 fun main() {
     val players = InputView.getInputPlayers()
 
-    players.forEach {
-        BlackJackTable.giveCardsToPlayer(it, BlackJackTable.START_CARD_SIZE)
-    }
-    OutputView.showPlayerSet(players)
+    BlackJackTable().startGame(
+        players,
+        object : ViewCallback {
+            override fun isMoreCard(player: Player): Boolean {
+                return InputView.isMoreCard(player)
+            }
 
-    players.forEach {
-        inputMoreCard(it)
-    }
+            override fun showPlayerSet(players: Players) {
+                OutputView.showPlayerSet(players)
+            }
 
-    players.forEach {
-        OutputView.showGameResult(it)
-    }
-}
+            override fun showPlayerCards(player: Player) {
+                OutputView.showPlayerCards(player)
+            }
 
-fun inputMoreCard(player: Player) {
-    do {
-        val yesOrNo = InputView.getInputMoreCards(player.name)
-        if (isYes(yesOrNo)) {
-            BlackJackTable.giveCardsToPlayer(player)
+            override fun showGameResult(player: Player) {
+                OutputView.showGameResult(player)
+            }
         }
-        OutputView.showPlayerCards(player)
-    } while (isYes(yesOrNo))
+    )
 }
-
-private fun isYes(yesOrNo: String) = yesOrNo.lowercase() == YES

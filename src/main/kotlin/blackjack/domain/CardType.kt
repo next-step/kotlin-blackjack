@@ -1,8 +1,22 @@
 package blackjack.domain
 
-enum class CardType(val type: String) {
-    SPADE("스페이드"),
-    CLOVER("클로버"),
-    HEART("하트"),
-    DIAMOND("다이아")
+enum class CardType {
+    SPADE,
+    CLOVER,
+    HEART,
+    DIAMOND;
+
+    companion object {
+        fun getCardDeck(numbers: Array<CardNumber>): Cards {
+            return Cards(
+                values().flatMap {
+                    getCard(numbers, it)
+                }.shuffled().toMutableList()
+            )
+        }
+
+        private fun getCard(numbers: Array<CardNumber>, it: CardType) = numbers.map { cardNumber ->
+            Card(cardNumber, it)
+        }
+    }
 }

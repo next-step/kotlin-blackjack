@@ -1,42 +1,60 @@
 package blackjack.domain
 
-object BlackJackTable {
+import blackjack.view.ViewCallback
 
-    const val START_CARD_SIZE = 2
-    const val DEFAULT_CARD_SIZE = 1
+class BlackJackTable {
 
-    private val blackJackCards: MutableList<Card> = generateBlackJackCards()
+    private val blackJackCards: Cards = CardType.getCardDeck(CardNumber.values())
 
-    lateinit var gamePlayers: List<Player>
     init {
-        check(blackJackCards.size == blackJackCards.distinct().size) {
+        check(blackJackCards.cards.size == blackJackCards.cards.distinct().size) {
             "카드는 중복이면 안됨"
         }
+//        println(blackJackCards.cards)
     }
 
-    private fun hitCard(): Card {
-        val card = blackJackCards.random()
-        blackJackCards.remove(card)
-        return card
-    }
-
-    private fun generateBlackJackCards(): MutableList<Card> {
-        return CardNumber.values().flatMap {
-            getCard(it)
-        }.toMutableList()
-    }
-
-    private fun getCard(cardNumber: CardNumber) = CardType.values().map { cardType ->
-        Card(cardNumber, cardType)
-    }
-
-    fun setPlayers(players: List<Player>) {
-        gamePlayers = players
-    }
-
-    fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_SIZE) {
+    private fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_COUNT) {
         repeat(repeatTime) {
             player.addCard(hitCard())
         }
+    }
+
+    private fun hitCard(): Card? {
+        return blackJackCards.cards.removeFirstOrNull()
+    }
+
+    fun startGame(players: Players, viewCallback: ViewCallback) {
+        players.players.forEach {
+            giveCardsToPlayer(it, START_CARD_COUNT)
+        }
+        viewCallback.showPlayerSet(players)
+
+        players.players.forEach {
+            giveMoreCard(viewCallback, it)
+        }
+
+        players.players.forEach {
+            viewCallback.showGameResult(it)
+        }
+    }
+
+    private fun giveMoreCard(viewCallback: ViewCallback, player: Player) {
+        do {
+            val isMoreCard = inputMoreCard(viewCallback, player)
+            viewCallback.showPlayerCards(player)
+        } while (isMoreCard)
+    }
+
+    private fun inputMoreCard(viewCallback: ViewCallback, it: Player): Boolean {
+        val isMoreCard = viewCallback.isMoreCard(it)
+        if (isMoreCard) {
+            giveCardsToPlayer(it)
+        }
+        return isMoreCard
+    }
+
+    companion object {
+        const val START_CARD_COUNT = 2
+        private const val DEFAULT_CARD_COUNT = 1
     }
 }
