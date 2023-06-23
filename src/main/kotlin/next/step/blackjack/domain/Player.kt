@@ -1,22 +1,17 @@
 package next.step.blackjack.domain
 
-data class Player(val name: String, val cards: MutableList<Card>) {
+data class Player(val name: String, val cards: PlayerCards) {
 
     fun hit(card: Card) {
         cards.add(card)
     }
 
-    fun isBurst(): Boolean {
-        return sumCardsPoint() > BLACKJACK_POINT
-    }
+    fun isBurst(): Boolean = cards.isBurst()
 
-    private fun sumCardsPoint() = cards.sumOf { it.face.point }
-
-    fun isBlackJack(): Boolean = sumCardsPoint() == BLACKJACK_POINT
+    fun isBlackJack(): Boolean = cards.isBlackJack()
 
     companion object {
-        private const val BLACKJACK_POINT = 21
 
-        fun of(name: String, cards: List<Card>): Player = Player(name, cards.toMutableList())
+        fun of(name: String, cards: PlayerCards): Player = Player(name, cards)
     }
 }

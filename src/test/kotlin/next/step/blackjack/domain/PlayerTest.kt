@@ -7,20 +7,25 @@ class PlayerTest : BehaviorSpec({
 
     Given("Player") {
         When("hit하면") {
-            val player = Player.of("dj", emptyList())
+            val player = Player.of("dj", PlayerCards.of(emptyList()))
             val card = Card.of(CardFace.ACE, CardSymbol.CLUB)
 
             player.hit(card)
 
             Then("가지고 있는 카드를 추가함") {
-                player shouldBe Player.of("dj", mutableListOf(card))
+                player shouldBe Player.of("dj", PlayerCards.of(mutableListOf(card)))
             }
         }
-        
+
         When("가지고 있는 카드 총 점수가 21점이 넘지 않으면") {
             val player = Player.of(
                 "dj",
-                listOf(Card.of(CardFace.KING, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART))
+                PlayerCards.of(
+                    listOf(
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.HEART)
+                    )
+                )
             )
 
             Then("burst하지 않음") {
@@ -34,7 +39,7 @@ class PlayerTest : BehaviorSpec({
         When("가지고 있는 카드 총 점수가 21점이면") {
             val player = Player.of(
                 "dj",
-                listOf(Card.of(CardFace.ACE, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART))
+                PlayerCards.of(listOf(Card.of(CardFace.ACE, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART)))
             )
 
             Then("blackjack!") {
@@ -44,7 +49,12 @@ class PlayerTest : BehaviorSpec({
         When("카드를 더 받아서 총 점수가 21점이 넘으면") {
             val player = Player.of(
                 "dj",
-                listOf(Card.of(CardFace.KING, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART))
+                PlayerCards.of(
+                    listOf(
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.HEART)
+                    )
+                )
             )
 
             player.hit(Card.of(CardFace.TWO, CardSymbol.DIAMOND))
@@ -56,6 +66,7 @@ class PlayerTest : BehaviorSpec({
                 player.isBlackJack() shouldBe false
             }
         }
+
     }
 
 })
