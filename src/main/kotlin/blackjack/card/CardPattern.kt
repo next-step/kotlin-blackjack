@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 enum class CardPattern(
     val pattern: String
