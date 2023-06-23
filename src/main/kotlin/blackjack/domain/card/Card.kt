@@ -11,7 +11,7 @@ class Card private constructor(
     override fun toString(): String = "${rank.mark}${shape.mark}"
 
     companion object {
-        private val CACHE = makeCardCache()
+        val CACHE = makeCardCache()
 
         fun createCard(rank: CardRank, shape: CardShape): Card {
             return CACHE[Pair(rank, shape)] ?: throw IllegalArgumentException("존재하지 않는 카드입니다.")
