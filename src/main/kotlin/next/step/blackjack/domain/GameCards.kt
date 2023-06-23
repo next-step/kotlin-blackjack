@@ -1,6 +1,6 @@
 package next.step.blackjack.domain
 
-data class GameCards(var cards: MutableList<Card>) {
+data class GameCards(val cards: MutableList<Card>) {
 
     fun pop(): Card = cards.removeFirst()
     fun size(): Int = cards.size
