@@ -15,6 +15,9 @@ class PlayerTest : BehaviorSpec({
             Then("가지고 있는 카드를 추가함") {
                 player shouldBe Player.of("dj", PlayerCards.of(mutableListOf(card)))
             }
+            Then("점수는 11점") {
+                player.point() shouldBe 11
+            }
         }
 
         When("가지고 있는 카드 총 점수가 21점이 넘지 않으면") {
@@ -37,6 +40,9 @@ class PlayerTest : BehaviorSpec({
             Then("더 hit할 수 있음") {
                 player.canHit() shouldBe true
             }
+            Then("점수는 20점") {
+                player.point() shouldBe 20
+            }
         }
         When("가지고 있는 카드 총 점수가 21점이면") {
             val player = Player.of(
@@ -49,6 +55,9 @@ class PlayerTest : BehaviorSpec({
             }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false
+            }
+            Then("점수는 21점") {
+                player.point() shouldBe 21
             }
         }
         When("카드를 더 받아서 총 점수가 21점이 넘으면") {
@@ -72,6 +81,9 @@ class PlayerTest : BehaviorSpec({
             }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false
+            }
+            Then("점수는 22점") {
+                player.point() shouldBe 22
             }
         }
 
