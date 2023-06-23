@@ -1,12 +1,12 @@
 package blackjack.domain
 
-interface Player {
+sealed interface Player {
     val name: String
     val deck: Deck
 
     fun addCard(card: Card)
     fun addCardAll(values: Collection<Card>)
     fun isAddable(): Boolean
-    fun score(): Int
+    fun calculateScore(): Int
     fun currentDeck(): Deck
 }

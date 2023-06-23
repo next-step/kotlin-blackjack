@@ -2,13 +2,8 @@ package blackjack.domain
 
 class Gamer(override val name: String, override val deck: Deck = Deck()) : Player {
     private val interDeck = deck.copy()
-    private var score: Int = 0
 
-    init {
-        score = interDeck.score()
-    }
-
-    override fun score(): Int = score
+    override fun calculateScore(): Int = interDeck.score()
 
     override fun addCard(card: Card) {
         check(isAddable()) {
@@ -16,12 +11,11 @@ class Gamer(override val name: String, override val deck: Deck = Deck()) : Playe
         }
 
         interDeck.add(card)
-        score += card.score(acc = score)
     }
 
     override fun addCardAll(values: Collection<Card>) = values.forEach(::addCard)
 
-    override fun isAddable(): Boolean = score < 21
+    override fun isAddable(): Boolean = interDeck.score() < Game.THRESHOLD
 
     override fun currentDeck(): Deck = interDeck.copy()
 }
