@@ -5,17 +5,24 @@ data class PlayerCards(val cards: MutableList<Card>) {
         cards.add(card)
     }
 
+    fun isBlackJack(): Boolean = minSumCardsPoint() == BLACKJACK_POINT || maxSumCardsPoint() == BLACKJACK_POINT
+
+    private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
+
+    private fun maxSumCardsPoint(): Int = cards.sumOf { it.maxPoint() }
+
     fun isBurst(): Boolean {
-        return sumCardsPoint() > BLACKJACK_POINT
+        return minSumCardsPoint() > BLACKJACK_POINT
     }
 
-    private fun sumCardsPoint() = cards.sumOf { it.face.point }
-
-    fun isBlackJack(): Boolean = sumCardsPoint() == BLACKJACK_POINT
+    fun point(): Int = when {
+        isBlackJack() -> BLACKJACK_POINT
+        maxSumCardsPoint() < BLACKJACK_POINT -> maxSumCardsPoint()
+        else -> minSumCardsPoint()
+    }
 
     companion object {
         private const val BLACKJACK_POINT = 21
         fun of(cards: List<Card>): PlayerCards = PlayerCards(cards.toMutableList())
-
     }
 }
