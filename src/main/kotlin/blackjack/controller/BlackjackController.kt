@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.view.input.GamePlayerNameInputView
@@ -17,8 +16,7 @@ class BlackjackController {
         NewLineOutputView()
 
         val playerList = Players(playerNameList.map { Player(it) })
-        val deck = CardDeck()
-        val blackjackGame = BlackjackGame(playerList, deck)
+        val blackjackGame = BlackjackGame(playerList)
         blackjackGame.initPlayers()
         GameSharedCardOutputView(playerList)
         playerList.value.forEach { player -> PlayerOutputView(player) }

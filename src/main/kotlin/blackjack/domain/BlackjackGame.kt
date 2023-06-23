@@ -4,7 +4,8 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
-class BlackjackGame(val players: Players, val deck: CardDeck) {
+class BlackjackGame(val players: Players) {
+    val deck: CardDeck = CardDeck()
 
     fun initPlayers() {
         players.value.forEach { player ->

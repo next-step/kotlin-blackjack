@@ -2,12 +2,12 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
@@ -16,21 +16,19 @@ class BlackjackGameTest {
 
     @Test
     fun `게임에 참여할 Player와 CardDeck이 필요하다`() {
-        val deck = CardDeck()
         val player1 = Player()
         val player2 = Player()
         val players = Players.from(player1, player2)
-        val blackjackGame = BlackjackGame(players, deck)
+        val blackjackGame = BlackjackGame(players)
 
         blackjackGame.players shouldBe players
-        blackjackGame.deck shouldBe deck
+        blackjackGame.deck.shouldNotBeNull()
     }
 
     @Test
     fun `Player에게 랜덤한 카드를 할당할 수 있다`() {
-        val deck = CardDeck()
         val player = Player()
-        val blackjackGame = BlackjackGame(Players.from(player), deck)
+        val blackjackGame = BlackjackGame(Players.from(player))
 
         blackjackGame.dealCards(player)
 
@@ -39,9 +37,8 @@ class BlackjackGameTest {
 
     @Test
     fun `최초 시작시 Player에게 2개의 랜덤한 카드를 할당한다`() {
-        val deck = CardDeck()
         val player = Player()
-        val blackjackGame = BlackjackGame(Players.from(player), deck)
+        val blackjackGame = BlackjackGame(Players.from(player))
 
         blackjackGame.initPlayers()
 
