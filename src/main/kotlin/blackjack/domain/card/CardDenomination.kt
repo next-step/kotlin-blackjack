@@ -2,7 +2,6 @@ package blackjack.domain.card
 
 enum class CardDenomination {
     ACE,
-    ONE,
     TWO,
     THREE,
     FOUR,

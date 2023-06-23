@@ -41,7 +41,6 @@ class BlackJackResultView {
         }
         val denominationName = when (denomination) {
             CardDenomination.ACE -> "A"
-            CardDenomination.ONE -> "1"
             CardDenomination.TWO -> "2"
             CardDenomination.THREE -> "3"
             CardDenomination.FOUR -> "4"
