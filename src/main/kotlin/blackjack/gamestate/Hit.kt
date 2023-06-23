@@ -7,7 +7,8 @@ class Hit(
     val cards: Cards,
 ) : GameState {
     override fun draw(card: Card): GameState {
-        TODO("Not yet implemented")
+        val cards = this.cards.addCard(card)
+        return Hit(cards)
     }
 
     override fun stay() = Stay()
