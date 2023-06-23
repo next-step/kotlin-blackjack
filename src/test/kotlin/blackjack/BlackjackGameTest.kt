@@ -63,6 +63,6 @@ class BlackjackGameTest {
         // 17, 27
         player.receiveCard(Card(Denomination.JACK, CardType.HEARTS))
 
-        player.getOptimizedScore() shouldBe 17
+        player.cards.getOptimizedScore() shouldBe 17
     }
 }

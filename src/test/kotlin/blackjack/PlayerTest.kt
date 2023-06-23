@@ -16,7 +16,7 @@ class PlayerTest {
         val player = Player()
 
         player.cards.value shouldNotBe null
-        player.getOptimizedScore() shouldNotBe null
+        player.cards.getOptimizedScore() shouldNotBe null
         player.name shouldNotBe null
     }
 
@@ -40,7 +40,7 @@ class PlayerTest {
         )
         cards.value.forEach { card -> player.receiveCard(card) }
 
-        player.getOptimizedScore() shouldBe 21
+        player.cards.getOptimizedScore() shouldBe 21
         player.isBlackJack() shouldBe true
         player.isReceivable() shouldBe true
     }

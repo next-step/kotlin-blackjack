@@ -2,17 +2,14 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Denomination
 
 class Player(
     val name: Name = Name(),
-    val scoreSet: MutableSet<Int> = mutableSetOf(INIT_SCORE),
 ) {
     val cards: Cards = Cards()
     private var status: PlayerStatus = PlayerStatus.RECEIVE
 
     init {
-        cards.value.map { updateScoreSet(it) }
         updateStatus()
     }
 
@@ -27,34 +24,12 @@ class Player(
     fun receiveCard(card: Card) {
         if (!isReceivable()) return
         cards.addCard(card)
-        updateScoreSet(card)
+        cards.updateScoreSet(card)
         updateStatus()
     }
 
-    private fun updateScoreSet(card: Card) {
-        val _scoreSet = setOf(*scoreSet.toTypedArray())
-
-        val newScoreSet = _scoreSet.flatMap { score ->
-            if (card.denom.symbol == Denomination.ACE.symbol) {
-                Denomination.ACE.getCardScoresValue().map { value -> score + value }
-            } else {
-                listOf(score + card.denom.cardScores.value.first().value)
-            }
-        }.distinct().toSet()
-
-        val finalScoreList =
-            newScoreSet.filter { it <= PlayerStatus.BLACK_JACK_SCORE }.ifEmpty { setOf(newScoreSet.min()) }
-
-        scoreSet.clear()
-        scoreSet.addAll(finalScoreList)
-    }
-
-    fun getOptimizedScore(): Int {
-        return scoreSet.max()
-    }
-
     private fun updateStatus() {
-        val optimizedScore = getOptimizedScore()
+        val optimizedScore = cards.getOptimizedScore()
         status = PlayerStatus.valuesOf(optimizedScore, status)
     }
 
