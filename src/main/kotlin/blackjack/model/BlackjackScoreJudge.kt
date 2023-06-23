@@ -7,7 +7,7 @@ value class BlackjackScoreJudge(private val limitScore: Int) {
         require(limitScore > 0) { "limitScore must be greater than 0. but provided limitScore(`$limitScore`)" }
     }
 
-    fun score(deck: CardDeck): Int {
+    fun score(deck: HandDeck): Int {
         val score: Int = deck.sumOf { cardNumberScore(it.number) }
         if (score <= limitScore) {
             return score
@@ -15,8 +15,8 @@ value class BlackjackScoreJudge(private val limitScore: Int) {
         return exceptedAceBonusScore(deck, score)
     }
 
-    private fun exceptedAceBonusScore(deck: CardDeck, score: Int): Int {
-        val aceCount: Int = deck.count { it.number == TrumpCardNumber.ACE }
+    private fun exceptedAceBonusScore(deck: HandDeck, score: Int): Int {
+        val aceCount: Int = deck.aceCount
         var scoreWithAcePlus: Int = score
         repeat(aceCount) {
             scoreWithAcePlus -= ACE_PLUS_SCORE

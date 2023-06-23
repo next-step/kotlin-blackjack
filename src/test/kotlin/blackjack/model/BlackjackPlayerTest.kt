@@ -1,7 +1,6 @@
 package blackjack.model
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -12,23 +11,21 @@ class BlackjackPlayerTest : StringSpec({
 
     "이름과 카드 리스트로 생성" {
         shouldNotThrowAny {
-            BlackjackPlayer("name", listOf(TrumpCard(TrumpCardShape.SPADE, TrumpCardNumber.ACE)))
+            BlackjackPlayer(PlayerName("name"), HandDeck(listOf(TrumpCard(TrumpCardShape.SPADE, TrumpCardNumber.ACE))))
         }
     }
 
-    "이름은 공백일 수 없음" {
-        shouldThrowExactly<IllegalArgumentException> {
-            BlackjackPlayer("", emptyList())
-        }
+    "기본 인자로 빈 덱 생성" {
+        BlackjackPlayer(PlayerName("name")).deck shouldBe HandDeck()
     }
 
     "스페이드 에이스 카드 추가" {
         // given
-        val name = "name"
-        val emptyCardsPlayer = BlackjackPlayer(name, emptyList())
+        val name = PlayerName("name")
+        val emptyCardsPlayer = BlackjackPlayer(name)
         // when
         val addedCardPlayer: BlackjackPlayer = emptyCardsPlayer.addedCard(SPADE_ACE)
         // then
-        addedCardPlayer shouldBe BlackjackPlayer(name, listOf(SPADE_ACE))
+        addedCardPlayer shouldBe BlackjackPlayer(name, HandDeck(listOf(SPADE_ACE)))
     }
 })

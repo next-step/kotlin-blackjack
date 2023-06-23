@@ -8,7 +8,7 @@ import blackjack.model.TrumpCardShape
 object OutputView {
 
     fun printInitialDealing(players: Collection<BlackjackPlayer>, count: Int) {
-        println("${players.joinToString { it.name }}에게 ${count}장의 나누었습니다.")
+        println("${players.joinToString { it.name.toString() }}에게 ${count}장의 나누었습니다.")
         players.forEach { printPlayerCards(it) }
         println()
     }
@@ -22,7 +22,7 @@ object OutputView {
     }
 
     private fun playerString(player: BlackjackPlayer): String {
-        return "${player.name}카드: ${player.deck.joinToString { cardString(it) }}"
+        return "${player.name}카드: ${player.deck.cards.joinToString { cardString(it) }}"
     }
 
     private fun cardString(card: TrumpCard): String {

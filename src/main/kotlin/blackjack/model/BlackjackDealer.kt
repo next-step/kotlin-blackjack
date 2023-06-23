@@ -2,11 +2,10 @@ package blackjack.model
 
 data class BlackjackDealer(
     private var deck: CardDeck,
-    private val cardSelector: (CardDeck) -> TrumpCard,
+    private val cardSelector: (Collection<TrumpCard>) -> TrumpCard,
 ) {
-    fun drawCardAndRemoved(): TrumpCard {
-        check(deck.isNotEmpty()) { "deck is empty. blackjack dealer can't draw card. dealer($this)" }
-        val card = cardSelector(deck)
+    fun drawCard(): TrumpCard {
+        val card = deck.card(cardSelector)
         deck -= card
         return card
     }

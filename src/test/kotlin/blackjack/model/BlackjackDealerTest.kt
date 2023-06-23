@@ -20,7 +20,7 @@ class BlackjackDealerTest : StringSpec({
         val cardSelector: (CardDeck) -> TrumpCard = { cards -> cards.first() }
         val dealer = BlackjackDealer(listOf(SPADE_ACE), cardSelector)
         // when
-        val drawnCard: TrumpCard = dealer.drawCardAndRemoved()
+        val drawnCard: TrumpCard = dealer.drawCard()
         // then
         assertSoftly {
             drawnCard shouldBe SPADE_ACE
