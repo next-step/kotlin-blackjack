@@ -30,4 +30,17 @@ class Player(val name: String) {
     fun showHands(): String {
         return hand.toRepresent()
     }
+
+    fun drawPhase(
+        wantToHit: Boolean,
+        dealer: Dealer,
+        handNotice: (Player) -> Unit
+    ) {
+        if (wantToHit) {
+            hit(dealer.draw())
+            handNotice.invoke(this)
+        } else {
+            stand()
+        }
+    }
 }

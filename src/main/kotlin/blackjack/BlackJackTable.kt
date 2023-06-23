@@ -20,17 +20,8 @@ class BlackJackTable(
 
     private fun proceedPlayerTurns(player: Player) {
         while (player.ableToDraw) {
-            resolveDrawPhase(player)
-        }
-    }
-
-    private fun resolveDrawPhase(player: Player) {
-        val wantToHit = InputView.wantToHit(player.name)
-        if (wantToHit) {
-            player.hit(dealer.draw())
-            OutputView.handNotice(player)
-        } else {
-            player.stand()
+            val wantToHit = InputView.wantToHit(player.name)
+            player.drawPhase(wantToHit, dealer) { OutputView.handNotice(player) }
         }
     }
 
