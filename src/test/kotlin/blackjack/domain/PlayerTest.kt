@@ -4,10 +4,9 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
 
 class PlayerTest : StringSpec({
-    "참여자 손패에 새로운 카드를 입력받는다." {
+    "플레이어가 hit 요청을 하면 새로운 카드를 받는다." {
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 11, "A")
         player.hands().size shouldBe 0
@@ -19,7 +18,7 @@ class PlayerTest : StringSpec({
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
         player.hit(pokerCard, pokerCard, pokerCard)
-        shouldThrow<IllegalArgumentException> {
+        shouldThrow<IllegalStateException> {
             player.hit(pokerCard)
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }
@@ -28,7 +27,7 @@ class PlayerTest : StringSpec({
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
         player.stand()
-        shouldThrow<IllegalArgumentException> {
+        shouldThrow<IllegalStateException> {
             player.hit(pokerCard)
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }

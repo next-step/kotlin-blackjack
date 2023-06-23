@@ -7,14 +7,14 @@ enum class PokerSymbol(val value: Int, val symbolName: String) {
     SPADES(3, "스페이드");
 
     companion object {
-        fun getSymbolByDrawNumber(drawNumber: Int): PokerSymbol {
-            return when (drawNumber / 13) {
+        fun getSymbolByDrawNumber(symbolValue: Int): PokerSymbol {
+            return when (symbolValue) {
                 HEARTS.value -> HEARTS
                 DIAMONDS.value -> DIAMONDS
                 CLUBS.value -> CLUBS
                 SPADES.value -> SPADES
                 else -> {
-                    throw IllegalArgumentException("${drawNumber}는 0과 52사이 값이어야 합니다.")
+                    throw IllegalArgumentException("${symbolValue}는 0과 3사이 값이어야 합니다.")
                 }
             }
         }
