@@ -7,6 +7,8 @@ import blackjack.CardTest.Companion.SPADE_QUEEN
 import blackjack.CardTest.Companion.SPADE_TWO
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
@@ -36,6 +38,22 @@ class CardsTest : FunSpec({
             val cards = Cards()
             val actual = cards.addCard(SPADE_TWO)
             actual.values shouldHaveSize 1
+        }
+    }
+
+    context("isBust") {
+        forAll(
+            row(listOf(SPADE_ACE, SPADE_TWO), false),
+            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK), false),
+            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK, SPADE_QUEEN), true),
+            row(listOf(SPADE_TWO, SPADE_KING, SPADE_JACK), true)
+        ) { input, expected ->
+            test("${input}은 버스트가 ${expected}이다") {
+                val cards = Cards(input)
+                val actual = cards.isBust()
+                actual shouldBe expected
+            }
+
         }
     }
 

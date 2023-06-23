@@ -13,7 +13,10 @@ value class Cards(
         return Cards(values + card)
     }
 
+    fun isBust() = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
+
     companion object {
+        private const val BLACKJACK_SCORE = 21
         fun of(vararg card: Card) = Cards(card.toMutableList())
     }
 }
