@@ -17,6 +17,8 @@ object OutputView {
 
     fun enterLine() = println()
 
+    fun printMessage(message: String) = println(message)
+
     private fun CardValue.toText(): String {
         return when (this) {
             CardValue.TWO -> "2"
