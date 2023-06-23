@@ -1,8 +1,10 @@
 package blackjack
 
 class Card(
-    val number: Int
+    val number: Int,
+    val pattern: CardPattern,
 ) {
+
     init {
         require(number in 1..10) { "숫자는 1에서 10 사이여야 합니다." }
     }
