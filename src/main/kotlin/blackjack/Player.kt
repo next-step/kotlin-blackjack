@@ -5,22 +5,11 @@ data class Player(
     var cards: Cards,
 ) {
     fun hit(card: Card) {
-        cards += card
-    }
-
-    fun calculateScore(): Int {
-        var scoreSum = cards.sumOf { it.denomination.maxScore() }
-        for (i in 1..cards.countAces()) {
-            if (scoreSum <= WINNING_NUMBER) {
-                break
-            }
-            scoreSum = scoreSum - Denomination.ACE.maxScore() + Denomination.ACE.score
+        val addedCards = cards + card
+        if (addedCards.calculateScore() <= Cards.WINNING_NUMBER) {
+            cards = addedCards
         }
-
-        return scoreSum
     }
 
-    companion object {
-        private const val WINNING_NUMBER = 21
-    }
+    fun calculateScore(): Int = cards.calculateScore()
 }

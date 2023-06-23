@@ -7,13 +7,13 @@ class PlayerVO(
     val cards: List<CardVO>,
 ) {
     companion object {
-        operator fun invoke(player: Player): PlayerVO {
+        fun of(player: Player): PlayerVO {
             return PlayerVO(
                 player.name,
                 player.cards.map {
                     CardVO(
-                        DenominationVO(it.denomination),
-                        SuitVO(it.suit),
+                        DenominationVO.of(it.denomination),
+                        SuitVO.of(it.suit),
                     )
                 }
             )

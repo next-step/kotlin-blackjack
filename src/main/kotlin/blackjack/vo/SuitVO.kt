@@ -6,7 +6,7 @@ class SuitVO(
     val name: String,
 ) {
     companion object {
-        operator fun invoke(suit: Suit): SuitVO {
+        fun of(suit: Suit): SuitVO {
             return when (suit) {
                 Suit.CLUBS -> SuitVO("클로버")
                 Suit.DIAMONDS -> SuitVO("다이아몬드")

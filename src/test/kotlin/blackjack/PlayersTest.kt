@@ -6,12 +6,12 @@ import io.kotest.matchers.shouldBe
 class PlayersTest : FunSpec({
     test("여러 플레이어들을 생성한다.") {
         val cards1 = Cards(
-            Card(Denomination.ACE, Suit.SPADES),
-            Card(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
         )
         val cards2 = Cards(
-            Card(Denomination.TWO, Suit.HEARTS),
-            Card(Denomination.THREE, Suit.DIAMONDS),
+            Card.of(Denomination.TWO, Suit.HEARTS),
+            Card.of(Denomination.THREE, Suit.DIAMONDS),
         )
         val player1 = Player("pobi", cards1)
         val player2 = Player("jason", cards2)

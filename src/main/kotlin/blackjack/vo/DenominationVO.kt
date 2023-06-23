@@ -6,7 +6,7 @@ class DenominationVO(
     val symbol: String,
 ) {
     companion object {
-        operator fun invoke(denomination: Denomination): DenominationVO {
+        fun of(denomination: Denomination): DenominationVO {
             return when (denomination) {
                 Denomination.ACE -> DenominationVO("1")
                 Denomination.TWO -> DenominationVO("2")

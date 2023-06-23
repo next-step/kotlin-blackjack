@@ -1,7 +1,7 @@
 package blackjack
 
 class Deck(
-    val cards: MutableList<Card>
+    private val cards: MutableList<Card>
 ) {
     constructor(vararg cards: Card) : this(cards.toMutableList())
 
@@ -17,12 +17,20 @@ class Deck(
         return cards.isNotEmpty()
     }
 
+    operator fun contains(card: Card): Boolean {
+        return card in cards
+    }
+
+    fun size(): Int {
+        return cards.size
+    }
+
     companion object {
-        fun init(): Deck {
+        fun shuffled(): Deck {
             val cards = Denomination.values()
                 .flatMap { number ->
                     Suit.values()
-                        .map { suit -> Card(number, suit) }
+                        .map { suit -> Card.of(number, suit) }
                 }
                 .shuffled()
                 .toMutableList()

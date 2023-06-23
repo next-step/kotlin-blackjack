@@ -7,9 +7,9 @@ import io.kotest.matchers.shouldBe
 class PlayerTest : FunSpec({
     test("이름과 카드를 플레이어를 생성한다.") {
         val cards = Cards(
-            Card(Denomination.ACE, Suit.SPADES),
-            Card(Denomination.JACK, Suit.SPADES),
-            Card(Denomination.TWO, Suit.HEARTS),
+            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.TWO, Suit.HEARTS),
         )
         val player = Player("pobi", cards)
 
@@ -19,18 +19,18 @@ class PlayerTest : FunSpec({
 
     test("카드를 더 받는다(hit).") {
         val cards = Cards(
-            Card(Denomination.ACE, Suit.SPADES),
-            Card(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
         )
-        val card = Card(Denomination.TWO, Suit.HEARTS)
+        val card = Card.of(Denomination.TWO, Suit.HEARTS)
         val player = Player("pobi", cards)
 
         player.hit(card)
 
         player.cards shouldBe Cards(
-            Card(Denomination.ACE, Suit.SPADES),
-            Card(Denomination.JACK, Suit.SPADES),
-            Card(Denomination.TWO, Suit.HEARTS),
+            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.TWO, Suit.HEARTS),
         )
     }
 
@@ -40,16 +40,16 @@ class PlayerTest : FunSpec({
             nameFn = { "${it.cards.joinToString(" + ") { card -> card.denomination.name }} = ${it.score}" },
             PlayerScore(
                 Cards(
-                    Card(Denomination.ACE, Suit.SPADES),
-                    Card(Denomination.JACK, Suit.SPADES),
-                    Card(Denomination.TWO, Suit.HEARTS),
+                    Card.of(Denomination.ACE, Suit.SPADES),
+                    Card.of(Denomination.JACK, Suit.SPADES),
+                    Card.of(Denomination.TWO, Suit.HEARTS),
                 ),
                 13
             ),
             PlayerScore(
                 Cards(
-                    Card(Denomination.ACE, Suit.SPADES),
-                    Card(Denomination.JACK, Suit.SPADES),
+                    Card.of(Denomination.ACE, Suit.SPADES),
+                    Card.of(Denomination.JACK, Suit.SPADES),
                 ),
                 21
             )
