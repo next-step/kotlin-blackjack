@@ -29,8 +29,6 @@ data class AceCardNumber(override val number: Int) : CardNumber {
         require(number in NUMBER_RANGE)
     }
 
-    override fun toString(): String = "A"
-
     companion object {
         val NUMBER_RANGE = 1..1
     }
@@ -42,8 +40,6 @@ data class NumberCardNumber(override val number: Int) : CardNumber {
     init {
         require(number in NUMBER_RANGE)
     }
-
-    override fun toString(): String = number.toString()
 
     companion object {
         val NUMBER_RANGE = AceCardNumber.NUMBER_RANGE.last + 1 until JackQueenKingCardNumber.NUMBER_RANGE.first
@@ -57,18 +53,11 @@ data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
         require(number in NUMBER_RANGE)
     }
 
-    override fun toString(): String = when (number) {
-        JACK_NUMBER -> "J"
-        QUEEN_NUMBER -> "Q"
-        KING_NUMBER -> "K"
-        else -> throw IllegalStateException()
-    }
-
     companion object {
         private const val CARD_POINT = 10
         const val JACK_NUMBER = 11
-        private const val QUEEN_NUMBER = 12
-        private const val KING_NUMBER = 13
+        const val QUEEN_NUMBER = 12
+        const val KING_NUMBER = 13
 
         val NUMBER_RANGE = JACK_NUMBER..KING_NUMBER
     }

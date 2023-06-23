@@ -2,7 +2,7 @@ package blackjack.domain
 
 import java.util.LinkedList
 
-data class Deck(private val cardList: LinkedList<Card>) {
+data class Deck(val cardList: LinkedList<Card>) {
     val size: Int
         get() = cardList.size
 
@@ -18,10 +18,6 @@ data class Deck(private val cardList: LinkedList<Card>) {
 
     operator fun get(index: Int): Card {
         return cardList[index]
-    }
-
-    override fun toString(): String {
-        return cardList.joinToString(", ")
     }
 
     companion object {
