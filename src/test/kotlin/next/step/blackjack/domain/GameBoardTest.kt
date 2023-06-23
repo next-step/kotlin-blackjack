@@ -22,7 +22,7 @@ class GameBoardTest : DescribeSpec({
                         )
                     ),
                     setOf(player1, player2)
-                ).start {}
+                ).start { _, _ -> }
 
                 assertSoftly {
                     player1.cards.size() shouldBe 2
