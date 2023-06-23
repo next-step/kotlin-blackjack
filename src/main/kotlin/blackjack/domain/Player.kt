@@ -1,24 +1,22 @@
 package blackjack.domain
 
-import blackjack.HandsCalculator
-
 class Player(val name: String) {
 
-    private val hand = mutableListOf<PokerCard>()
+    private val hand: Hand = Hand()
     var ableToDraw = true
 
     fun hit(vararg pokerCards: PokerCard) {
-        require(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
+        check(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
 
         for (pokerCard in pokerCards) {
-            hand.add(pokerCard)
+            hand.addNewCard(pokerCard)
         }
-        val blackJackOrBust = HandsCalculator.calculateOptimalValue(hand) >= 21
+        val blackJackOrBust = hand.isBlackJackOrBust()
         if (blackJackOrBust) ableToDraw = false
     }
 
     fun hands(): List<PokerCard> {
-        return hand.toList()
+        return hand.hands()
     }
 
     fun stand() {
@@ -26,10 +24,10 @@ class Player(val name: String) {
     }
 
     fun optimalValue(): Int {
-        return HandsCalculator.calculateOptimalValue(hand)
+        return hand.optimalValue()
     }
 
     fun showHands(): String {
-        return hand.joinToString(transform = PokerCard::representCard)
+        return hand.toRepresent()
     }
 }
