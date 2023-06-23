@@ -31,9 +31,11 @@ class PlayerTest : BehaviorSpec({
             Then("burst하지 않음") {
                 player.isBurst() shouldBe false
             }
-
             Then("블랙잭이 아님") {
                 player.isBlackJack() shouldBe false
+            }
+            Then("더 hit할 수 있음") {
+                player.canHit() shouldBe true
             }
         }
         When("가지고 있는 카드 총 점수가 21점이면") {
@@ -44,6 +46,9 @@ class PlayerTest : BehaviorSpec({
 
             Then("blackjack!") {
                 player.isBlackJack() shouldBe true
+            }
+            Then("더 hit할 수 없음") {
+                player.canHit() shouldBe false
             }
         }
         When("카드를 더 받아서 총 점수가 21점이 넘으면") {
@@ -64,6 +69,9 @@ class PlayerTest : BehaviorSpec({
             }
             Then("블랙잭이 아님") {
                 player.isBlackJack() shouldBe false
+            }
+            Then("더 hit할 수 없음") {
+                player.canHit() shouldBe false
             }
         }
 
