@@ -62,4 +62,18 @@ class BlackJackGameTest : BehaviorSpec({
             hitResult.cards.size shouldBe playerCardsSize + 1
         }
     }
+
+    Given("플레이어가 stay 답변을 하면") {
+        val playerNames = playerNames("test1", "test2")
+        val game = BlackJackGame(
+            shuffler = CardNotShuffler(),
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers()
+        game.stayFocusedPlayer()
+        Then("다음 플레이어로 순서가 넘어간다") {
+            val turn = game.nextTurn() as BlackJackGameTurn.HitAnswerWait
+            turn.playerName shouldBe playerNames[1]
+        }
+    }
 })

@@ -53,6 +53,10 @@ class BlackJackGame(
         return player.captureCardDeck()
     }
 
+    fun stayFocusedPlayer() {
+        moveFocusedPlayerToFinished()
+    }
+
     private fun moveFocusedPlayerToFinished() {
         val player = waitPlayers.removeFirstOrNull() ?: throw IllegalStateException("focused player not existed")
         finishedPlayers.add(player)

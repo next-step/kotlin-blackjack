@@ -32,7 +32,9 @@ class BlackJackController(
                 val hitResult = blackJackGame.hitFocusedPlayer()
                 resultView.display(hitResult)
             }
-            HitAnswer.STAY -> { }
+            HitAnswer.STAY -> {
+                blackJackGame.stayFocusedPlayer()
+            }
         }
     }
 }
