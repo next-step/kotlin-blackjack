@@ -1,7 +1,7 @@
 package next.step.blackjack.domain
 
 enum class CardFace(val desc: String, val point: Int) {
-    
+
     ONE("1", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -17,4 +17,9 @@ enum class CardFace(val desc: String, val point: Int) {
     KING("K", 10),
     ACE("A", 11);
 
+    fun maxPoint(): Int = point
+
+    fun minPoint(): Int = if (isAce()) 1 else point
+
+    private fun isAce(): Boolean = this == ACE
 }
