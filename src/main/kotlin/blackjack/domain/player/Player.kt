@@ -17,7 +17,7 @@ class Player(
     }
 
     fun isReceivable(): Boolean {
-        return status == PlayerStatus.RECEIVE
+        return status == PlayerStatus.RECEIVE || status == PlayerStatus.BLACK_JACK
     }
 
     fun isBlackJack(): Boolean {
