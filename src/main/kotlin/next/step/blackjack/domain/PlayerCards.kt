@@ -21,6 +21,8 @@ data class PlayerCards(val cards: MutableList<Card>) {
         else -> minSumCardsPoint()
     }
 
+    fun size() = cards.size
+
     companion object {
         private const val BLACKJACK_POINT = 21
         fun of(cards: List<Card>): PlayerCards = PlayerCards(cards.toMutableList())

@@ -1,5 +1,6 @@
 package next.step.blackjack.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -13,7 +14,10 @@ class PlayerCardsTest : BehaviorSpec({
             playerCards.add(card)
 
             Then("가지고 있는 카드를 추가함") {
-                playerCards shouldBe PlayerCards.of(mutableListOf(card))
+                assertSoftly {
+                    playerCards shouldBe PlayerCards.of(mutableListOf(card))
+                    playerCards.size() shouldBe 1
+                }
             }
         }
 
