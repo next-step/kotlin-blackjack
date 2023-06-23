@@ -1,15 +1,23 @@
 package blackjack.domain.card
 
-import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerStatus
 
 class Cards(
-    val value: MutableList<Card> = mutableListOf(),
+    _value: List<Card> = emptyList(),
     private val scoreSet: MutableSet<Int> = mutableSetOf(INIT_SCORE),
 ) {
+    private val value: MutableList<Card> = _value.toMutableList()
 
     init {
         value.map { updateScoreSet(it) }
+    }
+
+    fun getValue(): List<Card> {
+        return value.toList()
+    }
+
+    fun addCards(cards: Cards) {
+        value.addAll(cards.value)
     }
 
     fun addCard(card: Card) {
@@ -36,6 +44,25 @@ class Cards(
 
         scoreSet.clear()
         scoreSet.addAll(finalScoreList)
+    }
+
+    fun updateScoreSet(cards: Cards) {
+        cards.value.forEach { card -> updateScoreSet(card) }
+    }
+
+    /**
+     * used by CardDeck()
+     */
+    fun getRandomCard(count: Int): Cards {
+        return Cards(value.shuffled().take(count))
+    }
+
+    fun getFirstCard(): Card {
+        return value.first()
+    }
+
+    fun removeAllCards(cards: Cards) {
+        value.removeAll(cards.value)
     }
 
     companion object {

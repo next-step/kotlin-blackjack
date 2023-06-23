@@ -1,10 +1,15 @@
 package blackjack.domain.card
 
-class CardDeck(val cards: Cards = Cards(cardDeck.shuffled().toMutableList())) {
+class CardDeck {
+    val cards: Cards = Cards(cardDeck.shuffled().toMutableList())
     fun getRandomCards(count: Int): Cards {
-        val randomCards = cards.value.shuffled().take(count).toMutableList()
-        cards.value.removeAll(randomCards)
-        return Cards(randomCards)
+        val randomCards = cards.getRandomCard(count)
+        cards.removeAllCards(randomCards)
+        return randomCards
+    }
+
+    fun getRandomCard(): Card {
+        return getRandomCards(1).getFirstCard()
     }
 
     companion object {

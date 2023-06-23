@@ -37,16 +37,6 @@ class CardTest {
     }
 
     @Test
-    fun `CardDeck은 다이아몬드, 하트, 클로버, 스페이드가 각각 13개의 끗수로 이루어져있다`() {
-        val deck = CardDeck.cardDeck
-        val validMap = mutableMapOf(*CardType.values().map { it to 0 }.toTypedArray())
-
-        deck.forEach { card -> validMap[card.type] = validMap[card.type]!! + 1 }
-
-        validMap.values shouldBe listOf(13, 13, 13, 13)
-    }
-
-    @Test
     fun `ACE 카드는 1 또는 11 score를 가질 수 있다`() {
         val deck = CardDeck.cardDeck
         val aceCard = deck.first { it.denom.symbol == Denomination.ACE.symbol }

@@ -6,29 +6,21 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
 import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `'카드 리스트'와 '카드 총합 점수'와 '이름' 정보를 가지고 있다`() {
-        val player = Player()
-
-        player.cards.value shouldNotBe null
-        player.cards.getOptimizedScore() shouldNotBe null
-        player.name shouldNotBe null
-    }
-
-    @Test
-    fun `게임 시작시 랜덤한 2장의 카드를 가지고 시작합니다`() {
+    fun `게임 시작시 랜덤한 2장의 카드를 가지고 시작하며 카드를 받을 수 있는 상태가 된다`() {
         val deck = CardDeck()
-        val cards = Cards(deck.getRandomCards(2).value)
+        val cards = deck.getRandomCards(2)
         val player = Player()
 
-        cards.value.forEach { card -> player.receiveCard(card) }
+        player.initCards(cards)
 
-        player.cards.value.size shouldBe 2
+        player.cards.getValue().size shouldBe 2
+        player.getStatus() shouldBe PlayerStatus.RECEIVE
     }
 
     @Test
@@ -38,10 +30,11 @@ class PlayerTest {
             Card(Denomination.ACE, CardType.CLUBS),
             Card(Denomination.JACK, CardType.DIAMONDS),
         )
-        cards.value.forEach { card -> player.receiveCard(card) }
+
+        player.initCards(cards)
 
         player.cards.getOptimizedScore() shouldBe 21
-        player.isBlackJack() shouldBe true
+        player.getStatus() shouldBe PlayerStatus.BLACK_JACK
         player.isReceivable() shouldBe true
     }
 
@@ -52,10 +45,11 @@ class PlayerTest {
             Card(Denomination.JACK, CardType.CLUBS),
             Card(Denomination.JACK, CardType.DIAMONDS),
         )
-        cards.value.forEach { card -> player.receiveCard(card) }
 
+        player.initCards(cards)
         player.receiveCard(Card(Denomination.TWO, CardType.DIAMONDS))
 
+        player.getStatus() shouldBe PlayerStatus.BUST
         player.isReceivable() shouldBe false
     }
 }

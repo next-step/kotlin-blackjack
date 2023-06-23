@@ -9,7 +9,6 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 class BlackjackGameTest {
@@ -26,23 +25,23 @@ class BlackjackGameTest {
     }
 
     @Test
-    fun `Player에게 랜덤한 카드를 할당할 수 있다`() {
-        val player = Player()
-        val blackjackGame = BlackjackGame(Players.from(player))
-
-        blackjackGame.dealCards(player)
-
-        blackjackGame.players.value[0].cards.value.shouldBeInstanceOf<List<Card>>()
-    }
-
-    @Test
-    fun `최초 시작시 Player에게 2개의 랜덤한 카드를 할당한다`() {
+    fun `최초 카드분배시 Player에게 2장의 카드를 나눠준다`() {
         val player = Player()
         val blackjackGame = BlackjackGame(Players.from(player))
 
         blackjackGame.initPlayers()
 
-        blackjackGame.players.value[0].cards.value.size shouldBe 2
+        player.cards.getValue().size shouldBe 2
+    }
+
+    @Test
+    fun `최초 카드분배 이후에는 Player에게 카드를 1장씩 나눠준다`() {
+        val player = Player()
+        val blackjackGame = BlackjackGame(Players.from(player))
+
+        blackjackGame.dealCards(player)
+
+        player.cards.getValue().size shouldBe 1
     }
 
     @Test
@@ -55,7 +54,8 @@ class BlackjackGameTest {
                 Card(Denomination.SIX, CardType.DIAMONDS),
             ),
         )
-        cards.value.forEach { card -> player.receiveCard(card) }
+
+        player.initCards(cards)
 
         // 17, 27
         player.receiveCard(Card(Denomination.JACK, CardType.HEARTS))
