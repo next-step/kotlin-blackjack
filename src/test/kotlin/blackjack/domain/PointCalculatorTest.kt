@@ -1,12 +1,6 @@
-package blackjack.util
+package blackjack.domain
 
 import blackjack.controller.BlackjackGame
-import blackjack.domain.AceCardNumber
-import blackjack.domain.Card
-import blackjack.domain.Deck
-import blackjack.domain.JackQueenKingCardNumber
-import blackjack.domain.NumberCardNumber
-import blackjack.domain.Suit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import java.util.LinkedList

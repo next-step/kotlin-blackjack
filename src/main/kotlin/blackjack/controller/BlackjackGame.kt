@@ -2,12 +2,12 @@ package blackjack.controller
 
 import blackjack.domain.Card
 import blackjack.domain.Deck
+import blackjack.domain.PointCalculator
 import blackjack.domain.User
 import blackjack.domain.Users
 import blackjack.io.InputView
 import blackjack.io.ResultView
 import blackjack.util.CardSelector
-import blackjack.util.PointCalculator
 import blackjack.util.RandomCardSelector
 import java.util.LinkedList
 

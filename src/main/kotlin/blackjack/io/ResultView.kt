@@ -6,10 +6,10 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Deck
 import blackjack.domain.JackQueenKingCardNumber
 import blackjack.domain.NumberCardNumber
+import blackjack.domain.PointCalculator
 import blackjack.domain.Suit
 import blackjack.domain.User
 import blackjack.domain.Users
-import blackjack.util.PointCalculator
 
 object ResultView {
     private const val DECK_PRINT_FORMAT = "%s카드: %s"

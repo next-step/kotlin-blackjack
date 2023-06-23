@@ -3,8 +3,6 @@ package blackjack.domain
 sealed interface CardNumber {
     val number: Int
 
-    val points: List<Int>
-
     companion object {
         const val MIN_CARD_NUMBER = 1
         const val MAX_CARD_NUMBER = 13
@@ -23,7 +21,6 @@ sealed interface CardNumber {
 }
 
 data class AceCardNumber(override val number: Int) : CardNumber {
-    override val points: List<Int> = listOf(11, 1)
 
     init {
         require(number in NUMBER_RANGE)
@@ -35,7 +32,6 @@ data class AceCardNumber(override val number: Int) : CardNumber {
 }
 
 data class NumberCardNumber(override val number: Int) : CardNumber {
-    override val points: List<Int> = listOf(number)
 
     init {
         require(number in NUMBER_RANGE)
@@ -47,14 +43,12 @@ data class NumberCardNumber(override val number: Int) : CardNumber {
 }
 
 data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
-    override val points: List<Int> = listOf(CARD_POINT)
 
     init {
         require(number in NUMBER_RANGE)
     }
 
     companion object {
-        private const val CARD_POINT = 10
         const val JACK_NUMBER = 11
         const val QUEEN_NUMBER = 12
         const val KING_NUMBER = 13

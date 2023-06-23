@@ -1,7 +1,6 @@
-package blackjack.util
+package blackjack.domain
 
 import blackjack.controller.BlackjackGame
-import blackjack.domain.Deck
 
 object PointCalculator {
     fun calculateUserPoint(deck: Deck): Int? {
@@ -12,11 +11,21 @@ object PointCalculator {
         if (index == deck.size) {
             return sum
         }
-        val card = deck[index]
-        for (point in card.points) {
+
+        val points = getCardPoints(deck[index])
+
+        for (point in points) {
             return getResult(deck, index, sum, point) ?: continue
         }
         return null
+    }
+
+    private fun getCardPoints(card: Card): List<Int> {
+        return when (card.cardNumber) {
+            is AceCardNumber -> listOf(11, 1)
+            is JackQueenKingCardNumber -> listOf(10)
+            is NumberCardNumber -> listOf(card.cardNumber.number)
+        }
     }
 
     private fun getResult(deck: Deck, index: Int, sum: Int, point: Int): Int? =
