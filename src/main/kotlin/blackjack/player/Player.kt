@@ -4,9 +4,9 @@ import blackjack.card.Card
 
 class Player(
     val name: String,
-    val cardList: ArrayList<Card> = ArrayList()
+    private val hand: Hand = Hand()
 ) {
     fun addCard(card: Card) {
-        cardList.add(card)
+        hand.addCard(card)
     }
 }
