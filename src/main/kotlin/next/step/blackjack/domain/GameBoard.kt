@@ -12,10 +12,9 @@ data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
 
     fun turn(chooseHit: (Player) -> Boolean, announce: (Player) -> Unit) {
         players.forEach {
-            while (chooseHit(it) && it.canHit()) {
+            while (it.canHit() && chooseHit(it)) {
                 hit(it)
                 announce(it)
-                if (!it.canHit()) break
             }
         }
     }
