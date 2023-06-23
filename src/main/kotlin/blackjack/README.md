@@ -17,7 +17,6 @@
 
 * Deck
 - [x] Card의 cardShape와 cardNumber의 조합이 중복되지 않는 Card 리스트를 가진다.
-- [ ] 플레이어들이 카드를 뽑을때 마다 Card 리스트에서 카드를 한장씩 나눠준다.
 - [ ] 남은 카드가 없으면 IllegaArgumentException을 throw 한다.
 
 * Player

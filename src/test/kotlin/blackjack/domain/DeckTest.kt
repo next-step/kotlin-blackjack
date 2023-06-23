@@ -2,9 +2,8 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class DeckTest {
 
@@ -27,5 +26,18 @@ class DeckTest {
         val actual = cards.toSet()
 
         Assertions.assertThat(cards.size).isEqualTo(actual.size)
+    }
+
+    @Test
+    fun `남은 카드가 없으면 IllegaArgumentException을 throw 한다`() {
+        val cards = mutableListOf<Card>()
+
+        for (i in 1..Card.TOTAL_NUMBER_OF_CARDS) {
+            cards.add(deck.drawCard())
+        }
+
+        assertThrows<IllegalArgumentException> {
+            deck.drawCard()
+        }
     }
 }
