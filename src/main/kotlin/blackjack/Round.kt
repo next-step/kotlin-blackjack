@@ -1,10 +1,11 @@
 package blackjack
 
 class Round(private val trump: Trump = Trump()) {
-
     fun getCard(): Card = trump.getCard()
 
     companion object {
+        const val TWENTY_ONE = 21
+
         fun calculateSum(cards: List<Card>): Int {
             var sum = 0
             cards.filterNot { it.value == CardValue.ACE }.forEach {
@@ -26,7 +27,7 @@ class Round(private val trump: Trump = Trump()) {
                 CardValue.SEVEN -> 7
                 CardValue.EIGHT -> 8
                 CardValue.NINE -> 9
-                CardValue.ACE -> if (sum + 11 > 21) 1 else 11
+                CardValue.ACE -> if (sum + 11 > TWENTY_ONE) 1 else 11
                 else -> 10
             }
         }
