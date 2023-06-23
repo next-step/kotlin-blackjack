@@ -9,4 +9,7 @@ class Player(
     fun addCard(card: Card) {
         hand.addCard(card)
     }
+    fun getHandSize(): Int {
+        return hand.size()
+    }
 }

@@ -15,7 +15,7 @@ class PlayerTest : BehaviorSpec({
                 player.name shouldBe "참가자"
             }
             Then("참가자는 빈 손 패를 가진다.") {
-                player.cardList shouldBe emptyList()
+                player.getHandSize() shouldBe 0
             }
         }
         When("카드를 두 장 받으면") {
@@ -25,7 +25,7 @@ class PlayerTest : BehaviorSpec({
             player.addCard(card1)
             player.addCard(card2)
             Then("참가자는 손패에 카드를 두 장 추가한다.") {
-                player.cardList.size shouldBe 2
+                player.getHandSize() shouldBe 2
             }
         }
     }

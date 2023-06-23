@@ -8,4 +8,7 @@ class Hand(
     fun addCard(card: Card) {
         cardList.add(card)
     }
+    fun size(): Int {
+        return cardList.size
+    }
 }
