@@ -16,7 +16,6 @@ class PokerCardBuilder {
     fun value(cardValue: Int) {
         this.value = when {
             cardValue == ACE_NUMBER -> ACE_VALUE
-            cardValue == KING_NUMBER -> FACE_CARD_VALUE
             cardValue > FACE_CARD_VALUE -> FACE_CARD_VALUE
             else -> cardValue
         }
@@ -42,6 +41,6 @@ class PokerCardBuilder {
         private const val FACE_CARD_VALUE = 10
         private const val JACK_NUMBER = 11
         private const val QUEEN_NUMBER = 12
-        private const val KING_NUMBER = 0
+        private const val KING_NUMBER = 13
     }
 }
