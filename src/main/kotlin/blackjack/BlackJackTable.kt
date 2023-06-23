@@ -9,18 +9,22 @@ class BlackJackTable(
     private val players: Array<Player>,
     private val dealer: Dealer = Dealer()
 ) {
-    fun startRound() {
-        dealer.startRound(players)
-        OutputView.roundStartNotice(players)
+    fun beginRound() {
+        dealer.initializeRound(players)
+        OutputView.roundBeginNotice(players)
     }
 
-    fun playEachTurn(player: Player) {
+    fun executePlayerTurns(player: Array<Player>) {
+        player.forEach(::proceedPlayerTurns)
+    }
+
+    private fun proceedPlayerTurns(player: Player) {
         while (player.ableToDraw) {
-            proceedTurn(player)
+            resolveDrawPhase(player)
         }
     }
 
-    private fun proceedTurn(player: Player) {
+    private fun resolveDrawPhase(player: Player) {
         val wantToHit = InputView.wantToHit(player.name)
         if (wantToHit) {
             player.hit(dealer.draw())
@@ -31,6 +35,6 @@ class BlackJackTable(
     }
 
     fun endRound() {
-        OutputView.resultNotice(players)
+        OutputView.roundResultNotice(players)
     }
 }

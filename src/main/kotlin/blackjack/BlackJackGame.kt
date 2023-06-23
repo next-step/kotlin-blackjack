@@ -6,8 +6,8 @@ object BlackJackGame {
     fun startGame() {
         val players = InputView.getPlayers()
         val blackJackTable = BlackJackTable(players)
-        blackJackTable.startRound()
-        players.forEach(blackJackTable::playEachTurn)
+        blackJackTable.beginRound()
+        blackJackTable.executePlayerTurns(players)
         blackJackTable.endRound()
     }
 }

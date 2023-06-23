@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.Player
 
 object OutputView {
-    fun roundStartNotice(players: Array<Player>) {
+    fun roundBeginNotice(players: Array<Player>) {
         val playerNames = players.joinToString { it.name }
         println("\n${playerNames}에게 2장의 나누었습니다.")
         players.forEach(::handNotice)
@@ -15,7 +15,7 @@ object OutputView {
         println("${player.name}카드: $showHands")
     }
 
-    fun resultNotice(players: Array<Player>) {
+    fun roundResultNotice(players: Array<Player>) {
         println()
         players.forEach {
             val showHands = it.showHands()

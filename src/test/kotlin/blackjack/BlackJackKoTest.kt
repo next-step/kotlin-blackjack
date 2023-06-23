@@ -16,7 +16,7 @@ class BlackJackKoTest : StringSpec({
         val deck = Deck()
         val dealer = Dealer(deck)
         val players = arrayOf(Player("test1"), Player("test2"))
-        dealer.startRound(players)
+        dealer.initializeRound(players)
         players.forEach { it.hands().size shouldBe 2 }
     }
 
