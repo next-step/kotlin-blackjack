@@ -85,6 +85,9 @@ class PlayerTest : BehaviorSpec({
             Then("점수는 22점") {
                 player.point() shouldBe 22
             }
+            Then("카드 설명 제공") {
+                player.cardDescs() shouldBe listOf("K클로버", "K하트", "2다이아몬드")
+            }
         }
 
     }

@@ -151,6 +151,9 @@ class PlayerCardsTest : BehaviorSpec({
             Then("블랙잭임") {
                 playerCards.isBlackJack() shouldBe true
             }
+            Then("카드 설명 제공") {
+                playerCards.descs() shouldBe listOf("A클로버", "9하트", "9클로버", "2하트")
+            }
         }
     }
 

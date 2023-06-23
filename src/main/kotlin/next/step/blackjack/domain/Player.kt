@@ -11,7 +11,9 @@ data class Player(val name: String, val cards: PlayerCards) {
     fun isBlackJack(): Boolean = cards.isBlackJack()
 
     fun canHit(): Boolean = !isBlackJack() && !isBurst()
+
     fun cardDescs(): Set<String> = cards.descs()
+
     fun point(): Int = cards.point()
 
     companion object {
