@@ -22,6 +22,7 @@ data class PlayerCards(val cards: MutableList<Card>) {
     }
 
     fun size() = cards.size
+    fun descs(): Set<String> = cards.map { it.desc() }.toSet()
 
     companion object {
         private const val BLACKJACK_POINT = 21
