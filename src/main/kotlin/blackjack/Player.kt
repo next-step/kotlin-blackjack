@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(round: Round = Round()) {
+class Player(val name: String = "", round: Round = Round()) {
     private val _cards = mutableListOf(round.getCard(), round.getCard())
     val cards: List<Card> get() = _cards
 

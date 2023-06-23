@@ -31,4 +31,10 @@ class PlayerTest {
 
         player.canGetCard() shouldBe false
     }
+
+    @Test
+    fun `플레이어는 이름을 가진다`() {
+        val player = Player(name = "홍길동")
+        player.name shouldBe "홍길동"
+    }
 }
