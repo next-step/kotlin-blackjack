@@ -7,8 +7,8 @@ class CasinoTest : DescribeSpec({
 
     describe("Casino init") {
         context("카지노가 생성되면") {
-            it("6덱 만큼의 카드가 생긴다.") {
-                Casino.cards.size shouldBe 6 * CardFace.values().size * CardSymbol.values().size
+            it("6덱 만큼의 카드를 가지는 GameCards를 만들어준다.") {
+                Casino.gameCards().size() shouldBe 6 * CardFace.values().size * CardSymbol.values().size
             }
         }
     }
