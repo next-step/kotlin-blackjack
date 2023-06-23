@@ -1,7 +1,19 @@
 package blackjack
 
 class Trump {
-    val cards: List<Card> = (SPADES + CLOVERS + DIAMONDS + HEARTS).shuffled()
+    private val _cards = mutableListOf<Card>().apply {
+        addAll(SPADES)
+        addAll(CLOVERS)
+        addAll(DIAMONDS)
+        addAll(HEARTS)
+    }
+    val cards: List<Card> get() = _cards
+
+    fun getCard(): Card {
+        val card = _cards.randomOrNull() ?: throw IllegalStateException("더 이상 나누어줄 카드가 없습니다")
+        _cards.remove(card)
+        return card
+    }
 
     companion object {
         private val SPADES = Card.VALUES.map { Card.from(CardType.SPADE, it) }

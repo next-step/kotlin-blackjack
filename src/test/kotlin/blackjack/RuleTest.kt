@@ -1,7 +1,9 @@
 package blackjack
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import java.lang.IllegalStateException
 
 class RuleTest {
     @Test
@@ -44,5 +46,24 @@ class RuleTest {
             Card.from(CardType.SPADE, CardValue.ACE)
         )
         Rule.calculateSum(cards) shouldBe 21
+    }
+
+    @Test
+    fun `카드는 52장 뽑을 수 있다`() {
+        val cards = mutableListOf<Card>()
+        val rule = Rule()
+
+        repeat(52) {
+            cards.add(rule.getCard())
+        }
+
+        cards.size shouldBe 52
+
+        // 52장 중복이 없는지 확인
+        cards.toSet().size shouldBe 52
+
+        shouldThrow<IllegalStateException> {
+            rule.getCard()
+        }
     }
 }

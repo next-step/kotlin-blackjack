@@ -1,6 +1,9 @@
 package blackjack
 
-class Rule {
+class Rule(private val trump: Trump = Trump()) {
+
+    fun getCard(): Card = trump.getCard()
+
     companion object {
         fun calculateSum(cards: List<Card>): Int {
             var sum = 0
