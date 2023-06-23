@@ -27,6 +27,7 @@ object OutputView {
     }
 
     fun showResult(players: Set<Player>) {
+        println()
         players.forEach {
             println("${cardDescs(it)} - 결과: ${it.point()}")
         }
