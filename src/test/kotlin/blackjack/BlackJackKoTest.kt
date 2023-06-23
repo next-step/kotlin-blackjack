@@ -1,4 +1,4 @@
-package study.blackjack
+package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
@@ -20,7 +20,7 @@ class BlackJackKoTest : StringSpec({
         players.forEach { it.hands().size shouldBe 2 }
     }
 
-    "덱에서 한장을 뽑는다." {
+    "덱에서 열장을 뽑는다." {
         val deck = Deck()
         val dealer = Dealer(deck)
         val cards = List(10) { dealer.draw() }
@@ -44,7 +44,7 @@ class BlackJackKoTest : StringSpec({
             it.symbol shouldBeOneOf pokerSymbols
             it.value shouldBeInRange (1..11)
         }
-        shouldThrow<IllegalArgumentException> {
+        shouldThrow<IllegalStateException> {
             dealer.draw()
         }.message shouldBe "모든 덱이 소진되었습니다."
     }
