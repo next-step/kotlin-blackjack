@@ -61,14 +61,20 @@ class DslTest {
         val languages = mapOf("Korean" to 5, "English" to 3)
 
         val person: Person = introduce {
-            name(name)
-            company(company)
+            name("김정욱")
+            company("카카오")
             skills {
-                softSkills.forEach { this.soft(it.name) }
-                hardSkills.forEach { this.hard(it.name) }
+                soft("성실함")
+                soft("능동성")
+                soft("열정")
+                hard("spring webflux")
+                hard("kotlin")
+                hard("nextjs")
+                hard("typescript")
             }
             languages {
-                languages.map { it.key level it.value }
+                "Korean" level 5
+                "English" level 3
             }
         }.build()
 
