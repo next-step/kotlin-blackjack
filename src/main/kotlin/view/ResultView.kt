@@ -1,30 +1,34 @@
 package view
 
+import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
 
 class ResultView {
 
-    fun printInitPlayers(players: Players) {
+    fun printInitPlayers(players: Players, dealer: Dealer) {
         val playerNames = players.map { it.name }.joinToString(SEPARATOR)
-        println("$playerNames 에게 2장을 나누었습니다.")
+        println("${dealer.name}와 $playerNames 에게 2장을 나누었습니다.")
+        println("${dealer.name}: ${printCard(dealer.cards[0])}")
         players.forEach { printPlayerCards(it) }
         println()
     }
 
-    fun printGameResult(players: Players) {
+    fun printGameResult(players: Players, dealer: Dealer) {
         println()
+        printPlayerCards(dealer) { "- 결과 : ${dealer.cards.sum}" }
         players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
     }
 
     fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
-        val playerCards = player.cards.map {
-            "${CARD_NUMBER_SHAPE_MAP[it.number]}${CARD_SUIT_SHAPE_MAP[it.suit]}"
-        }.joinToString(SEPARATOR)
+        val playerCards = player.cards.joinToString(SEPARATOR) { printCard(it) }
         println("${player.name}: $playerCards ${sumOfCardSum()}")
     }
+
+    private fun printCard(card: Card) = "${CARD_NUMBER_SHAPE_MAP[card.number]}${CARD_SUIT_SHAPE_MAP[card.suit]}"
 
     fun printCannotProceed(player: Player) {
         println("${player.name} $CANNOT_PROCEED_GAME_MESSAGE")
@@ -62,6 +66,6 @@ class ResultView {
 
         private const val CANNOT_PROCEED_GAME_MESSAGE = "은(는) 더 이상 게임을 진행할 수 없습니다."
 
-        private const val DEALER_ISSUED_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        private const val DEALER_ISSUED_CARD_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     }
 }

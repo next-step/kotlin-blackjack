@@ -17,6 +17,7 @@ fun main() {
     blackjackGameController.initGame()
 
     blackjackGameController.gameStart()
+    blackjackGameController.playDealer()
 
     blackjackGameController.printGameResult()
 }
