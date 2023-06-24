@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 sealed class Participant(
     val name: String,

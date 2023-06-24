@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Participants(
     val dealer: Dealer,

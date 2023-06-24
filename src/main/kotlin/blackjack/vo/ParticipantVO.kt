@@ -1,7 +1,7 @@
 package blackjack.vo
 
-import blackjack.Cards
-import blackjack.Participant
+import blackjack.domain.Cards
+import blackjack.domain.Participant
 
 class ParticipantVO(
     val name: String,

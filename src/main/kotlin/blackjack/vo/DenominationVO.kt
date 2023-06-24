@@ -1,6 +1,6 @@
 package blackjack.vo
 
-import blackjack.Denomination
+import blackjack.domain.Denomination
 
 class DenominationVO(
     val symbol: String,

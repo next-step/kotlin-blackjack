@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
@@ -33,7 +33,7 @@ object ResultView {
 
     fun printCardHands(participantVOs: List<ParticipantVO>) {
         val namesText = participantVOs.joinToString(COMMA_SEPARATOR) { it.name }
-        val playersText = participantVOs.joinToString(NEW_LINE, transform = ::participantText)
+        val playersText = participantVOs.joinToString(NEW_LINE, transform = ResultView::participantText)
         println(
             """
             |${namesText}에게 2장의 카드를 나누었습니다

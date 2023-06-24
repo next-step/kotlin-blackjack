@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Card private constructor(
     val denomination: Denomination,
