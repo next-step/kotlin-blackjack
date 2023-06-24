@@ -22,4 +22,6 @@ class Hit(
     }
 
     override fun stay() = Stay(cards)
+
+    override fun isBust(): Boolean = false
 }

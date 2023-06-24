@@ -36,6 +36,13 @@ class StayTest : FunSpec({
             exception.message shouldBe "종료된 게임은 stay할 수 없다."
         }
     }
+
+    context("isBust") {
+        test("bust인지 확인한다") {
+            val actual = Stay(STAY_CARDS)
+            actual shouldBe false
+        }
+    }
 }) {
     companion object {
         private val STAY_CARDS = Cards.of(SPADE_KING, SPADE_JACK)

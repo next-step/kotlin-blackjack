@@ -55,4 +55,11 @@ class HitTest : FunSpec({
             actual.shouldBeTypeOf<Stay>()
         }
     }
+
+    context("isBust") {
+        test("bust인지 확인한다") {
+            val actual = Hit(Cards.of(SPADE_KING, SPADE_JACK))
+            actual shouldBe false
+        }
+    }
 })

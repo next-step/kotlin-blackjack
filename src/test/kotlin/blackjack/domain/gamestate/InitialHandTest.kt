@@ -9,7 +9,6 @@ import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
 
 class InitialHandTest : FunSpec({
 
@@ -43,6 +42,13 @@ class InitialHandTest : FunSpec({
         test("카드를 그만받으려하는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { InitialHand().stay() }
             exception.message shouldBe "2장을 받기전에는 카드를 그만받을 수 없다."
+        }
+    }
+
+    context("isBust") {
+        test("bust인지 확인한다") {
+            val actual = InitialHand()
+            actual shouldBe false
         }
     }
 })

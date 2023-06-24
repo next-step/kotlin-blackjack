@@ -37,6 +37,13 @@ class BustTest : FunSpec({
             exception.message shouldBe "종료된 게임은 stay할 수 없다."
         }
     }
+
+    context("isBust") {
+        test("bust인지 확인한다") {
+            val actual = Bust(BUST_CARDS).isBust()
+            actual shouldBe true
+        }
+    }
 }) {
     companion object {
         private val BUST_CARDS = Cards.of(SPADE_KING, SPADE_QUEEN, SPADE_JACK)
