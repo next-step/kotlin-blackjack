@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
+import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.card.PlayerCardDeck
 import blackjack.domain.card.PlayerCardDeckCapture
 
@@ -9,6 +10,7 @@ class Player(
 ) {
 
     private val cardDeck = PlayerCardDeck(name)
+    private val cardScoreCalculator = CardScoreCalculator()
 
     fun pass(card: Card) {
         cardDeck.insert(card)
@@ -28,6 +30,10 @@ class Player(
 
     fun captureCardDeck(): PlayerCardDeckCapture {
         return cardDeck.capture()
+    }
+
+    fun isBust(): Boolean {
+        return cardScoreCalculator.calculateScore(cardDeck.cards).isBust
     }
 }
 

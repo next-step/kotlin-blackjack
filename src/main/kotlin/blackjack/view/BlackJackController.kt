@@ -18,8 +18,11 @@ class BlackJackController(
         val cardDistributionResult = blackJackGame.distributeCardsToPlayers()
         resultView.display(cardDistributionResult)
 
-        when (val turn = blackJackGame.nextTurn()) {
-            is BlackJackGameTurn.HitAnswerWait -> processHitAnswerWaitTurn(blackJackGame, turn)
+        while (true) {
+            when (val turn = blackJackGame.nextTurn()) {
+                is BlackJackGameTurn.HitAnswerWait -> processHitAnswerWaitTurn(blackJackGame, turn)
+                is BlackJackGameTurn.Finish -> break
+            }
         }
     }
 

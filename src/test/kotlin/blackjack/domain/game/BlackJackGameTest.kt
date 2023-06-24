@@ -1,7 +1,9 @@
 package blackjack.domain.game
 
 import blackjack.domain.player.playerNames
+import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.CardNotShuffler
+import blackjack.domain.shuffle.CardShuffler
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -60,6 +62,23 @@ class BlackJackGameTest : BehaviorSpec({
         Then("플레이어는 한장의 카드를 받는다") {
             val hitResult = game.hitFocusedPlayer()
             hitResult.cards.size shouldBe playerCardsSize + 1
+        }
+    }
+
+    Given("플레이어의 카드 점수가 21을 초과하면") {
+        val playerNames = playerNames("test1", "test2")
+        val game = BlackJackGame(
+            shuffler = CardShuffler(),
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers()
+        Then("다음 플레이어로 순서가 넘어간다") {
+            var isBust = false
+            while (isBust.not()) {
+                val playerCards = game.hitFocusedPlayer().cards
+                isBust = CardScoreCalculator().calculateScore(playerCards).isBust
+            }
+            game.hitFocusedPlayer().playerName shouldBe playerNames[1]
         }
     }
 

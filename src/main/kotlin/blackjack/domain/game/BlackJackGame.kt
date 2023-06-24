@@ -44,12 +44,15 @@ class BlackJackGame(
             )
         }
 
-        throw NotImplementedError("nextTurn()")
+        return BlackJackGameTurn.Finish
     }
 
     fun hitFocusedPlayer(): PlayerCardDeckCapture {
         val player = findWaitPlayerOrNull() ?: throw IllegalStateException("focused player not existed")
         player.pass(cardDeck.pick())
+        if (player.isBust()) {
+            moveFocusedPlayerToFinished()
+        }
         return player.captureCardDeck()
     }
 

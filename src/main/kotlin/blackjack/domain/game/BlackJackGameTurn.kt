@@ -7,4 +7,6 @@ sealed class BlackJackGameTurn {
     data class HitAnswerWait(
         val playerName: PlayerName,
     ) : BlackJackGameTurn()
+
+    object Finish : BlackJackGameTurn()
 }
