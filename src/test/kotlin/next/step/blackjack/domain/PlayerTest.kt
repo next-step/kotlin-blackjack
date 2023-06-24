@@ -89,7 +89,5 @@ class PlayerTest : BehaviorSpec({
                 player.cardDescs() shouldBe listOf("K클로버", "K하트", "2다이아몬드")
             }
         }
-
     }
-
 })

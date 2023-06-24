@@ -19,7 +19,8 @@ class CardFaceTest : DescribeSpec({
             }
         }
         context("ACE가 아닌 CardFace는 최대 최소값 모두 point와 같음") {
-            withData(CardFace.values().filterNot { it == CardFace.ACE }
+            withData(
+                CardFace.values().filterNot { it == CardFace.ACE }
             ) { cardFace ->
                 assertSoftly {
                     cardFace.maxPoint() shouldBe cardFace.point
@@ -28,5 +29,4 @@ class CardFaceTest : DescribeSpec({
             }
         }
     }
-
 })

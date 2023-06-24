@@ -3,7 +3,6 @@ package next.step.racing.view
 import next.step.blackjack.domain.Player
 import next.step.blackjack.view.PlayerParser
 
-
 object InputView {
 
     private const val ENTER_PLAYER = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
@@ -25,13 +24,11 @@ object InputView {
         }.getOrThrow()
     }
 
-    fun readTurn(player: Player): Boolean = read("${player.name}${ENTER_TURN}") {
+    fun readTurn(player: Player): Boolean = read("${player.name}$ENTER_TURN") {
         when {
             it.trim() == YES -> true
             it.trim() == NO -> false
             else -> throw IllegalArgumentException("y나 n 중에 입력하세요.")
         }
     }
-
-
 }

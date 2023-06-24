@@ -40,5 +40,4 @@ class GameCardsTest : DescribeSpec({
             }
         }
     }
-
 })

@@ -156,6 +156,4 @@ class PlayerCardsTest : BehaviorSpec({
             }
         }
     }
-
-
 })
