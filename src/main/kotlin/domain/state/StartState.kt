@@ -16,7 +16,7 @@ class StartState private constructor(private val cards: BlackjackCards) : State 
 
     companion object {
         fun start(card1: BlackjackCard, card2: BlackjackCard): State =
-            if (Blackjack.isBlackjack(card1, card2)) {
+            if (BlackjackCards.isBlackjack(card1, card2)) {
                 Blackjack(BlackjackCards(listOf(card1, card2)))
             } else {
                 StartState(BlackjackCards(listOf(card1, card2)))

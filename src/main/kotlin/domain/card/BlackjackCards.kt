@@ -25,5 +25,8 @@ class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCar
     companion object {
         private const val CARD_NUMBER_SUM_MAX = 21
         private const val ACE_SPECIAL_SCORE = 10
+        fun isBlackjack(card1: BlackjackCard, card2: BlackjackCard): Boolean =
+            (card1.number.isAce() && card2.number.isTenScore()) ||
+                (card2.number.isAce() && card1.number.isTenScore())
     }
 }
