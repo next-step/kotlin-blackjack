@@ -9,6 +9,10 @@ fun printFirstDrawResult(drawResults: List<DrawResult>) {
     drawResults.forEach { printPlayerDrawResult(it) }
 }
 
+fun printCurrentDrawResult(drawResult: DrawResult) {
+    println("${drawResult.playerName}카드: ${drawResult.cards}")
+}
+
 private fun parsePlayerNames(drawResults: List<DrawResult>) =
     drawResults.joinToString(PLAYER_NAME_DELIMITER) { it.playerName }
 
