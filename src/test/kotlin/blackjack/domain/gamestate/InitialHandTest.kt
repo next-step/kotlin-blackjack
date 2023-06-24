@@ -47,7 +47,7 @@ class InitialHandTest : FunSpec({
 
     context("isBust") {
         test("bust인지 확인한다") {
-            val actual = InitialHand()
+            val actual = InitialHand().isBust()
             actual shouldBe false
         }
     }

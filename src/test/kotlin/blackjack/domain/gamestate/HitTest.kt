@@ -58,7 +58,7 @@ class HitTest : FunSpec({
 
     context("isBust") {
         test("bust인지 확인한다") {
-            val actual = Hit(Cards.of(SPADE_KING, SPADE_JACK))
+            val actual = Hit(Cards.of(SPADE_KING, SPADE_JACK)).isBust()
             actual shouldBe false
         }
     }
