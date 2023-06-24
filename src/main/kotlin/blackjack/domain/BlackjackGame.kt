@@ -4,7 +4,7 @@ import blackjack.domain.card.CardDeck
 
 class BlackjackGame(
     turn: Int = -1,
-    val players: Players,
+    val players: List<Player>,
     val cardDeck: CardDeck = CardDeck.randomCardDeck(),
 ) {
     var turn: Int = turn
@@ -12,21 +12,31 @@ class BlackjackGame(
 
     fun firstDraw(): List<DrawResult> {
         check(turn == BEFORE_FIRST_DRAW_TURN) { "first draw 턴이 아닙니다." }
-        players.drawAllPlayer { cardDeck.draw() }
-        players.drawAllPlayer { cardDeck.draw() }
+        players.forEach { it.draw(cardDeck.draw()) }
+        players.forEach { it.draw(cardDeck.draw()) }
         turn++
-        return players.allPlayersDrawResult()
+        return players.map { it.currentStatus() }
     }
 
-    fun isEndGame(): Boolean = players.isEndTurn(turn)
+    fun currentPlayerDraw(): DrawResult {
+        val player = currentPlayer()
+        player.draw(cardDeck.draw())
+        return DrawResult(playerName = player.name, cards = player.gameState.cards())
+    }
 
-    fun currentTurnPlayerName(): String {
+    fun isEndGame(): Boolean = players.size == turn
+
+    fun currentTurnPlayerName(): String = currentPlayer().name
+
+    private fun currentPlayer(): Player {
         check(turn != BEFORE_FIRST_DRAW_TURN) { "첫 드로우가 시작되지 않았다." }
-        check(players.isEndTurn(turn).not()) { "모든 드로우가 종료되었다." }
-        return players.playerName(turn)
+        check(turn < players.size) { "모든 드로우가 종료되었다." }
+        return players[turn]
     }
 
     companion object {
         private const val BEFORE_FIRST_DRAW_TURN = -1
+
+        fun from(playerNames: List<String>) = BlackjackGame(players = playerNames.map { Player(it) })
     }
 }

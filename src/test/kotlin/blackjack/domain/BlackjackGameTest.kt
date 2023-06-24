@@ -1,11 +1,22 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_KING
+import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
+import blackjack.domain.card.CardTest.Companion.SPADE_THREE
+import blackjack.domain.card.CardTest.Companion.SPADE_TWO
+import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.Hit
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import java.util.LinkedList
 
 class BlackjackGameTest : FunSpec({
 
@@ -26,6 +37,50 @@ class BlackjackGameTest : FunSpec({
         }
     }
 
+    context("currentPlayerDraw") {
+        test("턴이 유효하지 않은데 드로우하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
+            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+        }
+
+        test("턴이 종료되었는데 드로우하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
+            exception.message shouldBe "모든 드로우가 종료되었다."
+        }
+
+        test("현재 플레이어를 드로우한다.") {
+            val cardDeck = LinkedList<Card>()
+            cardDeck.add(SPADE_THREE)
+            val blackjackGame =
+                BlackjackGame(
+                    turn = 0,
+                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                    cardDeck = CardDeck(cardDeck)
+                )
+
+            val actual = blackjackGame.currentPlayerDraw()
+            actual.playerName shouldBe "a"
+            actual.cards shouldContainAll listOf(SPADE_ACE, SPADE_TWO, SPADE_THREE)
+        }
+
+        test("드로우 후 플레이어의 상태가 종료되었다면 다음 turn으로 변경한다.") {
+            val cardDeck = LinkedList<Card>()
+            cardDeck.add(SPADE_QUEEN)
+            val blackjackGame =
+                BlackjackGame(
+                    turn = 0,
+                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_KING)))),
+                    cardDeck = CardDeck(cardDeck)
+                )
+            blackjackGame.currentPlayerDraw()
+
+            val actual = blackjackGame.turn
+            actual shouldBe 1
+        }
+    }
+
     context("isEndGame") {
         forAll(
             row(-1, false),
@@ -40,7 +95,7 @@ class BlackjackGameTest : FunSpec({
         }
     }
 
-    context("currentTurnPlayer") {
+    context("currentTurnPlayerName") {
         test("턴이 유효하지 않은데 반환하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
@@ -61,6 +116,6 @@ class BlackjackGameTest : FunSpec({
     }
 }) {
     companion object {
-        private val PLAYERS = Players(listOf(Player("a"), Player("b")))
+        private val PLAYERS = listOf(Player("a"), Player("b"))
     }
 }
