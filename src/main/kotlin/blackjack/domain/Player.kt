@@ -23,6 +23,8 @@ class Player(
         gameState = gameState.stay()
     }
 
+    fun isBust() = gameState.isBust()
+
     fun currentStatus(): DrawResult = DrawResult(name, gameState.cards())
 
     companion object {

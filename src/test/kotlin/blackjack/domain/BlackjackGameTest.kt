@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
@@ -73,7 +74,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = 0,
-                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_KING)))),
+                    players = listOf(Player("a", Hit(Cards.of(SPADE_KING, SPADE_JACK)))),
                     cardDeck = CardDeck(cardDeck)
                 )
             blackjackGame.currentPlayerDraw()

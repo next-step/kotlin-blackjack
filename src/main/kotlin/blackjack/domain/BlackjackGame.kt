@@ -21,6 +21,9 @@ class BlackjackGame(
     fun currentPlayerDraw(): DrawResult {
         val player = currentPlayer()
         player.draw(cardDeck.draw())
+        if (player.isBust()) {
+            turn++
+        }
         return DrawResult(playerName = player.name, cards = player.gameState.cards())
     }
 
