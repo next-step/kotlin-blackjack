@@ -2,10 +2,8 @@ package blackjack.domain.card
 
 import blackjack.domain.player.PlayerStatus
 
-class Cards(
-    _value: List<Card> = emptyList(),
-    private val scoreSet: MutableSet<Int> = mutableSetOf(INIT_SCORE),
-) {
+class Cards(_value: List<Card> = emptyList()) {
+    private val scoreSet: MutableSet<Int> = mutableSetOf(INIT_SCORE)
     private val value: MutableList<Card> = _value.toMutableList()
 
     init {
