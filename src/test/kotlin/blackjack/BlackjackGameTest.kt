@@ -4,6 +4,7 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 class BlackjackGameTest : FunSpec({
@@ -14,9 +15,18 @@ class BlackjackGameTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.firstDraw() }
             exception.message shouldBe "first draw 턴이 아닙니다."
         }
+
+        test("모든 유저에게 2장의 카드를 첫 드로우한다.") {
+            val blackjackGame = BlackjackGame(players = PLAYERS)
+            val actual = blackjackGame.firstDraw()
+
+            blackjackGame.cardDeck.size() shouldBe 48
+            blackjackGame.turn shouldBe 0
+            actual shouldHaveSize 2
+        }
     }
 }) {
     companion object {
-        private val PLAYERS = Players(listOf(Player("최진영")))
+        private val PLAYERS = Players(listOf(Player("a"), Player("b")))
     }
 }

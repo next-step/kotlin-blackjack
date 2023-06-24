@@ -12,6 +12,8 @@ value class Players(
 
     fun drawAllPlayer(receiveCard: () -> Card) = values.forEach { it.draw(receiveCard()) }
 
+    fun allPlayersDrawResult(): List<DrawResult> = values.map { it.currentStatus() }
+
     companion object {
         fun from(names: List<String>) = Players(names.map { Player(it) })
     }

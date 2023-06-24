@@ -9,7 +9,6 @@ import blackjack.domain.gamestate.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
-import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
@@ -37,13 +36,13 @@ class PlayerTest : FunSpec({
         }
     }
 
-    context("cardsInHand") {
-        test("현재 보유중인 카드를 반환한다.") {
+    context("currentStatus") {
+        test("현재 플레이어의 상태를 반환한다.") {
             val player = Player("최진영", Hit(Cards.of(SPADE_ACE, SPADE_KING)))
-            val actual = player.cardsInHand()
+            val actual = player.currentStatus()
 
-            actual shouldHaveSize 2
-            actual shouldContainAll listOf(SPADE_ACE, SPADE_KING)
+            actual.playerName shouldBe "최진영"
+            actual.cards shouldContainAll listOf(SPADE_ACE, SPADE_KING)
         }
     }
 })
