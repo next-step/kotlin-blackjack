@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 
 class CardScoreTypeTest : StringSpec({
 
-    "1은 점수의 밤위인 2~10 사이가 아니므로 RuntimeException 예외 처리를 한다" {
+    "1은 점수의 범위인 2~10 사이가 아니므로 RuntimeException 예외 처리를 한다" {
         shouldThrow<RuntimeException> { CardScoreType.fixed(1) }
     }
 
