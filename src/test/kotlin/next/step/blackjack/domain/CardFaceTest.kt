@@ -4,6 +4,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.card.CardFace
 
 class CardFaceTest : DescribeSpec({
 

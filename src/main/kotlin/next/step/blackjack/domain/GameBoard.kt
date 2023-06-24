@@ -1,5 +1,7 @@
 package next.step.blackjack.domain
 
+import next.step.blackjack.domain.player.Player
+
 data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
     fun start(announce: (Set<Player>, Int) -> Unit) {
         players.forEach { player -> repeat(INIT_CARD_CNT) { hit(player) } }

@@ -1,7 +1,16 @@
 package next.step.blackjack.domain
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.CardFace
+import next.step.blackjack.domain.card.CardSymbol
+import next.step.blackjack.domain.player.Player
+import next.step.blackjack.domain.player.PlayerCards
+import next.step.blackjack.domain.player.state.BlackjackState
+import next.step.blackjack.domain.player.state.BurstState
+import next.step.blackjack.domain.player.state.HitAvailableState
 
 class PlayerTest : BehaviorSpec({
 
@@ -31,14 +40,11 @@ class PlayerTest : BehaviorSpec({
                 )
             )
 
-            Then("burst하지 않음") {
-                player.isBurst() shouldBe false
-            }
-            Then("블랙잭이 아님") {
-                player.isBlackJack() shouldBe false
-            }
             Then("더 hit할 수 있음") {
-                player.canHit() shouldBe true
+                assertSoftly {
+                    player.canHit() shouldBe true
+                    player.state shouldBe HitAvailableState
+                }
             }
             Then("점수는 20점") {
                 player.point() shouldBe 20
@@ -51,7 +57,7 @@ class PlayerTest : BehaviorSpec({
             )
 
             Then("blackjack!") {
-                player.isBlackJack() shouldBe true
+                player.state shouldBe BlackjackState
             }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false
@@ -74,10 +80,7 @@ class PlayerTest : BehaviorSpec({
             player.hit(Card.of(CardFace.TWO, CardSymbol.DIAMOND))
 
             Then("burst함") {
-                player.isBurst() shouldBe true
-            }
-            Then("블랙잭이 아님") {
-                player.isBlackJack() shouldBe false
+                player.state shouldBe BurstState
             }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false

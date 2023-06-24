@@ -1,6 +1,6 @@
 package next.step.racing.view
 
-import next.step.blackjack.domain.Player
+import next.step.blackjack.domain.player.Player
 
 object OutputView {
 

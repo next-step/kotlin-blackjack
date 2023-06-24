@@ -1,4 +1,4 @@
-package next.step.blackjack.domain
+package next.step.blackjack.domain.card
 
 data class Card(val face: CardFace, val symbol: CardSymbol) {
 

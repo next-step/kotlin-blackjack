@@ -1,4 +1,4 @@
-package next.step.blackjack.domain
+package next.step.blackjack.domain.card
 
 enum class CardSymbol(val desc: String) {
 

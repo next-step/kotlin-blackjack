@@ -3,6 +3,10 @@ package next.step.blackjack.domain
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.CardFace
+import next.step.blackjack.domain.card.CardSymbol
+import next.step.blackjack.domain.player.PlayerCards
 
 class PlayerCardsTest : BehaviorSpec({
 
@@ -37,7 +41,7 @@ class PlayerCardsTest : BehaviorSpec({
                 playerCards.isBlackJack() shouldBe false
             }
         }
-        When("카드 총 점수가 21점이면") {
+        When("카드 총 개수가 2개이고, 총 점수가 21점이면") {
             val playerCards =
                 PlayerCards.of(listOf(Card.of(CardFace.ACE, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART)))
 
@@ -115,7 +119,7 @@ class PlayerCardsTest : BehaviorSpec({
                 playerCards.isBlackJack() shouldBe false
             }
         }
-        When("Ace가 포함되어 최대점수가 블랙잭점수와 같으면") {
+        When("Ace가 포함되어 최대점수가 종료점수와 같으면") {
             val playerCards = PlayerCards.of(
                 listOf(
                     Card.of(CardFace.ACE, CardSymbol.CLUB),
@@ -123,17 +127,17 @@ class PlayerCardsTest : BehaviorSpec({
                     Card.of(CardFace.ONE, CardSymbol.DIAMOND)
                 )
             )
-            Then("블랙잭 점수를 점수로 제공함") {
+            Then("종료 점수를 점수로 제공함") {
                 playerCards.point() shouldBe 21
             }
             Then("burst 안함") {
                 playerCards.isBurst() shouldBe false
             }
-            Then("블랙잭임") {
-                playerCards.isBlackJack() shouldBe true
+            Then("종료 상태임") {
+                playerCards.isFinished() shouldBe true
             }
         }
-        When("Ace가 포함되어 최소점수가 블랙잭점수와 같으면") {
+        When("Ace가 포함되어 최소점수가 종료점수와 같으면") {
             val playerCards = PlayerCards.of(
                 listOf(
                     Card.of(CardFace.ACE, CardSymbol.CLUB),
@@ -148,8 +152,8 @@ class PlayerCardsTest : BehaviorSpec({
             Then("burst 안함") {
                 playerCards.isBurst() shouldBe false
             }
-            Then("블랙잭임") {
-                playerCards.isBlackJack() shouldBe true
+            Then("종료 상태임") {
+                playerCards.isFinished() shouldBe true
             }
             Then("카드 설명 제공") {
                 playerCards.descs() shouldBe listOf("A클로버", "9하트", "9클로버", "2하트")
