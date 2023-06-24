@@ -25,7 +25,9 @@ class Player(
 
     fun isBust() = gameState.isBust()
 
-    fun currentStatus(): DrawResult = DrawResult(name, gameState.cards())
+    fun cards() = gameState.cards()
+
+    fun currentStatus(): DrawResult = DrawResult(name, cards())
 
     companion object {
         private const val NAME_LENGTH_LIMIT = 5

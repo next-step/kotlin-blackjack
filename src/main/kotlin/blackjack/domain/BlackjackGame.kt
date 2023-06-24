@@ -24,7 +24,7 @@ class BlackjackGame(
         if (player.isBust()) {
             turn++
         }
-        return DrawResult(playerName = player.name, cards = player.gameState.cards())
+        return DrawResult(playerName = player.name, cards = player.cards())
     }
 
     fun isEndGame(): Boolean = players.size == turn
@@ -37,7 +37,7 @@ class BlackjackGame(
     }
 
     fun gameResult(): List<GameResult> =
-        players.map { GameResult(playerName = it.name, cards = it.gameState.cards(), score = 0) }
+        players.map { GameResult(playerName = it.name, cards = it.cards(), score = 0) }
 
     private fun currentPlayer(): Player {
         checkTurn()
