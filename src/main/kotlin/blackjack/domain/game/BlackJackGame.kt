@@ -7,8 +7,8 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.domain.player.captureAllCardDecks
 import blackjack.domain.shuffle.Shuffler
-import java.lang.IllegalStateException
 import java.util.LinkedList
+import kotlin.IllegalStateException
 
 class BlackJackGame(
     shuffler: Shuffler<Card>,
@@ -19,40 +19,37 @@ class BlackJackGame(
     private val waitPlayers = LinkedList(playerNames.map { Player(it) })
     private val finishedPlayers = LinkedList<Player>()
 
+    fun currentTurn(): BlackJackGameTurn {
+        return when {
+            needCardDistribution() -> {
+                BlackJackGameTurn.CardDistributionWait
+            }
+            hasWaitPlayer() -> {
+                BlackJackGameTurn.HitAnswerWait(requireWaitPlayer().name)
+            }
+            else -> {
+                BlackJackGameTurn.Finished
+            }
+        }
+    }
+
     fun distributeCardsToPlayers(): CardDistributionResult {
         require(needCardDistribution()) {
-            "already card distribution completed"
+            "already card distributed"
         }
         waitPlayers.forEach { player ->
             val cards = cardDeck.pick(CARD_DISTRIBUTION_SIZE)
             player.pass(cards)
         }
         return CardDistributionResult(
-            playerCardDeckCaptures = waitPlayers.captureAllCardDecks()
-        )
-    }
-
-    fun nextTurn(): BlackJackGameTurn {
-        require(isCardDistributionCompleted()) {
-            "need card distribution. please call distributeCardsToPlayers()"
-        }
-
-        val waitPlayer = findWaitPlayerOrNull()
-        if (waitPlayer != null) {
-            return BlackJackGameTurn.HitAnswerWait(
-                playerName = waitPlayer.name,
-            )
-        }
-
-        return BlackJackGameTurn.Finish(
-            blackJackGameResult = BlackJackGameResult(
-                playerGameResults = finishedPlayers.map { PlayerGameResult(it.captureCardDeck()) },
-            ),
+            playerCardDeckCaptures = waitPlayers.captureAllCardDecks(),
         )
     }
 
     fun hitFocusedPlayer(): PlayerCardDeckCapture {
-        val player = findWaitPlayerOrNull() ?: throw IllegalStateException("focused player not existed")
+        checkCardDistributionCompleted()
+
+        val player = requireWaitPlayer()
         player.pass(cardDeck.pick())
         if (player.isBust()) {
             moveFocusedPlayerToFinished()
@@ -61,11 +58,31 @@ class BlackJackGame(
     }
 
     fun stayFocusedPlayer() {
+        checkCardDistributionCompleted()
         moveFocusedPlayerToFinished()
     }
 
+    fun makeGameResult(): BlackJackGameResult {
+        require(waitPlayers.isEmpty()) {
+            "game is not end"
+        }
+
+        val playerGameResults = finishedPlayers.map { player ->
+            PlayerGameResult(player.captureCardDeck())
+        }
+        return BlackJackGameResult(
+            playerGameResults = playerGameResults,
+        )
+    }
+
+    private fun checkCardDistributionCompleted() {
+        require(isCardDistributionCompleted()) {
+            "need card distribute"
+        }
+    }
+
     private fun moveFocusedPlayerToFinished() {
-        val player = waitPlayers.removeFirstOrNull() ?: throw IllegalStateException("focused player not existed")
+        val player = waitPlayers.removeFirstOrNull() ?: throw IllegalStateException("wait player not existed")
         finishedPlayers.add(player)
     }
 
@@ -74,7 +91,15 @@ class BlackJackGame(
     }
 
     private fun isCardDistributionCompleted(): Boolean {
-        return waitPlayers.find { player -> player.notHasCard() } == null
+        return waitPlayers.all { player -> player.hasCard() }
+    }
+
+    private fun hasWaitPlayer(): Boolean {
+        return findWaitPlayerOrNull() != null
+    }
+
+    private fun requireWaitPlayer(): Player {
+        return findWaitPlayerOrNull() ?: throw IllegalStateException("wait player not existed")
     }
 
     private fun findWaitPlayerOrNull(): Player? {

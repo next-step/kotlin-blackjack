@@ -4,11 +4,13 @@ import blackjack.domain.player.PlayerName
 
 sealed class BlackJackGameTurn {
 
+    object CardDistributionWait : BlackJackGameTurn()
+
     data class HitAnswerWait(
         val playerName: PlayerName,
     ) : BlackJackGameTurn()
 
-    data class Finish(
-        val blackJackGameResult: BlackJackGameResult,
-    ) : BlackJackGameTurn()
+    object Finished : BlackJackGameTurn()
+
+    fun isFinished() = this is Finished
 }

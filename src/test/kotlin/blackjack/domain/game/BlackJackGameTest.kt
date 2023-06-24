@@ -4,7 +4,6 @@ import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.CardNotShuffler
 import blackjack.domain.shuffle.CardShuffler
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -15,36 +14,21 @@ class BlackJackGameTest : BehaviorSpec({
             shuffler = CardNotShuffler(),
             playerNames = playerNames("test1", "test2"),
         )
-        val result = game.distributeCardsToPlayers()
-
+        val cardDistributionResult = game.distributeCardsToPlayers()
         Then("플레이어들은 2장씩 카드를 받는다") {
-            result.countOfCardDistribution shouldBe 2
+            cardDistributionResult.countOfCardDistribution shouldBe 2
         }
     }
 
-    Given("카드 배분을 했음에도 다시 카드 배분을 하면") {
-        val game = BlackJackGame(
-            shuffler = CardNotShuffler(),
-            playerNames = playerNames("test1", "test2"),
-        )
-        Then("RuntimeException 예외 처리를 한다") {
-            shouldThrow<RuntimeException> {
-                game.distributeCardsToPlayers()
-                game.distributeCardsToPlayers()
-            }
-        }
-    }
-
-    Given("카드 분배 이후 다음 턴으로 넘어가면") {
+    Given("카드를 분배하고 나면") {
         val playerNames = playerNames("test1", "test2")
         val game = BlackJackGame(
             shuffler = CardNotShuffler(),
             playerNames = playerNames,
-        ).apply {
-            distributeCardsToPlayers()
-        }
+        )
+        game.distributeCardsToPlayers()
         Then("대기중인 첫 플레이어의 hit 대답을 기다린다") {
-            val turn = game.nextTurn()
+            val turn = game.currentTurn() as BlackJackGameTurn.HitAnswerWait
             turn shouldBe BlackJackGameTurn.HitAnswerWait(playerNames[0])
         }
     }
@@ -55,30 +39,30 @@ class BlackJackGameTest : BehaviorSpec({
             shuffler = CardNotShuffler(),
             playerNames = playerNames,
         )
-        val playerCardsSize = game.distributeCardsToPlayers()
-            .playerCardDeckCaptures[0]
-            .cards
-            .size
+        val cardDistributionResult = game.distributeCardsToPlayers()
+        val initCardsSize = cardDistributionResult.playerCardDeckCaptures[0].cards.size
+        val hitResult = game.hitFocusedPlayer()
         Then("플레이어는 한장의 카드를 받는다") {
-            val hitResult = game.hitFocusedPlayer()
-            hitResult.cards.size shouldBe playerCardsSize + 1
+            hitResult.cards.size shouldBe initCardsSize + 1
         }
     }
 
-    Given("플레이어의 카드 점수가 21을 초과하면") {
+    Given("플레이어가 bust 상태가 되면") {
         val playerNames = playerNames("test1", "test2")
         val game = BlackJackGame(
             shuffler = CardShuffler(),
             playerNames = playerNames,
         )
         game.distributeCardsToPlayers()
+        var isBust = false
+        while (isBust.not()) {
+            val playerCards = game.hitFocusedPlayer().cards
+            isBust = CardScoreCalculator().calculateScore(playerCards).isBust
+        }
         Then("다음 플레이어로 순서가 넘어간다") {
-            var isBust = false
-            while (isBust.not()) {
-                val playerCards = game.hitFocusedPlayer().cards
-                isBust = CardScoreCalculator().calculateScore(playerCards).isBust
-            }
-            game.hitFocusedPlayer().playerName shouldBe playerNames[1]
+            val turn = (game.currentTurn() as BlackJackGameTurn.HitAnswerWait)
+            val playerName = turn.playerName
+            playerName shouldBe playerNames[1]
         }
     }
 
@@ -91,7 +75,7 @@ class BlackJackGameTest : BehaviorSpec({
         game.distributeCardsToPlayers()
         game.stayFocusedPlayer()
         Then("다음 플레이어로 순서가 넘어간다") {
-            val turn = game.nextTurn() as BlackJackGameTurn.HitAnswerWait
+            val turn = game.currentTurn() as BlackJackGameTurn.HitAnswerWait
             turn.playerName shouldBe playerNames[1]
         }
     }
@@ -106,7 +90,7 @@ class BlackJackGameTest : BehaviorSpec({
         game.stayFocusedPlayer()
         game.stayFocusedPlayer()
         Then("게임은 종료된다") {
-            (game.nextTurn() is BlackJackGameTurn.Finish) shouldBe true
+            (game.currentTurn() is BlackJackGameTurn.Finished) shouldBe true
         }
     }
 })

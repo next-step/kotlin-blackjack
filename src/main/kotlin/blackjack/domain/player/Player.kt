@@ -20,10 +20,6 @@ class Player(
         cardDeck.insertAll(cards)
     }
 
-    fun notHasCard(): Boolean {
-        return hasCard().not()
-    }
-
     fun hasCard(): Boolean {
         return cardDeck.isNotEmpty()
     }
