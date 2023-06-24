@@ -1,8 +1,10 @@
-package blackjack.domain
+package blackjack.domain.deck
 
-import kotlin.random.Random
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
 
-class Deck {
+class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
 
     private val deck: MutableList<Card>
 
@@ -21,8 +23,8 @@ class Deck {
         return deck
     }
 
-    fun shuffleDeck(deck: MutableList<Card>) {
-        deck.shuffle(Random(System.currentTimeMillis()))
+    private fun shuffleDeck(deck: MutableList<Card>) {
+        deckShuffleStrategy.shuffleDeck(deck)
     }
 
     fun drawCard(): Card {

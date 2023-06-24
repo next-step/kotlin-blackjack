@@ -1,10 +1,13 @@
 package blackjack.domain
 
-class Game {
+import blackjack.domain.deck.Deck
+import blackjack.domain.deck.DeckShuffleStarategy
 
-    private val deck = Deck()
+class Game(deckShuffleStrategy: DeckShuffleStarategy) {
+
+    private val deck = Deck(deckShuffleStrategy)
+
     fun firstDraw(playerList: List<Player>) {
-
         playerList.forEach {
             it.addCards(deck.drawTwoCard())
         }

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.deck.Deck
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -11,7 +13,7 @@ class DeckTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck()
+        deck = Deck(NotRandomDeckShuffleStrategy())
     }
 
     @Test
