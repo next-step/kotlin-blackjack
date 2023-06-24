@@ -4,6 +4,7 @@ import blakjack.domain.Player
 
 object OutputView {
     fun printInitialPlayerCards(players: List<Player>) {
+        println()
         println("${players.joinToString { it.name }}에게 2장의 나누었습니다.")
         players.forEach(this::printPlayerCards)
     }

@@ -22,12 +22,9 @@ class BlackJackController {
     }
 
     private fun hitOrStand(player: Player) {
-        var isHit = InputView.readHitOrStand(player.name)
-        while (isHit && player.isUnderBlackjackScore) {
+        while (player.isUnderBlackjackScore && InputView.readHitOrStand(player.name)) {
             player.add(dealer.drawOneCard())
             OutputView.printPlayerCards(player)
-
-            isHit = InputView.readHitOrStand(player.name)
         }
     }
 }

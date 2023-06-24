@@ -10,7 +10,7 @@ class CardDeck {
         require(!isAllUsed()) { "더 이상 사용할 수 있는 카드가 없습니다." }
 
         countOfUsed++
-        return cards.getUnusedCards().getRandomCard()
+        return cards.getUnusedCards().getRandomCard().also { cards[it] = true }
     }
 
     private fun isAllUsed(): Boolean {
