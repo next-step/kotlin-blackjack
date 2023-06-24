@@ -3,32 +3,47 @@ package blackjack.model
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.shouldBe
 
 @DisplayName("블랙잭 플레이어")
 class BlackjackPlayerTest : StringSpec({
 
-    "이름과 카드 리스트로 생성" {
+    "이름과 카드 컨슈머, 프레디케이트로 생성" {
         shouldNotThrowAny {
             BlackjackPlayer(
                 PlayerName("name"),
-                BlackjackScoreJudge,
-                HandDeck(listOf(TrumpCard(TrumpCardShape.SPADE, TrumpCardNumber.ACE)))
+                { _ -> },
+                { _ -> false },
             )
         }
     }
 
-    "기본 인자로 빈 덱 생성" {
-        BlackjackPlayer(PlayerName("name"), BlackjackScoreJudge).deck shouldBe HandDeck()
-    }
-
     "스페이드 에이스 카드 추가" {
         // given
-        val name = PlayerName("name")
-        val emptyCardsPlayer = BlackjackPlayer(name, BlackjackScoreJudge)
+        val emptyCardsPlayer = BlackjackPlayer(
+            PlayerName("name"),
+            { _ -> },
+            { _ -> false },
+        )
+        val spadeAceHandDeck = HandDeck()
+        spadeAceHandDeck + SPADE_ACE
         // when
-        val addedCardPlayer: BlackjackPlayer = emptyCardsPlayer.addedCard(SPADE_ACE)
+        emptyCardsPlayer.add(SPADE_ACE)
         // then
-        addedCardPlayer shouldBe BlackjackPlayer(name, BlackjackScoreJudge, HandDeck(listOf(SPADE_ACE)))
+        emptyCardsPlayer.deck shouldBe spadeAceHandDeck
+    }
+
+    "21점 이하인 경우 추가 카드를 뽑을 수 있음" {
+        // given
+        val player = BlackjackPlayer(
+            PlayerName("name"),
+            { _ -> },
+            { _ -> true },
+        )
+        // when
+        player.draw(CardDeck())
+        // then
+        player.deckScore shouldBeGreaterThanOrEqual 21
     }
 })

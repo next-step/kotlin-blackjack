@@ -10,35 +10,48 @@ import io.kotest.matchers.shouldBe
 class HandDeckTest : StringSpec({
 
     "카드들로 생성" {
-        listOf(
-            emptyList(), listOf(SPADE_ACE),
-        ).forAll {
-            shouldNotThrowAny {
-                HandDeck(it)
-            }
+        shouldNotThrowAny {
+            HandDeck()
         }
     }
 
     "카드 추가 가능" {
         // given
-        val spadeAceDeck = HandDeck(listOf(SPADE_ACE))
+        val handDeck = HandDeck()
         // when
-        val addedDeck: HandDeck = spadeAceDeck + SPADE_KING
+        handDeck + SPADE_KING
         // then
-        addedDeck shouldBe HandDeck(listOf(SPADE_ACE, SPADE_KING))
+        handDeck.score shouldBe 10
     }
 
-    "스페이드 에이스 카드 세기" {
+    "21점 카드 기준 점수 이하는 에이스 카드 점수 그대로 반환" {
         listOf(
-            listOf(SPADE_KING) to 0,
-            listOf(SPADE_ACE) to 1,
-            listOf(SPADE_ACE, HEART_ACE) to 2
+            emptyList<TrumpCard>() to 0,
+            listOf(SPADE_ACE, DIAMOND_TWO) to 13,
+            listOf(CLOVER_THREE, DIAMOND_TWO) to 5,
+            listOf(SPADE_ACE, CLOVER_THREE) to 14,
+            listOf(HEART_ACE, DIAMOND_TWO, CLOVER_THREE) to 16,
+            listOf(SPADE_ACE, SPADE_KING, SPADE_TEN, CLOVER_THREE) to 24,
         ).forAll {
-            HandDeck(it.first).aceCount shouldBe it.second
+            // given
+            val handDeck = HandDeck()
+            it.first.forEach(handDeck::plus)
+            // when & then
+            handDeck.score shouldBe it.second
         }
     }
 
-    "원하는 대상으로 합산 가능" {
-        HandDeck(listOf(SPADE_ACE)).sumOf { 0 } shouldBe 0
+    "21점 카드 기준 점수 이상은 ace 를 1로 계산" {
+        listOf(
+            listOf(SPADE_ACE, HEART_ACE) to 12,
+            listOf(SPADE_KING, SPADE_TEN, SPADE_ACE) to 21,
+            listOf(HEART_ACE, SPADE_KING, DIAMOND_TWO, CLOVER_THREE) to 16,
+        ).forAll {
+            // given
+            val handDeck = HandDeck()
+            it.first.forEach(handDeck::plus)
+            // when & then
+            handDeck.score shouldBe it.second
+        }
     }
 })

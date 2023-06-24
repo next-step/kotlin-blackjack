@@ -1,10 +1,22 @@
 package blackjack.model
 
-class BlackjackPlayers(players: Collection<BlackjackPlayer>) {
-
-    fun <T> map(mapper: (BlackjackPlayer) -> T): Collection<T> {
-        return players.map(mapper)
+class BlackjackPlayers(
+    deck: CardDeck,
+    blackjackPlayersCardCountConsumer: BlackjackPlayersCardCountConsumer,
+    val players: Collection<BlackjackPlayer>,
+) {
+    init {
+        repeat(INITIAL_DEALING_COUNT) {
+            players.map { it.add(deck.draw()) }
+        }
+        blackjackPlayersCardCountConsumer.consumePlayersCardCount(this, INITIAL_DEALING_COUNT)
     }
 
-    val players: Collection<BlackjackPlayer> = players.toList()
+    fun forEach(action: (BlackjackPlayer) -> Unit) {
+        players.forEach(action)
+    }
+
+    companion object {
+        private const val INITIAL_DEALING_COUNT: Int = 2
+    }
 }

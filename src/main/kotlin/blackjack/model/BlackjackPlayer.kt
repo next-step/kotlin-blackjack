@@ -2,13 +2,36 @@ package blackjack.model
 
 data class BlackjackPlayer(
     val name: PlayerName,
-    private val scoreJudge: BlackjackScoreJudge,
-    val deck: HandDeck = HandDeck(),
+    val blackjackPlayerConsumer: BlackjackPlayerConsumer,
+    val moreWantedCardPredicate: MoreWantedCardPredicate,
 ) {
-    fun addedCard(card: TrumpCard): BlackjackPlayer {
-        return BlackjackPlayer(name, scoreJudge, deck + card)
-    }
+    val deck: HandDeck = HandDeck()
 
     val deckScore: Int
-        get() = scoreJudge.score(deck)
+        get() = deck.score
+
+    fun add(card: TrumpCard) {
+        deck + card
+    }
+
+    fun draw(cardDeck: CardDeck) {
+        var isReceivedMoreCard = false
+        while (isLessScoreThanLimit && moreWantedCardPredicate.isWantedMorePredicate(name.toString())) {
+            add(cardDeck.draw())
+            blackjackPlayerConsumer.consumePlayer(this)
+            isReceivedMoreCard = true
+        }
+        if (!isReceivedMoreCard) {
+            blackjackPlayerConsumer.consumePlayer(this)
+        }
+    }
+
+    private val isLessScoreThanLimit: Boolean
+        get() {
+            return deckScore < LIMIT_SCORE
+        }
+
+    companion object {
+        private const val LIMIT_SCORE = 21
+    }
 }

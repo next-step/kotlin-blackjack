@@ -1,8 +1,7 @@
 package blackjack.view
 
-import blackjack.controller.MoreWantedCardPredicate
-import blackjack.controller.PlayerNamesProvider
-import blackjack.model.BlackjackPlayer
+import blackjack.model.MoreWantedCardPredicate
+import blackjack.model.PlayerNamesProvider
 
 object InputView : MoreWantedCardPredicate, PlayerNamesProvider {
 
@@ -17,8 +16,8 @@ object InputView : MoreWantedCardPredicate, PlayerNamesProvider {
             ?: throw IllegalArgumentException("플레이어 이름을 입력해주세요.")
     }
 
-    override fun isWantedMorePredicate(player: BlackjackPlayer): Boolean {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 $POSITIVE_ANSWER, 아니오는 $NEGATIVE_ANSWER)")
+    override fun isWantedMorePredicate(name: String): Boolean {
+        println("${name}는 한장의 카드를 더 받겠습니까?(예는 $POSITIVE_ANSWER, 아니오는 $NEGATIVE_ANSWER)")
         return when (readlnOrNull()) {
             POSITIVE_ANSWER -> true
             NEGATIVE_ANSWER -> false

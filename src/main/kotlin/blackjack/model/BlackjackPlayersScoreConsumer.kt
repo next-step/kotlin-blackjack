@@ -1,6 +1,4 @@
-package blackjack.controller
-
-import blackjack.model.BlackjackPlayers
+package blackjack.model
 
 fun interface BlackjackPlayersScoreConsumer {
 

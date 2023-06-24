@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.controller.BlackjackPlayerConsumer
-import blackjack.controller.BlackjackPlayersCardCountConsumer
-import blackjack.controller.BlackjackPlayersScoreConsumer
 import blackjack.model.BlackjackPlayer
+import blackjack.model.BlackjackPlayerConsumer
 import blackjack.model.BlackjackPlayers
+import blackjack.model.BlackjackPlayersCardCountConsumer
+import blackjack.model.BlackjackPlayersScoreConsumer
 import blackjack.model.TrumpCard
 import blackjack.model.TrumpCardNumber
 import blackjack.model.TrumpCardShape
