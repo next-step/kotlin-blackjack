@@ -20,7 +20,7 @@ class BlackjackCardsTest {
     @ParameterizedTest
     @MethodSource("getCardNumberSum")
     fun `카드들의 숫자 합은 21 또는 21에 가장 가까운 숫자를 가진다`(cards: BlackjackCards, expected: Int) {
-        cards.sum() shouldBe expected
+        cards.sum shouldBe expected
     }
 
     companion object {
