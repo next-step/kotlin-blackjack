@@ -49,7 +49,7 @@ class PlayerTest : FunSpec({
     context("currentStatus") {
         test("현재 플레이어의 상태를 반환한다.") {
             val player = Player("최진영", Hit(Cards.of(SPADE_ACE, SPADE_KING)))
-            val actual = player.currentStatus()
+            val actual = player.hands()
 
             actual.playerName shouldBe "최진영"
             actual.cards shouldContainAll listOf(SPADE_ACE, SPADE_KING)

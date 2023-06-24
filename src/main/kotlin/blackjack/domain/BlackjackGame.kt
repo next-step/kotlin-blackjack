@@ -10,21 +10,21 @@ class BlackjackGame(
     var turn: Int = turn
         private set
 
-    fun firstDraw(): List<DrawResult> {
+    fun firstDraw(): List<Hands> {
         check(turn == BEFORE_FIRST_DRAW_TURN) { "first draw 턴이 아닙니다." }
         players.forEach { it.draw(cardDeck.draw()) }
         players.forEach { it.draw(cardDeck.draw()) }
         turn++
-        return players.map { it.currentStatus() }
+        return players.map { it.hands() }
     }
 
-    fun currentPlayerDraw(): DrawResult {
+    fun currentPlayerDraw(): Hands {
         val player = currentPlayer()
         player.draw(cardDeck.draw())
         if (player.isBust()) {
             turn++
         }
-        return DrawResult(playerName = player.name, cards = player.cards())
+        return Hands(playerName = player.name, cards = player.cards())
     }
 
     fun isEndGame(): Boolean = players.size == turn

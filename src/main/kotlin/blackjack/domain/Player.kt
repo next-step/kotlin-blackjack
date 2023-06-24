@@ -27,7 +27,7 @@ class Player(
 
     fun cards() = gameState.cards()
 
-    fun currentStatus(): DrawResult = DrawResult(name, cards())
+    fun hands(): Hands = Hands(name, cards())
 
     fun score() = gameState.score()
 

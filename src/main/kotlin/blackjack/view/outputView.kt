@@ -1,28 +1,28 @@
 package blackjack.view
 
-import blackjack.domain.DrawResult
+import blackjack.domain.Hands
 import blackjack.domain.GameResult
 
 private const val PLAYER_NAME_DELIMITER = ", "
 
-fun printFirstDrawResult(drawResults: List<DrawResult>) {
-    println("${parsePlayerNames(drawResults)}에게 2장의 카드를 나누었습니다.")
-    drawResults.forEach { printPlayerDrawResult(it) }
+fun printFirstDrawResult(hands: List<Hands>) {
+    println("${parsePlayerNames(hands)}에게 2장의 카드를 나누었습니다.")
+    hands.forEach { printPlayerDrawResult(it) }
 }
 
-fun printCurrentDrawResult(drawResult: DrawResult) {
-    println("${drawResult.playerName}카드: ${drawResult.cards}")
+fun printCurrentDrawResult(hands: Hands) {
+    println("${hands.playerName}카드: ${hands.cards}")
 }
 
 fun printGameResults(gameResults: List<GameResult>) {
     gameResults.forEach { printGameResult(it) }
 }
 
-private fun parsePlayerNames(drawResults: List<DrawResult>) =
-    drawResults.joinToString(PLAYER_NAME_DELIMITER) { it.playerName }
+private fun parsePlayerNames(hands: List<Hands>) =
+    hands.joinToString(PLAYER_NAME_DELIMITER) { it.playerName }
 
-private fun printPlayerDrawResult(drawResult: DrawResult) {
-    println("${drawResult.playerName}카드: ${drawResult.cards}}")
+private fun printPlayerDrawResult(hands: Hands) {
+    println("${hands.playerName}카드: ${hands.cards}}")
 }
 
 private fun printGameResult(gameResult: GameResult) {
