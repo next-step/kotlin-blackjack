@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String) {
+open class Player(val name: String) {
 
     private val hand: Hand = Hand()
     var ableToDraw = true
@@ -32,7 +32,7 @@ class Player(val name: String) {
     }
 
     fun drawPhase(
-        wantToHit: Boolean,
+        wantToHit: Boolean = ableToDraw,
         dealer: Dealer,
         handNotice: (Player) -> Unit
     ) {

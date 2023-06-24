@@ -1,26 +1,27 @@
 package blackjack.view
 
-import blackjack.domain.Player
-
 object OutputView {
-    fun roundBeginNotice(players: Array<Player>) {
-        val playerNames = players.joinToString { it.name }
-        println("\n${playerNames}에게 2장의 나누었습니다.")
-        players.forEach(::handNotice)
+    fun roundBeginNotice(statuses: List<PlayerStatus>) {
+        val dealerStatus = statuses.find { it.name == "딜러" }
+        check(dealerStatus != null) { "딜러는 비어있을 수 없습니다." }
+        val playerNames = statuses.filter { it.name != "딜러" }.joinToString { it.name }
+        println("\n${dealerStatus.name}와 ${playerNames}에게 2장의 나누었습니다.")
+        statuses.forEach(::handNotice)
         println()
     }
 
-    fun handNotice(player: Player) {
-        val showHands = player.showHands()
-        println("${player.name}카드: $showHands")
+    fun handNotice(status: PlayerStatus) {
+        println("${status.name}카드: ${status.handRepresent}")
     }
 
-    fun roundResultNotice(players: Array<Player>) {
+    fun roundResultNotice(players: List<PlayerStatus>) {
         println()
         players.forEach {
-            val showHands = it.showHands()
-            val optimalValue = it.optimalValue()
-            println("${it.name}카드: $showHands - 결과: $optimalValue")
+            println("${it.name}카드: ${it.handRepresent} - 결과: ${it.optimalValue}")
         }
+    }
+
+    fun dealerAddNotice() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }
