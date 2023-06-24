@@ -30,13 +30,11 @@ class BlackjackGame(private val deck: Deck) {
         playGame(players)
     }
 
-    fun issuedCardForDealer(): Boolean =
-        if (dealer.isDrawable()) {
-            this.issueCard(dealer)
-            true
-        } else {
-            false
-        }
+    fun issuedCardForDealer(): Boolean {
+        val beforeCardSize = dealer.cards.size
+        this.issueCard(dealer)
+        return dealer.cards.size > beforeCardSize
+    }
 
     fun isTerminatedPlayer(player: Player): Boolean {
         return player.state is TerminationState
@@ -54,6 +52,7 @@ class BlackjackGame(private val deck: Deck) {
         private const val MAX_PLAYER_SIZE = 8
         private const val MIN_PLAYER_SIZE = 1
         private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
+        private val INIT_CARD_COUNT = 2
         const val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }
