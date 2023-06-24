@@ -15,7 +15,7 @@ class BlackJackGame(
     playerNames: PlayerNames,
 ) {
 
-    private val cardDeck = CardDeck(shuffler)
+    private val cardDeck = CardDeck.create(shuffler)
     private val waitPlayers = LinkedList(playerNames.map { Player(it) })
     private val finishedPlayers = LinkedList<Player>()
 

@@ -8,7 +8,7 @@ import io.kotest.matchers.shouldBe
 class CardDeckTest : StringSpec({
 
     "모든 카드를 보유한다" {
-        val cardDeckCards = CardDeck(CardNotShuffler()).cards
+        val cardDeckCards = CardDeck.create(CardNotShuffler()).cards
         val allCards = Card.ALL_CARDS
         val intersectSize = cardDeckCards.intersect(allCards.toSet()).size
         intersectSize shouldBe allCards.size
@@ -18,6 +18,6 @@ class CardDeckTest : StringSpec({
         val originCards = Card.ALL_CARDS
         val newCards = originCards.toMutableList().apply { add(removeFirst()) }
         val mockShuffler = CardCustomShuffler { newCards }
-        CardDeck(mockShuffler).cards shouldBe newCards
+        CardDeck.create(mockShuffler).cards shouldBe newCards
     }
 })
