@@ -44,6 +44,6 @@ class BlackjackGameController(
     }
 
     fun printGameResult() {
-        resultView.printGameResult(players = game.players, dealer = game.dealer)
+        resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
     }
 }
