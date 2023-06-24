@@ -84,6 +84,7 @@ introduce {
 ### blackjack game
 - [ ] 현재 turn인 유저의 index를 알 수 있다.
 - [ ] firstDraw : 첫 2장의 카드를 모든 유저에게 draw한다.
+  - [x] 현재 턴이 firstDraw 턴이 아닌 경우 예외가 발생한다. 
   - [ ] draw 후 정보를 반환한다.
 - [ ] 현재 turn인 유저의 정보를 반환한다.
 - [ ] 현재 turn인 유저에게 카드를 한장 draw 하고 그 정보를 반환한다.
