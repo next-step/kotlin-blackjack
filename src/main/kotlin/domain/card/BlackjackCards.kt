@@ -9,10 +9,7 @@ class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCar
         sum = this.sum()
     }
 
-    fun isDrawable(): Boolean {
-        val sum = cards.sumOf { it.number.score }
-        return sum <= CARD_NUMBER_SUM_MAX
-    }
+    fun isDrawable(): Boolean = this.sum <= CARD_NUMBER_SUM_MAX
 
     private fun sum(): Int {
         val (aceCards, nonAceCards) = cards.partition { it.number.isAce() }
