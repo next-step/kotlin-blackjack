@@ -11,6 +11,8 @@ class InitialHand(
         require(cards.isInitialHand()) { "초기 핸드는 2장 이상 가질 수 없다." }
     }
 
+    override fun cards() = cards.values
+
     override fun draw(card: Card): GameState {
         val cards = this.cards.addCard(card)
         if (cards.isInitialHand().not()) {

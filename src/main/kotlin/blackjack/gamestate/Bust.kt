@@ -11,6 +11,8 @@ class Bust(
         require(cards.isBust()) { "버스트 아닌 카드로 생성될 수 없다." }
     }
 
+    override fun cards() = cards.values
+
     override fun draw(card: Card) = throw IllegalStateException("종료된 게임은 draw할 수 없다.")
 
     override fun stay() = throw IllegalStateException("종료된 게임은 stay할 수 없다.")

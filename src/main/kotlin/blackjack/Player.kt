@@ -18,6 +18,8 @@ class Player(
         gameState = gameState.draw(card)
     }
 
+    fun cardsInHand(): List<Card> = gameState.cards()
+
     companion object {
         private const val NAME_LENGTH_LIMIT = 5
     }
