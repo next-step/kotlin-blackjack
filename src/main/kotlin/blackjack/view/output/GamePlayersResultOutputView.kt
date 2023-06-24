@@ -14,7 +14,7 @@ class GamePlayersResultOutputView(gamePlayers: GamePlayers) {
     }
 
     private fun renderDealerMessage(result: DealerResult) {
-        val resultMessage = listOf(GameResult.WIN, GameResult.LOOSE).joinToString(" ") { gameResult ->
+        val resultMessage = GameResult.values().joinToString(" ") { gameResult ->
             result.getMatchedGameResultCount(gameResult).toString() + gameResult.korName
         }
         println("딜러: $resultMessage")
