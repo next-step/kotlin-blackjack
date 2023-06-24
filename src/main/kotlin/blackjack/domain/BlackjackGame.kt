@@ -10,6 +10,10 @@ class BlackjackGame(
     var turn: Int = turn
         private set
 
+    init {
+        require(players.isNotEmpty()) { "게임은 최소 1명 이상이 있어야 한다." }
+    }
+
     fun firstDraw(): List<Hands> {
         check(turn == BEFORE_FIRST_DRAW_TURN) { "first draw 턴이 아닙니다." }
         players.forEach { it.draw(cardDeck.draw()) }

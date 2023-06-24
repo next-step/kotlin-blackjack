@@ -23,6 +23,13 @@ import java.util.LinkedList
 
 class BlackjackGameTest : FunSpec({
 
+    context("init") {
+        test("player가 0명인채로 게임은 생성될 수 없다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> { BlackjackGame(players = listOf()) }
+            exception.message shouldBe "게임은 최소 1명 이상이 있어야 한다."
+        }
+    }
+
     context("firstDraw") {
         test("현재 턴이 firstDraw 턴이 아닌데 요청한 경우 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = 1, players = PLAYERS)

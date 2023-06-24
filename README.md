@@ -86,6 +86,7 @@ introduce {
 - [x] 현재 본인의 카드 정보를 반환할 수 있다.
 
 ### blackjack game
+- [x] 플레이어가 0명일 때 예외가 발생한다.
 - [x] 현재 turn인 유저의 index를 알 수 있다.
 - [x] firstDraw : 첫 2장의 카드를 모든 유저에게 draw한다.
   - [x] 현재 턴이 firstDraw 턴이 아닌 경우 예외가 발생한다. 
