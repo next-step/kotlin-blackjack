@@ -9,7 +9,7 @@ class Hit(
     override fun draw(card: Card): GameState {
         val cards = this.cards.addCard(card)
         if (cards.isBust()) {
-            return Bust()
+            return Bust(cards)
         }
         return Hit(cards)
     }

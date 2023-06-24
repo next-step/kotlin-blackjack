@@ -1,6 +1,9 @@
 package blackjack.gamestate
 
 import blackjack.CardTest.Companion.SPADE_ACE
+import blackjack.CardTest.Companion.SPADE_JACK
+import blackjack.CardTest.Companion.SPADE_KING
+import blackjack.CardTest.Companion.SPADE_QUEEN
 import blackjack.CardTest.Companion.SPADE_THREE
 import blackjack.CardTest.Companion.SPADE_TWO
 import blackjack.Cards
@@ -22,7 +25,12 @@ class HitTest : FunSpec({
         }
 
         test("드로우 후 버스트면 Bust로 변경한다.") {
-            val hit = Hit(Cards.of())
+            val hit = Hit(Cards.of(SPADE_KING, SPADE_JACK))
+            val actual = hit.draw(SPADE_QUEEN)
+
+            actual.shouldBeTypeOf<Bust>()
+            actual.cards.values shouldHaveSize 3
+            actual.cards.values shouldContainAll listOf(SPADE_KING, SPADE_JACK, SPADE_QUEEN)
         }
     }
 
