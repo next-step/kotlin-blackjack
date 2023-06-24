@@ -41,19 +41,32 @@ class CardsTest : FunSpec({
         }
     }
 
+    context("isInitialHand") {
+        test("초기 핸드인지 확인할 수 있다.") {
+            val cards = Cards.of(SPADE_ACE)
+            val actual = cards.isInitialHand()
+            actual shouldBe true
+        }
+
+        test("초기 핸드가 아닌지 확인할 수 있다.") {
+            val cards = Cards.of(SPADE_ACE, SPADE_TWO)
+            val actual = cards.isInitialHand()
+            actual shouldBe false
+        }
+    }
+
     context("isBust") {
         forAll(
             row(listOf(SPADE_ACE, SPADE_TWO), false),
             row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK), false),
             row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK, SPADE_QUEEN), true),
-            row(listOf(SPADE_TWO, SPADE_KING, SPADE_JACK), true)
+            row(listOf(SPADE_TWO, SPADE_KING, SPADE_JACK), true),
         ) { input, expected ->
             test("${input}은 버스트가 ${expected}이다") {
                 val cards = Cards(input)
                 val actual = cards.isBust()
                 actual shouldBe expected
             }
-
         }
     }
 

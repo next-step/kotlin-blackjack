@@ -2,7 +2,7 @@ package blackjack
 
 @JvmInline
 value class Cards(
-    val values: List<Card> = listOf()
+    val values: List<Card> = listOf(),
 ) {
     init {
         require(values.size == values.toSet().size) { "중복된 카드가 저장될 수 없다." }
@@ -13,10 +13,14 @@ value class Cards(
         return Cards(values + card)
     }
 
+    fun isInitialHand() = values.size != INITIAL_HAND_CARD_LIMIT_SIZE
+
     fun isBust() = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
 
     companion object {
         private const val BLACKJACK_SCORE = 21
+        private const val INITIAL_HAND_CARD_LIMIT_SIZE = 2
+
         fun of(vararg card: Card) = Cards(card.toMutableList())
     }
 }
