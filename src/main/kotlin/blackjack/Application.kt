@@ -13,14 +13,22 @@ fun main() {
     val blackJackGame = BlackjackGame.from(inputPlayerNames())
 
     printFirstDrawResult(blackJackGame.firstDraw())
-    while (blackJackGame.isEndGame().not()) {
-        val command = inputPlayerDraw(blackJackGame.currentTurnPlayerName())
-        if (command == NO) {
-            blackJackGame.passToNextTurn()
-        }
-        if (command == YES) {
-            printCurrentDrawResult(blackJackGame.currentPlayerDraw())
-        }
-    }
+
+    runBlackjackGame(blackJackGame)
     printGameResults(blackJackGame.gameResult())
+}
+
+private tailrec fun runBlackjackGame(blackjackGame: BlackjackGame) {
+    if (blackjackGame.isEndGame()) {
+        return
+    }
+    executeByCommand(blackjackGame)
+    runBlackjackGame(blackjackGame)
+}
+
+private fun executeByCommand(blackjackGame: BlackjackGame) {
+    when (inputPlayerDraw(blackjackGame.currentTurnPlayerName())) {
+        NO -> blackjackGame.passToNextTurn()
+        YES -> printCurrentDrawResult(blackjackGame.currentPlayerDraw())
+    }
 }
