@@ -1,8 +1,9 @@
-package domain.player
+package blackjack.player
 
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.player.Dealer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
