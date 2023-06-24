@@ -15,6 +15,8 @@ class BlackJackController(
         val playerList = Player.generatePlayers(playerNameList)
         val game = Game()
 
+        game.firstDraw(playerList)
+        resultView.printFirstDraw(playerList)
 
     }
 }

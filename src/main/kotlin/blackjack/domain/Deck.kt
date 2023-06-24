@@ -26,7 +26,20 @@ class Deck {
     }
 
     fun drawCard(): Card {
-        require(deck.size > 0) { "남은 카드가 없습니다." }
+        validateCardIsLeft()
         return deck.removeAt(deck.lastIndex)
+    }
+
+    fun drawTwoCard(): List<Card> {
+        validateCardIsLeft()
+        val twoCard = mutableListOf<Card>()
+        repeat(2) {
+            twoCard.add(deck.removeAt(deck.lastIndex))
+        }
+        return twoCard.toList()
+    }
+
+    private fun validateCardIsLeft() {
+        require(deck.size > 0) { "남은 카드가 없습니다." }
     }
 }

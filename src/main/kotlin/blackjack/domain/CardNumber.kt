@@ -14,5 +14,15 @@ enum class CardNumber(val value: Int) {
     K(10),
     Q(10),
     J(10),
-    A(11)
+    A(11);
+
+    override fun toString(): String {
+        return when (this) {
+            K -> "K"
+            Q -> "Q"
+            J -> "J"
+            A -> "A"
+            else -> value.toString()
+        }
+    }
 }
