@@ -30,10 +30,6 @@ class ResultView {
 
     private fun printCard(card: Card) = "${CARD_NUMBER_SHAPE_MAP[card.number]}${CARD_SUIT_SHAPE_MAP[card.suit]}"
 
-    fun printCannotProceed(player: Player) {
-        println("${player.name} $CANNOT_PROCEED_GAME_MESSAGE")
-    }
-
     fun printDealerIssuedCardMessage() {
         println(DEALER_ISSUED_CARD_MESSAGE)
     }
