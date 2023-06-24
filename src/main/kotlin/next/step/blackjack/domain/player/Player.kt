@@ -4,7 +4,7 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.player.state.HitAvailableState
 import next.step.blackjack.domain.player.state.PlayerState
 
-data class Player(val name: String, private val cards: PlayerCards, private var state: PlayerState) {
+data class Player(val name: String, val cards: PlayerCards, private var state: PlayerState) {
 
     fun hit(card: Card) {
         cards.add(card)

@@ -1,6 +1,7 @@
 package next.step.blackjack.domain.player
 
 import next.step.blackjack.domain.card.Card
+import next.step.blackjack.util.CombinationUtils
 
 data class PlayerCards(val cards: MutableList<Card>) {
     fun add(card: Card) {
@@ -9,21 +10,24 @@ data class PlayerCards(val cards: MutableList<Card>) {
 
     fun isBlackJack(): Boolean = size() == BLACKJACK_CARDS_CNT && isFinished()
 
-    fun isFinished(): Boolean = minSumCardsPoint() == FINISH_POINT || maxSumCardsPoint() == FINISH_POINT
-
-    private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
-
-    private fun maxSumCardsPoint(): Int = cards.sumOf { it.maxPoint() }
+    fun isFinished(): Boolean = possiblePoints().contains(FINISH_POINT)
 
     fun isBurst(): Boolean {
         return minSumCardsPoint() > FINISH_POINT
     }
 
-    fun point(): Int = when {
-        isFinished() -> FINISH_POINT
-        maxSumCardsPoint() < FINISH_POINT -> maxSumCardsPoint()
-        else -> minSumCardsPoint()
+    private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
+
+    fun point(): Int {
+        return when {
+            isFinished() -> FINISH_POINT
+            isBurst() -> minSumCardsPoint()
+            else -> possiblePoints().filter { it < FINISH_POINT }.max()
+        }
     }
+
+    private fun possiblePoints() = CombinationUtils.possiblePoints(cards)
+
 
     fun size() = cards.size
 

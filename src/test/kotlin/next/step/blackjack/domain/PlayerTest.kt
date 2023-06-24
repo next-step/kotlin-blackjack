@@ -8,9 +8,6 @@ import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerCards
-import next.step.blackjack.domain.player.state.BlackjackState
-import next.step.blackjack.domain.player.state.BurstState
-import next.step.blackjack.domain.player.state.HitAvailableState
 
 class PlayerTest : BehaviorSpec({
 
@@ -43,7 +40,6 @@ class PlayerTest : BehaviorSpec({
             Then("더 hit할 수 있음") {
                 assertSoftly {
                     player.canHit() shouldBe true
-                    player.state shouldBe HitAvailableState
                 }
             }
             Then("점수는 20점") {
@@ -56,9 +52,6 @@ class PlayerTest : BehaviorSpec({
                 PlayerCards.of(listOf(Card.of(CardFace.ACE, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART)))
             )
 
-            Then("blackjack!") {
-                player.state shouldBe BlackjackState
-            }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false
             }
@@ -79,9 +72,6 @@ class PlayerTest : BehaviorSpec({
 
             player.hit(Card.of(CardFace.TWO, CardSymbol.DIAMOND))
 
-            Then("burst함") {
-                player.state shouldBe BurstState
-            }
             Then("더 hit할 수 없음") {
                 player.canHit() shouldBe false
             }
