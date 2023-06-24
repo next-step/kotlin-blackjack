@@ -25,7 +25,7 @@ class ResultView {
 
     fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
         val playerCards = player.cards.joinToString(SEPARATOR) { printCard(it) }
-        println("${player.name}: $playerCards ${sumOfCardSum()}")
+        println("${player.name} 카드: $playerCards ${sumOfCardSum()}")
     }
 
     private fun printCard(card: Card) = "${CARD_NUMBER_SHAPE_MAP[card.number]}${CARD_SUIT_SHAPE_MAP[card.suit]}"
