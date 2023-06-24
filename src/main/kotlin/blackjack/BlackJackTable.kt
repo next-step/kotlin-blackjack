@@ -21,7 +21,7 @@ class BlackJackTable(private val players: Array<Player>) {
     }
 
     private fun proceedPlayerTurns(player: Player) {
-        while (player.ableToDraw) {
+        while (player.ableToDraw()) {
             val wantToHit = InputView.wantToHit(player.name)
             player.drawPhase(wantToHit, deckManager) { OutputView.handNotice(PlayerStatus.of(player)) }
         }

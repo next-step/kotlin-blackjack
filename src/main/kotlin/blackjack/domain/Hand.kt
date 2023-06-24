@@ -5,6 +5,7 @@ import blackjack.HandsCalculator
 class Hand {
 
     private val hands = mutableListOf<PokerCard>()
+    private var ableToDraw = true
 
     fun hands(): List<PokerCard> {
         return hands.toList()
@@ -24,6 +25,14 @@ class Hand {
 
     fun isBlackJackOrBust(): Boolean {
         return HandsCalculator.calculateOptimalValue(hands) >= BLACK_JACK_NUMBER
+    }
+
+    fun ableToDraw(): Boolean {
+        return ableToDraw
+    }
+
+    fun changeAbleToDraw(ableToDraw: Boolean) {
+        this.ableToDraw = ableToDraw
     }
 
     companion object {
