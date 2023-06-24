@@ -7,12 +7,21 @@ import blackjack.CardTest.Companion.SPADE_QUEEN
 import blackjack.CardTest.Companion.SPADE_THREE
 import blackjack.CardTest.Companion.SPADE_TWO
 import blackjack.Cards
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class HitTest : FunSpec({
+
+    context("init") {
+        test("생성시 카드가 initialhand면 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalArgumentException> { Hit(Cards()) }
+            exception.message shouldBe "2장 미만의 카드로 생성될 수 없다."
+        }
+    }
 
     context("draw") {
         test("카드를 드로우받는다.") {
