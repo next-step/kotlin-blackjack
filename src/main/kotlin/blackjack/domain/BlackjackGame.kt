@@ -1,7 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.DrawResult
-import blackjack.domain.Players
 import blackjack.domain.card.CardDeck
 
 class BlackjackGame(

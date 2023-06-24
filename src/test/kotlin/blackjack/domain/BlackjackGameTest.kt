@@ -1,7 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.Player
-import blackjack.domain.Players
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize
