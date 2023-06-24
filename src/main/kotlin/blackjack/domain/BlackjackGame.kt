@@ -11,7 +11,7 @@ class BlackjackGame(input: String) {
     private fun transformToPlayerList(input: String) {
         val playerList = input.split(",", ", ")
         playerList.forEach { player ->
-            players.add(player)
+            players.add(player.trim())
         }
     }
 
