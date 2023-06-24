@@ -14,6 +14,10 @@ class Player(
         require(name.length <= NAME_LENGTH_LIMIT) { "플레이어 이름은 5자를 초과할 수 없다." }
     }
 
+    fun draw(card: Card) {
+        gameState = gameState.draw(card)
+    }
+
     companion object {
         private const val NAME_LENGTH_LIMIT = 5
     }
