@@ -1,8 +1,7 @@
 package blackjack.card
 
+import blackjack.card.helper.StartStateTestHelper
 import domain.card.BlackjackCard
-import domain.card.CardNumber
-import domain.card.Suit
 import domain.state.Blackjack
 import domain.state.Hit
 import domain.state.Stand
@@ -56,58 +55,11 @@ class StartStateTest {
 
     companion object {
         @JvmStatic
-        fun getStartStateTestData(): List<Arguments> = listOf(
-            Arguments.of(
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
-                BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.JACK),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.JACK),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TEN),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
-            ),
-        )
+        fun getStartStateTestData(): List<Arguments> = StartStateTestHelper.getStartStateTestData()
 
         @JvmStatic
-        fun getBlackjackStateTestData(): List<Arguments> = listOf(
-            Arguments.of(
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
-                BlackjackCard(suit = Suit.CLUB, number = CardNumber.JACK),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.QUEEN),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TEN),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.KING),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
-            ),
-        )
-
+        fun getBlackjackStateTestData(): List<Arguments> = StartStateTestHelper.getBlackjackStateTestData()
         @JvmStatic
-        fun getHitStateTestData(): List<Arguments> = listOf(
-            Arguments.of(
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.ACE),
-                BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
-                BlackjackCard(suit = Suit.CLUB, number = CardNumber.TWO),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.TEN),
-            ),
-            Arguments.of(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TEN),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
-                BlackjackCard(suit = Suit.HEART, number = CardNumber.FIVE),
-            ),
-        )
+        fun getHitStateTestData(): List<Arguments> = StartStateTestHelper.getHitStateTestData()
     }
 }
