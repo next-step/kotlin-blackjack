@@ -1,9 +1,12 @@
 package blackjack.domain
 
+import blackjack.DeckManager
+
 open class Player(val name: String) {
 
     private val hand: Hand = Hand()
     var ableToDraw = true
+    private val scoreBoard = ScoreBoard()
 
     fun hit(vararg pokerCards: PokerCard) {
         check(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
@@ -11,8 +14,7 @@ open class Player(val name: String) {
         for (pokerCard in pokerCards) {
             hand.addNewCard(pokerCard)
         }
-        val blackJackOrBust = hand.isBlackJackOrBust()
-        if (blackJackOrBust) ableToDraw = false
+        ableToDraw = !hand.isBlackJackOrBust()
     }
 
     fun hands(): List<PokerCard> {
@@ -31,13 +33,21 @@ open class Player(val name: String) {
         return hand.toRepresent()
     }
 
+    fun scoreBoard(): ScoreBoard {
+        return this.scoreBoard
+    }
+
+    open fun gameResult(): String {
+        return this.scoreBoard.resultForPlayer()
+    }
+
     fun drawPhase(
         wantToHit: Boolean = ableToDraw,
-        dealer: Dealer,
+        deckManager: DeckManager,
         handNotice: (Player) -> Unit
     ) {
         if (wantToHit) {
-            hit(dealer.draw())
+            hit(deckManager.draw())
             handNotice.invoke(this)
         } else {
             stand()

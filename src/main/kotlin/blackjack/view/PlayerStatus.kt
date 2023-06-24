@@ -5,11 +5,12 @@ import blackjack.domain.Player
 data class PlayerStatus(
     val name: String,
     val handRepresent: String,
-    val optimalValue: Int
+    val optimalValue: Int,
+    val gameResult: String
 ) {
     companion object {
         fun of(player: Player): PlayerStatus {
-            return PlayerStatus(player.name, player.showHands(), player.optimalValue())
+            return PlayerStatus(player.name, player.showHands(), player.optimalValue(), player.gameResult())
         }
     }
 }
