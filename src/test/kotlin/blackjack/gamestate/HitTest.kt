@@ -21,6 +21,12 @@ class HitTest : FunSpec({
             val exception = shouldThrowExactly<IllegalArgumentException> { Hit(Cards()) }
             exception.message shouldBe "2장 미만의 카드로 생성될 수 없다."
         }
+
+        test("생성 시 카드가 bust면 예외가 발생한다.") {
+            val exception =
+                shouldThrowExactly<IllegalArgumentException> { Hit(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)) }
+            exception.message shouldBe "버스트 카드로 생성될 수 없다."
+        }
     }
 
     context("draw") {

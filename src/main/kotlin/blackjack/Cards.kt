@@ -13,7 +13,7 @@ value class Cards(
         return Cards(values + card)
     }
 
-    fun isInitialHand() = values.size != INITIAL_HAND_CARD_LIMIT_SIZE
+    fun isInitialHand() = values.size < INITIAL_HAND_CARD_LIMIT_SIZE
 
     fun isBust() = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
 
