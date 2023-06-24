@@ -8,11 +8,10 @@ import domain.card.Suit
 object DeckGenerator {
 
     fun makeDeck(deckSize: Int): Deck {
-        val cards = mutableListOf<BlackjackCard>()
-        repeat(deckSize) {
-            cards.addAll(makeDeck())
-        }
-        cards.shuffle()
+        val cards = List(deckSize) { makeDeck() }
+            .flatten()
+            .shuffled()
+            .toMutableList()
         return Deck(cards)
     }
 
