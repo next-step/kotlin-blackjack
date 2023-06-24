@@ -9,7 +9,7 @@ import view.ResultView
 class BlackjackGameController(
     private val game: BlackjackGame,
     private val inputView: InputView,
-    private val resultView: ResultView
+    private val resultView: ResultView,
 ) {
     fun initGame() {
         val playerNames = inputView.getPlayerNames()
@@ -18,10 +18,13 @@ class BlackjackGameController(
     }
 
     fun gameStart() {
-        game.players.forEach { player ->
-            while (!game.isTerminatedPlayer(player)) {
-                gameProgress(inputView, player)
-                resultView.printPlayerCards(player)
+        game.gameStart { players ->
+            players.forEach { player ->
+                while (!game.isTerminatedPlayer(player)) {
+                    gameProgress(inputView, player)
+
+                    resultView.printPlayerCards(player)
+                }
             }
         }
     }
@@ -30,6 +33,13 @@ class BlackjackGameController(
         when (inputView.askDraw(player.name)) {
             Answer.YES -> game.issueCard(player)
             else -> game.stopIssueCard(player)
+        }
+    }
+
+    fun playDealer() {
+        val issueCardForDealerResult = game.issuedCardForDealer()
+        if (issueCardForDealerResult) {
+            resultView.printDealerIssuedCardMessage()
         }
     }
 

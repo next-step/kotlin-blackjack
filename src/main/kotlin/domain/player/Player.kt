@@ -5,7 +5,7 @@ import domain.card.Cards
 import domain.state.StartState
 import domain.state.State
 
-class Player(name: String, card1: Card, card2: Card) {
+open class Player(name: String, card1: Card, card2: Card) {
 
     val name: String
     var state: State
@@ -18,7 +18,7 @@ class Player(name: String, card1: Card, card2: Card) {
         this.state = StartState.start(card1, card2)
     }
 
-    fun draw(card: Card): State {
+    open fun draw(card: Card): State {
         this.state = state.draw(card)
         return this.state
     }

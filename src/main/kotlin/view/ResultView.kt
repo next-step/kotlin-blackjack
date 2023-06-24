@@ -30,6 +30,10 @@ class ResultView {
         println("${player.name} $CANNOT_PROCEED_GAME_MESSAGE")
     }
 
+    fun printDealerIssuedCardMessage() {
+        println(DEALER_ISSUED_CARD_MESSAGE)
+    }
+
     companion object {
         private val CARD_NUMBER_SHAPE_MAP = mapOf(
             CardNumber.ACE to "A",
@@ -57,5 +61,7 @@ class ResultView {
         private const val SEPARATOR = ", "
 
         private const val CANNOT_PROCEED_GAME_MESSAGE = "은(는) 더 이상 게임을 진행할 수 없습니다."
+
+        private const val DEALER_ISSUED_CARD_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     }
 }

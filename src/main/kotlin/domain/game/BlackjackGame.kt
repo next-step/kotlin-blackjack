@@ -1,6 +1,7 @@
 package domain.game
 
 import domain.card.Deck
+import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
 import domain.state.State
@@ -11,6 +12,9 @@ class BlackjackGame(private val deck: Deck) {
     lateinit var players: Players
         private set
 
+    lateinit var dealer: Dealer
+        private set
+
     fun initGame(playerNames: List<String>): Players {
         require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
         this.players = Players(
@@ -18,8 +22,21 @@ class BlackjackGame(private val deck: Deck) {
                 Player(it, deck.issueCard(), deck.issueCard())
             },
         )
+        this.dealer = Dealer(deck.issueCard(), deck.issueCard())
         return this.players
     }
+
+    fun gameStart(playGame: (players: Players) -> Unit) {
+        playGame(players)
+    }
+
+    fun issuedCardForDealer(): Boolean =
+        if (dealer.isDrawable()) {
+            this.issueCard(dealer)
+            true
+        } else {
+            false
+        }
 
     fun isTerminatedPlayer(player: Player): Boolean {
         return player.state is TerminationState
