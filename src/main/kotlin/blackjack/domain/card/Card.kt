@@ -7,9 +7,9 @@ data class Card(
 
     companion object {
 
-        val ALL_CARDS = CardShape.ALL_CARD_SHAPES
-            .map { cardShape -> createCards(cardShape, CardDenomination.ALL_CARD_DENOMINATIONS) }
-            .flatten()
+        val ALL_CARDS = CardShape.ALL_CARD_SHAPES.flatMap { cardShape ->
+            createCards(cardShape, CardDenomination.ALL_CARD_DENOMINATIONS)
+        }
 
         private fun createCards(
             cardShape: CardShape,
