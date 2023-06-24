@@ -1,6 +1,6 @@
 package blakjack.domain
 
-typealias Used = Boolean
+private typealias Used = Boolean
 
 class CardDeck {
     private val cards: CardUsedMap = CardUsedMap(Card.values().associateWith { false }.toMutableMap())
