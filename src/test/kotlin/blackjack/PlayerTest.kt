@@ -5,18 +5,6 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : FunSpec({
-    test("이름과 카드를 플레이어를 생성한다.") {
-        val cards = Cards(
-            Card.of(Denomination.ACE, Suit.SPADES),
-            Card.of(Denomination.JACK, Suit.SPADES),
-            Card.of(Denomination.TWO, Suit.HEARTS),
-        )
-        val player = Player("pobi", cards)
-
-        player.name shouldBe "pobi"
-        player.cards shouldBe cards
-    }
-
     test("카드를 더 받는다(hit).") {
         val cards = Cards(
             Card.of(Denomination.ACE, Suit.SPADES),
@@ -57,5 +45,16 @@ class PlayerTest : FunSpec({
             val player = Player("pobi", cards)
             player.calculateScore() shouldBe score
         }
+    }
+
+    test("오픈한 카드를 반환한다") {
+        val cards = Cards(
+            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.TWO, Suit.HEARTS),
+        )
+        val player = Player("pobi", cards)
+
+        player.openedCards() shouldBe cards
     }
 })

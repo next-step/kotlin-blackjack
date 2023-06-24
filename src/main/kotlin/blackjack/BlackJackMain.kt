@@ -1,21 +1,30 @@
 package blackjack
 
-import blackjack.vo.PlayerScoreVO
-import blackjack.vo.PlayerVO
+import blackjack.vo.ParticipantScoreVO
+import blackjack.vo.ParticipantVO
 
 fun main() {
     val playerNames = InputView.readPlayerNames()
 
     val deck = Deck.shuffled()
-    val players = Players.init(playerNames, deck)
+    val participants = Participants.init(playerNames, deck)
 
-    val playersVOs = players.map { PlayerVO.of(it) }
-    ResultView.printCardHands(playersVOs)
+    val participantVOs = participants.members().map {
+        ParticipantVO.of(it.name, it.openedCards())
+    }
+    ResultView.printCardHands(participantVOs)
 
+    val players = participants.players
     players.forEach { player -> drawMore(deck, player) }
 
-    val playerScoreVOs = players.map { PlayerScoreVO(PlayerVO.of(it), it.calculateScore()) }
-    ResultView.printPlayerScores(playerScoreVOs)
+    val dealer = participants.dealer
+    if (dealer.shouldHit()) {
+        ResultView.printDealerHit()
+        dealer.hit(deck.draw())
+    }
+
+    val participantScoreVOs = participants.members().map { ParticipantScoreVO(ParticipantVO.of(it), it.calculateScore()) }
+    ResultView.printParticipantScores(participantScoreVOs)
 }
 
 private fun drawMore(deck: Deck, player: Player) {
@@ -25,6 +34,6 @@ private fun drawMore(deck: Deck, player: Player) {
         } else {
             return
         }
-        ResultView.printPlayer(PlayerVO.of(player))
+        ResultView.printParticipant(ParticipantVO.of(player))
     }
 }

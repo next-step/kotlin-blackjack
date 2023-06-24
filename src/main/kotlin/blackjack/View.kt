@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.vo.PlayerScoreVO
-import blackjack.vo.PlayerVO
+import blackjack.vo.ParticipantScoreVO
+import blackjack.vo.ParticipantVO
 
 object InputView {
     private const val COMMA_SEPARATOR = ","
@@ -26,13 +26,13 @@ object ResultView {
     private const val COMMA_SEPARATOR = ", "
     private const val NEW_LINE = "\n"
 
-    fun printPlayer(player: PlayerVO) {
-        println(playerText(player))
+    fun printParticipant(participant: ParticipantVO) {
+        println(participantText(participant))
     }
 
-    fun printCardHands(players: List<PlayerVO>) {
-        val namesText = players.joinToString(COMMA_SEPARATOR) { it.name }
-        val playersText = players.joinToString(NEW_LINE, transform = ::playerText)
+    fun printCardHands(participantVOs: List<ParticipantVO>) {
+        val namesText = participantVOs.joinToString(COMMA_SEPARATOR) { it.name }
+        val playersText = participantVOs.joinToString(NEW_LINE, transform = ::participantText)
         println(
             """
             |${namesText}에게 2장의 카드를 나누었습니다
@@ -41,15 +41,19 @@ object ResultView {
         )
     }
 
-    fun printPlayerScores(players: List<PlayerScoreVO>) {
-        val playerScoresText = players.joinToString(NEW_LINE) {
-            "${playerText(it.playerVO)} - 결과:${it.score}"
+    fun printParticipantScores(participantScoreVOs: List<ParticipantScoreVO>) {
+        val participantScoresText = participantScoreVOs.joinToString(NEW_LINE) {
+            "${participantText(it.participantVO)} - 결과:${it.score}"
         }
-        println(playerScoresText)
+        println(participantScoresText)
     }
 
-    private fun playerText(player: PlayerVO): String {
-        val cards = player.cards.joinToString(COMMA_SEPARATOR) { "${it.denomination.symbol}${it.suit.name}" }
-        return "${player.name}카드: $cards"
+    fun printDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    private fun participantText(participant: ParticipantVO): String {
+        val cards = participant.cards.joinToString(COMMA_SEPARATOR) { "${it.denomination.symbol}${it.suit.name}" }
+        return "${participant.name}카드: $cards"
     }
 }
