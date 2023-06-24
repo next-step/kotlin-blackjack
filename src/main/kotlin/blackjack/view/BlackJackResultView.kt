@@ -27,7 +27,7 @@ class BlackJackResultView {
         println()
         blackJackGameResult.playerGameResults
             .map { it.playerCardDeck.makeDisplayMessage().plus(" - 결과: ${it.score}") }
-            .forEach {  println(it) }
+            .forEach { println(it) }
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
