@@ -103,4 +103,24 @@ class PlayerTest {
 
         player.getPlayerGameResult(dealer) shouldBe PlayerGameResult.WIN
     }
+
+    @Test
+    fun `딜러는 카드 합계가 21이하고 살아있는 플레이어 카드 합계와 같다면 딜러가 무승부다`() {
+        val player = Player(
+            name = "남상윤",
+            card1 = Card(suit = Suit.SPADE, number = CardNumber.TWO),
+            card2 = Card(suit = Suit.CLUB, number = CardNumber.ACE),
+        )
+
+        val dealer = Dealer(
+            card1 = Card(suit = Suit.SPADE, number = CardNumber.THREE),
+            card2 = Card(suit = Suit.CLUB, number = CardNumber.JACK),
+        )
+
+        val newCard = Card(suit = Suit.SPADE, number = CardNumber.SEVEN)
+        player.draw(newCard)
+        dealer.draw(newCard)
+
+        player.getPlayerGameResult(dealer) shouldBe PlayerGameResult.DRAW
+    }
 }
