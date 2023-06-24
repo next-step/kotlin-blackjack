@@ -29,6 +29,8 @@ class Player(
 
     fun currentStatus(): DrawResult = DrawResult(name, cards())
 
+    fun score() = gameState.score()
+
     companion object {
         private const val NAME_LENGTH_LIMIT = 5
     }
