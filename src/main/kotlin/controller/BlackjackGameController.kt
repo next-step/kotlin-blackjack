@@ -3,22 +3,42 @@ package controller
 import domain.game.BlackjackGame
 import domain.player.Player
 import domain.player.Players
-import domain.state.State
+import view.Answer
+import view.InputView
+import view.ResultView
 
-class BlackjackGameController(private val game: BlackjackGame) {
-    fun initGame(playerNames: List<String>): Players {
-        return game.initGame(playerNames)
+class BlackjackGameController(
+    private val game: BlackjackGame,
+    private val inputView: InputView,
+    private val resultView: ResultView
+) {
+    fun initGame(): Players {
+        val playerNames = inputView.getPlayerNames()
+        val players = game.initGame(playerNames)
+        resultView.printInitPlayers(players = players)
+        return players
     }
 
-    fun isTerminatedPlayer(player: Player): Boolean {
-        return game.isTerminatedPlayer(player)
+    fun gameStart(
+        player: Player,
+        inputView: InputView,
+        resultView: ResultView,
+    ) {
+        while (!game.isTerminatedPlayer(player)) {
+            gameProgress(inputView, player)
+
+            resultView.printPlayerCards(player)
+        }
     }
 
-    fun issueCard(player: Player): State {
-        return game.issueCard(player)
+    private fun gameProgress(inputView: InputView, player: Player) {
+        when (inputView.askDraw(player.name)) {
+            Answer.YES -> game.issueCard(player)
+            else -> game.stopIssueCard(player)
+        }
     }
 
-    fun stopIssueCard(player: Player): State {
-        return game.stopIssueCard(player)
+    fun printGameResult(players: Players) {
+        resultView.printGameResult(players = players)
     }
 }
