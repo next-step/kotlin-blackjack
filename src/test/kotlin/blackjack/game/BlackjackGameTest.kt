@@ -1,6 +1,6 @@
 package blackjack.game
 
-import domain.card.Deck
+import domain.card.util.DeckGenerator
 import domain.game.BlackjackGame
 import io.kotest.assertions.throwables.shouldThrow
 import org.junit.jupiter.params.ParameterizedTest
@@ -12,7 +12,7 @@ class BlackjackGameTest {
     @ParameterizedTest
     @MethodSource("getPlayerNames")
     fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(playerNames: List<String>) {
-        val game = BlackjackGame(Deck())
+        val game = BlackjackGame(DeckGenerator.makeDeck(1))
 
         shouldThrow<IllegalArgumentException> {
             game.initGame(playerNames)

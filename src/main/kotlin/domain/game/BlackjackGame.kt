@@ -6,7 +6,7 @@ import domain.player.Players
 import domain.state.State
 import domain.state.TerminationState
 
-class BlackjackGame(private val deck: Deck = Deck()) {
+class BlackjackGame(private val deck: Deck) {
 
     fun initGame(playerNames: List<String>): Players {
         require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
@@ -33,5 +33,6 @@ class BlackjackGame(private val deck: Deck = Deck()) {
         private const val MAX_PLAYER_SIZE = 8
         private const val MIN_PLAYER_SIZE = 1
         private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
+        val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }
