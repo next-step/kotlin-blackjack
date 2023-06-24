@@ -5,6 +5,7 @@ import blackjack.view.inputPlayerDraw
 import blackjack.view.inputPlayerNames
 import blackjack.view.printCurrentDrawResult
 import blackjack.view.printFirstDrawResult
+import blackjack.view.printGameResults
 
 fun main() {
     val blackJackGame = BlackjackGame.from(inputPlayerNames())
@@ -19,4 +20,5 @@ fun main() {
             printCurrentDrawResult(blackJackGame.currentPlayerDraw())
         }
     }
+    printGameResults(blackJackGame.gameResult())
 }
