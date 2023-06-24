@@ -24,7 +24,7 @@ class BlackjackGame(
         if (player.isBust()) {
             turn++
         }
-        return Hands(playerName = player.name, cards = player.cards())
+        return Hands.from(player)
     }
 
     fun isEndGame(): Boolean = players.size == turn
