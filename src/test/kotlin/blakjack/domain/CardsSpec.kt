@@ -27,7 +27,7 @@ class CardsSpec : DescribeSpec({
                 newCards.size shouldBe 3
             }
             it("추가한 카드가 포함된 카드 목록을 반환한다.") {
-                newCards.values shouldBe setOf(Card.SPADE_10, Card.HEART_2, Card.CLOVER_3)
+                newCards.values shouldBe setOf(Card.CLOVER_2, Card.HEART_3, Card.CLOVER_3)
             }
         }
 
