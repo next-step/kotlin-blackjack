@@ -6,13 +6,14 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 import blackjack.view.PlayerStatus
 
-class BlackJackTable(players: Array<Player>) {
+class BlackJackTable(private val players: Array<Player>) {
 
-    private val dealer: Dealer = Dealer(players = players)
+    private val dealer: Dealer = Dealer()
+    private val deckManager: DeckManager = DeckManager()
 
     fun beginRound() {
-        dealer.initializeRound()
-        OutputView.roundBeginNotice(dealer.getAllPlayerStatus())
+        dealer.initializeRound(deckManager, players)
+        OutputView.roundBeginNotice(dealer.getAllParticipantsStatus(players))
     }
 
     fun executePlayerTurns(player: Array<Player>) {
@@ -22,7 +23,7 @@ class BlackJackTable(players: Array<Player>) {
     private fun proceedPlayerTurns(player: Player) {
         while (player.ableToDraw) {
             val wantToHit = InputView.wantToHit(player.name)
-            player.drawPhase(wantToHit, dealer) { OutputView.handNotice(PlayerStatus.of(player)) }
+            player.drawPhase(wantToHit, deckManager) { OutputView.handNotice(PlayerStatus.of(player)) }
         }
     }
 

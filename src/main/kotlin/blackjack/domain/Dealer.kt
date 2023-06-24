@@ -1,22 +1,19 @@
 package blackjack.domain
 
+import blackjack.DeckManager
+import blackjack.GameResultChecker
 import blackjack.view.PlayerStatus
 
-class Dealer(
-    private val deck: Deck = Deck(),
-    private val players: Array<Player>
-) : Player(name = "딜러") {
+class Dealer : Player(name = "딜러") {
 
-    fun initializeRound() {
-        val initDealerCards = arrayOf(deck.drawCard(), deck.drawCard())
-        this.hit(*initDealerCards)
+    fun initializeRound(deckManager: DeckManager, players: Array<Player>) {
+        this.hit(*deckManager.drawTwoCards())
         for (player in players) {
-            val firstRoundCards = arrayOf(deck.drawCard(), deck.drawCard())
-            player.hit(*firstRoundCards)
+            player.hit(*deckManager.drawTwoCards())
         }
     }
 
-    fun getAllPlayerStatus(): List<PlayerStatus> {
+    fun getAllParticipantsStatus(players: Array<Player>): List<PlayerStatus> {
         val playerStatus = mutableListOf(PlayerStatus.of(this))
         for (player in players) {
             playerStatus.add(PlayerStatus.of(player))
@@ -25,14 +22,23 @@ class Dealer(
         return playerStatus
     }
 
-    fun draw(): PokerCard {
-        return deck.drawCard()
+    fun drawAdditionalCard(deckManager: DeckManager, dealerAddNotice: () -> Unit) {
+        if (this.optimalValue() <= DEALER_MIN_VALUE_TO_DRAW) {
+            this.hit(deckManager.draw())
+            dealerAddNotice.invoke()
+        }
     }
 
-    fun drawAdditionalCard(dealerAddNotice: () -> Unit) {
-        if (this.optimalValue() <= DEALER_MIN_VALUE_TO_DRAW) {
-            this.hit(this.draw())
-            dealerAddNotice.invoke()
+    override fun gameResult(): String {
+        return scoreBoard().resultForDealer()
+    }
+
+    fun determineWinner(players: Array<Player>, checker: GameResultChecker) {
+        players.forEach {
+            val playerValue = it.optimalValue()
+            val dealerValue = this.optimalValue()
+            val winner = checker.determineWinner(playerValue, dealerValue)
+            checker.updateScores(winner, it)
         }
     }
 
