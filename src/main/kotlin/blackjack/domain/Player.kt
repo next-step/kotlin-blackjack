@@ -19,6 +19,10 @@ class Player(
         gameState = gameState.draw(card)
     }
 
+    fun stay() {
+        gameState = gameState.stay()
+    }
+
     fun currentStatus(): DrawResult = DrawResult(name, gameState.cards())
 
     companion object {

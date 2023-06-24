@@ -28,10 +28,19 @@ class BlackjackGame(
 
     fun currentTurnPlayerName(): String = currentPlayer().name
 
+    fun passToNextTurn() {
+        currentPlayer().stay()
+        turn++
+    }
+
     private fun currentPlayer(): Player {
+        checkTurn()
+        return players[turn]
+    }
+
+    private fun checkTurn() {
         check(turn != BEFORE_FIRST_DRAW_TURN) { "첫 드로우가 시작되지 않았다." }
         check(turn < players.size) { "모든 드로우가 종료되었다." }
-        return players[turn]
     }
 
     companion object {

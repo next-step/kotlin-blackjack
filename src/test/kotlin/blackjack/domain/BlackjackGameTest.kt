@@ -9,6 +9,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Hit
+import blackjack.domain.gamestate.Stay
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
@@ -16,6 +17,7 @@ import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import java.util.LinkedList
 
 class BlackjackGameTest : FunSpec({
@@ -112,6 +114,33 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame = BlackjackGame(turn = 1, players = PLAYERS)
             val actual = blackjackGame.currentTurnPlayerName()
             actual shouldBe "b"
+        }
+    }
+
+    context("passToNextTurn") {
+        test("턴이 유효하지 않은데 전환하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
+            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+        }
+
+        test("턴이 종료되었는데 전환하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
+            exception.message shouldBe "모든 드로우가 종료되었다."
+        }
+
+        test("현재 턴 유저를 stay로 변경하고 다음 턴으로 변경한다.") {
+            val blackjackGame =
+                BlackjackGame(
+                    turn = 0,
+                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                )
+            blackjackGame.passToNextTurn()
+
+
+            blackjackGame.turn shouldBe 1
+            blackjackGame.players[0].gameState.shouldBeTypeOf<Stay>()
         }
     }
 }) {

@@ -6,6 +6,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Hit
 import blackjack.domain.gamestate.InitialHand
+import blackjack.domain.gamestate.Stay
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -33,6 +34,15 @@ class PlayerTest : FunSpec({
             player.draw(SPADE_TWO)
 
             player.gameState.shouldBeTypeOf<Hit>()
+        }
+    }
+
+    context("stay") {
+        test("다음 상태를 stay로 변경한다.") {
+            val player = Player("최진영", Hit(Cards.of(SPADE_ACE, SPADE_KING)))
+            player.stay()
+
+            player.gameState.shouldBeTypeOf<Stay>()
         }
     }
 
