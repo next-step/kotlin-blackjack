@@ -7,6 +7,12 @@ class Player(val name: String) {
         cards.add(card)
     }
 
+    fun addCards(drawCards: List<Card>) {
+        drawCards.forEach {
+            cards.add(it)
+        }
+    }
+
     fun getCards(): List<Card> {
         return cards.toList()
     }
