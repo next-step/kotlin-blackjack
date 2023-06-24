@@ -1,3 +1,3 @@
 package blackjack.domain
 
-class Game {}
+class Game
