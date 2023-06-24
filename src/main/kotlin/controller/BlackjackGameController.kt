@@ -2,7 +2,6 @@ package controller
 
 import domain.game.BlackjackGame
 import domain.player.Player
-import domain.player.Players
 import view.Answer
 import view.InputView
 import view.ResultView
@@ -12,22 +11,18 @@ class BlackjackGameController(
     private val inputView: InputView,
     private val resultView: ResultView
 ) {
-    fun initGame(): Players {
+    fun initGame() {
         val playerNames = inputView.getPlayerNames()
-        val players = game.initGame(playerNames)
-        resultView.printInitPlayers(players = players)
-        return players
+        game.initGame(playerNames)
+        resultView.printInitPlayers(players = game.players)
     }
 
-    fun gameStart(
-        player: Player,
-        inputView: InputView,
-        resultView: ResultView,
-    ) {
-        while (!game.isTerminatedPlayer(player)) {
-            gameProgress(inputView, player)
-
-            resultView.printPlayerCards(player)
+    fun gameStart() {
+        game.players.forEach { player ->
+            while (!game.isTerminatedPlayer(player)) {
+                gameProgress(inputView, player)
+                resultView.printPlayerCards(player)
+            }
         }
     }
 
@@ -38,7 +33,7 @@ class BlackjackGameController(
         }
     }
 
-    fun printGameResult(players: Players) {
-        resultView.printGameResult(players = players)
+    fun printGameResult() {
+        resultView.printGameResult(players = game.players)
     }
 }

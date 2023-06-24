@@ -8,13 +8,17 @@ import domain.state.TerminationState
 
 class BlackjackGame(private val deck: Deck) {
 
+    lateinit var players: Players
+        private set
+
     fun initGame(playerNames: List<String>): Players {
         require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
-        return Players(
+        this.players = Players(
             playerNames.map {
                 Player(it, deck.issueCard(), deck.issueCard())
             },
         )
+        return this.players
     }
 
     fun isTerminatedPlayer(player: Player): Boolean {
@@ -33,6 +37,6 @@ class BlackjackGame(private val deck: Deck) {
         private const val MAX_PLAYER_SIZE = 8
         private const val MIN_PLAYER_SIZE = 1
         private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
-        val BLACKJACK_GAME_DECK_SIZE = 6
+        const val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }
