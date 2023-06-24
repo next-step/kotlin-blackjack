@@ -27,7 +27,11 @@ class BlackJackTable(players: Array<Player>) {
     }
 
     fun endRound() {
-        dealer.drawAdditionalCard { OutputView.dealerAddNotice() }
-        OutputView.roundResultNotice(dealer.getAllPlayerStatus())
+        val checker = GameResultChecker(dealer)
+        dealer.drawAdditionalCard(deckManager) { OutputView.dealerAddNotice() }
+        dealer.determineWinner(players, checker)
+        val allPlayerStatus = dealer.getAllParticipantsStatus(players)
+        OutputView.roundResultNotice(allPlayerStatus)
+        OutputView.gameResultNotice(allPlayerStatus)
     }
 }
