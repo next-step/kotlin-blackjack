@@ -2,19 +2,27 @@ package blackjack
 
 import blackjack.domain.PokerCard
 
-const val ACE = "A"
-const val BLACK_JACK_NUM = 21
+private const val ACE = "A"
+private const val ACE_ALT_VALUE = 10
+private const val ACE_THRESHOLD = 11
 
 object HandsCalculator {
     fun calculateOptimalValue(hand: List<PokerCard>): Int {
-        var total = hand.sumOf { it.value }
-        var aceCount = hand.count { it.rank == ACE }
+        val total = hand.sumOf { it.value }
+        val aceCount = hand.count { it.rank == ACE }
 
-        while (total > BLACK_JACK_NUM && aceCount > 0) {
-            aceCount -= 1
-            total -= 10
+        return calculateValueWithAce(total, aceCount)
+    }
+
+    private fun calculateValueWithAce(total: Int, aceCount: Int): Int {
+        if (aceCount == 0) return total
+
+        val optimalTotal = total - (aceCount * ACE_ALT_VALUE)
+
+        if (optimalTotal <= ACE_THRESHOLD) {
+            return optimalTotal + ACE_ALT_VALUE
         }
 
-        return total
+        return optimalTotal
     }
 }
