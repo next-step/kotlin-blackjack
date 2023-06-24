@@ -44,7 +44,11 @@ class BlackJackGame(
             )
         }
 
-        return BlackJackGameTurn.Finish
+        return BlackJackGameTurn.Finish(
+            blackJackGameResult = BlackJackGameResult(
+                playerGameResults = finishedPlayers.map { PlayerGameResult(it.captureCardDeck()) },
+            ),
+        )
     }
 
     fun hitFocusedPlayer(): PlayerCardDeckCapture {

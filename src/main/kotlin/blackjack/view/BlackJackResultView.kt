@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.player.unWrappings
 
@@ -15,10 +16,18 @@ class BlackJackResultView {
         result.playerCardDeckCaptures
             .map { playerCardDeckCapture -> playerCardDeckCapture.makeDisplayMessage() }
             .forEach { playerCardDeckCaptureMessage -> println(playerCardDeckCaptureMessage) }
+        println()
     }
 
     fun display(playerCardDeckCapture: PlayerCardDeckCapture) {
         println(playerCardDeckCapture.makeDisplayMessage())
+    }
+
+    fun display(blackJackGameResult: BlackJackGameResult) {
+        println()
+        blackJackGameResult.playerGameResults
+            .map { it.playerCardDeck.makeDisplayMessage().plus(" - 결과: ${it.score}") }
+            .forEach {  println(it) }
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {

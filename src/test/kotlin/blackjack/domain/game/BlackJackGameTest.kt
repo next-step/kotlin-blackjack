@@ -95,4 +95,18 @@ class BlackJackGameTest : BehaviorSpec({
             turn.playerName shouldBe playerNames[1]
         }
     }
+
+    Given("남아있는 플레이어가 없다면") {
+        val playerNames = playerNames("test1", "test2")
+        val game = BlackJackGame(
+            shuffler = CardNotShuffler(),
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers()
+        game.stayFocusedPlayer()
+        game.stayFocusedPlayer()
+        Then("게임은 종료된다") {
+            (game.nextTurn() is BlackJackGameTurn.Finish) shouldBe true
+        }
+    }
 })

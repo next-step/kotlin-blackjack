@@ -8,5 +8,7 @@ sealed class BlackJackGameTurn {
         val playerName: PlayerName,
     ) : BlackJackGameTurn()
 
-    object Finish : BlackJackGameTurn()
+    data class Finish(
+        val blackJackGameResult: BlackJackGameResult,
+    ) : BlackJackGameTurn()
 }

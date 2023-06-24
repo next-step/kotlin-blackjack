@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.card.PlayerCardDeck
 import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.score.CardScoreCalculator
 
 class Player(
     val name: PlayerName,

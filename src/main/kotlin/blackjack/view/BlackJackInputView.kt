@@ -13,7 +13,6 @@ class BlackJackInputView {
     }
 
     fun readHitAnswer(playerName: PlayerName): HitAnswer {
-        println()
         println("${playerName.unWrapping()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln().lowercase()) {
             "y" -> HitAnswer.HIT

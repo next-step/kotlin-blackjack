@@ -21,7 +21,10 @@ class BlackJackController(
         while (true) {
             when (val turn = blackJackGame.nextTurn()) {
                 is BlackJackGameTurn.HitAnswerWait -> processHitAnswerWaitTurn(blackJackGame, turn)
-                is BlackJackGameTurn.Finish -> break
+                is BlackJackGameTurn.Finish -> {
+                    processFinish(turn)
+                    break
+                }
             }
         }
     }
@@ -39,5 +42,11 @@ class BlackJackController(
                 blackJackGame.stayFocusedPlayer()
             }
         }
+    }
+
+    private fun processFinish(
+        turn: BlackJackGameTurn.Finish,
+    ) {
+        resultView.display(turn.blackJackGameResult)
     }
 }
