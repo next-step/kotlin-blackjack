@@ -2,7 +2,6 @@ package domain.player
 
 import domain.card.Card
 import domain.card.Cards
-import domain.state.Burst
 import domain.state.StartState
 import domain.state.State
 
@@ -29,15 +28,7 @@ open class Player(name: String, card1: Card, card2: Card) {
         return this.state
     }
 
-    final fun getPlayerGameResult(dealer: Dealer): PlayerGameResult {
-        if (this.state is Burst) {
-            return PlayerGameResult.LOSE
-        } else if (dealer.state is Burst) {
-            return PlayerGameResult.WIN
-        }
-
-        return if (cards.sum > dealer.cards.sum) PlayerGameResult.WIN
-        else if (cards.sum == dealer.cards.sum) PlayerGameResult.DRAW
-        else PlayerGameResult.LOSE
+    fun getPlayerGameResult(dealer: Dealer): PlayerGameResult {
+        return PlayerGameResult.valueOf(this, dealer)
     }
 }

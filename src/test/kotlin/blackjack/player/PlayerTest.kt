@@ -51,13 +51,13 @@ class PlayerTest {
             card1 = Card(suit = Suit.SPADE, number = CardNumber.TWO),
             card2 = Card(suit = Suit.CLUB, number = CardNumber.ACE),
         )
-        val newCard = Card(suit = Suit.SPADE, number = CardNumber.SEVEN)
 
         val dealer = Dealer(
             card1 = Card(suit = Suit.SPADE, number = CardNumber.FIVE),
             card2 = Card(suit = Suit.CLUB, number = CardNumber.JACK),
         )
 
+        val newCard = Card(suit = Suit.SPADE, number = CardNumber.SEVEN)
         player.draw(newCard)
         dealer.draw(newCard)
 
