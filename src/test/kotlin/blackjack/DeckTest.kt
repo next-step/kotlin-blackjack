@@ -17,7 +17,7 @@ class DeckTest : FunSpec({
             (it in deck) shouldBe true
         }
 
-        deck.size() shouldBe 52
+        deck.size shouldBe 52
     }
 
     test("마지막 카드를 1장을 뽑는다.") {
@@ -71,6 +71,6 @@ class DeckTest : FunSpec({
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
 
-        deck.size() shouldBe 3
+        deck.size shouldBe 3
     }
 })
