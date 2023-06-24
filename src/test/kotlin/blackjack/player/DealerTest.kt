@@ -26,7 +26,10 @@ class DealerTest {
         val card1 = Card(suit = Suit.SPADE, number = CardNumber.JACK)
         val card2 = Card(suit = Suit.SPADE, number = CardNumber.SEVEN)
         val dealer = Dealer(card1 = card1, card2 = card2)
+        val newCard = Card(suit = Suit.HEART, number = CardNumber.FIVE)
 
-        dealer.isDrawable() shouldBe false
+        dealer.draw(newCard)
+
+        dealer.cards.sum shouldBe 17
     }
 }

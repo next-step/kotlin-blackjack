@@ -3,7 +3,9 @@ package blackjack.player
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.player.Dealer
 import domain.player.Player
+import domain.player.PlayerGameResult
 import domain.state.Hit
 import domain.state.ProceedingState
 import domain.state.Stand
@@ -40,5 +42,25 @@ class PlayerTest {
 
         (playerState is Stand) shouldBe true
         (playerState is TerminationState) shouldBe true
+    }
+
+    @Test
+    fun `딜러는 카드 합계가 21을 초과하면 살아있는 플레이어는 무조건 승리`() {
+        val player = Player(
+            name = "남상윤",
+            card1 = Card(suit = Suit.SPADE, number = CardNumber.TWO),
+            card2 = Card(suit = Suit.CLUB, number = CardNumber.ACE),
+        )
+        val newCard = Card(suit = Suit.SPADE, number = CardNumber.SEVEN)
+
+        val dealer = Dealer(
+            card1 = Card(suit = Suit.SPADE, number = CardNumber.FIVE),
+            card2 = Card(suit = Suit.CLUB, number = CardNumber.JACK),
+        )
+
+        player.draw(newCard)
+        dealer.draw(newCard)
+
+        player.getPlayerGameResult(dealer) shouldBe PlayerGameResult.WIN
     }
 }
