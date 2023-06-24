@@ -10,6 +10,7 @@ enum class CardNumber(val value: Int) {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
+    TEN(10),
     K(10),
     Q(10),
     J(10),

@@ -38,4 +38,18 @@ class PlayerTest {
 
         Assertions.assertThat(player.getCards()).isEqualTo(drawCards.toList())
     }
+
+    @Test
+    fun `이름 리스트를 입력받으면 이름을 가지는 플레이어 리스트를 생성한다 `() {
+        val playerNameList = listOf<String>("pobi", "jason")
+
+        val playerList = Player.generatePlayers(playerNameList)
+        val actual = mutableListOf<String>()
+
+        playerList.forEach {
+            actual.add(it.name)
+        }
+
+        Assertions.assertThat(actual).isEqualTo(playerNameList)
+    }
 }

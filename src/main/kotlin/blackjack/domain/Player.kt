@@ -16,4 +16,14 @@ class Player(val name: String) {
     fun getCards(): List<Card> {
         return cards.toList()
     }
+
+    companion object {
+        fun generatePlayers(nameList: List<String>): List<Player> {
+            val playerList = mutableListOf<Player>()
+            nameList.forEach {
+                playerList.add(Player(it))
+            }
+            return playerList.toList()
+        }
+    }
 }
