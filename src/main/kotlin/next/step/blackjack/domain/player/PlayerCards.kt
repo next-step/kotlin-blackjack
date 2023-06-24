@@ -28,7 +28,6 @@ data class PlayerCards(val cards: MutableList<Card>) {
 
     private fun possiblePoints() = CombinationUtils.possiblePoints(cards)
 
-
     fun size() = cards.size
 
     fun descs(): Set<String> = cards.map { it.desc() }.toSet()

@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
-import next.step.blackjack.domain.player.PlayerCards
 import next.step.blackjack.util.CombinationUtils
 
 class PlayerCardsTest : BehaviorSpec({

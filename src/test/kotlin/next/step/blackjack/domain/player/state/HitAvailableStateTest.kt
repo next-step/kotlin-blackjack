@@ -26,7 +26,8 @@ class HitAvailableStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.ACE, CardSymbol.HEART)
                         )
-                    ), BlackjackState
+                    ),
+                    BlackjackState
                 ),
                 NextStateExpected(
                     PlayerCards.of(
@@ -35,7 +36,8 @@ class HitAvailableStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.ACE, CardSymbol.HEART)
                         )
-                    ), FinishedState
+                    ),
+                    FinishedState
                 ),
                 NextStateExpected(
                     PlayerCards.of(
@@ -44,7 +46,8 @@ class HitAvailableStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.TWO, CardSymbol.HEART)
                         )
-                    ), BurstState
+                    ),
+                    BurstState
                 ),
                 NextStateExpected(
                     PlayerCards.of(
@@ -52,12 +55,12 @@ class HitAvailableStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.HEART)
                         )
-                    ), HitAvailableState
+                    ),
+                    HitAvailableState
                 )
             ) { (cards, expected) ->
                 HitAvailableState.next(cards) shouldBe expected
             }
         }
-
     }
 })
