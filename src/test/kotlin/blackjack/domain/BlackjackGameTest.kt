@@ -39,6 +39,26 @@ class BlackjackGameTest : FunSpec({
             }
         }
     }
+
+    context("currentTurnPlayer") {
+        test("턴이 유효하지 않은데 반환하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
+            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+        }
+
+        test("턴이 종료되었는데 반환하려하면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
+            exception.message shouldBe "모든 드로우가 종료되었다."
+        }
+
+        test("현재 턴인 유저의 이름이 반환된다.") {
+            val blackjackGame = BlackjackGame(turn = 1, players = PLAYERS)
+            val actual = blackjackGame.currentTurnPlayerName()
+            actual shouldBe "b"
+        }
+    }
 }) {
     companion object {
         private val PLAYERS = Players(listOf(Player("a"), Player("b")))
