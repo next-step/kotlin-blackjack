@@ -30,7 +30,7 @@ class ScoreBoard {
     }
 
     fun resultForDealer(): String {
-        return "${win}승 ${lose}패 ${draw}무"
+        return "${win}승 ${draw}무 ${lose}패"
     }
 
     companion object {
