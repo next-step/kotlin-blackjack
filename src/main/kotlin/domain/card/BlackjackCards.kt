@@ -2,8 +2,7 @@ package domain.card
 
 class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCard> by cards {
 
-    var sum: Int
-        private set
+    val sum: Int
 
     init {
         sum = this.sum()
