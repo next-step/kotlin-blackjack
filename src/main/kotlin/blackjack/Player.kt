@@ -5,4 +5,9 @@ class Player(
     cards: Cards,
 ) : Participant(name, cards) {
     override fun openedCards(): Cards = cards
+
+    fun isWinner(dealerScore: Int): Boolean {
+        val score = calculateScore()
+        return score <= Cards.WINNING_NUMBER && score >= dealerScore
+    }
 }

@@ -1,7 +1,9 @@
 package blackjack
 
+import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
+import blackjack.vo.PlayerGameResultVO
 
 fun main() {
     val playerNames = InputView.readPlayerNames()
@@ -9,11 +11,17 @@ fun main() {
     val deck = Deck.shuffled()
     val participants = Participants.init(playerNames, deck)
 
-    val participantVOs = participants.members().map {
-        ParticipantVO.of(it.name, it.openedCards())
-    }
+    val participantVOs = participants.members().map { ParticipantVO.of(it.name, it.openedCards()) }
     ResultView.printCardHands(participantVOs)
 
+    val gameResultVO = play(participants, deck)
+
+    val participantScoreVOs = participants.members().map { ParticipantScoreVO(ParticipantVO.of(it), it.calculateScore()) }
+    ResultView.printParticipantScores(participantScoreVOs)
+    ResultView.printGameResult(gameResultVO)
+}
+
+private fun play(participants: Participants, deck: Deck): GameResultVO {
     val players = participants.players
     players.forEach { player -> drawMore(deck, player) }
 
@@ -23,8 +31,9 @@ fun main() {
         dealer.hit(deck.draw())
     }
 
-    val participantScoreVOs = participants.members().map { ParticipantScoreVO(ParticipantVO.of(it), it.calculateScore()) }
-    ResultView.printParticipantScores(participantScoreVOs)
+    val dealerScore = dealer.calculateScore()
+    val playerGameResultVOs = players.map { PlayerGameResultVO(it.name, it.isWinner(dealerScore)) }
+    return GameResultVO.of(playerGameResultVOs)
 }
 
 private fun drawMore(deck: Deck, player: Player) {

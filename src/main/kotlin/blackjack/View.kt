@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
 
@@ -41,6 +42,10 @@ object ResultView {
         )
     }
 
+    fun printDealerHit() {
+        println("${NEW_LINE}딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
     fun printParticipantScores(participantScoreVOs: List<ParticipantScoreVO>) {
         val participantScoresText = participantScoreVOs.joinToString(NEW_LINE) {
             "${participantText(it.participantVO)} - 결과:${it.score}"
@@ -48,8 +53,17 @@ object ResultView {
         println(participantScoresText)
     }
 
-    fun printDealerHit() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun printGameResult(gameResultVO: GameResultVO) {
+        val playersGameResult = gameResultVO.playerGameResultVOs
+            .joinToString(NEW_LINE) { "${it.name}: ${if (it.isWinner) "승" else "패"}" }
+
+        println(
+            """$NEW_LINE
+            |## 최종 승패
+            |딜러: ${gameResultVO.dealerWinCount}승 ${gameResultVO.dealerLoseCount}패
+            |$playersGameResult
+            |""".trimMargin()
+        )
     }
 
     private fun participantText(participant: ParticipantVO): String {

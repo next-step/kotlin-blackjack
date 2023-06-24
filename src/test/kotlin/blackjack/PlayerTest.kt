@@ -57,4 +57,35 @@ class PlayerTest : FunSpec({
 
         player.openedCards() shouldBe cards
     }
+
+    context("게임을 이겼는지 여부를 반환한다") {
+        data class IsWinner(val cards: Cards, val expected: Boolean)
+        withData(
+            IsWinner(
+                Cards(
+                    Card.of(Denomination.ACE, Suit.SPADES),
+                    Card.of(Denomination.JACK, Suit.SPADES),
+                ),
+                true
+            ),
+            IsWinner(
+                Cards(
+                    Card.of(Denomination.ACE, Suit.SPADES),
+                    Card.of(Denomination.JACK, Suit.SPADES),
+                    Card.of(Denomination.ACE, Suit.HEARTS),
+                ),
+                false
+            ),
+            IsWinner(
+                Cards(
+                    Card.of(Denomination.KING, Suit.SPADES),
+                    Card.of(Denomination.JACK, Suit.SPADES),
+                ),
+                false
+            ),
+        ) { (cards, expected) ->
+            val player = Player("pobi", cards)
+            player.isWinner(dealerScore = 21) shouldBe expected
+        }
+    }
 })
