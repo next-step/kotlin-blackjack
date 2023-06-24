@@ -7,7 +7,7 @@ import java.util.Queue
 value class CardDeck(
     private val values: Queue<Card> = LinkedList(),
 ) {
-    fun size() = values.size
+    fun size(): Int = values.size
 
     fun draw(): Card {
         check(values.isNotEmpty()) { "남은 카드가 없을 땐 드로우할 수 없다" }
@@ -18,8 +18,6 @@ value class CardDeck(
         private val INIT_CARD_DECK =
             Suit.values().flatMap { suit -> Denomination.values().map { denomination -> Card(suit, denomination) } }
 
-        fun randomCardDeck() = CardDeck(
-            INIT_CARD_DECK.shuffled().toCollection(LinkedList()),
-        )
+        fun randomCardDeck() = CardDeck(INIT_CARD_DECK.shuffled().toCollection(LinkedList()))
     }
 }

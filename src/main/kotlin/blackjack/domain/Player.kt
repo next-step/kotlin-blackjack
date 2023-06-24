@@ -23,13 +23,13 @@ class Player(
         gameState = gameState.stay()
     }
 
-    fun isBust() = gameState.isBust()
+    fun isBust(): Boolean = gameState.isBust()
 
-    fun cards() = gameState.cards()
+    fun cards(): List<Card> = gameState.cards()
 
     fun hands(): Hands = Hands(name, cards())
 
-    fun score() = gameState.score()
+    fun score(): Int = gameState.score()
 
     companion object {
         private const val NAME_LENGTH_LIMIT = 5
