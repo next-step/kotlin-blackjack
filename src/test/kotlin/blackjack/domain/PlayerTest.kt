@@ -1,8 +1,9 @@
 package blackjack.domain
 
-import blackjack.domain.CardTest.Companion.SPADE_ACE
-import blackjack.domain.CardTest.Companion.SPADE_KING
-import blackjack.domain.CardTest.Companion.SPADE_TWO
+import blackjack.domain.card.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_KING
+import blackjack.domain.card.CardTest.Companion.SPADE_TWO
+import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Hit
 import blackjack.domain.gamestate.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly

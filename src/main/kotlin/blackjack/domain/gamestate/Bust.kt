@@ -1,7 +1,7 @@
 package blackjack.domain.gamestate
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 class Bust(
     val cards: Cards,

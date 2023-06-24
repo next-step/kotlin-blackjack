@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.InitialHand
 
