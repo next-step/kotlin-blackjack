@@ -36,8 +36,7 @@ class BlackjackGame(
         turn++
     }
 
-    fun gameResult(): List<GameResult> =
-        players.map { GameResult(playerName = it.name, cards = it.cards(), score = it.score()) }
+    fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
 
     private fun currentPlayer(): Player {
         checkTurn()
