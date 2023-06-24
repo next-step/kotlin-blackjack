@@ -39,7 +39,7 @@ class BlackjackGameTest {
         val player = Player()
         val blackjackGame = BlackjackGame(Players.from(player))
 
-        blackjackGame.dealCards(player)
+        blackjackGame.dealCard(player)
 
         player.cards.getValue().size shouldBe 1
     }

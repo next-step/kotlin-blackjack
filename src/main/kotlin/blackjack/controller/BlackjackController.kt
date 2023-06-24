@@ -30,8 +30,11 @@ class BlackjackController {
     fun dealCards(player: Player, blackjackGame: BlackjackGame) {
         while (player.isReceivable()) {
             val response = GamePlayerReceiveInputView(player.name).value
-            if (!response.value) return
-            blackjackGame.dealCards(player)
+            if (!response.value) {
+                player.getStayStatus()
+                return
+            }
+            blackjackGame.dealCard(player)
             PlayerOutputView(player)
         }
     }

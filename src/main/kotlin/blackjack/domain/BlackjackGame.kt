@@ -11,7 +11,7 @@ class BlackjackGame(val players: Players) {
         players.receiveCard { deck.getRandomCards(INIT_CARD_COUNT) }
     }
 
-    fun dealCards(player: Player) {
+    fun dealCard(player: Player) {
         val card = deck.getRandomCard()
         player.receiveCard(card)
     }
