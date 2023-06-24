@@ -6,6 +6,7 @@ import domain.player.Player
 import domain.player.Players
 import domain.state.State
 import domain.state.TerminationState
+import view.WinLoseDrawResult
 
 class BlackjackGame(private val deck: Deck) {
 
@@ -48,11 +49,15 @@ class BlackjackGame(private val deck: Deck) {
         return player.stop()
     }
 
+    fun getGameWinLoseDrawResult(): WinLoseDrawResult {
+        val playerGameResultMap = players.groupBy { it.getPlayerGameResult(dealer) }
+        return WinLoseDrawResult(playerResultMap = playerGameResultMap)
+    }
+
     companion object {
         private const val MAX_PLAYER_SIZE = 8
         private const val MIN_PLAYER_SIZE = 1
         private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
-        private val INIT_CARD_COUNT = 2
         const val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }

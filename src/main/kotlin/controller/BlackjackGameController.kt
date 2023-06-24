@@ -44,6 +44,8 @@ class BlackjackGameController(
     }
 
     fun printGameResult() {
+        val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
         resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
+        resultView.printWinLoseDrawResult(gameWinLoseDrawResult)
     }
 }

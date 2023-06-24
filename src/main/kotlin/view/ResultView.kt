@@ -5,6 +5,7 @@ import domain.card.CardNumber
 import domain.card.Suit
 import domain.player.Dealer
 import domain.player.Player
+import domain.player.PlayerGameResult
 import domain.player.Players
 
 class ResultView {
@@ -21,6 +22,36 @@ class ResultView {
         println()
         printPlayerCards(dealer) { "- 결과 : ${dealer.cards.sum}" }
         players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
+    }
+
+    fun printWinLoseDrawResult(result: WinLoseDrawResult) {
+        println()
+        println("## 최종 승패")
+        printDealerWinLoseDrawResult(result)
+        printPlayersWinLoseDrawResult(result)
+    }
+
+    private fun printDealerWinLoseDrawResult(result: WinLoseDrawResult) {
+        println(
+            "딜러: ${result.playerResultMap[PlayerGameResult.LOSE]?.size ?: 0}승" +
+                "${result.playerResultMap[PlayerGameResult.DRAW]?.size ?: 0}무" +
+                "${result.playerResultMap[PlayerGameResult.WIN]?.size ?: 0}패",
+        )
+    }
+
+    private fun printPlayersWinLoseDrawResult(result: WinLoseDrawResult) {
+        result.playerResultMap.forEach { (playerGameResult, players) ->
+            printPlayerResults(players, playerGameResult)
+        }
+    }
+
+    private fun printPlayerResults(
+        players: List<Player>,
+        playerGameResult: PlayerGameResult,
+    ) {
+        players.forEach { player ->
+            println("${player.name}: ${playerGameResult.description}")
+        }
     }
 
     fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
