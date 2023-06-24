@@ -12,6 +12,7 @@ object DeckGenerator {
         repeat(deckSize) {
             cards.addAll(makeDeck())
         }
+        cards.shuffle()
         return Deck(cards)
     }
 
