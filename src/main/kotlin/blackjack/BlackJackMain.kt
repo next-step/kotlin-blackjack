@@ -43,6 +43,10 @@ private fun play(participants: Participants, deck: Deck): GameResultVO {
 
 private fun drawMore(deck: Deck, player: Player) {
     while (deck.isNotEmpty()) {
+        if (player.burst) {
+            return
+        }
+
         if (InputView.readDrawMore(player.name)) {
             player.hit(deck.draw())
         } else {
