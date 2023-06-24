@@ -1,19 +1,19 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
+import blackjack.domain.player.GamePlayer
+import blackjack.domain.player.GamePlayers
 
-class BlackjackGame(val players: Players) {
+class BlackjackGame(val gamePlayers: GamePlayers) {
     val deck: CardDeck = CardDeck()
 
     fun initPlayers() {
-        players.receiveCard { deck.getRandomCards(INIT_CARD_COUNT) }
+        gamePlayers.receiveCard { deck.getRandomCards(INIT_CARD_COUNT) }
     }
 
-    fun dealCard(player: Player) {
+    fun dealCard(gamePlayer: GamePlayer) {
         val card = deck.getRandomCard()
-        player.receiveCard(card)
+        gamePlayer.receiveCard(card)
     }
 
     companion object {

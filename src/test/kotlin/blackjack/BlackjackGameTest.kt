@@ -5,8 +5,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
+import blackjack.domain.player.GamePlayers
 import blackjack.domain.player.Player
-import blackjack.domain.player.Players
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -17,17 +17,17 @@ class BlackjackGameTest {
     fun `게임에 참여할 Player와 CardDeck이 필요하다`() {
         val player1 = Player()
         val player2 = Player()
-        val players = Players.from(player1, player2)
-        val blackjackGame = BlackjackGame(players)
+        val gamePlayers = GamePlayers.from(player1, player2)
+        val blackjackGame = BlackjackGame(gamePlayers)
 
-        blackjackGame.players shouldBe players
+        blackjackGame.gamePlayers shouldBe gamePlayers
         blackjackGame.deck.shouldNotBeNull()
     }
 
     @Test
     fun `최초 카드분배시 Player에게 2장의 카드를 나눠준다`() {
         val player = Player()
-        val blackjackGame = BlackjackGame(Players.from(player))
+        val blackjackGame = BlackjackGame(GamePlayers.from(player))
 
         blackjackGame.initPlayers()
 
@@ -37,7 +37,7 @@ class BlackjackGameTest {
     @Test
     fun `최초 카드분배 이후에는 Player에게 카드를 1장씩 나눠준다`() {
         val player = Player()
-        val blackjackGame = BlackjackGame(Players.from(player))
+        val blackjackGame = BlackjackGame(GamePlayers.from(player))
 
         blackjackGame.dealCard(player)
 
