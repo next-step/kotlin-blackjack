@@ -1,6 +1,6 @@
 package blackjack.card.helper
 
-import domain.card.card
+import domain.card.Card
 import domain.card.Cards
 import domain.card.CardNumber
 import domain.card.Suit
@@ -10,26 +10,26 @@ object HitTestHelper {
 
     fun getHitStateTestData(): List<Arguments> = listOf(
         Arguments.of(
-            Cards(listOf(card(suit = Suit.CLUB, number = CardNumber.KING))),
-            card(suit = Suit.SPADE, number = CardNumber.FIVE),
+            Cards(listOf(Card(suit = Suit.CLUB, number = CardNumber.KING))),
+            Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    card(suit = Suit.CLUB, number = CardNumber.TWO),
+                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
                 ),
             ),
-            card(suit = Suit.SPADE, number = CardNumber.FIVE),
+            Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    card(suit = Suit.HEART, number = CardNumber.TEN),
+                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                    Card(suit = Suit.HEART, number = CardNumber.TEN),
                 ),
             ),
-            card(suit = Suit.SPADE, number = CardNumber.ACE),
+            Card(suit = Suit.SPADE, number = CardNumber.ACE),
         ),
     )
 
@@ -37,31 +37,31 @@ object HitTestHelper {
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.KING),
-                    card(suit = Suit.HEART, number = CardNumber.KING),
+                    Card(suit = Suit.CLUB, number = CardNumber.KING),
+                    Card(suit = Suit.HEART, number = CardNumber.KING),
                 ),
             ),
-            card(suit = Suit.SPADE, number = CardNumber.FIVE),
+            Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    card(suit = Suit.CLUB, number = CardNumber.TWO),
-                    card(suit = Suit.SPADE, number = CardNumber.SEVEN),
-                    card(suit = Suit.SPADE, number = CardNumber.JACK),
+                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
+                    Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                    Card(suit = Suit.SPADE, number = CardNumber.JACK),
                 ),
             ),
-            card(suit = Suit.SPADE, number = CardNumber.TWO),
+            Card(suit = Suit.SPADE, number = CardNumber.TWO),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    card(suit = Suit.HEART, number = CardNumber.TEN),
+                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                    Card(suit = Suit.HEART, number = CardNumber.TEN),
                 ),
             ),
-            card(suit = Suit.SPADE, number = CardNumber.TWO),
+            Card(suit = Suit.SPADE, number = CardNumber.TWO),
         ),
     )
 
@@ -69,26 +69,26 @@ object HitTestHelper {
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.KING),
-                    card(suit = Suit.HEART, number = CardNumber.KING),
+                    Card(suit = Suit.CLUB, number = CardNumber.KING),
+                    Card(suit = Suit.HEART, number = CardNumber.KING),
                 ),
             ),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    card(suit = Suit.CLUB, number = CardNumber.TWO),
-                    card(suit = Suit.SPADE, number = CardNumber.SEVEN),
-                    card(suit = Suit.SPADE, number = CardNumber.JACK),
+                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
+                    Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                    Card(suit = Suit.SPADE, number = CardNumber.JACK),
                 ),
             ),
         ),
         Arguments.of(
             Cards(
                 listOf(
-                    card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    card(suit = Suit.HEART, number = CardNumber.TEN),
+                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                    Card(suit = Suit.HEART, number = CardNumber.TEN),
                 ),
             ),
         ),

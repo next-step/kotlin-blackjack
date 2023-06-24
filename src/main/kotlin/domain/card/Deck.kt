@@ -3,21 +3,21 @@ package domain.card
 import domain.card.util.DeckGenerator
 import domain.game.BlackjackGame
 
-fun MutableList<card>.pop(): card = this.removeAt(0)
+fun MutableList<Card>.pop(): Card = this.removeAt(0)
 
-class Deck(private val cards: MutableList<card>) {
+class Deck(private val Cards: MutableList<Card>) {
     val cardCount
-        get() = cards.size
+        get() = Cards.size
 
-    fun issueCard(): card {
-        if (cards.isEmpty()) {
+    fun issueCard(): Card {
+        if (Cards.isEmpty()) {
             reloadCards()
         }
-        return cards.pop()
+        return Cards.pop()
     }
 
     private fun reloadCards() {
         val newDeck = DeckGenerator.makeDeck(BlackjackGame.BLACKJACK_GAME_DECK_SIZE)
-        cards.addAll(newDeck.cards)
+        Cards.addAll(newDeck.Cards)
     }
 }

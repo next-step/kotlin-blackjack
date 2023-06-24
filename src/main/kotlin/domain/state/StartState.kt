@@ -1,11 +1,11 @@
 package domain.state
 
-import domain.card.card
+import domain.card.Card
 import domain.card.Cards
 
 class StartState private constructor(private val cards: Cards) : State {
 
-    override fun draw(card: card): State {
+    override fun draw(card: Card): State {
         val currentCards = Cards(this.getCards().plus(card))
         return if (currentCards.isDrawable()) Hit(cards = currentCards) else Burst(cards = currentCards)
     }
@@ -15,7 +15,7 @@ class StartState private constructor(private val cards: Cards) : State {
     override fun getCards(): Cards = this.cards
 
     companion object {
-        fun start(card1: card, card2: card): State =
+        fun start(card1: Card, card2: Card): State =
             if (Cards.isBlackjack(card1, card2)) {
                 Blackjack(Cards(listOf(card1, card2)))
             } else {
