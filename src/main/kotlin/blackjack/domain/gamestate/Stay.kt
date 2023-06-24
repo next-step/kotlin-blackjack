@@ -18,4 +18,6 @@ class Stay(
     override fun stay() = throw IllegalStateException("종료된 게임은 stay할 수 없다.")
 
     override fun isBust(): Boolean = false
+
+    override fun score(): Int = cards.score()
 }

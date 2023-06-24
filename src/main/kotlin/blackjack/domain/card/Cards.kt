@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import kotlin.math.abs
+
 @JvmInline
 value class Cards(
     val values: List<Card> = listOf(),
@@ -16,6 +18,19 @@ value class Cards(
     fun isInitialHand() = values.size < INITIAL_HAND_CARD_LIMIT_SIZE
 
     fun isBust() = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
+
+    fun score(): Int = calculateOptimalScore(calculateAllAvailableScore())
+
+    private fun calculateOptimalScore(scores: List<Int>) = scores.filter { it <= BLACKJACK_SCORE }
+        .maxOrNull() ?: scores.minBy { abs(BLACKJACK_SCORE - it) }
+
+    private fun calculateAllAvailableScore() = values.map { it.denomination.score }
+        .fold(listOf(0), ::aggregateScore)
+
+    private fun aggregateScore(
+        currentScores: List<Int>,
+        nextScores: List<Int>
+    ) = currentScores.flatMap { currentScore -> nextScores.map { nextScore -> nextScore + currentScore } }
 
     companion object {
         private const val BLACKJACK_SCORE = 21

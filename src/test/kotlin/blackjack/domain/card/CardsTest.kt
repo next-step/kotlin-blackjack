@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.domain.card.CardTest.Companion.HEART_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
@@ -65,6 +66,22 @@ class CardsTest : FunSpec({
             test("${input}은 버스트가 ${expected}이다") {
                 val cards = Cards(input)
                 val actual = cards.isBust()
+                actual shouldBe expected
+            }
+        }
+    }
+
+    context("score") {
+        forAll(
+            row(listOf(SPADE_ACE, SPADE_TWO), 13),
+            row(listOf(SPADE_ACE, SPADE_KING), 21),
+            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK), 21),
+            row(listOf(SPADE_ACE, HEART_ACE), 12),
+            row(listOf(SPADE_ACE, SPADE_TWO, SPADE_KING), 13)
+
+        ) { input, expected ->
+            test("21에 가장 가까운 score를 계산한다") {
+                val actual = Cards(input).score()
                 actual shouldBe expected
             }
         }

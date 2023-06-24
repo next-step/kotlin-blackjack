@@ -2,7 +2,6 @@ package blackjack.domain.gamestate
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import java.lang.IllegalStateException
 
 class InitialHand(
     val cards: Cards = Cards(),
@@ -24,4 +23,6 @@ class InitialHand(
     override fun stay() = throw IllegalStateException("2장을 받기전에는 카드를 그만받을 수 없다.")
 
     override fun isBust(): Boolean = false
+
+    override fun score() = throw IllegalStateException("턴이 종료되지 않아 점수를 반환할 수 없다.")
 }

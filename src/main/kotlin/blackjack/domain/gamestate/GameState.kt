@@ -11,4 +11,6 @@ interface GameState {
     fun stay(): Stay
 
     fun isBust(): Boolean
+
+    fun score(): Int
 }

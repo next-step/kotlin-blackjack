@@ -24,4 +24,6 @@ class Hit(
     override fun stay() = Stay(cards)
 
     override fun isBust(): Boolean = false
+
+    override fun score() = throw IllegalStateException("턴이 종료되지 않아 점수를 반환할 수 없다.")
 }
