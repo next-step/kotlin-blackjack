@@ -19,5 +19,5 @@ class Hit(
         return Hit(cards)
     }
 
-    override fun stay() = Stay()
+    override fun stay() = Stay(cards)
 }
