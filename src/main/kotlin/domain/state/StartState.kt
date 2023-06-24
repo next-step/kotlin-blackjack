@@ -14,11 +14,6 @@ class StartState private constructor(private val cards: BlackjackCards) : State 
 
     override fun getCards(): BlackjackCards = this.cards
 
-    override fun isDrawable(): Boolean = true
-
-    override fun isProceeding(): Boolean = true
-    override fun getScoreSum(): Int = cards.sum
-
     companion object {
         fun start(card1: BlackjackCard, card2: BlackjackCard): State =
             if (Blackjack.isBlackjack(card1, card2)) {
