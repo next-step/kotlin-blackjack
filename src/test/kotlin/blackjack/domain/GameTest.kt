@@ -27,4 +27,14 @@ class GameTest {
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
         Assertions.assertThat(jason.getCards()).isEqualTo(jasonCards)
     }
+
+    @Test
+    fun `플레이어가 카드 뽑는것을 선택하면 카드를 1장 나눠준다`() {
+        val pobi = Player("pobi")
+
+        game.onePlayerDraw(pobi)
+        val pobiCards = "A다이아"
+
+        Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
+    }
 }

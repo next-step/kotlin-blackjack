@@ -17,7 +17,7 @@ class BlackJackController(
         val game = Game(RandomDeckShuffleStrategy())
 
         firstDraw(game, playerList)
-//        drawEachPlayer(game, playerList)
+        askPlayersWantToDrawCard(game, playerList)
     }
 
     private fun firstDraw(game: Game, playerList: List<Player>) {
@@ -25,7 +25,20 @@ class BlackJackController(
         resultView.printFirstDraw(playerList)
     }
 
-    private fun drawEachPlayer(game: Game, playerList: List<Player>) {
-        playerList.forEach {}
+    private fun askPlayersWantToDrawCard(game: Game, playerList: List<Player>) {
+        playerList.forEach { askPlayerWantToDrawCard(game, it) }
+    }
+
+    private fun askPlayerWantToDrawCard(game: Game, player: Player) {
+        resultView.printPlayersWantToDrawCard(player)
+        while (inputView.askPlayersWantToDrawCard()) {
+            drawPlayer(game, player)
+            resultView.printPlayersWantToDrawCard(player)
+        }
+    }
+
+    private fun drawPlayer(game: Game, player: Player) {
+        game.onePlayerDraw(player)
+        resultView.printPlayerCardList(player)
     }
 }

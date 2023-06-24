@@ -23,4 +23,13 @@ class ResultView {
             println(it.getCards())
         }
     }
+
+    fun printPlayersWantToDrawCard(player: Player) {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    }
+
+    fun printPlayerCardList(player: Player) {
+        print("${player.name}카드:")
+        println(player.getCards())
+    }
 }

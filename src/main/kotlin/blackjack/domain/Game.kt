@@ -12,4 +12,8 @@ class Game(deckShuffleStrategy: DeckShuffleStarategy) {
             it.addCards(deck.drawTwoCard())
         }
     }
+
+    fun onePlayerDraw(player: Player) {
+        player.addCard(deck.drawCard())
+    }
 }

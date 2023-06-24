@@ -13,4 +13,11 @@ class InputView {
         return playerNameText.split(",").toList()
     }
 
+    fun askPlayersWantToDrawCard(): Boolean {
+        val playerAnswer = readln()
+        if (playerAnswer == "Y") {
+            return true
+        }
+        return false
+    }
 }
