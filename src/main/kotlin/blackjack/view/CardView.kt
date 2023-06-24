@@ -44,7 +44,7 @@ enum class DenominationView(
     ;
 
     companion object {
-        fun from(denomination: Denomination) = values().firstOrNull() { it.denomination == denomination }
+        fun from(denomination: Denomination) = values().firstOrNull { it.denomination == denomination }
             ?: throw IllegalArgumentException("뷰에서 지원하지 않는 끗수다.")
     }
 }
@@ -60,7 +60,7 @@ enum class SuitView(
     ;
 
     companion object {
-        fun from(suit: Suit) = values().firstOrNull() { it.suit == suit }
+        fun from(suit: Suit) = values().firstOrNull { it.suit == suit }
             ?: throw IllegalArgumentException("뷰에서 지원하지 않는 문양이다.")
     }
 }
