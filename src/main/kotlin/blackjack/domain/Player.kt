@@ -13,8 +13,13 @@ class Player(val name: String) {
         }
     }
 
-    fun getCards(): List<Card> {
-        return cards.toList()
+    fun getCards(): String {
+        var cardText = ""
+        cards.forEachIndexed { index, card ->
+            cardText += card.number.toString() + card.shape.value
+            if (index != cards.lastIndex) cardText += ", "
+        }
+        return cardText
     }
 
     companion object {
