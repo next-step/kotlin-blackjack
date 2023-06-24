@@ -3,7 +3,7 @@ package blackjack
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class CardCalculatorTest {
+class PointCalculatorTest {
     @Test
     fun `숫자 계산은 카드의 숫자를 기본으로 한다`() {
         val cards = listOf(
@@ -12,7 +12,7 @@ class CardCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.HEART, CardValue.EIGHT),
         )
-        CardCalculator.sum(cards) shouldBe 19
+        PointCalculator.sum(cards) shouldBe 19
     }
 
     @Test
@@ -23,26 +23,26 @@ class CardCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.SPADE, CardValue.KING)
         )
-        CardCalculator.sum(cards) shouldBe 21
+        PointCalculator.sum(cards) shouldBe 21
     }
 
     @Test
-    fun `A는 1로 계산할 수 있다`() {
+    fun `A를 11로 계산했을 때 카드 숫자의 총 합이 21를 초과하면 A는 1로 계산한다`() {
         val cards = listOf(
             Card.from(CardType.SPADE, CardValue.TWO),
             Card.from(CardType.DIAMOND, CardValue.EIGHT),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        CardCalculator.sum(cards) shouldBe 21
+        PointCalculator.sum(cards) shouldBe 21
     }
 
     @Test
-    fun `A는 11로 계산할 수 있다`() {
+    fun `A를 11로 계산했을 때 카드 숫자의 총 합이 21를 미만이면 A는 11로 계산한다`() {
         val cards = listOf(
             Card.from(CardType.SPADE, CardValue.JACK),
             Card.from(CardType.DIAMOND, CardValue.KING),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        CardCalculator.sum(cards) shouldBe 21
+        PointCalculator.sum(cards) shouldBe 21
     }
 }

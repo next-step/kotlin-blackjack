@@ -33,12 +33,10 @@ class GameController {
             if (result == "y") {
                 player.addCard(round.getCard())
                 OutputView.printCards(player)
-                continue
             } else if (result == "n") {
                 OutputView.printCards(player)
                 break
             }
-            OutputView.printMessage("입력 값이 잘못되었습니다")
         }
     }
 

@@ -8,6 +8,11 @@ object InputView {
 
     fun inputCard(name: String): String {
         println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+        var input = readln()
+        while (input !in listOf("y", "n")) {
+            println("입력 값이 잘못되었습니다")
+            input = readln()
+        }
+        return input
     }
 }
