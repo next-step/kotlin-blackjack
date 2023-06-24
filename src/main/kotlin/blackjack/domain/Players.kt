@@ -14,6 +14,8 @@ value class Players(
 
     fun allPlayersDrawResult(): List<DrawResult> = values.map { it.currentStatus() }
 
+    fun isEndTurn(index: Int): Boolean = values.size == index
+
     companion object {
         fun from(names: List<String>) = Players(names.map { Player(it) })
     }

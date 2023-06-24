@@ -2,6 +2,8 @@ package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
@@ -21,6 +23,20 @@ class BlackjackGameTest : FunSpec({
             blackjackGame.cardDeck.size() shouldBe 48
             blackjackGame.turn shouldBe 0
             actual shouldHaveSize 2
+        }
+    }
+
+    context("isEndGame") {
+        forAll(
+            row(-1, false),
+            row(0, false),
+            row(2, true)
+        ) { input, expected ->
+            test("현재 턴 ${input}이 종료되었음은 ${expected}이다.") {
+                val blackjackGame = BlackjackGame(turn = input, players = PLAYERS)
+                val actual = blackjackGame.isEndGame()
+                actual shouldBe expected
+            }
         }
     }
 }) {

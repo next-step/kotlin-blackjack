@@ -18,6 +18,8 @@ class BlackjackGame(
         return players.allPlayersDrawResult()
     }
 
+    fun isEndGame(): Boolean = players.isEndTurn(turn)
+
     companion object {
         private const val BEFORE_FIRST_DRAW_TURN = -1
     }
