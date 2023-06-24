@@ -3,6 +3,7 @@ package blackjack.domain.card
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class CardScoreTypeTest : StringSpec({
 
@@ -20,5 +21,13 @@ class CardScoreTypeTest : StringSpec({
                 CardScoreType.fixed(it)
             }
         }
+    }
+
+    "flexible 타입의 작은 값은 1이다" {
+        CardScoreType.Flexible.smallValue shouldBe 1
+    }
+
+    "flexible 타입의 큰 값은 11이다" {
+        CardScoreType.Flexible.largeValue shouldBe 11
     }
 })
