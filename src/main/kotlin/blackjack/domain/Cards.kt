@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 @JvmInline
 value class Cards(

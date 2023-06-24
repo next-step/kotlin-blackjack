@@ -1,10 +1,10 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.CardTest.Companion.SPADE_ACE
-import blackjack.CardTest.Companion.SPADE_KING
-import blackjack.CardTest.Companion.SPADE_TWO
-import blackjack.gamestate.Hit
-import blackjack.gamestate.InitialHand
+import blackjack.domain.CardTest.Companion.SPADE_ACE
+import blackjack.domain.CardTest.Companion.SPADE_KING
+import blackjack.domain.CardTest.Companion.SPADE_TWO
+import blackjack.domain.gamestate.Hit
+import blackjack.domain.gamestate.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll

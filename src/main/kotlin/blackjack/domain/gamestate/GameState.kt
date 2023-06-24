@@ -1,6 +1,6 @@
-package blackjack.gamestate
+package blackjack.domain.gamestate
 
-import blackjack.Card
+import blackjack.domain.Card
 
 interface GameState {
 

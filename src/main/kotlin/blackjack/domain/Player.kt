@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.gamestate.GameState
-import blackjack.gamestate.InitialHand
+import blackjack.domain.gamestate.GameState
+import blackjack.domain.gamestate.InitialHand
 
 class Player(
     val name: String,

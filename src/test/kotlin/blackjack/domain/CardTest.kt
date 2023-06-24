@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.Denomination.*
-import blackjack.Suit.SPADE
+import blackjack.domain.Denomination.*
+import blackjack.domain.Suit.SPADE
 import io.kotest.core.spec.style.FunSpec
 
 class CardTest : FunSpec({

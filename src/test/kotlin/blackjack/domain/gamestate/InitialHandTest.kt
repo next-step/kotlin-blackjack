@@ -1,8 +1,8 @@
-package blackjack.gamestate
+package blackjack.domain.gamestate
 
-import blackjack.CardTest.Companion.SPADE_ACE
-import blackjack.CardTest.Companion.SPADE_TWO
-import blackjack.Cards
+import blackjack.domain.CardTest.Companion.SPADE_ACE
+import blackjack.domain.CardTest.Companion.SPADE_TWO
+import blackjack.domain.Cards
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContain

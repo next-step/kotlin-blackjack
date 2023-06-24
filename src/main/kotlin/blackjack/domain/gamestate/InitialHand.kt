@@ -1,7 +1,7 @@
-package blackjack.gamestate
+package blackjack.domain.gamestate
 
-import blackjack.Card
-import blackjack.Cards
+import blackjack.domain.Card
+import blackjack.domain.Cards
 import java.lang.IllegalStateException
 
 class InitialHand(

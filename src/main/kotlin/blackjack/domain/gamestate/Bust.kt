@@ -1,14 +1,14 @@
-package blackjack.gamestate
+package blackjack.domain.gamestate
 
-import blackjack.Card
-import blackjack.Cards
+import blackjack.domain.Card
+import blackjack.domain.Cards
 
-class Stay(
+class Bust(
     val cards: Cards,
 ) : GameState {
     init {
         require(cards.isInitialHand().not()) { "2장 미만의 카드로 생성될 수 없다." }
-        require(cards.isBust().not()) { "버스트 카드로 생성될 수 없다." }
+        require(cards.isBust()) { "버스트 아닌 카드로 생성될 수 없다." }
     }
 
     override fun cards() = cards.values
