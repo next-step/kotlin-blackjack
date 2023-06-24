@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.Denomination
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
 import io.kotest.data.row

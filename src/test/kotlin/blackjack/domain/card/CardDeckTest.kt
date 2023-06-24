@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
