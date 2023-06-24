@@ -18,7 +18,7 @@ fun printGameResults(gameResults: List<GameResult>) = gameResults.forEach { prin
 
 private fun parsePlayerNames(hands: List<Hands>) = hands.joinToString(PLAYER_NAME_DELIMITER) { it.playerName }
 
-private fun printPlayerDrawResult(hands: Hands) = println("${hands.playerName}카드: ${parseCardsResult(hands.cards)}}")
+private fun printPlayerDrawResult(hands: Hands) = println("${hands.playerName}카드: ${parseCardsResult(hands.cards)}")
 
 private fun printGameResult(gameResult: GameResult) {
     println("${gameResult.playerName}카드: ${parseCardsResult(gameResult.cards)}} - 결과: ${gameResult.score}")
