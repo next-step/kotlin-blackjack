@@ -4,9 +4,9 @@ import blackjack.domain.player.PlayerName
 
 sealed class BlackJackGameTurn {
 
-    object CardDistributionWait : BlackJackGameTurn()
+    object CardDistribution : BlackJackGameTurn()
 
-    data class HitAnswerWait(
+    data class HitOrStay(
         val playerName: PlayerName,
     ) : BlackJackGameTurn()
 

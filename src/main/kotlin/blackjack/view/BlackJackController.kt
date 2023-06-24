@@ -18,8 +18,8 @@ class BlackJackController(
         do {
             val turn = blackJackGame.currentTurn()
             when (turn) {
-                is BlackJackGameTurn.CardDistributionWait -> processCardDistributedTurn(blackJackGame)
-                is BlackJackGameTurn.HitAnswerWait -> processHitAnswerWaitTurn(blackJackGame, turn)
+                is BlackJackGameTurn.CardDistribution -> processCardDistributedTurn(blackJackGame)
+                is BlackJackGameTurn.HitOrStay -> processHitOrStayTurn(blackJackGame, turn)
                 is BlackJackGameTurn.Finished -> processFinishTurn(blackJackGame)
             }
         } while (turn.isFinished().not())
@@ -32,9 +32,9 @@ class BlackJackController(
         resultView.display(cardDistributionResult)
     }
 
-    private fun processHitAnswerWaitTurn(
+    private fun processHitOrStayTurn(
         blackJackGame: BlackJackGame,
-        turn: BlackJackGameTurn.HitAnswerWait,
+        turn: BlackJackGameTurn.HitOrStay,
     ) {
         when (inputView.readHitAnswer(turn.playerName)) {
             HitAnswer.HIT -> {

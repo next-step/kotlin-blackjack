@@ -22,10 +22,10 @@ class BlackJackGame(
     fun currentTurn(): BlackJackGameTurn {
         return when {
             needCardDistribution() -> {
-                BlackJackGameTurn.CardDistributionWait
+                BlackJackGameTurn.CardDistribution
             }
             hasWaitPlayer() -> {
-                BlackJackGameTurn.HitAnswerWait(requireWaitPlayer().name)
+                BlackJackGameTurn.HitOrStay(requireWaitPlayer().name)
             }
             else -> {
                 BlackJackGameTurn.Finished

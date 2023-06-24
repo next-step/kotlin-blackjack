@@ -28,8 +28,8 @@ class BlackJackGameTest : BehaviorSpec({
         )
         game.distributeCardsToPlayers()
         Then("대기중인 첫 플레이어의 hit 대답을 기다린다") {
-            val turn = game.currentTurn() as BlackJackGameTurn.HitAnswerWait
-            turn shouldBe BlackJackGameTurn.HitAnswerWait(playerNames[0])
+            val turn = game.currentTurn() as BlackJackGameTurn.HitOrStay
+            turn shouldBe BlackJackGameTurn.HitOrStay(playerNames[0])
         }
     }
 
@@ -60,7 +60,7 @@ class BlackJackGameTest : BehaviorSpec({
             isBust = CardScoreCalculator().calculateScore(playerCards).isBust
         }
         Then("다음 플레이어로 순서가 넘어간다") {
-            val turn = (game.currentTurn() as BlackJackGameTurn.HitAnswerWait)
+            val turn = (game.currentTurn() as BlackJackGameTurn.HitOrStay)
             val playerName = turn.playerName
             playerName shouldBe playerNames[1]
         }
@@ -75,7 +75,7 @@ class BlackJackGameTest : BehaviorSpec({
         game.distributeCardsToPlayers()
         game.stayFocusedPlayer()
         Then("다음 플레이어로 순서가 넘어간다") {
-            val turn = game.currentTurn() as BlackJackGameTurn.HitAnswerWait
+            val turn = game.currentTurn() as BlackJackGameTurn.HitOrStay
             turn.playerName shouldBe playerNames[1]
         }
     }
