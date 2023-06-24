@@ -33,11 +33,14 @@ class Game(val players: Players, private val deck: Deck, val dealer: Dealer) {
         const val INIT_TAKE_SIZE = 2
         const val THRESHOLD = 21
 
-        fun from(requestNames: List<String>): Game =
+        fun from(request: List<Pair<String, Double>>): Game =
             buildGame {
                 dealer()
                 players {
-                    requestNames.forEach { name(it) }
+                    request.forEach {
+                        name(it.first)
+                        bet(it.second)
+                    }
                 }
                 deck {
                     aceCards(SymbolType.DIAMOND, SymbolType.HEART, SymbolType.CLOVER, SymbolType.SPADE)

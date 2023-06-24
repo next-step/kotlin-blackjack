@@ -2,9 +2,11 @@ package blackjack.domain
 
 sealed class Player(
     val name: String,
-    deck: Deck
+    val bet: Money = Money(),
+    deck: Deck = Deck()
 ) {
-    val deck: Deck = deck.copy()
+    internal val deck: Deck = deck.copy()
+    var revenue: Money = Money()
 
     open fun addCard(card: Card) {
         deck.add(card)
@@ -15,6 +17,10 @@ sealed class Player(
     fun currentDeck(): Deck = deck.copy()
 
     fun calculateScore(): Int = deck.score()
+
+    fun computeEarnings(block: (playerRevenue: Money) -> Money) {
+        revenue = block(revenue)
+    }
 
     abstract fun isAddable(): Boolean
 }

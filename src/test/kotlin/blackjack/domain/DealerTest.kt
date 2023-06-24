@@ -89,7 +89,7 @@ class DealerTest : BehaviorSpec({
 
         When("딜러가 21점을 초과하면") {
             dealer = Dealer()
-            players = Players(listOf(Gamer(name = "catsbi"), Gamer("pobi")))
+            players = Players(listOf(Gamer(name = "catsbi", bet = 1000.0), Gamer(name = "pobi", bet = 1000.0)))
 
             dealer.addCardAll(
                 listOf(
@@ -106,9 +106,9 @@ class DealerTest : BehaviorSpec({
             Then("플레이어어 점수에 상관없이 승리로 평가한다.") {
                 val actual = dealer.calculate(players = players)
 
-                actual.dealerRecord[OutcomeType.LOSE] shouldBe 2
+                actual.dealerRecord shouldBe Money(-2000.0)
                 actual.playerRecords.forEach {
-                    it.value shouldBe OutcomeType.WIN
+                    it.second shouldBe Money(1000.0)
                 }
             }
         }
@@ -123,8 +123,9 @@ class DealerTest : BehaviorSpec({
                             faceCards {
                                 SymbolType.HEART to FaceType.QUEEN and FaceType.KING
                             }
-                        }
-                    ),
+                        },
+                        bet = 1000.0
+                    ), // score 20
                     Gamer(
                         "pobi",
                         deck = buildDeck {
@@ -132,7 +133,8 @@ class DealerTest : BehaviorSpec({
                             numberCards {
                                 2..3 from SymbolType.DIAMOND
                             }
-                        }
+                        }, // score: 15
+                        bet = 1000.0
                     )
                 )
             )
@@ -142,16 +144,15 @@ class DealerTest : BehaviorSpec({
                     FaceCard(symbol = SymbolType.HEART, faceType = FaceType.JACK),
                     NumberCard(symbol = SymbolType.HEART, number = 7)
                 )
-            )
+            ) // score: 17
 
-            Then("각각의 플레이어와 승패를 계산한다.") {
+            Then("각각의 플레이어와 수익을 계산한다.") {
                 val gameResult = dealer.calculate(players = players)
 
-                gameResult.dealerRecord[OutcomeType.WIN] shouldBe 1
-                gameResult.dealerRecord[OutcomeType.LOSE] shouldBe 1
+                gameResult.dealerRecord shouldBe Money()
 
-                gameResult.playerRecords[players[0]] shouldBe OutcomeType.WIN
-                gameResult.playerRecords[players[1]] shouldBe OutcomeType.LOSE
+                gameResult.playerRecords[0].second shouldBe Money(1000.0)
+                gameResult.playerRecords[1].second shouldBe Money(-1000.0)
             }
         }
     }

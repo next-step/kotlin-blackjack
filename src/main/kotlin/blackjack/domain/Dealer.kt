@@ -1,11 +1,12 @@
 package blackjack.domain
 
 import blackjack.domain.Game.Companion.INIT_TAKE_SIZE
-import kotlin.math.abs
+import blackjack.domain.state.OutcomeStateContextHolder
+import blackjack.domain.state.StateType
 
 class Dealer(deck: Deck = Deck()) :
     Player(
-        deck = deck.copy(),
+        deck = deck,
         name = DEFAULT_DEALER_NAME
     ),
     GameOutcomeCalculator {
@@ -18,36 +19,28 @@ class Dealer(deck: Deck = Deck()) :
     override fun isAddable(): Boolean = deck.score() <= THRESHOLD && deck.size <= INIT_TAKE_SIZE
 
     override fun calculate(players: Players): GameResult {
-        val dealerRecord = players.groupingBy(::recodingOutcome)
-            .eachCount()
-            .mapKeys { it.key.dealerOutcome }
+        val dealerType = StateType.from(deck)
+
+        players.forEach {
+            calculateByState(dealerType = dealerType, gamer = it as Gamer)
+        }
 
         return GameResult(
-            dealerRecord = dealerRecord,
-            playerRecords = players.associateWith { recodingOutcome(it).playerOutcome }
+            dealerRecord = this.revenue,
+            playerRecords = players.map { it.name to it.revenue }
         )
     }
 
-    private fun recodingOutcome(player: Player): OutcomeResultEntry {
-        val dealerScore = calculateScore()
-        val playerScore = player.calculateScore()
+    private fun calculateByState(dealerType: StateType, gamer: Gamer) {
+        val playerType = StateType.from(gamer.deck)
 
-        return when {
-            dealerScore > Game.THRESHOLD -> PLAYER_WIN_PAIR
-            playerScore > Game.THRESHOLD -> DEALER_WIN_PAIR
-            (abs(Game.THRESHOLD - dealerScore) < abs(Game.THRESHOLD - playerScore)) -> DEALER_WIN_PAIR
-            else -> PLAYER_WIN_PAIR
-        }
+        OutcomeStateContextHolder
+            .find(playerType = playerType, dealerType = dealerType)
+            .update(gamer = gamer, dealer = this)
     }
 
     companion object {
         const val THRESHOLD = 16
         const val DEFAULT_DEALER_NAME = "딜러"
-        private val DEALER_WIN_PAIR =
-            OutcomeResultEntry(dealerOutcome = OutcomeType.WIN, playerOutcome = OutcomeType.LOSE)
-        private val PLAYER_WIN_PAIR =
-            OutcomeResultEntry(dealerOutcome = OutcomeType.LOSE, playerOutcome = OutcomeType.WIN)
-
-        data class OutcomeResultEntry(val dealerOutcome: OutcomeType, val playerOutcome: OutcomeType)
     }
 }

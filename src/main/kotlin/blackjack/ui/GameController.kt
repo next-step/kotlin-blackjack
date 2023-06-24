@@ -9,8 +9,8 @@ class GameController(
 ) {
 
     fun play() {
-        val requestNames = gameInput.requestPlayers()
-        val game = Game.from(requestNames)
+        val requestPlayers = gameInput.requestPlayers()
+        val game = Game.from(requestPlayers)
 
         game.dealInitialCards()
         gameOutput.printDealInitialCards(game.players)
