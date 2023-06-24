@@ -1,4 +1,4 @@
-package next.step.blackjack.domain
+package next.step.blackjack.domain.card
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

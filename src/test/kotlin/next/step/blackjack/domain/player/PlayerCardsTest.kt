@@ -1,4 +1,4 @@
-package next.step.blackjack.domain
+package next.step.blackjack.domain.player
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec

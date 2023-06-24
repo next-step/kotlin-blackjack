@@ -11,6 +11,4 @@ object HitAvailableState : PlayerState {
         cards.isBurst() -> BurstState
         else -> HitAvailableState
     }
-
-
 }
