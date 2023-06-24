@@ -5,9 +5,9 @@ import io.kotest.matchers.shouldBe
 
 class CardTest : StringSpec({
 
-    "총 48장의 카드 목록을 반환한다" {
+    "총 52장의 카드 목록을 반환한다" {
         val allCards = Card.ALL_CARDS
-        allCards.size shouldBe 48
+        allCards.size shouldBe 52
     }
 
     "모든 모양이 담긴 카드 목록을 반환한다" {

@@ -58,6 +58,7 @@ class BlackJackResultView {
             CardDenomination.SEVEN -> "7"
             CardDenomination.EIGHT -> "8"
             CardDenomination.NINE -> "9"
+            CardDenomination.TEN -> "10"
             CardDenomination.JACK -> "J"
             CardDenomination.QUEEN -> "Q"
             CardDenomination.KING -> "K"

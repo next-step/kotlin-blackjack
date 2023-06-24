@@ -12,6 +12,7 @@ enum class CardDenomination(
     SEVEN(CardScoreType.fixed(7)),
     EIGHT(CardScoreType.fixed(8)),
     NINE(CardScoreType.fixed(9)),
+    TEN(CardScoreType.fixed(10)),
     JACK(CardScoreType.fixed(10)),
     QUEEN(CardScoreType.fixed(10)),
     KING(CardScoreType.fixed(10)),
