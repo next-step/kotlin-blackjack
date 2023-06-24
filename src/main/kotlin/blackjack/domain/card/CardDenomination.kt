@@ -3,7 +3,7 @@ package blackjack.domain.card
 enum class CardDenomination(
     val score: CardScoreType,
 ) {
-    ACE(CardScoreType.joker()),
+    ACE(CardScoreType.flexible()),
     TWO(CardScoreType.fixed(2)),
     THREE(CardScoreType.fixed(3)),
     FOUR(CardScoreType.fixed(4)),

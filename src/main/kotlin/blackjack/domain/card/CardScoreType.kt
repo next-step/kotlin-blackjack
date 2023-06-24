@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 sealed class CardScoreType {
 
-    object Joker : CardScoreType() {
+    object Flexible : CardScoreType() {
         const val smallValue = 1
         const val largeValue = 11
     }
@@ -24,8 +24,8 @@ sealed class CardScoreType {
 
     companion object {
 
-        fun joker(): CardScoreType {
-            return Joker
+        fun flexible(): CardScoreType {
+            return Flexible
         }
 
         fun fixed(value: Int): CardScoreType {
@@ -36,6 +36,6 @@ sealed class CardScoreType {
 
 fun List<CardScoreType.Fixed>.sum() = sumOf { it.value }
 
-fun List<CardScoreType.Joker>.sumSmallValue() = sumOf { it.smallValue }
+fun List<CardScoreType.Flexible>.sumSmallValue() = sumOf { it.smallValue }
 
-fun List<CardScoreType.Joker>.sumLargeValue() = sumOf { it.largeValue }
+fun List<CardScoreType.Flexible>.sumLargeValue() = sumOf { it.largeValue }

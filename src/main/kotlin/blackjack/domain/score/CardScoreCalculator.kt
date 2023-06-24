@@ -21,12 +21,12 @@ class CardScoreCalculator {
     }
 
     private fun List<Card>.classifyByScore(): CardClassifiedResult {
-        val jokerScores = mutableListOf<CardScoreType.Joker>()
+        val jokerScores = mutableListOf<CardScoreType.Flexible>()
         val fixedScores = mutableListOf<CardScoreType.Fixed>()
 
         forEach { card ->
             when (val score = card.denomination.score) {
-                is CardScoreType.Joker -> jokerScores.add(score)
+                is CardScoreType.Flexible -> jokerScores.add(score)
                 is CardScoreType.Fixed -> fixedScores.add(score)
             }
         }
@@ -35,7 +35,7 @@ class CardScoreCalculator {
     }
 
     private data class CardClassifiedResult(
-        val jokerScores: List<CardScoreType.Joker>,
+        val jokerScores: List<CardScoreType.Flexible>,
         val fixedScores: List<CardScoreType.Fixed>,
     ) {
 
