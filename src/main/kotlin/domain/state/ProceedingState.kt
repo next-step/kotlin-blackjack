@@ -1,8 +1,8 @@
 package domain.state
 
-import domain.card.BlackjackCards
+import domain.card.Cards
 
-abstract class ProceedingState(private val cards: BlackjackCards) : State {
+abstract class ProceedingState(private val cards: Cards) : State {
 
-    final override fun getCards(): BlackjackCards = cards
+    final override fun getCards(): Cards = cards
 }

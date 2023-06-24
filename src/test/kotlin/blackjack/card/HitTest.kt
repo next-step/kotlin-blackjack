@@ -1,8 +1,8 @@
 package blackjack.card
 
 import blackjack.card.helper.HitTestHelper
-import domain.card.BlackjackCard
-import domain.card.BlackjackCards
+import domain.card.card
+import domain.card.Cards
 import domain.state.Burst
 import domain.state.Hit
 import domain.state.Stand
@@ -16,8 +16,8 @@ class HitTest {
     @ParameterizedTest
     @MethodSource("getHitStateTestData")
     fun `플레이어는 Hit 상태에서 카드를 더 받았을 때 합이 21 이하라면 Hit 이라는 진행 상태가 된다`(
-        cards: BlackjackCards,
-        newCard: BlackjackCard,
+        cards: Cards,
+        newCard: card,
     ) {
         val hit = Hit(cards)
 
@@ -29,8 +29,8 @@ class HitTest {
     @ParameterizedTest
     @MethodSource("getBurstStateTestData")
     fun `플레이어는 Hit 상태에서 카드를 더 받았을 때 합이 21 초과라면 Burst 라는 종료 상태`(
-        cards: BlackjackCards,
-        newCard: BlackjackCard,
+        cards: Cards,
+        newCard: card,
     ) {
         val hit = Hit(cards)
 
@@ -41,7 +41,7 @@ class HitTest {
 
     @ParameterizedTest
     @MethodSource("getStandStateTestData")
-    fun `플레이어는 힛(Hit) 상태에서 더 이상 카드를 받지 않는다고 하면 스탠드(Stand)라는 종료 상태`(cards: BlackjackCards) {
+    fun `플레이어는 힛(Hit) 상태에서 더 이상 카드를 받지 않는다고 하면 스탠드(Stand)라는 종료 상태`(cards: Cards) {
         val hit = Hit(cards)
 
         val newState = hit.stop()

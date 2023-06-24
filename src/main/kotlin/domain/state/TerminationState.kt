@@ -1,12 +1,12 @@
 package domain.state
 
-import domain.card.BlackjackCard
-import domain.card.BlackjackCards
+import domain.card.card
+import domain.card.Cards
 
-open class TerminationState(private val cards: BlackjackCards) : State {
-    override fun draw(card: BlackjackCard): State = this
+open class TerminationState(private val cards: Cards) : State {
+    override fun draw(card: card): State = this
 
     override fun stop(): State = this
 
-    override fun getCards(): BlackjackCards = this.cards
+    override fun getCards(): Cards = this.cards
 }

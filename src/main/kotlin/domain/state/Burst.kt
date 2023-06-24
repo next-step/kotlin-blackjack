@@ -1,5 +1,5 @@
 package domain.state
 
-import domain.card.BlackjackCards
+import domain.card.Cards
 
-class Burst(cards: BlackjackCards) : TerminationState(cards)
+class Burst(cards: Cards) : TerminationState(cards)

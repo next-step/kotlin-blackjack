@@ -1,7 +1,7 @@
 package blackjack.card
 
-import domain.card.BlackjackCard
-import domain.card.BlackjackCards
+import domain.card.card
+import domain.card.Cards
 import domain.card.CardNumber
 import domain.card.Suit
 import domain.state.Blackjack
@@ -16,10 +16,10 @@ class StateTest {
 
     @Test
     fun `각 상태는 카드들의 정보를 제공`() {
-        val cards = BlackjackCards(
+        val cards = Cards(
             listOf(
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.ACE),
-                BlackjackCard(suit = Suit.SPADE, number = CardNumber.TWO),
+                card(suit = Suit.SPADE, number = CardNumber.ACE),
+                card(suit = Suit.SPADE, number = CardNumber.TWO),
             ),
         )
         val start = StartState.start(cards[0], cards[1])

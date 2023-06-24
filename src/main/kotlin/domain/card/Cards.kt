@@ -1,6 +1,6 @@
 package domain.card
 
-class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCard> by cards {
+class Cards(private val cards: List<card>) : List<card> by cards {
 
     val sum: Int
 
@@ -25,7 +25,7 @@ class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCar
     companion object {
         private const val CARD_NUMBER_SUM_MAX = 21
         private const val ACE_SPECIAL_SCORE = 10
-        fun isBlackjack(card1: BlackjackCard, card2: BlackjackCard): Boolean =
+        fun isBlackjack(card1: card, card2: card): Boolean =
             (card1.number.isAce() && card2.number.isTenScore()) ||
                 (card2.number.isAce() && card1.number.isTenScore())
     }

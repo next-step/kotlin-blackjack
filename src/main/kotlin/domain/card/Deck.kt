@@ -3,13 +3,13 @@ package domain.card
 import domain.card.util.DeckGenerator
 import domain.game.BlackjackGame
 
-fun MutableList<BlackjackCard>.pop(): BlackjackCard = this.removeAt(0)
+fun MutableList<card>.pop(): card = this.removeAt(0)
 
-class Deck(private val cards: MutableList<BlackjackCard>) {
+class Deck(private val cards: MutableList<card>) {
     val cardCount
         get() = cards.size
 
-    fun issueCard(): BlackjackCard {
+    fun issueCard(): card {
         if (cards.isEmpty()) {
             reloadCards()
         }

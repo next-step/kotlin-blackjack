@@ -1,16 +1,16 @@
 package domain.player
 
-import domain.card.BlackjackCard
-import domain.card.BlackjackCards
+import domain.card.card
+import domain.card.Cards
 import domain.state.StartState
 import domain.state.State
 
-class Player(name: String, card1: BlackjackCard, card2: BlackjackCard) {
+class Player(name: String, card1: card, card2: card) {
 
     val name: String
     var state: State
         private set
-    val cards: BlackjackCards
+    val cards: Cards
         get() = state.getCards()
 
     init {
@@ -18,7 +18,7 @@ class Player(name: String, card1: BlackjackCard, card2: BlackjackCard) {
         this.state = StartState.start(card1, card2)
     }
 
-    fun draw(card: BlackjackCard): State {
+    fun draw(card: card): State {
         this.state = state.draw(card)
         return this.state
     }

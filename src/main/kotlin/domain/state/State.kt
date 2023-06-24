@@ -1,11 +1,11 @@
 package domain.state
 
-import domain.card.BlackjackCard
-import domain.card.BlackjackCards
+import domain.card.card
+import domain.card.Cards
 
 interface State {
 
-    fun draw(card: BlackjackCard): State
+    fun draw(card: card): State
     fun stop(): State
-    fun getCards(): BlackjackCards
+    fun getCards(): Cards
 }

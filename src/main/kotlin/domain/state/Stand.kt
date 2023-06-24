@@ -1,5 +1,5 @@
 package domain.state
 
-import domain.card.BlackjackCards
+import domain.card.Cards
 
-class Stand(cards: BlackjackCards) : TerminationState(cards)
+class Stand(cards: Cards) : TerminationState(cards)

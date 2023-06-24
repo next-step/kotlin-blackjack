@@ -1,6 +1,6 @@
 package domain.card.util
 
-import domain.card.BlackjackCard
+import domain.card.card
 import domain.card.CardNumber
 import domain.card.Deck
 import domain.card.Suit
@@ -15,13 +15,13 @@ object DeckGenerator {
         return Deck(cards)
     }
 
-    private fun makeDeck(): List<BlackjackCard> {
+    private fun makeDeck(): List<card> {
         return Suit.values().map {
             makeCards(it, CardNumber.values())
         }.flatten()
     }
 
-    private fun makeCards(suit: Suit, cardNumbers: Array<CardNumber>): List<BlackjackCard> {
-        return cardNumbers.map { BlackjackCard(suit, it) }
+    private fun makeCards(suit: Suit, cardNumbers: Array<CardNumber>): List<card> {
+        return cardNumbers.map { card(suit, it) }
     }
 }
