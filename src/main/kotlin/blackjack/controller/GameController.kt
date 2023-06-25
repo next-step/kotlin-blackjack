@@ -22,7 +22,7 @@ object GameController {
         val participants = Participants(players)
 
         repeat(DEFAULT_INITIAL_DRAW) {
-            participants.players.forEach { it.drawCard(deck) }
+            participants.drawAll(deck)
         }
         return participants
     }
