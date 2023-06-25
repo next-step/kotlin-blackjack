@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.enums.Rank
-
 class Cards(
     private val cards: List<Card>
 ) {
@@ -38,7 +36,7 @@ class Cards(
                 total += if (total > STANDARD_NUMBER) {
                     card.rank.value
                 } else {
-                    Rank.SECRET_ACE_MAX_VALUE
+                    card.rank.hiddenValue
                 }
             }
         }

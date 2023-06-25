@@ -31,7 +31,7 @@ class CardTest {
 
     @Test
     fun `Ace의 경우 숫자 1과 11을 가지고 있다`() {
-        val aceNumbers = listOf(Rank.ACE.value, Rank.SECRET_ACE_MAX_VALUE)
+        val aceNumbers = listOf(Rank.ACE.value, Rank.ACE.hiddenValue)
         aceNumbers.size shouldBe 2
         aceNumbers.sumOf { it } shouldBe 12
     }
