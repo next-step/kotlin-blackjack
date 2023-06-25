@@ -132,7 +132,6 @@ class DslTest {
             block()
         }
 
-
         infix fun String.level(level: Int) {
             languageSkills.add(Pair(this, level))
         }
