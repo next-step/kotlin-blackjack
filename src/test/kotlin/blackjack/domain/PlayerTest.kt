@@ -1,10 +1,10 @@
 package blackjack.domain
 
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-internal class PlayerTest{
+internal class PlayerTest {
     @Test
     internal fun `이름을 입력하면 Player가 생성된다`() {
         Player("pobi").name shouldBe "pobi"
