@@ -11,7 +11,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
-class GamePlayersTest : StringSpec({
+class GamePlayerTest : StringSpec({
     "플레이어가 카드를 뽑는다." {
         // given
         val cards = cards(Card(CardNumber.ACE, CardSymbol.SPADE))

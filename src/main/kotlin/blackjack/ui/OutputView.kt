@@ -22,7 +22,7 @@ object OutputView {
 
     fun printResults(scoreResults: List<GameResult>) {
         scoreResults.forEach { (player, score) ->
-            println("${player.name}카드: ${getCardsName(player.cards)} - 결과: ${score.value}")
+            println("${player.name}카드: ${getCardsName(player.cards)} - 결과: ${player.score}")
         }
     }
 }

@@ -20,7 +20,7 @@ object Controller {
         OutputView.printInitState(playersModels, CardDeck.INIT_DRAW_SIZE)
 
         gamePlayers.players.forEach { player -> turn(deck, player) }
-        val scoreResults = GameResultManager.getGameResults(gamePlayers)
+        val scoreResults = GameResultManager.getGameResults(gamePlayers, dealer)
         OutputView.printResults(scoreResults)
     }
 

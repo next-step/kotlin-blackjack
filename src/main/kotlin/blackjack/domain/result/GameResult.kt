@@ -1,9 +1,9 @@
 package blackjack.domain.result
 
 import blackjack.domain.player.GamePlayer
-import blackjack.domain.score.Score
+import blackjack.domain.result.match.MatchState
 
 data class GameResult(
     val player: GamePlayer,
-    val score: Score,
+    val matchState: MatchState,
 )

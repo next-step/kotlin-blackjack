@@ -50,4 +50,4 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 # 기능 명세서
 - [x] 딜러 개발 - Dealer
   - [x] 딜러와 게임 플레이어 추상화
-- [ ] 플레이어 별로 승패 개발 - GameResultManager
+- [x] 플레이어 별로 승패 개발 - GameResultManager
