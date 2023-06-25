@@ -6,36 +6,27 @@ class ScoreBoard {
     private var lose: Int = 0
     private var draw: Int = 0
 
-    fun winTo(opponent: ScoreBoard) {
+    fun win(): Int {
+        return win
+    }
+
+    fun lose(): Int {
+        return lose
+    }
+
+    fun draw(): Int {
+        return draw
+    }
+
+    fun countWin() {
         this.win++
-        opponent.lose++
     }
 
-    fun loseTo(opponent: ScoreBoard) {
+    fun countLose() {
         this.lose++
-        opponent.win++
     }
 
-    fun draw(opponent: ScoreBoard) {
+    fun countDraw() {
         this.draw++
-        opponent.draw++
-    }
-
-    fun resultForPlayer(): String {
-        return when {
-            win > 0 -> winComment
-            lose > 0 -> loseComment
-            else -> drawComment
-        }
-    }
-
-    fun resultForDealer(): String {
-        return "${win}승 ${draw}무 ${lose}패"
-    }
-
-    companion object {
-        private const val winComment = "승"
-        private const val loseComment = "패"
-        private const val drawComment = "무"
     }
 }
