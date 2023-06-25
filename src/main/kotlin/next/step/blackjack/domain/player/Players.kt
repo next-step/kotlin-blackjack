@@ -1,6 +1,7 @@
 package next.step.blackjack.domain.player
 
 import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.Cards
 
 @JvmInline
 value class Players(private val players: Set<Player>) : Set<Player> by players {
@@ -18,7 +19,7 @@ value class Players(private val players: Set<Player>) : Set<Player> by players {
         const val INIT_CARD_CNT = 2
 
         fun of(playerNames: PlayerNames, cardsGenerator: (n: Int) -> List<Card>): Players {
-            return Players(playerNames.map { Player.of(it, PlayerCards.of(cardsGenerator(INIT_CARD_CNT))) }.toSet())
+            return Players(playerNames.map { Player.of(it, Cards.of(cardsGenerator(INIT_CARD_CNT))) }.toSet())
         }
     }
 }

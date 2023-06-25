@@ -1,9 +1,8 @@
-package next.step.blackjack.domain.player
+package next.step.blackjack.domain.card
 
-import next.step.blackjack.domain.card.Card
 import next.step.blackjack.util.CombinationUtils
 
-data class PlayerCards(private val cards: MutableList<Card> = mutableListOf()) {
+data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     fun add(card: Card) {
         cards.add(card)
     }
@@ -35,6 +34,6 @@ data class PlayerCards(private val cards: MutableList<Card> = mutableListOf()) {
     companion object {
         private const val FINISH_POINT = 21
         private const val BLACKJACK_CARDS_CNT = 2
-        fun of(cards: List<Card>): PlayerCards = PlayerCards(cards.toMutableList())
+        fun of(cards: List<Card>): Cards = Cards(cards.toMutableList())
     }
 }

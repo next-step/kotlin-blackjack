@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
-import next.step.blackjack.domain.player.PlayerCards
+import next.step.blackjack.domain.card.Cards
 
 class HitAvailableStateTest : DescribeSpec({
 
@@ -17,11 +17,11 @@ class HitAvailableStateTest : DescribeSpec({
             }
         }
         context("cards 조건에 따라 다른 다음 상태 제공") {
-            data class NextStateExpected(val cards: PlayerCards, val nextState: PlayerState)
+            data class NextStateExpected(val cards: Cards, val nextState: PlayerState)
 
             withData(
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.ACE, CardSymbol.HEART)
@@ -30,7 +30,7 @@ class HitAvailableStateTest : DescribeSpec({
                     BlackjackState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.CLUB),
@@ -40,7 +40,7 @@ class HitAvailableStateTest : DescribeSpec({
                     FinishedState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.CLUB),
@@ -50,7 +50,7 @@ class HitAvailableStateTest : DescribeSpec({
                     BurstState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.HEART)
