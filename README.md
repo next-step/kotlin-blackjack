@@ -30,7 +30,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 ```
 
 ### Todo
-- [ ] 게임에 참여할 사람 입력받기 - InputView
+- [x] 게임에 참여할 사람 입력받기 - InputView
 - [ ] 게임에 참여할 사람 이름 저장 - Player
 - [ ] 카드 리스트 만들기 - Card
 - [ ] player에게 카드를 나눠주기 - BlackJack
