@@ -6,26 +6,24 @@ open class Player(val name: String) {
 
     private val hand: Hand = Hand()
     private val scoreBoard = ScoreBoard()
+    private var wantToDraw = true
 
     fun hit(vararg pokerCards: PokerCard) {
-        check(hand.ableToDraw()) { "더이상 카드를 받을 수 없습니다." }
+        check(wantToDraw) { "더이상 카드를 받을 수 없습니다." }
 
         for (pokerCard in pokerCards) {
             hand.addNewCard(pokerCard)
         }
-        hand.changeAbleToDraw(!hand.isBlackJackOrBust())
+
+        wantToDraw = hand.isNotBlackJackOrNotBust()
     }
 
     fun hands(): List<PokerCard> {
         return hand.hands()
     }
 
-    fun ableToDraw(): Boolean {
-        return hand.ableToDraw()
-    }
-
     fun stand() {
-        hand.changeAbleToDraw(false)
+        this.wantToDraw = false
     }
 
     fun optimalValue(): Int {
@@ -40,12 +38,12 @@ open class Player(val name: String) {
         return this.scoreBoard
     }
 
-    open fun gameResult(): String {
-        return this.scoreBoard.resultForPlayer()
+    fun wantToDraw(): Boolean {
+        return wantToDraw
     }
 
     fun drawPhase(
-        wantToHit: Boolean = hand.ableToDraw(),
+        wantToHit: Boolean = wantToDraw,
         deckManager: DeckManager,
         handNotice: (Player) -> Unit
     ) {
