@@ -1,11 +1,16 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.Card
 import blackjack.enums.Rank
 
-class CardManager {
+class Cards(
+    private val cards: List<Card>
+) {
 
-    fun getCardsInfo(cards: List<Card>): String {
+    fun hitCard(card: Card) {
+        this.cards.toMutableList().add(card)
+    }
+
+    fun extractCardsInfoAsString(): String {
         var cardsInfo = ""
 
         cards.forEachIndexed { index, card ->
@@ -17,13 +22,13 @@ class CardManager {
         return cardsInfo
     }
 
-    fun getCardsTotalValue(cards: List<Card>): Int {
+    fun calculateCardsTotalValue(): Int {
         var total = 0
-        cards.filter { it.rank.rank != "A" }.forEach { card ->
+        cards.filter { it.rank.rank != ACE_RANK_MARK }.forEach { card ->
             total += card.rank.value
         }
 
-        val rankACards = cards.filter { it.rank.rank == "A" }
+        val rankACards = cards.filter { it.rank.rank == ACE_RANK_MARK }
         if(rankACards.isNotEmpty()) {
             rankACards.forEach { card ->
                 total += if(total > STANDARD_NUMBER) {
@@ -37,6 +42,7 @@ class CardManager {
     }
 
     companion object {
+        private const val ACE_RANK_MARK = "A"
         private const val STANDARD_NUMBER = 10
     }
 }

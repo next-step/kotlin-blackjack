@@ -1,6 +1,7 @@
 package blackjack.service
 
 import blackjack.domain.BlackjackGame
+import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.enums.Condition
@@ -20,7 +21,7 @@ class BlackjackService {
 
         val blackJackPlayers = players.map { player ->
             val cards = dealer.getCardsByCount(BASIC_CARD_COUNT)
-            Player(name = player, cards = cards.toMutableList())
+            Player(name = player, cards = Cards(cards))
         }
         ResultView.printPlayers(players)
         ResultView.printPlayersAndCards(blackJackPlayers)
@@ -42,7 +43,7 @@ class BlackjackService {
             val answer = InputView.askForCardChoice(player)
             if (answer == Condition.YES.condition && player.condition == Condition.YES) {
                 val card = blackjackGame.dealer.getCardsByCount(ONE_MORE_CARD_COUNT)
-                player.addCard(card[0])
+                player.hit(card[0])
                 ResultView.printPlayerAndCards(player)
             } else if (answer == Condition.NO.condition) {
                 player.changeCondition(answer)

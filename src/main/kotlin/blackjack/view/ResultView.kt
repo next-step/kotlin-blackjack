@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.CardManager
 import blackjack.domain.Player
 
 object ResultView {
@@ -11,20 +10,20 @@ object ResultView {
 
     fun printPlayersAndCards(players: List<Player>) {
         players.forEach { player ->
-            val cardsInfo = CardManager().getCardsInfo(player.cards)
+            val cardsInfo = player.cards.extractCardsInfoAsString()
             println("${player.name}카드: $cardsInfo")
         }
     }
 
     fun printPlayerAndCards(player: Player) {
-        val cardsInfo = CardManager().getCardsInfo(player.cards)
+        val cardsInfo = player.cards.extractCardsInfoAsString()
         println("${player.name}카드: $cardsInfo")
     }
 
     fun printResultGame(players: List<Player>) {
         players.forEach { player ->
-            val cardsInfo = CardManager().getCardsInfo(player.cards)
-            val cardsTotalValue = CardManager().getCardsTotalValue(player.cards)
+            val cardsInfo = player.cards.extractCardsInfoAsString()
+            val cardsTotalValue = player.cards.calculateCardsTotalValue()
             println("${player.name}카드: $cardsInfo - 결과: $cardsTotalValue")
         }
     }
