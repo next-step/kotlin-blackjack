@@ -8,6 +8,10 @@ open class Player(
     val cards: List<Card> get() = _cards.toList()
 
     val sum: Int get() = PointCalculator.sum(cards)
+    var win: Int = 0
+        private set
+    var lose: Int = 0
+        private set
 
     init {
         if (_cards.isEmpty()) {
@@ -22,5 +26,13 @@ open class Player(
 
     fun addCard(card: Card) {
         _cards.add(card)
+    }
+
+    fun win() {
+        win++
+    }
+
+    fun lose() {
+        lose++
     }
 }

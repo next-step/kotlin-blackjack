@@ -37,4 +37,46 @@ class PlayerTest {
         val player = Player(name = "홍길동")
         player.name shouldBe "홍길동"
     }
+
+    @Test
+    fun `플레이어의 승패가 기록된다`() {
+        val dealerCard =
+            mutableListOf(Card.from(CardType.CLOVER, CardValue.ACE), Card.from(CardType.SPADE, CardValue.NINE))
+        val dealer = Dealer(cards = dealerCard)
+
+        val playerCards =
+            mutableListOf(Card.from(CardType.SPADE, CardValue.TEN), Card.from(CardType.HEART, CardValue.NINE))
+        val player = Player(_cards = playerCards)
+
+        val winner = Rule.decisionWinner(dealer, player)
+
+        winner shouldBe dealer
+
+        player.win shouldBe 0
+        player.lose shouldBe 1
+
+        dealer.win shouldBe 1
+        dealer.lose shouldBe 0
+    }
+
+    @Test
+    fun `무승부일 때는 승패가 기록되지 않는다`() {
+        val dealerCard =
+            mutableListOf(Card.from(CardType.CLOVER, CardValue.ACE), Card.from(CardType.SPADE, CardValue.NINE))
+        val dealer = Dealer(cards = dealerCard)
+
+        val playerCards =
+            mutableListOf(Card.from(CardType.HEART, CardValue.ACE), Card.from(CardType.HEART, CardValue.NINE))
+        val player = Player(_cards = playerCards)
+
+        val winner = Rule.decisionWinner(dealer, player)
+
+        winner shouldBe null
+
+        player.win shouldBe 0
+        player.lose shouldBe 0
+
+        dealer.win shouldBe 0
+        dealer.lose shouldBe 0
+    }
 }

@@ -14,7 +14,7 @@ class RuleTest {
             mutableListOf(Card.from(CardType.SPADE, CardValue.TEN), Card.from(CardType.HEART, CardValue.NINE))
         val player = Player(_cards = playerCards)
 
-        Rule.getWinner(dealer, player) shouldBe dealer
+        Rule.decisionWinner(dealer, player) shouldBe dealer
     }
 
     @Test
@@ -27,7 +27,7 @@ class RuleTest {
             mutableListOf(Card.from(CardType.SPADE, CardValue.TEN), Card.from(CardType.HEART, CardValue.NINE))
         val player = Player(_cards = playerCards)
 
-        Rule.getWinner(dealer, player) shouldBe player
+        Rule.decisionWinner(dealer, player) shouldBe player
     }
 
     @Test
@@ -40,7 +40,7 @@ class RuleTest {
             mutableListOf(Card.from(CardType.SPADE, CardValue.TEN), Card.from(CardType.HEART, CardValue.SEVEN))
         val player = Player(_cards = playerCards)
 
-        Rule.getWinner(dealer, player) shouldBe null
+        Rule.decisionWinner(dealer, player) shouldBe null
     }
 
     @Test
@@ -56,7 +56,7 @@ class RuleTest {
         )
         val player = Player(_cards = playerCards)
 
-        Rule.getWinner(dealer, player) shouldBe dealer
+        Rule.decisionWinner(dealer, player) shouldBe dealer
     }
 
     @Test
@@ -76,6 +76,6 @@ class RuleTest {
             )
         val player = Player(_cards = playerCards)
 
-        Rule.getWinner(dealer, player) shouldBe player
+        Rule.decisionWinner(dealer, player) shouldBe player
     }
 }
