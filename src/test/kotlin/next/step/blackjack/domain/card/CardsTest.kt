@@ -3,6 +3,7 @@ package next.step.blackjack.domain.card
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.game.GameResult
 import org.junit.jupiter.api.assertThrows
 
 class CardsTest : BehaviorSpec({
@@ -200,6 +201,49 @@ class CardsTest : BehaviorSpec({
             val cards = Cards.of(emptyList())
             Then("예외 발생") {
                 assertThrows<IllegalArgumentException> { cards.descFirst() }
+            }
+        }
+
+    }
+
+    Given("Cards fight") {
+        val cards = Cards.of(
+            listOf(
+                Card.of(CardFace.ACE, CardSymbol.CLUB),
+                Card.of(CardFace.NINE, CardSymbol.HEART),
+            )
+        )
+        When("점수가 더 큰 Cards와 fight하면") {
+            val otherCards = Cards.of(
+                listOf(
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                    Card.of(CardFace.TEN, CardSymbol.HEART),
+                )
+            )
+            Then("짐") {
+                cards.fight(otherCards) shouldBe GameResult.LOSE
+            }
+        }
+        When("점수가 더 작은 Cards와 fight하면") {
+            val otherCards = Cards.of(
+                listOf(
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                    Card.of(CardFace.EIGHT, CardSymbol.HEART),
+                )
+            )
+            Then("이김") {
+                cards.fight(otherCards) shouldBe GameResult.WIN
+            }
+        }
+        When("점수가 더 큰 Cards와 fight하면") {
+            val otherCards = Cards.of(
+                listOf(
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                    Card.of(CardFace.NINE, CardSymbol.HEART),
+                )
+            )
+            Then("비김") {
+                cards.fight(otherCards) shouldBe GameResult.TIE
             }
         }
     }
