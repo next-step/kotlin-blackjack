@@ -81,59 +81,51 @@ class PlayerTest : FunSpec({
         data class GetGameResult(
             val cards: Cards,
             val isPlayerBurst: Boolean,
-            val dealerScore: Int,
+            val dealerCards: Cards,
+            val isDealerBurst: Boolean,
             val gameResult: GameResult
         )
         withData(
             GetGameResult(
-                Cards(
-                    Card.of(Denomination.ACE, Suit.SPADES),
-                    Card.of(Denomination.JACK, Suit.SPADES),
-                ),
+                Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 false,
-                21,
+                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
+                false,
                 GameResult.TIE
             ),
             GetGameResult(
-                Cards(
-                    Card.of(Denomination.ACE, Suit.SPADES),
-                    Card.of(Denomination.JACK, Suit.SPADES),
-                    Card.of(Denomination.ACE, Suit.HEARTS),
-                ),
+                Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS)),
                 false,
-                21,
+                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
+                false,
                 GameResult.LOSE
             ),
             GetGameResult(
-                Cards(
-                    Card.of(Denomination.KING, Suit.SPADES),
-                    Card.of(Denomination.JACK, Suit.SPADES),
-                ),
+                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 false,
-                21,
+                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
+                false,
                 GameResult.LOSE
             ),
             GetGameResult(
-                Cards(
-                    Card.of(Denomination.KING, Suit.SPADES),
-                    Card.of(Denomination.JACK, Suit.SPADES),
-                ),
+                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 false,
-                22,
+                Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
+                true,
                 GameResult.WIN
             ),
             GetGameResult(
-                Cards(
-                    Card.of(Denomination.KING, Suit.SPADES),
-                    Card.of(Denomination.JACK, Suit.SPADES),
-                ),
+                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 true,
-                22,
+                Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
+                true,
                 GameResult.LOSE
             ),
-        ) { (cards, isPlayerBurst, dealerScore, gameResult) ->
+        ) { (cards, isPlayerBurst, dealerCards, isDealerBurst, gameResult) ->
             val player = Player("pobi", cards, isPlayerBurst)
-            player.getGameResult(dealerScore) shouldBe gameResult
+            val dealer = Dealer(dealerCards, isDealerBurst)
+
+            player.getGameResult(dealer) shouldBe gameResult
         }
     }
 })

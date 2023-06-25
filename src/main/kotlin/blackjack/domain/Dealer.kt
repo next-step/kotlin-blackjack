@@ -2,7 +2,8 @@ package blackjack.domain
 
 class Dealer(
     cards: Cards,
-) : Participant(DEALER_NAME, cards) {
+    burst: Boolean = false,
+) : Participant(DEALER_NAME, cards, burst) {
     override fun openedCards(): Cards = Cards(cards.take(DEALER_OPEN_CARD_COUNT))
 
     fun shouldHit(): Boolean {

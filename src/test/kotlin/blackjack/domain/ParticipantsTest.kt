@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 class ParticipantsTest : FunSpec({
 
-    test("members") {
+    test("참가자의 모든 인원을 반환한다") {
         val cards = Cards(
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),

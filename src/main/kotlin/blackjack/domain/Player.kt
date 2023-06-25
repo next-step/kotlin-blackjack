@@ -7,12 +7,13 @@ class Player(
 ) : Participant(name, cards, burst) {
     override fun openedCards(): Cards = cards
 
-    fun getGameResult(dealerScore: Int): GameResult {
+    fun getGameResult(dealer: Dealer): GameResult {
         if (burst) {
             return GameResult.LOSE
         }
 
-        if (dealerScore > Cards.WINNING_NUMBER) {
+        val dealerScore = dealer.calculateScore()
+        if (dealer.burst) {
             return GameResult.WIN
         }
 
