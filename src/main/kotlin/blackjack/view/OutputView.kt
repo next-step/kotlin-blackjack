@@ -32,4 +32,20 @@ object OutputView {
     }
 
     fun printDealerGetCard() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+
+    fun printResult(players: List<Player>) {
+        println("\n## 최종 승패")
+        players.forEach {
+            val win = it.info.record.win
+            val lose = it.info.record.lose
+            printScore(it)
+        }
+    }
+
+    private fun printScore(player: Player) {
+        val win = player.info.record.win
+        val lose = player.info.record.lose
+        val score = "${if (win > 0) "${win}승" else ""} ${if (lose > 0) "${lose}패" else ""}"
+        println("${player.info.name}: ${score.ifBlank { "승패 없음" }}")
+    }
 }
