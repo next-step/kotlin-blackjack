@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.dsl.buildDeck
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -78,6 +79,80 @@ class DealerTest : BehaviorSpec({
                 shouldThrow<IllegalArgumentException> {
                     dealer.addCard(AceCard(SymbolType.HEART))
                 }
+            }
+        }
+    }
+
+    Given("딜러와 플레이어들이 있다.") {
+        var dealer: Dealer
+        var players: Players
+
+        When("딜러가 21점을 초과하면") {
+            dealer = Dealer()
+            players = Players(listOf(Gamer(name = "catsbi", bet = 1000.0), Gamer(name = "pobi", bet = 1000.0)))
+
+            dealer.addCardAll(
+                listOf(
+                    FaceCard(symbol = SymbolType.HEART, faceType = FaceType.JACK),
+                    NumberCard(symbol = SymbolType.HEART, number = 5),
+                    NumberCard(symbol = SymbolType.DIAMOND, number = 9)
+
+                )
+            )
+            players.forEach {
+                it.addCard(NumberCard(symbol = SymbolType.HEART, number = (2..9).random()))
+            }
+
+            Then("플레이어어 점수에 상관없이 승리로 평가한다.") {
+                val actual = dealer.calculate(players = players)
+
+                actual.dealerRecord shouldBe Money(-2000.0)
+                actual.playerRecords.forEach {
+                    it.second shouldBe Money(1000.0)
+                }
+            }
+        }
+
+        When("딜러가 21점 이하라면") {
+            dealer = Dealer()
+            players = Players(
+                listOf(
+                    Gamer(
+                        name = "catsbi",
+                        deck = buildDeck {
+                            faceCards {
+                                SymbolType.HEART to FaceType.QUEEN and FaceType.KING
+                            }
+                        },
+                        bet = 1000.0
+                    ), // score 20
+                    Gamer(
+                        "pobi",
+                        deck = buildDeck {
+                            faceCards { SymbolType.HEART to FaceType.QUEEN }
+                            numberCards {
+                                2..3 from SymbolType.DIAMOND
+                            }
+                        }, // score: 15
+                        bet = 1000.0
+                    )
+                )
+            )
+
+            dealer.addCardAll(
+                listOf(
+                    FaceCard(symbol = SymbolType.HEART, faceType = FaceType.JACK),
+                    NumberCard(symbol = SymbolType.HEART, number = 7)
+                )
+            ) // score: 17
+
+            Then("각각의 플레이어와 수익을 계산한다.") {
+                val gameResult = dealer.calculate(players = players)
+
+                gameResult.dealerRecord shouldBe Money()
+
+                gameResult.playerRecords[0].second shouldBe Money(1000.0)
+                gameResult.playerRecords[1].second shouldBe Money(-1000.0)
             }
         }
     }

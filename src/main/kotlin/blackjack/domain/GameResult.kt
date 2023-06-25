@@ -1,3 +1,3 @@
 package blackjack.domain
 
-data class GameResult(val dealerRecord: Map<OutcomeType, Int>, val playerRecords: Map<Player, OutcomeType>)
+data class GameResult(val dealerRecord: Money, val playerRecords: List<Pair<String, Money>>)

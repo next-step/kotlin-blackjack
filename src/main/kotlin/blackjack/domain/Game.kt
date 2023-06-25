@@ -22,22 +22,27 @@ class Game(val players: Players, private val deck: Deck, val dealer: Dealer) {
         }.addCardAll(deck.pick(capacity))
     }
 
-    fun deaCardsToDealerAndTo(block: () -> Unit) {
+    fun dealCardsToDealerAndTo(block: () -> Unit) {
         if (dealer.isAddable()) {
             deal(player = dealer)
             block()
         }
     }
 
+    fun calculate(): GameResult = dealer.calculate(players)
+
     companion object {
         const val INIT_TAKE_SIZE = 2
         const val THRESHOLD = 21
 
-        fun from(requestNames: List<String>): Game =
+        fun from(request: List<Pair<String, Double>>): Game =
             buildGame {
                 dealer()
                 players {
-                    requestNames.forEach { name(it) }
+                    request.forEach { (name, bettingMoney) ->
+                        name(name)
+                        bet(bettingMoney)
+                    }
                 }
                 deck {
                     aceCards(SymbolType.DIAMOND, SymbolType.HEART, SymbolType.CLOVER, SymbolType.SPADE)

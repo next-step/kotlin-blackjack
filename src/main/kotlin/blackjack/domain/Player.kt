@@ -1,12 +1,21 @@
 package blackjack.domain
 
-sealed interface Player {
-    val name: String
-    val deck: Deck
+sealed class Player(
+    val name: String,
+    val bet: Money = Money(),
+    deck: Deck = Deck()
+) {
+    internal val deck: Deck = deck.copy()
 
-    fun addCard(card: Card)
-    fun addCardAll(values: Collection<Card>)
-    fun isAddable(): Boolean
-    fun calculateScore(): Int
-    fun currentDeck(): Deck
+    open fun addCard(card: Card) {
+        deck.add(card)
+    }
+
+    fun addCardAll(values: Collection<Card>) = values.forEach(::addCard)
+
+    fun currentDeck(): Deck = deck.copy()
+
+    fun calculateScore(): Int = deck.score()
+
+    abstract fun isAddable(): Boolean
 }

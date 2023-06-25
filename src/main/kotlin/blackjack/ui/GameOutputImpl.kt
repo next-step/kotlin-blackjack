@@ -1,8 +1,6 @@
 package blackjack.ui
 
 import blackjack.domain.GameResult
-import blackjack.domain.OutcomeType.LOSE
-import blackjack.domain.OutcomeType.WIN
 import blackjack.domain.Player
 import blackjack.domain.Players
 
@@ -42,10 +40,10 @@ object GameOutputImpl : GameOutput {
         val dealerRecord = gameResult.dealerRecord
         val playerRecords = gameResult.playerRecords
         val result = buildString {
-            append("\n## 최종 승패\n")
-            append("딜러: ${dealerRecord[WIN] ?: 0}승 ${dealerRecord[LOSE] ?: 0}패\n")
+            append("\n## 최종 수익\n")
+            append("딜러: ${dealerRecord}원\n")
             playerRecords.forEach { entry ->
-                append("${entry.key.name}: ${entry.value.korName}\n")
+                append("${entry.first}: ${entry.second}원\n")
             }
         }
 

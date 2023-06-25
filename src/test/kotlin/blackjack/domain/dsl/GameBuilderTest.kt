@@ -20,7 +20,10 @@ class GameBuilderTest : FunSpec({
 
             players {
                 name("catsbi")
+                bet(1000.0)
+
                 name("pobi")
+                bet(1000.0)
             }
         }
 
