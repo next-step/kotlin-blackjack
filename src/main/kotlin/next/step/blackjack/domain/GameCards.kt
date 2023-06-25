@@ -7,6 +7,9 @@ import next.step.blackjack.domain.card.CardSymbol
 data class GameCards(private val cards: MutableList<Card>) {
 
     fun pop(): Card = cards.removeFirst()
+
+    fun pop(n: Int): List<Card> = (1..n).map { cards.removeFirst() }
+    
     fun size(): Int = cards.size
 
     companion object {
