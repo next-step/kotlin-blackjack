@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardValue(private val value: String) {
+enum class CardValue(val value: String) {
     ACE("A"),
     TWO("2"),
     THREE("3"),

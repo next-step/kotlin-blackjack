@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardType(private val value: String) {
+enum class CardType(val value: String) {
 
     SPADE("♠"),
     DIAMOND("♦"),
