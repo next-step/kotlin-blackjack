@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-class GameResult(
+data class GameResult(
     val playerName: String,
     val cards: List<Card>,
     val score: Int,
