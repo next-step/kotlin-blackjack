@@ -32,6 +32,8 @@ class CardNumberCalculatorTest {
             Card(shape = CardShape.SPADE, number = CardNumber.NINE),
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
         )
+
+
     }
 
     @Test
@@ -64,11 +66,22 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `Ace는 1 또는 11로 계산할 수 있다`() {
-        var cardList = listOf<Card>(
-            Card(shape = CardShape.SPADE, number = CardNumber.K),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.Q),
-            Card(shape = CardShape.HEART, number = CardNumber.J)
-        )
+    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
+        val ace = CardNumber.A
+        val startSum = 0
+
+        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
+
+        assertThat(actual).isEqualTo(11)
+    }
+
+    @Test
+    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
+        val ace = CardNumber.A
+        val startSum = 11
+
+        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
+
+        assertThat(actual).isEqualTo(12)
     }
 }
