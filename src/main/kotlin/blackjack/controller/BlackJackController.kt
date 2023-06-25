@@ -2,8 +2,8 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.enums.Condition
+import blackjack.ext.replaceWhiteSpaceAndSplitByComma
 import blackjack.service.BlackjackService
-import blackjack.utils.StringUtils
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -37,7 +37,7 @@ class BlackJackController(
         val inputPlayers = inputView.inputPlayers()
         resultView.printEnter()
 
-        val players = StringUtils.replaceWhiteSpaceAndSplitByComma(inputPlayers)
+        val players = replaceWhiteSpaceAndSplitByComma(inputPlayers)
         val blackjackGame = blackjackService.initBlackjackGame(players)
 
         resultView.printPlayers(players)
