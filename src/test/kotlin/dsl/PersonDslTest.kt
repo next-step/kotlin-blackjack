@@ -1,5 +1,6 @@
 package dsl
 
+import dsl.language.Language
 import dsl.person.Person
 import dsl.skill.Skill
 import dsl.skill.SkillType
@@ -24,18 +25,18 @@ class PersonDslTest {
     @Test
     fun company() {
         val person = introduce {
-            name("홍길동")
-            company("활빈당")
+            name("김현준")
+            company("카카오")
         }
-        person.name shouldBe "홍길동"
-        person.company shouldBe "활빈당"
+        person.name shouldBe "김현준"
+        person.company shouldBe "카카오"
     }
 
     @Test
     fun skillsTest() {
         val person = introduce {
-            name("홍길동")
-            company("활빈당")
+            name("김현준")
+            company("카카오")
             skills {
                 soft("A passion for problem solving")
                 hard("kotlin")
@@ -48,8 +49,8 @@ class PersonDslTest {
     @Test
     fun languagesTest() {
         val person = introduce {
-            name("홍길동")
-            company("활빈당")
+            name("김현준")
+            company("카카오")
             skills {
                 soft("A passion for problem solving")
                 hard("kotlin")
@@ -59,5 +60,7 @@ class PersonDslTest {
                 "English" level 3
             }
         }
+        person.languages shouldContain Language(name = "Korean", level = 5)
+        person.languages shouldContain Language(name = "English", level = 3)
     }
 }
