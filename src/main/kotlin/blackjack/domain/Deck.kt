@@ -32,17 +32,13 @@ class Deck(cardList: List<Card>) : Iterable<Card> {
         private const val EMPTY_DECK_ERROR_MESSAGE = "덱이 비어있습니다"
 
         private val DEFAULT_DECK: Deck by lazy {
-            val list = ArrayList<Card>()
-            for (suit in Suit.values()) {
-                list.addSuitCards(suit)
-            }
+            val list = Suit.values()
+                .flatMap { addSuitCards(it) }
             Deck(list)
         }
 
-        private fun MutableList<Card>.addSuitCards(suit: Suit) {
-            for (number in CardNumber.NUMBER_RANGE) {
-                add(Card(suit, CardNumber.of(number)))
-            }
+        private fun addSuitCards(suit: Suit): List<Card> {
+            return CardNumber.NUMBER_RANGE.map { Card(suit, CardNumber.of(it)) }
         }
 
         fun getShuffledDeck() = Deck(ArrayList(DEFAULT_DECK.cardQueue.shuffled()))
