@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.domain.model
+
+import blackjack.domain.Rule
 
 open class Player(
     val info: PlayerInfo = PlayerInfo(),

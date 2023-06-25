@@ -1,7 +1,8 @@
-package blackjack
+package blackjack.view
 
-import blackjack.CardType.Companion.toText
-import blackjack.CardValue.Companion.toText
+import blackjack.domain.model.CardType.Companion.toText
+import blackjack.domain.model.CardValue.Companion.toText
+import blackjack.domain.model.Player
 
 object OutputView {
     fun divideCard(names: List<String>) {

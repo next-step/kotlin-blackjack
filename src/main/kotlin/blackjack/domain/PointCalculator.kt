@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.domain
+
+import blackjack.domain.model.CardValue
+import blackjack.domain.model.Cards
 
 object PointCalculator {
     fun sum(cards: Cards): Int {

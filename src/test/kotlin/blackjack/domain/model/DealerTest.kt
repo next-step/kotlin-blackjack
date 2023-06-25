@@ -1,5 +1,6 @@
-package blackjack
+package blackjack.domain.model
 
+import blackjack.domain.PointCalculator
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

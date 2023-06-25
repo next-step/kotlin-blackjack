@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.domain.model
+
+import blackjack.domain.PointCalculator
 
 class Cards(private val cards: MutableList<Card> = mutableListOf(), round: Round = Round()) {
     val items: List<Card> get() = cards.toList()

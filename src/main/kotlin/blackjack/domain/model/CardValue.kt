@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.model
 
 enum class CardValue {
     TWO,

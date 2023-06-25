@@ -1,5 +1,12 @@
-package blackjack
+package blackjack.domain
 
+import blackjack.domain.Rule
+import blackjack.domain.model.Card
+import blackjack.domain.model.CardType
+import blackjack.domain.model.CardValue
+import blackjack.domain.model.Cards
+import blackjack.domain.model.Dealer
+import blackjack.domain.model.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

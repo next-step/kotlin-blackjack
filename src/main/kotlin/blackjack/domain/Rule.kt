@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.domain
+
+import blackjack.domain.model.Dealer
+import blackjack.domain.model.Player
 
 object Rule {
     fun decisionWinner(dealer: Dealer, player: Player): Player? {

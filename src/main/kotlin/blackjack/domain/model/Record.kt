@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.model
 
 class Record {
     var win = 0

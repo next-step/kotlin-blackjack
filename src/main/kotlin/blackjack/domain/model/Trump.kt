@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.model
 
 class Trump(private val _cards: MutableList<Card> = defaultTrump()) {
     val cards: List<Card> get() = _cards.toList()

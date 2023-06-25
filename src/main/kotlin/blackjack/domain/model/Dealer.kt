@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.domain.model
+
+import blackjack.domain.Rule
 
 class Dealer(cards: Cards = Cards()) : Player(PlayerInfo(NAME), cards) {
     override fun canGetCard(): Boolean {
