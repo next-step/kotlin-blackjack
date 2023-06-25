@@ -21,9 +21,9 @@ internal class BlackJackTest {
                 Card(Shape.CLOVER, Character.A)
             )
         )
-        val player = Player("pobi",cards)
+        val player = Player("pobi", cards)
 
-        player.cards.score() shouldBe  21
+        player.cards.score() shouldBe 21
         BlackJack.canPlay(player) shouldBe true
     }
 
@@ -36,9 +36,9 @@ internal class BlackJackTest {
                 Card(Shape.CLOVER, Character.TEN)
             )
         )
-        val player = Player("pobi",cards)
+        val player = Player("pobi", cards)
 
-        player.cards.score() shouldBe  24
+        player.cards.score() shouldBe 24
         BlackJack.canPlay(player) shouldBe false
     }
 }

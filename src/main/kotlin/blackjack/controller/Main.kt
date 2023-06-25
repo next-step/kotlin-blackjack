@@ -13,11 +13,12 @@ fun main() {
     players.forEach {
         play(it)
     }
+    ResultView.printResult(players)
 }
 
 fun play(player: Player) {
     var playCount = 0
-    while (BlackJack.canPlay(player) && InputView.getAnswer(player) == "y") {
+    while (player.canPlay() && InputView.getAnswer(player) == "y") {
         player.draw()
         ResultView.printCards(player)
         playCount++

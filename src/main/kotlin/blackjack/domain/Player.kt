@@ -10,4 +10,8 @@ data class Player(val name: String, val cards: Cards = Cards()) {
     fun draw() {
         cards.addCard(Card.draw())
     }
+
+    fun canPlay(): Boolean {
+        return cards.score() <= BLACKJACK_MAX_SCORE
+    }
 }
