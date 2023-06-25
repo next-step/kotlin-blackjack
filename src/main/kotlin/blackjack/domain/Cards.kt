@@ -1,6 +1,6 @@
 package blackjack.domain
 
-object Cards {
+class Cards {
     private val cards: MutableList<Card> = mutableListOf()
 
     init {
@@ -14,5 +14,12 @@ object Cards {
 
     fun getCards(): List<Card> {
         return cards.toList()
+    }
+
+    fun takeCard(): Card {
+        val randomIndex = (0 until cards.size).random()
+        val card = cards[randomIndex]
+        cards.removeAt(randomIndex)
+        return card
     }
 }
