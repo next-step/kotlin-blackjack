@@ -7,7 +7,7 @@ import next.step.racing.view.OutputView
 
 fun main() {
     runCatching {
-        val gameBoard = GameBoard.of(GameCards.shuffled(), InputView.readPlayers())
+        val gameBoard = GameBoard.of(GameCards.shuffled(), InputView.readPlayerNames())
         gameBoard.start { players, cardCnt -> OutputView.showStart(players, cardCnt) }
         gameBoard.turn(InputView::readTurn) { player -> OutputView.showPlayerCards(player) }
         gameBoard.finish { players -> OutputView.showResult(players) }
