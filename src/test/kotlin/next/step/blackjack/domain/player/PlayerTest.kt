@@ -7,6 +7,7 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
+import next.step.blackjack.domain.game.GameResult
 
 class PlayerTest : BehaviorSpec({
 
@@ -79,6 +80,46 @@ class PlayerTest : BehaviorSpec({
             }
             Then("카드 설명 제공") {
                 player.cardDescs() shouldBe listOf("K클로버", "K하트", "2다이아몬드")
+            }
+        }
+    }
+
+    Given("Player fight") {
+        val player = Player.of(
+            PlayerName.of("unfinished17"),
+            Cards.of(
+                listOf(
+                    Card.of(CardFace.SEVEN, CardSymbol.CLUB),
+                    Card.of(CardFace.TEN, CardSymbol.HEART)
+                )
+            )
+        )
+        When("Player state로 게임 결과가 결정되면") {
+            val other = Player.of(
+                PlayerName.of("blackjack"),
+                Cards.of(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.TEN, CardSymbol.HEART)
+                    )
+                )
+            )
+            Then("그대로 게임결과 제공") {
+                player.fight(other) shouldBe GameResult.LOSE
+            }
+        }
+        When("Player state로 게임 결과가 결정되지 않으면") {
+            val other = Player.of(
+                PlayerName.of("unfinished16"),
+                Cards.of(
+                    listOf(
+                        Card.of(CardFace.SIX, CardSymbol.CLUB),
+                        Card.of(CardFace.TEN, CardSymbol.HEART)
+                    )
+                )
+            )
+            Then("점수 비교로 게임 결과 제공") {
+                player.fight(other) shouldBe GameResult.WIN
             }
         }
     }
