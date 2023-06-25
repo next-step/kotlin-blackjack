@@ -12,7 +12,7 @@ class PlayersGameResultTest : DescribeSpec({
 
                 result.put("player", GameResult.WIN)
 
-                result shouldBe PlayersGameResult(mutableMapOf("player" to GameResult.WIN))
+                result shouldBe PlayersGameResult.of(mutableMapOf("player" to GameResult.WIN))
             }
         }
         context("results 호출하면") {

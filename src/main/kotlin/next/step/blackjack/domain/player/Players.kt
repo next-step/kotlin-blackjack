@@ -16,6 +16,8 @@ value class Players(private val players: Set<Player>) : Set<Player> by players {
     }
 
     companion object {
+        fun of(players: Set<Player>) = Players(players)
+
         fun of(playerNames: PlayerNames, cardsGenerator: () -> List<Card>): Players {
             return Players(playerNames.map { Player.of(it, Cards.of(cardsGenerator())) }.toSet())
         }

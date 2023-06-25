@@ -7,7 +7,7 @@ class DealerGameResultsTest : DescribeSpec({
     describe("DealerGameResults") {
         context("zeros로 생성하면") {
             it("GameResult 키에 대해 value가 0인 Map으로 생성") {
-                DealerGameResults.zeros() shouldBe DealerGameResults(
+                DealerGameResults.zeros() shouldBe DealerGameResults.of(
                     mutableMapOf(
                         GameResult.WIN to 0,
                         GameResult.LOSE to 0,
@@ -26,7 +26,7 @@ class DealerGameResultsTest : DescribeSpec({
                 dealerGameResults.add(GameResult.WIN)
                 dealerGameResults.add(GameResult.LOSE)
 
-                dealerGameResults shouldBe DealerGameResults(
+                dealerGameResults shouldBe DealerGameResults.of(
                     mutableMapOf(
                         GameResult.WIN to 2,
                         GameResult.LOSE to 1,
