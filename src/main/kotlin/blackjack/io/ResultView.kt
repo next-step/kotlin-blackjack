@@ -31,14 +31,16 @@ object ResultView {
     fun printUsersResult(users: Users) {
         println()
         for (user in users) {
-            println(
-                RESULT_PRINT_FORMAT.format(
-                    user.name,
-                    deckToString(user.deck),
-                    PointCalculator.calculateUserPoint(user.deck) ?: GAME_OVER_MESSAGE,
-                ),
-            )
+            println(resultFormatting(user))
         }
+    }
+
+    private fun resultFormatting(user: User): String {
+        return RESULT_PRINT_FORMAT.format(
+            user.name,
+            deckToString(user.deck),
+            PointCalculator.calculateUserPoint(user.deck) ?: GAME_OVER_MESSAGE,
+        )
     }
 
     private fun cardNumberToString(cardNumber: CardNumber): String {
