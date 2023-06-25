@@ -1,7 +1,5 @@
 package blackjack.domain
 
-private const val NAME_EXCEPTION = "이름을 정확하게 입력해주십시오"
-
 data class Player(val name: String, val cards: Cards = Cards()) {
     init {
         require(!name.isNullOrBlank()) { NAME_EXCEPTION }
@@ -11,7 +9,11 @@ data class Player(val name: String, val cards: Cards = Cards()) {
         cards.addCard(Card.draw())
     }
 
-    fun canPlay(): Boolean {
-        return cards.score() <= BLACKJACK_MAX_SCORE
+    fun score(): Int {
+        return cards.score()
+    }
+
+    companion object {
+        private const val NAME_EXCEPTION = "이름을 정확하게 입력해주십시오"
     }
 }

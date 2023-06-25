@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.BlackJack
 import blackjack.domain.Player
 
 object ResultView {
@@ -14,15 +15,15 @@ object ResultView {
         println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }}")
     }
 
-    fun printStart(players: List<Player>) {
-        println("\n${players.joinToString { it.name }}$START_STRING")
-        players.forEach { printCards(it) }
+    fun printStart(game: BlackJack) {
+        println("\n${game.players.joinToString { it.name }}$START_STRING")
+        game.players.forEach { printCards(it) }
         println()
     }
 
-    fun printResult(players: List<Player>) {
+    fun printResult(game: BlackJack) {
         println()
-        players.forEach { printScore(it) }
+        game.players.forEach { printScore(it) }
     }
 
     private fun printScore(player: Player) {

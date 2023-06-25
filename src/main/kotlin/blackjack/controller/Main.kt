@@ -6,24 +6,23 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val players = InputView.getNames()
-    BlackJack.start(players)
-    ResultView.printStart(players)
+    val game = BlackJack(InputView.getNames())
+    game.start()
+    ResultView.printStart(game)
 
-    players.forEach {
-        play(it)
+    while (!game.isEnd()) {
+        val player = game.getNowPlayer()
+        val answer = InputView.getAnswer(player)
+        val count = game.play(answer)
+        printCards(player, answer, count)
     }
-    ResultView.printResult(players)
+
+    ResultView.printResult(game)
 }
 
-fun play(player: Player) {
-    var playCount = 0
-    while (player.canPlay() && InputView.getAnswer(player) == "y") {
-        player.draw()
-        ResultView.printCards(player)
-        playCount++
+fun printCards(player: Player, answer: String, count: Int) {
+    if (answer == "n" && count != 0) {
+        return
     }
-    if (playCount == 0) {
-        ResultView.printCards(player)
-    }
+    ResultView.printCards(player)
 }

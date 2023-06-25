@@ -8,12 +8,12 @@ internal class BlackJackTest {
     internal fun `게임이 시작되면 플레이어에게 두장의 카드가 주어진다`() {
         val player = Player("pobi")
         player.cards.cards.size shouldBe 0
-        BlackJack.start(listOf(player))
+        BlackJack(listOf(player)).start()
         player.cards.cards.size shouldBe 2
     }
 
     @Test
-    internal fun `21점이 초과하지 않은 사람은 게임을 진행할 수 있다`() {
+    internal fun `플레이어가 21점이 초과하지않으면 턴은 계속된다`() {
         val cards = Cards(
             mutableListOf(
                 Card(Shape.CLOVER, Character.EIGHT),
@@ -22,13 +22,14 @@ internal class BlackJackTest {
             )
         )
         val player = Player("pobi", cards)
+        val game = BlackJack(listOf(player))
 
         player.cards.score() shouldBe 21
-        BlackJack.canPlay(player) shouldBe true
+        game.isEnd() shouldBe false
     }
 
     @Test
-    internal fun `21점을 초과한 사람은 게임을 진행할 수 없다`() {
+    internal fun `플레이어가 21점을 초과하면 더이상 카드를 뽑을 수 없어 턴이 종료된다`() {
         val cards = Cards(
             mutableListOf(
                 Card(Shape.CLOVER, Character.NINE),
@@ -37,8 +38,58 @@ internal class BlackJackTest {
             )
         )
         val player = Player("pobi", cards)
+        val game = BlackJack(listOf(player))
 
         player.cards.score() shouldBe 24
-        BlackJack.canPlay(player) shouldBe false
+        game.isEnd() shouldBe true
+    }
+
+    @Test
+    internal fun `플레이어가 y를 대답하면 턴은 계속된다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO)
+            )
+        )
+        val player = Player("pobi", cards)
+        val game = BlackJack(listOf(player))
+        game.play("y")
+        game.isEnd() shouldBe false
+    }
+
+    @Test
+    internal fun `플레이어가 n를 대답하면 턴이 종료된다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO)
+            )
+        )
+        val player = Player("pobi", cards)
+        val game = BlackJack(listOf(player))
+        game.play("n")
+        game.isEnd() shouldBe true
+    }
+
+    @Test
+    internal fun `이전 플레이어가 끝나면 게임차례는 넘어간다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.TWO)
+            )
+        )
+        val player1 = Player("pobi", cards)
+        var player2 = Player("ryan", cards)
+        val game = BlackJack(listOf(player1,player2))
+
+        game.getNowPlayer() shouldBe player1
+        game.play("n")
+        game.getNowPlayer() shouldBe player2
+        game.isEnd() shouldBe false
     }
 }
