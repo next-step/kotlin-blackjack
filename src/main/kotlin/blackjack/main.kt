@@ -1,8 +1,8 @@
 package blackjack
 
 import blackjack.controller.GameController
-import blackjack.domain.model.Round
+import blackjack.domain.model.Game
 
 fun main() {
-    GameController().execute(Round())
+    GameController().execute(Game())
 }

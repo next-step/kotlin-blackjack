@@ -3,9 +3,9 @@ package blackjack.domain.model
 import blackjack.domain.Rule
 
 open class Player(
-    round: Round,
+    game: Game,
     val info: PlayerInfo = PlayerInfo(),
-    val cards: Cards = Cards(round = round),
+    val cards: Cards = Cards(game = game),
 ) {
 
     open fun canGetCard(): Boolean {

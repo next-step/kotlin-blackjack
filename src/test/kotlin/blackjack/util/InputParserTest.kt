@@ -1,6 +1,5 @@
 package blackjack.util
 
-import blackjack.util.InputParser
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

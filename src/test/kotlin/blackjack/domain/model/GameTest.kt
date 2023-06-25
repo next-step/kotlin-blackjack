@@ -4,15 +4,15 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class RoundTest {
+class GameTest {
 
     @Test
     fun `카드는 52장 뽑을 수 있다`() {
         val cards = mutableListOf<Card>()
-        val round = Round()
+        val game = Game()
 
         repeat(52) {
-            cards.add(round.getCard())
+            cards.add(game.getCard())
         }
 
         cards.size shouldBe 52
@@ -21,7 +21,7 @@ class RoundTest {
         cards.toSet().size shouldBe 52
 
         shouldThrow<IllegalStateException> {
-            round.getCard()
+            game.getCard()
         }
     }
 }
