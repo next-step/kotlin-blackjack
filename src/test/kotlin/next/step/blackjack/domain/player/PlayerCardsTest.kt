@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
-import next.step.blackjack.util.CombinationUtils
 
 class PlayerCardsTest : BehaviorSpec({
 
@@ -96,9 +95,6 @@ class PlayerCardsTest : BehaviorSpec({
                     Card.of(CardFace.NINE, CardSymbol.CLUB),
                 )
             )
-            Then("가능한 점수는 20, 30, 40") {
-                CombinationUtils.possiblePoints(playerCards.cards) shouldBe setOf(20, 30, 40)
-            }
             Then("21점보다 작으면서 가장 큰 점수를 점수로 제공함") {
                 playerCards.point() shouldBe 20
             }

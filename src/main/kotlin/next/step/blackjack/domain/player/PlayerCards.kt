@@ -3,7 +3,7 @@ package next.step.blackjack.domain.player
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.util.CombinationUtils
 
-data class PlayerCards(val cards: MutableList<Card>) {
+data class PlayerCards(private val cards: MutableList<Card>) {
     fun add(card: Card) {
         cards.add(card)
     }
