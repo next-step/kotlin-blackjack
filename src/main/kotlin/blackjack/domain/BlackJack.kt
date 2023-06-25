@@ -1,8 +1,10 @@
 package blackjack.domain
 
-class BlackJack(private val players: List<Player>) {
+private const val START_CARD_COUNT = 2
+
+class BlackJack(val players: List<Player>) {
     fun start() {
-        for (i in 0 until 2) players.forEach { draw(it) }
+        for (i in 0 until START_CARD_COUNT) players.forEach { draw(it) }
     }
 
     private fun draw(player: Player) {
