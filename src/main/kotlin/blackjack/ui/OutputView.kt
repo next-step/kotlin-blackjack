@@ -1,7 +1,7 @@
 package blackjack.ui
 
+import blackjack.domain.GameResult.GameResult
 import blackjack.domain.card.Cards
-import blackjack.domain.score.GameResult
 import blackjack.ui.model.PlayerOutputModel
 
 object OutputView {

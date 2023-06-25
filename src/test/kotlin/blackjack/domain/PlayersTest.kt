@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.player.Player
@@ -11,10 +12,11 @@ class PlayersTest : StringSpec({
     "플레이어가 카드를 뽑는다." {
         // given
         val cards = cards(Card(CardNumber.ACE, CardSymbol.SPADE))
+        val deck = CardDeck(mutableListOf(Card(CardNumber.TWO, CardSymbol.SPADE)))
         val player = Player("tris", cards)
 
         // when
-        player.draw(Card(CardNumber.TWO, CardSymbol.SPADE))
+        player.draw(deck)
 
         // then
         player.cards shouldBe cards(
@@ -22,44 +24,27 @@ class PlayersTest : StringSpec({
             Card(CardNumber.TWO, CardSymbol.SPADE),
         )
     }
+    "플레이어가 hit 가능한 상태" {
+        // given
+        val cards = cards(Card(CardNumber.ACE, CardSymbol.SPADE))
+        val player = Player("tris", cards)
 
-    "점수가 버스트 플레이어" {
-        val cards = cards(
-            Card(CardNumber.ACE, CardSymbol.SPADE), Card(CardNumber.TWO, CardSymbol.HEART),
-            Card(CardNumber.JACK, CardSymbol.SPADE), Card(CardNumber.QUEEN, CardSymbol.HEART),
-        )
-        val player = Player("test", cards)
-        player.isBustPlayer() shouldBe true
-        player.isNotBustPlayer() shouldBe false
+        // when
+        val result = player.isEligibleToHit()
+
+        // then
+        result shouldBe true
     }
-    "점수가 버스트 플레이어가 아닌 경우" {
-        val cards = cards(
-            Card(CardNumber.ACE, CardSymbol.SPADE),
-            Card(CardNumber.JACK, CardSymbol.SPADE),
-            Card(CardNumber.QUEEN, CardSymbol.HEART),
-        )
-        val player = Player("test", cards)
-        player.isBustPlayer() shouldBe false
-        player.isNotBustPlayer() shouldBe true
-    }
-    "블랙잭인 경우" {
-        val cards = cards(
-            Card(CardNumber.ACE, CardSymbol.SPADE),
-            Card(CardNumber.JACK, CardSymbol.SPADE),
-            Card(CardNumber.QUEEN, CardSymbol.HEART),
-        )
-        val player = Player("test", cards)
-        player.isBlackJack() shouldBe true
-        player.isNotBlackJack() shouldBe false
-    }
-    "블랙잭인 아닌 경우" {
-        val cards = cards(
-            Card(CardNumber.ACE, CardSymbol.SPADE),
-            Card(CardNumber.NINE, CardSymbol.SPADE),
-            Card(CardNumber.TEN, CardSymbol.HEART),
-        )
-        val player = Player("test", cards)
-        player.isBlackJack() shouldBe false
-        player.isNotBlackJack() shouldBe true
+
+    "플레이어가 hit 불가능한 상태" {
+        // given
+        val cards = cards(Card(CardNumber.ACE, CardSymbol.SPADE), Card(CardNumber.TEN, CardSymbol.HEART))
+        val player = Player("tris", cards)
+
+        // when
+        val result = player.isEligibleToHit()
+
+        // then
+        result shouldBe false
     }
 })

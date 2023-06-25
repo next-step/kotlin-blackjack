@@ -1,7 +1,5 @@
 package blackjack.ui
 
-import blackjack.domain.player.Player
-
 object InputView {
     private const val DELIMITER = ","
     private const val YES_ANSWER = "y"
@@ -12,8 +10,8 @@ object InputView {
         return readln().split(DELIMITER).toList()
     }
 
-    fun isHit(player: Player): Boolean {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun isHit(playerName: String): Boolean {
+        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln()
         require(answer == YES_ANSWER || answer == NO_ANSWER) { "예는 y, 아니오는 n 만 입력할 수 있습니다." }
         return answer == YES_ANSWER

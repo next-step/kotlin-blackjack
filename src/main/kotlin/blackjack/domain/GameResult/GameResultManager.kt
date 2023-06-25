@@ -1,4 +1,4 @@
-package blackjack.domain.score
+package blackjack.domain.GameResult
 
 import blackjack.domain.player.Players
 

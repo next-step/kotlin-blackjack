@@ -1,5 +1,7 @@
 package blackjack.domain.score
 
+import blackjack.domain.GameResult.GameResult
+import blackjack.domain.GameResult.GameResultManager
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSymbol
