@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.view.ViewCallback
+import blackjack.view.GameConditionNotify
 import io.kotest.assertions.throwables.shouldNotThrow
 import org.junit.jupiter.api.Test
 
@@ -17,20 +17,21 @@ class BlackJackTableTest {
     fun `게임은 입력 없이도 테스트 가능함`() {
         shouldNotThrow<IllegalStateException> {
             val player = Player(PlayerName("pobi"))
-            BlackJackTable().startGame(
-                Players(listOf(player)),
-                object : ViewCallback {
-                    override fun showPlayerSet(players: Players) {
+            val blackJackTable = BlackJackTable()
+            blackJackTable.startGame(
+                Players(mutableListOf(player), blackJackTable),
+                object : GameConditionNotify {
+                    override fun showPlayerCardSet(players: Players) {
                     }
 
-                    override fun isMoreCard(player: Player): Boolean {
+                    override fun isNeedMoreCard(player: Player): Boolean {
                         return false
                     }
 
                     override fun showPlayerCards(player: Player) {
                     }
 
-                    override fun showGameResult(player: Player) {
+                    override fun showGameResult(player: Players) {
                     }
                 }
             )

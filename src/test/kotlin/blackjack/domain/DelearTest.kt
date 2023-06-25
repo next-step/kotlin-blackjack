@@ -22,5 +22,24 @@ class DelearTest : BehaviorSpec({
                 dealer.shouldGetMoreCard() shouldBe false
             }
         }
+        `when`("카드 점수를 21점으로 설정") {
+            val dealer = Dealer()
+            dealer.addCard(Card(CardNumber.CARD_ACE, CardType.DIAMOND))
+            dealer.addCard(Card(CardNumber.CARD_QUEEN, CardType.DIAMOND))
+            then("딜러의 승패는 딜러 점수와 사용자 점수로 체크할 수 있음") {
+                dealer.getCardScore() shouldBe 21
+                dealer.isDealerMustLoose() shouldBe false
+            }
+        }
+        `when`("카드 점수를 22점으로 설정") {
+            val dealer = Dealer()
+            dealer.addCard(Card(CardNumber.CARD_QUEEN, CardType.DIAMOND))
+            dealer.addCard(Card(CardNumber.CARD_KING, CardType.DIAMOND))
+            dealer.addCard(Card(CardNumber.CARD_TWO, CardType.DIAMOND))
+            then("딜러는 무조건 지는 조건이 됨") {
+                dealer.getCardScore() shouldBe 22
+                dealer.isDealerMustLoose() shouldBe true
+            }
+        }
     }
 })

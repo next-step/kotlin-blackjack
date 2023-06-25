@@ -5,21 +5,19 @@ import kotlin.math.min
 
 open class Player(open val name: PlayerName) {
 
-    val cards: Cards = Cards(mutableListOf())
+    var gameResultState: GameResultState = GameResultState.DRAW
+
+    val cards: Cards = Cards(hashSetOf())
 
     fun addCard(card: Card?) {
         if (card != null) {
-            cards.cards.add(card)
+            cards.addCard(card)
         }
     }
 
     fun getCardScore(): Int {
-        val minScore = cards.cards.sumOf {
-            it.cardNumber.score
-        }
-        val hasAce = cards.cards.any {
-            it.cardNumber == CardNumber.CARD_ACE
-        }
+        val minScore = cards.getTotalScore()
+        val hasAce = cards.hasAceCard()
         val maxScore = minScore + if (hasAce) MAX_PLUS_SCORE else MIN_PLUS_SCORE
         if (maxScore > WIN_SCORE) {
             return minScore
@@ -29,6 +27,10 @@ open class Player(open val name: PlayerName) {
         } else {
             maxScore
         }
+    }
+
+    fun setResultState(state: GameResultState) {
+        gameResultState = state
     }
 
     companion object {

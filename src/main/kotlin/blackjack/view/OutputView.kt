@@ -1,46 +1,101 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardType
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
+import blackjack.domain.GameResultState
+import blackjack.domain.Player
+import blackjack.domain.Players
 
 object OutputView {
 
     private const val SEPERATOR = ", "
+    private const val ZERO_COUNT = 0
 
     fun showPlayerSet(players: Players) {
-        val playersName = players.players.joinToString(SEPERATOR) {
+        val playersName = players.getPlayers().joinToString(SEPERATOR) {
             it.name.name
         }
-        println("${playersName}에게 ${BlackJackTable.START_CARD_COUNT}장의 카드를 나누어 주었습니다.")
-        players.players.forEach {
+        println("${playersName.replaceFirst(",", "와")}에게 ${Players.START_CARD_COUNT}장의 카드를 나누어 주었습니다.")
+        players.getPlayers().forEach {
             showPlayerCards(it)
         }
         println()
     }
 
     fun showPlayerCards(player: Player) {
-        println(getPlayerCardInfomation(player))
+        println(getPlayerCardInformation(player))
     }
 
-    private fun getPlayerCardInfomation(player: Player) = "${player.name.name}카드 : ${getCardsNames(player.cards)}"
+    private fun getPlayerCardInformation(player: Player) = "${player.name.name}카드: ${getCardsNames(player.cards)}"
 
-    fun showGameResult(player: Player) {
-        println("${getPlayerCardInfomation(player)} - 결과: ${player.getCardScore()}")
+    fun showGameResult(players: Players) {
+        players.getPlayers().forEach {
+            showDealerGetMoreCardState(it)
+            println("${getPlayerCardInformation(it)} - 결과: ${it.getCardScore()}")
+        }
+        showFinalResults(players)
+    }
+
+    private fun showDealerGetMoreCardState(it: Player) {
+        if (it is Dealer) {
+            val dealerState = if (it.hasGetMoreCard) "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n" else "\n딜러는 17이상이라 카드를 받지 않았습니다.\n"
+            println(dealerState)
+        }
+    }
+
+    private fun showFinalResults(players: Players) {
+        println("## 최종 승패")
+        players.getPlayers().forEach {
+            showResultPlayer(it)
+        }
+    }
+
+    private fun showResultPlayer(player: Player) {
+        var result = when (player.gameResultState) {
+            GameResultState.WIN -> "승"
+            GameResultState.DRAW -> "무"
+            GameResultState.LOSE -> "패"
+        }
+        if (player is Dealer) {
+            result = makeDealerResult(player)
+        }
+        println("${player.name.name}카드: $result")
+    }
+
+    private fun makeDealerResult(player: Dealer): String {
+        val winCount = player.resultStateCount[GameResultState.LOSE] ?: ZERO_COUNT
+        val drawCount = player.resultStateCount[GameResultState.DRAW] ?: ZERO_COUNT
+        val loseCount = player.resultStateCount[GameResultState.WIN] ?: ZERO_COUNT
+        val result = StringBuffer()
+        if (winCount > ZERO_COUNT) {
+            result.append("${winCount}승 ")
+        }
+        if (drawCount > ZERO_COUNT) {
+            result.append("${drawCount}무 ")
+        }
+        if (loseCount > ZERO_COUNT) {
+            result.append("${loseCount}무 ")
+        }
+        return result.toString()
     }
 
     private fun getCardsNames(cards: Cards): String {
-        return cards.cards.sortedBy { it.cardNumber.score }.joinToString(SEPERATOR) {
+        return cards.getCardsSortByScore().joinToString(SEPERATOR) {
             getCardName(it)
         }
     }
 
     private fun getCardName(card: Card): String {
-        return when(card.cardNumber) {
+        return when (card.cardNumber) {
             CardNumber.CARD_ACE -> "A"
             CardNumber.CARD_KING -> "K"
             CardNumber.CARD_QUEEN -> "Q"
             CardNumber.CARD_JACK -> "J"
             else -> card.cardNumber.score.toString()
-        } + when(card.cardType) {
+        } + when (card.cardType) {
             CardType.SPADE -> "하트"
             CardType.CLOVER -> "클로버"
             CardType.HEART -> "하트"

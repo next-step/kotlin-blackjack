@@ -11,7 +11,7 @@ enum class CardType {
             return Cards(
                 values().flatMap {
                     getCard(numbers, it)
-                }.shuffled().toMutableList()
+                }.shuffled().toHashSet()
             )
         }
 

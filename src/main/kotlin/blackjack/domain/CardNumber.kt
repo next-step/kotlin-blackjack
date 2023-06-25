@@ -12,5 +12,5 @@ enum class CardNumber(val score: Int) {
     CARD_JACK(10),
     CARD_QUEEN(10),
     CARD_KING(10),
-    CARD_ACE(1);
+    CARD_ACE(1)
 }
