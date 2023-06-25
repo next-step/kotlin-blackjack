@@ -6,8 +6,6 @@ class Deck(
     val size: Int
         get() = cards.size
 
-    constructor(vararg cards: Card) : this(cards.toMutableList())
-
     fun draw(): Card = cards.removeLast()
 
     fun draw(count: Int): Cards {
