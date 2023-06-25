@@ -2,13 +2,13 @@ package next.step.blackjack.domain.player
 
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.player.state.HitAvailableState
-import next.step.blackjack.domain.player.state.PlayerState
+import next.step.blackjack.domain.card.state.CardsState
+import next.step.blackjack.domain.card.state.UnfinishedState
 
-data class Player(
+open class Player(
     private val name: PlayerName,
     private val cards: Cards = Cards.of(emptyList()),
-    private var state: PlayerState = HitAvailableState
+    private var state: CardsState = UnfinishedState
 ) {
 
     fun name(): String = name.name
@@ -18,7 +18,7 @@ data class Player(
         state = state.next(cards)
     }
 
-    fun canHit(): Boolean = state.canHit()
+    open fun canHit(): Boolean = state == UnfinishedState
 
     fun cardDescs(): Set<String> = cards.descs()
 
@@ -26,6 +26,6 @@ data class Player(
 
     companion object {
         fun of(name: PlayerName, cards: Cards): Player =
-            Player(name, cards, HitAvailableState.next(cards))
+            Player(name, cards, UnfinishedState.next(cards))
     }
 }
