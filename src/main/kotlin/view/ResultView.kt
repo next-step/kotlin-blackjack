@@ -3,6 +3,7 @@ package view
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
+import domain.dto.WinLoseDrawResult
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.PlayerGameResult

@@ -18,23 +18,15 @@ class BlackjackGameController(
     }
 
     fun gameStart() {
-        game.gameStart { players ->
-            players.forEach { player ->
-                while (!game.isTerminatedPlayer(player)) {
-                    gameProgress(inputView, player)
-
-                    resultView.printPlayerCards(player)
-                }
-            }
-        }
+        game.gameStart(isIssueCard = this::askPlayer, showPlayerCards = this::showPlayerCards)
     }
 
-    private fun gameProgress(inputView: InputView, player: Player) {
-        when (inputView.askDraw(player.name)) {
-            Answer.YES -> game.issueCard(player)
-            else -> game.stopIssueCard(player)
-        }
+    private fun askPlayer(playerName: String) = when (inputView.askDraw(playerName)) {
+        Answer.YES -> true
+        else -> false
     }
+
+    private fun showPlayerCards(player: Player) { resultView.printPlayerCards(player) }
 
     fun playDealer() {
         val issueCardForDealerResult = game.issuedCardForDealer()

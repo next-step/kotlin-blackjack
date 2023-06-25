@@ -1,4 +1,4 @@
-package view
+package domain.dto
 
 import domain.player.Player
 import domain.player.PlayerGameResult

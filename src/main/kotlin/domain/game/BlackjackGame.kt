@@ -6,7 +6,7 @@ import domain.player.Player
 import domain.player.Players
 import domain.state.State
 import domain.state.TerminationState
-import view.WinLoseDrawResult
+import domain.dto.WinLoseDrawResult
 
 class BlackjackGame(private val deck: Deck) {
 
@@ -26,8 +26,30 @@ class BlackjackGame(private val deck: Deck) {
     private fun createPlayers(playerNames: List<String>) =
         Players(playerNames.map { Player(it, deck.issueCard(), deck.issueCard()) })
 
-    fun gameStart(playGame: (players: Players) -> Unit) {
-        playGame(players)
+    fun gameStart(
+        isIssueCard: (playerName: String) -> Boolean,
+        showPlayerCards: (player: Player) -> Unit,
+    ) {
+        players.forEach { playGame(player = it, isIssueCard, showPlayerCards) }
+    }
+
+    private fun playGame(
+        player: Player,
+        isIssueCard: (playerName: String) -> Boolean,
+        showPlayerCards: (player: Player) -> Unit,
+    ) {
+        while (!this.isTerminatedPlayer(player)) {
+            gameProgress(isIssueCard, player)
+
+            showPlayerCards(player)
+        }
+    }
+
+    private fun gameProgress(isIssueCard: (playerName: String) -> Boolean, player: Player) {
+        when (isIssueCard(player.name)) {
+            true -> this.issueCard(player)
+            else -> this.stopIssueCard(player)
+        }
     }
 
     fun issuedCardForDealer(): Boolean {
@@ -36,15 +58,15 @@ class BlackjackGame(private val deck: Deck) {
         return dealer.cards.size > beforeCardSize
     }
 
-    fun isTerminatedPlayer(player: Player): Boolean {
+    private fun isTerminatedPlayer(player: Player): Boolean {
         return player.state is TerminationState
     }
 
-    fun issueCard(player: Player): State {
+    private fun issueCard(player: Player): State {
         return player.draw(this.deck.issueCard())
     }
 
-    fun stopIssueCard(player: Player): State {
+    private fun stopIssueCard(player: Player): State {
         return player.stop()
     }
 
