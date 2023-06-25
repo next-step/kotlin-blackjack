@@ -7,6 +7,7 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
+import next.step.blackjack.domain.game.GameResult
 
 class UnfinishedStateTest : DescribeSpec({
 
@@ -55,6 +56,17 @@ class UnfinishedStateTest : DescribeSpec({
                 )
             ) { (cards, expected) ->
                 UnfinishedState.next(cards) shouldBe expected
+            }
+        }
+        context("카드 상태에 따라 게임 결과가 달라짐") {
+            data class ResultExpected(val state: CardsState, val result: GameResult)
+            withData(
+                ResultExpected(BlackjackState, GameResult.LOSE),
+                ResultExpected(UnfinishedState, GameResult.UNDECIDED),
+                ResultExpected(FinishedState, GameResult.LOSE),
+                ResultExpected(BurstState, GameResult.WIN),
+            ) { (state, result) ->
+                UnfinishedState.fight(state) shouldBe result
             }
         }
     }
