@@ -14,18 +14,18 @@ class GameController {
     private fun inputName(): List<Player> {
         val names = InputParser.parse(InputView.inputNames())
         val players = mutableListOf<Player>().apply {
-            addAll(names.map { Player(it) })
+            addAll(names.map { Player(PlayerInfo(it)) })
         }
         return players
     }
 
     private fun divideCards(players: List<Player>) {
-        OutputView.divideCard(players.map { it.name })
+        OutputView.divideCard(players.map { it.info.name })
         OutputView.printPlayersCards(players)
     }
 
     private fun playerTurn(player: Player, round: Round) {
-        while (player.canGetCard() && InputView.inputCard(player.name)) {
+        while (player.canGetCard() && InputView.inputCard(player.info.name)) {
             player.addCard(round.getCard())
             OutputView.printCards(player)
         }

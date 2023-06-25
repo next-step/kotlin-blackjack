@@ -2,8 +2,8 @@ package blackjack
 
 object Rule {
     fun decisionWinner(dealer: Dealer, player: Player): Player? {
-        val dealerSum = dealer.sum
-        val playerSum = player.sum
+        val dealerSum = dealer.cards.sum
+        val playerSum = player.cards.sum
 
         if (isOverBlackJack(playerSum)) return dealerWin(dealer, player)
 

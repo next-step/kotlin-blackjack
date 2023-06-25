@@ -17,11 +17,11 @@ object OutputView {
     }
 
     fun printCards(player: Player, isResult: Boolean = false) {
-        val cards = player.cards.joinToString { "${it.value.toText()}${it.type.toText()}" }
-        print("${player.name}카드: $cards")
+        val cards = player.cards.items.joinToString { "${it.value.toText()}${it.type.toText()}" }
+        print("${player.info.name}카드: $cards")
 
         if (isResult) {
-            print(" - 결과: ${player.sum}")
+            print(" - 결과: ${player.cards.sum}")
         }
         println()
     }
