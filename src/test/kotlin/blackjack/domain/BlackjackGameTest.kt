@@ -4,7 +4,6 @@ import blackjack.controller.BlackjackGame
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import util.FixedCardSelector
-import java.util.LinkedList
 
 class BlackjackGameTest : BehaviorSpec({
 
@@ -41,13 +40,9 @@ class BlackjackGameTest : BehaviorSpec({
 
     given("게임에서 히트를 하면 21점을 넘기는 유저가 있다") {
         System.setIn("홍길동".byteInputStream())
-        val selectedCardList = listOf(
-            Card(Suit.SPADE, JackQueenKingCardNumber(11)),
-            Card(Suit.SPADE, JackQueenKingCardNumber(12)),
-            Card(Suit.SPADE, JackQueenKingCardNumber(13)),
+        val game = BlackjackGame(
+            FixedCardSelector(Card(Suit.SPADE, JackQueenKingCardNumber(11))),
         )
-        val deck = Deck(LinkedList(selectedCardList))
-        val game = BlackjackGame(FixedCardSelector(deck))
 
         `when`("해당 게임에서 딜을 할때") {
             then("유저는 히트를 한번밖에 하지 못한다") {

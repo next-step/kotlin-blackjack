@@ -1,6 +1,10 @@
 package util
 
-import blackjack.domain.Deck
+import blackjack.domain.Card
 import blackjack.util.CardSelector
 
-class FixedCardSelector(override val deck: Deck) : CardSelector()
+class FixedCardSelector(private val card: Card) : CardSelector {
+    override fun drawCard(): Card {
+        return card
+    }
+}
