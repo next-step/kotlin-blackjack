@@ -1,15 +1,16 @@
 package blackjack.domain
 
 import blackjack.domain.model.CardValue
+import blackjack.domain.model.CardValue.Companion.isAce
 import blackjack.domain.model.Cards
 
 object PointCalculator {
     fun sum(cards: Cards): Int {
         var sum = 0
-        cards.items.filterNot { it.value == CardValue.ACE }.forEach {
+        cards.items.filterNot { it.value.isAce() }.forEach {
             sum += it.value.toPoint(sum)
         }
-        cards.items.filter { it.value == CardValue.ACE }.forEach {
+        cards.items.filter { it.value.isAce() }.forEach {
             sum += it.value.toPoint(sum)
         }
         return sum

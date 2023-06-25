@@ -16,6 +16,7 @@ enum class CardValue {
     ACE;
 
     companion object {
+        fun CardValue.isAce(): Boolean = this == ACE
 
         fun CardValue.toText(): String {
             return when (this) {
