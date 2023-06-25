@@ -1,6 +1,6 @@
 package domain.card
 
-class Cards(private val Cards: List<Card>) : List<Card> by Cards {
+class Cards(private val cards: List<Card>) : List<Card> by cards {
 
     val sum: Int
 
@@ -11,8 +11,8 @@ class Cards(private val Cards: List<Card>) : List<Card> by Cards {
     fun isDrawable(): Boolean = this.sum <= CARD_NUMBER_SUM_MAX
 
     private fun sum(): Int {
-        val scoreSum = Cards.sumOf { it.number.score }
-        return Cards.filter { it.number.isAce() }
+        val scoreSum = cards.sumOf { it.number.score }
+        return cards.filter { it.number.isAce() }
             .fold(scoreSum) { currentSum, _ ->
                 if (currentSum + ACE_SPECIAL_SCORE <= CARD_NUMBER_SUM_MAX) {
                     currentSum + ACE_SPECIAL_SCORE
