@@ -1,13 +1,12 @@
 package next.step.blackjack.domain
 
 import next.step.blackjack.domain.player.Player
-import next.step.blackjack.domain.player.PlayerCards
 import next.step.blackjack.domain.player.PlayerName
 import next.step.blackjack.domain.player.PlayerNames
 
 data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
     fun start(announce: (Set<Player>, Int) -> Unit) {
-        announce(players, INIT_CARD_CNT)
+        announce(players, Player.INIT_CARD_CNT)
     }
 
     fun turn(chooseHit: (Player) -> Boolean, announce: (Player) -> Unit) {
@@ -28,7 +27,6 @@ data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
     }
 
     companion object {
-        private const val INIT_CARD_CNT = 2
         fun of(gameCards: GameCards, playerNames: PlayerNames): GameBoard {
             return GameBoard(gameCards, players(playerNames, gameCards))
         }
@@ -37,6 +35,6 @@ data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
             playerNames.map { player(it, gameCards) }.toSet()
 
         private fun player(name: PlayerName, gameCards: GameCards) =
-            Player.of(name, PlayerCards.of(gameCards.pop(INIT_CARD_CNT)))
+            Player.of(name) { gameCards.pop(it) }
     }
 }
