@@ -17,17 +17,15 @@ class BlackJackScoringStrategy {
         return results.minBy { IDEAL_SCORE - it.value }.value
     }
 
-    private fun pickMinimalResult(results: Results): Int {
-        return results.minOf { it.value }
-    }
-
     private fun updateListWithCard(card: Card, currList: Results): Results {
         val pack = card.cardSignaturePack
         val numbers =
             pack.numberSignature?.values
                 ?: throw IllegalArgumentException("블랙잭에서 스코어링 할 수 있는 카드가 아닙니다")
         val resultList = numbers.map { number -> currList.map { result -> Result(number + result.value) } }
+            .asSequence()
             .flatten()
+            .filter { it.value <= IDEAL_SCORE }
             .toMutableList()
         return Results(resultList)
     }
