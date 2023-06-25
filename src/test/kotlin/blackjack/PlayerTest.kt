@@ -28,6 +28,6 @@ class PlayerTest : FreeSpec({
 
         cards.forEach { player.receive(it) }
 
-        player.cards() shouldContainExactly cards
+        player.cards shouldContainExactly cards
     }
 })
