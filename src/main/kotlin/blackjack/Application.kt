@@ -3,7 +3,7 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.view.CommandView.NO
 import blackjack.view.CommandView.YES
-import blackjack.view.inputPlayerDraw
+import blackjack.view.requestAdditionalDraw
 import blackjack.view.inputPlayerNames
 import blackjack.view.printCurrentDrawResult
 import blackjack.view.printFirstDrawResult
@@ -27,7 +27,7 @@ private tailrec fun runBlackjackGame(blackjackGame: BlackjackGame) {
 }
 
 private fun executeByCommand(blackjackGame: BlackjackGame) {
-    when (inputPlayerDraw(blackjackGame.currentTurnPlayerName())) {
+    when (requestAdditionalDraw(blackjackGame.currentTurnPlayerName())) {
         NO -> blackjackGame.passToNextTurn()
         YES -> printCurrentDrawResult(blackjackGame.currentPlayerDraw())
     }
