@@ -54,5 +54,6 @@ class BlackjackTest {
         )
         val player = Player(card, name = name)
         player.score shouldBe 21
+        player.isBlackJack() shouldBe true
     }
 }
