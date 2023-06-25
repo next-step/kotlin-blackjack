@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.enums.Condition
+import blackjack.domain.enums.Condition
 import blackjack.enums.Rank
 import blackjack.enums.Symbol
 import io.kotest.matchers.shouldBe
@@ -22,6 +22,6 @@ class PlayerTest {
         val cards = Cards(listOf((Card(rank = Rank.ACE, symbol = Symbol.SPADES))))
         val player = Player(name = "플레이어1", cards = cards)
 
-        player.condition shouldBe Condition.YES
+        player.currentCondition() shouldBe Condition.PLAY
     }
 }
