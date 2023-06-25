@@ -8,6 +8,14 @@ object OutputView {
         println("${names.joinToString(",")}에게 2장의 카드를 나누었습니다.")
     }
 
+    fun printPlayersCards(players: List<Player>, isResult: Boolean = false) {
+        if (isResult) println()
+        players.forEach {
+            printCards(it, isResult)
+        }
+        println()
+    }
+
     fun printCards(player: Player, isResult: Boolean = false) {
         val cards = player.cards.joinToString { "${it.value.toText()}${it.type.toText()}" }
         print("${player.name}카드: $cards")
@@ -17,8 +25,4 @@ object OutputView {
         }
         println()
     }
-
-    fun enterLine() = println()
-
-    fun printMessage(message: String) = println(message)
 }

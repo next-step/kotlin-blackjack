@@ -16,34 +16,22 @@ class GameController {
         val players = mutableListOf<Player>().apply {
             addAll(names.map { Player(it) })
         }
-        OutputView.enterLine()
         return players
     }
 
     private fun divideCards(players: List<Player>) {
         OutputView.divideCard(players.map { it.name })
-        players.forEach { OutputView.printCards(it) }
-        OutputView.enterLine()
+        OutputView.printPlayersCards(players)
     }
 
     private fun playerTurn(player: Player, round: Round) {
-        while (player.canGetCard()) {
-            val result: String = InputView.inputCard(player.name)
-
-            if (result == "y") {
-                player.addCard(round.getCard())
-                OutputView.printCards(player)
-            } else if (result == "n") {
-                OutputView.printCards(player)
-                break
-            }
+        while (player.canGetCard() && InputView.inputCard(player.name)) {
+            player.addCard(round.getCard())
+            OutputView.printCards(player)
         }
     }
 
     private fun result(players: List<Player>) {
-        OutputView.enterLine()
-        players.forEach {
-            OutputView.printCards(it, isResult = true)
-        }
+        OutputView.printPlayersCards(players, isResult = true)
     }
 }
