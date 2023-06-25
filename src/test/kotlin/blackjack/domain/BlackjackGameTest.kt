@@ -11,6 +11,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Hit
 import blackjack.domain.gamestate.Stay
+import blackjack.domain.player.Player
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
@@ -66,7 +67,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
                     cardDeck = CardDeck(cardDeck)
                 )
 
@@ -81,7 +82,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = listOf(Player("a", Hit(Cards.of(SPADE_KING, SPADE_JACK)))),
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_KING, SPADE_JACK)))),
                     cardDeck = CardDeck(cardDeck)
                 )
             blackjackGame.currentPlayerDraw()
@@ -142,7 +143,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
                 )
             blackjackGame.passToNextTurn()
 
@@ -153,7 +154,7 @@ class BlackjackGameTest : FunSpec({
     }
 }) {
     companion object {
-        private val PLAYERS = listOf(Player("a"), Player("b"))
+        private val PLAYERS = listOf(Player.from("a"), Player.from("b"))
         private val TURN_MINUS_1 = Turn(-1)
         private val TURN_0 = Turn(0)
         private val TURN_1 = Turn(1)

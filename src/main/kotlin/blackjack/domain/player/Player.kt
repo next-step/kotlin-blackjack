@@ -1,19 +1,16 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.Hands
 import blackjack.domain.card.Card
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.InitialHand
 
 class Player(
-    val name: String,
+    val name: Name,
     gameState: GameState = InitialHand(),
 ) {
     var gameState: GameState = gameState
         private set
-
-    init {
-        require(name.length <= NAME_LENGTH_LIMIT) { "플레이어 이름은 5자를 초과할 수 없다." }
-    }
 
     fun draw(card: Card) {
         gameState = gameState.draw(card)
@@ -27,11 +24,13 @@ class Player(
 
     fun cards(): List<Card> = gameState.cards()
 
-    fun hands(): Hands = Hands(name, cards())
+    fun hands(): Hands = Hands.from(this)
 
     fun score(): Int = gameState.score()
 
     companion object {
-        private const val NAME_LENGTH_LIMIT = 5
+        fun from(name: String) = Player(Name(name))
+
+        fun of(name: String, gameState: GameState) = Player(Name(name), gameState)
     }
 }

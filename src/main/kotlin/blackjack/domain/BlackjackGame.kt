@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Player
 
 class BlackjackGame(
     turn: Turn = Turn(),
@@ -33,7 +34,7 @@ class BlackjackGame(
 
     fun isEndGame(): Boolean = turn.isSameTurn(players.size)
 
-    fun currentTurnPlayerName(): String = currentPlayer().name
+    fun currentTurnPlayerName(): String = currentPlayer().name.value
 
     fun passToNextTurn() {
         currentPlayer().stay()
@@ -57,6 +58,6 @@ class BlackjackGame(
     }
 
     companion object {
-        fun from(playerNames: List<String>) = BlackjackGame(players = playerNames.map { Player(it) })
+        fun from(playerNames: List<String>) = BlackjackGame(players = playerNames.map { Player.from(it) })
     }
 }
