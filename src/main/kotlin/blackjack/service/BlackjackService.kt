@@ -5,51 +5,27 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.enums.Condition
-import blackjack.utils.StringUtils
-import blackjack.view.InputView
-import blackjack.view.ResultView
 
 class BlackjackService {
 
-    fun initBlackjackGame(): BlackjackGame {
-
-        val inputPlayers = InputView.inputPlayers()
-        ResultView.printEnter()
-        val players = StringUtils.replaceWhiteSpaceAndSplitByComma(inputPlayers)
+    fun initBlackjackGame(players: List<String>): BlackjackGame {
         val dealer = Dealer(Deck())
-
         val blackJackPlayers = players.map { player ->
             val cards = dealer.drawCardsFromDeck(BASIC_CARD_COUNT)
             Player(name = player, cards = cards)
         }
-        ResultView.printPlayers(players)
-        ResultView.printPlayersAndCards(blackJackPlayers)
-        ResultView.printEnter()
         return BlackjackGame(blackJackPlayers, dealer)
     }
 
-    fun playBlackjackGame(blackjackGame: BlackjackGame) {
-        blackjackGame.players.forEach { player ->
-            raceBlackjack(player, blackjackGame)
+    fun raceBlackjack(player: Player, blackjackGame: BlackjackGame, answer: String) {
+
+        if (answer == Condition.PLAY.raceFlag && player.currentCondition() == Condition.PLAY) {
+            val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).getOneCard()
+            player.hit(card)
+            checkCondition(player)
+        } else if (answer == Condition.STAY.raceFlag) {
+            player.changeCondition(Condition.STAY)
         }
-
-        ResultView.printEnter()
-        ResultView.printResultGame(blackjackGame.players)
-    }
-
-    private fun raceBlackjack(player: Player, blackjackGame: BlackjackGame) {
-        do {
-            val answer = InputView.askForCardChoice(player)
-            if (answer == Condition.PLAY.raceFlag && player.currentCondition() == Condition.PLAY) {
-                val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).getOneCard()
-                player.hit(card)
-                ResultView.printPlayerAndCards(player)
-                checkCondition(player)
-            } else if (answer == Condition.STAY.raceFlag) {
-                player.changeCondition(Condition.STAY)
-                ResultView.printPlayerAndCards(player)
-            }
-        } while (player.currentCondition() == Condition.PLAY)
     }
 
     private fun checkCondition(player: Player) {
