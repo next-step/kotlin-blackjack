@@ -28,4 +28,11 @@ class CardTest {
         rankList.size shouldBe 3
         rankList.sumOf { it.value } shouldBe 30
     }
+
+    @Test
+    fun `Ace의 경우 숫자 1과 11을 가지고 있다`() {
+        val aceNumbers = listOf(Rank.ACE.value, Rank.SECRET_ACE_MAX_VALUE)
+        aceNumbers.size shouldBe 2
+        aceNumbers.sumOf { it } shouldBe 12
+    }
 }
