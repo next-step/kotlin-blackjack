@@ -19,13 +19,16 @@ class GameResultChecker(
     fun updateScores(winner: Winner, player: Player) {
         when (winner) {
             Winner.PLAYER -> {
-                player.scoreBoard().winTo(dealer.scoreBoard())
+                player.scoreBoard().countWin()
+                dealer.scoreBoard().countLose()
             }
             Winner.DEALER -> {
-                player.scoreBoard().loseTo(dealer.scoreBoard())
+                dealer.scoreBoard().countWin()
+                player.scoreBoard().countLose()
             }
             Winner.DRAW -> {
-                player.scoreBoard().draw(dealer.scoreBoard())
+                dealer.scoreBoard().countDraw()
+                player.scoreBoard().countDraw()
             }
         }
     }
