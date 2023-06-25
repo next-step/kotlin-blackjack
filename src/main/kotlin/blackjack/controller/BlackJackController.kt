@@ -6,7 +6,6 @@ import blackjack.domain.deck.RandomDeckShuffleStrategy
 import blackjack.exception.PlayerLoseException
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
-import java.lang.RuntimeException
 
 class BlackJackController(
     val inputView: InputView,
