@@ -66,7 +66,7 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
 
             And("딜러의 상태도 블랙잭이라면") {
                 Then(" 베팅 금액을 돌려받는다.") {
-                    val (dealerRecord, playerRecords) = blackJackDealer.calculate(Players(listOf(gamer)))
+                    val (_, playerRecords) = blackJackDealer.calculate(Players(listOf(gamer)))
 
                     playerRecords[0].second shouldBe Money()
                 }
