@@ -1,14 +1,13 @@
-package domain
+package dsl.domain
 
-import dsl.domain.introduce
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class IntroduceTest : BehaviorSpec({
 
-    given("정상적인 정보가 주어졌다") {
-        `when`("해당 정보로 소개를 생성하면") {
-            then("정상적으로 생성된다") {
+    Given("정상적인 정보가 주어졌다") {
+        When("해당 정보로 소개를 생성하면") {
+            Then("정상적으로 생성된다") {
                 val introduce = introduce {
                     name("사용자")
                     company("회사명")
