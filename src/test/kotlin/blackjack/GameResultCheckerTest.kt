@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class GameResultCheckerTest : StringSpec({
-    "계산 결과로 딜러가 승리한다." {
+    "딜러의 값이 플레이어보다 높으면 딜러가 승리한다." {
         val dealer = Dealer()
         val gameResultChecker = GameResultChecker(dealer)
         val playerValue = 10
@@ -24,7 +24,7 @@ class GameResultCheckerTest : StringSpec({
         determineWinner shouldBe GameResultChecker.Winner.PLAYER
     }
 
-    "계산 결과로 플레이어가 승리한다." {
+    "플레이어 값이 딜러의 값보다 높으면 플레이어가 승리한다." {
         val dealer = Dealer()
         val gameResultChecker = GameResultChecker(dealer)
         val playerValue = 21
@@ -33,7 +33,7 @@ class GameResultCheckerTest : StringSpec({
         determineWinner shouldBe GameResultChecker.Winner.PLAYER
     }
 
-    "같은 값일 경우 무승부가 된다." {
+    "딜러와 플레이어가 같은 값을 가지면 무승부이다" {
         val dealer = Dealer()
         val gameResultChecker = GameResultChecker(dealer)
         val playerValue = 21
@@ -48,8 +48,8 @@ class GameResultCheckerTest : StringSpec({
         val gameResultChecker = GameResultChecker(dealer)
 
         gameResultChecker.updateScores(GameResultChecker.Winner.DEALER, player)
-        dealer.gameResult() shouldBe "1승 0무 0패"
-        player.gameResult() shouldBe "패"
+        dealer.scoreBoard().win() shouldBe 1
+        player.scoreBoard().lose() shouldBe 1
     }
 
     "플레이어가 승리할 경우 승패가 잘 기록된다." {
@@ -58,8 +58,8 @@ class GameResultCheckerTest : StringSpec({
         val gameResultChecker = GameResultChecker(dealer)
 
         gameResultChecker.updateScores(GameResultChecker.Winner.PLAYER, player)
-        dealer.gameResult() shouldBe "0승 0무 1패"
-        player.gameResult() shouldBe "승"
+        dealer.scoreBoard().lose() shouldBe 1
+        player.scoreBoard().win() shouldBe 1
     }
 
     "무승부의 경우 무승부가 잘 기록된다." {
@@ -68,7 +68,7 @@ class GameResultCheckerTest : StringSpec({
         val gameResultChecker = GameResultChecker(dealer)
 
         gameResultChecker.updateScores(GameResultChecker.Winner.DRAW, player)
-        dealer.gameResult() shouldBe "0승 1무 0패"
-        player.gameResult() shouldBe "무"
+        dealer.scoreBoard().draw() shouldBe 1
+        player.scoreBoard().draw() shouldBe 1
     }
 })
