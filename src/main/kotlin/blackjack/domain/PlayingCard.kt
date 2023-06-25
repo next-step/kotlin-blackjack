@@ -1,8 +1,8 @@
-package blackjack
+package blackjack.domain
 
 data class PlayingCard(val type: CardType, val value: CardValue) {
     override fun toString(): String {
-        return "${value.value}${type.value}"
+        return "${value.displayName}${type.displayName}"
     }
 
     companion object {

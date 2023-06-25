@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain
 
-enum class CardValue(val value: String, val numbers: List<Int>) {
+enum class CardValue(val displayName: String, val numbers: List<Int>) {
     ACE("A", listOf(1, 11)),
     TWO("2", listOf(2)),
     THREE("3", listOf(3)),

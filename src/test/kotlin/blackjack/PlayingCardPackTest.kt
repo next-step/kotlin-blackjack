@@ -1,5 +1,9 @@
 package blackjack
 
+import blackjack.domain.CardType
+import blackjack.domain.CardValue
+import blackjack.domain.PlayingCard
+import blackjack.domain.PlayingCardPackFactory
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
@@ -18,8 +22,8 @@ class PlayingCardPackTest : FreeSpec({
     "카드 팩은 섞을 수 있다." {
         val pack = PlayingCardPackFactory.createPack()
         val originOrder = pack.toList()
-        val shufflePack = pack.shuffle()
-        val shuffledOrder = shufflePack.toList()
+        pack.shuffle()
+        val shuffledOrder = pack.toList()
 
         shuffledOrder shouldNotContainInOrder originOrder
     }
