@@ -14,6 +14,10 @@ object OutputView {
         println("${player.name}카드: ${joinPlayerCardNames(player.cards)}")
     }
 
+    fun printBlackJackResult(player: Player, result: Int) {
+        println("${player.name}카드: ${joinPlayerCardNames(player.cards)} - 결과: $result")
+    }
+
     private fun joinPlayerCardNames(cards: List<Card>): String {
         return cards.joinToString(separator = ", ") { card -> card.toString() }
     }

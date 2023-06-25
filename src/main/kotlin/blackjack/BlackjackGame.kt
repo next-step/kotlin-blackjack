@@ -17,6 +17,7 @@ class BlackjackGame(
         OutputView.printInitialCardCasting(players, initialCastingCardNum)
 
         players.forEach { attemptCasting(it) }
+        score(players)
     }
 
     private fun attemptCasting(player: Player) {
@@ -28,6 +29,12 @@ class BlackjackGame(
 
     private fun ableToCastMore(player: Player): Boolean {
         return blackJackScoringStrategy.score(player.cards) < BLACK_JACK_GOAL_NUMBER
+    }
+
+    private fun score(players: List<Player>) {
+        players.forEach {
+            OutputView.printBlackJackResult(it, blackJackScoringStrategy.score(it.cards))
+        }
     }
 
     companion object {
