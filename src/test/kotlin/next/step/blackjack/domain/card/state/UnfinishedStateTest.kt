@@ -1,4 +1,4 @@
-package next.step.blackjack.domain.player.state
+package next.step.blackjack.domain.card.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -8,16 +8,11 @@ import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
 
-class HitAvailableStateTest : DescribeSpec({
+class UnfinishedStateTest : DescribeSpec({
 
-    describe("HitAvailableState") {
-        context("canHit") {
-            it("항상 true 제공") {
-                HitAvailableState.canHit() shouldBe true
-            }
-        }
+    describe("UnfinishedState") {
         context("cards 조건에 따라 다른 다음 상태 제공") {
-            data class NextStateExpected(val cards: Cards, val nextState: PlayerState)
+            data class NextStateExpected(val cards: Cards, val nextState: CardsState)
 
             withData(
                 NextStateExpected(
@@ -56,10 +51,10 @@ class HitAvailableStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.HEART)
                         )
                     ),
-                    HitAvailableState
+                    UnfinishedState
                 )
             ) { (cards, expected) ->
-                HitAvailableState.next(cards) shouldBe expected
+                UnfinishedState.next(cards) shouldBe expected
             }
         }
     }

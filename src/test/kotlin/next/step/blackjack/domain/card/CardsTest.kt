@@ -34,7 +34,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("블랙잭이 아님") {
-                cards.isBlackJack() shouldBe false
+                cards.isBlackjack() shouldBe false
             }
             Then("20점") {
                 cards.point() shouldBe 20
@@ -45,7 +45,7 @@ class CardsTest : BehaviorSpec({
                 Cards.of(listOf(Card.of(CardFace.ACE, CardSymbol.CLUB), Card.of(CardFace.KING, CardSymbol.HEART)))
 
             Then("blackjack!") {
-                cards.isBlackJack() shouldBe true
+                cards.isBlackjack() shouldBe true
             }
         }
         When("카드를 총 점수가 21점이 넘으면") {
@@ -61,7 +61,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe true
             }
             Then("블랙잭이 아님") {
-                cards.isBlackJack() shouldBe false
+                cards.isBlackjack() shouldBe false
             }
             Then("22점") {
                 cards.point() shouldBe 22
@@ -81,7 +81,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("블랙잭이 아님") {
-                cards.isBlackJack() shouldBe false
+                cards.isBlackjack() shouldBe false
             }
         }
         When("Ace가 포함되어 최소점수가 21점보다 더 작고 최대점수가 21점보다 더 크면서 21점이 가능하지 않으면") {
@@ -100,7 +100,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("블랙잭이 아님") {
-                cards.isBlackJack() shouldBe false
+                cards.isBlackjack() shouldBe false
             }
         }
         When("Ace가 포함되어 최소점수가 21점보다 더 크면") {
@@ -119,7 +119,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe true
             }
             Then("블랙잭이 아님") {
-                cards.isBlackJack() shouldBe false
+                cards.isBlackjack() shouldBe false
             }
         }
         When("Ace가 포함되어 최대점수가 21점과 같으면") {
