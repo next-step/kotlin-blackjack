@@ -27,6 +27,6 @@ object ResultView {
     }
 
     private fun printScore(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }} $SCORE_STRING ${player.cards.score()}")
+        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }} $SCORE_STRING ${player.score()}")
     }
 }

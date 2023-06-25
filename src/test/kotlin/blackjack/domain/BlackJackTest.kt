@@ -24,7 +24,7 @@ internal class BlackJackTest {
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
 
-        player.cards.score() shouldBe 21
+        player.score() shouldBe 21
         game.isEnd() shouldBe false
     }
 
@@ -40,7 +40,7 @@ internal class BlackJackTest {
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
 
-        player.cards.score() shouldBe 24
+        player.score() shouldBe 24
         game.isEnd() shouldBe true
     }
 

@@ -26,7 +26,7 @@ internal class PlayerTest {
     }
 
     @Test
-    internal fun `플레이어가 21점이 초과하지않으면 턴은 계속된다`() {
+    internal fun `플레이어의 점수가 계산된다`() {
         val cards = Cards(
             mutableListOf(
                 Card(Shape.CLOVER, Character.EIGHT),
@@ -36,6 +36,6 @@ internal class PlayerTest {
         )
         val player = Player("pobi", cards)
 
-        player.cards.score() shouldBe 21
+        player.score() shouldBe 21
     }
 }
