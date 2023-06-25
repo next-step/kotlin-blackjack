@@ -1,6 +1,8 @@
-package blackjack.domain
+package blackjack.controller
 
-import blackjack.controller.BlackjackGame
+import blackjack.domain.Card
+import blackjack.domain.JackQueenKingCardNumber
+import blackjack.domain.Suit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import util.FixedCardSelector
