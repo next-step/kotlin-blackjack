@@ -29,6 +29,7 @@ class BlackJackController(
 
     private fun askPlayersWantToDrawCard(game: Game, playerList: List<Player>) {
         playerList.forEach { askPlayerWantToDrawCard(game, it) }
+        println()
     }
 
     private fun askPlayerWantToDrawCard(game: Game, player: Player) {
@@ -47,6 +48,7 @@ class BlackJackController(
     private fun drawPlayer(game: Game, player: Player) {
         game.onePlayerDraw(player)
         resultView.printPlayerCardList(player)
+        println()
     }
 
     private fun printGameResult(playerList: List<Player>) {
