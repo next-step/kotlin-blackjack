@@ -20,7 +20,7 @@ class PlayerTest {
         player.initCards(cards)
 
         player.cards.getValue().size shouldBe 2
-        player.getStatus() shouldBe PlayerStatus.RECEIVE
+        player.getPlayerStatus() shouldBe PlayerStatus.RECEIVE
     }
 
     @Test
@@ -34,7 +34,7 @@ class PlayerTest {
         player.initCards(cards)
 
         player.cards.getOptimizedScore() shouldBe 21
-        player.getStatus() shouldBe PlayerStatus.BLACK_JACK
+        player.getPlayerStatus() shouldBe PlayerStatus.BLACK_JACK
         player.isReceivable() shouldBe true
     }
 
@@ -49,7 +49,7 @@ class PlayerTest {
         player.initCards(cards)
         player.receiveCard(Card(Denomination.TWO, CardType.DIAMONDS))
 
-        player.getStatus() shouldBe PlayerStatus.BUST
+        player.getPlayerStatus() shouldBe PlayerStatus.BUST
         player.isReceivable() shouldBe false
     }
 }
