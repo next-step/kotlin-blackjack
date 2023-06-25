@@ -6,7 +6,7 @@ import blackjack.domain.card.CardNumber
 class CardNumberCalculator {
 
     fun calculateSumOfCardNumbers(cards: List<Card>): Int {
-        var sum = 0;
+        var sum = 0
         cards.forEach {
             sum += calculateCardNumber(it.number, sum)
         }
@@ -17,14 +17,14 @@ class CardNumberCalculator {
         if (cardNumber == CardNumber.A) {
             return proceedAceNumber(sum)
         }
-        return sum + cardNumber.value
+        return cardNumber.value
     }
 
     fun proceedAceNumber(sum: Int): Int {
         if (sum + ACE_MAXINUM <= CONDITION_TO_WIN_BLACK_JACK) {
-            return sum + ACE_MAXINUM
+            return ACE_MAXINUM
         }
-        return sum + ACE_MINIMUM
+        return ACE_MINIMUM
     }
 
     companion object {
@@ -32,5 +32,4 @@ class CardNumberCalculator {
         const val ACE_MAXINUM = 11
         const val ACE_MINIMUM = 1
     }
-
 }

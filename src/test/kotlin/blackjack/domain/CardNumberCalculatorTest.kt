@@ -20,7 +20,7 @@ class CardNumberCalculatorTest {
 
     @Test
     fun `1부터 10까지의 카드 리스트 숫자의 합을 계산한다`() {
-        var cardList = listOf<Card>(
+        var cardList = listOf(
             Card(shape = CardShape.SPADE, number = CardNumber.ONE),
             Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
             Card(shape = CardShape.HEART, number = CardNumber.THREE),
@@ -33,16 +33,22 @@ class CardNumberCalculatorTest {
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
         )
 
+        val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
+        assertThat(actual).isEqualTo(55)
     }
 
     @Test
     fun `King, Queen, Jack 카드 리스트 숫자의 합을 계산한다`() {
-        var cardList = listOf<Card>(
+        var cardList = listOf(
             Card(shape = CardShape.SPADE, number = CardNumber.K),
             Card(shape = CardShape.DIAMOND, number = CardNumber.Q),
             Card(shape = CardShape.HEART, number = CardNumber.J)
         )
+
+        val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
+
+        assertThat(actual).isEqualTo(30)
     }
 
     @ParameterizedTest
@@ -82,6 +88,6 @@ class CardNumberCalculatorTest {
 
         val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
 
-        assertThat(actual).isEqualTo(12)
+        assertThat(actual).isEqualTo(1)
     }
 }
