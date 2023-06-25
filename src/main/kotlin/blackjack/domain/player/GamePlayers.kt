@@ -5,9 +5,9 @@ import blackjack.domain.DealerResult
 import blackjack.domain.PlayerResult
 import blackjack.domain.card.Cards
 
-class GamePlayers(val value: List<Player>, val dealer: Dealer = Dealer()) {
+class GamePlayers(val players: List<Player>, val dealer: Dealer = Dealer()) {
     fun receiveCard(getCards: () -> Cards) {
-        value.plus(dealer).forEach {
+        players.plus(dealer).forEach {
             val cards = getCards()
             it.initCards(cards)
         }
@@ -15,7 +15,7 @@ class GamePlayers(val value: List<Player>, val dealer: Dealer = Dealer()) {
 
     fun getGameResult(): BlackjackGameResult {
         val dealerScore = dealer.cards.getOptimizedScore()
-        val playerResults = value.map { compareScore(it, dealerScore) }
+        val playerResults = players.map { compareScore(it, dealerScore) }
         val dealerResult = DealerResult.from(dealer, playerResults)
         return BlackjackGameResult(dealerResult, playerResults)
     }

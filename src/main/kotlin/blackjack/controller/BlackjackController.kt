@@ -26,7 +26,7 @@ class BlackjackController {
         NewLineOutputView()
 
         // 각 플레이어마다 카드 분배 로직 수행
-        gamePlayers.value.forEach { player -> dealCards(player, blackjackGame) }
+        gamePlayers.players.forEach { player -> dealCards(player, blackjackGame) }
         NewLineOutputView()
 
         // 딜러의 score 여부에 따라 추가 카드 분배 현황 출력

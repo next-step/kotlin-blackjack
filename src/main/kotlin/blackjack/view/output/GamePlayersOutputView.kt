@@ -7,7 +7,7 @@ import blackjack.domain.player.Player
 class GamePlayersOutputView(gamePlayers: GamePlayers, private val isResult: Boolean = false) {
     init {
         with(gamePlayers) {
-            listOf(dealer).plus(value).forEach { gamePlayer -> renderMessage(gamePlayer) }
+            listOf(dealer).plus(players).forEach { gamePlayer -> renderMessage(gamePlayer) }
         }
     }
 
