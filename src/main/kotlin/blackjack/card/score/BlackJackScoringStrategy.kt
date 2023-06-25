@@ -25,7 +25,6 @@ class BlackJackScoringStrategy {
         val resultList = numbers.map { number -> currList.map { result -> Result(number + result.value) } }
             .asSequence()
             .flatten()
-            .filter { it.value <= IDEAL_SCORE }
             .toMutableList()
         return Results(resultList)
     }
