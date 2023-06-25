@@ -1,6 +1,7 @@
 package blakjack.domain
 
-class Cards(val values: Set<Card>) {
+@JvmInline
+value class Cards(val values: Set<Card>) {
     val size: Int
         get() = values.size
 
@@ -20,18 +21,17 @@ class Cards(val values: Set<Card>) {
         return CardsScoreCalculator.sumWithAceAsOne(this)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Cards) return false
-
-        return values == other.values
-    }
-
-    override fun hashCode(): Int {
-        return values.hashCode()
-    }
-
     companion object {
         fun empty(): Cards = Cards(emptySet())
+
+        fun all(): Cards {
+            return Cards(
+                CardSuit.values().flatMap { suit ->
+                    CardRank.values().map { rank ->
+                        Card(suit, rank)
+                    }
+                }.toSet()
+            )
+        }
     }
 }

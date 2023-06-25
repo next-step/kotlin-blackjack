@@ -6,24 +6,26 @@ import blakjack.view.InputView
 import blakjack.view.OutputView
 
 class BlackJackController {
-    private val dealer = Dealer()
 
     fun start() {
+        val dealer = Dealer()
         val playerNames = InputView.readPlayerNames()
-        val players = playerNames.map { Player(name = it) }.also { initialDraw(it) }
+        val players = playerNames
+            .map { Player(name = it) }
+            .also { players -> dealer.initialDraw(players) }
 
         OutputView.printInitialPlayerCards(players)
-        players.forEach(::hitOrStand)
+        players.forEach { player -> dealer.hitOrStand(player) }
         OutputView.printPlayerCardsWithScore(players)
     }
 
-    private fun initialDraw(players: List<Player>) {
-        players.forEach { player -> player.add(dealer.drawTwoCards()) }
+    private fun Dealer.initialDraw(players: List<Player>) {
+        players.forEach { player -> player.add(drawTwoCards()) }
     }
 
-    private fun hitOrStand(player: Player) {
+    private fun Dealer.hitOrStand(player: Player) {
         while (player.isUnderBlackjackScore && InputView.readHitOrStand(player.name)) {
-            player.add(dealer.drawOneCard())
+            player.add(this.drawOneCard())
             OutputView.printPlayerCards(player)
         }
     }

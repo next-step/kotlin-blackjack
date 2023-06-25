@@ -1,18 +1,21 @@
 package blakjack.domain
 
+import blakjack.domain.CardRank.Companion.ACE_SCORE_DIFF
+
 object CardsScoreCalculator {
     fun sum(cards: Cards): Int {
-        var sum = sumByScore(cards)
+        var sum = sumWithAceAsOne(cards)
+
         repeat(getAceCount(cards)) {
-            if (isBust(sum + Card.ACE_SCORE_DIFF)) return@repeat
-            sum += Card.ACE_SCORE_DIFF
+            if (isBust(sum + ACE_SCORE_DIFF)) return@repeat
+            sum += ACE_SCORE_DIFF
         }
 
         return sum
     }
 
     fun sumWithAceAsOne(cards: Cards): Int {
-        return sumByScore(cards)
+        return cards.values.sumOf { it.rank.value }
     }
 
     private fun isBust(score: Int): Boolean {
@@ -20,10 +23,6 @@ object CardsScoreCalculator {
     }
 
     private fun getAceCount(cards: Cards): Int {
-        return cards.values.count(Card::isAce)
-    }
-
-    private fun sumByScore(cards: Cards): Int {
-        return cards.values.sumOf(Card::score)
+        return cards.values.count { it.rank.isAce() }
     }
 }

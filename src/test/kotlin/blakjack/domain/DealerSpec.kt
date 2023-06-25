@@ -11,12 +11,13 @@ class DealerSpec : DescribeSpec({
             val dealer = Dealer()
             val card = dealer.drawOneCard()
 
-            card shouldBeIn Card.values().toList()
+            card.suit shouldBeIn CardSuit.values().toList()
+            card.rank shouldBeIn CardRank.values().toList()
         }
 
         context("이미 52장의 카드를 뽑았다면") {
             val dealer = Dealer()
-            repeat(Card.values().size) {
+            repeat(52) {
                 dealer.drawOneCard()
             }
 
@@ -38,7 +39,7 @@ class DealerSpec : DescribeSpec({
 
         context("이미 51장의 카드를 뽑았다면") {
             val dealer = Dealer()
-            repeat(Card.values().size - 1) {
+            repeat(51) {
                 dealer.drawOneCard()
             }
 

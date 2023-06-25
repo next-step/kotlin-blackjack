@@ -12,13 +12,14 @@ class CardDeckSpec : DescribeSpec({
             it("카드를 랜덤으로 한장 뽑을 수 있다.") {
                 val card = cardDeck.getCardRandomly()
 
-                card shouldBeIn Card.values().toList()
+                card.rank shouldBeIn CardRank.values().toList()
+                card.suit shouldBeIn CardSuit.values().toList()
             }
         }
 
         context("모든 카드(52장)를 뽑았을 때") {
             val cardDeck = CardDeck.create()
-            repeat(Card.values().size) {
+            repeat(52) {
                 cardDeck.getCardRandomly()
             }
 
