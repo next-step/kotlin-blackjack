@@ -20,7 +20,7 @@ class DealerTest {
 
         dealer.getPlayerStatus() shouldBe PlayerStatus.NOT_INIT
         dealer.initCards(cards)
-        dealer.getPlayerStatus() shouldBe PlayerStatus.RECEIVABLE
+        dealer.getPlayerStatus() shouldBe PlayerStatus.RECEIVE
     }
 
     @Test

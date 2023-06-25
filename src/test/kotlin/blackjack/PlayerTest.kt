@@ -20,7 +20,7 @@ class PlayerTest {
         player.initCards(cards)
 
         player.cards.getValue().size shouldBe 2
-        player.getPlayerStatus() shouldBe PlayerStatus.RECEIVABLE
+        player.getPlayerStatus() shouldBe PlayerStatus.RECEIVE
     }
 
     @Test

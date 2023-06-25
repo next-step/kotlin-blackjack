@@ -6,10 +6,6 @@ class Dealer : GamePlayer() {
         return !isReceivedAddCard && cards.getOptimizedScore() <= RECEIVABLE_SCORE
     }
 
-    override fun getDefaultStatus(): PlayerStatus {
-        return PlayerStatus.NOT_INIT
-    }
-
     override fun afterEventOfReceiveCard() {
         if (!isReceivedAddCard) isReceivedAddCard = true
     }

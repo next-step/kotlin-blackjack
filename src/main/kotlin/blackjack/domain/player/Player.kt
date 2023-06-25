@@ -3,11 +3,7 @@ package blackjack.domain.player
 class Player(val name: Name = Name()) : GamePlayer() {
 
     override fun isReceivable(): Boolean {
-        return status == PlayerStatus.RECEIVABLE || status == PlayerStatus.BLACK_JACK
-    }
-
-    override fun getDefaultStatus(): PlayerStatus {
-        return PlayerStatus.RECEIVABLE
+        return status.isReceivable
     }
 
     override fun afterEventOfReceiveCard() = Unit

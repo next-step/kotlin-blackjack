@@ -8,11 +8,10 @@ abstract class GamePlayer {
     protected var status: PlayerStatus
 
     init {
-        status = getDefaultStatus()
+        status = PlayerStatus.NOT_INIT
     }
 
     abstract fun isReceivable(): Boolean
-    abstract fun getDefaultStatus(): PlayerStatus
 
     abstract fun afterEventOfReceiveCard()
 
@@ -36,6 +35,7 @@ abstract class GamePlayer {
 
     private fun updateStatus() {
         val optimizedScore = cards.getOptimizedScore()
-        status = PlayerStatus.valuesOf(optimizedScore) { isReceivable() }
+        val isReceivable = isReceivable()
+        status = PlayerStatus.valuesOf(optimizedScore, isReceivable)
     }
 }
