@@ -4,10 +4,9 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.player.state.HitAvailableState
 import next.step.blackjack.domain.player.state.PlayerState
 
-data class Player(private val name: String, val cards: PlayerCards, private var state: PlayerState) {
+data class Player(private val name: PlayerName, val cards: PlayerCards, private var state: PlayerState) {
 
-    fun name() = name
-
+    fun name() = name.name
 
     fun hit(card: Card) {
         cards.add(card)
@@ -22,6 +21,9 @@ data class Player(private val name: String, val cards: PlayerCards, private var 
 
     companion object {
         fun of(name: String, cards: PlayerCards = PlayerCards.of(emptyList())): Player =
+            Player(PlayerName.of(name), cards, HitAvailableState.next(cards))
+
+        fun of(name: PlayerName, cards: PlayerCards): Player =
             Player(name, cards, HitAvailableState.next(cards))
     }
 }
