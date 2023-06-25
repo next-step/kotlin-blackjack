@@ -15,11 +15,11 @@ class StartState private constructor(private val cards: Cards) : State {
     override fun getCards(): Cards = this.cards
 
     companion object {
-        fun start(card1: Card, card2: Card): State =
-            if (Cards.isBlackjack(card1, card2)) {
-                Blackjack(Cards(listOf(card1, card2)))
+        fun start(cards: Cards): State =
+            if (cards.isBlackjack()) {
+                Blackjack(cards)
             } else {
-                StartState(Cards(listOf(card1, card2)))
+                StartState(cards)
             }
     }
 }

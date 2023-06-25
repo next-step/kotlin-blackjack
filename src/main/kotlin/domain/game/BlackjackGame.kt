@@ -1,5 +1,6 @@
 package domain.game
 
+import domain.card.Cards
 import domain.card.Deck
 import domain.player.Dealer
 import domain.player.Player
@@ -19,12 +20,14 @@ class BlackjackGame(private val deck: Deck) {
     fun initGame(playerNames: List<String>): Players {
         require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
         this.players = createPlayers(playerNames)
-        this.dealer = Dealer(deck.issueCard(), deck.issueCard())
+        this.dealer = Dealer(cards = initCards())
         return this.players
     }
 
     private fun createPlayers(playerNames: List<String>) =
-        Players(playerNames.map { Player(it, deck.issueCard(), deck.issueCard()) })
+        Players(playerNames.map { Player(it, cards = initCards()) })
+
+    private fun initCards() = Cards(listOf(deck.issueCard(), deck.issueCard()))
 
     fun gameStart(
         isIssueCard: (playerName: String) -> Boolean,

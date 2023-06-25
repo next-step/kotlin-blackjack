@@ -1,7 +1,6 @@
 package blackjack.card.helper
 
 import domain.card.Card
-import domain.card.Cards
 import domain.card.CardNumber
 import domain.card.Suit
 import org.junit.jupiter.params.provider.Arguments
@@ -10,24 +9,20 @@ object HitTestHelper {
 
     fun getHitStateTestData(): List<Arguments> = listOf(
         Arguments.of(
-            Cards(listOf(Card(suit = Suit.CLUB, number = CardNumber.KING))),
+            CardsTestFactory.makeCards(Card(suit = Suit.CLUB, number = CardNumber.KING)),
             Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                Card(suit = Suit.CLUB, number = CardNumber.TWO),
             ),
             Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    Card(suit = Suit.HEART, number = CardNumber.TEN),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                Card(suit = Suit.HEART, number = CardNumber.TEN),
             ),
             Card(suit = Suit.SPADE, number = CardNumber.ACE),
         ),
@@ -35,31 +30,25 @@ object HitTestHelper {
 
     fun getBurstStateTestData(): List<Arguments> = listOf(
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.KING),
-                    Card(suit = Suit.HEART, number = CardNumber.KING),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.KING),
+                Card(suit = Suit.HEART, number = CardNumber.KING),
             ),
             Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
-                    Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
-                    Card(suit = Suit.SPADE, number = CardNumber.JACK),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                Card(suit = Suit.CLUB, number = CardNumber.TWO),
+                Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                Card(suit = Suit.SPADE, number = CardNumber.JACK),
             ),
             Card(suit = Suit.SPADE, number = CardNumber.TWO),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    Card(suit = Suit.HEART, number = CardNumber.TEN),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                Card(suit = Suit.HEART, number = CardNumber.TEN),
             ),
             Card(suit = Suit.SPADE, number = CardNumber.TWO),
         ),
@@ -67,29 +56,23 @@ object HitTestHelper {
 
     fun getStandStateTestData(): List<Arguments> = listOf(
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.KING),
-                    Card(suit = Suit.HEART, number = CardNumber.KING),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.KING),
+                Card(suit = Suit.HEART, number = CardNumber.KING),
             ),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
-                    Card(suit = Suit.CLUB, number = CardNumber.TWO),
-                    Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
-                    Card(suit = Suit.SPADE, number = CardNumber.JACK),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.ACE),
+                Card(suit = Suit.CLUB, number = CardNumber.TWO),
+                Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+                Card(suit = Suit.SPADE, number = CardNumber.JACK),
             ),
         ),
         Arguments.of(
-            Cards(
-                listOf(
-                    Card(suit = Suit.CLUB, number = CardNumber.TEN),
-                    Card(suit = Suit.HEART, number = CardNumber.TEN),
-                ),
+            CardsTestFactory.makeCards(
+                Card(suit = Suit.CLUB, number = CardNumber.TEN),
+                Card(suit = Suit.HEART, number = CardNumber.TEN),
             ),
         ),
     )

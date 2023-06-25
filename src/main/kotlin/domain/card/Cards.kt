@@ -22,11 +22,11 @@ class Cards(private val cards: List<Card>) : List<Card> by cards {
             }
     }
 
+    fun isBlackjack(): Boolean = cards.size == BLACKJACK_CARD_COUNT && this.sum == CARD_NUMBER_SUM_MAX
+
     companion object {
         private const val CARD_NUMBER_SUM_MAX = 21
         private const val ACE_SPECIAL_SCORE = 10
-        fun isBlackjack(card1: Card, card2: Card): Boolean =
-            (card1.number.isAce() && card2.number.isTenScore()) ||
-                (card2.number.isAce() && card1.number.isTenScore())
+        private const val BLACKJACK_CARD_COUNT = 2
     }
 }
