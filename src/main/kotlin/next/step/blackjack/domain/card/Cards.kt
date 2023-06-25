@@ -7,7 +7,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         cards.add(card)
     }
 
-    fun isBlackJack(): Boolean = size() == BLACKJACK_CARDS_CNT && isFinished()
+    fun isBlackjack(): Boolean = size() == BLACKJACK_CARDS_CNT && isFinished()
 
     fun isFinished(): Boolean = possiblePoints().contains(FINISH_POINT)
 
