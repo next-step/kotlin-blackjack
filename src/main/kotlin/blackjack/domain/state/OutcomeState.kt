@@ -2,16 +2,14 @@ package blackjack.domain.state
 
 import blackjack.domain.Dealer
 import blackjack.domain.Gamer
+import blackjack.domain.Money
 
-sealed class OutcomeState {
-
+sealed class OutcomeState(
+    protected var gamerRate: Double = 0.0,
+    protected var dealerRate: Double = 0.0
+) {
     abstract fun supported(playerType: StateType, dealerType: StateType): Boolean
 
-    open fun update(gamer: Gamer, dealer: Dealer) {
-        gamer.revenue += (gamer.bet * getGamerRate())
-        dealer.revenue += (gamer.bet * getDealerRate())
-    }
-
-    abstract fun getGamerRate(): Double
-    abstract fun getDealerRate(): Double
+    open fun getRevenue(gamer: Gamer, dealer: Dealer): Pair<Money, Money> =
+        (gamer.bet * gamerRate) to (gamer.bet * dealerRate)
 }

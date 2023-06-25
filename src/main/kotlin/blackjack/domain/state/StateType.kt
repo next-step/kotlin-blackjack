@@ -17,6 +17,6 @@ enum class StateType(
     });
 
     companion object {
-        fun from(deck: Deck): StateType = values().find { it.condition.invoke(deck) } ?: STAY
+        fun from(deck: Deck): StateType = values().find { it.condition(deck) } ?: STAY
     }
 }

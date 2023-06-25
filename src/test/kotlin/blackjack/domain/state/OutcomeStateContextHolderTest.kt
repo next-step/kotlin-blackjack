@@ -57,20 +57,18 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
             And("딜러의 상태가 블랙잭만 아니라면") {
                 Then("1.5배의 베팅금액을 받는다.") {
                     listOf(burstDealer, stayDealer).forEach {
-                        gamer.revenue = Money()
-                        it.calculate(Players(listOf(gamer)))
+                        val gameResult = it.calculate(Players(listOf(gamer)))
 
-                        gamer.revenue shouldBe Money(betAmount * 1.5)
+                        gameResult.playerRecords[0].second shouldBe Money(betAmount * 1.5)
                     }
                 }
             }
 
             And("딜러의 상태도 블랙잭이라면") {
                 Then(" 베팅 금액을 돌려받는다.") {
-                    gamer.revenue = Money()
-                    blackJackDealer.calculate(Players(listOf(gamer)))
+                    val (dealerRecord, playerRecords) = blackJackDealer.calculate(Players(listOf(gamer)))
 
-                    gamer.revenue shouldBe Money()
+                    playerRecords[0].second shouldBe Money()
                 }
             }
         }
@@ -92,12 +90,10 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
 
                 Then("게이머는 베팅 금액을 잃는다.") {
                     dealers.forEach {
-                        gamer.revenue = Money()
-                        it.revenue = Money()
-                        it.calculate(Players(listOf(gamer)))
+                        val actual = it.calculate(Players(listOf(gamer)))
 
-                        gamer.revenue shouldBe Money(-betAmount)
-                        it.revenue shouldBe Money(betAmount)
+                        actual.playerRecords[0].second shouldBe Money(-betAmount)
+                        actual.dealerRecord shouldBe Money(betAmount)
                     }
                 }
             }
@@ -115,7 +111,6 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
             )
 
             And("딜러도 스테이이면서 더 낮은 점수일 경우") {
-                gamer.revenue = Money()
                 dealer = Dealer(
                     deck = buildDeck {
                         numberCards { 2..4 from SymbolType.DIAMOND }
@@ -123,15 +118,14 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
                 )
 
                 Then("게이머는 베팅 금액만큼을 딜러에게 받는다.") {
-                    dealer.calculate(Players(listOf(gamer)))
+                    val (dealerRecord, playerRecords) = dealer.calculate(Players(listOf(gamer)))
 
-                    gamer.revenue shouldBe Money(betAmount)
-                    dealer.revenue shouldBe Money(-betAmount)
+                    playerRecords[0].second shouldBe Money(betAmount)
+                    dealerRecord shouldBe Money(-betAmount)
                 }
             }
 
             And("딜러도 스테이면서 더 높은 점수일 경우") {
-                gamer.revenue = Money()
                 dealer = Dealer(
                     deck = buildDeck {
                         faceCards {
@@ -142,10 +136,10 @@ class OutcomeStateContextHolderTest : BehaviorSpec({
                 )
 
                 Then("게이머는 베팅 금액만큼을 딜러에게 전한다.") {
-                    dealer.calculate(Players(listOf(gamer)))
+                    val (dealerRecord, playerRecords) = dealer.calculate(Players(listOf(gamer)))
 
-                    gamer.revenue shouldBe Money(-betAmount)
-                    dealer.revenue shouldBe Money(betAmount)
+                    playerRecords[0].second shouldBe Money(-betAmount)
+                    dealerRecord shouldBe Money(betAmount)
                 }
             }
         }

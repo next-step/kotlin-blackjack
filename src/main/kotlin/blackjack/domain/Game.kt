@@ -29,6 +29,8 @@ class Game(val players: Players, private val deck: Deck, val dealer: Dealer) {
         }
     }
 
+    fun calculate(): GameResult = dealer.calculate(players)
+
     companion object {
         const val INIT_TAKE_SIZE = 2
         const val THRESHOLD = 21
@@ -37,9 +39,9 @@ class Game(val players: Players, private val deck: Deck, val dealer: Dealer) {
             buildGame {
                 dealer()
                 players {
-                    request.forEach {
-                        name(it.first)
-                        bet(it.second)
+                    request.forEach { (name, bettingMoney) ->
+                        name(name)
+                        bet(bettingMoney)
                     }
                 }
                 deck {

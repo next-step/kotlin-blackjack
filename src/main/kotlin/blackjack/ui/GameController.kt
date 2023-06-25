@@ -23,7 +23,7 @@ class GameController(
             gameOutput.printDealerOneMorePick()
         }
 
-        val gameResult = game.dealer.calculate(players = game.players)
+        val gameResult = game.calculate()
 
         gameOutput.printAllDeckStatus(players = game.players, dealer = game.dealer)
         gameOutput.printOutcome(gameResult)

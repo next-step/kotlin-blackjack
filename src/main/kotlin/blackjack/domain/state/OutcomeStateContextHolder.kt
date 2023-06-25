@@ -1,13 +1,7 @@
 package blackjack.domain.state
 
 object OutcomeStateContextHolder {
-    private var store = listOf(Push, DealerBlackjack, PlayerBlackjack, DealerBurst, PlayerBurst, Stay)
-
-    fun addState(state: OutcomeState) {
-        store += state
-    }
-
-    fun addStateAll(collections: Collection<OutcomeState>) = collections.forEach(::addState)
+    private val store = listOf(Push, DealerBlackjack, PlayerBlackjack, DealerBurst, PlayerBurst, Stay)
 
     fun find(playerType: StateType, dealerType: StateType) =
         store.find { it.supported(playerType = playerType, dealerType = dealerType) }

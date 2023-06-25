@@ -19,24 +19,25 @@ class Dealer(deck: Deck = Deck()) :
     override fun isAddable(): Boolean = deck.score() <= THRESHOLD && deck.size <= INIT_TAKE_SIZE
 
     override fun calculate(players: Players): GameResult {
-        val dealerType = StateType.from(deck)
-
-        players.forEach {
-            calculateByState(dealerType = dealerType, gamer = it as Gamer)
+        val resultMap = players.fold(mutableMapOf<Player, Money>()) { acc, player ->
+            val revenuePair = calculateByState(dealerType = StateType.from(deck), gamer = player as Gamer)
+            acc[this] = acc.getOrDefault(this, Money()).plus(revenuePair.second)
+            acc[player] = acc.getOrDefault(player, Money()).plus(revenuePair.first)
+            acc
         }
 
         return GameResult(
-            dealerRecord = this.revenue,
-            playerRecords = players.map { it.name to it.revenue }
+            dealerRecord = resultMap[this] ?: Money(),
+            playerRecords = players.map { it.name to (resultMap[it] ?: Money()) }
         )
     }
 
-    private fun calculateByState(dealerType: StateType, gamer: Gamer) {
+    private fun calculateByState(dealerType: StateType, gamer: Gamer): Pair<Money, Money> {
         val playerType = StateType.from(gamer.deck)
 
-        OutcomeStateContextHolder
+        return OutcomeStateContextHolder
             .find(playerType = playerType, dealerType = dealerType)
-            .update(gamer = gamer, dealer = this)
+            .getRevenue(gamer = gamer, dealer = this)
     }
 
     companion object {
