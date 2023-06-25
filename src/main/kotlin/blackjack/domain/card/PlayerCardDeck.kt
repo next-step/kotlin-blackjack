@@ -19,7 +19,7 @@ class PlayerCardDeck(
     }
 
     fun isNotEmpty(): Boolean {
-        return isEmpty().not()
+        return _cards.isNotEmpty()
     }
 
     fun isEmpty(): Boolean {
