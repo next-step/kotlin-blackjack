@@ -2,7 +2,7 @@ package next.step.blackjack.domain.player.state
 
 import next.step.blackjack.domain.player.PlayerCards
 
-object BurstState : PlayerState {
+object BurstState : PlayerState() {
     override fun canHit(): Boolean = false
 
     override fun next(cards: PlayerCards): PlayerState {
