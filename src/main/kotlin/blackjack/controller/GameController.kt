@@ -10,7 +10,7 @@ import blackjack.view.OutputView
 class GameController {
 
     fun execute(round: Round) {
-        val players = inputName()
+        val players = inputName(round)
         divideCards(players)
         players.forEach {
             playerTurn(it, round)
@@ -18,10 +18,10 @@ class GameController {
         result(players)
     }
 
-    private fun inputName(): List<Player> {
+    private fun inputName(round: Round): List<Player> {
         val names = InputParser.parse(InputView.inputNames())
         val players = mutableListOf<Player>().apply {
-            addAll(names.map { Player(PlayerInfo(it)) })
+            addAll(names.map { Player(round, PlayerInfo(it)) })
         }
         return players
     }

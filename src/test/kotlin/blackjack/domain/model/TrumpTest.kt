@@ -1,5 +1,6 @@
 package blackjack.domain.model
 
+import blackjack.domain.model.Trump
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

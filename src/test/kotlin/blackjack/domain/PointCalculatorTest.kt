@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.PointCalculator
 import blackjack.domain.model.Card
 import blackjack.domain.model.CardType
 import blackjack.domain.model.CardValue
 import blackjack.domain.model.Cards
+import blackjack.domain.model.Round
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -17,7 +17,7 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.HEART, CardValue.EIGHT),
         )
-        PointCalculator.sum(Cards(cards)) shouldBe 19
+        PointCalculator.sum(Cards(cards, Round())) shouldBe 19
     }
 
     @Test
@@ -28,7 +28,7 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.SPADE, CardValue.KING)
         )
-        PointCalculator.sum(Cards(cards)) shouldBe 21
+        PointCalculator.sum(Cards(cards, Round())) shouldBe 21
     }
 
     @Test
@@ -38,7 +38,7 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.EIGHT),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        PointCalculator.sum(Cards(cards)) shouldBe 21
+        PointCalculator.sum(Cards(cards, Round())) shouldBe 21
     }
 
     @Test
@@ -48,6 +48,6 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.KING),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        PointCalculator.sum(Cards(cards)) shouldBe 21
+        PointCalculator.sum(Cards(cards, Round())) shouldBe 21
     }
 }

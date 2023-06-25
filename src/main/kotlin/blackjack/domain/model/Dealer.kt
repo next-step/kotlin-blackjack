@@ -2,7 +2,7 @@ package blackjack.domain.model
 
 import blackjack.domain.Rule
 
-class Dealer(cards: Cards = Cards()) : Player(PlayerInfo(NAME), cards) {
+class Dealer(round: Round, cards: Cards = Cards(round = round)) : Player(round, PlayerInfo(NAME), cards) {
     override fun canGetCard(): Boolean {
         return cards.sum < Rule.DEALER_MINIMUM_SCORE
     }
