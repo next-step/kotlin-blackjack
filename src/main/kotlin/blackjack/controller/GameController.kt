@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.model.Dealer
 import blackjack.domain.model.Game
 import blackjack.domain.model.Player
 import blackjack.domain.model.PlayerInfo
@@ -10,12 +11,16 @@ import blackjack.view.OutputView
 class GameController {
 
     fun execute(game: Game) {
+        val dealer = Dealer(game)
         val players = inputName(game)
-        divideCards(players)
+        val users = mutableListOf<Player>(dealer).apply {
+            addAll(players)
+        }
+        divideCards(users)
         players.forEach {
             playerTurn(it, game)
         }
-        result(players)
+        result(users)
     }
 
     private fun inputName(game: Game): List<Player> {
