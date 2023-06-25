@@ -1,7 +1,10 @@
 package blackjack.domain
 
 class Deck(cardList: List<Card>) : Iterable<Card> {
-    private val cardQueue: ArrayList<Card> = ArrayList(cardList.map { it.copy() })
+
+    private val cardQueue: MutableList<Card> = MutableList(cardList.size) {
+        return@MutableList cardList[it].copy()
+    }
 
     val size: Int
         get() = cardQueue.size
@@ -41,6 +44,6 @@ class Deck(cardList: List<Card>) : Iterable<Card> {
             return CardNumber.NUMBER_RANGE.map { Card(suit, CardNumber.of(it)) }
         }
 
-        fun getShuffledDeck() = Deck(ArrayList(DEFAULT_DECK.cardQueue.shuffled()))
+        fun getShuffledDeck() = Deck(DEFAULT_DECK.cardQueue.shuffled())
     }
 }
