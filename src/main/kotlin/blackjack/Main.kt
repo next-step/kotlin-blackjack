@@ -1,7 +1,8 @@
 package blackjack
 
 import blackjack.controller.BlackJackController
+import blackjack.service.BlackjackService
 
 fun main() {
-    BlackJackController().play()
+    BlackJackController(BlackjackService()).play()
 }

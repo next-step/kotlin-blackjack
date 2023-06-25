@@ -1,15 +1,13 @@
 package blackjack.controller
 
-import blackjack.utils.StringUtils
-import blackjack.view.InputView
-import blackjack.view.ResultView
+import blackjack.service.BlackjackService
 
-class BlackJackController {
+class BlackJackController(
+    private val blackjackService: BlackjackService
+) {
 
     fun play() {
 
-        val inputPlayers = InputView.inputPlayers()
-        ResultView.printEnter()
-        val players = StringUtils.replaceWhiteSpaceAndSplitByComma(inputPlayers)
+        val blackjackGame = blackjackService.initBlackjackGame()
     }
 }

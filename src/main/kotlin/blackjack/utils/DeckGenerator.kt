@@ -6,7 +6,7 @@ import blackjack.enums.Symbol
 
 object DeckGenerator {
 
-    fun generateDeck(): List<Card> {
+    fun generateDeck(): MutableList<Card> {
 
         val deck = mutableListOf<Card>()
 
@@ -15,6 +15,6 @@ object DeckGenerator {
                 deck.add(Card(rank, symbol))
             }
         }
-        return deck.toList()
+        return deck
     }
 }
