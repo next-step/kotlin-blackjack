@@ -30,11 +30,15 @@ class BlackJackController(
     }
 
     private fun askPlayerWantToDrawCard(game: Game, player: Player) {
-        resultView.printPlayersWantToDrawCard(player)
-        while (inputView.askPlayersWantToDrawCard()) {
+        while (continueDrawingCards(player)) {
             drawPlayer(game, player)
-            resultView.printPlayersWantToDrawCard(player)
         }
+        resultView.printPlayerCardList(player)
+    }
+
+    private fun continueDrawingCards(player: Player): Boolean {
+        resultView.printPlayersWantToDrawCard(player)
+        return inputView.askPlayersWantToDrawCard()
     }
 
     private fun drawPlayer(game: Game, player: Player) {

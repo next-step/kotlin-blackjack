@@ -7,6 +7,7 @@ class ResultView {
         println()
         printFirstDrawTitle(playerList)
         printFirstDrawDetail(playerList)
+        println()
     }
 
     private fun printFirstDrawTitle(playerList: List<Player>) {
