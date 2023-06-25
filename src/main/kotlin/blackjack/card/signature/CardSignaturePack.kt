@@ -5,6 +5,6 @@ class CardSignaturePack(
     private val symbolSignature: CardSymbolSignature?,
 ) {
     fun getName(): String {
-        return numberSignature?.name + symbolSignature?.name
+        return numberSignature?.code + symbolSignature?.code
     }
 }
