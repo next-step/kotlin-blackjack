@@ -7,11 +7,11 @@ data class Dealer(private val cards: Cards = Cards.of(emptyList())) {
 
     fun name(): String = DEALER_NAME
 
-    fun cardDescFirst() = cards.descFirst()
+    fun cardDescFirst(): String = cards.descFirst()
 
     fun cardDescs(): Set<String> = cards.descs()
 
-    fun canHit() = cards.point() <= HIT_AVAILABLE_POINT
+    fun canHit(): Boolean = cards.point() <= HIT_AVAILABLE_POINT
 
     fun hit(card: Card) {
         cards.add(card)
