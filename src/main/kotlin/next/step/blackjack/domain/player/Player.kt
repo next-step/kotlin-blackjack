@@ -11,7 +11,7 @@ data class Player(
     private var state: PlayerState = HitAvailableState
 ) {
 
-    fun name() = name.name
+    fun name(): String = name.name
 
     fun hit(card: Card) {
         cards.add(card)

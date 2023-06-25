@@ -25,9 +25,9 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         }
     }
 
-    private fun possiblePoints() = CombinationUtils.possiblePoints(cards)
+    private fun possiblePoints(): Set<Int> = CombinationUtils.possiblePoints(cards)
 
-    fun size() = cards.size
+    fun size(): Int = cards.size
 
     fun descs(): Set<String> = cards.map { it.desc() }.toSet()
 

@@ -18,6 +18,6 @@ data class GameCards(private val cards: MutableList<Card>) {
 
         private fun deck(): List<Card> = CardFace.values().flatMap { mapSymbols(it) }
 
-        private fun mapSymbols(face: CardFace) = CardSymbol.values().map { Card.of(face, it) }
+        private fun mapSymbols(face: CardFace): List<Card> = CardSymbol.values().map { Card.of(face, it) }
     }
 }

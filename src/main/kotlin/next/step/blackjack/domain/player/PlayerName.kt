@@ -7,6 +7,6 @@ value class PlayerName(val name: String) {
     }
 
     companion object {
-        fun of(name: String) = PlayerName(name)
+        fun of(name: String): PlayerName = PlayerName(name)
     }
 }
