@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.card.Deck
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
 import blackjack.view.InputView
@@ -7,21 +8,21 @@ import blackjack.view.OutputView
 
 object GameController {
     private const val DEFAULT_INITIAL_DRAW = 2
-    private var toggle = false
 
     fun run() {
-        val players = prepareGame()
+        val deck = Deck()
+        val players = prepareGame(deck)
         printBeforeStart(players)
-        playGame(players)
+        playGame(players, deck)
         endGame(players)
     }
 
-    private fun prepareGame(): Participants {
+    private fun prepareGame(deck: Deck): Participants {
         val players = InputView.getPlayerNames().map { Player(it) }
         val participants = Participants(players)
 
         repeat(DEFAULT_INITIAL_DRAW) {
-            participants.players.forEach { it.drawCard() }
+            participants.players.forEach { it.drawCard(deck) }
         }
         return participants
     }
@@ -31,18 +32,15 @@ object GameController {
         OutputView.printPlayerCard(participants)
     }
 
-    private fun playGame(participants: Participants) {
-        while (!toggle) {
-            participants.players.forEach { playTurn(it) }
-        }
+    private fun playGame(participants: Participants, deck: Deck) {
+        participants.players.forEach { playTurn(it, deck) }
     }
 
-    private fun playTurn(player: Player) {
+    private fun playTurn(player: Player, deck: Deck) {
         while (player.canDraw() && InputView.askDrawCard(player)) {
-            player.drawCard()
+            player.drawCard(deck)
             OutputView.printPlayerCard(player)
         }
-        toggle = true
     }
 
     private fun endGame(participants: Participants) {

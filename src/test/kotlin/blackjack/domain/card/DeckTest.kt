@@ -9,7 +9,7 @@ class DeckTest {
 
     @BeforeEach
     fun setUp() {
-        deck = Deck
+        deck = Deck()
     }
 
     @Test

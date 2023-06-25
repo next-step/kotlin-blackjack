@@ -13,7 +13,7 @@ enum class CardRank(
     EIGHT("8", listOf(8)),
     NINE("9", listOf(9)),
     TEN("10", listOf(10)),
-    ACE("A", listOf(1, 11)),
+    ACE("A", listOf(1, 10)), // 10 means additional point
     JACK("J", listOf(10)),
     QUEEN("Q", listOf(10)),
     KING("K", listOf(10));

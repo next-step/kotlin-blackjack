@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class CardHold private constructor(
+class CardHold(
     val cards: List<Card> = emptyList()
 ) {
     fun add(newCard: Card): CardHold {
@@ -15,26 +15,18 @@ class CardHold private constructor(
 
     private fun getTotalPoints(): Int {
         return cards.sumOf { card ->
-            card.getPoints().max()
+            card.getPoint()
         }
     }
 
     private fun adjustAceSum(sum: Int): Int {
-        var calibratedSum = sum
-        var aceCardSize = cards.count { it.rank == CardRank.ACE }
-
-        while (0 < aceCardSize && calibratedSum > THRESHOLD) {
-            calibratedSum -= 10
-            aceCardSize--
+        if (cards.any { card -> card.rank == CardRank.ACE }) {
+            return sum + CardRank.ACE.point[1]
         }
-
-        return calibratedSum
+        return sum
     }
-
-    override fun toString(): String = cards.joinToString(", ") { it.toString() }
 
     companion object {
         const val THRESHOLD: Int = 21
-        fun init(): CardHold = CardHold()
     }
 }

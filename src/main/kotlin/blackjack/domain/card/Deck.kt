@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 import kotlin.random.Random
 
-object Deck {
+class Deck {
     private val pickedCards: MutableSet<Card> = mutableSetOf()
     private val remainedCards: List<Card>
         get() = Card.CACHE.values.filter {

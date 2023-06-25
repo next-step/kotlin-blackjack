@@ -4,14 +4,17 @@ class Card private constructor(
     val rank: CardRank,
     val shape: CardShape
 ) {
-    fun getPoints(): List<Int> {
-        return rank.point
+
+    fun getPoint(): Int {
+        return rank.point[0] ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
     }
 
-    override fun toString(): String = "${rank.mark}${shape.mark}"
+    fun getMaxPoint(): Int {
+        return rank.point.max() ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
+    }
 
     companion object {
-        val CACHE = makeCardCache()
+        val CACHE: Map<Pair<CardRank, CardShape>, Card> = makeCardCache()
 
         fun createCard(rank: CardRank, shape: CardShape): Card {
             return CACHE[Pair(rank, shape)] ?: throw IllegalArgumentException("존재하지 않는 카드입니다.")

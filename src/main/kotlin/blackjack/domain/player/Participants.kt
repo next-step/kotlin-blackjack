@@ -1,4 +1,9 @@
 package blackjack.domain.player
 
-@JvmInline
-value class Participants(val players: List<Player>)
+import blackjack.domain.card.Deck
+
+class Participants(val players: List<Player>) {
+    fun drawAll(deck: Deck) {
+        players.forEach { it.drawCard(deck) }
+    }
+}

@@ -8,7 +8,7 @@ class CardHoldTest {
     fun `카드들의 합을 계산할 수 있다`() {
         val cloverEight = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
         val heartJack = Card.createCard(CardRank.JACK, CardShape.HEART)
-        val cardHold = CardHold.init()
+        val cardHold = CardHold()
             .add(cloverEight)
             .add(heartJack)
 
@@ -19,7 +19,7 @@ class CardHoldTest {
     fun `Ace는 1 또는 11로 계산해서 최적의 값을 비교한다`() {
         val cloverAce = Card.createCard(CardRank.ACE, CardShape.CLOVER)
         val heartTen = Card.createCard(CardRank.TEN, CardShape.HEART)
-        val cardHold = CardHold.init()
+        val cardHold = CardHold()
             .add(cloverAce)
             .add(heartTen)
 
