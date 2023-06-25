@@ -1,8 +1,8 @@
 package blackjack
 
-class Dealer(round: Round = Round()) : Player(NAME, round) {
+class Dealer(cards: MutableList<Card> = mutableListOf(), round: Round = Round()) : Player(NAME, cards, round) {
     override fun canGetCard(): Boolean {
-        return sum < Round.DEALER_MINIMUM_SCORE
+        return sum < Rule.DEALER_MINIMUM_SCORE
     }
 
     companion object {

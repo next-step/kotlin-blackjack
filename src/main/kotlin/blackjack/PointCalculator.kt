@@ -22,7 +22,7 @@ object PointCalculator {
             CardValue.SEVEN -> 7
             CardValue.EIGHT -> 8
             CardValue.NINE -> 9
-            CardValue.ACE -> if (sum + 11 > Round.BLACK_JACK) 1 else 11
+            CardValue.ACE -> if (sum + 11 > Rule.BLACK_JACK) 1 else 11
             else -> 10
         }
     }
