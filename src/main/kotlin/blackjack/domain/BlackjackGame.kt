@@ -12,7 +12,7 @@ class BlackjackGame(
 
     private fun giveCard(player: Player, count: Int = INIT_CARD_COUNT) {
         val randomCards = deck.getRandomCard(count)
-        player.cards.addAll(randomCards)
+        player.getCard(randomCards[0])
     }
 
     companion object {

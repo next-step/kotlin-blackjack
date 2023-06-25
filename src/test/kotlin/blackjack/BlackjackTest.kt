@@ -21,17 +21,29 @@ class BlackjackTest {
     @Test
     fun `플레이어는 카드를 받는다`() {
         val card = CardDeck().getRandomCard(1)
-        val player = Player(card)
+        val player = Player(Cards(card))
 
-        player.cards.size shouldBe 1
+        player.cards.card.size shouldBe 1
     }
 
     @Test
     fun `게임 시작 시 두장의 카드를 받는다`() {
-        val card = CardDeck()
-        val player = Player()
-        val game = BlackjackGame(listOf(player), card)
+        val card = CardDeck().getRandomCard(2)
+        val player = Player(Cards(card))
+        val game = BlackjackGame(listOf(player), CardDeck())
         game.initPlayer()
-        game.player[0].cards.size shouldBe 2
+        game.player[0].cards.card.size shouldBe 2
+    }
+
+    @Test
+    fun `카드의 합이 21이 되면 블랙잭이다`() {
+        val card = Cards(
+            mutableListOf(
+                Card(NumberType.ACE, CardType.DIAMOND),
+                Card(NumberType.KING, CardType.SPADE)
+            )
+        )
+        val player = Player(card)
+        player.score shouldBe 21
     }
 }
