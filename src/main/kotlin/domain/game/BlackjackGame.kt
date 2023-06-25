@@ -34,6 +34,7 @@ class BlackjackGame(private val deck: Deck) {
         showPlayerCards: (player: Player) -> Unit,
     ) {
         players.forEach { playGame(player = it, isIssueCard, showPlayerCards) }
+        this.issueCard(dealer)
     }
 
     private fun playGame(
@@ -53,12 +54,6 @@ class BlackjackGame(private val deck: Deck) {
             true -> this.issueCard(player)
             else -> this.stopIssueCard(player)
         }
-    }
-
-    fun issuedCardForDealer(): Boolean {
-        val beforeCardSize = dealer.cards.size
-        this.issueCard(dealer)
-        return dealer.cards.size > beforeCardSize
     }
 
     private fun isTerminatedPlayer(player: Player): Boolean {

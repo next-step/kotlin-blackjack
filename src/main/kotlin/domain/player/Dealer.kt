@@ -16,8 +16,11 @@ class Dealer(cards: Cards) : Player(name = NAME, cards = cards) {
 
     private fun isDrawable(): Boolean = cards.sum <= DRAWABLE_CARD_SUM_MAX
 
+    fun isIssuedCard(): Boolean = DEALER_INIT_CARD_COUNT < cards.size
+
     companion object {
         private const val NAME = "딜러"
         private const val DRAWABLE_CARD_SUM_MAX = 16
+        private const val DEALER_INIT_CARD_COUNT = 2
     }
 }

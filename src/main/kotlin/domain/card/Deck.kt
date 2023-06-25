@@ -5,19 +5,19 @@ import domain.game.BlackjackGame
 
 fun MutableList<Card>.pop(): Card = this.removeAt(0)
 
-class Deck(private val Cards: MutableList<Card>) {
+class Deck(private val cards: MutableList<Card>) {
     val cardCount
-        get() = Cards.size
+        get() = cards.size
 
     fun issueCard(): Card {
-        if (Cards.isEmpty()) {
+        if (cards.isEmpty()) {
             reloadCards()
         }
-        return Cards.pop()
+        return cards.pop()
     }
 
     private fun reloadCards() {
         val newDeck = DeckGenerator.makeDeck(BlackjackGame.BLACKJACK_GAME_DECK_SIZE)
-        Cards.addAll(newDeck.Cards)
+        cards.addAll(newDeck.cards)
     }
 }

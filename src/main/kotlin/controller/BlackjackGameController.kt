@@ -19,6 +19,9 @@ class BlackjackGameController(
 
     fun gameStart() {
         game.gameStart(isIssueCard = this::askPlayer, showPlayerCards = this::showPlayerCards)
+        if (game.dealer.isIssuedCard()) {
+            resultView.printDealerIssuedCardMessage()
+        }
     }
 
     private fun askPlayer(playerName: String) = when (inputView.askDraw(playerName)) {
@@ -27,13 +30,6 @@ class BlackjackGameController(
     }
 
     private fun showPlayerCards(player: Player) { resultView.printPlayerCards(player) }
-
-    fun playDealer() {
-        val issueCardForDealerResult = game.issuedCardForDealer()
-        if (issueCardForDealerResult) {
-            resultView.printDealerIssuedCardMessage()
-        }
-    }
 
     fun printGameResult() {
         val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
