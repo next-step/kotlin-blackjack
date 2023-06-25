@@ -8,7 +8,7 @@ object OutputView {
 
     fun showStart(players: Set<Player>, cardCnt: Int) {
         println()
-        val playerNames = players.joinToString(", ") { it.name }
+        val playerNames = players.joinToString(", ") { it.name() }
         println("${playerNames}에게 ${cardCnt}장씩 나누었습니다.")
         players.forEach {
             showPlayerCards(it)
@@ -22,7 +22,7 @@ object OutputView {
 
     private fun cardDescs(player: Player): String {
         val cardDescs = player.cardDescs().joinToString(", ")
-        val playerCardsFormat = "${player.name}카드: $cardDescs"
+        val playerCardsFormat = "${player.name()}카드: $cardDescs"
         return playerCardsFormat
     }
 

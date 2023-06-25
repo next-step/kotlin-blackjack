@@ -24,7 +24,7 @@ object InputView {
         }.getOrThrow()
     }
 
-    fun readTurn(player: Player): Boolean = read("${player.name}$ENTER_TURN") {
+    fun readTurn(player: Player): Boolean = read("${player.name()}$ENTER_TURN") {
         when {
             it.trim() == YES -> true
             it.trim() == NO -> false
