@@ -1,21 +1,25 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardHold
-import blackjack.domain.card.CardHold.Companion.THRESHOLD
+import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
 
 class Player(
     val name: String,
     cardHold: CardHold = CardHold()
 ) {
-    var myCards = cardHold
+    var cardHold = cardHold
         private set
 
-    fun getTotalCardSize(): Int = myCards.cards.size
+    fun getPoints(): Int {
+        val sum = cardHold.getTotalPoints()
+        if (cardHold.cards.any { card -> card.rank == CardRank.ACE } && sum <= THRESHOLD) {
+            return sum + CardRank.ACE.point[1]
+        }
+        return sum
+    }
 
-    fun getNowPoints(): Int = myCards.getPoints()
-
-    fun canDraw(): Boolean = myCards.getPoints() <= THRESHOLD
+    fun canDraw(): Boolean = cardHold.getTotalPoints() <= THRESHOLD
 
     fun drawCard(deck: Deck) {
         if (!canDraw()) {
@@ -24,7 +28,11 @@ class Player(
 
         val card = deck.draw()
         if (card != null) {
-            myCards = myCards.add(card)
+            cardHold = cardHold.add(card)
         }
+    }
+
+    companion object {
+        const val THRESHOLD = 21
     }
 }

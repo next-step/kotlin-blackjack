@@ -16,7 +16,7 @@ object OutputView {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.myCards.cards.joinToString(", ") { it.rank.mark + it.shape.mark } }")
+        println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } }")
     }
 
     fun printPlayerResult(players: Participants) {
@@ -27,6 +27,6 @@ object OutputView {
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.myCards.cards.joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getNowPoints()}")
+        println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
     }
 }
