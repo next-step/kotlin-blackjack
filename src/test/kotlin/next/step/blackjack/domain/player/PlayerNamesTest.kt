@@ -12,5 +12,4 @@ class PlayerNamesTest : DescribeSpec({
             }
         }
     }
-
 })

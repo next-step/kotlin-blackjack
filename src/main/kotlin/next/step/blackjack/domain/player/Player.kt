@@ -27,6 +27,5 @@ data class Player(
     companion object {
         fun of(name: PlayerName, cards: Cards): Player =
             Player(name, cards, HitAvailableState.next(cards))
-
     }
 }

@@ -2,7 +2,11 @@ package next.step.blackjack.domain.player
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import next.step.blackjack.domain.card.*
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.CardFace
+import next.step.blackjack.domain.card.CardSymbol
+import next.step.blackjack.domain.card.Cards
+import next.step.blackjack.domain.card.GameCards
 
 class PlayersTest : DescribeSpec({
     describe("Players") {
@@ -28,7 +32,8 @@ class PlayersTest : DescribeSpec({
 
                 players shouldBe setOf(
                     Player.of(
-                        PlayerName.of("dj"), Cards.of(
+                        PlayerName.of("dj"),
+                        Cards.of(
                             listOf(
                                 Card.of(CardFace.TWO, CardSymbol.CLUB),
                                 Card.of(CardFace.THREE, CardSymbol.CLUB)
@@ -36,7 +41,8 @@ class PlayersTest : DescribeSpec({
                         )
                     ),
                     Player.of(
-                        PlayerName.of("dj2"), Cards.of(
+                        PlayerName.of("dj2"),
+                        Cards.of(
                             listOf(
                                 Card.of(CardFace.FOUR, CardSymbol.CLUB),
                                 Card.of(CardFace.FIVE, CardSymbol.CLUB)
@@ -71,7 +77,8 @@ class PlayersTest : DescribeSpec({
 
                 players shouldBe setOf(
                     Player.of(
-                        PlayerName.of("dj"), Cards.of(
+                        PlayerName.of("dj"),
+                        Cards.of(
                             listOf(
                                 Card.of(CardFace.ACE, CardSymbol.CLUB),
                                 Card.of(CardFace.KING, CardSymbol.CLUB)
@@ -90,7 +97,6 @@ class PlayersTest : DescribeSpec({
                         )
                     )
                 )
-
             }
 
             it("플레이어가 받는다고 선택하지 않으면 카드를 받지 않음") {
@@ -117,7 +123,8 @@ class PlayersTest : DescribeSpec({
 
                 players shouldBe setOf(
                     Player.of(
-                        PlayerName.of("dj"), Cards.of(
+                        PlayerName.of("dj"),
+                        Cards.of(
                             listOf(
                                 Card.of(CardFace.ACE, CardSymbol.CLUB),
                                 Card.of(CardFace.KING, CardSymbol.CLUB)

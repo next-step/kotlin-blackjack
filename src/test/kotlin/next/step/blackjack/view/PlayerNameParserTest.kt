@@ -19,5 +19,4 @@ class PlayerNameParserTest : DescribeSpec({
             }
         }
     }
-
 })
