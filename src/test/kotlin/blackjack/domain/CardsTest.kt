@@ -46,7 +46,7 @@ class CardsTest : FunSpec({
                 21
             )
         ) { (cards, score) ->
-            cards.calculateScore() shouldBe score
+            cards.calculateScore() shouldBe Score(score)
         }
     }
 })

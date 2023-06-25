@@ -44,7 +44,7 @@ class DenominationTest : FunSpec({
             MaxScore(Denomination.QUEEN, 10),
             MaxScore(Denomination.KING, 10),
         ) { (denomination, maxScore) ->
-            denomination.maxScore() shouldBe maxScore
+            denomination.maxScore() shouldBe Score(maxScore)
         }
     }
 })

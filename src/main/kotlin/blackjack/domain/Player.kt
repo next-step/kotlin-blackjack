@@ -12,12 +12,12 @@ class Player(
             return GameResult.LOSE
         }
 
-        val dealerScore = dealer.calculateScore()
+        val dealerScore: Score = dealer.calculateScore()
         if (dealer.burst) {
             return GameResult.WIN
         }
 
-        val score = calculateScore()
+        val score: Score = calculateScore()
         if (score > dealerScore) {
             return GameResult.WIN
         }

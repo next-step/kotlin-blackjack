@@ -13,6 +13,6 @@ class Dealer(
     companion object {
         private const val DEALER_NAME = "딜러"
         private const val DEALER_OPEN_CARD_COUNT = 1
-        private const val MAX_SCORE_DEALER_SHOULD_HIT = 16
+        private val MAX_SCORE_DEALER_SHOULD_HIT = Score(16)
     }
 }

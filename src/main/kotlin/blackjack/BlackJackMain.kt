@@ -21,7 +21,7 @@ fun main() {
 
     val gameResultVO = play(participants, deck)
 
-    val participantScoreVOs = participants.members().map { ParticipantScoreVO(ParticipantVO.of(it), it.calculateScore()) }
+    val participantScoreVOs = participants.members().map { ParticipantScoreVO(ParticipantVO.of(it), it.calculateScore().score) }
     ResultView.printParticipantScores(participantScoreVOs)
     ResultView.printGameResult(gameResultVO)
 }

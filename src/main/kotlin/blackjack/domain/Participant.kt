@@ -8,18 +8,18 @@ sealed class Participant(
     abstract fun openedCards(): Cards
 
     fun hit(card: Card) {
-        if (cards.calculateScore() > Cards.WINNING_NUMBER) {
+        if (cards.calculateScore().isBurst()) {
             return
         }
 
         val addedCards = cards + card
-        if (addedCards.calculateScore() > Cards.WINNING_NUMBER) {
+        if (addedCards.calculateScore().isBurst()) {
             burst = true
         }
         cards = addedCards
     }
 
-    fun calculateScore(): Int = cards.calculateScore()
+    fun calculateScore(): Score = cards.calculateScore()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

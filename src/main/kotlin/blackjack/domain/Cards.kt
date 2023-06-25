@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.support.sumOf
+
 class Cards(
     private val cards: List<Card>
 ) : List<Card> by cards {
@@ -9,13 +11,13 @@ class Cards(
         return cards.count { it.denomination.isAce() }
     }
 
-    fun calculateScore(): Int {
-        var scoreSum = cards.sumOf { it.denomination.maxScore() }
+    fun calculateScore(): Score {
+        var scoreSum: Score = cards.sumOf { it.denomination.maxScore() }
         for (i in 1..countAces()) {
-            if (scoreSum <= WINNING_NUMBER) {
+            if (!scoreSum.isBurst()) {
                 break
             }
-            scoreSum = scoreSum - Denomination.ACE.maxScore() + Denomination.ACE.score
+            scoreSum = scoreSum + Denomination.ACE.score() - Denomination.ACE.maxScore()
         }
 
         return scoreSum
@@ -23,9 +25,5 @@ class Cards(
 
     operator fun plus(card: Card): Cards {
         return Cards(cards + card)
-    }
-
-    companion object {
-        const val WINNING_NUMBER = 21
     }
 }

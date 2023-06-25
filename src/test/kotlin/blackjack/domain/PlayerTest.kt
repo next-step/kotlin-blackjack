@@ -62,7 +62,7 @@ class PlayerTest : FunSpec({
             )
         ) { (cards, score) ->
             val player = Player("pobi", cards)
-            player.calculateScore() shouldBe score
+            player.calculateScore() shouldBe Score(score)
         }
     }
 
