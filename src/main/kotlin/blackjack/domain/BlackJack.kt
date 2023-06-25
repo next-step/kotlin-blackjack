@@ -12,7 +12,7 @@ class BlackJack(val players: List<Player>) {
 
     fun isEnd(): Boolean {
         if (!isEnd) {
-            canPlay()
+            checkAndChangeGamePlayer()
         }
         return isEnd
     }
@@ -34,12 +34,10 @@ class BlackJack(val players: List<Player>) {
         return count
     }
 
-    private fun canPlay(): Boolean {
-        val canPlay = players[nowPlayer].score() <= BLACKJACK_MAX_SCORE
-        if (!canPlay) {
+    private fun checkAndChangeGamePlayer() {
+        if (players[nowPlayer].score() > BLACKJACK_MAX_SCORE) {
             changeNowPlayer()
         }
-        return canPlay
     }
 
     private fun changeNowPlayer() {
