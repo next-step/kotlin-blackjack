@@ -5,7 +5,7 @@ import blackjack.domain.player.Player
 
 data class Hands(
     val playerName: String,
-    val cards: List<Card>
+    val cards: Set<Card>
 ) {
     companion object {
         fun from(player: Player) = Hands(playerName = player.name.value, cards = player.cards())

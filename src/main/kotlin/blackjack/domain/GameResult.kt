@@ -5,7 +5,7 @@ import blackjack.domain.player.Player
 
 data class GameResult(
     val playerName: String,
-    val cards: List<Card>,
+    val cards: Set<Card>,
     val score: Int,
 ) {
     companion object {

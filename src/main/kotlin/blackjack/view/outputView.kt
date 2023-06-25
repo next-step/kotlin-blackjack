@@ -24,4 +24,4 @@ private fun printGameResult(gameResult: GameResult) {
     println("${gameResult.playerName}카드: ${parseCardsResult(gameResult.cards)}} - 결과: ${gameResult.score}")
 }
 
-private fun parseCardsResult(cards: List<Card>) = cards.joinToString(CARD_DELIMITER) { parseCardView(it) }
+private fun parseCardsResult(cards: Set<Card>) = cards.joinToString(CARD_DELIMITER) { parseCardView(it) }

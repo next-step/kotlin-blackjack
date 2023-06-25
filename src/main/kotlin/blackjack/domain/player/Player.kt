@@ -22,7 +22,7 @@ class Player(
 
     fun isBust(): Boolean = gameState.isBust()
 
-    fun cards(): List<Card> = gameState.cards()
+    fun cards(): Set<Card> = gameState.cards()
 
     fun hands(): Hands = Hands.from(this)
 

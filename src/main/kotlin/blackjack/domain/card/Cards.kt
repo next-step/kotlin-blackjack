@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 @JvmInline
 value class Cards(
-    val values: List<Card> = listOf(),
+    val values: Set<Card> = linkedSetOf(),
 ) {
     init {
         require(values.size == values.toSet().size) { "중복된 카드가 저장될 수 없다." }
@@ -36,6 +36,6 @@ value class Cards(
         private const val BLACKJACK_SCORE = 21
         private const val INITIAL_HAND_CARD_LIMIT_SIZE = 2
 
-        fun of(vararg card: Card) = Cards(card.toMutableList())
+        fun of(vararg card: Card) = Cards(card.toCollection(LinkedHashSet()))
     }
 }

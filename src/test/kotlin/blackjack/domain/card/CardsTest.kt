@@ -16,14 +16,8 @@ import io.kotest.matchers.shouldBe
 class CardsTest : FunSpec({
 
     context("init") {
-        test("중복된 카드가 저장될 경우 예외가 발생한다.") {
-            val givenCards = mutableListOf(SPADE_ACE, SPADE_ACE)
-            val exception = shouldThrowExactly<IllegalArgumentException> { Cards(givenCards) }
-            exception.message shouldBe "중복된 카드가 저장될 수 없다."
-        }
-
         test("카드 리스트를 생성한다.") {
-            val actual = Cards(mutableListOf(SPADE_ACE, SPADE_TWO))
+            val actual = Cards(linkedSetOf(SPADE_ACE, SPADE_TWO))
             actual.values shouldHaveSize 2
         }
     }
@@ -58,10 +52,10 @@ class CardsTest : FunSpec({
 
     context("isBust") {
         forAll(
-            row(listOf(SPADE_ACE, SPADE_TWO), false),
-            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK), false),
-            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK, SPADE_QUEEN), true),
-            row(listOf(SPADE_TWO, SPADE_KING, SPADE_JACK), true),
+            row(linkedSetOf(SPADE_ACE, SPADE_TWO), false),
+            row(linkedSetOf(SPADE_ACE, SPADE_KING, SPADE_JACK), false),
+            row(linkedSetOf(SPADE_ACE, SPADE_KING, SPADE_JACK, SPADE_QUEEN), true),
+            row(linkedSetOf(SPADE_TWO, SPADE_KING, SPADE_JACK), true),
         ) { input, expected ->
             test("${input}은 버스트가 ${expected}이다") {
                 val cards = Cards(input)
@@ -73,11 +67,11 @@ class CardsTest : FunSpec({
 
     context("score") {
         forAll(
-            row(listOf(SPADE_ACE, SPADE_TWO), 13),
-            row(listOf(SPADE_ACE, SPADE_KING), 21),
-            row(listOf(SPADE_ACE, SPADE_KING, SPADE_JACK), 21),
-            row(listOf(SPADE_ACE, HEART_ACE), 12),
-            row(listOf(SPADE_ACE, SPADE_TWO, SPADE_KING), 13)
+            row(linkedSetOf(SPADE_ACE, SPADE_TWO), 13),
+            row(linkedSetOf(SPADE_ACE, SPADE_KING), 21),
+            row(linkedSetOf(SPADE_ACE, SPADE_KING, SPADE_JACK), 21),
+            row(linkedSetOf(SPADE_ACE, HEART_ACE), 12),
+            row(linkedSetOf(SPADE_ACE, SPADE_TWO, SPADE_KING), 13)
 
         ) { input, expected ->
             test("21에 가장 가까운 score를 계산한다") {

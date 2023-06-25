@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 
 interface GameState {
 
-    fun cards(): List<Card>
+    fun cards(): Set<Card>
 
     fun draw(card: Card): GameState
 
