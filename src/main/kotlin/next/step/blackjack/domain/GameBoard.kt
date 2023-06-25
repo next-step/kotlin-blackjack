@@ -1,15 +1,13 @@
 package next.step.blackjack.domain
 
 import next.step.blackjack.domain.player.Player
+import next.step.blackjack.domain.player.PlayerCards
+import next.step.blackjack.domain.player.PlayerName
+import next.step.blackjack.domain.player.PlayerNames
 
 data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
     fun start(announce: (Set<Player>, Int) -> Unit) {
-        players.forEach { player -> repeat(INIT_CARD_CNT) { hit(player) } }
         announce(players, INIT_CARD_CNT)
-    }
-
-    private fun hit(player: Player) {
-        player.hit(gameCards.pop())
     }
 
     fun turn(chooseHit: (Player) -> Boolean, announce: (Player) -> Unit) {
@@ -21,12 +19,24 @@ data class GameBoard(val gameCards: GameCards, val players: Set<Player>) {
         }
     }
 
+    private fun hit(player: Player) {
+        player.hit(gameCards.pop())
+    }
+
     fun finish(announce: (Set<Player>) -> Unit) {
         announce(players)
     }
 
     companion object {
         private const val INIT_CARD_CNT = 2
-        fun of(gameCards: GameCards, players: Set<Player>): GameBoard = GameBoard(gameCards, players)
+        fun of(gameCards: GameCards, playerNames: PlayerNames): GameBoard {
+            return GameBoard(gameCards, players(playerNames, gameCards))
+        }
+
+        private fun players(playerNames: PlayerNames, gameCards: GameCards) =
+            playerNames.map { player(it, gameCards) }.toSet()
+
+        private fun player(name: PlayerName, gameCards: GameCards) =
+            Player.of(name, PlayerCards.of(gameCards.pop(INIT_CARD_CNT)))
     }
 }
