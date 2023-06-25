@@ -14,7 +14,7 @@ class Player(
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()
         if (cardHold.cards.any { card -> card.rank == CardRank.ACE } && sum <= THRESHOLD) {
-            return sum + CardRank.ACE.point[1]
+            return sum + CardRank.ACE.getSpecialPoint()
         }
         return sum
     }

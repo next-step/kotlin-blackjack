@@ -6,7 +6,7 @@ class Card private constructor(
 ) {
 
     fun getPoint(): Int {
-        return rank.point[0] ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
+        return rank.point ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
     }
 
     companion object {
