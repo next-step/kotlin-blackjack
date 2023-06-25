@@ -1,7 +1,8 @@
 package blackjack.domain
 
-sealed interface CardNumber {
-    val number: Int
+enum class CardNumber {
+
+    ACE, TWO, TREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING;
 
     companion object {
         const val MIN_CARD_NUMBER = 1
@@ -10,49 +11,13 @@ sealed interface CardNumber {
         private const val INVALID_CARD_NUMBER_ERROR_MESSAGE = "카드의 번호는 $MIN_CARD_NUMBER ~ $MAX_CARD_NUMBER 사이여야 합니다"
 
         fun of(value: Int): CardNumber {
-            return when (value) {
-                in AceCardNumber.NUMBER_RANGE -> AceCardNumber(value)
-                in NumberCardNumber.NUMBER_RANGE -> NumberCardNumber(value)
-                in JackQueenKingCardNumber.NUMBER_RANGE -> JackQueenKingCardNumber(value)
-                else -> throw IllegalArgumentException(INVALID_CARD_NUMBER_ERROR_MESSAGE)
+            return when {
+                value < MIN_CARD_NUMBER || value > MAX_CARD_NUMBER -> throw IllegalArgumentException(
+                    INVALID_CARD_NUMBER_ERROR_MESSAGE,
+                )
+
+                else -> values()[value - 1]
             }
         }
-    }
-}
-
-data class AceCardNumber(override val number: Int) : CardNumber {
-
-    init {
-        require(number in NUMBER_RANGE)
-    }
-
-    companion object {
-        val NUMBER_RANGE = 1..1
-    }
-}
-
-data class NumberCardNumber(override val number: Int) : CardNumber {
-
-    init {
-        require(number in NUMBER_RANGE)
-    }
-
-    companion object {
-        val NUMBER_RANGE = AceCardNumber.NUMBER_RANGE.last + 1 until JackQueenKingCardNumber.NUMBER_RANGE.first
-    }
-}
-
-data class JackQueenKingCardNumber(override val number: Int) : CardNumber {
-
-    init {
-        require(number in NUMBER_RANGE)
-    }
-
-    companion object {
-        const val JACK_NUMBER = 11
-        const val QUEEN_NUMBER = 12
-        const val KING_NUMBER = 13
-
-        val NUMBER_RANGE = JACK_NUMBER..KING_NUMBER
     }
 }

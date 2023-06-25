@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.PointCalculator
 import blackjack.domain.User
 import blackjack.domain.Users
 import blackjack.io.InputView
@@ -26,11 +25,10 @@ class BlackjackController {
     }
 
     private fun checkHit(user: User) {
-        while (InputView.checkHit(user.name)) {
+        while (!user.isBust() && InputView.checkHit(user.name)) {
             blackjackGame.addCardTo(user)
-            PointCalculator.calculatePoint(user.deck) ?: break
             ResultView.printUserDeck(user)
         }
-        ResultView.printUserDeck(user)
+        println()
     }
 }

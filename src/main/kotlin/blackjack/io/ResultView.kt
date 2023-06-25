@@ -1,11 +1,8 @@
 package blackjack.io
 
-import blackjack.domain.AceCardNumber
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
-import blackjack.domain.JackQueenKingCardNumber
-import blackjack.domain.NumberCardNumber
 import blackjack.domain.Suit
 import blackjack.domain.User
 import blackjack.domain.Users
@@ -13,7 +10,6 @@ import blackjack.domain.Users
 object ResultView {
     private const val DECK_PRINT_FORMAT = "%s카드: %s"
     private const val RESULT_PRINT_FORMAT = "%s카드: %s - 결과: %s"
-    private const val GAME_OVER_MESSAGE = "게임오버"
 
     fun printUsersDeck(users: Users) {
         println()
@@ -28,7 +24,6 @@ object ResultView {
     }
 
     fun printUsersResult(users: Users) {
-        println()
         for (user in users) {
             println(resultFormatting(user))
         }
@@ -38,22 +33,17 @@ object ResultView {
         return RESULT_PRINT_FORMAT.format(
             user.name,
             deckToString(user.deck),
-            user.calculatePointOrNull() ?: GAME_OVER_MESSAGE,
+            user.calculatePoint(),
         )
     }
 
     private fun cardNumberToString(cardNumber: CardNumber): String {
         return when (cardNumber) {
-            is AceCardNumber -> "A"
-            is NumberCardNumber -> cardNumber.number.toString()
-            is JackQueenKingCardNumber -> {
-                when (cardNumber.number) {
-                    JackQueenKingCardNumber.JACK_NUMBER -> "J"
-                    JackQueenKingCardNumber.QUEEN_NUMBER -> "Q"
-                    JackQueenKingCardNumber.KING_NUMBER -> "K"
-                    else -> throw IllegalStateException()
-                }
-            }
+            CardNumber.ACE -> "A"
+            CardNumber.JACK -> "J"
+            CardNumber.QUEEN -> "Q"
+            CardNumber.KING -> "K"
+            else -> (CardNumber.values().indexOf(cardNumber) + 1).toString()
         }
     }
 

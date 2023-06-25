@@ -25,58 +25,11 @@ class CardNumberTest : BehaviorSpec({
         }
     }
 
-    Given("Ace에 해당하지 않는 숫자가 주어졌다") {
-        val number = AceCardNumber.NUMBER_RANGE.last + 1
-        When("해당 숫자로 CardNumber를 만들면") {
-            Then("에러가 던져진다") {
-                shouldThrow<IllegalArgumentException> { AceCardNumber(number) }
-            }
-        }
-    }
-
-    AceCardNumber.NUMBER_RANGE.toList().forAll { number ->
-        Given("Ace에 해당하는 숫자($number)가 주어졌다") {
+    CardNumber.NUMBER_RANGE.toList().forAll { number ->
+        Given("CardNumber에 해당하는 숫자($number)가 주어졌다") {
             When("해당 숫자로 CardNumber를 만들면") {
-                Then("AceCardNumber가 생성된다") {
-                    CardNumber.of(number) shouldBe AceCardNumber(number)
-                }
-            }
-        }
-    }
-
-    Given("숫자 카드에 해당하지 않는 숫자가 주어졌다") {
-        val number = NumberCardNumber.NUMBER_RANGE.last + 1
-        When("해당 숫자로 CardNumber를 만들면") {
-            Then("에러가 던져진다") {
-                shouldThrow<IllegalArgumentException> { NumberCardNumber(number) }
-            }
-        }
-    }
-
-    NumberCardNumber.NUMBER_RANGE.toList().forAll { number ->
-        Given("숫자 카드에 해당하는 숫자($number)가 주어졌다") {
-            When("해당 숫자로 CardNumber를 만들면") {
-                Then("NumberCardNumber가 생성된다") {
-                    CardNumber.of(number) shouldBe NumberCardNumber(number)
-                }
-            }
-        }
-    }
-
-    Given("J,Q,K에 해당하지 않는 숫자가 주어졌다") {
-        val number = JackQueenKingCardNumber.NUMBER_RANGE.last + 1
-        When("해당 숫자로 CardNumber를 만들면") {
-            Then("에러가 던져진다") {
-                shouldThrow<IllegalArgumentException> { JackQueenKingCardNumber(number) }
-            }
-        }
-    }
-
-    JackQueenKingCardNumber.NUMBER_RANGE.toList().forAll { number ->
-        Given("J,Q,K에 해당하는 숫자($number)가 주어졌다") {
-            When("해당 숫자로 CardNumber를 만들면") {
-                Then("JackQueenKingCardNumber가 생성된다") {
-                    CardNumber.of(number) shouldBe JackQueenKingCardNumber(number)
+                Then("적당한 Enum이 반환된다") {
+                    CardNumber.of(number) shouldBe CardNumber.values()[number - 1]
                 }
             }
         }

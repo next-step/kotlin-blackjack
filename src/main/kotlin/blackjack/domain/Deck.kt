@@ -19,8 +19,12 @@ class Deck(cardList: List<Card>) : Iterable<Card> {
         cardQueue.add(card)
     }
 
-    fun calculatePointOrNull(): Int? {
-        return PointCalculator.calculatePoint(this)
+    fun sum(): Int {
+        return cardQueue.sumOf { PointCalculator.getCardPoints(it) }
+    }
+
+    fun hasAce(): Boolean {
+        return cardQueue.any { it.cardNumber == CardNumber.ACE }
     }
 
     operator fun get(index: Int): Card {

@@ -10,8 +10,12 @@ data class User(val name: String, val deck: Deck) {
         deck.addCard(card)
     }
 
-    fun calculatePointOrNull(): Int? {
-        return deck.calculatePointOrNull()
+    fun calculatePoint(): Int {
+        return deck.sum()
+    }
+
+    fun isBust(): Boolean {
+        return deck.sum() > PointCalculator.BLACKJACK_LIMIT
     }
 
     companion object {

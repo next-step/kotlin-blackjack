@@ -2,12 +2,11 @@ package blackjack.domain
 
 import blackjack.util.CardSelector
 import blackjack.util.RandomCardSelector
-import java.util.LinkedList
 
 class BlackjackGame(private val cardSelector: CardSelector = RandomCardSelector()) {
 
     fun getInitDeck(): Deck {
-        val cardList = LinkedList<Card>()
+        val cardList = mutableListOf<Card>()
         repeat(INITIAL_DECK_SIZE) {
             cardList.add(cardSelector.drawCard())
         }
