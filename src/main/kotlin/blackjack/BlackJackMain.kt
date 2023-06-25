@@ -37,7 +37,7 @@ private fun play(participants: Participants, deck: Deck): GameResultVO {
     }
 
     val dealerScore = dealer.calculateScore()
-    val playerGameResultVOs = players.map { PlayerGameResultVO(it.name, it.isWinner(dealerScore)) }
+    val playerGameResultVOs = players.map { PlayerGameResultVO(it.name, it.getGameResult(dealerScore)) }
     return GameResultVO.of(playerGameResultVOs)
 }
 

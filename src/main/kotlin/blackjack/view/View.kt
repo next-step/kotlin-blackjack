@@ -55,12 +55,12 @@ object ResultView {
 
     fun printGameResult(gameResultVO: GameResultVO) {
         val playersGameResult = gameResultVO.playerGameResultVOs
-            .joinToString(NEW_LINE) { "${it.name}: ${if (it.isWinner) "승" else "패"}" }
+            .joinToString(NEW_LINE) { "${it.name}: ${it.gameResult()}" }
 
         println(
             """$NEW_LINE
             |## 최종 승패
-            |딜러: ${gameResultVO.dealerWinCount}승 ${gameResultVO.dealerLoseCount}패
+            |딜러: ${gameResultVO.dealerWinCount}승 ${gameResultVO.dealerLoseCount}패 ${gameResultVO.dealerTieCount}무
             |$playersGameResult
             |""".trimMargin()
         )

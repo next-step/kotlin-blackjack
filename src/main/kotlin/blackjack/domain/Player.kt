@@ -7,16 +7,24 @@ class Player(
 ) : Participant(name, cards, burst) {
     override fun openedCards(): Cards = cards
 
-    fun isWinner(dealerScore: Int): Boolean {
+    fun getGameResult(dealerScore: Int): GameResult {
         if (burst) {
-            return false
+            return GameResult.LOSE
         }
 
         if (dealerScore > Cards.WINNING_NUMBER) {
-            return true
+            return GameResult.WIN
         }
 
         val score = calculateScore()
-        return score <= Cards.WINNING_NUMBER && score >= dealerScore
+        if (score > dealerScore) {
+            return GameResult.WIN
+        }
+
+        if (score == dealerScore) {
+            return GameResult.TIE
+        }
+
+        return GameResult.LOSE
     }
 }

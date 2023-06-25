@@ -77,19 +77,24 @@ class PlayerTest : FunSpec({
         player.openedCards() shouldBe cards
     }
 
-    context("게임을 이겼는지 여부를 반환한다") {
-        data class IsWinner(val cards: Cards, val isPlayerBurst: Boolean, val dealerScore: Int, val expected: Boolean)
+    context("게임 결과를 반환한다") {
+        data class GetGameResult(
+            val cards: Cards,
+            val isPlayerBurst: Boolean,
+            val dealerScore: Int,
+            val gameResult: GameResult
+        )
         withData(
-            IsWinner(
+            GetGameResult(
                 Cards(
                     Card.of(Denomination.ACE, Suit.SPADES),
                     Card.of(Denomination.JACK, Suit.SPADES),
                 ),
                 false,
                 21,
-                true
+                GameResult.TIE
             ),
-            IsWinner(
+            GetGameResult(
                 Cards(
                     Card.of(Denomination.ACE, Suit.SPADES),
                     Card.of(Denomination.JACK, Suit.SPADES),
@@ -97,38 +102,38 @@ class PlayerTest : FunSpec({
                 ),
                 false,
                 21,
-                false
+                GameResult.LOSE
             ),
-            IsWinner(
+            GetGameResult(
                 Cards(
                     Card.of(Denomination.KING, Suit.SPADES),
                     Card.of(Denomination.JACK, Suit.SPADES),
                 ),
                 false,
                 21,
-                false
+                GameResult.LOSE
             ),
-            IsWinner(
+            GetGameResult(
                 Cards(
                     Card.of(Denomination.KING, Suit.SPADES),
                     Card.of(Denomination.JACK, Suit.SPADES),
                 ),
                 false,
                 22,
-                true
+                GameResult.WIN
             ),
-            IsWinner(
+            GetGameResult(
                 Cards(
                     Card.of(Denomination.KING, Suit.SPADES),
                     Card.of(Denomination.JACK, Suit.SPADES),
                 ),
                 true,
                 22,
-                false
+                GameResult.LOSE
             ),
-        ) { (cards, isPlayerBurst, dealerScore, expected) ->
+        ) { (cards, isPlayerBurst, dealerScore, gameResult) ->
             val player = Player("pobi", cards, isPlayerBurst)
-            player.isWinner(dealerScore) shouldBe expected
+            player.getGameResult(dealerScore) shouldBe gameResult
         }
     }
 })
