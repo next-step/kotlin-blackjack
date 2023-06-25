@@ -14,8 +14,4 @@ class CardTest {
         Assertions.assertThat(card.number).isEqualTo(CardNumber.A)
         Assertions.assertThat(card.shape).isEqualTo(CardShape.CLOVER)
     }
-
-    @Test
-    fun `카드의 문양과 숫자의 조합은 모두 다르다`() {
-    }
 }

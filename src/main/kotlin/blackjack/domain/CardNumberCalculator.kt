@@ -21,14 +21,13 @@ class CardNumberCalculator {
     }
 
     fun proceedAceNumber(sum: Int): Int {
-        if (sum + ACE_MAXINUM <= CONDITION_TO_WIN_BLACK_JACK) {
+        if (sum + ACE_MAXINUM <= RuleChecker.CONDITION_TO_WIN_BLACK_JACK) {
             return ACE_MAXINUM
         }
         return ACE_MINIMUM
     }
 
     companion object {
-        const val CONDITION_TO_WIN_BLACK_JACK = 21
         const val ACE_MAXINUM = 11
         const val ACE_MINIMUM = 1
     }
