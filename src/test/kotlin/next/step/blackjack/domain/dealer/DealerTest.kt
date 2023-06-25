@@ -110,6 +110,52 @@ class DealerTest : DescribeSpec({
             }
         }
 
+        context("turn") {
+            it("canHit이면 카드 더 받음") {
+                val dealer = Dealer.of(
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SIX, CardSymbol.SPADE),
+                            Card.of(CardFace.TEN, CardSymbol.SPADE)
+                        )
+                    )
+                )
+
+                dealer.turn({ Card.of(CardFace.ONE, CardSymbol.HEART) }, {})
+
+                dealer shouldBe Dealer.of(
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SIX, CardSymbol.SPADE),
+                            Card.of(CardFace.TEN, CardSymbol.SPADE),
+                            Card.of(CardFace.ONE, CardSymbol.HEART)
+                        )
+                    )
+                )
+            }
+            it("canHit 아니면 카드 더 안받음") {
+                val dealer = Dealer.of(
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SEVEN, CardSymbol.SPADE),
+                            Card.of(CardFace.TEN, CardSymbol.SPADE)
+                        )
+                    )
+                )
+
+                dealer.turn({ Card.of(CardFace.ONE, CardSymbol.HEART) }, {})
+
+                dealer shouldBe Dealer.of(
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SEVEN, CardSymbol.SPADE),
+                            Card.of(CardFace.TEN, CardSymbol.SPADE)
+                        )
+                    )
+                )
+            }
+        }
+
         context("fight") {
             it("GameResults 제공") {
                 val players = Players.of(

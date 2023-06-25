@@ -1,5 +1,6 @@
 package next.step.blackjack.domain.dealer
 
+import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.card.state.CardsState
 import next.step.blackjack.domain.card.state.UnfinishedState
@@ -17,6 +18,13 @@ data class Dealer(
 ) : Player(name, cards, state) {
 
     fun cardDescFirst(): String = cards.descFirst()
+
+    fun turn(cardGenerator: () -> Card, announce: (String) -> Unit) {
+        if (canHit()) {
+            hit(cardGenerator())
+            announce(name())
+        }
+    }
 
     override fun canHit(): Boolean = cards.point() <= HIT_AVAILABLE_POINT
 
