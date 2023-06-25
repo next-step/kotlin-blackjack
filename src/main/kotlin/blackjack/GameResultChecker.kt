@@ -6,6 +6,16 @@ import blackjack.domain.Player
 class GameResultChecker(
     private val dealer: Dealer
 ) {
+
+    fun determineGameResult(players: Array<Player>) {
+        val dealerValue = dealer.optimalValue()
+
+        players.forEach {
+            val winner = determineWinner(it.optimalValue(), dealerValue)
+            updateScores(winner, it)
+        }
+    }
+
     fun determineWinner(playerValue: Int, dealerValue: Int): Winner {
         return when {
             playerValue > 21 -> Winner.DEALER
