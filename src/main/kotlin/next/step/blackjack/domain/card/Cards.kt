@@ -31,6 +31,11 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
 
     fun descs(): Set<String> = cards.map { it.desc() }.toSet()
 
+    fun descFirst(): String {
+        require(cards.isNotEmpty()) { "카드 개수가 1개 이상이어야 조회 가능합니다." }
+        return cards.first().desc()
+    }
+
     companion object {
         private const val FINISH_POINT = 21
         private const val BLACKJACK_CARDS_CNT = 2

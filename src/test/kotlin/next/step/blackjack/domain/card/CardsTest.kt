@@ -3,6 +3,7 @@ package next.step.blackjack.domain.card
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.assertThrows
 
 class CardsTest : BehaviorSpec({
 
@@ -179,6 +180,26 @@ class CardsTest : BehaviorSpec({
             }
             Then("종료 상태임") {
                 cards.isFinished() shouldBe true
+            }
+        }
+        When("첫번째 desc 찾는데 카드가 있으면") {
+            val cards = Cards.of(
+                listOf(
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                    Card.of(CardFace.NINE, CardSymbol.HEART),
+                    Card.of(CardFace.NINE, CardSymbol.CLUB),
+                    Card.of(CardFace.ONE, CardSymbol.HEART),
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                )
+            )
+            Then("첫번째 카드 desc 제공") {
+                cards.descFirst() shouldBe "A클로버"
+            }
+        }
+        When("첫번째 desc 찾는데 카드가 없으면") {
+            val cards = Cards.of(emptyList())
+            Then("예외 발생") {
+                assertThrows<IllegalArgumentException> { cards.descFirst() }
             }
         }
     }
