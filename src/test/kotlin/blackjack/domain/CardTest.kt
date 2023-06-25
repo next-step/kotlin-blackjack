@@ -21,6 +21,4 @@ class CardTest {
         val rankList = Rank.values()
         rankList.size shouldBe 13
     }
-
-
 }
