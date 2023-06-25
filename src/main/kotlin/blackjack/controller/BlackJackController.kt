@@ -7,7 +7,7 @@ class BlackJackController(
 ) {
 
     fun play() {
-
         val blackjackGame = blackjackService.initBlackjackGame()
+        blackjackService.playBlackjackGame(blackjackGame)
     }
 }
