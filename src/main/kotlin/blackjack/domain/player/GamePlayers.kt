@@ -22,16 +22,12 @@ class GamePlayers(val players: List<Player>, val dealer: Dealer = Dealer()) {
 
     private fun compareScore(player: Player, dealerScore: Int): PlayerResult {
         val playerScore = player.cards.getOptimizedScore()
-        val gameResult =
-            if (dealerScore > PlayerStatus.BLACK_JACK_SCORE ||
-                (playerScore < PlayerStatus.BLACK_JACK_SCORE && dealerScore < playerScore)
-            ) {
-                GameResult.WIN
-            } else if (playerScore == dealerScore) {
-                GameResult.TIE
-            } else {
-                GameResult.LOOSE
-            }
+        val gameResult = when {
+            dealerScore > PlayerStatus.BLACK_JACK_SCORE ||
+                (playerScore <= PlayerStatus.BLACK_JACK_SCORE && dealerScore < playerScore) -> GameResult.WIN
+            (playerScore == dealerScore) -> GameResult.TIE
+            else -> GameResult.LOOSE
+        }
         return PlayerResult(player, gameResult)
     }
 
