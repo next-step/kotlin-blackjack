@@ -28,7 +28,7 @@ class PlayersTest : DescribeSpec({
                             PlayerName.of("dj2")
                         )
                     )
-                ) { gameCards.pop(it) }
+                ) { gameCards.pop(2) }
 
                 players shouldBe setOf(
                     Player.of(
@@ -71,7 +71,7 @@ class PlayersTest : DescribeSpec({
                             PlayerName.of("dj2")
                         )
                     )
-                ) { gameCards.pop(it) }
+                ) { gameCards.pop(2) }
 
                 players.turn({ _ -> true }, { gameCards.pop() }, {})
 
@@ -117,7 +117,7 @@ class PlayersTest : DescribeSpec({
                             PlayerName.of("dj2")
                         )
                     )
-                ) { gameCards.pop(it) }
+                ) { gameCards.pop(2) }
 
                 players.turn({ _ -> false }, { gameCards.pop() }, {})
 
