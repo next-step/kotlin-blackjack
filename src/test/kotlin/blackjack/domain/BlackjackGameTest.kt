@@ -32,7 +32,7 @@ class BlackjackGameTest : FunSpec({
 
     context("firstDraw") {
         test("현재 턴이 firstDraw 턴이 아닌데 요청한 경우 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = 1, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.firstDraw() }
             exception.message shouldBe "first draw 턴이 아닙니다."
         }
@@ -42,20 +42,20 @@ class BlackjackGameTest : FunSpec({
             val actual = blackjackGame.firstDraw()
 
             blackjackGame.cardDeck.size() shouldBe 48
-            blackjackGame.turn shouldBe 0
+            blackjackGame.turn shouldBe TURN_0
             actual shouldHaveSize 2
         }
     }
 
     context("currentPlayerDraw") {
         test("턴이 유효하지 않은데 드로우하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
             exception.message shouldBe "첫 드로우가 시작되지 않았다."
         }
 
         test("턴이 종료되었는데 드로우하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
             exception.message shouldBe "모든 드로우가 종료되었다."
         }
@@ -65,7 +65,7 @@ class BlackjackGameTest : FunSpec({
             cardDeck.add(SPADE_THREE)
             val blackjackGame =
                 BlackjackGame(
-                    turn = 0,
+                    turn = TURN_0,
                     players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
                     cardDeck = CardDeck(cardDeck)
                 )
@@ -80,22 +80,22 @@ class BlackjackGameTest : FunSpec({
             cardDeck.add(SPADE_QUEEN)
             val blackjackGame =
                 BlackjackGame(
-                    turn = 0,
+                    turn = TURN_0,
                     players = listOf(Player("a", Hit(Cards.of(SPADE_KING, SPADE_JACK)))),
                     cardDeck = CardDeck(cardDeck)
                 )
             blackjackGame.currentPlayerDraw()
 
             val actual = blackjackGame.turn
-            actual shouldBe 1
+            actual shouldBe TURN_1
         }
     }
 
     context("isEndGame") {
         forAll(
-            row(-1, false),
-            row(0, false),
-            row(2, true)
+            row(TURN_MINUS_1, false),
+            row(TURN_0, false),
+            row(TURN_2, true)
         ) { input, expected ->
             test("현재 턴 ${input}이 종료되었음은 ${expected}이다.") {
                 val blackjackGame = BlackjackGame(turn = input, players = PLAYERS)
@@ -107,19 +107,19 @@ class BlackjackGameTest : FunSpec({
 
     context("currentTurnPlayerName") {
         test("턴이 유효하지 않은데 반환하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
             exception.message shouldBe "첫 드로우가 시작되지 않았다."
         }
 
         test("턴이 종료되었는데 반환하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
             exception.message shouldBe "모든 드로우가 종료되었다."
         }
 
         test("현재 턴인 유저의 이름이 반환된다.") {
-            val blackjackGame = BlackjackGame(turn = 1, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_1, players = PLAYERS)
             val actual = blackjackGame.currentTurnPlayerName()
             actual shouldBe "b"
         }
@@ -127,13 +127,13 @@ class BlackjackGameTest : FunSpec({
 
     context("passToNextTurn") {
         test("턴이 유효하지 않은데 전환하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = -1, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
             exception.message shouldBe "첫 드로우가 시작되지 않았다."
         }
 
         test("턴이 종료되었는데 전환하려하면 예외가 발생한다.") {
-            val blackjackGame = BlackjackGame(turn = 2, players = PLAYERS)
+            val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
             exception.message shouldBe "모든 드로우가 종료되었다."
         }
@@ -141,18 +141,22 @@ class BlackjackGameTest : FunSpec({
         test("현재 턴 유저를 stay로 변경하고 다음 턴으로 변경한다.") {
             val blackjackGame =
                 BlackjackGame(
-                    turn = 0,
+                    turn = TURN_0,
                     players = listOf(Player("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
                 )
             blackjackGame.passToNextTurn()
 
 
-            blackjackGame.turn shouldBe 1
+            blackjackGame.turn shouldBe TURN_1
             blackjackGame.players[0].gameState.shouldBeTypeOf<Stay>()
         }
     }
 }) {
     companion object {
         private val PLAYERS = listOf(Player("a"), Player("b"))
+        private val TURN_MINUS_1 = Turn(-1)
+        private val TURN_0 = Turn(0)
+        private val TURN_1 = Turn(1)
+        private val TURN_2 = Turn(2)
     }
 }
