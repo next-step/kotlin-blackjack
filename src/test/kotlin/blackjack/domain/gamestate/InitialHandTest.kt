@@ -54,7 +54,7 @@ class InitialHandTest : FunSpec({
 
     context("score") {
         test("스코어를 계산하려는 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalStateException> { InitialHand() }
+            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().score() }
             exception.message shouldBe "턴이 종료되지 않아 점수를 반환할 수 없다."
         }
     }
