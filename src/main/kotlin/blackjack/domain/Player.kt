@@ -3,7 +3,7 @@ package blackjack.domain
 import kotlin.math.abs
 import kotlin.math.min
 
-class Player(val name: PlayerName) {
+open class Player(open val name: PlayerName) {
 
     val cards: Cards = Cards(mutableListOf())
 
