@@ -1,8 +1,13 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+import blackjack.exception.PlayerLoseException
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class GameTest {
 
@@ -36,5 +41,18 @@ class GameTest {
         val pobiCards = "A다이아"
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
+    }
+
+    @Test
+    fun `플레이어의 카드합이 21이 넘으면 PlayerLoseException를 throw한다`() {
+        val pobi = Player("pobi")
+        val cards = listOf(
+            Card(shape = CardShape.CLOVER, number = CardNumber.TEN),
+            Card(shape = CardShape.CLOVER, number = CardNumber.TEN),
+            Card(shape = CardShape.CLOVER, number = CardNumber.TWO)
+        )
+        pobi.addCards(cards)
+
+        assertThrows<PlayerLoseException> { game.checkPlayerIsLose(pobi) }
     }
 }

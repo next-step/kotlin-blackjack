@@ -3,8 +3,10 @@ package blackjack.controller
 import blackjack.domain.Game
 import blackjack.domain.Player
 import blackjack.domain.deck.RandomDeckShuffleStrategy
+import blackjack.exception.PlayerLoseException
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
+import java.lang.RuntimeException
 
 class BlackJackController(
     val inputView: InputView,
@@ -17,7 +19,12 @@ class BlackJackController(
         val game = Game(RandomDeckShuffleStrategy())
 
         firstDraw(game, playerList)
-        askPlayersWantToDrawCard(game, playerList)
+
+        try {
+            askPlayersWantToDrawCard(game, playerList)
+        } catch (e: PlayerLoseException) {
+            println()
+        }
 
         printGameResult(playerList)
     }
@@ -35,6 +42,7 @@ class BlackJackController(
     private fun askPlayerWantToDrawCard(game: Game, player: Player) {
         while (continueDrawingCards(player)) {
             drawPlayer(game, player)
+            game.checkPlayerIsLose(player)
         }
         resultView.printPlayerCardList(player)
         println()
