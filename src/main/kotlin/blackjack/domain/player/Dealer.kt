@@ -10,7 +10,7 @@ class Dealer(cards: Cards) : AbstractPlayer(NAME, cards) {
 
     companion object {
         private const val ELIGIBLE_CARD_SIZE = 2
-        private val ELIGIBLE_HIT_MAX_SCORE = Score(16)
+        val ELIGIBLE_HIT_MAX_SCORE = Score(16)
         const val NAME = "딜러"
     }
 }
