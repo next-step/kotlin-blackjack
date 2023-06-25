@@ -20,6 +20,7 @@ class GameController {
         players.forEach {
             playerTurn(it, game)
         }
+        dealerTurn(dealer, game)
         result(users)
     }
 
@@ -34,6 +35,13 @@ class GameController {
     private fun divideCards(players: List<Player>) {
         OutputView.divideCard(players.map { it.info.name })
         OutputView.printPlayersCards(players)
+    }
+
+    private fun dealerTurn(dealer: Dealer, game: Game) {
+        while (dealer.canGetCard()) {
+            dealer.addCard(game.getCard())
+            OutputView.printDealerGetCard()
+        }
     }
 
     private fun playerTurn(player: Player, game: Game) {
