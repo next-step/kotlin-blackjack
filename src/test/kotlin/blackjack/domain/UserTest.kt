@@ -16,19 +16,19 @@ class UserTest : BehaviorSpec({
         ),
     )
 
-    given("비어있는 이름이 주어졌다") {
+    Given("비어있는 이름이 주어졌다") {
         val name = "  "
-        `when`("해당 이름으로 User를 생성하면") {
-            then("에러가 던져진다.") {
+        When("해당 이름으로 User를 생성하면") {
+            Then("에러가 던져진다.") {
                 shouldThrow<IllegalArgumentException> { User(name, deck) }
             }
         }
     }
 
-    given("정상적인 정보가 주어졌다") {
+    Given("정상적인 정보가 주어졌다") {
         val name = "홍길동"
-        `when`("해당 이름으로 User를 생성하면") {
-            then("정상적으로 생성된다") {
+        When("해당 이름으로 User를 생성하면") {
+            Then("정상적으로 생성된다") {
                 User(name, deck).name shouldBe name
             }
         }

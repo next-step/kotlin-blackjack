@@ -8,44 +8,44 @@ import java.util.LinkedList
 
 class DeckTest : BehaviorSpec({
 
-    given("비어있는 카드 리스트가 있다") {
+    Given("비어있는 카드 리스트가 있다") {
         val cardList = LinkedList<Card>()
-        `when`("해당 리스트로 덱을 만들면") {
-            then("에러가 던져진다") {
+        When("해당 리스트로 덱을 만들면") {
+            Then("에러가 던져진다") {
                 shouldThrow<IllegalArgumentException> { Deck(cardList) }
             }
         }
     }
 
-    given("비어있지 않은 카드 리스트가 있다") {
+    Given("비어있지 않은 카드 리스트가 있다") {
         val cardList = LinkedList(listOf(Card(Suit.SPADE, NumberCardNumber(NumberCardNumber.NUMBER_RANGE.first))))
-        `when`("해당 리스트로 덱을 만들면") {
-            then("생성이 된다") {
+        When("해당 리스트로 덱을 만들면") {
+            Then("생성이 된다") {
                 shouldNotThrow<Throwable> { Deck(cardList) }
             }
         }
     }
 
-    given("1장이 들어있는 덱이 있다") {
+    Given("1장이 들어있는 덱이 있다") {
         val card = Card(Suit.SPADE, NumberCardNumber(NumberCardNumber.NUMBER_RANGE.first))
         val cardList = Deck(LinkedList(listOf(card)))
 
-        `when`("덱에서 한장을 꺼내면") {
-            then("카드가 꺼내진다") {
+        When("덱에서 한장을 꺼내면") {
+            Then("카드가 꺼내진다") {
                 cardList.drawCard() shouldBe card
                 cardList.size shouldBe 0
             }
         }
 
-        `when`("덱에서 한장을 더 꺼내면") {
-            then("에러가 던져진다") {
+        When("덱에서 한장을 더 꺼내면") {
+            Then("에러가 던져진다") {
                 shouldThrow<IllegalStateException> { cardList.drawCard() }
             }
         }
 
-        `when`("덱에 한장을 추가하면") {
+        When("덱에 한장을 추가하면") {
             cardList.addCard(card)
-            then("카드가 한장 늘어난다") {
+            Then("카드가 한장 늘어난다") {
                 cardList.size shouldBe 1
             }
         }
