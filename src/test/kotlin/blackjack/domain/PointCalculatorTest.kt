@@ -1,13 +1,12 @@
 package blackjack.domain
 
-import blackjack.controller.BlackjackGame
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import java.util.LinkedList
 
 class PointCalculatorTest : BehaviorSpec({
 
-    given("${BlackjackGame.BLACKJACK_LIMIT}점을 넘지않는 덱이 있다") {
+    given("${PointCalculator.BLACKJACK_LIMIT}점을 넘지않는 덱이 있다") {
         val deck = Deck(
             LinkedList(
                 listOf(
@@ -24,7 +23,7 @@ class PointCalculatorTest : BehaviorSpec({
         }
     }
 
-    given("${BlackjackGame.BLACKJACK_LIMIT}점을 넘는 덱이 있다") {
+    given("${PointCalculator.BLACKJACK_LIMIT}점을 넘는 덱이 있다") {
         val deck = Deck(
             LinkedList(
                 listOf(

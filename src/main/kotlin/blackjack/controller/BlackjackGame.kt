@@ -53,6 +53,5 @@ class BlackjackGame(
 
     companion object {
         const val INITIAL_DECK_SIZE = 2
-        const val BLACKJACK_LIMIT = 21
     }
 }

@@ -1,8 +1,8 @@
 package blackjack.domain
 
-import blackjack.controller.BlackjackGame
-
 object PointCalculator {
+    const val BLACKJACK_LIMIT = 21
+
     fun calculateUserPoint(deck: Deck): Int? {
         return calculateRecursively(deck, 0, 0)
     }
@@ -29,7 +29,7 @@ object PointCalculator {
     }
 
     private fun getResult(deck: Deck, index: Int, sum: Int, point: Int): Int? =
-        if (sum + point > BlackjackGame.BLACKJACK_LIMIT) {
+        if (sum + point > BLACKJACK_LIMIT) {
             null
         } else {
             calculateRecursively(deck, index + 1, sum + point)
