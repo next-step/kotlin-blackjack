@@ -9,7 +9,7 @@ private const val CARD_STRING = "카드:"
 
 object ResultView {
     private fun printCards(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.joinToString { it.char + it.shape }}")
+        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }}")
     }
 
     fun printStart(game: BlackJack) {

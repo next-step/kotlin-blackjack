@@ -35,6 +35,6 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [x] 카드 리스트 만들기 - Card
 - [x] player에게 카드를 나눠주기 - BlackJack
 - [x] player 카드 출력 - ResultView
+- [x] 점수 계산하기 (21이 넘으면 카드를 더 받을 수 없다.) - blackjack
 - [ ] n라고 입력할 때가지 게임 진행하기 - Main?, InputView
-- [ ] 게임 점수 계산하기 - BlackJack
 - [ ] 게임 결과 출력하기 - ResultView
