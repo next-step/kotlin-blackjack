@@ -19,13 +19,16 @@ value class Cards(
 
     fun isBust(): Boolean = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
 
-    fun score(): Int = calculateOptimalScore(calculateAllAvailableScore())
+    fun score(): Int {
+        check(values.isNotEmpty()) { "카드가 없어 점수를 계산할 수 없다." }
+        return calculateOptimalScore(calculateAllAvailableScore())
+    }
 
     private fun calculateOptimalScore(scores: List<Int>) = scores.filter { it <= BLACKJACK_SCORE }
         .maxOrNull() ?: scores.minBy { abs(BLACKJACK_SCORE - it) }
 
     private fun calculateAllAvailableScore() = values.map { it.denomination.score }
-        .fold(listOf(0), ::aggregateScore)
+        .reduce(::aggregateScore)
 
     private fun aggregateScore(
         currentScores: List<Int>,

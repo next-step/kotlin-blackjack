@@ -66,6 +66,10 @@ class CardsTest : FunSpec({
     }
 
     context("score") {
+        test("카드가 비었는데 score를 계산하려하면 예외가 발생한다.") {
+            val exception = shouldThrowExactly<IllegalStateException> { Cards().score() }
+            exception.message shouldBe "카드가 없어 점수를 계산할 수 없다."
+        }
         forAll(
             row(linkedSetOf(SPADE_ACE, SPADE_TWO), 13),
             row(linkedSetOf(SPADE_ACE, SPADE_KING), 21),
