@@ -21,4 +21,11 @@ class CardTest {
         val rankList = Rank.values()
         rankList.size shouldBe 13
     }
+
+    @Test
+    fun `King, Queen, Jack 카드의 총합은 30이다`() {
+        val rankList = Rank.values().filter { it == Rank.KING || it == Rank.QUEEN || it == Rank.JACK}
+        rankList.size shouldBe 3
+        rankList.sumOf { it.value } shouldBe 30
+    }
 }
