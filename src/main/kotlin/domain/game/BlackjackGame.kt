@@ -18,14 +18,13 @@ class BlackjackGame(private val deck: Deck) {
 
     fun initGame(playerNames: List<String>): Players {
         require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
-        this.players = Players(
-            playerNames.map {
-                Player(it, deck.issueCard(), deck.issueCard())
-            },
-        )
+        this.players = createPlayers(playerNames)
         this.dealer = Dealer(deck.issueCard(), deck.issueCard())
         return this.players
     }
+
+    private fun createPlayers(playerNames: List<String>) =
+        Players(playerNames.map { Player(it, deck.issueCard(), deck.issueCard()) })
 
     fun gameStart(playGame: (players: Players) -> Unit) {
         playGame(players)
