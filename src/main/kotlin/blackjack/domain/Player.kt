@@ -12,6 +12,6 @@ class Player(
     }
 
     fun changeCondition(condition: String) {
-        this.condition = Condition.values().first { it.condition == condition}
+        this.condition = Condition.values().first { it.condition == condition }
     }
 }

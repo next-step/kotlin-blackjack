@@ -29,9 +29,9 @@ class Cards(
         }
 
         val rankACards = cards.filter { it.rank.rank == ACE_RANK_MARK }
-        if(rankACards.isNotEmpty()) {
+        if (rankACards.isNotEmpty()) {
             rankACards.forEach { card ->
-                total += if(total > STANDARD_NUMBER) {
+                total += if (total > STANDARD_NUMBER) {
                     card.rank.value
                 } else {
                     Rank.SECRET_ACE_MAX_VALUE
