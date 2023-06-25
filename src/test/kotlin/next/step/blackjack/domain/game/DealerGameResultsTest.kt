@@ -46,13 +46,12 @@ class DealerGameResultsTest : DescribeSpec({
                 dealerGameResults.add(GameResult.LOSE)
 
                 dealerGameResults.results() shouldBe
-                        mapOf(
-                            GameResult.WIN to 2,
-                            GameResult.LOSE to 1,
-                            GameResult.TIE to 0
-                        )
+                    mapOf(
+                        GameResult.WIN to 2,
+                        GameResult.LOSE to 1,
+                        GameResult.TIE to 0
+                    )
             }
         }
     }
-
 })

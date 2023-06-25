@@ -203,7 +203,6 @@ class CardsTest : BehaviorSpec({
                 assertThrows<IllegalArgumentException> { cards.descFirst() }
             }
         }
-
     }
 
     Given("Cards fight") {

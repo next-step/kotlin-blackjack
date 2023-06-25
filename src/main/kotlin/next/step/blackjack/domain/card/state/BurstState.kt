@@ -14,5 +14,4 @@ object BurstState : CardsState() {
             BurstState -> GameResult.WIN
             else -> GameResult.LOSE
         }
-
 }

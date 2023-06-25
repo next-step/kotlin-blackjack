@@ -10,7 +10,7 @@ data class DealerGameResults(private val results: MutableMap<GameResult, Int>) {
     companion object {
 
         fun of(results: MutableMap<GameResult, Int>) = DealerGameResults(results)
-        
+
         fun zeros(): DealerGameResults = DealerGameResults(
             GameResult.values().associateWith { 0 }.toMutableMap()
         )
