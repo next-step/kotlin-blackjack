@@ -25,6 +25,10 @@ class Player(val name: String) {
         return cardText
     }
 
+    fun calculateSumOfCardNumbers(): Int {
+        return cardNumberCalculator.calculateSumOfCardNumbers(cards)
+    }
+
     companion object {
         fun generatePlayers(nameList: List<String>): List<Player> {
             val playerList = mutableListOf<Player>()

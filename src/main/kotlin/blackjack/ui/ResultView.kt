@@ -20,9 +20,13 @@ class ResultView {
 
     private fun printFirstDrawDetail(playerList: List<Player>) {
         playerList.forEach {
-            print("${it.name}카드:")
+            printPlayerName(it)
             println(it.getCards())
         }
+    }
+
+    private fun printPlayerName(player: Player) {
+        print("${player.name}카드: ")
     }
 
     fun printPlayersWantToDrawCard(player: Player) {
@@ -30,7 +34,19 @@ class ResultView {
     }
 
     fun printPlayerCardList(player: Player) {
-        print("${player.name}카드:")
-        println(player.getCards())
+        printPlayerName(player)
+        print(player.getCards())
+    }
+
+    fun printGameResult(playerList: List<Player>) {
+        playerList.forEach {
+            printPlayerCardList(it)
+            printSumOfPlayerCardNumbers(it)
+        }
+    }
+
+    private fun printSumOfPlayerCardNumbers(player: Player) {
+        val sumOfCardNumbers = player.calculateSumOfCardNumbers()
+        println(" - 결과: $sumOfCardNumbers")
     }
 }

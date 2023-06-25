@@ -18,6 +18,8 @@ class BlackJackController(
 
         firstDraw(game, playerList)
         askPlayersWantToDrawCard(game, playerList)
+
+        printGameResult(playerList)
     }
 
     private fun firstDraw(game: Game, playerList: List<Player>) {
@@ -34,6 +36,7 @@ class BlackJackController(
             drawPlayer(game, player)
         }
         resultView.printPlayerCardList(player)
+        println()
     }
 
     private fun continueDrawingCards(player: Player): Boolean {
@@ -44,5 +47,9 @@ class BlackJackController(
     private fun drawPlayer(game: Game, player: Player) {
         game.onePlayerDraw(player)
         resultView.printPlayerCardList(player)
+    }
+
+    private fun printGameResult(playerList: List<Player>) {
+        resultView.printGameResult(playerList)
     }
 }
