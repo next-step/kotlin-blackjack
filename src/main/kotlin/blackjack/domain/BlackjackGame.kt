@@ -1,7 +1,8 @@
 package blackjack.domain
 
 class BlackjackGame(
-    val player: List<Player>, val deck: CardDeck
+    val player: List<Player>,
+    val deck: CardDeck
 ) {
 
     fun initPlayer() {

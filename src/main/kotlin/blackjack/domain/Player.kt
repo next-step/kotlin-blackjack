@@ -2,15 +2,17 @@ package blackjack.domain
 
 import java.lang.Integer.max
 
-
 class Player(
-    val cards: Cards = Cards(), var score: Int = 0, val name: String
+    val cards: Cards = Cards(),
+    var score: Int = 0,
+    val name: String
 ) {
     private var status: PlayerStatus = PlayerStatus.GET
 
     init {
         cards.card.map {
             updateScore(it)
+            updateStatus()
         }
     }
 
@@ -26,6 +28,7 @@ class Player(
         if (!isGetCardPossible()) return
         cards.addCard(card)
         updateScore(card)
+        updateStatus()
     }
 
     fun updateScore(card: Card) {
@@ -40,5 +43,9 @@ class Player(
                 this.first().value
             }
         }
+    }
+
+    fun updateStatus() {
+        status = PlayerStatus.status(status, score)
     }
 }

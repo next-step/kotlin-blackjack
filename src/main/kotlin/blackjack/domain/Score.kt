@@ -4,7 +4,7 @@ class Score(
     val value: Int
 ) {
     init {
-        require(value in START_SCORE..END_SCORE){
+        require(value in START_SCORE..END_SCORE) {
             println(ERROR_SCORE_RANGE)
         }
     }
