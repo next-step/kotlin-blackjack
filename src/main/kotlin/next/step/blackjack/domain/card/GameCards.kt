@@ -1,15 +1,11 @@
-package next.step.blackjack.domain
-
-import next.step.blackjack.domain.card.Card
-import next.step.blackjack.domain.card.CardFace
-import next.step.blackjack.domain.card.CardSymbol
+package next.step.blackjack.domain.card
 
 data class GameCards(private val cards: MutableList<Card>) {
 
     fun pop(): Card = cards.removeFirst()
 
     fun pop(n: Int): List<Card> = (1..n).map { cards.removeFirst() }
-    
+
     fun size(): Int = cards.size
 
     companion object {
