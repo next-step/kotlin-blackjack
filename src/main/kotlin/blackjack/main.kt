@@ -6,10 +6,12 @@ import blackjack.view.OutputView
 
 fun main() {
     BlackjackGame(
-        InputView,
-        InputView,
-        OutputView,
-        OutputView,
-        OutputView,
+        InputView::isWantedMorePredicate,
+        InputView::names,
+        OutputView::consumeBlackjackDealerMoreCardScoreLimit,
+        OutputView::consumeParticipant,
+        OutputView::consumePlayersCardCount,
+        OutputView::blackjackParticipantsScoreConsumer,
+        OutputView::blackjackJudgeConsumer,
     ).start()
 }

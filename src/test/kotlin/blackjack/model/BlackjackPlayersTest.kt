@@ -11,18 +11,10 @@ class BlackjackPlayersTest : StringSpec({
         // given
         val cardDeck = CardDeck()
         // when
-        val players = BlackjackPlayers(
-            cardDeck,
-            { _, _ -> },
-            listOf(
-                BlackjackPlayer(
-                    PlayerName("name"),
-                    { _ -> },
-                    { _ -> true },
-                )
-            )
+        val players = BlackjackParticipants(
+            listOf(BlackjackPlayer(PlayerName("name"), cardDeck, { _ -> }, { _ -> false }))
         )
         // then
-        players.players.first().deck.cards shouldHaveSize 2
+        players.participants.first().handDeck.cards shouldHaveSize 2
     }
 })

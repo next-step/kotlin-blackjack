@@ -4,6 +4,9 @@ class HandDeck {
 
     val cards: MutableCollection<TrumpCard> = mutableListOf()
 
+    val isScoreOverThanLimitScore: Boolean
+        get() = score > LIMIT_SCORE
+
     private val aceCount: Int
         get() = cards.count { it.number == TrumpCardNumber.ACE }
 
@@ -45,7 +48,11 @@ class HandDeck {
         return cards.hashCode()
     }
 
+    override fun toString(): String {
+        return "HandDeck(cards=$cards)"
+    }
+
     companion object {
-        private const val LIMIT_SCORE = 21
+        const val LIMIT_SCORE = 21
     }
 }
