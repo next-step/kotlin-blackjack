@@ -22,8 +22,8 @@ class Hand {
         hands.add(pokerCard)
     }
 
-    fun isBlackJackOrBust(): Boolean {
-        return HandsCalculator.calculateOptimalValue(hands) >= BLACK_JACK_NUMBER
+    fun isNotBlackJackOrNotBust(): Boolean {
+        return HandsCalculator.calculateOptimalValue(hands) <= BLACK_JACK_NUMBER
     }
 
     companion object {

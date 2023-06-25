@@ -1,18 +1,21 @@
 package blackjack.domain
 
-class Player(val name: String) {
+import blackjack.DeckManager
+
+open class Player(val name: String) {
 
     private val hand: Hand = Hand()
-    var ableToDraw = true
+    private val scoreBoard = ScoreBoard()
+    private var wantToDraw = true
 
     fun hit(vararg pokerCards: PokerCard) {
-        check(ableToDraw) { "더이상 카드를 받을 수 없습니다." }
+        check(wantToDraw) { "더이상 카드를 받을 수 없습니다." }
 
         for (pokerCard in pokerCards) {
             hand.addNewCard(pokerCard)
         }
-        val blackJackOrBust = hand.isBlackJackOrBust()
-        if (blackJackOrBust) ableToDraw = false
+
+        wantToDraw = hand.isNotBlackJackOrNotBust()
     }
 
     fun hands(): List<PokerCard> {
@@ -20,7 +23,7 @@ class Player(val name: String) {
     }
 
     fun stand() {
-        this.ableToDraw = false
+        this.wantToDraw = false
     }
 
     fun optimalValue(): Int {
@@ -31,13 +34,21 @@ class Player(val name: String) {
         return hand.toRepresent()
     }
 
+    fun scoreBoard(): ScoreBoard {
+        return this.scoreBoard
+    }
+
+    fun wantToDraw(): Boolean {
+        return wantToDraw
+    }
+
     fun drawPhase(
-        wantToHit: Boolean,
-        dealer: Dealer,
+        wantToHit: Boolean = wantToDraw,
+        deckManager: DeckManager,
         handNotice: (Player) -> Unit
     ) {
         if (wantToHit) {
-            hit(dealer.draw())
+            hit(deckManager.draw())
             handNotice.invoke(this)
         } else {
             stand()

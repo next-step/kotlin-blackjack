@@ -8,6 +8,7 @@ object BlackJackGame {
         val blackJackTable = BlackJackTable(players)
         blackJackTable.beginRound()
         blackJackTable.executePlayerTurns(players)
+        blackJackTable.checkScoreBoard()
         blackJackTable.endRound()
     }
 }
