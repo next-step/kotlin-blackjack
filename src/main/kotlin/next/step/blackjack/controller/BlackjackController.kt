@@ -1,7 +1,7 @@
 package next.step.blackjack.controller
 
-import next.step.blackjack.domain.GameRule
 import next.step.blackjack.domain.card.GameCards
+import next.step.blackjack.domain.game.GameRule
 import next.step.blackjack.domain.player.Players
 import next.step.racing.view.InputView
 import next.step.racing.view.OutputView
