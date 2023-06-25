@@ -4,7 +4,7 @@ import blackjack.enums.Condition
 
 class Player(
     val name: String,
-    var cards: Cards,
+    val cards: Cards,
     var condition: Condition = Condition.YES
 ) {
     fun hit(card: Card) {

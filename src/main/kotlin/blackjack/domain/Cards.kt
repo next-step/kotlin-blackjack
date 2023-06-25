@@ -10,6 +10,10 @@ class Cards(
         this.cards.toMutableList().add(card)
     }
 
+    fun getOneCard(): Card {
+        return cards.first()
+    }
+
     fun extractCardsInfoAsString(): String {
         var cardsInfo = ""
 

@@ -1,11 +1,10 @@
 package blackjack.service
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Cards
 import blackjack.domain.Dealer
+import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.enums.Condition
-import blackjack.utils.DeckGenerator
 import blackjack.utils.StringUtils
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -17,11 +16,11 @@ class BlackjackService {
         val inputPlayers = InputView.inputPlayers()
         ResultView.printEnter()
         val players = StringUtils.replaceWhiteSpaceAndSplitByComma(inputPlayers)
-        val dealer = Dealer(DeckGenerator.generateDeck())
+        val dealer = Dealer(Deck())
 
         val blackJackPlayers = players.map { player ->
-            val cards = dealer.getCardsByCount(BASIC_CARD_COUNT)
-            Player(name = player, cards = Cards(cards))
+            val cards = dealer.drawCardsFromDeck(BASIC_CARD_COUNT)
+            Player(name = player, cards = cards)
         }
         ResultView.printPlayers(players)
         ResultView.printPlayersAndCards(blackJackPlayers)
@@ -42,8 +41,8 @@ class BlackjackService {
         do {
             val answer = InputView.askForCardChoice(player)
             if (answer == Condition.YES.condition && player.condition == Condition.YES) {
-                val card = blackjackGame.dealer.getCardsByCount(ONE_MORE_CARD_COUNT)
-                player.hit(card[0])
+                val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).getOneCard()
+                player.hit(card)
                 ResultView.printPlayerAndCards(player)
             } else if (answer == Condition.NO.condition) {
                 player.changeCondition(answer)
