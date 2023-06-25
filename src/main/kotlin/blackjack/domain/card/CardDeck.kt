@@ -1,13 +1,15 @@
 package blackjack.domain.card
 
-class CardDeck(val cards: MutableList<Card>, val initDrawSize: Int = 2) {
+class CardDeck(
+    val cards: MutableList<Card> = CARDS.shuffled().toMutableList(),
+    val initDrawSize: Int = INIT_DRAW_SIZE
+) {
 
-    fun draw(): Card {
-        require(cards.isNotEmpty()) { "카드 덱이 비어있습니다." }
-        return cards.removeLast()
+    fun draw(count: Int = 1): Cards {
+        require(count >= MINIMUM_DRAW_SIZE) { "카드 드로우 갯수는 $MINIMUM_DRAW_SIZE 이상입니다." }
+        require(cards.size > count) { "드로우 갯수에 비해 카드 수가 부족합니다." }
+        return Cards(List(count) { cards.removeLast() })
     }
-
-    fun initDraw(): Cards = Cards(List(initDrawSize) { draw() })
 
     companion object {
         private val CARDS: List<Card> = CardSymbol.values().flatMap { cardSymbol ->
@@ -16,8 +18,7 @@ class CardDeck(val cards: MutableList<Card>, val initDrawSize: Int = 2) {
             }
         }
 
-        fun create(): CardDeck {
-            return CardDeck(CARDS.shuffled().toMutableList())
-        }
+        const val MINIMUM_DRAW_SIZE = 1
+        const val INIT_DRAW_SIZE = 2
     }
 }

@@ -11,15 +11,16 @@ value class Cards(val cards: List<Card>) {
     fun getScore(): Score {
         var totalScore = cards.fold(Score.ZERO) { acc, card -> acc + card.toScore() }
 
-        if (totalScore.isBust() && hasAce()) {
-            generateSequence(getAceCount()) { it - 1 }
-                .takeWhile { it > 0 && totalScore > Score.BLACK_JACK }
-                .forEach { _ ->
-                    totalScore -= Score.FOR_SECOND_ACE_VALUE
-                }
+        for (i in 1..getAceCount()) {
+            totalScore = minusBustedAce(totalScore)
         }
-
         return totalScore
+    }
+
+    private fun minusBustedAce(totalScore: Score): Score {
+        return if (totalScore.isBust()) {
+            totalScore - Score.FOR_SECOND_ACE_VALUE
+        } else totalScore
     }
 
     fun isBust(): Boolean {
@@ -30,11 +31,13 @@ value class Cards(val cards: List<Card>) {
         return getScore().isBlackJack()
     }
 
-    private fun hasAce() = cards.any { it.cardNumber == CardNumber.ACE }
-
     private fun getAceCount() = cards.filter { it.cardNumber == CardNumber.ACE }.size
 
     operator fun plus(card: Card): Cards {
         return Cards(cards + card)
+    }
+
+    operator fun plus(other: Cards): Cards {
+        return Cards(this.cards + other.cards)
     }
 }

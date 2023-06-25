@@ -13,19 +13,19 @@ class OutViewConstMapTest : StringSpec({
     "카드 숫자 표현 상수를 지원하는 타입" {
         table(
             headers("카드 숫자", "표현 상수"),
-            row(CardNumber.ACE, 1),
-            row(CardNumber.TWO, 2),
-            row(CardNumber.THREE, 3),
-            row(CardNumber.FOUR, 4),
-            row(CardNumber.FIVE, 5),
-            row(CardNumber.SIX, 6),
-            row(CardNumber.SEVEN, 7),
-            row(CardNumber.EIGHT, 8),
-            row(CardNumber.NINE, 9),
-            row(CardNumber.TEN, 10),
-            row(CardNumber.JACK, 10),
-            row(CardNumber.QUEEN, 10),
-            row(CardNumber.KING, 10),
+            row(CardNumber.ACE, "1"),
+            row(CardNumber.TWO, "2"),
+            row(CardNumber.THREE, "3"),
+            row(CardNumber.FOUR, "4"),
+            row(CardNumber.FIVE, "5"),
+            row(CardNumber.SIX, "6"),
+            row(CardNumber.SEVEN, "7"),
+            row(CardNumber.EIGHT, "8"),
+            row(CardNumber.NINE, "9"),
+            row(CardNumber.TEN, "10"),
+            row(CardNumber.JACK, "J"),
+            row(CardNumber.QUEEN, "Q"),
+            row(CardNumber.KING, "K"),
         ).forAll { number, expect ->
             OutViewConstMap[number] shouldBe expect
         }

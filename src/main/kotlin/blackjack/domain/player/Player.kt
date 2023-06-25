@@ -2,18 +2,36 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.score.Score
 
 class Player(val name: String, cards: Cards) {
     private var _cards = cards
     val cards
         get() = _cards
 
+    val score
+        get() = _cards.getScore()
+
     fun draw(card: Card) {
         _cards += card
     }
 
-    fun getScore(): Score {
-        return _cards.getScore()
+    fun draw(cards: Cards) {
+        _cards += cards
+    }
+
+    fun isBustPlayer(): Boolean {
+        return score.isBust()
+    }
+
+    fun isNotBustPlayer(): Boolean {
+        return !score.isBust()
+    }
+
+    fun isBlackJack(): Boolean {
+        return score.isBlackJack()
+    }
+
+    fun isNotBlackJack(): Boolean {
+        return !score.isBlackJack()
     }
 }

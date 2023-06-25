@@ -1,20 +1,19 @@
 package blackjack.ui
 
 import blackjack.domain.card.Cards
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
 import blackjack.domain.score.GameResult
+import blackjack.ui.model.PlayerOutputModel
 
 object OutputView {
     private const val NAME_SEPARATOR = ", "
 
-    fun printInitState(players: Players, initDrawSize: Int) {
-        val playerNames = players.getNames()
+    fun printInitState(players: List<PlayerOutputModel>, initDrawSize: Int) {
+        val playerNames = players.map { it.name }
         println("${playerNames.joinToString(NAME_SEPARATOR)} 에게 ${initDrawSize}장의 나누었습니다.")
-        players.players.forEach(::printPlayersCard)
+        players.forEach(::printPlayersCard)
     }
 
-    fun printPlayersCard(player: Player) {
+    fun printPlayersCard(player: PlayerOutputModel) {
         println("${player.name}카드: ${getCardsName(player.cards)}")
     }
 

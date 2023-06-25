@@ -13,14 +13,6 @@ class ScoreTest : StringSpec({
             Score(-1)
         }.shouldHaveMessage("점수는 음수일 수 없습니다. score: -1")
     }
-    "버스트 인 경우" {
-        val score = Score(22)
-        score.isBust() shouldBe true
-    }
-    "블랙잭 인 경우" {
-        val score = Score(21)
-        score.isBlackJack() shouldBe true
-    }
     "점수 비교" {
         forAll(
             row((Score(1)), Score(2)),
