@@ -6,7 +6,6 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Deck
 import blackjack.domain.JackQueenKingCardNumber
 import blackjack.domain.NumberCardNumber
-import blackjack.domain.PointCalculator
 import blackjack.domain.Suit
 import blackjack.domain.User
 import blackjack.domain.Users
@@ -39,7 +38,7 @@ object ResultView {
         return RESULT_PRINT_FORMAT.format(
             user.name,
             deckToString(user.deck),
-            PointCalculator.calculateUserPoint(user.deck) ?: GAME_OVER_MESSAGE,
+            user.calculatePointOrNull() ?: GAME_OVER_MESSAGE,
         )
     }
 

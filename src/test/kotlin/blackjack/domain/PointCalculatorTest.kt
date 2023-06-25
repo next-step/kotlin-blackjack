@@ -18,7 +18,7 @@ class PointCalculatorTest : BehaviorSpec({
         )
         `when`("해당덱의 점수를 구하면") {
             then("합이 반환된다") {
-                PointCalculator.calculateUserPoint(deck) shouldBe 21
+                PointCalculator.calculatePoint(deck) shouldBe 21
             }
         }
     }
@@ -35,7 +35,7 @@ class PointCalculatorTest : BehaviorSpec({
         )
         `when`("해당덱의 점수를 구하면") {
             then("null이 반환된다") {
-                PointCalculator.calculateUserPoint(deck) shouldBe null
+                PointCalculator.calculatePoint(deck) shouldBe null
             }
         }
     }

@@ -45,7 +45,7 @@ class BlackjackGame(
     private fun checkHit(user: User) {
         while (InputView.checkHit(user.name)) {
             user.addCard(cardSelector.drawCard())
-            PointCalculator.calculateUserPoint(user.deck) ?: break
+            PointCalculator.calculatePoint(user.deck) ?: break
             ResultView.printUserDeck(user)
         }
         ResultView.printUserDeck(user)

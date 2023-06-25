@@ -16,6 +16,10 @@ class Deck(cardList: List<Card>) : Iterable<Card> {
         cardQueue.add(card)
     }
 
+    fun calculatePointOrNull(): Int? {
+        return PointCalculator.calculatePoint(this)
+    }
+
     operator fun get(index: Int): Card {
         return cardQueue[index]
     }

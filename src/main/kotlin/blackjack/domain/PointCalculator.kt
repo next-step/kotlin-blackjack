@@ -3,7 +3,7 @@ package blackjack.domain
 object PointCalculator {
     const val BLACKJACK_LIMIT = 21
 
-    fun calculateUserPoint(deck: Deck): Int? {
+    fun calculatePoint(deck: Deck): Int? {
         return calculateRecursively(deck, 0, 0)
     }
 
