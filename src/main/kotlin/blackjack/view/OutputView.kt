@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.model.CardType.Companion.toText
-import blackjack.domain.model.CardValue.Companion.toText
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
 
@@ -21,8 +20,8 @@ object OutputView {
     fun printCards(player: Player, isResult: Boolean = false) {
         val cards = if (player is Dealer && !isResult) {
             val card = player.cards.items[0]
-            "${card.value.toText()}${card.type.toText()}"
-        } else player.cards.items.joinToString { "${it.value.toText()}${it.type.toText()}" }
+            "${card.value.text}${card.type.toText()}"
+        } else player.cards.items.joinToString { "${it.value.text}${it.type.toText()}" }
         print("${player.info.name}${if (player is Dealer) "" else "카드"}: $cards")
 
         if (isResult) {
