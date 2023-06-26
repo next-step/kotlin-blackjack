@@ -75,19 +75,19 @@ object OutputView {
     }
 
     private fun showDealerGameResults(gameResults: GameResults, dealerName: String) {
-        val dealerResult = gameResults.dealerGameResults.map { "${it.value}${it.key.desc}" }.joinToString(", ")
+        val dealerResult = gameResults.dealerResult.map { "${it.value}${it.key.desc}" }.joinToString(", ")
         println("$dealerName: $dealerResult")
     }
 
     private fun showPlayersGameResults(gameResults: GameResults) {
-        gameResults.playersGameResult.forEach {
+        gameResults.playersResult.forEach {
             println("${it.key}: ${it.value.desc}")
         }
     }
 
     fun showResult(dealer: Dealer, players: Players) {
         showCardsWithPoints(dealer, players)
-        showGameResult(dealer.name(), dealer.fight(players))
+        showGameResult(dealer.name(), players.fight(dealer))
     }
 
     fun showError(msg: String?) {

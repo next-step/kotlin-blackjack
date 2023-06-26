@@ -2,6 +2,7 @@ package next.step.blackjack.domain.player
 
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
+import next.step.blackjack.domain.game.GameResults
 
 @JvmInline
 value class Players(private val players: Set<Player>) : Set<Player> by players {
@@ -13,6 +14,10 @@ value class Players(private val players: Set<Player>) : Set<Player> by players {
                 announce(player)
             }
         }
+    }
+
+    fun fight(player: Player): GameResults {
+        return GameResults.from(players.associate { it.name() to it.fight(player) })
     }
 
     companion object {

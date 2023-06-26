@@ -7,6 +7,9 @@ import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.card.GameCards
+import next.step.blackjack.domain.dealer.Dealer
+import next.step.blackjack.domain.game.GameResult
+import next.step.blackjack.domain.game.GameResults
 
 class PlayersTest : DescribeSpec({
     describe("Players") {
@@ -139,6 +142,73 @@ class PlayersTest : DescribeSpec({
                                 Card.of(CardFace.FIVE, CardSymbol.CLUB)
                             )
                         )
+                    )
+                )
+            }
+        }
+        context("fight") {
+            it("GameResults 제공") {
+                val players = Players.of(
+                    setOf(
+                        Player.of(
+                            PlayerName.of("unfinished17"),
+                            Cards.of(
+                                listOf(
+                                    Card.of(CardFace.SEVEN, CardSymbol.CLUB),
+                                    Card.of(CardFace.TEN, CardSymbol.HEART)
+                                )
+                            )
+                        ),
+                        Player.of(
+                            PlayerName.of("blackjack"),
+                            Cards.of(
+                                listOf(
+                                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                                    Card.of(CardFace.TEN, CardSymbol.HEART)
+                                )
+                            )
+                        ),
+                        Player.of(
+                            PlayerName.of("finished"),
+                            Cards.of(
+                                listOf(
+                                    Card.of(CardFace.TEN, CardSymbol.CLUB),
+                                    Card.of(CardFace.TEN, CardSymbol.HEART),
+                                    Card.of(CardFace.ONE, CardSymbol.HEART)
+                                )
+                            )
+                        ),
+                        Player.of(
+                            PlayerName.of("burst"),
+                            Cards.of(
+                                listOf(
+                                    Card.of(CardFace.TEN, CardSymbol.CLUB),
+                                    Card.of(CardFace.TEN, CardSymbol.HEART),
+                                    Card.of(CardFace.TEN, CardSymbol.SPADE)
+                                )
+                            )
+                        )
+                    )
+                )
+                val dealer = Dealer.of(
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.ACE, CardSymbol.CLUB),
+                            Card.of(CardFace.TEN, CardSymbol.HEART)
+                        )
+                    )
+                )
+
+                players.fight(dealer) shouldBe GameResults(
+                    mapOf(
+                        "unfinished17" to GameResult.LOSE,
+                        "blackjack" to GameResult.TIE,
+                        "finished" to GameResult.LOSE,
+                        "burst" to GameResult.LOSE,
+                    ),
+                    mapOf(
+                        GameResult.WIN to 3,
+                        GameResult.TIE to 1
                     )
                 )
             }

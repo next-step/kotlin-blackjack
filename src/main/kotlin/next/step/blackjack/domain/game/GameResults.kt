@@ -1,8 +1,16 @@
 package next.step.blackjack.domain.game
 
-data class GameResults(val dealerGameResults: Map<GameResult, Int>, val playersGameResult: Map<String, GameResult>) {
+data class GameResults(val playersResult: Map<String, GameResult>, val dealerResult: Map<GameResult, Int>) {
+
     companion object {
-        fun of(dealerGameResults: DealerGameResults, playersGameResult: PlayersGameResult): GameResults =
-            GameResults(dealerGameResults.results(), playersGameResult.results())
+        fun from(playersResult: Map<String, GameResult>): GameResults =
+            GameResults(playersResult, dealerResult(playersResult))
+
+        private fun dealerResult(playersResult: Map<String, GameResult>) =
+            playersResult.map { it.value.opposite() }
+                .groupBy { it }
+                .map { it.key to it.value.size }
+                .toMap()
+
     }
 }

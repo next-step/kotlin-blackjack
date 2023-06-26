@@ -4,12 +4,8 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.card.state.CardsState
 import next.step.blackjack.domain.card.state.UnfinishedState
-import next.step.blackjack.domain.game.DealerGameResults
-import next.step.blackjack.domain.game.GameResults
-import next.step.blackjack.domain.game.PlayersGameResult
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerName
-import next.step.blackjack.domain.player.Players
 
 class Dealer(
     name: PlayerName = PlayerName.of(DEALER_NAME),
@@ -27,17 +23,6 @@ class Dealer(
     }
 
     override fun canHit(): Boolean = cards.point() <= HIT_AVAILABLE_POINT
-
-    fun fight(players: Players): GameResults {
-        val dealerGameResult = DealerGameResults.zeros()
-        val playersGameResult = PlayersGameResult.empty()
-        for (player in players) {
-            val gameResult = fight(player)
-            dealerGameResult.add(gameResult)
-            playersGameResult.put(player.name(), gameResult.opposite())
-        }
-        return GameResults.of(dealerGameResult, playersGameResult)
-    }
 
     companion object {
         private const val DEALER_NAME = "딜러"
