@@ -64,6 +64,11 @@ class StayTest : FunSpec({
             val actual = Stay(Cards.of(SPADE_ACE, SPADE_TWO)).compete(Stay(Cards.of(SPADE_TWO, SPADE_THREE)))
             actual shouldBe Competition.WIN
         }
+
+        test("상대와 점수가 같으면 무승부한다.") {
+            val actual = Stay(Cards.of(SPADE_ACE, SPADE_TWO)).compete(Stay(Cards.of(SPADE_ACE, SPADE_TWO)))
+            actual shouldBe Competition.DRAW
+        }
     }
 }) {
     companion object {

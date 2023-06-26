@@ -29,6 +29,6 @@ class Stay(
         if (score > otherScore) {
             return Competition.WIN
         }
-        TODO("todo")
+        return Competition.DRAW
     }
 }
