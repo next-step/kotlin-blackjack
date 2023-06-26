@@ -29,6 +29,5 @@ class BlackjackController {
             blackjackGame.addCardTo(user)
             ResultView.printUserDeck(user)
         }
-        println()
     }
 }

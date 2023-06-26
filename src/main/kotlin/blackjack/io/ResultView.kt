@@ -24,6 +24,7 @@ object ResultView {
     }
 
     fun printUsersResult(users: Users) {
+        println()
         for (user in users) {
             println(resultFormatting(user))
         }
