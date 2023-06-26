@@ -16,16 +16,7 @@ class Cards private constructor(
         return adjustAceSum(sum)
     }
 
-    private fun calculateSum(): Int {
-        var sum = 0
-
-        cards.forEach { card ->
-            val maxNumber = card.numbers.max()
-            sum += maxNumber
-        }
-
-        return sum
-    }
+    private fun calculateSum(): Int = cards.sumOf { it.numbers.max() }
 
     private fun adjustAceSum(sum: Int): Int {
         var adjustedSum = sum
