@@ -16,6 +16,8 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         return minSumCardsPoint() > FINISH_POINT
     }
 
+    fun cards(): List<Card> = cards.toList()
+
     private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
 
     fun point(): Int {

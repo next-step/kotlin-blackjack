@@ -20,7 +20,7 @@ class PlayersTest : DescribeSpec({
                     Card.of(CardFace.THREE, CardSymbol.CLUB),
                     Card.of(CardFace.FOUR, CardSymbol.CLUB),
                     Card.of(CardFace.FIVE, CardSymbol.CLUB),
-                    Card.of(CardFace.TWO, CardSymbol.CLUB)
+                    Card.of(CardFace.SIX, CardSymbol.CLUB)
                 )
             )
             it("카드를 두장씩 가지는 플레이어들이 생성됨") {
@@ -33,24 +33,13 @@ class PlayersTest : DescribeSpec({
                     )
                 ) { gameCards.pop(2) }
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.TWO, CardSymbol.CLUB),
-                                Card.of(CardFace.THREE, CardSymbol.CLUB)
-                            )
-                        )
-                    ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.TWO, CardSymbol.CLUB),
+                        Card.of(CardFace.THREE, CardSymbol.CLUB),
+                    ), listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
                 )
             }
@@ -78,26 +67,15 @@ class PlayersTest : DescribeSpec({
 
                 players.turn({ _ -> true }, { gameCards.pop() }, {})
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.ACE, CardSymbol.CLUB),
-                                Card.of(CardFace.KING, CardSymbol.CLUB)
-                            )
-                        )
-                    ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB),
-                                Card.of(CardFace.THREE, CardSymbol.CLUB),
-                                Card.of(CardFace.QUEEN, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
+                    ), listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
+                        Card.of(CardFace.THREE, CardSymbol.CLUB),
+                        Card.of(CardFace.QUEEN, CardSymbol.CLUB),
                     )
                 )
             }
@@ -124,24 +102,13 @@ class PlayersTest : DescribeSpec({
 
                 players.turn({ _ -> false }, { gameCards.pop() }, {})
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.ACE, CardSymbol.CLUB),
-                                Card.of(CardFace.KING, CardSymbol.CLUB)
-                            )
-                        )
-                    ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
+                    ), listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
                 )
             }

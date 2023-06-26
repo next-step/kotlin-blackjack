@@ -19,7 +19,7 @@ class PlayerTest : BehaviorSpec({
             player.hit(card)
 
             Then("가지고 있는 카드를 추가함") {
-                player shouldBe Player.of(PlayerName.of("dj"), Cards.of(mutableListOf(card)))
+                player.cards() shouldBe listOf(Card.of(CardFace.ACE, CardSymbol.CLUB))
             }
             Then("점수는 11점") {
                 player.point() shouldBe 11

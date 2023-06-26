@@ -20,6 +20,8 @@ value class Players(private val players: Set<Player>) : Set<Player> by players {
         return GameResults.from(players.associate { it.name() to it.fight(player) })
     }
 
+    fun cards(): List<List<Card>> = players.map { it.cards() }
+
     companion object {
         fun of(players: Set<Player>) = Players(players)
 

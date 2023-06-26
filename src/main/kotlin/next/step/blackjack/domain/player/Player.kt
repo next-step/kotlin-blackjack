@@ -23,27 +23,13 @@ open class Player(
 
     fun cardDescs(): Set<String> = cards.descs()
 
+    fun cards(): List<Card> = cards.cards()
+
     fun point(): Int = cards.point()
 
     fun fight(other: Player): GameResult {
         val gameResult = state.fight(other.state)
         return if (gameResult == GameResult.UNDECIDED) cards.fight(other.cards) else gameResult
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Player) return false
-
-        if (name != other.name) return false
-        if (cards != other.cards) return false
-        return state == other.state
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + cards.hashCode()
-        result = 31 * result + state.hashCode()
-        return result
     }
 
     companion object {
