@@ -7,25 +7,23 @@ import blackjack.view.InputView
 
 class BlackjackController {
     private var wantStop = false
-    private val inputView = InputView()
-    private val blackjackView = BlackjackView()
 
     fun run() {
         val players = prepareGame()
-        blackjackView.printPlayersCard(players)
+        BlackjackView.printPlayersCard(players)
         playGame(players)
-        blackjackView.printPlayersResult(players)
+        BlackjackView.printPlayersResult(players)
     }
 
     private fun prepareGame(): Players {
-        val players = inputView.inputPlayers()
+        val players = InputView.inputPlayers()
 
         val initialDraw = DEFAULT_INITIAL_DRAW
         repeat(initialDraw) {
             players.players.forEach { player -> player.drawCard() }
         }
 
-        blackjackView.printInitialTurn(players.players.map { it.name }, initialDraw)
+        BlackjackView.printInitialTurn(players.players.map { it.name }, initialDraw)
         return players
     }
 
@@ -36,9 +34,9 @@ class BlackjackController {
     }
 
     private fun playTurn(player: Player) {
-        while (player.canDraw() && blackjackView.askDraw(player)) {
+        while (player.canDraw() && BlackjackView.askDraw(player)) {
             player.drawCard()
-            blackjackView.printPlayerCard(player)
+            BlackjackView.printPlayerCard(player)
         }
         wantStop = true
     }

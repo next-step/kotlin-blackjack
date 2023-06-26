@@ -11,6 +11,6 @@ class PlayerTest {
         val gameCardsSet = GameCardsSet()
         val player1 = Player("사람1", gameCardsSet)
         player1.drawCard()
-        assertThat(player1.countMyCards()).isEqualTo(1)
+        assertThat(player1.numberOfMyCards()).isEqualTo(1)
     }
 }

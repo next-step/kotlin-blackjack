@@ -8,9 +8,9 @@ class Player(
 ) {
     private var myCards: Cards = Cards.empty()
 
-    fun countMyCards(): Int = myCards.cards.size
+    fun numberOfMyCards(): Int = myCards.cards.size
 
-    fun sumMyCards(): Int = myCards.calculateOptimalSum()
+    fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
     fun showMyCards(): String = myCards.toString()
 

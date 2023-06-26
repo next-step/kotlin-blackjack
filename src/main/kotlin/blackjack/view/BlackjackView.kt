@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.Player
 import blackjack.domain.Players
 
-class BlackjackView {
+object BlackjackView {
     fun printInitialTurn(names: List<String>, initialDraw: Int) {
         println("\n${names.joinToString(", ")}에게 ${initialDraw}장을 나누었습니다.")
     }
@@ -36,11 +36,9 @@ class BlackjackView {
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.showMyCards()} - 결과: ${player.sumMyCards()}")
+        println("${player.name}카드: ${player.showMyCards()} - 결과: ${player.sumOfMyCards()}")
     }
 
-    companion object {
-        private const val YES: String = "y"
-        private const val NO: String = "n"
-    }
+    private const val YES: String = "y"
+    private const val NO: String = "n"
 }
