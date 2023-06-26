@@ -13,21 +13,24 @@ class BlackjackController {
         val userNames = InputView.getUsers()
         val userList = userNames.map { name -> User(name, blackjackGame.getInitDeck()) }.toSet()
         val users = Users(userList)
-        ResultView.printUsersDeck(users)
+        ResultView.printDecks(blackjackGame.getDealerDeck(), users)
         dealCards(users)
-        ResultView.printUsersResult(users)
+        ResultView.printResult(blackjackGame.getDealerDeck(), users)
     }
 
     private fun dealCards(users: Users) {
         for (user in users) {
-            checkHit(user)
+            dealUser(user)
         }
     }
 
-    private fun checkHit(user: User) {
-        while (!user.isBust() && InputView.checkHit(user.name)) {
-            blackjackGame.addCardTo(user)
+    private fun dealUser(user: User) {
+        blackjackGame.userHit(user, ::checkHit) {
             ResultView.printUserDeck(user)
         }
+    }
+
+    private fun checkHit(user: User): Boolean {
+        return !user.isBust() && InputView.checkHit(user.name)
     }
 }

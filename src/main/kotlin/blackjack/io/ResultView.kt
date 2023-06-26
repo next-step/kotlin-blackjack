@@ -8,29 +8,63 @@ import blackjack.domain.User
 import blackjack.domain.Users
 
 object ResultView {
+    private const val DECK_INITIALIZED_FORMAT = "딜러와 %s에게 2장의 카드를 나누었습니다."
+    private const val DEALER_DECK_PRINT_FORMAT = "딜러: %s"
     private const val DECK_PRINT_FORMAT = "%s카드: %s"
+    private const val DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val DEALER_RESULT_PRINT_FORMAT = "딜러 카드: %s - 결과: %s"
     private const val RESULT_PRINT_FORMAT = "%s카드: %s - 결과: %s"
 
-    fun printUsersDeck(users: Users) {
-        println()
-        for (user in users) {
-            printUserDeck(user)
+    fun printDecks(dealerDeck: Deck, users: Users) {
+        val message = buildString {
+            appendLine()
+            appendLine(getDeckInitializedMessage(users))
+            appendLine(getDealerDeckString(dealerDeck))
+            appendLine(getUsersDeckString(users))
         }
-        println()
+        print(message)
+    }
+
+    private fun getDeckInitializedMessage(users: Users): String {
+        return DECK_INITIALIZED_FORMAT.format(users.joinToString(", ") { it.name })
+    }
+
+    private fun getDealerDeckString(deck: Deck): String {
+        return DEALER_DECK_PRINT_FORMAT.format(deckToString(deck))
+    }
+
+    private fun getUsersDeckString(users: Users): StringBuilder {
+        val stringBuilder = StringBuilder()
+        for (user in users) {
+            stringBuilder.appendLine(getUserDeckString(user))
+        }
+        return stringBuilder
+    }
+
+    private fun getUserDeckString(user: User): String {
+        return DECK_PRINT_FORMAT.format(user.name, deckToString(user.deck))
     }
 
     fun printUserDeck(user: User) {
-        println(DECK_PRINT_FORMAT.format(user.name, deckToString(user.deck)))
+        println(getUserDeckString(user))
     }
 
-    fun printUsersResult(users: Users) {
+    fun printResult(dealerDeck: Deck, users: Users) {
         println()
+        println(dealerResultFormatting(dealerDeck))
         for (user in users) {
-            println(resultFormatting(user))
+            println(userResultFormatting(user))
         }
     }
 
-    private fun resultFormatting(user: User): String {
+    private fun dealerResultFormatting(dealerDeck: Deck): String {
+        return DEALER_RESULT_PRINT_FORMAT.format(
+            deckToString(dealerDeck),
+            dealerDeck.sum(),
+        )
+    }
+
+    private fun userResultFormatting(user: User): String {
         return RESULT_PRINT_FORMAT.format(
             user.name,
             deckToString(user.deck),
