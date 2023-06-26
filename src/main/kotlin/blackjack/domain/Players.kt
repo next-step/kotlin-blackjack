@@ -2,5 +2,5 @@ package blackjack.domain
 
 @JvmInline
 value class Players(
-    val players: List<Player>
+    val players: List<Player>,
 )

@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Card private constructor(
     val rank: Ranks,
-    val suit: Suits
+    val suit: Suits,
 ) {
     val numbers: List<Int> = rank.numbers
 

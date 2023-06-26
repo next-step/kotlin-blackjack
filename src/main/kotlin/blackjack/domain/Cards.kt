@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Cards private constructor(
-    val cards: List<Card>
+    val cards: List<Card>,
 ) {
     override fun toString(): String = cards.joinToString(", ") { it.toString() }
 

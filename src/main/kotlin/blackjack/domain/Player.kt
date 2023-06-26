@@ -2,7 +2,9 @@ package blackjack.domain
 
 import blackjack.domain.Cards.Companion.TARGET_SUM
 
-class Player(val name: String) {
+class Player(
+    val name: String,
+) {
     private var myCards: Cards = Cards.empty()
 
     fun countMyCards(): Int = myCards.cards.size

@@ -2,7 +2,7 @@ package blackjack.domain
 
 enum class Ranks(
     val description: String,
-    val numbers: List<Int>
+    val numbers: List<Int>,
 ) {
     ACE("A", listOf(1, 11)),
     TWO("2", listOf(2)),

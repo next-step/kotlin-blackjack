@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class Suits(
-    val description: String
+    val description: String,
 ) {
     SPADES("스페이드"),
     HEARTS("하트"),
