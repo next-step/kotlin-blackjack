@@ -8,14 +8,21 @@ import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerTurnExecuteResult
+import blackjack.domain.game.DelayerGameResult
 import blackjack.domain.player.unWrappings
+import blackjack.domain.score.Score
 
 class BlackJackResultView {
 
     fun display(result: CardDistributionResult) {
         println()
         println(result.makeTitleMessage())
-        println(result.dealerCards.makeDisplayMessage())
+
+        val cardsMessage = result.dealerCards
+            .filterIsInstance<CardHolder.Open>()
+            .joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
+        println("딜러: $cardsMessage")
+
         result.playerCards
             .map { playerCard -> playerCard.makeDisplayMessage() }
             .forEach { playerCardsCaptureMessage -> println(playerCardsCaptureMessage) }
@@ -39,8 +46,18 @@ class BlackJackResultView {
     fun display(blackJackGameResult: BlackJackGameResult) {
         println()
         blackJackGameResult.playerGameResults
-            .map { it.playerCards.makeDisplayMessage().plus(" - 결과: ${it.score}") }
+            .map { it.playerCards.makeDisplayMessage().plus(" - ${it.score.makeDisplayMessage()}") }
             .forEach { println(it) }
+        println(blackJackGameResult.dealerGameResult.makeDisplayMessage())
+    }
+
+    private fun DelayerGameResult.makeDisplayMessage(): String {
+        return buildString {
+            append("딜러 카드: ")
+            append(dealerCards.makeDisplayMessage())
+            append(" - ")
+            append(score.makeDisplayMessage())
+        }
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
@@ -48,17 +65,18 @@ class BlackJackResultView {
         return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
     }
 
-    private fun List<CardHolder>.makeDisplayMessage(): String {
-        val cardsMessage = filterIsInstance<CardHolder.Open>().joinToString(", ") { openCard ->
-            openCard.card.makeDisplayMessage()
-        }
-        return "딜러: $cardsMessage"
-    }
-
     private fun PlayerCards.makeDisplayMessage(): String {
         val name = playerName.unWrapping()
-        val cardNames = cards.joinToString(", ") { card -> card.makeDisplayMessage() }
+        val cardNames = cards.makeDisplayMessage()
         return "${name}카드: $cardNames"
+    }
+
+    private fun Score.makeDisplayMessage(): String {
+        return "결과: $value"
+    }
+
+    private fun List<Card>.makeDisplayMessage(): String {
+        return joinToString(", ") { card -> card.makeDisplayMessage() }
     }
 
     private fun Card.makeDisplayMessage(): String {
