@@ -14,15 +14,9 @@ fun main() {
         resultView = resultView,
     )
 
-    val players = blackjackGameController.initGame()
+    blackjackGameController.initGame()
 
-    players.forEach {
-        blackjackGameController.gameStart(
-            player = it,
-            inputView = inputView,
-            resultView = resultView,
-        )
-    }
+    blackjackGameController.gameStart()
 
-    blackjackGameController.printGameResult(players = players)
+    blackjackGameController.printGameResult()
 }

@@ -1,9 +1,8 @@
 package domain.card
 
-class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCard> by cards {
+class Cards(private val cards: List<Card>) : List<Card> by cards {
 
-    var sum: Int
-        private set
+    val sum: Int
 
     init {
         sum = this.sum()
@@ -23,8 +22,11 @@ class BlackjackCards(private val cards: List<BlackjackCard>) : List<BlackjackCar
             }
     }
 
+    fun isBlackjack(): Boolean = cards.size == BLACKJACK_CARD_COUNT && this.sum == CARD_NUMBER_SUM_MAX
+
     companion object {
         private const val CARD_NUMBER_SUM_MAX = 21
         private const val ACE_SPECIAL_SCORE = 10
+        private const val BLACKJACK_CARD_COUNT = 2
     }
 }

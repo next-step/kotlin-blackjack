@@ -2,7 +2,6 @@ package controller
 
 import domain.game.BlackjackGame
 import domain.player.Player
-import domain.player.Players
 import view.Answer
 import view.InputView
 import view.ResultView
@@ -10,35 +9,31 @@ import view.ResultView
 class BlackjackGameController(
     private val game: BlackjackGame,
     private val inputView: InputView,
-    private val resultView: ResultView
+    private val resultView: ResultView,
 ) {
-    fun initGame(): Players {
+    fun initGame() {
         val playerNames = inputView.getPlayerNames()
-        val players = game.initGame(playerNames)
-        resultView.printInitPlayers(players = players)
-        return players
+        game.initGame(playerNames)
+        resultView.printInitPlayers(players = game.players, dealer = game.dealer)
     }
 
-    fun gameStart(
-        player: Player,
-        inputView: InputView,
-        resultView: ResultView,
-    ) {
-        while (!game.isTerminatedPlayer(player)) {
-            gameProgress(inputView, player)
-
-            resultView.printPlayerCards(player)
+    fun gameStart() {
+        game.gameStart(isIssueCard = this::askPlayer, showPlayerCards = this::showPlayerCards)
+        if (game.dealer.isIssuedCard()) {
+            resultView.printDealerIssuedCardMessage()
         }
     }
 
-    private fun gameProgress(inputView: InputView, player: Player) {
-        when (inputView.askDraw(player.name)) {
-            Answer.YES -> game.issueCard(player)
-            else -> game.stopIssueCard(player)
-        }
+    private fun askPlayer(playerName: String) = when (inputView.askDraw(playerName)) {
+        Answer.YES -> true
+        else -> false
     }
 
-    fun printGameResult(players: Players) {
-        resultView.printGameResult(players = players)
+    private fun showPlayerCards(player: Player) { resultView.printPlayerCards(player) }
+
+    fun printGameResult() {
+        val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
+        resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
+        resultView.printWinLoseDrawResult(gameWinLoseDrawResult)
     }
 }
