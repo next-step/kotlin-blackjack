@@ -16,17 +16,19 @@ class Cards(_value: List<Card> = emptyList()) {
 
     fun addCards(cards: Cards) {
         value.addAll(cards.value)
+        updateScoreSet(cards)
     }
 
     fun addCard(card: Card) {
         value.add(card)
+        updateScoreSet(card)
     }
 
     fun getOptimizedScore(): Int {
         return scoreSet.max()
     }
 
-    fun updateScoreSet(card: Card) {
+    private fun updateScoreSet(card: Card) {
         val _scoreSet = setOf(*scoreSet.toTypedArray())
 
         val newScoreSet = _scoreSet.flatMap { score ->
@@ -44,7 +46,7 @@ class Cards(_value: List<Card> = emptyList()) {
         scoreSet.addAll(finalScoreList)
     }
 
-    fun updateScoreSet(cards: Cards) {
+    private fun updateScoreSet(cards: Cards) {
         cards.value.forEach { card -> updateScoreSet(card) }
     }
 

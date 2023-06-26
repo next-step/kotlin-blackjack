@@ -17,14 +17,12 @@ abstract class GamePlayer {
 
     fun initCards(cards: Cards) {
         this.cards.addCards(cards)
-        this.cards.updateScoreSet(cards)
         updateStatus()
     }
 
     fun receiveCard(card: Card) {
         if (!isReceivable()) return
         cards.addCard(card)
-        cards.updateScoreSet(card)
         afterEventOfReceiveCard()
         updateStatus()
     }
