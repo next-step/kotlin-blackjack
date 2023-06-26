@@ -1,4 +1,4 @@
-package next.step.blackjack.domain.player.state
+package next.step.blackjack.domain.card.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -6,22 +6,18 @@ import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
-import next.step.blackjack.domain.player.PlayerCards
+import next.step.blackjack.domain.card.Cards
+import next.step.blackjack.domain.game.GameResult
 
-class HitAvailableStateTest : DescribeSpec({
+class UnfinishedStateTest : DescribeSpec({
 
-    describe("HitAvailableState") {
-        context("canHit") {
-            it("항상 true 제공") {
-                HitAvailableState.canHit() shouldBe true
-            }
-        }
+    describe("UnfinishedState") {
         context("cards 조건에 따라 다른 다음 상태 제공") {
-            data class NextStateExpected(val cards: PlayerCards, val nextState: PlayerState)
+            data class NextStateExpected(val cards: Cards, val nextState: CardsState)
 
             withData(
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.ACE, CardSymbol.HEART)
@@ -30,7 +26,7 @@ class HitAvailableStateTest : DescribeSpec({
                     BlackjackState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.CLUB),
@@ -40,7 +36,7 @@ class HitAvailableStateTest : DescribeSpec({
                     FinishedState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.CLUB),
@@ -50,16 +46,27 @@ class HitAvailableStateTest : DescribeSpec({
                     BurstState
                 ),
                 NextStateExpected(
-                    PlayerCards.of(
+                    Cards.of(
                         listOf(
                             Card.of(CardFace.KING, CardSymbol.CLUB),
                             Card.of(CardFace.KING, CardSymbol.HEART)
                         )
                     ),
-                    HitAvailableState
+                    UnfinishedState
                 )
             ) { (cards, expected) ->
-                HitAvailableState.next(cards) shouldBe expected
+                UnfinishedState.next(cards) shouldBe expected
+            }
+        }
+        context("카드 상태에 따라 게임 결과가 달라짐") {
+            data class ResultExpected(val state: CardsState, val result: GameResult)
+            withData(
+                ResultExpected(BlackjackState, GameResult.LOSE),
+                ResultExpected(UnfinishedState, GameResult.UNDECIDED),
+                ResultExpected(FinishedState, GameResult.LOSE),
+                ResultExpected(BurstState, GameResult.WIN),
+            ) { (state, result) ->
+                UnfinishedState.fight(state) shouldBe result
             }
         }
     }

@@ -1,12 +1,11 @@
-package next.step.blackjack.domain
-
-import next.step.blackjack.domain.card.Card
-import next.step.blackjack.domain.card.CardFace
-import next.step.blackjack.domain.card.CardSymbol
+package next.step.blackjack.domain.card
 
 data class GameCards(private val cards: MutableList<Card>) {
 
     fun pop(): Card = cards.removeFirst()
+
+    fun pop(n: Int): List<Card> = (1..n).map { cards.removeFirst() }
+
     fun size(): Int = cards.size
 
     companion object {
@@ -19,6 +18,6 @@ data class GameCards(private val cards: MutableList<Card>) {
 
         private fun deck(): List<Card> = CardFace.values().flatMap { mapSymbols(it) }
 
-        private fun mapSymbols(face: CardFace) = CardSymbol.values().map { Card.of(face, it) }
+        private fun mapSymbols(face: CardFace): List<Card> = CardSymbol.values().map { Card.of(face, it) }
     }
 }

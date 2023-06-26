@@ -1,10 +1,7 @@
-package next.step.blackjack.domain
+package next.step.blackjack.domain.card
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import next.step.blackjack.domain.card.Card
-import next.step.blackjack.domain.card.CardFace
-import next.step.blackjack.domain.card.CardSymbol
 
 class GameCardsTest : DescribeSpec({
 
@@ -40,6 +37,33 @@ class GameCardsTest : DescribeSpec({
                 gameCards shouldBe GameCards.of(
                     listOf(Card.of(CardFace.ACE, CardSymbol.DIAMOND))
                 )
+            }
+        }
+        context("pop(2)") {
+            it("가지고 있는 카드리스트의 첫번째부터 2개를 제공한다.") {
+                GameCards.of(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.ACE, CardSymbol.DIAMOND),
+                        Card.of(CardFace.ACE, CardSymbol.HEART),
+                    )
+                ).pop(2) shouldBe listOf(
+                    Card.of(CardFace.ACE, CardSymbol.CLUB),
+                    Card.of(CardFace.ACE, CardSymbol.DIAMOND)
+                )
+            }
+
+            it("가지고 있는 카드리스트의 첫번째부터 2개를 제거한다.") {
+                val gameCards = GameCards.of(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.ACE, CardSymbol.DIAMOND)
+                    )
+                )
+
+                gameCards.pop(2)
+
+                gameCards shouldBe GameCards.of(emptyList())
             }
         }
     }
