@@ -39,12 +39,6 @@ class CardsTest {
     }
 
     @Test
-    fun `카드 뭉치에 대한 정보를 문자열 값으로 추출한다`() {
-        val actual = cards.extractCardsInfoAsString()
-        actual shouldBe "10스페이드, 5하트"
-    }
-
-    @Test
     fun `카드 뭉치에 대한 숫자 합계를 구한다`() {
         val actual = cards.calculateCardsTotalValue()
         actual shouldBe 15

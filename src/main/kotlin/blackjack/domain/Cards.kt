@@ -6,7 +6,7 @@ class Cards(
 
     private val mutableCards = cards.toMutableList()
 
-    private val cards: List<Card>
+    val cards: List<Card>
         get() = mutableCards
 
     fun append(card: Card) {
@@ -15,18 +15,6 @@ class Cards(
 
     fun pick(): Card {
         return cards.first()
-    }
-
-    fun extractCardsInfoAsString(): String {
-        var cardsInfo = ""
-
-        cards.forEachIndexed { index, card ->
-            cardsInfo += "${card.rank.value}${card.symbol.symbolName}"
-            if (index != cards.lastIndex) {
-                cardsInfo += ", "
-            }
-        }
-        return cardsInfo
     }
 
     fun calculateCardsTotalValue(): Int {
