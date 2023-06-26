@@ -2,6 +2,7 @@ package domain.state
 
 import domain.card.Card
 import domain.card.Cards
+import domain.player.PlayerGameResult
 
 class StartState private constructor(private val cards: Cards) : State {
 
@@ -13,6 +14,10 @@ class StartState private constructor(private val cards: Cards) : State {
     override fun stop(): State = Stand(cards)
 
     override fun getCards(): Cards = this.cards
+
+    override fun getPlayerGameResult(state: State): PlayerGameResult {
+        throw UnsupportedOperationException("시작 상태는 지원하지 않음.")
+    }
 
     companion object {
         fun start(cards: Cards): State =

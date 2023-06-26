@@ -2,7 +2,6 @@ package domain.player
 
 import domain.card.Card
 import domain.card.Cards
-import domain.state.Burst
 import domain.state.StartState
 import domain.state.State
 import domain.state.TerminationState
@@ -29,13 +28,7 @@ open class Player(name: String, cards: Cards) {
         return this.state
     }
 
-    fun getPlayerGameResult(dealer: Dealer): PlayerGameResult = when {
-        this.state is Burst -> PlayerGameResult.LOSE
-        dealer.state is Burst -> PlayerGameResult.WIN
-        this.cards.sum > dealer.cards.sum -> PlayerGameResult.WIN
-        this.cards.sum == dealer.cards.sum -> PlayerGameResult.DRAW
-        else -> PlayerGameResult.LOSE
-    }
+    fun getPlayerGameResult(dealer: Dealer): PlayerGameResult = state.getPlayerGameResult(dealer.state)
 
     fun isTerminated(): Boolean = state is TerminationState
 }

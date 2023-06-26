@@ -1,13 +1,18 @@
 package blackjack.card
 
+import blackjack.card.helper.CardsTestFactory
 import blackjack.card.helper.StartStateTestHelper
 import domain.card.Card
+import domain.card.CardNumber
 import domain.card.Cards
+import domain.card.Suit
 import domain.state.Blackjack
 import domain.state.Hit
 import domain.state.Stand
 import domain.state.StartState
+import io.kotest.assertions.throwables.shouldThrow
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -44,6 +49,20 @@ class StartStateTest {
         val startState = StartState.start(cards)
         val actual = startState.stop()
         assertThat(actual is Stand).isTrue
+    }
+
+    @Test
+    fun `시작(Start) 상태에서 승패를 조회하면 UnsupportedOperationException 이 발생`() {
+        val cards = CardsTestFactory.makeCards(
+            Card(suit = Suit.SPADE, CardNumber.THREE),
+            Card(suit = Suit.SPADE, CardNumber.THREE),
+        )
+
+        val state = StartState.start(cards)
+
+        shouldThrow<UnsupportedOperationException> {
+            state.getPlayerGameResult(state)
+        }
     }
 
     companion object {
