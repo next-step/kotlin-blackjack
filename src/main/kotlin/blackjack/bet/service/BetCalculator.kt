@@ -16,7 +16,6 @@ object BetCalculator {
             }
             BlackJackDetermine.Winner.PLAYER -> {
                 playerWin(player, allIn, dealer, loss)
-
             }
             BlackJackDetermine.Winner.DEALER -> {
                 dealer.wallet().settle(allIn)

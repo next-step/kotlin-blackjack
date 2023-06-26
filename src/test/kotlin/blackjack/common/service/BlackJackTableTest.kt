@@ -1,7 +1,7 @@
 package blackjack.common.service
 
-import blackjack.scorerule.domain.ScorePlayer
 import blackjack.scorerule.domain.BlackJackScoreTable
+import blackjack.scorerule.domain.ScorePlayer
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder

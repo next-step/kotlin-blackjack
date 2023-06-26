@@ -2,10 +2,9 @@ package blackjack.common.domain
 
 import blackjack.common.service.DeckManager
 
-abstract class Player<T: Player<T>>(val name: String) {
+abstract class Player<T : Player<T>>(val name: String) {
 
     private val hand: Hand = Hand()
-
 
     fun hit(vararg pokerCards: PokerCard) {
         check(hand.isNotBlackJackOrNotBust()) { "더이상 카드를 받을 수 없습니다." }

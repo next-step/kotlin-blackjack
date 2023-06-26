@@ -48,8 +48,4 @@ class BlackJackBetTable(private val players: Array<BetPlayer>) {
         val checker = BetGameResultChecker(dealer)
         checker.determineGameResult(players)
     }
-
-    fun getDealerStatus(): BetPlayerStatus {
-        return BetPlayerStatus.of(dealer)
-    }
 }
