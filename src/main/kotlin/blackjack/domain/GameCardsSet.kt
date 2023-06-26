@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Card.Companion.ALL_CARDS
 import kotlin.random.Random
 
-object GameCardsSet {
+class GameCardsSet {
     private val drawnCards: MutableSet<Card> = mutableSetOf()
     private val remainingCards: List<Card>
         get() = ALL_CARDS.values.filter { it !in drawnCards }
