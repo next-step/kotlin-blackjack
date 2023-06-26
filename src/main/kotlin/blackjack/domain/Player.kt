@@ -21,8 +21,6 @@ class Player(
         }
 
         val drawnCard = GameCardsSet.drawRandomCard()
-        if (drawnCard != null) {
-            myCards = myCards.add(drawnCard)
-        }
+        myCards = myCards.add(drawnCard)
     }
 }
