@@ -7,4 +7,8 @@ class Cards(private val cards: List<Card>) {
     fun addCard(card: Card): Cards {
         return Cards(cards + listOf(card))
     }
+
+    companion object {
+        val EMPTY_CARDS = Cards(emptyList())
+    }
 }
