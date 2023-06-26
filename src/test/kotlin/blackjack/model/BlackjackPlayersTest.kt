@@ -12,7 +12,7 @@ class BlackjackPlayersTest : StringSpec({
         val cardDeck = CardDeck()
         // when
         val players = BlackjackParticipants(
-            listOf(BlackjackPlayer(PlayerName("name"), cardDeck, { _ -> }, { _ -> false }))
+            listOf(BlackjackPlayer(cardDeck, { _ -> 1000 }, PlayerName("name"), { _ -> }, { _ -> false }))
         )
         // then
         players.participants.first().handDeck.cards shouldHaveSize 2

@@ -11,6 +11,7 @@ class BlackjackGameTest : StringSpec({
     "블랙잭 게임" {
         BlackjackGame(
             { false },
+            { _ -> 1000 },
             { listOf("test1", "test2") },
             { _ -> },
             { player -> player.handDeck.cards.size shouldBe 2 },

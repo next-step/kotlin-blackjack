@@ -7,6 +7,7 @@ import blackjack.view.OutputView
 fun main() {
     BlackjackGame(
         InputView::isWantedMorePredicate,
+        InputView::blackjackPlayerBettingMoney,
         InputView::playerNames,
         OutputView::printDealerMoreCard,
         OutputView::printParticipant,

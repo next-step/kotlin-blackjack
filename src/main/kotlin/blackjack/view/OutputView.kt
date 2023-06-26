@@ -1,10 +1,9 @@
 package blackjack.view
 
 import blackjack.model.BlackjackDealer
-import blackjack.model.BlackjackJudge
 import blackjack.model.BlackjackParticipant
 import blackjack.model.BlackjackPlayer
-import blackjack.model.BlackjackPlayerResult
+import blackjack.model.BlackjackRevenueJudge
 import blackjack.model.HandDeck
 import blackjack.model.TrumpCard
 import blackjack.model.TrumpCardNumber
@@ -34,21 +33,11 @@ object OutputView {
         println()
     }
 
-    fun printBlackjackJudgeResult(blackjackJudge: BlackjackJudge) {
-        println("## 최종 승패")
-        println("딜러: ${blackjackJudge.dealerWinCount}승 ${blackjackJudge.dealerLoseCount}패")
-        blackjackJudge.playerResults.forEach {
-            println(
-                "${it.player.name}: ${victoryResultString(it)}"
-            )
-        }
-    }
-
-    private fun victoryResultString(it: BlackjackPlayerResult): String {
-        return if (it.isWin) {
-            "승"
-        } else {
-            "패"
+    fun printBlackjackJudgeResult(blackjackRevenueJudge: BlackjackRevenueJudge) {
+        println("## 최종 수익")
+        println("딜러: ${blackjackRevenueJudge.dealerRevenue}")
+        blackjackRevenueJudge.playerResults.forEach {
+            println("${it.player.name}: ${it.revenue}")
         }
     }
 
