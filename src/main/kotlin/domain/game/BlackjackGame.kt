@@ -2,22 +2,28 @@ package domain.game
 
 import domain.card.Cards
 import domain.card.Deck
-import domain.dto.WinLoseDrawResult
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
+import domain.state.StartState
 import domain.state.State
 
-class BlackjackGame(private val deck: Deck, playerNames: List<String>) {
+class BlackjackGame(private val deck: Deck, playerBetAmounts: Map<String, Int>) {
 
     val players: Players
 
     val dealer: Dealer
 
     init {
-        require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
-        this.players = Players(playerNames.map { Player(it, cards = initCards()) })
-        this.dealer = Dealer(cards = initCards())
+        require(PLAYERS_RANGE.contains(playerBetAmounts.keys.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
+        this.players = Players(initPlayers(playerBetAmounts))
+        val dealerState = StartState.start(cards = initCards())
+        this.dealer = Dealer(state = dealerState)
+    }
+
+    private fun initPlayers(playerBetAmounts: Map<String, Int>) = playerBetAmounts.map { (name, betAmount) ->
+        val state = StartState.start(cards = initCards(), betAmount = betAmount)
+        Player(name = name, state = state)
     }
 
     private fun initCards() = Cards(listOf(deck.issueCard(), deck.issueCard()))
@@ -62,9 +68,10 @@ class BlackjackGame(private val deck: Deck, playerNames: List<String>) {
         return player.draw(this.deck.issueCard())
     }
 
-    fun getGameWinLoseDrawResult(): WinLoseDrawResult {
-        val playerGameResult = players.groupBy { it.getPlayerGameResult(dealer) }
-        return WinLoseDrawResult(playerResult = playerGameResult)
+    fun getPlayersRevenues(): RevenueResult {
+        val playersRevenues = players.associate { player -> player.name to player.getRevenue(dealer) }
+        val dealerRevenue = playersRevenues.values.sumOf { -it }
+        return RevenueResult(dealerRevenue = dealerRevenue, playersRevenues = playersRevenues)
     }
 
     companion object {

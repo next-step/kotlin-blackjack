@@ -4,6 +4,7 @@ import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
 import domain.dto.WinLoseDrawResult
+import domain.game.RevenueResult
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.PlayerGameResult
@@ -25,25 +26,17 @@ class ResultView {
         players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
     }
 
-    fun printWinLoseDrawResult(result: WinLoseDrawResult) {
+    fun printRevenue(result: RevenueResult) {
         println()
-        println("## 최종 승패")
-        printDealerWinLoseDrawResult(result)
-        printPlayersWinLoseDrawResult(result)
-    }
-
-    private fun printDealerWinLoseDrawResult(result: WinLoseDrawResult) {
-        println(
-            "딜러: ${result.playerResult[PlayerGameResult.LOSE]?.size ?: 0}승" +
-                "${result.playerResult[PlayerGameResult.DRAW]?.size ?: 0}무" +
-                "${result.playerResult[PlayerGameResult.WIN]?.size ?: 0}패",
-        )
-    }
-
-    private fun printPlayersWinLoseDrawResult(result: WinLoseDrawResult) {
-        result.playerResult.forEach { (playerGameResult, players) ->
-            printPlayerResults(players, playerGameResult)
+        println("## 최종 수익")
+        printRevenue(name = "딜러", revenueAmount = result.dealerRevenue)
+        result.playersRevenues.forEach { (name, revenueAmount) ->
+            printRevenue(name = name, revenueAmount = revenueAmount)
         }
+    }
+
+    private fun printRevenue(name: String, revenueAmount: Int) {
+        println("$name: $revenueAmount")
     }
 
     private fun printPlayerResults(

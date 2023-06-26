@@ -1,10 +1,9 @@
 package domain.player
 
 import domain.card.Card
-import domain.card.Cards
 import domain.state.State
 
-class Dealer(cards: Cards) : Player(name = NAME, cards = cards) {
+class Dealer(state: State) : Player(name = NAME, state = state) {
 
     override fun draw(card: Card): State {
         return if (isDrawable()) {

@@ -11,17 +11,17 @@ class BlackjackGameTest {
 
     @ParameterizedTest
     @MethodSource("getPlayerNames")
-    fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(playerNames: List<String>) {
+    fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(playersBetAmounts: Map<String, Int>) {
         shouldThrow<IllegalArgumentException> {
-            BlackjackGame(DeckGenerator.makeDeck(1), playerNames)
+            BlackjackGame(DeckGenerator.makeDeck(1), playersBetAmounts)
         }
     }
 
     companion object {
         @JvmStatic
         fun getPlayerNames(): List<Arguments> = listOf(
-            Arguments.of(emptyList<String>()),
-            Arguments.of((1..9).map { it.toString() }.toList()),
+            Arguments.of(emptyMap<String, Int>()),
+            Arguments.of((1..9).map { it.toString() to it }.toMap()),
         )
     }
 }

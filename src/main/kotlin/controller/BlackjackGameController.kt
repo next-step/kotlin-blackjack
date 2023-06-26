@@ -14,7 +14,8 @@ class BlackjackGameController(
 ) {
     fun initGame(deckSize: Int): BlackjackGame {
         val playerNames = inputView.getPlayerNames()
-        val game = BlackjackGame(deck = DeckGenerator.makeDeck(deckSize), playerNames = playerNames)
+        val playerBetAmounts = inputView.getPlayerBetAmounts(playerNames)
+        val game = BlackjackGame(deck = DeckGenerator.makeDeck(deckSize), playerBetAmounts = playerBetAmounts)
         resultView.printInitPlayers(players = game.players, dealer = game.dealer)
         return game
     }
@@ -33,8 +34,8 @@ class BlackjackGameController(
     }
 
     fun printGameResult(game: BlackjackGame) {
-        val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
+        val revenueResult = game.getPlayersRevenues()
         resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
-        resultView.printWinLoseDrawResult(gameWinLoseDrawResult)
+        resultView.printRevenue(revenueResult)
     }
 }
