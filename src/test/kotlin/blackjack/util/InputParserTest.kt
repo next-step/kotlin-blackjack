@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.util
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

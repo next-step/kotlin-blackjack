@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.util
 
 object InputParser {
     private const val DEFAULT_DELIMITER = ","

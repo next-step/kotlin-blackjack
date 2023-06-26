@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain.model
 
 class Card private constructor(val type: CardType, val value: CardValue) {
     companion object {
