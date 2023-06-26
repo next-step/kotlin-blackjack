@@ -6,11 +6,15 @@ class Player(private val name: String, cards: List<Card> = emptyList()) {
         return name
     }
 
-    fun addCard(card: Card) {
-        _cards.add(card)
+    fun addCard(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     fun getCards(): List<Card> {
         return _cards.toList()
+    }
+
+    fun getScore(): Int {
+        return _cards.sumOf { it.cardSymbol.score }
     }
 }
