@@ -1,6 +1,7 @@
 package blackjack.service
 
-import blackjack.domain.PokerSymbol
+import blackjack.common.domain.PokerSymbol
+import blackjack.common.service.DeckManager
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldBeOneOf

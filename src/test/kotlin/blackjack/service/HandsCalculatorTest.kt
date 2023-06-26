@@ -1,7 +1,8 @@
 package blackjack.service
 
-import blackjack.domain.PokerCard
-import blackjack.domain.PokerSymbol
+import blackjack.common.domain.PokerCard
+import blackjack.common.domain.PokerSymbol
+import blackjack.common.service.HandsCalculator
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
