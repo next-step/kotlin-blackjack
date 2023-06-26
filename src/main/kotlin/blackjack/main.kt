@@ -7,11 +7,11 @@ import blackjack.view.OutputView
 fun main() {
     BlackjackGame(
         InputView::isWantedMorePredicate,
-        InputView::names,
-        OutputView::consumeBlackjackDealerMoreCardScoreLimit,
-        OutputView::consumeParticipant,
-        OutputView::consumePlayersCardCount,
-        OutputView::blackjackParticipantsScoreConsumer,
-        OutputView::blackjackJudgeConsumer,
+        InputView::playerNames,
+        OutputView::printDealerMoreCard,
+        OutputView::printParticipant,
+        OutputView::printDealerPlayersDealingResult,
+        OutputView::printBlackjackParticipantsScore,
+        OutputView::printBlackjackJudgeResult,
     ).start()
 }

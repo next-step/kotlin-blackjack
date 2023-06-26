@@ -12,29 +12,29 @@ import blackjack.model.TrumpCardShape
 
 object OutputView {
 
-    fun consumePlayersCardCount(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>, cardCount: Int) {
+    fun printDealerPlayersDealingResult(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>, cardCount: Int) {
         println("딜러와 ${players.joinToString { it.name.toString() }}에게 ${cardCount}장의 나누었습니다.")
         println("딜러 : ${deckString(dealer.handDeck)}")
-        players.forEach { consumeParticipant(it) }
+        players.forEach { printParticipant(it) }
         println()
     }
 
-    fun consumeBlackjackDealerMoreCardScoreLimit(scoreLimit: Int) {
+    fun printDealerMoreCard(scoreLimit: Int) {
         println("딜러는 ${scoreLimit}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun consumeParticipant(participant: BlackjackParticipant) {
+    fun printParticipant(participant: BlackjackParticipant) {
         println(participantString(participant))
     }
 
-    fun blackjackParticipantsScoreConsumer(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>) {
+    fun printBlackjackParticipantsScore(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>) {
         (listOf(dealer) + players).forEach {
             println("${participantString(it)} - 결과: ${it.deckScore}")
         }
         println()
     }
 
-    fun blackjackJudgeConsumer(blackjackJudge: BlackjackJudge) {
+    fun printBlackjackJudgeResult(blackjackJudge: BlackjackJudge) {
         println("## 최종 승패")
         println("딜러: ${blackjackJudge.dealerWinCount}승 ${blackjackJudge.dealerLoseCount}패")
         blackjackJudge.playerResults.forEach {
