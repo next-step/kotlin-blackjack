@@ -5,11 +5,11 @@ import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
-    val blackJackApllication = BlackJackApllication()
+    val blackJackApllication = BlackJackApplication()
     blackJackApllication.run()
 }
 
-class BlackJackApllication {
+class BlackJackApplication {
 
     fun run() {
         val blackJackController = BlackJackController(
@@ -18,5 +18,4 @@ class BlackJackApllication {
         )
         blackJackController.start()
     }
-
 }
