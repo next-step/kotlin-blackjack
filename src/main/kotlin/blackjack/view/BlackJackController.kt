@@ -49,7 +49,8 @@ class BlackJackController(
     }
 
     private fun processDealerTurn(blackJackGame: BlackJackGame) {
-        blackJackGame.executeDealerTurn()
+        val executeResult = blackJackGame.executeDealerTurn()
+        resultView.display(executeResult)
     }
 
     private fun processFinishTurn(

@@ -7,6 +7,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
+import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.player.unWrappings
 
 class BlackJackResultView {
@@ -23,6 +24,16 @@ class BlackJackResultView {
 
     fun display(playerCards: PlayerCards) {
         println(playerCards.makeDisplayMessage())
+    }
+
+    fun display(dealerTurnExecuteResult: DealerTurnExecuteResult) {
+        val message = if (dealerTurnExecuteResult.isDistributedOneMoreCard) {
+            "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        } else {
+            "딜러는 17이상이라 카드를 더 받지 않았습니다."
+        }
+        println()
+        println(message)
     }
 
     fun display(blackJackGameResult: BlackJackGameResult) {
