@@ -66,7 +66,7 @@ class BlackjackTest {
                 Card(NumberType.KING, CardType.SPADE)
             )
         )
-       val player = Player(card, name = name)
+        val player = Player(card, name = name)
         val giveCard = Card(NumberType.NINE, CardType.HEART)
         player.getCard(giveCard)
 
