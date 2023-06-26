@@ -46,5 +46,6 @@ class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
     }
     companion object {
         private const val NUMBER_OF_CARD_FIRST_DRAW = 2
+        const val TOTAL_NUMBER_OF_CARDS = 52
     }
 }

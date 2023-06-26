@@ -21,7 +21,7 @@ class DeckTest {
 
         val cards = mutableListOf<Card>()
 
-        for (i in 1..Card.TOTAL_NUMBER_OF_CARDS) {
+        for (i in 1..Deck.TOTAL_NUMBER_OF_CARDS) {
             cards.add(deck.drawCard())
         }
 
@@ -34,7 +34,7 @@ class DeckTest {
     fun `남은 카드가 없으면 IllegaArgumentException을 throw 한다`() {
         val cards = mutableListOf<Card>()
 
-        for (i in 1..Card.TOTAL_NUMBER_OF_CARDS) {
+        for (i in 1..Deck.TOTAL_NUMBER_OF_CARDS) {
             cards.add(deck.drawCard())
         }
 
