@@ -39,8 +39,8 @@ class BlackJackController(
         val players = replaceWhiteSpaceAndSplitByComma(inputPlayers)
         val blackjackGame = blackjackService.initBlackjackGame(players)
 
-        resultView.printPlayers(players)
-        resultView.printPlayersAndCards(blackjackGame.players)
+        resultView.printPlayers(blackjackGame.players, blackjackGame.dealer)
+        resultView.printPlayersAndCards(blackjackGame.players, blackjackGame.dealer)
         resultView.printEnter()
 
         return blackjackGame

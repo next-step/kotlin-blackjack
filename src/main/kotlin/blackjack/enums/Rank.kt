@@ -1,7 +1,7 @@
 package blackjack.enums
 
 enum class Rank(
-    val rank: String,
+    val rankName: String,
     val value: Int,
     val hiddenValue: Int = 0
 ) {

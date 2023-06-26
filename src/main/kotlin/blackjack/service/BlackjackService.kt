@@ -9,7 +9,8 @@ import blackjack.domain.enums.Condition
 class BlackjackService {
 
     fun initBlackjackGame(players: List<String>): BlackjackGame {
-        val dealer = Dealer(Deck())
+        val deck = Deck()
+        val dealer = Dealer(deck = deck, cards = deck.drawCard(BASIC_CARD_COUNT))
         val blackJackPlayers = players.map { player ->
             val cards = dealer.draw(BASIC_CARD_COUNT)
             Player(name = player, cards = cards)
@@ -38,7 +39,7 @@ class BlackjackService {
 
     companion object {
         private const val BLACK_JACK_NUMBER = 21
-        private const val BASIC_CARD_COUNT = 2
+        const val BASIC_CARD_COUNT = 2
         private const val ONE_MORE_CARD_COUNT = 1
     }
 }
