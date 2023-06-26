@@ -15,20 +15,8 @@ class CardNumberCalculator {
 
     fun calculateCardNumber(cardNumber: CardNumber, sum: Int): Int {
         if (cardNumber == CardNumber.A) {
-            return proceedAceNumber(sum)
+            return CardNumber.proceedAceNumber(sum)
         }
         return cardNumber.value
-    }
-
-    fun proceedAceNumber(sum: Int): Int {
-        if (sum + ACE_MAXINUM <= RuleChecker.CONDITION_TO_WIN_BLACK_JACK) {
-            return ACE_MAXINUM
-        }
-        return ACE_MINIMUM
-    }
-
-    companion object {
-        private const val ACE_MAXINUM = 11
-        private const val ACE_MINIMUM = 1
     }
 }
