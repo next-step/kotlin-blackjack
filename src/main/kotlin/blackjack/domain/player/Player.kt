@@ -4,12 +4,9 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
 
-class Player(
-    val name: String,
-    cardHold: CardHold = CardHold()
-) {
-    var cardHold = cardHold
-        private set
+sealed interface Player {
+    val name: String
+    var cardHold: CardHold
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()

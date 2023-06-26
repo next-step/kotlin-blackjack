@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerImpl
 
 object OutputView {
     fun printGameStart(names: List<String>, initialDraw: Int) {
@@ -15,7 +15,7 @@ object OutputView {
         println()
     }
 
-    fun printPlayerCard(player: Player) {
+    fun printPlayerCard(player: PlayerImpl) {
         println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } }")
     }
 
@@ -26,7 +26,7 @@ object OutputView {
         }
     }
 
-    private fun printPlayerResult(player: Player) {
+    private fun printPlayerResult(player: PlayerImpl) {
         println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
     }
 }
