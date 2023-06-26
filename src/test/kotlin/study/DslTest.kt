@@ -1,10 +1,11 @@
 package study
 
-import Hard
-import Language
-import Person
-import Soft
-import introduce
+import dsl.Hard
+import dsl.Language
+import dsl.Person
+import dsl.Soft
+import dsl.introduce
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
@@ -13,7 +14,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 /**
- * introduce {
+ * dsl.introduce {
  *   name("홍길동")
  *   company("우아한형제들")
  *   skills {
@@ -93,14 +94,14 @@ class DslTest {
             }
         }
 
-        person.languages.list[0].country shouldBe "Korean"
-        person.languages.list[0].level shouldBe 5
-        person.languages.list[0].shouldBeTypeOf<Language>()
-
-        person.languages.list[1].country shouldBe "English"
-        person.languages.list[1].level shouldBe 3
-
-        person.languages.list[2].country shouldBe "Spanish"
-        person.languages.list[2].level shouldBe 0
+        assertSoftly(person.languages) {
+            list[0].country shouldBe "Korean"
+            list[0].level shouldBe 5
+            list[0].shouldBeTypeOf<Language>()
+            list[1].country shouldBe "English"
+            list[1].level shouldBe 3
+            list[2].country shouldBe "Spanish"
+            list[2].level shouldBe 0
+        }
     }
 }

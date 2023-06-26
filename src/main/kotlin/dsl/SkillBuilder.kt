@@ -1,3 +1,5 @@
+package dsl
+
 class SkillBuilder {
     private var skills = mutableListOf<Skill>()
 
