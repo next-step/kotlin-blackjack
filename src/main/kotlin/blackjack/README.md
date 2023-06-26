@@ -61,6 +61,6 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   - 카드의 점수를 계산하는 역할은 카드 뭉치 스스로가 할 수 있게 만들어보는 건 어떨까요?
   - ACE의 기본 점수는 1점, 11 점이 될 수 있는건 점수 계산에서 판단하면 어떨지 ? 
   - 총합이 21일 경우 블랙잭이 아니라 2장의 합이 21이어야 블랙잭이다.
-- [ ] PlayingCardPack - Iterable 보다는 필요한 기능을 제공하면 어떨지 ?
+- [x] PlayingCardPack - Iterable 보다는 필요한 기능을 제공하면 어떨지 ?
 - [x] PlayerCards 의 생성자 파라미터가 mutableList 라 외부 참조가 있을 경우 취약해 보인다. 
 - [ ] BlackJackStatus - STAY_OR_HIT STAY 와 HIT은 각각 독립적인 상태로 보인다.

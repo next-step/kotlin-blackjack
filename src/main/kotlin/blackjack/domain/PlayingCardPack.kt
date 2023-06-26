@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class PlayingCardPack(playingCards: List<PlayingCard>) : Iterable<PlayingCard> {
+class PlayingCardPack(playingCards: List<PlayingCard>) {
 
-    private var playingCards: MutableList<PlayingCard> = playingCards.toMutableList()
+    private val playingCards: MutableList<PlayingCard> = playingCards.toMutableList()
 
     fun shuffle() {
         this.playingCards.shuffle()
@@ -12,7 +12,5 @@ class PlayingCardPack(playingCards: List<PlayingCard>) : Iterable<PlayingCard> {
         return this.playingCards.removeFirst()
     }
 
-    override fun iterator(): Iterator<PlayingCard> {
-        return this.playingCards.iterator()
-    }
+    fun remainCount(): Int = this.playingCards.size
 }
