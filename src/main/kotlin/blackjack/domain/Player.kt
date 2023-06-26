@@ -3,17 +3,17 @@ package blackjack.domain
 class Player(
     name: String,
     cards: Cards,
-    burst: Boolean = false,
-) : Participant(name, cards, burst) {
+    state: ParticipantState = Alive,
+) : Participant(name, cards, state) {
     override fun openedCards(): Cards = cards
 
     fun getGameResult(dealer: Dealer): GameResult {
-        if (burst) {
+        if (isBurst()) {
             return GameResult.LOSE
         }
 
         val dealerScore: Score = dealer.calculateScore()
-        if (dealer.burst) {
+        if (dealer.isBurst()) {
             return GameResult.WIN
         }
 

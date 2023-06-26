@@ -42,7 +42,7 @@ private fun play(participants: Participants, deck: Deck): GameResultVO {
 
 private fun drawMore(deck: Deck, player: Player) {
     while (deck.isNotEmpty()) {
-        if (player.burst) {
+        if (player.isBurst()) {
             return
         }
 

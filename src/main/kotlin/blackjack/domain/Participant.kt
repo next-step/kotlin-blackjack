@@ -3,23 +3,25 @@ package blackjack.domain
 sealed class Participant(
     val name: String,
     var cards: Cards,
-    var burst: Boolean = false
+    var state: ParticipantState = Alive
 ) {
     abstract fun openedCards(): Cards
 
     fun hit(card: Card) {
-        if (cards.calculateScore().isBurst()) {
+        if (state.isBurst()) {
             return
         }
 
         val addedCards = cards + card
         if (addedCards.calculateScore().isBurst()) {
-            burst = true
+            state = Burst
         }
         cards = addedCards
     }
 
     fun calculateScore(): Score = cards.calculateScore()
+
+    fun isBurst(): Boolean = state.isBurst()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

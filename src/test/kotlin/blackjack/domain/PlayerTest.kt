@@ -20,7 +20,7 @@ class PlayerTest : FunSpec({
             Card.of(Denomination.JACK, Suit.SPADES),
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
-        player.burst shouldBe false
+        player.state shouldBe Alive
     }
 
     test("카드를 더 받고(hit) 21 초과하면 burst 된다") {
@@ -38,7 +38,7 @@ class PlayerTest : FunSpec({
             Card.of(Denomination.JACK, Suit.SPADES),
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
-        player.burst shouldBe true
+        player.state shouldBe Burst
     }
 
     context("플레이어의 스코어를 계산한다.") {
@@ -80,52 +80,59 @@ class PlayerTest : FunSpec({
     context("게임 결과를 반환한다") {
         data class GetGameResult(
             val cards: Cards,
-            val isPlayerBurst: Boolean,
+            val playerState: ParticipantState,
             val dealerCards: Cards,
-            val isDealerBurst: Boolean,
+            val dealerState: ParticipantState,
             val gameResult: GameResult
         )
         withData(
             GetGameResult(
                 Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                false,
+                Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                false,
+                Alive,
                 GameResult.TIE
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS)),
-                false,
+                Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                false,
+                Alive,
                 GameResult.LOSE
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                false,
+                Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                false,
+                Alive,
                 GameResult.LOSE
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                false,
+                Alive,
                 Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
-                true,
+                Burst,
                 GameResult.WIN
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                true,
+                Burst,
                 Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
-                true,
+                Burst,
                 GameResult.LOSE
             ),
-        ) { (cards, isPlayerBurst, dealerCards, isDealerBurst, gameResult) ->
-            val player = Player("pobi", cards, isPlayerBurst)
-            val dealer = Dealer(dealerCards, isDealerBurst)
+        ) { (cards, playerState, dealerCards, dealerState, gameResult) ->
+            val player = Player("pobi", cards, playerState)
+            val dealer = Dealer(dealerCards, dealerState)
 
             player.getGameResult(dealer) shouldBe gameResult
         }
+    }
+
+    test("플레이어의 상태가 Burst 인지 반환한다") {
+        val cards = Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))
+        val player = Player("pobi", cards, Burst)
+
+        player.isBurst() shouldBe true
     }
 })
