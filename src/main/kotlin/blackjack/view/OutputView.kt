@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerImpl
@@ -17,8 +16,13 @@ object OutputView {
         println()
     }
 
-    fun printDealerCard(dealer: Dealer) {
-        println("${dealer.name}카드: ${dealer.cardHold.cards[0].rank.mark}${dealer.cardHold.cards[0].shape.mark}")
+    fun printCard(players: Participants) {
+        printDealerCard(players)
+        printPlayerCard(players)
+    }
+
+    private fun printDealerCard(players: Participants) {
+        println("${players.dealer.name}카드: ${players.dealer.cardHold.cards[0].rank.mark}${players.dealer.cardHold.cards[0].shape.mark}")
     }
 
     fun printDealerGetAdditionalCard() {
@@ -31,7 +35,7 @@ object OutputView {
 
     fun printPlayerResult(players: Participants) {
         println()
-        players.players.forEach {
+        players.getAllPlayers.forEach {
             printPlayerResult(it)
         }
     }
