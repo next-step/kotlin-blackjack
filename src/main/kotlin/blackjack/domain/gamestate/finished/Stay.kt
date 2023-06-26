@@ -2,6 +2,7 @@ package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Competition
+import java.lang.RuntimeException
 
 class Stay(
     val cards: Cards,
@@ -21,14 +22,17 @@ class Stay(
         if (gameState.isBust()) {
             return Competition.WIN
         }
-        val score = this.score()
-        val otherScore = gameState.score()
-        if (score < otherScore) {
-            return Competition.LOSE
+        return when (score().compareTo(gameState.score())) {
+            WIN_COMPARE_VALUE -> Competition.WIN
+            LOST_COMPARE_VALUE -> Competition.LOSE
+            DRAW_COMPARE_VALUE -> Competition.DRAW
+            else -> throw RuntimeException("승부 계산에 문제가 발생했습니다.")
         }
-        if (score > otherScore) {
-            return Competition.WIN
-        }
-        return Competition.DRAW
+    }
+
+    companion object {
+        private const val WIN_COMPARE_VALUE = 1
+        private const val LOST_COMPARE_VALUE = -1
+        private const val DRAW_COMPARE_VALUE = 0
     }
 }
