@@ -1,21 +1,9 @@
-package blackjack
+package blackjack.service
 
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 
-class GameResultChecker(
-    private val dealer: Dealer
-) {
-
-    fun determineGameResult(players: Array<Player>) {
-        val dealerValue = dealer.optimalValue()
-
-        players.forEach {
-            val winner = determineWinner(it.optimalValue(), dealerValue)
-            updateScores(winner, it)
-        }
-    }
-
+object ScoreCalculator {
     fun determineWinner(playerValue: Int, dealerValue: Int): Winner {
         return when {
             playerValue > 21 -> Winner.DEALER
@@ -26,7 +14,7 @@ class GameResultChecker(
         }
     }
 
-    fun updateScores(winner: Winner, player: Player) {
+    fun updateScores(winner: Winner, player: Player, dealer: Dealer) {
         when (winner) {
             Winner.PLAYER -> {
                 player.scoreBoard().countWin()

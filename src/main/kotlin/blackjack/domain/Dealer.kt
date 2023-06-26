@@ -1,20 +1,19 @@
 package blackjack.domain
 
-import blackjack.DeckManager
+import blackjack.service.DeckManager
 import blackjack.view.PlayerStatus
 
 class Dealer : Player(name = "딜러") {
 
-    fun initializeRound(deckManager: DeckManager, players: Array<Player>) {
+    fun beginRound(deckManager: DeckManager, players: Array<Player>) {
         this.hit(*deckManager.drawTwoCards())
-        if (this.optimalValue() >= STAND_THRESHOLD) this.stand()
         for (player in players) {
             player.hit(*deckManager.drawTwoCards())
         }
     }
 
     fun getParticipantInitialStatus(players: Array<Player>): List<PlayerStatus> {
-        val playerStatus = mutableListOf(PlayerStatus.upCard(this))
+        val playerStatus = mutableListOf(PlayerStatus.dealerUpCard(this))
         for (player in players) {
             playerStatus.add(PlayerStatus.of(player))
         }
@@ -22,13 +21,11 @@ class Dealer : Player(name = "딜러") {
         return playerStatus
     }
 
-    fun getParticipantStatus(players: Array<Player>): Pair<PlayerStatus, List<PlayerStatus>> {
-        val dealerStatus = PlayerStatus.of(this)
-        val playerStatusList = players.map(PlayerStatus::of)
-        return Pair(dealerStatus, playerStatusList)
+    fun needToDraw(): Boolean {
+        return this.optimalValue() <= STAND_THRESHOLD
     }
 
     companion object {
-        private const val STAND_THRESHOLD = 17
+        private const val STAND_THRESHOLD = 16
     }
 }
