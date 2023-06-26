@@ -54,6 +54,6 @@ class BustTest : FunSpec({
     }
 }) {
     companion object {
-        private val BUST_CARDS = Cards.of(SPADE_KING, SPADE_QUEEN, SPADE_JACK)
+        val BUST_CARDS = Cards.of(SPADE_KING, SPADE_QUEEN, SPADE_JACK)
     }
 }

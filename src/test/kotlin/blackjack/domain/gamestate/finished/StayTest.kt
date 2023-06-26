@@ -5,6 +5,8 @@ import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.Competition
+import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -42,6 +44,13 @@ class StayTest : FunSpec({
         test("bust인지 확인한다") {
             val actual = Stay(STAY_CARDS).isBust()
             actual shouldBe false
+        }
+    }
+
+    context("compete") {
+        test("상대가 bust면 승리한다.") {
+            val actual = Stay(STAY_CARDS).compete(Bust(BUST_CARDS))
+            actual shouldBe Competition.WIN
         }
     }
 }) {

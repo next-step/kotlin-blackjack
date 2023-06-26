@@ -18,6 +18,9 @@ class Stay(
     override fun score() = cards.score()
 
     override fun compete(gameState: Finished): Competition {
-        TODO("Not yet implemented")
+        if (gameState.isBust()) {
+            return Competition.WIN
+        }
+        TODO("todo")
     }
 }

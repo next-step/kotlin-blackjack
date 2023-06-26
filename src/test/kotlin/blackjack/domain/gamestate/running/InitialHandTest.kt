@@ -3,6 +3,8 @@ package blackjack.domain.gamestate.running
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Bust
+import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContain
@@ -61,7 +63,7 @@ class InitialHandTest : FunSpec({
 
     context("compete") {
         test("승패를 계산하려하는 경우 예외가 발생한다") {
-            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().compete(InitialHand()) }
+            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().compete(Bust(BUST_CARDS)) }
             exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }
     }
