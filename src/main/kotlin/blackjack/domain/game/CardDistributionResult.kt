@@ -1,16 +1,16 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.card.PlayerCards
 
 data class CardDistributionResult(
-    val playerCardDeckCaptures: List<PlayerCardDeckCapture>,
+    val playerCards: List<PlayerCards>,
 ) {
 
-    val countOfCardDistribution = playerCardDeckCaptures.first().cards.size
-    val playerNames = playerCardDeckCaptures.map { it.playerName }
+    val countOfCardDistribution = playerCards.first().cards.size
+    val playerNames = playerCards.map { it.playerName }
 
     init {
-        val isAllCardsSizeSame = playerCardDeckCaptures.map { it.cards.size }.distinct().size == 1
+        val isAllCardsSizeSame = playerCards.map { it.cards.size }.distinct().size == 1
         require(isAllCardsSizeSame) {
             "all cards size is not same"
         }

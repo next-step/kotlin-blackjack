@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardShape
-import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.player.unWrappings
@@ -13,20 +13,20 @@ class BlackJackResultView {
     fun display(result: CardDistributionResult) {
         println()
         println(result.makeTitleMessage())
-        result.playerCardDeckCaptures
-            .map { playerCardDeckCapture -> playerCardDeckCapture.makeDisplayMessage() }
-            .forEach { playerCardDeckCaptureMessage -> println(playerCardDeckCaptureMessage) }
+        result.playerCards
+            .map { playerCard -> playerCard.makeDisplayMessage() }
+            .forEach { playerCardsCaptureMessage -> println(playerCardsCaptureMessage) }
         println()
     }
 
-    fun display(playerCardDeckCapture: PlayerCardDeckCapture) {
-        println(playerCardDeckCapture.makeDisplayMessage())
+    fun display(playerCards: PlayerCards) {
+        println(playerCards.makeDisplayMessage())
     }
 
     fun display(blackJackGameResult: BlackJackGameResult) {
         println()
         blackJackGameResult.playerGameResults
-            .map { it.playerCardDeck.makeDisplayMessage().plus(" - 결과: ${it.score}") }
+            .map { it.playerCards.makeDisplayMessage().plus(" - 결과: ${it.score}") }
             .forEach { println(it) }
     }
 
@@ -35,7 +35,7 @@ class BlackJackResultView {
         return "${names}에게 ${countOfCardDistribution}장씩 나누었습니다."
     }
 
-    private fun PlayerCardDeckCapture.makeDisplayMessage(): String {
+    private fun PlayerCards.makeDisplayMessage(): String {
         val name = playerName.unWrapping()
         val cardNames = cards.joinToString(", ") { card -> card.makeDisplayMessage() }
         return "${name}카드: $cardNames"

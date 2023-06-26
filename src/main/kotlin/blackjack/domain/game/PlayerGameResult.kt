@@ -1,11 +1,11 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.card.PlayerCards
 import blackjack.domain.score.CardScoreCalculator
 
 data class PlayerGameResult(
-    val playerCardDeck: PlayerCardDeckCapture,
+    val playerCards: PlayerCards,
 ) {
 
-    val score = CardScoreCalculator.calculateScore(playerCardDeck.cards).value
+    val score = CardScoreCalculator.calculateScore(playerCards.cards).value
 }

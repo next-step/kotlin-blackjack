@@ -2,10 +2,9 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.PlayerCardDeckCapture
+import blackjack.domain.card.PlayerCards
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
-import blackjack.domain.player.captureAllCardDecks
 import blackjack.domain.shuffle.Shuffler
 import java.util.LinkedList
 import kotlin.IllegalStateException
@@ -42,11 +41,11 @@ class BlackJackGame(
             player.pass(cards)
         }
         return CardDistributionResult(
-            playerCardDeckCaptures = waitPlayers.captureAllCardDecks(),
+            playerCards = waitPlayers.captureAllCards(),
         )
     }
 
-    fun hitFocusedPlayer(): PlayerCardDeckCapture {
+    fun hitFocusedPlayer(): PlayerCards {
         checkCardDistributionCompleted()
 
         val player = requireWaitPlayer()
@@ -54,7 +53,7 @@ class BlackJackGame(
         if (player.isBust()) {
             moveFocusedPlayerToFinished()
         }
-        return player.captureCardDeck()
+        return player.captureCards()
     }
 
     fun stayFocusedPlayer() {
@@ -67,9 +66,10 @@ class BlackJackGame(
             "game is not end"
         }
 
-        val playerGameResults = finishedPlayers.map { player ->
-            PlayerGameResult(player.captureCardDeck())
-        }
+        val playerGameResults = finishedPlayers
+            .map { player -> player.captureCards() }
+            .map { playerCards -> PlayerGameResult(playerCards) }
+
         return BlackJackGameResult(
             playerGameResults = playerGameResults,
         )
@@ -104,6 +104,17 @@ class BlackJackGame(
 
     private fun findWaitPlayerOrNull(): Player? {
         return waitPlayers.firstOrNull()
+    }
+
+    private fun List<Player>.captureAllCards(): List<PlayerCards> {
+        return map { it.captureCards() }
+    }
+
+    private fun Player.captureCards(): PlayerCards {
+        return PlayerCards(
+            playerName = name,
+            cards = cards,
+        )
     }
 
     companion object {

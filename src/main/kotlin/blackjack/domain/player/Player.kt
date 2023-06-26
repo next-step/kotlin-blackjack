@@ -1,37 +1,29 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.PlayerCardDeck
-import blackjack.domain.card.PlayerCardDeckCapture
 import blackjack.domain.score.CardScoreCalculator
+import java.util.LinkedList
 
 class Player(
     val name: PlayerName,
 ) {
 
-    private val cardDeck = PlayerCardDeck(name)
+    private val _cards = LinkedList<Card>()
+    val cards: List<Card> get() = _cards.toList()
 
-    fun pass(card: Card) {
-        cardDeck.insert(card)
+    fun pass(newCard: Card) {
+        _cards.add(newCard)
     }
 
-    fun pass(cards: List<Card>) {
-        cardDeck.insertAll(cards)
+    fun pass(newCards: List<Card>) {
+        _cards.addAll(newCards)
     }
 
     fun hasCard(): Boolean {
-        return cardDeck.isNotEmpty()
-    }
-
-    fun captureCardDeck(): PlayerCardDeckCapture {
-        return cardDeck.capture()
+        return _cards.isNotEmpty()
     }
 
     fun isBust(): Boolean {
-        return CardScoreCalculator.calculateScore(cardDeck.cards).isBust
+        return CardScoreCalculator.calculateScore(_cards).isBust
     }
-}
-
-fun List<Player>.captureAllCardDecks(): List<PlayerCardDeckCapture> {
-    return map { it.captureCardDeck() }
 }
