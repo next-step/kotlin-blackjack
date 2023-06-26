@@ -13,7 +13,7 @@ class CardsTest {
     @Test
     fun takeCardTest(){
         val cards = Cards()
-        cards.takeCard(2)
+        cards.takeCards(2)
         assertThat(cards.getCards().count()).isEqualTo(50)
     }
 }

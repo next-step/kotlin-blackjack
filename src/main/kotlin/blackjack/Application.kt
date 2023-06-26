@@ -18,7 +18,7 @@ fun main() {
 
     ResultView.printDistributionPlan(players, 2)
     players.forEach {
-        it.addCard(cards.takeCard(2))
+        it.addCards(cards.takeCards(2))
         ResultView.printUserCardList(it)
     }
 
@@ -27,7 +27,7 @@ fun main() {
             if (checkBurst(player)) {
                 break
             }
-            player.addCard(cards.takeCard(1))
+            player.addCards(cards.takeCards(1))
             ResultView.printUserCardList(player)
         } while (InputView.isHit(player.getName()))
         ResultView.printUserCardList(player)

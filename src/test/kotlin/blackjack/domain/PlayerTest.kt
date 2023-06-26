@@ -23,14 +23,14 @@ class PlayerTest {
     @Test
     fun getCardsTest(){
         val cards = listOf(Card(CardShape.HEART, CardSymbol.KING))
-        player.addCard(cards)
+        player.addCards(cards)
         assertThat(player.getCards()).isEqualTo(cards)
     }
 
     @Test
     fun getScoreTest(){
         val cards = listOf(Card(CardShape.HEART, CardSymbol.KING))
-        player.addCard(cards)
+        player.addCards(cards)
         assertThat(player.getScore()).isEqualTo(10)
     }
 }

@@ -6,7 +6,7 @@ class Player(private val name: String, cards: List<Card> = emptyList()) {
         return name
     }
 
-    fun addCard(cards: List<Card>) {
+    fun addCards(cards: List<Card>) {
         _cards.addAll(cards)
     }
 
