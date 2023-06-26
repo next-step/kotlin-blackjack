@@ -13,17 +13,40 @@ class BlackjackGameTest : BehaviorSpec({
             Card(Suit.HEART, CardNumber.ACE),
             Card(Suit.CLOVER, CardNumber.ACE),
         )
-        val game = BlackjackGame(cardSelector)
+        val userNames = UserNames(setOf("홍길동"))
+        val game = BlackjackGame(userNames, cardSelector)
 
-        When("게임 시작시 시작패를 뽑으면") {
-            Then("2개씩 뽑아진다") {
-                game.getInitDeck().size shouldBe 2
+        When("게임 시작시 유저의 패를 확인하면") {
+            Then("2장을 가지고 있다") {
+                val users = game.users
+                val user = users.first()
+                user.getDeckSize() shouldBe 2
             }
         }
 
         When("딜러의 패를 확인하면") {
             Then("2장을 가지고 있다") {
                 game.getDealerDeck().size shouldBe 2
+            }
+        }
+    }
+
+    Given("초기의 딜러의 패 점수가 16점 이하로 주어지는 게임이 있다") {
+
+        val userNames = UserNames(setOf("홍길동"))
+        val cardSelector = FixedCardsSelector(
+            Card(Suit.SPADE, CardNumber.EIGHT), // 딜러의 카드
+            Card(Suit.DIAMOND, CardNumber.EIGHT), // 딜러의 카드
+            Card(Suit.HEART, CardNumber.EIGHT), // 유저의 카드
+            Card(Suit.CLOVER, CardNumber.EIGHT), // 유저의 카드
+            Card(Suit.CLOVER, CardNumber.NINE),
+        )
+        val game = BlackjackGame(userNames, cardSelector)
+        When("딜러가 딜을 하면") {
+            Then("딜러는 카드를 한장더 뽑는다") {
+                game.getDealerDeck().size shouldBe 2
+                game.dealDealer()
+                game.getDealerDeck().size shouldBe 3
             }
         }
     }

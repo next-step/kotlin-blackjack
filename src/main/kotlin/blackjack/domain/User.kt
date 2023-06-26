@@ -6,6 +6,8 @@ data class User(val name: String, val deck: Deck) {
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
     }
 
+    fun getDeckSize() = deck.size
+
     fun addCard(card: Card) {
         deck.addCard(card)
     }

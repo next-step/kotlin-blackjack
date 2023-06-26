@@ -49,6 +49,10 @@ object ResultView {
         println(getUserDeckString(user))
     }
 
+    fun printDealerHit() {
+        println(DEALER_HIT_MESSAGE)
+    }
+
     fun printResult(dealerDeck: Deck, users: Users) {
         println()
         println(dealerResultFormatting(dealerDeck))
