@@ -14,7 +14,7 @@ class PlayerTest : StringSpec({
         player.hands().size shouldBe 1
     }
 
-    "참여자의 손패가 21이상이라면 더이상 카드를 받지 못한다." {
+    "참여자의 손패가 21초과라면 더이상 카드를 받지 못한다." {
         val player = Player("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
         player.hit(pokerCard, pokerCard, pokerCard)
@@ -23,12 +23,16 @@ class PlayerTest : StringSpec({
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }
 
-    "사용자가 스탑을 외치면 더이상 손패를 받지 않는다." {
+    "플레이어의 손패가 21이면 더이상 손패를 받지 않는다." {
         val player = Player("tester")
-        val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
-        player.stand()
+        val pokerCards = arrayOf(
+            PokerCard(PokerSymbol.CLUBS, 10, "K"),
+            PokerCard(PokerSymbol.CLUBS, 10, "K"),
+            PokerCard(PokerSymbol.CLUBS, 11, "A")
+        )
+        player.hit(*pokerCards)
         shouldThrow<IllegalStateException> {
-            player.hit(pokerCard)
+            player.hit(*pokerCards)
         }.message shouldBe "더이상 카드를 받을 수 없습니다."
     }
 
