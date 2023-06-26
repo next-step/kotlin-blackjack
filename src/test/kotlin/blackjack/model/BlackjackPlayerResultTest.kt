@@ -1,8 +1,8 @@
 package blackjack.model
 
 import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
-import org.junit.jupiter.api.DisplayName
 
 @DisplayName("블랙잭 플레이어 결과")
 class BlackjackPlayerResultTest : StringSpec({
