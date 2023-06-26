@@ -26,7 +26,7 @@ class BlackjackGameTest : BehaviorSpec({
 
         When("딜러의 패를 확인하면") {
             Then("2장을 가지고 있다") {
-                game.getDealerDeck().size shouldBe 2
+                game.dealer.getDeckSize() shouldBe 2
             }
         }
     }
@@ -44,9 +44,9 @@ class BlackjackGameTest : BehaviorSpec({
         val game = BlackjackGame(userNames, cardSelector)
         When("딜러가 딜을 하면") {
             Then("딜러는 카드를 한장더 뽑는다") {
-                game.getDealerDeck().size shouldBe 2
+                game.dealer.getDeckSize() shouldBe 2
                 game.dealDealer()
-                game.getDealerDeck().size shouldBe 3
+                game.dealer.getDeckSize() shouldBe 3
             }
         }
     }

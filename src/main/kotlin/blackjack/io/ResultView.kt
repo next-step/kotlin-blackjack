@@ -3,6 +3,7 @@ package blackjack.io
 import blackjack.domain.BlackjackResults
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
+import blackjack.domain.Dealer
 import blackjack.domain.DealerResult
 import blackjack.domain.Deck
 import blackjack.domain.Result
@@ -26,11 +27,11 @@ object ResultView {
     private const val DEALER_RESULT_PRINT_FORMAT = "딜러: %d승 %d무 %d패"
     private const val USER_RESULT_PRINT_FORMAT = "%s: %s"
 
-    fun printDecks(dealerDeck: Deck, users: Users) {
+    fun printDecks(dealer: Dealer, users: Users) {
         val message = buildString {
             appendLine()
             appendLine(getDeckInitializedMessage(users))
-            appendLine(getDealerDeckString(dealerDeck))
+            appendLine(getDealerDeckString(dealer.deck))
             appendLine(getUsersDeckString(users))
         }
         print(message)

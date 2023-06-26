@@ -4,15 +4,13 @@ import blackjack.util.CardSelector
 import blackjack.util.RandomCardSelector
 
 class BlackjackGame(userNames: UserNames, private val cardSelector: CardSelector = RandomCardSelector()) {
-    private val dealer = Dealer(getInitDeck())
+    val dealer = Dealer(getInitDeck())
     val users: Users
 
     init {
         val userList = userNames.map { name -> User(name, getInitDeck()) }.toSet()
         users = Users(userList)
     }
-
-    fun getDealerDeck(): Deck = dealer.deck
 
     private fun getInitDeck(): Deck {
         val cardList = mutableListOf<Card>()

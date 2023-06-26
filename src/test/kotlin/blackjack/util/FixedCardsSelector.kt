@@ -1,10 +1,11 @@
 package blackjack.util
 
 import blackjack.domain.Card
+import blackjack.domain.Deck
 
 class FixedCardsSelector(vararg cardList: Card) : CardSelector {
-    private val fixedCards = cardList.toMutableList()
+    private val deck = Deck(cardList.toList())
     override fun drawCard(): Card {
-        return fixedCards.removeAt(0)
+        return deck.drawCard()
     }
 }
