@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.HandsCalculator
+import blackjack.service.HandsCalculator
 
 class Hand {
 

@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.service.DeckManager
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -10,7 +11,7 @@ class BlackJackKoTest : StringSpec({
         val players = arrayOf(Player("test1"), Player("test2"))
         val dealer = Dealer()
         val deckManager = DeckManager()
-        dealer.initializeRound(deckManager, players)
+        dealer.beginRound(deckManager, players)
         players.forEach { it.hands().size shouldBe 2 }
     }
 })

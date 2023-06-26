@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.service
 
 import blackjack.domain.PokerSymbol
 import io.kotest.assertions.throwables.shouldThrow

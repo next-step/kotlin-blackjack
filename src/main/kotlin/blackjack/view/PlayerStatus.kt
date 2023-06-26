@@ -14,7 +14,7 @@ data class PlayerStatus(
             return PlayerStatus(player.name, player.showHands(), player.optimalValue(), player.scoreBoard())
         }
 
-        fun upCard(dealer: Player): PlayerStatus {
+        fun dealerUpCard(dealer: Player): PlayerStatus {
             return PlayerStatus(dealer.name, dealer.hands().first().representCard(), dealer.optimalValue(), dealer.scoreBoard())
         }
     }
