@@ -6,7 +6,7 @@ import blackjack.common.service.BlackJackDetermine
 
 object BetCalculator {
     fun updateScores(winner: BlackJackDetermine.Winner, player: BetPlayer, dealer: BetDealer) {
-        val bet = player.wallet().bet()
+        val bet = player.wallet().balance()
         val loseMoney = bet * -1
         when (winner) {
             BlackJackDetermine.Winner.DEALER_BUST -> {
@@ -25,7 +25,7 @@ object BetCalculator {
     }
 
     fun initialBlackjack(player: BetPlayer, dealer: BetDealer) {
-        val bet = (player.wallet().bet() * 1.5).toInt()
+        val bet = (player.wallet().balance() * 1.5).toInt()
         val loseMoney = bet * -1
         settleRoundResult(dealer, loseMoney, player, bet)
     }
