@@ -1,6 +1,7 @@
 package blackjack.domain
 
-open class User(val name: String, val deck: Deck) : Comparable<User> {
+open class User(val name: String, val deck: Deck) {
+    val finalPoint: Int by lazy { deck.sum() }
 
     init {
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
@@ -20,17 +21,21 @@ open class User(val name: String, val deck: Deck) : Comparable<User> {
         return deck.sum() > PointCalculator.BLACKJACK_LIMIT
     }
 
-    override fun compareTo(other: User): Int {
-        return deck.sum().compareTo(other.deck.sum())
-    }
-
     companion object {
         private const val EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있을 수 없습니다"
     }
 }
 
-class Dealer(deck: Deck) : User(DEALER_NAME, deck) {
+class Dealer(deck: Deck) : User(DEALER_NAME, deck), Comparable<User> {
     companion object {
         private const val DEALER_NAME = "딜러"
+    }
+
+    override fun compareTo(other: User): Int {
+        return when {
+            isBust() -> -1
+            other.isBust() -> 1
+            else -> finalPoint - other.finalPoint
+        }
     }
 }

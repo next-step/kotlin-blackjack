@@ -15,11 +15,10 @@ class BlackjackResults(dealer: Dealer, users: Users) {
 
     companion object {
         private fun getResult(dealer: Dealer, user: User): Result {
+            val compareResult = dealer.compareTo(user)
             return when {
-                dealer.isBust() -> Result.WIN
-                user.isBust() -> Result.LOSE
-                user > dealer -> Result.WIN
-                user < dealer -> Result.LOSE
+                compareResult < 0 -> Result.WIN
+                compareResult > 0 -> Result.LOSE
                 else -> Result.DRAW
             }
         }
