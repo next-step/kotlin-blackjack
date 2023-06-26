@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.enums.Rank
+
 class Cards(
     cards: List<Card>
 ) {
@@ -19,11 +21,12 @@ class Cards(
 
     fun calculateScore(): Int {
         var total = 0
-        cards.filter { it.rank.rank != ACE_RANK_MARK }.forEach { card ->
-            total += card.rank.value
-        }
+        cards.filter { it.rank != Rank.ACE }
+            .forEach { card ->
+                total += card.rank.value
+            }
 
-        val rankACards = cards.filter { it.rank.rank == ACE_RANK_MARK }
+        val rankACards = cards.filter { it.rank == Rank.ACE }
         if (rankACards.isNotEmpty()) {
             rankACards.forEach { card ->
                 total += if (total > STANDARD_NUMBER) {
@@ -37,7 +40,6 @@ class Cards(
     }
 
     companion object {
-        private const val ACE_RANK_MARK = "A"
         private const val STANDARD_NUMBER = 10
     }
 }
