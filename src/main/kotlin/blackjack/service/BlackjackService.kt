@@ -20,7 +20,7 @@ class BlackjackService {
     fun raceBlackjack(player: Player, blackjackGame: BlackjackGame, answer: String) {
 
         if (answer == Condition.PLAY.raceFlag && player.currentCondition() == Condition.PLAY) {
-            val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).getOneCard()
+            val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).pick()
             player.hit(card)
             checkCondition(player)
         } else if (answer == Condition.STAY.raceFlag) {

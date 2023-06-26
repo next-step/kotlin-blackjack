@@ -13,7 +13,7 @@ class Cards(
         mutableCards.add(card)
     }
 
-    fun getOneCard(): Card {
+    fun pick(): Card {
         return cards.first()
     }
 
