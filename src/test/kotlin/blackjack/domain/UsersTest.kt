@@ -22,7 +22,7 @@ class UsersTest : BehaviorSpec({
         )
         When("해당 배열로 Users를 만들면") {
             Then("정상적으로 생성된다.") {
-                Users(userList).size shouldBe 2
+                Users(userList).count() shouldBe 2
             }
         }
     }

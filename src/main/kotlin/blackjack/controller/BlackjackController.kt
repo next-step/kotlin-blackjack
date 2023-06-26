@@ -15,7 +15,7 @@ class BlackjackController {
         blackjackGame.dealUsers(::checkHit, ResultView::printUserDeck)
         blackjackGame.dealDealer { ResultView.printDealerHit() }
 
-        ResultView.printResult(blackjackGame.getDealerDeck(), blackjackGame.users)
+        ResultView.printResults(blackjackGame.getGameResult())
     }
 
     private fun checkHit(user: User): Boolean {

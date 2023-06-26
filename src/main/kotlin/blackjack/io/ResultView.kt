@@ -1,19 +1,30 @@
 package blackjack.io
 
+import blackjack.domain.BlackjackResults
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
+import blackjack.domain.DealerResult
 import blackjack.domain.Deck
+import blackjack.domain.Result
 import blackjack.domain.Suit
 import blackjack.domain.User
+import blackjack.domain.UserResults
 import blackjack.domain.Users
 
 object ResultView {
     private const val DECK_INITIALIZED_FORMAT = "딜러와 %s에게 2장의 카드를 나누었습니다."
+
     private const val DEALER_DECK_PRINT_FORMAT = "딜러: %s"
     private const val DECK_PRINT_FORMAT = "%s카드: %s"
+
     private const val DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val DEALER_RESULT_PRINT_FORMAT = "딜러 카드: %s - 결과: %s"
-    private const val RESULT_PRINT_FORMAT = "%s카드: %s - 결과: %s"
+
+    private const val DEALER_SCORE_PRINT_FORMAT = "딜러 카드: %s - 결과: %s"
+    private const val USER_SCORE_PRINT_FORMAT = "%s카드: %s - 결과: %s"
+
+    private const val RESULT_MESSAGE = "## 최종 승패"
+    private const val DEALER_RESULT_PRINT_FORMAT = "딜러: %d승 %d무 %d패"
+    private const val USER_RESULT_PRINT_FORMAT = "%s: %s"
 
     fun printDecks(dealerDeck: Deck, users: Users) {
         val message = buildString {
@@ -53,27 +64,44 @@ object ResultView {
         println(DEALER_HIT_MESSAGE)
     }
 
-    fun printResult(dealerDeck: Deck, users: Users) {
-        println()
-        println(dealerResultFormatting(dealerDeck))
-        for (user in users) {
-            println(userResultFormatting(user))
+    fun printResults(blackJackResults: BlackjackResults) {
+        printDealerScoreResult(blackJackResults.dealerResult)
+        printUsersScoreResult(blackJackResults.userResults)
+        println(RESULT_MESSAGE)
+        printDealerResult(blackJackResults.dealerResult)
+        printUserResults(blackJackResults.userResults)
+    }
+
+    private fun printDealerScoreResult(dealerResult: DealerResult) {
+        val dealer = dealerResult.dealerInfo
+        println(DEALER_SCORE_PRINT_FORMAT.format(deckToString(dealer.deck), dealer.calculatePoint()))
+    }
+
+    private fun printUsersScoreResult(userResults: UserResults) {
+        for (userResult in userResults) {
+            printUserScoreResult(userResult.userInfo)
         }
     }
 
-    private fun dealerResultFormatting(dealerDeck: Deck): String {
-        return DEALER_RESULT_PRINT_FORMAT.format(
-            deckToString(dealerDeck),
-            dealerDeck.sum(),
+    private fun printUserScoreResult(user: User) {
+        println(USER_SCORE_PRINT_FORMAT.format(user.name, deckToString(user.deck), user.calculatePoint()))
+    }
+
+    private fun printDealerResult(dealerResult: DealerResult) {
+        println(
+            DEALER_RESULT_PRINT_FORMAT.format(
+                dealerResult.winCount,
+                dealerResult.drawCount,
+                dealerResult.loseCount,
+            ),
         )
     }
 
-    private fun userResultFormatting(user: User): String {
-        return RESULT_PRINT_FORMAT.format(
-            user.name,
-            deckToString(user.deck),
-            user.calculatePoint(),
-        )
+    private fun printUserResults(userResults: UserResults) {
+        for (userResult in userResults) {
+            val user = userResult.userInfo
+            println(USER_RESULT_PRINT_FORMAT.format(user.name, blackJackResultToString(userResult.result)))
+        }
     }
 
     private fun cardNumberToString(cardNumber: CardNumber): String {
@@ -101,5 +129,13 @@ object ResultView {
 
     private fun deckToString(deck: Deck): String {
         return deck.joinToString(", ", transform = ::cardToString)
+    }
+
+    private fun blackJackResultToString(blackjackResult: Result): String {
+        return when (blackjackResult) {
+            Result.WIN -> "승"
+            Result.DRAW -> "무"
+            Result.LOSE -> "패"
+        }
     }
 }
