@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
@@ -44,7 +44,7 @@ class DenominationTest : FunSpec({
             MaxScore(Denomination.QUEEN, 10),
             MaxScore(Denomination.KING, 10),
         ) { (denomination, maxScore) ->
-            denomination.maxScore() shouldBe maxScore
+            denomination.maxScore() shouldBe Score(maxScore)
         }
     }
 })

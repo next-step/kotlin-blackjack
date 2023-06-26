@@ -1,11 +1,11 @@
-package blackjack
+package blackjack.domain
 
-data class Card(
+class Card private constructor(
     val denomination: Denomination,
     val suit: Suit,
 ) {
     companion object {
-        val cards = Denomination.values()
+        private val cards = Denomination.values()
             .flatMap { number ->
                 Suit.values()
                     .map { suit -> Card(number, suit) }

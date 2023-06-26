@@ -1,6 +1,6 @@
 package blackjack.vo
 
-import blackjack.Suit
+import blackjack.domain.Suit
 
 class SuitVO(
     val name: String,

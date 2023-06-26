@@ -1,13 +1,12 @@
-package blackjack
+package blackjack.domain
 
 class Deck(
     private val cards: MutableList<Card>
 ) {
-    constructor(vararg cards: Card) : this(cards.toMutableList())
+    val size: Int
+        get() = cards.size
 
-    fun draw(): Card {
-        return cards.removeLast()
-    }
+    fun draw(): Card = cards.removeLast()
 
     fun draw(count: Int): Cards {
         return Cards(List(count) { draw() })
@@ -19,10 +18,6 @@ class Deck(
 
     operator fun contains(card: Card): Boolean {
         return card in cards
-    }
-
-    fun size(): Int {
-        return cards.size
     }
 
     companion object {

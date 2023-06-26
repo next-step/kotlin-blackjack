@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
@@ -46,7 +46,7 @@ class CardsTest : FunSpec({
                 21
             )
         ) { (cards, score) ->
-            cards.calculateScore() shouldBe score
+            cards.calculateScore() shouldBe Score(score)
         }
     }
 })
