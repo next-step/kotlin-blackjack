@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.scorerule.domain
 
 class ScoreBoard {
 
