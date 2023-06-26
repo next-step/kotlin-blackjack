@@ -11,6 +11,5 @@ data class GameResults(val playersResult: Map<String, GameResult>, val dealerRes
                 .groupBy { it }
                 .map { it.key to it.value.size }
                 .toMap()
-
     }
 }

@@ -7,5 +7,4 @@ sealed class CardsState {
 
     abstract fun next(cards: Cards): CardsState
     abstract fun fight(other: CardsState): GameResult
-
 }
