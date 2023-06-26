@@ -1,4 +1,4 @@
-package blackjack.service
+package blackjack.common.service
 
 import blackjack.scorerule.domain.ScorePlayer
 import blackjack.scorerule.domain.BlackJackScoreTable

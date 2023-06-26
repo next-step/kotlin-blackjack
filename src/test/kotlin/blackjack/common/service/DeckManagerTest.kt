@@ -1,4 +1,4 @@
-package blackjack.service
+package blackjack.common.service
 
 import blackjack.common.domain.PokerSymbol
 import blackjack.common.service.DeckManager

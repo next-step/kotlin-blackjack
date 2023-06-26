@@ -1,4 +1,4 @@
-package blackjack.service
+package blackjack.common.service
 
 import blackjack.common.domain.PokerCard
 import blackjack.common.domain.PokerSymbol
