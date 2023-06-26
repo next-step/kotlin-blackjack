@@ -17,7 +17,7 @@ class Cards(
         return cards.first()
     }
 
-    fun calculateCardsTotalValue(): Int {
+    fun calculateScore(): Int {
         var total = 0
         cards.filter { it.rank.rank != ACE_RANK_MARK }.forEach { card ->
             total += card.rank.value

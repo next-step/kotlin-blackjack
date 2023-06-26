@@ -29,9 +29,9 @@ class BlackjackService {
     }
 
     private fun checkCondition(player: Player) {
-        if (player.cards.calculateCardsTotalValue() == BLACK_JACK_NUMBER) {
+        if (player.cards.calculateScore() == BLACK_JACK_NUMBER) {
             player.changeCondition(Condition.BLACKJACK)
-        } else if (player.cards.calculateCardsTotalValue() > BLACK_JACK_NUMBER) {
+        } else if (player.cards.calculateScore() > BLACK_JACK_NUMBER) {
             player.changeCondition(Condition.BUST)
         }
     }

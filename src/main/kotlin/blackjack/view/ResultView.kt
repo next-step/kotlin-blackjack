@@ -24,7 +24,7 @@ object ResultView {
     fun printResultGame(players: List<Player>) {
         players.forEach { player ->
             val cardsInfo = getCardsInfo(player.cards)
-            val cardsTotalValue = player.cards.calculateCardsTotalValue()
+            val cardsTotalValue = player.cards.calculateScore()
             println("${player.name}카드: $cardsInfo - 결과: $cardsTotalValue")
         }
     }
