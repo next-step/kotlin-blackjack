@@ -1,37 +1,38 @@
 package controller
 
+import domain.card.util.DeckGenerator
 import domain.game.BlackjackGame
+import domain.player.Dealer
 import domain.player.Player
 import view.Answer
 import view.InputView
 import view.ResultView
 
 class BlackjackGameController(
-    private val game: BlackjackGame,
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
-    fun initGame() {
+    fun initGame(deckSize: Int): BlackjackGame {
         val playerNames = inputView.getPlayerNames()
-        game.initGame(playerNames)
+        val game = BlackjackGame(deck = DeckGenerator.makeDeck(deckSize), playerNames = playerNames)
         resultView.printInitPlayers(players = game.players, dealer = game.dealer)
+        return game
     }
 
-    fun gameStart() {
-        game.gameStart(isIssueCard = this::askPlayer, showPlayerCards = this::showPlayerCards)
-        if (game.dealer.isIssuedCard()) {
-            resultView.printDealerIssuedCardMessage()
-        }
+    fun gameStart(game: BlackjackGame) {
+        game.gameStart(isIssueCard = this::askPlayer, showMessage = this::showMessage)
     }
 
-    private fun askPlayer(playerName: String) = when (inputView.askDraw(playerName)) {
+    private fun askPlayer(player: Player) = when (inputView.askDraw(player.name)) {
         Answer.YES -> true
         else -> false
     }
 
-    private fun showPlayerCards(player: Player) { resultView.printPlayerCards(player) }
+    private fun showMessage(player: Player) {
+        if (player is Dealer) resultView.printDealerIssuedCardMessage() else resultView.printPlayerCards(player)
+    }
 
-    fun printGameResult() {
+    fun printGameResult(game: BlackjackGame) {
         val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
         resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
         resultView.printWinLoseDrawResult(gameWinLoseDrawResult)

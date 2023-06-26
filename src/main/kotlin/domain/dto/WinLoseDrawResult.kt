@@ -4,5 +4,5 @@ import domain.player.Player
 import domain.player.PlayerGameResult
 
 class WinLoseDrawResult(
-    val playerResultMap: Map<PlayerGameResult, List<Player>>,
+    val playerResult: Map<PlayerGameResult, List<Player>>,
 )

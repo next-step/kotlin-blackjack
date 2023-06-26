@@ -34,14 +34,14 @@ class ResultView {
 
     private fun printDealerWinLoseDrawResult(result: WinLoseDrawResult) {
         println(
-            "딜러: ${result.playerResultMap[PlayerGameResult.LOSE]?.size ?: 0}승" +
-                "${result.playerResultMap[PlayerGameResult.DRAW]?.size ?: 0}무" +
-                "${result.playerResultMap[PlayerGameResult.WIN]?.size ?: 0}패",
+            "딜러: ${result.playerResult[PlayerGameResult.LOSE]?.size ?: 0}승" +
+                "${result.playerResult[PlayerGameResult.DRAW]?.size ?: 0}무" +
+                "${result.playerResult[PlayerGameResult.WIN]?.size ?: 0}패",
         )
     }
 
     private fun printPlayersWinLoseDrawResult(result: WinLoseDrawResult) {
-        result.playerResultMap.forEach { (playerGameResult, players) ->
+        result.playerResult.forEach { (playerGameResult, players) ->
             printPlayerResults(players, playerGameResult)
         }
     }
@@ -91,8 +91,6 @@ class ResultView {
         )
 
         private const val SEPARATOR = ", "
-
-        private const val CANNOT_PROCEED_GAME_MESSAGE = "은(는) 더 이상 게임을 진행할 수 없습니다."
 
         private const val DEALER_ISSUED_CARD_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     }

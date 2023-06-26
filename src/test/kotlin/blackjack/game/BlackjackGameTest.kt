@@ -12,10 +12,8 @@ class BlackjackGameTest {
     @ParameterizedTest
     @MethodSource("getPlayerNames")
     fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(playerNames: List<String>) {
-        val game = BlackjackGame(DeckGenerator.makeDeck(1))
-
         shouldThrow<IllegalArgumentException> {
-            game.initGame(playerNames)
+            BlackjackGame(DeckGenerator.makeDeck(1), playerNames)
         }
     }
 

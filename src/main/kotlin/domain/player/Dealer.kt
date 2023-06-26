@@ -14,7 +14,7 @@ class Dealer(cards: Cards) : Player(name = NAME, cards = cards) {
         }
     }
 
-    private fun isDrawable(): Boolean = cards.sum <= DRAWABLE_CARD_SUM_MAX
+    fun isDrawable(): Boolean = cards.sum <= DRAWABLE_CARD_SUM_MAX
 
     fun isIssuedCard(): Boolean = DEALER_INIT_CARD_COUNT < cards.size
 
