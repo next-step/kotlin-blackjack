@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.player.GamePlayers
 import blackjack.domain.player.Player
+import blackjack.view.input.GamePlayerBetAmountInputView
 import blackjack.view.input.GamePlayerNameInputView
 import blackjack.view.input.GamePlayerReceiveInputView
 import blackjack.view.output.GameDealerAddCardOutputView
@@ -17,9 +18,15 @@ class BlackjackController {
         val playerNameList = GamePlayerNameInputView().value
         NewLineOutputView()
 
-        val gamePlayers = GamePlayers(playerNameList.map { Player(it) })
+        // 게임 플레이어별 베팅금액 입력
+        val betAmounts = playerNameList.map { GamePlayerBetAmountInputView(it).value }
+        NewLineOutputView()
+
+        val players = playerNameList.zip(betAmounts.toTypedArray()).map { (name, betAmount) -> Player(name, betAmount) }
+        val gamePlayers = GamePlayers(players)
         val blackjackGame = BlackjackGame(gamePlayers)
         blackjackGame.initPlayers()
+
         // 딜러, 플레이어가 보유한 카드 현황 출력
         GameSharedCardOutputView(gamePlayers)
         GamePlayersOutputView(gamePlayers)
@@ -44,7 +51,7 @@ class BlackjackController {
         while (player.isReceivable()) {
             val response = GamePlayerReceiveInputView(player.name).value
             if (!response.value) {
-                player.getStayStatus()
+                player.setStayStatus()
                 return
             }
             blackjackGame.dealCard(player)
