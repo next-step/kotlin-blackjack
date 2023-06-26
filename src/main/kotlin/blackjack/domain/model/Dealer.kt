@@ -2,13 +2,20 @@ package blackjack.domain.model
 
 import blackjack.domain.Rule
 
-class Dealer(game: Game, cards: Cards = Cards(game = game)) : Player(game, PlayerInfo(NAME), cards) {
+class Dealer(
+    trump: Trump,
+    cards: Cards = Cards(trump = trump)
+) : Player(trump, PlayerInfo(NAME), cards) {
     private var hasThirdCard = false
 
-    override fun canGetCard(): Boolean {
+    override fun canDrawCard(): Boolean {
         if (hasThirdCard) return false
-        hasThirdCard = true
         return cards.sum < Rule.DEALER_MINIMUM_SCORE
+    }
+
+    override fun drawCard(trump: Trump) {
+        hasThirdCard = true
+        super.drawCard(trump)
     }
 
     companion object {

@@ -1,8 +1,9 @@
 package blackjack
 
 import blackjack.controller.GameController
-import blackjack.domain.model.Game
+import blackjack.domain.model.Trump
 
 fun main() {
-    GameController().execute(Game())
+    val trump = Trump()
+    GameController().execute(trump)
 }

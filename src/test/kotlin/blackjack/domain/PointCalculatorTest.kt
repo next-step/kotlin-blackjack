@@ -4,7 +4,7 @@ import blackjack.domain.model.Card
 import blackjack.domain.model.CardType
 import blackjack.domain.model.CardValue
 import blackjack.domain.model.Cards
-import blackjack.domain.model.Game
+import blackjack.domain.model.Trump
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -17,18 +17,19 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.HEART, CardValue.EIGHT),
         )
-        PointCalculator.sum(Cards(cards, Game())) shouldBe 19
+        PointCalculator.sum(Cards(cards, Trump())) shouldBe 19
     }
 
     @Test
     fun `J, Q, K는 10으로 계산한다`() {
+
         val cards = mutableListOf(
             Card.from(CardType.SPADE, CardValue.TWO),
             Card.from(CardType.CLOVER, CardValue.THREE),
             Card.from(CardType.DIAMOND, CardValue.SIX),
             Card.from(CardType.SPADE, CardValue.KING)
         )
-        PointCalculator.sum(Cards(cards, Game())) shouldBe 21
+        PointCalculator.sum(Cards(cards, Trump())) shouldBe 21
     }
 
     @Test
@@ -38,7 +39,7 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.EIGHT),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        PointCalculator.sum(Cards(cards, Game())) shouldBe 21
+        PointCalculator.sum(Cards(cards, Trump())) shouldBe 21
     }
 
     @Test
@@ -48,6 +49,6 @@ class PointCalculatorTest {
             Card.from(CardType.DIAMOND, CardValue.KING),
             Card.from(CardType.SPADE, CardValue.ACE)
         )
-        PointCalculator.sum(Cards(cards, Game())) shouldBe 21
+        PointCalculator.sum(Cards(cards, Trump())) shouldBe 21
     }
 }

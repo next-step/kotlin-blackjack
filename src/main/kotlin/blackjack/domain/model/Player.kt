@@ -3,17 +3,17 @@ package blackjack.domain.model
 import blackjack.domain.Rule
 
 open class Player(
-    game: Game,
+    trump: Trump,
     val info: PlayerInfo = PlayerInfo(),
-    val cards: Cards = Cards(game = game),
+    val cards: Cards = Cards(trump = trump),
 ) {
 
-    open fun canGetCard(): Boolean {
+    open fun canDrawCard(): Boolean {
         return cards.sum < Rule.BLACK_JACK
     }
 
-    fun addCard(card: Card) {
-        cards.add(card)
+    open fun drawCard(trump: Trump) {
+        cards.add(trump.getCard())
     }
 
     fun win() = info.record.win()

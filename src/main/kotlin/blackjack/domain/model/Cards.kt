@@ -2,18 +2,19 @@ package blackjack.domain.model
 
 import blackjack.domain.PointCalculator
 
-class Cards(private val cards: MutableList<Card> = mutableListOf(), game: Game) {
-    val items: List<Card> get() = cards.toList()
+class Cards(cards: List<Card> = emptyList(), trump: Trump) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val items: List<Card> get() = _cards.toList()
     val sum: Int get() = PointCalculator.sum(this)
 
     init {
-        if (cards.isEmpty()) {
-            cards.add(game.getCard())
-            cards.add(game.getCard())
+        if (_cards.isEmpty()) {
+            _cards.add(trump.getCard())
+            _cards.add(trump.getCard())
         }
     }
 
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 }
