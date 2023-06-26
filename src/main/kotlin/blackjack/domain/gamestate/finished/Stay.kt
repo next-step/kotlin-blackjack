@@ -21,6 +21,11 @@ class Stay(
         if (gameState.isBust()) {
             return Competition.WIN
         }
+        val score = this.score()
+        val otherScore = gameState.score()
+        if (score < otherScore) {
+            return Competition.LOSE
+        }
         TODO("todo")
     }
 }

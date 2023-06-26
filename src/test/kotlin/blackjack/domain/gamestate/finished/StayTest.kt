@@ -4,6 +4,8 @@ import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
+import blackjack.domain.card.CardTest.Companion.SPADE_THREE
+import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
@@ -51,6 +53,11 @@ class StayTest : FunSpec({
         test("상대가 bust면 승리한다.") {
             val actual = Stay(STAY_CARDS).compete(Bust(BUST_CARDS))
             actual shouldBe Competition.WIN
+        }
+
+        test("상대보다 21에 멀면 패배한다.") {
+            val actual = Stay(Cards.of(SPADE_TWO, SPADE_THREE)).compete(Stay(Cards.of(SPADE_ACE, SPADE_TWO)))
+            actual shouldBe Competition.LOSE
         }
     }
 }) {
