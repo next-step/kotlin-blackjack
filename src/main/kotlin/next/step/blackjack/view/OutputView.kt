@@ -3,6 +3,7 @@ package next.step.racing.view
 import next.step.blackjack.domain.dealer.Dealer
 import next.step.blackjack.domain.game.GameResults
 import next.step.blackjack.domain.player.Player
+import next.step.blackjack.domain.player.Players
 
 object OutputView {
 
@@ -82,6 +83,11 @@ object OutputView {
         gameResults.playersGameResult.forEach {
             println("${it.key}: ${it.value.desc}")
         }
+    }
+
+    fun showResult(dealer: Dealer, players: Players) {
+        showCardsWithPoints(dealer, players)
+        showGameResult(dealer.name(), dealer.fight(players))
     }
 
     fun showError(msg: String?) {
