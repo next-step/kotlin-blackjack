@@ -21,7 +21,6 @@ class CardNumberCalculatorTest {
     @Test
     fun `1부터 10까지의 카드 리스트 숫자의 합을 계산한다`() {
         var cardList = listOf(
-            Card(shape = CardShape.SPADE, number = CardNumber.ONE),
             Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
             Card(shape = CardShape.HEART, number = CardNumber.THREE),
             Card(shape = CardShape.CLOVER, number = CardNumber.FOUR),
@@ -35,7 +34,7 @@ class CardNumberCalculatorTest {
 
         val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
-        assertThat(actual).isEqualTo(55)
+        assertThat(actual).isEqualTo(54)
     }
 
     @Test
@@ -52,7 +51,7 @@ class CardNumberCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"])
+    @ValueSource(strings = ["TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"])
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
         val startSum = 0
 

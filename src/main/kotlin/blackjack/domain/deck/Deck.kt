@@ -35,7 +35,7 @@ class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
     fun drawTwoCard(): List<Card> {
         validateCardIsLeft()
         val twoCard = mutableListOf<Card>()
-        repeat(2) {
+        repeat(NUMBER_OF_CARD_FIRST_DRAW) {
             twoCard.add(deck.removeAt(deck.lastIndex))
         }
         return twoCard.toList()
@@ -43,5 +43,8 @@ class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
 
     private fun validateCardIsLeft() {
         require(deck.size > 0) { "남은 카드가 없습니다." }
+    }
+    companion object {
+        private const val NUMBER_OF_CARD_FIRST_DRAW = 2
     }
 }

@@ -28,7 +28,7 @@ class CardNumberCalculator {
     }
 
     companion object {
-        const val ACE_MAXINUM = 11
-        const val ACE_MINIMUM = 1
+        private const val ACE_MAXINUM = 11
+        private const val ACE_MINIMUM = 1
     }
 }

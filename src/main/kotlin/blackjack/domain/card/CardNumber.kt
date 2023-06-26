@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
 enum class CardNumber(val value: Int) {
-    ONE(1),
+    A(1),
     TWO(2),
     THREE(3),
     FOUR(4),
@@ -13,8 +13,7 @@ enum class CardNumber(val value: Int) {
     TEN(10),
     K(10),
     Q(10),
-    J(10),
-    A(11);
+    J(10);
 
     override fun toString(): String {
         return when (this) {
