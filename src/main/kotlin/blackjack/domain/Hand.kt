@@ -23,7 +23,7 @@ class Hand {
     }
 
     fun isNotBlackJackOrNotBust(): Boolean {
-        return HandsCalculator.calculateOptimalValue(hands) <= BLACK_JACK_NUMBER
+        return HandsCalculator.calculateOptimalValue(hands) < BLACK_JACK_NUMBER
     }
 
     companion object {
