@@ -17,7 +17,7 @@ class Player(
 
     fun drawCard() {
         if (!canDraw()) {
-            throw IllegalArgumentException("카드 숫자의 합이 21을 초과합니다.")
+            throw IllegalStateException("카드 숫자의 합이 21을 초과합니다.")
         }
 
         val drawnCard = GameCardsSet.drawRandomCard()

@@ -10,7 +10,7 @@ object GameCardsSet {
 
     fun drawRandomCard(): Card {
         if (remainingCards.isEmpty()) {
-            throw IllegalArgumentException("남은 카드가 없습니다.")
+            throw IllegalStateException("남은 카드가 없습니다.")
         }
 
         val randomIndex = Random.nextInt(remainingCards.size)

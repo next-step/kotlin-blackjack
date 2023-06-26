@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.Card
 import blackjack.domain.GameCardsSet
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -22,12 +21,13 @@ class GameCardsSetTest {
     }
 
     @Test
-    fun `게임 카드 세트에서 모든 카드를 뽑으면 null이 반환된다`() {
-        while (true) {
-            val draw = GameCardsSet.drawRandomCard() ?: break
+    fun `게임 카드 세트에서 카드를 뽑을 때 남은 카드가 없다면 IllegalStateException`() {
+        repeat (52) {
+            val draw = GameCardsSet.drawRandomCard()
         }
 
-        val draw = GameCardsSet.drawRandomCard()
-        assertNull(draw)
+        assertThrows<IllegalStateException> {
+            val draw = GameCardsSet.drawRandomCard()
+        }
     }
 }
