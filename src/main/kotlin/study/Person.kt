@@ -7,15 +7,10 @@ class Person(
     val languages: Map<String, Int> = emptyMap(),
 )
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder(val name: String) {
     private var company: String? = null
     private var skillsBuilder = SkillsBuilder()
     private var languagesBuilder = LanguagesBuilder()
-
-    fun name(value: String) {
-        name = value
-    }
 
     fun company(value: String) {
         company = value
@@ -34,8 +29,8 @@ class PersonBuilder {
     }
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
+fun introduce(name: String, block: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder(name).apply(block).build()
 }
 
 class LanguagesBuilder {
