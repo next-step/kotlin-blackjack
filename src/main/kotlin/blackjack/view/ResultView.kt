@@ -1,8 +1,10 @@
 package blackjack.view
 
+import blackjack.domain.Player
+
 object ResultView {
-    fun printUserCardList(userName: String, cardList: List<String>){
-        var result = cardList.joinToString(", ")
-        println("${userName}카드: $result")
+    fun printUserCardList(player: Player) {
+        var cards = player.getCards().joinToString(", ")
+        println("${player.getName()}카드: $cards")
     }
 }
