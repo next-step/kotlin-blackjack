@@ -11,7 +11,7 @@ class BlackjackService {
     fun initBlackjackGame(players: List<String>): BlackjackGame {
         val dealer = Dealer(Deck())
         val blackJackPlayers = players.map { player ->
-            val cards = dealer.drawCardsFromDeck(BASIC_CARD_COUNT)
+            val cards = dealer.draw(BASIC_CARD_COUNT)
             Player(name = player, cards = cards)
         }
         return BlackjackGame(blackJackPlayers, dealer)
@@ -20,7 +20,7 @@ class BlackjackService {
     fun raceBlackjack(player: Player, blackjackGame: BlackjackGame, answer: String) {
 
         if (answer == Condition.PLAY.raceFlag && player.currentCondition() == Condition.PLAY) {
-            val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).pick()
+            val card = blackjackGame.dealer.draw(ONE_MORE_CARD_COUNT).pick()
             player.hit(card)
             checkCondition(player)
         } else if (answer == Condition.STAY.raceFlag) {

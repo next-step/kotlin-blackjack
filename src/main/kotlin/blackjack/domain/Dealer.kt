@@ -4,7 +4,7 @@ class Dealer(
     val deck: Deck
 ) {
 
-    fun drawCardsFromDeck(count: Int): Cards {
+    fun draw(count: Int): Cards {
         return deck.drawCard(count)
     }
 }
