@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class CardDeck(val cards: MutableList<Card> = CARDS.shuffled().toMutableList()) {
+class CardDeck(private val cards: MutableList<Card> = CARDS.shuffled().toMutableList()) {
 
     fun draw(count: Int = 1): Cards {
         require(count >= MINIMUM_DRAW_SIZE) { "카드 드로우 갯수는 $MINIMUM_DRAW_SIZE 이상입니다." }

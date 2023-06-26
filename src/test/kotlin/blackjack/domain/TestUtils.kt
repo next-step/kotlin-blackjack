@@ -7,4 +7,4 @@ import blackjack.domain.player.GamePlayers
 
 fun cards(vararg cards: Card) = Cards(cards.toList())
 
-fun players(vararg players: GamePlayer) = GamePlayers(players.toList())
+fun gamePlayers(vararg players: GamePlayer) = GamePlayers(players.toList())

@@ -4,9 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.cards
+import blackjack.domain.gamePlayers
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.GamePlayer
-import blackjack.domain.players
+import blackjack.domain.player.Players
 import blackjack.domain.result.match.MatchState
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -41,7 +42,7 @@ class GameResultManagerTest : StringSpec({
             ),
         ) { cards, expectedMatch ->
             val player1 = GamePlayer("test", cards)
-            val players = players(player1)
+            val gamePlayers = gamePlayers(player1)
 
             val dealer = Dealer(
                 cards(
@@ -50,7 +51,7 @@ class GameResultManagerTest : StringSpec({
                 )
             )
 
-            val results = GameResultManager.getGameResults(players, dealer)
+            val results = GameResultManager.getGameResults(Players(dealer, gamePlayers))
 
             results shouldContainExactlyInAnyOrder listOf(GameResult(player1, expectedMatch))
         }
@@ -89,7 +90,7 @@ class GameResultManagerTest : StringSpec({
             val player1 = GamePlayer("test", cards1)
             val player2 = GamePlayer("test", cards2)
 
-            val players = players(player1, player2)
+            val gamePlayers = gamePlayers(player1, player2)
 
             val dealer = Dealer(
                 cards(
@@ -99,7 +100,7 @@ class GameResultManagerTest : StringSpec({
                 )
             )
 
-            val results = GameResultManager.getGameResults(players, dealer)
+            val results = GameResultManager.getGameResults(Players(dealer, gamePlayers))
 
             results shouldContainExactlyInAnyOrder listOf(
                 GameResult(player1, expect1),
@@ -139,7 +140,7 @@ class GameResultManagerTest : StringSpec({
             val player1 = GamePlayer("test", cards1)
             val player2 = GamePlayer("test", cards2)
 
-            val players = players(player1, player2)
+            val gamePlayers = gamePlayers(player1, player2)
 
             val dealer = Dealer(
                 cards(
@@ -148,7 +149,7 @@ class GameResultManagerTest : StringSpec({
                 )
             )
 
-            val results = GameResultManager.getGameResults(players, dealer)
+            val results = GameResultManager.getGameResults(Players(dealer, gamePlayers))
 
             results shouldContainExactlyInAnyOrder listOf(
                 GameResult(player1, expect1),
@@ -189,7 +190,7 @@ class GameResultManagerTest : StringSpec({
             val player1 = GamePlayer("test", cards1)
             val player2 = GamePlayer("test", cards2)
 
-            val players = players(player1, player2)
+            val gamePlayers = gamePlayers(player1, player2)
 
             val dealer = Dealer(
                 cards(
@@ -198,7 +199,7 @@ class GameResultManagerTest : StringSpec({
                 )
             )
 
-            val results = GameResultManager.getGameResults(players, dealer)
+            val results = GameResultManager.getGameResults(Players(dealer, gamePlayers))
 
             results shouldContainExactlyInAnyOrder listOf(
                 GameResult(player1, expect1),
