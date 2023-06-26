@@ -43,8 +43,11 @@ class BlackjackController {
         // 딜러, 플레이어가 보유한 카드현황 + 최종 score 출력
         GamePlayersOutputView(gamePlayers, true)
 
-        // 최종 승패 출력
-        GamePlayersResultOutputView(gamePlayers)
+        // 블랙잭 게임 종료(베팅 금액 계산 등등 수행)
+        val gameResult = blackjackGame.finishPlayers()
+
+        // 최종 수익 출력
+        GamePlayersResultOutputView(gameResult)
     }
 
     private fun dealCards(player: Player, blackjackGame: BlackjackGame) {

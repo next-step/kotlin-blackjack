@@ -16,6 +16,10 @@ class BlackjackGame(val gamePlayers: GamePlayers) {
         gamePlayer.receiveCard(card)
     }
 
+    fun finishPlayers(): BlackjackGameResult {
+        return gamePlayers.finish()
+    }
+
     companion object {
         const val DEAL_CARD_COUNT = 1
         const val INIT_CARD_COUNT = 2

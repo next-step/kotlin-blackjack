@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
-class Player(val name: Name = Name()) : GamePlayer() {
+class Player(val name: Name = Name(), val betAmount: PlayerBetAmount = PlayerBetAmount()) : GamePlayer() {
 
     override fun isReceivable(): Boolean {
         return status.isReceivable
@@ -14,7 +14,7 @@ class Player(val name: Name = Name()) : GamePlayer() {
         updateStatus()
     }
 
-    fun getStayStatus() {
+    fun setStayStatus() {
         status = PlayerStatus.STAY
     }
 }

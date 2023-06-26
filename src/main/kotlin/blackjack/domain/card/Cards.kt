@@ -28,6 +28,10 @@ class Cards(_value: List<Card> = emptyList()) {
         return scoreSet.max()
     }
 
+    fun getCardsSize(): Int {
+        return value.size
+    }
+
     private fun updateScoreSet(card: Card) {
         val _scoreSet = setOf(*scoreSet.toTypedArray())
 

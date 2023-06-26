@@ -55,6 +55,25 @@ class PlayerTest {
     }
 
     @Test
+    fun `ACE는 1 또는 11 score로 계산될 수 있어서 21을 넘지 않는 가장 가까운 수로 계산된다`() {
+        // 7, 17
+        val player = Player()
+        val cards = Cards(
+            mutableListOf(
+                Card(Denomination.ACE, CardType.CLUBS),
+                Card(Denomination.SIX, CardType.DIAMONDS),
+            ),
+        )
+
+        player.initCards(cards)
+
+        // 17, 27
+        player.receiveCard(Card(Denomination.JACK, CardType.HEARTS))
+
+        player.cards.getOptimizedScore() shouldBe 17
+    }
+
+    @Test
     fun `블랙잭인지 확인할 수 있다`() {
         val player = Player(Name("hue"))
         val cards = Cards.from(Card(Denomination.ACE, CardType.DIAMONDS), Card(Denomination.QUEEN, CardType.DIAMONDS))

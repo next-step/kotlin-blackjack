@@ -3,7 +3,9 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 
 class Dealer : GamePlayer() {
+    val revenue: DealerRevenue = DealerRevenue()
     private var isReceivedAddCard = false
+
     override fun isReceivable(): Boolean {
         return !isReceivedAddCard && cards.getOptimizedScore() <= RECEIVABLE_SCORE
     }
@@ -14,6 +16,7 @@ class Dealer : GamePlayer() {
         setIsReceivedAddCardToTrue()
         updateStatus()
     }
+
     private fun setIsReceivedAddCardToTrue() {
         if (!isReceivedAddCard) isReceivedAddCard = true
     }
