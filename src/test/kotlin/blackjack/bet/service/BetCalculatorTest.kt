@@ -57,4 +57,16 @@ class BetCalculatorTest : StringSpec({
         isNotPlaying.wallet().balance() shouldBe 10_000
         isNotPlaying.wallet().income() shouldBe 0
     }
+
+    "플레이어가 처음 뽑은 2자리의 값이 블랙잭(21)이라면 1.5배를 돌려받는다." {
+        val dealer = BetDealer()
+        val player = BetPlayer("tester")
+        player.chargeWallet(10_000)
+
+        BetCalculator.initialBlackjack(player, dealer)
+        dealer.wallet().balance() shouldBe -15_000
+        dealer.wallet().income() shouldBe -15_000
+        player.wallet().balance() shouldBe 15_000
+        player.wallet().income() shouldBe 5_000
+    }
 })

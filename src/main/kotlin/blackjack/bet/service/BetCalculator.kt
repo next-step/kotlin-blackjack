@@ -29,8 +29,9 @@ object BetCalculator {
     }
 
     fun initialBlackjack(player: BetPlayer, dealer: BetDealer) {
-        val blackJackPit = (player.wallet().balance() * 1.5).toInt()
-        val loss = blackJackPit * -1
+        val balance = player.wallet().balance()
+        val blackJackPit = (balance * 0.5).toInt()
+        val loss = (balance + blackJackPit) * -1
         playerWin(player, blackJackPit, dealer, loss)
     }
 
