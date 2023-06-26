@@ -8,7 +8,7 @@ class Player(
     private var condition: Condition = Condition.PLAY
 ) {
     fun hit(card: Card) {
-        this.cards.hitCard(card)
+        this.cards.append(card)
     }
 
     fun currentCondition(): Condition {

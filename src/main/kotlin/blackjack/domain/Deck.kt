@@ -24,7 +24,7 @@ class Deck {
 
         repeat(count) {
             val card = deck.pop()
-            cards.hitCard(card)
+            cards.append(card)
         }
 
         return cards

@@ -1,11 +1,16 @@
 package blackjack.domain
 
 class Cards(
-    private val cards: List<Card>
+    cards: List<Card>
 ) {
 
-    fun hitCard(card: Card) {
-        this.cards.toMutableList().add(card)
+    private val mutableCards = cards.toMutableList()
+
+    private val cards: List<Card>
+        get() = mutableCards
+
+    fun append(card: Card) {
+        mutableCards.add(card)
     }
 
     fun getOneCard(): Card {
