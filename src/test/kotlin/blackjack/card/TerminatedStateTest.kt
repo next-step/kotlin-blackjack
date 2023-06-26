@@ -60,7 +60,7 @@ class TerminatedStateTest {
 
         val state = TerminationState(cards)
 
-        state.getPlayerGameResult(dealerState) shouldBe PlayerGameResult.WIN
+        state.getPlayerGameResult(dealerState) shouldBe PlayerGameResult.DRAW
     }
 
     @Test
@@ -80,5 +80,70 @@ class TerminatedStateTest {
         val state = TerminationState(cards)
 
         state.getPlayerGameResult(dealerState) shouldBe PlayerGameResult.LOSE
+    }
+
+    @Test
+    fun `종료 상태에서 딜러가 버스트 상태면 플레이어는 베팅 금액만큼 수익을 얻는다`() {
+        val cards = CardsTestFactory.makeStandCards()
+        val dealerCards = CardsTestFactory.makeBurstCards()
+        val betAmount = 1000
+
+        val dealerState = Burst(dealerCards)
+        val state = TerminationState(cards = cards, betAmount = betAmount)
+
+        state.getRevenue(dealerState) shouldBe 1000
+    }
+
+    @Test
+    fun `종료 상태에서 딜러도 종료 상태일 때 플레이어의 카드 숫자 총합이 딜러보다 크다면 베팅 금액만큼 수익을 얻는다`() {
+        val cards = CardsTestFactory.makeCards(
+            Card(suit = Suit.SPADE, number = CardNumber.JACK),
+            Card(suit = Suit.SPADE, number = CardNumber.JACK),
+        )
+
+        val dealerCards = CardsTestFactory.makeCards(
+            Card(suit = Suit.SPADE, number = CardNumber.JACK),
+            Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+        )
+
+        val betAmount = 1000
+
+        val dealerState = TerminationState(dealerCards)
+        val state = TerminationState(cards = cards, betAmount = betAmount)
+
+        state.getRevenue(dealerState) shouldBe 1000
+    }
+
+    @Test
+    fun `종료 상태에서 딜러도 종료 상태일 때 둘의 카드 숫자 총합이 같다면 수익은 0이다`() {
+        val cards = CardsTestFactory.makeStandCards()
+
+        val betAmount = 1000
+
+        val dealerState = TerminationState(cards)
+        val state = TerminationState(cards = cards, betAmount = betAmount)
+
+        state.getRevenue(dealerState) shouldBe 0
+    }
+
+    @Test
+    fun `종료 상태에서 딜러도 종료 상태일 때 플레이어의 카드 숫자 총합이 딜러보다 작다면 베팅 금액을 잃는다`() {
+        val cards = CardsTestFactory.makeCards(
+            Card(suit = Suit.SPADE, number = CardNumber.JACK),
+            Card(suit = Suit.SPADE, number = CardNumber.TWO),
+        )
+
+        val dealerCards = CardsTestFactory.makeCards(
+            Card(suit = Suit.SPADE, number = CardNumber.JACK),
+            Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
+        )
+
+        val betAmount = 1000
+
+        val dealerState = TerminationState(dealerCards)
+
+        val state = TerminationState(cards = cards, betAmount = betAmount)
+
+        state.getRevenue(dealerState) shouldBe -1000
     }
 }

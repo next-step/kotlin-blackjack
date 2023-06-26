@@ -3,9 +3,7 @@ package blackjack.card
 import blackjack.card.helper.CardsTestFactory
 import blackjack.card.helper.StartStateTestHelper
 import domain.card.Card
-import domain.card.CardNumber
 import domain.card.Cards
-import domain.card.Suit
 import domain.state.Blackjack
 import domain.state.Hit
 import domain.state.Stand
@@ -53,15 +51,23 @@ class StartStateTest {
 
     @Test
     fun `시작(Start) 상태에서 승패를 조회하면 UnsupportedOperationException 이 발생`() {
-        val cards = CardsTestFactory.makeCards(
-            Card(suit = Suit.SPADE, CardNumber.THREE),
-            Card(suit = Suit.SPADE, CardNumber.THREE),
-        )
+        val cards = CardsTestFactory.makeStartCards()
 
         val state = StartState.start(cards)
 
         shouldThrow<UnsupportedOperationException> {
             state.getPlayerGameResult(state)
+        }
+    }
+
+    @Test
+    fun `시작(Start) 상태에서 수익을 조회하면 UnsupportedOperationException 이 발생`() {
+        val cards = CardsTestFactory.makeStartCards()
+
+        val state = StartState.start(cards)
+
+        shouldThrow<UnsupportedOperationException> {
+            state.getRevenue(state)
         }
     }
 

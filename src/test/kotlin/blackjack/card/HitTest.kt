@@ -3,9 +3,7 @@ package blackjack.card
 import blackjack.card.helper.CardsTestFactory
 import blackjack.card.helper.HitTestHelper
 import domain.card.Card
-import domain.card.CardNumber
 import domain.card.Cards
-import domain.card.Suit
 import domain.state.Burst
 import domain.state.Hit
 import domain.state.Stand
@@ -56,16 +54,23 @@ class HitTest {
 
     @Test
     fun `힛(Hit) 상태에서 승패를 조회하면 UnsupportedOperationException 이 발생`() {
-        val cards = CardsTestFactory.makeCards(
-            Card(suit = Suit.SPADE, CardNumber.THREE),
-            Card(suit = Suit.SPADE, CardNumber.THREE),
-            Card(suit = Suit.SPADE, CardNumber.THREE),
-        )
+        val cards = CardsTestFactory.makeHitCarts()
 
         val hitState = Hit(cards)
 
         shouldThrow<UnsupportedOperationException> {
             hitState.getPlayerGameResult(hitState)
+        }
+    }
+
+    @Test
+    fun `힛(Hit) 상태에서 수익을를 조회하면 UnsupportedOperationException 이 발생`() {
+        val cards = CardsTestFactory.makeHitCarts()
+
+        val hitState = Hit(cards)
+
+        shouldThrow<UnsupportedOperationException> {
+            hitState.getRevenue(hitState)
         }
     }
 

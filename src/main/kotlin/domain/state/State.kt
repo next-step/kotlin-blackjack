@@ -10,4 +10,6 @@ interface State {
     fun stop(): State
     fun getCards(): Cards
     fun getPlayerGameResult(state: State): PlayerGameResult
+    fun getBetAmount(): Int
+    fun getRevenue(state: State): Int
 }
