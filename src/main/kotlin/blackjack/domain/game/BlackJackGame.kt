@@ -25,7 +25,7 @@ class BlackJackGame(
                 BlackJackGameTurn.CardDistribution
             }
             hasWaitPlayer() -> {
-                BlackJackGameTurn.HitOrStay(requireWaitPlayer().name)
+                BlackJackGameTurn.PlayerAnswer(requireWaitPlayer().name)
             }
             else -> {
                 BlackJackGameTurn.Finished

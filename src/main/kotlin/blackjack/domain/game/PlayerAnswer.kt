@@ -1,6 +1,6 @@
 package blackjack.domain.game
 
-enum class HitAnswer {
+enum class PlayerAnswer {
     HIT,
     STAY,
 }

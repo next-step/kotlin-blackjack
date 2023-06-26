@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.game.BlackJackGame
 import blackjack.domain.game.BlackJackGameFactory
 import blackjack.domain.game.BlackJackGameTurn
-import blackjack.domain.game.HitAnswer
+import blackjack.domain.game.PlayerAnswer
 
 class BlackJackController(
     private val inputView: BlackJackInputView,
@@ -19,7 +19,7 @@ class BlackJackController(
             val turn = blackJackGame.currentTurn()
             when (turn) {
                 is BlackJackGameTurn.CardDistribution -> processCardDistributedTurn(blackJackGame)
-                is BlackJackGameTurn.HitOrStay -> processHitOrStayTurn(blackJackGame, turn)
+                is BlackJackGameTurn.PlayerAnswer -> processPlayerAnswerTurn(blackJackGame, turn)
                 is BlackJackGameTurn.Finished -> processFinishTurn(blackJackGame)
             }
         } while (turn.isFinished().not())
@@ -32,16 +32,16 @@ class BlackJackController(
         resultView.display(cardDistributionResult)
     }
 
-    private fun processHitOrStayTurn(
+    private fun processPlayerAnswerTurn(
         blackJackGame: BlackJackGame,
-        turn: BlackJackGameTurn.HitOrStay,
+        turn: BlackJackGameTurn.PlayerAnswer,
     ) {
         when (inputView.readHitAnswer(turn.playerName)) {
-            HitAnswer.HIT -> {
+            PlayerAnswer.HIT -> {
                 val hitResult = blackJackGame.hitFocusedPlayer()
                 resultView.display(hitResult)
             }
-            HitAnswer.STAY -> {
+            PlayerAnswer.STAY -> {
                 blackJackGame.stayFocusedPlayer()
             }
         }
