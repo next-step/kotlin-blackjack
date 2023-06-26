@@ -1,12 +1,14 @@
 package blackjack.domain
 
-class PlayerCards(private val cards: MutableList<PlayingCard> = mutableListOf()) : Iterable<PlayingCard> by cards {
+class PlayerCards(cards: List<PlayingCard> = listOf()) : Iterable<PlayingCard> {
+
+    private val cards = cards.toMutableList()
 
     fun add(vararg card: PlayingCard) {
         card.forEach { cards.add(it) }
     }
 
-    override fun toString(): String {
-        return "PlayerCards(cards=$cards)"
+    override fun iterator(): Iterator<PlayingCard> {
+        return this.cards.iterator()
     }
 }
