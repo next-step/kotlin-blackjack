@@ -12,18 +12,10 @@ abstract class GamePlayer {
     }
 
     abstract fun isReceivable(): Boolean
-
-    abstract fun afterEventOfReceiveCard()
+    abstract fun receiveCard(card: Card)
 
     fun initCards(cards: Cards) {
         this.cards.addCards(cards)
-        updateStatus()
-    }
-
-    fun receiveCard(card: Card) {
-        if (!isReceivable()) return
-        cards.addCard(card)
-        afterEventOfReceiveCard()
         updateStatus()
     }
 
@@ -31,7 +23,7 @@ abstract class GamePlayer {
         return status
     }
 
-    private fun updateStatus() {
+    protected fun updateStatus() {
         val optimizedScore = cards.getOptimizedScore()
         val isReceivable = isReceivable()
         status = PlayerStatus.valuesOf(optimizedScore, isReceivable)
