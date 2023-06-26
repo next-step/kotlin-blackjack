@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.CardNumberCalculator
 import blackjack.domain.RuleChecker
 
 enum class CardNumber(val value: Int) {

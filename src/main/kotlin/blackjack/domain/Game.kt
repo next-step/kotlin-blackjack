@@ -9,7 +9,6 @@ class Game(deckShuffleStrategy: DeckShuffleStarategy) {
     private val deck = Deck(deckShuffleStrategy)
     private val ruleChecker = RuleChecker()
 
-
     fun firstDraw(playerList: List<Player>) {
         playerList.forEach {
             it.addCards(deck.drawTwoCard())
@@ -22,7 +21,7 @@ class Game(deckShuffleStrategy: DeckShuffleStarategy) {
 
     fun checkPlayerIsLose(player: Player) {
         if (!ruleChecker.checkSumOfCardNumbers(player.calculateSumOfCardNumbers())) {
-            throw PlayerLoseException("${player.name}의 카드가 21을 넘었습니다.")
+            throw PlayerLoseException("${player.name}의 카드가 ${RuleChecker.CONDITION_TO_WIN_BLACK_JACK}을 넘었습니다.")
         }
     }
 }
