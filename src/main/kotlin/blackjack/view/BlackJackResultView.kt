@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
+import blackjack.domain.card.CardHolder
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
@@ -13,6 +14,7 @@ class BlackJackResultView {
     fun display(result: CardDistributionResult) {
         println()
         println(result.makeTitleMessage())
+        println(result.dealerCards.makeDisplayMessage())
         result.playerCards
             .map { playerCard -> playerCard.makeDisplayMessage() }
             .forEach { playerCardsCaptureMessage -> println(playerCardsCaptureMessage) }
@@ -32,7 +34,14 @@ class BlackJackResultView {
 
     private fun CardDistributionResult.makeTitleMessage(): String {
         val names = playerNames.unWrappings().joinToString(", ")
-        return "${names}에게 ${distributionCardSize}장씩 나누었습니다."
+        return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
+    }
+
+    private fun List<CardHolder>.makeDisplayMessage(): String {
+        val cardsMessage = filterIsInstance<CardHolder.Open>().joinToString(", ") { openCard ->
+            openCard.card.makeDisplayMessage()
+        }
+        return "딜러: $cardsMessage"
     }
 
     private fun PlayerCards.makeDisplayMessage(): String {
