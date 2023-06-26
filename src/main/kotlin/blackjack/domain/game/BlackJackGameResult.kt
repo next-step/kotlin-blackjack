@@ -1,4 +1,6 @@
 package blackjack.domain.game
 
-@JvmInline
-value class BlackJackGameResult(val playerGameResults: List<PlayerGameResult>)
+data class BlackJackGameResult(
+    val dealerGameResult: DelayerGameResult,
+    val playerGameResults: List<PlayerGameResult>,
+)

@@ -88,6 +88,7 @@ class BlackJackGame(
         checkFinishTurn()
 
         return BlackJackGameResult(
+            dealerGameResult = DelayerGameResult(dealer.cards),
             playerGameResults = players
                 .captureAllCards()
                 .map { playerCards -> PlayerGameResult(playerCards) },

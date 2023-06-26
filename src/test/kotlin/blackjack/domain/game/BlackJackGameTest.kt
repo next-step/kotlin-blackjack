@@ -6,7 +6,6 @@ import blackjack.domain.card.heartCard
 import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.CardCustomShuffler
-import blackjack.domain.shuffle.CardShuffler
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -160,6 +159,40 @@ class BlackJackGameTest : BehaviorSpec({
             val executeResult = game.executeDealerTurn() // 딜러는 [10, 10] 이므로 합은 20
             Then("1장의 카드를 추가로 받지 않는다") {
                 executeResult.isDistributedOneMoreCard shouldBe false
+            }
+        }
+    }
+
+    Given("게임 종료 턴이 되었을 때") {
+        val playerNames = playerNames("test1")
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TEN),
+                    heartCard(CardDenomination.JACK),
+                    heartCard(CardDenomination.QUEEN),
+                    heartCard(CardDenomination.KING),
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
+        game.stayFocusedPlayer()
+        game.executeDealerTurn() // 딜러는 [10, 10] 추가 발급 받지 않음
+        When("결과를 만들면") {
+            val result = game.makeGameResult()
+            Then("딜러와 플레이어들의 카드를 반환한다") {
+                result.dealerGameResult.dealerCards shouldBe listOf(
+                    heartCard(CardDenomination.TEN),
+                    heartCard(CardDenomination.JACK),
+                )
+                result.playerGameResults[0].playerCards.cards shouldBe listOf(
+                    heartCard(CardDenomination.QUEEN),
+                    heartCard(CardDenomination.KING),
+                )
             }
         }
     }
