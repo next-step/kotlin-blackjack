@@ -3,8 +3,9 @@ package blackjack.domain.player
 import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Score
 
-sealed interface Player : Comparable<Player> {
+sealed interface Player {
     val name: String
     val cardHold: CardHold
 
@@ -29,8 +30,16 @@ sealed interface Player : Comparable<Player> {
         }
     }
 
-    override fun compareTo(other: Player): Int {
-        return this.getPoints() - other.getPoints()
+    fun compareScore(other: Player): Score {
+        if (this === other) {
+            return Score()
+        }
+
+        return when {
+            this.getPoints() > other.getPoints() -> Score(1, 0, 0)
+            this.getPoints() < other.getPoints() -> Score(0, 0, 1)
+            else -> Score(0, 1, 0)
+        }
     }
 
     companion object {

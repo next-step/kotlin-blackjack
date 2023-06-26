@@ -68,7 +68,3 @@ jason카드: 7클로버, K스페이드 - 결과: 17
   - player 의 구현체이다
   - 이름은 딜러 로 고정되고, 프로퍼티는 플레이어와 동일하다
   - compareTo 오버라이드를 통해 본인이 21보다 크면 그냥 Win을 리턴하고, 아니면 비교할 수 있게 하자
-- `GameResultType`
-  - WIN, DRAW, LOSE 3가지 타입을 가진다
-- `GameResult` : Map<GameRetultType, Int> 를 가진다
-  

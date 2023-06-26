@@ -16,6 +16,7 @@ object GameController {
         printBeforeStart(players)
         playGame(players, deck)
         endGame(players)
+        showResult(players)
     }
 
     private fun prepareGame(deck: Deck): Participants {
@@ -50,5 +51,10 @@ object GameController {
 
     private fun endGame(participants: Participants) {
         OutputView.printPlayerResult(participants)
+    }
+
+    private fun showResult(participants: Participants) {
+        val result = participants.getGameResult()
+        OutputView.showWinner(result)
     }
 }

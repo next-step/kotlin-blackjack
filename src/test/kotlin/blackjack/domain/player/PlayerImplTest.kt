@@ -5,6 +5,7 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Score
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -75,9 +76,9 @@ class PlayerImplTest {
         val zeroPlayer = PlayerImpl("zero", myCards2)
 
         // when
-        val result = goofyPlayer > zeroPlayer
+        val result = goofyPlayer.compareScore(zeroPlayer)
 
         // then
-        result shouldBe true
+        result shouldBe Score(1, 0, 0)
     }
 }

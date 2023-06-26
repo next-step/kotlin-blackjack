@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerImpl
+import blackjack.domain.rule.Score
 
 object OutputView {
     fun printGameStart(names: List<String>, initialDraw: Int) {
@@ -42,5 +43,39 @@ object OutputView {
 
     private fun printPlayerResult(player: Player) {
         println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
+    }
+
+    fun showWinner(results: Map<String, Score>) {
+        println("\n## 최종 승패")
+        results.forEach { (name, score) ->
+            println("$name:  ${showWin(score)}${showDraw(score)}${showLose(score)}")
+        }
+    }
+
+    private fun showWin(score: Score): String {
+        if (score.getTotalGame() <= 1) return showSimpleWin(score)
+        return if (score.win >= 1) score.win.toString() + "승 " else ""
+    }
+
+    private fun showDraw(score: Score): String {
+        if (score.getTotalGame() <= 1) return showSimpleDraw(score)
+        return if (score.draw >= 1) score.draw.toString() + "무 " else ""
+    }
+
+    private fun showLose(score: Score): String {
+        if (score.getTotalGame() <= 1) return showSimpleLose(score)
+        return if (score.lose >= 1) score.lose.toString() + "패 " else ""
+    }
+
+    private fun showSimpleWin(score: Score): String {
+        return if (score.win >= 1) "승 " else ""
+    }
+
+    private fun showSimpleDraw(score: Score): String {
+        return if (score.draw >= 1) "무 " else ""
+    }
+
+    private fun showSimpleLose(score: Score): String {
+        return if (score.lose >= 1) "패 " else ""
     }
 }
