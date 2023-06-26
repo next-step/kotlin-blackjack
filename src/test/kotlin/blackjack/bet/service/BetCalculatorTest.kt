@@ -30,4 +30,31 @@ class BetCalculatorTest : StringSpec({
         player.wallet().balance() shouldBe 100_000
         player.wallet().income() shouldBe 50_000
     }
+
+    "딜러가 Bust 된다면(패가 21 초과) 그 시점 까지 남아있던 플레이어만 승리한다." {
+        val dealer = BetDealer()
+        val blackJacked = BetPlayer("tester")
+
+        blackJacked.chargeWallet(10_000)
+
+        BetCalculator.updateScores(BlackJackDetermine.Winner.DEALER_BUST, blackJacked, dealer)
+        dealer.wallet().balance() shouldBe -10_000
+        dealer.wallet().income() shouldBe -10_000
+        blackJacked.wallet().balance() shouldBe 20_000
+        blackJacked.wallet().income() shouldBe 10_000
+    }
+
+    "딜러가 Bust 된다면(패가 21 초과) 남아 있지 않은 플레이어는 상관 없다." {
+        val dealer = BetDealer()
+        val isNotPlaying = BetPlayer("tester")
+
+        isNotPlaying.chargeWallet(10_000)
+        isNotPlaying.isInitialBlackjack(21)
+
+        BetCalculator.updateScores(BlackJackDetermine.Winner.DEALER_BUST, isNotPlaying, dealer)
+        dealer.wallet().balance() shouldBe 0
+        dealer.wallet().income() shouldBe 0
+        isNotPlaying.wallet().balance() shouldBe 10_000
+        isNotPlaying.wallet().income() shouldBe 0
+    }
 })

@@ -13,7 +13,8 @@ class BlackJackBetTable(private val players: Array<BetPlayer>) {
     fun beginRound() {
         dealer.beginRound(deckManager, players)
         players.forEach {
-            if (it.isInitialBlackjack()) {
+            val optimalValue = it.optimalValue()
+            if (it.isInitialBlackjack(optimalValue)) {
                 BetCalculator.initialBlackjack(it, dealer)
             }
         }

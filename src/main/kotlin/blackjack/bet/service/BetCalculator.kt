@@ -10,7 +10,7 @@ object BetCalculator {
         val loss = allIn * -1
         when (winner) {
             BlackJackDetermine.Winner.DEALER_BUST -> {
-                if (player.isPlayingRound()) {
+                if (player.isPlaying()) {
                     playerWin(player, allIn, dealer, loss)
                 }
             }

@@ -6,7 +6,7 @@ import blackjack.common.service.DeckManager
 open class BetPlayer(name: String) : Player<BetPlayer>(name) {
 
     private val wallet = Wallet()
-    private var isNotPlayingRound = true
+    private var isPlaying = true
 
     fun wallet(): Wallet {
         return this.wallet
@@ -16,19 +16,17 @@ open class BetPlayer(name: String) : Player<BetPlayer>(name) {
         wallet.charge(money)
     }
 
-    fun isInitialBlackjack(): Boolean {
-        if (this.optimalValue() == BLACK_JACK_NUMBER) {
-            isNotPlayingRound = true
-        }
-        return isNotPlayingRound
+    fun isInitialBlackjack(optimalValue: Int): Boolean {
+        isPlaying = optimalValue != BLACK_JACK_NUMBER
+        return isPlaying
     }
 
-    fun isPlayingRound(): Boolean {
-        return !isNotPlayingRound
+    fun isPlaying(): Boolean {
+        return isPlaying
     }
 
     override fun drawPhase(deckManager: DeckManager, handNotice: (BetPlayer) -> Unit) {
-        if (isPlayingRound()) {
+        if (isPlaying()) {
             hit(deckManager.draw())
             handNotice.invoke(this)
         }
