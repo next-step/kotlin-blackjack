@@ -1,5 +1,7 @@
-package blackjack.domain
+package blackjack.scorerule.domain
 
+import blackjack.common.domain.PokerCard
+import blackjack.common.domain.PokerSymbol
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
@@ -7,7 +9,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "플레이어가 hit 요청을 하면 새로운 카드를 받는다." {
-        val player = Player("tester")
+        val player = ScorePlayer("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 11, "A")
         player.hands().size shouldBe 0
         player.hit(pokerCard)
@@ -15,7 +17,7 @@ class PlayerTest : StringSpec({
     }
 
     "참여자의 손패가 21초과라면 더이상 카드를 받지 못한다." {
-        val player = Player("tester")
+        val player = ScorePlayer("tester")
         val pokerCard = PokerCard(PokerSymbol.CLUBS, 10, "K")
         player.hit(pokerCard, pokerCard, pokerCard)
         shouldThrow<IllegalStateException> {
@@ -24,7 +26,7 @@ class PlayerTest : StringSpec({
     }
 
     "플레이어의 손패가 21이면 더이상 손패를 받지 않는다." {
-        val player = Player("tester")
+        val player = ScorePlayer("tester")
         val pokerCards = arrayOf(
             PokerCard(PokerSymbol.CLUBS, 10, "K"),
             PokerCard(PokerSymbol.CLUBS, 10, "K"),
@@ -48,7 +50,7 @@ class PlayerTest : StringSpec({
             arrayOf(ace, ace, ace) to 13,
             arrayOf(seven, queen, ace, ace, ace, ace) to 21
         ).forAll { (input, expected) ->
-            val player = Player("tester")
+            val player = ScorePlayer("tester")
             player.hit(*input)
 
             player.optimalValue() shouldBe expected

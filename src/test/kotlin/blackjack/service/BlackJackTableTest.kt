@@ -1,6 +1,7 @@
 package blackjack.service
 
-import blackjack.domain.Player
+import blackjack.scorerule.domain.ScorePlayer
+import blackjack.scorerule.domain.BlackJackScoreTable
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
@@ -10,8 +11,8 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackTableTest : BehaviorSpec({
     given("게임을 시작할 때 모든 플레이어에게 2장을 나누어준다.") {
-        val players = arrayOf(Player("test"), Player("test2"))
-        val table = BlackJackTable(players)
+        val players = arrayOf(ScorePlayer("test"), ScorePlayer("test2"))
+        val table = BlackJackScoreTable(players)
         table.beginRound()
         `when`("테이블에서 초기 값을 설정한다.") {
             then("플레이어들은 2장을 갖고 있는다.") {

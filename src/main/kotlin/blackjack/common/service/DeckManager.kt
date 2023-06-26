@@ -1,7 +1,7 @@
-package blackjack.service
+package blackjack.common.service
 
-import blackjack.domain.Deck
-import blackjack.domain.PokerCard
+import blackjack.common.domain.Deck
+import blackjack.common.domain.PokerCard
 
 class DeckManager(
     private val deck: Deck = Deck()
