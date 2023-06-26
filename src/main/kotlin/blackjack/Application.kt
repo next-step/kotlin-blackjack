@@ -1,11 +1,14 @@
 package blackjack
 
+import blackjack.domain.BlackJack.checkBurst
 import blackjack.domain.Cards
 import blackjack.domain.Player
 import blackjack.view.InputView
+import blackjack.view.ResultView
 
 fun main() {
-    val names = InputView.getPlayersName().split(",")
+    val names = InputView.getPlayersList()
+
     val cards = Cards()
 
     var players = mutableListOf<Player>()
@@ -13,11 +16,24 @@ fun main() {
         players.add(Player(name))
     }
 
+    ResultView.printDistributionPlan(players, 2)
     players.forEach {
-        it.addCard(cards.takeCard())
-        it.addCard(cards.takeCard())
-        println(it.getCards())
+        it.addCard(cards.takeCard(2))
+        ResultView.printUserCardList(it)
     }
 
-    // 플레이어가 카드를 그만 받는다고 하거나 블랙잭일때 까지
+    players.forEach { player ->
+        do {
+            if (checkBurst(player)) {
+                break
+            }
+            player.addCard(cards.takeCard(1))
+            ResultView.printUserCardList(player)
+        } while (InputView.isHit(player.getName()))
+        ResultView.printUserCardList(player)
+    }
+
+    players.forEach {
+        ResultView.printUserCardListWithResult(it)
+    }
 }
