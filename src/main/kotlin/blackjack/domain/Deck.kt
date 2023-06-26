@@ -2,9 +2,7 @@ package blackjack.domain
 
 class Deck(cardList: List<Card>) : Iterable<Card> {
 
-    private val cardQueue: MutableList<Card> = MutableList(cardList.size) {
-        return@MutableList cardList[it].copy()
-    }
+    private val cardQueue: MutableList<Card> = cardList.toMutableList()
 
     val size: Int
         get() = cardQueue.size
