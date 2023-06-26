@@ -18,7 +18,7 @@ enum class CardRank(
     QUEEN("Q", 10),
     KING("K", 10);
 
-    fun getSpecialPoint(): Int {
+    fun getSoftHand(): Int {
         if (this == ACE) {
             return 10
         }

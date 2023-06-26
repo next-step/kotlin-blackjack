@@ -7,20 +7,20 @@ class ScoreTest {
     @Test
     fun `Score 객체는 덧셈 연산이 가능하다`() {
         // given
-        val a = Score(1, 0)
-        val b = Score(2, 1)
+        val a = Score.init().win()
+        val b = Score.init().win(2).draw(1)
         // when
         val result = a + b
         // then
-        result.win shouldBe 3
-        result.draw shouldBe 1
+        result.winNum shouldBe 3
+        result.drawNum shouldBe 1
     }
 
     @Test
     fun `Score 객체 동등성 연산이 가능하다`() {
         // given
-        val a = Score(1, 0)
-        val b = Score(1, 0)
+        val a = Score.init().win()
+        val b = Score.init().win()
         // when
         val result = a == b
         // then
@@ -30,10 +30,10 @@ class ScoreTest {
     @Test
     fun `Score 객체의 반대 결과를 리턴한다`() {
         // given
-        val a = Score(1, 0, 0)
+        val a = Score.init().win()
         // when
         val result = a.reverse()
         // then
-        result shouldBe Score(0, 0, 1)
+        result shouldBe Score.init().lose()
     }
 }

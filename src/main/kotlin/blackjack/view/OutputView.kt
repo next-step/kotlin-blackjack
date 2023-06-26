@@ -23,7 +23,7 @@ object OutputView {
     }
 
     private fun printDealerCard(players: Participants) {
-        println("${players.dealer.name}카드: ${players.dealer.cardHold.cards[0].rank.mark}${players.dealer.cardHold.cards[0].shape.mark}")
+        println(players.dealer.showOnlyOneCard())
     }
 
     fun printDealerGetAdditionalCard() {
@@ -31,7 +31,7 @@ object OutputView {
     }
 
     fun printPlayerCard(player: PlayerImpl) {
-        println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } }")
+        println("${player.name}카드: ${player.cardHold.getAllCards().joinToString(", ") { it.rank.mark + it.shape.mark } }")
     }
 
     fun printPlayerResult(players: Participants) {
@@ -42,7 +42,7 @@ object OutputView {
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.cardHold.cards.joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
+        println("${player.name}카드: ${player.cardHold.getAllCards().joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
     }
 
     fun showWinner(results: Map<String, Score>) {
@@ -54,28 +54,28 @@ object OutputView {
 
     private fun showWin(score: Score): String {
         if (score.getTotalGame() <= 1) return showSimpleWin(score)
-        return if (score.win >= 1) score.win.toString() + "승 " else ""
+        return if (score.winNum >= 1) score.winNum.toString() + "승 " else ""
     }
 
     private fun showDraw(score: Score): String {
         if (score.getTotalGame() <= 1) return showSimpleDraw(score)
-        return if (score.draw >= 1) score.draw.toString() + "무 " else ""
+        return if (score.drawNum >= 1) score.drawNum.toString() + "무 " else ""
     }
 
     private fun showLose(score: Score): String {
         if (score.getTotalGame() <= 1) return showSimpleLose(score)
-        return if (score.lose >= 1) score.lose.toString() + "패 " else ""
+        return if (score.loseNum >= 1) score.loseNum.toString() + "패 " else ""
     }
 
     private fun showSimpleWin(score: Score): String {
-        return if (score.win >= 1) "승 " else ""
+        return if (score.winNum >= 1) "승 " else ""
     }
 
     private fun showSimpleDraw(score: Score): String {
-        return if (score.draw >= 1) "무 " else ""
+        return if (score.drawNum >= 1) "무 " else ""
     }
 
     private fun showSimpleLose(score: Score): String {
-        return if (score.lose >= 1) "패 " else ""
+        return if (score.loseNum >= 1) "패 " else ""
     }
 }

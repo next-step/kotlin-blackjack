@@ -5,10 +5,10 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
-import blackjack.domain.rule.Score
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PlayerImplTest {
     @Test
@@ -63,7 +63,7 @@ class PlayerImplTest {
     }
 
     @Test
-    fun `비교 연산자 오버로딩을 이용해 게임 플레이어간의 점수를 비교 할 수 있다`() {
+    fun `플레이어간에는 점수 비교를 하지 않는다`() {
         // given player 1
         val sampleCard = Card.createCard(CardRank.JACK, CardShape.CLOVER)
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
@@ -76,9 +76,8 @@ class PlayerImplTest {
         val zeroPlayer = PlayerImpl("zero", myCards2)
 
         // when
-        val result = goofyPlayer.compareScore(zeroPlayer)
-
-        // then
-        result shouldBe Score(1, 0, 0)
+        assertThrows<IllegalArgumentException> {
+            zeroPlayer.compareScore(goofyPlayer)
+        }
     }
 }

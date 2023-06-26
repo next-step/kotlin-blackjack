@@ -16,8 +16,8 @@ class Participants(
     }
 
     fun getGameResult(): Map<String, Score> {
-        val result = mutableMapOf<String, Score>(dealer.name to Score(0, 0, 0))
-        val dealerScore = players.fold(Score(0, 0, 0)) { acc, player ->
+        val result = mutableMapOf<String, Score>(dealer.name to Score.init())
+        val dealerScore = players.fold(Score.init()) { acc, player ->
             val score = dealer.compareScore(player)
             result[player.name] = score.reverse()
             acc + score
