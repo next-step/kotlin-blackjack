@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Players(
+data class Players(
     val names: List<String>
 ) {
     var players: List<Player> = names.map{ Player(it) }
