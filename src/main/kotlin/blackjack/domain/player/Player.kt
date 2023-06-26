@@ -10,7 +10,6 @@ class Player(
 ) {
 
     private val cardDeck = PlayerCardDeck(name)
-    private val cardScoreCalculator = CardScoreCalculator()
 
     fun pass(card: Card) {
         cardDeck.insert(card)
@@ -29,7 +28,7 @@ class Player(
     }
 
     fun isBust(): Boolean {
-        return cardScoreCalculator.calculateScore(cardDeck.cards).isBust
+        return CardScoreCalculator.calculateScore(cardDeck.cards).isBust
     }
 }
 

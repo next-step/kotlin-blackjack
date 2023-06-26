@@ -31,7 +31,7 @@ class CardScoreCalculatorTest : BehaviorSpec({
                 )
             ) { cards, expected ->
                 Then("에이스는 1로 계산한다") {
-                    CardScoreCalculator().calculateScore(cards).value shouldBe expected
+                    CardScoreCalculator.calculateScore(cards).value shouldBe expected
                 }
             }
         }
@@ -61,7 +61,7 @@ class CardScoreCalculatorTest : BehaviorSpec({
                 ),
             ) { cards, expected ->
                 Then("에이스는 11로 계산한다") {
-                    CardScoreCalculator().calculateScore(cards).value shouldBe expected
+                    CardScoreCalculator.calculateScore(cards).value shouldBe expected
                 }
             }
         }

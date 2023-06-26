@@ -69,7 +69,7 @@ class BlackJackGameTest : BehaviorSpec({
             var isBust = false
             while (isBust.not()) {
                 val playerCards = game.hitFocusedPlayer().cards
-                isBust = CardScoreCalculator().calculateScore(playerCards).isBust
+                isBust = CardScoreCalculator.calculateScore(playerCards).isBust
             }
 
             Then("다음 플레이어로 순서가 넘어간다") {

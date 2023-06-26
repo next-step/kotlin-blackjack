@@ -6,7 +6,7 @@ import blackjack.domain.card.sum
 import blackjack.domain.card.sumLargeValue
 import blackjack.domain.card.sumSmallValue
 
-class CardScoreCalculator {
+object CardScoreCalculator {
 
     fun calculateScore(cards: List<Card>): Score {
         if (cards.isEmpty()) {
@@ -17,40 +17,41 @@ class CardScoreCalculator {
             .calculateSumCases()
             .sortedDescending()
             .map { sum -> Score(sum) }
+
         return scores.firstOrNull { it.isAlive } ?: scores.last()
     }
 
     private fun List<Card>.classifyByScore(): CardClassifiedResult {
-        val jokerScores = mutableListOf<CardScoreType.Flexible>()
+        val flexibleScores = mutableListOf<CardScoreType.Flexible>()
         val fixedScores = mutableListOf<CardScoreType.Fixed>()
 
         forEach { card ->
             when (val score = card.denomination.score) {
-                is CardScoreType.Flexible -> jokerScores.add(score)
+                is CardScoreType.Flexible -> flexibleScores.add(score)
                 is CardScoreType.Fixed -> fixedScores.add(score)
             }
         }
 
-        return CardClassifiedResult(jokerScores, fixedScores)
+        return CardClassifiedResult(flexibleScores, fixedScores)
     }
 
     private data class CardClassifiedResult(
-        val jokerScores: List<CardScoreType.Flexible>,
+        val flexibleScores: List<CardScoreType.Flexible>,
         val fixedScores: List<CardScoreType.Fixed>,
     ) {
 
         fun calculateSumCases(): List<Int> {
             val fixedScoreSum = fixedScores.sum()
-            if (jokerScores.isEmpty()) {
+            if (flexibleScores.isEmpty()) {
                 return listOf(fixedScoreSum)
             }
 
             val largeScoreStartPickSize = 0
             val largeScoreEndPickSize = 1
             return (largeScoreStartPickSize..largeScoreEndPickSize).map { largeScorePickSize ->
-                val smallScorePickSize = jokerScores.size - largeScorePickSize
-                val largeScoreSum = jokerScores.take(largeScorePickSize).sumLargeValue()
-                val smallScoreSum = jokerScores.take(smallScorePickSize).sumSmallValue()
+                val smallScorePickSize = flexibleScores.size - largeScorePickSize
+                val largeScoreSum = flexibleScores.take(largeScorePickSize).sumLargeValue()
+                val smallScoreSum = flexibleScores.take(smallScorePickSize).sumSmallValue()
                 fixedScoreSum + largeScoreSum + smallScoreSum
             }
         }

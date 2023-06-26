@@ -7,5 +7,5 @@ data class PlayerGameResult(
     val playerCardDeck: PlayerCardDeckCapture,
 ) {
 
-    val score = CardScoreCalculator().calculateScore(playerCardDeck.cards).value
+    val score = CardScoreCalculator.calculateScore(playerCardDeck.cards).value
 }
