@@ -11,13 +11,7 @@ enum class CardNumber {
         private const val INVALID_CARD_NUMBER_ERROR_MESSAGE = "카드의 번호는 $MIN_CARD_NUMBER ~ $MAX_CARD_NUMBER 사이여야 합니다"
 
         fun of(value: Int): CardNumber {
-            return when {
-                value < MIN_CARD_NUMBER || value > MAX_CARD_NUMBER -> throw IllegalArgumentException(
-                    INVALID_CARD_NUMBER_ERROR_MESSAGE,
-                )
-
-                else -> values()[value - 1]
-            }
+            return requireNotNull(values().find { it.ordinal + 1 == value }) { INVALID_CARD_NUMBER_ERROR_MESSAGE }
         }
     }
 }

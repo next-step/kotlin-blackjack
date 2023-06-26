@@ -44,7 +44,7 @@ object ResultView {
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
-            else -> (CardNumber.values().indexOf(cardNumber) + 1).toString()
+            else -> (cardNumber.ordinal + 1).toString()
         }
     }
 

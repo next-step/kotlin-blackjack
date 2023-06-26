@@ -14,7 +14,7 @@ object PointCalculator {
     private fun getCardPoints(card: Card): Int {
         return when (card.cardNumber) {
             CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING -> 10
-            else -> CardNumber.values().indexOf(card.cardNumber) + 1
+            else -> card.cardNumber.ordinal + 1
         }
     }
 }
