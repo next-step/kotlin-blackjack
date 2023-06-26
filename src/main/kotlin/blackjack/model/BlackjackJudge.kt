@@ -9,7 +9,7 @@ data class BlackjackJudge(private val dealer: BlackjackDealer, private val playe
 
     val dealerLoseCount: Int
         get() {
-            return players.count { dealer.isWinThan(it) }
+            return players.count() - dealerWinCount
         }
 
     val playerResults: Collection<BlackjackPlayerResult>
