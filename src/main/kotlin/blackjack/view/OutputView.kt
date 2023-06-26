@@ -35,7 +35,7 @@ object OutputView {
 
     fun printPlayerResult(players: Participants) {
         println()
-        players.getAllPlayers.forEach {
+        players.allPlayers.forEach {
             printPlayerResult(it)
         }
     }

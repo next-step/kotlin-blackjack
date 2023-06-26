@@ -60,4 +60,24 @@ class PlayerImplTest {
         // then
         result shouldBe 31
     }
+
+    @Test
+    fun `비교 연산자 오버로딩을 이용해 게임 플레이어간의 점수를 비교 할 수 있다`() {
+        // given player 1
+        val sampleCard = Card.createCard(CardRank.JACK, CardShape.CLOVER)
+        val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
+        val myCards = CardHold(listOf(sampleCard, sampleCard2))
+        val goofyPlayer = PlayerImpl("goofy", myCards)
+
+        // given player 2
+        val sampleCard3 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
+        val myCards2 = CardHold(listOf(sampleCard3))
+        val zeroPlayer = PlayerImpl("zero", myCards2)
+
+        // when
+        val result = goofyPlayer > zeroPlayer
+
+        // then
+        result shouldBe true
+    }
 }

@@ -4,7 +4,7 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
 
-sealed interface Player {
+sealed interface Player : Comparable<Player> {
     val name: String
     var cardHold: CardHold
 
@@ -27,6 +27,10 @@ sealed interface Player {
         if (card != null) {
             cardHold = cardHold.add(card)
         }
+    }
+
+    override fun compareTo(other: Player): Int {
+        return this.getPoints() - other.getPoints()
     }
 
     companion object {

@@ -6,7 +6,7 @@ class Participants(
     val players: List<PlayerImpl>,
     val dealer: Dealer
 ) {
-    val getAllPlayers: List<Player>
+    val allPlayers: List<Player>
         get() = listOf(dealer) + players
 
     fun drawAll(deck: Deck) {
