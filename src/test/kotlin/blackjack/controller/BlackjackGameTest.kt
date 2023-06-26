@@ -12,9 +12,11 @@ class BlackjackGameTest : StringSpec({
         BlackjackGame(
             { false },
             { listOf("test1", "test2") },
-            { player -> player.deck.cards.size shouldBe 2 },
-            { _, count -> count shouldBe 2 },
-            { players -> players.players.map { it.deck.cards.size }.shouldContainExactly(2, 2) }
+            { _ -> },
+            { player -> player.handDeck.cards.size shouldBe 2 },
+            { _, _, count -> count shouldBe 2 },
+            { _, players -> players.map { it.handDeck.cards.size }.shouldContainExactly(2, 2) },
+            { _ -> },
         ).start()
     }
 })
