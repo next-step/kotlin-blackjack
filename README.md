@@ -149,7 +149,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - [ ] 상대보다 21에 가까우면 승리한다.
 - [ ] 상대보다 21에 멀면 패배한다.
 
-- [ ] InitialHand와 Hit은 Running상태이므로 승패를 계산하려할 경우 예외가 발생한다.
+- [x] InitialHand와 Hit은 Running상태이므로 승패를 계산하려할 경우 예외가 발생한다.
 
 
 ### output view

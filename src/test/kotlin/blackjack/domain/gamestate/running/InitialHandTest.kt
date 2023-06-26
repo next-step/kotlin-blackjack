@@ -1,4 +1,4 @@
-package blackjack.domain.gamestate
+package blackjack.domain.gamestate.running
 
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
@@ -56,6 +56,13 @@ class InitialHandTest : FunSpec({
         test("스코어를 계산하려는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { InitialHand().score() }
             exception.message shouldBe "턴이 종료되지 않아 점수를 반환할 수 없다."
+        }
+    }
+
+    context("compete") {
+        test("승패를 계산하려하는 경우 예외가 발생한다") {
+            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().compete(InitialHand()) }
+            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }
     }
 })

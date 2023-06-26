@@ -4,9 +4,9 @@ import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Hit
-import blackjack.domain.gamestate.InitialHand
-import blackjack.domain.gamestate.Stay
+import blackjack.domain.gamestate.running.Hit
+import blackjack.domain.gamestate.running.InitialHand
+import blackjack.domain.gamestate.finished.Stay
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe

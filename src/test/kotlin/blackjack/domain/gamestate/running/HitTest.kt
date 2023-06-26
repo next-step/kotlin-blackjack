@@ -1,4 +1,4 @@
-package blackjack.domain.gamestate
+package blackjack.domain.gamestate.running
 
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
@@ -7,6 +7,8 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Bust
+import blackjack.domain.gamestate.finished.Stay
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -67,6 +69,15 @@ class HitTest : FunSpec({
         test("스코어를 계산하려는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { Hit(Cards.of(SPADE_KING, SPADE_JACK)).score() }
             exception.message shouldBe "턴이 종료되지 않아 점수를 반환할 수 없다."
+        }
+    }
+
+    context("compete") {
+        test("승패를 계산하려하는 경우 예외가 발생한다") {
+            val exception = shouldThrowExactly<IllegalStateException> {
+                Hit(Cards.of(SPADE_KING, SPADE_JACK)).compete(Hit(Cards.of(SPADE_KING, SPADE_JACK)))
+            }
+            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }
     }
 })

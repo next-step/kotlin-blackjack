@@ -9,8 +9,8 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Hit
-import blackjack.domain.gamestate.Stay
+import blackjack.domain.gamestate.running.Hit
+import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.player.Player
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec

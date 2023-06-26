@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.Hands
 import blackjack.domain.card.Card
 import blackjack.domain.gamestate.GameState
-import blackjack.domain.gamestate.InitialHand
+import blackjack.domain.gamestate.running.InitialHand
 
 class Player(
     val name: Name,
