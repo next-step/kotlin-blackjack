@@ -3,11 +3,11 @@ package blackjack.domain
 import blackjack.domain.enums.Condition
 
 class Dealer(
-    val name: String = "딜러",
-    val cards: Cards,
+    name: String = "딜러",
+    cards: Cards,
+    condition: Condition = Condition.STAY,
     val deck: Deck,
-    private var condition: Condition = Condition.STAY
-) {
+): Participant(name, cards, condition) {
 
     init {
         var total = 0
@@ -15,7 +15,20 @@ class Dealer(
             total += it.rank.value
         }
         if( STANDARD_CARD_SCORE >= total) {
-            condition = Condition.PLAY
+            this.condition = Condition.PLAY
+        }
+    }
+
+    override fun hit(card: Card) {
+        super.hit(card)
+        var total = 0
+        cards.cards.forEach {
+            total += it.rank.value
+        }
+        if( STANDARD_CARD_SCORE < total) {
+            this.condition = Condition.STAY
+        } else if (total > BlackjackGame.BLACK_JACK_NUMBER) {
+            this.condition = Condition.BUST
         }
     }
 
@@ -28,6 +41,7 @@ class Dealer(
     }
 
     companion object {
-        private const val STANDARD_CARD_SCORE = 16
+        const val ONE_DRAW_COUNT = 1
+        const val STANDARD_CARD_SCORE = 16
     }
 }
