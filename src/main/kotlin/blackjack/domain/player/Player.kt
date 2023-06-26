@@ -6,7 +6,7 @@ import blackjack.domain.card.Deck
 
 sealed interface Player : Comparable<Player> {
     val name: String
-    var cardHold: CardHold
+    val cardHold: CardHold
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()
@@ -25,7 +25,7 @@ sealed interface Player : Comparable<Player> {
 
         val card = deck.draw()
         if (card != null) {
-            cardHold = cardHold.add(card)
+            cardHold.add(card)
         }
     }
 

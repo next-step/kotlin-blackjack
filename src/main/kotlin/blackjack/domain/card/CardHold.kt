@@ -1,11 +1,10 @@
 package blackjack.domain.card
 
 class CardHold(
-    val cards: List<Card> = emptyList()
+    val cards: MutableList<Card> = mutableListOf<Card>()
 ) {
-    fun add(newCard: Card): CardHold {
-        val addedCards = cards + newCard
-        return CardHold(addedCards)
+    fun add(newCard: Card) {
+        cards.add(newCard)
     }
 
     fun getCardsTotalSize(): Int {

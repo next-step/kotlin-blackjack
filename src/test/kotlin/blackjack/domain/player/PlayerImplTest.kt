@@ -35,7 +35,7 @@ class PlayerImplTest {
         val sampleCard = Card.createCard(CardRank.JACK, CardShape.CLOVER)
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
-        val myCards = CardHold(listOf(sampleCard, sampleCard2, sampleCard3))
+        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3))
         val playerImpl = PlayerImpl("goofy", myCards)
 
         // when
@@ -51,7 +51,7 @@ class PlayerImplTest {
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val sampleCard4 = Card.createCard(CardRank.ACE, CardShape.HEART)
-        val myCards = CardHold(listOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
+        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
         val playerImpl = PlayerImpl("goofy", myCards)
 
         // when
@@ -66,12 +66,12 @@ class PlayerImplTest {
         // given player 1
         val sampleCard = Card.createCard(CardRank.JACK, CardShape.CLOVER)
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val myCards = CardHold(listOf(sampleCard, sampleCard2))
+        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
         val goofyPlayer = PlayerImpl("goofy", myCards)
 
         // given player 2
         val sampleCard3 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val myCards2 = CardHold(listOf(sampleCard3))
+        val myCards2 = CardHold(mutableListOf(sampleCard3))
         val zeroPlayer = PlayerImpl("zero", myCards2)
 
         // when

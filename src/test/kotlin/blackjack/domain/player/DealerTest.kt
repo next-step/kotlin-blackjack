@@ -33,8 +33,8 @@ class DealerTest {
     @Test
     fun `포인트가 17 이상인 경우 카드를 뽑을 수 없다`() {
         val sampleCard = Card.createCard(CardRank.KING, CardShape.CLOVER)
-        val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val myCards = CardHold(listOf(sampleCard, sampleCard2))
+        val sampleCard2 = Card.createCard(CardRank.SEVEN, CardShape.HEART)
+        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
         val dealer = Dealer(cardHold = myCards)
 
         // when
@@ -50,7 +50,7 @@ class DealerTest {
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val sampleCard4 = Card.createCard(CardRank.ACE, CardShape.HEART)
-        val myCards = CardHold(listOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
+        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
         val dealer = Dealer(cardHold = myCards)
 
         // when

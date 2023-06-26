@@ -9,8 +9,8 @@ class CardHoldTest {
         val cloverEight = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
         val heartJack = Card.createCard(CardRank.JACK, CardShape.HEART)
         val cardHold = CardHold()
-            .add(cloverEight)
-            .add(heartJack)
+        cardHold.add(cloverEight)
+        cardHold.add(heartJack)
 
         cardHold.getTotalPoints() shouldBe 18
     }

@@ -4,5 +4,5 @@ import blackjack.domain.card.CardHold
 
 class PlayerImpl(
     override val name: String,
-    override var cardHold: CardHold = CardHold()
+    override val cardHold: CardHold = CardHold()
 ) : Player
