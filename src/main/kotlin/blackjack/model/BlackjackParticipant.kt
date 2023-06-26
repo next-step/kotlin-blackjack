@@ -6,6 +6,16 @@ sealed class BlackjackParticipant(cardDeck: CardDeck) {
     val deckScore: Int
         get() = handDeck.score
 
+    val deckCount: Int
+        get() = handDeck.count
+
+    fun isWinByScoreGap(participant: BlackjackParticipant): Boolean {
+        return (HandDeck.LIMIT_SCORE - deckScore) < (HandDeck.LIMIT_SCORE - participant.deckScore)
+    }
+
+    val isSameLimitScore: Boolean
+        get() = (HandDeck.LIMIT_SCORE == deckScore)
+
     val isScoreOverThanLimitScore: Boolean
         get() = handDeck.isScoreOverThanLimitScore
 

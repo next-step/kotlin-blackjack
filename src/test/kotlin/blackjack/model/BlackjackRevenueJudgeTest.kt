@@ -19,7 +19,7 @@ class BlackjackRevenueJudgeTest : StringSpec({
         }
     }
 
-    "모든 참가자의 수익금은 0원이어야 함" {
+    "딜러와 참가자들의 모든 수익금은 0원이어야 함" {
         // given
         val cardDeck = CardDeck()
         val dealer = BlackjackDealer(cardDeck) { _ -> }

@@ -2,6 +2,9 @@ package blackjack.model
 
 class HandDeck {
 
+    val count: Int
+        get() = cards.size
+
     val cards: MutableCollection<TrumpCard> = mutableListOf()
 
     val isScoreOverThanLimitScore: Boolean
