@@ -8,9 +8,9 @@ object GameCardsSet {
     private val remainingCards: List<Card>
         get() = ALL_CARDS.values.filter { it !in drawnCards }
 
-    fun drawRandomCard(): Card? {
+    fun drawRandomCard(): Card {
         if (remainingCards.isEmpty()) {
-            return null
+            throw IllegalArgumentException("남은 카드가 없습니다.")
         }
 
         val randomIndex = Random.nextInt(remainingCards.size)
