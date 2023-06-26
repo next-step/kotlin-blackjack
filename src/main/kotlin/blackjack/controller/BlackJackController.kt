@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.enums.Condition
-import blackjack.ext.replaceWhiteSpaceAndSplitByComma
 import blackjack.service.BlackjackService
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -45,5 +44,9 @@ class BlackJackController(
         resultView.printEnter()
 
         return blackjackGame
+    }
+
+    private fun replaceWhiteSpaceAndSplitByComma(target: String): List<String> {
+        return target.trim().replace("\\s".toRegex(), "").split(",")
     }
 }
