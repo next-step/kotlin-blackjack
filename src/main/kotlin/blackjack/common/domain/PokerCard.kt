@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.common.domain
 
 class PokerCard(
     val symbol: PokerSymbol,

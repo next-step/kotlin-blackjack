@@ -1,7 +1,6 @@
-package blackjack
+package blackjack.common.domain.builder
 
-import blackjack.domain.PokerCard
-import blackjack.domain.builder.PokerCardBuilder
+import blackjack.common.domain.PokerCard
 
 fun pokerCardOf(block: PokerCardBuilder.() -> Unit): PokerCard {
     return PokerCardBuilder().apply(block).build()

@@ -1,7 +1,7 @@
-package blackjack.domain.builder
+package blackjack.common.domain.builder
 
-import blackjack.domain.PokerCard
-import blackjack.domain.PokerSymbol
+import blackjack.common.domain.PokerCard
+import blackjack.common.domain.PokerSymbol
 
 class PokerCardBuilder {
 

@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.common.domain
 
-import blackjack.pokerCardOf
+import blackjack.common.domain.builder.pokerCardOf
 
 class Deck {
     private val deck: MutableList<PokerCard> = List(DECK_SIZE) { index ->

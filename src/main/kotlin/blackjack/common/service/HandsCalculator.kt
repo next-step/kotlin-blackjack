@@ -1,6 +1,6 @@
-package blackjack.service
+package blackjack.common.service
 
-import blackjack.domain.PokerCard
+import blackjack.common.domain.PokerCard
 
 private const val ACE = "A"
 private const val ACE_ALT_VALUE = 10

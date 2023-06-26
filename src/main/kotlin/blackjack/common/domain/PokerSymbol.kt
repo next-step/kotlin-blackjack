@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.common.domain
 
 enum class PokerSymbol(val value: Int, val symbolName: String) {
     HEARTS(0, "하트"),
