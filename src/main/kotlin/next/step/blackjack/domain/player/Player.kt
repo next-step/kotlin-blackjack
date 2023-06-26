@@ -4,14 +4,13 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.card.state.CardsState
 import next.step.blackjack.domain.card.state.UnfinishedState
-import next.step.blackjack.domain.game.Fightable
 import next.step.blackjack.domain.game.GameResult
 
 open class Player(
     protected val name: PlayerName,
     protected val cards: Cards = Cards.of(emptyList()),
     protected var state: CardsState = UnfinishedState
-) : Fightable<Player> {
+) {
 
     fun name(): String = name.name
 
@@ -26,7 +25,7 @@ open class Player(
 
     fun point(): Int = cards.point()
 
-    override fun fight(other: Player): GameResult {
+    fun fight(other: Player): GameResult {
         val gameResult = state.fight(other.state)
         return if (gameResult == GameResult.UNDECIDED) cards.fight(other.cards) else gameResult
     }

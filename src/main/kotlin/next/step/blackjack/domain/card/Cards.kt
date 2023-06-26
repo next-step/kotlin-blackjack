@@ -1,10 +1,9 @@
 package next.step.blackjack.domain.card
 
-import next.step.blackjack.domain.game.Fightable
 import next.step.blackjack.domain.game.GameResult
 import next.step.blackjack.util.CombinationUtils
 
-data class Cards(private val cards: MutableList<Card> = mutableListOf()) : Fightable<Cards> {
+data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     fun add(card: Card) {
         cards.add(card)
     }
@@ -38,7 +37,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) : Fight
         return cards.first().desc()
     }
 
-    override fun fight(other: Cards): GameResult = when {
+    fun fight(other: Cards): GameResult = when {
         point() > other.point() -> GameResult.WIN
         point() < other.point() -> GameResult.LOSE
         else -> GameResult.TIE
