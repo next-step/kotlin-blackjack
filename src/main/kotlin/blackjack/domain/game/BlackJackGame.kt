@@ -18,8 +18,7 @@ class BlackJackGame(
 
     private val cardDeck = CardDeck.create(shuffler)
     private val dealer = Dealer()
-    private val waitPlayers = LinkedList(playerNames.map { Player(it) })
-    private val finishedPlayers = LinkedList<Player>()
+    private val players = LinkedList(playerNames.map { Player(it) })
 
     fun currentTurn(): BlackJackGameTurn {
         return when {
@@ -28,6 +27,9 @@ class BlackJackGame(
             }
             hasWaitPlayer() -> {
                 BlackJackGameTurn.PlayerAnswer(requireWaitPlayer().name)
+            }
+            isDealerWait() -> {
+                BlackJackGameTurn.Dealer
             }
             else -> {
                 BlackJackGameTurn.Finished
@@ -40,7 +42,7 @@ class BlackJackGame(
             "already card distributed"
         }
         dealer.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
-        waitPlayers.forEach { player ->
+        players.forEach { player ->
             player.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
         }
 
@@ -50,49 +52,73 @@ class BlackJackGame(
                 CardHolder.Open(dealer.cards.first()),
                 CardHolder.Hide,
             ),
-            playerCards = waitPlayers.captureAllCards(),
+            playerCards = players.captureAllCards(),
         )
     }
 
     fun hitFocusedPlayer(): PlayerCards {
-        checkCardDistributionCompleted()
-
+        checkPlayerTurn()
         val player = requireWaitPlayer()
         player.pass(cardDeck.pick())
-        if (player.isBust()) {
-            moveFocusedPlayerToFinished()
-        }
         return player.captureCards()
     }
 
     fun stayFocusedPlayer() {
-        checkCardDistributionCompleted()
-        moveFocusedPlayerToFinished()
+        checkPlayerTurn()
+        requireWaitPlayer().stay()
     }
 
-    fun makeGameResult(): BlackJackGameResult {
-        require(waitPlayers.isEmpty()) {
-            "game is not end"
+    fun executeDealerTurn(): DealerTurnExecuteResult {
+        checkDelayerTurn()
+
+        val isDistributedOneMoreCard = if (dealer.canHit()) {
+            dealer.pass(cardDeck.pick())
+            true
+        } else {
+            dealer.stay()
+            false
         }
 
-        val playerGameResults = finishedPlayers
-            .map { player -> player.captureCards() }
-            .map { playerCards -> PlayerGameResult(playerCards) }
-
-        return BlackJackGameResult(
-            playerGameResults = playerGameResults,
+        return DealerTurnExecuteResult(
+            isDistributedOneMoreCard = isDistributedOneMoreCard,
         )
     }
 
-    private fun checkCardDistributionCompleted() {
+    fun makeGameResult(): BlackJackGameResult {
+        checkFinishTurn()
+
+        return BlackJackGameResult(
+            playerGameResults = players
+                .captureAllCards()
+                .map { playerCards -> PlayerGameResult(playerCards) },
+        )
+    }
+
+    private fun checkPlayerTurn() {
         require(isCardDistributionCompleted()) {
             "need card distribute"
         }
     }
 
-    private fun moveFocusedPlayerToFinished() {
-        val player = waitPlayers.removeFirstOrNull() ?: throw IllegalStateException("wait player not existed")
-        finishedPlayers.add(player)
+    private fun checkDelayerTurn() {
+        require(isCardDistributionCompleted()) {
+            "need card distribute"
+        }
+        require(players.all { player -> player.state.canHit().not() }) {
+            "can hit player is remaining"
+        }
+    }
+
+    private fun checkFinishTurn() {
+        require(isCardDistributionCompleted()) {
+            "need card distribute"
+        }
+        require(players.all { player -> player.state.canHit().not() }) {
+            "can hit player is remaining"
+        }
+        require(dealer.state.canHit().not()) {
+            "should be start dealer turn"
+        }
     }
 
     private fun isCardDistributionCompleted(): Boolean {
@@ -100,7 +126,7 @@ class BlackJackGame(
     }
 
     private fun needCardDistribution(): Boolean {
-        return waitPlayers.all { player -> player.notHasCard() } && dealer.notHasCard()
+        return players.all { player -> player.notHasCard() } && dealer.notHasCard()
     }
 
     private fun hasWaitPlayer(): Boolean {
@@ -112,7 +138,7 @@ class BlackJackGame(
     }
 
     private fun findWaitPlayerOrNull(): Player? {
-        return waitPlayers.firstOrNull()
+        return players.firstOrNull { it.state.canHit() }
     }
 
     private fun List<Player>.captureAllCards(): List<PlayerCards> {
@@ -124,6 +150,10 @@ class BlackJackGame(
             playerName = name,
             cards = cards,
         )
+    }
+
+    private fun isDealerWait(): Boolean {
+        return dealer.state.canHit()
     }
 
     companion object {

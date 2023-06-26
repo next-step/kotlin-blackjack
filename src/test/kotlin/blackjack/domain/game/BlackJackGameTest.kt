@@ -1,8 +1,12 @@
 package blackjack.domain.game
 
+import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardHolder
+import blackjack.domain.card.heartCard
 import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
+import blackjack.domain.shuffle.CardCustomShuffler
+import blackjack.domain.shuffle.CardShuffler
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -102,8 +106,60 @@ class BlackJackGameTest : BehaviorSpec({
             game.stayFocusedPlayer()
             game.stayFocusedPlayer()
 
-            Then("게임이 종료된다.") {
-                game.currentTurn().isFinished() shouldBe true
+            Then("딜러의 순서로 넘어간다") {
+                (game.currentTurn() is BlackJackGameTurn.Dealer) shouldBe true
+            }
+        }
+    }
+
+    Given("카드의 합이 16 이하인 딜러의 차례가 되었을 때") {
+        val playerNames = playerNames("test1")
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TWO),
+                    heartCard(CardDenomination.THREE),
+                    heartCard(CardDenomination.FOUR),
+                    heartCard(CardDenomination.FIVE),
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers() // 딜러 : [2, 3] 플레이어 [4, 5]
+        game.stayFocusedPlayer()
+        When("딜러의 턴을 실행하면") {
+            val executeResult = game.executeDealerTurn() // 딜러는 [2, 3] 이므로 합은 5
+            Then("1장의 카드를 추가로 받는다") {
+                executeResult.isDistributedOneMoreCard shouldBe true
+            }
+        }
+    }
+
+    Given("카드의 합이 17 이상인 딜러의 차례가 되었을 때") {
+        val playerNames = playerNames("test1")
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TEN),
+                    heartCard(CardDenomination.JACK),
+                    heartCard(CardDenomination.QUEEN),
+                    heartCard(CardDenomination.KING),
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames,
+        )
+        game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
+        game.stayFocusedPlayer()
+        When("딜러의 턴을 실행하면") {
+            val executeResult = game.executeDealerTurn() // 딜러는 [10, 10] 이므로 합은 20
+            Then("1장의 카드를 추가로 받지 않는다") {
+                executeResult.isDistributedOneMoreCard shouldBe false
             }
         }
     }
