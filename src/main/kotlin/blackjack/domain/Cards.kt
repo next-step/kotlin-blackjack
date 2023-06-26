@@ -18,7 +18,7 @@ class Cards {
 
     fun takeCard(count: Int): List<Card> {
         cards.shuffle()
-        val takenCards = cards.take(2)
+        val takenCards = cards.take(count)
         cards.removeAll(takenCards)
         return takenCards
     }
