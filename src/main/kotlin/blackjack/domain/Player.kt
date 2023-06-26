@@ -11,9 +11,7 @@ class Player(val name: String) {
     }
 
     fun addCards(drawCards: List<Card>) {
-        drawCards.forEach {
-            cards.add(it)
-        }
+        cards.addAll(drawCards)
     }
 
     fun getCards(): String {
