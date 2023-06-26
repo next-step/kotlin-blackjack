@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.dto.BlackjackGameResult
 import blackjack.service.BlackjackService
 
 object ResultView {
@@ -25,11 +26,30 @@ object ResultView {
         println("${player.name}카드: $cardsInfo")
     }
 
-    fun printResultGame(players: List<Player>) {
+    fun printResultScore(players: List<Player>, dealer: Dealer) {
+
+        val dealerScore = dealer.cards.calculateScore()
+        println("${dealer.name} 카드: ${getCardsInfo(dealer.cards)} - 결과: $dealerScore")
+
         players.forEach { player ->
             val cardsInfo = getCardsInfo(player.cards)
-            val cardsTotalValue = player.cards.calculateScore()
-            println("${player.name}카드: $cardsInfo - 결과: $cardsTotalValue")
+            val totalScore = player.cards.calculateScore()
+            println("${player.name}카드: $cardsInfo - 결과: $totalScore")
+        }
+    }
+
+    fun printDealerCard(dealer: Dealer) {
+        if(dealer.cards.calculateScore() > Dealer.STANDARD_CARD_SCORE) {
+            println("${dealer.name}는 ${Dealer.STANDARD_CARD_SCORE+1}이상이라 카드를 더 받지 않습니다.")
+        } else if (dealer.cards.calculateScore() < Dealer.STANDARD_CARD_SCORE) {
+            println("${dealer.name}는 ${Dealer.STANDARD_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
+        }
+    }
+
+    fun printResultGame(result: List<BlackjackGameResult>) {
+        println("## 최종 승패")
+        result.forEach {
+            println("${it.name}: ${it.result}")
         }
     }
 

@@ -33,7 +33,6 @@ class DealerTest {
         dealer.currentCondition() shouldBe Condition.PLAY
     }
 
-
     companion object {
         const val TOTAL_CARD_COUNT = 52
         const val BASIC_CARD_COUNT = 2

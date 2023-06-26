@@ -1,10 +1,10 @@
 package blackjack.domain.enums
 
 enum class Condition(
-    val raceFlag: String
+    val raceFlag: RaceFlag
 ) {
-    PLAY("y"),
-    STAY("n"),
-    BUST("n"),
-    BLACKJACK("n")
+    PLAY(RaceFlag.Y),
+    STAY(RaceFlag.N),
+    BUST(RaceFlag.N),
+    BLACKJACK(RaceFlag.N)
 }
