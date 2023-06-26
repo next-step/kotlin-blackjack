@@ -65,43 +65,46 @@ object ResultView {
     }
 
     fun printResults(blackJackResults: BlackjackResults) {
-        printDealerScoreResult(blackJackResults.dealerResult)
-        printUsersScoreResult(blackJackResults.userResults)
-        println(RESULT_MESSAGE)
-        printDealerResult(blackJackResults.dealerResult)
-        printUserResults(blackJackResults.userResults)
-    }
-
-    private fun printDealerScoreResult(dealerResult: DealerResult) {
-        val dealer = dealerResult.dealerInfo
-        println(DEALER_SCORE_PRINT_FORMAT.format(deckToString(dealer.deck), dealer.calculatePoint()))
-    }
-
-    private fun printUsersScoreResult(userResults: UserResults) {
-        for (userResult in userResults) {
-            printUserScoreResult(userResult.userInfo)
+        val message = buildString {
+            appendLine()
+            appendLine(dealerScoreResultFormatting(blackJackResults.dealerResult))
+            appendLine(usersScoreResultFormatting(blackJackResults.userResults))
+            appendLine(RESULT_MESSAGE)
+            appendLine(dealerResultFormatting(blackJackResults.dealerResult))
+            append(userResultsFormatting(blackJackResults.userResults))
         }
+
+        print(message)
     }
 
-    private fun printUserScoreResult(user: User) {
-        println(USER_SCORE_PRINT_FORMAT.format(user.name, deckToString(user.deck), user.calculatePoint()))
+    private fun dealerScoreResultFormatting(dealerResult: DealerResult): String {
+        val dealer = dealerResult.dealerInfo
+        return DEALER_SCORE_PRINT_FORMAT.format(deckToString(dealer.deck), dealer.calculatePoint())
     }
 
-    private fun printDealerResult(dealerResult: DealerResult) {
-        println(
-            DEALER_RESULT_PRINT_FORMAT.format(
-                dealerResult.winCount,
-                dealerResult.drawCount,
-                dealerResult.loseCount,
-            ),
-        )
+    private fun usersScoreResultFormatting(userResults: UserResults): StringBuilder {
+        val stringBuilder = StringBuilder()
+        for (userResult in userResults) {
+            stringBuilder.appendLine(userScoreResultFormatting(userResult.userInfo))
+        }
+        return stringBuilder
     }
 
-    private fun printUserResults(userResults: UserResults) {
+    private fun userScoreResultFormatting(user: User): String {
+        return USER_SCORE_PRINT_FORMAT.format(user.name, deckToString(user.deck), user.calculatePoint())
+    }
+
+    private fun dealerResultFormatting(dealerResult: DealerResult): String {
+        return DEALER_RESULT_PRINT_FORMAT.format(dealerResult.winCount, dealerResult.drawCount, dealerResult.loseCount)
+    }
+
+    private fun userResultsFormatting(userResults: UserResults): StringBuilder {
+        val stringBuilder = StringBuilder()
         for (userResult in userResults) {
             val user = userResult.userInfo
-            println(USER_RESULT_PRINT_FORMAT.format(user.name, blackJackResultToString(userResult.result)))
+            stringBuilder.appendLine(USER_RESULT_PRINT_FORMAT.format(user.name, blackJackResultToString(userResult.result)))
         }
+        return stringBuilder
     }
 
     private fun cardNumberToString(cardNumber: CardNumber): String {
