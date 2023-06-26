@@ -16,10 +16,10 @@ class Cards {
         return cards.toList()
     }
 
-    fun takeCard(): Card {
-        val randomIndex = (0 until cards.size).random()
-        val card = cards[randomIndex]
-        cards.removeAt(randomIndex)
-        return card
+    fun takeCard(count: Int): List<Card> {
+        cards.shuffle()
+        val takenCards = cards.take(2)
+        cards.removeAll(takenCards)
+        return takenCards
     }
 }
