@@ -10,6 +10,8 @@ class Deck(deck: List<Card>) {
 
     fun getCards() = cards
 
+    fun draw() = cards.removeFirst()
+
     companion object {
         fun make(): Deck {
             val shuffledDeck = Denomination.values()

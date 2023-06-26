@@ -1,18 +1,26 @@
 package blackjack.domain
 
-class BlackjackGame(input: String) {
+class BlackjackGame(input: List<String>) {
 
-    private val players = mutableListOf<String>()
+    private val players = mutableListOf<Player>()
 
     init {
-        transformToPlayerList(input)
+        transformToPlayers(input, makeDeck())
     }
 
-    private fun transformToPlayerList(input: String) {
-        val playerList = input.split(",", ", ")
-        playerList.forEach { player ->
-            players.add(player.trim())
+    private fun makeDeck(): Deck = Deck.make()
+
+    private fun transformToPlayers(
+        input: List<String>,
+        deck: Deck
+    ) {
+        val playerList = input.map {
+            Player(
+                it.trim(),
+                listOf(deck.draw(), deck.draw())
+            )
         }
+        players.addAll(playerList)
     }
 
     fun getPlayers() = players
