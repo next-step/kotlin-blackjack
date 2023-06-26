@@ -1,8 +1,18 @@
 package blackjack.view
 
+import blackjack.domain.Player
+
 object OutputView {
 
     fun printFirstDeal(users: List<String>) {
-        println("${users.joinToString { it }}에게 2장의 카드를 나누었습니다.")
+        println()
+        println("${users.joinToString { it.trim() }}에게 2장의 카드를 나누었습니다.")
+    }
+
+    fun printPlayerCards(player: Player) {
+        val message = player.cards.joinToString(", ") {
+            "${it.denomination.score}${it.shape.desc}"
+        }
+        println("${player.name}카드: $message")
     }
 }
