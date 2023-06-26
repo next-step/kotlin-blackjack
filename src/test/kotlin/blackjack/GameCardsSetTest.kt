@@ -23,7 +23,7 @@ class GameCardsSetTest {
 
     @Test
     fun `게임 카드 세트에서 카드를 뽑을 때 남은 카드가 없다면 IllegalStateException`() {
-        repeat (52) {
+        repeat(52) {
             val draw = gameCardsSet.drawRandomCard()
         }
 

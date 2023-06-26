@@ -15,7 +15,7 @@ class Card private constructor(
             return ALL_CARDS[Pair(rank, suit)] ?: throw IllegalArgumentException("카드가 존재하지 않습니다.")
         }
 
-        private fun createAllCards(): Map<Pair<Ranks, Suits>,Card> {
+        private fun createAllCards(): Map<Pair<Ranks, Suits>, Card> {
             return Ranks.values().flatMap { rank ->
                 Suits.values().map { suit -> Card(rank, suit) }
             }.associateBy {
