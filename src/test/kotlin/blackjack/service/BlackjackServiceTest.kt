@@ -12,6 +12,6 @@ class BlackjackServiceTest {
         blackjackGame.players.size shouldBe 2
         blackjackGame.players[0].name shouldBe "test1"
         blackjackGame.players[1].name shouldBe "test2"
-        blackjackGame.dealer.deck.currentCardCount() shouldBe 52 - 4
+        blackjackGame.dealer.deck.cardCount shouldBe 52 - 4
     }
 }
