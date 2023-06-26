@@ -11,10 +11,10 @@ import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerName
 import next.step.blackjack.domain.player.Players
 
-data class Dealer(
-    private val name: PlayerName = PlayerName.of(DEALER_NAME),
-    private val cards: Cards = Cards.of(emptyList()),
-    private var state: CardsState = UnfinishedState
+class Dealer(
+    name: PlayerName = PlayerName.of(DEALER_NAME),
+    cards: Cards = Cards.of(emptyList()),
+    state: CardsState = UnfinishedState
 ) : Player(name, cards, state) {
 
     fun cardDescFirst(): String = cards.descFirst()

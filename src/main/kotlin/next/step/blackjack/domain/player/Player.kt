@@ -8,9 +8,9 @@ import next.step.blackjack.domain.game.Fightable
 import next.step.blackjack.domain.game.GameResult
 
 open class Player(
-    private val name: PlayerName,
-    private val cards: Cards = Cards.of(emptyList()),
-    private var state: CardsState = UnfinishedState
+    protected val name: PlayerName,
+    protected val cards: Cards = Cards.of(emptyList()),
+    protected var state: CardsState = UnfinishedState
 ) : Fightable<Player> {
 
     fun name(): String = name.name
