@@ -51,4 +51,15 @@ class DealerTest {
         dealer.cards.getOptimizedScore() shouldBe 24
         dealer.getPlayerStatus() shouldBe PlayerStatus.BUST
     }
+
+    @Test
+    fun `블랙잭인지 확인할 수 있다`() {
+        val dealer = Dealer()
+        val cards = Cards.from(Card(Denomination.ACE, CardType.DIAMONDS), Card(Denomination.QUEEN, CardType.DIAMONDS))
+
+        dealer.initCards(cards)
+
+        dealer.isBlackjack() shouldBe true
+        dealer.getPlayerStatus() shouldBe PlayerStatus.BLACK_JACK
+    }
 }

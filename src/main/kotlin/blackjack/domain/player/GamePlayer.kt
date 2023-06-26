@@ -23,9 +23,12 @@ abstract class GamePlayer {
         return status
     }
 
+    fun isBlackjack(): Boolean {
+        return status == PlayerStatus.BLACK_JACK
+    }
+
     protected fun updateStatus() {
-        val optimizedScore = cards.getOptimizedScore()
         val isReceivable = isReceivable()
-        status = PlayerStatus.valuesOf(optimizedScore, isReceivable)
+        status = PlayerStatus.valuesOf(cards, isReceivable)
     }
 }

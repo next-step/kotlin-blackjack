@@ -5,6 +5,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Denomination
+import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerStatus
 import io.kotest.matchers.shouldBe
@@ -51,5 +52,16 @@ class PlayerTest {
 
         player.getPlayerStatus() shouldBe PlayerStatus.BUST
         player.isReceivable() shouldBe false
+    }
+
+    @Test
+    fun `블랙잭인지 확인할 수 있다`() {
+        val player = Player(Name("hue"))
+        val cards = Cards.from(Card(Denomination.ACE, CardType.DIAMONDS), Card(Denomination.QUEEN, CardType.DIAMONDS))
+
+        player.initCards(cards)
+
+        player.isBlackjack() shouldBe true
+        player.getPlayerStatus() shouldBe PlayerStatus.BLACK_JACK
     }
 }
