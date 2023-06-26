@@ -1,5 +1,6 @@
 package blackjack.domain.game
 
+import blackjack.domain.card.CardHolder
 import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import io.kotest.core.spec.style.BehaviorSpec
@@ -14,7 +15,19 @@ class BlackJackGameTest : BehaviorSpec({
             val cardDistributionResult = game.distributeCardsToPlayers()
 
             Then("플레이어들은 2장씩 카드를 받는다") {
-                cardDistributionResult.countOfCardDistribution shouldBe 2
+                cardDistributionResult.distributionCardSize shouldBe 2
+            }
+
+            Then("딜러는 2장의 카드를 받는다") {
+                cardDistributionResult.dealerCards.size shouldBe 2
+            }
+
+            Then("딜러는 2장의 카드 중 첫번째 카드는 오픈 처리가 되어있다") {
+                (cardDistributionResult.dealerCards.first() is CardHolder.Open) shouldBe true
+            }
+
+            Then("딜러는 2장의 카드 중 두번째 카드는 숨김 처리가 되어있다") {
+                (cardDistributionResult.dealerCards.last() is CardHolder.Hide) shouldBe true
             }
         }
     }

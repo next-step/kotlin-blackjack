@@ -32,7 +32,7 @@ class BlackJackResultView {
 
     private fun CardDistributionResult.makeTitleMessage(): String {
         val names = playerNames.unWrappings().joinToString(", ")
-        return "${names}에게 ${countOfCardDistribution}장씩 나누었습니다."
+        return "${names}에게 ${distributionCardSize}장씩 나누었습니다."
     }
 
     private fun PlayerCards.makeDisplayMessage(): String {

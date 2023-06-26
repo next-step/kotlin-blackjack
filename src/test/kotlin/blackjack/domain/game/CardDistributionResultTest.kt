@@ -1,17 +1,21 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.CardHolder
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.player.PlayerName
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 
 class CardDistributionResultTest : StringSpec({
 
-    "캡쳐된 카드들의 사이즈가 모두 같지 않다면 RuntimeException 예외 처리를 한다" {
-        val captures = listOf(
+    "플레이어 카드들의 사이즈가 분배한 카드 수와 같지 않다면 RuntimeException 예외 처리를 한다" {
+        val dealerCards = listOf(
+            CardHolder.Open(Card.ALL_CARDS[0]),
+            CardHolder.Hide,
+        )
+        val playerCards = listOf(
             PlayerCards(
                 playerName = PlayerName("1"),
                 cards = Card.ALL_CARDS.take(2),
@@ -22,12 +26,43 @@ class CardDistributionResultTest : StringSpec({
             ),
         )
         shouldThrow<RuntimeException> {
-            CardDistributionResult(captures)
+            CardDistributionResult(
+                distributionCardSize = 2,
+                dealerCards = dealerCards,
+                playerCards = playerCards,
+            )
         }
     }
 
-    "캡쳐된 카드들의 사이즈가 모두 같다면 결과물이 만들어진다" {
-        val captures = listOf(
+    "딜러의 카드 사이즈가 분배한 카드 수와 다르다면 RuntimeException 예외 처리를 한다" {
+        val dealerCards = listOf(
+            CardHolder.Open(Card.ALL_CARDS[0]),
+        )
+        val playerCards = listOf(
+            PlayerCards(
+                playerName = PlayerName("1"),
+                cards = Card.ALL_CARDS.take(2),
+            ),
+            PlayerCards(
+                playerName = PlayerName("1"),
+                cards = Card.ALL_CARDS.take(2),
+            ),
+        )
+        shouldThrow<RuntimeException> {
+            CardDistributionResult(
+                distributionCardSize = 2,
+                dealerCards = dealerCards,
+                playerCards = playerCards,
+            )
+        }
+    }
+
+    "딜러와 플레이어 카드들의 사이즈가 분배한 카드 수와 같다면 결과물이 만들어진다" {
+        val dealerCards = listOf(
+            CardHolder.Open(Card.ALL_CARDS[0]),
+            CardHolder.Hide,
+        )
+        val playerCards = listOf(
             PlayerCards(
                 playerName = PlayerName("1"),
                 cards = Card.ALL_CARDS.take(2),
@@ -38,18 +73,11 @@ class CardDistributionResultTest : StringSpec({
             ),
         )
         shouldNotThrow<Throwable> {
-            CardDistributionResult(captures)
-        }
-    }
-
-    "분배된 카드의 개수를 반환한다" {
-        val cards = Card.ALL_CARDS.take(2)
-        val captures = listOf(
-            PlayerCards(
-                playerName = PlayerName("1"),
-                cards = cards,
+            CardDistributionResult(
+                distributionCardSize = 2,
+                dealerCards = dealerCards,
+                playerCards = playerCards,
             )
-        )
-        CardDistributionResult(captures).countOfCardDistribution shouldBe cards.size
+        }
     }
 })
