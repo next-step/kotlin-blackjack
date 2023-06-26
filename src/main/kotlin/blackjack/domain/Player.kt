@@ -8,4 +8,12 @@ class Player(
     fun hit(card: Card) {
         cards.add(card)
     }
+
+    fun getTotalScore(): Int {
+        var sum = 0
+        cards.forEach { card ->
+            sum += Denomination.from(card.denomination, sum)
+        }
+        return sum
+    }
 }
