@@ -5,6 +5,7 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSymbol
 import blackjack.domain.card.Cards
 import blackjack.domain.score.Score
+import blackjack.domain.score.ScoreState
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -62,7 +63,7 @@ class CardsTest : StringSpec({
             Card(CardNumber.QUEEN, CardSymbol.SPADE),
             Card(CardNumber.KING, CardSymbol.SPADE),
         )
-        cards.isBust() shouldBe true
+        cards.getScoreState() shouldBe ScoreState.BUST
     }
 
     "카드가 블랙잭인 경우" {
@@ -71,6 +72,6 @@ class CardsTest : StringSpec({
             Card(CardNumber.QUEEN, CardSymbol.SPADE),
             Card(CardNumber.KING, CardSymbol.SPADE),
         )
-        cards.isBlackJack() shouldBe true
+        cards.getScoreState() shouldBe ScoreState.BLACK_JACK
     }
 })
