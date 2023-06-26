@@ -90,4 +90,25 @@ class RuleTest {
 
         Rule.decisionWinner(dealer, player) shouldBe player
     }
+
+    @Test
+    fun `딜러의 카드의 합이 21을 넘고 플레이어의 카드의 합이 21을 넘으면 플레이어가 이긴다`() {
+        val game = Game()
+        val dealerCard = mutableListOf(
+            Card.from(CardType.SPADE, CardValue.TEN),
+            Card.from(CardType.HEART, CardValue.SEVEN),
+            Card.from(CardType.DIAMOND, CardValue.SIX)
+        )
+        val dealer = Dealer(game, cards = Cards(dealerCard, game))
+
+        val playerCards =
+            mutableListOf(
+                Card.from(CardType.SPADE, CardValue.KING),
+                Card.from(CardType.HEART, CardValue.JACK),
+                Card.from(CardType.DIAMOND, CardValue.FIVE)
+            )
+        val player = Player(game, cards = Cards(playerCards, game))
+
+        Rule.decisionWinner(dealer, player) shouldBe player
+    }
 }

@@ -36,16 +36,24 @@ object OutputView {
     fun printResult(players: List<Player>) {
         println("\n## 최종 승패")
         players.forEach {
-            val win = it.info.record.win
-            val lose = it.info.record.lose
             printScore(it)
         }
     }
 
     private fun printScore(player: Player) {
+        val record: String = if (player is Dealer) dealerRecord(player) else playerRecord(player)
+        println("${player.info.name}: ${record.ifBlank { "무승부" }}")
+    }
+
+    private fun dealerRecord(dealer: Dealer): String {
+        val win = dealer.info.record.win
+        val lose = dealer.info.record.lose
+        return "${if (win > 0) "${win}승" else ""} ${if (lose > 0) "${lose}패" else ""}".trim()
+    }
+
+    private fun playerRecord(player: Player): String {
         val win = player.info.record.win
         val lose = player.info.record.lose
-        val score = "${if (win > 0) "${win}승" else ""} ${if (lose > 0) "${lose}패" else ""}"
-        println("${player.info.name}: ${score.ifBlank { "승패 없음" }}")
+        return "${if (win > 0) "승" else ""} ${if (lose > 0) "패" else ""}".trim()
     }
 }

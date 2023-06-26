@@ -4,17 +4,22 @@ import blackjack.domain.model.Dealer
 import blackjack.domain.model.Player
 
 object Rule {
+    const val DEALER_MINIMUM_SCORE = 17
+    const val BLACK_JACK = 21
+
     fun decisionWinner(dealer: Dealer, player: Player): Player? {
         val dealerSum = dealer.cards.sum
         val playerSum = player.cards.sum
 
-        if (isOverBlackJack(playerSum)) return dealerWin(dealer, player)
-
         if (isOverBlackJack(dealerSum)) return playerWin(dealer, player)
 
-        return if (dealerSum > playerSum) dealerWin(dealer, player)
-        else if (dealerSum < playerSum) playerWin(dealer, player)
-        else null
+        if (isOverBlackJack(playerSum)) return dealerWin(dealer, player)
+
+        return when {
+            dealerSum > playerSum -> dealerWin(dealer, player)
+            dealerSum < playerSum -> playerWin(dealer, player)
+            else -> null
+        }
     }
 
     private fun isOverBlackJack(score: Int): Boolean = score > BLACK_JACK
@@ -30,7 +35,4 @@ object Rule {
         player.lose()
         return dealer
     }
-
-    const val DEALER_MINIMUM_SCORE = 17
-    const val BLACK_JACK = 21
 }

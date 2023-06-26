@@ -1,12 +1,13 @@
 package blackjack.domain.model
 
 import blackjack.domain.PointCalculator
+import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class DealerTest {
     @Test
-    fun `딜러의 이름은 딜러이다`() {
+    fun `딜러의 이름의 기본 값은 딜러이다`() {
         val dealer = Dealer(Game())
         dealer.info.name shouldBe "딜러"
     }
@@ -27,14 +28,22 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 가지고 있는 카드의 합이 17이 되지 않으면 카드를 계속 뽑을 수 있다`() {
+    fun `딜러의 초기 카드의 합이 17이 되지 않으면 카드를 한 장 뽑는다`() {
         val game = Game()
-        val dealer = Dealer(Game())
 
-        while (dealer.cards.sum < 17) {
-            dealer.canGetCard() shouldBe true
-            dealer.addCard(game.getCard())
-        }
+        val cards = Cards(
+            cards = mutableListOf(
+                Card.from(CardType.SPADE, CardValue.SEVEN),
+                Card.from(CardType.SPADE, CardValue.FIVE),
+            ),
+            game
+        )
+        val dealer = Dealer(game, cards)
+
+        dealer.cards.sum shouldBeLessThan 17
+        dealer.canGetCard() shouldBe true
+        dealer.addCard(game.getCard())
+        dealer.addCard(Card.from(CardType.HEART, CardValue.THREE))
 
         dealer.canGetCard() shouldBe false
     }
