@@ -7,7 +7,7 @@ import blackjack.view.OutputView
 
 fun main() {
     val inputUsers = InputView.inputPlayers()
-    val printFirstDeal = OutputView.printFirstDeal(inputUsers)
+    OutputView.printFirstDeal(inputUsers)
 
     val game = BlackjackGame(inputUsers)
     game.getPlayers().forEach {
@@ -21,5 +21,10 @@ fun main() {
             game.deal(answer, it)
         } while (answer == Answer.HIT)
         OutputView.printPlayerCards(it)
+    }
+
+    println()
+    game.getPlayers().forEach {
+        OutputView.printResult(it)
     }
 }

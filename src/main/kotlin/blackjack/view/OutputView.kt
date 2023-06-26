@@ -15,4 +15,11 @@ object OutputView {
         }
         println("${player.name}카드: $message")
     }
+
+    fun printResult(player: Player) {
+        val message = player.cards.joinToString(", ") {
+            "${it.denomination.score}${it.shape.desc}"
+        }
+        println("${player.name}카드: $message - 결과: ${player.getTotalScore()}")
+    }
 }
