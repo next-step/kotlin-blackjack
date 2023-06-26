@@ -27,7 +27,7 @@ data class BlackjackGame(
         BlackjackParticipants(players + dealer).also {
             blackjackPlayersCardCountConsumer(dealer, players, BlackjackParticipant.INITIAL_DEALING_COUNT)
         }.apply {
-            forEach { it.draw(deck) }
+            draw(deck)
         }.also {
             blackjackPlayersScoreConsumer(dealer, players)
         }

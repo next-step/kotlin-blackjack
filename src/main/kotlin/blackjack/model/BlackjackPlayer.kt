@@ -1,11 +1,11 @@
 package blackjack.model
 
 class BlackjackPlayer(
-    name: PlayerName,
+    val name: PlayerName,
     deck: CardDeck,
     private val blackjackPlayerConsumer: (BlackjackPlayer) -> Unit,
     private val moreWantedCardPredicate: (String) -> Boolean,
-) : BlackjackParticipant(name, deck) {
+) : BlackjackParticipant(deck) {
 
     override fun draw(cardDeck: CardDeck) {
         var isReceivedMoreCard = false
@@ -19,10 +19,7 @@ class BlackjackPlayer(
         }
     }
 
-    private val isLessScoreThanLimit: Boolean
-        get() {
-            return deckScore < LIMIT_SCORE
-        }
+    private val isLessScoreThanLimit: Boolean = deckScore < LIMIT_SCORE
 
     companion object {
         private const val LIMIT_SCORE = 21

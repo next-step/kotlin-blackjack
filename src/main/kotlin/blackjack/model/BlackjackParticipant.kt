@@ -1,6 +1,6 @@
 package blackjack.model
 
-sealed class BlackjackParticipant(val name: PlayerName, cardDeck: CardDeck) {
+sealed class BlackjackParticipant(cardDeck: CardDeck) {
     val handDeck: HandDeck = HandDeck()
 
     val deckScore: Int

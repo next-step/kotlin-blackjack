@@ -12,7 +12,7 @@ class HandDeck {
 
     val score: Int
         get() {
-            val score: Int = cards.sumOf { it.number.score }
+            val score: Int = cards.sumOf { it.numberScore }
             if (score <= LIMIT_SCORE) {
                 return score
             }

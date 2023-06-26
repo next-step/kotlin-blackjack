@@ -4,6 +4,7 @@ import blackjack.model.BlackjackDealer
 import blackjack.model.BlackjackJudge
 import blackjack.model.BlackjackParticipant
 import blackjack.model.BlackjackPlayer
+import blackjack.model.BlackjackPlayerResult
 import blackjack.model.HandDeck
 import blackjack.model.TrumpCard
 import blackjack.model.TrumpCardNumber
@@ -12,8 +13,8 @@ import blackjack.model.TrumpCardShape
 object OutputView {
 
     fun consumePlayersCardCount(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>, cardCount: Int) {
-        println("${dealer.name}와 ${players.joinToString { it.name.toString() }}에게 ${cardCount}장의 나누었습니다.")
-        println("${dealer.name}: ${deckString(dealer.handDeck)}")
+        println("딜러와 ${players.joinToString { it.name.toString() }}에게 ${cardCount}장의 나누었습니다.")
+        println("딜러 : ${deckString(dealer.handDeck)}")
         players.forEach { consumeParticipant(it) }
         println()
     }
@@ -38,19 +39,24 @@ object OutputView {
         println("딜러: ${blackjackJudge.dealerWinCount}승 ${blackjackJudge.dealerLoseCount}패")
         blackjackJudge.playerResults.forEach {
             println(
-                "${it.player.name}: ${
-                if (it.isWin) {
-                    "승"
-                } else {
-                    "패"
-                }
-                }"
+                "${it.player.name}: ${victoryResultString(it)}"
             )
         }
     }
 
+    private fun victoryResultString(it: BlackjackPlayerResult): String {
+        return if (it.isWin) {
+            "승"
+        } else {
+            "패"
+        }
+    }
+
     private fun participantString(participant: BlackjackParticipant): String {
-        return "${participant.name} 카드: ${deckString(participant.handDeck)}"
+        return when (participant) {
+            is BlackjackDealer -> "딜러 카드: ${deckString(participant.handDeck)}"
+            is BlackjackPlayer -> "${participant.name} 카드: ${deckString(participant.handDeck)}"
+        }
     }
 
     private fun deckString(deck: HandDeck): String {
