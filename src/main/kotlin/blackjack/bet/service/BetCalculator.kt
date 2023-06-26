@@ -6,17 +6,21 @@ import blackjack.common.service.BlackJackDetermine
 
 object BetCalculator {
     fun updateScores(winner: BlackJackDetermine.Winner, player: BetPlayer, dealer: BetDealer) {
-        val bet = player.wallet().balance()
-        val loseMoney = bet * -1
+        val allIn = player.wallet().balance()
+        val loss = allIn * -1
         when (winner) {
             BlackJackDetermine.Winner.DEALER_BUST -> {
-                if (player.isPlayingRound()) settleRoundResult(dealer, bet, player, loseMoney)
+                if (player.isPlayingRound()) {
+                    playerWin(player, allIn, dealer, loss)
+                }
             }
             BlackJackDetermine.Winner.PLAYER -> {
-                settleRoundResult(dealer, loseMoney, player, bet)
+                playerWin(player, allIn, dealer, loss)
+
             }
             BlackJackDetermine.Winner.DEALER -> {
-                settleRoundResult(dealer, bet, player, loseMoney)
+                dealer.wallet().settle(allIn)
+                player.wallet().settle(loss)
             }
             else -> {
                 player.wallet().settle(0)
@@ -25,18 +29,18 @@ object BetCalculator {
     }
 
     fun initialBlackjack(player: BetPlayer, dealer: BetDealer) {
-        val bet = (player.wallet().balance() * 1.5).toInt()
-        val loseMoney = bet * -1
-        settleRoundResult(dealer, loseMoney, player, bet)
+        val blackJackPit = (player.wallet().balance() * 1.5).toInt()
+        val loss = blackJackPit * -1
+        playerWin(player, blackJackPit, dealer, loss)
     }
 
-    private fun settleRoundResult(
-        dealer: BetDealer,
-        bet: Int,
+    private fun playerWin(
         player: BetPlayer,
-        loseMoney: Int
+        allIn: Int,
+        dealer: BetDealer,
+        loss: Int
     ) {
-        dealer.wallet().settle(bet)
-        player.wallet().settle(loseMoney)
+        player.wallet().settle(allIn)
+        dealer.wallet().settle(loss)
     }
 }
