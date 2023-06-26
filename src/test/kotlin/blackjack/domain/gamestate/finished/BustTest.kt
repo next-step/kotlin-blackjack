@@ -5,6 +5,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.Competition.LOSE
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -42,6 +43,13 @@ class BustTest : FunSpec({
         test("bust인지 확인한다") {
             val actual = Bust(BUST_CARDS).isBust()
             actual shouldBe true
+        }
+    }
+
+    context("compete") {
+        test("버스트는 상대가 누구든 진다.") {
+            val actual = Bust(BUST_CARDS).compete(Bust(BUST_CARDS))
+            actual shouldBe LOSE
         }
     }
 }) {

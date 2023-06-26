@@ -2,7 +2,6 @@ package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.Competition
-import blackjack.domain.gamestate.GameState
 
 class Stay(
     val cards: Cards,
@@ -18,7 +17,7 @@ class Stay(
 
     override fun score() = cards.score()
 
-    override fun compete(gameState: GameState): Competition {
+    override fun compete(gameState: Finished): Competition {
         TODO("Not yet implemented")
     }
 }
