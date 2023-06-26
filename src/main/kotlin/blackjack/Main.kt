@@ -1,5 +1,11 @@
 package blackjack
 
+import blackjack.view.InputView
+
 fun main() {
-    BlackJackGame.startGame()
+    val players = InputView.getPlayers()
+    val blackJackGame = BlackJackGame(players)
+    blackJackGame.startGame()
+    blackJackGame.processRound()
+    blackJackGame.endGame()
 }
