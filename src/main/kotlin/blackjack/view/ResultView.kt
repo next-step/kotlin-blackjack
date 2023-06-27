@@ -5,7 +5,7 @@ import blackjack.player.Player
 object ResultView {
 
     fun printPlayerList(players: List<Player>) {
-        println("딜러와 ${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+        println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
         players.map { printPlayerStatus(it) }
     }
 
