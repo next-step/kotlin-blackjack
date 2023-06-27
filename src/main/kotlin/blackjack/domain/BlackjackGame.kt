@@ -20,10 +20,7 @@ class BlackjackGame(
 
     fun firstDraw(): List<Hands> {
         check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
-        dealer.draw(cardDeck.draw())
-        players.forEach { it.draw(cardDeck.draw()) }
-        dealer.draw(cardDeck.draw())
-        players.forEach { it.draw(cardDeck.draw()) }
+        repeat(2) { drawDealerAndPlayers() }
         nextTurnChange()
         return listOf(dealer.hands()) + players.map { it.hands() }
     }
@@ -47,6 +44,11 @@ class BlackjackGame(
     }
 
     fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
+
+    private fun drawDealerAndPlayers() {
+        dealer.draw(cardDeck.draw())
+        players.forEach { it.draw(cardDeck.draw()) }
+    }
 
     private fun currentPlayer(): Participant {
         checkTurn()
