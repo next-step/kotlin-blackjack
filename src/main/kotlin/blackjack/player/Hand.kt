@@ -6,6 +6,7 @@ import blackjack.card.CardNumber
 class Hand(
     private val cardList: ArrayList<Card> = ArrayList()
 ) {
+
     fun addCard(card: Card) {
         cardList.add(card)
     }
@@ -23,24 +24,30 @@ class Hand(
         var numberOfAces = 0
 
         for (card in cardList) {
-            totalValue += getCardValue(card)
-            if (card.number == CardNumber.ACE) {
-                numberOfAces++
-            }
+            val (value, isAce) = calculateCardValue(card)
+            totalValue += value
+            numberOfAces += if (isAce) 1 else 0
         }
 
-        while (totalValue > 21 && numberOfAces > 0) {
-            totalValue -= 10
-            numberOfAces--
-        }
-
-        return totalValue
+        return adjustForAces(totalValue, numberOfAces)
     }
-    private fun getCardValue(card: Card): Int {
+
+    private fun calculateCardValue(card: Card): Pair<Int, Boolean> {
         return if (card.number == CardNumber.ACE) {
-            11
+            Pair(11, true)
         } else {
-            card.number.maxValue
+            Pair(card.number.maxValue, false)
         }
+    }
+
+    private fun adjustForAces(totalValue: Int, numberOfAces: Int): Int {
+        var adjustedValue = totalValue
+        var remainingAces = numberOfAces
+
+        if (adjustedValue > 21 && remainingAces > 0) {
+            adjustedValue -= 10 * remainingAces
+        }
+
+        return adjustedValue
     }
 }
