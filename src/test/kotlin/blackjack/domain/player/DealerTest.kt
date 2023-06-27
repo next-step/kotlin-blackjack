@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.CardTest.Companion.SPADE_FIVE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
+import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
@@ -48,6 +49,20 @@ class DealerTest : FunSpec({
             val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
             val exception = shouldThrowExactly<IllegalStateException> { dealer.stay() }
             exception.message shouldBe "딜러는 직접 stay할 수 없다."
+        }
+    }
+
+    context("cards") {
+        test("딜러가 턴이 종료되지 않은 경우 1장의 카드만 반환한다.") {
+            val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
+            val actual = dealer.cards()
+            actual shouldBe setOf(SPADE_TWO)
+        }
+
+        test("딜러가 턴이 종료되었다면 모든 카드를 반환한다.") {
+            val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
+            val actual = dealer.cards()
+            actual shouldBe setOf(SPADE_KING, SPADE_JACK, SPADE_QUEEN)
         }
     }
 })

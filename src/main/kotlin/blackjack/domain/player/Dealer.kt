@@ -27,7 +27,10 @@ class Dealer(
     override fun isFinished(): Boolean = gameState.isFinished()
 
     override fun cards(): Set<Card> {
-        TODO("Not yet implemented")
+        if (gameState.isFinished().not()) {
+            return setOf(gameState.cards().first())
+        }
+        return gameState.cards()
     }
 
     override fun hands(): Hands {
