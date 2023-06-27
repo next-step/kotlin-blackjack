@@ -12,5 +12,5 @@ sealed class BlackJackGameTurn {
 
     object Finished : BlackJackGameTurn()
 
-    fun isFinished() = this is Finished
+    fun hasNextTurn() = this !is Finished
 }

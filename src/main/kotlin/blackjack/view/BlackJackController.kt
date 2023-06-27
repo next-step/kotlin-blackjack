@@ -23,7 +23,7 @@ class BlackJackController(
                 is BlackJackGameTurn.Dealer -> processDealerTurn(blackJackGame)
                 is BlackJackGameTurn.Finished -> processFinishTurn(blackJackGame)
             }
-        } while (turn.isFinished().not())
+        } while (turn.hasNextTurn())
     }
 
     private fun processCardDistributedTurn(
