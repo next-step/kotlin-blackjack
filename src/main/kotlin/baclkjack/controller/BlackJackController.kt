@@ -21,7 +21,7 @@ class BlackJackController(
         }
 
         backJackGame.play(
-            isDraw = {
+            draw = {
                 inputView.inputCardDraw(it) == IS_DRAW
             },
             out = {

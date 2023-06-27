@@ -14,14 +14,15 @@ class BlackJackGame(players: List<String>, private val deck: Deck = Deck.createD
         }
     }
 
-    fun play(isDraw: (String) -> Boolean, out: (Player) -> Unit) {
+    fun play(draw: (String) -> Boolean, out: (Player) -> Unit) {
         _players.forEach {
+            val isDraw = draw(it.name)
             playerDraw(it, isDraw, out)
         }
     }
 
-    private fun playerDraw(player: Player, isDraw: (String) -> Boolean, out: (Player) -> Unit) {
-        while (isDraw(player.name)) {
+    private fun playerDraw(player: Player, isDraw: Boolean, out: (Player) -> Unit) {
+        while (isDraw) {
             player.hit(deck)
             out(player)
             if (player.burst() || player.blackJack()) {
