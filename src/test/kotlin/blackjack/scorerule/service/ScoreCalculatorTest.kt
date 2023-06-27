@@ -1,6 +1,6 @@
 package blackjack.scorerule.service
 
-import blackjack.common.service.BlackJackDetermine
+import blackjack.bet.domain.WinType
 import blackjack.scorerule.domain.ScoreDealer
 import blackjack.scorerule.domain.ScorePlayer
 import io.kotest.core.spec.style.StringSpec
@@ -11,7 +11,7 @@ class ScoreCalculatorTest : StringSpec({
         val dealer = ScoreDealer()
         val player = ScorePlayer("tester")
 
-        ScoreCalculator.updateScores(BlackJackDetermine.Winner.DEALER, player, dealer)
+        ScoreCalculator.updateScores(WinType.DEALER_WIN, player, dealer)
         dealer.scoreBoard().win() shouldBe 1
         player.scoreBoard().lose() shouldBe 1
     }
@@ -20,7 +20,7 @@ class ScoreCalculatorTest : StringSpec({
         val dealer = ScoreDealer()
         val player = ScorePlayer("tester")
 
-        ScoreCalculator.updateScores(BlackJackDetermine.Winner.PLAYER, player, dealer)
+        ScoreCalculator.updateScores(WinType.PLAYER_WIN, player, dealer)
         dealer.scoreBoard().lose() shouldBe 1
         player.scoreBoard().win() shouldBe 1
     }
@@ -29,7 +29,7 @@ class ScoreCalculatorTest : StringSpec({
         val dealer = ScoreDealer()
         val player = ScorePlayer("tester")
 
-        ScoreCalculator.updateScores(BlackJackDetermine.Winner.DRAW, player, dealer)
+        ScoreCalculator.updateScores(WinType.DRAW, player, dealer)
         dealer.scoreBoard().draw() shouldBe 1
         player.scoreBoard().draw() shouldBe 1
     }

@@ -1,8 +1,8 @@
 package blackjack.scorerule
 
+import blackjack.common.service.DeckManager
 import blackjack.scorerule.domain.ScoreDealer
 import blackjack.scorerule.domain.ScorePlayer
-import blackjack.common.service.DeckManager
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
