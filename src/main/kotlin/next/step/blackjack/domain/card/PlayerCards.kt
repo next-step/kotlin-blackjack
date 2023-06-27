@@ -1,5 +1,6 @@
 package next.step.blackjack.domain.card
 
+import next.step.blackjack.domain.card.state.BlackjackState
 import next.step.blackjack.domain.card.state.CardsState
 import next.step.blackjack.domain.card.state.UnfinishedState
 import next.step.blackjack.domain.game.GameResult
@@ -14,7 +15,9 @@ class PlayerCards(
         state = state.next(cards)
     }
 
-    fun isUnfinished() = state == UnfinishedState
+    fun isUnfinished(): Boolean = state == UnfinishedState
+
+    fun isBlackjack(): Boolean = state == BlackjackState
 
     fun descs(): Set<String> = cards.descs()
 
