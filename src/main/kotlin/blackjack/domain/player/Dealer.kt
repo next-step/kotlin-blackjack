@@ -9,8 +9,17 @@ class Dealer(
     val name: Name = DEALER_NAME,
     gameState: GameState = InitialHand(),
 ) : Participant {
+    var gameState: GameState = gameState
+        private set
+
     override fun draw(card: Card) {
-        TODO("Not yet implemented")
+        gameState = gameState.draw(card)
+        if (gameState.isBust()) {
+            return
+        }
+        if (gameState.score() >= 17) {
+            gameState = gameState.stay()
+        }
     }
 
     override fun stay() {
