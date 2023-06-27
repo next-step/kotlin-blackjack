@@ -30,4 +30,6 @@ abstract class Player<T : Player<T>>(val name: String) {
         deckManager: DeckManager,
         handNotice: (T) -> Unit
     )
+
+    abstract fun canDraw(): Boolean
 }

@@ -6,7 +6,6 @@ import blackjack.common.service.DeckManager
 open class BetPlayer(name: String) : Player<BetPlayer>(name) {
 
     private val wallet = Wallet()
-    private var isPlaying = true
 
     fun wallet(): Wallet {
         return this.wallet
@@ -26,10 +25,12 @@ open class BetPlayer(name: String) : Player<BetPlayer>(name) {
     }
 
     override fun drawPhase(deckManager: DeckManager, handNotice: (BetPlayer) -> Unit) {
-        if (isPlaying()) {
-            hit(deckManager.draw())
-            handNotice.invoke(this)
-        }
+        hit(deckManager.draw())
+        handNotice.invoke(this)
+    }
+
+    override fun canDraw(): Boolean {
+        return this.optimalValue() < BLACK_JACK_NUMBER
     }
 
     companion object {

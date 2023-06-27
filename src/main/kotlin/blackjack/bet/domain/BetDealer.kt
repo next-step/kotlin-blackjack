@@ -20,7 +20,13 @@ class BetDealer : BetPlayer(name = "딜러") {
         return scorePlayerStatuses
     }
 
-    fun needToDraw(): Boolean {
+    fun drawCardIfNeeded(deckManager: DeckManager, handNotice: (BetPlayer) -> Unit) {
+        while (canDraw()) {
+            drawPhase(deckManager = deckManager, handNotice = handNotice)
+        }
+    }
+
+    override fun canDraw(): Boolean {
         return this.optimalValue() <= STAND_THRESHOLD
     }
 

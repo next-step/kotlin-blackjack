@@ -29,19 +29,25 @@ class BlackJackBetTable(private val players: Array<BetPlayer>) {
     }
 
     fun executePlayerTurns(
-        player: Array<BetPlayer>,
+        player: List<BetPlayer>,
         wantToHit: (String) -> Boolean,
-        handNotice: (BetPlayer) -> Unit
+        handNotice: (BetPlayer) -> Unit,
+        cantDrawMoreException: (String) -> Unit
     ) {
         player.forEach {
-            while (wantToHit.invoke(it.name)) {
-                it.drawPhase(deckManager = deckManager, handNotice = handNotice)
+            while (wantToHit(it.name) && it.canDraw()) {
+                try {
+                    it.drawPhase(deckManager = deckManager, handNotice = handNotice)
+                } catch (ex: IllegalStateException) {
+                    cantDrawMoreException(it.name)
+                    break
+                }
             }
         }
     }
 
     fun executeDealerTurn(handNotice: (BetPlayer) -> Unit) {
-        if (dealer.needToDraw()) dealer.drawPhase(deckManager = deckManager, handNotice = handNotice)
+        dealer.drawCardIfNeeded(deckManager, handNotice)
     }
 
     fun checkGameResult() {
