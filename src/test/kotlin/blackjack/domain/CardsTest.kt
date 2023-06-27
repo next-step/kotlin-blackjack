@@ -8,7 +8,7 @@ internal class CardsTest {
     internal fun `카드를 추가하면 카드가 추가된다`() {
         val cards = Cards()
         cards.addCard(GameCards().draw())
-        cards.value.size shouldBe 1
+        cards.values.size shouldBe 1
     }
 
     @Test

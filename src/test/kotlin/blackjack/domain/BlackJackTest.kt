@@ -7,11 +7,11 @@ internal class BlackJackTest {
     @Test
     internal fun `게임이 시작되면 플레이어에게 두장의 카드가 주어진다`() {
         val player = Player("pobi")
-        player.cards.value.size shouldBe 0
+        player.cards.values.size shouldBe 0
         val blackJack = BlackJack(listOf(player))
         blackJack.start()
-        player.cards.value.size shouldBe 2
-        blackJack.dealer.cards.value.size shouldBe 2
+        player.cards.values.size shouldBe 2
+        blackJack.dealer.cards.values.size shouldBe 2
     }
 
     @Test
@@ -108,9 +108,9 @@ internal class BlackJackTest {
         val game = BlackJack(listOf(player1), dealer)
 
         dealer.cards.score() shouldBe 16
-        dealer.cards.value.size shouldBe 2
+        dealer.cards.values.size shouldBe 2
         game.askDealerForAdditionalCard()
-        dealer.cards.value.size shouldBe 3
+        dealer.cards.values.size shouldBe 3
     }
 
     @Test
@@ -126,9 +126,9 @@ internal class BlackJackTest {
         val game = BlackJack(listOf(player1), dealer)
 
         dealer.cards.score() shouldBe 17
-        dealer.cards.value.size shouldBe 2
+        dealer.cards.values.size shouldBe 2
         game.askDealerForAdditionalCard()
-        dealer.cards.value.size shouldBe 2
+        dealer.cards.values.size shouldBe 2
     }
 
     @Test

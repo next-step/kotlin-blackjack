@@ -13,7 +13,7 @@ fun main() {
         val player = game.getNowPlayer()
         val answer = InputView.getAnswer(player)
         game.playGameTurn(answer)
-        ResultView.printCards(player)
+        ResultView.printPlayerCards(player)
     }
 
     if (game.askDealerForAdditionalCard()) {

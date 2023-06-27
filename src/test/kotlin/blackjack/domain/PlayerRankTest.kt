@@ -3,7 +3,7 @@ package blackjack.domain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class PlayerRankTest{
+internal class PlayerRankTest {
     @Test
     internal fun `플레이어가 점수가 더 높으면 플레이어는 이긴다`() {
         val playerCard = Cards(
@@ -20,7 +20,7 @@ internal class PlayerRankTest{
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.getValues(player1.score(),dealer.score()) shouldBe PlayerRank.WON
+        PlayerRank.getValues(player1.score(), dealer.score()) shouldBe PlayerRank.WON
     }
 
     @Test
@@ -39,6 +39,6 @@ internal class PlayerRankTest{
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.getValues(player1.score(),dealer.score()) shouldBe PlayerRank.LOST
+        PlayerRank.getValues(player1.score(), dealer.score()) shouldBe PlayerRank.LOST
     }
 }

@@ -1,13 +1,14 @@
 package blackjack.domain
 
-data class Cards(val value: MutableList<Card> = mutableListOf()) {
+@JvmInline
+value class Cards(val values: MutableList<Card> = mutableListOf()) {
     fun addCard(card: Card) {
-        value.add(card)
+        values.add(card)
     }
 
     fun score(): Int {
-        var score = value.sumOf { it.character.score }
-        if (value.any { it.isAce() } && (score + ACE_PLUS_SCORE) <= BlackJack.BLACKJACK_MAX_SCORE) {
+        var score = values.sumOf { it.character.score }
+        if (values.any { it.isAce() } && (score + ACE_PLUS_SCORE) <= BlackJack.BLACKJACK_MAX_SCORE) {
             score += ACE_PLUS_SCORE
         }
         return score
