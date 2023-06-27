@@ -7,6 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.ValueSource
 
 class CardNumberCalculatorTest {
@@ -51,7 +52,7 @@ class CardNumberCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["A", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"])
+    @EnumSource(CardNumber::class)
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
         val cardNumberCalculator = CardNumberCalculator(StaticProceedAceStrategy())
         val startSum = 0
