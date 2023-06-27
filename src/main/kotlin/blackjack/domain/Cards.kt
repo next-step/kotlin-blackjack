@@ -22,7 +22,7 @@ class Cards private constructor(
         var adjustedSum = sum
         var aceCount = cards.count { it.rank == Ranks.ACE }
 
-        while (0 < aceCount && adjustedSum > TARGET_SUM) {
+        while (0 < aceCount && adjustedSum > BLACK_JACK_SCORE) {
             adjustedSum -= 10
             aceCount--
         }
@@ -31,7 +31,7 @@ class Cards private constructor(
     }
 
     companion object {
-        const val TARGET_SUM: Int = 21
+        const val BLACK_JACK_SCORE: Int = 21
         fun empty(): Cards = Cards(emptyList())
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.Cards.Companion.TARGET_SUM
+import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
 
 open class Player(
     val name: String,
@@ -14,7 +14,7 @@ open class Player(
 
     fun showMyCards(): String = myCards.toString()
 
-    fun canDraw(): Boolean = myCards.calculateOptimalSum() <= TARGET_SUM
+    fun canDraw(): Boolean = myCards.calculateOptimalSum() <= BLACK_JACK_SCORE
 
     fun drawCard() {
         if (!canDraw()) {
