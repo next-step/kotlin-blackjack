@@ -8,27 +8,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         cards.add(card)
     }
 
-    fun isBlackjack(): Boolean = size() == BLACKJACK_CARDS_CNT && isFinished()
-
-    fun isFinished(): Boolean = possiblePoints().contains(FINISH_POINT)
-
-    fun isBurst(): Boolean {
-        return minSumCardsPoint() > FINISH_POINT
-    }
-
     fun cards(): List<Card> = cards.toList()
-
-    private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
-
-    fun point(): Int {
-        return when {
-            isFinished() -> FINISH_POINT
-            isBurst() -> minSumCardsPoint()
-            else -> possiblePoints().filter { it < FINISH_POINT }.max()
-        }
-    }
-
-    private fun possiblePoints(): Set<Int> = CombinationUtils.possiblePoints(cards)
 
     fun size(): Int = cards.size
 
@@ -38,6 +18,22 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         require(cards.isNotEmpty()) { "카드 개수가 1개 이상이어야 조회 가능합니다." }
         return cards.first().desc()
     }
+
+    fun point(): Int = when {
+        isFinished() -> FINISH_POINT
+        isBurst() -> minSumCardsPoint()
+        else -> possiblePoints().filter { it < FINISH_POINT }.max()
+    }
+
+    private fun minSumCardsPoint(): Int = cards.sumOf { it.minPoint() }
+
+    private fun possiblePoints(): Set<Int> = CombinationUtils.possiblePoints(cards)
+
+    fun isBlackjack(): Boolean = size() == BLACKJACK_CARDS_CNT && isFinished()
+
+    fun isFinished(): Boolean = possiblePoints().contains(FINISH_POINT)
+
+    fun isBurst(): Boolean = minSumCardsPoint() > FINISH_POINT
 
     fun fight(other: Cards): GameResult = when {
         point() > other.point() -> GameResult.WIN
@@ -49,6 +45,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         private const val BLACKJACK_CARDS_CNT = 2
 
         private const val FINISH_POINT = 21
+        
         fun of(cards: List<Card>): Cards = Cards(cards.toMutableList())
     }
 }
