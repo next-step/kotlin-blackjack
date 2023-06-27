@@ -27,4 +27,6 @@ class Hit(
     override fun stay() = Stay(cards)
 
     override fun isBust() = false
+
+    override fun score() = cards.score()
 }

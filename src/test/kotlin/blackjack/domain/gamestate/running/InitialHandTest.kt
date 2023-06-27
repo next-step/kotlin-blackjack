@@ -55,9 +55,14 @@ class InitialHandTest : FunSpec({
     }
 
     context("score") {
-        test("스코어를 계산하려는 경우 예외가 발생한다.") {
+        test("스코어를 계산한다.") {
+            val actual = InitialHand(Cards.of(SPADE_ACE)).score()
+            actual shouldBe 11
+        }
+
+        test("스코어를 계산할 때 카드가 없으면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { InitialHand().score() }
-            exception.message shouldBe "턴이 종료되지 않아 점수를 반환할 수 없다."
+            exception.message shouldBe "카드가 없어 점수를 계산할 수 없다."
         }
     }
 
