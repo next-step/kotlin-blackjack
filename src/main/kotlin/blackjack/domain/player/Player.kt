@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
-import blackjack.domain.game.PlayerMatchResult
 import blackjack.domain.game.MatchResultType
+import blackjack.domain.game.PlayerMatchResult
 
 class Player(
     val name: PlayerName,
