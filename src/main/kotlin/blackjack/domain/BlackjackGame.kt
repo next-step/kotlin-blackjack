@@ -61,13 +61,13 @@ class BlackjackGame(
         return GameResult(dealerGameResult, playerGameResults)
     }
 
-    private fun nextTurnChange() {
-        turn = turn.nextTurn()
-    }
-
     private fun drawDealerAndPlayers() {
         dealer.draw(cardDeck.draw())
         players.forEach { it.draw(cardDeck.draw()) }
+    }
+
+    private fun nextTurnChange() {
+        turn = turn.nextTurn()
     }
 
     private fun dealerFirstDrawHand() = Hands(playerName = dealer.name(), cards = setOf(dealer.cards().first()))
