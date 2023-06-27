@@ -1,7 +1,10 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Player(
     name: String,
+    val betAmount: BigDecimal,
     cards: Cards,
     state: ParticipantState = Alive,
 ) : Participant(name, cards, state) {

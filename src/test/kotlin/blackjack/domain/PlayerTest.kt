@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.fixture.player
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -11,7 +12,7 @@ class PlayerTest : FunSpec({
             Card.of(Denomination.JACK, Suit.SPADES),
         )
         val card = Card.of(Denomination.TWO, Suit.HEARTS)
-        val player = Player("pobi", cards)
+        val player = player(cards = cards)
 
         player.hit(card)
 
@@ -29,7 +30,7 @@ class PlayerTest : FunSpec({
             Card.of(Denomination.JACK, Suit.SPADES),
         )
         val card = Card.of(Denomination.TWO, Suit.HEARTS)
-        val player = Player("pobi", cards)
+        val player = player(cards = cards)
 
         player.hit(card)
 
@@ -61,7 +62,7 @@ class PlayerTest : FunSpec({
                 21
             )
         ) { (cards, score) ->
-            val player = Player("pobi", cards)
+            val player = player(cards = cards)
             player.calculateScore() shouldBe Score(score)
         }
     }
@@ -72,7 +73,7 @@ class PlayerTest : FunSpec({
             Card.of(Denomination.JACK, Suit.SPADES),
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
-        val player = Player("pobi", cards)
+        val player = player(cards = cards)
 
         player.openedCards() shouldBe cards
     }
@@ -122,7 +123,7 @@ class PlayerTest : FunSpec({
                 GameResult.LOSE
             ),
         ) { (cards, playerState, dealerCards, dealerState, gameResult) ->
-            val player = Player("pobi", cards, playerState)
+            val player = player(cards = cards, state = playerState)
             val dealer = Dealer(dealerCards, dealerState)
 
             player.getGameResult(dealer) shouldBe gameResult
@@ -131,7 +132,7 @@ class PlayerTest : FunSpec({
 
     test("플레이어의 상태가 Burst 인지 반환한다") {
         val cards = Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))
-        val player = Player("pobi", cards, Burst)
+        val player = player(cards = cards, state = Burst)
 
         player.isBurst() shouldBe true
     }

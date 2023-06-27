@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Deck
 import blackjack.domain.Participants
 import blackjack.domain.Player
+import blackjack.domain.PlayerInfo
 import blackjack.view.InputView
 import blackjack.view.ResultView
 import blackjack.vo.GameResultVO
@@ -12,9 +13,10 @@ import blackjack.vo.PlayerGameResultVO
 
 fun main() {
     val playerNames = InputView.readPlayerNames()
+    val playerInfos = playerNames.map { PlayerInfo(it, InputView.readBetAmount(it)) }
 
     val deck = Deck.shuffled()
-    val participants = Participants.init(playerNames, deck)
+    val participants = Participants.init(playerInfos, deck)
 
     val participantVOs = participants.members().map { ParticipantVO.of(it.name, it.openedCards()) }
     ResultView.printCardHands(participantVOs)
