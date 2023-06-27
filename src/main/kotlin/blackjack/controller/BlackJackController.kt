@@ -19,11 +19,7 @@ class BlackJackController(
 
         firstDraw(blackJackGame, playerList)
 
-        try {
-            askPlayersWantToDrawCard(blackJackGame, playerList)
-        } catch (e: PlayerLoseException) {
-            println()
-        }
+        askPlayersWantToDrawCard(blackJackGame, playerList)
 
         printGameResult(playerList)
     }
@@ -34,8 +30,18 @@ class BlackJackController(
     }
 
     private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
-        playerList.forEach { askPlayerWantToDrawCard(blackJackGame, it) }
+        playerList.forEach {
+            checkPlayerIsLoseByAskingPlayerWantToDraw(blackJackGame, it)
+        }
         println()
+    }
+
+    private fun checkPlayerIsLoseByAskingPlayerWantToDraw(blackJackGame: BlackJackGame, it: Player) {
+        try {
+            askPlayerWantToDrawCard(blackJackGame, it)
+        } catch (e: PlayerLoseException) {
+            println()
+        }
     }
 
     private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player) {
