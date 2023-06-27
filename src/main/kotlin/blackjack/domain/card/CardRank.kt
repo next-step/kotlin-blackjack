@@ -2,19 +2,26 @@ package blackjack.domain.card
 
 enum class CardRank(
     val mark: String,
-    val point: List<Int>
+    val point: Int
 ) {
-    TWO("2", listOf(2)),
-    THREE("3", listOf(3)),
-    FOUR("4", listOf(4)),
-    FIVE("5", listOf(5)),
-    SIX("6", listOf(6)),
-    SEVEN("7", listOf(7)),
-    EIGHT("8", listOf(8)),
-    NINE("9", listOf(9)),
-    TEN("10", listOf(10)),
-    ACE("A", listOf(1, 10)), // 10 means additional point
-    JACK("J", listOf(10)),
-    QUEEN("Q", listOf(10)),
-    KING("K", listOf(10));
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    ACE("A", 1),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10);
+
+    fun getSoftHand(): Int {
+        if (this == ACE) {
+            return 10
+        }
+        return 0
+    }
 }

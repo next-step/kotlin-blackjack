@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerImpl
 
 object InputView {
     const val YES = "y"
@@ -10,8 +10,8 @@ object InputView {
         return readln().split(",")
     }
 
-    fun askDrawCard(player: Player): Boolean {
-        println("${player.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askDrawCard(playerImpl: PlayerImpl): Boolean {
+        println("${playerImpl.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln()) {
             YES -> true
             NO -> false

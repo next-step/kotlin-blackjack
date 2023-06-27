@@ -1,32 +1,23 @@
 package blackjack.domain.card
 
 class CardHold(
-    val cards: List<Card> = emptyList()
+    private val cards: MutableList<Card> = mutableListOf<Card>()
 ) {
-    fun add(newCard: Card): CardHold {
-        val addedCards = cards + newCard
-        return CardHold(addedCards)
+    fun add(newCard: Card) {
+        cards.add(newCard)
     }
 
-    fun getPoints(): Int {
-        val sum = getTotalPoints()
-        return adjustAceSum(sum)
+    fun getAllCards(): List<Card> {
+        return cards.toList()
     }
 
-    private fun getTotalPoints(): Int {
+    fun getCardsTotalSize(): Int {
+        return cards.size
+    }
+
+    fun getTotalPoints(): Int {
         return cards.sumOf { card ->
             card.getPoint()
         }
-    }
-
-    private fun adjustAceSum(sum: Int): Int {
-        if (cards.any { card -> card.rank == CardRank.ACE }) {
-            return sum + CardRank.ACE.point[1]
-        }
-        return sum
-    }
-
-    companion object {
-        const val THRESHOLD: Int = 21
     }
 }

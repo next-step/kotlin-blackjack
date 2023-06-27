@@ -6,11 +6,7 @@ class Card private constructor(
 ) {
 
     fun getPoint(): Int {
-        return rank.point[0] ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
-    }
-
-    fun getMaxPoint(): Int {
-        return rank.point.max() ?: throw IllegalArgumentException("포인트가 세팅되지 않았습니다")
+        return rank.point
     }
 
     companion object {
