@@ -1,5 +1,6 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
 
@@ -20,4 +21,15 @@ class Player(
             matchResultType = matchResultType,
         )
     }
+
+    fun captureCards(): PlayerCards {
+        return PlayerCards(
+            playerName = name,
+            cards = cards,
+        )
+    }
+}
+
+fun List<Player>.captureAllCards(): List<PlayerCards> {
+    return map { it.captureCards() }
 }

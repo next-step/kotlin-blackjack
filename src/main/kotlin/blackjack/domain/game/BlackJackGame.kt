@@ -7,6 +7,7 @@ import blackjack.domain.card.PlayerCards
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.PlayerNames
+import blackjack.domain.gamer.captureAllCards
 import blackjack.domain.shuffle.Shuffler
 import java.util.LinkedList
 import kotlin.IllegalStateException
@@ -118,17 +119,6 @@ class BlackJackGame(
 
     private fun findWaitPlayerOrNull(): Player? {
         return players.firstOrNull { it.state.canHit() }
-    }
-
-    private fun List<Player>.captureAllCards(): List<PlayerCards> {
-        return map { it.captureCards() }
-    }
-
-    private fun Player.captureCards(): PlayerCards {
-        return PlayerCards(
-            playerName = name,
-            cards = cards,
-        )
     }
 
     private fun isDealerWait(): Boolean {
