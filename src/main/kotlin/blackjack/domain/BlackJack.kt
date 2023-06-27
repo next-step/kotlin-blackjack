@@ -32,8 +32,17 @@ class BlackJack(
         }
     }
 
+    fun askDealerForAdditionalCard(): Boolean {
+        if (dealer.score() <= DEALER_CARD_STANDARD_SCORE) {
+            dealer.addCard(gameCards.draw())
+            return true
+        }
+        return false
+    }
+
     companion object {
-        private const val START_CARD_COUNT = 2
+        const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
+        const val DEALER_CARD_STANDARD_SCORE = 16
     }
 }

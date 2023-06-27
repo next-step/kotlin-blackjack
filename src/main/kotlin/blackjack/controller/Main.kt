@@ -14,14 +14,13 @@ fun main() {
         val player = game.getNowPlayer()
         val answer = InputView.getAnswer(player)
         game.playGameTurn(answer)
-        printCards(player, answer)
-    }
-
-    ResultView.printResult(game)
-}
-
-fun printCards(player: Player, isPlaying: Boolean) {
-    if (isPlaying) {
         ResultView.printCards(player)
     }
+
+    if(game.askDealerForAdditionalCard()){
+        ResultView.printAddDealerCard()
+    }
+
+
+    ResultView.printResult(game)
 }

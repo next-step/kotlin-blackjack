@@ -89,7 +89,7 @@ jason: 패
 
 - [x] 딜러 객체를 추가한다 - dealer
 - [x] 딜러도 카드를 받는 부분을 추가한다 - blackjack
-- [ ] 딜러의 카드도 출력한다 - ResultView
-- [ ] 딜러의 점수 계산과 카드를 더 받아야 하는지 여부를 구현한다. - blackjack, dealer
+- [x] 딜러의 카드도 출력한다 - ResultView
+- [x] 딜러의 점수 계산과 카드를 더 받아야 하는지 여부를 구현한다. - blackjack, dealer
 - [ ] 승패를 계산한다. - blackjack, player
 - [ ] 승패를 출력한다. - ResultView

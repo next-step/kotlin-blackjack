@@ -6,4 +6,8 @@ data class Dealer(val cards: Cards = Cards()) {
     fun addCard(card: Card) {
         cards.addCard(card)
     }
+
+    fun score(): Int {
+        return cards.score()
+    }
 }

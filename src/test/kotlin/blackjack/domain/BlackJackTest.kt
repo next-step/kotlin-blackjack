@@ -94,4 +94,40 @@ internal class BlackJackTest {
         game.getNowPlayer() shouldBe player2
         game.isEnd() shouldBe false
     }
+
+    @Test
+    internal fun `딜러는 점수 16점 이하면 카드 한장을 더 받는다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SIX),
+            )
+        )
+        val player1 = Player("pobi", cards)
+        val dealer = Dealer(cards)
+        val game = BlackJack(listOf(player1),dealer)
+
+        dealer.cards.score() shouldBe 16
+        dealer.cards.value.size shouldBe 2
+        game.askDealerForAdditionalCard()
+        dealer.cards.value.size shouldBe 3
+    }
+    @Test
+    internal fun `딜러는 점수 16점 초과면 카드 한장을 더 받지않는다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SEVEN),
+            )
+        )
+        val player1 = Player("pobi", cards)
+        val dealer = Dealer(cards)
+        val game = BlackJack(listOf(player1),dealer)
+
+        dealer.cards.score() shouldBe 17
+        dealer.cards.value.size shouldBe 2
+        game.askDealerForAdditionalCard()
+        dealer.cards.value.size shouldBe 2
+    }
+
 }
