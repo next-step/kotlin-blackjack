@@ -7,8 +7,11 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
+import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.DelayerGameResult
+import blackjack.domain.game.MatchResultType
+import blackjack.domain.game.PlayerMatchResult
 import blackjack.domain.player.unWrappings
 import blackjack.domain.score.Score
 
@@ -45,10 +48,16 @@ class BlackJackResultView {
 
     fun display(blackJackGameResult: BlackJackGameResult) {
         println()
+        println(blackJackGameResult.dealerGameResult.makeDisplayMessage())
         blackJackGameResult.playerGameResults
             .map { it.playerCards.makeDisplayMessage().plus(" - ${it.score.makeDisplayMessage()}") }
             .forEach { println(it) }
-        println(blackJackGameResult.dealerGameResult.makeDisplayMessage())
+        println()
+        println("## 최종 승패")
+        println(blackJackGameResult.matchResult.dealerMatchResult.makeDisplayMessage())
+        blackJackGameResult.matchResult.playerMatchResults.forEach {
+            println(it.makeDisplayMessage())
+        }
     }
 
     private fun DelayerGameResult.makeDisplayMessage(): String {
@@ -102,5 +111,26 @@ class BlackJackResultView {
             CardDenomination.KING -> "K"
         }
         return "$denominationName$shapeName"
+    }
+
+    private fun DealerMatchResult.makeDisplayMessage(): String {
+        return buildString {
+            append("딜러:")
+            append(" ${winCount}승")
+            append(" ${tieCount}무")
+            append(" ${loseCount}패")
+        }
+    }
+
+    private fun PlayerMatchResult.makeDisplayMessage(): String {
+        val matchResultText = when (matchResultType) {
+            MatchResultType.WIN -> "승"
+            MatchResultType.TIE -> "무"
+            MatchResultType.LOSE -> "패"
+        }
+        return buildString {
+            append("${playerName.unWrapping()}: ")
+            append(matchResultText)
+        }
     }
 }
