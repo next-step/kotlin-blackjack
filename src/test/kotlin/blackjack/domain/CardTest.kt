@@ -5,9 +5,18 @@ import org.junit.jupiter.api.Test
 
 internal class CardTest {
     @Test
-    internal fun `카드는 트럼프카드 안에 존재하는 카드만 생성된다`() {
-        val card = Card.draw()
-        Shape.values().contains(card.shape) shouldBe true
-        Character.values().contains(card.character) shouldBe true
+    internal fun `shape과 character로 카드를 생성할 수 있다`() {
+        val card = Card(Shape.CLOVER, Character.EIGHT)
+        card.shape shouldBe Shape.CLOVER
+        card.character shouldBe Character.EIGHT
+    }
+
+    @Test
+    internal fun `카드가 에이스카드인지 여부를 확인할 수 있다`() {
+        val notAceCard = Card(Shape.CLOVER, Character.EIGHT)
+        val aceCard = Card(Shape.DIAMOND, Character.A)
+
+        notAceCard.isAce() shouldBe false
+        aceCard.isAce() shouldBe true
     }
 }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJack(val players: List<Player>) {
+class BlackJack(val players: List<Player>, private val gameCards: GameCards = GameCards()) {
 
     private var nowPlayer = 0
     private var playCount = 0
@@ -11,7 +11,7 @@ class BlackJack(val players: List<Player>) {
     }
 
     private fun distributeInitialCard() {
-        for (i in 0 until START_CARD_COUNT) players.forEach { it.draw() }
+        for (i in 0 until START_CARD_COUNT) players.forEach { it.addCard(gameCards.draw()) }
     }
 
     fun isEnd(): Boolean {
@@ -29,7 +29,7 @@ class BlackJack(val players: List<Player>) {
         val count = playCount
         when (isPlaying) {
             true -> {
-                getNowPlayer().draw()
+                getNowPlayer().addCard(gameCards.draw())
                 playCount++
             }
 
