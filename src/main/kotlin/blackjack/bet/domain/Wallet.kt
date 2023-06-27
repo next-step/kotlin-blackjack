@@ -2,14 +2,14 @@ package blackjack.bet.domain
 
 class Wallet {
 
-    private var balance = 0
+    private var bettingAmount = 0
     private var income = 0
     fun charge(money: Int) {
-        this.balance = money
+        this.bettingAmount = money
     }
 
     fun balance(): Int {
-        return balance
+        return bettingAmount
     }
 
     fun income(): Int {
@@ -17,7 +17,7 @@ class Wallet {
     }
 
     fun settle(result: Int) {
-        balance += result
+        bettingAmount += result
         income += result
     }
 }
