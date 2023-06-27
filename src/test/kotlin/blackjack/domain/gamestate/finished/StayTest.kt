@@ -49,6 +49,13 @@ class StayTest : FunSpec({
         }
     }
 
+    context("isFinished") {
+        test("finished인지 확인한다.") {
+            val actual = Stay(STAY_CARDS).isFinished()
+            actual shouldBe true
+        }
+    }
+
     context("compete") {
         test("상대가 bust면 승리한다.") {
             val actual = Stay(STAY_CARDS).compete(Bust(BUST_CARDS))

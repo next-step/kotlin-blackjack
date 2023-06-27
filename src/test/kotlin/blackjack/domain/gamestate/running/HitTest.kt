@@ -66,6 +66,13 @@ class HitTest : FunSpec({
         }
     }
 
+    context("isFinished") {
+        test("finished인지 확인한다.") {
+            val actual = Hit(Cards.of(SPADE_KING, SPADE_JACK)).isFinished()
+            actual shouldBe false
+        }
+    }
+
     context("score") {
         test("스코어를 계산한다.") {
             val actual = Hit(Cards.of(SPADE_KING, SPADE_JACK)).score()

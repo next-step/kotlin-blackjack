@@ -46,6 +46,13 @@ class BustTest : FunSpec({
         }
     }
 
+    context("isFinished") {
+        test("finished인지 확인한다.") {
+            val actual = Bust(BUST_CARDS).isFinished()
+            actual shouldBe true
+        }
+    }
+
     context("compete") {
         test("버스트는 상대가 누구든 진다.") {
             val actual = Bust(BUST_CARDS).compete(Bust(BUST_CARDS))

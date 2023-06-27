@@ -14,6 +14,8 @@ interface GameState {
 
     fun isBust(): Boolean
 
+    fun isFinished(): Boolean
+
     fun score(): Int
 
     fun compete(gameState: Finished): Competition
