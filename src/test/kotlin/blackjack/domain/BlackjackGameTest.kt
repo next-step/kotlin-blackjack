@@ -156,6 +156,31 @@ class BlackjackGameTest : FunSpec({
         }
     }
 
+    context("dealerDraw") {
+        test("유저턴이 종료되지 않았는데 딜러 드로우 시 예외가 발생한다.") {
+            val blackjackGame =
+                BlackjackGame(
+                    turn = TURN_0,
+                    dealer = Dealer(Hit(Cards.of(SPADE_ACE, SPADE_TWO))),
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                )
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.dealerDraw() }
+            exception.message shouldBe "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없다."
+        }
+
+        test("딜러에게 드로우 한다.") {
+            val blackjackGame =
+                BlackjackGame(
+                    turn = TURN_1,
+                    dealer = Dealer(Hit(Cards.of(SPADE_ACE, SPADE_TWO))),
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_KING)))),
+                )
+            blackjackGame.dealerDraw()
+
+            blackjackGame.dealer.cards() shouldHaveSize 3
+        }
+    }
+
     context("isDealerTurnEnd") {
         test("유저턴이 종료되지 않았는데 호출 시 예외가 발생한다.") {
             val blackjackGame =
@@ -181,7 +206,6 @@ class BlackjackGameTest : FunSpec({
                 actual shouldBe expected
             }
         }
-
     }
 }) {
     companion object {
