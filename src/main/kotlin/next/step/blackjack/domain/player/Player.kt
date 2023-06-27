@@ -2,24 +2,19 @@ package next.step.blackjack.domain.player
 
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.state.CardsState
-import next.step.blackjack.domain.card.state.UnfinishedState
+import next.step.blackjack.domain.card.PlayerCards
 import next.step.blackjack.domain.game.GameResult
 
 open class Player(
     protected val name: PlayerName,
-    protected val cards: Cards = Cards.of(emptyList()),
-    protected var state: CardsState = UnfinishedState
+    protected val cards: PlayerCards = PlayerCards()
 ) {
 
     fun name(): String = name.name
 
-    fun hit(card: Card) {
-        cards.add(card)
-        state = state.next(cards)
-    }
+    fun hit(card: Card) = cards.hit(card)
 
-    open fun canHit(): Boolean = state == UnfinishedState
+    open fun canHit(): Boolean = cards.isUnfinished()
 
     fun cardDescs(): Set<String> = cards.descs()
 
@@ -27,13 +22,10 @@ open class Player(
 
     fun point(): Int = cards.point()
 
-    fun fight(other: Player): GameResult {
-        val gameResult = state.fight(other.state)
-        return if (gameResult == GameResult.UNDECIDED) cards.fight(other.cards) else gameResult
-    }
+    fun fight(other: Player): GameResult = cards.fight(other.cards)
 
     companion object {
         fun of(name: PlayerName, cards: Cards): Player =
-            Player(name, cards, UnfinishedState.next(cards))
+            Player(name, PlayerCards.of(cards))
     }
 }
