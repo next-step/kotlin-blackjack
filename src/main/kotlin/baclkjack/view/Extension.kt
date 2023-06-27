@@ -1,6 +1,7 @@
 package baclkjack.view
 
 import baclkjack.domain.card.Card
+import baclkjack.domain.card.Number
 import baclkjack.domain.card.Suit
 
 fun Suit.toName() = when (this) {
@@ -10,4 +11,12 @@ fun Suit.toName() = when (this) {
     Suit.CLUB -> "클로버"
 }
 
-fun List<Card>.toCards() = this.map { "${it.number.value}${it.suit.toName()}" }.joinToString { it }
+fun Number.toName() = when (this) {
+    Number.ACE -> "A"
+    Number.JACK -> "J"
+    Number.QUEEN -> "Q"
+    Number.KING -> "K"
+    else -> this.value.toString()
+}
+
+fun List<Card>.toCards() = this.map { "${it.number.toName()}${it.suit.toName()}" }.joinToString { it }
