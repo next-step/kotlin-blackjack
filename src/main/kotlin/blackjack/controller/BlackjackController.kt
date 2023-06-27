@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.GameCardsSet
@@ -12,19 +13,21 @@ class BlackjackController {
     private var wantStop = false
 
     fun run() {
-        val players = prepareGame()
-        BlackjackView.printPlayersCard(players)
-        playGame(players)
+        val dealerAndPlayers = prepareGame()
+        val dealer = dealerAndPlayers.first
+        val players = dealerAndPlayers.second
+
+        playGame(dealer, players)
         BlackjackView.printPlayersResult(players)
     }
 
-    private fun prepareGame(): Players {
+    private fun prepareGame(): Pair<Dealer, Players> {
         val gameCardsSet = GameCardsSet()
         val dealer = Dealer(gameCardsSet = gameCardsSet)
         val players = InputView.inputPlayers(gameCardsSet)
-        initialTurn(dealer, players)
 
-        return players
+        initialTurn(dealer, players)
+        return Pair(dealer, players)
     }
 
     private fun initialTurn(dealer: Dealer, players: Players) {
@@ -34,13 +37,21 @@ class BlackjackController {
         }
 
         BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
-
-        if (dealer.sumOfMyCards() <= DEALER_INITIAL_TURN_LIMIT) {
-            dealer.drawCard()
-        }
+        BlackjackView.printDealerCard(dealer)
+        BlackjackView.printPlayersCard(players)
     }
 
-    private fun playGame(players: Players) {
+    private fun playGame(dealer: Dealer, players: Players) {
+        if (dealer.sumOfMyCards() <= DEALER_INITIAL_TURN_LIMIT) {
+            dealer.drawCard()
+            BlackjackView.printDealerExtraHit(dealer.name)
+        }
+
+        if (dealer.sumOfMyCards() > BLACK_JACK_SCORE) {
+            wantStop = true
+            return // todo: 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리한다.
+        }
+
         while (!wantStop) {
             players.players.forEach { playTurn(it) }
         }
