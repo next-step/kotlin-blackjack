@@ -1,13 +1,15 @@
-package next.step.racing.view
+package next.step.blackjack.view
 
+import next.step.blackjack.domain.betting.BettingAmount
+import next.step.blackjack.domain.betting.BettingPlayer
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerNames
-import next.step.blackjack.view.PlayerNameParser
 
 object InputView {
 
     private const val ENTER_PLAYER_NAMES = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val ENTER_TURN = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+    private const val ENTER_BETTING = "의 배팅 금액은?"
     private const val YES = "y"
     private const val NO = "n"
 
@@ -25,7 +27,12 @@ object InputView {
         }.getOrThrow()
     }
 
-    fun readTurn(player: Player): Boolean = read("${player.name()}$ENTER_TURN") {
+    fun readBetting(player: Player): BettingAmount {
+        println()
+        return read("${player.name()}$ENTER_BETTING") { BettingAmount.of(it.toInt()) }
+    }
+
+    fun readTurn(player: BettingPlayer): Boolean = read("${player.name()}$ENTER_TURN") {
         when {
             it.trim() == YES -> true
             it.trim() == NO -> false
