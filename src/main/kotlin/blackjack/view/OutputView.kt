@@ -16,10 +16,11 @@ fun printFirstDrawResult(hands: List<Hands>) {
 
 fun printCurrentDrawResult(hands: Hands) = println("${hands.playerName}카드: ${parseCardsResult(hands.cards)}")
 
-fun printDealerGetDraw() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+fun printDealerGetDraw() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
 
 fun printGameResult(gameResult: GameResult) {
     printGameScoreResult(gameResult)
+    println()
     println("## 최종 승패")
     printGameCompetition(gameResult.dealerGameResult)
     printCameCompetition(gameResult.playerGameResults)
