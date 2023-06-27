@@ -1,6 +1,8 @@
 package blackjack.domain
 
-class Player(val name: String, val cards: PlayerCards = PlayerCards()) {
+class Player(val name: String, rule: BlackJackRule) {
+
+    val cards: PlayerCards = PlayerCards(rule)
 
     fun receive(card: PlayingCard) {
         cards.add(card)

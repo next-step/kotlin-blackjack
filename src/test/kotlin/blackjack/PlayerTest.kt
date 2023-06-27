@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BlackJackRule
 import blackjack.domain.CardType
 import blackjack.domain.CardValue
 import blackjack.domain.Player
@@ -15,14 +16,14 @@ class PlayerTest : FreeSpec({
             "제이든",
             "김진억"
         ) { name ->
-            val player = Player(name)
+            val player = Player(name, BlackJackRule())
 
             player.name shouldBe name
         }
     }
 
     "플레이어는 카드를 받는다." {
-        val player = Player("제이든")
+        val player = Player("제이든", BlackJackRule())
         val cards = listOf(
             PlayingCard(CardType.CLUB, CardValue.ACE),
             PlayingCard(CardType.DIAMOND, CardValue.ACE),

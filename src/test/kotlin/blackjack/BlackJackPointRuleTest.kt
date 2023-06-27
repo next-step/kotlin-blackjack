@@ -1,9 +1,5 @@
 package blackjack
 
-import blackjack.domain.BlackJackPointRule
-import blackjack.domain.BlackJackStatus.BLACK_JACK
-import blackjack.domain.BlackJackStatus.BUST
-import blackjack.domain.BlackJackStatus.STAY_OR_HIT
 import blackjack.domain.CardType.CLUB
 import blackjack.domain.CardType.DIAMOND
 import blackjack.domain.CardType.HEART
@@ -21,7 +17,7 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackPointRuleTest : FreeSpec({
 
-    "총 합이 21일 경우 블랙잭이다." {
+    "카드 포인트의 총 합을 계산할 수 있다." {
         val playerCards = PlayerCards()
         playerCards.add(
             THREE of HEART,
@@ -30,39 +26,22 @@ class BlackJackPointRuleTest : FreeSpec({
             FIVE of DIAMOND
         )
 
-        BlackJackPointRule.check(playerCards) shouldBe BLACK_JACK
+        playerCards.point() shouldBe 21
     }
 
-    "총 합이 21 보다 클 경우 버스트 처리된다." {
-        val playerCards = PlayerCards()
-        playerCards.add(
-            EIGHT of HEART,
-            EIGHT of SPADE,
-            EIGHT of CLUB
-        )
-
-        BlackJackPointRule.check(playerCards) shouldBe BUST
-    }
-
-    "총 합이 21 보다 작을 경우 stay or hit 처리된다." {
-        val playerCards = PlayerCards()
-        playerCards.add(EIGHT of HEART, EIGHT of CLUB)
-
-        BlackJackPointRule.check(playerCards) shouldBe STAY_OR_HIT
-    }
-
-    "ACE 가 포함된 경우 blackjack > stay or hit > bust 우선 순위로 11 또는 1 로 처리된다." - {
+    "ACE 가 포함된 경우 총 합이 21이 초과되지 않도록 1 or 11 로 처리 될 수 있다." - {
         withData(
             mapOf(
-                "블랙잭 with ace by 11" to Pair(arrayOf(TEN of HEART, ACE of HEART), BLACK_JACK),
-                "블랙잭 with ace by 1" to Pair(arrayOf(TEN of HEART, ACE of HEART, TEN of CLUB), BLACK_JACK),
-                "`stay or hit` with ace by 1" to Pair(arrayOf(FIVE of HEART, ACE of HEART, TEN of CLUB), STAY_OR_HIT),
+                "블랙잭 with ace by 11" to Pair(arrayOf(TEN of HEART, ACE of HEART), 21),
+                "블랙잭 with ace by 1" to Pair(arrayOf(TEN of HEART, ACE of HEART, TEN of CLUB), 21),
+                "`stay or hit` with ace by 1" to Pair(arrayOf(FIVE of HEART, ACE of HEART, TEN of CLUB), 16),
+                "ace 4장" to Pair(arrayOf(ACE of HEART, ACE of DIAMOND, ACE of CLUB, ACE of SPADE), 14),
             )
-        ) { (cards, expected) ->
+        ) { (cards, expectedPoint) ->
             val playerCards = PlayerCards()
             playerCards.add(*cards)
 
-            BlackJackPointRule.check(playerCards) shouldBe expected
+            playerCards.point() shouldBe expectedPoint
         }
     }
 })

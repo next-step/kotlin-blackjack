@@ -1,13 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.BlackJackStatus.BLACK_JACK
-import blackjack.domain.BlackJackStatus.BUST
-import blackjack.domain.BlackJackStatus.STAY_OR_HIT
-
-class BlackJackGame(playerNames: List<String>) {
-
-    private val players = playerNames.map { Player(it) }
+class BlackJackGame(
+    playerNames: List<String>,
     private val playingCards: PlayingCardPack = PlayingCardPackFactory.createPack()
+) {
+
+    private val players = playerNames.map { Player(it, POINT_RULE) }
 
     init {
         this.playingCards.shuffle()
@@ -22,23 +20,20 @@ class BlackJackGame(playerNames: List<String>) {
 
     fun play(askHit: (Player) -> Boolean, showPlayer: (Player) -> Unit): GameResult {
         players.forEach { playerInteraction(it, askHit, showPlayer) }
-        return GameResult(this.players.map { Pair(it, BlackJackPointRule.point(it.cards)) })
+        return GameResult(this.players.map { Pair(it, it.cards.point()) })
     }
 
     private fun playerInteraction(player: Player, askHit: (Player) -> Boolean, showPlayer: (Player) -> Unit) {
-        when (BlackJackPointRule.check(player.cards)) {
-            BUST, BLACK_JACK -> {}
-            STAY_OR_HIT -> {
-                if (askHit(player)) {
-                    player.receive(playingCards.pick())
-                    showPlayer(player)
-                    playerInteraction(player, askHit, showPlayer)
-                }
-            }
+        val point = player.cards.point()
+        if (point < POINT_RULE.winningPoint && askHit(player)) {
+            player.receive(playingCards.pick())
+            showPlayer(player)
+            playerInteraction(player, askHit, showPlayer)
         }
     }
 
     companion object {
         private const val INIT_CARD_COUNT = 2
+        private val POINT_RULE = BlackJackRule()
     }
 }
