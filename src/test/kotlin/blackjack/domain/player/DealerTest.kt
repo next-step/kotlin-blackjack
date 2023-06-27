@@ -69,7 +69,7 @@ class DealerTest {
         val additionalCard = Card.createCard(CardRank.QUEEN, CardShape.DIAMOND)
         val additionalCard2 = Card.createCard(CardRank.QUEEN, CardShape.SPADE)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
-        val goofyPlayer = PlayerImpl("goofy", myCards)
+        val goofyPlayer = GamePlayer("goofy", myCards)
 
         // given dealer
         val sampleCard4 = Card.createCard(CardRank.JACK, CardShape.CLOVER)
@@ -80,10 +80,7 @@ class DealerTest {
 
         // when
         val result = dealer.compareScore(goofyPlayer)
-        val goofyResult = goofyPlayer.compareScore(dealer)
-
         // then
         result shouldBe Score.init().win()
-        result.reverse() shouldBe goofyResult
     }
 }

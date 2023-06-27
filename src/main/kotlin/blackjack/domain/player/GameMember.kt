@@ -3,15 +3,12 @@ package blackjack.domain.player
 import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
-import blackjack.domain.rule.Score
 
-sealed interface Player {
+sealed interface GameMember {
     val name: String
     val cardHold: CardHold
 
     fun canDraw(): Boolean
-
-    fun compareScore(other: Player): Score
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()

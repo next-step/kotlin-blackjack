@@ -15,15 +15,13 @@ class ParticipantsTest {
         // given player 1
         val sampleCard = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
         val sampleCard2 = Card.createCard(CardRank.NINE, CardShape.HEART)
-        val additionalCard = Card.createCard(CardRank.QUEEN, CardShape.DIAMOND)
-        val additionalCard2 = Card.createCard(CardRank.QUEEN, CardShape.SPADE)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
-        val goofyPlayer = PlayerImpl("goofy", myCards)
+        val goofyPlayer = GamePlayer("goofy", myCards)
 
         // given player 2
         val sampleCard3 = Card.createCard(CardRank.FOUR, CardShape.HEART)
         val myCards2 = CardHold(mutableListOf(sampleCard3))
-        val zeroPlayer = PlayerImpl("zero", myCards2)
+        val zeroPlayer = GamePlayer("zero", myCards2)
 
         // given dealer
         val sampleCard4 = Card.createCard(CardRank.JACK, CardShape.CLOVER)

@@ -4,10 +4,10 @@ import blackjack.domain.card.Deck
 import blackjack.domain.rule.Score
 
 class Participants(
-    val players: List<PlayerImpl>,
+    val players: List<GamePlayer>,
     val dealer: Dealer
 ) {
-    val allPlayers: List<Player>
+    val allGameMembers: List<GameMember>
         get() = listOf(dealer) + players
 
     fun drawAll(deck: Deck) {

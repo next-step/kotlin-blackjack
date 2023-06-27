@@ -2,8 +2,8 @@ package blackjack.controller
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.GamePlayer
 import blackjack.domain.player.Participants
-import blackjack.domain.player.PlayerImpl
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -20,7 +20,7 @@ object GameController {
     }
 
     private fun prepareGame(deck: Deck): Participants {
-        val playerImpls = InputView.getPlayerNames().map { PlayerImpl(it) }
+        val playerImpls = InputView.getPlayerNames().map { GamePlayer(it) }
         val dealer = Dealer()
         val participants = Participants(playerImpls, dealer)
 
@@ -38,11 +38,12 @@ object GameController {
     private fun playGame(participants: Participants, deck: Deck) {
         participants.players.forEach { playTurn(it, deck) }
         if (participants.dealer.canDraw()) {
+            OutputView.printDealerGetAdditionalCard()
             participants.dealer.drawCard(deck)
         }
     }
 
-    private fun playTurn(playerImpl: PlayerImpl, deck: Deck) {
+    private fun playTurn(playerImpl: GamePlayer, deck: Deck) {
         while (playerImpl.canDraw() && InputView.askDrawCard(playerImpl)) {
             playerImpl.drawCard(deck)
             OutputView.printPlayerCard(playerImpl)

@@ -1,8 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.player.GameMember
+import blackjack.domain.player.GamePlayer
 import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerImpl
 import blackjack.domain.rule.Score
 
 object OutputView {
@@ -23,26 +23,26 @@ object OutputView {
     }
 
     private fun printDealerCard(players: Participants) {
-        println(players.dealer.showOnlyOneCard())
+        println(players.dealer.let { println("${it.name}카드: ${it.cardHold.getAllCards()[0].rank.mark}${it.cardHold.getAllCards()[0].shape.mark}") })
     }
 
     fun printDealerGetAdditionalCard() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 
-    fun printPlayerCard(player: PlayerImpl) {
+    fun printPlayerCard(player: GamePlayer) {
         println("${player.name}카드: ${player.cardHold.getAllCards().joinToString(", ") { it.rank.mark + it.shape.mark } }")
     }
 
     fun printPlayerResult(players: Participants) {
         println()
-        players.allPlayers.forEach {
+        players.allGameMembers.forEach {
             printPlayerResult(it)
         }
     }
 
-    private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.cardHold.getAllCards().joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${player.getPoints()}")
+    private fun printPlayerResult(gameMember: GameMember) {
+        println("${gameMember.name}카드: ${gameMember.cardHold.getAllCards().joinToString(", ") { it.rank.mark + it.shape.mark } } - 결과: ${gameMember.getPoints()}")
     }
 
     fun showWinner(results: Map<String, Score>) {
