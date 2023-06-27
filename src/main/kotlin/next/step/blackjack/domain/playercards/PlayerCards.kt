@@ -1,13 +1,15 @@
-package next.step.blackjack.domain.card
+package next.step.blackjack.domain.playercards
 
-import next.step.blackjack.domain.card.state.BlackjackState
-import next.step.blackjack.domain.card.state.CardsState
-import next.step.blackjack.domain.card.state.UnfinishedState
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
+import next.step.blackjack.domain.playercards.state.BlackjackState
+import next.step.blackjack.domain.playercards.state.PlayerCardsState
+import next.step.blackjack.domain.playercards.state.UnfinishedState
 
 class PlayerCards(
     val cards: Cards = Cards.of(emptyList()),
-    var state: CardsState = UnfinishedState
+    var state: PlayerCardsState = UnfinishedState
 ) {
 
     fun hit(card: Card) {

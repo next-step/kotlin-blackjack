@@ -2,6 +2,7 @@ package next.step.blackjack.domain.card
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.game.GameCards
 
 class GameCardsTest : DescribeSpec({
 

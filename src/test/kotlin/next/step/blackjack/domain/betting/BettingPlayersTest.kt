@@ -6,8 +6,8 @@ import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.GameCards
 import next.step.blackjack.domain.dealer.Dealer
+import next.step.blackjack.domain.game.GameCards
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerName
 

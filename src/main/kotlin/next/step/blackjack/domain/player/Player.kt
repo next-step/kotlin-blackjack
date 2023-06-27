@@ -4,8 +4,8 @@ import next.step.blackjack.domain.betting.BettingAmount
 import next.step.blackjack.domain.betting.BettingPlayer
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.PlayerCards
 import next.step.blackjack.domain.game.GameResult
+import next.step.blackjack.domain.playercards.PlayerCards
 
 open class Player(
     protected val name: PlayerName,

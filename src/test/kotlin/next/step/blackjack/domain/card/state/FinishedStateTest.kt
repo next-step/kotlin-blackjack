@@ -5,6 +5,11 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
+import next.step.blackjack.domain.playercards.state.BlackjackState
+import next.step.blackjack.domain.playercards.state.BurstState
+import next.step.blackjack.domain.playercards.state.FinishedState
+import next.step.blackjack.domain.playercards.state.PlayerCardsState
+import next.step.blackjack.domain.playercards.state.UnfinishedState
 import org.junit.jupiter.api.assertThrows
 
 class FinishedStateTest : DescribeSpec({
@@ -16,7 +21,7 @@ class FinishedStateTest : DescribeSpec({
             }
         }
         context("카드 상태에 따라 게임 결과가 달라짐") {
-            data class ResultExpected(val state: CardsState, val result: GameResult)
+            data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
                 ResultExpected(BlackjackState, GameResult.LOSE),
                 ResultExpected(UnfinishedState, GameResult.WIN),

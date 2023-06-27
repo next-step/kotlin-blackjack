@@ -2,9 +2,9 @@ package next.step.blackjack.domain.dealer
 
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.PlayerCards
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerName
+import next.step.blackjack.domain.playercards.PlayerCards
 
 class Dealer(
     name: PlayerName = PlayerName.of(DEALER_NAME),
