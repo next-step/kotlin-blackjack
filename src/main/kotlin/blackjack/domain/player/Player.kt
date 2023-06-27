@@ -12,6 +12,8 @@ class Player(
     var gameState: GameState = gameState
         private set
 
+    override fun name(): String = name.value
+
     override fun draw(card: Card) {
         gameState = gameState.draw(card)
     }

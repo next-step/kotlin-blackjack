@@ -5,6 +5,8 @@ import blackjack.domain.card.Card
 
 interface Participant {
 
+    fun name(): String
+
     fun draw(card: Card)
 
     fun stay()

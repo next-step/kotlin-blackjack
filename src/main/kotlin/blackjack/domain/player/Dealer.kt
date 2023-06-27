@@ -6,11 +6,12 @@ import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.running.InitialHand
 
 class Dealer(
-    val name: Name = DEALER_NAME,
     gameState: GameState = InitialHand(),
 ) : Participant {
     var gameState: GameState = gameState
         private set
+
+    override fun name(): String = DEALER_NAME
 
     override fun draw(card: Card) {
         gameState = gameState.draw(card)
@@ -33,15 +34,13 @@ class Dealer(
         return gameState.cards()
     }
 
-    override fun hands(): Hands {
-        TODO("Not yet implemented")
-    }
+    override fun hands(): Hands = Hands.from(this)
 
     override fun score(): Int {
         TODO("Not yet implemented")
     }
 
     companion object {
-        private val DEALER_NAME = Name("딜러")
+        private const val DEALER_NAME = "딜러"
     }
 }
