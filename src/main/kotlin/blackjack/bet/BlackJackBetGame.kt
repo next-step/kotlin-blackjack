@@ -5,8 +5,7 @@ import blackjack.bet.domain.BlackJackBetTable
 import blackjack.bet.view.BetOutputView
 import blackjack.bet.view.BetPlayerStatus
 import blackjack.bet.view.BetStatusNoticer
-import blackjack.common.view.InputView
-import blackjack.common.view.OutputView
+import blackjack.common.view.CommonOutputView
 
 class BlackJackBetGame(playerNames: List<String>) {
 
@@ -16,29 +15,29 @@ class BlackJackBetGame(playerNames: List<String>) {
     fun startGame() {
         table.beginRound()
         val playersName = table.getPlayersName()
-        val allStatusWithDealer = table.getRoundStartedStatus()
+        val allStatusWithDealer = table.getInitialStatus()
         BetStatusNoticer.noticeInitialStatus(playersName, allStatusWithDealer)
     }
 
-    fun processRound() {
+    fun processRound(wantToHit: (String) -> Boolean) {
         table.executePlayerTurns(
             players,
-            wantToHit = { name -> InputView.wantToHit(name) },
+            wantToHit = wantToHit,
             handNotice = { player -> BetOutputView.handNotice(BetPlayerStatus.of(player)) },
-            cantDrawMoreException = { name -> OutputView.canNotDrawMoreWarn(name) }
+            cantDrawException = { name -> CommonOutputView.canNotDrawMoreWarn(name) }
         )
-        table.executeDealerTurn { OutputView.dealerAddNotice() }
+        table.executeDealerTurn { CommonOutputView.dealerAddNotice() }
         table.checkGameResult()
     }
 
     fun endGame() {
-        val allStatusWithDealer = table.getAllStatusWithDealer()
+        val allStatusWithDealer = table.getAllStatus()
         BetStatusNoticer.noticeResultStatus(allStatusWithDealer)
     }
 
     fun chargePhase(chargeRequest: (String) -> Int) {
         players.forEach {
-            it.chargeWallet(chargeRequest.invoke(it.name))
+            it.charge(chargeRequest.invoke(it.name))
         }
     }
 }

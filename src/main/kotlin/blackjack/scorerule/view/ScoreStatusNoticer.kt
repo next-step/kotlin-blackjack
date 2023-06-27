@@ -1,10 +1,10 @@
 package blackjack.scorerule.view
 
-import blackjack.common.view.OutputView
+import blackjack.common.view.CommonOutputView
 
 object ScoreStatusNoticer {
     fun noticeInitialStatus(playerNames: String, allStatusWithDealer: List<ScorePlayerStatus>) {
-        OutputView.beginNameNotice(playerNames)
+        CommonOutputView.beginNameNotice(playerNames)
         ScoreOutputView.roundBeginNotice(allStatusWithDealer)
     }
 

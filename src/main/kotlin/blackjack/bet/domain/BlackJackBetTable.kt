@@ -17,7 +17,7 @@ class BlackJackBetTable(private val players: List<BetPlayer>) {
         return players.joinToString { it.name }
     }
 
-    fun getRoundStartedStatus(): List<BetPlayerStatus> {
+    fun getInitialStatus(): List<BetPlayerStatus> {
         val betPlayerStatus = mutableListOf(BetPlayerStatus.dealerUpCard(dealer))
         for (player in players) {
             betPlayerStatus.add(BetPlayerStatus.of(player))
@@ -26,22 +26,22 @@ class BlackJackBetTable(private val players: List<BetPlayer>) {
         return betPlayerStatus
     }
 
-    fun getAllStatusWithDealer(): List<BetPlayerStatus> {
-        return dealer.getParticipantInitialStatus(players)
+    fun getAllStatus(): List<BetPlayerStatus> {
+        return dealer.getAllStatus(players)
     }
 
     fun executePlayerTurns(
         player: List<BetPlayer>,
         wantToHit: (String) -> Boolean,
         handNotice: (BetPlayer) -> Unit,
-        cantDrawMoreException: (String) -> Unit
+        cantDrawException: (String) -> Unit
     ) {
         player.forEach {
             while (wantToHit(it.name) && it.canDraw()) {
                 try {
                     it.drawPhase(deckManager = deckManager, handNotice = handNotice)
                 } catch (ex: IllegalStateException) {
-                    cantDrawMoreException(it.name)
+                    cantDrawException(it.name)
                     break
                 }
             }
@@ -54,6 +54,6 @@ class BlackJackBetTable(private val players: List<BetPlayer>) {
 
     fun checkGameResult() {
         val checker = BetGameResultChecker(dealer)
-        checker.determineGameResult(players)
+        checker.determine(players)
     }
 }

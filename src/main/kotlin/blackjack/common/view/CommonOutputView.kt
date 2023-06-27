@@ -1,6 +1,6 @@
 package blackjack.common.view
 
-object OutputView {
+object CommonOutputView {
 
     fun beginNameNotice(playerNames: String) {
         println("\n딜러와 ${playerNames}에게 2장의 나누었습니다.")

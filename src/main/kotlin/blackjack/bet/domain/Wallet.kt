@@ -8,7 +8,7 @@ class Wallet {
         this.bettingAmount = money
     }
 
-    fun balance(): Int {
+    fun bettingAmount(): Int {
         return bettingAmount
     }
 

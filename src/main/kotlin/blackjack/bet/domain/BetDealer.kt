@@ -4,14 +4,14 @@ import blackjack.bet.view.BetPlayerStatus
 import blackjack.common.service.DeckManager
 
 class BetDealer : BetPlayer(name = "딜러") {
-    fun beginRound(deckManager: DeckManager, players: List<BetPlayer>) {
-        this.hit(*deckManager.drawTwoCards())
+    fun beginRound(manager: DeckManager, players: List<BetPlayer>) {
+        this.hit(*manager.drawTwoCards())
         for (player in players) {
-            player.hit(*deckManager.drawTwoCards())
+            player.hit(*manager.drawTwoCards())
         }
     }
 
-    fun getParticipantInitialStatus(players: List<BetPlayer>): List<BetPlayerStatus> {
+    fun getAllStatus(players: List<BetPlayer>): List<BetPlayerStatus> {
         val betPlayerStatus = mutableListOf(BetPlayerStatus.of(this))
         for (player in players) {
             betPlayerStatus.add(BetPlayerStatus.of(player))

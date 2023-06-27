@@ -12,7 +12,7 @@ open class BetPlayer(name: String) : Player<BetPlayer>(name) {
         return this.wallet
     }
 
-    fun chargeWallet(money: Int) {
+    fun charge(money: Int) {
         wallet.charge(money)
     }
 
