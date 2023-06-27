@@ -14,16 +14,16 @@ fun main() {
 
     printFirstDrawResult(blackJackGame.firstDraw())
 
-    runBlackjackGame(blackJackGame)
+    runBlackjackGamePlayerTurn(blackJackGame)
     printGameResults(blackJackGame.gameResult())
 }
 
-private tailrec fun runBlackjackGame(blackjackGame: BlackjackGame) {
-    if (blackjackGame.isEndGame()) {
+private tailrec fun runBlackjackGamePlayerTurn(blackjackGame: BlackjackGame) {
+    if (blackjackGame.isPlayerTurnEnd()) {
         return
     }
     executeByCommand(blackjackGame)
-    runBlackjackGame(blackjackGame)
+    runBlackjackGamePlayerTurn(blackjackGame)
 }
 
 private fun executeByCommand(blackjackGame: BlackjackGame) {

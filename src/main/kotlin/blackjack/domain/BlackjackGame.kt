@@ -34,7 +34,7 @@ class BlackjackGame(
         return Hands.from(player)
     }
 
-    fun isEndGame(): Boolean = turn.isSameTurn(players.size)
+    fun isPlayerTurnEnd(): Boolean = turn.isSameTurn(players.size)
 
     fun currentTurnPlayerName(): String = currentPlayer().name()
 

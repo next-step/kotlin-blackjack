@@ -94,7 +94,7 @@ class BlackjackGameTest : FunSpec({
         }
     }
 
-    context("isEndGame") {
+    context("isPlayerTurnEnd") {
         forAll(
             row(TURN_MINUS_1, false),
             row(TURN_0, false),
@@ -102,7 +102,7 @@ class BlackjackGameTest : FunSpec({
         ) { input, expected ->
             test("현재 턴 ${input}이 종료되었음은 ${expected}이다.") {
                 val blackjackGame = BlackjackGame(turn = input, players = PLAYERS)
-                val actual = blackjackGame.isEndGame()
+                val actual = blackjackGame.isPlayerTurnEnd()
                 actual shouldBe expected
             }
         }
