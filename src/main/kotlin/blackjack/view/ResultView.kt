@@ -4,6 +4,8 @@ import blackjack.domain.BlackJack
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.PlayerRank
+import blackjack.domain.Ranks
 
 object ResultView {
 
@@ -29,18 +31,24 @@ object ResultView {
         println()
     }
 
-    fun printResult(game: BlackJack) {
+    fun printScore(game: BlackJack) {
         println()
         printDealerScore(game.dealer)
-        game.players.forEach { printScore(it) }
+        game.players.forEach { printPlayerScore(it) }
     }
 
     private fun printDealerScore(dealer: Dealer) {
         println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.cards)} $SCORE_STRING ${dealer.score()}")
     }
 
-    private fun printScore(player: Player) {
+    private fun printPlayerScore(player: Player) {
         println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)} $SCORE_STRING ${player.score()}")
+    }
+
+    fun printResult(game: BlackJack, ranks: Ranks) {
+        println("\n## 최종 승패")
+        println("${game.dealer.name}: ${ranks.values.count { it.value == PlayerRank.LOST }}${PlayerRank.LOST.dealerResult} ${ranks.values.count { it.value == PlayerRank.WON }}${PlayerRank.WON.dealerResult}")
+        game.players.forEach { player -> ranks.values[player]?.let { rank -> println("${player.name}: ${rank.playerResult}") } }
     }
 
     private fun getPrintCardString(cards: Cards) = cards.value.joinToString { it.character.value + it.shape.value }

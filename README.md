@@ -92,4 +92,4 @@ jason: 패
 - [x] 딜러의 카드도 출력한다 - ResultView
 - [x] 딜러의 점수 계산과 카드를 더 받아야 하는지 여부를 구현한다. - blackjack, dealer
 - [x] 승패를 계산한다. - blackjack, player,ranks,rank
-- [ ] 승패를 출력한다. - ResultView
+- [x] 승패를 출력한다. - ResultView

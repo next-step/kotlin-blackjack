@@ -20,6 +20,6 @@ fun main() {
         ResultView.printAddDealerCard()
     }
 
-    val result = game.getResult()
-    ResultView.printResult(game)
+    ResultView.printScore(game)
+    ResultView.printResult(game, game.getResult())
 }

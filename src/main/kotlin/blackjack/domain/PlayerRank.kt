@@ -7,6 +7,16 @@ enum class PlayerRank(val playerResult: String, val dealerResult: String) {
 
     companion object {
         fun getValues(playerScore: Int, dealerScore: Int): PlayerRank {
+
+            if (dealerScore > BlackJack.BLACKJACK_MAX_SCORE) {
+                return WON
+            }
+
+
+            if (playerScore > BlackJack.BLACKJACK_MAX_SCORE) {
+                return LOST
+            }
+
             return when {
                 playerScore > dealerScore -> WON
                 playerScore < dealerScore -> LOST

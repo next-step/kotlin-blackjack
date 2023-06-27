@@ -48,9 +48,6 @@ class BlackJack(
     }
 
     private fun getPlayerRank(player: Player): PlayerRank {
-        if (dealer.score() > BLACKJACK_MAX_SCORE) {
-            return PlayerRank.WON
-        }
         return PlayerRank.getValues(player.score(), dealer.score())
     }
 
