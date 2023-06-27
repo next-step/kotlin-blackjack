@@ -12,7 +12,8 @@ object ResultView {
     private const val SCORE_STRING = "- 결과:"
 
     fun printCards(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }}")
+        var cards = player.cards.value.joinToString { it.character.value + it.shape.value }
+        println("${player.name}$CARD_STRING $cards")
     }
 
     fun printStart(game: BlackJack) {
@@ -27,6 +28,7 @@ object ResultView {
     }
 
     private fun printScore(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }} $SCORE_STRING ${player.score()}")
+        val cards = player.cards.value.joinToString { it.character.value + it.shape.value }
+        println("${player.name}$CARD_STRING $cards $SCORE_STRING ${player.score()}")
     }
 }

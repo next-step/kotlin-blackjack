@@ -60,7 +60,6 @@ class DslTest {
         person.company shouldBe "활빈당"
         person.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.hardSkills shouldBe listOf("Kotlin")
-
     }
 
     @Test
@@ -77,7 +76,6 @@ class DslTest {
                 "Korean" level 5
                 "English" level 3
             }
-
         }
 
         person.name shouldBe "홍길동"
@@ -85,7 +83,6 @@ class DslTest {
         person.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.hardSkills shouldBe listOf("Kotlin")
         person.languageSkills shouldBe listOf(Pair("Korean", 5), Pair("English", 3))
-
     }
 
     private fun introduce(block: PersonBuilder.() -> Unit): Person {
