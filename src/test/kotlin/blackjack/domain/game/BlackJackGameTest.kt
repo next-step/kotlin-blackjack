@@ -6,6 +6,7 @@ import blackjack.domain.card.heartCard
 import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.CardCustomShuffler
+import blackjack.domain.shuffle.ForceMoveForwardCardShuffler
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -114,17 +115,12 @@ class BlackJackGameTest : BehaviorSpec({
     Given("카드의 합이 16 이하인 딜러의 차례가 되었을 때") {
         val playerNames = playerNames("test1")
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TWO),
-                    heartCard(CardDenomination.THREE),
-                    heartCard(CardDenomination.FOUR),
-                    heartCard(CardDenomination.FIVE),
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TWO),
+                heartCard(CardDenomination.THREE),
+                heartCard(CardDenomination.FOUR),
+                heartCard(CardDenomination.FIVE),
+            ),
             playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [2, 3] 플레이어 [4, 5]
@@ -140,17 +136,12 @@ class BlackJackGameTest : BehaviorSpec({
     Given("카드의 합이 17 이상인 딜러의 차례가 되었을 때") {
         val playerNames = playerNames("test1")
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TEN),
-                    heartCard(CardDenomination.JACK),
-                    heartCard(CardDenomination.QUEEN),
-                    heartCard(CardDenomination.KING),
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TEN),
+                heartCard(CardDenomination.JACK),
+                heartCard(CardDenomination.QUEEN),
+                heartCard(CardDenomination.KING),
+            ),
             playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
@@ -166,17 +157,12 @@ class BlackJackGameTest : BehaviorSpec({
     Given("게임 종료 턴이 되었을 때") {
         val playerNames = playerNames("test1")
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TEN),
-                    heartCard(CardDenomination.JACK),
-                    heartCard(CardDenomination.QUEEN),
-                    heartCard(CardDenomination.KING),
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TEN),
+                heartCard(CardDenomination.JACK),
+                heartCard(CardDenomination.QUEEN),
+                heartCard(CardDenomination.KING),
+            ),
             playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
@@ -200,17 +186,12 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 이겼을 떄") {
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TEN), // 딜러
-                    heartCard(CardDenomination.JACK), // 딜러
-                    heartCard(CardDenomination.TWO), // 참가자
-                    heartCard(CardDenomination.THREE), // 참가자
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TEN), // 딜러
+                heartCard(CardDenomination.JACK), // 딜러
+                heartCard(CardDenomination.TWO), // 참가자
+                heartCard(CardDenomination.THREE), // 참가자
+            ),
             playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [2, 3]
@@ -232,17 +213,12 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 참가자가 이겼을 떄") {
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.SEVEN), // 딜러
-                    heartCard(CardDenomination.TEN), // 딜러
-                    heartCard(CardDenomination.QUEEN), // 참가자
-                    heartCard(CardDenomination.JACK), // 참가자
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.SEVEN), // 딜러
+                heartCard(CardDenomination.TEN), // 딜러
+                heartCard(CardDenomination.QUEEN), // 참가자
+                heartCard(CardDenomination.JACK), // 참가자
+            ),
             playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [7, 10] 플레이어 [10, 10]
@@ -264,17 +240,12 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러와 참가자가 비겼을 떄") {
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TEN), // 딜러
-                    heartCard(CardDenomination.JACK), // 딜러
-                    heartCard(CardDenomination.QUEEN), // 참가자
-                    heartCard(CardDenomination.KING), // 참가자
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TEN), // 딜러
+                heartCard(CardDenomination.JACK), // 딜러
+                heartCard(CardDenomination.QUEEN), // 참가자
+                heartCard(CardDenomination.KING), // 참가자
+            ),
             playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
@@ -296,18 +267,13 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 버스트 되었을 때") {
         val game = blackJackGame(
-            shuffler = CardCustomShuffler {
-                val frontCards = listOf(
-                    heartCard(CardDenomination.TEN), // 딜러
-                    heartCard(CardDenomination.THREE), // 딜러
-                    heartCard(CardDenomination.QUEEN), // 참가자
-                    heartCard(CardDenomination.KING), // 참가자
-                    heartCard(CardDenomination.JACK), // 딜러 추가분
-                )
-                val set = it.toSet().toMutableSet()
-                set.removeAll(frontCards.toSet())
-                frontCards.toMutableList().apply { addAll(set.toList()) }
-            },
+            shuffler = ForceMoveForwardCardShuffler(
+                heartCard(CardDenomination.TEN), // 딜러
+                heartCard(CardDenomination.THREE), // 딜러
+                heartCard(CardDenomination.QUEEN), // 참가자
+                heartCard(CardDenomination.KING), // 참가자
+                heartCard(CardDenomination.JACK), // 딜러 추가분
+            ),
             playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 3] 플레이어 [10, 10]
