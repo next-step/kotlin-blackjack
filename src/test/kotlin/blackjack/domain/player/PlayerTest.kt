@@ -10,6 +10,7 @@ import blackjack.domain.gamestate.running.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import java.lang.IllegalStateException
 
@@ -20,6 +21,14 @@ class PlayerTest : FunSpec({
             val actual = Player(Name("최진영"))
             actual.name.value shouldBe "최진영"
             actual.gameState.shouldBeTypeOf<InitialHand>()
+        }
+    }
+
+    context("equals") {
+        test("이름이 같아도 같은 플레이어가 아니다.") {
+            val player1 = Player(Name("최진영"))
+            val player2 = Player(Name("최진영"))
+            player1 shouldNotBe player2
         }
     }
 
