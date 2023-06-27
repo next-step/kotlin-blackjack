@@ -1,6 +1,6 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.CardHolder
+import blackjack.domain.gamer.CardHolder
 import blackjack.domain.gamer.PlayerCards
 
 data class CardDistributionResult(

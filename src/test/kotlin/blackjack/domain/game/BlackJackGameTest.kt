@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.card.CardHolder
+import blackjack.domain.gamer.CardHolder
 import blackjack.domain.card.heartCard
 import blackjack.domain.gamer.playerNames
 import blackjack.domain.score.CardScoreCalculator

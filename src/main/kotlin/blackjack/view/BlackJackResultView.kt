@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.card.CardHolder
+import blackjack.domain.gamer.CardHolder
 import blackjack.domain.card.CardShape
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.game.BlackJackGameResult

@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardHolder
+import blackjack.domain.gamer.CardHolder
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.PlayerName
 import io.kotest.assertions.throwables.shouldNotThrow

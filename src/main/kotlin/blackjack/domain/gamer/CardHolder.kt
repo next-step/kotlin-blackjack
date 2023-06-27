@@ -1,4 +1,6 @@
-package blackjack.domain.card
+package blackjack.domain.gamer
+
+import blackjack.domain.card.Card
 
 sealed class CardHolder {
 
