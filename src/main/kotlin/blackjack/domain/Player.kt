@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class Player(val name: String, val cards: Cards = Cards()) {
     init {
-        require(!name.isNullOrBlank()) { NAME_EXCEPTION }
+        require(name.isNotBlank()) { NAME_EXCEPTION }
     }
 
     fun draw() {
