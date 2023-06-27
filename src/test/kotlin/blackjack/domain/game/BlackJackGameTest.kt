@@ -5,7 +5,6 @@ import blackjack.domain.card.CardHolder
 import blackjack.domain.card.heartCard
 import blackjack.domain.player.playerNames
 import blackjack.domain.score.CardScoreCalculator
-import blackjack.domain.shuffle.CardCustomShuffler
 import blackjack.domain.shuffle.ForceMoveForwardCardShuffler
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -257,8 +256,8 @@ class BlackJackGameTest : BehaviorSpec({
 
             Then("딜러의 결과는 0승 1무 0패이다") {
                 result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
-
             }
+
             Then("참가자의 결과는 무승부이다") {
                 result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.TIE
             }
