@@ -77,7 +77,7 @@ class BettingPlayersTest : DescribeSpec({
                 val players = BettingPlayers.of(
                     setOf(
                         BettingPlayer(
-                            "unfinished17", 1000,
+                            "stay17", 1000,
                             Card.of(CardFace.SEVEN, CardSymbol.CLUB),
                             Card.of(CardFace.TEN, CardSymbol.HEART)
                         ),
@@ -87,7 +87,7 @@ class BettingPlayersTest : DescribeSpec({
                             Card.of(CardFace.TEN, CardSymbol.HEART)
                         ),
                         BettingPlayer(
-                            "finished", 1000,
+                            "hit", 1000,
                             Card.of(CardFace.TEN, CardSymbol.CLUB),
                             Card.of(CardFace.TEN, CardSymbol.HEART),
                             Card.of(CardFace.ONE, CardSymbol.HEART)
@@ -107,9 +107,9 @@ class BettingPlayersTest : DescribeSpec({
 
                 players.fight(dealer) shouldBe BettingResults(
                     mapOf(
-                        "unfinished17" to -1000,
+                        "stay17" to -1000,
                         "blackjack" to 0,
-                        "finished" to -1000,
+                        "hit" to -1000,
                         "burst" to -1000,
                     ),
                     3000

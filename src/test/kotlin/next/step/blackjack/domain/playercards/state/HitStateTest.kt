@@ -7,23 +7,23 @@ import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
 import org.junit.jupiter.api.assertThrows
 
-class FinishedStateTest : DescribeSpec({
+class HitStateTest : DescribeSpec({
 
-    describe("FinishedState") {
+    describe("HitState") {
         context("next") {
             it("항상 예외 발생") {
-                assertThrows<IllegalArgumentException> { FinishedState.next(Cards.of(emptyList())) }
+                assertThrows<IllegalArgumentException> { HitState.next(Cards.of(emptyList())) }
             }
         }
         context("카드 상태에 따라 게임 결과가 달라짐") {
             data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
                 ResultExpected(BlackjackState, GameResult.LOSE),
-                ResultExpected(UnfinishedState, GameResult.WIN),
-                ResultExpected(FinishedState, GameResult.TIE),
+                ResultExpected(StayState, GameResult.WIN),
+                ResultExpected(HitState, GameResult.TIE),
                 ResultExpected(BurstState, GameResult.WIN),
             ) { (state, result) ->
-                FinishedState.fight(state) shouldBe result
+                HitState.fight(state) shouldBe result
             }
         }
     }

@@ -124,7 +124,7 @@ class PlayersTest : DescribeSpec({
                 val players = Players.of(
                     setOf(
                         Player.of(
-                            PlayerName.of("unfinished17"),
+                            PlayerName.of("stay17"),
                             Cards.of(
                                 listOf(
                                     Card.of(CardFace.SEVEN, CardSymbol.CLUB),
@@ -142,7 +142,7 @@ class PlayersTest : DescribeSpec({
                             )
                         ),
                         Player.of(
-                            PlayerName.of("finished"),
+                            PlayerName.of("hit"),
                             Cards.of(
                                 listOf(
                                     Card.of(CardFace.TEN, CardSymbol.CLUB),
@@ -174,9 +174,9 @@ class PlayersTest : DescribeSpec({
 
                 players.fight(dealer) shouldBe GameResults(
                     mapOf(
-                        "unfinished17" to GameResult.LOSE,
+                        "stay17" to GameResult.LOSE,
                         "blackjack" to GameResult.TIE,
-                        "finished" to GameResult.LOSE,
+                        "hit" to GameResult.LOSE,
                         "burst" to GameResult.LOSE,
                     ),
                     mapOf(
@@ -187,7 +187,7 @@ class PlayersTest : DescribeSpec({
             }
             it("bet하면 베팅 금액을 받아서 BettingPlayers 생성") {
                 val player = Player.of(
-                    PlayerName.of("unfinished17"),
+                    PlayerName.of("stay17"),
                     Cards.of(
                         listOf(
                             Card.of(CardFace.SEVEN, CardSymbol.CLUB),
@@ -197,9 +197,9 @@ class PlayersTest : DescribeSpec({
                 )
 
                 Players.of(setOf(player)).bet { BettingAmount.of(1000) } shouldBe
-                    BettingPlayers.of(
-                        setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
-                    )
+                        BettingPlayers.of(
+                            setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
+                        )
             }
         }
     }

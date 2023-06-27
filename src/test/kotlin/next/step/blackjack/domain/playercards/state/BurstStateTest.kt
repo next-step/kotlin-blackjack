@@ -19,8 +19,8 @@ class BurstStateTest : DescribeSpec({
             data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
                 ResultExpected(BlackjackState, GameResult.LOSE),
-                ResultExpected(UnfinishedState, GameResult.LOSE),
-                ResultExpected(FinishedState, GameResult.LOSE),
+                ResultExpected(StayState, GameResult.LOSE),
+                ResultExpected(HitState, GameResult.LOSE),
                 ResultExpected(BurstState, GameResult.WIN),
             ) { (state, result) ->
                 BurstState.fight(state) shouldBe result

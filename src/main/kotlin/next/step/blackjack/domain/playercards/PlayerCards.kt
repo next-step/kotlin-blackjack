@@ -5,11 +5,11 @@ import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
 import next.step.blackjack.domain.playercards.state.BlackjackState
 import next.step.blackjack.domain.playercards.state.PlayerCardsState
-import next.step.blackjack.domain.playercards.state.UnfinishedState
+import next.step.blackjack.domain.playercards.state.StayState
 
 class PlayerCards(
     val cards: Cards = Cards.of(emptyList()),
-    var state: PlayerCardsState = UnfinishedState
+    var state: PlayerCardsState = StayState
 ) {
 
     fun hit(card: Card) {
@@ -17,7 +17,7 @@ class PlayerCards(
         state = state.next(cards)
     }
 
-    fun isUnfinished(): Boolean = state == UnfinishedState
+    fun isStay(): Boolean = state == StayState
 
     fun isBlackjack(): Boolean = state == BlackjackState
 
@@ -34,6 +34,6 @@ class PlayerCards(
     }
 
     companion object {
-        fun of(cards: Cards) = PlayerCards(cards, UnfinishedState.next(cards))
+        fun of(cards: Cards) = PlayerCards(cards, StayState.next(cards))
     }
 }

@@ -16,7 +16,7 @@ open class Player(
 
     fun hit(card: Card) = cards.hit(card)
 
-    open fun canHit(): Boolean = cards.isUnfinished()
+    open fun canHit(): Boolean = cards.isStay()
 
     fun cardDescs(): Set<String> = cards.descs()
 

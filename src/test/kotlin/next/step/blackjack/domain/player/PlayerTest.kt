@@ -107,7 +107,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("Player fight") {
         val player = Player.of(
-            PlayerName.of("unfinished17"),
+            PlayerName.of("stay17"),
             Cards.of(
                 listOf(
                     Card.of(CardFace.SEVEN, CardSymbol.CLUB),
@@ -131,7 +131,7 @@ class PlayerTest : BehaviorSpec({
         }
         When("Player state로 게임 결과가 결정되지 않으면") {
             val other = Player.of(
-                PlayerName.of("unfinished16"),
+                PlayerName.of("stay16"),
                 Cards.of(
                     listOf(
                         Card.of(CardFace.SIX, CardSymbol.CLUB),

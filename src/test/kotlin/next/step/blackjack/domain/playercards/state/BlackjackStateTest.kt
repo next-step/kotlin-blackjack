@@ -19,8 +19,8 @@ class BlackjackStateTest : DescribeSpec({
             data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
                 ResultExpected(BlackjackState, GameResult.TIE),
-                ResultExpected(UnfinishedState, GameResult.WIN),
-                ResultExpected(FinishedState, GameResult.WIN),
+                ResultExpected(StayState, GameResult.WIN),
+                ResultExpected(HitState, GameResult.WIN),
                 ResultExpected(BurstState, GameResult.WIN),
             ) { (state, result) ->
                 BlackjackState.fight(state) shouldBe result

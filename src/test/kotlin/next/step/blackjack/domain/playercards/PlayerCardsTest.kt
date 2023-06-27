@@ -36,9 +36,9 @@ class PlayerCardsTest : BehaviorSpec({
                 cards.descFirst() shouldBe "5다이아몬드"
             }
         }
-        When("Unfinished 상태이면") {
+        When("Stay 상태이면") {
             Then("true") {
-                cards.isUnfinished() shouldBe true
+                cards.isStay() shouldBe true
             }
         }
         When("블랙잭 상태이면") {
