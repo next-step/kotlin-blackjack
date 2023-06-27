@@ -27,6 +27,8 @@ class Player(
 
     override fun score(): Int = gameState.score()
 
+    override fun competeWith(participant: Participant) = throw IllegalStateException("플레이어는 직접 승부할 수 없다.")
+
     companion object {
         fun from(name: String) = Player(Name(name))
 

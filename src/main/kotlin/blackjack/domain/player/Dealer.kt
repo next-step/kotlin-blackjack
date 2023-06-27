@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
+import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.running.InitialHand
 
@@ -33,6 +34,11 @@ class Dealer(
     override fun score(): Int {
         check(gameState.isFinished()) { "턴이 종료되기 전에는 점수를 조회할 수 없다" }
         return gameState.score()
+    }
+
+    override fun competeWith(participant: Participant): Competition {
+        require(participant is Player) { "딜러는 플레이어와만 승부할 수 있다." }
+        return this.gameState.compete(gameState)
     }
 
     companion object {

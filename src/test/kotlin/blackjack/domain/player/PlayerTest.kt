@@ -7,9 +7,11 @@ import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.running.InitialHand
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
+import java.lang.IllegalStateException
 
 class PlayerTest : FunSpec({
 
@@ -36,6 +38,16 @@ class PlayerTest : FunSpec({
             player.stay()
 
             player.gameState.shouldBeTypeOf<Stay>()
+        }
+    }
+
+    context("competeWith") {
+        test("승부확인을 하려하는 경우 예외가 발생한다.") {
+            val player = Player(Name("최진영"), Stay(Cards.of(SPADE_ACE, SPADE_KING)))
+            val dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_KING)))
+
+            val exception = shouldThrowExactly<IllegalStateException> { player.competeWith(dealer) }
+            exception.message shouldBe "플레이어는 직접 승부할 수 없다."
         }
     }
 })

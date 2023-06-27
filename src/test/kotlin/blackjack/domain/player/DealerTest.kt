@@ -7,6 +7,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
@@ -66,6 +67,23 @@ class DealerTest : FunSpec({
             val dealer = Dealer(gameState = InitialHand())
             val exception = shouldThrowExactly<IllegalStateException> { dealer.score() }
             exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없다"
+        }
+    }
+
+    context("competeWith") {
+        test("플레이어가 아닌 참가자와 승부하려고하면 예외가 발생한다.") {
+            val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
+            val dealer2 = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
+            val exception = shouldThrowExactly<IllegalArgumentException> { dealer.competeWith(dealer2) }
+            exception.message shouldBe "딜러는 플레이어와만 승부할 수 있다."
+        }
+
+        test("승부를 확인한다.") {
+            val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
+            val player = Player(Name("a"), Hit(Cards.of(SPADE_KING, SPADE_JACK)))
+            val actual = dealer.competeWith(player)
+
+            actual shouldBe Competition.LOSE
         }
     }
 })
