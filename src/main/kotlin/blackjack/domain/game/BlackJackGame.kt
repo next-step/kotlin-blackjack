@@ -38,9 +38,8 @@ class BlackJackGame(
     }
 
     fun distributeCardsToPlayers(): CardDistributionResult {
-        require(needCardDistribution()) {
-            "already card distributed"
-        }
+        requireTurn<BlackJackGameTurn.CardDistribution>()
+
         dealer.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
         players.forEach { player ->
             player.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
@@ -57,19 +56,21 @@ class BlackJackGame(
     }
 
     fun hitFocusedPlayer(): PlayerCards {
-        checkPlayerTurn()
+        requireTurn<BlackJackGameTurn.PlayerAnswer>()
+
         val player = requireWaitPlayer()
         player.pass(cardDeck.pick())
         return player.captureCards()
     }
 
     fun stayFocusedPlayer() {
-        checkPlayerTurn()
+        requireTurn<BlackJackGameTurn.PlayerAnswer>()
+
         requireWaitPlayer().stay()
     }
 
     fun executeDealerTurn(): DealerTurnExecuteResult {
-        checkDelayerTurn()
+        requireTurn<BlackJackGameTurn.Dealer>()
 
         val isDistributedOneMoreCard = if (dealer.canHit()) {
             dealer.pass(cardDeck.pick())
@@ -85,7 +86,7 @@ class BlackJackGame(
     }
 
     fun makeGameResult(): BlackJackGameResult {
-        checkFinishTurn()
+        requireTurn<BlackJackGameTurn.Finished>()
 
         return BlackJackGameResult(
             dealerGameResult = DelayerGameResult(dealer.cards),
@@ -96,35 +97,11 @@ class BlackJackGame(
         )
     }
 
-    private fun checkPlayerTurn() {
-        require(isCardDistributionCompleted()) {
-            "need card distribute"
+    private inline fun <reified T> requireTurn() {
+        val turn = currentTurn()
+        require(turn is T) {
+            "you want turn is '${turn::class.java.simpleName}'. but current turn is '${T::class.java.simpleName}'"
         }
-    }
-
-    private fun checkDelayerTurn() {
-        require(isCardDistributionCompleted()) {
-            "need card distribute"
-        }
-        require(players.all { player -> player.state.canHit().not() }) {
-            "can hit player is remaining"
-        }
-    }
-
-    private fun checkFinishTurn() {
-        require(isCardDistributionCompleted()) {
-            "need card distribute"
-        }
-        require(players.all { player -> player.state.canHit().not() }) {
-            "can hit player is remaining"
-        }
-        require(dealer.state.canHit().not()) {
-            "should be start dealer turn"
-        }
-    }
-
-    private fun isCardDistributionCompleted(): Boolean {
-        return needCardDistribution().not()
     }
 
     private fun needCardDistribution(): Boolean {
