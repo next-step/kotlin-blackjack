@@ -8,12 +8,12 @@ import blackjack.view.ResultView
 fun main() {
     val game = BlackJack(InputView.getNames())
     game.start()
-    ResultView.printStart(game)
+    ResultView.printFirstCards(game)
 
     while (!game.isEnd()) {
         val player = game.getNowPlayer()
         val answer = InputView.getAnswer(player)
-        val count = game.play(answer)
+        val count = game.playGameTurn(answer)
         printCards(player, answer, count)
     }
 

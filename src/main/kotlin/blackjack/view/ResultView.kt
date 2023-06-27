@@ -16,7 +16,7 @@ object ResultView {
         println("${player.name}$CARD_STRING $cards")
     }
 
-    fun printStart(game: BlackJack) {
+    fun printFirstCards(game: BlackJack) {
         println("\n${game.players.joinToString { it.name }}$START_STRING")
         game.players.forEach { printCards(it) }
         println()

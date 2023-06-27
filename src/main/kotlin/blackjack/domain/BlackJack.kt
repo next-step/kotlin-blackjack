@@ -7,6 +7,10 @@ class BlackJack(val players: List<Player>) {
     private var isEnd = false
 
     fun start() {
+        distributeInitialCard()
+    }
+
+    private fun distributeInitialCard() {
         for (i in 0 until START_CARD_COUNT) players.forEach { it.draw() }
     }
 
@@ -21,13 +25,14 @@ class BlackJack(val players: List<Player>) {
         return players[nowPlayer]
     }
 
-    fun play(answer: String): Int {
+    fun playGameTurn(answer: String): Int {
         val count = playCount
         when (answer) {
             "y" -> {
                 getNowPlayer().draw()
                 playCount++
             }
+
             "n" -> changeNowPlayer()
             else -> throw IllegalArgumentException("잘못된 답변입니다")
         }
