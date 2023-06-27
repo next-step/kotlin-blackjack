@@ -42,10 +42,9 @@ class Hand(
 
     private fun adjustForAces(totalValue: Int, numberOfAces: Int): Int {
         var adjustedValue = totalValue
-        var remainingAces = numberOfAces
 
-        if (adjustedValue > 21 && remainingAces > 0) {
-            adjustedValue -= 10 * remainingAces
+        if (adjustedValue > 21 && numberOfAces > 0) {
+            adjustedValue -= 10 * numberOfAces
         }
 
         return adjustedValue
