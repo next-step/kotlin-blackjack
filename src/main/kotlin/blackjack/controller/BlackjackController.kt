@@ -33,6 +33,10 @@ class BlackjackController {
         }
 
         BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
+
+        if (dealer.sumOfMyCards() <= 16) {
+            dealer.drawCard()
+        }
     }
 
     private fun playGame(players: Players) {
