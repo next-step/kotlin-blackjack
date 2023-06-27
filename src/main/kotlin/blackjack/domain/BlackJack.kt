@@ -40,6 +40,20 @@ class BlackJack(
         return false
     }
 
+    fun getResult(): Ranks {
+        val result = players.associateWith {
+            getPlayerRank(it)
+        }
+        return Ranks(result)
+    }
+
+    private fun getPlayerRank(player: Player): PlayerRank {
+        if (dealer.score() > BLACKJACK_MAX_SCORE) {
+            return PlayerRank.WON
+        }
+        return PlayerRank.getValues(player.score(), dealer.score())
+    }
+
     companion object {
         const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21

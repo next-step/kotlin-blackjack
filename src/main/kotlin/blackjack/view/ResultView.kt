@@ -22,7 +22,6 @@ object ResultView {
         println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.cards)}")
     }
 
-
     fun printFirstCards(game: BlackJack) {
         println("\n${game.players.joinToString { it.name }}$START_STRING")
         printDealerCards(game.dealer)

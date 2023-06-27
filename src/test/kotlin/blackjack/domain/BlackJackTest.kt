@@ -105,13 +105,14 @@ internal class BlackJackTest {
         )
         val player1 = Player("pobi", cards)
         val dealer = Dealer(cards)
-        val game = BlackJack(listOf(player1),dealer)
+        val game = BlackJack(listOf(player1), dealer)
 
         dealer.cards.score() shouldBe 16
         dealer.cards.value.size shouldBe 2
         game.askDealerForAdditionalCard()
         dealer.cards.value.size shouldBe 3
     }
+
     @Test
     internal fun `딜러는 점수 16점 초과면 카드 한장을 더 받지않는다`() {
         val cards = Cards(
@@ -122,7 +123,7 @@ internal class BlackJackTest {
         )
         val player1 = Player("pobi", cards)
         val dealer = Dealer(cards)
-        val game = BlackJack(listOf(player1),dealer)
+        val game = BlackJack(listOf(player1), dealer)
 
         dealer.cards.score() shouldBe 17
         dealer.cards.value.size shouldBe 2
@@ -130,4 +131,67 @@ internal class BlackJackTest {
         dealer.cards.value.size shouldBe 2
     }
 
+    @Test
+    internal fun `플레이어가 점수가 더 높으면 플레이어는 이긴다`() {
+        val playerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SEVEN),
+            )
+        )
+        val dealerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SIX),
+            )
+        )
+        val player1 = Player("pobi", playerCard)
+        val dealer = Dealer(dealerCard)
+        val game = BlackJack(listOf(player1), dealer)
+
+        game.getResult().values[player1] shouldBe PlayerRank.WON
+    }
+
+    @Test
+    internal fun `플레이어가 점수가 더 낮으면 플레이어는 진다`() {
+        val dealerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SEVEN),
+            )
+        )
+        val playerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SIX),
+            )
+        )
+        val player1 = Player("pobi", playerCard)
+        val dealer = Dealer(dealerCard)
+        val game = BlackJack(listOf(player1), dealer)
+
+        game.getResult().values[player1] shouldBe PlayerRank.LOST
+    }
+
+    @Test
+    internal fun `딜러가 21점을 초과하면 플레이어는 무조건 이긴다`() {
+        val dealerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SEVEN),
+                Card(Shape.CLOVER, Character.SEVEN),
+            )
+        )
+        val playerCard = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.J),
+                Card(Shape.CLOVER, Character.SIX),
+            )
+        )
+        val player1 = Player("pobi", playerCard)
+        val dealer = Dealer(dealerCard)
+        val game = BlackJack(listOf(player1), dealer)
+
+        game.getResult().values[player1] shouldBe PlayerRank.WON
+    }
 }

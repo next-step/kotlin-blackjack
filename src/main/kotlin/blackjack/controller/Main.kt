@@ -1,7 +1,6 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJack
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -17,10 +16,10 @@ fun main() {
         ResultView.printCards(player)
     }
 
-    if(game.askDealerForAdditionalCard()){
+    if (game.askDealerForAdditionalCard()) {
         ResultView.printAddDealerCard()
     }
 
-
+    val result = game.getResult()
     ResultView.printResult(game)
 }
