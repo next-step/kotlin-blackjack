@@ -3,6 +3,8 @@ package next.step.blackjack.domain.player
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.betting.BettingAmount
+import next.step.blackjack.domain.betting.BettingPlayer
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
@@ -58,6 +60,9 @@ class PlayerTest : BehaviorSpec({
             Then("점수는 21점") {
                 player.point() shouldBe 21
             }
+            Then("카드도 2장이면 블랙잭") {
+                player.isBlackjack() shouldBe true
+            }
         }
         When("카드를 더 받아서 총 점수가 21점이 넘으면") {
             val player = Player.of(
@@ -80,6 +85,22 @@ class PlayerTest : BehaviorSpec({
             }
             Then("카드 설명 제공") {
                 player.cardDescs() shouldBe listOf("K클로버", "K하트", "2다이아몬드")
+            }
+        }
+        When("베팅하면") {
+            Then("베팅금액을 가진 Player를 제공") {
+                val player = Player.of(
+                    PlayerName.of("dj"),
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.KING, CardSymbol.CLUB),
+                            Card.of(CardFace.KING, CardSymbol.HEART)
+                        )
+                    )
+                )
+                val bettingAmount = BettingAmount.of(1000)
+
+                player.bet(bettingAmount) shouldBe BettingPlayer.of(player, bettingAmount)
             }
         }
     }

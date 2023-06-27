@@ -5,7 +5,7 @@ import next.step.blackjack.domain.dealer.Dealer
 import next.step.blackjack.domain.game.GameOdds
 import next.step.blackjack.domain.player.Player
 
-class BettingPlayer(
+data class BettingPlayer(
     val player: Player,
     val amount: BettingAmount
 ) {
