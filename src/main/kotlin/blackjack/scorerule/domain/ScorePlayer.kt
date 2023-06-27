@@ -15,4 +15,8 @@ open class ScorePlayer(name: String) : Player<ScorePlayer>(name) {
         hit(deckManager.draw())
         handNotice.invoke(this)
     }
+
+    override fun canDraw(): Boolean {
+        return true
+    }
 }

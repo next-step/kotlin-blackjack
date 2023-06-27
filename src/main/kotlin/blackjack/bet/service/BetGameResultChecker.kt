@@ -7,12 +7,12 @@ import blackjack.common.service.BlackJackDetermine
 class BetGameResultChecker(
     private val dealer: BetDealer
 ) {
-    fun determineGameResult(players: Array<BetPlayer>) {
+    fun determineGameResult(players: List<BetPlayer>) {
         val dealerValue = dealer.optimalValue()
 
-        players.forEach {
-            val winner = BlackJackDetermine.determineWinner(it.optimalValue(), dealerValue)
-            BetCalculator.updateScores(winner, it, dealer)
+        for (player in players) {
+            val winType = BlackJackDetermine.determineWinType(player, dealerValue)
+            BetCalculator.settleBetMoney(winType, player, dealer)
         }
     }
 }

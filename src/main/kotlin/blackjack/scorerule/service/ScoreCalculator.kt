@@ -1,17 +1,17 @@
 package blackjack.scorerule.service
 
-import blackjack.common.service.BlackJackDetermine
+import blackjack.bet.domain.WinType
 import blackjack.scorerule.domain.ScoreDealer
 import blackjack.scorerule.domain.ScorePlayer
 
 object ScoreCalculator {
-    fun updateScores(winner: BlackJackDetermine.Winner, player: ScorePlayer, dealer: ScoreDealer) {
-        when (winner) {
-            BlackJackDetermine.Winner.PLAYER, BlackJackDetermine.Winner.DEALER_BUST -> {
+    fun updateScores(winType: WinType, player: ScorePlayer, dealer: ScoreDealer) {
+        when (winType) {
+            WinType.PLAYER_WIN, WinType.DEALER_BUST -> {
                 player.scoreBoard().countWin()
                 dealer.scoreBoard().countLose()
             }
-            BlackJackDetermine.Winner.DEALER -> {
+            WinType.DEALER_WIN -> {
                 dealer.scoreBoard().countWin()
                 player.scoreBoard().countLose()
             }

@@ -11,7 +11,7 @@ class ScoreGameResultChecker(
         val dealerValue = dealer.optimalValue()
 
         players.forEach {
-            val winner = BlackJackDetermine.determineWinner(it.optimalValue(), dealerValue)
+            val winner = BlackJackDetermine.determineWinType(it, dealerValue)
             ScoreCalculator.updateScores(winner, it, dealer)
         }
     }

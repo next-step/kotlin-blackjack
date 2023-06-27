@@ -1,8 +1,8 @@
 package blackjack.scorerule.domain
 
-import blackjack.scorerule.view.ScorePlayerStatus
 import blackjack.common.service.DeckManager
 import blackjack.scorerule.service.ScoreGameResultChecker
+import blackjack.scorerule.view.ScorePlayerStatus
 
 class BlackJackScoreTable(private val players: Array<ScorePlayer>) {
 

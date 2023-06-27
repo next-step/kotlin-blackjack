@@ -3,11 +3,11 @@ package blackjack.scorerule.view
 import blackjack.scorerule.domain.ScoreBoard
 import blackjack.scorerule.domain.ScorePlayer
 
-data class ScorePlayerStatus (
+data class ScorePlayerStatus(
     val name: String,
     val handRepresent: String,
     val optimalValue: Int,
-    val scoreBoard: ScoreBoard,
+    val scoreBoard: ScoreBoard
 ) {
     companion object {
         fun of(player: ScorePlayer): ScorePlayerStatus {
