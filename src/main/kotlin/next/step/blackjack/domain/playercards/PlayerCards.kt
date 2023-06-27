@@ -7,7 +7,7 @@ import next.step.blackjack.domain.playercards.state.BlackjackState
 import next.step.blackjack.domain.playercards.state.PlayerCardsState
 import next.step.blackjack.domain.playercards.state.StayState
 
-class PlayerCards(
+data class PlayerCards(
     val cards: Cards = Cards.of(emptyList()),
     var state: PlayerCardsState = StayState
 ) {
