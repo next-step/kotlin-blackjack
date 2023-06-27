@@ -3,12 +3,14 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_FIVE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.player.Dealer
@@ -19,6 +21,7 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 import java.util.LinkedList
@@ -214,6 +217,24 @@ class BlackjackGameTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.gameResult() }
             exception.message shouldBe "게임이 종료되지 않아 결과를 확인할 수 없다."
         }
+
+        test("게임의 결과를 반환한다.") {
+            val blackjackGame = BlackjackGame(
+                turn = TURN_3,
+                dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_TWO, SPADE_FIVE))),
+                players = listOf(
+                    Player.of("a", Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
+                    Player.of("b", Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
+                    Player.of("c", Stay(Cards.of(SPADE_ACE, SPADE_KING))),
+                )
+            )
+            val actual = blackjackGame.gameResult()
+
+            actual.dealerGameResult.competitions shouldContainAll mapOf(Competition.WIN to 2, Competition.LOSE to 1)
+            actual.playerGameResults[0].competition shouldBe Competition.LOSE
+            actual.playerGameResults[1].competition shouldBe Competition.LOSE
+            actual.playerGameResults[2].competition shouldBe Competition.WIN
+        }
     }
 }) {
     companion object {
@@ -222,5 +243,6 @@ class BlackjackGameTest : FunSpec({
         private val TURN_0 = Turn(0)
         private val TURN_1 = Turn(1)
         private val TURN_2 = Turn(2)
+        private val TURN_3 = Turn(3)
     }
 }

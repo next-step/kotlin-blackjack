@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_FIVE
 import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
@@ -79,8 +80,8 @@ class DealerTest : FunSpec({
         }
 
         test("승부를 확인한다.") {
-            val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
-            val player = Player(Name("a"), Hit(Cards.of(SPADE_KING, SPADE_JACK)))
+            val dealer = Dealer(gameState = Stay(Cards.of(SPADE_KING, SPADE_JACK)))
+            val player = Player(Name("a"), Stay(Cards.of(SPADE_KING, SPADE_ACE)))
             val actual = dealer.competeWith(player)
 
             actual shouldBe Competition.LOSE

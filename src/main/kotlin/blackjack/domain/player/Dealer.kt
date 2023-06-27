@@ -38,7 +38,7 @@ class Dealer(
 
     override fun competeWith(participant: Participant): Competition {
         require(participant is Player) { "딜러는 플레이어와만 승부할 수 있다." }
-        return this.gameState.compete(gameState)
+        return this.gameState.compete(participant.gameState)
     }
 
     companion object {

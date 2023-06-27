@@ -3,12 +3,12 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.view.CommandView.NO
 import blackjack.view.CommandView.YES
-import blackjack.view.requestAdditionalDraw
 import blackjack.view.inputPlayerNames
 import blackjack.view.printCurrentDrawResult
 import blackjack.view.printDealerGetDraw
 import blackjack.view.printFirstDrawResult
-import blackjack.view.printGameResults
+import blackjack.view.printGameResult
+import blackjack.view.requestAdditionalDraw
 
 fun main() {
     val blackJackGame = BlackjackGame.from(inputPlayerNames())
@@ -17,7 +17,7 @@ fun main() {
 
     runBlackjackGamePlayerTurn(blackJackGame)
     runBlackjackGameDealerTurn(blackJackGame)
-    printGameResults(blackJackGame.gameResult())
+    printGameResult(blackJackGame.gameResult())
 }
 
 private tailrec fun runBlackjackGamePlayerTurn(blackjackGame: BlackjackGame) {
