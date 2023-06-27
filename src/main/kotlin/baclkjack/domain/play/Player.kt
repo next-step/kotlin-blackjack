@@ -2,9 +2,7 @@ package baclkjack.domain.play
 
 import baclkjack.domain.card.Deck
 
-class Player(private val _name: String) {
-
-    val name: String get() = _name
+class Player(val name: String) {
 
     private val cards: Cards = Cards()
 
@@ -20,12 +18,13 @@ class Player(private val _name: String) {
 
     fun burst(): Boolean = cards.isBurst()
 
+    fun blackJack(): Boolean = cards.isBlackJack()
+
     fun result(): Int = cards.score()
 
-    fun cardList() = cards.toString()
+    fun cards() = cards.cards
 
     companion object {
         const val FIRST_DRAW = 2
     }
-
 }
