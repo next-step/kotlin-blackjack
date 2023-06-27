@@ -16,7 +16,7 @@ class BlackJackBetGame(playerNames: List<String>) {
     fun startGame() {
         table.beginRound()
         val playersName = table.getPlayersName()
-        val allStatusWithDealer = table.getAllStatusWithDealer()
+        val allStatusWithDealer = table.getRoundStartedStatus()
         BetStatusNoticer.noticeInitialStatus(playersName, allStatusWithDealer)
     }
 

@@ -1,6 +1,5 @@
 package blackjack.bet.domain
 
-import blackjack.bet.service.BetCalculator
 import blackjack.bet.service.BetGameResultChecker
 import blackjack.bet.view.BetPlayerStatus
 import blackjack.common.service.DeckManager
@@ -12,16 +11,19 @@ class BlackJackBetTable(private val players: List<BetPlayer>) {
 
     fun beginRound() {
         dealer.beginRound(deckManager, players)
-        players.forEach {
-            val optimalValue = it.optimalValue()
-            if (it.isInitialBlackjack(optimalValue)) {
-                BetCalculator.initialBlackjack(it, dealer)
-            }
-        }
     }
 
     fun getPlayersName(): String {
         return players.joinToString { it.name }
+    }
+
+    fun getRoundStartedStatus(): List<BetPlayerStatus> {
+        val betPlayerStatus = mutableListOf(BetPlayerStatus.dealerUpCard(dealer))
+        for (player in players) {
+            betPlayerStatus.add(BetPlayerStatus.of(player))
+        }
+
+        return betPlayerStatus
     }
 
     fun getAllStatusWithDealer(): List<BetPlayerStatus> {

@@ -11,13 +11,13 @@ class BetDealer : BetPlayer(name = "딜러") {
         }
     }
 
-    fun getParticipantInitialStatus(players: Array<BetPlayer>): List<BetPlayerStatus> {
-        val scorePlayerStatuses = mutableListOf(BetPlayerStatus.dealerUpCard(this))
+    fun getParticipantInitialStatus(players: List<BetPlayer>): List<BetPlayerStatus> {
+        val betPlayerStatus = mutableListOf(BetPlayerStatus.of(this))
         for (player in players) {
-            scorePlayerStatuses.add(BetPlayerStatus.of(player))
+            betPlayerStatus.add(BetPlayerStatus.of(player))
         }
 
-        return scorePlayerStatuses
+        return betPlayerStatus
     }
 
     fun drawCardIfNeeded(deckManager: DeckManager, handNotice: (BetPlayer) -> Unit) {
