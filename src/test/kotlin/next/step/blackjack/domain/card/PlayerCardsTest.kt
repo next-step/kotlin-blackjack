@@ -24,7 +24,7 @@ class PlayerCardsTest : BehaviorSpec({
         }
         When("desc하면") {
             Then("설명 셋 제공") {
-                cards.descs() shouldBe setOf("5다이아몬드")
+                PlayerCards(Card.of(CardFace.FIVE, CardSymbol.DIAMOND)).descs() shouldBe setOf("5다이아몬드")
             }
         }
         When("descFirst하면") {
