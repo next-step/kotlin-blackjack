@@ -154,6 +154,18 @@ class BlackjackGameTest : FunSpec({
             (blackjackGame.players[0] as Player).gameState.shouldBeTypeOf<Stay>()
         }
     }
+
+    context("isDealerTurnEnd") {
+        test("유저턴이 종료되지 않았는데 호출 시 예외가 발생한다.") {
+            val blackjackGame =
+                BlackjackGame(
+                    turn = TURN_0,
+                    players = listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO)))),
+                )
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.isDealerTurnEnd() }
+            exception.message shouldBe "유저턴이 종료되지 않아 확인할 수 없다."
+        }
+    }
 }) {
     companion object {
         private val PLAYERS = listOf(Player.from("a"), Player.from("b"))
