@@ -1,7 +1,7 @@
 package blackjack.scorerule
 
-import blackjack.common.view.InputView
-import blackjack.common.view.OutputView
+import blackjack.common.view.CommonInputView
+import blackjack.common.view.CommonOutputView
 import blackjack.scorerule.domain.BlackJackScoreTable
 import blackjack.scorerule.domain.ScorePlayer
 import blackjack.scorerule.view.ScoreOutputView
@@ -23,10 +23,10 @@ class BlackJackScoreGame(playerNames: List<String>) {
     fun processRound() {
         table.executePlayerTurns(
             players,
-            wantToHit = { name -> InputView.wantToHit(name) },
+            wantToHit = { name -> CommonInputView.wantToHit(name) },
             handNotice = { player -> ScoreOutputView.handNotice(ScorePlayerStatus.of(player)) }
         )
-        table.executeDealerTurn { OutputView.dealerAddNotice() }
+        table.executeDealerTurn { CommonOutputView.dealerAddNotice() }
         table.checkGameResult()
     }
 
