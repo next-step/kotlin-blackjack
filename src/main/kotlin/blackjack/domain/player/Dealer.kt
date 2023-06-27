@@ -36,7 +36,10 @@ class Dealer(
 
     override fun hands(): Hands = Hands.from(this)
 
-    override fun score(): Int = gameState.score()
+    override fun score(): Int {
+        check(gameState.isFinished()) { "턴이 종료되기 전에는 점수를 조회할 수 없다" }
+        return gameState.score()
+    }
 
     companion object {
         private const val DEALER_NAME = "딜러"

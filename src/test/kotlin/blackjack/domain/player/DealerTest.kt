@@ -10,6 +10,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
+import blackjack.domain.gamestate.running.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -63,6 +64,14 @@ class DealerTest : FunSpec({
             val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
             val actual = dealer.cards()
             actual shouldBe setOf(SPADE_KING, SPADE_JACK, SPADE_QUEEN)
+        }
+    }
+
+    context("score") {
+        test("턴이 종료되기 전에 점수 조회시 예외가 발생한다.") {
+            val dealer = Dealer(gameState = InitialHand())
+            val exception = shouldThrowExactly<IllegalStateException> { dealer.score() }
+            exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없다"
         }
     }
 })
