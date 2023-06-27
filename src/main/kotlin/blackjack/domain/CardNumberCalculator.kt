@@ -3,7 +3,8 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 
-class CardNumberCalculator {
+class CardNumberCalculator(private val proceedAceStrategy: ProceedAceStrategy) {
+
 
     fun calculateSumOfCardNumbers(cards: List<Card>): Int {
         var sum = 0
@@ -14,9 +15,10 @@ class CardNumberCalculator {
     }
 
     fun calculateCardNumber(cardNumber: CardNumber, sum: Int): Int {
-        if (cardNumber == CardNumber.A) {
-            return CardNumber.proceedAceNumber(sum)
+        if (CardNumber.isAce(cardNumber)) {
+            return proceedAceStrategy.proceedAceNumber(sum)
         }
         return cardNumber.value
     }
+
 }

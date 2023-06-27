@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 
 class Player(val name: String) {
     private val cards = mutableListOf<Card>()
-    private val cardNumberCalculator = CardNumberCalculator()
+    private val cardNumberCalculator = CardNumberCalculator(DynamicProceedAceStrategy())
 
     fun addCard(card: Card) {
         cards.add(card)
