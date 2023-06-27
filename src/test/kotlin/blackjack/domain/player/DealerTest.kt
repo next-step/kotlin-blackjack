@@ -9,8 +9,11 @@ import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
+import java.lang.IllegalStateException
 
 class DealerTest : FunSpec({
 
@@ -37,6 +40,14 @@ class DealerTest : FunSpec({
 
             val actual = dealer.gameState
             actual.shouldBeTypeOf<Hit>()
+        }
+    }
+
+    context("stay") {
+        test("딜러가 stay하는 경우 예외가 발생한다.") {
+            val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
+            val exception = shouldThrowExactly<IllegalStateException> { dealer.stay() }
+            exception.message shouldBe "딜러는 직접 stay할 수 없다."
         }
     }
 })
