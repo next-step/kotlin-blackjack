@@ -26,7 +26,7 @@ class BlackjackGame(
     fun currentPlayerDraw(): Hands {
         val player = currentPlayer()
         player.draw(cardDeck.draw())
-        if (player.isBust()) {
+        if (player.isFinished()) {
             nextTurnChange()
         }
         return Hands.from(player)

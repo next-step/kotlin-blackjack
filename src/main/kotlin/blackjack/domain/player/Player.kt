@@ -8,25 +8,25 @@ import blackjack.domain.gamestate.running.InitialHand
 class Player(
     val name: Name,
     gameState: GameState = InitialHand(),
-) {
+) : Participant {
     var gameState: GameState = gameState
         private set
 
-    fun draw(card: Card) {
+    override fun draw(card: Card) {
         gameState = gameState.draw(card)
     }
 
-    fun stay() {
+    override fun stay() {
         gameState = gameState.stay()
     }
 
-    fun isBust(): Boolean = gameState.isBust()
+    override fun isFinished(): Boolean = gameState.isFinished()
 
-    fun cards(): Set<Card> = gameState.cards()
+    override fun cards(): Set<Card> = gameState.cards()
 
-    fun hands(): Hands = Hands.from(this)
+    override fun hands(): Hands = Hands.from(this)
 
-    fun score(): Int = gameState.score()
+    override fun score(): Int = gameState.score()
 
     companion object {
         fun from(name: String) = Player(Name(name))

@@ -24,9 +24,7 @@ class Dealer(
 
     override fun stay() = throw IllegalStateException("딜러는 직접 stay할 수 없다.")
 
-    override fun isBust(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isFinished(): Boolean = gameState.isFinished()
 
     override fun cards(): Set<Card> {
         TODO("Not yet implemented")

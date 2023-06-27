@@ -9,7 +9,7 @@ interface Participant {
 
     fun stay()
 
-    fun isBust(): Boolean
+    fun isFinished(): Boolean
 
     fun cards(): Set<Card>
 
