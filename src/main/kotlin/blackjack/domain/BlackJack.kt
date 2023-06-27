@@ -2,10 +2,6 @@ package blackjack.domain
 
 class BlackJack(val players: List<Player>, private val gameCards: GameCards = GameCards()) {
 
-    private var nowPlayer = 0
-    private var playCount = 0
-    private var isEnd = false
-
     fun start() {
         distributeInitialCard()
     }
@@ -15,40 +11,17 @@ class BlackJack(val players: List<Player>, private val gameCards: GameCards = Ga
     }
 
     fun isEnd(): Boolean {
-        if (!isEnd) {
-            checkAndChangeGamePlayer()
-        }
-        return isEnd
+        return players.all { !it.canProceedTurn() }
     }
 
     fun getNowPlayer(): Player {
-        return players[nowPlayer]
+        return players.first { it.canProceedTurn() }
     }
 
-    fun playGameTurn(isPlaying: Boolean): Int {
-        val count = playCount
+    fun playGameTurn(isPlaying: Boolean) {
         when (isPlaying) {
-            true -> {
-                getNowPlayer().addCard(gameCards.draw())
-                playCount++
-            }
-
-            false -> changeNowPlayer()
-        }
-        return count
-    }
-
-    private fun checkAndChangeGamePlayer() {
-        if (players[nowPlayer].score() > BLACKJACK_MAX_SCORE) {
-            changeNowPlayer()
-        }
-    }
-
-    private fun changeNowPlayer() {
-        nowPlayer++
-        playCount = 0
-        if (nowPlayer >= players.size) {
-            isEnd = true
+            true -> getNowPlayer().addCard(gameCards.draw())
+            false -> getNowPlayer().finishedTurn()
         }
     }
 

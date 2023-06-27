@@ -38,4 +38,34 @@ internal class PlayerTest {
 
         player.score() shouldBe 21
     }
+
+    @Test
+    internal fun `플레이어는 21점이 넘으면 더이상 게임을 진행할 수 없다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.EIGHT),
+                Card(Shape.CLOVER, Character.FOUR),
+                Card(Shape.CLOVER, Character.TEN)
+            )
+        )
+        val player = Player("pobi", cards)
+
+        player.score() shouldBe 22
+        player.canProceedTurn() shouldBe false
+    }
+
+    @Test
+    internal fun `플레이어는 턴을 끝내면 더이상 게임을 진행할 수 없다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.EIGHT),
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.A)
+            )
+        )
+        val player = Player("pobi", cards)
+        player.finishedTurn()
+
+        player.canProceedTurn() shouldBe false
+    }
 }

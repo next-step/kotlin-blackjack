@@ -13,16 +13,15 @@ fun main() {
     while (!game.isEnd()) {
         val player = game.getNowPlayer()
         val answer = InputView.getAnswer(player)
-        val count = game.playGameTurn(answer)
-        printCards(player, answer, count)
+        game.playGameTurn(answer)
+        printCards(player, answer)
     }
 
     ResultView.printResult(game)
 }
 
-fun printCards(player: Player, isPlaying: Boolean, count: Int) {
-    if (!isPlaying && count != 0) {
-        return
+fun printCards(player: Player, isPlaying: Boolean) {
+    if (isPlaying) {
+        ResultView.printCards(player)
     }
-    ResultView.printCards(player)
 }
