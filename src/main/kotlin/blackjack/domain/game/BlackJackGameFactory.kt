@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.player.PlayerNames
+import blackjack.domain.gamer.PlayerNames
 import blackjack.domain.shuffle.Shuffler
 
 class BlackJackGameFactory(

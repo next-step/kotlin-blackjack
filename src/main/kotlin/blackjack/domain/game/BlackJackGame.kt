@@ -4,9 +4,9 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardHolder
 import blackjack.domain.card.PlayerCards
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerNames
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Player
+import blackjack.domain.gamer.PlayerNames
 import blackjack.domain.shuffle.Shuffler
 import java.util.LinkedList
 import kotlin.IllegalStateException

@@ -12,7 +12,7 @@ import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.DelayerGameResult
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
-import blackjack.domain.player.unWrappings
+import blackjack.domain.gamer.unWrappings
 import blackjack.domain.score.Score
 
 class BlackJackResultView {

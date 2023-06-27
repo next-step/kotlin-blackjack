@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.gamer
 
 enum class GamerState {
     WAIT {

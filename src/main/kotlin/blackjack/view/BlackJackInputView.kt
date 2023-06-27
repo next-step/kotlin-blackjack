@@ -1,8 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.game.PlayerAnswer
-import blackjack.domain.player.PlayerName
-import blackjack.domain.player.PlayerNames
+import blackjack.domain.gamer.PlayerName
+import blackjack.domain.gamer.PlayerNames
 
 class BlackJackInputView {
 

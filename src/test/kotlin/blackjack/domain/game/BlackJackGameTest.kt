@@ -3,7 +3,7 @@ package blackjack.domain.game
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardHolder
 import blackjack.domain.card.heartCard
-import blackjack.domain.player.playerNames
+import blackjack.domain.gamer.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.ForceMoveForwardCardShuffler
 import io.kotest.core.spec.style.BehaviorSpec

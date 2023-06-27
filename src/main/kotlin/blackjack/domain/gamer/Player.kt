@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.gamer
 
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
