@@ -20,8 +20,8 @@ fun main() {
     ResultView.printResult(game)
 }
 
-fun printCards(player: Player, answer: String, count: Int) {
-    if (answer == "n" && count != 0) {
+fun printCards(player: Player, isPlaying: Boolean, count: Int) {
+    if (!isPlaying && count != 0) {
         return
     }
     ResultView.printCards(player)

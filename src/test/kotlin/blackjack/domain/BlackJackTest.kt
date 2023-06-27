@@ -55,7 +55,7 @@ internal class BlackJackTest {
         )
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
-        game.playGameTurn("y")
+        game.playGameTurn(true)
         game.isEnd() shouldBe false
     }
 
@@ -70,7 +70,7 @@ internal class BlackJackTest {
         )
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
-        game.playGameTurn("n")
+        game.playGameTurn(false)
         game.isEnd() shouldBe true
     }
 
@@ -88,7 +88,7 @@ internal class BlackJackTest {
         val game = BlackJack(listOf(player1, player2))
 
         game.getNowPlayer() shouldBe player1
-        game.playGameTurn("n")
+        game.playGameTurn(false)
         game.getNowPlayer() shouldBe player2
         game.isEnd() shouldBe false
     }

@@ -25,16 +25,15 @@ class BlackJack(val players: List<Player>) {
         return players[nowPlayer]
     }
 
-    fun playGameTurn(answer: String): Int {
+    fun playGameTurn(isPlaying: Boolean): Int {
         val count = playCount
-        when (answer) {
-            "y" -> {
+        when (isPlaying) {
+            true -> {
                 getNowPlayer().draw()
                 playCount++
             }
 
-            "n" -> changeNowPlayer()
-            else -> throw IllegalArgumentException("잘못된 답변입니다")
+            false -> changeNowPlayer()
         }
         return count
     }
