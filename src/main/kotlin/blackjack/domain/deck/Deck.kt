@@ -6,7 +6,7 @@ import blackjack.domain.card.CardShape
 
 class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
 
-    private val deck: MutableList<Card>
+    private var deck: MutableList<Card>
 
     init {
         deck = createDeck()
@@ -24,7 +24,7 @@ class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
     }
 
     private fun shuffleDeck(deck: MutableList<Card>) {
-        deckShuffleStrategy.shuffleDeck(deck)
+        this.deck = deckShuffleStrategy.shuffleDeck(deck).toMutableList()
     }
 
     fun drawCard(): Card {
