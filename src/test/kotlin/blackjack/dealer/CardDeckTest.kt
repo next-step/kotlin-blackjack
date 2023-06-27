@@ -15,8 +15,8 @@ class CardDeckTest : BehaviorSpec({
         When("딜러가 두장을 참가자에게 나누어주면") {
             Then("카드 덱은 50장이다.") {
                 val dealer = Dealer()
-                val player = Player("참가자")
-                dealer.drawCards(player)
+                val players = listOf(Player("참가자"))
+                dealer.dealInitialCards(players)
                 CardDeck.size shouldBe 50
             }
         }
