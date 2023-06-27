@@ -7,7 +7,7 @@ data class Cards(val cards: MutableList<Card> = mutableListOf()) {
 
     fun score(): Int {
         var score = cards.sumOf { it.character.score }
-        if (cards.find { it.character == Character.A } != null && (score + ACE_PLUS_SCORE) <= BlackJack.BLACKJACK_MAX_SCORE) {
+        if (cards.any { it.hasAce() } && (score + ACE_PLUS_SCORE) <= BlackJack.BLACKJACK_MAX_SCORE) {
             score += ACE_PLUS_SCORE
         }
         return score

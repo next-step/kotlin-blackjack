@@ -1,6 +1,11 @@
 package blackjack.domain
 
 data class Card(val shape: Shape, val character: Character) {
+
+    fun hasAce(): Boolean {
+        return character == Character.A
+    }
+
     companion object {
         private val gameCards: MutableList<Pair<Shape, Character>> = mutableListOf()
         fun draw(): Card {
