@@ -2,6 +2,9 @@ package next.step.blackjack.domain.player
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.betting.BettingAmount
+import next.step.blackjack.domain.betting.BettingPlayer
+import next.step.blackjack.domain.betting.BettingPlayers
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
@@ -13,7 +16,7 @@ import next.step.blackjack.domain.game.GameResults
 
 class PlayersTest : DescribeSpec({
     describe("Players") {
-        context("생성하면") {
+        context("생성") {
             val gameCards = GameCards.of(
                 listOf(
                     Card.of(CardFace.TWO, CardSymbol.CLUB),
@@ -113,8 +116,8 @@ class PlayersTest : DescribeSpec({
                 )
             }
         }
-        context("fight") {
-            it("GameResults 제공") {
+        context("method") {
+            it("fight 하면 GameResults 제공") {
                 val players = Players.of(
                     setOf(
                         Player.of(
@@ -178,6 +181,22 @@ class PlayersTest : DescribeSpec({
                         GameResult.TIE to 1
                     )
                 )
+            }
+            it("bet하면 베팅 금액을 받아서 BettingPlayers 생성") {
+                val player = Player.of(
+                    PlayerName.of("unfinished17"),
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SEVEN, CardSymbol.CLUB),
+                            Card.of(CardFace.TEN, CardSymbol.HEART)
+                        )
+                    )
+                )
+                
+                Players.of(setOf(player)).bet { BettingAmount.of(1000) } shouldBe
+                        BettingPlayers.of(
+                            setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
+                        )
             }
         }
     }

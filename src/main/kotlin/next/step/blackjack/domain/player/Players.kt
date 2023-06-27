@@ -1,5 +1,8 @@
 package next.step.blackjack.domain.player
 
+import next.step.blackjack.domain.betting.BettingAmount
+import next.step.blackjack.domain.betting.BettingPlayer
+import next.step.blackjack.domain.betting.BettingPlayers
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResults
@@ -21,6 +24,9 @@ value class Players(private val players: Set<Player>) : Set<Player> by players {
     }
 
     fun cards(): List<List<Card>> = players.map { it.cards() }
+
+    fun bet(chooseBet: (Player) -> BettingAmount): BettingPlayers =
+        BettingPlayers.of(players.map { BettingPlayer.of(it, chooseBet(it)) }.toSet())
 
     companion object {
         fun of(players: Set<Player>) = Players(players)
