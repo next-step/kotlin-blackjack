@@ -12,7 +12,7 @@ open class Player(
         return cards.sum < Rule.BLACK_JACK
     }
 
-    open fun drawCard(trump: Trump) {
+    fun drawCard(trump: Trump) {
         cards.add(trump.getCard())
     }
 
