@@ -4,7 +4,7 @@ import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckShuffleStarategy
 import blackjack.exception.PlayerLoseException
 
-class Game(deckShuffleStrategy: DeckShuffleStarategy) {
+class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
 
     private val deck = Deck(deckShuffleStrategy)
     private val ruleChecker = RuleChecker()

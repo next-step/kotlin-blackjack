@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.Game
+import blackjack.domain.BlackJackGame
 import blackjack.domain.Player
 import blackjack.domain.deck.RandomDeckShuffleStrategy
 import blackjack.exception.PlayerLoseException
@@ -15,12 +15,12 @@ class BlackJackController(
     fun start() {
         val playerNameList = inputView.getPlayerNames()
         val playerList = Player.generatePlayers(playerNameList)
-        val game = Game(RandomDeckShuffleStrategy())
+        val blackJackGame = BlackJackGame(RandomDeckShuffleStrategy())
 
-        firstDraw(game, playerList)
+        firstDraw(blackJackGame, playerList)
 
         try {
-            askPlayersWantToDrawCard(game, playerList)
+            askPlayersWantToDrawCard(blackJackGame, playerList)
         } catch (e: PlayerLoseException) {
             println()
         }
@@ -28,20 +28,20 @@ class BlackJackController(
         printGameResult(playerList)
     }
 
-    private fun firstDraw(game: Game, playerList: List<Player>) {
-        game.firstDraw(playerList)
+    private fun firstDraw(blackJackGame: BlackJackGame, playerList: List<Player>) {
+        blackJackGame.firstDraw(playerList)
         resultView.printFirstDraw(playerList)
     }
 
-    private fun askPlayersWantToDrawCard(game: Game, playerList: List<Player>) {
-        playerList.forEach { askPlayerWantToDrawCard(game, it) }
+    private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
+        playerList.forEach { askPlayerWantToDrawCard(blackJackGame, it) }
         println()
     }
 
-    private fun askPlayerWantToDrawCard(game: Game, player: Player) {
+    private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player) {
         while (continueDrawingCards(player)) {
-            drawPlayer(game, player)
-            game.checkPlayerIsLose(player)
+            drawPlayer(blackJackGame, player)
+            blackJackGame.checkPlayerIsLose(player)
         }
         resultView.printPlayerCardList(player)
         println()
@@ -52,8 +52,8 @@ class BlackJackController(
         return inputView.askPlayersWantToDrawCard()
     }
 
-    private fun drawPlayer(game: Game, player: Player) {
-        game.onePlayerDraw(player)
+    private fun drawPlayer(blackJackGame: BlackJackGame, player: Player) {
+        blackJackGame.onePlayerDraw(player)
         resultView.printPlayerCardList(player)
         println()
     }

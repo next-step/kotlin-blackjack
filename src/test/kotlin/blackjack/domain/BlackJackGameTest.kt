@@ -9,13 +9,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class GameTest {
+class BlackJackGameTest {
 
-    private lateinit var game: Game
+    private lateinit var blackJackGame: BlackJackGame
 
     @BeforeEach()
     fun setUp() {
-        game = Game(NotRandomDeckShuffleStrategy())
+        blackJackGame = BlackJackGame(NotRandomDeckShuffleStrategy())
     }
 
     @Test
@@ -33,7 +33,7 @@ class GameTest {
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
         )
 
-        game.firstDraw(playerList)
+        blackJackGame.firstDraw(playerList)
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
         Assertions.assertThat(jason.getCards()).isEqualTo(jasonCards)
@@ -43,7 +43,7 @@ class GameTest {
     fun `플레이어가 카드 뽑는것을 선택하면 카드를 1장 나눠준다`() {
         val pobi = Player("pobi")
 
-        game.onePlayerDraw(pobi)
+        blackJackGame.onePlayerDraw(pobi)
         val pobiCards = listOf(Card(shape = CardShape.DIAMOND, number = CardNumber.J))
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
@@ -59,6 +59,6 @@ class GameTest {
         )
         pobi.addCards(cards)
 
-        assertThrows<PlayerLoseException> { game.checkPlayerIsLose(pobi) }
+        assertThrows<PlayerLoseException> { blackJackGame.checkPlayerIsLose(pobi) }
     }
 }
