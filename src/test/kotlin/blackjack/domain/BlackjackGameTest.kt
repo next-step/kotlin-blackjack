@@ -42,9 +42,9 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame = BlackjackGame(players = PLAYERS)
             val actual = blackjackGame.firstDraw()
 
-            blackjackGame.cardDeck.size() shouldBe 48
+            blackjackGame.cardDeck.size() shouldBe 46
             blackjackGame.turn shouldBe TURN_0
-            actual shouldHaveSize 2
+            actual shouldHaveSize 3
         }
     }
 
