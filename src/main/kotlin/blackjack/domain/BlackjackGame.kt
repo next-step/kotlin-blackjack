@@ -45,7 +45,7 @@ class BlackjackGame(
 
     fun isDealerTurnEnd(): Boolean {
         check(isPlayerTurnEnd()) { "유저턴이 종료되지 않아 확인할 수 없다." }
-        TODO("")
+        return dealer.isFinished()
     }
 
     fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }

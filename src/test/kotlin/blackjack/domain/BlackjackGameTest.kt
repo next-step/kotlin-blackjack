@@ -9,8 +9,9 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.finished.Stay
+import blackjack.domain.gamestate.running.Hit
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
@@ -165,6 +166,22 @@ class BlackjackGameTest : FunSpec({
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.isDealerTurnEnd() }
             exception.message shouldBe "유저턴이 종료되지 않아 확인할 수 없다."
         }
+
+        forAll(
+            row(Dealer(Hit(Cards.of(SPADE_TWO, SPADE_THREE))), false),
+            row(Dealer(Stay(Cards.of(SPADE_ACE, SPADE_TWO))), true),
+        ) { input, expected ->
+            test("유저턴이 종료되면 딜러턴을 확인할 수 있다.") {
+                val blackjackGame = BlackjackGame(
+                    turn = TURN_2,
+                    dealer = input,
+                    players = PLAYERS
+                )
+                val actual = blackjackGame.isDealerTurnEnd()
+                actual shouldBe expected
+            }
+        }
+
     }
 }) {
     companion object {
