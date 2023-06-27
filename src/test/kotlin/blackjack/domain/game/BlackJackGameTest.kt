@@ -184,6 +184,7 @@ class BlackJackGameTest : BehaviorSpec({
         game.executeDealerTurn() // 딜러는 [10, 10] 추가 발급 받지 않음
         When("결과를 만들면") {
             val result = game.makeGameResult()
+
             Then("딜러와 플레이어들의 카드를 반환한다") {
                 result.dealerGameResult.dealerCards shouldBe listOf(
                     heartCard(CardDenomination.TEN),
@@ -193,6 +194,135 @@ class BlackJackGameTest : BehaviorSpec({
                     heartCard(CardDenomination.QUEEN),
                     heartCard(CardDenomination.KING),
                 )
+            }
+        }
+    }
+
+    Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 이겼을 떄") {
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TEN), // 딜러
+                    heartCard(CardDenomination.JACK), // 딜러
+                    heartCard(CardDenomination.TWO), // 참가자
+                    heartCard(CardDenomination.THREE), // 참가자
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames("test1"),
+        )
+        game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [2, 3]
+        game.stayFocusedPlayer() // 참가자 받지 않음
+        game.executeDealerTurn() // 딜러는 추가 발급 받지 않음
+
+        When("결과를 만들면") {
+            val result = game.makeGameResult()
+
+            Then("딜러의 결과는 1승 0무 0패이다") {
+                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
+            }
+
+            Then("참가자의 결과는 패배다") {
+                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.LOSE
+            }
+        }
+    }
+
+    Given("1명의 참가자와 딜러가 있는 게임에서 참가자가 이겼을 떄") {
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.SEVEN), // 딜러
+                    heartCard(CardDenomination.TEN), // 딜러
+                    heartCard(CardDenomination.QUEEN), // 참가자
+                    heartCard(CardDenomination.JACK), // 참가자
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames("test1"),
+        )
+        game.distributeCardsToPlayers() // 딜러 : [7, 10] 플레이어 [10, 10]
+        game.stayFocusedPlayer() // 참가자 받지 않음
+        game.executeDealerTurn() // 딜러는 추가 발급 받지 않음
+
+        When("결과를 만들면") {
+            val result = game.makeGameResult()
+
+            Then("딜러의 결과는 0승 0무 1패이다") {
+                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+            }
+
+            Then("참가자의 결과는 승리이다") {
+                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
+            }
+        }
+    }
+
+    Given("1명의 참가자와 딜러가 있는 게임에서 딜러와 참가자가 비겼을 떄") {
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TEN), // 딜러
+                    heartCard(CardDenomination.JACK), // 딜러
+                    heartCard(CardDenomination.QUEEN), // 참가자
+                    heartCard(CardDenomination.KING), // 참가자
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames("test1"),
+        )
+        game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
+        game.stayFocusedPlayer() // 참가자 받지 않음
+        game.executeDealerTurn() // 딜러는 추가 발급 받지 않음
+
+        When("결과를 만들면") {
+            val result = game.makeGameResult()
+
+            Then("딜러의 결과는 0승 1무 0패이다") {
+                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
+
+            }
+            Then("참가자의 결과는 무승부이다") {
+                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.TIE
+            }
+        }
+    }
+
+    Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 버스트 되었을 때") {
+        val game = blackJackGame(
+            shuffler = CardCustomShuffler {
+                val frontCards = listOf(
+                    heartCard(CardDenomination.TEN), // 딜러
+                    heartCard(CardDenomination.THREE), // 딜러
+                    heartCard(CardDenomination.QUEEN), // 참가자
+                    heartCard(CardDenomination.KING), // 참가자
+                    heartCard(CardDenomination.JACK), // 딜러 추가분
+                )
+                val set = it.toSet().toMutableSet()
+                set.removeAll(frontCards.toSet())
+                frontCards.toMutableList().apply { addAll(set.toList()) }
+            },
+            playerNames = playerNames("test1"),
+        )
+        game.distributeCardsToPlayers() // 딜러 : [10, 3] 플레이어 [10, 10]
+        game.stayFocusedPlayer() // 참가자 받지 않음
+        game.executeDealerTurn() // 딜러 추가 발급 받음
+
+        When("결과를 만들면") {
+            val result = game.makeGameResult()
+
+            Then("딜러의 결과는 0승 0무 1패이다") {
+                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+            }
+
+            Then("참가자의 결과는 승리이다") {
+                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
             }
         }
     }

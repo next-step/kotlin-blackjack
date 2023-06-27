@@ -92,6 +92,7 @@ class BlackJackGame(
             playerGameResults = players
                 .captureAllCards()
                 .map { playerCards -> PlayerGameResult(playerCards) },
+            matchResult = createMatchResult()
         )
     }
 
@@ -155,6 +156,19 @@ class BlackJackGame(
 
     private fun isDealerWait(): Boolean {
         return dealer.state.canHit()
+    }
+
+    private fun createMatchResult(): MatchResult {
+        val playerMatchResults = players.map { player -> player.match(dealer) }
+        val dealerMatchResult = DealerMatchResult(
+            winCount = playerMatchResults.count { it.matchResultType == MatchResultType.LOSE },
+            tieCount = playerMatchResults.count { it.matchResultType == MatchResultType.TIE },
+            loseCount = playerMatchResults.count { it.matchResultType == MatchResultType.WIN }
+        )
+        return MatchResult(
+            dealerMatchResult = dealerMatchResult,
+            playerMatchResults = playerMatchResults,
+        )
     }
 
     companion object {

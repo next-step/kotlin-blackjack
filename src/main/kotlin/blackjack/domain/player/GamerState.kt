@@ -33,4 +33,6 @@ enum class GamerState {
     abstract fun canHit(): Boolean
 
     abstract fun canToStay(): Boolean
+
+    fun isBust() = this == BUST
 }
