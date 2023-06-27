@@ -14,12 +14,12 @@ class Player(
             return Profit(-betAmount)
         }
 
-        val dealerScore: Score = dealer.calculateScore()
         if (dealer.state is Burst) {
             return Profit(betAmount)
         }
 
-        val score: Score = calculateScore()
+        val score = calculateScore()
+        val dealerScore = dealer.calculateScore()
         if (score > dealerScore) {
             return state.calculateProfit(betAmount)
         }
@@ -35,7 +35,7 @@ class Player(
         fun of(name: String, betAmount: BigDecimal, cards: Cards) = Player(
             name = name,
             betAmount = betAmount,
-            state = Running(cards),
+            state = State.of(cards),
         )
     }
 }

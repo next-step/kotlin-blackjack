@@ -5,25 +5,29 @@ import java.math.BigDecimal
 sealed class State(
     val cards: Cards,
 ) {
-    abstract fun draw(card: Card): State
+    abstract fun hit(card: Card): State
 
     abstract fun stay(): State
 
+    abstract fun calculateProfit(betAmount: BigDecimal): Profit
+
     fun calculateScore(): Score = cards.calculateScore()
 
-    fun calculateProfit(betAmount: BigDecimal): Profit {
-        if (this !is Finished) {
-            throw IllegalStateException("끝난 상태에서만 수익을 계산할 수 있습니다.")
-        }
+    companion object {
+        fun of(cards: Cards): State {
+            if (cards.calculateScore().isBlackJack()) {
+                return BlackJack(cards)
+            }
 
-        return Profit(betAmount * profitRate())
+            return Running(cards)
+        }
     }
 }
 
 class Running(
     cards: Cards,
 ) : State(cards) {
-    override fun draw(card: Card): State {
+    override fun hit(card: Card): State {
         val addedCards = cards + card
         val score = addedCards.calculateScore()
         if (score.isBlackJack()) {
@@ -38,6 +42,10 @@ class Running(
     }
 
     override fun stay(): State = Stay(cards)
+
+    override fun calculateProfit(betAmount: BigDecimal): Profit {
+        throw IllegalStateException("끝난 상태에서만 수익을 계산할 수 있습니다.")
+    }
 }
 
 sealed class Finished(
@@ -45,12 +53,16 @@ sealed class Finished(
 ) : State(cards) {
     abstract fun profitRate(): BigDecimal
 
-    override fun draw(card: Card): State {
-        throw IllegalStateException("끝난 상태에서 카드를 뽑을 수 없습니다.")
+    override fun hit(card: Card): State {
+        throw IllegalStateException("끝난 상태에서 hit 할 수 없습니다.")
     }
 
     override fun stay(): State {
         throw IllegalStateException("끝난 상태에서 stay 할 수 없습니다.")
+    }
+
+    override fun calculateProfit(betAmount: BigDecimal): Profit {
+        return Profit(betAmount * profitRate())
     }
 }
 

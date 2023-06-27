@@ -3,7 +3,9 @@ package blackjack.domain
 import blackjack.fixture.player
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.instanceOf
 import java.math.BigDecimal
 
 class PlayerTest : FunSpec({
@@ -17,12 +19,8 @@ class PlayerTest : FunSpec({
 
         player.hit(card)
 
-        (player.state is Running) shouldBe true
-        player.state.cards shouldBe Cards(
-            Card.of(Denomination.ACE, Suit.SPADES),
-            Card.of(Denomination.JACK, Suit.SPADES),
-            Card.of(Denomination.TWO, Suit.HEARTS),
-        )
+        player.state should instanceOf<Running>()
+        player.state.cards shouldBe cards + card
     }
 
     test("카드를 더 받고(hit) 21 초과하면 burst 된다") {
@@ -35,12 +33,8 @@ class PlayerTest : FunSpec({
 
         player.hit(card)
 
-        (player.state is Burst) shouldBe true
-        player.state.cards shouldBe Cards(
-            Card.of(Denomination.KING, Suit.SPADES),
-            Card.of(Denomination.JACK, Suit.SPADES),
-            Card.of(Denomination.TWO, Suit.HEARTS),
-        )
+        player.state should instanceOf<Burst>()
+        player.state.cards shouldBe cards + card
     }
 
     context("플레이어의 스코어를 계산한다.") {
@@ -87,22 +81,27 @@ class PlayerTest : FunSpec({
         )
         withData(
             GetGameResult(
-                Running(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
-                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
+                BlackJack(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit.ZERO,
             ),
             GetGameResult(
-                Running(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS))),
-                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
+                BlackJack(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Profit(1500.0.toBigDecimal()),
+            ),
+            GetGameResult(
+                Stay(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS))),
+                BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
-                Running(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
-                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
+                Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
-                Running(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 Burst(Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))),
                 Profit(BigDecimal(1000)),
             ),
@@ -119,7 +118,7 @@ class PlayerTest : FunSpec({
         }
     }
 
-    test("플레이어의 상태가 Burst 인지 반환한다") {
+    test("플레이어의 상태가 끝났는지 반환한다") {
         val cards = Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))
         val player = player(state = Burst(cards))
 

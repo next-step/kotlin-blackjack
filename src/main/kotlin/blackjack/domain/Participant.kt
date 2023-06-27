@@ -12,7 +12,7 @@ sealed class Participant(
         if (isFinished()) {
             return
         }
-        state = state.draw(card)
+        state = state.hit(card)
     }
 
     fun stay() {
