@@ -5,24 +5,23 @@ import java.math.BigDecimal
 class Player(
     name: String,
     val betAmount: BigDecimal,
-    cards: Cards,
-    state: ParticipantState = Alive,
-) : Participant(name, cards, state) {
-    override fun openedCards(): Cards = cards
+    state: State,
+) : Participant(name, state) {
+    override fun openedCards(): Cards = state.cards
 
     fun calculateProfit(dealer: Dealer): Profit {
-        if (isBurst()) {
+        if (state is Burst) {
             return Profit(-betAmount)
         }
 
         val dealerScore: Score = dealer.calculateScore()
-        if (dealer.isBurst()) {
+        if (dealer.state is Burst) {
             return Profit(betAmount)
         }
 
         val score: Score = calculateScore()
         if (score > dealerScore) {
-            return Profit(betAmount)
+            return state.calculateProfit(betAmount)
         }
 
         if (score == dealerScore) {
@@ -30,5 +29,13 @@ class Player(
         }
 
         return Profit(-betAmount)
+    }
+
+    companion object {
+        fun of(name: String, betAmount: BigDecimal, cards: Cards) = Player(
+            name = name,
+            betAmount = betAmount,
+            state = Running(cards),
+        )
     }
 }

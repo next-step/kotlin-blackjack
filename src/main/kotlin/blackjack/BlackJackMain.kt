@@ -36,6 +36,8 @@ private fun play(participants: Participants, deck: Deck): ProfitResultVO {
     if (dealer.shouldHit()) {
         ResultView.printDealerHit()
         dealer.hit(deck.draw())
+    } else {
+        dealer.stay()
     }
 
     val playerProfitVOS = players.map { PlayerProfitVO.of(it.name, it.calculateProfit(dealer)) }
@@ -44,13 +46,14 @@ private fun play(participants: Participants, deck: Deck): ProfitResultVO {
 
 private fun drawMore(deck: Deck, player: Player) {
     while (deck.isNotEmpty()) {
-        if (player.isBurst()) {
+        if (player.isFinished()) {
             return
         }
 
         if (InputView.readDrawMore(player.name)) {
             player.hit(deck.draw())
         } else {
+            player.stay()
             return
         }
         ResultView.printParticipant(ParticipantVO.of(player))

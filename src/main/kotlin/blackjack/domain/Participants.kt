@@ -12,14 +12,13 @@ class Participants(
         private const val INITIAL_DRAW_COUNT = 2
 
         fun init(playerInfos: List<PlayerInfo>, deck: Deck): Participants = Participants(
-            Dealer(deck.draw(INITIAL_DRAW_COUNT)),
+            Dealer.of(deck.draw(INITIAL_DRAW_COUNT)),
             Players(
                 playerInfos.map {
-                    Player(
+                    Player.of(
                         name = it.name,
                         betAmount = it.betAmount,
                         cards = deck.draw(INITIAL_DRAW_COUNT),
-                        state = Alive,
                     )
                 }
             ),

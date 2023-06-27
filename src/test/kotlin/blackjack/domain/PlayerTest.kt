@@ -17,12 +17,12 @@ class PlayerTest : FunSpec({
 
         player.hit(card)
 
-        player.cards shouldBe Cards(
+        (player.state is Running) shouldBe true
+        player.state.cards shouldBe Cards(
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
-        player.state shouldBe Alive
     }
 
     test("카드를 더 받고(hit) 21 초과하면 burst 된다") {
@@ -35,12 +35,12 @@ class PlayerTest : FunSpec({
 
         player.hit(card)
 
-        player.cards shouldBe Cards(
+        (player.state is Burst) shouldBe true
+        player.state.cards shouldBe Cards(
             Card.of(Denomination.KING, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
             Card.of(Denomination.TWO, Suit.HEARTS),
         )
-        player.state shouldBe Burst
     }
 
     context("플레이어의 스코어를 계산한다.") {
@@ -81,51 +81,39 @@ class PlayerTest : FunSpec({
 
     context("게임 수익을 계산한다") {
         data class GetGameResult(
-            val cards: Cards,
-            val playerState: ParticipantState,
-            val dealerCards: Cards,
-            val dealerState: ParticipantState,
+            val playerState: State,
+            val dealerState: State,
             val profit: Profit
         )
         withData(
             GetGameResult(
-                Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                Alive,
-                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                Alive,
+                Running(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit.ZERO,
             ),
             GetGameResult(
-                Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS)),
-                Alive,
-                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                Alive,
+                Running(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS))),
+                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
-                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                Alive,
-                Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
-                Alive,
+                Running(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Running(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
-                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                Alive,
-                Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
-                Burst,
+                Running(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Burst(Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))),
                 Profit(BigDecimal(1000)),
             ),
             GetGameResult(
-                Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
-                Burst,
-                Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
-                Burst,
+                Burst(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
+                Burst(Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
-        ) { (cards, playerState, dealerCards, dealerState, profit) ->
-            val player = player(cards = cards, state = playerState, betAmount = BigDecimal(1000))
-            val dealer = Dealer(dealerCards, dealerState)
+        ) { (playerState, dealerState, profit) ->
+            val player = player(state = playerState, betAmount = BigDecimal(1000))
+            val dealer = Dealer(dealerState)
 
             player.calculateProfit(dealer) shouldBe profit
         }
@@ -133,8 +121,8 @@ class PlayerTest : FunSpec({
 
     test("플레이어의 상태가 Burst 인지 반환한다") {
         val cards = Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))
-        val player = player(cards = cards, state = Burst)
+        val player = player(state = Burst(cards))
 
-        player.isBurst() shouldBe true
+        player.isFinished() shouldBe true
     }
 })

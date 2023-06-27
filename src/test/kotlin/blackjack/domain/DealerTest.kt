@@ -10,7 +10,7 @@ class DealerTest : FunSpec({
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
         )
-        val dealer = Dealer(cards)
+        val dealer = Dealer.of(cards)
 
         dealer.openedCards() shouldBe Cards(Card.of(Denomination.ACE, Suit.SPADES))
     }
@@ -34,7 +34,7 @@ class DealerTest : FunSpec({
                 false
             ),
         ) { (cards, expected) ->
-            val dealer = Dealer(cards)
+            val dealer = Dealer.of(cards)
             dealer.shouldHit() shouldBe expected
         }
     }

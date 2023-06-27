@@ -12,7 +12,7 @@ class ParticipantsTest : FunSpec({
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
         )
-        val dealer = Dealer(cards)
+        val dealer = Dealer.of(cards)
         val player1 = player(name = "pobi", cards = cards)
         val player2 = player(name = "jason", cards = cards)
         val players = Players(listOf(player1, player2))
