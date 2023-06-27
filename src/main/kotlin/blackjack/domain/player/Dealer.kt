@@ -36,9 +36,7 @@ class Dealer(
 
     override fun hands(): Hands = Hands.from(this)
 
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = gameState.score()
 
     companion object {
         private const val DEALER_NAME = "딜러"
