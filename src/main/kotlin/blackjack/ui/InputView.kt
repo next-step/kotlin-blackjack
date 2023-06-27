@@ -13,9 +13,6 @@ class InputView {
 
     fun askPlayersWantToDrawCard(): Boolean {
         val playerAnswer = readln()
-        if (playerAnswer == "Y" || playerAnswer == "y") {
-            return true
-        }
-        return false
+        return playerAnswer.lowercase() == "y"
     }
 }
