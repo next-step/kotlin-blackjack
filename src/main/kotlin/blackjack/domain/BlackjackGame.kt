@@ -53,7 +53,10 @@ class BlackjackGame(
         return dealer.isFinished()
     }
 
-    fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
+    fun gameResult(): List<GameResult> {
+        check(isPlayerTurnEnd() && dealer.isFinished()) { "게임이 종료되지 않아 결과를 확인할 수 없다." }
+        return players.map { GameResult.from(it) }
+    }
 
     private fun nextTurnChange() {
         turn = turn.nextTurn()

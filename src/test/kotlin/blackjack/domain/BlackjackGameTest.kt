@@ -207,6 +207,14 @@ class BlackjackGameTest : FunSpec({
             }
         }
     }
+
+    context("gameResult") {
+        test("게임 결과를 확인할 때 모든 턴이 종료되지 않으면 예외가 발생한다.") {
+            val blackjackGame = BlackjackGame(turn = TURN_0, players = PLAYERS)
+            val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.gameResult() }
+            exception.message shouldBe "게임이 종료되지 않아 결과를 확인할 수 없다."
+        }
+    }
 }) {
     companion object {
         private val PLAYERS = listOf(Player.from("a"), Player.from("b"))
