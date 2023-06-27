@@ -1,15 +1,13 @@
 package blackjack.controller
 
-import blackjack.domain.GameInit
 import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.PlayerCards
 
 object ResultView {
 
-    fun writeGameInit(gameInit: GameInit) {
-        val players = gameInit.players
-        println("${players.joinToString(",") { it.name }} 에게 ${gameInit.initCardCount}장의 카드를 나누었습니다.")
+    fun writeGameInit(initDrawCardCount: Int, players: List<Player>) {
+        println("${players.joinToString(",") { it.name }} 에게 ${initDrawCardCount}장의 카드를 나누었습니다.")
         players.forEach { writePlayer(it) }
         println("")
     }

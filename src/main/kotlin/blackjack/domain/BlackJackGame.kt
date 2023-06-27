@@ -2,7 +2,8 @@ package blackjack.domain
 
 class BlackJackGame(
     playerNames: List<String>,
-    private val playingCards: PlayingCardPack = PlayingCardPackFactory.createPack()
+    private val playingCards: PlayingCardPack,
+    private val playerInteraction: PlayerInteraction
 ) {
 
     private val players = playerNames.map { Player(it, POINT_RULE) }
@@ -11,24 +12,25 @@ class BlackJackGame(
         this.playingCards.shuffle()
     }
 
-    fun initDraw(): GameInit {
-        repeat(INIT_CARD_COUNT) {
-            players.forEach { it.receive(playingCards.pick()) }
-        }
-        return GameInit(INIT_CARD_COUNT, players)
-    }
-
-    fun play(askHit: (Player) -> Boolean, showPlayer: (Player) -> Unit): GameResult {
-        players.forEach { playerInteraction(it, askHit, showPlayer) }
+    fun play(): GameResult {
+        initDraw()
+        players.forEach { playerInteraction(it) }
         return GameResult(this.players.map { Pair(it, it.cards.point()) })
     }
 
-    private fun playerInteraction(player: Player, askHit: (Player) -> Boolean, showPlayer: (Player) -> Unit) {
+    private fun initDraw() {
+        repeat(INIT_CARD_COUNT) {
+            players.forEach { it.receive(playingCards.pick()) }
+        }
+        playerInteraction.showInitDraw(INIT_CARD_COUNT, players)
+    }
+
+    private fun playerInteraction(player: Player) {
         val point = player.cards.point()
-        if (point < POINT_RULE.winningPoint && askHit(player)) {
+        if (point < POINT_RULE.winningPoint && playerInteraction.askHit(player)) {
             player.receive(playingCards.pick())
-            showPlayer(player)
-            playerInteraction(player, askHit, showPlayer)
+            playerInteraction.showPlayer(player)
+            playerInteraction(player)
         }
     }
 

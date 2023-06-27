@@ -1,19 +1,18 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.PlayingCardPackFactory
 
 fun main() {
 
     val players = InputView.inputPlayers()
-    val blackJackGame = BlackJackGame(players)
-
-    val gameInit = blackJackGame.initDraw()
-    ResultView.writeGameInit(gameInit)
-
-    val result = blackJackGame.play(
-        askHit = { player -> InputView.askPlayerHit(player) },
-        showPlayer = { player -> ResultView.writePlayer(player) }
+    val blackJackGame = BlackJackGame(
+        players,
+        PlayingCardPackFactory.createPack(),
+        ConsolePlayerInteraction()
     )
+
+    val result = blackJackGame.play()
 
     ResultView.writeGameResult(result)
 }
