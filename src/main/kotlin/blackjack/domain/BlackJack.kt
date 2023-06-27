@@ -1,13 +1,20 @@
 package blackjack.domain
 
-class BlackJack(val players: List<Player>, private val gameCards: GameCards = GameCards()) {
+class BlackJack(
+    val players: List<Player>,
+    val dealer: Dealer = Dealer(),
+    private val gameCards: GameCards = GameCards(),
+) {
 
     fun start() {
         distributeInitialCard()
     }
 
     private fun distributeInitialCard() {
-        for (i in 0 until START_CARD_COUNT) players.forEach { it.addCard(gameCards.draw()) }
+        for (i in 0 until START_CARD_COUNT) {
+            dealer.addCard(gameCards.draw())
+            players.forEach { it.addCard(gameCards.draw()) }
+        }
     }
 
     fun isEnd(): Boolean {

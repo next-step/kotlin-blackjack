@@ -8,8 +8,10 @@ internal class BlackJackTest {
     internal fun `게임이 시작되면 플레이어에게 두장의 카드가 주어진다`() {
         val player = Player("pobi")
         player.cards.value.size shouldBe 0
-        BlackJack(listOf(player)).start()
+        val blackJack = BlackJack(listOf(player))
+        blackJack.start()
         player.cards.value.size shouldBe 2
+        blackJack.dealer.cards.value.size shouldBe 2
     }
 
     @Test
