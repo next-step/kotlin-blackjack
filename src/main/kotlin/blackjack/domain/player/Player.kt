@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.Hands
 import blackjack.domain.card.Card
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.running.InitialHand
@@ -25,8 +24,6 @@ class Player(
     override fun isFinished(): Boolean = gameState.isFinished()
 
     override fun cards(): Set<Card> = gameState.cards()
-
-    override fun hands(): Hands = Hands.from(this)
 
     override fun score(): Int = gameState.score()
 

@@ -4,11 +4,10 @@ import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.running.InitialHand
-import blackjack.domain.gamestate.finished.Stay
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
@@ -37,16 +36,6 @@ class PlayerTest : FunSpec({
             player.stay()
 
             player.gameState.shouldBeTypeOf<Stay>()
-        }
-    }
-
-    context("currentStatus") {
-        test("현재 플레이어의 상태를 반환한다.") {
-            val player = Player(Name("최진영"), Hit(Cards.of(SPADE_ACE, SPADE_KING)))
-            val actual = player.hands()
-
-            actual.playerName shouldBe "최진영"
-            actual.cards shouldContainAll listOf(SPADE_ACE, SPADE_KING)
         }
     }
 })

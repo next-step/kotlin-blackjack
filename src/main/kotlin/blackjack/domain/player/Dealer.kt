@@ -1,6 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.Hands
 import blackjack.domain.card.Card
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.running.InitialHand
@@ -30,8 +29,6 @@ class Dealer(
     override fun cards(): Set<Card> {
         return gameState.cards()
     }
-
-    override fun hands(): Hands = Hands.from(this)
 
     override fun score(): Int {
         check(gameState.isFinished()) { "턴이 종료되기 전에는 점수를 조회할 수 없다" }
