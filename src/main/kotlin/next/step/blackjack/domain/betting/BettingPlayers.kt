@@ -23,6 +23,5 @@ value class BettingPlayers(private val players: Set<BettingPlayer>) : Set<Bettin
 
     companion object {
         fun of(players: Set<BettingPlayer>) = BettingPlayers(players)
-
     }
 }

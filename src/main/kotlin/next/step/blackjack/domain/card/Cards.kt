@@ -45,7 +45,7 @@ data class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         private const val BLACKJACK_CARDS_CNT = 2
 
         private const val FINISH_POINT = 21
-        
+
         fun of(cards: List<Card>): Cards = Cards(cards.toMutableList())
     }
 }

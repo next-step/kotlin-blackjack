@@ -26,7 +26,6 @@ object OutputView {
 
     private fun showPlayersCards(players: BettingPlayers) = players.forEach(OutputView::showPlayerCards)
 
-
     fun showPlayerCards(player: BettingPlayer) = println(cardDescs(player))
 
     private fun cardDescs(player: BettingPlayer): String {

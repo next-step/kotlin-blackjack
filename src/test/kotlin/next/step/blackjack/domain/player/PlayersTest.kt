@@ -40,7 +40,8 @@ class PlayersTest : DescribeSpec({
                     listOf(
                         Card.of(CardFace.TWO, CardSymbol.CLUB),
                         Card.of(CardFace.THREE, CardSymbol.CLUB),
-                    ), listOf(
+                    ),
+                    listOf(
                         Card.of(CardFace.FOUR, CardSymbol.CLUB),
                         Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
@@ -74,7 +75,8 @@ class PlayersTest : DescribeSpec({
                     listOf(
                         Card.of(CardFace.ACE, CardSymbol.CLUB),
                         Card.of(CardFace.KING, CardSymbol.CLUB),
-                    ), listOf(
+                    ),
+                    listOf(
                         Card.of(CardFace.FOUR, CardSymbol.CLUB),
                         Card.of(CardFace.FIVE, CardSymbol.CLUB),
                         Card.of(CardFace.THREE, CardSymbol.CLUB),
@@ -109,7 +111,8 @@ class PlayersTest : DescribeSpec({
                     listOf(
                         Card.of(CardFace.ACE, CardSymbol.CLUB),
                         Card.of(CardFace.KING, CardSymbol.CLUB),
-                    ), listOf(
+                    ),
+                    listOf(
                         Card.of(CardFace.FOUR, CardSymbol.CLUB),
                         Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
@@ -192,11 +195,11 @@ class PlayersTest : DescribeSpec({
                         )
                     )
                 )
-                
+
                 Players.of(setOf(player)).bet { BettingAmount.of(1000) } shouldBe
-                        BettingPlayers.of(
-                            setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
-                        )
+                    BettingPlayers.of(
+                        setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
+                    )
             }
         }
     }

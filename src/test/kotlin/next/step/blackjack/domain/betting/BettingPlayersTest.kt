@@ -39,7 +39,8 @@ class BettingPlayersTest : DescribeSpec({
                     listOf(
                         Card.of(CardFace.ACE, CardSymbol.CLUB),
                         Card.of(CardFace.KING, CardSymbol.CLUB),
-                    ), listOf(
+                    ),
+                    listOf(
                         Card.of(CardFace.FOUR, CardSymbol.CLUB),
                         Card.of(CardFace.FIVE, CardSymbol.CLUB),
                         Card.of(CardFace.THREE, CardSymbol.CLUB),
@@ -122,4 +123,3 @@ private fun BettingPlayer(name: String, amount: Int, vararg cards: Card): Bettin
     BettingPlayer.of(Player.of(PlayerName.of(name), Cards.of(cards.toList())), BettingAmount.of(amount))
 
 private fun Dealer(vararg cards: Card): Dealer = Dealer.of(Cards.of(cards.toList()))
-
