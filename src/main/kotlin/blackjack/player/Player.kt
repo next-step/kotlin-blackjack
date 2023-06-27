@@ -17,6 +17,10 @@ class Player(
     fun updateStatus(newStatus: Status) {
         status = newStatus
     }
+
+    fun displayHand(): String {
+        return hand.displayCards()
+    }
     fun getTotalValue(): Int {
         return hand.getTotalValue()
     }
