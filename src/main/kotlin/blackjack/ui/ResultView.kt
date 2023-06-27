@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.Player
+import blackjack.domain.card.Card
 
 class ResultView {
     fun printFirstDraw(playerList: List<Player>) {
@@ -21,12 +22,21 @@ class ResultView {
     private fun printFirstDrawDetail(playerList: List<Player>) {
         playerList.forEach {
             printPlayerName(it)
-            println(it.getCards())
+            println(getPlayerCardsText(it.getCards()))
         }
     }
 
     private fun printPlayerName(player: Player) {
         print("${player.name}카드: ")
+    }
+
+    private fun getPlayerCardsText(cards: List<Card>): String {
+        var cardText = ""
+        cards.forEachIndexed { index, card ->
+            cardText += card.number.toString() + card.shape.value
+            if (index != cards.lastIndex) cardText += ", "
+        }
+        return cardText
     }
 
     fun printPlayersWantToDrawCard(player: Player) {
@@ -35,7 +45,7 @@ class ResultView {
 
     fun printPlayerCardList(player: Player) {
         printPlayerName(player)
-        print(player.getCards())
+        print(getPlayerCardsText(player.getCards()))
     }
 
     fun printGameResult(playerList: List<Player>) {

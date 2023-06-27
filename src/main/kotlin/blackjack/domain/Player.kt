@@ -14,13 +14,17 @@ class Player(val name: String) {
         cards.addAll(drawCards)
     }
 
-    fun getCards(): String {
-        var cardText = ""
-        cards.forEachIndexed { index, card ->
-            cardText += card.number.toString() + card.shape.value
-            if (index != cards.lastIndex) cardText += ", "
-        }
-        return cardText
+//    fun getCards(): String {
+//        var cardText = ""
+//        cards.forEachIndexed { index, card ->
+//            cardText += card.number.toString() + card.shape.value
+//            if (index != cards.lastIndex) cardText += ", "
+//        }
+//        return cardText
+//    }
+
+    fun getCards(): List<Card> {
+        return cards.toList()
     }
 
     fun calculateSumOfCardNumbers(): Int {

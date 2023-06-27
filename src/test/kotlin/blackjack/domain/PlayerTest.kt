@@ -26,7 +26,7 @@ class PlayerTest {
         val drawCard = Card(shape = CardShape.CLOVER, number = CardNumber.A)
 
         player.addCard(drawCard)
-        val answer = "A클로버"
+        val answer = listOf(Card(shape = CardShape.CLOVER, number = CardNumber.A))
 
         Assertions.assertThat(player.getCards()).isEqualTo(answer)
     }
@@ -39,7 +39,12 @@ class PlayerTest {
         drawCards.add(Card(shape = CardShape.CLOVER, number = CardNumber.A))
 
         player.addCards(drawCards)
-        val answer = "2다이아, 3하트, A클로버"
+
+        val answer = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
+            Card(shape = CardShape.HEART, number = CardNumber.THREE),
+            Card(shape = CardShape.CLOVER, number = CardNumber.A)
+        )
 
         Assertions.assertThat(player.getCards()).isEqualTo(answer)
     }

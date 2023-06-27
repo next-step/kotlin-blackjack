@@ -24,8 +24,14 @@ class GameTest {
         val jason = Player("jason")
 
         val playerList = listOf(pobi, jason)
-        val pobiCards = "J다이아, Q다이아"
-        val jasonCards = "K다이아, 10다이아"
+        val pobiCards = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.J),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.Q)
+        )
+        val jasonCards = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.K),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
+        )
 
         game.firstDraw(playerList)
 
@@ -38,7 +44,7 @@ class GameTest {
         val pobi = Player("pobi")
 
         game.onePlayerDraw(pobi)
-        val pobiCards = "J다이아"
+        val pobiCards = listOf(Card(shape = CardShape.DIAMOND, number = CardNumber.J))
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
     }
