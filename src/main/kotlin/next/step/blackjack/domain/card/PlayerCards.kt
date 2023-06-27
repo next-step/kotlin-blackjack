@@ -25,8 +25,7 @@ class PlayerCards(
     fun point(): Int = cards.point()
 
     fun fight(other: PlayerCards): GameResult {
-        val gameResult = state.fight(other.state)
-        return if (gameResult == GameResult.UNDECIDED) cards.fight(other.cards) else gameResult
+        return state.fight(other.state) then cards.fight(other.cards)
     }
 
     companion object {
