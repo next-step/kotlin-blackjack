@@ -6,6 +6,7 @@ import blackjack.view.CommandView.YES
 import blackjack.view.requestAdditionalDraw
 import blackjack.view.inputPlayerNames
 import blackjack.view.printCurrentDrawResult
+import blackjack.view.printDealerGetDraw
 import blackjack.view.printFirstDrawResult
 import blackjack.view.printGameResults
 
@@ -15,6 +16,7 @@ fun main() {
     printFirstDrawResult(blackJackGame.firstDraw())
 
     runBlackjackGamePlayerTurn(blackJackGame)
+    runBlackjackGameDealerTurn(blackJackGame)
     printGameResults(blackJackGame.gameResult())
 }
 
@@ -31,4 +33,13 @@ private fun executeByCommand(blackjackGame: BlackjackGame) {
         NO -> blackjackGame.passToNextTurn()
         YES -> printCurrentDrawResult(blackjackGame.currentPlayerDraw())
     }
+}
+
+private tailrec fun runBlackjackGameDealerTurn(blackjackGame: BlackjackGame) {
+    if (blackjackGame.isDealerTurnEnd()) {
+        return
+    }
+    printDealerGetDraw()
+    blackjackGame.dealerDraw()
+    runBlackjackGameDealerTurn(blackjackGame)
 }

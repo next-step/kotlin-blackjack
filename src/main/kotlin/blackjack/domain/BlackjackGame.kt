@@ -48,6 +48,11 @@ class BlackjackGame(
         return dealer.isFinished()
     }
 
+    fun dealerDraw() {
+        check(isDealerTurnEnd().not()) { "딜러턴이 종료되지 않았다." }
+        dealer.draw(cardDeck.draw())
+    }
+
     fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
 
     private fun nextTurnChange() {
