@@ -38,13 +38,15 @@ class BlackjackGameTest : FunSpec({
             exception.message shouldBe "first draw 턴이 아닙니다."
         }
 
-        test("모든 유저에게 2장의 카드를 첫 드로우한다.") {
+        test("모든 유저에게 2장의 카드를 첫 드로우하고 딜러는 1장의 카드만 보여준다.") {
             val blackjackGame = BlackjackGame(players = PLAYERS)
             val actual = blackjackGame.firstDraw()
 
             blackjackGame.cardDeck.size() shouldBe 46
             blackjackGame.turn shouldBe TURN_0
             actual shouldHaveSize 3
+            actual[0].playerName shouldBe "딜러"
+            actual[0].cards shouldHaveSize 1
         }
     }
 

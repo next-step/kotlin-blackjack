@@ -54,13 +54,7 @@ class DealerTest : FunSpec({
     }
 
     context("cards") {
-        test("딜러가 턴이 종료되지 않은 경우 1장의 카드만 반환한다.") {
-            val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
-            val actual = dealer.cards()
-            actual shouldBe setOf(SPADE_TWO)
-        }
-
-        test("딜러가 턴이 종료되었다면 모든 카드를 반환한다.") {
+        test("모든 카드를 반환한다.") {
             val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
             val actual = dealer.cards()
             actual shouldBe setOf(SPADE_KING, SPADE_JACK, SPADE_QUEEN)

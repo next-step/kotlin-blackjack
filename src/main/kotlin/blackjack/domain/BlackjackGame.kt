@@ -22,7 +22,7 @@ class BlackjackGame(
         check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
         repeat(FIRST_DRAW_COUNT) { drawDealerAndPlayers() }
         nextTurnChange()
-        return listOf(dealer.hands()) + players.map { it.hands() }
+        return listOf(dealerFirstDrawHand()) + players.map { Hands.from(it) }
     }
 
     fun currentPlayerDraw(): Hands {
@@ -45,10 +45,16 @@ class BlackjackGame(
 
     fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
 
+    private fun nextTurnChange() {
+        turn = turn.nextTurn()
+    }
+
     private fun drawDealerAndPlayers() {
         dealer.draw(cardDeck.draw())
         players.forEach { it.draw(cardDeck.draw()) }
     }
+
+    private fun dealerFirstDrawHand() = Hands(playerName = dealer.name(), cards = setOf(dealer.cards().first()))
 
     private fun currentPlayer(): Participant {
         checkTurn()
@@ -58,10 +64,6 @@ class BlackjackGame(
     private fun checkTurn() {
         check(turn.isDealingTurn().not()) { "첫 드로우가 시작되지 않았다." }
         check(turn.isHigherTurn(players.size)) { "모든 드로우가 종료되었다." }
-    }
-
-    private fun nextTurnChange() {
-        turn = turn.nextTurn()
     }
 
     companion object {
