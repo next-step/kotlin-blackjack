@@ -2,6 +2,7 @@ package blackjack.bet.domain
 
 import blackjack.common.domain.Player
 import blackjack.common.service.DeckManager
+import blackjack.common.service.HandsCalculator
 
 open class BetPlayer(name: String) : Player<BetPlayer>(name) {
 
@@ -15,13 +16,9 @@ open class BetPlayer(name: String) : Player<BetPlayer>(name) {
         wallet.charge(money)
     }
 
-    fun isInitialBlackjack(optimalValue: Int): Boolean {
-        isPlaying = optimalValue != BLACK_JACK_NUMBER
-        return isPlaying
-    }
-
-    fun isPlaying(): Boolean {
-        return isPlaying
+    fun isInitialBlackjack(): Boolean {
+        val initialOptimalValue = HandsCalculator.calculateOptimalValue(this.hands().subList(0, 2))
+        return initialOptimalValue == BLACK_JACK_NUMBER
     }
 
     override fun drawPhase(deckManager: DeckManager, handNotice: (BetPlayer) -> Unit) {
