@@ -1,9 +1,12 @@
-package next.step.blackjack.domain.card
+package next.step.blackjack.domain.playercards
 
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.CardFace
+import next.step.blackjack.domain.card.CardSymbol
+import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
-import next.step.blackjack.domain.playercards.PlayerCards
 
 class PlayerCardsTest : BehaviorSpec({
 

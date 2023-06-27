@@ -197,9 +197,9 @@ class PlayersTest : DescribeSpec({
                 )
 
                 Players.of(setOf(player)).bet { BettingAmount.of(1000) } shouldBe
-                        BettingPlayers.of(
-                            setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
-                        )
+                    BettingPlayers.of(
+                        setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
+                    )
             }
         }
     }

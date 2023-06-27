@@ -1,8 +1,10 @@
-package next.step.blackjack.domain.card
+package next.step.blackjack.domain.game
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import next.step.blackjack.domain.game.GameCards
+import next.step.blackjack.domain.card.Card
+import next.step.blackjack.domain.card.CardFace
+import next.step.blackjack.domain.card.CardSymbol
 
 class GameCardsTest : DescribeSpec({
 

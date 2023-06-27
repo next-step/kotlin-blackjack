@@ -1,15 +1,10 @@
-package next.step.blackjack.domain.card.state
+package next.step.blackjack.domain.playercards.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
-import next.step.blackjack.domain.playercards.state.BlackjackState
-import next.step.blackjack.domain.playercards.state.BurstState
-import next.step.blackjack.domain.playercards.state.FinishedState
-import next.step.blackjack.domain.playercards.state.PlayerCardsState
-import next.step.blackjack.domain.playercards.state.UnfinishedState
 import org.junit.jupiter.api.assertThrows
 
 class FinishedStateTest : DescribeSpec({

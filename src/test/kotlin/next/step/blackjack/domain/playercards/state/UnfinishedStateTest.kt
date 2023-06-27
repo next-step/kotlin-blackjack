@@ -1,4 +1,4 @@
-package next.step.blackjack.domain.card.state
+package next.step.blackjack.domain.playercards.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -8,11 +8,6 @@ import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
-import next.step.blackjack.domain.playercards.state.BlackjackState
-import next.step.blackjack.domain.playercards.state.BurstState
-import next.step.blackjack.domain.playercards.state.FinishedState
-import next.step.blackjack.domain.playercards.state.PlayerCardsState
-import next.step.blackjack.domain.playercards.state.UnfinishedState
 
 class UnfinishedStateTest : DescribeSpec({
 
