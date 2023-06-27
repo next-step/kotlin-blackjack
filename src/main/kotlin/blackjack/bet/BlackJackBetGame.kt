@@ -10,7 +10,7 @@ import blackjack.common.view.OutputView
 
 class BlackJackBetGame(playerNames: List<String>) {
 
-    private val players = playerNames.map { BetPlayer(it) }.toTypedArray()
+    private val players = playerNames.map { BetPlayer(it) }
     private val table = BlackJackBetTable(players)
 
     fun startGame() {
@@ -24,7 +24,8 @@ class BlackJackBetGame(playerNames: List<String>) {
         table.executePlayerTurns(
             players,
             wantToHit = { name -> InputView.wantToHit(name) },
-            handNotice = { player -> BetOutputView.handNotice(BetPlayerStatus.of(player)) }
+            handNotice = { player -> BetOutputView.handNotice(BetPlayerStatus.of(player)) },
+            cantDrawMoreException = { name -> OutputView.canNotDrawMoreWarn(name) }
         )
         table.executeDealerTurn { OutputView.dealerAddNotice() }
         table.checkGameResult()

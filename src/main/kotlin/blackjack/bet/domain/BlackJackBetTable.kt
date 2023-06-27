@@ -5,7 +5,7 @@ import blackjack.bet.service.BetGameResultChecker
 import blackjack.bet.view.BetPlayerStatus
 import blackjack.common.service.DeckManager
 
-class BlackJackBetTable(private val players: Array<BetPlayer>) {
+class BlackJackBetTable(private val players: List<BetPlayer>) {
 
     private val dealer: BetDealer = BetDealer()
     private val deckManager: DeckManager = DeckManager()
@@ -21,7 +21,7 @@ class BlackJackBetTable(private val players: Array<BetPlayer>) {
     }
 
     fun getPlayersName(): String {
-        return players.filter { it.name != "딜러" }.joinToString { it.name }
+        return players.joinToString { it.name }
     }
 
     fun getAllStatusWithDealer(): List<BetPlayerStatus> {

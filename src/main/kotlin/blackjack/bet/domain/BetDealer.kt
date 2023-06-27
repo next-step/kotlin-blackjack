@@ -4,7 +4,7 @@ import blackjack.bet.view.BetPlayerStatus
 import blackjack.common.service.DeckManager
 
 class BetDealer : BetPlayer(name = "딜러") {
-    fun beginRound(deckManager: DeckManager, players: Array<BetPlayer>) {
+    fun beginRound(deckManager: DeckManager, players: List<BetPlayer>) {
         this.hit(*deckManager.drawTwoCards())
         for (player in players) {
             player.hit(*deckManager.drawTwoCards())
