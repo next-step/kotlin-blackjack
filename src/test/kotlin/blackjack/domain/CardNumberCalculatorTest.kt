@@ -15,7 +15,7 @@ class CardNumberCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        cardNumberCalculator = CardNumberCalculator()
+        cardNumberCalculator = CardNumberCalculator(DynamicProceedAceStrategy())
     }
 
     @Test
@@ -51,8 +51,9 @@ class CardNumberCalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"])
+    @ValueSource(strings = ["A", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN"])
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
+        val cardNumberCalculator = CardNumberCalculator(StaticProceedAceStrategy())
         val startSum = 0
 
         val actual = cardNumberCalculator.calculateCardNumber(cardNumber, startSum)
