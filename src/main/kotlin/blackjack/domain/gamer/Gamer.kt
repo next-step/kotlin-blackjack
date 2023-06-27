@@ -1,53 +1,33 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.card.Card
-import blackjack.domain.score.CardScoreCalculator
-import blackjack.domain.score.Score
-import java.util.LinkedList
+import blackjack.domain.card.InitCard
+import blackjack.domain.state.GamerState
 
 abstract class Gamer {
 
-    private val _cards = LinkedList<Card>()
-    val cards: List<Card>
-        get() = _cards.toList()
-    val cardsSize: Int
-        get() = _cards.size
-
-    var score = Score(0)
+    var state = GamerState.wait()
         private set
 
-    var state = GamerState.WAIT
-        private set
-
-    fun pass(newCard: Card) {
-        pass(listOf(newCard))
+    fun init(initCard: InitCard) {
+        state = state.init(initCard)
     }
 
-    fun pass(newCards: List<Card>) {
-        require(state.canHit()) {
-            "current state is $state. card pass is only available in ${GamerState.WAIT} state "
-        }
-
-        _cards.addAll(newCards)
-        score = CardScoreCalculator.calculateScore(_cards)
-        if (score.isBust) {
-            state = GamerState.BUST
-        }
+    fun hit(card: Card) {
+        state = state.hit(card)
     }
 
     fun hasCard(): Boolean {
-        return _cards.isNotEmpty()
+        return state.cards.isNotEmpty()
     }
 
     fun notHasCard(): Boolean {
-        return _cards.isEmpty()
+        return state.cards.isEmpty()
     }
 
     fun stay() {
-        require(state.canToStay()) {
-            "current state is $state. stay command is available in ${GamerState.values().filter { it.canToStay() }}"
-        }
-
-        state = GamerState.STAY
+        state = state.stay()
     }
+
+    abstract fun canHit(): Boolean
 }

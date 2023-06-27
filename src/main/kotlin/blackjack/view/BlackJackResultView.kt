@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.card.CardShape
+import blackjack.domain.card.Cards
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
@@ -50,7 +51,7 @@ class BlackJackResultView {
         println()
         println(blackJackGameResult.dealerGameResult.makeDisplayMessage())
         blackJackGameResult.playerGameResults
-            .map { it.playerCards.makeDisplayMessage().plus(" - ${it.score.makeDisplayMessage()}") }
+            .map { it.playerCards.makeDisplayMessage().plus(" - ${it.playerCards.cards.score.makeDisplayMessage()}") }
             .forEach { println(it) }
         println()
         println("## 최종 승패")
@@ -63,9 +64,9 @@ class BlackJackResultView {
     private fun DelayerGameResult.makeDisplayMessage(): String {
         return buildString {
             append("딜러 카드: ")
-            append(dealerCards.makeDisplayMessage())
+            append(cards.makeDisplayMessage())
             append(" - ")
-            append(score.makeDisplayMessage())
+            append(cards.score.makeDisplayMessage())
         }
     }
 
@@ -84,8 +85,8 @@ class BlackJackResultView {
         return "결과: $value"
     }
 
-    private fun List<Card>.makeDisplayMessage(): String {
-        return joinToString(", ") { card -> card.makeDisplayMessage() }
+    private fun Cards.makeDisplayMessage(): String {
+        return value.joinToString(", ") { card -> card.makeDisplayMessage() }
     }
 
     private fun Card.makeDisplayMessage(): String {

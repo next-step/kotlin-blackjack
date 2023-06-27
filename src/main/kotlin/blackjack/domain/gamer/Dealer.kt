@@ -1,11 +1,13 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.card.InitCard
+
 class Dealer : Gamer() {
 
-    fun canHit(): Boolean {
-        return state.canHit() &&
-            cardsSize == 2 &&
-            score.value <= NEED_HIT_SCORE
+    override fun canHit(): Boolean {
+        return state.isHit() &&
+            state.cards.size == InitCard.INIT_CARD_SIZE &&
+            state.cards.score.value <= NEED_HIT_SCORE
     }
 
     companion object {

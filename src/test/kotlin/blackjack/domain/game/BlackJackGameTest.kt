@@ -1,8 +1,9 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.gamer.DealerCard
+import blackjack.domain.card.cards
 import blackjack.domain.card.heartCard
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.playerNames
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.ForceMoveForwardCardShuffler
@@ -84,7 +85,7 @@ class BlackJackGameTest : BehaviorSpec({
         When("bust 상태가 되면") {
             var isBust = false
             while (isBust.not()) {
-                val playerCards = game.hitFocusedPlayer().cards
+                val playerCards = game.hitFocusedPlayer().cards.value
                 isBust = CardScoreCalculator.calculateScore(playerCards).isBust
             }
 
@@ -170,15 +171,14 @@ class BlackJackGameTest : BehaviorSpec({
         When("결과를 만들면") {
             val result = game.makeGameResult()
 
-            Then("딜러와 플레이어들의 카드를 반환한다") {
-                result.dealerGameResult.dealerCards shouldBe listOf(
-                    heartCard(CardDenomination.TEN),
-                    heartCard(CardDenomination.JACK),
-                )
-                result.playerGameResults[0].playerCards.cards shouldBe listOf(
-                    heartCard(CardDenomination.QUEEN),
-                    heartCard(CardDenomination.KING),
-                )
+            Then("딜러의 카드 목록을 반환한다") {
+                val expected = cards(heartCard(CardDenomination.TEN), heartCard(CardDenomination.JACK))
+                result.dealerGameResult.cards shouldBe expected
+            }
+
+            Then("플레이어의 카드 목록을 반환한다") {
+                val expected = cards(heartCard(CardDenomination.QUEEN), heartCard(CardDenomination.KING))
+                result.playerGameResults[0].playerCards.cards shouldBe expected
             }
         }
     }

@@ -2,6 +2,7 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
+import blackjack.domain.card.InitCard
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.Dealer
@@ -41,15 +42,15 @@ class BlackJackGame(
     fun distributeCardsToPlayers(): CardDistributionResult {
         requireTurn<BlackJackGameTurn.CardDistribution>()
 
-        dealer.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
+        dealer.init(InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)))
         players.forEach { player ->
-            player.pass(cardDeck.pick(CARD_DISTRIBUTION_SIZE))
+            player.init(InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)))
         }
 
         return CardDistributionResult(
             distributionCardSize = CARD_DISTRIBUTION_SIZE,
             dealerCards = listOf(
-                DealerCard.Open(dealer.cards.first()),
+                DealerCard.Open(dealer.state.cards.first()),
                 DealerCard.Hide,
             ),
             playerCards = players.captureAllCards(),
@@ -60,7 +61,7 @@ class BlackJackGame(
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
 
         val player = requireWaitPlayer()
-        player.pass(cardDeck.pick())
+        player.hit(cardDeck.pick())
         return player.captureCards()
     }
 
@@ -74,7 +75,7 @@ class BlackJackGame(
         requireTurn<BlackJackGameTurn.Dealer>()
 
         val isDistributedOneMoreCard = if (dealer.canHit()) {
-            dealer.pass(cardDeck.pick())
+            dealer.hit(cardDeck.pick())
             true
         } else {
             dealer.stay()
@@ -90,7 +91,7 @@ class BlackJackGame(
         requireTurn<BlackJackGameTurn.Finished>()
 
         return BlackJackGameResult(
-            dealerGameResult = DelayerGameResult(dealer.cards),
+            dealerGameResult = DelayerGameResult(dealer.state.cards),
             playerGameResults = players
                 .captureAllCards()
                 .map { playerCards -> PlayerGameResult(playerCards) },
@@ -118,11 +119,11 @@ class BlackJackGame(
     }
 
     private fun findWaitPlayerOrNull(): Player? {
-        return players.firstOrNull { it.state.canHit() }
+        return players.firstOrNull { it.state.isHit() }
     }
 
     private fun isDealerWait(): Boolean {
-        return dealer.state.canHit()
+        return dealer.state.isInit()
     }
 
     private fun createMatchResult(): MatchResult {

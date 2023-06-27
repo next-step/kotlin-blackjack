@@ -1,6 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.PlayerName
@@ -18,11 +19,11 @@ class CardDistributionResultTest : StringSpec({
         val playerCards = listOf(
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(1),
+                cards = Cards(Card.ALL_CARDS.take(1)),
             ),
         )
         shouldThrow<RuntimeException> {
@@ -41,11 +42,11 @@ class CardDistributionResultTest : StringSpec({
         val playerCards = listOf(
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
         )
         shouldThrow<RuntimeException> {
@@ -65,11 +66,11 @@ class CardDistributionResultTest : StringSpec({
         val playerCards = listOf(
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
             PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
         )
         shouldNotThrow<Throwable> {

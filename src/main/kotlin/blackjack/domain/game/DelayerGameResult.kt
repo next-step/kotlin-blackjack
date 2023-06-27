@@ -1,10 +1,6 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.Card
-import blackjack.domain.score.CardScoreCalculator
+import blackjack.domain.card.Cards
 
-data class DelayerGameResult(
-    val dealerCards: List<Card>,
-) {
-    val score = CardScoreCalculator.calculateScore(dealerCards)
-}
+@JvmInline
+value class DelayerGameResult(val cards: Cards)
