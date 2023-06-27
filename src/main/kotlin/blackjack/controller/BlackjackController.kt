@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
+import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.GameCardsSet
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -34,7 +35,7 @@ class BlackjackController {
 
         BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
 
-        if (dealer.sumOfMyCards() <= 16) {
+        if (dealer.sumOfMyCards() <= DEALER_INITIAL_TURN_LIMIT) {
             dealer.drawCard()
         }
     }

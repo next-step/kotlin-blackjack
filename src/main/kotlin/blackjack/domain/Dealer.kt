@@ -2,4 +2,8 @@ package blackjack.domain
 
 class Dealer(
     private val gameCardsSet: GameCardsSet
-) : Player("딜러", gameCardsSet)
+) : Player("딜러", gameCardsSet) {
+    companion object {
+        const val DEALER_INITIAL_TURN_LIMIT: Int = 16
+    }
+}
