@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
+import blackjack.vo.ProfitResultVO
 import java.math.BigDecimal
 
 object InputView {
@@ -60,14 +60,14 @@ object ResultView {
         println(participantScoresText)
     }
 
-    fun printGameResult(gameResultVO: GameResultVO) {
-        val playersGameResult = gameResultVO.playerGameResultVOs
-            .joinToString(NEW_LINE) { "${it.name}: ${it.gameResult()}" }
+    fun printGameResult(profitResultVO: ProfitResultVO) {
+        val playersGameResult = profitResultVO.playerProfitVOS
+            .joinToString(NEW_LINE) { "${it.name}: ${it.profitAmount}" }
 
         println(
             """$NEW_LINE
             |## 최종 승패
-            |딜러: ${gameResultVO.dealerWinCount}승 ${gameResultVO.dealerLoseCount}패 ${gameResultVO.dealerTieCount}무
+            |딜러: ${profitResultVO.dealerProfitAmount}
             |$playersGameResult
             |""".trimMargin()
         )

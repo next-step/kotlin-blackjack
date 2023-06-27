@@ -10,25 +10,25 @@ class Player(
 ) : Participant(name, cards, state) {
     override fun openedCards(): Cards = cards
 
-    fun getGameResult(dealer: Dealer): GameResult {
+    fun calculateProfit(dealer: Dealer): Profit {
         if (isBurst()) {
-            return GameResult.LOSE
+            return Profit(-betAmount)
         }
 
         val dealerScore: Score = dealer.calculateScore()
         if (dealer.isBurst()) {
-            return GameResult.WIN
+            return Profit(betAmount)
         }
 
         val score: Score = calculateScore()
         if (score > dealerScore) {
-            return GameResult.WIN
+            return Profit(betAmount)
         }
 
         if (score == dealerScore) {
-            return GameResult.TIE
+            return Profit.ZERO
         }
 
-        return GameResult.LOSE
+        return Profit(-betAmount)
     }
 }

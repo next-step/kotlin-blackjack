@@ -4,6 +4,7 @@ import blackjack.fixture.player
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
+import java.math.BigDecimal
 
 class PlayerTest : FunSpec({
     test("카드를 더 받는다(hit).") {
@@ -78,13 +79,13 @@ class PlayerTest : FunSpec({
         player.openedCards() shouldBe cards
     }
 
-    context("게임 결과를 반환한다") {
+    context("게임 수익을 계산한다") {
         data class GetGameResult(
             val cards: Cards,
             val playerState: ParticipantState,
             val dealerCards: Cards,
             val dealerState: ParticipantState,
-            val gameResult: GameResult
+            val profit: Profit
         )
         withData(
             GetGameResult(
@@ -92,41 +93,41 @@ class PlayerTest : FunSpec({
                 Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
                 Alive,
-                GameResult.TIE
+                Profit.ZERO,
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS)),
                 Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
                 Alive,
-                GameResult.LOSE
+                Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 Alive,
                 Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS)),
                 Alive,
-                GameResult.LOSE
+                Profit(BigDecimal(-1000)),
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 Alive,
                 Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
                 Burst,
-                GameResult.WIN
+                Profit(BigDecimal(1000)),
             ),
             GetGameResult(
                 Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES)),
                 Burst,
                 Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS)),
                 Burst,
-                GameResult.LOSE
+                Profit(BigDecimal(-1000)),
             ),
-        ) { (cards, playerState, dealerCards, dealerState, gameResult) ->
-            val player = player(cards = cards, state = playerState)
+        ) { (cards, playerState, dealerCards, dealerState, profit) ->
+            val player = player(cards = cards, state = playerState, betAmount = BigDecimal(1000))
             val dealer = Dealer(dealerCards, dealerState)
 
-            player.getGameResult(dealer) shouldBe gameResult
+            player.calculateProfit(dealer) shouldBe profit
         }
     }
 

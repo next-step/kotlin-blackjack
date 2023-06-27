@@ -6,10 +6,10 @@ import blackjack.domain.Player
 import blackjack.domain.PlayerInfo
 import blackjack.view.InputView
 import blackjack.view.ResultView
-import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
-import blackjack.vo.PlayerGameResultVO
+import blackjack.vo.PlayerProfitVO
+import blackjack.vo.ProfitResultVO
 
 fun main() {
     val playerNames = InputView.readPlayerNames()
@@ -28,7 +28,7 @@ fun main() {
     ResultView.printGameResult(gameResultVO)
 }
 
-private fun play(participants: Participants, deck: Deck): GameResultVO {
+private fun play(participants: Participants, deck: Deck): ProfitResultVO {
     val players = participants.players
     players.forEach { player -> drawMore(deck, player) }
 
@@ -38,8 +38,8 @@ private fun play(participants: Participants, deck: Deck): GameResultVO {
         dealer.hit(deck.draw())
     }
 
-    val playerGameResultVOs = players.map { PlayerGameResultVO(it.name, it.getGameResult(dealer)) }
-    return GameResultVO.of(playerGameResultVOs)
+    val playerProfitVOS = players.map { PlayerProfitVO.of(it.name, it.calculateProfit(dealer)) }
+    return ProfitResultVO.of(playerProfitVOS)
 }
 
 private fun drawMore(deck: Deck, player: Player) {
