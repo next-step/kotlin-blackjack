@@ -1,11 +1,14 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 
 class BlackjackGame(
     turn: Turn = Turn(),
-    val players: List<Player>,
+    val dealer: Participant = Dealer(),
+    val players: List<Participant>,
     val cardDeck: CardDeck = CardDeck.randomCardDeck(),
 ) {
     var turn: Turn = turn
@@ -34,7 +37,7 @@ class BlackjackGame(
 
     fun isEndGame(): Boolean = turn.isSameTurn(players.size)
 
-    fun currentTurnPlayerName(): String = currentPlayer().name.value
+    fun currentTurnPlayerName(): String = currentPlayer().name()
 
     fun passToNextTurn() {
         currentPlayer().stay()
@@ -43,7 +46,7 @@ class BlackjackGame(
 
     fun gameResult(): List<GameResult> = players.map { GameResult.from(it) }
 
-    private fun currentPlayer(): Player {
+    private fun currentPlayer(): Participant {
         checkTurn()
         return players[turn.value]
     }

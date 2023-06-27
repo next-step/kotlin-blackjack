@@ -149,7 +149,7 @@ class BlackjackGameTest : FunSpec({
 
 
             blackjackGame.turn shouldBe TURN_1
-            blackjackGame.players[0].gameState.shouldBeTypeOf<Stay>()
+            (blackjackGame.players[0] as Player).gameState.shouldBeTypeOf<Stay>()
         }
     }
 }) {

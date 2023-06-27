@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
-import blackjack.domain.player.Player
+import blackjack.domain.player.Participant
 
 data class GameResult(
     val playerName: String,
@@ -9,7 +9,7 @@ data class GameResult(
     val score: Int,
 ) {
     companion object {
-        fun from(player: Player): GameResult =
-            GameResult(playerName = player.name.value, cards = player.cards(), score = player.score())
+        fun from(participant: Participant): GameResult =
+            GameResult(playerName = participant.name(), cards = participant.cards(), score = participant.score())
     }
 }
