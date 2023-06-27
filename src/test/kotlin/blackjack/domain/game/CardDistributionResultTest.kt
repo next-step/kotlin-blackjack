@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamer.CardHolder
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.PlayerName
 import io.kotest.assertions.throwables.shouldNotThrow
@@ -12,8 +12,8 @@ class CardDistributionResultTest : StringSpec({
 
     "플레이어 카드들의 사이즈가 분배한 카드 수와 같지 않다면 RuntimeException 예외 처리를 한다" {
         val dealerCards = listOf(
-            CardHolder.Open(Card.ALL_CARDS[0]),
-            CardHolder.Hide,
+            DealerCard.Open(Card.ALL_CARDS[0]),
+            DealerCard.Hide,
         )
         val playerCards = listOf(
             PlayerCards(
@@ -36,7 +36,7 @@ class CardDistributionResultTest : StringSpec({
 
     "딜러의 카드 사이즈가 분배한 카드 수와 다르다면 RuntimeException 예외 처리를 한다" {
         val dealerCards = listOf(
-            CardHolder.Open(Card.ALL_CARDS[0]),
+            DealerCard.Open(Card.ALL_CARDS[0]),
         )
         val playerCards = listOf(
             PlayerCards(
@@ -59,8 +59,8 @@ class CardDistributionResultTest : StringSpec({
 
     "딜러와 플레이어 카드들의 사이즈가 분배한 카드 수와 같다면 결과물이 만들어진다" {
         val dealerCards = listOf(
-            CardHolder.Open(Card.ALL_CARDS[0]),
-            CardHolder.Hide,
+            DealerCard.Open(Card.ALL_CARDS[0]),
+            DealerCard.Hide,
         )
         val playerCards = listOf(
             PlayerCards(

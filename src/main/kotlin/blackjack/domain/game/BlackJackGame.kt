@@ -2,7 +2,7 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
-import blackjack.domain.gamer.CardHolder
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
@@ -49,8 +49,8 @@ class BlackJackGame(
         return CardDistributionResult(
             distributionCardSize = CARD_DISTRIBUTION_SIZE,
             dealerCards = listOf(
-                CardHolder.Open(dealer.cards.first()),
-                CardHolder.Hide,
+                DealerCard.Open(dealer.cards.first()),
+                DealerCard.Hide,
             ),
             playerCards = players.captureAllCards(),
         )

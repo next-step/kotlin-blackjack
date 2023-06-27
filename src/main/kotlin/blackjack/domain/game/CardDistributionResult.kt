@@ -1,11 +1,11 @@
 package blackjack.domain.game
 
-import blackjack.domain.gamer.CardHolder
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 
 data class CardDistributionResult(
     val distributionCardSize: Int,
-    val dealerCards: List<CardHolder>,
+    val dealerCards: List<DealerCard>,
     val playerCards: List<PlayerCards>,
 ) {
 

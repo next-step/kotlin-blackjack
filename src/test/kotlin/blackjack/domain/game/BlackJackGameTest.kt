@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.gamer.CardHolder
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.card.heartCard
 import blackjack.domain.gamer.playerNames
 import blackjack.domain.score.CardScoreCalculator
@@ -26,11 +26,11 @@ class BlackJackGameTest : BehaviorSpec({
             }
 
             Then("딜러는 2장의 카드 중 첫번째 카드는 오픈 처리가 되어있다") {
-                (cardDistributionResult.dealerCards.first() is CardHolder.Open) shouldBe true
+                (cardDistributionResult.dealerCards.first() is DealerCard.Open) shouldBe true
             }
 
             Then("딜러는 2장의 카드 중 두번째 카드는 숨김 처리가 되어있다") {
-                (cardDistributionResult.dealerCards.last() is CardHolder.Hide) shouldBe true
+                (cardDistributionResult.dealerCards.last() is DealerCard.Hide) shouldBe true
             }
         }
     }

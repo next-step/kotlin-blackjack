@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.gamer.CardHolder
+import blackjack.domain.gamer.DealerCard
 import blackjack.domain.card.CardShape
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
@@ -22,7 +22,7 @@ class BlackJackResultView {
         println(result.makeTitleMessage())
 
         val cardsMessage = result.dealerCards
-            .filterIsInstance<CardHolder.Open>()
+            .filterIsInstance<DealerCard.Open>()
             .joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
         println("딜러: $cardsMessage")
 
