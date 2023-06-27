@@ -24,6 +24,11 @@ class Stay(
         if (gameState.isBust()) {
             return Competition.WIN
         }
+
+        return competeWithoutBust(gameState)
+    }
+
+    private fun competeWithoutBust(gameState: GameState): Competition {
         return when (score().compareTo(gameState.score())) {
             WIN_COMPARE_VALUE -> Competition.WIN
             LOST_COMPARE_VALUE -> Competition.LOSE
