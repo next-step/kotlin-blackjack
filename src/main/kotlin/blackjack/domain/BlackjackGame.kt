@@ -20,7 +20,7 @@ class BlackjackGame(
 
     fun firstDraw(): List<Hands> {
         check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
-        repeat(2) { drawDealerAndPlayers() }
+        repeat(FIRST_DRAW_COUNT) { drawDealerAndPlayers() }
         nextTurnChange()
         return listOf(dealer.hands()) + players.map { it.hands() }
     }
@@ -65,6 +65,8 @@ class BlackjackGame(
     }
 
     companion object {
+        private const val FIRST_DRAW_COUNT = 2
+
         fun from(playerNames: List<String>) = BlackjackGame(players = playerNames.map { Player.from(it) })
     }
 }
