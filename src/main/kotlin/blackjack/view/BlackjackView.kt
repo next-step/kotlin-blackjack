@@ -4,8 +4,8 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 
 object BlackjackView {
-    fun printInitialTurn(names: List<String>, initialDraw: Int) {
-        println("\n${names.joinToString(", ")}에게 ${initialDraw}장을 나누었습니다.")
+    fun printInitialTurn(dealerName: String, playerNames: List<String>, initialDraw: Int) {
+        println("\n${dealerName}와 ${playerNames.joinToString(", ")}에게 ${initialDraw}장을 나누었습니다.")
     }
 
     fun printPlayersCard(players: Players) {

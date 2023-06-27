@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.Cards.Companion.TARGET_SUM
 
-class Player(
+open class Player(
     val name: String,
     private val gameCardsSet: GameCardsSet
 ) {

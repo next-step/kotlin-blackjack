@@ -1,5 +1,7 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
+import blackjack.domain.GameCardsSet
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.BlackjackView
@@ -16,15 +18,21 @@ class BlackjackController {
     }
 
     private fun prepareGame(): Players {
-        val players = InputView.inputPlayers()
+        val gameCardsSet = GameCardsSet()
+        val dealer = Dealer(gameCardsSet = gameCardsSet)
+        val players = InputView.inputPlayers(gameCardsSet)
+        initialTurn(dealer, players)
 
-        val initialDraw = DEFAULT_INITIAL_DRAW
-        repeat(initialDraw) {
+        return players
+    }
+
+    private fun initialTurn(dealer: Dealer, players: Players) {
+        repeat(DEFAULT_INITIAL_DRAW) {
+            dealer.drawCard()
             players.players.forEach { player -> player.drawCard() }
         }
 
-        BlackjackView.printInitialTurn(players.players.map { it.name }, initialDraw)
-        return players
+        BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
     }
 
     private fun playGame(players: Players) {
