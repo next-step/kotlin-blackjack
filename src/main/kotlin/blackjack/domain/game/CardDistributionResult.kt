@@ -1,7 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.CardHolder
-import blackjack.domain.card.PlayerCards
+import blackjack.domain.gamer.PlayerCards
 
 data class CardDistributionResult(
     val distributionCardSize: Int,

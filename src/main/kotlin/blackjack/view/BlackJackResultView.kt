@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardHolder
 import blackjack.domain.card.CardShape
-import blackjack.domain.card.PlayerCards
+import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerMatchResult

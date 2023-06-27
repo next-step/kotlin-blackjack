@@ -1,6 +1,6 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.PlayerCards
+import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.score.CardScoreCalculator
 
 data class PlayerGameResult(

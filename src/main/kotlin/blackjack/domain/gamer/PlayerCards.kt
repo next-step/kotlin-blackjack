@@ -1,6 +1,6 @@
-package blackjack.domain.card
+package blackjack.domain.gamer
 
-import blackjack.domain.gamer.PlayerName
+import blackjack.domain.card.Card
 
 data class PlayerCards(
     val playerName: PlayerName,

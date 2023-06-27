@@ -1,6 +1,5 @@
 package blackjack.domain.gamer
 
-import blackjack.domain.card.PlayerCards
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
 

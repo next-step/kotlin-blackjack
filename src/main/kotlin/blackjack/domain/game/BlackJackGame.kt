@@ -3,7 +3,7 @@ package blackjack.domain.game
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardHolder
-import blackjack.domain.card.PlayerCards
+import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.PlayerNames
