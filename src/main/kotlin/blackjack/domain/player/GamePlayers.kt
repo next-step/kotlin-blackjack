@@ -34,13 +34,7 @@ class GamePlayers(val players: List<Player>) {
 
     private fun compareWithDealer(player: Player): PlayerResult {
         val dealerScore = dealer.cards.getOptimizedScore()
-        val playerScore = player.cards.getOptimizedScore()
-        val gameResult = when {
-            (dealerScore > PlayerStatus.BLACK_JACK_SCORE && player.getPlayerStatus() != PlayerStatus.BUST) ||
-                (playerScore <= PlayerStatus.BLACK_JACK_SCORE && dealerScore < playerScore) -> GameResult.WIN
-            (playerScore == dealerScore) -> GameResult.TIE
-            else -> GameResult.LOOSE
-        }
+        val gameResult = GameResult.valueByCompare(dealerScore, player)
         return PlayerResult(player, gameResult)
     }
 

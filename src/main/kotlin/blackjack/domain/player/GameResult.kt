@@ -12,5 +12,15 @@ enum class GameResult(val korName: String) {
                 TIE -> TIE
             }
         }
+
+        fun valueByCompare(dealerScore: Int, player: Player): GameResult {
+            val playerScore = player.cards.getOptimizedScore()
+            return when {
+                (dealerScore > PlayerStatus.BLACK_JACK_SCORE && player.getPlayerStatus() != PlayerStatus.BUST) ||
+                    (playerScore <= PlayerStatus.BLACK_JACK_SCORE && dealerScore < playerScore) -> WIN
+                (playerScore == dealerScore) -> TIE
+                else -> LOOSE
+            }
+        }
     }
 }
