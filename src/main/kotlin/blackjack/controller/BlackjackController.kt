@@ -18,7 +18,7 @@ class BlackjackController {
         val players = dealerAndPlayers.second
 
         playGame(dealer, players)
-        BlackjackView.printPlayersResult(players.players.plus(dealer))
+        BlackjackView.printPlayersResult(listOf(dealer).plus(players.players))
     }
 
     private fun prepareGame(): Pair<Dealer, Players> {
