@@ -25,21 +25,20 @@ class GameResult(
     }
 
     private fun dealerBlackjack(player: Player) {
-        val playerState = player.findStateBySum()
-        if (playerState == PlayerState.BLACK_JACK) {
+        if (player.findStateBySum() == PlayerState.BLACK_JACK) {
             draw(player)
             return
         }
 
-        if (playerState == PlayerState.BUST) {
+        dealerWinAndPlayerLose(player)
+    }
+
+    private fun dealerBust(player: Player) {
+        if (player.findStateBySum() == PlayerState.BUST) {
             dealerWinAndPlayerLose(player)
             return
         }
 
-        dealerLoseAndPlayerWin(player)
-    }
-
-    private fun dealerBust(player: Player) {
         if (player.sumOfMyCards() == dealer.sumOfMyCards()) {
             draw(player)
             return
