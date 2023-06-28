@@ -16,7 +16,8 @@ class GamePlayersOutputView(gamePlayers: GamePlayers, private val isResult: Bool
 
     private fun renderDealerMessage(dealer: Dealer) {
         val resultScoreMessage = getScoreMessage(dealer.cards.getOptimizedScore())
-        val cardMessage = getCardStr(dealer.cards.getFirstCard())
+        val targetCards = if (isResult) dealer.cards.getValue() else listOf(dealer.cards.getFirstCard())
+        val cardMessage = targetCards.joinToString(SEPARATOR) { card -> getCardStr(card) }
         val message = "딜러: $cardMessage"
         println(message + resultScoreMessage)
     }
