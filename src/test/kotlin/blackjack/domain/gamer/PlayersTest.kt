@@ -95,11 +95,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 패배다") {
-                matchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
             }
 
             Then("딜러는 1승 0무 0패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
             }
         }
     }
@@ -116,11 +116,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 무승부이다") {
-                matchResult.playerMatchResults[0].matchResultType.isTie() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isTie() shouldBe true
             }
 
             Then("딜러는 0승 1무 0패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
             }
         }
     }
@@ -137,11 +137,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 승리다") {
-                matchResult.playerMatchResults[0].matchResultType.isWin() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isWin() shouldBe true
             }
 
             Then("딜러는 0승 0무 1패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
             }
         }
     }
@@ -161,11 +161,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 승리다") {
-                matchResult.playerMatchResults[0].matchResultType.isWin() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isWin() shouldBe true
             }
 
             Then("딜러는 0승 0무 1패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
             }
         }
     }
@@ -185,11 +185,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 패배다") {
-                matchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
             }
 
             Then("딜러는 1승 0무 0패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
             }
         }
     }
@@ -209,11 +209,11 @@ class PlayersTest : BehaviorSpec({
             val matchResult = players.match(dealer)
 
             Then("플레이어는 패배다") {
-                matchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
+                matchResult.gamerMatchResult.playerMatchResults[0].matchResultType.isLose() shouldBe true
             }
 
             Then("딜러는 1승 0무 0패이다") {
-                matchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
+                matchResult.gamerMatchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
             }
         }
     }

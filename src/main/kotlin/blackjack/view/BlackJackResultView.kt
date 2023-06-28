@@ -73,11 +73,13 @@ class BlackJackResultView {
     }
 
     private fun MatchResult.makeDealerCardsDisplayMessage(): String {
-        return "딜러 카드: ${dealerCards.makeDisplayMessage()} - ${dealerCards.score.makeDisplayMessage()}"
+        return gamerCards.run {
+            "딜러 카드: ${dealerCards.makeDisplayMessage()} - ${dealerCards.score.makeDisplayMessage()}"
+        }
     }
 
     private fun MatchResult.makeAllPlayerCardsDisplayMessage(): String {
-        return allPlayerCards.joinToString("\n") {
+        return gamerCards.allPlayerCards.joinToString("\n") {
             val name = it.playerName.unWrapping()
             val cards = it.cards
             val score = it.cards.score
@@ -86,7 +88,7 @@ class BlackJackResultView {
     }
 
     private fun MatchResult.makeDealerMatchResultMessage(): String {
-        return dealerMatchResult.run {
+        return gamerMatchResult.dealerMatchResult.run {
             buildString {
                 append("딜러:")
                 append(" ${winCount}승")
@@ -97,7 +99,7 @@ class BlackJackResultView {
     }
 
     private fun MatchResult.makeAllPlayersMatchResultMessage(): String {
-        return playerMatchResults.joinToString("\n") {
+        return gamerMatchResult.playerMatchResults.joinToString("\n") {
             val name = it.playerName.unWrapping()
             val matchResult = when (it.matchResultType) {
                 MatchResultType.WIN -> "승"

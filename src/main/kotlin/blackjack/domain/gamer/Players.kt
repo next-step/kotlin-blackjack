@@ -2,6 +2,8 @@ package blackjack.domain.gamer
 
 import blackjack.domain.card.InitCard
 import blackjack.domain.game.DealerMatchResult
+import blackjack.domain.game.GamerCards
+import blackjack.domain.game.GamerMatchResult
 import blackjack.domain.game.MatchResult
 
 @JvmInline
@@ -33,10 +35,14 @@ value class Players(val value: List<Player>) {
         val playerMatchResults = value.map { player -> player.match(dealer) }
         val dealerMatchResult = DealerMatchResult.create(playerMatchResults)
         return MatchResult(
-            dealerCards = dealer.state.cards,
-            allPlayerCards = captureAllPlayerCards(),
-            dealerMatchResult = dealerMatchResult,
-            playerMatchResults = playerMatchResults,
+            gamerCards = GamerCards(
+                dealerCards = dealer.state.cards,
+                allPlayerCards = captureAllPlayerCards(),
+            ),
+            gamerMatchResult = GamerMatchResult(
+                dealerMatchResult = dealerMatchResult,
+                playerMatchResults = playerMatchResults,
+            ),
         )
     }
 
