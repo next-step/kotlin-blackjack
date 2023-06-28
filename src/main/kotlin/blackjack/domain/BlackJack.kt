@@ -7,9 +7,21 @@ class BlackJack(
 ) {
     fun distributeInitialCard() {
         for (i in 0 until START_CARD_COUNT) {
-            dealer.addCard(gameCards.draw())
-            players.forEach { it.addCard(gameCards.draw()) }
+            distributeCardForDealer()
+            distributeCardForPlayers()
         }
+    }
+
+    fun distributeCardForDealer() {
+        dealer.addCard(draw())
+    }
+
+    private fun distributeCardForPlayers() {
+        players.forEach { it.addCard(draw()) }
+    }
+
+    private fun draw(): Card {
+        return gameCards.draw()
     }
 
     fun isEnd(): Boolean {
@@ -28,9 +40,8 @@ class BlackJack(
         }
     }
 
-    fun askDealerForAdditionalCard(): Boolean {
+    fun shouldDealerDrawCard(): Boolean {
         if (dealer.score() <= DEALER_CARD_STANDARD_SCORE) {
-            dealer.addCard(gameCards.draw())
             return true
         }
         return false

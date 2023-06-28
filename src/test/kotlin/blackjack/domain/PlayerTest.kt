@@ -18,14 +18,6 @@ internal class PlayerTest {
     }
 
     @Test
-    internal fun `게임이 시작되면 플레이어에게 두장의 카드가 주어진다`() {
-        val player = Player("pobi")
-        player.cards.values.size shouldBe 0
-        BlackJack(listOf(player)).start()
-        player.cards.values.size shouldBe 2
-    }
-
-    @Test
     internal fun `플레이어의 점수가 계산된다`() {
         val cards = Cards(
             mutableListOf(
@@ -65,7 +57,6 @@ internal class PlayerTest {
         )
         val player = Player("pobi", cards)
         player.finishedTurn()
-
         player.canProceedTurn() shouldBe false
     }
 }

@@ -9,7 +9,7 @@ internal class BlackJackTest {
         val player = Player("pobi")
         player.cards.values.size shouldBe 0
         val blackJack = BlackJack(listOf(player))
-        blackJack.start()
+        blackJack.distributeInitialCard()
         player.cards.values.size shouldBe 2
         blackJack.dealer.cards.values.size shouldBe 2
     }
@@ -109,7 +109,8 @@ internal class BlackJackTest {
 
         dealer.cards.score() shouldBe 16
         dealer.cards.values.size shouldBe 2
-        game.askDealerForAdditionalCard()
+        game.shouldDealerDrawCard() shouldBe true
+        game.distributeCardForDealer()
         dealer.cards.values.size shouldBe 3
     }
 
@@ -127,7 +128,7 @@ internal class BlackJackTest {
 
         dealer.cards.score() shouldBe 17
         dealer.cards.values.size shouldBe 2
-        game.askDealerForAdditionalCard()
+        game.shouldDealerDrawCard() shouldBe false
         dealer.cards.values.size shouldBe 2
     }
 
