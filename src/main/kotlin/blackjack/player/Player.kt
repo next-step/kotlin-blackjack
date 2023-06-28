@@ -14,6 +14,7 @@ class Player(
     fun getHandSize(): Int {
         return hand.size()
     }
+
     fun updateStatus(newStatus: Status) {
         status = newStatus
     }
@@ -21,7 +22,8 @@ class Player(
     fun displayHand(): String {
         return hand.displayCards()
     }
+
     fun getTotalValue(): Int {
-        return hand.getTotalValue()
+        return ScoreCalculator.calculateScore(hand)
     }
 }

@@ -16,7 +16,6 @@ class BlackjackGame(
 
         dealer.dealInitialCards(players)
         resultView.printPlayerList(players)
-        players.map { resultView.printPlayerStatus(it) }
         players.takeTurns()
 
         resultView.printFinalPlayerStatus(players)
