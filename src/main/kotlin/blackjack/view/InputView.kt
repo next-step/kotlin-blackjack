@@ -9,9 +9,9 @@ object InputView {
         return players
     }
 
-    fun readWantOrStand(playerName: String): Status {
+    fun readHitOrStand(playerName: String): Status {
         println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val response = readLine() ?: throw IllegalArgumentException("입력이 잘못되었습니다.")
-        return if (response == "y") Status.WANT else Status.STAND
+        return if (response == "y") Status.HIT else Status.STAND
     }
 }
