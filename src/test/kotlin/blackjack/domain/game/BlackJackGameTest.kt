@@ -1,8 +1,15 @@
 package blackjack.domain.game
 
-import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.cards
-import blackjack.domain.card.heartCard
+import blackjack.domain.card.heartFive
+import blackjack.domain.card.heartFour
+import blackjack.domain.card.heartJack
+import blackjack.domain.card.heartKing
+import blackjack.domain.card.heartQueen
+import blackjack.domain.card.heartSeven
+import blackjack.domain.card.heartTen
+import blackjack.domain.card.heartThree
+import blackjack.domain.card.heartTwo
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.playerNames
 import blackjack.domain.score.CardScoreCalculator
@@ -116,10 +123,10 @@ class BlackJackGameTest : BehaviorSpec({
         val playerNames = playerNames("test1")
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TWO),
-                heartCard(CardDenomination.THREE),
-                heartCard(CardDenomination.FOUR),
-                heartCard(CardDenomination.FIVE),
+                heartTwo(),
+                heartThree(),
+                heartFour(),
+                heartFive(),
             ),
             playerNames = playerNames,
         )
@@ -137,10 +144,10 @@ class BlackJackGameTest : BehaviorSpec({
         val playerNames = playerNames("test1")
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TEN),
-                heartCard(CardDenomination.JACK),
-                heartCard(CardDenomination.QUEEN),
-                heartCard(CardDenomination.KING),
+                heartTen(),
+                heartJack(),
+                heartQueen(),
+                heartKing(),
             ),
             playerNames = playerNames,
         )
@@ -158,10 +165,10 @@ class BlackJackGameTest : BehaviorSpec({
         val playerNames = playerNames("test1")
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TEN),
-                heartCard(CardDenomination.JACK),
-                heartCard(CardDenomination.QUEEN),
-                heartCard(CardDenomination.KING),
+                heartTen(),
+                heartJack(),
+                heartQueen(),
+                heartKing(),
             ),
             playerNames = playerNames,
         )
@@ -172,12 +179,12 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 카드 목록을 반환한다") {
-                val expected = cards(heartCard(CardDenomination.TEN), heartCard(CardDenomination.JACK))
+                val expected = cards(heartTen(), heartJack())
                 result.dealerCards shouldBe expected
             }
 
             Then("플레이어의 카드 목록을 반환한다") {
-                val expected = cards(heartCard(CardDenomination.QUEEN), heartCard(CardDenomination.KING))
+                val expected = cards(heartQueen(), heartKing())
                 result.allPlayerCards[0].cards shouldBe expected
             }
         }
@@ -186,10 +193,10 @@ class BlackJackGameTest : BehaviorSpec({
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 이겼을 떄") {
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TEN), // 딜러
-                heartCard(CardDenomination.JACK), // 딜러
-                heartCard(CardDenomination.TWO), // 참가자
-                heartCard(CardDenomination.THREE), // 참가자
+                heartTen(), // 딜러
+                heartJack(), // 딜러
+                heartTwo(), // 참가자
+                heartThree(), // 참가자
             ),
             playerNames = playerNames("test1"),
         )
@@ -213,10 +220,10 @@ class BlackJackGameTest : BehaviorSpec({
     Given("1명의 참가자와 딜러가 있는 게임에서 참가자가 이겼을 떄") {
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.SEVEN), // 딜러
-                heartCard(CardDenomination.TEN), // 딜러
-                heartCard(CardDenomination.QUEEN), // 참가자
-                heartCard(CardDenomination.JACK), // 참가자
+                heartSeven(), // 딜러
+                heartTen(), // 딜러
+                heartQueen(), // 참가자
+                heartJack(), // 참가자
             ),
             playerNames = playerNames("test1"),
         )
@@ -240,10 +247,10 @@ class BlackJackGameTest : BehaviorSpec({
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러와 참가자가 비겼을 떄") {
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TEN), // 딜러
-                heartCard(CardDenomination.JACK), // 딜러
-                heartCard(CardDenomination.QUEEN), // 참가자
-                heartCard(CardDenomination.KING), // 참가자
+                heartTen(), // 딜러
+                heartJack(), // 딜러
+                heartQueen(), // 참가자
+                heartKing(), // 참가자
             ),
             playerNames = playerNames("test1"),
         )
@@ -267,11 +274,11 @@ class BlackJackGameTest : BehaviorSpec({
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 버스트 되었을 때") {
         val game = blackJackGame(
             shuffler = ForceMoveForwardCardShuffler(
-                heartCard(CardDenomination.TEN), // 딜러
-                heartCard(CardDenomination.THREE), // 딜러
-                heartCard(CardDenomination.QUEEN), // 참가자
-                heartCard(CardDenomination.KING), // 참가자
-                heartCard(CardDenomination.JACK), // 딜러 추가분
+                heartTen(), // 딜러
+                heartThree(), // 딜러
+                heartQueen(), // 참가자
+                heartKing(), // 참가자
+                heartJack(), // 딜러 추가분
             ),
             playerNames = playerNames("test1"),
         )

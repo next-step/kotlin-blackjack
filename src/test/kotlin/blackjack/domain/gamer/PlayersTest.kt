@@ -1,10 +1,15 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.CardDenomination
-import blackjack.domain.card.heartCard
+import blackjack.domain.card.heartFour
+import blackjack.domain.card.heartKing
+import blackjack.domain.card.heartQueen
+import blackjack.domain.card.heartTen
 import blackjack.domain.card.initCard
-import blackjack.domain.card.spadeCard
+import blackjack.domain.card.spadeFour
+import blackjack.domain.card.spadeQueen
+import blackjack.domain.card.spadeTen
+import blackjack.domain.card.spadeTwo
 import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.shuffle.CardNotShuffler
 import io.kotest.assertions.throwables.shouldThrow
@@ -81,10 +86,10 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어의 점수보다 딜러의 점수가 높을 떄") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
         }
         val dealer = Dealer().apply {
-            init(initCard(heartCard(CardDenomination.QUEEN), heartCard(CardDenomination.KING))) // 10 + 10 = 20
+            init(initCard(heartQueen(), heartKing())) // 10 + 10 = 20
         }
         When("승패 결과를 확인하면") {
             val matchResult = players.match(dealer)
@@ -101,10 +106,10 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어의 점수보다 딜러의 점수가 같을 떄") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
         }
         val dealer = Dealer().apply {
-            init(initCard(spadeCard(CardDenomination.TEN), spadeCard(CardDenomination.FOUR))) // 10 + 4 = 14
+            init(initCard(spadeTen(), spadeFour())) // 10 + 4 = 14
         }
 
         When("승패 결과를 확인하면") {
@@ -122,10 +127,10 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어의 점수보다 딜러의 점수가 낮을 떄") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
         }
         val dealer = Dealer().apply {
-            init(initCard(spadeCard(CardDenomination.TEN), spadeCard(CardDenomination.TWO))) // 10 + 2 = 12
+            init(initCard(spadeTen(), spadeTwo())) // 10 + 2 = 12
         }
 
         When("승패 결과를 확인하면") {
@@ -143,13 +148,13 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어는 stay, 딜러는 bust 일 때") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
             requireWaitPlayer().stay()
         }
 
         val dealer = Dealer().apply {
-            init(initCard(spadeCard(CardDenomination.TEN), spadeCard(CardDenomination.TWO))) // 10 + 2 = 12
-            hit(spadeCard(CardDenomination.QUEEN)) // 12 + 10 = 22
+            init(initCard(spadeTen(), spadeTwo())) // 10 + 2 = 12
+            hit(spadeQueen()) // 12 + 10 = 22
         }
 
         When("승패 결과를 확인하면") {
@@ -167,12 +172,12 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어는 bust, 딜러는 stay 일 때") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
-            requireWaitPlayer().hit(heartCard(CardDenomination.QUEEN)) // 14 + 10 = 24
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
+            requireWaitPlayer().hit(heartQueen()) // 14 + 10 = 24
         }
 
         val dealer = Dealer().apply {
-            init(initCard(spadeCard(CardDenomination.TEN), spadeCard(CardDenomination.TWO))) // 10 + 2 = 12
+            init(initCard(spadeTen(), spadeTwo())) // 10 + 2 = 12
             stay()
         }
 
@@ -191,13 +196,13 @@ class PlayersTest : BehaviorSpec({
 
     Given("플레이어와 딜러 모두 bust 일 때") {
         val players = players("test1").apply {
-            init { initCard(heartCard(CardDenomination.TEN), heartCard(CardDenomination.FOUR)) } // 10 + 4 = 14
-            requireWaitPlayer().hit(heartCard(CardDenomination.QUEEN)) // 14 + 10 = 24
+            init { initCard(heartTen(), heartFour()) } // 10 + 4 = 14
+            requireWaitPlayer().hit(heartQueen()) // 14 + 10 = 24
         }
 
         val dealer = Dealer().apply {
-            init(initCard(spadeCard(CardDenomination.TEN), spadeCard(CardDenomination.TWO))) // 10 + 2 = 12
-            hit(spadeCard(CardDenomination.QUEEN)) // 12 + 10 = 22
+            init(initCard(spadeTen(), spadeTwo())) // 10 + 2 = 12
+            hit(spadeQueen()) // 12 + 10 = 22
         }
 
         When("승패 결과를 확인하면") {

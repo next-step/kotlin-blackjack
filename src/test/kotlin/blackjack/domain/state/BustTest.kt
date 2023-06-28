@@ -1,8 +1,8 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.bustCards
-import blackjack.domain.card.heartCard
+import blackjack.domain.card.heartThree
+import blackjack.domain.card.heartTwo
 import blackjack.domain.card.initCard
 import blackjack.domain.card.notBustCards
 import io.kotest.assertions.throwables.shouldThrow
@@ -18,13 +18,13 @@ class BustTest : StringSpec({
 
     "init 함수 사용시 RuntimeException 예외 처리를 한다" {
         shouldThrow<RuntimeException> {
-            Bust(bustCards()).init(initCard(heartCard(CardDenomination.TWO), heartCard(CardDenomination.THREE)))
+            Bust(bustCards()).init(initCard(heartTwo(), heartThree()))
         }
     }
 
     "hit 함수 사용시 RuntimeException 예외 처리를 한다" {
         shouldThrow<RuntimeException> {
-            Bust(bustCards()).hit(heartCard(CardDenomination.TWO))
+            Bust(bustCards()).hit(heartTwo())
         }
     }
 

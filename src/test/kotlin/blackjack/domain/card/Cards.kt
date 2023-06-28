@@ -6,15 +6,15 @@ fun cards(vararg card: Card): Cards {
 
 fun bustCards(): Cards {
     return cards(
-        heartCard(CardDenomination.JACK),
-        heartCard(CardDenomination.QUEEN),
-        heartCard(CardDenomination.KING),
+        heartJack(),
+        heartQueen(),
+        heartKing(),
     )
 }
 
 fun notBustCards(): Cards {
     return cards(
-        heartCard(CardDenomination.TWO),
-        heartCard(CardDenomination.THREE),
+        heartTwo(),
+        heartThree(),
     )
 }
