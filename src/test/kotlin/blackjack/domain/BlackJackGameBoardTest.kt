@@ -28,7 +28,7 @@ class BlackJackGameBoardTest {
     }
 
     @Test
-    fun `게임 참여자는 카드를 뽑기 전에 아무런 카드가 없는상태로 시작한다`() {
+    fun `게임 참여자는 카드를 뽑지 않아도 초기 2장의 카드로 시작한다`() {
         // given
         val tPlayers = setOf("jun")
         val sut = blackJackGameBoard(players = tPlayers)
@@ -37,11 +37,11 @@ class BlackJackGameBoardTest {
         val junCards: Cards = sut.getPlayerCards(PlayerName("jun"))
 
         // then
-        assertThat(junCards.all().size).isEqualTo(0)
+        assertThat(junCards.all().size).isEqualTo(2)
     }
 
     @Test
-    fun `게임 참여자가 카드를 받을 수 있다`() {
+    fun `게임 참여자가 추가로 카드를 받을 수 있다`() {
         // given
         val tPlayers = setOf("park", "jun")
         val tCard = newCard { CardImage.SPADE with CardLevel.ACE }
@@ -51,8 +51,8 @@ class BlackJackGameBoardTest {
         val junCards: Cards = sut.pickCard(PlayerName("jun"))
 
         // then
-        assertThat(junCards.all().size).isEqualTo(1)
-        assertThat(junCards.all().first()).isEqualTo(tCard)
+        assertThat(junCards.all().size).isEqualTo(3)
+        assertThat(junCards.all().last()).isEqualTo(tCard)
     }
 
     @Test
@@ -60,6 +60,7 @@ class BlackJackGameBoardTest {
         // given
         val tPlayers = setOf("jun")
         val tCard = newCard { CardImage.SPADE with CardLevel.FIVE }
+        val initialCardScores = 5.toScore() + 5.toScore()
         val sut = blackJackGameBoard(players = tPlayers, cardDeck = AllSameCardsDeck(tCard))
         sut.pickCard(PlayerName("jun"))
 
@@ -67,7 +68,7 @@ class BlackJackGameBoardTest {
         val score = sut.getPlayerScore(PlayerName("jun"))
 
         // then
-        assertThat(score).isEqualTo(5.toScore())
+        assertThat(score).isEqualTo(initialCardScores + 5.toScore())
     }
 }
 
