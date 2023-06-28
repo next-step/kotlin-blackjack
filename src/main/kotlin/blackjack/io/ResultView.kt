@@ -42,7 +42,8 @@ object ResultView {
     }
 
     private fun getDealerDeckString(deck: Deck): String {
-        return DEALER_DECK_PRINT_FORMAT.format(deckToString(deck))
+        val card = deck.first()
+        return DEALER_DECK_PRINT_FORMAT.format(cardToString(card))
     }
 
     private fun getUsersDeckString(users: Users): StringBuilder {
