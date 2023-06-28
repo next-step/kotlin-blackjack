@@ -1,16 +1,21 @@
 package blackjack.view
 
+import blackjack.domain.BlackJackGameBoard.Companion.INITIAL_CARD_COUNT
 import blackjack.domain.Card
 import blackjack.domain.CardImage
 import blackjack.domain.CardLevel
 import blackjack.domain.Cards
 
 class OutputView {
-    fun viewPlayerCards(playerName: String, cards: Cards) {
+    fun outputPlayerCards(playerName: String, cards: Cards) {
         println(playerCardsOutputString(playerName, cards))
     }
 
-    fun viewPlayerScore(playerName: String, cards: Cards, score: Int) {
+    fun outputInitialGameMessage(players: List<String>) {
+        println("${players.joinToString(separator = ", ")}에게 $INITIAL_CARD_COUNT 장을 나누었습니다.")
+    }
+
+    fun outputPlayerScore(playerName: String, cards: Cards, score: Int) {
         println("${playerCardsOutputString(playerName, cards)} - 결과: $score")
     }
 

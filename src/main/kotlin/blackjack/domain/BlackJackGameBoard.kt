@@ -4,7 +4,7 @@ import java.lang.IllegalArgumentException
 
 class BlackJackGameBoard(
     players: Set<String>,
-    private val cardDeck: CardDeck,
+    private val cardDeck: CardDeck = ShuffledCardDeck(),
     private val cardGameScore: CardGameScore = BlackJackScore()
 ) {
     private val players = players.map { Player.of(it) }
@@ -34,6 +34,6 @@ class BlackJackGameBoard(
     }
 
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
     }
 }
