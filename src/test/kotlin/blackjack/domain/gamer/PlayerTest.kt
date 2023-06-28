@@ -2,17 +2,10 @@ package blackjack.domain.gamer
 
 import blackjack.domain.card.InitCard
 import blackjack.domain.card.cards
-import blackjack.domain.card.heartFour
 import blackjack.domain.card.heartKing
 import blackjack.domain.card.heartQueen
 import blackjack.domain.card.heartTwo
 import blackjack.domain.card.initCard
-import blackjack.domain.card.spadeFour
-import blackjack.domain.card.spadeKing
-import blackjack.domain.card.spadeQueen
-import blackjack.domain.card.spadeTen
-import blackjack.domain.card.spadeTwo
-import blackjack.domain.game.MatchResultType
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
