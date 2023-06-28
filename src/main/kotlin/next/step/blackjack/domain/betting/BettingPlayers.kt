@@ -24,8 +24,6 @@ value class BettingPlayers(val players: Set<BettingPlayer>) : Set<BettingPlayer>
         return BettingResults.from(players.associate { it.name() to it.fight(dealer) })
     }
 
-    fun cards(): List<List<Card>> = players.map { it.cards() }
-
     companion object {
         fun of(players: Set<BettingPlayer>) = BettingPlayers(players)
     }
