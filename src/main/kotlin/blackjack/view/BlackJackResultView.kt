@@ -49,9 +49,9 @@ class BlackJackResultView {
 
     fun display(matchResult: MatchResult) {
         println()
-        println(matchResult.dealerMatchResult.makeDisplayMessage())
+        println("딜러 카드: ${matchResult.dealerCards.makeDisplayMessage()} - ${matchResult.dealerCards.score.makeDisplayMessage()}")
         matchResult.allPlayerCards
-            .map { it.cards.makeDisplayMessage().plus(" - ${it.cards.score.makeDisplayMessage()}") }
+            .map { "${it.playerName.unWrapping()} 카드: ${it.cards.makeDisplayMessage()} - ${it.cards.score.makeDisplayMessage()}" }
             .forEach { println(it) }
         println()
         println("## 최종 승패")
