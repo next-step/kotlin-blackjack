@@ -21,6 +21,17 @@ class PlayerTest {
     }
 
     @Test
+    fun `이름이 같은 플레이어는 동일한 객체로 취급된다`() {
+        // given
+        val jun1 = Player("jun")
+        val jun2 = Player("jun")
+
+        // when
+        // then
+        assertThat(jun1 == jun2).isEqualTo(true)
+    }
+
+    @Test
     fun `초기상태 플레이어는 아무런 카드가 없다`() {
         // given
         val sut = Player("jun")
