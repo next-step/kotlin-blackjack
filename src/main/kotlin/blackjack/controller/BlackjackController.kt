@@ -37,7 +37,7 @@ class BlackjackController {
         }
 
         BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
-        BlackjackView.printDealerCard(dealer)
+        BlackjackView.printDealerFirstCard(dealer)
         BlackjackView.printPlayersCard(players)
     }
 

@@ -23,7 +23,7 @@ object BlackjackView {
         println()
     }
 
-    fun printDealerCard(dealer: Dealer) {
+    fun printDealerFirstCard(dealer: Dealer) {
         val dealerFirstCard = dealer.getMyCards().cards[0]
         println("${dealer.name}: ${print(dealerFirstCard)}")
     }
