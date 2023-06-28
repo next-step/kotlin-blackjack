@@ -12,16 +12,9 @@ class Player(
     }
 
     fun match(dealer: Dealer): PlayerMatchResult {
-        val matchResultType = when {
-            state.isBust() -> MatchResultType.LOSE
-            dealer.state.isBust() -> MatchResultType.WIN
-            dealer.state.cards.score < state.cards.score -> MatchResultType.WIN
-            dealer.state.cards.score == state.cards.score -> MatchResultType.TIE
-            else -> MatchResultType.LOSE
-        }
         return PlayerMatchResult(
             playerName = name,
-            matchResultType = matchResultType,
+            matchResultType = MatchResultType.calculatePlayerMatchResult(dealer, this),
         )
     }
 
