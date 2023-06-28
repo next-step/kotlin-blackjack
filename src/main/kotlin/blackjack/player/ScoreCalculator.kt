@@ -1,6 +1,5 @@
 package blackjack.player
 
-import blackjack.card.Card
 import blackjack.card.CardNumber
 
 object ScoreCalculator {
@@ -10,20 +9,11 @@ object ScoreCalculator {
         var numberOfAces = 0
 
         hand.forEachCard { card ->
-            val (value, isAce) = calculateCardValue(card)
-            totalValue += value
-            numberOfAces += if (isAce) 1 else 0
+            totalValue += card.number.maxValue
+            numberOfAces += if (card.number == CardNumber.ACE) 1 else 0
         }
 
         return adjustForAces(totalValue, numberOfAces)
-    }
-
-    private fun calculateCardValue(card: Card): Pair<Int, Boolean> {
-        return if (card.number == CardNumber.ACE) {
-            Pair(11, true)
-        } else {
-            Pair(card.number.maxValue, false)
-        }
     }
 
     private fun adjustForAces(totalValue: Int, numberOfAces: Int): Int {
