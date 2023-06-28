@@ -17,10 +17,10 @@ class BlackJackResultView {
 
     fun display(result: CardDistributionResult) {
         val message = buildString {
-            append("\n")
-            append(result.makeTitleMessage())
-            append(result.makeDealerCardsMessage())
-            append(result.makeAllPlayerCardsMessage())
+            appendLine()
+            appendLine(result.makeTitleMessage())
+            appendLine(result.makeDealerCardsMessage())
+            appendLine(result.makeAllPlayerCardsMessage())
         }
         println(message)
     }
@@ -31,23 +31,20 @@ class BlackJackResultView {
 
     fun display(dealerTurnExecuteResult: DealerTurnExecuteResult) {
         val message = buildString {
-            append("\n")
-            append(dealerTurnExecuteResult.makeDealerTurnResultMessage())
+            appendLine()
+            appendLine(dealerTurnExecuteResult.makeDealerTurnResultMessage())
         }
         println(message)
     }
 
     fun display(matchResult: MatchResult) {
         val message = buildString {
-            append("\n")
-            append(matchResult.makeDealerCardsDisplayMessage())
-            append("\n")
-            append(matchResult.makeAllPlayerCardsDisplayMessage())
-            append("\n")
-            append("\n## 최종 승패\n")
-            append(matchResult.makeDealerMatchResultMessage())
-            append("\n")
-            append(matchResult.makeAllPlayersMatchResultMessage())
+            appendLine(matchResult.makeDealerCardsDisplayMessage())
+            appendLine(matchResult.makeAllPlayerCardsDisplayMessage())
+            appendLine()
+            appendLine("## 최종 승패")
+            appendLine(matchResult.makeDealerMatchResultMessage())
+            appendLine(matchResult.makeAllPlayersMatchResultMessage())
         }
         println(message)
     }
