@@ -4,7 +4,7 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.card.Cards
 
 enum class PlayerStatus(val isReceivable: Boolean) {
-    NOT_INIT(true), RECEIVE(true), STAY(false), BUST(false), BLACK_JACK(true);
+    NOT_INIT(true), RECEIVE(true), STAY(false), BUST(false), BLACK_JACK(false);
 
     companion object {
         const val BLACK_JACK_SCORE = 21

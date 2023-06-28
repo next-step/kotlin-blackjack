@@ -25,7 +25,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `최초 카드를 받은 후 BLACK_JACK 이어도 카드를 받을 수 있다`() {
+    fun `최초 카드를 받은 후 BLACK_JACK 이면 카드를 받을 수 없다`() {
         val player = Player()
         val cards = Cards.from(
             Card(Denomination.ACE, CardType.CLUBS),
@@ -36,7 +36,7 @@ class PlayerTest {
 
         player.cards.getOptimizedScore() shouldBe 21
         player.getPlayerStatus() shouldBe PlayerStatus.BLACK_JACK
-        player.isReceivable() shouldBe true
+        player.isReceivable() shouldBe false
     }
 
     @Test
