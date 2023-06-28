@@ -5,6 +5,7 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Money
 import blackjack.domain.rule.Score
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -82,5 +83,65 @@ class DealerTest {
         val result = dealer.compareScore(goofyPlayer)
         // then
         result shouldBe Score().lose()
+    }
+
+    @Test
+    fun `플레이어는 돈을 베팅할 수 있다`() {
+        // given
+        val player = GamePlayer("player")
+        val dealer = Dealer()
+        dealer.playersMoneyFromPlayer(player, 10000)
+
+        // when
+        val money = dealer.playersMoney[player] ?: Money()
+
+        // then
+        money.value shouldBe 10000
+        player.money.value shouldBe -10000
+    }
+
+    @Test
+    fun `플레이어에게 돈을 돌려줄 수 있다`() {
+        // given
+        val player = GamePlayer("player")
+        val dealer = Dealer()
+        dealer.playersMoneyFromPlayer(player, 10000)
+
+        // when
+        dealer.giveMoneyToPlayer(player)
+
+        // then
+        dealer.money.value shouldBe -10000
+        player.money.value shouldBe 10000
+    }
+
+    @Test
+    fun `플레이어에게 돈을 150프로 추가로 돌려준다`() {
+        // given
+        val player = GamePlayer("player")
+        val dealer = Dealer()
+        dealer.playersMoneyFromPlayer(player, 10000)
+
+        // when
+        dealer.giveMoneyToPlayerInSpecial(player)
+
+        // then
+        dealer.money.value shouldBe -15000
+        player.money.value shouldBe 15000
+    }
+
+    @Test
+    fun `플레이어에게 돈을 압수한다`() {
+        // given
+        val player = GamePlayer("player")
+        val dealer = Dealer()
+        dealer.playersMoneyFromPlayer(player, 10000)
+
+        // when
+        dealer.collectMoneyFromPlayer(player)
+
+        // then
+        dealer.money.value shouldBe 10000
+        player.money.value shouldBe -10000
     }
 }

@@ -65,14 +65,14 @@ class GameMemberImplTest {
     @Test
     fun `게임 플레이어는 돈을 낼 수 있다`() {
         // given
-        val bettingMoney = Money(10000)
+        val bettingMoney = 10000
         val player = GamePlayer("name")
 
         // when
         val money = player.betMoney(bettingMoney)
 
         // then
-        money.value shouldBe bettingMoney.value
+        money.value shouldBe bettingMoney
         player.money.value shouldBe -10000
     }
 

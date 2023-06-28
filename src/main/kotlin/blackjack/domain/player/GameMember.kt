@@ -35,9 +35,9 @@ sealed interface GameMember {
         }
     }
 
-    fun betMoney(amount: Money): Money {
-        money -= amount
-        return amount
+    fun betMoney(amount: Int): Money {
+        money -= Money(amount)
+        return Money(amount)
     }
 
     fun winMoney(amount: Money) {

@@ -7,7 +7,7 @@ import blackjack.domain.rule.Score
 class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     override val name: String = "딜러"
     override var money: Money = Money()
-    val betMoney: MutableMap<GamePlayer, Money> = mutableMapOf()
+    val playersMoney: MutableMap<GamePlayer, Money> = mutableMapOf()
 
     override fun canDraw(): Boolean {
         return cardHold.getCardsTotalSize() <= 2 && cardHold.getTotalPoints() <= 16
@@ -24,15 +24,25 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
         }
     }
 
-    fun collectGameMoney(player: GamePlayer, money: Int) {
-        betMoney[player] = Money(money)
+    fun playersMoneyFromPlayer(player: GamePlayer, amount: Int) {
+        val money = player.betMoney(amount)
+        playersMoney[player] = money
     }
 
-    fun loseMoney(player: GamePlayer) {
-        betMoney[player]
+    fun giveMoneyToPlayer(player: GamePlayer) {
+        val money = playersMoney[player] ?: Money()
+        val dealerMoney = betMoney(money.value)
+        player.winMoney(money + dealerMoney)
     }
 
-    fun giveMoney(player: GamePlayer) {
-        betMoney[player]
+    fun giveMoneyToPlayerInSpecial(player: GamePlayer) {
+        val money = playersMoney[player] ?: Money()
+        val dealerMoney = betMoney(money.value * 150 / 100)
+        player.winMoney(money + dealerMoney)
+    }
+
+    fun collectMoneyFromPlayer(player: GamePlayer) {
+        val money = playersMoney[player] ?: Money()
+        winMoney(money)
     }
 }
