@@ -22,13 +22,14 @@ class BlackJack(
     }
 
     fun getNowPlayer(): Player {
-        return players.first { it.canProceedTurn() }
+        return players.firstOrNull { it.canProceedTurn() } ?: throw RuntimeException(PLAYER_NONE_EXCEPTION)
     }
 
     fun playGameTurn(isPlaying: Boolean) {
+        val nowPlayer = getNowPlayer()
         when (isPlaying) {
-            true -> getNowPlayer().addCard(gameCards.draw())
-            false -> getNowPlayer().finishedTurn()
+            true -> nowPlayer.addCard(gameCards.draw())
+            false -> nowPlayer.finishedTurn()
         }
     }
 
@@ -55,5 +56,6 @@ class BlackJack(
         const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
         const val DEALER_CARD_STANDARD_SCORE = 16
+        private const val PLAYER_NONE_EXCEPTION = "턴을 가져갈 플레이어가 존재하지 않습니다"
     }
 }
