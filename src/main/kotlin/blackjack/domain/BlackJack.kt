@@ -6,22 +6,16 @@ class BlackJack(
     private val gameCards: GameCards = GameCards(),
 ) {
     fun distributeInitialCard() {
-        for (i in 0 until START_CARD_COUNT) {
-            distributeCardForDealer()
-            distributeCardForPlayers()
-        }
+        dealer.addCards(drawInitCards())
+        players.forEach { player -> player.addCards(drawInitCards()) }
+    }
+
+    private fun drawInitCards(): List<Card> {
+        return List(START_CARD_COUNT) { gameCards.draw() }
     }
 
     fun distributeCardForDealer() {
-        dealer.addCard(draw())
-    }
-
-    private fun distributeCardForPlayers() {
-        players.forEach { it.addCard(draw()) }
-    }
-
-    private fun draw(): Card {
-        return gameCards.draw()
+        dealer.addCard(gameCards.draw())
     }
 
     fun isEnd(): Boolean {
@@ -48,20 +42,13 @@ class BlackJack(
     }
 
     fun getResult(): Ranks {
-        val result = players.associateWith {
-            getPlayerRank(it)
-        }
-        return Ranks(result)
-    }
-
-    private fun getPlayerRank(player: Player): PlayerRank {
-        return PlayerRank.of(player.score(), dealer.score())
+        return Ranks(players.associateWith { PlayerRank.of(it.score(), dealer.score()) })
     }
 
     companion object {
-        const val START_CARD_COUNT = 2
+        private const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
-        const val DEALER_CARD_STANDARD_SCORE = 16
+        private const val DEALER_CARD_STANDARD_SCORE = 16
         private const val PLAYER_NONE_EXCEPTION = "턴을 가져갈 플레이어가 존재하지 않습니다"
     }
 }

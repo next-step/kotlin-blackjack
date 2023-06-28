@@ -7,6 +7,10 @@ data class Dealer(val cards: Cards = Cards()) {
         cards.addCard(card)
     }
 
+    fun addCards(cards: List<Card>) {
+        cards.map { addCard(it) }
+    }
+
     fun score(): Int {
         return cards.score()
     }
