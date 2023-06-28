@@ -66,8 +66,8 @@ class BlackJackGameTest : BehaviorSpec({
             val hitResult = game.hitFocusedPlayer()
 
             Then("한장의 카드를 발급 받는다") {
-                val initCardsSize = cardDistributeResult.playerCards[0].cards.size
-                val cardSize = hitResult.cards.size
+                val initCardsSize = cardDistributeResult.playerCards[0].cards.value.size
+                val cardSize = hitResult.cards.value.size
                 cardSize shouldBe initCardsSize + 1
             }
         }

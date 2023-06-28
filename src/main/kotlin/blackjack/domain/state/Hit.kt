@@ -9,18 +9,18 @@ class Hit(
 ) : GamerState() {
 
     init {
-        require(cards.isBust.not()) {
+        require(cards.score.isBust.not()) {
             "bust cards not support"
         }
 
-        require(cards.size >= InitCard.INIT_CARD_SIZE) {
-            "cards size is ${cards.size}. support cards minimum size is ${InitCard.INIT_CARD_SIZE}"
+        require(cards.value.size >= InitCard.INIT_CARD_SIZE) {
+            "cards size is ${cards.value.size}. support cards minimum size is ${InitCard.INIT_CARD_SIZE}"
         }
     }
 
     override fun hit(card: Card): GamerState {
         val newCards = cards + card
-        return if (newCards.isBust) {
+        return if (newCards.score.isBust) {
             Bust(newCards)
         } else {
             Hit(newCards)

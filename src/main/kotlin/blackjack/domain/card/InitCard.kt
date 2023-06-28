@@ -4,7 +4,7 @@ package blackjack.domain.card
 value class InitCard(val cards: Cards) {
 
     init {
-        require(cards.size == INIT_CARD_SIZE) {
+        require(cards.value.size == INIT_CARD_SIZE) {
             "only support two cards"
         }
     }

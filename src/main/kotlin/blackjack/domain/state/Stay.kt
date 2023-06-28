@@ -8,8 +8,8 @@ class Stay(
 ) : GamerState() {
 
     init {
-        require(cards.size >= InitCard.INIT_CARD_SIZE) {
-            "cards size is ${cards.size}. support cards minimum size is ${InitCard.INIT_CARD_SIZE}"
+        require(cards.value.size >= InitCard.INIT_CARD_SIZE) {
+            "cards size is ${cards.value.size}. support cards minimum size is ${InitCard.INIT_CARD_SIZE}"
         }
     }
 }

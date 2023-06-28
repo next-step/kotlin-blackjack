@@ -7,7 +7,7 @@ class Bust(
 ) : GamerState() {
 
     init {
-        require(cards.isBust) {
+        require(cards.score.isBust) {
             "cards is not bust"
         }
     }

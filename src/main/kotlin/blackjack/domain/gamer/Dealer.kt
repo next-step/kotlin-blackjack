@@ -6,7 +6,7 @@ class Dealer : Gamer() {
 
     override fun canHit(): Boolean {
         return state.isHit() &&
-            state.cards.size == InitCard.INIT_CARD_SIZE &&
+            state.cards.value.size == InitCard.INIT_CARD_SIZE &&
             state.cards.score <= NEED_HIT_SCORE
     }
 

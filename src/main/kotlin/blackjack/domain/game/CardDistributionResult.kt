@@ -13,7 +13,7 @@ data class CardDistributionResult(
 
     init {
         val sizeOfCardsSize = mutableSetOf(dealerCards.size)
-            .apply { addAll(playerCards.map { it.cards.size }) }
+            .apply { addAll(playerCards.map { it.cards.value.size }) }
             .size
         require(sizeOfCardsSize == 1) {
             "all cards must have the same size"

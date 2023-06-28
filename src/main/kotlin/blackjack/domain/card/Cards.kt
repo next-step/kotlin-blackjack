@@ -5,9 +5,7 @@ import blackjack.domain.score.CardScoreCalculator
 data class Cards(
     val value: List<Card>,
 ) {
-    val size = value.size
     val score = CardScoreCalculator.calculateScore(value)
-    val isBust = score.isBust
 
     fun first(): Card {
         return value.first()

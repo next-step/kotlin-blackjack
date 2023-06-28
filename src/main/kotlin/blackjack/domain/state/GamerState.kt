@@ -9,7 +9,7 @@ abstract class GamerState {
     abstract val cards: Cards
 
     fun isInit(): Boolean {
-        return isHit() && cards.size == InitCard.INIT_CARD_SIZE
+        return isHit() && cards.value.size == InitCard.INIT_CARD_SIZE
     }
 
     fun isHit(): Boolean {
