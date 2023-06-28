@@ -1,55 +1,54 @@
 package blackjack.domain
 
-class BlackJack(val players: List<Player>) {
+class BlackJack(
+    val players: List<Player>,
+    val dealer: Dealer = Dealer(),
+    private val gameCards: GameCards = GameCards(),
+) {
+    fun distributeInitialCard() {
+        dealer.addCards(drawInitCards())
+        players.forEach { player -> player.addCards(drawInitCards()) }
+    }
 
-    private var nowPlayer = 0
-    private var playCount = 0
-    private var isEnd = false
+    private fun drawInitCards(): List<Card> {
+        return List(START_CARD_COUNT) { gameCards.draw() }
+    }
 
-    fun start() {
-        for (i in 0 until START_CARD_COUNT) players.forEach { it.draw() }
+    fun distributeCardForDealer() {
+        dealer.addCard(gameCards.draw())
     }
 
     fun isEnd(): Boolean {
-        if (!isEnd) {
-            checkAndChangeGamePlayer()
-        }
-        return isEnd
+        return players.none { it.canProceedTurn() }
     }
 
     fun getNowPlayer(): Player {
-        return players[nowPlayer]
+        return players.firstOrNull { it.canProceedTurn() } ?: throw RuntimeException(PLAYER_NONE_EXCEPTION)
     }
 
-    fun play(answer: String): Int {
-        val count = playCount
-        when (answer) {
-            "y" -> {
-                getNowPlayer().draw()
-                playCount++
-            }
-            "n" -> changeNowPlayer()
-            else -> throw IllegalArgumentException("잘못된 답변입니다")
-        }
-        return count
-    }
-
-    private fun checkAndChangeGamePlayer() {
-        if (players[nowPlayer].score() > BLACKJACK_MAX_SCORE) {
-            changeNowPlayer()
+    fun playGameTurn(isPlaying: Boolean) {
+        val nowPlayer = getNowPlayer()
+        when (isPlaying) {
+            true -> nowPlayer.addCard(gameCards.draw())
+            false -> nowPlayer.finishedTurn()
         }
     }
 
-    private fun changeNowPlayer() {
-        nowPlayer++
-        playCount = 0
-        if (nowPlayer >= players.size) {
-            isEnd = true
+    fun shouldDealerDrawCard(): Boolean {
+        if (dealer.score() <= DEALER_CARD_STANDARD_SCORE) {
+            return true
         }
+        return false
+    }
+
+    fun getResult(): Ranks {
+        return Ranks(players.associateWith { PlayerRank.of(it.score(), dealer.score()) })
     }
 
     companion object {
         private const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
+        private const val DEALER_CARD_STANDARD_SCORE = 16
+        private const val PLAYER_NONE_EXCEPTION = "턴을 가져갈 플레이어가 존재하지 않습니다"
     }
 }

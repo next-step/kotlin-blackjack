@@ -1,28 +1,26 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJack
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     val game = BlackJack(InputView.getNames())
-    game.start()
-    ResultView.printStart(game)
+    game.distributeInitialCard()
+    ResultView.printFirstCards(game)
 
     while (!game.isEnd()) {
         val player = game.getNowPlayer()
         val answer = InputView.getAnswer(player)
-        val count = game.play(answer)
-        printCards(player, answer, count)
+        game.playGameTurn(answer)
+        ResultView.printPlayerCards(player)
     }
 
-    ResultView.printResult(game)
-}
-
-fun printCards(player: Player, answer: String, count: Int) {
-    if (answer == "n" && count != 0) {
-        return
+    if (game.shouldDealerDrawCard()) {
+        game.distributeCardForDealer()
+        ResultView.printAddDealerCard()
     }
-    ResultView.printCards(player)
+
+    ResultView.printScore(game)
+    ResultView.printResult(game, game.getResult())
 }

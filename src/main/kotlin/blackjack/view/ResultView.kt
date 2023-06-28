@@ -1,32 +1,60 @@
 package blackjack.view
 
 import blackjack.domain.BlackJack
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Ranks
 
 object ResultView {
 
+    private const val DEALER_CARD_STRING = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val START_STRING = "에게 2장의 나누었습니다."
-
     private const val CARD_STRING = "카드:"
-
     private const val SCORE_STRING = "- 결과:"
+    private const val LOST_STRING = "패"
+    private const val WON_STRING = "승"
+    private const val RESULT_STRING = "\n## 최종 승패"
 
-    fun printCards(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }}")
+    fun printPlayerCards(player: Player) {
+        println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)}")
     }
 
-    fun printStart(game: BlackJack) {
-        println("\n${game.players.joinToString { it.name }}$START_STRING")
-        game.players.forEach { printCards(it) }
+    fun printAddDealerCard() {
+        println(DEALER_CARD_STRING)
+    }
+
+    private fun printDealerInitCards(dealer: Dealer) {
+        val firstCard = dealer.cards.values.first()
+        println("${dealer.name}$CARD_STRING ${firstCard.character.value + firstCard.shape.value}")
+    }
+
+    fun printFirstCards(game: BlackJack) {
+        println("\n${game.dealer.name}와 ${game.players.joinToString { it.name }}$START_STRING")
+        printDealerInitCards(game.dealer)
+        game.players.forEach { printPlayerCards(it) }
         println()
     }
 
-    fun printResult(game: BlackJack) {
+    fun printScore(game: BlackJack) {
         println()
-        game.players.forEach { printScore(it) }
+        printDealerScore(game.dealer)
+        game.players.forEach { printPlayerScore(it) }
     }
 
-    private fun printScore(player: Player) {
-        println("${player.name}$CARD_STRING ${player.cards.cards.joinToString { it.character.value + it.shape.value }} $SCORE_STRING ${player.score()}")
+    private fun printDealerScore(dealer: Dealer) {
+        println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.cards)} $SCORE_STRING ${dealer.score()}")
     }
+
+    private fun printPlayerScore(player: Player) {
+        println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)} $SCORE_STRING ${player.score()}")
+    }
+
+    fun printResult(game: BlackJack, ranks: Ranks) {
+        println(RESULT_STRING)
+        println("${game.dealer.name}: ${ranks.getDealerWonCounts()}$WON_STRING ${ranks.getDealerLostCounts()}$LOST_STRING")
+        game.players.forEach { player -> ranks.values[player]?.let { rank -> println("${player.name}: ${rank.value}") } }
+    }
+
+    private fun getPrintCardString(cards: Cards) = cards.values.joinToString { it.character.value + it.shape.value }
 }
