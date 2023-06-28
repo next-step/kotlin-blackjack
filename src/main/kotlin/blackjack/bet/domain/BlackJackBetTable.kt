@@ -37,7 +37,7 @@ class BlackJackBetTable(private val players: List<BetPlayer>) {
         cantDrawException: (String) -> Unit
     ) {
         player.forEach {
-            while (wantToHit(it.name) && it.canDraw()) {
+            while (it.canDraw() && wantToHit(it.name)) {
                 try {
                     it.drawPhase(deckManager = deckManager, handNotice = handNotice)
                 } catch (ex: IllegalStateException) {
