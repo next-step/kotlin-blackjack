@@ -66,7 +66,7 @@ class BlackJackGameTest : BehaviorSpec({
             val hitResult = game.hitFocusedPlayer()
 
             Then("한장의 카드를 발급 받는다") {
-                val initCardsSize = cardDistributeResult.playerCards[0].cards.value.size
+                val initCardsSize = cardDistributeResult.playerCards.first().cards.value.size
                 val cardSize = hitResult.cards.value.size
                 cardSize shouldBe initCardsSize + 1
             }
@@ -185,7 +185,7 @@ class BlackJackGameTest : BehaviorSpec({
 
             Then("플레이어의 카드 목록을 반환한다") {
                 val expected = cards(heartQueen(), heartKing())
-                result.gamerCards.allPlayerCards[0].cards shouldBe expected
+                result.gamerCards.allPlayerCards.first().cards shouldBe expected
             }
         }
     }
@@ -212,7 +212,7 @@ class BlackJackGameTest : BehaviorSpec({
             }
 
             Then("참가자의 결과는 패배다") {
-                result.gamerMatchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.LOSE
+                result.gamerMatchResult.playerMatchResults.first().matchResultType shouldBe MatchResultType.LOSE
             }
         }
     }
@@ -239,7 +239,7 @@ class BlackJackGameTest : BehaviorSpec({
             }
 
             Then("참가자의 결과는 승리이다") {
-                result.gamerMatchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
+                result.gamerMatchResult.playerMatchResults.first().matchResultType shouldBe MatchResultType.WIN
             }
         }
     }
@@ -266,7 +266,7 @@ class BlackJackGameTest : BehaviorSpec({
             }
 
             Then("참가자의 결과는 무승부이다") {
-                result.gamerMatchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.TIE
+                result.gamerMatchResult.playerMatchResults.first().matchResultType shouldBe MatchResultType.TIE
             }
         }
     }
@@ -294,7 +294,7 @@ class BlackJackGameTest : BehaviorSpec({
             }
 
             Then("참가자의 결과는 승리이다") {
-                result.gamerMatchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
+                result.gamerMatchResult.playerMatchResults.first().matchResultType shouldBe MatchResultType.WIN
             }
         }
     }
