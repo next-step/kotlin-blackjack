@@ -10,25 +10,8 @@ class Player(
     override fun openedCards(): Cards = state.cards
 
     fun calculateProfit(dealer: Dealer): Profit {
-        if (state is Burst) {
-            return Profit(-betAmount)
-        }
-
-        if (dealer.state is Burst) {
-            return Profit(betAmount)
-        }
-
-        val score = calculateScore()
-        val dealerScore = dealer.calculateScore()
-        if (score > dealerScore) {
-            return state.calculateProfit(betAmount)
-        }
-
-        if (score == dealerScore) {
-            return Profit.ZERO
-        }
-
-        return Profit(-betAmount)
+        val gameResult = state.gameResult(dealer.state)
+        return gameResult.calculateProfit(betAmount, state.profitMultiple())
     }
 
     companion object {

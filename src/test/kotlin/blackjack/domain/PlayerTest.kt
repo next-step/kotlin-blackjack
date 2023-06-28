@@ -11,7 +11,7 @@ import java.math.BigDecimal
 class PlayerTest : FunSpec({
     test("카드를 더 받는다(hit).") {
         val cards = Cards(
-            Card.of(Denomination.ACE, Suit.SPADES),
+            Card.of(Denomination.TWO, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
         )
         val card = Card.of(Denomination.TWO, Suit.HEARTS)
@@ -74,38 +74,38 @@ class PlayerTest : FunSpec({
     }
 
     context("게임 수익을 계산한다") {
-        data class GetGameResult(
+        data class StateProfit(
             val playerState: State,
             val dealerState: State,
             val profit: Profit
         )
         withData(
-            GetGameResult(
+            StateProfit(
                 BlackJack(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit.ZERO,
             ),
-            GetGameResult(
+            StateProfit(
                 BlackJack(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 Profit(1500.0.toBigDecimal()),
             ),
-            GetGameResult(
+            StateProfit(
                 Stay(Cards(Card.of(Denomination.ACE, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES), Card.of(Denomination.ACE, Suit.HEARTS))),
                 BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
-            GetGameResult(
+            StateProfit(
                 Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 BlackJack(Cards(Card.of(Denomination.ACE, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),
             ),
-            GetGameResult(
+            StateProfit(
                 Stay(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 Burst(Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))),
                 Profit(BigDecimal(1000)),
             ),
-            GetGameResult(
+            StateProfit(
                 Burst(Cards(Card.of(Denomination.KING, Suit.SPADES), Card.of(Denomination.JACK, Suit.SPADES))),
                 Burst(Cards(Card.of(Denomination.KING, Suit.CLUBS), Card.of(Denomination.JACK, Suit.CLUBS), Card.of(Denomination.TWO, Suit.CLUBS))),
                 Profit(BigDecimal(-1000)),

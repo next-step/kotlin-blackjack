@@ -2,8 +2,11 @@ package blackjack.domain
 
 sealed class Participant(
     val name: String,
-    protected var state: State
+    state: State
 ) {
+    var state: State = state
+        protected set
+
     abstract fun openedCards(): Cards
 
     fun isFinished(): Boolean = state is Finished

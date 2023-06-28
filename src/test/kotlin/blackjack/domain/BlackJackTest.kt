@@ -5,11 +5,20 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackTest : FunSpec({
 
-    test("BlackJack 상태의 수익률을 반환한다") {
+    test("카드 2장이면서 BlackJack 상태일 때 수익 배수를 반환한다") {
         val cards = Cards(
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
         )
-        BlackJack(cards).profitRate() shouldBe 1.5.toBigDecimal()
+        BlackJack(cards).profitMultiple() shouldBe 1.5.toBigDecimal()
+    }
+
+    test("카드 3장 이상이면서 BlackJack 상태일 때 수익 배수를 반환한다") {
+        val cards = Cards(
+            Card.of(Denomination.EIGHT, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+            Card.of(Denomination.THREE, Suit.SPADES),
+        )
+        BlackJack(cards).profitMultiple() shouldBe 1.toBigDecimal()
     }
 })

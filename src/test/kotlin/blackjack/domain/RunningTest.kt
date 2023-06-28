@@ -5,7 +5,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.instanceOf
-import java.math.BigDecimal
 
 class RunningTest : FunSpec({
 
@@ -64,16 +63,29 @@ class RunningTest : FunSpec({
         state.cards shouldBe cards
     }
 
-    test("Running 상태에서 수익을 계산하면 예외가 발생한다") {
+    test("Running 상태에서 게임 결과를 구하면 예외가 발생한다") {
+        val cards = Cards(
+            Card.of(Denomination.TWO, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+        )
+
         val exception = shouldThrow<IllegalStateException> {
-            val cards = Cards(
-                Card.of(Denomination.TWO, Suit.SPADES),
-                Card.of(Denomination.JACK, Suit.SPADES),
-            )
-            val running = Running(cards)
-            running.calculateProfit(BigDecimal(1000))
+            Running(cards).gameResult(Stay(cards))
         }
 
-        exception.message shouldBe "끝난 상태에서만 수익을 계산할 수 있습니다."
+        exception.message shouldBe "끝난 상태에서만 승부를 낼 수 있습니다."
+    }
+
+    test("Running 상태에서 수익 배수를 구하면 예외가 발생한다") {
+        val cards = Cards(
+            Card.of(Denomination.TWO, Suit.SPADES),
+            Card.of(Denomination.JACK, Suit.SPADES),
+        )
+
+        val exception = shouldThrow<IllegalStateException> {
+            Running(cards).profitMultiple()
+        }
+
+        exception.message shouldBe "끝난 상태에서만 수익 배수를 반환할 수 있습니다."
     }
 })

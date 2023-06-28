@@ -9,7 +9,9 @@ sealed class State(
 
     abstract fun stay(): State
 
-    abstract fun calculateProfit(betAmount: BigDecimal): Profit
+    abstract fun gameResult(other: State): GameResult
+
+    abstract fun profitMultiple(): BigDecimal
 
     fun calculateScore(): Score = cards.calculateScore()
 
@@ -43,16 +45,18 @@ class Running(
 
     override fun stay(): State = Stay(cards)
 
-    override fun calculateProfit(betAmount: BigDecimal): Profit {
-        throw IllegalStateException("끝난 상태에서만 수익을 계산할 수 있습니다.")
+    override fun gameResult(other: State): GameResult {
+        throw IllegalStateException("끝난 상태에서만 승부를 낼 수 있습니다.")
+    }
+
+    override fun profitMultiple(): BigDecimal {
+        throw IllegalStateException("끝난 상태에서만 수익 배수를 반환할 수 있습니다.")
     }
 }
 
 sealed class Finished(
     cards: Cards,
 ) : State(cards) {
-    abstract fun profitRate(): BigDecimal
-
     override fun hit(card: Card): State {
         throw IllegalStateException("끝난 상태에서 hit 할 수 없습니다.")
     }
@@ -61,25 +65,53 @@ sealed class Finished(
         throw IllegalStateException("끝난 상태에서 stay 할 수 없습니다.")
     }
 
-    override fun calculateProfit(betAmount: BigDecimal): Profit {
-        return Profit(betAmount * profitRate())
+    override fun gameResult(other: State): GameResult {
+        if (this is Burst) {
+            return GameResult.LOSE
+        }
+
+        if (other is Burst) {
+            return GameResult.WIN
+        }
+
+        val score = calculateScore()
+        val otherScore = other.calculateScore()
+        if (score > otherScore) {
+            return GameResult.WIN
+        }
+
+        if (score == otherScore) {
+            return GameResult.TIE
+        }
+
+        return GameResult.LOSE
     }
 }
 
 class Stay(
     cards: Cards,
 ) : Finished(cards) {
-    override fun profitRate(): BigDecimal = BigDecimal(1)
+    override fun profitMultiple(): BigDecimal = BigDecimal(1)
 }
 
 class Burst(
     cards: Cards,
 ) : Finished(cards) {
-    override fun profitRate(): BigDecimal = BigDecimal(-1)
+    override fun profitMultiple(): BigDecimal = BigDecimal(-1)
 }
 
 class BlackJack(
     cards: Cards,
 ) : Finished(cards) {
-    override fun profitRate(): BigDecimal = BigDecimal(1.5)
+    override fun profitMultiple(): BigDecimal {
+        if (cards.size == FIRST_CARDS_COUNT) {
+            return BigDecimal(1.5)
+        }
+
+        return BigDecimal(1)
+    }
+
+    companion object {
+        private const val FIRST_CARDS_COUNT = 2
+    }
 }
