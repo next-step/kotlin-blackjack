@@ -34,7 +34,7 @@ class BlackjackGame(
     }
 
     private fun takeTurn(player: Player) {
-        while (player.status == Status.WANT && player.getTotalValue() < 21) {
+        while (player.getStatus() == Status.WANT && player.getTotalValue() < 21) {
             val response = inputView.readWantOrStand(player.name)
             if (response == Status.WANT) {
                 dealer.drawCard(player)
