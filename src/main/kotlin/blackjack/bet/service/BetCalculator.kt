@@ -6,11 +6,9 @@ import blackjack.bet.domain.WinType
 
 object BetCalculator {
     fun settleBet(winType: WinType, player: BetPlayer, dealer: BetDealer) {
-        val betAmount = player.wallet().bettingAmount()
-        val winningAmount = (betAmount * winType.payoutRatio).toInt()
-        val dealerAmount = winningAmount * -1
-
-        player.wallet().settle(winningAmount)
-        dealer.wallet().settle(dealerAmount)
+        val playerIncome = (player.wallet().bettingAmount() * winType.incomeRatio).toInt()
+        val dealerIncome = playerIncome * -1
+        player.wallet().settle(playerIncome)
+        dealer.wallet().settle(dealerIncome)
     }
 }
