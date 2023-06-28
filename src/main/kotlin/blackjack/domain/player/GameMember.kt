@@ -35,12 +35,13 @@ sealed interface GameMember {
         }
     }
 
-    fun giveMoney(amount: Money): Money {
-        if (amount.value > money.value) {
-            throw IllegalStateException("소지하고 있는 돈이 부족합니다")
-        }
+    fun betMoney(amount: Money): Money {
         money -= amount
         return amount
+    }
+
+    fun winMoney(amount: Money) {
+        money += amount
     }
 
     companion object {

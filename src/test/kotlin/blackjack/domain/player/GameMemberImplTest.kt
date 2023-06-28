@@ -5,6 +5,7 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Money
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -59,5 +60,32 @@ class GameMemberImplTest {
 
         // then
         result shouldBe 31
+    }
+
+    @Test
+    fun `게임 플레이어는 돈을 낼 수 있다`() {
+        // given
+        val bettingMoney = Money(10000)
+        val player = GamePlayer("name")
+
+        // when
+        val money = player.betMoney(bettingMoney)
+
+        // then
+        money.value shouldBe bettingMoney.value
+        player.money.value shouldBe -10000
+    }
+
+    @Test
+    fun `게임플레이어는 돈을 돌려받을 수 있다`() {
+        // given
+        val winMoney = Money(10000)
+        val player = GamePlayer("name")
+
+        // when
+        player.winMoney(winMoney)
+
+        // then
+        player.money.value shouldBe winMoney.value
     }
 }
