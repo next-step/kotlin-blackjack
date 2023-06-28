@@ -86,7 +86,7 @@ internal class BlackJackTest {
             )
         )
         val player1 = Player("pobi", cards)
-        var player2 = Player("ryan", cards)
+        val player2 = Player("ryan", cards)
         val game = BlackJack(listOf(player1, player2))
 
         game.getNowPlayer() shouldBe player1

@@ -12,7 +12,7 @@ data class Player(val name: String, val cards: Cards = Cards()) {
         cards.addCard(card)
     }
 
-    fun addCards(cards:List<Card>){
+    fun addCards(cards: List<Card>) {
         cards.map { addCard(it) }
     }
 
