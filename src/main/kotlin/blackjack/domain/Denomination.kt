@@ -26,9 +26,13 @@ enum class Denomination(
 
     fun maxScore(): Score {
         if (this == ACE) {
-            return Score.MAX_ACE
+            return Score(MAX_ACE_SCORE)
         }
 
         return score()
+    }
+
+    companion object {
+        private const val MAX_ACE_SCORE = 11
     }
 }

@@ -27,6 +27,5 @@ value class Score(
     companion object {
         const val BLACKJACK_SCORE = 21
         val ZERO = Score(0)
-        val MAX_ACE = Score(11)
     }
 }
