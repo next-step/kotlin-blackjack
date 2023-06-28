@@ -5,11 +5,9 @@ import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
 import blackjack.domain.game.CardDistributionResult
-import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.MatchResult
 import blackjack.domain.game.MatchResultType
-import blackjack.domain.game.PlayerMatchResult
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.unWrappings
@@ -40,17 +38,18 @@ class BlackJackResultView {
     }
 
     fun display(matchResult: MatchResult) {
-        println()
-        println("딜러 카드: ${matchResult.dealerCards.makeDisplayMessage()} - ${matchResult.dealerCards.score.makeDisplayMessage()}")
-        matchResult.allPlayerCards
-            .map { "${it.playerName.unWrapping()} 카드: ${it.cards.makeDisplayMessage()} - ${it.cards.score.makeDisplayMessage()}" }
-            .forEach { println(it) }
-        println()
-        println("## 최종 승패")
-        println(matchResult.dealerMatchResult.makeDisplayMessage())
-        matchResult.playerMatchResults.forEach {
-            println(it.makeDisplayMessage())
+        val message = buildString {
+            append("\n")
+            append(matchResult.makeDealerCardsDisplayMessage())
+            append("\n")
+            append(matchResult.makeAllPlayerCardsDisplayMessage())
+            append("\n")
+            append("\n## 최종 승패\n")
+            append(matchResult.makeDealerMatchResultMessage())
+            append("\n")
+            append(matchResult.makeAllPlayersMatchResultMessage())
         }
+        println(message)
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
@@ -73,6 +72,42 @@ class BlackJackResultView {
             "딜러는 16이하라 한장의 카드를 더 받았습니다."
         } else {
             "딜러는 17이상이라 카드를 더 받지 않았습니다."
+        }
+    }
+
+    private fun MatchResult.makeDealerCardsDisplayMessage(): String {
+        return "딜러 카드: ${dealerCards.makeDisplayMessage()} - ${dealerCards.score.makeDisplayMessage()}"
+    }
+
+    private fun MatchResult.makeAllPlayerCardsDisplayMessage(): String {
+        return allPlayerCards.joinToString("\n") {
+            val name = it.playerName.unWrapping()
+            val cards = it.cards
+            val score = it.cards.score
+            "$name 카드: ${cards.makeDisplayMessage()} - ${score.makeDisplayMessage()}"
+        }
+    }
+
+    private fun MatchResult.makeDealerMatchResultMessage(): String {
+        return dealerMatchResult.run {
+            buildString {
+                append("딜러:")
+                append(" ${winCount}승")
+                append(" ${tieCount}무")
+                append(" ${loseCount}패")
+            }
+        }
+    }
+
+    private fun MatchResult.makeAllPlayersMatchResultMessage(): String {
+        return playerMatchResults.joinToString("\n") {
+            val name = it.playerName.unWrapping()
+            val matchResult = when (it.matchResultType) {
+                MatchResultType.WIN -> "승"
+                MatchResultType.TIE -> "무"
+                MatchResultType.LOSE -> "패"
+            }
+            "${name}: $matchResult"
         }
     }
 
@@ -113,26 +148,5 @@ class BlackJackResultView {
             CardDenomination.KING -> "K"
         }
         return "$denominationName$shapeName"
-    }
-
-    private fun DealerMatchResult.makeDisplayMessage(): String {
-        return buildString {
-            append("딜러:")
-            append(" ${winCount}승")
-            append(" ${tieCount}무")
-            append(" ${loseCount}패")
-        }
-    }
-
-    private fun PlayerMatchResult.makeDisplayMessage(): String {
-        val matchResultText = when (matchResultType) {
-            MatchResultType.WIN -> "승"
-            MatchResultType.TIE -> "무"
-            MatchResultType.LOSE -> "패"
-        }
-        return buildString {
-            append("${playerName.unWrapping()}: ")
-            append(matchResultText)
-        }
     }
 }
