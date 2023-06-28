@@ -19,7 +19,6 @@ value class BettingPlayers(val players: Set<BettingPlayer>) : Set<BettingPlayer>
             player.cards()
         }.toList()
 
-
     fun fight(dealer: Dealer): BettingResults {
         return BettingResults.from(players.associate { it.name() to it.fight(dealer) })
     }

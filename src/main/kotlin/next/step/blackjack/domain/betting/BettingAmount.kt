@@ -12,7 +12,7 @@ value class BettingAmount(private val amount: Int) {
 
     companion object {
         private const val MINIMUM_BETTING_AMOUNT = 0
-        
+
         fun of(amount: Int): BettingAmount = BettingAmount(amount)
     }
 }
