@@ -18,7 +18,7 @@ class BlackJack(
     }
 
     fun isEnd(): Boolean {
-        return players.all { !it.canProceedTurn() }
+        return players.none { it.canProceedTurn() }
     }
 
     fun getNowPlayer(): Player {
