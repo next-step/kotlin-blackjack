@@ -15,8 +15,8 @@ class Player(
         val matchResultType = when {
             state.isBust() -> MatchResultType.LOSE
             dealer.state.isBust() -> MatchResultType.WIN
-            dealer.state.cards.score.value < state.cards.score.value -> MatchResultType.WIN
-            dealer.state.cards.score.value == state.cards.score.value -> MatchResultType.TIE
+            dealer.state.cards.score < state.cards.score -> MatchResultType.WIN
+            dealer.state.cards.score == state.cards.score -> MatchResultType.TIE
             else -> MatchResultType.LOSE
         }
         return PlayerMatchResult(
