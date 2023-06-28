@@ -11,6 +11,7 @@ import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerBetAmount
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class BlackjackGameResultTest {
@@ -121,8 +122,9 @@ class BlackjackGameResultTest {
         }
     }
 
+    @DisplayName("플레이어가 Blackjack 으로 승리하면, 딜러에게 베팅금액의 1.5배를 수익으로 받는다")
     @Test
-    fun `플레이어가 Blackjack 이면서 승리하면 딜러에게 기존 베팅금액에 절반만큼 더 받는다`() {
+    fun getAvenueFromDealerIfBlackjackWin() {
         val betAmount = PlayerBetAmount(10000L)
         val gamePlayers = GamePlayers.from(Player(Name("hue"), betAmount))
         val initCards = listOf(

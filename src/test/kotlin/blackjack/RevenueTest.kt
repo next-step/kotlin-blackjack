@@ -9,6 +9,7 @@ import blackjack.domain.player.Name
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerBetAmount
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class RevenueTest {
@@ -43,8 +44,9 @@ class RevenueTest {
         dealer.revenue.value shouldBe -5000L
     }
 
+    @DisplayName("플레이어가 블랙잭으로 딜러를 이기면, 딜러의 최종 수익은 블랙잭으로 이긴 플레이어의 베팅금액의 1.5배를 지불해야 한다")
     @Test
-    fun `플레이어가 블랙잭으로 딜러를 이기면, 딜러의 최종 수익은 블랙잭으로 이긴 플레이어의 원금과 그 절반을 더한 값을 지불해야 한다`() {
+    fun dealerAvenueFromPlayerBlackjack() {
         val dealer = Dealer()
         val playerResult1 = getPlayerResultWithCalcRevenue(Name("hue"), GameResult.WIN, true, 30000L)
         val playerResults = PlayerResults(listOf(playerResult1))
