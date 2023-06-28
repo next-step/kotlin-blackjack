@@ -34,7 +34,7 @@ class CardDistributionResultTest : StringSpec({
         }
     }
 
-    "딜러와 플레이어 카드들의 사이즈가 분배한 카드 수와 같다면 결과물이 만들어진다" {
+    "딜러와 플레이어 카드들의 사이즈가 분배한 카드 수와 같다면 예외가 발생하지 않는다" {
         val dealerCards = listOf(
             DealerCard.Open(Card.ALL_CARDS.first()),
             DealerCard.Hide,
