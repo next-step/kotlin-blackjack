@@ -32,12 +32,10 @@ class BlackJackResultView {
     }
 
     fun display(dealerTurnExecuteResult: DealerTurnExecuteResult) {
-        val message = if (dealerTurnExecuteResult.isDistributedOneMoreCard) {
-            "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        } else {
-            "딜러는 17이상이라 카드를 더 받지 않았습니다."
+        val message = buildString {
+            append("\n")
+            append(dealerTurnExecuteResult.makeDealerTurnResultMessage())
         }
-        println()
         println(message)
     }
 
@@ -68,6 +66,14 @@ class BlackJackResultView {
 
     private fun CardDistributionResult.makeAllPlayerCardsMessage(): String {
         return playerCards.joinToString("\n") { playerCard -> playerCard.makeDisplayMessage() }
+    }
+
+    private fun DealerTurnExecuteResult.makeDealerTurnResultMessage(): String {
+        return if (isDistributedOneMoreCard) {
+            "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        } else {
+            "딜러는 17이상이라 카드를 더 받지 않았습니다."
+        }
     }
 
     private fun PlayerCards.makeDisplayMessage(): String {
