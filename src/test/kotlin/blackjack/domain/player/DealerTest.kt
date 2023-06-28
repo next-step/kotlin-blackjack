@@ -6,7 +6,6 @@ import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.Money
-import blackjack.domain.rule.Score
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -63,34 +62,11 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 21 포인트가 초과하면 항상 진다`() {
-        // given player 1
-        val sampleCard = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
-        val sampleCard2 = Card.createCard(CardRank.NINE, CardShape.HEART)
-        val additionalCard = Card.createCard(CardRank.QUEEN, CardShape.DIAMOND)
-        val additionalCard2 = Card.createCard(CardRank.QUEEN, CardShape.SPADE)
-        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
-        val goofyPlayer = GamePlayer("goofy", myCards)
-
-        // given dealer
-        val sampleCard4 = Card.createCard(CardRank.JACK, CardShape.CLOVER)
-        val sampleCard5 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val sampleCard6 = Card.createCard(CardRank.KING, CardShape.HEART)
-        val myCards3 = CardHold(mutableListOf(sampleCard4, sampleCard5, sampleCard6))
-        val dealer = Dealer(cardHold = myCards3)
-
-        // when
-        val result = dealer.compareScore(goofyPlayer)
-        // then
-        result shouldBe Score().lose()
-    }
-
-    @Test
     fun `플레이어는 돈을 베팅할 수 있다`() {
         // given
         val player = GamePlayer("player")
         val dealer = Dealer()
-        dealer.playersMoneyFromPlayer(player, 10000)
+        dealer.getMoneyFromPlayer(player, 10000)
 
         // when
         val money = dealer.playersMoney[player] ?: Money()
@@ -105,7 +81,7 @@ class DealerTest {
         // given
         val player = GamePlayer("player")
         val dealer = Dealer()
-        dealer.playersMoneyFromPlayer(player, 10000)
+        dealer.getMoneyFromPlayer(player, 10000)
 
         // when
         dealer.giveMoneyToPlayer(player)
@@ -120,7 +96,7 @@ class DealerTest {
         // given
         val player = GamePlayer("player")
         val dealer = Dealer()
-        dealer.playersMoneyFromPlayer(player, 10000)
+        dealer.getMoneyFromPlayer(player, 10000)
 
         // when
         dealer.giveMoneyToPlayerInSpecial(player)
@@ -135,7 +111,7 @@ class DealerTest {
         // given
         val player = GamePlayer("player")
         val dealer = Dealer()
-        dealer.playersMoneyFromPlayer(player, 10000)
+        dealer.getMoneyFromPlayer(player, 10000)
 
         // when
         dealer.collectMoneyFromPlayer(player)

@@ -2,7 +2,6 @@ package blackjack.domain.player
 
 import blackjack.domain.card.CardHold
 import blackjack.domain.rule.Money
-import blackjack.domain.rule.Score
 
 class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     override val name: String = "딜러"
@@ -13,18 +12,46 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
         return cardHold.getCardsTotalSize() <= 2 && cardHold.getTotalPoints() <= 16
     }
 
-    fun compareScore(other: GamePlayer): Score {
-        if (other.getPoints() > 21) return Score().win()
-        if (getPoints() > 21) return Score().lose()
-        return when {
-            this.getPoints() > other.getPoints() -> Score().win()
-            this.getPoints() < other.getPoints() -> Score().lose()
-            this.getCardHoldSize() < other.getCardHoldSize() -> Score().win()
-            else -> Score().draw()
+    fun compareScore(other: GamePlayer) {
+        if (getPoints() > 21) {
+            giveMoneyToPlayer(other)
+            return
         }
+
+        if (other.getPoints() > 21) {
+            collectMoneyFromPlayer(other)
+            return
+        }
+
+        if (getPoints() == 21 && getCardHoldSize() == 2 && other.getPoints() == 21 && other.getCardHoldSize() == 2) {
+            draw(other)
+            return
+        }
+
+        if (other.getPoints() == 21 && other.getCardHoldSize() == 2) {
+            giveMoneyToPlayerInSpecial(other)
+            return
+        }
+
+        if (this.getPoints() > other.getPoints()) {
+            collectMoneyFromPlayer(other)
+            return
+        }
+
+        if (this.getPoints() < other.getPoints()) {
+            giveMoneyToPlayer(other)
+            return
+        }
+
+        if (this.getCardHoldSize() < other.getCardHoldSize()) {
+            giveMoneyToPlayer(other)
+            return
+        }
+
+        draw(other)
     }
 
-    fun playersMoneyFromPlayer(player: GamePlayer, amount: Int) {
+    fun getMoneyFromPlayer(player: GamePlayer, amount: Int) {
         val money = player.betMoney(amount)
         playersMoney[player] = money
     }
@@ -44,5 +71,10 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     fun collectMoneyFromPlayer(player: GamePlayer) {
         val money = playersMoney[player] ?: Money()
         winMoney(money)
+    }
+
+    fun draw(player: GamePlayer) {
+        val money = playersMoney[player] ?: Money()
+        player.winMoney(money)
     }
 }

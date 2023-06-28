@@ -24,6 +24,12 @@ object GameController {
         val dealer = Dealer()
         val participants = Participants(playerImpls, dealer)
 
+        // 베팅금액
+        playerImpls.forEach { player ->
+            val amount = InputView.askBettingAmount(player.name)
+            dealer.getMoneyFromPlayer(player, amount)
+        }
+
         repeat(DEFAULT_INITIAL_DRAW) {
             participants.drawAll(deck)
         }
@@ -55,7 +61,7 @@ object GameController {
     }
 
     private fun showResult(participants: Participants) {
-        val result = participants.getGameResult()
-        OutputView.showWinner(result)
+        participants.finishGame()
+        OutputView.showWinner(participants.allGameMembers)
     }
 }

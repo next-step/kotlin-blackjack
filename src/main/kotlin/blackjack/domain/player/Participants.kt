@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
-import blackjack.domain.rule.Score
 
 class Participants(
     val players: List<GamePlayer>,
@@ -15,14 +14,9 @@ class Participants(
         players.forEach { it.drawCard(deck) }
     }
 
-    fun getGameResult(): Map<String, Score> {
-        val result = mutableMapOf<String, Score>(dealer.name to Score())
-        val dealerScore = players.fold(Score()) { acc, player ->
-            val score = dealer.compareScore(player)
-            result[player.name] = score.reverse()
-            acc + score
+    fun finishGame() {
+        players.forEach { player ->
+            dealer.compareScore(player)
         }
-        result[dealer.name] = dealerScore
-        return result
     }
 }
