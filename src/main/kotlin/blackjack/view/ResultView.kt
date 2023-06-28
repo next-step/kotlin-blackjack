@@ -4,8 +4,11 @@ import blackjack.player.Player
 
 object ResultView {
 
-    fun printPlayerList(players: List<Player>) {
+    fun printInitialDistribute(players: List<Player>) {
         println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+    }
+
+    fun printPlayerList(players: List<Player>) {
         players.map { printPlayerStatus(it) }
     }
 

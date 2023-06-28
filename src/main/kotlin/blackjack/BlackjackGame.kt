@@ -15,6 +15,7 @@ class BlackjackGame(
         val players = createPlayers()
 
         dealer.dealInitialCards(players)
+        resultView.printInitialDistribute(players)
         resultView.printPlayerList(players)
         players.takeTurns()
 
