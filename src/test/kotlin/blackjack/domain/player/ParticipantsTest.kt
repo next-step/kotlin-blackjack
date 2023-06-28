@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 
 class ParticipantsTest {
     @Test
-    fun `딜러가 21을 초과하면 카드 결과에 상관없이 항상 이긴다`() {
+    fun `딜러가 21을 초과하면 카드 결과에 상관없이 항상 진다`() {
         // given playerImpl
         // given player 1
         val sampleCard = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
@@ -35,6 +35,6 @@ class ParticipantsTest {
         val result = participants.getGameResult()
 
         // then
-        result["딜러"] shouldBe Score().win(cnt = 2)
+        result["딜러"] shouldBe Score().lose(cnt = 2)
     }
 }

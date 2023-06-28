@@ -11,8 +11,8 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     }
 
     fun compareScore(other: GamePlayer): Score {
-        if (other.getPoints() >= 21) return Score().win()
-        if (getPoints() >= 21) return Score().win()
+        if (other.getPoints() > 21) return Score().win()
+        if (getPoints() > 21) return Score().lose()
         return when {
             this.getPoints() > other.getPoints() -> Score().win()
             this.getPoints() < other.getPoints() -> Score().lose()

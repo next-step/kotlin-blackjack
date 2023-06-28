@@ -62,7 +62,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러가 21 포인트가 되면 항상 이긴다`() {
+    fun `딜러가 21 포인트가 초과하면 항상 진다`() {
         // given player 1
         val sampleCard = Card.createCard(CardRank.EIGHT, CardShape.CLOVER)
         val sampleCard2 = Card.createCard(CardRank.NINE, CardShape.HEART)
@@ -81,6 +81,6 @@ class DealerTest {
         // when
         val result = dealer.compareScore(goofyPlayer)
         // then
-        result shouldBe Score().win()
+        result shouldBe Score().lose()
     }
 }
