@@ -1,6 +1,6 @@
 package blackjack.domain.gamer
 
-import blackjack.domain.card.InitCard
+import blackjack.domain.card.Cards
 import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.game.GamerCards
 import blackjack.domain.game.GamerMatchResult
@@ -9,9 +9,9 @@ import blackjack.domain.game.MatchResult
 @JvmInline
 value class Players(val value: List<Player>) {
 
-    fun init(cardPick: () -> InitCard) {
+    fun init(pickCards: () -> Cards) {
         value.forEach { player ->
-            player.init(cardPick())
+            player.init(pickCards())
         }
     }
 

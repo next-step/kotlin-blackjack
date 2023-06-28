@@ -2,14 +2,13 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.InitCard
 
 abstract class GamerState {
 
     abstract val cards: Cards
 
     fun isInit(): Boolean {
-        return isHit() && cards.value.size == InitCard.INIT_CARD_SIZE
+        return isHit() && cards.value.size == Cards.INIT_CARD_SIZE
     }
 
     fun isHit(): Boolean {
@@ -20,7 +19,7 @@ abstract class GamerState {
         return this is Bust
     }
 
-    open fun init(initCard: InitCard): GamerState {
+    open fun init(initCards: Cards): GamerState {
         throw IllegalStateException("not support init")
     }
 

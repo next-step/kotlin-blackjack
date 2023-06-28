@@ -1,15 +1,18 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.Cards
-import blackjack.domain.card.InitCard
 
 class Wait : GamerState() {
 
     override val cards: Cards = Cards.empty()
 
-    override fun init(initCard: InitCard): GamerState {
+    override fun init(initCards: Cards): GamerState {
+        require(initCards.value.size == Cards.INIT_CARD_SIZE) {
+            "init cards size should be ${Cards.INIT_CARD_SIZE}"
+        }
+
         return Hit(
-            cards = initCard.cards,
+            cards = initCards,
         )
     }
 }

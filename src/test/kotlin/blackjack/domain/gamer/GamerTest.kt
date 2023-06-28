@@ -1,5 +1,6 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.card.cards
 import blackjack.domain.card.heartAce
 import blackjack.domain.card.heartFive
 import blackjack.domain.card.heartFour
@@ -8,7 +9,6 @@ import blackjack.domain.card.heartKing
 import blackjack.domain.card.heartQueen
 import blackjack.domain.card.heartThree
 import blackjack.domain.card.heartTwo
-import blackjack.domain.card.initCard
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.state.Stay
@@ -34,13 +34,13 @@ class GamerTest : StringSpec({
 
     "최초 카드를 전달하면 hit 상태이다" {
         val gamer = gamer()
-        gamer.init(initCard(heartAce(), heartJack()))
+        gamer.init(cards(heartAce(), heartJack()))
         (gamer.state is Hit) shouldBe true
     }
 
     "hit 이후에도 21점을 초과하지 않는다면 hit 상태이다" {
         val gamer = gamer()
-        gamer.init(initCard(heartTwo(), heartThree())) // 2 + 3 = 5
+        gamer.init(cards(heartTwo(), heartThree())) // 2 + 3 = 5
         gamer.hit(heartFour()) // 5 + 4 = 9
         gamer.hit(heartFive()) // 9 + 5 = 14
         (gamer.state is Hit) shouldBe true
@@ -55,7 +55,7 @@ class GamerTest : StringSpec({
 
     "카드를 삽입 했다면 카드 목록이 비어있지 않다" {
         val gamer = gamer()
-        gamer.init(initCard(heartAce(), heartJack()))
+        gamer.init(cards(heartAce(), heartJack()))
         gamer.hasCard() shouldBe true
     }
 
@@ -66,14 +66,14 @@ class GamerTest : StringSpec({
 
     "카드 삽입 후 21점을 초과하면 bust 상태가 된다" {
         val gamer = gamer()
-        gamer.init(initCard(heartQueen(), heartJack())) // 20
+        gamer.init(cards(heartQueen(), heartJack())) // 20
         gamer.hit(heartKing())
         (gamer.state is Bust) shouldBe true
     }
 
     "stay를 하면 stay 상태가 된다" {
         val gamer = gamer()
-        gamer.init(initCard(heartQueen(), heartJack())) // 20
+        gamer.init(cards(heartQueen(), heartJack())) // 20
         gamer.stay()
         (gamer.state is Stay) shouldBe true
     }

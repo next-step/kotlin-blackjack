@@ -2,7 +2,7 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
-import blackjack.domain.card.InitCard
+import blackjack.domain.card.Cards
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.PlayerNames
@@ -35,7 +35,7 @@ class BlackJackGame(
 
     fun distributeCardsToPlayers(): CardDistributionResult {
         requireTurn<BlackJackGameTurn.CardDistribution>()
-        return gamers.init { InitCard.create(listOf(cardDeck.pick(), cardDeck.pick())) }
+        return gamers.init { Cards.initCards(cardDeck) }
     }
 
     fun hitFocusedPlayer(): PlayerCards {

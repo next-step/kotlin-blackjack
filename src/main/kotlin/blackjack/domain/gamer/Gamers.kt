@@ -1,7 +1,7 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.InitCard
+import blackjack.domain.card.Cards
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.MatchResult
@@ -11,7 +11,7 @@ class Gamers(
     private val players: Players,
 ) {
 
-    fun init(pickCards: () -> InitCard): CardDistributionResult {
+    fun init(pickCards: () -> Cards): CardDistributionResult {
         dealer.init(pickCards())
         players.init { pickCards() }
 

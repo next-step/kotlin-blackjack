@@ -8,7 +8,6 @@ import blackjack.domain.card.heartKing
 import blackjack.domain.card.heartQueen
 import blackjack.domain.card.heartThree
 import blackjack.domain.card.heartTwo
-import blackjack.domain.card.initCard
 import blackjack.domain.card.notBustCards
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -29,7 +28,7 @@ class HitTest : StringSpec({
 
     "init 함수 사용시 RuntimeException 예외 처리를 한다" {
         shouldThrow<RuntimeException> {
-            Hit(notBustCards()).init(initCard(heartTwo(), heartThree()))
+            Hit(notBustCards()).init(cards(heartTwo(), heartThree()))
         }
     }
 

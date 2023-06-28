@@ -1,7 +1,7 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.InitCard
+import blackjack.domain.card.Cards
 import blackjack.domain.state.GamerState
 
 abstract class Gamer {
@@ -9,8 +9,8 @@ abstract class Gamer {
     var state = GamerState.wait()
         private set
 
-    fun init(initCard: InitCard) {
-        state = state.init(initCard)
+    fun init(initCards: Cards) {
+        state = state.init(initCards)
     }
 
     fun hit(card: Card) {

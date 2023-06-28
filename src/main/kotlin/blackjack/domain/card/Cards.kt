@@ -13,8 +13,14 @@ data class Cards(
 
     companion object {
 
+        const val INIT_CARD_SIZE = 2
+
         fun empty(): Cards {
             return Cards(emptyList())
+        }
+
+        fun initCards(cardDeck: CardDeck): Cards {
+            return Cards(List(INIT_CARD_SIZE) { cardDeck.pick() })
         }
     }
 }

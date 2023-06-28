@@ -5,7 +5,6 @@ import blackjack.domain.card.cards
 import blackjack.domain.card.heartFour
 import blackjack.domain.card.heartThree
 import blackjack.domain.card.heartTwo
-import blackjack.domain.card.initCard
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
@@ -20,7 +19,7 @@ class StayTest : StringSpec({
 
     "init 함수 사용시 RuntimeException 예외 처리를 한다" {
         shouldThrow<RuntimeException> {
-            Stay(bustCards()).init(initCard(heartTwo(), heartThree()))
+            Stay(bustCards()).init(cards(heartTwo(), heartThree()))
         }
     }
 
