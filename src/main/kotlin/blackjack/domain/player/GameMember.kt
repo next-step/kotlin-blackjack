@@ -3,10 +3,12 @@ package blackjack.domain.player
 import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Money
 
 sealed interface GameMember {
     val name: String
     val cardHold: CardHold
+    var money: Money
 
     fun canDraw(): Boolean
 
@@ -31,6 +33,14 @@ sealed interface GameMember {
         if (card != null) {
             cardHold.add(card)
         }
+    }
+
+    fun giveMoney(amount: Money): Money {
+        if (amount.value > money.value) {
+            throw IllegalStateException("소지하고 있는 돈이 부족합니다")
+        }
+        money -= amount
+        return amount
     }
 
     companion object {

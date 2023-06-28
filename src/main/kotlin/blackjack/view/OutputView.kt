@@ -78,4 +78,11 @@ object OutputView {
     private fun showSimpleLose(score: Score): String {
         return if (score.loseNum >= 1) "패 " else ""
     }
+
+    fun showWinner(players: List<GameMember>) {
+        println("\n## 최종 수익")
+        players.forEach { player ->
+            println("${player.name}: ${player.money.value}")
+        }
+    }
 }

@@ -18,4 +18,9 @@ object InputView {
             else -> throw IllegalArgumentException("잘못된 입력입니다.")
         }
     }
+
+    fun askBettingAmount(name: String): Int {
+        println("\n${name}의 베팅 금액은?")
+        return readln().toInt()
+    }
 }
