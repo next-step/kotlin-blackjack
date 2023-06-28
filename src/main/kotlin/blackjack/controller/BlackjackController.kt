@@ -5,6 +5,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.GameCardsSet
 import blackjack.domain.Player
+import blackjack.domain.PlayerState
 import blackjack.domain.Players
 import blackjack.view.BlackjackView
 import blackjack.view.InputView
@@ -58,11 +59,25 @@ class BlackjackController {
     }
 
     private fun playTurn(player: Player) {
-        while (player.canDraw() && BlackjackView.askDraw(player)) {
+        while (goNext(player)) {
             player.drawCard()
             BlackjackView.printPlayerCard(player)
         }
         wantStop = true
+    }
+
+    private fun goNext(player: Player): Boolean {
+        val canDraw = player.canDraw()
+        if (!canDraw) {
+            player.setState(PlayerState.BUST)
+            return false
+        }
+
+        val wantDraw = BlackjackView.askDraw(player)
+        if (!wantDraw) {
+            player.setState(PlayerState.STAND)
+        }
+        return wantDraw
     }
 
     companion object {

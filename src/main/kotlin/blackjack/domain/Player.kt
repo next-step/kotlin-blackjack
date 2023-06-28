@@ -7,6 +7,7 @@ open class Player(
     private val gameCardsSet: GameCardsSet
 ) {
     private var myCards: Cards = Cards.empty()
+    private var state: PlayerState = PlayerState.DEFAULT
 
     fun getMyCards(): Cards = myCards.copy()
 
@@ -14,7 +15,24 @@ open class Player(
 
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
-    fun canDraw(): Boolean = myCards.calculateOptimalSum() <= BLACK_JACK_SCORE
+    fun canDraw(): Boolean {
+        val optimalSum = myCards.calculateOptimalSum()
+
+        if (optimalSum == BLACK_JACK_SCORE) {
+            state = PlayerState.BLACK_JACK
+            return false
+        }
+
+        if (optimalSum > BLACK_JACK_SCORE) {
+            state = PlayerState.BUST
+            return false
+        }
+        return true
+    }
+
+    fun setState(newState: PlayerState) {
+        state = newState
+    }
 
     fun drawCard() {
         if (!canDraw()) {
@@ -23,5 +41,6 @@ open class Player(
 
         val drawnCard = gameCardsSet.drawRandomCard()
         myCards = myCards.add(drawnCard)
+        state = PlayerState.HIT
     }
 }
