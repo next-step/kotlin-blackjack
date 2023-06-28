@@ -11,23 +11,19 @@ class Player(
         hand.addCard(card)
     }
 
-    fun getHandSize(): Int {
-        return hand.size()
-    }
-
     fun updateStatus(newStatus: Status) {
         status = newStatus
     }
 
-    fun getStatus(): Status {
-        return status
-    }
+    val currentStatus: Status
+        get() = status
 
-    fun displayHand(): String {
-        return hand.displayCards()
-    }
+    val handSize: Int
+        get() = hand.size()
 
-    fun getTotalValue(): Int {
-        return ScoreCalculator.calculateScore(hand)
-    }
+    val displayHand: String
+        get() = hand.displayCards()
+
+    val totalValue: Int
+        get() = ScoreCalculator.calculateScore(hand)
 }

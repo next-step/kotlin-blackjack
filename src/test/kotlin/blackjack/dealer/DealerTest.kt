@@ -11,7 +11,7 @@ class DealerTest : StringSpec({
         val players = listOf(Player("참가자1"), Player("참가자2"))
 
         dealer.dealInitialCards(players)
-        players[0].getHandSize() shouldBe 2
-        players[1].getHandSize() shouldBe 2
+        players[0].handSize shouldBe 2
+        players[1].handSize shouldBe 2
     }
 })

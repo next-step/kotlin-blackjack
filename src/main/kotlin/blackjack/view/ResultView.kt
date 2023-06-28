@@ -13,13 +13,13 @@ object ResultView {
     }
 
     fun printPlayerStatus(player: Player) {
-        println("${player.name}카드: ${player.displayHand()}")
+        println("${player.name}카드: ${player.displayHand}")
     }
 
     fun printFinalPlayerStatus(players: List<Player>) {
         println()
         players.forEach { player ->
-            println("${player.name}카드: ${player.displayHand()} - 결과: ${player.getTotalValue()}")
+            println("${player.name}카드: ${player.displayHand} - 결과: ${player.totalValue}")
         }
     }
 }
