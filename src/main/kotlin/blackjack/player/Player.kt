@@ -19,10 +19,10 @@ class Player(
         get() = status
 
     val handSize: Int
-        get() = hand.size()
+        get() = hand.size
 
     val displayHand: String
-        get() = hand.displayCards()
+        get() = hand.displayCards
 
     val totalValue: Int
         get() = ScoreCalculator.calculateScore(hand)

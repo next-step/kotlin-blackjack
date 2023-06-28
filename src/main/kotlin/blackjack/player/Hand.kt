@@ -10,13 +10,11 @@ class Hand(
         cardList.add(card)
     }
 
-    fun size(): Int {
-        return cardList.size
-    }
+    val size: Int
+        get() = cardList.size
 
-    fun displayCards(): String {
-        return cardList.joinToString(", ") { it.toString() }
-    }
+    val displayCards: String
+        get() = cardList.joinToString(", ") { it.toString() }
 
     fun forEachCard(block: (Card) -> Unit) {
         cardList.forEach(block)
