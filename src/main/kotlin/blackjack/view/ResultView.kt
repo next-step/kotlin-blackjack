@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Score
 import blackjack.dto.BlackjackGameResult
 import blackjack.service.BlackjackService
 
@@ -39,10 +40,10 @@ object ResultView {
     }
 
     fun printDealerCard(dealer: Dealer) {
-        if(dealer.cards.calculateScore() > Dealer.STANDARD_CARD_SCORE) {
-            println("${dealer.name}는 ${Dealer.STANDARD_CARD_SCORE+1}이상이라 카드를 더 받지 않습니다.")
-        } else if (dealer.cards.calculateScore() < Dealer.STANDARD_CARD_SCORE) {
-            println("${dealer.name}는 ${Dealer.STANDARD_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
+        if(dealer.cards.calculateScore().value > Score.STANDARD_CARD_SCORE) {
+            println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE+1}이상이라 카드를 더 받지 않습니다.")
+        } else if (dealer.cards.calculateScore().value < Score.STANDARD_CARD_SCORE) {
+            println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
         }
     }
 

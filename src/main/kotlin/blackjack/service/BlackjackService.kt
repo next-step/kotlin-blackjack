@@ -1,9 +1,6 @@
 package blackjack.service
 
-import blackjack.domain.BlackjackGame
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
-import blackjack.domain.Player
+import blackjack.domain.*
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 import blackjack.dto.BlackjackGameResult
@@ -39,11 +36,11 @@ class BlackjackService {
         players.forEach { player ->
             val playerScore = player.cards.calculateScore()
             when {
-                dealerScore > playerScore -> {
+                dealerScore.value > playerScore.value -> {
                     dealerWinCount++
                     result.add(BlackjackGameResult(name = player.name, result = MatchResult.LOSE.match))
                 }
-                dealerScore < playerScore -> {
+                dealerScore.value < playerScore.value -> {
                     dealerLoseCount++
                     result.add(BlackjackGameResult(name = player.name, result = MatchResult.WIN.match))
                 }
@@ -63,9 +60,9 @@ class BlackjackService {
     }
 
     private fun checkCondition(player: Player) {
-        if (player.cards.calculateScore() == BlackjackGame.BLACK_JACK_NUMBER) {
+        if (player.cards.calculateScore().value == Score.BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BLACKJACK)
-        } else if (player.cards.calculateScore() > BlackjackGame.BLACK_JACK_NUMBER) {
+        } else if (player.cards.calculateScore().value > Score.BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BUST)
         }
     }

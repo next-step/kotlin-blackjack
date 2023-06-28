@@ -10,24 +10,20 @@ class Dealer(
 ): Participant(name, cards, condition) {
 
     init {
-        var total = 0
-        cards.cards.forEach {
-            total += it.rank.value
-        }
-        if( STANDARD_CARD_SCORE >= total) {
+        val score = cards.calculateScore()
+
+        if( score.isScoreBelowStandard()) {
             this.condition = Condition.PLAY
         }
     }
 
     override fun hit(card: Card) {
         super.hit(card)
-        var total = 0
-        cards.cards.forEach {
-            total += it.rank.value
-        }
-        if( STANDARD_CARD_SCORE < total) {
+        val score = cards.calculateScore()
+
+        if(score.isScoreAboveStandard()) {
             this.condition = Condition.STAY
-        } else if (total > BlackjackGame.BLACK_JACK_NUMBER) {
+        } else if (score.isScoreAboveBlackjack()) {
             this.condition = Condition.BUST
         }
     }
@@ -42,6 +38,5 @@ class Dealer(
 
     companion object {
         const val ONE_DRAW_COUNT = 1
-        const val STANDARD_CARD_SCORE = 16
     }
 }
