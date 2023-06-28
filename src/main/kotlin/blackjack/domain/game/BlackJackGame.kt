@@ -3,11 +3,9 @@ package blackjack.domain.game
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import blackjack.domain.card.InitCard
-import blackjack.domain.gamer.Dealer
-import blackjack.domain.gamer.DealerCard
+import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.PlayerNames
-import blackjack.domain.gamer.Players
 import blackjack.domain.shuffle.Shuffler
 
 class BlackJackGame(
@@ -16,18 +14,17 @@ class BlackJackGame(
 ) {
 
     private val cardDeck = CardDeck.create(shuffler)
-    private val dealer = Dealer()
-    private val players = Players.create(playerNames)
+    private val gamers = Gamers.create(playerNames)
 
     fun currentTurn(): BlackJackGameTurn {
         return when {
-            players.notHasCards() && dealer.notHasCards() -> {
+            gamers.hasNotCards() -> {
                 BlackJackGameTurn.CardDistribution
             }
-            players.hasWaitPlayer() -> {
-                BlackJackGameTurn.PlayerAnswer(players.requireWaitPlayer().name)
+            gamers.hasWaitPlayer() -> {
+                BlackJackGameTurn.PlayerAnswer(gamers.requireWaitPlayer().name)
             }
-            dealer.state.isInit() -> {
+            gamers.isDealerWait() -> {
                 BlackJackGameTurn.Dealer
             }
             else -> {
@@ -38,50 +35,27 @@ class BlackJackGame(
 
     fun distributeCardsToPlayers(): CardDistributionResult {
         requireTurn<BlackJackGameTurn.CardDistribution>()
-
-        dealer.init(InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)))
-        players.init { InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)) }
-
-        return CardDistributionResult(
-            dealerCards = listOf(DealerCard.Open(dealer.state.cards.value.first()), DealerCard.Hide),
-            playerCards = players.captureAllPlayerCards(),
-        )
+        return gamers.init { InitCard.create(listOf(cardDeck.pick(), cardDeck.pick())) }
     }
 
     fun hitFocusedPlayer(): PlayerCards {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
-
-        val player = players.requireWaitPlayer()
-        player.hit(cardDeck.pick())
-        return player.captureCards()
+        return gamers.hitToFocusedPlayer(cardDeck.pick())
     }
 
     fun stayFocusedPlayer() {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
-
-        players.requireWaitPlayer().stay()
+        gamers.stayToFocusedPlayer()
     }
 
     fun executeDealerTurn(): DealerTurnExecuteResult {
         requireTurn<BlackJackGameTurn.Dealer>()
-
-        val isDistributedOneMoreCard = if (dealer.canHit()) {
-            dealer.hit(cardDeck.pick())
-            true
-        } else {
-            dealer.stay()
-            false
-        }
-
-        return DealerTurnExecuteResult(
-            isDistributedOneMoreCard = isDistributedOneMoreCard,
-        )
+        return gamers.tryHitToDealer { cardDeck.pick() }
     }
 
     fun makeGameResult(): MatchResult {
         requireTurn<BlackJackGameTurn.Finished>()
-
-        return players.match(dealer)
+        return gamers.match()
     }
 
     private inline fun <reified T> requireTurn() {
@@ -89,10 +63,5 @@ class BlackJackGame(
         require(turn is T) {
             "you want turn is '${turn::class.java.simpleName}'. but current turn is '${T::class.java.simpleName}'"
         }
-    }
-
-    companion object {
-
-        private const val CARD_DISTRIBUTION_SIZE = 2
     }
 }
