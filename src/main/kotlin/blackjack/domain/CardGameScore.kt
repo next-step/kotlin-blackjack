@@ -16,7 +16,7 @@ class BlackJackScore : CardGameScore {
             }.withConsiderAceCase(cards)
     }
 
-    private fun Card.score(): Score = scoreTable.getValue(cardLevel)
+    private fun Card.score(): Score = SCORE_Table.getValue(cardLevel)
 
     private fun Score.withConsiderAceCase(cards: Cards): Score {
         if (!cards.hasAce()) return this
@@ -40,15 +40,15 @@ class BlackJackScore : CardGameScore {
     private fun CardLevel.isAce(): Boolean = this == CardLevel.ACE
 
     private fun Score.withoutAceScore(aceCount: Int): Score {
-        return this - (aceCount * scoreTable.getValue(CardLevel.ACE).score).toScore()
+        return this - (aceCount * SCORE_Table.getValue(CardLevel.ACE).score).toScore()
     }
 
     private fun possibleAceScores(aceCount: Int, scores: MutableList<Score> = mutableListOf()): List<Score> {
-        if (aceCount <= 1) return aceValues
+        if (aceCount <= 1) return ACE_SCORES
 
         val newScores = possibleAceScores(aceCount - 1, scores)
         return newScores.map { score ->
-            aceValues.map { aceValue ->
+            ACE_SCORES.map { aceValue ->
                 score + aceValue
             }
         }.flatten()
@@ -57,7 +57,7 @@ class BlackJackScore : CardGameScore {
     private fun calculateDiffWithPerfectScore(score: Score): Int = abs(score.score - PERFECT_SCORE.score)
 
     companion object {
-        private val scoreTable: Map<CardLevel, Score> = mapOf(
+        private val SCORE_Table: Map<CardLevel, Score> = mapOf(
             CardLevel.TWO to 2.toScore(),
             CardLevel.THREE to 3.toScore(),
             CardLevel.FOUR to 4.toScore(),
@@ -73,7 +73,7 @@ class BlackJackScore : CardGameScore {
             CardLevel.ACE to 11.toScore(),
         )
 
-        private val aceValues = listOf(1.toScore(), 11.toScore())
+        private val ACE_SCORES = listOf(1.toScore(), 11.toScore())
 
         private val PERFECT_SCORE = 21.toScore()
     }
