@@ -1,7 +1,7 @@
 package blackjack.bet.domain
 
 enum class WinType(
-    val payoutRatio: Double
+    val incomeRatio: Double,
 ) {
     PLAYER_WIN(1.0),
     PLAYER_BLACK_JACK(0.5),
