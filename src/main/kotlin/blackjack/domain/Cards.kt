@@ -20,21 +20,11 @@ class Cards(
     }
 
     fun calculateScore(): Int {
-        var total = 0
-        cards.filter { it.rank != Rank.ACE }
-            .forEach { card ->
-                total += card.rank.value
-            }
 
-        val rankACards = cards.filter { it.rank == Rank.ACE }
-        if (rankACards.isNotEmpty()) {
-            rankACards.forEach { card ->
-                total += if (total > STANDARD_NUMBER) {
-                    card.rank.value
-                } else {
-                    card.rank.hiddenValue
-                }
-            }
+        var total = cards.sumOf { it.rank.value }
+
+        if(cards.any { it.rank == Rank.ACE } && total - Rank.ACE.value <= STANDARD_NUMBER) {
+            total += -Rank.ACE.value + Rank.ACE.hiddenValue
         }
         return total
     }
