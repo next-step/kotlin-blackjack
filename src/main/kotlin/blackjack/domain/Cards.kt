@@ -1,12 +1,6 @@
 package blackjack.domain
 
-class Cards(private val cards: HashSet<Card>) {
-    fun getCard(): Card {
-        val card = cards.first()
-        cards.remove(card)
-        return card
-    }
-
+class Cards(private val cards: MutableSet<Card>) : MutableSet<Card> by cards {
     fun addCard(card: Card) {
         cards.add(card)
     }
@@ -14,12 +8,6 @@ class Cards(private val cards: HashSet<Card>) {
     fun getTotalScore(): Int {
         return cards.sumOf {
             it.cardNumber.score
-        }
-    }
-
-    fun hasAceCard(): Boolean {
-        return cards.any {
-            it.cardNumber == CardNumber.CARD_ACE
         }
     }
 

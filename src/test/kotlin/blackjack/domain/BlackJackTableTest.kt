@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.view.GameConditionNotify
 import io.kotest.assertions.throwables.shouldNotThrow
 import org.junit.jupiter.api.Test
 
@@ -21,17 +20,17 @@ class BlackJackTableTest {
             blackJackTable.startGame(
                 Players(mutableListOf(player), blackJackTable),
                 object : GameConditionNotify {
-                    override fun showPlayerCardSet(players: Players) {
+                    override fun giveDefaultCardsToPlayerDone(players: Players) {
                     }
 
                     override fun isNeedMoreCard(player: Player): Boolean {
                         return false
                     }
 
-                    override fun showPlayerCards(player: Player) {
+                    override fun giveCardToPlayerDone(player: Player) {
                     }
 
-                    override fun showGameResult(player: Players) {
+                    override fun finishBlackJackGame(player: Players) {
                     }
                 }
             )

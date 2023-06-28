@@ -1,21 +1,22 @@
 package blackjack
 
 import blackjack.domain.BlackJackTable
+import blackjack.domain.GameConditionNotify
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.view.GameConditionNotify
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
 
     val blackJackTable = BlackJackTable()
-    val blackJackPlayers = InputView.getInputPlayers(blackJackTable)
+    val players = InputView.getInputPlayers()
+    val blackJackPlayers = Players(players, blackJackTable)
+
     blackJackTable.startGame(
         blackJackPlayers,
         object : GameConditionNotify {
-
-            override fun showPlayerCardSet(players: Players) {
+            override fun giveDefaultCardsToPlayerDone(players: Players) {
                 OutputView.showPlayerSet(players)
             }
 
@@ -23,11 +24,11 @@ fun main() {
                 return InputView.isMoreCard(player)
             }
 
-            override fun showPlayerCards(player: Player) {
+            override fun giveCardToPlayerDone(player: Player) {
                 OutputView.showPlayerCards(player)
             }
 
-            override fun showGameResult(players: Players) {
+            override fun finishBlackJackGame(players: Players) {
                 OutputView.showGameResult(players)
             }
         }

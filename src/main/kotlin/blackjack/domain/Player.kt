@@ -7,7 +7,7 @@ open class Player(open val name: PlayerName) {
 
     var gameResultState: GameResultState = GameResultState.DRAW
 
-    val cards: Cards = Cards(hashSetOf())
+    val cards: Cards = Cards(mutableSetOf())
 
     fun addCard(card: Card?) {
         if (card != null) {
@@ -17,7 +17,9 @@ open class Player(open val name: PlayerName) {
 
     fun getCardScore(): Int {
         val minScore = cards.getTotalScore()
-        val hasAce = cards.hasAceCard()
+        val hasAce = cards.any {
+            it.cardNumber == CardNumber.CARD_ACE
+        }
         val maxScore = minScore + if (hasAce) MAX_PLUS_SCORE else MIN_PLUS_SCORE
         if (maxScore > WIN_SCORE) {
             return minScore
@@ -29,8 +31,16 @@ open class Player(open val name: PlayerName) {
         }
     }
 
-    fun setResultState(state: GameResultState) {
-        gameResultState = state
+    fun matchGameScore(dealerScore: Int): GameResultState {
+        var gameResult = GameResultState.DRAW
+        if (dealerScore > getCardScore()) {
+            gameResult = GameResultState.LOSE
+        }
+        if (dealerScore < getCardScore()) {
+            gameResult = GameResultState.WIN
+        }
+        gameResultState = gameResult
+        return gameResult
     }
 
     companion object {

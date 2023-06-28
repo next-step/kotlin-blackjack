@@ -65,10 +65,10 @@ object OutputView {
         println("${player.name.name}카드: $result")
     }
 
-    private fun makeDealerResult(player: Dealer): String {
-        val winCount = player.resultStateCount[GameResultState.LOSE] ?: ZERO_COUNT
-        val drawCount = player.resultStateCount[GameResultState.DRAW] ?: ZERO_COUNT
-        val loseCount = player.resultStateCount[GameResultState.WIN] ?: ZERO_COUNT
+    private fun makeDealerResult(dealer: Dealer): String {
+        val winCount = dealer.getCountOfResult(GameResultState.LOSE)
+        val drawCount = dealer.getCountOfResult(GameResultState.DRAW)
+        val loseCount = dealer.getCountOfResult(GameResultState.WIN)
         val result = StringBuffer()
         if (winCount > ZERO_COUNT) {
             result.append("${winCount}승 ")
@@ -77,7 +77,7 @@ object OutputView {
             result.append("${drawCount}무 ")
         }
         if (loseCount > ZERO_COUNT) {
-            result.append("${loseCount}무 ")
+            result.append("${loseCount}패 ")
         }
         return result.toString()
     }

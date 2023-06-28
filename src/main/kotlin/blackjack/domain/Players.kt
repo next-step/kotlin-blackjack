@@ -1,20 +1,15 @@
 package blackjack.domain
 
-import blackjack.view.GameConditionNotify
-
 class Players(private val players: MutableList<Player>, private val blackJackTable: BlackJackTable) {
 
+    private val dealer = Dealer()
+
     init {
-        players.add(DEALER_POSITION, Dealer())
+        players.add(DEALER_POSITION, dealer)
     }
 
     fun getPlayers(): List<Player> {
         return players
-    }
-    private fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_COUNT) {
-        repeat(repeatTime) {
-            player.addCard(blackJackTable.hitCard())
-        }
     }
 
     fun giveDefaultCards() {
@@ -23,44 +18,41 @@ class Players(private val players: MutableList<Player>, private val blackJackTab
         }
     }
 
-    private fun inputMoreCard(viewCallback: GameConditionNotify, it: Player): Boolean {
-        val isMoreCard = viewCallback.isNeedMoreCard(it)
+    private fun requestGiveMoreCard(viewCallback: GameConditionNotify, player: Player): Boolean {
+        val isMoreCard = viewCallback.isNeedMoreCard(player)
         if (isMoreCard) {
-            giveCardsToPlayer(it)
+            giveCardsToPlayer(player)
         }
         return isMoreCard
     }
 
-    private fun giveMoreCard(viewCallback: GameConditionNotify, player: Player) {
-        do {
-            val isMoreCard = inputMoreCard(viewCallback, player)
-            viewCallback.showPlayerCards(player)
-        } while (isMoreCard)
+    private fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_COUNT) {
+        repeat(repeatTime) {
+            player.addCard(blackJackTable.hitCard())
+        }
     }
 
     fun giveMoreCard(viewCallback: GameConditionNotify) {
-        players.forEach {
-            if (isDealer(it)) return@forEach
-            giveMoreCard(viewCallback, it)
-        }
-    }
-
-    private fun isDealer(player: Player): Boolean {
-        if (player is Dealer) {
-            checkDealerGetMoreCard(player)
-            return true
-        }
-        return false
-    }
-
-    private fun checkDealerGetMoreCard(dealer: Dealer) {
         if (dealer.shouldGetMoreCard()) {
             dealer.addCard(blackJackTable.hitCard())
         }
+
+        val playersWithoutDealer = players.filterNot {
+            it is Dealer
+        }
+        playersWithoutDealer.forEach {
+            giveMoreCardToPlayer(viewCallback, it)
+        }
+    }
+
+    private fun giveMoreCardToPlayer(viewCallback: GameConditionNotify, player: Player) {
+        do {
+            val isMoreCard = requestGiveMoreCard(viewCallback, player)
+            viewCallback.giveCardToPlayerDone(player)
+        } while (isMoreCard)
     }
 
     fun judgeGameResult() {
-        val dealer = players[DEALER_POSITION] as Dealer
         var dealerScore = ZERO_SCORE
 
         if (!dealer.isDealerMustLoose()) {
@@ -72,7 +64,7 @@ class Players(private val players: MutableList<Player>, private val blackJackTab
         }
 
         playersWithoutDealer.forEach {
-            val result = setGameScoreForPlayer(dealerScore, it)
+            val result = it.matchGameScore(dealerScore)
             setDealerResult(dealer, result)
         }
     }
@@ -82,18 +74,6 @@ class Players(private val players: MutableList<Player>, private val blackJackTab
             val count = resultStateCount[result] ?: DEFAULT_ZERO
             resultStateCount[result] = count.inc()
         }
-    }
-
-    private fun setGameScoreForPlayer(dealerScore: Int, player: Player): GameResultState {
-        var gameResult = GameResultState.DRAW
-        if (dealerScore > player.getCardScore()) {
-            gameResult = GameResultState.LOSE
-        }
-        if (dealerScore < player.getCardScore()) {
-            gameResult = GameResultState.WIN
-        }
-        player.setResultState(gameResult)
-        return gameResult
     }
 
     companion object {
