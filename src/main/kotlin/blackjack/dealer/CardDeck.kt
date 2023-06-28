@@ -2,11 +2,11 @@ package blackjack.dealer
 
 import blackjack.card.Card
 import blackjack.card.CardNumber
-import blackjack.card.CardPattern
+import blackjack.card.CardSuit
 
 object CardDeck {
 
-    private val cardDeck: MutableList<Card> = CardPattern.values().flatMap { pattern ->
+    private val cardDeck: MutableList<Card> = CardSuit.values().flatMap { pattern ->
         CardNumber.values().map { number -> Card(number, pattern) }
     }.toMutableList()
 

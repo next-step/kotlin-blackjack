@@ -2,7 +2,7 @@ package blackjack.player
 
 import blackjack.card.Card
 import blackjack.card.CardNumber
-import blackjack.card.CardPattern
+import blackjack.card.CardSuit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -18,13 +18,13 @@ class PlayerTest : BehaviorSpec({
                 player.getHandSize() shouldBe 0
             }
             Then("참가자의 초기 상태는 WANT이다.") {
-                player.status shouldBe Status.WANT
+                player.getStatus() shouldBe Status.HIT
             }
         }
         When("카드를 두 장 받으면") {
             val player = Player("참가자")
-            val card1 = Card(CardNumber.JACK, CardPattern.CLOVER)
-            val card2 = Card(CardNumber.TEN, CardPattern.CLOVER)
+            val card1 = Card(CardNumber.JACK, CardSuit.CLUB)
+            val card2 = Card(CardNumber.TEN, CardSuit.CLUB)
             player.addCard(card1)
             player.addCard(card2)
             Then("참가자는 손패에 카드를 두 장 추가한다.") {
@@ -38,12 +38,12 @@ class PlayerTest : BehaviorSpec({
         When("카드를 받지 않겠다고 할 때") {
             Then("Status 상태를 STAND로 바꾼다.") {
                 player.updateStatus(Status.STAND)
-                player.status shouldBe Status.STAND
+                player.getStatus() shouldBe Status.STAND
             }
             And("카드를 받고 싶다고 할 때") {
                 Then("Status 상태를 WANT로 바꾼다.") {
-                    player.updateStatus(Status.WANT)
-                    player.status shouldBe Status.WANT
+                    player.updateStatus(Status.HIT)
+                    player.getStatus() shouldBe Status.HIT
                 }
             }
         }

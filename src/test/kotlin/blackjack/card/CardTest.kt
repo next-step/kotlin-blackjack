@@ -1,6 +1,5 @@
 package blackjack.card
 
-
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
@@ -8,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class CardTest : StringSpec({
 
     "숫자가 적힌 카드는 1에서 10 사이이다." {
-        val card = Card(CardNumber.TWO, CardPattern.CLOVER)
+        val card = Card(CardNumber.TWO, CardSuit.CLUB)
         card.number shouldBeIn listOf(
             CardNumber.TWO,
             CardNumber.THREE,
@@ -22,15 +21,15 @@ class CardTest : StringSpec({
         )
     }
     "카드의 문양은 클로버, 다이아, 스페이드, 하트중 하나이다." {
-        val card = Card(CardNumber.TWO, CardPattern.CLOVER)
-        card.pattern shouldBeIn listOf(CardPattern.CLOVER, CardPattern.DIAMOND, CardPattern.SPADE, CardPattern.HEART)
+        val card = Card(CardNumber.TWO, CardSuit.CLUB)
+        card.pattern shouldBeIn listOf(CardSuit.CLUB, CardSuit.DIAMOND, CardSuit.SPADE, CardSuit.HEART)
     }
     "카드는 숫자 이외에도 Jack, Queen, King을 가질 수 있다." {
-        val card = Card(CardNumber.JACK, CardPattern.CLOVER)
+        val card = Card(CardNumber.JACK, CardSuit.CLUB)
         card.number shouldBe CardNumber.JACK
-        val card2 = Card(CardNumber.QUEEN, CardPattern.CLOVER)
+        val card2 = Card(CardNumber.QUEEN, CardSuit.CLUB)
         card2.number shouldBe CardNumber.QUEEN
-        val card3 = Card(CardNumber.KING, CardPattern.CLOVER)
+        val card3 = Card(CardNumber.KING, CardSuit.CLUB)
         card3.number shouldBe CardNumber.KING
     }
 })

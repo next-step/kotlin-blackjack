@@ -5,7 +5,7 @@ import blackjack.card.Card
 class Player(
     val name: String,
     private val hand: Hand = Hand(),
-    private var status: Status = Status.WANT
+    private var status: Status = Status.HIT
 ) {
     fun addCard(card: Card) {
         hand.addCard(card)
