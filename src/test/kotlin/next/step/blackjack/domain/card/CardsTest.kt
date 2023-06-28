@@ -138,7 +138,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("종료 상태임") {
-                cards.isFinished() shouldBe true
+                cards.isHit() shouldBe true
             }
         }
         When("Ace가 포함되어 최소점수가 21점과 같으면") {
@@ -157,7 +157,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("종료 상태임") {
-                cards.isFinished() shouldBe true
+                cards.isHit() shouldBe true
             }
             Then("카드 설명 제공") {
                 cards.descs() shouldBe listOf("A클로버", "9하트", "9클로버", "2하트")
@@ -180,7 +180,7 @@ class CardsTest : BehaviorSpec({
                 cards.isBurst() shouldBe false
             }
             Then("종료 상태임") {
-                cards.isFinished() shouldBe true
+                cards.isHit() shouldBe true
             }
         }
         When("첫번째 desc 찾는데 카드가 있으면") {

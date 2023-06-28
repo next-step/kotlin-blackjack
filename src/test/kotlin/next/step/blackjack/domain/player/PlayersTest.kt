@@ -1,26 +1,28 @@
 package next.step.blackjack.domain.player
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.betting.BettingAmount
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.GameCards
 import next.step.blackjack.domain.dealer.Dealer
+import next.step.blackjack.domain.game.GameCards
 import next.step.blackjack.domain.game.GameResult
 import next.step.blackjack.domain.game.GameResults
 
 class PlayersTest : DescribeSpec({
     describe("Players") {
-        context("생성하면") {
+        context("생성") {
             val gameCards = GameCards.of(
                 listOf(
                     Card.of(CardFace.TWO, CardSymbol.CLUB),
                     Card.of(CardFace.THREE, CardSymbol.CLUB),
                     Card.of(CardFace.FOUR, CardSymbol.CLUB),
                     Card.of(CardFace.FIVE, CardSymbol.CLUB),
-                    Card.of(CardFace.TWO, CardSymbol.CLUB)
+                    Card.of(CardFace.SIX, CardSymbol.CLUB)
                 )
             )
             it("카드를 두장씩 가지는 플레이어들이 생성됨") {
@@ -33,24 +35,14 @@ class PlayersTest : DescribeSpec({
                     )
                 ) { gameCards.pop(2) }
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.TWO, CardSymbol.CLUB),
-                                Card.of(CardFace.THREE, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.TWO, CardSymbol.CLUB),
+                        Card.of(CardFace.THREE, CardSymbol.CLUB),
                     ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB)
-                            )
-                        )
+                    listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
                 )
             }
@@ -78,26 +70,16 @@ class PlayersTest : DescribeSpec({
 
                 players.turn({ _ -> true }, { gameCards.pop() }, {})
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.ACE, CardSymbol.CLUB),
-                                Card.of(CardFace.KING, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
                     ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB),
-                                Card.of(CardFace.THREE, CardSymbol.CLUB),
-                                Card.of(CardFace.QUEEN, CardSymbol.CLUB)
-                            )
-                        )
+                    listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
+                        Card.of(CardFace.THREE, CardSymbol.CLUB),
+                        Card.of(CardFace.QUEEN, CardSymbol.CLUB),
                     )
                 )
             }
@@ -124,34 +106,24 @@ class PlayersTest : DescribeSpec({
 
                 players.turn({ _ -> false }, { gameCards.pop() }, {})
 
-                players shouldBe setOf(
-                    Player.of(
-                        PlayerName.of("dj"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.ACE, CardSymbol.CLUB),
-                                Card.of(CardFace.KING, CardSymbol.CLUB)
-                            )
-                        )
+                players.cards() shouldBe listOf(
+                    listOf(
+                        Card.of(CardFace.ACE, CardSymbol.CLUB),
+                        Card.of(CardFace.KING, CardSymbol.CLUB),
                     ),
-                    Player.of(
-                        PlayerName.of("dj2"),
-                        Cards.of(
-                            listOf(
-                                Card.of(CardFace.FOUR, CardSymbol.CLUB),
-                                Card.of(CardFace.FIVE, CardSymbol.CLUB)
-                            )
-                        )
+                    listOf(
+                        Card.of(CardFace.FOUR, CardSymbol.CLUB),
+                        Card.of(CardFace.FIVE, CardSymbol.CLUB),
                     )
                 )
             }
         }
-        context("fight") {
-            it("GameResults 제공") {
+        context("method") {
+            it("fight 하면 GameResults 제공") {
                 val players = Players.of(
                     setOf(
                         Player.of(
-                            PlayerName.of("unfinished17"),
+                            PlayerName.of("stay17"),
                             Cards.of(
                                 listOf(
                                     Card.of(CardFace.SEVEN, CardSymbol.CLUB),
@@ -169,7 +141,7 @@ class PlayersTest : DescribeSpec({
                             )
                         ),
                         Player.of(
-                            PlayerName.of("finished"),
+                            PlayerName.of("hit"),
                             Cards.of(
                                 listOf(
                                     Card.of(CardFace.TEN, CardSymbol.CLUB),
@@ -201,9 +173,9 @@ class PlayersTest : DescribeSpec({
 
                 players.fight(dealer) shouldBe GameResults(
                     mapOf(
-                        "unfinished17" to GameResult.LOSE,
+                        "stay17" to GameResult.LOSE,
                         "blackjack" to GameResult.TIE,
-                        "finished" to GameResult.LOSE,
+                        "hit" to GameResult.LOSE,
                         "burst" to GameResult.LOSE,
                     ),
                     mapOf(
@@ -211,6 +183,25 @@ class PlayersTest : DescribeSpec({
                         GameResult.TIE to 1
                     )
                 )
+            }
+            it("bet하면 베팅 금액을 받아서 BettingPlayers 생성") {
+                val player = Player.of(
+                    PlayerName.of("stay17"),
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.SEVEN, CardSymbol.CLUB),
+                            Card.of(CardFace.TEN, CardSymbol.HEART)
+                        )
+                    )
+                )
+
+                val result = Players.of(setOf(player)).bet { BettingAmount.of(1000) }
+
+                assertSoftly {
+                    result.players.size shouldBe 1
+                    result.players.first().player shouldBe player
+                    result.players.first().amount shouldBe BettingAmount(1000)
+                }
             }
         }
     }

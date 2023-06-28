@@ -18,5 +18,19 @@ class GameResultTest : DescribeSpec({
                 input.opposite() shouldBe opposite
             }
         }
+        context("UNDECIDED이면 then으로 다음 결과를 제공") {
+            withData(
+                GameResult.values().toList()
+            ) { gameResult ->
+                GameResult.UNDECIDED then gameResult shouldBe gameResult
+            }
+        }
+        context("UNDECIDED가 아니면 then을 해도 자신의 결과를 제공") {
+            withData(
+                GameResult.values().filterNot { it == GameResult.UNDECIDED }
+            ) { gameResult ->
+                gameResult then GameResult.TIE shouldBe gameResult
+            }
+        }
     }
 })

@@ -2,16 +2,14 @@ package next.step.blackjack.domain.dealer
 
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.state.CardsState
-import next.step.blackjack.domain.card.state.UnfinishedState
 import next.step.blackjack.domain.player.Player
 import next.step.blackjack.domain.player.PlayerName
+import next.step.blackjack.domain.playercards.PlayerCards
 
 class Dealer(
     name: PlayerName = PlayerName.of(DEALER_NAME),
-    cards: Cards = Cards.of(emptyList()),
-    state: CardsState = UnfinishedState
-) : Player(name, cards, state) {
+    cards: PlayerCards
+) : Player(name, cards) {
 
     fun cardDescFirst(): String = cards.descFirst()
 
@@ -28,6 +26,6 @@ class Dealer(
         private const val DEALER_NAME = "딜러"
         private const val HIT_AVAILABLE_POINT = 16
 
-        fun of(cards: Cards): Dealer = Dealer(cards = cards, state = UnfinishedState.next(cards))
+        fun of(cards: Cards): Dealer = Dealer(cards = PlayerCards.of(cards))
     }
 }

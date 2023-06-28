@@ -1,4 +1,4 @@
-package next.step.blackjack.domain.card.state
+package next.step.blackjack.domain.playercards.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -7,23 +7,23 @@ import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
 import org.junit.jupiter.api.assertThrows
 
-class BlackjackStateTest : DescribeSpec({
+class HitStateTest : DescribeSpec({
 
-    describe("BlackjackState") {
+    describe("HitState") {
         context("next") {
             it("항상 예외 발생") {
-                assertThrows<IllegalArgumentException> { BlackjackState.next(Cards.of(emptyList())) }
+                assertThrows<IllegalArgumentException> { HitState.next(Cards.of(emptyList())) }
             }
         }
         context("카드 상태에 따라 게임 결과가 달라짐") {
-            data class ResultExpected(val state: CardsState, val result: GameResult)
+            data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
-                ResultExpected(BlackjackState, GameResult.TIE),
-                ResultExpected(UnfinishedState, GameResult.WIN),
-                ResultExpected(FinishedState, GameResult.WIN),
+                ResultExpected(BlackjackState, GameResult.LOSE),
+                ResultExpected(StayState, GameResult.WIN),
+                ResultExpected(HitState, GameResult.TIE),
                 ResultExpected(BurstState, GameResult.WIN),
             ) { (state, result) ->
-                BlackjackState.fight(state) shouldBe result
+                HitState.fight(state) shouldBe result
             }
         }
     }

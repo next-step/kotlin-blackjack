@@ -1,53 +1,37 @@
 package next.step.blackjack.domain.player
 
+import next.step.blackjack.domain.betting.BettingAmount
+import next.step.blackjack.domain.betting.BettingPlayer
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.Cards
-import next.step.blackjack.domain.card.state.CardsState
-import next.step.blackjack.domain.card.state.UnfinishedState
 import next.step.blackjack.domain.game.GameResult
+import next.step.blackjack.domain.playercards.PlayerCards
 
 open class Player(
     protected val name: PlayerName,
-    protected val cards: Cards = Cards.of(emptyList()),
-    protected var state: CardsState = UnfinishedState
+    protected val cards: PlayerCards = PlayerCards()
 ) {
 
     fun name(): String = name.name
 
-    fun hit(card: Card) {
-        cards.add(card)
-        state = state.next(cards)
-    }
+    fun hit(card: Card) = cards.hit(card)
 
-    open fun canHit(): Boolean = state == UnfinishedState
+    open fun canHit(): Boolean = cards.isStay()
 
     fun cardDescs(): Set<String> = cards.descs()
 
+    fun cards(): List<Card> = cards.cards()
+
     fun point(): Int = cards.point()
 
-    fun fight(other: Player): GameResult {
-        val gameResult = state.fight(other.state)
-        return if (gameResult == GameResult.UNDECIDED) cards.fight(other.cards) else gameResult
-    }
+    fun fight(other: Player): GameResult = cards.fight(other.cards)
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Player) return false
+    fun bet(amount: BettingAmount): BettingPlayer = BettingPlayer.of(this, amount)
 
-        if (name != other.name) return false
-        if (cards != other.cards) return false
-        return state == other.state
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + cards.hashCode()
-        result = 31 * result + state.hashCode()
-        return result
-    }
+    fun isBlackjack(): Boolean = cards.isBlackjack()
 
     companion object {
         fun of(name: PlayerName, cards: Cards): Player =
-            Player(name, cards, UnfinishedState.next(cards))
+            Player(name, PlayerCards.of(cards))
     }
 }

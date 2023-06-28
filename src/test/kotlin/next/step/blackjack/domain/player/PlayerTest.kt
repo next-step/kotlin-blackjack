@@ -3,6 +3,7 @@ package next.step.blackjack.domain.player
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import next.step.blackjack.domain.betting.BettingAmount
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
@@ -19,7 +20,7 @@ class PlayerTest : BehaviorSpec({
             player.hit(card)
 
             Then("가지고 있는 카드를 추가함") {
-                player shouldBe Player.of(PlayerName.of("dj"), Cards.of(mutableListOf(card)))
+                player.cards() shouldBe listOf(Card.of(CardFace.ACE, CardSymbol.CLUB))
             }
             Then("점수는 11점") {
                 player.point() shouldBe 11
@@ -58,6 +59,9 @@ class PlayerTest : BehaviorSpec({
             Then("점수는 21점") {
                 player.point() shouldBe 21
             }
+            Then("카드도 2장이면 블랙잭") {
+                player.isBlackjack() shouldBe true
+            }
         }
         When("카드를 더 받아서 총 점수가 21점이 넘으면") {
             val player = Player.of(
@@ -82,11 +86,32 @@ class PlayerTest : BehaviorSpec({
                 player.cardDescs() shouldBe listOf("K클로버", "K하트", "2다이아몬드")
             }
         }
+        When("베팅하면") {
+            Then("베팅금액을 가진 Player를 제공") {
+                val player = Player.of(
+                    PlayerName.of("dj"),
+                    Cards.of(
+                        listOf(
+                            Card.of(CardFace.KING, CardSymbol.CLUB),
+                            Card.of(CardFace.KING, CardSymbol.HEART)
+                        )
+                    )
+                )
+                val bettingAmount = BettingAmount.of(1000)
+
+                val result = player.bet(bettingAmount)
+
+                assertSoftly {
+                    result.player shouldBe player
+                    result.amount shouldBe bettingAmount
+                }
+            }
+        }
     }
 
     Given("Player fight") {
         val player = Player.of(
-            PlayerName.of("unfinished17"),
+            PlayerName.of("stay17"),
             Cards.of(
                 listOf(
                     Card.of(CardFace.SEVEN, CardSymbol.CLUB),
@@ -110,7 +135,7 @@ class PlayerTest : BehaviorSpec({
         }
         When("Player state로 게임 결과가 결정되지 않으면") {
             val other = Player.of(
-                PlayerName.of("unfinished16"),
+                PlayerName.of("stay16"),
                 Cards.of(
                     listOf(
                         Card.of(CardFace.SIX, CardSymbol.CLUB),

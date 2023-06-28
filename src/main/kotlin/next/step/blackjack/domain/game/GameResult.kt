@@ -12,4 +12,6 @@ enum class GameResult(val desc: String) {
         LOSE -> WIN
         UNDECIDED -> UNDECIDED
     }
+
+    infix fun then(nextResult: GameResult): GameResult = if (this == UNDECIDED) nextResult else this
 }

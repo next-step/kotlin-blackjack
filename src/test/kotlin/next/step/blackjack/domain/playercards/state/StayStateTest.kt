@@ -1,4 +1,4 @@
-package next.step.blackjack.domain.card.state
+package next.step.blackjack.domain.playercards.state
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData
@@ -9,11 +9,11 @@ import next.step.blackjack.domain.card.CardSymbol
 import next.step.blackjack.domain.card.Cards
 import next.step.blackjack.domain.game.GameResult
 
-class UnfinishedStateTest : DescribeSpec({
+class StayStateTest : DescribeSpec({
 
-    describe("UnfinishedState") {
+    describe("StayState") {
         context("cards 조건에 따라 다른 다음 상태 제공") {
-            data class NextStateExpected(val cards: Cards, val nextState: CardsState)
+            data class NextStateExpected(val cards: Cards, val nextState: PlayerCardsState)
 
             withData(
                 NextStateExpected(
@@ -33,7 +33,7 @@ class UnfinishedStateTest : DescribeSpec({
                             Card.of(CardFace.ACE, CardSymbol.HEART)
                         )
                     ),
-                    FinishedState
+                    HitState
                 ),
                 NextStateExpected(
                     Cards.of(
@@ -52,21 +52,21 @@ class UnfinishedStateTest : DescribeSpec({
                             Card.of(CardFace.KING, CardSymbol.HEART)
                         )
                     ),
-                    UnfinishedState
+                    StayState
                 )
             ) { (cards, expected) ->
-                UnfinishedState.next(cards) shouldBe expected
+                StayState.next(cards) shouldBe expected
             }
         }
         context("카드 상태에 따라 게임 결과가 달라짐") {
-            data class ResultExpected(val state: CardsState, val result: GameResult)
+            data class ResultExpected(val state: PlayerCardsState, val result: GameResult)
             withData(
                 ResultExpected(BlackjackState, GameResult.LOSE),
-                ResultExpected(UnfinishedState, GameResult.UNDECIDED),
-                ResultExpected(FinishedState, GameResult.LOSE),
+                ResultExpected(StayState, GameResult.UNDECIDED),
+                ResultExpected(HitState, GameResult.LOSE),
                 ResultExpected(BurstState, GameResult.WIN),
             ) { (state, result) ->
-                UnfinishedState.fight(state) shouldBe result
+                StayState.fight(state) shouldBe result
             }
         }
     }
