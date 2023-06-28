@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.error.BlackjackErrorMessage.NOT_EXIST_CARD
+
 class Card private constructor(
     val rank: Ranks,
     val suit: Suits,
@@ -10,7 +12,7 @@ class Card private constructor(
         val ALL_CARDS = createAllCards()
 
         fun createCard(rank: Ranks, suit: Suits): Card {
-            return ALL_CARDS[Pair(rank, suit)] ?: throw IllegalArgumentException("카드가 존재하지 않습니다.")
+            return ALL_CARDS[Pair(rank, suit)] ?: throw IllegalArgumentException(NOT_EXIST_CARD)
         }
 
         private fun createAllCards(): Map<Pair<Ranks, Suits>, Card> {

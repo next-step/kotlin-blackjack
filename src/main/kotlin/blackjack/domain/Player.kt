@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
+import blackjack.error.BlackjackErrorMessage.SUM_OVER_21
 
 open class Player(
     val name: String,
@@ -51,9 +52,7 @@ open class Player(
     }
 
     fun drawCard() {
-        if (!canDraw()) {
-            throw IllegalStateException("카드 숫자의 합이 21을 초과합니다.")
-        }
+        check(canDraw()) { SUM_OVER_21 }
 
         val drawnCard = gameCardsSet.drawRandomCard()
         myCards = myCards.add(drawnCard)
