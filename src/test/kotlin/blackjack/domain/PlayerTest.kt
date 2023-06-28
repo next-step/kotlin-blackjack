@@ -13,18 +13,18 @@ class PlayerTest {
     @Test
     fun `플레이어는 이름을 갖는다`() {
         // given
-        val sut = Player("jun")
+        val sut = Player.of("jun")
 
         // when
         // then
-        assertThat(sut.name).isEqualTo("jun")
+        assertThat(sut.playerName).isEqualTo(PlayerName("jun"))
     }
 
     @Test
     fun `이름이 같은 플레이어는 동일한 객체로 취급된다`() {
         // given
-        val jun1 = Player("jun")
-        val jun2 = Player("jun")
+        val jun1 = Player.of("jun")
+        val jun2 = Player.of("jun")
 
         // when
         // then
@@ -34,7 +34,7 @@ class PlayerTest {
     @Test
     fun `초기상태 플레이어는 아무런 카드가 없다`() {
         // given
-        val sut = Player("jun")
+        val sut = Player.of("jun")
 
         // when
         val cards = sut.cards
@@ -46,7 +46,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 가져갈 수 있다`() {
         // given
-        val sut = Player("jun")
+        val sut = Player.of("jun")
 
         // when
         val cards = sut.receiveCard(card)
@@ -61,7 +61,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 여러장 가져갈 수 있다`() {
         // given
-        val sut = Player("jun")
+        val sut = Player.of("jun")
 
         // when
         sut.receiveCard(card)

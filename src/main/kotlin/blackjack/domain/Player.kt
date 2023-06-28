@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.Cards.Companion.EMPTY_CARDS
 
-class Player(val name: String) {
+class Player(val playerName: PlayerName) {
 
     private var _cards: Cards = EMPTY_CARDS
     val cards: Cards
@@ -21,12 +21,19 @@ class Player(val name: String) {
         if (this === other) return true
         if (other !is Player) return false
 
-        if (name != other.name) return false
+        if (playerName != other.playerName) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return name.hashCode()
+        return playerName.hashCode()
+    }
+
+    companion object {
+        fun of(name: String): Player = Player(PlayerName(name))
     }
 }
+
+@JvmInline
+value class PlayerName(val name: String)
