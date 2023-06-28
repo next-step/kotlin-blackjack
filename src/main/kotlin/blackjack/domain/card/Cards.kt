@@ -33,9 +33,9 @@ class Cards(_value: List<Card> = emptyList()) {
     }
 
     private fun updateScoreSet(card: Card) {
-        val _scoreSet = setOf(*scoreSet.toTypedArray())
+        val copyScoreSet = setOf(*scoreSet.toTypedArray())
 
-        val newScoreSet = _scoreSet.flatMap { score ->
+        val newScoreSet = copyScoreSet.flatMap { score ->
             if (card.denom.symbol == Denomination.ACE.symbol) {
                 Denomination.ACE.getCardScoresValue().map { value -> score + value }
             } else {
