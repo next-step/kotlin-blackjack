@@ -3,7 +3,7 @@ package blackjack.player
 import blackjack.card.Card
 
 class Hand(
-    private val cardList: ArrayList<Card> = ArrayList()
+    private val cardList: MutableList<Card> = mutableListOf()
 ) {
 
     fun addCard(card: Card) {
