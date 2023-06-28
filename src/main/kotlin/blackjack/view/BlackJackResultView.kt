@@ -18,18 +18,13 @@ import blackjack.domain.score.Score
 class BlackJackResultView {
 
     fun display(result: CardDistributionResult) {
-        println()
-        println(result.makeTitleMessage())
-
-        val cardsMessage = result.dealerCards
-            .filterIsInstance<DealerCard.Open>()
-            .joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
-        println("딜러: $cardsMessage")
-
-        result.playerCards
-            .map { playerCard -> playerCard.makeDisplayMessage() }
-            .forEach { playerCardsCaptureMessage -> println(playerCardsCaptureMessage) }
-        println()
+        val message = buildString {
+            append("\n")
+            append(result.makeTitleMessage())
+            append(result.makeDealerCardsMessage())
+            append(result.makeAllPlayerCardsMessage())
+        }
+        println(message)
     }
 
     fun display(playerCards: PlayerCards) {
@@ -63,6 +58,16 @@ class BlackJackResultView {
     private fun CardDistributionResult.makeTitleMessage(): String {
         val names = playerNames.unWrappings().joinToString(", ")
         return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
+    }
+
+    private fun CardDistributionResult.makeDealerCardsMessage(): String {
+        val openCards = dealerCards.filterIsInstance<DealerCard.Open>()
+        val cardsMessage = openCards.joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
+        return "딜러: $cardsMessage"
+    }
+
+    private fun CardDistributionResult.makeAllPlayerCardsMessage(): String {
+        return playerCards.joinToString("\n") { playerCard -> playerCard.makeDisplayMessage() }
     }
 
     private fun PlayerCards.makeDisplayMessage(): String {
