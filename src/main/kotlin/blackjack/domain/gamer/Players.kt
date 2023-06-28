@@ -31,11 +31,7 @@ value class Players(val value: List<Player>) {
 
     fun match(dealer: Dealer): MatchResult {
         val playerMatchResults = value.map { player -> player.match(dealer) }
-        val dealerMatchResult = DealerMatchResult(
-            winCount = playerMatchResults.count { it.matchResultType.isLose() },
-            tieCount = playerMatchResults.count { it.matchResultType.isTie() },
-            loseCount = playerMatchResults.count { it.matchResultType.isWin() }
-        )
+        val dealerMatchResult = DealerMatchResult.create(playerMatchResults)
         return MatchResult(
             dealerCards = dealer.state.cards,
             allPlayerCards = captureAllPlayerCards(),
