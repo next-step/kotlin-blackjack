@@ -7,7 +7,6 @@ import blackjack.domain.card.Cards
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.game.DealerTurnExecuteResult
-import blackjack.domain.game.DelayerGameResult
 import blackjack.domain.game.MatchResult
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
@@ -58,15 +57,6 @@ class BlackJackResultView {
         println(matchResult.dealerMatchResult.makeDisplayMessage())
         matchResult.playerMatchResults.forEach {
             println(it.makeDisplayMessage())
-        }
-    }
-
-    private fun DelayerGameResult.makeDisplayMessage(): String {
-        return buildString {
-            append("딜러 카드: ")
-            append(cards.makeDisplayMessage())
-            append(" - ")
-            append(cards.score.makeDisplayMessage())
         }
     }
 
