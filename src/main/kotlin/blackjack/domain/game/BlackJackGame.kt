@@ -43,7 +43,7 @@ class BlackJackGame(
         players.init { InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)) }
 
         return CardDistributionResult(
-            dealerCards = listOf(DealerCard.Open(dealer.state.cards.first()), DealerCard.Hide),
+            dealerCards = listOf(DealerCard.Open(dealer.state.cards.value.first()), DealerCard.Hide),
             playerCards = players.captureAllPlayerCards(),
         )
     }

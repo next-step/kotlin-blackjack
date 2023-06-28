@@ -7,18 +7,6 @@ data class Cards(
 ) {
     val score = CardScoreCalculator.calculateScore(value)
 
-    fun first(): Card {
-        return value.first()
-    }
-
-    fun isEmpty(): Boolean {
-        return value.isEmpty()
-    }
-
-    fun isNotEmpty(): Boolean {
-        return value.isNotEmpty()
-    }
-
     operator fun plus(card: Card): Cards {
         return Cards(value.plus(card))
     }

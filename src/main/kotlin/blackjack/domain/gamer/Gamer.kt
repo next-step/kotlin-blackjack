@@ -18,11 +18,11 @@ abstract class Gamer {
     }
 
     fun hasCard(): Boolean {
-        return state.cards.isNotEmpty()
+        return state.cards.value.isNotEmpty()
     }
 
     fun notHasCards(): Boolean {
-        return state.cards.isEmpty()
+        return state.cards.value.isEmpty()
     }
 
     fun stay() {
