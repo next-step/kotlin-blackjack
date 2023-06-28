@@ -19,8 +19,7 @@ class PlayerResults(val results: List<PlayerResult>) {
     private fun getSumOfRevenueFromGameResult(gameResult: GameResult): Long {
         return results.filter { it.result == gameResult }
             .map { it.player.betAmount.getRevenue() }
-            .ifEmpty { listOf(0L) }
-            .reduce { acc, betAmount -> acc + betAmount }
+            .fold(0) { acc, betAmount -> acc + betAmount }
     }
 }
 
