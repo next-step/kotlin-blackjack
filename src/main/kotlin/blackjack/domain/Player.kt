@@ -4,7 +4,7 @@ import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
 
 open class Player(
     val name: String,
-    private val gameCardsSet: GameCardsSet
+    private val gameCardsSet: GameCardsSet,
 ) {
     private var myCards: Cards = Cards.empty()
     private var state: PlayerState = PlayerState.DEFAULT
@@ -30,8 +30,24 @@ open class Player(
         return true
     }
 
-    fun setState(newState: PlayerState) {
-        state = newState
+    fun wantStand() {
+        state = PlayerState.STAND
+    }
+
+    fun findStateBySum(): PlayerState {
+        if (sumOfMyCards() == BLACK_JACK_SCORE) {
+            state = PlayerState.BLACK_JACK
+        }
+
+        if (sumOfMyCards() < BLACK_JACK_SCORE) {
+            state = PlayerState.STAND
+        }
+
+        if (sumOfMyCards() > BLACK_JACK_SCORE) {
+            state = PlayerState.BUST
+        }
+
+        return state
     }
 
     fun drawCard() {

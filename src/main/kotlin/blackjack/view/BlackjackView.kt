@@ -6,6 +6,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.vo.GameResultVO
 
 object BlackjackView {
     fun printInitialTurn(dealerName: String, playerNames: List<String>, initialDraw: Int) {
@@ -55,6 +56,20 @@ object BlackjackView {
     private fun print(card: Card): String = "${card.rank.description}${card.suit.description}"
 
     private fun print(cards: Cards): String = cards.cards.joinToString(", ") { print(it) }
+    fun printGameResult(gameResult: GameResultVO) {
+        println("\n## 최종 승패")
+        println(
+            "딜러: ${
+            gameResult.dealerWinMap.map { (result, int) ->
+                int.toString() + result.description
+            }.joinToString(" ")
+            }"
+        )
+
+        gameResult.playersWinMap.forEach { (player, result) ->
+            println("${player.name}: ${result.description}")
+        }
+    }
 
     private const val YES: String = "y"
     private const val NO: String = "n"

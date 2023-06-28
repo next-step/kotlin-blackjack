@@ -1,11 +1,10 @@
 package blackjack.controller
 
-import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.GameCardsSet
+import blackjack.domain.GameResult
 import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import blackjack.domain.Players
 import blackjack.view.BlackjackView
 import blackjack.view.InputView
@@ -20,6 +19,9 @@ class BlackjackController {
 
         playGame(dealer, players)
         BlackjackView.printPlayersResult(listOf(dealer).plus(players.players))
+
+        val gameResult = GameResult(dealer, players).calculate()
+        BlackjackView.printGameResult(gameResult)
     }
 
     private fun prepareGame(): Pair<Dealer, Players> {
@@ -52,10 +54,7 @@ class BlackjackController {
             BlackjackView.printDealerExtraHit(dealer.name)
         }
 
-        if (dealer.sumOfMyCards() > BLACK_JACK_SCORE) {
-            wantStop = true
-            return
-        }
+        dealer.findStateBySum()
     }
 
     private fun playTurn(player: Player) {
@@ -69,13 +68,13 @@ class BlackjackController {
     private fun goNext(player: Player): Boolean {
         val canDraw = player.canDraw()
         if (!canDraw) {
-            player.setState(PlayerState.BUST)
+            player.findStateBySum()
             return false
         }
 
         val wantDraw = BlackjackView.askDraw(player)
         if (!wantDraw) {
-            player.setState(PlayerState.STAND)
+            player.wantStand()
         }
         return wantDraw
     }
