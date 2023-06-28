@@ -8,11 +8,11 @@ open class Player(
 ) {
     private var myCards: Cards = Cards.empty()
 
+    fun getMyCards(): Cards = myCards.copy()
+
     fun numberOfMyCards(): Int = myCards.cards.size
 
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
-
-    fun showMyCards(): String = myCards.toString()
 
     fun canDraw(): Boolean = myCards.calculateOptimalSum() <= BLACK_JACK_SCORE
 

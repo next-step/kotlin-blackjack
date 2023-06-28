@@ -3,7 +3,7 @@ package blackjack.domain
 class Cards private constructor(
     val cards: List<Card>,
 ) {
-    override fun toString(): String = cards.joinToString(", ") { it.toString() }
+    fun copy(): Cards = Cards(cards.toList())
 
     fun add(newCard: Card): Cards {
         val newCards = cards.toMutableList()

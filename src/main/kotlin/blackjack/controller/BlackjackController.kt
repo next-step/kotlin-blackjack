@@ -18,7 +18,7 @@ class BlackjackController {
         val players = dealerAndPlayers.second
 
         playGame(dealer, players)
-        BlackjackView.printPlayersResult(players)
+        BlackjackView.printPlayersResult(players.players.plus(dealer))
     }
 
     private fun prepareGame(): Pair<Dealer, Players> {
@@ -42,6 +42,10 @@ class BlackjackController {
     }
 
     private fun playGame(dealer: Dealer, players: Players) {
+        while (!wantStop) {
+            players.players.forEach { playTurn(it) }
+        }
+
         if (dealer.sumOfMyCards() <= DEALER_INITIAL_TURN_LIMIT) {
             dealer.drawCard()
             BlackjackView.printDealerExtraHit(dealer.name)
@@ -49,11 +53,7 @@ class BlackjackController {
 
         if (dealer.sumOfMyCards() > BLACK_JACK_SCORE) {
             wantStop = true
-            return // todo: 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리한다.
-        }
-
-        while (!wantStop) {
-            players.players.forEach { playTurn(it) }
+            return
         }
     }
 

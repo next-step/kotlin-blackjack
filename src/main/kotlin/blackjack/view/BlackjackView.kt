@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.Player
@@ -22,11 +24,12 @@ object BlackjackView {
     }
 
     fun printDealerCard(dealer: Dealer) {
-        println("${dealer.name}: ${dealer.showMyCards()}")
+        val dealerFirstCard = dealer.getMyCards().cards[0]
+        println("${dealer.name}: ${print(dealerFirstCard)}")
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.showMyCards()}")
+        println("${player.name}카드: ${print(player.getMyCards())}")
     }
 
     fun askDraw(player: Player): Boolean {
@@ -38,16 +41,20 @@ object BlackjackView {
         }
     }
 
-    fun printPlayersResult(players: Players) {
+    fun printPlayersResult(players: List<Player>) {
         println()
-        players.players.forEach {
+        players.forEach {
             printPlayerResult(it)
         }
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.showMyCards()} - 결과: ${player.sumOfMyCards()}")
+        println("${player.name}카드: ${print(player.getMyCards())} - 결과: ${player.sumOfMyCards()}")
     }
+
+    private fun print(card: Card): String = "${card.rank.description}${card.suit.description}"
+
+    private fun print(cards: Cards): String = cards.cards.joinToString(", ") { print(it) }
 
     private const val YES: String = "y"
     private const val NO: String = "n"

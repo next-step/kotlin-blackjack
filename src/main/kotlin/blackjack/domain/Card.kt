@@ -6,8 +6,6 @@ class Card private constructor(
 ) {
     val numbers: List<Int> = rank.numbers
 
-    override fun toString(): String = "${rank.description}${suit.description}"
-
     companion object {
         val ALL_CARDS = createAllCards()
 
