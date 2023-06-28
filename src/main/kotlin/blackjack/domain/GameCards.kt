@@ -1,15 +1,15 @@
 package blackjack.domain
 
 class GameCards {
-    private val gameCards: MutableList<Pair<Shape, Character>> = mutableListOf()
+    private val gameCards: MutableList<Card> = mutableListOf()
 
     fun draw(): Card {
-        var card = getShape() to getChar()
+        var card = Card(getShape(), getChar())
         while (gameCards.contains(card)) {
-            card = getShape() to getChar()
+            card = Card(getShape(), getChar())
         }
         gameCards.add(card)
-        return Card(card.first, card.second)
+        return card
     }
 
     private fun getShape(): Shape {
