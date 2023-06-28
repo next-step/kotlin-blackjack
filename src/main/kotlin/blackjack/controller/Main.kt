@@ -6,7 +6,7 @@ import blackjack.view.ResultView
 
 fun main() {
     val game = BlackJack(InputView.getNames())
-    game.start()
+    game.distributeInitialCard()
     ResultView.printFirstCards(game)
 
     while (!game.isEnd()) {

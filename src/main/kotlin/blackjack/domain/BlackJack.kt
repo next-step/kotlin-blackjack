@@ -5,12 +5,7 @@ class BlackJack(
     val dealer: Dealer = Dealer(),
     private val gameCards: GameCards = GameCards(),
 ) {
-
-    fun start() {
-        distributeInitialCard()
-    }
-
-    private fun distributeInitialCard() {
+    fun distributeInitialCard() {
         for (i in 0 until START_CARD_COUNT) {
             dealer.addCard(gameCards.draw())
             players.forEach { it.addCard(gameCards.draw()) }
