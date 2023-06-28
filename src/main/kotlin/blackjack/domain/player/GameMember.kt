@@ -18,6 +18,10 @@ sealed interface GameMember {
         return sum
     }
 
+    fun getCardHoldSize(): Int {
+        return cardHold.getCardsTotalSize()
+    }
+
     fun drawCard(deck: Deck) {
         if (!canDraw()) {
             throw IllegalArgumentException("카드 숫자의 합이 21을 초과합니다.")

@@ -1,6 +1,6 @@
 package blackjack.domain.rule
 
-class Score private constructor(
+class Score(
     val winNum: Int = 0,
     val drawNum: Int = 0,
     val loseNum: Int = 0
@@ -34,11 +34,5 @@ class Score private constructor(
         return this.winNum == (other as Score).winNum &&
             this.drawNum == (other as Score).drawNum &&
             this.loseNum == (other as Score).loseNum
-    }
-
-    companion object {
-        fun init(): Score {
-            return Score(0, 0, 0)
-        }
     }
 }

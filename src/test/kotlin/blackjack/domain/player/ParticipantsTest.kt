@@ -35,6 +35,6 @@ class ParticipantsTest {
         val result = participants.getGameResult()
 
         // then
-        result["딜러"] shouldBe Score.init().win(cnt = 2)
+        result["딜러"] shouldBe Score().win(cnt = 2)
     }
 }

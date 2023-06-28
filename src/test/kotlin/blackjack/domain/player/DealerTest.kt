@@ -81,6 +81,6 @@ class DealerTest {
         // when
         val result = dealer.compareScore(goofyPlayer)
         // then
-        result shouldBe Score.init().win()
+        result shouldBe Score().win()
     }
 }
