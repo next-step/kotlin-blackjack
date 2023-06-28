@@ -104,7 +104,7 @@ class BlackJackResultView {
                 MatchResultType.TIE -> "무"
                 MatchResultType.LOSE -> "패"
             }
-            "${name}: $matchResult"
+            "$name: $matchResult"
         }
     }
 
