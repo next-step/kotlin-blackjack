@@ -1,10 +1,9 @@
 package next.step.blackjack.domain.player
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.betting.BettingAmount
-import next.step.blackjack.domain.betting.BettingPlayer
-import next.step.blackjack.domain.betting.BettingPlayers
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
@@ -196,10 +195,13 @@ class PlayersTest : DescribeSpec({
                     )
                 )
 
-                Players.of(setOf(player)).bet { BettingAmount.of(1000) } shouldBe
-                        BettingPlayers.of(
-                            setOf(BettingPlayer.of(player, BettingAmount.of(1000)))
-                        )
+                val result = Players.of(setOf(player)).bet { BettingAmount.of(1000) }
+
+                assertSoftly {
+                    result.players.size shouldBe 1
+                    result.players.first().player shouldBe player
+                    result.players.first().amount shouldBe BettingAmount(1000)
+                }
             }
         }
     }

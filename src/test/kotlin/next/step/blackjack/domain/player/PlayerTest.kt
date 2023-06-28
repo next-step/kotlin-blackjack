@@ -4,7 +4,6 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import next.step.blackjack.domain.betting.BettingAmount
-import next.step.blackjack.domain.betting.BettingPlayer
 import next.step.blackjack.domain.card.Card
 import next.step.blackjack.domain.card.CardFace
 import next.step.blackjack.domain.card.CardSymbol
@@ -100,7 +99,12 @@ class PlayerTest : BehaviorSpec({
                 )
                 val bettingAmount = BettingAmount.of(1000)
 
-                player.bet(bettingAmount) shouldBe BettingPlayer.of(player, bettingAmount)
+                val result = player.bet(bettingAmount)
+
+                assertSoftly {
+                    result.player shouldBe player
+                    result.amount shouldBe bettingAmount
+                }
             }
         }
     }

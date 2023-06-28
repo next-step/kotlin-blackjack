@@ -5,7 +5,7 @@ import next.step.blackjack.domain.dealer.Dealer
 import next.step.blackjack.domain.game.GameOdds
 import next.step.blackjack.domain.player.Player
 
-class BettingPlayer(private val player: Player, private val amount: BettingAmount) {
+class BettingPlayer(val player: Player, val amount: BettingAmount) {
     fun name(): String = player.name()
 
     fun hit(card: Card) = player.hit(card)

@@ -33,9 +33,9 @@ class BettingPlayersTest : DescribeSpec({
                     )
                 )
 
-                players.turn({ _ -> true }, { gameCards.pop() }, {})
+                val result = players.turn({ _ -> true }, { gameCards.pop() }, {})
 
-                players.cards() shouldBe listOf(
+                result shouldBe listOf(
                     listOf(
                         Card.of(CardFace.ACE, CardSymbol.CLUB),
                         Card.of(CardFace.KING, CardSymbol.CLUB),
@@ -67,9 +67,9 @@ class BettingPlayersTest : DescribeSpec({
                     )
                 )
 
-                players.turn({ _ -> false }, { gameCards.pop() }, {})
+                val result = players.turn({ _ -> false }, { gameCards.pop() }, {})
 
-                players.cards() shouldBe listOf(emptyList(), emptyList())
+                result shouldBe listOf(emptyList(), emptyList())
             }
         }
         context("fight") {
