@@ -1,20 +1,20 @@
 package blackjack.domain
 
 enum class NumberType(
-    val score: Scores,
+    val score: CardScore,
     val nameType: String
 ) {
-    ACE(Scores(listOf(Score(1), Score(11))), "A"),
-    TWO(Scores.from(2), "2"),
-    THREE(Scores.from(3), "3"),
-    FOUR(Scores.from(4), "4"),
-    FIVE(Scores.from(5), "5"),
-    SIX(Scores.from(6), "6"),
-    SEVEN(Scores.from(7), "7"),
-    EIGHT(Scores.from(8), "8"),
-    NINE(Scores.from(9), "9"),
-    TEN(Scores.from(10), "10"),
-    JACK(Scores.from(10), "J"),
-    QUEEN(Scores.from(10), "Q"),
-    KING(Scores.from(10), "K")
+    ACE(CardScore(listOf(Score(1), Score(11))), "A"),
+    TWO(CardScore.from(2), "2"),
+    THREE(CardScore.from(3), "3"),
+    FOUR(CardScore.from(4), "4"),
+    FIVE(CardScore.from(5), "5"),
+    SIX(CardScore.from(6), "6"),
+    SEVEN(CardScore.from(7), "7"),
+    EIGHT(CardScore.from(8), "8"),
+    NINE(CardScore.from(9), "9"),
+    TEN(CardScore.from(10), "10"),
+    JACK(CardScore.from(10), "J"),
+    QUEEN(CardScore.from(10), "Q"),
+    KING(CardScore.from(10), "K")
 }

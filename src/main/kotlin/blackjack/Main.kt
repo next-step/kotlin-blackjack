@@ -10,9 +10,7 @@ fun main() {
     val input = InputView()
     val output = OutputView()
     val playerNames = input.initGamePlayer()
-    val player1 = Player(name = playerNames.first())
-    val player2 = Player(name = playerNames.last())
-    val players = listOf(player1, player2)
+    val players = playerNames.map { Player(name = it) }
     val cardDeck = CardDeck()
 
     val game = BlackjackGame(players, cardDeck)
@@ -20,13 +18,7 @@ fun main() {
     output.initGameSetting(players)
 
     players.forEach { player ->
-        while (player.isGetCardPossible()) {
-            val playerChoice = input.playerGetCard(player.name)
-            if (playerChoice == "n") break
-            game.giveCard(player)
-            output.checkPlayerCard(listOf(player))
-        }
+        game.choiceTurn(player, input, output)
     }
-
     output.showResult(players)
 }

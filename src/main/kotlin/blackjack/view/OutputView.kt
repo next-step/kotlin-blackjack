@@ -7,16 +7,16 @@ class OutputView {
     fun initGameSetting(player: List<Player>) {
         val names = player.map { it.name }.toTypedArray()
         println("${names.contentToString()} 에게 2장의 카드를 나누었습니다.")
-        checkPlayerCard(player)
+        player.forEach {
+            checkPlayerCard(it)
+        }
     }
 
-    fun checkPlayerCard(player: List<Player>) {
-        player.forEach {
-            val message = it.cards.card.map {
-                it.number.nameType + it.type.cardName
-            }.toTypedArray()
-            println("${it.name} 카드 ${message.contentToString()}")
-        }
+    fun checkPlayerCard(player: Player) {
+        val message = player.cards.card.map {
+            it.number.nameType + it.type.cardName
+        }.toTypedArray()
+        println("${player.name} 카드 ${message.contentToString()}")
         println()
     }
 

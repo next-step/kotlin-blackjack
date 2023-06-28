@@ -3,11 +3,11 @@ package blackjack.domain
 import java.lang.Integer.max
 
 class Player(
-    val cards: Cards = Cards(),
-    var score: Int = 0,
+    var score: MutableList<Int> = mutableListOf(0),
     val name: String
 ) {
-    private var status: PlayerStatus = PlayerStatus.GET
+    private var status: PlayerStatus = PlayerStatus.HIT
+    val cards: Cards = Cards()
 
     init {
         cards.card.map {
@@ -17,14 +17,14 @@ class Player(
     }
 
     fun isGetCardPossible(): Boolean {
-        return status == PlayerStatus.GET
+        return status == PlayerStatus.HIT
     }
 
     fun isBlackJack(): Boolean {
         return status == PlayerStatus.BLACK_JACK
     }
 
-    fun getCard(card: Card) {
+    fun receiveCard(card: Card) {
         if (!isGetCardPossible()) return
         cards.addCard(card)
         updateScore(card)
@@ -33,19 +33,21 @@ class Player(
 
     fun updateScore(card: Card) {
         val cardScore = card.number.score
-        with(cardScore.value) {
-            score += if (this.size > 1) {
-                this.map { it.value }.reduce { calculateScore, curScore ->
-                    val endScore = score + curScore > PlayerStatus.BLACK_JACK_SCORE
-                    if (!endScore) max(calculateScore, curScore) else calculateScore
-                }
+        val calculateScore = score.flatMap { value ->
+            if (card.number == NumberType.ACE) {
+                cardScore.scores.map { value + it.value }
             } else {
-                this.first().value
+                listOf(value + cardScore.scores.first().value)
             }
+        }
+
+        if (isGetCardPossible()) {
+            score.clear()
+            score.add(calculateScore.min())
         }
     }
 
     fun updateStatus() {
-        status = PlayerStatus.status(status, score)
+        status = PlayerStatus.status(status, score.max())
     }
 }
