@@ -1,55 +1,59 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.PlayerCardDeckCapture
-import blackjack.domain.player.PlayerName
+import blackjack.domain.card.Cards
+import blackjack.domain.gamer.DealerCard
+import blackjack.domain.gamer.PlayerCards
+import blackjack.domain.gamer.PlayerName
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 
 class CardDistributionResultTest : StringSpec({
 
-    "캡쳐된 카드들의 사이즈가 모두 같지 않다면 RuntimeException 예외 처리를 한다" {
-        val captures = listOf(
-            PlayerCardDeckCapture(
+    "플레이어 카드들과 딜러의 카드 수가 같지 않다면 RuntimeException 예외 처리를 한다" {
+        val dealerCards = listOf(
+            DealerCard.Open(Card.ALL_CARDS.first()),
+            DealerCard.Hide,
+        )
+        val playerCards = listOf(
+            PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
-            PlayerCardDeckCapture(
+            PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(1),
+                cards = Cards(Card.ALL_CARDS.take(1)),
             ),
         )
         shouldThrow<RuntimeException> {
-            CardDistributionResult(captures)
+            CardDistributionResult(
+                dealerCards = dealerCards,
+                playerCards = playerCards,
+            )
         }
     }
 
-    "캡쳐된 카드들의 사이즈가 모두 같다면 결과물이 만들어진다" {
-        val captures = listOf(
-            PlayerCardDeckCapture(
+    "딜러와 플레이어 카드들의 사이즈가 분배한 카드 수와 같다면 예외가 발생하지 않는다" {
+        val dealerCards = listOf(
+            DealerCard.Open(Card.ALL_CARDS.first()),
+            DealerCard.Hide,
+        )
+        val playerCards = listOf(
+            PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
-            PlayerCardDeckCapture(
+            PlayerCards(
                 playerName = PlayerName("1"),
-                cards = Card.ALL_CARDS.take(2),
+                cards = Cards(Card.ALL_CARDS.take(2)),
             ),
         )
         shouldNotThrow<Throwable> {
-            CardDistributionResult(captures)
-        }
-    }
-
-    "분배된 카드의 개수를 반환한다" {
-        val cards = Card.ALL_CARDS.take(2)
-        val captures = listOf(
-            PlayerCardDeckCapture(
-                playerName = PlayerName("1"),
-                cards = cards,
+            CardDistributionResult(
+                dealerCards = dealerCards,
+                playerCards = playerCards,
             )
-        )
-        CardDistributionResult(captures).countOfCardDistribution shouldBe cards.size
+        }
     }
 })

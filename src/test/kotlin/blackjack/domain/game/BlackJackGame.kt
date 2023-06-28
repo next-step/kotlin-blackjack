@@ -1,11 +1,16 @@
 package blackjack.domain.game
 
-import blackjack.domain.player.PlayerNames
+import blackjack.domain.card.Card
+import blackjack.domain.gamer.PlayerNames
 import blackjack.domain.shuffle.CardShuffler
+import blackjack.domain.shuffle.Shuffler
 
-fun blackJackGame(playerNames: PlayerNames): BlackJackGame {
+fun blackJackGame(
+    playerNames: PlayerNames,
+    shuffler: Shuffler<Card> = CardShuffler(),
+): BlackJackGame {
     return BlackJackGame(
-        shuffler = CardShuffler(),
-        playerNames = playerNames
+        shuffler = shuffler,
+        playerNames = playerNames,
     )
 }

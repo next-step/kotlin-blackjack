@@ -3,42 +3,125 @@ package blackjack.view
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
 import blackjack.domain.card.CardShape
-import blackjack.domain.card.PlayerCardDeckCapture
-import blackjack.domain.game.BlackJackGameResult
+import blackjack.domain.card.Cards
 import blackjack.domain.game.CardDistributionResult
-import blackjack.domain.player.unWrappings
+import blackjack.domain.game.DealerTurnExecuteResult
+import blackjack.domain.game.MatchResult
+import blackjack.domain.game.MatchResultType
+import blackjack.domain.gamer.DealerCard
+import blackjack.domain.gamer.PlayerCards
+import blackjack.domain.gamer.unWrappings
+import blackjack.domain.score.Score
 
 class BlackJackResultView {
 
     fun display(result: CardDistributionResult) {
-        println()
-        println(result.makeTitleMessage())
-        result.playerCardDeckCaptures
-            .map { playerCardDeckCapture -> playerCardDeckCapture.makeDisplayMessage() }
-            .forEach { playerCardDeckCaptureMessage -> println(playerCardDeckCaptureMessage) }
-        println()
+        val message = buildString {
+            appendLine()
+            appendLine(result.makeTitleMessage())
+            appendLine(result.makeDealerCardsMessage())
+            appendLine(result.makeAllPlayerCardsMessage())
+        }
+        println(message)
     }
 
-    fun display(playerCardDeckCapture: PlayerCardDeckCapture) {
-        println(playerCardDeckCapture.makeDisplayMessage())
+    fun display(playerCards: PlayerCards) {
+        println(playerCards.makeDisplayMessage())
     }
 
-    fun display(blackJackGameResult: BlackJackGameResult) {
-        println()
-        blackJackGameResult.playerGameResults
-            .map { it.playerCardDeck.makeDisplayMessage().plus(" - 결과: ${it.score}") }
-            .forEach { println(it) }
+    fun display(dealerTurnExecuteResult: DealerTurnExecuteResult) {
+        val message = buildString {
+            appendLine()
+            appendLine(dealerTurnExecuteResult.makeDealerTurnResultMessage())
+        }
+        println(message)
+    }
+
+    fun display(matchResult: MatchResult) {
+        val message = buildString {
+            appendLine(matchResult.makeDealerCardsDisplayMessage())
+            appendLine(matchResult.makeAllPlayerCardsDisplayMessage())
+            appendLine()
+            appendLine("## 최종 승패")
+            appendLine(matchResult.makeDealerMatchResultMessage())
+            appendLine(matchResult.makeAllPlayersMatchResultMessage())
+        }
+        println(message)
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
         val names = playerNames.unWrappings().joinToString(", ")
-        return "${names}에게 ${countOfCardDistribution}장씩 나누었습니다."
+        return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
     }
 
-    private fun PlayerCardDeckCapture.makeDisplayMessage(): String {
+    private fun CardDistributionResult.makeDealerCardsMessage(): String {
+        val openCards = dealerCards.filterIsInstance<DealerCard.Open>()
+        val cardsMessage = openCards.joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
+        return "딜러: $cardsMessage"
+    }
+
+    private fun CardDistributionResult.makeAllPlayerCardsMessage(): String {
+        return playerCards.joinToString("\n") { playerCard -> playerCard.makeDisplayMessage() }
+    }
+
+    private fun DealerTurnExecuteResult.makeDealerTurnResultMessage(): String {
+        return if (isDistributedOneMoreCard) {
+            "딜러는 16이하라 한장의 카드를 더 받았습니다."
+        } else {
+            "딜러는 17이상이라 카드를 더 받지 않았습니다."
+        }
+    }
+
+    private fun MatchResult.makeDealerCardsDisplayMessage(): String {
+        return gamerCards.run {
+            "딜러 카드: ${dealerCards.makeDisplayMessage()} - ${dealerCards.score.makeDisplayMessage()}"
+        }
+    }
+
+    private fun MatchResult.makeAllPlayerCardsDisplayMessage(): String {
+        return gamerCards.allPlayerCards.joinToString("\n") {
+            val name = it.playerName.unWrapping()
+            val cards = it.cards
+            val score = it.cards.score
+            "$name 카드: ${cards.makeDisplayMessage()} - ${score.makeDisplayMessage()}"
+        }
+    }
+
+    private fun MatchResult.makeDealerMatchResultMessage(): String {
+        return gamerMatchResult.dealerMatchResult.run {
+            buildString {
+                append("딜러:")
+                append(" ${winCount}승")
+                append(" ${tieCount}무")
+                append(" ${loseCount}패")
+            }
+        }
+    }
+
+    private fun MatchResult.makeAllPlayersMatchResultMessage(): String {
+        return gamerMatchResult.playerMatchResults.joinToString("\n") {
+            val name = it.playerName.unWrapping()
+            val matchResult = when (it.matchResultType) {
+                MatchResultType.WIN -> "승"
+                MatchResultType.TIE -> "무"
+                MatchResultType.LOSE -> "패"
+            }
+            "$name: $matchResult"
+        }
+    }
+
+    private fun PlayerCards.makeDisplayMessage(): String {
         val name = playerName.unWrapping()
-        val cardNames = cards.joinToString(", ") { card -> card.makeDisplayMessage() }
+        val cardNames = cards.makeDisplayMessage()
         return "${name}카드: $cardNames"
+    }
+
+    private fun Score.makeDisplayMessage(): String {
+        return "결과: $value"
+    }
+
+    private fun Cards.makeDisplayMessage(): String {
+        return value.joinToString(", ") { card -> card.makeDisplayMessage() }
     }
 
     private fun Card.makeDisplayMessage(): String {

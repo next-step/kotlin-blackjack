@@ -6,10 +6,6 @@ import java.util.LinkedList
 @JvmInline
 value class CardDeck private constructor(val cards: LinkedList<Card>) {
 
-    fun pick(size: Int): List<Card> {
-        return List(size) { pick() }
-    }
-
     fun pick(): Card {
         return cards.poll()
     }
