@@ -3,17 +3,17 @@ package domain.state
 import domain.card.Card
 import domain.card.Cards
 import domain.player.PlayerGameResult
+import java.math.BigDecimal
 
-class StartState private constructor(private val cards: Cards, private val betAmount: Int) : State {
+class StartState private constructor(private val cards: Cards) : State {
 
     override fun draw(card: Card): State {
         val currentCards = Cards(this.getCards().plus(card))
-        val betAmount = getBetAmount()
-        return if (currentCards.isDrawable()) Hit(cards = currentCards, betAmount = betAmount)
-        else Burst(cards = cards, betAmount = betAmount)
+        return if (currentCards.isDrawable()) Hit(cards = currentCards)
+        else Burst(cards = currentCards)
     }
 
-    override fun stop(): State = Stand(cards = cards, betAmount = betAmount)
+    override fun stop(): State = Stand(cards = cards)
 
     override fun getCards(): Cards = this.cards
 
@@ -21,18 +21,16 @@ class StartState private constructor(private val cards: Cards, private val betAm
         throw UnsupportedOperationException("시작 상태는 지원하지 않음.")
     }
 
-    override fun getBetAmount(): Int = betAmount
-
-    override fun getRevenue(state: State): Int {
+    override fun getRevenueRate(state: State): BigDecimal {
         throw UnsupportedOperationException("시작 상태는 지원하지 않음.")
     }
 
     companion object {
-        fun start(cards: Cards, betAmount: Int = 0): State =
+        fun start(cards: Cards): State =
             if (cards.isBlackjack()) {
-                Blackjack(cards = cards, betAmount = betAmount)
+                Blackjack(cards = cards)
             } else {
-                StartState(cards = cards, betAmount = betAmount)
+                StartState(cards = cards)
             }
     }
 }

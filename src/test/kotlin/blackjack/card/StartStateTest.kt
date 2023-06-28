@@ -67,7 +67,7 @@ class StartStateTest {
         val state = StartState.start(cards)
 
         shouldThrow<UnsupportedOperationException> {
-            state.getRevenue(state)
+            state.getRevenueRate(state)
         }
     }
 

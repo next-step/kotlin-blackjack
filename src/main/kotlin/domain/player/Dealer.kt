@@ -3,7 +3,7 @@ package domain.player
 import domain.card.Card
 import domain.state.State
 
-class Dealer(state: State) : Player(name = NAME, state = state) {
+class Dealer : Player(name = NAME, betAmount = BetAmount(DEALER_BET_AMOUNT)) {
 
     override fun draw(card: Card): State {
         return if (isDrawable()) {
@@ -15,11 +15,9 @@ class Dealer(state: State) : Player(name = NAME, state = state) {
 
     fun isDrawable(): Boolean = cards.sum <= DRAWABLE_CARD_SUM_MAX
 
-    fun isIssuedCard(): Boolean = DEALER_INIT_CARD_COUNT < cards.size
-
     companion object {
         private const val NAME = "딜러"
+        private const val DEALER_BET_AMOUNT = 1
         private const val DRAWABLE_CARD_SUM_MAX = 16
-        private const val DEALER_INIT_CARD_COUNT = 2
     }
 }

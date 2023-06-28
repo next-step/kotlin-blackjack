@@ -5,9 +5,7 @@ import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
 import domain.player.Dealer
-import domain.state.StartState
 import io.kotest.matchers.shouldBe
-import io.kotest.mpp.start
 import org.junit.jupiter.api.Test
 
 class DealerTest {
@@ -18,9 +16,9 @@ class DealerTest {
             Card(suit = Suit.SPADE, number = CardNumber.FIVE),
             Card(suit = Suit.SPADE, number = CardNumber.FIVE),
         )
-        val dealer = Dealer(state = StartState.start(cards))
+        val dealer = Dealer()
         val newCard = Card(suit = Suit.HEART, number = CardNumber.FIVE)
-
+        dealer.initGame(cards)
         dealer.draw(newCard)
 
         dealer.cards.sum shouldBe 15
@@ -32,9 +30,10 @@ class DealerTest {
             Card(suit = Suit.SPADE, number = CardNumber.JACK),
             Card(suit = Suit.SPADE, number = CardNumber.SEVEN),
         )
-        val dealer = Dealer(state = StartState.start(cards))
+        val dealer = Dealer()
         val newCard = Card(suit = Suit.HEART, number = CardNumber.FIVE)
 
+        dealer.initGame(cards)
         dealer.draw(newCard)
 
         dealer.cards.sum shouldBe 17

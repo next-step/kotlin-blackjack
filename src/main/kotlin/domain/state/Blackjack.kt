@@ -2,19 +2,13 @@ package domain.state
 
 import domain.card.Cards
 import java.math.BigDecimal
-import java.math.RoundingMode
 
-class Blackjack(cards: Cards, betAmount: Int = 0) : TerminationState(cards, betAmount) {
+class Blackjack(cards: Cards) : TerminationState(cards) {
 
-    override fun getRevenue(state: State): Int =
-        if (state !is Blackjack) { calculateRevenue() } else { super.getRevenue(state) }
-
-    private fun calculateRevenue(): Int = BigDecimal(getBetAmount())
-        .multiply(BigDecimal(BLACKJACK_REVENUE))
-        .setScale(0, RoundingMode.DOWN)
-        .toInt()
+    override fun getRevenueRate(state: State): BigDecimal =
+        if (state !is Blackjack) { BLACKJACK_REVENUE_RATE } else { super.getRevenueRate(state) }
 
     companion object {
-        private const val BLACKJACK_REVENUE = "1.5"
+        private val BLACKJACK_REVENUE_RATE = BigDecimal("1.5")
     }
 }

@@ -4,6 +4,7 @@ import blackjack.card.helper.CardsTestFactory
 import domain.player.PlayerGameResult
 import domain.state.Burst
 import io.kotest.matchers.shouldBe
+import java.math.BigDecimal
 import org.junit.jupiter.api.Test
 
 class BurstStateTest {
@@ -19,13 +20,12 @@ class BurstStateTest {
     }
 
     @Test
-    fun `버스트 상태에서는 무조건 잃는다`() {
+    fun `버스트 상태는 수익률이 -1 이다`() {
         val cards = CardsTestFactory.makeBurstCards()
-        val betAmount = 1000
 
-        val dealerState = Burst(cards = cards, betAmount = betAmount)
-        val playerState = Burst(cards = cards, betAmount = betAmount)
+        val dealerState = Burst(cards = cards)
+        val playerState = Burst(cards = cards)
 
-        playerState.getRevenue(state = dealerState) shouldBe -1000
+        playerState.getRevenueRate(state = dealerState) shouldBe BigDecimal(-1)
     }
 }

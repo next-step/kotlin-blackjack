@@ -70,7 +70,7 @@ class HitTest {
         val hitState = Hit(cards)
 
         shouldThrow<UnsupportedOperationException> {
-            hitState.getRevenue(hitState)
+            hitState.getRevenueRate(hitState)
         }
     }
 

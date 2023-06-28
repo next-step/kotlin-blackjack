@@ -3,8 +3,9 @@ package domain.state
 import domain.card.Card
 import domain.card.Cards
 import domain.player.PlayerGameResult
+import java.math.BigDecimal
 
-open class TerminationState(private val cards: Cards, private val betAmount: Int = 0) : State {
+open class TerminationState(private val cards: Cards) : State {
     override fun draw(card: Card): State = this
 
     override fun stop(): State = this
@@ -17,16 +18,13 @@ open class TerminationState(private val cards: Cards, private val betAmount: Int
         else -> PlayerGameResult.LOSE
     }
 
-    override fun getBetAmount(): Int = this.betAmount
-
-    override fun getRevenue(state: State): Int = when (getPlayerGameResult(state)) {
-        PlayerGameResult.WIN -> this.betAmount
-        PlayerGameResult.DRAW -> DRAW_REVENUE
-        PlayerGameResult.LOSE -> this.betAmount * LOSE_REVENUE
+    override fun getRevenueRate(state: State): BigDecimal = when (getPlayerGameResult(state)) {
+        PlayerGameResult.WIN -> BigDecimal.ONE
+        PlayerGameResult.DRAW -> BigDecimal.ZERO
+        PlayerGameResult.LOSE -> BigDecimal(LOSE_REVENUE)
     }
 
     companion object {
-        const val DRAW_REVENUE = 0
         private const val LOSE_REVENUE = -1
     }
 }

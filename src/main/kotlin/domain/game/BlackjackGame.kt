@@ -2,28 +2,26 @@ package domain.game
 
 import domain.card.Cards
 import domain.card.Deck
+import domain.player.BetAmount
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
-import domain.state.StartState
 import domain.state.State
 
-class BlackjackGame(private val deck: Deck, playerBetAmounts: Map<String, Int>) {
+class BlackjackGame(private val deck: Deck, playerBetAmounts: Map<String, BetAmount>) {
 
     val players: Players
 
     val dealer: Dealer
 
     init {
-        require(PLAYERS_RANGE.contains(playerBetAmounts.keys.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
-        this.players = Players(initPlayers(playerBetAmounts))
-        val dealerState = StartState.start(cards = initCards())
-        this.dealer = Dealer(state = dealerState)
+        this.players = Players.createPlayers(playerBetAmounts)
+        this.dealer = Dealer()
     }
 
-    private fun initPlayers(playerBetAmounts: Map<String, Int>) = playerBetAmounts.map { (name, betAmount) ->
-        val state = StartState.start(cards = initCards(), betAmount = betAmount)
-        Player(name = name, state = state)
+    fun initGame() {
+        players.forEach { player -> player.initGame(initCards()) }
+        dealer.initGame(initCards())
     }
 
     private fun initCards() = Cards(listOf(deck.issueCard(), deck.issueCard()))
@@ -75,9 +73,6 @@ class BlackjackGame(private val deck: Deck, playerBetAmounts: Map<String, Int>) 
     }
 
     companion object {
-        private const val MAX_PLAYER_SIZE = 8
-        private const val MIN_PLAYER_SIZE = 1
-        private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
         const val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }

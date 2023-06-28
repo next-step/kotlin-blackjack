@@ -1,54 +1,29 @@
 package blackjack.player
 
-import blackjack.card.helper.CardsTestFactory
-import domain.card.Card
-import domain.card.CardNumber
-import domain.card.Suit
-import domain.player.Player
-import domain.state.Hit
-import domain.state.ProceedingState
-import domain.state.Stand
-import domain.state.StartState
-import domain.state.TerminationState
-import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
+import domain.player.BetAmount
+import domain.player.Players
+import io.kotest.assertions.throwables.shouldThrow
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class PlayerTest {
 
-    @Test
-    fun `플레이어는 카드를 뽑을 수 있다`() {
-        val player = Player(
-            name = "남상윤",
-            StartState.start(
-                CardsTestFactory.makeCards(
-                    Card(suit = Suit.SPADE, number = CardNumber.TWO),
-                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
-                ),
-            ),
-        )
-        val newCard = Card(suit = Suit.HEART, number = CardNumber.TEN)
-
-        val playerState = player.draw(newCard)
-
-        (playerState is Hit) shouldBe true
-        (playerState is ProceedingState) shouldBe true
+    @ParameterizedTest
+    @MethodSource("getPlayerNames")
+    fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(players: Map<String, BetAmount>) {
+        shouldThrow<IllegalArgumentException> {
+            Players.createPlayers(players)
+        }
     }
 
-    @Test
-    fun `플레이어는 카드를 안 받을 수 있다`() {
-        val player = Player(
-            name = "남상윤",
-            StartState.start(
-                CardsTestFactory.makeCards(
-                    Card(suit = Suit.SPADE, number = CardNumber.TWO),
-                    Card(suit = Suit.CLUB, number = CardNumber.ACE),
-                ),
+    companion object {
+        @JvmStatic
+        fun getPlayerNames(): List<Arguments> = listOf(
+            Arguments.of(emptyMap<String, BetAmount>()),
+            Arguments.of(
+                (1..9).associate { "player$it" to BetAmount(it) },
             ),
         )
-
-        val playerState = player.stop()
-
-        (playerState is Stand) shouldBe true
-        (playerState is TerminationState) shouldBe true
     }
 }
