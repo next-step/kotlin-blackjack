@@ -3,14 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.PlayerResults
 
 class DealerRevenue {
-    private var resultValue: Long = INIT_REVENUE
-
-    fun getRevenue(): Long {
-        return resultValue
-    }
+    var value: Long = INIT_REVENUE
+        private set
 
     fun calcRevenue(playerResults: PlayerResults) {
-        resultValue = playerResults.getDealerRevenue()
+        value = playerResults.getDealerRevenue()
     }
 
     companion object {

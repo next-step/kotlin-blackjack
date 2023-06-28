@@ -150,8 +150,8 @@ class BlackjackGameResultTest {
             players.results[0].result shouldBe GameResult.WIN
 
             // 베팅금액 확인
-            dealer.dealer.revenue.getRevenue() shouldBe -15000L
-            players.results[0].player.betAmount.getRevenue() shouldBe 15000L
+            dealer.dealer.revenue.value shouldBe -15000L
+            players.results[0].player.betAmount.revenue shouldBe 15000L
         }
     }
 
@@ -184,8 +184,8 @@ class BlackjackGameResultTest {
             players.results[0].result shouldBe GameResult.TIE
 
             // 베팅금액 확인
-            dealer.dealer.revenue.getRevenue() shouldBe 0L
-            players.results[0].player.betAmount.getRevenue() shouldBe 0L
+            dealer.dealer.revenue.value shouldBe 0L
+            players.results[0].player.betAmount.revenue shouldBe 0L
         }
     }
 
@@ -222,8 +222,8 @@ class BlackjackGameResultTest {
             players.results[0].result shouldBe GameResult.LOOSE
 
             // 베팅금액 확인
-            dealer.dealer.revenue.getRevenue() shouldBe 10000L
-            players.results[0].player.betAmount.getRevenue() shouldBe -10000L
+            dealer.dealer.revenue.value shouldBe 10000L
+            players.results[0].player.betAmount.revenue shouldBe -10000L
         }
     }
 }

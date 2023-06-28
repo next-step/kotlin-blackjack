@@ -1,11 +1,8 @@
 package blackjack.domain.player
 
 data class PlayerBetAmount(val initValue: Long = INIT_BET_AMOUNT) {
-    private var revenue: Long = INIT_REVENUE
-
-    fun getRevenue(): Long {
-        return revenue
-    }
+    var revenue: Long = INIT_REVENUE
+        private set
 
     fun calcRevenue(gameResult: GameResult, isBlackjack: Boolean): Long {
         val resultRevenue = when {

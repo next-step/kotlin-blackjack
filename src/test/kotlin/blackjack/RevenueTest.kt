@@ -40,7 +40,7 @@ class RevenueTest {
 
         DealerResult.from(dealer, playerResults)
 
-        dealer.revenue.getRevenue() shouldBe -5000L
+        dealer.revenue.value shouldBe -5000L
     }
 
     @Test
@@ -51,7 +51,7 @@ class RevenueTest {
 
         DealerResult.from(dealer, playerResults)
 
-        dealer.revenue.getRevenue() shouldBe -45000L
+        dealer.revenue.value shouldBe -45000L
     }
 
     private fun getPlayerResultWithCalcRevenue(

@@ -12,13 +12,13 @@ class GamePlayersResultOutputView(gameResult: BlackjackGameResult) {
     }
 
     private fun renderDealerMessage(result: DealerResult) {
-        val revenue = result.dealer.revenue.getRevenue()
+        val revenue = result.dealer.revenue.value
         println("딜러: $revenue")
     }
 
     private fun renderPlayerMessage(result: PlayerResult) {
         val name = result.player.name.value
-        val revenue = result.player.betAmount.getRevenue()
+        val revenue = result.player.betAmount.revenue
         println("$name: $revenue")
     }
 }
