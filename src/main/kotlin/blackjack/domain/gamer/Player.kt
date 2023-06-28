@@ -32,7 +32,3 @@ class Player(
         )
     }
 }
-
-fun List<Player>.captureAllCards(): List<PlayerCards> {
-    return map { it.captureCards() }
-}

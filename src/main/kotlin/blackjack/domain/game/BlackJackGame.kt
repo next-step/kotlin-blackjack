@@ -6,12 +6,9 @@ import blackjack.domain.card.InitCard
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.Dealer
-import blackjack.domain.gamer.Player
 import blackjack.domain.gamer.PlayerNames
-import blackjack.domain.gamer.captureAllCards
+import blackjack.domain.gamer.Players
 import blackjack.domain.shuffle.Shuffler
-import java.util.LinkedList
-import kotlin.IllegalStateException
 
 class BlackJackGame(
     shuffler: Shuffler<Card>,
@@ -20,17 +17,17 @@ class BlackJackGame(
 
     private val cardDeck = CardDeck.create(shuffler)
     private val dealer = Dealer()
-    private val players = LinkedList(playerNames.map { Player(it) })
+    private val players = Players.create(playerNames)
 
     fun currentTurn(): BlackJackGameTurn {
         return when {
-            needCardDistribution() -> {
+            players.notHasCards() && dealer.notHasCards() -> {
                 BlackJackGameTurn.CardDistribution
             }
-            hasWaitPlayer() -> {
-                BlackJackGameTurn.PlayerAnswer(requireWaitPlayer().name)
+            players.hasWaitPlayer() -> {
+                BlackJackGameTurn.PlayerAnswer(players.requireWaitPlayer().name)
             }
-            isDealerWait() -> {
+            dealer.state.isInit() -> {
                 BlackJackGameTurn.Dealer
             }
             else -> {
@@ -43,9 +40,7 @@ class BlackJackGame(
         requireTurn<BlackJackGameTurn.CardDistribution>()
 
         dealer.init(InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)))
-        players.forEach { player ->
-            player.init(InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)))
-        }
+        players.init { InitCard.create(cardDeck.pick(CARD_DISTRIBUTION_SIZE)) }
 
         return CardDistributionResult(
             distributionCardSize = CARD_DISTRIBUTION_SIZE,
@@ -53,14 +48,14 @@ class BlackJackGame(
                 DealerCard.Open(dealer.state.cards.first()),
                 DealerCard.Hide,
             ),
-            playerCards = players.captureAllCards(),
+            playerCards = players.captureAllPlayerCards(),
         )
     }
 
     fun hitFocusedPlayer(): PlayerCards {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
 
-        val player = requireWaitPlayer()
+        val player = players.requireWaitPlayer()
         player.hit(cardDeck.pick())
         return player.captureCards()
     }
@@ -68,7 +63,7 @@ class BlackJackGame(
     fun stayFocusedPlayer() {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
 
-        requireWaitPlayer().stay()
+        players.requireWaitPlayer().stay()
     }
 
     fun executeDealerTurn(): DealerTurnExecuteResult {
@@ -87,16 +82,10 @@ class BlackJackGame(
         )
     }
 
-    fun makeGameResult(): BlackJackGameResult {
+    fun makeGameResult(): MatchResult {
         requireTurn<BlackJackGameTurn.Finished>()
 
-        return BlackJackGameResult(
-            dealerGameResult = DelayerGameResult(dealer.state.cards),
-            playerGameResults = players
-                .captureAllCards()
-                .map { playerCards -> PlayerGameResult(playerCards) },
-            matchResult = createMatchResult()
-        )
+        return players.match(dealer)
     }
 
     private inline fun <reified T> requireTurn() {
@@ -104,39 +93,6 @@ class BlackJackGame(
         require(turn is T) {
             "you want turn is '${turn::class.java.simpleName}'. but current turn is '${T::class.java.simpleName}'"
         }
-    }
-
-    private fun needCardDistribution(): Boolean {
-        return players.all { player -> player.notHasCard() } && dealer.notHasCard()
-    }
-
-    private fun hasWaitPlayer(): Boolean {
-        return findWaitPlayerOrNull() != null
-    }
-
-    private fun requireWaitPlayer(): Player {
-        return findWaitPlayerOrNull() ?: throw IllegalStateException("wait player not existed")
-    }
-
-    private fun findWaitPlayerOrNull(): Player? {
-        return players.firstOrNull { it.state.isHit() }
-    }
-
-    private fun isDealerWait(): Boolean {
-        return dealer.state.isInit()
-    }
-
-    private fun createMatchResult(): MatchResult {
-        val playerMatchResults = players.map { player -> player.match(dealer) }
-        val dealerMatchResult = DealerMatchResult(
-            winCount = playerMatchResults.count { it.matchResultType == MatchResultType.LOSE },
-            tieCount = playerMatchResults.count { it.matchResultType == MatchResultType.TIE },
-            loseCount = playerMatchResults.count { it.matchResultType == MatchResultType.WIN }
-        )
-        return MatchResult(
-            dealerMatchResult = dealerMatchResult,
-            playerMatchResults = playerMatchResults,
-        )
     }
 
     companion object {

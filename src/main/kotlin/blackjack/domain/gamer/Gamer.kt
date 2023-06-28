@@ -21,7 +21,7 @@ abstract class Gamer {
         return state.cards.isNotEmpty()
     }
 
-    fun notHasCard(): Boolean {
+    fun notHasCards(): Boolean {
         return state.cards.isEmpty()
     }
 

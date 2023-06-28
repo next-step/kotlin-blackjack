@@ -173,12 +173,12 @@ class BlackJackGameTest : BehaviorSpec({
 
             Then("딜러의 카드 목록을 반환한다") {
                 val expected = cards(heartCard(CardDenomination.TEN), heartCard(CardDenomination.JACK))
-                result.dealerGameResult.cards shouldBe expected
+                result.dealerCards shouldBe expected
             }
 
             Then("플레이어의 카드 목록을 반환한다") {
                 val expected = cards(heartCard(CardDenomination.QUEEN), heartCard(CardDenomination.KING))
-                result.playerGameResults[0].playerCards.cards shouldBe expected
+                result.allPlayerCards[0].cards shouldBe expected
             }
         }
     }
@@ -201,11 +201,11 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 결과는 1승 0무 0패이다") {
-                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
+                result.dealerMatchResult shouldBe DealerMatchResult(1, 0, 0)
             }
 
             Then("참가자의 결과는 패배다") {
-                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.LOSE
+                result.playerMatchResults[0].matchResultType shouldBe MatchResultType.LOSE
             }
         }
     }
@@ -228,11 +228,11 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 결과는 0승 0무 1패이다") {
-                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+                result.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
             }
 
             Then("참가자의 결과는 승리이다") {
-                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
+                result.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
             }
         }
     }
@@ -255,11 +255,11 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 결과는 0승 1무 0패이다") {
-                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
+                result.dealerMatchResult shouldBe DealerMatchResult(0, 1, 0)
             }
 
             Then("참가자의 결과는 무승부이다") {
-                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.TIE
+                result.playerMatchResults[0].matchResultType shouldBe MatchResultType.TIE
             }
         }
     }
@@ -283,11 +283,11 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 결과는 0승 0무 1패이다") {
-                result.matchResult.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
+                result.dealerMatchResult shouldBe DealerMatchResult(0, 0, 1)
             }
 
             Then("참가자의 결과는 승리이다") {
-                result.matchResult.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
+                result.playerMatchResults[0].matchResultType shouldBe MatchResultType.WIN
             }
         }
     }

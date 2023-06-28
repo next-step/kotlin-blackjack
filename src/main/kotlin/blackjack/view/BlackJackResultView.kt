@@ -2,17 +2,17 @@ package blackjack.view
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardDenomination
-import blackjack.domain.gamer.DealerCard
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
-import blackjack.domain.gamer.PlayerCards
-import blackjack.domain.game.BlackJackGameResult
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerMatchResult
 import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.DelayerGameResult
+import blackjack.domain.game.MatchResult
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.game.PlayerMatchResult
+import blackjack.domain.gamer.DealerCard
+import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.gamer.unWrappings
 import blackjack.domain.score.Score
 
@@ -47,16 +47,16 @@ class BlackJackResultView {
         println(message)
     }
 
-    fun display(blackJackGameResult: BlackJackGameResult) {
+    fun display(matchResult: MatchResult) {
         println()
-        println(blackJackGameResult.dealerGameResult.makeDisplayMessage())
-        blackJackGameResult.playerGameResults
-            .map { it.playerCards.makeDisplayMessage().plus(" - ${it.playerCards.cards.score.makeDisplayMessage()}") }
+        println(matchResult.dealerMatchResult.makeDisplayMessage())
+        matchResult.allPlayerCards
+            .map { it.cards.makeDisplayMessage().plus(" - ${it.cards.score.makeDisplayMessage()}") }
             .forEach { println(it) }
         println()
         println("## 최종 승패")
-        println(blackJackGameResult.matchResult.dealerMatchResult.makeDisplayMessage())
-        blackJackGameResult.matchResult.playerMatchResults.forEach {
+        println(matchResult.dealerMatchResult.makeDisplayMessage())
+        matchResult.playerMatchResults.forEach {
             println(it.makeDisplayMessage())
         }
     }

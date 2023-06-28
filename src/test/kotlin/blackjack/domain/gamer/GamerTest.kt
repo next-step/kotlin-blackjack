@@ -55,7 +55,7 @@ class GamerTest : StringSpec({
 
     "카드를 삽입하지 않았다면 카드 목록이 비어있다" {
         val gamer = gamer()
-        gamer.notHasCard() shouldBe true
+        gamer.notHasCards() shouldBe true
     }
 
     "카드 삽입 후 21점을 초과하면 bust 상태가 된다" {
