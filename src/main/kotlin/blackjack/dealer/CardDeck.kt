@@ -3,6 +3,7 @@ package blackjack.dealer
 import blackjack.card.Card
 import blackjack.card.CardNumber
 import blackjack.card.CardSuit
+import kotlin.random.Random
 
 object CardDeck {
 
@@ -11,7 +12,7 @@ object CardDeck {
     }.toMutableList()
 
     fun draw(): Card {
-        val randomIndex = (0 until cardDeck.size).random()
+        val randomIndex = Random.nextInt(cardDeck.size)
         return cardDeck.removeAt(randomIndex)
     }
 
