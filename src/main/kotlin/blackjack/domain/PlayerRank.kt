@@ -6,7 +6,7 @@ enum class PlayerRank(val value: String) {
     DRAW("무");
 
     companion object {
-        fun getValues(playerScore: Int, dealerScore: Int): PlayerRank {
+        fun of(playerScore: Int, dealerScore: Int): PlayerRank {
             return when {
                 dealerScore > BlackJack.BLACKJACK_MAX_SCORE -> WON
                 playerScore > BlackJack.BLACKJACK_MAX_SCORE -> LOST

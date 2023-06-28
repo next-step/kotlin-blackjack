@@ -20,7 +20,7 @@ internal class PlayerRankTest {
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.getValues(player1.score(), dealer.score()) shouldBe PlayerRank.WON
+        PlayerRank.of(player1.score(), dealer.score()) shouldBe PlayerRank.WON
     }
 
     @Test
@@ -39,6 +39,6 @@ internal class PlayerRankTest {
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.getValues(player1.score(), dealer.score()) shouldBe PlayerRank.LOST
+        PlayerRank.of(player1.score(), dealer.score()) shouldBe PlayerRank.LOST
     }
 }

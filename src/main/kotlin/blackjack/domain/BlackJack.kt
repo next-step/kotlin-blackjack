@@ -55,7 +55,7 @@ class BlackJack(
     }
 
     private fun getPlayerRank(player: Player): PlayerRank {
-        return PlayerRank.getValues(player.score(), dealer.score())
+        return PlayerRank.of(player.score(), dealer.score())
     }
 
     companion object {
