@@ -22,13 +22,14 @@ object ResultView {
         println(DEALER_CARD_STRING)
     }
 
-    private fun printDealerCards(dealer: Dealer) {
-        println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.cards)}")
+    private fun printDealerInitCards(dealer: Dealer) {
+        val firstCard = dealer.cards.values.first()
+        println("${dealer.name}$CARD_STRING ${firstCard.character.value + firstCard.shape.value}")
     }
 
     fun printFirstCards(game: BlackJack) {
         println("\n${game.dealer.name}와 ${game.players.joinToString { it.name }}$START_STRING")
-        printDealerCards(game.dealer)
+        printDealerInitCards(game.dealer)
         game.players.forEach { printPlayerCards(it) }
         println()
     }
