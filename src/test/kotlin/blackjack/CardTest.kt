@@ -54,7 +54,7 @@ class CardTest : StringSpec({
 
             val card = Card(Suit.SPADE, cardNumber)
 
-            card.scores shouldBe expectedScores
+            card.number.scores shouldBe expectedScores
         }
     }
 })
