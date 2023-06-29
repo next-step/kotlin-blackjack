@@ -1,7 +1,9 @@
 package blackjack.domain
 
+import blackjack.fixture.player
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import java.math.BigDecimal
 
 class ParticipantsTest : FunSpec({
 
@@ -10,9 +12,9 @@ class ParticipantsTest : FunSpec({
             Card.of(Denomination.ACE, Suit.SPADES),
             Card.of(Denomination.JACK, Suit.SPADES),
         )
-        val dealer = Dealer(cards)
-        val player1 = Player("pobi", cards)
-        val player2 = Player("jason", cards)
+        val dealer = Dealer.of(cards)
+        val player1 = player(name = "pobi", cards = cards)
+        val player2 = player(name = "jason", cards = cards)
         val players = Players(listOf(player1, player2))
 
         val participants = Participants(dealer, players)
@@ -22,7 +24,7 @@ class ParticipantsTest : FunSpec({
 
     test("참가자를 생성한다") {
         val participants = Participants.init(
-            playerNames = listOf("pobi", "jason"),
+            playerInfos = listOf(PlayerInfo("pobi", BigDecimal.ZERO), PlayerInfo("jason", BigDecimal.ZERO)),
             deck = Deck.shuffled(),
         )
 

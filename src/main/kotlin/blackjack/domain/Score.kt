@@ -20,9 +20,12 @@ value class Score(
         return score > BLACKJACK_SCORE
     }
 
+    fun isBlackJack(): Boolean {
+        return score == BLACKJACK_SCORE
+    }
+
     companion object {
         const val BLACKJACK_SCORE = 21
         val ZERO = Score(0)
-        val MAX_ACE = Score(11)
     }
 }

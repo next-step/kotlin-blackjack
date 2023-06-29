@@ -2,38 +2,28 @@ package blackjack.domain
 
 sealed class Participant(
     val name: String,
-    var cards: Cards,
-    var state: ParticipantState = Alive
+    state: State
 ) {
+    var state: State = state
+        protected set
+
     abstract fun openedCards(): Cards
 
+    fun isFinished(): Boolean = state is Finished
+
     fun hit(card: Card) {
-        if (state.isBurst()) {
+        if (isFinished()) {
             return
         }
+        state = state.hit(card)
+    }
 
-        val addedCards = cards + card
-        if (addedCards.calculateScore().isBurst()) {
-            state = Burst
+    fun stay() {
+        if (isFinished()) {
+            return
         }
-        cards = addedCards
+        state = state.stay()
     }
 
-    fun calculateScore(): Score = cards.calculateScore()
-
-    fun isBurst(): Boolean = state.isBurst()
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Participant) return false
-
-        if (name != other.name) return false
-        return cards == other.cards
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + cards.hashCode()
-        return result
-    }
+    fun calculateScore(): Score = state.calculateScore()
 }

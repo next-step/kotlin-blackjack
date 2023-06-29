@@ -11,9 +11,17 @@ class Participants(
     companion object {
         private const val INITIAL_DRAW_COUNT = 2
 
-        fun init(playerNames: List<String>, deck: Deck): Participants = Participants(
-            Dealer(deck.draw(INITIAL_DRAW_COUNT)),
-            Players(playerNames.map { Player(it, deck.draw(INITIAL_DRAW_COUNT)) }),
+        fun init(playerInfos: List<PlayerInfo>, deck: Deck): Participants = Participants(
+            Dealer.of(deck.draw(INITIAL_DRAW_COUNT)),
+            Players(
+                playerInfos.map {
+                    Player.of(
+                        name = it.name,
+                        betAmount = it.betAmount,
+                        cards = deck.draw(INITIAL_DRAW_COUNT),
+                    )
+                }
+            ),
         )
     }
 }

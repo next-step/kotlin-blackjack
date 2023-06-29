@@ -11,12 +11,13 @@ class ParticipantVO(
         fun of(participant: Participant): ParticipantVO {
             return ParticipantVO(
                 participant.name,
-                participant.cards.map {
-                    CardVO(
-                        DenominationVO.of(it.denomination),
-                        SuitVO.of(it.suit),
-                    )
-                }
+                participant.state
+                    .cards.map {
+                        CardVO(
+                            DenominationVO.of(it.denomination),
+                            SuitVO.of(it.suit),
+                        )
+                    }
             )
         }
 

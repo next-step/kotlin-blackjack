@@ -20,8 +20,14 @@ class ScoreTest : FunSpec({
         (Score(1) <= Score(1)) shouldBe true
     }
 
-    test("burst 인지 여부를 반환한다") {
+    test("Burst 인지 여부를 반환한다") {
         Score(22).isBurst() shouldBe true
         Score(21).isBurst() shouldBe false
+    }
+
+    test("BlackJack 인지 여부를 반환한다") {
+        Score(22).isBlackJack() shouldBe false
+        Score(21).isBlackJack() shouldBe true
+        Score(20).isBlackJack() shouldBe false
     }
 })

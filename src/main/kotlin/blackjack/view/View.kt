@@ -1,8 +1,9 @@
 package blackjack.view
 
-import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
+import blackjack.vo.ProfitResultVO
+import java.math.BigDecimal
 
 object InputView {
     private const val COMMA_SEPARATOR = ","
@@ -11,6 +12,12 @@ object InputView {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val names = readlnOrNull() ?: throw IllegalArgumentException("이름을 입력해주세요.")
         return names.split(COMMA_SEPARATOR)
+    }
+
+    fun readBetAmount(playerName: String): BigDecimal {
+        println("${playerName}의 배팅 금액은?")
+        val betAmount = readlnOrNull() ?: throw IllegalArgumentException("베팅 금액을 입력해주세요.")
+        return BigDecimal(betAmount)
     }
 
     fun readDrawMore(playerName: String): Boolean {
@@ -53,14 +60,14 @@ object ResultView {
         println(participantScoresText)
     }
 
-    fun printGameResult(gameResultVO: GameResultVO) {
-        val playersGameResult = gameResultVO.playerGameResultVOs
-            .joinToString(NEW_LINE) { "${it.name}: ${it.gameResult()}" }
+    fun printGameResult(profitResultVO: ProfitResultVO) {
+        val playersGameResult = profitResultVO.playerProfitVOS
+            .joinToString(NEW_LINE) { "${it.name}: ${it.profitAmount}" }
 
         println(
             """$NEW_LINE
             |## 최종 승패
-            |딜러: ${gameResultVO.dealerWinCount}승 ${gameResultVO.dealerLoseCount}패 ${gameResultVO.dealerTieCount}무
+            |딜러: ${profitResultVO.dealerProfitAmount}
             |$playersGameResult
             |""".trimMargin()
         )

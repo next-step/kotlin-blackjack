@@ -1,31 +1,24 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Player(
     name: String,
-    cards: Cards,
-    state: ParticipantState = Alive,
-) : Participant(name, cards, state) {
-    override fun openedCards(): Cards = cards
+    val betAmount: BigDecimal,
+    state: State,
+) : Participant(name, state) {
+    override fun openedCards(): Cards = state.cards
 
-    fun getGameResult(dealer: Dealer): GameResult {
-        if (isBurst()) {
-            return GameResult.LOSE
-        }
+    fun calculateProfit(dealer: Dealer): Profit {
+        val gameResult = state.gameResult(dealer.state)
+        return gameResult.calculateProfit(betAmount, state.profitMultiple())
+    }
 
-        val dealerScore: Score = dealer.calculateScore()
-        if (dealer.isBurst()) {
-            return GameResult.WIN
-        }
-
-        val score: Score = calculateScore()
-        if (score > dealerScore) {
-            return GameResult.WIN
-        }
-
-        if (score == dealerScore) {
-            return GameResult.TIE
-        }
-
-        return GameResult.LOSE
+    companion object {
+        fun of(name: String, betAmount: BigDecimal, cards: Cards) = Player(
+            name = name,
+            betAmount = betAmount,
+            state = State.of(cards),
+        )
     }
 }

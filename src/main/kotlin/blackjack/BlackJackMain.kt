@@ -3,18 +3,20 @@ package blackjack
 import blackjack.domain.Deck
 import blackjack.domain.Participants
 import blackjack.domain.Player
+import blackjack.domain.PlayerInfo
 import blackjack.view.InputView
 import blackjack.view.ResultView
-import blackjack.vo.GameResultVO
 import blackjack.vo.ParticipantScoreVO
 import blackjack.vo.ParticipantVO
-import blackjack.vo.PlayerGameResultVO
+import blackjack.vo.PlayerProfitVO
+import blackjack.vo.ProfitResultVO
 
 fun main() {
     val playerNames = InputView.readPlayerNames()
+    val playerInfos = playerNames.map { PlayerInfo(it, InputView.readBetAmount(it)) }
 
     val deck = Deck.shuffled()
-    val participants = Participants.init(playerNames, deck)
+    val participants = Participants.init(playerInfos, deck)
 
     val participantVOs = participants.members().map { ParticipantVO.of(it.name, it.openedCards()) }
     ResultView.printCardHands(participantVOs)
@@ -26,7 +28,7 @@ fun main() {
     ResultView.printGameResult(gameResultVO)
 }
 
-private fun play(participants: Participants, deck: Deck): GameResultVO {
+private fun play(participants: Participants, deck: Deck): ProfitResultVO {
     val players = participants.players
     players.forEach { player -> drawMore(deck, player) }
 
@@ -34,21 +36,24 @@ private fun play(participants: Participants, deck: Deck): GameResultVO {
     if (dealer.shouldHit()) {
         ResultView.printDealerHit()
         dealer.hit(deck.draw())
+    } else {
+        dealer.stay()
     }
 
-    val playerGameResultVOs = players.map { PlayerGameResultVO(it.name, it.getGameResult(dealer)) }
-    return GameResultVO.of(playerGameResultVOs)
+    val playerProfitVOS = players.map { PlayerProfitVO.of(it.name, it.calculateProfit(dealer)) }
+    return ProfitResultVO.of(playerProfitVOS)
 }
 
 private fun drawMore(deck: Deck, player: Player) {
     while (deck.isNotEmpty()) {
-        if (player.isBurst()) {
+        if (player.isFinished()) {
             return
         }
 
         if (InputView.readDrawMore(player.name)) {
             player.hit(deck.draw())
         } else {
+            player.stay()
             return
         }
         ResultView.printParticipant(ParticipantVO.of(player))
