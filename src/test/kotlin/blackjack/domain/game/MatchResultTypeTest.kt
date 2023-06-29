@@ -21,7 +21,7 @@ class MatchResultTypeTest : StringSpec({
         val dealer = Dealer()
         dealer.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
         dealer.hit(heartKing()) // 12 + k(10) = 22
-        val player = player("test")
+        val player = player()
         player.init(cards(spadeTen(), spadeFour())) // 10 + 4 = 14
         player.hit(spadeKing()) // 14 + 10 = 24
         MatchResultType.calculatePlayerMatchResult(dealer, player) shouldBe MatchResultType.LOSE
@@ -31,7 +31,7 @@ class MatchResultTypeTest : StringSpec({
         val dealer = Dealer()
         dealer.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
         dealer.hit(heartKing()) // 12 + k(10) = 22
-        val player = player("test")
+        val player = player()
         player.init(cards(spadeTwo(), spadeFour()))
         MatchResultType.calculatePlayerMatchResult(dealer, player) shouldBe MatchResultType.WIN
     }
@@ -39,7 +39,7 @@ class MatchResultTypeTest : StringSpec({
     "플레이어의 점수가 딜러의 점수보다 높다면 승리한다" {
         val dealer = Dealer()
         dealer.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
-        val player = player("test")
+        val player = player()
         player.init(cards(spadeKing(), spadeFour())) // k(10) + 4 = 14
         MatchResultType.calculatePlayerMatchResult(dealer, player) shouldBe MatchResultType.WIN
     }
@@ -47,7 +47,7 @@ class MatchResultTypeTest : StringSpec({
     "플레이어의 점수가 딜러의 점수보다 낮다면 패배한다" {
         val dealer = Dealer()
         dealer.init(cards(spadeKing(), spadeFour())) // k(10) + 4 = 14
-        val player = player("test")
+        val player = player()
         player.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
         MatchResultType.calculatePlayerMatchResult(dealer, player) shouldBe MatchResultType.LOSE
     }
@@ -55,7 +55,7 @@ class MatchResultTypeTest : StringSpec({
     "플레이어의 점수가 딜러의 점수와 같다면 무승부다" {
         val dealer = Dealer()
         dealer.init(cards(spadeQueen(), spadeFour())) // q(10) + 4 = 14
-        val player = player("test")
+        val player = player()
         player.init(cards(heartQueen(), heartFour())) // q(10) + 4 = 14
         MatchResultType.calculatePlayerMatchResult(dealer, player) shouldBe MatchResultType.TIE
     }

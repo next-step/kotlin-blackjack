@@ -10,25 +10,25 @@ import io.kotest.matchers.shouldBe
 class PlayerTest : StringSpec({
 
     "초기화를 하지 않았다면 hit가 불가능하다" {
-        val player = player("test")
+        val player = player()
         player.canHit() shouldBe false
     }
 
     "hit 상태라면 hit가 가능하다" {
-        val player = player("test")
+        val player = player()
         player.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
         player.canHit() shouldBe true
     }
 
     "bust가 되었다면 hit가 불가능하다" {
-        val player = player("test")
+        val player = player()
         player.init(cards(heartQueen(), heartTwo())) // q(10) + 2 = 12
         player.hit(heartKing()) // 12 + k(10) = 22
         player.canHit() shouldBe false
     }
 
     "stay를 했다면 hit가 불가능하다" {
-        val player = player("test")
+        val player = player()
         player.init(cards(heartQueen(), heartTwo()))
         player.stay()
         player.canHit() shouldBe false
