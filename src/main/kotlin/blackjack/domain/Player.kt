@@ -31,7 +31,7 @@ open class Player(
         return true
     }
 
-    fun wantStand() {
+    fun stand() {
         state = PlayerState.STAND
     }
 
@@ -51,7 +51,7 @@ open class Player(
         return state
     }
 
-    fun drawCard() {
+    fun hit() {
         check(canDraw()) { SUM_OVER_21 }
 
         val drawnCard = gameCardsSet.drawRandomCard()

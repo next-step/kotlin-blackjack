@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.Dealer
-import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
+import blackjack.domain.Dealer.Companion.DEALER_UNDER_NUMBER
 import blackjack.domain.GameCardsSet
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -35,8 +35,8 @@ class BlackjackController {
 
     private fun initialTurn(dealer: Dealer, players: Players) {
         repeat(DEFAULT_INITIAL_DRAW) {
-            dealer.drawCard()
-            players.players.forEach { player -> player.drawCard() }
+            dealer.hit()
+            players.players.forEach { player -> player.hit() }
         }
 
         BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
@@ -46,20 +46,20 @@ class BlackjackController {
 
     private fun playGame(dealer: Dealer, players: Players) {
         while (!wantStop) {
-            players.players.forEach { playTurn(it) }
+            players.players.forEach { hit(it) }
         }
 
-        if (dealer.sumOfMyCards() <= DEALER_INITIAL_TURN_LIMIT) {
-            dealer.drawCard()
+        if (dealer.sumOfMyCards() <= DEALER_UNDER_NUMBER) {
+            dealer.hit()
             BlackjackView.printDealerExtraHit(dealer.name)
         }
 
         dealer.findStateBySum()
     }
 
-    private fun playTurn(player: Player) {
+    private fun hit(player: Player) {
         while (goNext(player)) {
-            player.drawCard()
+            player.hit()
             BlackjackView.printPlayerCard(player)
         }
         wantStop = true
@@ -74,7 +74,7 @@ class BlackjackController {
 
         val wantDraw = BlackjackView.askDraw(player)
         if (!wantDraw) {
-            player.wantStand()
+            player.stand()
         }
         return wantDraw
     }

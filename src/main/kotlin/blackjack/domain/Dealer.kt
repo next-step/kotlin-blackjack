@@ -4,6 +4,6 @@ class Dealer(
     private val gameCardsSet: GameCardsSet
 ) : Player("딜러", gameCardsSet) {
     companion object {
-        const val DEALER_INITIAL_TURN_LIMIT: Int = 16
+        const val DEALER_UNDER_NUMBER: Int = 16
     }
 }

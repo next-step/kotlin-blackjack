@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
-import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
+import blackjack.domain.Dealer.Companion.DEALER_UNDER_NUMBER
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.vo.GameResultVO
@@ -14,7 +14,7 @@ object BlackjackView {
     }
 
     fun printDealerExtraHit(dealerName: String) {
-        println("\n${dealerName}는 ${DEALER_INITIAL_TURN_LIMIT}이하라 한장의 카드를 더 받았습니다.")
+        println("\n${dealerName}는 ${DEALER_UNDER_NUMBER}이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printPlayersCard(players: Players) {

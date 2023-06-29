@@ -10,7 +10,7 @@ class PlayerTest {
     fun `플레이어는 카드들을 가질 수 있다`() {
         val gameCardsSet = GameCardsSet()
         val player1 = Player("사람1", gameCardsSet)
-        player1.drawCard()
+        player1.hit()
         assertThat(player1.numberOfMyCards()).isEqualTo(1)
     }
 }
