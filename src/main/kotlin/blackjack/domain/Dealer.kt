@@ -5,13 +5,16 @@ import blackjack.domain.enums.Condition
 class Dealer(
     name: String = "딜러",
     cards: Cards,
-    condition: Condition = Condition.STAY,
+    override var condition: Condition = Condition.STAY,
     val deck: Deck,
 ) : Participant(name, cards, condition) {
 
     init {
         val score = cards.calculateScore()
+        initCondition(score)
+    }
 
+    private fun initCondition(score: Score) {
         if (score.isScoreBelowStandard()) {
             this.condition = Condition.PLAY
         }
