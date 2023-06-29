@@ -26,6 +26,7 @@ class PlayerTest : StringSpec({
         )
         player.start(deck)
         player.blackJack().shouldBeTrue()
+        player.result() shouldBe 21
     }
 
     "내 카드가 22 이상이 경우  burst" {
@@ -40,5 +41,6 @@ class PlayerTest : StringSpec({
         player.start(deck)
         player.hit(deck)
         player.burst().shouldBeTrue()
+        player.result() shouldBe 22
     }
 })

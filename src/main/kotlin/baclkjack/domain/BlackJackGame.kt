@@ -5,17 +5,16 @@ import baclkjack.domain.play.Player
 
 class BlackJackGame(players: List<String>, private val deck: Deck = Deck.createDeck()) {
 
-    private val _players = players.map { Player(it) }
-    val players: List<Player> get() = _players
+    val players = players.map { Player(it) }
 
     fun start() {
-        _players.forEach {
+        players.forEach {
             it.start(deck)
         }
     }
 
     fun play(isDraw: (String) -> Boolean, out: (Player) -> Unit) {
-        _players.forEach {
+        players.forEach {
             playerDraw(it, isDraw, out)
         }
     }

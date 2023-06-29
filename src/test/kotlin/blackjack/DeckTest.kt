@@ -17,12 +17,27 @@ class DeckTest : StringSpec({
 
     " 스페이스 A 를 덱에 넣고 카드를 가져온다" {
         val card = Card(Suit.SPADE, Number.ACE)
-        val deck = Deck(cards = mutableListOf<Card>().apply {
-            add(card)
-        })
+        val deck = Deck(
+            cards = mutableListOf<Card>().apply {
+                add(card)
+            }
+        )
         val draw = deck.draw()
         draw.number shouldBe Number.ACE
         draw.suit shouldBe Suit.SPADE
     }
 
+    "덱에서 가져올 카드가 없습니다.." {
+
+        val deck = Deck(
+            cards = mutableListOf<Card>().apply {
+                add(Card(Suit.SPADE, Number.ACE))
+            }
+        )
+
+        deck.draw()
+        shouldThrow<IllegalArgumentException> {
+            deck.draw()
+        }
+    }
 })
