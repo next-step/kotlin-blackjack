@@ -44,9 +44,8 @@ class BlackjackGameTest : BehaviorSpec({
         )
         val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
         When("딜러가 딜을 하면") {
+            game.dealDealer()
             Then("딜러는 카드를 한장더 뽑는다") {
-                game.dealer.getCardsSize() shouldBe 2
-                game.dealDealer()
                 game.dealer.getCardsSize() shouldBe 3
             }
         }

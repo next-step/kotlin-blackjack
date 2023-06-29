@@ -22,6 +22,7 @@ class CardsTest : BehaviorSpec({
                 shouldThrow<IllegalStateException> { cards.drawCard() }
             }
         }
+
         When("한장을 추가하면") {
             cards.addCard(card)
             Then("카드가 한장 늘어난다") {
