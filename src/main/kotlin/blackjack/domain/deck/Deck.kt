@@ -6,11 +6,11 @@ import blackjack.domain.card.CardShape
 
 class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
 
-    private var deck: MutableList<Card>
+    private val deck: MutableList<Card>
 
     init {
-        deck = createDeck()
-        shuffleDeck(deck)
+        val createdDeck = createDeck()
+        deck = shuffleDeck(createdDeck)
     }
 
     private fun createDeck(): MutableList<Card> {
@@ -23,8 +23,8 @@ class Deck(private val deckShuffleStrategy: DeckShuffleStarategy) {
         return deck
     }
 
-    private fun shuffleDeck(deck: MutableList<Card>) {
-        this.deck = deckShuffleStrategy.shuffleDeck(deck).toMutableList()
+    private fun shuffleDeck(deck: MutableList<Card>): MutableList<Card> {
+        return deckShuffleStrategy.shuffleDeck(deck).toMutableList()
     }
 
     fun drawCard(): Card {
