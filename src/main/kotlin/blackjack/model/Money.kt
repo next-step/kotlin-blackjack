@@ -2,8 +2,7 @@ package blackjack.model
 
 import java.math.BigDecimal
 
-@JvmInline
-value class Money(private val value: BigDecimal) {
+data class Money(private val value: BigDecimal) {
 
     val negative: Money get() = Money(value.abs().negate())
 

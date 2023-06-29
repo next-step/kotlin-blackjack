@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.participant.BlackjackPlayer
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec

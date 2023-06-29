@@ -10,6 +10,12 @@ class HandDeck {
     val isScoreOverThanLimitScore: Boolean
         get() = score > LIMIT_SCORE
 
+    val gapScoreWithLimitScore: Int
+        get() = LIMIT_SCORE - score
+
+    val isLessScoreThanLimit: Boolean
+        get() = score < LIMIT_SCORE
+
     private val aceCount: Int
         get() = cards.count { it.number == TrumpCardNumber.ACE }
 
@@ -34,7 +40,7 @@ class HandDeck {
         return scoreWithAcePlus
     }
 
-    operator fun plus(card: TrumpCard) {
+    fun add(card: TrumpCard) {
         cards.add(card)
     }
 

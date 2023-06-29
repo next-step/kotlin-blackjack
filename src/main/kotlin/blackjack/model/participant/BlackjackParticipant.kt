@@ -1,6 +1,10 @@
-package blackjack.model
+package blackjack.model.participant
 
-sealed class BlackjackParticipant(cardDeck: CardDeck) {
+import blackjack.model.CardDeck
+import blackjack.model.HandDeck
+import blackjack.model.TrumpCard
+
+sealed class BlackjackParticipant(val cardDeck: CardDeck) {
     val handDeck: HandDeck = HandDeck()
 
     val deckScore: Int
@@ -9,12 +13,8 @@ sealed class BlackjackParticipant(cardDeck: CardDeck) {
     val deckCount: Int
         get() = handDeck.count
 
-    fun isWinByScoreGap(participant: BlackjackParticipant): Boolean {
-        return (HandDeck.LIMIT_SCORE - deckScore) < (HandDeck.LIMIT_SCORE - participant.deckScore)
-    }
-
     val isSameLimitScore: Boolean
-        get() = (HandDeck.LIMIT_SCORE == deckScore)
+        get() = handDeck.isLessScoreThanLimit
 
     val isScoreOverThanLimitScore: Boolean
         get() = handDeck.isScoreOverThanLimitScore
@@ -25,11 +25,15 @@ sealed class BlackjackParticipant(cardDeck: CardDeck) {
         }
     }
 
-    fun add(card: TrumpCard) {
-        handDeck + card
+    fun isWinByScoreGap(participant: BlackjackParticipant): Boolean {
+        return handDeck.gapScoreWithLimitScore < participant.handDeck.gapScoreWithLimitScore
     }
 
-    abstract fun draw(cardDeck: CardDeck)
+    fun add(card: TrumpCard) {
+        handDeck.add(card)
+    }
+
+    abstract fun draw()
 
     companion object {
         const val INITIAL_DEALING_COUNT: Int = 2

@@ -1,16 +1,19 @@
-package blackjack.model
+package blackjack.model.participant
+
+import blackjack.model.BlackjackDealerMoreCardScoreLimitConsumer
+import blackjack.model.CardDeck
 
 class BlackjackDealer(
     cardDeck: CardDeck,
-    private val moreCardScoreLimitConsumer: (Int) -> Unit,
+    private val moreCardScoreLimitConsumer: BlackjackDealerMoreCardScoreLimitConsumer,
 ) : BlackjackParticipant(cardDeck) {
 
     private val isLessThanLimitScore: Boolean
         get() = handDeck.score <= ADD_CARD_LIMIT_SCORE
 
-    override fun draw(cardDeck: CardDeck) {
+    override fun draw() {
         if (isLessThanLimitScore) {
-            moreCardScoreLimitConsumer(ADD_CARD_LIMIT_SCORE)
+            moreCardScoreLimitConsumer.consumeDealerMoreCardScoreLimit(ADD_CARD_LIMIT_SCORE)
             add(cardDeck.draw())
         }
     }
