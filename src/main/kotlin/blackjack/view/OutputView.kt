@@ -32,13 +32,13 @@ object OutputView {
     fun printDealerGetCard() = println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
 
     fun printResult(players: List<Player>) {
-        println("\n## 최종 승패")
+        println("## 최종 수익")
         players.forEach {
             printScore(it)
         }
     }
 
     private fun printScore(player: Player) {
-        println("${player.info.name}: ${player.info.record}")
+        println("${player.info.name}: ${player.info.result}")
     }
 }

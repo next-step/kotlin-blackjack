@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.domain.Rule
 import blackjack.domain.model.Dealer
 import blackjack.domain.model.Money
 import blackjack.domain.model.Player
@@ -70,7 +69,7 @@ class GameController {
 
     private fun endGame(dealer: Dealer, players: List<Player>) {
         players.forEach {
-            Rule.decisionWinner(dealer, it)
+            dealer.settleMoney(it)
         }
         OutputView.printResult(mutableListOf<Player>(dealer).apply { addAll(players) })
     }
