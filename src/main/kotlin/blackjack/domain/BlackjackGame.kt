@@ -3,12 +3,16 @@ package blackjack.domain
 import blackjack.util.CardSelector
 import blackjack.util.RandomCardSelector
 
-class BlackjackGame(userNames: UserNames, private val cardSelector: CardSelector = RandomCardSelector()) {
+class BlackjackGame(
+    userNames: UserNames,
+    private val cardSelector: CardSelector = RandomCardSelector(),
+    userDrawInterface: UserDrawInterface = UserDrawInterface.defaultDrawInterface,
+) {
     val dealer = Dealer(getInitDeck())
     val users: Users
 
     init {
-        val userList = userNames.map { name -> User(name, getInitDeck()) }.toSet()
+        val userList = userNames.map { name -> User(name, getInitDeck(), userDrawInterface) }.toSet()
         users = Users(userList)
     }
 
@@ -24,25 +28,21 @@ class BlackjackGame(userNames: UserNames, private val cardSelector: CardSelector
         user.addCard(cardSelector.drawCard())
     }
 
-    private fun playerHit(user: User, checkHit: (User) -> Boolean, afterHit: (User) -> Unit) {
-        while (checkHit(user)) {
+    private fun playerHit(user: User, afterHit: (User) -> Unit) {
+        while (user.canDraw()) {
             addCardTo(user)
             afterHit(user)
         }
     }
 
-    fun dealUsers(checkHit: (User) -> Boolean, afterHit: (User) -> Unit) {
+    fun dealUsers(afterHit: (User) -> Unit) {
         for (user in users) {
-            playerHit(user, checkHit, afterHit)
+            playerHit(user, afterHit)
         }
     }
 
     fun dealDealer(afterHit: (User) -> Unit = {}) {
-        playerHit(dealer, ::checkDealerHit, afterHit)
-    }
-
-    private fun checkDealerHit(dealer: User): Boolean {
-        return dealer.calculatePoint() <= DEALER_HIT_THRESHOLD
+        playerHit(dealer, afterHit)
     }
 
     fun getGameResult(): BlackjackResults {
@@ -51,6 +51,5 @@ class BlackjackGame(userNames: UserNames, private val cardSelector: CardSelector
 
     companion object {
         private const val INITIAL_DECK_SIZE = 2
-        private const val DEALER_HIT_THRESHOLD = 16
     }
 }
