@@ -21,13 +21,13 @@ class BlackjackGameTest : BehaviorSpec({
             Then("2장을 가지고 있다") {
                 val users = game.users
                 val user = users.first()
-                user.getDeckSize() shouldBe 2
+                user.getCardsSize() shouldBe 2
             }
         }
 
         When("딜러의 패를 확인하면") {
             Then("2장을 가지고 있다") {
-                game.dealer.getDeckSize() shouldBe 2
+                game.dealer.getCardsSize() shouldBe 2
             }
         }
     }
@@ -45,9 +45,9 @@ class BlackjackGameTest : BehaviorSpec({
         val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
         When("딜러가 딜을 하면") {
             Then("딜러는 카드를 한장더 뽑는다") {
-                game.dealer.getDeckSize() shouldBe 2
+                game.dealer.getCardsSize() shouldBe 2
                 game.dealDealer()
-                game.dealer.getDeckSize() shouldBe 3
+                game.dealer.getCardsSize() shouldBe 3
             }
         }
     }

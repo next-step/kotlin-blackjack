@@ -1,37 +1,15 @@
 package blackjack.domain
 
-class Deck(cardList: List<Card>) : Iterable<Card> {
-
-    private val cardQueue: MutableList<Card> = cardList.toMutableList()
+class Deck(private val cards: Cards) {
 
     val size: Int
-        get() = cardQueue.size
+        get() = cards.size
 
     init {
-        require(cardList.isNotEmpty()) { EMPTY_DECK_ERROR_MESSAGE }
+        require(cards.isNotEmpty()) { EMPTY_DECK_ERROR_MESSAGE }
     }
 
-    fun drawCard(): Card = checkNotNull(cardQueue.removeFirstOrNull()) { EMPTY_DECK_ERROR_MESSAGE }
-
-    fun addCard(card: Card) {
-        cardQueue.add(card)
-    }
-
-    fun sum(): Int {
-        return PointCalculator.calculatePoint(this)
-    }
-
-    fun hasAce(): Boolean {
-        return cardQueue.any { it.cardNumber == CardNumber.ACE }
-    }
-
-    operator fun get(index: Int): Card {
-        return cardQueue[index]
-    }
-
-    override fun iterator(): Iterator<Card> {
-        return cardQueue.iterator()
-    }
+    fun drawCard(): Card = cards.drawCard()
 
     companion object {
         private const val EMPTY_DECK_ERROR_MESSAGE = "덱이 비어있습니다"
@@ -39,13 +17,13 @@ class Deck(cardList: List<Card>) : Iterable<Card> {
         private val DEFAULT_DECK: Deck by lazy {
             val list = Suit.values()
                 .flatMap { addSuitCards(it) }
-            Deck(list)
+            Deck(Cards(list))
         }
 
         private fun addSuitCards(suit: Suit): List<Card> {
             return CardNumber.NUMBER_RANGE.map { Card(suit, CardNumber.of(it)) }
         }
 
-        fun getShuffledDeck() = Deck(DEFAULT_DECK.cardQueue.shuffled())
+        fun getShuffledDeck() = Deck(Cards(DEFAULT_DECK.cards.shuffled()))
     }
 }

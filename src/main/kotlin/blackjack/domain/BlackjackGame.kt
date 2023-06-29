@@ -8,20 +8,20 @@ class BlackjackGame(
     private val cardSelector: CardSelector = RandomCardSelector(),
     userDrawInterface: UserDrawInterface,
 ) {
-    val dealer = Dealer(getInitDeck())
+    val dealer = Dealer(getInitCards())
     val users: Users
 
     init {
-        val userList = userNames.map { name -> User(name, getInitDeck(), userDrawInterface) }.toSet()
+        val userList = userNames.map { name -> User(name, getInitCards(), userDrawInterface) }.toSet()
         users = Users(userList)
     }
 
-    private fun getInitDeck(): Deck {
+    private fun getInitCards(): Cards {
         val cardList = mutableListOf<Card>()
-        repeat(INITIAL_DECK_SIZE) {
+        repeat(INITIAL_CARDS_SIZE) {
             cardList.add(cardSelector.drawCard())
         }
-        return Deck(cardList)
+        return Cards(cardList)
     }
 
     fun dealUsers(afterHit: (Player) -> Unit) {
@@ -50,6 +50,6 @@ class BlackjackGame(
     }
 
     companion object {
-        private const val INITIAL_DECK_SIZE = 2
+        private const val INITIAL_CARDS_SIZE = 2
     }
 }

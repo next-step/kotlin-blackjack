@@ -18,8 +18,8 @@ class UsersTest : BehaviorSpec({
 
     Given("비어있지 않은 유저 배열이 있다.") {
         val userList = setOf(
-            User("홍길동", Deck(listOf(Card(Suit.SPADE, CardNumber.ACE))), TEST_USER_DRAW_INTERFACE),
-            User("김한빈", Deck(listOf(Card(Suit.HEART, CardNumber.ACE))), TEST_USER_DRAW_INTERFACE),
+            User("홍길동", Cards(listOf(Card(Suit.SPADE, CardNumber.ACE))), TEST_USER_DRAW_INTERFACE),
+            User("김한빈", Cards(listOf(Card(Suit.HEART, CardNumber.ACE))), TEST_USER_DRAW_INTERFACE),
         )
         When("해당 배열로 Users를 만들면") {
             Then("정상적으로 생성된다.") {

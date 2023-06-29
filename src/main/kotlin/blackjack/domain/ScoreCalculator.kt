@@ -1,17 +1,17 @@
 package blackjack.domain
 
-object PointCalculator {
+object ScoreCalculator {
     const val BLACKJACK_LIMIT = 21
 
-    fun calculatePoint(deck: Deck): Int {
-        var sum = deck.sumOf { getCardPoints(it) }
-        if (deck.hasAce() && sum <= 11) {
+    fun calculateScore(cards: Cards): Int {
+        var sum = cards.sumOf { getCardScore(it) }
+        if (cards.hasAce() && sum <= 11) {
             sum += 10
         }
         return sum
     }
 
-    private fun getCardPoints(card: Card): Int {
+    private fun getCardScore(card: Card): Int {
         return when (card.cardNumber) {
             CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING -> 10
             else -> card.cardNumber.ordinal + 1

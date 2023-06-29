@@ -6,22 +6,22 @@ fun interface UserDrawInterface {
 
 abstract class Player(
     val name: String,
-    val deck: Deck,
+    val cards: Cards,
 ) {
-    val finalPoint: Int by lazy { deck.sum() }
+    val finalScore: Int by lazy { cards.score() }
 
-    fun getDeckSize() = deck.size
+    fun getCardsSize() = cards.size
 
     fun addCard(card: Card) {
-        deck.addCard(card)
+        cards.addCard(card)
     }
 
-    fun calculatePoint(): Int {
-        return deck.sum()
+    fun score(): Int {
+        return cards.score()
     }
 
     fun isBust(): Boolean {
-        return deck.sum() > PointCalculator.BLACKJACK_LIMIT
+        return cards.score() > ScoreCalculator.BLACKJACK_LIMIT
     }
 
     abstract fun canDraw(): Boolean
@@ -29,9 +29,9 @@ abstract class Player(
 
 open class User(
     name: String,
-    deck: Deck,
+    cards: Cards,
     private val userDrawInterface: UserDrawInterface,
-) : Player(name, deck) {
+) : Player(name, cards) {
 
     init {
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
@@ -41,7 +41,7 @@ open class User(
         val compareResult = when {
             dealer.isBust() -> 1
             isBust() -> -1
-            else -> finalPoint - dealer.finalPoint
+            else -> finalScore - dealer.finalScore
         }
         return when {
             compareResult > 0 -> Result.WIN
@@ -59,10 +59,10 @@ open class User(
     }
 }
 
-class Dealer(deck: Deck) : Player(DEALER_NAME, deck) {
+class Dealer(cards: Cards) : Player(DEALER_NAME, cards) {
 
     override fun canDraw(): Boolean {
-        return calculatePoint() <= DEALER_HIT_THRESHOLD
+        return score() <= DEALER_HIT_THRESHOLD
     }
 
     companion object {

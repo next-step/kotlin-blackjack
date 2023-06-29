@@ -10,7 +10,15 @@ import io.kotest.matchers.shouldBe
 
 class BlackjackResultTest : BehaviorSpec({
     Given("21을 초과한 딜러가 있다") {
-        val dealer = Dealer(Deck(listOf(Card(Suit.SPADE, CardNumber.EIGHT), Card(Suit.DIAMOND, CardNumber.EIGHT), Card(Suit.HEART, CardNumber.EIGHT))))
+        val dealer = Dealer(
+            Cards(
+                listOf(
+                    Card(Suit.SPADE, CardNumber.EIGHT),
+                    Card(Suit.DIAMOND, CardNumber.EIGHT),
+                    Card(Suit.HEART, CardNumber.EIGHT),
+                ),
+            ),
+        )
 
         forAll(
             table(
@@ -18,21 +26,21 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "블랙잭",
-                        Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        Cards(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                 ),
                 row(
                     User(
                         "블랙잭_아님",
-                        Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        Cards(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                 ),
                 row(
                     User(
                         "초과함",
-                        Deck(
+                        Cards(
                             listOf(
                                 Card(Suit.SPADE, CardNumber.TEN),
                                 Card(Suit.DIAMOND, CardNumber.TEN),
@@ -55,7 +63,7 @@ class BlackjackResultTest : BehaviorSpec({
     }
 
     Given("21을 초과하지 않은 딜러가 있다") {
-        val dealer = Dealer(Deck(listOf(Card(Suit.SPADE, CardNumber.EIGHT), Card(Suit.DIAMOND, CardNumber.NINE))))
+        val dealer = Dealer(Cards(listOf(Card(Suit.SPADE, CardNumber.EIGHT), Card(Suit.DIAMOND, CardNumber.NINE))))
 
         forAll(
             table(
@@ -63,7 +71,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "블랙잭",
-                        Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        Cards(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 0, 0, 1),
@@ -71,7 +79,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "딜러와_동점",
-                        Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        Cards(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 0, 1, 0),
@@ -79,7 +87,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "딜러에게_짐",
-                        Deck(listOf(Card(Suit.DIAMOND, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SIX))),
+                        Cards(listOf(Card(Suit.DIAMOND, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SIX))),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 1, 0, 0),
@@ -87,7 +95,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "초과함",
-                        Deck(
+                        Cards(
                             listOf(
                                 Card(Suit.SPADE, CardNumber.TEN),
                                 Card(Suit.DIAMOND, CardNumber.TEN),
