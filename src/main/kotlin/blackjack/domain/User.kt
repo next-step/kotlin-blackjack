@@ -37,6 +37,19 @@ open class User(
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
     }
 
+    fun match(dealer: Dealer): Result {
+        val compareResult = when {
+            dealer.isBust() -> 1
+            isBust() -> -1
+            else -> finalPoint - dealer.finalPoint
+        }
+        return when {
+            compareResult > 0 -> Result.WIN
+            compareResult < 0 -> Result.LOSE
+            else -> Result.DRAW
+        }
+    }
+
     override fun canDraw(): Boolean {
         return !isBust() && userDrawInterface.canDraw(this)
     }
@@ -46,18 +59,10 @@ open class User(
     }
 }
 
-class Dealer(deck: Deck) : Player(DEALER_NAME, deck), Comparable<User> {
+class Dealer(deck: Deck) : Player(DEALER_NAME, deck) {
 
     override fun canDraw(): Boolean {
         return calculatePoint() <= DEALER_HIT_THRESHOLD
-    }
-
-    override fun compareTo(other: User): Int {
-        return when {
-            isBust() -> -1
-            other.isBust() -> 1
-            else -> finalPoint - other.finalPoint
-        }
     }
 
     companion object {

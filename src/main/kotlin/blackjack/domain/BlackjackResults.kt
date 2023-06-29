@@ -7,21 +7,13 @@ class BlackjackResults(dealer: Dealer, users: Users) {
     init {
         val userResultsList = mutableListOf<UserResult>()
         for (user in users) {
-            userResultsList.add(UserResult(user, getResult(dealer, user)))
+            userResultsList.add(UserResult(user, user.match(dealer)))
         }
         userResults = UserResults(userResultsList)
         dealerResult = getDealerResult(dealer, userResults)
     }
 
     companion object {
-        private fun getResult(dealer: Dealer, user: User): Result {
-            val compareResult = dealer.compareTo(user)
-            return when {
-                compareResult < 0 -> Result.WIN
-                compareResult > 0 -> Result.LOSE
-                else -> Result.DRAW
-            }
-        }
 
         private fun getDealerResult(dealer: Dealer, userResults: UserResults): DealerResult {
             val dealerWinCount = userResults.count { it.result == Result.LOSE }
