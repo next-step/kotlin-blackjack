@@ -12,6 +12,14 @@ open class Player(
         return cards.sum < Rule.BLACK_JACK
     }
 
+    fun isBlackJack(): Boolean = cards.sum == Rule.BLACK_JACK
+
+    fun hasTwoCards(): Boolean = cards.items.size == 2
+
+    fun batting(dealer: Dealer, money: Money) {
+        dealer.addBattingMoney(this, money)
+    }
+
     fun drawCard(trump: Trump) {
         cards.add(trump.getCard())
     }

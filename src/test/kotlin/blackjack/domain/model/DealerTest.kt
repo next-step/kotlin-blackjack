@@ -46,10 +46,4 @@ class DealerTest {
 
         dealer.canDrawCard() shouldBe false
     }
-
-    @Test
-    fun `플레이어는 이름을 가진다`() {
-        val player = Player(Trump(), PlayerInfo(name = "홍길동"))
-        player.info.name shouldBe "홍길동"
-    }
 }
