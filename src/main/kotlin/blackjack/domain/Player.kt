@@ -20,12 +20,12 @@ open class Player(
         val optimalSum = myCards.calculateOptimalSum()
 
         if (optimalSum == BLACK_JACK_SCORE) {
-            state = PlayerState.BLACK_JACK
+            findStateBySum()
             return false
         }
 
         if (optimalSum > BLACK_JACK_SCORE) {
-            state = PlayerState.BUST
+            findStateBySum()
             return false
         }
         return true
@@ -36,15 +36,17 @@ open class Player(
     }
 
     fun findStateBySum(): PlayerState {
-        if (sumOfMyCards() == BLACK_JACK_SCORE) {
+        val sumOfMyCards = sumOfMyCards()
+
+        if (sumOfMyCards == BLACK_JACK_SCORE) {
             state = PlayerState.BLACK_JACK
         }
 
-        if (sumOfMyCards() < BLACK_JACK_SCORE) {
+        if (sumOfMyCards < BLACK_JACK_SCORE) {
             state = PlayerState.STAND
         }
 
-        if (sumOfMyCards() > BLACK_JACK_SCORE) {
+        if (sumOfMyCards > BLACK_JACK_SCORE) {
             state = PlayerState.BUST
         }
 

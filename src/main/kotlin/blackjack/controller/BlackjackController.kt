@@ -68,7 +68,6 @@ class BlackjackController {
     private fun goNext(player: Player): Boolean {
         val canDraw = player.canDraw()
         if (!canDraw) {
-            player.findStateBySum()
             return false
         }
 
