@@ -2,10 +2,12 @@ package blackjack.domain.state
 
 import blackjack.domain.card.bustCards
 import blackjack.domain.card.cards
+import blackjack.domain.card.heartAce
 import blackjack.domain.card.heartFour
 import blackjack.domain.card.heartJack
 import blackjack.domain.card.heartKing
 import blackjack.domain.card.heartQueen
+import blackjack.domain.card.heartTen
 import blackjack.domain.card.heartThree
 import blackjack.domain.card.heartTwo
 import blackjack.domain.card.notBustCards
@@ -46,7 +48,13 @@ class HitTest : StringSpec({
         state.isHit() shouldBe true
     }
 
-    "stay 함수 사용시 stay를 반환한다" {
-        (Hit(notBustCards()).stay() is Stay) shouldBe true
+    "stay 함수 사용 시 블랙잭이라면 블랙잭 상태를 반환한다" {
+        val blackJackCards = cards(heartAce(), heartTen())
+        (Hit(blackJackCards).stay() is BlackJack) shouldBe true
+    }
+
+    "stay 함수 사용시 블랙잭이 아니라면 stay를 반환한다" {
+        val notBlackJackCards = cards(heartTwo(), heartThree())
+        (Hit(notBlackJackCards).stay() is Stay) shouldBe true
     }
 })

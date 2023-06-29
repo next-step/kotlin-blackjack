@@ -27,6 +27,10 @@ class Hit(
     }
 
     override fun stay(): GamerState {
-        return Stay(cards)
+        return if (cards.isBlackJack()) {
+            BlackJack(cards)
+        } else {
+            Stay(cards)
+        }
     }
 }
