@@ -5,16 +5,16 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.PlayerCards
-import blackjack.domain.gamer.PlayerNames
+import blackjack.domain.gamer.PlayerInitProperty
 import blackjack.domain.shuffle.Shuffler
 
 class BlackJackGame(
     shuffler: Shuffler<Card>,
-    playerNames: PlayerNames,
+    playerInitProperties: List<PlayerInitProperty>
 ) {
 
     private val cardDeck = CardDeck.create(shuffler)
-    private val gamers = Gamers.create(playerNames)
+    private val gamers = Gamers.create(playerInitProperties)
 
     fun currentTurn(): BlackJackGameTurn {
         return when {

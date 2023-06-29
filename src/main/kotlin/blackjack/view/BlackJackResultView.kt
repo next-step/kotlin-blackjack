@@ -10,7 +10,6 @@ import blackjack.domain.game.MatchResult
 import blackjack.domain.game.MatchResultType
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
-import blackjack.domain.gamer.unWrappings
 import blackjack.domain.score.Score
 
 class BlackJackResultView {
@@ -50,7 +49,7 @@ class BlackJackResultView {
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
-        val names = playerNames.unWrappings().joinToString(", ")
+        val names = playerNames.joinToString(", ")
         return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
     }
 
@@ -80,7 +79,7 @@ class BlackJackResultView {
 
     private fun MatchResult.makeAllPlayerCardsDisplayMessage(): String {
         return gamerCards.allPlayerCards.joinToString("\n") {
-            val name = it.playerName.unWrapping()
+            val name = it.playerName
             val cards = it.cards
             val score = it.cards.score
             "$name 카드: ${cards.makeDisplayMessage()} - ${score.makeDisplayMessage()}"
@@ -100,7 +99,7 @@ class BlackJackResultView {
 
     private fun MatchResult.makeAllPlayersMatchResultMessage(): String {
         return gamerMatchResult.playerMatchResults.joinToString("\n") {
-            val name = it.playerName.unWrapping()
+            val name = it.playerName
             val matchResult = when (it.matchResultType) {
                 MatchResultType.WIN -> "승"
                 MatchResultType.TIE -> "무"
@@ -111,9 +110,8 @@ class BlackJackResultView {
     }
 
     private fun PlayerCards.makeDisplayMessage(): String {
-        val name = playerName.unWrapping()
         val cardNames = cards.makeDisplayMessage()
-        return "${name}카드: $cardNames"
+        return "${playerName}카드: $cardNames"
     }
 
     private fun Score.makeDisplayMessage(): String {

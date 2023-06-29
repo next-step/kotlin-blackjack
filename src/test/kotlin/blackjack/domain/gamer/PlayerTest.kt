@@ -35,8 +35,8 @@ class PlayerTest : StringSpec({
     }
 
     "플레이어의 카드 목록을 캡쳐할 수 있다" {
-        val name = PlayerName("test")
-        val player = Player(name)
+        val name = "test"
+        val player = player(name)
         val cards = cards(heartQueen(), heartTwo())
         player.init(cards)
         player.captureCards() shouldBe PlayerCards(name, cards)

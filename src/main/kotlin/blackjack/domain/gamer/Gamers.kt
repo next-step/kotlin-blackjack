@@ -66,10 +66,10 @@ class Gamers(
 
     companion object {
 
-        fun create(playerNames: PlayerNames): Gamers {
+        fun create(playerInitProperties: List<PlayerInitProperty>): Gamers {
             return Gamers(
                 dealer = Dealer(),
-                players = Players.create(playerNames)
+                players = Players.create(playerInitProperties)
             )
         }
     }

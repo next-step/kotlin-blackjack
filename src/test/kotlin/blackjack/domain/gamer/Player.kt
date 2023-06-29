@@ -1,5 +1,10 @@
 package blackjack.domain.gamer
 
-fun player(name: String): Player {
-    return Player(PlayerName(name))
+import blackjack.domain.game.Money
+
+fun player(
+    name: String,
+    betAmount: Money = Money(1),
+): Player {
+    return Player(name, betAmount)
 }

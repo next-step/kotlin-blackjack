@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
-import blackjack.domain.gamer.PlayerName
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -18,11 +17,11 @@ class CardDistributionResultTest : StringSpec({
         )
         val playerCards = listOf(
             PlayerCards(
-                playerName = PlayerName("1"),
+                playerName = "1",
                 cards = Cards(Card.ALL_CARDS.take(2)),
             ),
             PlayerCards(
-                playerName = PlayerName("1"),
+                playerName = "1",
                 cards = Cards(Card.ALL_CARDS.take(1)),
             ),
         )
@@ -41,11 +40,11 @@ class CardDistributionResultTest : StringSpec({
         )
         val playerCards = listOf(
             PlayerCards(
-                playerName = PlayerName("1"),
+                playerName = "1",
                 cards = Cards(Card.ALL_CARDS.take(2)),
             ),
             PlayerCards(
-                playerName = PlayerName("1"),
+                playerName = "1",
                 cards = Cards(Card.ALL_CARDS.take(2)),
             ),
         )

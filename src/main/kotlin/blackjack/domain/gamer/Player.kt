@@ -1,10 +1,12 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.game.MatchResultType
+import blackjack.domain.game.Money
 import blackjack.domain.game.PlayerMatchResult
 
 class Player(
-    val name: PlayerName,
+    val name: String,
+    val betAmount: Money,
 ) : Gamer() {
 
     override fun canHit(): Boolean {

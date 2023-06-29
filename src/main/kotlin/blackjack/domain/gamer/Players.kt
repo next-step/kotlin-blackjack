@@ -52,8 +52,9 @@ value class Players(val value: List<Player>) {
 
     companion object {
 
-        fun create(playerNames: PlayerNames): Players {
-            return Players(playerNames.map { Player(it) })
+        fun create(playerInitProperties: List<PlayerInitProperty>): Players {
+            val players = playerInitProperties.map { Player(it.playerName, it.betAmount) }
+            return Players(players)
         }
     }
 }

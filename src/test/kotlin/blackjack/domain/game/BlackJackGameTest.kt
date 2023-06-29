@@ -11,7 +11,7 @@ import blackjack.domain.card.heartTen
 import blackjack.domain.card.heartThree
 import blackjack.domain.card.heartTwo
 import blackjack.domain.gamer.DealerCard
-import blackjack.domain.gamer.playerNames
+import blackjack.domain.gamer.playerInitProperties
 import blackjack.domain.score.CardScoreCalculator
 import blackjack.domain.shuffle.ForceMoveForwardCardShuffler
 import io.kotest.core.spec.style.BehaviorSpec
@@ -20,7 +20,7 @@ import io.kotest.matchers.shouldBe
 class BlackJackGameTest : BehaviorSpec({
 
     Given("게임이 처음 만들어 졌을 때") {
-        val game = blackJackGame(playerNames("test1", "test2"))
+        val game = blackJackGame(playerInitProperties("test1", "test2"))
 
         When("카드를 분배하면") {
             val cardDistributionResult = game.distributeCardsToPlayers()
@@ -44,24 +44,24 @@ class BlackJackGameTest : BehaviorSpec({
     }
 
     Given("카드 분배가 완료 되었을 때") {
-        val playerNames = playerNames("test1", "test2")
-        val game = blackJackGame(playerNames)
+        val playerInitProperties = playerInitProperties("test1", "test2")
+        val game = blackJackGame(playerInitProperties)
         game.distributeCardsToPlayers()
 
         When("현재 턴을 확인하면") {
             val turn = game.currentTurn() as BlackJackGameTurn.PlayerAnswer
 
             Then("대기중인 첫 플레이어의 hit 대답을 기다린다") {
-                turn shouldBe BlackJackGameTurn.PlayerAnswer(playerNames[0])
+                turn shouldBe BlackJackGameTurn.PlayerAnswer(playerInitProperties.first().playerName)
             }
         }
     }
 
     Given("플레이어의 대답을 기다리고 있을 때") {
-        val playerNames = playerNames("test1", "test2")
+        val playerInitProperties = playerInitProperties("test1", "test2")
 
         When("hit 답변을 하면") {
-            val game = blackJackGame(playerNames)
+            val game = blackJackGame(playerInitProperties)
             val cardDistributeResult = game.distributeCardsToPlayers()
             val hitResult = game.hitFocusedPlayer()
 
@@ -73,20 +73,20 @@ class BlackJackGameTest : BehaviorSpec({
         }
 
         When("stay 답변을 하면") {
-            val game = blackJackGame(playerNames)
+            val game = blackJackGame(playerInitProperties)
             game.distributeCardsToPlayers()
             game.stayFocusedPlayer()
 
             Then("다음 플레이어로 순서가 넘어간다") {
                 val turn = game.currentTurn() as BlackJackGameTurn.PlayerAnswer
-                turn.playerName shouldBe playerNames[1]
+                turn.playerName shouldBe playerInitProperties[1].playerName
             }
         }
     }
 
     Given("플레이어가 hit 대답을 했을 때") {
-        val playerNames = playerNames("test1", "test2")
-        val game = blackJackGame(playerNames)
+        val playerInitProperties = playerInitProperties("test1", "test2")
+        val game = blackJackGame(playerInitProperties)
         game.distributeCardsToPlayers()
 
         When("bust 상태가 되면") {
@@ -99,14 +99,13 @@ class BlackJackGameTest : BehaviorSpec({
             Then("다음 플레이어로 순서가 넘어간다") {
                 val turn = (game.currentTurn() as BlackJackGameTurn.PlayerAnswer)
                 val playerName = turn.playerName
-                playerName shouldBe playerNames[1]
+                playerName shouldBe playerInitProperties[1].playerName
             }
         }
     }
 
     Given("2명의 플레이어가 참여 했을 때") {
-        val playerNames = playerNames("test1", "test2")
-        val game = blackJackGame(playerNames)
+        val game = blackJackGame(playerInitProperties("test1", "test2"))
 
         When("2명 모두 카드 받기를 완료하면") {
             game.distributeCardsToPlayers()
@@ -120,15 +119,14 @@ class BlackJackGameTest : BehaviorSpec({
     }
 
     Given("카드의 합이 16 이하인 딜러의 차례가 되었을 때") {
-        val playerNames = playerNames("test1")
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTwo(),
                 heartThree(),
                 heartFour(),
                 heartFive(),
             ),
-            playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [2, 3] 플레이어 [4, 5]
         game.stayFocusedPlayer()
@@ -141,15 +139,14 @@ class BlackJackGameTest : BehaviorSpec({
     }
 
     Given("카드의 합이 17 이상인 딜러의 차례가 되었을 때") {
-        val playerNames = playerNames("test1")
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTen(),
                 heartJack(),
                 heartQueen(),
                 heartKing(),
             ),
-            playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
         game.stayFocusedPlayer()
@@ -162,15 +159,14 @@ class BlackJackGameTest : BehaviorSpec({
     }
 
     Given("게임 종료 턴이 되었을 때") {
-        val playerNames = playerNames("test1")
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTen(),
                 heartJack(),
                 heartQueen(),
                 heartKing(),
             ),
-            playerNames = playerNames,
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
         game.stayFocusedPlayer()
@@ -192,13 +188,13 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 이겼을 떄") {
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTen(), // 딜러
                 heartJack(), // 딜러
                 heartTwo(), // 참가자
                 heartThree(), // 참가자
             ),
-            playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [2, 3]
         game.stayFocusedPlayer() // 참가자 받지 않음
@@ -219,13 +215,13 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 참가자가 이겼을 떄") {
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartSeven(), // 딜러
                 heartTen(), // 딜러
                 heartQueen(), // 참가자
                 heartJack(), // 참가자
             ),
-            playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [7, 10] 플레이어 [10, 10]
         game.stayFocusedPlayer() // 참가자 받지 않음
@@ -246,13 +242,13 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러와 참가자가 비겼을 떄") {
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTen(), // 딜러
                 heartJack(), // 딜러
                 heartQueen(), // 참가자
                 heartKing(), // 참가자
             ),
-            playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
         game.stayFocusedPlayer() // 참가자 받지 않음
@@ -273,6 +269,7 @@ class BlackJackGameTest : BehaviorSpec({
 
     Given("1명의 참가자와 딜러가 있는 게임에서 딜러가 버스트 되었을 때") {
         val game = blackJackGame(
+            playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
                 heartTen(), // 딜러
                 heartThree(), // 딜러
@@ -280,7 +277,6 @@ class BlackJackGameTest : BehaviorSpec({
                 heartKing(), // 참가자
                 heartJack(), // 딜러 추가분
             ),
-            playerNames = playerNames("test1"),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 3] 플레이어 [10, 10]
         game.stayFocusedPlayer() // 참가자 받지 않음

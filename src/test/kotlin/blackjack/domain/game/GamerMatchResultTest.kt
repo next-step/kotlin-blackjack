@@ -1,6 +1,5 @@
 package blackjack.domain.game
 
-import blackjack.domain.gamer.PlayerName
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
@@ -10,7 +9,7 @@ class GamerMatchResultTest : StringSpec({
         val dealerMatchResult = DealerMatchResult(0, 0, 2)
         val playerMatchResults = listOf(
             PlayerMatchResult(
-                PlayerName("test"),
+                "test",
                 MatchResultType.WIN
             )
         )
@@ -23,7 +22,7 @@ class GamerMatchResultTest : StringSpec({
         val dealerMatchResult = DealerMatchResult(2, 0, 0)
         val playerMatchResults = listOf(
             PlayerMatchResult(
-                PlayerName("test"),
+                "test",
                 MatchResultType.LOSE
             )
         )
@@ -36,7 +35,7 @@ class GamerMatchResultTest : StringSpec({
         val dealerMatchResult = DealerMatchResult(0, 2, 0)
         val playerMatchResults = listOf(
             PlayerMatchResult(
-                PlayerName("test"),
+                "test",
                 MatchResultType.TIE
             )
         )

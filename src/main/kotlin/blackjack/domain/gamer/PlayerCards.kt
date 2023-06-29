@@ -3,6 +3,6 @@ package blackjack.domain.gamer
 import blackjack.domain.card.Cards
 
 data class PlayerCards(
-    val playerName: PlayerName,
+    val playerName: String,
     val cards: Cards,
 )
