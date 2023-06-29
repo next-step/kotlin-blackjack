@@ -23,7 +23,7 @@ class Cards(
 
         var total = cards.sumOf { it.rank.value }
 
-        if(cards.any { it.rank == Rank.ACE } && total - Rank.ACE.value <= STANDARD_NUMBER) {
+        if (cards.any { it.rank == Rank.ACE } && total - Rank.ACE.value <= STANDARD_NUMBER) {
             total += -Rank.ACE.value + Rank.ACE.hiddenValue
         }
         return Score(total)

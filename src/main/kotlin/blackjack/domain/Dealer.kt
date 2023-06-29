@@ -7,21 +7,25 @@ class Dealer(
     cards: Cards,
     condition: Condition = Condition.STAY,
     val deck: Deck,
-): Participant(name, cards, condition) {
+) : Participant(name, cards, condition) {
 
     init {
         val score = cards.calculateScore()
 
-        if( score.isScoreBelowStandard()) {
+        if (score.isScoreBelowStandard()) {
             this.condition = Condition.PLAY
         }
     }
 
     override fun hit(card: Card) {
         super.hit(card)
-        val score = cards.calculateScore()
 
-        if(score.isScoreAboveStandard()) {
+        val score = cards.calculateScore()
+        changeCondition(score)
+    }
+
+    private fun changeCondition(score: Score) {
+        if (score.isScoreAboveStandard()) {
             this.condition = Condition.STAY
         } else if (score.isScoreAboveBlackjack()) {
             this.condition = Condition.BUST
