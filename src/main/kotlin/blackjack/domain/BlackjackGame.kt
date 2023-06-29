@@ -24,8 +24,14 @@ class BlackjackGame(
         return Deck(cardList)
     }
 
-    private fun addCardTo(user: User) {
-        user.addCard(cardSelector.drawCard())
+    fun dealUsers(afterHit: (User) -> Unit) {
+        for (user in users) {
+            playerHit(user, afterHit)
+        }
+    }
+
+    fun dealDealer(afterHit: (User) -> Unit = {}) {
+        playerHit(dealer, afterHit)
     }
 
     private fun playerHit(user: User, afterHit: (User) -> Unit) {
@@ -35,14 +41,8 @@ class BlackjackGame(
         }
     }
 
-    fun dealUsers(afterHit: (User) -> Unit) {
-        for (user in users) {
-            playerHit(user, afterHit)
-        }
-    }
-
-    fun dealDealer(afterHit: (User) -> Unit = {}) {
-        playerHit(dealer, afterHit)
+    private fun addCardTo(user: User) {
+        user.addCard(cardSelector.drawCard())
     }
 
     fun getGameResult(): BlackjackResults {
