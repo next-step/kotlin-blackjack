@@ -14,9 +14,24 @@ class CardTest : StringSpec({
             row(Suit.HEART, Suit.HEART),
         ) { inputSuit, expectedSuit ->
 
-            val card = Card(inputSuit)
+            val card = Card(inputSuit, CardNumber.ACE)
 
             card.suit shouldBe expectedSuit
+        }
+    }
+
+    "카드는 A, 2~10, J, Q, K 범위의 숫자를 갖는다." {
+        val cardNumberRows = CardNumber
+            .values()
+            .map { row(it) }
+            .toTypedArray()
+        forAll(
+            *cardNumberRows
+        ) { cardNumber ->
+
+            val card = Card(Suit.SPADE, cardNumber)
+
+            card.number shouldBe cardNumber
         }
     }
 })
