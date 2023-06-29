@@ -23,12 +23,12 @@ object OutputView {
     }
 
     fun printParticipant(participant: BlackjackParticipant) {
-        println(participantString(participant))
+        println(getParticipantString(participant))
     }
 
     fun printBlackjackParticipantsScore(dealer: BlackjackDealer, players: Collection<BlackjackPlayer>) {
         (listOf(dealer) + players).forEach {
-            println("${participantString(it)} - 결과: ${it.deckScore}")
+            println("${getParticipantString(it)} - 결과: ${it.deckScore}")
         }
         println()
     }
@@ -41,7 +41,7 @@ object OutputView {
         }
     }
 
-    private fun participantString(participant: BlackjackParticipant): String {
+    private fun getParticipantString(participant: BlackjackParticipant): String {
         return when (participant) {
             is BlackjackDealer -> "딜러 카드: ${deckString(participant.handDeck)}"
             is BlackjackPlayer -> "${participant.name} 카드: ${deckString(participant.handDeck)}"

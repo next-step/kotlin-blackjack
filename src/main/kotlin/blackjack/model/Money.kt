@@ -2,7 +2,8 @@ package blackjack.model
 
 import java.math.BigDecimal
 
-class Money(private val value: BigDecimal) {
+@JvmInline
+value class Money(private val value: BigDecimal) {
 
     val negative: Money get() = Money(value.abs().negate())
 
@@ -18,19 +19,6 @@ class Money(private val value: BigDecimal) {
 
     override fun toString(): String {
         return value.stripTrailingZeros().toPlainString()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Money
-
-        return value.compareTo(other.value) == 0
-    }
-
-    override fun hashCode(): Int {
-        return value.hashCode()
     }
 
     companion object {
