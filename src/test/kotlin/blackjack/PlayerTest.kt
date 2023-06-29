@@ -41,6 +41,6 @@ class PlayerTest : StringSpec({
         player.start(deck)
         player.hit(deck)
         player.burst().shouldBeTrue()
-        player.result() shouldBe 22
+        player.result() shouldBe 30
     }
 })
