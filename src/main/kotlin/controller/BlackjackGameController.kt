@@ -1,7 +1,9 @@
 package controller
 
 import domain.card.util.DeckGenerator
+import domain.dto.PlayerIssuedCardsResult
 import domain.game.BlackjackGame
+import domain.game.GameResult
 import domain.player.BetAmount
 import domain.player.Dealer
 import domain.player.Player
@@ -34,19 +36,18 @@ class BlackjackGameController(
 
     fun gameStart() {
         initGame()
-        game.gameStart(isIssueCard = this::askPlayer, showMessage = this::showMessage)
-        printGameResult()
+        val gameResult = game.gameStart(isIssueCard = this::askPlayer, showMessage = this::showMessage)
+        printGameResult(gameResult)
     }
 
     private fun initGame() {
-        game.initGame()
-        resultView.printInitPlayers(players = game.players, dealer = game.dealer)
+        val initGameResult = game.initGame()
+        resultView.printInitPlayers(initGameResult)
     }
 
-    private fun printGameResult() {
-        val revenueResult = game.getPlayersRevenues()
-        resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
-        resultView.printRevenue(revenueResult)
+    private fun printGameResult(gameResult: GameResult) {
+        resultView.printIssuedCardResult(gameResult.issuedCardsResult)
+        resultView.printRevenue(gameResult.revenueResult)
     }
 
     private fun askPlayer(player: Player) = when (inputView.askDraw(player.name)) {
@@ -55,6 +56,8 @@ class BlackjackGameController(
     }
 
     private fun showMessage(player: Player) {
-        if (player is Dealer) resultView.printDealerIssuedCardMessage() else resultView.printPlayerCards(player)
+        if (player is Dealer) resultView.printDealerIssuedCardMessage() else resultView.printPlayerCards(
+            PlayerIssuedCardsResult(name = player.name, issuedCards = player.cards),
+        )
     }
 }

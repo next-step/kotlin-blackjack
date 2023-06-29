@@ -2,6 +2,7 @@ package domain.game
 
 import domain.card.Cards
 import domain.card.Deck
+import domain.dto.IssuedCardResult
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.PlayerBetAmounts
@@ -19,9 +20,10 @@ class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) 
         this.dealer = Dealer()
     }
 
-    fun initGame() {
+    fun initGame(): IssuedCardResult {
         players.forEach { player -> player.initGame(initCards()) }
         dealer.initGame(initCards())
+        return IssuedCardResult(players = players, dealer = dealer)
     }
 
     private fun initCards() = Cards(listOf(deck.issueCard(), deck.issueCard()))
@@ -29,7 +31,7 @@ class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) 
     fun gameStart(
         isIssueCard: (player: Player) -> Boolean,
         showMessage: (player: Player) -> Unit,
-    ) {
+    ): GameResult {
         players.forEach { player ->
             playGame(player = player, isIssueCard, showMessage = showMessageWithCheck(showMessage))
         }
@@ -38,6 +40,7 @@ class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) 
             isIssueCard = { dealer.isDrawable() },
             showMessage = showMessageWithCheck(showMessage),
         )
+        return GameResult(players = players, dealer = dealer)
     }
 
     private fun playGame(
@@ -64,12 +67,6 @@ class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) 
 
     private fun issueCard(player: Player): State {
         return player.draw(this.deck.issueCard())
-    }
-
-    fun getPlayersRevenues(): RevenueResult {
-        val playersRevenues = players.associate { player -> player.name to player.getRevenue(dealer) }
-        val dealerRevenue = playersRevenues.values.sumOf { -it }
-        return RevenueResult(dealerRevenue = dealerRevenue, playersRevenues = playersRevenues)
     }
 
     companion object {

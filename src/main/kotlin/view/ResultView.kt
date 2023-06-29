@@ -3,27 +3,26 @@ package view
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
-import domain.dto.WinLoseDrawResult
+import domain.dto.IssuedCardResult
+import domain.dto.PlayerIssuedCardsResult
 import domain.game.RevenueResult
-import domain.player.Dealer
 import domain.player.Player
 import domain.player.PlayerGameResult
-import domain.player.Players
 
 class ResultView {
 
-    fun printInitPlayers(players: Players, dealer: Dealer) {
-        val playerNames = players.map { it.name }.joinToString(SEPARATOR)
-        println("${dealer.name}와 $playerNames 에게 2장을 나누었습니다.")
-        println("${dealer.name}: ${printCard(dealer.cards[0])}")
-        players.forEach { printPlayerCards(it) }
+    fun printInitPlayers(initGameResult: IssuedCardResult) {
+        val playerNames = initGameResult.playerResults.joinToString(SEPARATOR) { it.name }
+        println("${initGameResult.dealerResult.name}와 $playerNames 에게 2장을 나누었습니다.")
+        println("${initGameResult.dealerResult.name}: ${printCard(initGameResult.dealerResult.cards[0])}")
+        initGameResult.playerResults.forEach { printPlayerCards(it) }
         println()
     }
 
-    fun printIssuedCardResult(players: Players, dealer: Dealer) {
+    fun printIssuedCardResult(issuedCardResult: IssuedCardResult) {
         println()
-        printPlayerCards(dealer) { "- 결과 : ${dealer.cards.sum}" }
-        players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
+        printPlayerCards(issuedCardResult.dealerResult) { "- 결과 : ${issuedCardResult.dealerResult.cards.sum}" }
+        issuedCardResult.playerResults.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
     }
 
     fun printRevenue(result: RevenueResult) {
@@ -48,9 +47,9 @@ class ResultView {
         }
     }
 
-    fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
-        val playerCards = player.cards.joinToString(SEPARATOR) { printCard(it) }
-        println("${player.name} 카드: $playerCards ${sumOfCardSum()}")
+    fun printPlayerCards(result: PlayerIssuedCardsResult, sumOfCardSum: () -> String = { "" }) {
+        val playerCards = result.cards.joinToString(SEPARATOR) { printCard(it) }
+        println("${result.name} 카드: $playerCards ${sumOfCardSum()}")
     }
 
     private fun printCard(card: Card) = "${CARD_NUMBER_SHAPE_MAP[card.number]}${CARD_SUIT_SHAPE_MAP[card.suit]}"
