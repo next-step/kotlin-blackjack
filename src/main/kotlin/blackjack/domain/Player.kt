@@ -1,14 +1,14 @@
 package blackjack.domain
 
 import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
-import blackjack.error.BlackjackErrorMessage.SUM_OVER_21
+import blackjack.error.BlackjackErrorMessage.CAN_NOT_DRAW
 
 open class Player(
     val name: String,
     private val gameCardsSet: GameCardsSet,
 ) {
     private var myCards: Cards = Cards.empty()
-    private var state: PlayerState = PlayerState.DEFAULT
+    private var state: PlayerState = PlayerState.HIT
 
     fun getMyCards(): Cards = myCards.copy()
 
@@ -16,26 +16,27 @@ open class Player(
 
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
-    fun canDraw(): Boolean {
-        val optimalSum = myCards.calculateOptimalSum()
+    fun getState(): PlayerState = state
 
-        if (optimalSum == BLACK_JACK_SCORE) {
-            findStateBySum()
-            return false
-        }
+    fun canDraw(): Boolean = state.canDraw
 
-        if (optimalSum > BLACK_JACK_SCORE) {
-            findStateBySum()
-            return false
-        }
-        return true
+    fun hit() {
+        check(canDraw()) { CAN_NOT_DRAW }
+
+        val drawnCard = gameCardsSet.drawRandomCard()
+        myCards = myCards.add(drawnCard)
+        updateState()
     }
 
     fun stand() {
         state = PlayerState.STAND
     }
 
-    fun findStateBySum(): PlayerState {
+    private fun updateState() {
+        if (state == PlayerState.STAND) {
+            return
+        }
+
         val sumOfMyCards = sumOfMyCards()
 
         if (sumOfMyCards == BLACK_JACK_SCORE) {
@@ -43,21 +44,11 @@ open class Player(
         }
 
         if (sumOfMyCards < BLACK_JACK_SCORE) {
-            state = PlayerState.STAND
+            state = PlayerState.HIT
         }
 
         if (sumOfMyCards > BLACK_JACK_SCORE) {
             state = PlayerState.BUST
         }
-
-        return state
-    }
-
-    fun hit() {
-        check(canDraw()) { SUM_OVER_21 }
-
-        val drawnCard = gameCardsSet.drawRandomCard()
-        myCards = myCards.add(drawnCard)
-        state = PlayerState.HIT
     }
 }

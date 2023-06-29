@@ -53,8 +53,6 @@ class BlackjackController {
             dealer.hit()
             BlackjackView.printDealerExtraHit(dealer.name)
         }
-
-        dealer.findStateBySum()
     }
 
     private fun hit(player: Player) {
@@ -66,8 +64,7 @@ class BlackjackController {
     }
 
     private fun goNext(player: Player): Boolean {
-        val canDraw = player.canDraw()
-        if (!canDraw) {
+        if (!player.canDraw()) {
             return false
         }
 

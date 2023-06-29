@@ -1,11 +1,10 @@
 package blackjack.domain
 
 enum class PlayerState(
-    val description: String
+    val canDraw: Boolean
 ) {
-    DEFAULT("기본"),
-    HIT("힛"),
-    STAND("스탠드"),
-    BUST("버스트"),
-    BLACK_JACK("블랙잭")
+    HIT(true),
+    STAND(false),
+    BUST(false),
+    BLACK_JACK(false)
 }

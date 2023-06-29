@@ -7,16 +7,16 @@ import blackjack.domain.PlayerState
 
 class FightService {
     fun go(dealer: Dealer, player: Player): FightResult {
-        return when (dealer.findStateBySum()) {
+        return when (dealer.getState()) {
             PlayerState.BLACK_JACK -> dealerBlackjack(player)
             PlayerState.BUST -> dealerBust(dealer, player)
-            PlayerState.STAND -> dealerStand(dealer, player)
+            PlayerState.HIT -> dealerHit(dealer, player)
             else -> throw IllegalStateException()
         }
     }
 
     private fun dealerBlackjack(player: Player): FightResult {
-        if (player.findStateBySum() == PlayerState.BLACK_JACK) {
+        if (player.getState() == PlayerState.BLACK_JACK) {
             return FightResult.DRAW
         }
 
@@ -24,7 +24,7 @@ class FightService {
     }
 
     private fun dealerBust(dealer: Dealer, player: Player): FightResult {
-        if (player.findStateBySum() == PlayerState.BUST) {
+        if (player.getState() == PlayerState.BUST) {
             return FightResult.LOSE
         }
 
@@ -35,8 +35,8 @@ class FightService {
         return FightResult.WIN
     }
 
-    private fun dealerStand(dealer: Dealer, player: Player): FightResult {
-        if (player.findStateBySum() == PlayerState.BUST) {
+    private fun dealerHit(dealer: Dealer, player: Player): FightResult {
+        if (player.getState() == PlayerState.BUST) {
             return FightResult.LOSE
         }
 
