@@ -6,6 +6,7 @@ data class Score(
 
     val isAlive = value <= WIN_NUMBER
     val isBust = isAlive.not()
+    val isWinNumber = value == WIN_NUMBER
 
     operator fun compareTo(other: Int): Int {
         return value.compareTo(other)

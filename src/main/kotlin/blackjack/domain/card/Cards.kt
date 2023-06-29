@@ -7,6 +7,10 @@ data class Cards(
 ) {
     val score = CardScoreCalculator.calculateScore(value)
 
+    fun isBlackJack(): Boolean {
+        return value.size == INIT_CARD_SIZE && score.isWinNumber
+    }
+
     operator fun plus(card: Card): Cards {
         return Cards(value.plus(card))
     }
