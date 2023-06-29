@@ -22,10 +22,10 @@ open class Player(open val name: PlayerName) {
         var gameResult = GameResultState.DRAW
         val dealerGap = abs(Cards.WIN_SCORE - dealerScore)
         val playerGap = abs(Cards.WIN_SCORE - getScore())
-        if(dealerGap < playerGap) {
+        if (dealerGap < playerGap) {
             gameResult = GameResultState.LOSE
         }
-        if(dealerGap > playerGap) {
+        if (dealerGap > playerGap) {
             gameResult = GameResultState.WIN
         }
         gameResultState = gameResult

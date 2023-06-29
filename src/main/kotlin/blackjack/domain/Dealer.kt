@@ -12,7 +12,7 @@ class Dealer(name: String = "딜러") : Player(PlayerName(name)) {
     }
 
     override fun getScore(): Int {
-        if(cards.getCardScore() > Cards.WIN_SCORE) {
+        if (cards.getCardScore() > Cards.WIN_SCORE) {
             return ZERO_SCORE
         }
         return super.getScore()
@@ -28,7 +28,6 @@ class Dealer(name: String = "딜러") : Player(PlayerName(name)) {
     fun getCountOfResult(state: GameResultState): Int {
         return resultStateCount[state] ?: ZERO_COUNT
     }
-
 
     companion object {
         const val ZERO_COUNT = 0
