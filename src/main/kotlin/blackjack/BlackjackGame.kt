@@ -7,23 +7,23 @@ import blackjack.view.OutputView
 class BlackjackGame(
     private val dealer: Dealer,
     private val blackJackScoringStrategy: BlackJackScoringStrategy,
+    private val inputView: InputView,
+    private val outputView: OutputView
 ) {
     fun start() {
-        val playerNames = InputView.getPlayers()
+        val playerNames = inputView.getPlayers()
         val players = playerNames.map { Player(it) }
-
-        val initialCastingCardNum = 2
-        dealer.provideCard(players, initialCastingCardNum)
-        OutputView.printInitialCardCasting(players, initialCastingCardNum)
+        dealer.provideCard(players, 2)
+        outputView.printInitialCardCasting(players, 2)
 
         players.forEach { attemptCasting(it) }
         score(players)
     }
 
     private fun attemptCasting(player: Player) {
-        while (ableToCastMore(player) && InputView.askCastCardToPlayer(player)) {
+        while (ableToCastMore(player) && inputView.askCastCardToPlayer(player)) {
             dealer.provideCard(listOf(player), 1)
-            OutputView.printPlayerCards(player)
+            outputView.printPlayerCards(player)
         }
     }
 
@@ -33,7 +33,7 @@ class BlackjackGame(
 
     private fun score(players: List<Player>) {
         players.forEach {
-            OutputView.printBlackJackResult(it, blackJackScoringStrategy.score(it.cards))
+            outputView.printBlackJackResult(it, blackJackScoringStrategy.score(it.cards))
         }
     }
 
