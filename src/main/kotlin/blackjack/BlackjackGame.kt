@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.card.deck.PlayerCardDeck
 import blackjack.card.score.BlackJackScoringStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -12,7 +13,7 @@ class BlackjackGame(
 ) {
     fun start() {
         val playerNames = inputView.getPlayers()
-        val players = playerNames.map { Player(it) }
+        val players = playerNames.map { Player(it, PlayerCardDeck()) }
         dealer.provideCard(players, 2)
         outputView.printInitialCardCasting(players, 2)
 
@@ -21,23 +22,15 @@ class BlackjackGame(
     }
 
     private fun attemptCasting(player: Player) {
-        while (ableToCastMore(player) && inputView.askCastCardToPlayer(player)) {
+        while (player.ableToCastCard(blackJackScoringStrategy) && inputView.askCastCardToPlayer(player)) {
             dealer.provideCard(listOf(player), 1)
             outputView.printPlayerCards(player)
         }
     }
 
-    private fun ableToCastMore(player: Player): Boolean {
-        return blackJackScoringStrategy.score(player.cards) < BLACK_JACK_GOAL_NUMBER
-    }
-
     private fun score(players: List<Player>) {
         players.forEach {
-            outputView.printBlackJackResult(it, blackJackScoringStrategy.score(it.cards))
+            outputView.printBlackJackResult(it, it.score(blackJackScoringStrategy))
         }
-    }
-
-    companion object {
-        private const val BLACK_JACK_GOAL_NUMBER = 21
     }
 }

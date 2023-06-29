@@ -14,9 +14,4 @@ enum class CardOrdinalSignature(val code: String, val values: List<Int>) {
     J("J", listOf(10)),
     Q("Q", listOf(10)),
     K("K", listOf(10)),
-    ;
-
-    companion object {
-        fun pickRandomOne() = values().toMutableList().shuffled().first()
-    }
 }

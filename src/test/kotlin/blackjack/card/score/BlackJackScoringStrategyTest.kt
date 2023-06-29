@@ -1,10 +1,15 @@
 package blackjack.card.score
 
 import blackjack.card.Card
+import blackjack.card.deck.PlayerCardDeck
 import blackjack.card.signature.CardOrdinalSignature
 import blackjack.card.signature.CardSignaturePack
 import blackjack.card.signature.CardSymbolSignature
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.forAll
+import io.kotest.data.headers
+import io.kotest.data.row
+import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
 internal class BlackJackScoringStrategyTest : StringSpec({
@@ -13,18 +18,51 @@ internal class BlackJackScoringStrategyTest : StringSpec({
     "주어진 카드로 블랙잭 룰로 점수를 계산한다" {
         val cards =
             listOf(
-                Card(CardSignaturePack(CardOrdinalSignature.TWO, CardSymbolSignature.CLOVER)),
-                Card(CardSignaturePack(CardOrdinalSignature.TEN, CardSymbolSignature.HEART)),
+                card(CardOrdinalSignature.TWO, CardSymbolSignature.CLOVER),
+                card(CardOrdinalSignature.TEN, CardSymbolSignature.HEART),
             )
-        strategy.score(cards) shouldBe 12
+        strategy.score(PlayerCardDeck(cards)) shouldBe 12
     }
 
     "21에 최대한 가까운 값이 되는 조합을 점수로 선택한다" {
         val cards =
             listOf(
-                Card(CardSignaturePack(CardOrdinalSignature.ACE, CardSymbolSignature.CLOVER)),
-                Card(CardSignaturePack(CardOrdinalSignature.TEN, CardSymbolSignature.HEART)),
+                card(CardOrdinalSignature.ACE, CardSymbolSignature.CLOVER),
+                card(CardOrdinalSignature.TEN, CardSymbolSignature.HEART),
             )
-        strategy.score(cards) shouldBe 21
+        strategy.score(PlayerCardDeck(cards)) shouldBe 21
+    }
+
+    "A 는 21에 가까운 값으로 1, 11 중에 선택된다" {
+        table(
+            headers("cardList", "expectedScore"),
+            row(
+                listOf(
+                    card(CardOrdinalSignature.ACE, CardSymbolSignature.CLOVER),
+                ),
+                11,
+            ),
+            row(
+                listOf(
+                    card(CardOrdinalSignature.ACE, CardSymbolSignature.CLOVER),
+                    card(CardOrdinalSignature.K, CardSymbolSignature.CLOVER),
+                ),
+                21,
+            ),
+            row(
+                listOf(
+                    card(CardOrdinalSignature.ACE, CardSymbolSignature.CLOVER),
+                    card(CardOrdinalSignature.TEN, CardSymbolSignature.CLOVER),
+                    card(CardOrdinalSignature.FIVE, CardSymbolSignature.CLOVER),
+                ),
+                16,
+            ),
+        ).forAll { cardList, expectedScore ->
+            strategy.score(PlayerCardDeck(cardList)) shouldBe expectedScore
+        }
     }
 })
+
+private fun card(cardOrdinalSignature: CardOrdinalSignature, cardSymbolSignature: CardSymbolSignature): Card {
+    return Card(CardSignaturePack(cardOrdinalSignature, cardSymbolSignature))
+}

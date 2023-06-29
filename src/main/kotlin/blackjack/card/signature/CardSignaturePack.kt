@@ -1,6 +1,6 @@
 package blackjack.card.signature
 
-class CardSignaturePack(
+data class CardSignaturePack(
     val numberSignature: CardOrdinalSignature?,
     val symbolSignature: CardSymbolSignature?,
 ) {
