@@ -18,7 +18,7 @@ class BlackJackTableTest {
             val player = Player(PlayerName("pobi"))
             val blackJackTable = BlackJackTable()
             blackJackTable.startGame(
-                Players(mutableListOf(player), blackJackTable),
+                Players(mutableListOf(player)),
                 object : GameConditionNotify {
                     override fun giveDefaultCardsToPlayerDone(players: Players) {
                     }

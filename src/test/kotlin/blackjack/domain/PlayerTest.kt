@@ -17,13 +17,13 @@ class PlayerTest : BehaviorSpec({
         `when`("추가 카드로 10을 넣을 때") {
             player.addCard(Card(CardNumber.CARD_QUEEN, CardType.DIAMOND))
             then("에이스는 11로 쓰인다") {
-                player.getCardScore() shouldBe 21
+                player.getScore() shouldBe 21
             }
         }
         `when`("추가 카드로 10을 넣을 때") {
             player.addCard(Card(CardNumber.CARD_JACK, CardType.DIAMOND))
             then("에이스는 1로 쓰인다") {
-                player.getCardScore() shouldBe 21
+                player.getScore() shouldBe 21
             }
         }
     }

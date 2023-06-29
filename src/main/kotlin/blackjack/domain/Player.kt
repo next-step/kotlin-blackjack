@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import kotlin.math.abs
-import kotlin.math.min
 
 open class Player(open val name: PlayerName) {
 
@@ -15,37 +14,21 @@ open class Player(open val name: PlayerName) {
         }
     }
 
-    fun getCardScore(): Int {
-        val minScore = cards.getTotalScore()
-        val hasAce = cards.any {
-            it.cardNumber == CardNumber.CARD_ACE
-        }
-        val maxScore = minScore + if (hasAce) MAX_PLUS_SCORE else MIN_PLUS_SCORE
-        if (maxScore > WIN_SCORE) {
-            return minScore
-        }
-        return if (min(abs(WIN_SCORE - minScore), abs(WIN_SCORE - maxScore)) == abs(WIN_SCORE - minScore)) {
-            minScore
-        } else {
-            maxScore
-        }
+    open fun getScore(): Int {
+        return cards.getCardScore()
     }
 
     fun matchGameScore(dealerScore: Int): GameResultState {
         var gameResult = GameResultState.DRAW
-        if (dealerScore > getCardScore()) {
+        val dealerGap = abs(Cards.WIN_SCORE - dealerScore)
+        val playerGap = abs(Cards.WIN_SCORE - getScore())
+        if(dealerGap < playerGap) {
             gameResult = GameResultState.LOSE
         }
-        if (dealerScore < getCardScore()) {
+        if(dealerGap > playerGap) {
             gameResult = GameResultState.WIN
         }
         gameResultState = gameResult
         return gameResult
-    }
-
-    companion object {
-        const val WIN_SCORE = 21
-        const val MAX_PLUS_SCORE = 10
-        const val MIN_PLUS_SCORE = 0
     }
 }

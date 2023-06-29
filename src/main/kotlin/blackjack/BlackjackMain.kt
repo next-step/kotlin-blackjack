@@ -11,7 +11,7 @@ fun main() {
 
     val blackJackTable = BlackJackTable()
     val players = InputView.getInputPlayers()
-    val blackJackPlayers = Players(players, blackJackTable)
+    val blackJackPlayers = Players(players)
 
     blackJackTable.startGame(
         blackJackPlayers,

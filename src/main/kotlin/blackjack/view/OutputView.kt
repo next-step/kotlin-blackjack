@@ -34,7 +34,7 @@ object OutputView {
     fun showGameResult(players: Players) {
         players.getPlayers().forEach {
             showDealerGetMoreCardState(it)
-            println("${getPlayerCardInformation(it)} - 결과: ${it.getCardScore()}")
+            println("${getPlayerCardInformation(it)} - 결과: ${it.getScore()}")
         }
         showFinalResults(players)
     }
@@ -62,7 +62,7 @@ object OutputView {
         if (player is Dealer) {
             result = makeDealerResult(player)
         }
-        println("${player.name.name}카드: $result")
+        println("${player.name.name}: $result")
     }
 
     private fun makeDealerResult(dealer: Dealer): String {
