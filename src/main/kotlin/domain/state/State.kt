@@ -10,6 +10,6 @@ interface State {
     fun draw(card: Card): State
     fun stop(): State
     fun getCards(): Cards
-    fun getPlayerGameResult(state: State): PlayerGameResult
-    fun getRevenueRate(state: State): BigDecimal
+    fun getPlayerGameResult(dealerState: State): PlayerGameResult
+    fun getRevenueRate(dealerState: State): BigDecimal
 }

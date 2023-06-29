@@ -17,11 +17,11 @@ class StartState private constructor(private val cards: Cards) : State {
 
     override fun getCards(): Cards = this.cards
 
-    override fun getPlayerGameResult(state: State): PlayerGameResult {
+    override fun getPlayerGameResult(dealerState: State): PlayerGameResult {
         throw UnsupportedOperationException("시작 상태는 지원하지 않음.")
     }
 
-    override fun getRevenueRate(state: State): BigDecimal {
+    override fun getRevenueRate(dealerState: State): BigDecimal {
         throw UnsupportedOperationException("시작 상태는 지원하지 않음.")
     }
 

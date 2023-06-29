@@ -12,13 +12,13 @@ open class TerminationState(private val cards: Cards) : State {
 
     override fun getCards(): Cards = this.cards
 
-    override fun getPlayerGameResult(state: State): PlayerGameResult = when {
-        state is Burst || this.cards.sum > state.getCards().sum -> PlayerGameResult.WIN
-        state.getCards().sum == this.cards.sum -> PlayerGameResult.DRAW
+    override fun getPlayerGameResult(dealerState: State): PlayerGameResult = when {
+        dealerState is Burst || this.cards.sum > dealerState.getCards().sum -> PlayerGameResult.WIN
+        dealerState.getCards().sum == this.cards.sum -> PlayerGameResult.DRAW
         else -> PlayerGameResult.LOSE
     }
 
-    override fun getRevenueRate(state: State): BigDecimal = when (getPlayerGameResult(state)) {
+    override fun getRevenueRate(dealerState: State): BigDecimal = when (getPlayerGameResult(dealerState)) {
         PlayerGameResult.WIN -> BigDecimal.ONE
         PlayerGameResult.DRAW -> BigDecimal.ZERO
         PlayerGameResult.LOSE -> BigDecimal(LOSE_REVENUE)
