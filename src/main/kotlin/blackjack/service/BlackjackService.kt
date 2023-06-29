@@ -1,6 +1,10 @@
 package blackjack.service
 
-import blackjack.domain.*
+import blackjack.domain.BlackjackGame
+import blackjack.domain.Dealer
+import blackjack.domain.Deck
+import blackjack.domain.Player
+import blackjack.domain.Score
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 import blackjack.dto.BlackjackGameResult
@@ -34,24 +38,24 @@ class BlackjackService {
         var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
 
         players.forEach { player ->
-            val playerScore = player.cards.calculateScore()
-            when {
-                dealerScore.value > playerScore.value -> {
-                    dealerWinCount++
-                    result.add(BlackjackGameResult(name = player.name, result = MatchResult.LOSE.match))
-                }
-                dealerScore.value < playerScore.value -> {
-                    dealerLoseCount++
-                    result.add(BlackjackGameResult(name = player.name, result = MatchResult.WIN.match))
-                }
-                else -> {
-                    dealerDrawCount++
-                    result.add(BlackjackGameResult(name = player.name, result = MatchResult.DRAW.match))
-                }
+            val resultMatch = player.determineResult(dealerScore)
+            addGameResult(result, player.name, resultMatch)
+            when (resultMatch) {
+                MatchResult.WIN -> dealerLoseCount++
+                MatchResult.LOSE -> dealerWinCount++
+                MatchResult.DRAW -> dealerDrawCount++
             }
         }
         result.add(0, BlackjackGameResult(name = dealer.name, result = "${dealerWinCount}${MatchResult.WIN.match} ${dealerDrawCount}${MatchResult.DRAW.match} ${dealerLoseCount}${MatchResult.LOSE.match}"))
         return result
+    }
+
+    private fun addGameResult(
+        result: MutableList<BlackjackGameResult>,
+        playerName: String,
+        resultMatch: MatchResult
+    ) {
+        result.add(BlackjackGameResult(playerName, resultMatch.match))
     }
 
     fun raceDealer(dealer: Dealer) {

@@ -6,7 +6,7 @@ class Player(
     name: String,
     cards: Cards,
     override var condition: Condition = Condition.PLAY
-): Participant(name, cards, condition) {
+) : Participant(name, cards, condition) {
 
     fun currentCondition(): Condition {
         return this.condition
