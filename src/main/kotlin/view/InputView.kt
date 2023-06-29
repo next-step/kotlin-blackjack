@@ -1,7 +1,5 @@
 package view
 
-import domain.player.BetAmount
-
 class InputView {
 
     fun getPlayerNames(): List<String> {
@@ -10,12 +8,12 @@ class InputView {
         return inputNames.split(DELIMITERS)
     }
 
-    fun getPlayerBetAmounts(playerName: List<String>): Map<String, BetAmount> {
+    fun getPlayerBetAmounts(playerName: List<String>): Map<String, Int> {
         return playerName.associateWith { name ->
             println("$name$BET_AMOUNT_MESSAGE")
             val betAmount = readln().toIntOrNull() ?: 0
             println()
-            BetAmount(betAmount)
+            betAmount
         }
     }
 

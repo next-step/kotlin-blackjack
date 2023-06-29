@@ -1,6 +1,8 @@
 package blackjack.player
 
 import domain.player.BetAmount
+import domain.player.PlayerBetAmount
+import domain.player.PlayerBetAmounts
 import domain.player.Players
 import io.kotest.assertions.throwables.shouldThrow
 import org.junit.jupiter.params.ParameterizedTest
@@ -11,18 +13,18 @@ class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("getPlayerNames")
-    fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(players: Map<String, BetAmount>) {
+    fun `게임에 참여 가능한 최대 인원이 1 ~ 8명이 아니라면 IllegalArgumentException 을 발생`(playerBetAmounts: PlayerBetAmounts) {
         shouldThrow<IllegalArgumentException> {
-            Players.createPlayers(players)
+            Players.createPlayers(playerBetAmounts)
         }
     }
 
     companion object {
         @JvmStatic
         fun getPlayerNames(): List<Arguments> = listOf(
-            Arguments.of(emptyMap<String, BetAmount>()),
+            Arguments.of(PlayerBetAmounts(emptyList())),
             Arguments.of(
-                (1..9).associate { "player$it" to BetAmount(it) },
+                PlayerBetAmounts((1..9).map { PlayerBetAmount(name = "player$it", betAmount = BetAmount(it)) }),
             ),
         )
     }

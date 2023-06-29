@@ -9,10 +9,5 @@ fun main() {
         inputView = inputView,
         resultView = resultView,
     )
-
-    blackjackGameController.initGame()
-
     blackjackGameController.gameStart()
-
-    blackjackGameController.printGameResult()
 }

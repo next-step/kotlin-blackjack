@@ -2,13 +2,13 @@ package domain.game
 
 import domain.card.Cards
 import domain.card.Deck
-import domain.player.BetAmount
 import domain.player.Dealer
 import domain.player.Player
+import domain.player.PlayerBetAmounts
 import domain.player.Players
 import domain.state.State
 
-class BlackjackGame(private val deck: Deck, playerBetAmounts: Map<String, BetAmount>) {
+class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) {
 
     val players: Players
 
