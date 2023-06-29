@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.enums.Condition
-import blackjack.domain.enums.RaceFlag
 import blackjack.service.BlackjackService
 import blackjack.view.InputView
 import blackjack.view.ResultView

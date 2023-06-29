@@ -16,16 +16,20 @@ class ParticipantTest {
 
     @BeforeEach
     fun setup() {
-        player = Participant(name = "test", cards = Cards(
-            listOf(
-                Card(rank = Rank.JACK, symbol = Symbol.SPADES),
-                Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
-            )
-        ), condition = Condition.PLAY)
+        player = Participant(
+            name = "test",
+            cards = Cards(
+                listOf(
+                    Card(rank = Rank.JACK, symbol = Symbol.SPADES),
+                    Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
+                )
+            ),
+            condition = Condition.PLAY
+        )
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [2,3,6,7,8])
+    @ValueSource(ints = [2, 3, 6, 7, 8])
     fun `자신의 카드 점수의 합과 상대방의 카드 점수의 합을 비교해 높으면 승을 반환`(value: Int) {
 
         val otherScore = Score(value = value)
@@ -33,7 +37,7 @@ class ParticipantTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [17,18,19,20,21])
+    @ValueSource(ints = [17, 18, 19, 20, 21])
     fun `자신의 카드 점수의 합과 상대방의 카드 점수의 합을 비교해 낮다면 패를 반환`(value: Int) {
 
         val otherScore = Score(value = value)
@@ -46,5 +50,4 @@ class ParticipantTest {
         val otherScore = Score(value = 15)
         player.determineResult(otherScore) shouldBe MatchResult.DRAW
     }
-
 }
