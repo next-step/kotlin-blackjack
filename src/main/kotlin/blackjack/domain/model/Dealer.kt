@@ -25,7 +25,7 @@ class Dealer(
         }
 
         if (winner == player && player.hasTwoCards() && player.isBlackJack()) {
-            val reward = (battingMoney * 1.5).toInt()
+            val reward = (battingMoney * BLACK_JACK_BONUS).toInt()
             lose(player, reward)
             return
         }
@@ -54,5 +54,6 @@ class Dealer(
     companion object {
         const val NAME = "딜러"
         private const val MAXIMUM_CARD_COUNT = 3
+        private const val BLACK_JACK_BONUS = 1.5
     }
 }
