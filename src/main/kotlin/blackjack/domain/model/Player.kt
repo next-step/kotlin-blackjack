@@ -16,7 +16,15 @@ open class Player(
         cards.add(trump.getCard())
     }
 
-    fun win() = info.record.win()
+    fun win() = info.result.record.win()
 
-    fun lose() = info.record.lose()
+    fun lose() = info.result.record.lose()
+
+    fun addMoney(amount: Money) {
+        info.result.addMoney(amount)
+    }
+
+    fun minusMoney(amount: Money) {
+        info.result.minusMoney(amount)
+    }
 }
