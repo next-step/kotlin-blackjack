@@ -3,9 +3,9 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_INITIAL_TURN_LIMIT
 import blackjack.domain.GameCardsSet
-import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.service.GameResultService
 import blackjack.view.BlackjackView
 import blackjack.view.InputView
 
@@ -20,7 +20,7 @@ class BlackjackController {
         playGame(dealer, players)
         BlackjackView.printPlayersResult(listOf(dealer).plus(players.players))
 
-        val gameResult = GameResult(dealer, players).calculate()
+        val gameResult = GameResultService().allResult(dealer, players)
         BlackjackView.printGameResult(gameResult)
     }
 
