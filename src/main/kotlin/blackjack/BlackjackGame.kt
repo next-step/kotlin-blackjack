@@ -34,7 +34,7 @@ class BlackjackGame(
     }
 
     private fun takeTurn(player: Player) {
-        while (player.currentStatus == Status.HIT && player.totalValue < 21) {
+        while (player.currentStatus == Status.HIT && player.totalValue < BUST_SCORE) {
             val response = inputView.readHitOrStand(player.name)
             if (response == Status.HIT) {
                 dealer.drawCard(player)
@@ -43,5 +43,8 @@ class BlackjackGame(
                 player.updateStatus(Status.STAND)
             }
         }
+    }
+    companion object {
+        private const val BUST_SCORE = 22
     }
 }
