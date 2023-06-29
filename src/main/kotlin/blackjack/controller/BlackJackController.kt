@@ -42,17 +42,10 @@ class BlackJackController(
     private fun raceBlackjack(blackjackGame: BlackjackGame) {
         blackjackGame.players.forEach { player ->
             val answer = inputView.askForCardChoice(player)
-            validAnswer(answer)
             do {
                 blackjackService.raceBlackjack(player, blackjackGame, answer)
                 resultView.printPlayerAndCards(player)
             } while (player.currentCondition() == Condition.PLAY)
-        }
-    }
-
-    private fun validAnswer(answer: String) {
-        require(RaceFlag.values().map { it.lowercaseName }.contains(answer)) {
-            "응답 입력 값은 ${RaceFlag.Y.lowercaseName}, ${RaceFlag.N.lowercaseName} 중 입력해주세요."
         }
     }
 
