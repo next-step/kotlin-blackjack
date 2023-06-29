@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.util.TEST_USER_DRAW_INTERFACE
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.headers
@@ -14,9 +15,33 @@ class BlackjackResultTest : BehaviorSpec({
         forAll(
             table(
                 headers("유저"),
-                row(User("블랙잭", Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))))),
-                row(User("블랙잭_아님", Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))))),
-                row(User("초과함", Deck(listOf(Card(Suit.SPADE, CardNumber.TEN), Card(Suit.DIAMOND, CardNumber.TEN), Card(Suit.HEART, CardNumber.TEN))))),
+                row(
+                    User(
+                        "블랙잭",
+                        Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                ),
+                row(
+                    User(
+                        "블랙잭_아님",
+                        Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                ),
+                row(
+                    User(
+                        "초과함",
+                        Deck(
+                            listOf(
+                                Card(Suit.SPADE, CardNumber.TEN),
+                                Card(Suit.DIAMOND, CardNumber.TEN),
+                                Card(Suit.HEART, CardNumber.TEN),
+                            ),
+                        ),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                ),
             ),
         ) { user ->
             val users = Users(setOf(user))
@@ -35,10 +60,44 @@ class BlackjackResultTest : BehaviorSpec({
         forAll(
             table(
                 headers("유저", "예상결과"),
-                row(User("블랙잭", Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK)))), DealerResult(dealer, 0, 0, 1)),
-                row(User("딜러와_동점", Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN)))), DealerResult(dealer, 0, 1, 0)),
-                row(User("딜러에게_짐", Deck(listOf(Card(Suit.DIAMOND, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SIX)))), DealerResult(dealer, 1, 0, 0)),
-                row(User("초과함", Deck(listOf(Card(Suit.SPADE, CardNumber.TEN), Card(Suit.DIAMOND, CardNumber.TEN), Card(Suit.HEART, CardNumber.TEN)))), DealerResult(dealer, 1, 0, 0)),
+                row(
+                    User(
+                        "블랙잭",
+                        Deck(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                    DealerResult(dealer, 0, 0, 1),
+                ),
+                row(
+                    User(
+                        "딜러와_동점",
+                        Deck(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                    DealerResult(dealer, 0, 1, 0),
+                ),
+                row(
+                    User(
+                        "딜러에게_짐",
+                        Deck(listOf(Card(Suit.DIAMOND, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SIX))),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                    DealerResult(dealer, 1, 0, 0),
+                ),
+                row(
+                    User(
+                        "초과함",
+                        Deck(
+                            listOf(
+                                Card(Suit.SPADE, CardNumber.TEN),
+                                Card(Suit.DIAMOND, CardNumber.TEN),
+                                Card(Suit.HEART, CardNumber.TEN),
+                            ),
+                        ),
+                        TEST_USER_DRAW_INTERFACE,
+                    ),
+                    DealerResult(dealer, 1, 0, 0),
+                ),
             ),
         ) { user, dealerResult ->
             val users = Users(setOf(user))

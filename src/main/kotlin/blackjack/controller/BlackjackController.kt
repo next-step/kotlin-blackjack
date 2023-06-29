@@ -13,7 +13,7 @@ class BlackjackController {
         val blackjackGame = BlackjackGame(userNames, userDrawInterface = userDrawInterface)
         ResultView.printDecks(blackjackGame.dealer, blackjackGame.users)
 
-        blackjackGame.dealUsers(ResultView::printUserDeck)
+        blackjackGame.dealUsers(ResultView::printPlayerDeck)
         blackjackGame.dealDealer { ResultView.printDealerHit() }
 
         ResultView.printResults(blackjackGame.getGameResult())

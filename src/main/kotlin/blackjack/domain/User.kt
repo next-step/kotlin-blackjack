@@ -2,22 +2,13 @@ package blackjack.domain
 
 fun interface UserDrawInterface {
     fun canDraw(user: User): Boolean
-
-    companion object {
-        val defaultDrawInterface = UserDrawInterface { return@UserDrawInterface true }
-    }
 }
 
-open class User(
+abstract class Player(
     val name: String,
     val deck: Deck,
-    private val userDrawInterface: UserDrawInterface = UserDrawInterface.defaultDrawInterface,
 ) {
     val finalPoint: Int by lazy { deck.sum() }
-
-    init {
-        require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
-    }
 
     fun getDeckSize() = deck.size
 
@@ -33,7 +24,20 @@ open class User(
         return deck.sum() > PointCalculator.BLACKJACK_LIMIT
     }
 
-    open fun canDraw(): Boolean {
+    abstract fun canDraw(): Boolean
+}
+
+open class User(
+    name: String,
+    deck: Deck,
+    private val userDrawInterface: UserDrawInterface,
+) : Player(name, deck) {
+
+    init {
+        require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
+    }
+
+    override fun canDraw(): Boolean {
         return !isBust() && userDrawInterface.canDraw(this)
     }
 
@@ -42,7 +46,7 @@ open class User(
     }
 }
 
-class Dealer(deck: Deck) : User(DEALER_NAME, deck), Comparable<User> {
+class Dealer(deck: Deck) : Player(DEALER_NAME, deck), Comparable<User> {
 
     override fun canDraw(): Boolean {
         return calculatePoint() <= DEALER_HIT_THRESHOLD

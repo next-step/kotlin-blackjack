@@ -6,6 +6,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Dealer
 import blackjack.domain.DealerResult
 import blackjack.domain.Deck
+import blackjack.domain.Player
 import blackjack.domain.Result
 import blackjack.domain.Suit
 import blackjack.domain.User
@@ -49,17 +50,17 @@ object ResultView {
     private fun getUsersDeckString(users: Users): StringBuilder {
         val stringBuilder = StringBuilder()
         for (user in users) {
-            stringBuilder.appendLine(getUserDeckString(user))
+            stringBuilder.appendLine(printPlayerDeck(user))
         }
         return stringBuilder
     }
 
-    private fun getUserDeckString(user: User): String {
-        return DECK_PRINT_FORMAT.format(user.name, deckToString(user.deck))
+    private fun getPlayerDeckString(player: Player): String {
+        return DECK_PRINT_FORMAT.format(player.name, deckToString(player.deck))
     }
 
-    fun printUserDeck(user: User) {
-        println(getUserDeckString(user))
+    fun printPlayerDeck(player: Player) {
+        println(getPlayerDeckString(player))
     }
 
     fun printDealerHit() {

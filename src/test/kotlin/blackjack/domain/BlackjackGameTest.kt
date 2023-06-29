@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.util.FixedCardsSelector
+import blackjack.util.TEST_USER_DRAW_INTERFACE
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -14,7 +15,7 @@ class BlackjackGameTest : BehaviorSpec({
             Card(Suit.CLOVER, CardNumber.ACE),
         )
         val userNames = UserNames(setOf("홍길동"))
-        val game = BlackjackGame(userNames, cardSelector)
+        val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
 
         When("게임 시작시 유저의 패를 확인하면") {
             Then("2장을 가지고 있다") {
@@ -41,7 +42,7 @@ class BlackjackGameTest : BehaviorSpec({
             Card(Suit.CLOVER, CardNumber.EIGHT), // 유저의 카드
             Card(Suit.CLOVER, CardNumber.NINE),
         )
-        val game = BlackjackGame(userNames, cardSelector)
+        val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
         When("딜러가 딜을 하면") {
             Then("딜러는 카드를 한장더 뽑는다") {
                 game.dealer.getDeckSize() shouldBe 2

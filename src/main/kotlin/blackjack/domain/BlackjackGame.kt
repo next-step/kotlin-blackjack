@@ -6,7 +6,7 @@ import blackjack.util.RandomCardSelector
 class BlackjackGame(
     userNames: UserNames,
     private val cardSelector: CardSelector = RandomCardSelector(),
-    userDrawInterface: UserDrawInterface = UserDrawInterface.defaultDrawInterface,
+    userDrawInterface: UserDrawInterface,
 ) {
     val dealer = Dealer(getInitDeck())
     val users: Users
@@ -24,25 +24,25 @@ class BlackjackGame(
         return Deck(cardList)
     }
 
-    fun dealUsers(afterHit: (User) -> Unit) {
+    fun dealUsers(afterHit: (Player) -> Unit) {
         for (user in users) {
             playerHit(user, afterHit)
         }
     }
 
-    fun dealDealer(afterHit: (User) -> Unit = {}) {
+    fun dealDealer(afterHit: (Player) -> Unit = {}) {
         playerHit(dealer, afterHit)
     }
 
-    private fun playerHit(user: User, afterHit: (User) -> Unit) {
-        while (user.canDraw()) {
-            addCardTo(user)
-            afterHit(user)
+    private fun playerHit(player: Player, afterHit: (Player) -> Unit) {
+        while (player.canDraw()) {
+            addCardTo(player)
+            afterHit(player)
         }
     }
 
-    private fun addCardTo(user: User) {
-        user.addCard(cardSelector.drawCard())
+    private fun addCardTo(player: Player) {
+        player.addCard(cardSelector.drawCard())
     }
 
     fun getGameResult(): BlackjackResults {
