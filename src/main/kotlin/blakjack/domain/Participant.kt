@@ -19,4 +19,8 @@ sealed class Participant(
     fun add(cards: Cards) {
         this.cards = cards.add(cards)
     }
+
+    fun isBust(): Boolean {
+        return this.score > BLACKJACK_SCORE
+    }
 }

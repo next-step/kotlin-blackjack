@@ -113,4 +113,24 @@ class PlayerSpec : DescribeSpec({
             player.isUnderBlackjackScore shouldBe result
         }
     }
+
+    describe("BUST 상태 검증") {
+        context("점수가 21점 이하면") {
+            val player = Player("홍길동")
+            player.add(cards(heart10, heart2))
+
+            it("BUST 상태가 아니다.") {
+                player.isBust() shouldBe false
+            }
+        }
+
+        context("점수가 21점 초과면") {
+            val player = Player("홍길동")
+            player.add(cards(heart10, heart9, spade10))
+
+            it("BUST 상태이다.") {
+                player.isBust() shouldBe true
+            }
+        }
+    }
 })
