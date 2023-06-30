@@ -28,7 +28,7 @@ enum class CardNumber(val value: Int) {
     companion object {
 
         fun isAce(cardNumber: CardNumber): Boolean {
-            return cardNumber == CardNumber.A
+            return cardNumber == A
         }
 
         const val ACE_MAXINUM = 11

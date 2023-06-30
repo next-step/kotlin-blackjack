@@ -16,26 +16,27 @@ class CardNumberCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        cardNumberCalculator = CardNumberCalculator(DynamicProceedAceStrategy())
+        cardNumberCalculator = CardNumberCalculator()
     }
 
     @Test
     fun `1부터 10까지의 카드 리스트 숫자의 합을 계산한다`() {
         var cardList = listOf(
-            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
-            Card(shape = CardShape.HEART, number = CardNumber.THREE),
-            Card(shape = CardShape.CLOVER, number = CardNumber.FOUR),
-            Card(shape = CardShape.SPADE, number = CardNumber.FIVE),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.SIX),
-            Card(shape = CardShape.HEART, number = CardNumber.SEVEN),
-            Card(shape = CardShape.CLOVER, number = CardNumber.EIGHT),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.TEN),
             Card(shape = CardShape.SPADE, number = CardNumber.NINE),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
+            Card(shape = CardShape.CLOVER, number = CardNumber.EIGHT),
+            Card(shape = CardShape.HEART, number = CardNumber.SEVEN),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.SIX),
+            Card(shape = CardShape.SPADE, number = CardNumber.FIVE),
+            Card(shape = CardShape.CLOVER, number = CardNumber.FOUR),
+            Card(shape = CardShape.HEART, number = CardNumber.THREE),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.A)
         )
 
         val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
-        assertThat(actual).isEqualTo(54)
+        assertThat(actual).isEqualTo(55)
     }
 
     @Test
@@ -54,8 +55,8 @@ class CardNumberCalculatorTest {
     @ParameterizedTest
     @EnumSource(CardNumber::class)
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
-        val cardNumberCalculator = CardNumberCalculator(StaticProceedAceStrategy())
-        val startSum = 0
+        val cardNumberCalculator = CardNumberCalculator()
+        val startSum = 11
 
         val actual = cardNumberCalculator.calculateCardNumber(cardNumber, startSum)
 

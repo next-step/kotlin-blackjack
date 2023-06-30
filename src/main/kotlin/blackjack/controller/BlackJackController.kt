@@ -31,12 +31,12 @@ class BlackJackController(
 
     private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
         playerList.forEach {
-            checkPlayerIsLoseByAskingPlayerWantToDraw(blackJackGame, it)
+            checkPlayerIsLoseWhileAskingPlayerWantToDraw(blackJackGame, it)
         }
         println()
     }
 
-    private fun checkPlayerIsLoseByAskingPlayerWantToDraw(blackJackGame: BlackJackGame, it: Player) {
+    private fun checkPlayerIsLoseWhileAskingPlayerWantToDraw(blackJackGame: BlackJackGame, it: Player) {
         try {
             askPlayerWantToDrawCard(blackJackGame, it)
         } catch (e: PlayerLoseException) {
