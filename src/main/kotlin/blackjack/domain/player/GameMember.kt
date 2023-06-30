@@ -1,6 +1,8 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardHold
+import blackjack.domain.card.CardHold.Companion.BLACKJACK_CARD_POINT
+import blackjack.domain.card.CardHold.Companion.BLACKJACK_CARD_SIZE
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.Money
@@ -14,7 +16,7 @@ sealed interface GameMember {
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()
-        if (cardHold.getAllCards().any { card -> card.rank == CardRank.ACE } && sum <= THRESHOLD) {
+        if (cardHold.getAllCards().any { card -> card.rank == CardRank.ACE } && sum <= BLACKJACK_CARD_POINT) {
             return sum + CardRank.ACE.getSoftHand()
         }
         return sum
@@ -44,7 +46,11 @@ sealed interface GameMember {
         money += amount
     }
 
-    companion object {
-        const val THRESHOLD = 21
+    fun isBlackJack(): Boolean {
+        return getPoints() == BLACKJACK_CARD_POINT && getCardHoldSize() == BLACKJACK_CARD_SIZE
+    }
+
+    fun isExceedCardPoint(): Boolean {
+        return getCardHoldSize() > BLACKJACK_CARD_POINT
     }
 }

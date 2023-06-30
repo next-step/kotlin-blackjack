@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardHold
+import blackjack.domain.card.CardHold.Companion.BLACKJACK_CARD_POINT
 import blackjack.domain.rule.Money
 
 class GamePlayer(
@@ -8,5 +9,5 @@ class GamePlayer(
     override val cardHold: CardHold = CardHold(),
 ) : GameMember {
     override var money: Money = Money()
-    override fun canDraw(): Boolean = cardHold.getTotalPoints() <= GameMember.THRESHOLD
+    override fun canDraw(): Boolean = cardHold.getTotalPoints() <= BLACKJACK_CARD_POINT
 }

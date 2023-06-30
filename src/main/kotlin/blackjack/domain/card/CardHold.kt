@@ -20,4 +20,9 @@ class CardHold(
             card.getPoint()
         }
     }
+
+    companion object {
+        const val BLACKJACK_CARD_POINT = 21
+        const val BLACKJACK_CARD_SIZE = 2
+    }
 }

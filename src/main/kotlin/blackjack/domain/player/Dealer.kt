@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.CardHold
+import blackjack.domain.card.CardHold.Companion.BLACKJACK_CARD_POINT
 import blackjack.domain.rule.Money
 
 class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
@@ -13,27 +14,27 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     }
 
     fun compareScore(other: GamePlayer) {
-        if (other.getPoints() > 21) {
+        if (other.getPoints() > BLACKJACK_CARD_POINT) {
             collectMoneyFromPlayer(other)
             return
         }
 
-        if (getPoints() > 21) {
+        if (getPoints() > BLACKJACK_CARD_POINT) {
             giveMoneyToPlayer(other)
             return
         }
 
-        if (getPoints() == 21 && getCardHoldSize() == 2 && other.getPoints() == 21 && other.getCardHoldSize() == 2) {
+        if (isBlackJack() && other.isBlackJack()) {
             draw(other)
             return
         }
 
-        if (other.getPoints() == 21 && other.getCardHoldSize() == 2) {
+        if (other.isBlackJack()) {
             giveMoneyToPlayerInSpecial(other)
             return
         }
 
-        if (getPoints() == 21 && getCardHoldSize() == 2) {
+        if (isBlackJack()) {
             collectMoneyFromPlayer(other)
             return
         }
