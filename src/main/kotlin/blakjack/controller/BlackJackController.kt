@@ -35,12 +35,9 @@ class BlackJackController {
     }
 
     private fun playerTurn(game: Game, player: Player) {
-        while (InputView.readHitOrStand(player.name)) {
+        while (!player.isBust() && InputView.readHitOrStand(player.name)) {
             game.hit(player)
             OutputView.printCards(player)
-            if (player.isBust()) {
-                break
-            }
         }
     }
 

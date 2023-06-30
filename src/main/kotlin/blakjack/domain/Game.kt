@@ -38,22 +38,28 @@ class Game(
     }
 
     private fun resultIfDealerIsBust() {
-        players.forEach { player ->
-            if (player.isBust()) {
-                dealer.win(player)
-            } else {
-                player.win(dealer)
-            }
+        players.forEach(::resultIfDealerIsBust)
+    }
+
+    private fun resultIfDealerIsBust(player: Player) {
+        if (player.isBust()) {
+            dealer.win(player)
+            return
         }
+
+        player.win(dealer)
     }
 
     private fun resultIfDealerIsNotBust() {
-        players.forEach { player ->
-            if (player.isBust() || !player.isWin(dealer)) {
-                dealer.win(player)
-            } else {
-                player.win(dealer)
-            }
+        players.forEach(::resultIfDealerIsNotBust)
+    }
+
+    private fun resultIfDealerIsNotBust(player: Player) {
+        if (player.isBust() || !player.isWin(dealer)) {
+            dealer.win(player)
+            return
         }
+
+        player.win(dealer)
     }
 }
