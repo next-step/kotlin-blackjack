@@ -2,8 +2,10 @@ package blakjack.domain
 
 private typealias Used = Boolean
 
-class CardDeck {
-    private val cards: CardUsedMap = CardUsedMap(Cards.all().values.associateWith { false }.toMutableMap())
+class CardDeck(
+    cards: Cards = Cards.all()
+) {
+    private val cards: CardUsedMap = CardUsedMap(cards.values.associateWith { false }.toMutableMap())
     private var countOfUsed = 0
 
     fun getCardRandomly(): Card {

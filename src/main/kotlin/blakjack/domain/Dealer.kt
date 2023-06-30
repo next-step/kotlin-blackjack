@@ -1,9 +1,9 @@
 package blakjack.domain
 
 class Dealer(
-    name: String = "딜러"
+    name: String = "딜러",
+    private val cardDeck: CardDeck = CardDeck.create()
 ) : Participant(name) {
-    val cardDeck = CardDeck.create()
     val isOver17: Boolean
         get() = this.score >= SEVENTEEN
 

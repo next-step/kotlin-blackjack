@@ -1,10 +1,12 @@
 package blakjack.domain
 
+import blakjack.domain.Participant.ParticipantAction
 import blakjack.domain.extension.cards
 import blakjack.domain.extension.heart10
 import blakjack.domain.extension.heart2
 import blakjack.domain.extension.heart3
 import blakjack.domain.extension.heart9
+import blakjack.domain.extension.spade10
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -37,6 +39,17 @@ class GameSpec : DescribeSpec({
                 player.cards.size shouldBe 1
             }
         }
+
+        context("카드 추가 후 플레이어의 점수가 21점을 초과하면") {
+            val player = Player("홍길동").also { it.add(cards(heart10, heart9, heart2)) }
+            val game = Game(players = listOf(player))
+
+            it("플레이어는 BUST 상태가 된다.") {
+                game.hit(player)
+
+                player.isBust() shouldBe true
+            }
+        }
     }
 
     describe("딜러 Hit or Stand 검증") {
@@ -57,6 +70,17 @@ class GameSpec : DescribeSpec({
             it("딜러는 HIT 한다.") {
                 game.hitOrStandDealer() shouldBe ParticipantAction.HIT
                 dealer.cards.size shouldBe 3
+            }
+        }
+
+        context("카드 추가 후 딜러의 점수가 21점을 초과하면") {
+            val cardDeck = CardDeck(cards = cards(spade10))
+            val dealer = Dealer(cardDeck = cardDeck).also { it.add(cards(heart2, heart10)) }
+            val game = Game(dealer = dealer, players = listOf(Player("홍길동")))
+
+            it("딜러는 BUST 상태가 된다.") {
+                game.hitOrStandDealer()
+                dealer.isBust() shouldBe true
             }
         }
     }

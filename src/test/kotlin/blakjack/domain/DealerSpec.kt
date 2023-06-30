@@ -4,7 +4,6 @@ import blakjack.domain.extension.cards
 import blakjack.domain.extension.heart10
 import blakjack.domain.extension.heart2
 import blakjack.domain.extension.heart9
-import blakjack.domain.extension.spade10
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
@@ -65,26 +64,6 @@ class DealerSpec : DescribeSpec({
                 shouldThrow<IllegalArgumentException> {
                     dealer.drawTwoCards()
                 }
-            }
-        }
-    }
-
-    describe("BUST 상태 검증") {
-        context("점수가 21점 이하면") {
-            val dealer = Dealer()
-            dealer.add(cards(heart10, heart2))
-
-            it("BUST 상태가 아니다.") {
-                dealer.isBust() shouldBe false
-            }
-        }
-
-        context("점수가 21점을 초과하면") {
-            val dealer = Dealer()
-            dealer.add(cards(heart10, spade10, heart2))
-
-            it("BUST 상태이다.") {
-                dealer.isBust() shouldBe true
             }
         }
     }

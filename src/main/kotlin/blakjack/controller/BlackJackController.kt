@@ -1,7 +1,7 @@
 package blakjack.controller
 
 import blakjack.domain.Game
-import blakjack.domain.ParticipantAction
+import blakjack.domain.Participant.ParticipantAction
 import blakjack.domain.Player
 import blakjack.view.InputView
 import blakjack.view.OutputView
@@ -25,15 +25,14 @@ class BlackJackController {
             while (InputView.readHitOrStand(player.name)) {
                 game.hit(player)
                 OutputView.printCards(player)
-
                 if (player.isBust()) {
                     break
                 }
             }
         }
 
-        val participantAction = game.hitOrStandDealer()
-        if (participantAction == ParticipantAction.HIT) {
+        val dealerAction = game.hitOrStandDealer()
+        if (dealerAction == ParticipantAction.HIT) {
             OutputView.printDealerHit()
         }
 

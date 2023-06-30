@@ -1,5 +1,7 @@
 package blakjack.domain
 
+import blakjack.domain.Participant.ParticipantAction
+
 class Game(
     val dealer: Dealer = Dealer(),
     val players: List<Player>
