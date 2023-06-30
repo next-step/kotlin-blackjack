@@ -3,9 +3,12 @@ package blackjack.domain.player
 import blackjack.domain.BlackjackGameResult
 import blackjack.domain.DealerResult
 import blackjack.domain.PlayerResult
+import blackjack.domain.PlayerResults
 import blackjack.domain.card.Cards
 
-class GamePlayers(val players: List<Player>, val dealer: Dealer = Dealer()) {
+class GamePlayers(val players: List<Player>) {
+    val dealer: Dealer = Dealer()
+
     fun receiveCard(getCards: () -> Cards) {
         players.plus(dealer).forEach {
             val cards = getCards()
@@ -13,21 +16,25 @@ class GamePlayers(val players: List<Player>, val dealer: Dealer = Dealer()) {
         }
     }
 
-    fun getGameResult(): BlackjackGameResult {
-        val dealerScore = dealer.cards.getOptimizedScore()
-        val playerResults = players.map { compareScore(it, dealerScore) }
-        val dealerResult = DealerResult.from(dealer, playerResults)
+    fun finish(): BlackjackGameResult {
+        val playerResults = getPlayerResults()
+        val dealerResult = getDealerResult(playerResults)
         return BlackjackGameResult(dealerResult, playerResults)
     }
 
-    private fun compareScore(player: Player, dealerScore: Int): PlayerResult {
-        val playerScore = player.cards.getOptimizedScore()
-        val gameResult = when {
-            dealerScore > PlayerStatus.BLACK_JACK_SCORE ||
-                (playerScore <= PlayerStatus.BLACK_JACK_SCORE && dealerScore < playerScore) -> GameResult.WIN
-            (playerScore == dealerScore) -> GameResult.TIE
-            else -> GameResult.LOOSE
+    private fun getPlayerResults(): PlayerResults {
+        return PlayerResults(players.map { compareWithDealer(it) }).apply {
+            this.calcRevenues()
         }
+    }
+
+    private fun getDealerResult(playerResults: PlayerResults): DealerResult {
+        return DealerResult.from(dealer, playerResults)
+    }
+
+    private fun compareWithDealer(player: Player): PlayerResult {
+        val dealerScore = dealer.cards.getOptimizedScore()
+        val gameResult = GameResult.valueByCompare(dealerScore, player)
         return PlayerResult(player, gameResult)
     }
 

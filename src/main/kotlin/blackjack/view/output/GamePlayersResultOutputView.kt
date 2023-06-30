@@ -1,26 +1,24 @@
 package blackjack.view.output
 
+import blackjack.domain.BlackjackGameResult
 import blackjack.domain.DealerResult
 import blackjack.domain.PlayerResult
-import blackjack.domain.player.GamePlayers
-import blackjack.domain.player.GameResult
 
-class GamePlayersResultOutputView(gamePlayers: GamePlayers) {
+class GamePlayersResultOutputView(gameResult: BlackjackGameResult) {
     init {
-        val gameResult = gamePlayers.getGameResult()
-        println("\n### 최종 승패")
+        println("\n### 최종 수익")
         renderDealerMessage(gameResult.dealer)
-        gameResult.players.forEach { renderPlayerMessage(it) }
+        gameResult.players.results.forEach { renderPlayerMessage(it) }
     }
 
     private fun renderDealerMessage(result: DealerResult) {
-        val resultMessage = GameResult.values().joinToString(" ") { gameResult ->
-            result.getMatchedGameResultCount(gameResult).toString() + gameResult.korName
-        }
-        println("딜러: $resultMessage")
+        val revenue = result.dealer.revenue.value
+        println("딜러: $revenue")
     }
 
-    private fun renderPlayerMessage(player: PlayerResult) {
-        println("${player.player.name.value}: ${player.result.korName}")
+    private fun renderPlayerMessage(result: PlayerResult) {
+        val name = result.player.name.value
+        val revenue = result.player.betAmount.revenue
+        println("$name: $revenue")
     }
 }

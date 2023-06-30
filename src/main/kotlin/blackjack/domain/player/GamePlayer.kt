@@ -12,20 +12,10 @@ abstract class GamePlayer {
     }
 
     abstract fun isReceivable(): Boolean
-
-    abstract fun afterEventOfReceiveCard()
+    abstract fun receiveCard(card: Card)
 
     fun initCards(cards: Cards) {
         this.cards.addCards(cards)
-        this.cards.updateScoreSet(cards)
-        updateStatus()
-    }
-
-    fun receiveCard(card: Card) {
-        if (!isReceivable()) return
-        cards.addCard(card)
-        cards.updateScoreSet(card)
-        afterEventOfReceiveCard()
         updateStatus()
     }
 
@@ -33,9 +23,12 @@ abstract class GamePlayer {
         return status
     }
 
-    private fun updateStatus() {
-        val optimizedScore = cards.getOptimizedScore()
+    fun isBlackjack(): Boolean {
+        return status == PlayerStatus.BLACK_JACK
+    }
+
+    protected fun updateStatus() {
         val isReceivable = isReceivable()
-        status = PlayerStatus.valuesOf(optimizedScore, isReceivable)
+        status = PlayerStatus.valuesOf(cards, isReceivable)
     }
 }

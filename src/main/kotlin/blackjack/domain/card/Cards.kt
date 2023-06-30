@@ -16,20 +16,26 @@ class Cards(_value: List<Card> = emptyList()) {
 
     fun addCards(cards: Cards) {
         value.addAll(cards.value)
+        updateScoreSet(cards)
     }
 
     fun addCard(card: Card) {
         value.add(card)
+        updateScoreSet(card)
     }
 
     fun getOptimizedScore(): Int {
         return scoreSet.max()
     }
 
-    fun updateScoreSet(card: Card) {
-        val _scoreSet = setOf(*scoreSet.toTypedArray())
+    fun getCardsSize(): Int {
+        return value.size
+    }
 
-        val newScoreSet = _scoreSet.flatMap { score ->
+    private fun updateScoreSet(card: Card) {
+        val copyScoreSet = setOf(*scoreSet.toTypedArray())
+
+        val newScoreSet = copyScoreSet.flatMap { score ->
             if (card.denom.symbol == Denomination.ACE.symbol) {
                 Denomination.ACE.getCardScoresValue().map { value -> score + value }
             } else {
@@ -44,7 +50,7 @@ class Cards(_value: List<Card> = emptyList()) {
         scoreSet.addAll(finalScoreList)
     }
 
-    fun updateScoreSet(cards: Cards) {
+    private fun updateScoreSet(cards: Cards) {
         cards.value.forEach { card -> updateScoreSet(card) }
     }
 

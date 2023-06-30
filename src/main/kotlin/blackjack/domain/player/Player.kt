@@ -1,14 +1,20 @@
 package blackjack.domain.player
 
-class Player(val name: Name = Name()) : GamePlayer() {
+import blackjack.domain.card.Card
+
+class Player(val name: Name = Name(), val betAmount: PlayerBetAmount = PlayerBetAmount()) : GamePlayer() {
 
     override fun isReceivable(): Boolean {
         return status.isReceivable
     }
 
-    override fun afterEventOfReceiveCard() = Unit
+    override fun receiveCard(card: Card) {
+        if (!isReceivable()) return
+        cards.addCard(card)
+        updateStatus()
+    }
 
-    fun getStayStatus() {
+    fun setStayStatus() {
         status = PlayerStatus.STAY
     }
 }

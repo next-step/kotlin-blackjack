@@ -73,7 +73,7 @@ class CardsTest {
             Card(Denomination.ACE, CardType.SPADES),
         )
 
-        cards.updateScoreSet(addCards)
+        cards.addCards(addCards)
 
         cards.getOptimizedScore() shouldBe 14
     }
