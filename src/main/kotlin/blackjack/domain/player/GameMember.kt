@@ -42,6 +42,10 @@ sealed interface GameMember {
         return Money(amount)
     }
 
+    fun getBettingMoney(): Money {
+        return money.getAmount()
+    }
+
     fun winMoney(amount: Money) {
         money += amount
     }

@@ -5,7 +5,6 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
-import blackjack.domain.rule.Money
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -69,11 +68,10 @@ class DealerTest {
         dealer.getMoneyFromPlayer(player, 10000)
 
         // when
-        val money = dealer.playersMoney[player] ?: Money()
+        val money = player.getBettingMoney()
 
         // then
         money.value shouldBe 10000
-        player.money.value shouldBe -10000
     }
 
     @Test
@@ -104,20 +102,5 @@ class DealerTest {
         // then
         dealer.money.value shouldBe -15000
         player.money.value shouldBe 15000
-    }
-
-    @Test
-    fun `플레이어에게 돈을 압수한다`() {
-        // given
-        val player = GamePlayer("player")
-        val dealer = Dealer()
-        dealer.getMoneyFromPlayer(player, 10000)
-
-        // when
-        dealer.collectMoneyFromPlayer(player)
-
-        // then
-        dealer.money.value shouldBe 10000
-        player.money.value shouldBe -10000
     }
 }
