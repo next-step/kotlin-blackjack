@@ -6,5 +6,5 @@ import blackjack.view.StdInInputView
 import blackjack.view.StdOutOutputView
 
 fun main() {
-    BlackjackGame(Dealer(BlackJackCardDeck()), BlackJackScoringStrategy(), StdInInputView, StdOutOutputView).start()
+    BlackJackController(Dealer(BlackJackCardDeck()), BlackJackScoringStrategy(), StdInInputView, StdOutOutputView).start()
 }

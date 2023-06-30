@@ -5,7 +5,7 @@ import blackjack.card.score.BlackJackScoringStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackGame(
+class BlackJackController(
     private val dealer: Dealer,
     private val blackJackScoringStrategy: BlackJackScoringStrategy,
     private val inputView: InputView,
