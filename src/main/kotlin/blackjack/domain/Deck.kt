@@ -1,26 +1,14 @@
 package blackjack.domain
 
-class Deck(deck: List<Card>) {
+class Deck(randomStrategy: RandomCardStrategy) {
 
     private val cards: MutableList<Card> = mutableListOf()
 
     init {
-        cards.addAll(deck)
+        cards.addAll(randomStrategy.getCards())
     }
 
-    fun getCards() = cards
+    fun getCards(): List<Card> = cards
 
-    fun draw() = cards.removeFirst()
-
-    companion object {
-        fun make(): Deck {
-            val shuffledDeck = Denomination.values()
-                .flatMap { denomination ->
-                    Shape.values().map { shape ->
-                        Card(denomination, shape)
-                    }
-                }.shuffled()
-            return Deck(shuffledDeck)
-        }
-    }
+    fun draw(): Card = cards.removeFirst()
 }
