@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
-class GameMemberImplTest {
+class GamePlayerTest {
     @Test
     fun `플레이어는 처음 포인트가 0이다`() {
         // given

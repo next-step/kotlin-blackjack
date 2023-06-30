@@ -17,7 +17,7 @@ sealed class GameMember {
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()
-        if (cardHold.getAllCards().any { card -> card.rank == CardRank.ACE } && sum <= BLACKJACK_CARD_POINT) {
+        if (cardHold.getAllCards().any { card -> card.rank == CardRank.ACE } && sum < BLACKJACK_CARD_POINT) {
             return sum + CardRank.ACE.getSoftHand()
         }
         return sum
@@ -56,6 +56,6 @@ sealed class GameMember {
     }
 
     fun isExceedCardPoint(): Boolean {
-        return getCardHoldSize() > BLACKJACK_CARD_POINT
+        return getPoints() > BLACKJACK_CARD_POINT
     }
 }

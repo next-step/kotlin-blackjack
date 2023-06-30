@@ -66,6 +66,7 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember() {
 
     fun draw(player: GamePlayer) {
         val money = player.getBettingMoney()
-        player.winMoney(money)
+        val dealerMoney = betMoney(money.value)
+        player.winMoney(dealerMoney)
     }
 }
