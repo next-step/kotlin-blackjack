@@ -1,3 +1,5 @@
+package dsl
+
 sealed class Skill(val value: String)
 
 class Soft(value: String) : Skill(value)

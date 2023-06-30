@@ -1,3 +1,5 @@
+package dsl
+
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
