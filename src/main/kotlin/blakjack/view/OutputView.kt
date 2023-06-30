@@ -3,31 +3,35 @@ package blakjack.view
 import blakjack.domain.Card
 import blakjack.domain.CardRank
 import blakjack.domain.CardSuit
-import blakjack.domain.Player
+import blakjack.domain.Cards
+import blakjack.domain.Participant
 
 object OutputView {
-    fun printInitialPlayerCards(players: List<Player>) {
+    fun printIntro(participants: List<Participant>) {
         println()
-        println("${players.joinToString { it.name }}에게 2장의 나누었습니다.")
-        players.forEach(this::printPlayerCards)
+        println("${participants.joinToString { it.name }}에게 2장의 나누었습니다.")
     }
 
-    fun printPlayerCards(player: Player) {
-        println(getPrintPlayerCards(player))
+    fun printCards(participant: Participant) {
+        println(getPrintPlayerCards(participant.name, participant.cards))
     }
 
-    fun printPlayerCardsWithScore(players: List<Player>) {
-        players.forEach {
-            println("${getPrintPlayerCards(it)} - 결과: ${it.score}")
+    fun printCardsWithScore(participants: List<Participant>) {
+        participants.forEach {
+            println("${getPrintPlayerCards(it.name, it.cards)} - 결과: ${it.score}")
         }
     }
 
-    private fun getPrintPlayerCards(player: Player): String {
-        return "${player.name}카드: ${player.cards.values.joinToString(",") { it.korean() }}"
+    private fun getPrintPlayerCards(name: String, cards: Cards): String {
+        return "${name}카드: ${cards.values.joinToString(",") { it.korean() }}"
     }
 
     private fun Card.korean(): String {
         return "${CARD_RANK_KOREAN_MAP[rank]}${CARD_SUIT_KOREAN_MAP[suit]}"
+    }
+
+    fun printDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }
 

@@ -3,6 +3,7 @@ package blakjack.domain
 import blakjack.domain.extension.cards
 import blakjack.domain.extension.heart10
 import blakjack.domain.extension.heart2
+import blakjack.domain.extension.heart9
 import blakjack.domain.extension.spade10
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -84,6 +85,24 @@ class DealerSpec : DescribeSpec({
 
             it("BUST 상태이다.") {
                 dealer.isBust() shouldBe true
+            }
+        }
+    }
+
+    describe("17점 이상 여부 검증") {
+        context("점수가 17점 이상이면") {
+            val dealer = Dealer().also { it.add(cards(heart10, heart9)) }
+
+            it("17점 이상 여부는 '참'이다.") {
+                dealer.isOver17 shouldBe true
+            }
+        }
+
+        context("점수가 17점 미만이면") {
+            val dealer = Dealer().also { it.add(cards(heart10, heart2)) }
+
+            it("17점 이상 여부는 '거짓'이다.") {
+                dealer.isOver17 shouldBe false
             }
         }
     }

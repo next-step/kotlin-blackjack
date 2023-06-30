@@ -12,4 +12,13 @@ class Game(
     fun hit(player: Player) {
         player.add(dealer.drawOneCard())
     }
+
+    fun hitOrStandDealer(): ParticipantAction {
+        if (dealer.isOver17) {
+            return ParticipantAction.STAND
+        }
+
+        dealer.add(dealer.drawOneCard())
+        return ParticipantAction.HIT
+    }
 }
