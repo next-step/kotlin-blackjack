@@ -1,8 +1,10 @@
 package blackjack.view
 
 import blackjack.model.BettingMoneyProvider
+import blackjack.model.Money
 import blackjack.model.MoreWantedCardPredicate
 import blackjack.model.PlayerName
+import blackjack.model.PlayerNames
 import blackjack.model.PlayerNamesProvider
 
 object InputView :
@@ -14,9 +16,9 @@ object InputView :
     private const val POSITIVE_ANSWER = "y"
     private const val NEGATIVE_ANSWER = "n"
 
-    override fun bettingMoney(name: PlayerName): Int {
+    override fun bet(name: PlayerName): Money {
         println("${name}의 배팅 금액은?")
-        return readln().toInt().also { println() }
+        return readln().toInt().also { println() }.let(::Money)
     }
 
     override fun isWantedMorePredicate(name: PlayerName): Boolean {
@@ -28,8 +30,10 @@ object InputView :
         }
     }
 
-    override fun names(): Collection<String> {
+    override fun names(): PlayerNames {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln().split(PLAYER_DELIMITER).also { println() }
+            .map { PlayerName(it.trim()) }
+            .let(::PlayerNames)
     }
 }

@@ -2,7 +2,7 @@ package blackjack.model
 
 class HandDeck {
 
-    val count: Int
+    private val count: Int
         get() = cards.size
 
     val cards: MutableCollection<TrumpCard> = mutableListOf()
@@ -15,6 +15,9 @@ class HandDeck {
 
     val isLessScoreThanLimit: Boolean
         get() = score < LIMIT_SCORE
+
+    val isSameScore: Boolean
+        get() = score == LIMIT_SCORE
 
     private val aceCount: Int
         get() = cards.count { it.number == TrumpCardNumber.ACE }
@@ -38,6 +41,14 @@ class HandDeck {
             }
         }
         return scoreWithAcePlus
+    }
+
+    fun equalsCountOf(count: Int): Boolean {
+        return this.count == count
+    }
+
+    fun isLessThanOrEqualTo(score: Int): Boolean {
+        return this.score <= score
     }
 
     fun add(card: TrumpCard) {

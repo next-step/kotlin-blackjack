@@ -1,14 +1,21 @@
 package blackjack.model.participant
 
+import blackjack.model.BlackjackPlayersCardCountConsumer
+
 data class BlackjackParticipants(
     val participants: Collection<BlackjackParticipant>,
 ) {
-    fun draw() {
-        participants.forEach { it.draw() }
+    init {
+        participants.forEach(BlackjackParticipant::draw)
     }
 
     companion object {
-        fun withDealer(players: Collection<BlackjackParticipant>, dealer: BlackjackParticipant): BlackjackParticipants {
+        fun withDealerAndDraw(
+            players: Collection<BlackjackPlayer>,
+            dealer: BlackjackDealer,
+            countConsumer: BlackjackPlayersCardCountConsumer,
+        ): BlackjackParticipants {
+            countConsumer.consumePlayersCardCount(dealer, players, BlackjackParticipant.INITIAL_DEALING_COUNT)
             return BlackjackParticipants(players + dealer)
         }
     }

@@ -9,12 +9,9 @@ import blackjack.model.BlackjackPlayersScoreConsumer
 import blackjack.model.BlackjackRevenueJudge
 import blackjack.model.CardDeck
 import blackjack.model.MoreWantedCardPredicate
-import blackjack.model.PlayerName
 import blackjack.model.PlayerNamesProvider
 import blackjack.model.participant.BlackjackDealer
-import blackjack.model.participant.BlackjackParticipant
 import blackjack.model.participant.BlackjackParticipants
-import blackjack.model.participant.BlackjackPlayer
 
 data class BlackjackGame(
     private val moreWantedCardPredicate: MoreWantedCardPredicate,
@@ -29,23 +26,14 @@ data class BlackjackGame(
     fun start() {
         val deck = CardDeck()
         val dealer = BlackjackDealer(deck, blackjackDealerMoreCardScoreLimitConsumer)
-        val players = playerNamesProvider.names().map {
-            BlackjackPlayer(
-                deck,
-                bettingMoneyProvider,
-                PlayerName(it),
-                blackjackPlayerConsumer,
-                moreWantedCardPredicate
-            )
-        }
+        val players = playerNamesProvider.names().registerPlayer(
+            deck,
+            bettingMoneyProvider,
+            blackjackPlayerConsumer,
+            moreWantedCardPredicate
+        )
 
-        BlackjackParticipants.withDealer(players, dealer).also {
-            blackjackPlayersCardCountConsumer.consumePlayersCardCount(
-                dealer,
-                players,
-                BlackjackParticipant.INITIAL_DEALING_COUNT
-            )
-        }.also { it.draw() }
+        BlackjackParticipants.withDealerAndDraw(players, dealer, blackjackPlayersCardCountConsumer)
         blackjackPlayersScoreConsumer.consumePlayers(dealer, players)
         blackjackJudgeConsumer.consume(BlackjackRevenueJudge(dealer, players))
     }

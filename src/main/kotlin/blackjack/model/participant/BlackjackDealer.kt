@@ -8,11 +8,8 @@ class BlackjackDealer(
     private val moreCardScoreLimitConsumer: BlackjackDealerMoreCardScoreLimitConsumer,
 ) : BlackjackParticipant(cardDeck) {
 
-    private val isLessThanLimitScore: Boolean
-        get() = handDeck.score <= ADD_CARD_LIMIT_SCORE
-
     override fun draw() {
-        if (isLessThanLimitScore) {
+        if (handDeck.isLessThanOrEqualTo(ADD_CARD_LIMIT_SCORE)) {
             moreCardScoreLimitConsumer.consumeDealerMoreCardScoreLimit(ADD_CARD_LIMIT_SCORE)
             add(cardDeck.draw())
         }

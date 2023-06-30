@@ -15,7 +15,7 @@ class BlackjackPlayer(
     private val moreWantedCardPredicate: MoreWantedCardPredicate,
 ) : BlackjackParticipant(deck) {
 
-    private val bettingMoney: Money = Money(bettingMoneyProvider.bettingMoney(name))
+    private val bettingMoney: Money = bettingMoneyProvider.bet(name)
 
     override fun draw() {
         var isReceivedMoreCard = false
@@ -42,7 +42,7 @@ class BlackjackPlayer(
     private fun revenueBlackjack(dealer: BlackjackDealer): Money {
         return if (dealer.isSameLimitScore) {
             Money.ZERO
-        } else if (deckCount == BONUS_REVENUE_CARD_COUNT) {
+        } else if (handDeck.equalsCountOf(BONUS_REVENUE_CARD_COUNT)) {
             bettingMoney.oneAndHalfTimes
         } else {
             bettingMoney
@@ -51,10 +51,10 @@ class BlackjackPlayer(
 
     private fun isWinFrom(dealer: BlackjackDealer): Boolean {
         if (dealer.isScoreOverThanLimitScore) {
-            return false
+            return true
         }
         if (isScoreOverThanLimitScore) {
-            return true
+            return false
         }
         return isWinByScoreGap(dealer)
     }
