@@ -6,6 +6,10 @@ class Game(
     val dealer: Dealer = Dealer(),
     val players: List<Player>
 ) {
+    init {
+        require(players.isNotEmpty()) { "플레이어는 최소 한 명 이상이어야 합니다." }
+    }
+
     fun initialDraw() {
         players.forEach { player -> player.add(dealer.drawTwoCards()) }
         dealer.add(dealer.drawTwoCards())

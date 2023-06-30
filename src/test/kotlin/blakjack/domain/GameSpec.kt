@@ -8,10 +8,30 @@ import blakjack.domain.extension.heart3
 import blakjack.domain.extension.heart9
 import blakjack.domain.extension.heartKing
 import blakjack.domain.extension.spade10
+import io.kotest.assertions.throwables.shouldNotThrowAny
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class GameSpec : DescribeSpec({
+    describe("게임 생성 검증") {
+        context("플레이어가 있는 경우") {
+            it("게임을 생성할 수 있다.") {
+                shouldNotThrowAny {
+                    Game(players = listOf(Player(name = "A")))
+                }
+            }
+        }
+
+        context("플레이어가 없는 경우") {
+            it("게임을 생성할 수 없다.") {
+                shouldThrow<IllegalArgumentException> {
+                    Game(players = emptyList())
+                }
+            }
+        }
+    }
+
     describe("초기 카드 뽑기 검증") {
         context("초기 카드 뽑기가 실행되면") {
             val dealer = Dealer()
