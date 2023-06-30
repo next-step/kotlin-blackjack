@@ -3,47 +3,39 @@ package view
 import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Suit
-import domain.dto.WinLoseDrawResult
-import domain.player.Dealer
+import domain.dto.IssuedCardResult
+import domain.dto.PlayerIssuedCardsResult
+import domain.game.RevenueResult
 import domain.player.Player
 import domain.player.PlayerGameResult
-import domain.player.Players
 
 class ResultView {
 
-    fun printInitPlayers(players: Players, dealer: Dealer) {
-        val playerNames = players.map { it.name }.joinToString(SEPARATOR)
-        println("${dealer.name}와 $playerNames 에게 2장을 나누었습니다.")
-        println("${dealer.name}: ${printCard(dealer.cards[0])}")
-        players.forEach { printPlayerCards(it) }
+    fun printInitPlayers(initGameResult: IssuedCardResult) {
+        val playerNames = initGameResult.playerResults.joinToString(SEPARATOR) { it.name }
+        println("${initGameResult.dealerResult.name}와 $playerNames 에게 2장을 나누었습니다.")
+        println("${initGameResult.dealerResult.name}: ${printCard(initGameResult.dealerResult.cards[0])}")
+        initGameResult.playerResults.forEach { printPlayerCards(it) }
         println()
     }
 
-    fun printIssuedCardResult(players: Players, dealer: Dealer) {
+    fun printIssuedCardResult(issuedCardResult: IssuedCardResult) {
         println()
-        printPlayerCards(dealer) { "- 결과 : ${dealer.cards.sum}" }
-        players.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
+        printPlayerCards(issuedCardResult.dealerResult) { "- 결과 : ${issuedCardResult.dealerResult.cards.sum}" }
+        issuedCardResult.playerResults.forEach { printPlayerCards(it) { "- 결과 : ${it.cards.sum}" } }
     }
 
-    fun printWinLoseDrawResult(result: WinLoseDrawResult) {
+    fun printRevenue(result: RevenueResult) {
         println()
-        println("## 최종 승패")
-        printDealerWinLoseDrawResult(result)
-        printPlayersWinLoseDrawResult(result)
-    }
-
-    private fun printDealerWinLoseDrawResult(result: WinLoseDrawResult) {
-        println(
-            "딜러: ${result.playerResultMap[PlayerGameResult.LOSE]?.size ?: 0}승" +
-                "${result.playerResultMap[PlayerGameResult.DRAW]?.size ?: 0}무" +
-                "${result.playerResultMap[PlayerGameResult.WIN]?.size ?: 0}패",
-        )
-    }
-
-    private fun printPlayersWinLoseDrawResult(result: WinLoseDrawResult) {
-        result.playerResultMap.forEach { (playerGameResult, players) ->
-            printPlayerResults(players, playerGameResult)
+        println("## 최종 수익")
+        printRevenue(name = "딜러", revenueAmount = result.dealerRevenue)
+        result.playersRevenues.forEach { (name, revenueAmount) ->
+            printRevenue(name = name, revenueAmount = revenueAmount)
         }
+    }
+
+    private fun printRevenue(name: String, revenueAmount: Int) {
+        println("$name: $revenueAmount")
     }
 
     private fun printPlayerResults(
@@ -55,9 +47,9 @@ class ResultView {
         }
     }
 
-    fun printPlayerCards(player: Player, sumOfCardSum: () -> String = { "" }) {
-        val playerCards = player.cards.joinToString(SEPARATOR) { printCard(it) }
-        println("${player.name} 카드: $playerCards ${sumOfCardSum()}")
+    fun printPlayerCards(result: PlayerIssuedCardsResult, sumOfCardSum: () -> String = { "" }) {
+        val playerCards = result.cards.joinToString(SEPARATOR) { printCard(it) }
+        println("${result.name} 카드: $playerCards ${sumOfCardSum()}")
     }
 
     private fun printCard(card: Card) = "${CARD_NUMBER_SHAPE_MAP[card.number]}${CARD_SUIT_SHAPE_MAP[card.suit]}"
@@ -91,8 +83,6 @@ class ResultView {
         )
 
         private const val SEPARATOR = ", "
-
-        private const val CANNOT_PROCEED_GAME_MESSAGE = "은(는) 더 이상 게임을 진행할 수 없습니다."
 
         private const val DEALER_ISSUED_CARD_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     }

@@ -1,12 +1,15 @@
 package blackjack.card
 
+import blackjack.card.helper.CardsTestFactory
 import blackjack.card.helper.HitTestHelper
 import domain.card.Card
 import domain.card.Cards
 import domain.state.Burst
 import domain.state.Hit
 import domain.state.Stand
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -47,6 +50,28 @@ class HitTest {
         val newState = hit.stop()
 
         (newState is Stand) shouldBe true
+    }
+
+    @Test
+    fun `힛(Hit) 상태에서 승패를 조회하면 UnsupportedOperationException 이 발생`() {
+        val cards = CardsTestFactory.makeHitCarts()
+
+        val hitState = Hit(cards)
+
+        shouldThrow<UnsupportedOperationException> {
+            hitState.getPlayerGameResult(hitState)
+        }
+    }
+
+    @Test
+    fun `힛(Hit) 상태에서 수익을를 조회하면 UnsupportedOperationException 이 발생`() {
+        val cards = CardsTestFactory.makeHitCarts()
+
+        val hitState = Hit(cards)
+
+        shouldThrow<UnsupportedOperationException> {
+            hitState.getRevenueRate(hitState)
+        }
     }
 
     companion object {

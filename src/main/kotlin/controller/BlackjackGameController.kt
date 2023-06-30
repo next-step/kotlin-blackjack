@@ -1,39 +1,63 @@
 package controller
 
+import domain.card.util.DeckGenerator
+import domain.dto.PlayerIssuedCardsResult
 import domain.game.BlackjackGame
+import domain.game.GameResult
+import domain.player.BetAmount
+import domain.player.Dealer
 import domain.player.Player
+import domain.player.PlayerBetAmount
+import domain.player.PlayerBetAmounts
 import view.Answer
 import view.InputView
 import view.ResultView
 
 class BlackjackGameController(
-    private val game: BlackjackGame,
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
-    fun initGame() {
+
+    private val game: BlackjackGame
+
+    init {
         val playerNames = inputView.getPlayerNames()
-        game.initGame(playerNames)
-        resultView.printInitPlayers(players = game.players, dealer = game.dealer)
+        val betAmounts = inputView.getPlayerBetAmounts(playerNames)
+        val playerBetAmounts = PlayerBetAmounts(
+            betAmounts.map { (name, betAmount) ->
+                PlayerBetAmount(
+                    name = name,
+                    betAmount = BetAmount(betAmount),
+                )
+            },
+        )
+        game = BlackjackGame(deck = DeckGenerator.makeDeck(), playerBetAmounts = playerBetAmounts)
     }
 
     fun gameStart() {
-        game.gameStart(isIssueCard = this::askPlayer, showPlayerCards = this::showPlayerCards)
-        if (game.dealer.isIssuedCard()) {
-            resultView.printDealerIssuedCardMessage()
-        }
+        initGame()
+        val gameResult = game.gameStart(isIssueCard = this::askPlayer, showMessage = this::showMessage)
+        printGameResult(gameResult)
     }
 
-    private fun askPlayer(playerName: String) = when (inputView.askDraw(playerName)) {
+    private fun initGame() {
+        val initGameResult = game.initGame()
+        resultView.printInitPlayers(initGameResult)
+    }
+
+    private fun printGameResult(gameResult: GameResult) {
+        resultView.printIssuedCardResult(gameResult.issuedCardsResult)
+        resultView.printRevenue(gameResult.revenueResult)
+    }
+
+    private fun askPlayer(player: Player) = when (inputView.askDraw(player.name)) {
         Answer.YES -> true
         else -> false
     }
 
-    private fun showPlayerCards(player: Player) { resultView.printPlayerCards(player) }
-
-    fun printGameResult() {
-        val gameWinLoseDrawResult = game.getGameWinLoseDrawResult()
-        resultView.printIssuedCardResult(players = game.players, dealer = game.dealer)
-        resultView.printWinLoseDrawResult(gameWinLoseDrawResult)
+    private fun showMessage(player: Player) {
+        if (player is Dealer) resultView.printDealerIssuedCardMessage() else resultView.printPlayerCards(
+            PlayerIssuedCardsResult(name = player.name, issuedCards = player.cards),
+        )
     }
 }

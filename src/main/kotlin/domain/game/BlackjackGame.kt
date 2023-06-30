@@ -2,81 +2,74 @@ package domain.game
 
 import domain.card.Cards
 import domain.card.Deck
+import domain.dto.IssuedCardResult
 import domain.player.Dealer
 import domain.player.Player
+import domain.player.PlayerBetAmounts
 import domain.player.Players
 import domain.state.State
-import domain.state.TerminationState
-import domain.dto.WinLoseDrawResult
 
-class BlackjackGame(private val deck: Deck) {
+class BlackjackGame(private val deck: Deck, playerBetAmounts: PlayerBetAmounts) {
 
-    lateinit var players: Players
-        private set
+    val players: Players
 
-    lateinit var dealer: Dealer
-        private set
+    val dealer: Dealer
 
-    fun initGame(playerNames: List<String>): Players {
-        require(PLAYERS_RANGE.contains(playerNames.size)) { "플레이어 수는 1 ~ 8명이어야 합니다." }
-        this.players = createPlayers(playerNames)
-        this.dealer = Dealer(cards = initCards())
-        return this.players
+    init {
+        this.players = Players.createPlayers(playerBetAmounts)
+        this.dealer = Dealer()
     }
 
-    private fun createPlayers(playerNames: List<String>) =
-        Players(playerNames.map { Player(it, cards = initCards()) })
+    fun initGame(): IssuedCardResult {
+        players.forEach { player -> player.initGame(initCards()) }
+        dealer.initGame(initCards())
+        return IssuedCardResult(players = players, dealer = dealer)
+    }
 
     private fun initCards() = Cards(listOf(deck.issueCard(), deck.issueCard()))
 
     fun gameStart(
-        isIssueCard: (playerName: String) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
-    ) {
-        players.forEach { playGame(player = it, isIssueCard, showPlayerCards) }
-        this.issueCard(dealer)
+        isIssueCard: (player: Player) -> Boolean,
+        showMessage: (player: Player) -> Unit,
+    ): GameResult {
+        players.forEach { player ->
+            playGame(player = player, isIssueCard, showMessage = showMessageWithCheck(showMessage))
+        }
+        playGame(
+            player = dealer,
+            isIssueCard = { dealer.isDrawable() },
+            showMessage = showMessageWithCheck(showMessage),
+        )
+        return GameResult(players = players, dealer = dealer)
     }
 
     private fun playGame(
         player: Player,
-        isIssueCard: (playerName: String) -> Boolean,
-        showPlayerCards: (player: Player) -> Unit,
+        isIssueCard: (player: Player) -> Boolean,
+        showMessage: (player: Player) -> Unit,
     ) {
-        while (!this.isTerminatedPlayer(player)) {
+        while (!player.isTerminated()) {
             gameProgress(isIssueCard, player)
 
-            showPlayerCards(player)
+            showMessage(player)
         }
     }
 
-    private fun gameProgress(isIssueCard: (playerName: String) -> Boolean, player: Player) {
-        when (isIssueCard(player.name)) {
-            true -> this.issueCard(player)
-            else -> this.stopIssueCard(player)
+    private fun gameProgress(isIssueCard: (player: Player) -> Boolean, player: Player) {
+        when (isIssueCard(player)) {
+            true -> issueCard(player)
+            else -> player.stop()
         }
     }
 
-    private fun isTerminatedPlayer(player: Player): Boolean {
-        return player.state is TerminationState
-    }
+    private fun showMessageWithCheck(showMessage: (player: Player) -> Unit): (player: Player) -> Unit =
+        { if (!it.isTerminated()) showMessage(it) }
 
     private fun issueCard(player: Player): State {
         return player.draw(this.deck.issueCard())
     }
 
-    private fun stopIssueCard(player: Player): State {
-        return player.stop()
-    }
-
-    fun getGameWinLoseDrawResult(): WinLoseDrawResult {
-        val playerGameResultMap = players.groupBy { it.getPlayerGameResult(dealer) }
-        return WinLoseDrawResult(playerResultMap = playerGameResultMap)
-    }
-
     companion object {
-        private const val MAX_PLAYER_SIZE = 8
-        private const val MIN_PLAYER_SIZE = 1
-        private val PLAYERS_RANGE = IntRange(MIN_PLAYER_SIZE, MAX_PLAYER_SIZE)
         const val BLACKJACK_GAME_DECK_SIZE = 6
     }
 }

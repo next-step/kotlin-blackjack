@@ -4,18 +4,20 @@ import domain.card.Card
 import domain.card.Cards
 import domain.state.StartState
 import domain.state.State
+import domain.state.TerminationState
+import java.math.BigDecimal
+import java.math.RoundingMode
 
-open class Player(name: String, cards: Cards) {
+open class Player(val name: String, val betAmount: BetAmount) {
 
-    val name: String
-    var state: State
+    lateinit var state: State
         private set
+
     val cards: Cards
         get() = state.getCards()
 
-    init {
-        this.name = name
-        this.state = StartState.start(cards)
+    fun initGame(cards: Cards) {
+        state = StartState.start(cards)
     }
 
     open fun draw(card: Card): State {
@@ -28,7 +30,12 @@ open class Player(name: String, cards: Cards) {
         return this.state
     }
 
-    fun getPlayerGameResult(dealer: Dealer): PlayerGameResult {
-        return PlayerGameResult.valueOf(this, dealer)
+    fun getPlayerGameResult(dealer: Dealer): PlayerGameResult = state.getPlayerGameResult(dealer.state)
+
+    fun getRevenue(dealer: Dealer): Int {
+        val revenueRate = state.getRevenueRate(dealer.state)
+        return BigDecimal(betAmount.amount).multiply(revenueRate).setScale(0, RoundingMode.DOWN).toInt()
     }
+
+    fun isTerminated(): Boolean = state is TerminationState
 }

@@ -4,10 +4,11 @@ import domain.card.Card
 import domain.card.CardNumber
 import domain.card.Deck
 import domain.card.Suit
+import domain.game.BlackjackGame
 
 object DeckGenerator {
 
-    fun makeDeck(deckSize: Int): Deck {
+    fun makeDeck(deckSize: Int = BlackjackGame.BLACKJACK_GAME_DECK_SIZE): Deck {
         val cards = List(deckSize) { makeDeck() }
             .flatten()
             .shuffled()
