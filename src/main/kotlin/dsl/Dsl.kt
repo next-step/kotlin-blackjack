@@ -38,10 +38,8 @@ class SkillBuilder {
     fun build(): Skill = Skill(softSkills, hardSkills)
 }
 
-inline fun PersonBuilder.skills(block: SkillBuilder.() -> Unit): Skill {
-    val skill = SkillBuilder().apply(block).build()
-    this.skill = skill
-    return skill
+inline fun PersonBuilder.skills(block: SkillBuilder.() -> Unit) {
+    this.skill = SkillBuilder().apply(block).build()
 }
 
 data class Language(
@@ -58,8 +56,6 @@ class LanguageBuilder {
     fun build(): Language = Language(languages)
 }
 
-inline fun PersonBuilder.languages(block: LanguageBuilder.() -> Unit): Language {
-    val language = LanguageBuilder().apply(block).build()
-    this.language = language
-    return language
+inline fun PersonBuilder.languages(block: LanguageBuilder.() -> Unit) {
+    this.language = LanguageBuilder().apply(block).build()
 }
