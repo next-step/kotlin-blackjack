@@ -13,13 +13,13 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
     }
 
     fun compareScore(other: GamePlayer) {
-        if (getPoints() > 21) {
-            giveMoneyToPlayer(other)
+        if (other.getPoints() > 21) {
+            collectMoneyFromPlayer(other)
             return
         }
 
-        if (other.getPoints() > 21) {
-            collectMoneyFromPlayer(other)
+        if (getPoints() > 21) {
+            giveMoneyToPlayer(other)
             return
         }
 
@@ -33,17 +33,17 @@ class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
             return
         }
 
+        if (getPoints() == 21 && getCardHoldSize() == 2) {
+            collectMoneyFromPlayer(other)
+            return
+        }
+
         if (this.getPoints() > other.getPoints()) {
             collectMoneyFromPlayer(other)
             return
         }
 
         if (this.getPoints() < other.getPoints()) {
-            giveMoneyToPlayer(other)
-            return
-        }
-
-        if (this.getCardHoldSize() < other.getCardHoldSize()) {
             giveMoneyToPlayer(other)
             return
         }
