@@ -1,9 +1,8 @@
 package blackjack.card.score
 
-import blackjack.card.Card
+import blackjack.TestUtils.Companion.card
 import blackjack.card.deck.PlayerCardDeck
 import blackjack.card.signature.CardOrdinalSignature
-import blackjack.card.signature.CardSignaturePack
 import blackjack.card.signature.CardSymbolSignature
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -62,7 +61,3 @@ internal class BlackJackScoringStrategyTest : StringSpec({
         }
     }
 })
-
-private fun card(cardOrdinalSignature: CardOrdinalSignature, cardSymbolSignature: CardSymbolSignature): Card {
-    return Card(CardSignaturePack(cardOrdinalSignature, cardSymbolSignature))
-}
