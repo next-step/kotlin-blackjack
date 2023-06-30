@@ -1,8 +1,10 @@
 package blakjack.domain
 
+import blakjack.domain.Participant.ParticipantType.PLAYER
+
 class Player(
     name: String,
-) : Participant(name) {
+) : Participant(name, PLAYER) {
     var result: Result = Result.NONE
         private set
 

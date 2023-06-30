@@ -15,13 +15,25 @@ object OutputView {
     }
 
     fun printCards(participant: Participant) {
+        when (participant.type) {
+            Participant.ParticipantType.PLAYER -> printPlayerCards(participant)
+            Participant.ParticipantType.DEALER -> printDealerCards(participant)
+        }
+    }
+
+    private fun printPlayerCards(participant: Participant) {
         println(getPrintPlayerCards(participant.name, participant.cards))
+    }
+
+    private fun printDealerCards(participant: Participant) {
+        println(getPrintPlayerCards(participant.name, participant.cards.hide()))
     }
 
     fun printCardsWithScore(participants: List<Participant>) {
         participants.forEach {
             println("${getPrintPlayerCards(it.name, it.cards)} - 결과: ${it.score}")
         }
+        println()
     }
 
     private fun getPrintPlayerCards(name: String, cards: Cards): String {
@@ -33,12 +45,13 @@ object OutputView {
     }
 
     fun printDealerHit() {
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 
     fun printResult(dealer: Dealer, player: List<Player>) {
         println()
         println("## 최종 승패")
+
         printDealerResult(dealer)
         player.forEach { printPlayerResult(it) }
     }

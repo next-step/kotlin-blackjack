@@ -1,9 +1,11 @@
 package blakjack.domain
 
+import blakjack.domain.Participant.ParticipantType.DEALER
+
 class Dealer(
     name: String = "딜러",
     private val cardDeck: CardDeck = CardDeck.create()
-) : Participant(name) {
+) : Participant(name, DEALER) {
     var winCount = 0
         private set
     var loseCount = 0

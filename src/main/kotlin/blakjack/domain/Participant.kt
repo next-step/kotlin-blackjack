@@ -1,7 +1,8 @@
 package blakjack.domain
 
 sealed class Participant(
-    val name: String
+    val name: String,
+    val type: ParticipantType,
 ) {
     var cards: Cards = Cards.empty()
         private set
@@ -46,6 +47,10 @@ sealed class Participant(
 
     fun isWin(other: Participant): Boolean {
         return this.score > other.score
+    }
+
+    enum class ParticipantType {
+        DEALER, PLAYER
     }
 
     enum class ParticipantStatus {
