@@ -14,21 +14,21 @@ class GameMemberImplTest {
     @Test
     fun `플레이어는 처음 포인트가 0이다`() {
         // given
-        val playerImpl = GamePlayer("goofy")
+        val gamePlayer = GamePlayer("goofy")
         // when
-        playerImpl.getPoints() shouldBe 0
+        gamePlayer.getPoints() shouldBe 0
     }
 
     @Test
     fun `플레이어는 카드를 뽑을 수 있다`() {
         // given
-        val playerImpl = GamePlayer("goofy")
+        val gamePlayer = GamePlayer("goofy")
         val deck = Deck()
         // when
-        playerImpl.drawCard(deck)
+        gamePlayer.drawCard(deck)
         // then
-        playerImpl.cardHold.getCardsTotalSize() shouldBe 1
-        playerImpl.getPoints() shouldNotBe 0
+        gamePlayer.cardHold.getCardsTotalSize() shouldBe 1
+        gamePlayer.getPoints() shouldNotBe 0
     }
 
     @Test
@@ -37,10 +37,10 @@ class GameMemberImplTest {
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3))
-        val playerImpl = GamePlayer("goofy", myCards)
+        val gamePlayer = GamePlayer("goofy", myCards)
 
         // when
-        val result = playerImpl.canDraw()
+        val result = gamePlayer.canDraw()
 
         // then
         result shouldBe false
@@ -53,10 +53,10 @@ class GameMemberImplTest {
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val sampleCard4 = Card.createCard(CardRank.ACE, CardShape.HEART)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
-        val playerImpl = GamePlayer("goofy", myCards)
+        val gamePlayer = GamePlayer("goofy", myCards)
 
         // when
-        val result = playerImpl.getPoints()
+        val result = gamePlayer.getPoints()
 
         // then
         result shouldBe 31

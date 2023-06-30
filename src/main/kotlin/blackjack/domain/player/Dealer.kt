@@ -3,7 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.CardHold
 import blackjack.domain.rule.Money
 
-class Dealer(override val cardHold: CardHold = CardHold()) : GameMember {
+class Dealer(override val cardHold: CardHold = CardHold()) : GameMember() {
     override val name: String = "딜러"
     override var money: Money = Money()
 

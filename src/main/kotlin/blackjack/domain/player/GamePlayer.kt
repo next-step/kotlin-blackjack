@@ -7,7 +7,7 @@ import blackjack.domain.rule.Money
 class GamePlayer(
     override val name: String,
     override val cardHold: CardHold = CardHold(),
-) : GameMember {
+) : GameMember() {
     override var money: Money = Money()
     override fun canDraw(): Boolean = cardHold.getTotalPoints() <= BLACKJACK_CARD_POINT
 }

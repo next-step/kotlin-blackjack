@@ -7,12 +7,13 @@ import blackjack.domain.card.CardRank
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.Money
 
-sealed interface GameMember {
-    val name: String
-    val cardHold: CardHold
-    var money: Money
+sealed class GameMember {
+    abstract val name: String
+    abstract val cardHold: CardHold
+    abstract var money: Money
+        protected set
 
-    fun canDraw(): Boolean
+    abstract fun canDraw(): Boolean
 
     fun getPoints(): Int {
         val sum = cardHold.getTotalPoints()

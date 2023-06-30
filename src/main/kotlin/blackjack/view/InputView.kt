@@ -10,8 +10,8 @@ object InputView {
         return readln().split(",")
     }
 
-    fun askDrawCard(playerImpl: GamePlayer): Boolean {
-        println("${playerImpl.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askDrawCard(gamePlayer: GamePlayer): Boolean {
+        println("${gamePlayer.name}는 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readln()) {
             YES -> true
             NO -> false
