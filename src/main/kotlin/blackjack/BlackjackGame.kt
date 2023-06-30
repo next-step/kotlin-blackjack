@@ -14,8 +14,13 @@ class BlackjackGame(
     fun start() {
         val playerNames = inputView.getPlayers()
         val players = playerNames.map { Player(it, PlayerCardDeck()) }
-        dealer.provideCard(players, 2)
-        outputView.printInitialCardCasting(players, 2)
+
+        players.forEach { player ->
+            val cards = dealer.provideInitialCards()
+            player.hit(cards)
+        }
+
+        outputView.printInitialCardCasting(players, INITIAL_CARD_NUM)
 
         players.forEach { attemptCasting(it) }
         score(players)
@@ -23,7 +28,8 @@ class BlackjackGame(
 
     private fun attemptCasting(player: Player) {
         while (player.ableToCastCard(blackJackScoringStrategy) && inputView.askCastCardToPlayer(player)) {
-            dealer.provideCard(listOf(player), 1)
+            val card = dealer.provideCard()
+            player.hit(card)
             outputView.printPlayerCards(player)
         }
     }
@@ -32,5 +38,9 @@ class BlackjackGame(
         players.forEach {
             outputView.printBlackJackResult(it, it.score(blackJackScoringStrategy))
         }
+    }
+
+    companion object {
+        private const val INITIAL_CARD_NUM = 2
     }
 }

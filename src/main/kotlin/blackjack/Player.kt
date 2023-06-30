@@ -8,8 +8,12 @@ class Player(
     val name: String,
     private val playerCardDeck: PlayerCardDeck = PlayerCardDeck(),
 ) {
-    fun addCard(cards: Card) {
-        playerCardDeck.addCard(cards)
+    fun hit(vararg cards: Card) {
+        hit(cards.toList())
+    }
+
+    fun hit(cards: List<Card>) {
+        cards.forEach { playerCardDeck.addCard(it) }
     }
 
     fun getCards(): List<Card> {
