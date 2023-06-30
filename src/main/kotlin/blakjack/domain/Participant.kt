@@ -14,6 +14,12 @@ sealed class Participant(
     val isOver21: Boolean
         get() = cards.scoreWithAceAsOne() > BLACKJACK_SCORE
 
+    open fun win(other: Participant) {
+        other.lose()
+    }
+
+    protected abstract fun lose()
+
     fun add(card: Card) {
         this.cards = cards.add(card)
         bustIfOver21()
@@ -24,10 +30,6 @@ sealed class Participant(
         bustIfOver21()
     }
 
-    fun bust() {
-        this.status = ParticipantStatus.BUST
-    }
-
     fun isBust(): Boolean {
         return this.status == ParticipantStatus.BUST
     }
@@ -36,6 +38,14 @@ sealed class Participant(
         if (isOver21) {
             bust()
         }
+    }
+
+    private fun bust() {
+        this.status = ParticipantStatus.BUST
+    }
+
+    fun isWin(other: Participant): Boolean {
+        return this.score > other.score
     }
 
     enum class ParticipantStatus {

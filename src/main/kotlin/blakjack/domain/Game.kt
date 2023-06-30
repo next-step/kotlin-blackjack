@@ -23,4 +23,33 @@ class Game(
         dealer.add(dealer.drawOneCard())
         return ParticipantAction.HIT
     }
+
+    fun result() {
+        if (dealer.isBust()) {
+            resultIfDealerIsBust()
+            return
+        }
+
+        resultIfDealerIsNotBust()
+    }
+
+    private fun resultIfDealerIsBust() {
+        players.forEach { player ->
+            if (player.isBust()) {
+                dealer.win(player)
+            } else {
+                player.win(dealer)
+            }
+        }
+    }
+
+    private fun resultIfDealerIsNotBust() {
+        players.forEach { player ->
+            if (player.isBust() || !player.isWin(dealer)) {
+                dealer.win(player)
+            } else {
+                player.win(dealer)
+            }
+        }
+    }
 }

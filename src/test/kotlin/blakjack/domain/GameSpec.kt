@@ -6,6 +6,7 @@ import blakjack.domain.extension.heart10
 import blakjack.domain.extension.heart2
 import blakjack.domain.extension.heart3
 import blakjack.domain.extension.heart9
+import blakjack.domain.extension.heartKing
 import blakjack.domain.extension.spade10
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -81,6 +82,42 @@ class GameSpec : DescribeSpec({
             it("딜러는 BUST 상태가 된다.") {
                 game.hitOrStandDealer()
                 dealer.isBust() shouldBe true
+            }
+        }
+    }
+
+    describe("게임 결과 검증") {
+        context("딜러가 BUST 상태인 경우") {
+            val dealer = Dealer().also { it.add(cards(heart10, heart9, spade10)) }
+
+            it("BUST 상태가 아닌 플레이어는 승리한다.") {
+                val playerA = Player("A").also { it.add(cards(heart10, heart9)) }
+                val playerB = Player("B").also { it.add(cards(heart10, heart9, spade10)) }
+                val game = Game(dealer = dealer, players = listOf(playerA, playerB))
+
+                game.result()
+
+                playerA.result shouldBe Player.Result.WIN
+                playerB.result shouldBe Player.Result.LOSE
+                dealer.winCount shouldBe 1
+                dealer.loseCount shouldBe 1
+            }
+        }
+
+        context("딜러가 BUST 상태가 아닌 경우") {
+            val dealer = Dealer().also { it.add(cards(heart10, heart9)) }
+
+            it("딜러보다 점수가 높은 플레이어는 승리한다.") {
+                val winPlayer = Player("A").also { it.add(cards(heart10, heartKing)) }
+                val losePlayer = Player("B").also { it.add(cards(heart10, heart2)) }
+                val game = Game(dealer = dealer, players = listOf(winPlayer, losePlayer))
+
+                game.result()
+
+                winPlayer.result shouldBe Player.Result.WIN
+                losePlayer.result shouldBe Player.Result.LOSE
+                dealer.winCount shouldBe 1
+                dealer.loseCount shouldBe 1
             }
         }
     }

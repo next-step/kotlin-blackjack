@@ -4,7 +4,9 @@ import blakjack.domain.Card
 import blakjack.domain.CardRank
 import blakjack.domain.CardSuit
 import blakjack.domain.Cards
+import blakjack.domain.Dealer
 import blakjack.domain.Participant
+import blakjack.domain.Player
 
 object OutputView {
     fun printIntro(participants: List<Participant>) {
@@ -31,7 +33,22 @@ object OutputView {
     }
 
     fun printDealerHit() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+    }
+
+    fun printResult(dealer: Dealer, player: List<Player>) {
+        println()
+        println("## 최종 승패")
+        printDealerResult(dealer)
+        player.forEach { printPlayerResult(it) }
+    }
+
+    private fun printDealerResult(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.winCount}승 ${dealer.loseCount}패")
+    }
+
+    private fun printPlayerResult(player: Player) {
+        println("${player.name}: ${RESULT_KOREAN_MAP[player.result]}")
     }
 }
 
@@ -56,4 +73,9 @@ private val CARD_SUIT_KOREAN_MAP = mapOf(
     CardSuit.DIAMOND to "다이아몬드",
     CardSuit.SPADE to "스페이드",
     CardSuit.CLOVER to "클로버",
+)
+
+private val RESULT_KOREAN_MAP = mapOf(
+    Player.Result.WIN to "승",
+    Player.Result.LOSE to "패",
 )

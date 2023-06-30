@@ -4,6 +4,11 @@ class Dealer(
     name: String = "딜러",
     private val cardDeck: CardDeck = CardDeck.create()
 ) : Participant(name) {
+    var winCount = 0
+        private set
+    var loseCount = 0
+        private set
+
     val isOver17: Boolean
         get() = this.score >= SEVENTEEN
 
@@ -18,6 +23,15 @@ class Dealer(
                 this.drawOneCard(),
             )
         )
+    }
+
+    override fun win(other: Participant) {
+        super.win(other)
+        winCount++
+    }
+
+    override fun lose() {
+        loseCount++
     }
 
     companion object {

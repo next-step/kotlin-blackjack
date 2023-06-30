@@ -85,4 +85,31 @@ class DealerSpec : DescribeSpec({
             }
         }
     }
+
+    describe("결과(win, lose) 검증") {
+        val dealer = Dealer("A")
+        val player = Player("B")
+
+        context("딜러가 플레이어를 이기면") {
+            dealer.win(player)
+
+            it("딜러 A의 승리 횟수는 1이다.") {
+                dealer.winCount shouldBe 1
+            }
+            it("플레이어 B의 결과는 LOSE 이다.") {
+                player.result shouldBe Player.Result.LOSE
+            }
+        }
+
+        context("플레이어가 딜러를 이기면") {
+            player.win(dealer)
+
+            it("딜러 A의 패배 횟수는 1이다.") {
+                dealer.loseCount shouldBe 1
+            }
+            it("플레이어 B의 결과는 WIN 이다.") {
+                player.result shouldBe Player.Result.WIN
+            }
+        }
+    }
 })
