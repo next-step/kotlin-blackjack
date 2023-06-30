@@ -1,21 +1,20 @@
 package blackjack.domain
 
+import blackjack.fixture.BlackJackFixture
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.be
 import io.kotest.matchers.shouldBe
 
 class DealerTest : BehaviorSpec({
     given("딜러는") {
-        `when`("소지 하고 있는 카드가") {
-            then("서로 다른 총 52장 이다.") {
-                val dealer = Dealer.create()
-                dealer.cards.size shouldBe 52
-            }
-        }
-        `when`("소지 하고 있는 카드가 있을 때 딜링 하면") {
-            then("소지 하고 있는 카드가 1장 줄어 든다.") {
-                val dealer = Dealer.create()
-                dealer.dealing()
-                dealer.cards.size shouldBe 51
+        val dealer = Dealer.create()
+
+        `when`("BURST 상태의 플레어가 딜링을 요청 하면") {
+            val beforeCountOfCard = dealer.countOfRemainCards()
+            dealer.dealing(BlackJackFixture.ofPlayer.BURST_PLAYER)
+            then("카드를 나누어 주지 않는다.") {
+                val afterCountOfCard = dealer.countOfRemainCards()
+                afterCountOfCard shouldBe beforeCountOfCard
             }
         }
     }

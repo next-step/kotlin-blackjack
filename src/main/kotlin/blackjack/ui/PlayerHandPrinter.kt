@@ -1,17 +1,16 @@
 package blackjack.ui
 
 import blackjack.domain.Player
+import blackjack.domain.PlayerName
 
 object PlayerHandPrinter {
     fun print(player: Player) {
-        println(message(player))
-    }
-
-    fun message(player: Player): String {
+        val playerName: PlayerName = player.name
         val cardMessages = player.hand.cards.joinToString(
             separator = ", ",
-            transform = { "${it.cardNumber.displayName}${it.cardShape.displayName}" }
+            transform = { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
         )
-        return "${player.name}카드: $cardMessages"
+        println("${playerName.value}카드: $cardMessages")
     }
+
 }
