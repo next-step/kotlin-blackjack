@@ -6,6 +6,19 @@ import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 
 class DealerSpec : DescribeSpec({
+    describe("딜러 생성 검증") {
+        context("이름이 '딜러'인 딜러를 생성하면") {
+            val dealer = Dealer("딜러")
+
+            it("이름은 '딜러'이다.") {
+                dealer.name shouldBe "딜러"
+            }
+            it("카드 목록은 비어있다.") {
+                dealer.cards shouldBe Cards.empty()
+            }
+        }
+    }
+
     describe("카드 한장 뽑기 검증") {
         it("무작위로 카드 한장을 뽑을 수 있다.") {
             val dealer = Dealer()

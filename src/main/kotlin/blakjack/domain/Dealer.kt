@@ -1,6 +1,8 @@
 package blakjack.domain
 
-class Dealer {
+class Dealer(
+    name: String = "딜러"
+) : Participant(name) {
     val cardDeck = CardDeck.create()
 
     fun drawOneCard(): Card {
