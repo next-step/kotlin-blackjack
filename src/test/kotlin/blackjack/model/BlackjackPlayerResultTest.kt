@@ -10,7 +10,7 @@ class BlackjackPlayerResultTest : StringSpec({
 
     "플레이어와 수익금으로 생성" {
         // given
-        val player = BlackjackPlayer(CardDeck(), { _ -> 1000 }, PlayerName("name"), { _ -> }, { _ -> false })
+        val player = BlackjackPlayer(CardDeck(), { _ -> Money(1000) }, PlayerName("name"), { _ -> }, { _ -> false })
         val revenue = Money(1000)
         // when & then
         shouldNotThrowAny {

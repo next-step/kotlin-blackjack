@@ -14,7 +14,7 @@ class BlackjackRevenueJudgeTest : StringSpec({
         // given
         val cardDeck = CardDeck()
         val dealer = BlackjackDealer(cardDeck) { _ -> }
-        val player1 = BlackjackPlayer(cardDeck, { _ -> 1000 }, PlayerName("name"), { _ -> }, { _ -> false })
+        val player1 = BlackjackPlayer(cardDeck, { _ -> Money(1000) }, PlayerName("name"), { _ -> }, { _ -> false })
         // when & then
         shouldNotThrowAny {
             BlackjackRevenueJudge(dealer, listOf(player1))
@@ -25,7 +25,7 @@ class BlackjackRevenueJudgeTest : StringSpec({
         // given
         val cardDeck = CardDeck()
         val dealer = BlackjackDealer(cardDeck) { _ -> }
-        val bettingMoney = 1000
+        val bettingMoney = Money(1000)
         val player1 = BlackjackPlayer(cardDeck, { _ -> bettingMoney }, PlayerName("name"), { _ -> }, { _ -> false })
         val player2 = BlackjackPlayer(cardDeck, { _ -> bettingMoney }, PlayerName("name"), { _ -> }, { _ -> false })
         val revenueJudge = BlackjackRevenueJudge(dealer, listOf(player1, player2))
