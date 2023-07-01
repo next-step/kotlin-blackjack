@@ -20,7 +20,9 @@ class PlayerTest {
         val player = Player("peter")
         val cards = setOf(Spade.get(Denomination.ACE), Spade.get(Denomination.JACK))
 
-        player.dealCards(cards)
+        cards.forEach {
+            player.dealCard(it)
+        }
 
         assertThat(player.cards()).isEqualTo(cards)
     }
