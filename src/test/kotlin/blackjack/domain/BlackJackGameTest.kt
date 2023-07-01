@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.fixture.PlayerFixture.PLAYER_SONG2
 import blackjack.fixture.PlayerFixture.PLAYER_SONG2_NAME
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

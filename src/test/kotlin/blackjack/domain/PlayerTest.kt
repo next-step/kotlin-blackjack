@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : FunSpec({
@@ -12,10 +11,10 @@ class PlayerTest : FunSpec({
         val name = "song2"
 
         // when
-        val player = Player(name)
+        val actual = Player(name, cards)
 
         // then
-        player.name shouldBe name
-        player.cards shouldBe cards
+        actual.name shouldBe name
+        actual.cards shouldBe cards
     }
 })
