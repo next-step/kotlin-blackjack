@@ -7,13 +7,34 @@ class CardTest : FunSpec({
 
     test("카드는 (1-9, K, Q, J, A) 중 하나의 rank 와 (하트, 스페이드, 클로바) 중 하나의 무늬를 가진다.") {
         // given
-        val card = Card(rank = Rank.Number(3), suit = Suit.HEART)
-        val expectedNumber = Rank.Number(3)
+        val expectedRank = Rank.THREE
         val expectedSuit = Suit.HEART
+        val card = Card(expectedRank, expectedSuit)
 
         // when, then
-        card.rank shouldBe expectedNumber
+        card.rank shouldBe expectedRank
         card.suit shouldBe expectedSuit
     }
 
+    test("카드의 점수 계산은 카드 숫자를 기본으로 한다.") {
+        // given
+        val card = Card(Rank.TWO)
+
+        // when
+        val score = card.getScore()
+
+        // then
+        score shouldBe 2
+    }
+
+    test("Ace 의 점수는 기본 1점이다.") {
+        // given
+        val card = Card(Rank.ACE)
+
+        // when
+        val score = card.getScore()
+
+        // then
+        score shouldBe 1
+    }
 })
