@@ -4,6 +4,11 @@ import java.util.concurrent.ConcurrentHashMap
 
 @JvmInline
 value class Diamond private constructor(override val denomination: Denomination) : Card {
+
+    override fun toString(): String {
+        return "${denomination}다이아몬드"
+    }
+
     companion object {
         private val cards = ConcurrentHashMap<Denomination, Diamond>()
 

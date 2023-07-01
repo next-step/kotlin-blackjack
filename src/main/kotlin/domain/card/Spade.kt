@@ -4,6 +4,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 @JvmInline
 value class Spade private constructor(override val denomination: Denomination) : Card {
+
+    override fun toString(): String {
+        return "${denomination}스페이드"
+    }
     companion object {
         private val cards = ConcurrentHashMap<Denomination, Spade>()
 
