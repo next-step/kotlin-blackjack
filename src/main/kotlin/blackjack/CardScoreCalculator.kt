@@ -28,11 +28,10 @@ object CardScoreCalculator {
     }
 
     private fun getBestTotalScoreSums(possibleScoreSums: List<Int>): Int {
-        val ascendingPossibleScoreSums = possibleScoreSums.sorted()
 
-        return ascendingPossibleScoreSums
+        return possibleScoreSums
             .filter { it <= BLACKJACK_NUMBER }
             .maxOrNull()
-            ?: return ascendingPossibleScoreSums.first()
+            ?: return possibleScoreSums.min()
     }
 }
