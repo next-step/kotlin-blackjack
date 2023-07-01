@@ -20,31 +20,34 @@ class CardTest : FunSpec({
     test("카드의 점수 계산은 카드 숫자를 기본으로 한다.") {
         // given
         val card = Card(Rank.TWO)
+        val expected = 2
 
         // when
         val score = card.getScore()
 
         // then
-        score shouldBe 2
+        score shouldBe expected
     }
 
     test("Ace 의 점수는 기본 1점이다.") {
         // given
         val card = Card(Rank.ACE)
+        val expected = 1
 
         // when
         val score = card.getScore()
 
         // then
-        score shouldBe 1
+        score shouldBe expected
     }
 
     test("King, Queen, Jack은 각각 10으로 계산한다.") {
         // given
+        val expected = 10
         listOf(Card(Rank.KING), Card(Rank.JACK), Card(Rank.QUEEN))
             .forAll {
                 // then, when
-                it.getScore() shouldBe 10
+                it.getScore() shouldBe expected
             }
     }
 })
