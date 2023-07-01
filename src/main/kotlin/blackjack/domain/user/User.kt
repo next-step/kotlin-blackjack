@@ -32,6 +32,19 @@ abstract class Player(
         return cards.isBust()
     }
 
+    fun match(player: Player): Result {
+        val compareResult = when {
+            player.isBust() -> 1
+            isBust() -> -1
+            else -> finalScore - player.finalScore
+        }
+        return when {
+            compareResult > 0 -> Result.WIN
+            compareResult < 0 -> Result.LOSE
+            else -> Result.DRAW
+        }
+    }
+
     abstract fun canDraw(): Boolean
 
     companion object {
@@ -44,19 +57,6 @@ class User(
     cards: Cards,
     private val userDrawInterface: UserDrawInterface,
 ) : Player(name, cards) {
-
-    fun match(dealer: Dealer): Result {
-        val compareResult = when {
-            dealer.isBust() -> 1
-            isBust() -> -1
-            else -> finalScore - dealer.finalScore
-        }
-        return when {
-            compareResult > 0 -> Result.WIN
-            compareResult < 0 -> Result.LOSE
-            else -> Result.DRAW
-        }
-    }
 
     override fun canDraw(): Boolean {
         return !isBust() && userDrawInterface.canDraw(this)
