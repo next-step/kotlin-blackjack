@@ -16,17 +16,17 @@ open class Player(
 
     fun hasTwoCards(): Boolean = cards.items.size == 2
 
-    fun batting(dealer: Dealer, money: Money) {
-        dealer.addBattingMoney(this, money)
+    fun batting(batting: Batting, money: Money) {
+        batting.addBattingMoney(this, money)
     }
 
     fun drawCard(trump: Trump) {
         cards.add(trump.getCard())
     }
 
-    fun win() = info.result.record.win()
+    fun recordWin() = info.result.record.win()
 
-    fun lose() = info.result.record.lose()
+    fun recordLose() = info.result.record.lose()
 
     fun addMoney(amount: Money) {
         info.result.addMoney(amount)
