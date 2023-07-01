@@ -1,17 +1,7 @@
 package blackjack.domain.game
 
+import blackjack.domain.card.CardFixture
 import blackjack.domain.card.cards
-import blackjack.domain.card.heartAce
-import blackjack.domain.card.heartJack
-import blackjack.domain.card.heartKing
-import blackjack.domain.card.heartQueen
-import blackjack.domain.card.heartSeven
-import blackjack.domain.card.heartTwo
-import blackjack.domain.card.spadeAce
-import blackjack.domain.card.spadeFour
-import blackjack.domain.card.spadeKing
-import blackjack.domain.card.spadeQueen
-import blackjack.domain.card.spadeTen
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
 import blackjack.domain.money.Money
@@ -24,13 +14,13 @@ class PlayerProfitResultTest : BehaviorSpec({
 
     Given("딜러가 bust 일 때") {
         val dealer = Dealer().apply {
-            init(cards(heartJack(), heartTwo())) // j(10) + 2 = 12
-            hit(heartQueen()) // 12 + q(10) = 22
+            init(cards(CardFixture.heartJack, CardFixture.heartTwo)) // j(10) + 2 = 12
+            hit(CardFixture.heartQueen) // 12 + q(10) = 22
         }
 
         When("플레이어가 BlackJack 이면") {
             val player = Player("test", betAmount).apply {
-                init(cards(spadeAce(), spadeKing())) // a(11) + k(10) = 21
+                init(cards(CardFixture.spadeAce, CardFixture.spadeKing)) // a(11) + k(10) = 21
                 stay()
             }
 
@@ -41,7 +31,7 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         When("플레이어가 BlackJack이 아니면") {
             val player = Player("test", betAmount).apply {
-                init(cards(spadeQueen(), spadeKing())) // q(10) + k(10) = 20
+                init(cards(CardFixture.spadeQueen, CardFixture.spadeKing)) // q(10) + k(10) = 20
                 stay()
             }
 
@@ -53,13 +43,13 @@ class PlayerProfitResultTest : BehaviorSpec({
 
     Given("플레이어가 BlackJack 일 떄") {
         val player = Player("test", betAmount).apply {
-            init(cards(spadeAce(), spadeKing())) // a(11) + k(10) = 21
+            init(cards(CardFixture.spadeAce, CardFixture.spadeKing)) // a(11) + k(10) = 21
             stay()
         }
 
         When("딜러가 BlackJack 이면") {
             val dealer = Dealer().apply {
-                init(cards(heartAce(), heartKing())) // a(11) + k(10) = 21
+                init(cards(CardFixture.heartAce, CardFixture.heartKing)) // a(11) + k(10) = 21
                 stay()
             }
 
@@ -70,7 +60,7 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         When("딜러가 BlackJack이 아니면") {
             val dealer = Dealer().apply {
-                init(cards(heartQueen(), heartQueen())) // q(10) + k(10) = 20
+                init(cards(CardFixture.heartQueen, CardFixture.heartKing)) // q(10) + k(10) = 20
                 stay()
             }
 
@@ -82,13 +72,13 @@ class PlayerProfitResultTest : BehaviorSpec({
 
     Given("플레이어가 stay 일 때") {
         val player = Player("test", betAmount).apply {
-            init(cards(spadeQueen(), spadeKing())) // q(10) + k(10) = 20
+            init(cards(CardFixture.spadeQueen, CardFixture.spadeKing)) // q(10) + k(10) = 20
             stay()
         }
 
         When("딜러가 BlackJack 이면") {
             val dealer = Dealer().apply {
-                init(cards(heartAce(), heartQueen())) // a(11) + q(10) = 21
+                init(cards(CardFixture.heartAce, CardFixture.heartQueen)) // a(11) + q(10) = 21
                 stay()
             }
 
@@ -99,7 +89,7 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         When("딜러보다 점수가 높으면") {
             val dealer = Dealer().apply {
-                init(cards(heartSeven(), heartQueen())) // 7 + q(10) = 17
+                init(cards(CardFixture.heartSeven, CardFixture.heartQueen)) // 7 + q(10) = 17
                 stay()
             }
 
@@ -110,7 +100,7 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         When("딜러와 점수가 같다면") {
             val dealer = Dealer().apply {
-                init(cards(heartKing(), heartQueen())) // k(10) + q(10) = 20
+                init(cards(CardFixture.heartKing, CardFixture.heartQueen)) // k(10) + q(10) = 20
                 stay()
             }
 
@@ -121,8 +111,8 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         When("딜러보다 점수가 낮다면") {
             val dealer = Dealer().apply {
-                init(cards(heartKing(), heartQueen())) // k(10) + q(10) = 20
-                hit(heartAce()) // 20 + a(1) = 21
+                init(cards(CardFixture.heartKing, CardFixture.heartQueen)) // k(10) + q(10) = 20
+                hit(CardFixture.heartAce) // 20 + a(1) = 21
                 stay()
             }
             Then("수익은 0이다") {
@@ -133,11 +123,11 @@ class PlayerProfitResultTest : BehaviorSpec({
 
     Given("플레이어가 bust 일 때") {
         val player = Player("test", betAmount).apply {
-            init(cards(heartJack(), heartQueen())) // j(10) + q(10) = 20
-            hit(heartKing()) // 20 + k(10) = 30
+            init(cards(CardFixture.heartJack, CardFixture.heartQueen)) // j(10) + q(10) = 20
+            hit(CardFixture.heartKing) // 20 + k(10) = 30
         }
         val dealer = Dealer().apply {
-            init(cards(spadeTen(), spadeFour())) // 10 + 4 = 14
+            init(cards(CardFixture.spadeTen, CardFixture.spadeFour)) // 10 + 4 = 14
             stay()
         }
 

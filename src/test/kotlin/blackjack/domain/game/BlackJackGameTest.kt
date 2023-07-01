@@ -1,14 +1,7 @@
 package blackjack.domain.game
 
+import blackjack.domain.card.CardFixture
 import blackjack.domain.card.cards
-import blackjack.domain.card.heartFive
-import blackjack.domain.card.heartFour
-import blackjack.domain.card.heartJack
-import blackjack.domain.card.heartKing
-import blackjack.domain.card.heartQueen
-import blackjack.domain.card.heartTen
-import blackjack.domain.card.heartThree
-import blackjack.domain.card.heartTwo
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.playerInitProperties
 import blackjack.domain.score.CardScoreCalculator
@@ -121,10 +114,10 @@ class BlackJackGameTest : BehaviorSpec({
         val game = blackJackGame(
             playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
-                heartTwo(),
-                heartThree(),
-                heartFour(),
-                heartFive(),
+                CardFixture.heartTwo,
+                CardFixture.heartThree,
+                CardFixture.heartFour,
+                CardFixture.heartFive,
             ),
         )
         game.distributeCardsToPlayers() // 딜러 : [2, 3] 플레이어 [4, 5]
@@ -141,10 +134,10 @@ class BlackJackGameTest : BehaviorSpec({
         val game = blackJackGame(
             playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
-                heartTen(),
-                heartJack(),
-                heartQueen(),
-                heartKing(),
+                CardFixture.heartTen,
+                CardFixture.heartJack,
+                CardFixture.heartQueen,
+                CardFixture.heartKing,
             ),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
@@ -161,10 +154,10 @@ class BlackJackGameTest : BehaviorSpec({
         val game = blackJackGame(
             playerInitProperties = playerInitProperties("test1"),
             shuffler = ForceMoveForwardCardShuffler(
-                heartTen(),
-                heartJack(),
-                heartQueen(),
-                heartKing(),
+                CardFixture.heartTen,
+                CardFixture.heartJack,
+                CardFixture.heartQueen,
+                CardFixture.heartKing,
             ),
         )
         game.distributeCardsToPlayers() // 딜러 : [10, 10] 플레이어 [10, 10]
@@ -174,12 +167,12 @@ class BlackJackGameTest : BehaviorSpec({
             val result = game.makeGameResult()
 
             Then("딜러의 카드 목록을 반환한다") {
-                val expected = cards(heartTen(), heartJack())
+                val expected = cards(CardFixture.heartTen, CardFixture.heartJack)
                 result.gamerCards.dealerCards shouldBe expected
             }
 
             Then("플레이어의 카드 목록을 반환한다") {
-                val expected = cards(heartQueen(), heartKing())
+                val expected = cards(CardFixture.heartQueen, CardFixture.heartKing)
                 result.gamerCards.allPlayerCards.first().cards shouldBe expected
             }
         }
