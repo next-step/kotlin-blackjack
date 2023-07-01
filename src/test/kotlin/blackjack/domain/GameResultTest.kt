@@ -26,11 +26,12 @@ class GameResultTest : FunSpec({
         val player = Player(PLAYER_SONG2_NAME, cards)
         val players = listOf(player)
         val gameResult = GameResult(players)
+        val expected = 12
 
         // when
         val actual = gameResult.scoreMap
 
         // then
-        actual[player] shouldBe 12
+        actual[player] shouldBe expected
     }
 })

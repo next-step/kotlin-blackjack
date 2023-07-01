@@ -2,12 +2,14 @@ package blackjack.domain
 
 class BlackJackGame(
     private val dealer: Dealer = Dealer(),
-    private val players: List<Player>
+    players: Players
 ) {
-    fun handOutDefaultCardToPlayers(): List<Player> {
-        return players.map { player ->
-            player.receiveCards(dealer.dealInitialCard())
-        }
+    var players: Players = players
+        private set
+
+    fun handOutDefaultCardToPlayers(): Players {
+        players = players.receiveCards(dealer)
+        return players
     }
 
     fun handOutAdditionalCard(player: Player): Player {
