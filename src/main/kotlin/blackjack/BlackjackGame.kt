@@ -18,7 +18,8 @@ class BlackjackGame(
         resultView.printInitialDistribute(dealer, players)
         resultView.printPlayerList(players)
         players.takeTurns()
-
+        checkDealerStatus()
+        resultView.printFinalDealerStatus(dealer)
         resultView.printFinalPlayerStatus(players)
     }
 
@@ -45,7 +46,15 @@ class BlackjackGame(
         }
     }
 
+    private fun checkDealerStatus() {
+        if (dealer.totalValue < DEALER_HIT_SCORE) {
+            dealer.drawCardFromDeck()
+            resultView.printDealerStatus()
+        }
+    }
+
     companion object {
-        private const val BUST_SCORE = 22
+        private const val DEALER_HIT_SCORE = 16
+        const val BUST_SCORE = 22
     }
 }
