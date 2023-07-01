@@ -17,10 +17,10 @@ class BlackjackGame(
     }
 
     private fun getInitCards(): Cards {
-        val cardList = mutableListOf<Card>()
-        repeat(INITIAL_CARDS_SIZE) {
-            cardList.add(cardSelector.drawCard())
+        val cardList = List(INITIAL_CARDS_SIZE) {
+            cardSelector.drawCard()
         }
+
         return Cards(cardList)
     }
 
