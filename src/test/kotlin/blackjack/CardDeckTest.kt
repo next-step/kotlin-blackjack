@@ -1,6 +1,6 @@
 package blackjack
 
-import domain.card.CardDeck
+import domain.card.CardDeckImpl
 import domain.card.Clover
 import domain.card.Denomination
 import domain.card.Diamond
@@ -18,7 +18,7 @@ class CardDeckTest {
         val diamonds = Diamond.createDeck().toMutableList()
         val clovers = Clover.createDeck().toMutableList()
 
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeckImpl()
 
         for (i in 0 until Denomination.values().size * 4) {
             when (val poppedCard = cardDeck.pop()) {

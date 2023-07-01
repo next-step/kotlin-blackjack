@@ -12,4 +12,5 @@ fun main() {
     )
     game.start()
     ResultView.printInitialState(game.players)
+    game.playersCanReceiveMoreCard()
 }
