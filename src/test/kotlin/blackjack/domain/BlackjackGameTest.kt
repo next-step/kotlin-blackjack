@@ -42,8 +42,8 @@ class BlackjackGameTest : FunSpec({
 
             blackjackGame.cardDeck.size() shouldBe 46
             blackjackGame.turn shouldBe TURN_0
-            actual.second shouldHaveSize 2
-            actual.first.cards shouldHaveSize 1
+            actual.playerHands shouldHaveSize 2
+            actual.dealerHands.cards shouldHaveSize 1
         }
     }
 
