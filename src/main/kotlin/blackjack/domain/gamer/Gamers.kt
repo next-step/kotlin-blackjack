@@ -34,6 +34,7 @@ class Gamers(
     fun tryHitToDealer(pickCard: () -> Card): DealerTurnExecuteResult {
         val isDistributedOneMoreCard = if (dealer.canHit()) {
             dealer.hit(pickCard())
+            dealer.stay()
             true
         } else {
             dealer.stay()
