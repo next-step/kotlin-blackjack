@@ -28,8 +28,8 @@ class Dealer(
         )
     }
 
-    override fun add(card: Card) {
-        super.add(card)
+    override fun hit(card: Card) {
+        super.hit(card)
         action = ParticipantAction.HIT
     }
 

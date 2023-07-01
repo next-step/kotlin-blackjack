@@ -21,7 +21,7 @@ sealed class Participant(
 
     protected abstract fun lose()
 
-    open fun add(card: Card) {
+    open fun hit(card: Card) {
         this.cards = cards.add(card)
         bustIfOver21()
     }

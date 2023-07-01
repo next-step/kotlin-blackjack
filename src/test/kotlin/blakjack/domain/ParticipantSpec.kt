@@ -15,9 +15,9 @@ import io.kotest.matchers.shouldBe
 
 class ParticipantSpec : DescribeSpec({
     describe("참가자 카드 추가 검증") {
-        context("참가자에 카드 1장을 추가하면") {
+        context("참가자가 hit 하면") {
             val player = Player("홍길동")
-            player.add(heart10)
+            player.hit(heart10)
 
             it("카드 목록에 카드 1장이 추가된다.") {
                 player.cards.size shouldBe 1

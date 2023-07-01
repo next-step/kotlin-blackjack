@@ -14,7 +14,7 @@ class Game(
     }
 
     fun hit(player: Player) {
-        player.add(dealer.drawOneCard())
+        player.hit(dealer.drawOneCard())
     }
 
     fun hitOrStandDealer() {
@@ -23,7 +23,7 @@ class Game(
             return
         }
 
-        dealer.add(dealer.drawOneCard())
+        dealer.hit(dealer.drawOneCard())
     }
 
     fun result() {

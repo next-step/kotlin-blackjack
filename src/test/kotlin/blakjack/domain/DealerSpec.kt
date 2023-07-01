@@ -24,15 +24,15 @@ class DealerSpec : DescribeSpec({
     }
 
     describe("액션(HIT, STAND, NONE) 검증") {
-        context("딜러가 hit 액션을 취하면") {
-            val dealer = Dealer().also { it.add(heart10) }
+        context("딜러가 hit 하면") {
+            val dealer = Dealer().also { it.hit(heart10) }
 
             it("딜러의 액션은 HIT 상태다.") {
                 dealer.isHit() shouldBe true
             }
         }
 
-        context("딜러가 stand 액션을 취하면") {
+        context("딜러가 stand 하면") {
             val dealer = Dealer().also { it.stand() }
 
             it("딜러의 액션은 STAND 상태다.") {
