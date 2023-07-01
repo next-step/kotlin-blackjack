@@ -6,14 +6,28 @@ import domain.card.CardDeckImpl
 class Game(val players: List<Player>, private val cardDeck: CardDeck = CardDeckImpl()) {
 
     fun start() {
-        players.forEach { player ->
-            player.dealInitialCards()
-        }
+        players.dealInitialCards()
     }
 
     fun playersCanReceiveMoreCard(): List<Player> {
         return players.filter {
             it.canReceiveMoreCard()
+        }
+    }
+
+    fun dealAdditionalCard(players: List<Player>) {
+        players.dealCard()
+    }
+
+    private fun List<Player>.dealInitialCards() {
+        forEach {
+            it.dealInitialCards()
+        }
+    }
+
+    private fun List<Player>.dealCard() {
+        forEach {
+            it.dealCard()
         }
     }
 

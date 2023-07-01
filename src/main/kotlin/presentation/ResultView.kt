@@ -8,6 +8,10 @@ object ResultView {
         players.print()
     }
 
+    fun printPlayerState(players: List<Player>) {
+        players.print()
+    }
+
     private fun List<Player>.names(): List<String> {
         return map { it.name }
     }
@@ -16,6 +20,7 @@ object ResultView {
         forEach {
             it.print()
         }
+        println()
     }
 
     private fun Player.print() {

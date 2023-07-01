@@ -4,7 +4,10 @@ import domain.Game
 import domain.Player
 import domain.card.Card
 import domain.card.CardDeck
+import domain.card.Clover
 import domain.card.Denomination
+import domain.card.Diamond
+import domain.card.Heart
 import domain.card.Spade
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -35,13 +38,24 @@ class GameTest {
     fun `카드 더 받을 수 있는 플레이어 목록 구하기 테스트`() {
         val players = listOf(
             Player("peter"),
-            Player("승현"),
         )
 
         val game = Game(
             players,
             object : CardDeck {
-                override fun pop(): Card = Spade.get(Denomination.KING)
+
+                var popCount = 0
+
+                val kings: List<Card> = listOf(
+                    Spade.get(Denomination.KING),
+                    Diamond.get(Denomination.KING),
+                    Heart.get(Denomination.KING),
+                    Clover.get(Denomination.KING),
+                )
+
+                override fun pop(): Card {
+                    return kings[popCount++]
+                }
             }
         )
 
@@ -50,6 +64,28 @@ class GameTest {
         assertThat(
             game.playersCanReceiveMoreCard()
         ).isEqualTo(players)
+
+        game.dealAdditionalCard(players)
+
+        assertThat(
+            game.playersCanReceiveMoreCard()
+        ).isEqualTo(emptyList<Player>())
+    }
+
+    @Test
+    fun `카드 추가 지급 테스트`() {
+        val players = listOf(
+            Player("peter"),
+            Player("승현"),
+        )
+
+        val game = Game(players)
+
+        game.dealAdditionalCard(players)
+
+        game.players.forEach {
+            assertThat(it.cards()).size().isEqualTo(1)
+        }
     }
 
     companion object {

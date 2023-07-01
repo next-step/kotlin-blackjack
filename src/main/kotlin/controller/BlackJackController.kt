@@ -15,6 +15,8 @@ fun main() {
 
     val playerReceiveMoreCard = game.playersCanReceiveMoreCard()
         .playerReceiveMoreCard()
+    game.dealAdditionalCard(playerReceiveMoreCard)
+    ResultView.printPlayerState(game.players)
 }
 
 fun List<Player>.playerReceiveMoreCard(): List<Player> {
