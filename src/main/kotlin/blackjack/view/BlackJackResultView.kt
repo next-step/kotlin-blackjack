@@ -49,13 +49,13 @@ class BlackJackResultView {
     }
 
     private fun CardDistributionResult.makeTitleMessage(): String {
-        val names = playerNames.joinToString(", ")
+        val names = playerNames.joinToString()
         return "딜러와 ${names}에게 ${distributionCardSize}장씩 나누었습니다."
     }
 
     private fun CardDistributionResult.makeDealerCardsMessage(): String {
         val openCards = dealerCards.filterIsInstance<DealerCard.Open>()
-        val cardsMessage = openCards.joinToString(", ") { openCard -> openCard.card.makeDisplayMessage() }
+        val cardsMessage = openCards.joinToString { openCard -> openCard.card.makeDisplayMessage() }
         return "딜러: $cardsMessage"
     }
 
@@ -106,7 +106,7 @@ class BlackJackResultView {
     }
 
     private fun Cards.makeDisplayMessage(): String {
-        return value.joinToString(", ") { card -> card.makeDisplayMessage() }
+        return value.joinToString { card -> card.makeDisplayMessage() }
     }
 
     private fun Card.makeDisplayMessage(): String {
