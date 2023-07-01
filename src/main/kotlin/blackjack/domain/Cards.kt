@@ -19,6 +19,10 @@ class Cards(
         return cards.first()
     }
 
+    fun first(): Card {
+        return this.cards.first()
+    }
+
     fun calculateScore(): Score {
 
         var total = cards.sumOf { it.rank.value }

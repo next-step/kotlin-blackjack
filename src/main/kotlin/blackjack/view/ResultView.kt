@@ -15,7 +15,7 @@ object ResultView {
     }
 
     fun printPlayersAndCards(players: List<Player>, dealer: Dealer) {
-        println("${dealer.name}: ${getCardsInfo(dealer.cards)}")
+        println("${dealer.name}: ${dealer.cards.first().cardInfo()}")
         players.forEach { player ->
             val cardsInfo = getCardsInfo(player.cards)
             println("${player.name}카드: $cardsInfo")
@@ -30,18 +30,18 @@ object ResultView {
     fun printResultScore(players: List<Player>, dealer: Dealer) {
 
         val dealerScore = dealer.cards.calculateScore()
-        println("${dealer.name} 카드: ${getCardsInfo(dealer.cards)} - 결과: $dealerScore")
+        println("${dealer.name} 카드: ${getCardsInfo(dealer.cards)} - 결과: ${dealerScore.value}")
 
         players.forEach { player ->
             val cardsInfo = getCardsInfo(player.cards)
             val totalScore = player.cards.calculateScore()
-            println("${player.name}카드: $cardsInfo - 결과: $totalScore")
+            println("${player.name}카드: $cardsInfo - 결과: ${totalScore.value}")
         }
     }
 
     fun printDealerCard(dealer: Dealer) {
-        if(dealer.cards.calculateScore().value > Score.STANDARD_CARD_SCORE) {
-            println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE+1}이상이라 카드를 더 받지 않습니다.")
+        if (dealer.cards.calculateScore().value > Score.STANDARD_CARD_SCORE) {
+            println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE + 1}이상이라 카드를 더 받지 않습니다.")
         } else if (dealer.cards.calculateScore().value < Score.STANDARD_CARD_SCORE) {
             println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
         }
