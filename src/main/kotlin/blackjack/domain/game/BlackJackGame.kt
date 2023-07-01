@@ -12,7 +12,7 @@ class BlackJackGame(
     private val gamers: Gamers,
 ) {
 
-    private val cardDeck = CardDeck.create(shuffler)
+    private val cardDeck = CardDeck.createAllCards(shuffler)
 
     fun currentTurn(): BlackJackGameTurn {
         return when {
