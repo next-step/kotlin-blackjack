@@ -50,7 +50,7 @@ object ResultView {
     fun printResultGame(result: List<BlackjackGameResult>) {
         println("## 최종 승패")
         result.forEach {
-            println("${it.name}: ${it.result}")
+            println("${it.name}: ${it.win} ${it.draw} ${it.lose}")
         }
     }
 

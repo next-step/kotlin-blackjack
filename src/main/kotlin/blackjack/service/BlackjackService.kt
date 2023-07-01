@@ -46,7 +46,7 @@ class BlackjackService {
                 MatchResult.DRAW -> dealerDrawCount++
             }
         }
-        result.add(0, BlackjackGameResult(name = dealer.name, result = "${dealerWinCount}${MatchResult.WIN.match} ${dealerDrawCount}${MatchResult.DRAW.match} ${dealerLoseCount}${MatchResult.LOSE.match}"))
+        result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
         return result
     }
 
@@ -55,7 +55,11 @@ class BlackjackService {
         playerName: String,
         resultMatch: MatchResult
     ) {
-        result.add(BlackjackGameResult(playerName, resultMatch.match))
+        when (resultMatch) {
+            MatchResult.WIN -> result.add(BlackjackGameResult(name = playerName, win = resultMatch.match))
+            MatchResult.LOSE -> result.add(BlackjackGameResult(name = playerName, lose = resultMatch.match))
+            MatchResult.DRAW -> result.add(BlackjackGameResult(name = playerName, draw = resultMatch.match))
+        }
     }
 
     fun raceDealer(dealer: Dealer) {

@@ -18,7 +18,7 @@ class Deck {
             }
         }
 
-        deck.shuffled()
+        deck.shuffle()
     }
 
     fun drawCard(count: Int): Cards {
