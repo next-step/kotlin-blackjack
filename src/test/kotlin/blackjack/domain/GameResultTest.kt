@@ -10,8 +10,7 @@ class GameResultTest : FunSpec({
         // given
         val cards = Cards(Card(Rank.QUEEN), Card(Rank.ACE), Card(Rank.KING))
         val player = Player(PLAYER_SONG2_NAME, cards)
-        val players = listOf(player)
-        val gameResult = GameResult(players)
+        val gameResult = GameResult(Players(player))
 
         // when
         val actual = gameResult.scoreMap
@@ -24,8 +23,7 @@ class GameResultTest : FunSpec({
         // given
         val cards = Cards(Card(Rank.ACE), Card(Rank.ACE))
         val player = Player(PLAYER_SONG2_NAME, cards)
-        val players = listOf(player)
-        val gameResult = GameResult(players)
+        val gameResult = GameResult(Players(player))
         val expected = 12
 
         // when

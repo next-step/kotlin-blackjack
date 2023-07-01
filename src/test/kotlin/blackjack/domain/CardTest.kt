@@ -23,10 +23,10 @@ class CardTest : FunSpec({
         val expected = 2
 
         // when
-        val score = card.getScore()
+        val actual = card.getScore()
 
         // then
-        score shouldBe expected
+        actual shouldBe expected
     }
 
     test("Ace 의 점수는 기본 1점이다.") {
@@ -35,10 +35,10 @@ class CardTest : FunSpec({
         val expected = 1
 
         // when
-        val score = card.getScore()
+        val actual = card.getScore()
 
         // then
-        score shouldBe expected
+        actual shouldBe expected
     }
 
     test("King, Queen, Jack은 각각 10으로 계산한다.") {

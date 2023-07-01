@@ -11,7 +11,7 @@ class BlackJackGameTest : FunSpec({
         // given
         val cards = Cards(Card(Rank.ACE))
         val player = Player(PLAYER_SONG2_NAME, cards)
-        val game = BlackJackGame(players = listOf(player))
+        val game = BlackJackGame(players = Players(player))
         val expected = 11
 
         // when
