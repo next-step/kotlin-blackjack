@@ -5,12 +5,15 @@ import io.kotest.matchers.shouldBe
 
 class CardTest : FunSpec({
 
-    test("카드의 숫자 계산은 카드 숫자를 기본으로 한다.") {
+    test("카드는 (1-9, K, Q, J, A) 중 하나의 rank 와 (하트, 스페이드, 클로바) 중 하나의 무늬를 가진다.") {
         // given
+        val card = Card(rank = Rank.Number(3), suit = Suit.HEART)
+        val expectedNumber = Rank.Number(3)
+        val expectedSuit = Suit.HEART
 
-        // when
-
-        // then
+        // when, then
+        card.rank shouldBe expectedNumber
+        card.suit shouldBe expectedSuit
     }
 
 })
