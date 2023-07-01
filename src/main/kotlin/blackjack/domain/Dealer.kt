@@ -2,9 +2,9 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-class Player(val name: String) {
+class Dealer {
     private val cards = mutableListOf<Card>()
-    private val cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
+    private val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
 
     fun addCard(card: Card) {
         cards.add(card)
@@ -20,15 +20,5 @@ class Player(val name: String) {
 
     fun calculateSumOfCardNumbers(): Int {
         return cardNumberCalculator.calculateSumOfCardNumbers(cards)
-    }
-
-    companion object {
-        fun generatePlayers(nameList: List<String>): List<Player> {
-            val playerList = mutableListOf<Player>()
-            nameList.forEach {
-                playerList.add(Player(it))
-            }
-            return playerList.toList()
-        }
     }
 }

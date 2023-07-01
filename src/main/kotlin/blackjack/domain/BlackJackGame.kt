@@ -8,7 +8,9 @@ class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
     private val deck = Deck(deckShuffleStrategy)
     private val ruleChecker = RuleChecker()
 
-    fun firstDraw(playerList: List<Player>) {
+    fun firstDraw(playerList: List<Player>, dealer: Dealer) {
+        dealer.addCards(deck.drawTwoCard())
+
         playerList.forEach {
             it.addCards(deck.drawTwoCard())
         }

@@ -17,24 +17,31 @@ class BlackJackGameTest {
     }
 
     @Test
-    fun `게임이 시작되면 플레이어에게 카드를 2장씩 나눠준다`() {
+    fun `게임이 시작되면 플레이어와 딜러에게 카드를 2장씩 나눠준다`() {
         val pobi = Player("pobi")
         val jason = Player("jason")
+        val dealer = Dealer()
 
         val playerList = listOf(pobi, jason)
         val pobiCards = listOf(
-            Card(shape = CardShape.DIAMOND, number = CardNumber.J),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.Q)
-        )
-        val jasonCards = listOf(
             Card(shape = CardShape.DIAMOND, number = CardNumber.K),
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
         )
+        val jasonCards = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.NINE),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.EIGHT)
+        )
 
-        blackJackGame.firstDraw(playerList)
+        val dealerCards = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.J),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.Q)
+        )
+
+        blackJackGame.firstDraw(playerList, dealer)
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
         Assertions.assertThat(jason.getCards()).isEqualTo(jasonCards)
+        Assertions.assertThat(dealer.getCards()).isEqualTo(dealerCards)
     }
 
     @Test

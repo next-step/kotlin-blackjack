@@ -1,17 +1,19 @@
 package blackjack.ui
 
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.card.Card
 
 class ResultView {
-    fun printFirstDraw(playerList: List<Player>) {
+    fun printFirstDraw(playerList: List<Player>, dealer: Dealer) {
         println()
         printFirstDrawTitle(playerList)
-        printFirstDrawDetail(playerList)
+        printFirstDrawDetail(playerList, dealer)
         println()
     }
 
     private fun printFirstDrawTitle(playerList: List<Player>) {
+        print("딜러와 ")
         playerList.forEachIndexed { index, player ->
             print(player.name)
             if (index != playerList.lastIndex) print(", ")
@@ -19,10 +21,12 @@ class ResultView {
         println("에게 2장의 나누었습니다.")
     }
 
-    private fun printFirstDrawDetail(playerList: List<Player>) {
+    private fun printFirstDrawDetail(playerList: List<Player>, dealer: Dealer) {
+        println(getCardsText(dealer.getCards()))
+
         playerList.forEach {
             printPlayerName(it)
-            println(getPlayerCardsText(it.getCards()))
+            println(getCardsText(it.getCards()))
         }
     }
 
@@ -30,7 +34,7 @@ class ResultView {
         print("${player.name}카드: ")
     }
 
-    private fun getPlayerCardsText(cards: List<Card>): String {
+    private fun getCardsText(cards: List<Card>): String {
         var cardText = ""
         cards.forEachIndexed { index, card ->
             cardText += card.number.toString() + card.shape.value
@@ -45,7 +49,7 @@ class ResultView {
 
     fun printPlayerCardList(player: Player) {
         printPlayerName(player)
-        print(getPlayerCardsText(player.getCards()))
+        print(getCardsText(player.getCards()))
     }
 
     fun printGameResult(playerList: List<Player>) {
@@ -58,5 +62,9 @@ class ResultView {
     private fun printSumOfPlayerCardNumbers(player: Player) {
         val sumOfCardNumbers = player.calculateSumOfCardNumbers()
         println(" - 결과: $sumOfCardNumbers")
+    }
+
+    fun printNextLine() {
+        println()
     }
 }

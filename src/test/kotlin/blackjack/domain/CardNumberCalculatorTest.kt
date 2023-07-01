@@ -16,7 +16,7 @@ class CardNumberCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        cardNumberCalculator = CardNumberCalculator()
+        cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
     }
 
     @Test
@@ -55,7 +55,6 @@ class CardNumberCalculatorTest {
     @ParameterizedTest
     @EnumSource(CardNumber::class)
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
-        val cardNumberCalculator = CardNumberCalculator()
         val startSum = 11
 
         val actual = cardNumberCalculator.calculateCardNumber(cardNumber, startSum)
@@ -74,9 +73,9 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
+    fun `카드의 소유자가 플레이어 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
         val ace = CardNumber.A
-        val startSum = 0
+        val startSum = 10
 
         val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
 
@@ -84,9 +83,31 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
+    fun `카드의 소유자가 플레이어 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
         val ace = CardNumber.A
         val startSum = 11
+
+        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
+
+        assertThat(actual).isEqualTo(1)
+    }
+
+    @Test
+    fun `카드의 소유자가 딜러 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 16이하인 경우는 11로 계산한다`() {
+        val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
+        val ace = CardNumber.A
+        val startSum = 5
+
+        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
+
+        assertThat(actual).isEqualTo(11)
+    }
+
+    @Test
+    fun `카드의 소유자가 딜러 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 16초과하는 경우는 1로 계산한다`() {
+        val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
+        val ace = CardNumber.A
+        val startSum = 6
 
         val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
 

@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.deck.RandomDeckShuffleStrategy
 import blackjack.ui.InputView
@@ -15,30 +16,25 @@ class BlackJackController(
         val playerNameList = inputView.getPlayerNames()
         val playerList = Player.generatePlayers(playerNameList)
         val blackJackGame = BlackJackGame(RandomDeckShuffleStrategy())
+        val dealer = Dealer()
 
-        firstDraw(blackJackGame, playerList)
+        firstDraw(blackJackGame, playerList, dealer)
 
         askPlayersWantToDrawCard(blackJackGame, playerList)
 
         printGameResult(playerList)
     }
 
-    private fun firstDraw(blackJackGame: BlackJackGame, playerList: List<Player>) {
-        blackJackGame.firstDraw(playerList)
-        resultView.printFirstDraw(playerList)
+    private fun firstDraw(blackJackGame: BlackJackGame, playerList: List<Player>, dealer: Dealer) {
+        blackJackGame.firstDraw(playerList, dealer)
+        resultView.printFirstDraw(playerList, dealer)
     }
 
     private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
         playerList.forEach {
-            checkPlayerIsLoseWhileAskingPlayerWantToDraw(blackJackGame, it)
+            askPlayerWantToDrawCard(blackJackGame, it)
         }
-        println()
-    }
-
-    private fun checkPlayerIsLoseWhileAskingPlayerWantToDraw(blackJackGame: BlackJackGame, it: Player) {
-        if (askPlayerWantToDrawCard(blackJackGame, it) != null) {
-            println()
-        }
+        resultView.printNextLine()
     }
 
     private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player): Player? {
@@ -49,7 +45,6 @@ class BlackJackController(
             }
         }
         resultView.printPlayerCardList(player)
-        println()
         return player
     }
 
@@ -61,7 +56,7 @@ class BlackJackController(
     private fun drawPlayer(blackJackGame: BlackJackGame, player: Player) {
         blackJackGame.onePlayerDraw(player)
         resultView.printPlayerCardList(player)
-        println()
+        resultView.printNextLine()
     }
 
     private fun printGameResult(playerList: List<Player>) {
