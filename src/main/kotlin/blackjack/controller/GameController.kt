@@ -1,7 +1,8 @@
 package blackjack.controller
 
-import blackjack.domain.Rule
+import blackjack.domain.model.Batting
 import blackjack.domain.model.Dealer
+import blackjack.domain.model.Money
 import blackjack.domain.model.Player
 import blackjack.domain.model.PlayerInfo
 import blackjack.domain.model.Trump
@@ -14,6 +15,10 @@ class GameController {
     fun execute(trump: Trump) {
         val dealer = Dealer(trump)
         val players = inputName(trump)
+        val batting = Batting()
+
+        inputBattings(players, batting)
+
         val users = mutableListOf<Player>(dealer).apply {
             addAll(players)
         }
@@ -23,7 +28,7 @@ class GameController {
         }
         dealerTurn(dealer, trump)
         printPlayerCards(users)
-        endGame(dealer, players)
+        endGame(batting, dealer, players)
     }
 
     private fun inputName(trump: Trump): List<Player> {
@@ -32,6 +37,13 @@ class GameController {
             addAll(names.map { Player(trump, PlayerInfo(it)) })
         }
         return players
+    }
+
+    private fun inputBattings(players: List<Player>, batting: Batting) {
+        players.forEach { player ->
+            val input = InputView.inputBatting(player.info.name)
+            player.batting(batting, Money(input))
+        }
     }
 
     private fun divideCards(players: List<Player>) {
@@ -57,9 +69,9 @@ class GameController {
         OutputView.printPlayersCards(players, isResult = true)
     }
 
-    private fun endGame(dealer: Dealer, players: List<Player>) {
+    private fun endGame(batting: Batting, dealer: Dealer, players: List<Player>) {
         players.forEach {
-            Rule.decisionWinner(dealer, it)
+            batting.settleMoney(it, dealer)
         }
         OutputView.printResult(mutableListOf<Player>(dealer).apply { addAll(players) })
     }

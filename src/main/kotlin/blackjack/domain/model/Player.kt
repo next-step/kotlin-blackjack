@@ -12,11 +12,27 @@ open class Player(
         return cards.sum < Rule.BLACK_JACK
     }
 
-    open fun drawCard(trump: Trump) {
+    fun isBlackJack(): Boolean = cards.sum == Rule.BLACK_JACK
+
+    fun hasTwoCards(): Boolean = cards.items.size == 2
+
+    fun batting(batting: Batting, money: Money) {
+        batting.addBattingMoney(this, money)
+    }
+
+    fun drawCard(trump: Trump) {
         cards.add(trump.getCard())
     }
 
-    fun win() = info.record.win()
+    fun recordWin() = info.result.record.win()
 
-    fun lose() = info.record.lose()
+    fun recordLose() = info.result.record.lose()
+
+    fun addMoney(amount: Money) {
+        info.result.addMoney(amount)
+    }
+
+    fun minusMoney(amount: Money) {
+        info.result.minusMoney(amount)
+    }
 }

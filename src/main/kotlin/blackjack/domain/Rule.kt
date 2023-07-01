@@ -11,28 +11,28 @@ object Rule {
         val dealerSum = dealer.cards.sum
         val playerSum = player.cards.sum
 
-        if (isOverBlackJack(dealerSum)) return playerWin(dealer, player)
+        if (isOverBlackJack(dealerSum)) return recordPlayerWin(dealer, player)
 
-        if (isOverBlackJack(playerSum)) return dealerWin(dealer, player)
+        if (isOverBlackJack(playerSum)) return recordDealerWin(dealer, player)
 
         return when {
-            dealerSum > playerSum -> dealerWin(dealer, player)
-            dealerSum < playerSum -> playerWin(dealer, player)
+            dealerSum > playerSum -> recordDealerWin(dealer, player)
+            dealerSum < playerSum -> recordPlayerWin(dealer, player)
             else -> null
         }
     }
 
     private fun isOverBlackJack(score: Int): Boolean = score > BLACK_JACK
 
-    private fun playerWin(dealer: Dealer, player: Player): Player {
-        dealer.lose()
-        player.win()
+    private fun recordPlayerWin(dealer: Dealer, player: Player): Player {
+        dealer.recordLose()
+        player.recordWin()
         return player
     }
 
-    private fun dealerWin(dealer: Dealer, player: Player): Dealer {
-        dealer.win()
-        player.lose()
+    private fun recordDealerWin(dealer: Dealer, player: Player): Dealer {
+        dealer.recordWin()
+        player.recordLose()
         return dealer
     }
 }

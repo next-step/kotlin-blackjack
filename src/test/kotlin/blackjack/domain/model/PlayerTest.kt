@@ -55,11 +55,11 @@ class PlayerTest {
 
         winner shouldBe dealer
 
-        player.info.record.win shouldBe 0
-        player.info.record.lose shouldBe 1
+        player.info.result.record.win shouldBe 0
+        player.info.result.record.lose shouldBe 1
 
-        dealer.info.record.win shouldBe 1
-        dealer.info.record.lose shouldBe 0
+        dealer.info.result.record.win shouldBe 1
+        dealer.info.result.record.lose shouldBe 0
     }
 
     @Test
@@ -77,10 +77,101 @@ class PlayerTest {
 
         winner shouldBe null
 
-        player.info.record.win shouldBe 0
-        player.info.record.lose shouldBe 0
+        player.info.result.record.win shouldBe 0
+        player.info.result.record.lose shouldBe 0
 
-        dealer.info.record.win shouldBe 0
-        dealer.info.record.lose shouldBe 0
+        dealer.info.result.record.win shouldBe 0
+        dealer.info.result.record.lose shouldBe 0
+    }
+
+    @Test
+    fun `플레이어는 돈을 얻을 수 있다`() {
+        val trump = Trump()
+        val player = Player(trump)
+
+        player.addMoney(Money(10000))
+        player.info.result.profit shouldBe Money(10000)
+    }
+
+    @Test
+    fun `플레이어는 돈을 잃을 수 있다`() {
+        val trump = Trump()
+        val player = Player(trump)
+
+        player.minusMoney(Money(10000))
+        player.info.result.profit shouldBe Money(-10000)
+    }
+
+    @Test
+    fun `플레이어 카드가 2장인 경우를 알 수 있다`() {
+        val trump = Trump()
+        val cards = Cards(
+            listOf(
+                Card.from(CardType.SPADE, CardValue.NINE),
+                Card.from(CardType.HEART, CardValue.FOUR)
+            ), trump
+        )
+        val player = Player(trump, cards = cards)
+
+        player.hasTwoCards() shouldBe true
+    }
+
+    @Test
+    fun `플레이어 카드가 2장인 경우를 알 수 있다 - 2장 이상인 경우`() {
+        val trump = Trump()
+        val cards = Cards(
+            listOf(
+                Card.from(CardType.SPADE, CardValue.NINE),
+                Card.from(CardType.HEART, CardValue.FOUR),
+                Card.from(CardType.DIAMOND, CardValue.FOUR)
+            ), trump
+        )
+        val player = Player(trump, cards = cards)
+
+        player.hasTwoCards() shouldBe false
+    }
+
+    @Test
+    fun `플레이어 카드가 블랙잭인 경우를 알 수 있다`() {
+        val trump = Trump()
+        val cards = Cards(
+            listOf(
+                Card.from(CardType.SPADE, CardValue.ACE),
+                Card.from(CardType.HEART, CardValue.KING),
+            ), trump
+        )
+        val player = Player(trump, cards = cards)
+
+        player.isBlackJack() shouldBe true
+    }
+
+    @Test
+    fun `플레이어 카드가 블랙잭인 경우를 알 수 있다 - 21점이 미만`() {
+        val trump = Trump()
+        val cards = Cards(
+            listOf(
+                Card.from(CardType.SPADE, CardValue.ACE),
+                Card.from(CardType.HEART, CardValue.KING),
+                Card.from(CardType.HEART, CardValue.SIX),
+            ), trump
+        )
+        val player = Player(trump, cards = cards)
+
+        player.isBlackJack() shouldBe false
+    }
+
+    @Test
+    fun `플레이어 카드가 블랙잭인 경우를 알 수 있다 - 21점이 초과`() {
+        val trump = Trump()
+        val cards = Cards(
+            listOf(
+                Card.from(CardType.SPADE, CardValue.QUEEN),
+                Card.from(CardType.HEART, CardValue.KING),
+                Card.from(CardType.HEART, CardValue.SIX),
+            ), trump
+        )
+        val player = Player(trump, cards = cards)
+
+        player.isBlackJack() shouldBe false
     }
 }

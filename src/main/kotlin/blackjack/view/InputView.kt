@@ -8,6 +8,18 @@ object InputView {
         return names
     }
 
+    fun inputBatting(name: String): Int {
+        println("${name}의 배팅 금액은?")
+        var batting = readln().toIntOrNull()
+
+        while (batting == null) {
+            println("입력 값이 잘못되었습니다")
+            batting = readln().toIntOrNull()
+        }
+        println()
+        return batting
+    }
+
     fun inputCard(name: String): Boolean {
         println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         var input = readln()
