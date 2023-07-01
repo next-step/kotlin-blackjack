@@ -51,10 +51,6 @@ fun spadeAce(): Card {
     return spadeCard(CardDenomination.ACE)
 }
 
-fun spadeTwo(): Card {
-    return spadeCard(CardDenomination.TWO)
-}
-
 fun spadeFour(): Card {
     return spadeCard(CardDenomination.FOUR)
 }

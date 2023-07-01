@@ -1,6 +1,6 @@
 package blackjack.domain.gamer
 
-import blackjack.domain.game.Money
+import blackjack.domain.money.Money
 
 data class PlayerInitProperty(
     val playerName: String,

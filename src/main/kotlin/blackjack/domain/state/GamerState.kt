@@ -19,6 +19,10 @@ abstract class GamerState {
         return this is Bust
     }
 
+    fun isBlackJack(): Boolean {
+        return this is BlackJack
+    }
+
     open fun init(initCards: Cards): GamerState {
         throw IllegalStateException("not support init")
     }

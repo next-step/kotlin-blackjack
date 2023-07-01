@@ -1,8 +1,6 @@
 package blackjack.domain.gamer
 
-import blackjack.domain.game.MatchResultType
-import blackjack.domain.game.Money
-import blackjack.domain.game.PlayerMatchResult
+import blackjack.domain.money.Money
 
 class Player(
     val name: String,
@@ -11,13 +9,6 @@ class Player(
 
     override fun canHit(): Boolean {
         return state.isHit()
-    }
-
-    fun match(dealer: Dealer): PlayerMatchResult {
-        return PlayerMatchResult(
-            playerName = name,
-            matchResultType = MatchResultType.calculatePlayerMatchResult(dealer, this),
-        )
     }
 
     fun captureCards(): PlayerCards {

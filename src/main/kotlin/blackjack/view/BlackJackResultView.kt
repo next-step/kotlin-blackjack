@@ -7,10 +7,10 @@ import blackjack.domain.card.Cards
 import blackjack.domain.game.CardDistributionResult
 import blackjack.domain.game.DealerTurnExecuteResult
 import blackjack.domain.game.MatchResult
-import blackjack.domain.game.MatchResultType
 import blackjack.domain.gamer.DealerCard
 import blackjack.domain.gamer.PlayerCards
 import blackjack.domain.score.Score
+import kotlin.math.roundToInt
 
 class BlackJackResultView {
 
@@ -41,7 +41,7 @@ class BlackJackResultView {
             appendLine(matchResult.makeDealerCardsDisplayMessage())
             appendLine(matchResult.makeAllPlayerCardsDisplayMessage())
             appendLine()
-            appendLine("## 최종 승패")
+            appendLine("## 최종 수익")
             appendLine(matchResult.makeDealerMatchResultMessage())
             appendLine(matchResult.makeAllPlayersMatchResultMessage())
         }
@@ -87,25 +87,12 @@ class BlackJackResultView {
     }
 
     private fun MatchResult.makeDealerMatchResultMessage(): String {
-        return gamerMatchResult.dealerMatchResult.run {
-            buildString {
-                append("딜러:")
-                append(" ${winCount}승")
-                append(" ${tieCount}무")
-                append(" ${loseCount}패")
-            }
-        }
+        return "딜러: ${gamerProfitResults.dealerProfitResult.profit.roundToInt()}"
     }
 
     private fun MatchResult.makeAllPlayersMatchResultMessage(): String {
-        return gamerMatchResult.playerMatchResults.joinToString("\n") {
-            val name = it.playerName
-            val matchResult = when (it.matchResultType) {
-                MatchResultType.WIN -> "승"
-                MatchResultType.TIE -> "무"
-                MatchResultType.LOSE -> "패"
-            }
-            "$name: $matchResult"
+        return gamerProfitResults.playerProfitResults.joinToString("\n") {
+            "${it.playerName}: ${it.profit.roundToInt()}"
         }
     }
 

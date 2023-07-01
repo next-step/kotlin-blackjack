@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.game.Money
 import blackjack.domain.game.PlayerAnswer
 import blackjack.domain.gamer.PlayerInitProperty
+import blackjack.domain.money.Money
 
 class BlackJackInputView {
 

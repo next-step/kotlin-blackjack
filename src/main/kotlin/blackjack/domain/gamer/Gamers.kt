@@ -61,7 +61,7 @@ class Gamers(
     }
 
     fun match(): MatchResult {
-        return players.match(dealer)
+        return MatchResult.create(players, dealer)
     }
 
     companion object {

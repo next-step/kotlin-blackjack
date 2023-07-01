@@ -1,10 +1,6 @@
 package blackjack.domain.gamer
 
 import blackjack.domain.card.Cards
-import blackjack.domain.game.DealerMatchResult
-import blackjack.domain.game.GamerCards
-import blackjack.domain.game.GamerMatchResult
-import blackjack.domain.game.MatchResult
 
 @JvmInline
 value class Players(val value: List<Player>) {
@@ -29,21 +25,6 @@ value class Players(val value: List<Player>) {
 
     fun captureAllPlayerCards(): List<PlayerCards> {
         return value.map { it.captureCards() }
-    }
-
-    fun match(dealer: Dealer): MatchResult {
-        val playerMatchResults = value.map { player -> player.match(dealer) }
-        val dealerMatchResult = DealerMatchResult.create(playerMatchResults)
-        return MatchResult(
-            gamerCards = GamerCards(
-                dealerCards = dealer.state.cards,
-                allPlayerCards = captureAllPlayerCards(),
-            ),
-            gamerMatchResult = GamerMatchResult(
-                dealerMatchResult = dealerMatchResult,
-                playerMatchResults = playerMatchResults,
-            ),
-        )
     }
 
     private fun findWaitPlayerOrNull(): Player? {
