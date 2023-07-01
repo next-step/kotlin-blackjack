@@ -1,6 +1,5 @@
 package blakjack.domain
 
-import blakjack.domain.Participant.ParticipantAction
 import blakjack.domain.extension.cards
 import blakjack.domain.extension.heart10
 import blakjack.domain.extension.heart2
@@ -79,7 +78,9 @@ class GameSpec : DescribeSpec({
             val game = Game(dealer = dealer, players = listOf(Player("홍길동")))
 
             it("딜러는 STAND 한다.") {
-                game.hitOrStandDealer() shouldBe ParticipantAction.STAND
+                game.hitOrStandDealer()
+
+                dealer.isStand() shouldBe true
                 dealer.cards.size shouldBe 2
             }
         }
@@ -89,7 +90,9 @@ class GameSpec : DescribeSpec({
             val game = Game(dealer = dealer, players = listOf(Player("홍길동")))
 
             it("딜러는 HIT 한다.") {
-                game.hitOrStandDealer() shouldBe ParticipantAction.HIT
+                game.hitOrStandDealer()
+
+                dealer.isHit() shouldBe true
                 dealer.cards.size shouldBe 3
             }
         }

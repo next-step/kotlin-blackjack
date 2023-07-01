@@ -1,8 +1,8 @@
 package blakjack.controller
 
+import blakjack.domain.Dealer
 import blakjack.domain.Game
 import blakjack.domain.Participant
-import blakjack.domain.Participant.ParticipantAction
 import blakjack.domain.Player
 import blakjack.view.InputView
 import blakjack.view.OutputView
@@ -21,7 +21,7 @@ class BlackJackController {
         printIntro(participants)
 
         players.forEach { player -> playerTurn(game, player) }
-        dealerTurn(game)
+        dealerTurn(game, dealer)
 
         game.result()
         OutputView.printCardsWithScore(participants)
@@ -41,9 +41,10 @@ class BlackJackController {
         }
     }
 
-    private fun dealerTurn(game: Game) {
-        val dealerAction = game.hitOrStandDealer()
-        if (dealerAction == ParticipantAction.HIT) {
+    private fun dealerTurn(game: Game, dealer: Dealer) {
+        game.hitOrStandDealer()
+
+        if (dealer.isHit()) {
             OutputView.printDealerHit()
         }
     }

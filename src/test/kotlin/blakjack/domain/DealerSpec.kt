@@ -23,6 +23,24 @@ class DealerSpec : DescribeSpec({
         }
     }
 
+    describe("액션(HIT, STAND, NONE) 검증") {
+        context("딜러가 hit 액션을 취하면") {
+            val dealer = Dealer().also { it.add(heart10) }
+
+            it("딜러의 액션은 HIT 상태다.") {
+                dealer.isHit() shouldBe true
+            }
+        }
+
+        context("딜러가 stand 액션을 취하면") {
+            val dealer = Dealer().also { it.stand() }
+
+            it("딜러의 액션은 STAND 상태다.") {
+                dealer.isStand() shouldBe true
+            }
+        }
+    }
+
     describe("카드 한장 뽑기 검증") {
         it("무작위로 카드 한장을 뽑을 수 있다.") {
             val dealer = Dealer()
@@ -73,7 +91,7 @@ class DealerSpec : DescribeSpec({
             val dealer = Dealer().also { it.add(cards(heart10, heart9)) }
 
             it("17점 이상 여부는 '참'이다.") {
-                dealer.isOver17 shouldBe true
+                dealer.isScoreToStand shouldBe true
             }
         }
 
@@ -81,7 +99,7 @@ class DealerSpec : DescribeSpec({
             val dealer = Dealer().also { it.add(cards(heart10, heart2)) }
 
             it("17점 이상 여부는 '거짓'이다.") {
-                dealer.isOver17 shouldBe false
+                dealer.isScoreToStand shouldBe false
             }
         }
     }

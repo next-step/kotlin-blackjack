@@ -21,7 +21,7 @@ sealed class Participant(
 
     protected abstract fun lose()
 
-    fun add(card: Card) {
+    open fun add(card: Card) {
         this.cards = cards.add(card)
         bustIfOver21()
     }
@@ -62,6 +62,6 @@ sealed class Participant(
     }
 
     enum class ParticipantAction {
-        HIT, STAND
+        HIT, STAND, NONE
     }
 }

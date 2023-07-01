@@ -1,7 +1,5 @@
 package blakjack.domain
 
-import blakjack.domain.Participant.ParticipantAction
-
 class Game(
     val dealer: Dealer = Dealer(),
     val players: List<Player>
@@ -19,13 +17,13 @@ class Game(
         player.add(dealer.drawOneCard())
     }
 
-    fun hitOrStandDealer(): ParticipantAction {
-        if (dealer.isOver17) {
-            return ParticipantAction.STAND
+    fun hitOrStandDealer() {
+        if (dealer.isScoreToStand) {
+            dealer.stand()
+            return
         }
 
         dealer.add(dealer.drawOneCard())
-        return ParticipantAction.HIT
     }
 
     fun result() {
