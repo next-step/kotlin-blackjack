@@ -19,10 +19,13 @@ class BlackjackResults(dealer: Dealer, users: Users) {
     companion object {
 
         private fun getDealerResult(dealer: Dealer, userResults: UserResults): DealerResult {
-            val dealerWinCount = userResults.count { it.result == Result.LOSE }
-            val dealerDrawCount = userResults.count { it.result == Result.DRAW }
-            val dealerLoseCount = userResults.count() - dealerWinCount - dealerDrawCount
-            return DealerResult(dealer, dealerWinCount, dealerDrawCount, dealerLoseCount)
+            val userResultsCountBy: Map<Result, Int> = userResults.groupingBy { it.result }.eachCount()
+            return DealerResult(
+                dealer,
+                userResultsCountBy.getOrDefault(Result.LOSE, 0),
+                userResultsCountBy.getOrDefault(Result.DRAW, 0),
+                userResultsCountBy.getOrDefault(Result.WIN, 0),
+            )
         }
     }
 }
