@@ -13,7 +13,7 @@ object CardScoreCalculator {
 
         val possibleAceScoreSums = calculateAllPossibleAceScores(aceCardCount)
 
-        return getBestTotalSums(possibleAceScoreSums, otherCardScoreSum)
+        return getBestTotalScoreSums(possibleAceScoreSums.map { it + otherCardScoreSum })
     }
 
     private fun calculateAllPossibleAceScores(aceCardCount: Int): List<Int> {
@@ -27,21 +27,12 @@ object CardScoreCalculator {
         return possibleAceScoreSums
     }
 
-    private fun getBestTotalSums(possibleAceScoreSums: List<Int>, otherCardScoreSum: Int): Int {
-        val ascendingPossibleAceScoreSums = possibleAceScoreSums.sorted()
+    private fun getBestTotalScoreSums(possibleScoreSums: List<Int>): Int {
+        val ascendingPossibleScoreSums = possibleScoreSums.sorted()
 
-        var bestTotalSum = 0
-        for (aceScoreSum in ascendingPossibleAceScoreSums) {
-            val totalSum = aceScoreSum + otherCardScoreSum
-            if (totalSum <= BLACKJACK_NUMBER) {
-                bestTotalSum = totalSum
-                continue
-            }
-            if (bestTotalSum == 0) {
-                bestTotalSum = totalSum
-                break
-            }
-        }
-        return bestTotalSum
+        return ascendingPossibleScoreSums
+            .filter { it <= BLACKJACK_NUMBER }
+            .maxOrNull()
+            ?: return ascendingPossibleScoreSums.first()
     }
 }
