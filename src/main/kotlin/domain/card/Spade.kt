@@ -12,5 +12,10 @@ value class Spade private constructor(override val denomination: Denomination) :
                 Spade(denomination)
             }
         }
+
+        fun createDeck(): List<Spade> {
+            return Denomination.values()
+                .map { Spade(it) }
+        }
     }
 }

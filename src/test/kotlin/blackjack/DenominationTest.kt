@@ -28,7 +28,7 @@ class DenominationTest {
         )
 
         assertThat(denominations.size == Denomination.values().size).isTrue()
-        assertThat(denominations.containsAll(Denomination.values().toList())).isTrue()
+        assertThat(denominations).containsAll(Denomination.values().toList())
     }
 
     @ParameterizedTest

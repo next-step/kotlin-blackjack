@@ -12,5 +12,10 @@ value class Diamond private constructor(override val denomination: Denomination)
                 Diamond(denomination)
             }
         }
+
+        fun createDeck(): List<Diamond> {
+            return Denomination.values()
+                .map { Diamond(it) }
+        }
     }
 }

@@ -12,5 +12,10 @@ value class Heart private constructor(override val denomination: Denomination) :
                 Heart(denomination)
             }
         }
+
+        fun createDeck(): List<Heart> {
+            return Denomination.values()
+                .map { Heart(it) }
+        }
     }
 }

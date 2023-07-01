@@ -12,5 +12,10 @@ value class Clover private constructor(override val denomination: Denomination) 
                 Clover(denomination)
             }
         }
+
+        fun createDeck(): List<Clover> {
+            return Denomination.values()
+                .map { Clover(it) }
+        }
     }
 }

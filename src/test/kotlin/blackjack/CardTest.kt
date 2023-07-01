@@ -1,9 +1,13 @@
 package blackjack
 
 import domain.card.Card
+import domain.card.Clover
 import domain.card.Denomination
+import domain.card.Diamond
+import domain.card.Heart
 import domain.card.Spade
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,6 +18,46 @@ class CardTest {
     @MethodSource("카드 숫자 테스트 데이터")
     fun `카드 숫자 테스트`(card: Card, numbers: Set<Int>) {
         assertThat(card.numbers).isEqualTo(numbers)
+    }
+
+    @Test
+    fun `스페이드 덱 생성 테스트`() {
+        assertThat(
+            Spade.createDeck()
+        ).containsAll(
+            Denomination.values()
+                .map { Spade.get(it) }
+        )
+    }
+
+    @Test
+    fun `하트 덱 생성 테스트`() {
+        assertThat(
+            Heart.createDeck()
+        ).containsAll(
+            Denomination.values()
+                .map { Heart.get(it) }
+        )
+    }
+
+    @Test
+    fun `다이아몬드 덱 생성 테스트`() {
+        assertThat(
+            Diamond.createDeck()
+        ).containsAll(
+            Denomination.values()
+                .map { Diamond.get(it) }
+        )
+    }
+
+    @Test
+    fun `클로버 덱 생성 테스트`() {
+        assertThat(
+            Clover.createDeck()
+        ).containsAll(
+            Denomination.values()
+                .map { Clover.get(it) }
+        )
     }
 
     companion object {
