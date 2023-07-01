@@ -170,6 +170,7 @@ class BlackjackGameTest : FunSpec({
                     turn = TURN_1,
                     dealer = Dealer(Hit(Cards.of(SPADE_ACE, SPADE_TWO))),
                     players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_KING))))),
+                    cardDeck = CardDeck(LinkedList(listOf(SPADE_THREE)))
                 )
             blackjackGame.dealerDraw()
 
