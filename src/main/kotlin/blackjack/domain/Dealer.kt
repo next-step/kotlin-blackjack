@@ -16,7 +16,7 @@ class Dealer(
     }
 
     private fun initCondition(score: Score) {
-        if (score.isScoreBelowStandard()) {
+        if (score.compareTo(Score.STANDARD_CARD_SCORE) == -1 || score.compareTo(Score.STANDARD_CARD_SCORE) == 0) {
             this.condition = Condition.PLAY
         }
     }
@@ -29,9 +29,9 @@ class Dealer(
     }
 
     private fun changeCondition(score: Score) {
-        if (score.isScoreAboveStandard()) {
+        if (score.compareTo(Score.STANDARD_CARD_SCORE) == 1) {
             this.condition = Condition.STAY
-        } else if (score.isScoreAboveBlackjack()) {
+        } else if (score.compareTo(Score.BLACK_JACK_SCORE) == 1) {
             this.condition = Condition.BUST
         }
     }

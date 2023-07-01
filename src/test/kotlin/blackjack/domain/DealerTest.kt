@@ -62,9 +62,10 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러도 마찬가지로 카드를 받기 위한 응답 여부의 조건값을 가진다`() {
+    fun `딜러는 처음 받은 2장의 카드의 합이 17 이상이면 상태는 그대로 유지한다`() {
         val deck = Deck()
-        val dealer = Dealer(name = "딜러", cards = deck.drawCard(2), deck = deck)
+        val cards = Cards(listOf(Card(rank = Rank.SEVEN, symbol = Symbol.SPADES), Card(rank = Rank.KING, symbol = Symbol.SPADES)))
+        val dealer = Dealer(name = "딜러", cards = cards, deck = deck)
         dealer.currentCondition() shouldBe Condition.STAY
     }
 

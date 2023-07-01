@@ -2,27 +2,10 @@ package blackjack.domain
 
 class Score(
     val value: Int
-) {
+) : Comparable<Int> {
 
-    fun isScoreBelowStandard(): Boolean {
-        if(STANDARD_CARD_SCORE >= this.value) {
-            return true
-        }
-        return false
-    }
-
-    fun isScoreAboveStandard(): Boolean {
-        if(STANDARD_CARD_SCORE < this.value) {
-            return true
-        }
-        return false
-    }
-
-    fun isScoreAboveBlackjack(): Boolean {
-        if(this.value > BLACK_JACK_SCORE) {
-            return true
-        }
-        return false
+    override fun compareTo(other: Int): Int {
+        return value.compareTo(other)
     }
 
     companion object {
