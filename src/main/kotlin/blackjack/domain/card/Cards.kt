@@ -24,7 +24,7 @@ data class Cards(
         }
 
         fun initCards(cardDeck: CardDeck): Cards {
-            return Cards(List(INIT_CARD_SIZE) { cardDeck.pick() })
+            return Cards(List(INIT_CARD_SIZE) { cardDeck.poll() })
         }
     }
 }

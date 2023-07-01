@@ -37,7 +37,7 @@ class PlayersTest : BehaviorSpec({
         When("카드를 배분 했다면") {
             val cardDeck = CardDeck.create(CardNotShuffler())
             val players = Players.create(playerInitProperties)
-            players.init { cards(cardDeck.pick(), cardDeck.pick()) }
+            players.init { cards(cardDeck.poll(), cardDeck.poll()) }
 
             Then("대기중인 플레이어는 첫번째 플레이어다") {
                 players.requireWaitPlayer().name shouldBe playerInitProperties.first().playerName
@@ -47,7 +47,7 @@ class PlayersTest : BehaviorSpec({
         When("첫번째 플레이어가 스테이 했다면") {
             val cardDeck = CardDeck.create(CardNotShuffler())
             val players = Players.create(playerInitProperties)
-            players.init { cards(cardDeck.pick(), cardDeck.pick()) }
+            players.init { cards(cardDeck.poll(), cardDeck.poll()) }
             players.requireWaitPlayer().stay()
 
             Then("대기중인 플레이어는 두번째 플레이어다") {
@@ -59,8 +59,8 @@ class PlayersTest : BehaviorSpec({
     Given("플레이어에게 카드를 배분 했을 때") {
         val playerInitProperties = playerInitProperties("test1", "test2")
         val cardDeck = CardDeck.create(CardNotShuffler())
-        val cards1 = cards(cardDeck.pick(), cardDeck.pick())
-        val cards2 = cards(cardDeck.pick(), cardDeck.pick())
+        val cards1 = cards(cardDeck.poll(), cardDeck.poll())
+        val cards2 = cards(cardDeck.poll(), cardDeck.poll())
         val cards = mutableListOf(cards1, cards2)
         val players = Players.create(playerInitProperties)
         players.init { cards.removeFirst() }

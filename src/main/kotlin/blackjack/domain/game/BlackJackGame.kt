@@ -38,7 +38,7 @@ class BlackJackGame(
 
     fun hitFocusedPlayer(): PlayerCards {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
-        return gamers.hitToFocusedPlayer(cardDeck.pick())
+        return gamers.hitToFocusedPlayer(cardDeck.poll())
     }
 
     fun stayFocusedPlayer() {
@@ -48,7 +48,7 @@ class BlackJackGame(
 
     fun executeDealerTurn(): DealerTurnExecuteResult {
         requireTurn<BlackJackGameTurn.Dealer>()
-        return gamers.tryHitToDealer { cardDeck.pick() }
+        return gamers.tryHitToDealer { cardDeck.poll() }
     }
 
     fun makeGameResult(): MatchResult {
