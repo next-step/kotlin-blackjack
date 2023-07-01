@@ -1,3 +1,5 @@
 package blackjack.model
 
-data class BlackjackPlayerResult(val player: BlackjackPlayer, val isWin: Boolean)
+import blackjack.model.participant.BlackjackPlayer
+
+data class BlackjackPlayerResult(val player: BlackjackPlayer, val revenue: Money)

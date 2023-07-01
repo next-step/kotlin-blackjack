@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.participant.BlackjackPlayer
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
@@ -11,7 +12,7 @@ class BlackjackPlayerTest : StringSpec({
     "이름과 카드 컨슈머, 프레디케이트로 생성" {
         shouldNotThrowAny {
             BlackjackPlayer(
-                PlayerName("name"), CardDeck(), { _ -> }, { _ -> false }
+                CardDeck(), { _ -> Money(1000) }, PlayerName("name"), { _ -> }, { _ -> false }
             )
         }
     }
@@ -19,11 +20,12 @@ class BlackjackPlayerTest : StringSpec({
     "21점 이하인 경우 추가 카드를 뽑을 수 있음" {
         // given
         val player = BlackjackPlayer(
-            PlayerName("name"), CardDeck(), { _ -> }, { _ -> true }
+            CardDeck(), { _ -> Money(1000) }, PlayerName("name"), { _ -> }, { _ -> true }
         )
         // when
-        player.draw(CardDeck())
+        player.draw()
         // then
         player.deckScore shouldBeGreaterThanOrEqual 21
     }
 })
+        

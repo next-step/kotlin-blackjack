@@ -1,5 +1,8 @@
 package blackjack.controller
 
+import blackjack.model.Money
+import blackjack.model.PlayerName
+import blackjack.model.PlayerNames
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -11,7 +14,8 @@ class BlackjackGameTest : StringSpec({
     "블랙잭 게임" {
         BlackjackGame(
             { false },
-            { listOf("test1", "test2") },
+            { _ -> Money(1000) },
+            { PlayerNames(listOf(PlayerName("test1"), PlayerName("test2"))) },
             { _ -> },
             { player -> player.handDeck.cards.size shouldBe 2 },
             { _, _, count -> count shouldBe 2 },

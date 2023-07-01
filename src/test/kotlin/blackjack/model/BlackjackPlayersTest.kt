@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.participant.BlackjackParticipants
+import blackjack.model.participant.BlackjackPlayer
 import io.kotest.core.spec.DisplayName
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
@@ -12,7 +14,7 @@ class BlackjackPlayersTest : StringSpec({
         val cardDeck = CardDeck()
         // when
         val players = BlackjackParticipants(
-            listOf(BlackjackPlayer(PlayerName("name"), cardDeck, { _ -> }, { _ -> false }))
+            listOf(BlackjackPlayer(cardDeck, { _ -> Money(1000) }, PlayerName("name"), { _ -> }, { _ -> false }))
         )
         // then
         players.participants.first().handDeck.cards shouldHaveSize 2

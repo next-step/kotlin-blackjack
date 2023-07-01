@@ -1,36 +1,40 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackDealer
-import blackjack.model.BlackjackJudge
-import blackjack.model.BlackjackParticipant
-import blackjack.model.BlackjackParticipants
-import blackjack.model.BlackjackPlayer
+import blackjack.model.BettingMoneyProvider
+import blackjack.model.BlackjackDealerMoreCardScoreLimitConsumer
+import blackjack.model.BlackjackJudgeConsumer
+import blackjack.model.BlackjackPlayerConsumer
+import blackjack.model.BlackjackPlayersCardCountConsumer
+import blackjack.model.BlackjackPlayersScoreConsumer
+import blackjack.model.BlackjackRevenueJudge
 import blackjack.model.CardDeck
-import blackjack.model.PlayerName
+import blackjack.model.MoreWantedCardPredicate
+import blackjack.model.PlayerNamesProvider
+import blackjack.model.participant.BlackjackDealer
+import blackjack.model.participant.BlackjackParticipants
 
 data class BlackjackGame(
-    private val moreWantedCardPredicate: (String) -> Boolean,
-    private val playerNamesProvider: () -> Collection<String>,
-    private val blackjackDealerMoreCardScoreLimitConsumer: (Int) -> Unit,
-    private val blackjackPlayerConsumer: (BlackjackPlayer) -> Unit,
-    private val blackjackPlayersCardCountConsumer: (BlackjackDealer, Collection<BlackjackPlayer>, Int) -> Unit,
-    private val blackjackPlayersScoreConsumer: (BlackjackDealer, Collection<BlackjackPlayer>) -> Unit,
-    private val blackjackJudgeConsumer: (BlackjackJudge) -> Unit,
+    private val moreWantedCardPredicate: MoreWantedCardPredicate,
+    private val bettingMoneyProvider: BettingMoneyProvider,
+    private val playerNamesProvider: PlayerNamesProvider,
+    private val blackjackDealerMoreCardScoreLimitConsumer: BlackjackDealerMoreCardScoreLimitConsumer,
+    private val blackjackPlayerConsumer: BlackjackPlayerConsumer,
+    private val blackjackPlayersCardCountConsumer: BlackjackPlayersCardCountConsumer,
+    private val blackjackPlayersScoreConsumer: BlackjackPlayersScoreConsumer,
+    private val blackjackJudgeConsumer: BlackjackJudgeConsumer,
 ) {
     fun start() {
         val deck = CardDeck()
         val dealer = BlackjackDealer(deck, blackjackDealerMoreCardScoreLimitConsumer)
-        val players = playerNamesProvider().map {
-            BlackjackPlayer(PlayerName(it), deck, blackjackPlayerConsumer, moreWantedCardPredicate)
-        }
+        val players = playerNamesProvider.names().registerPlayer(
+            deck,
+            bettingMoneyProvider,
+            blackjackPlayerConsumer,
+            moreWantedCardPredicate
+        )
 
-        BlackjackParticipants(players + dealer).also {
-            blackjackPlayersCardCountConsumer(dealer, players, BlackjackParticipant.INITIAL_DEALING_COUNT)
-        }.apply {
-            forEach { it.draw(deck) }
-        }.also {
-            blackjackPlayersScoreConsumer(dealer, players)
-        }
-        blackjackJudgeConsumer(BlackjackJudge(dealer, players))
+        BlackjackParticipants.withDealerAndDraw(players, dealer, blackjackPlayersCardCountConsumer)
+        blackjackPlayersScoreConsumer.consumePlayers(dealer, players)
+        blackjackJudgeConsumer.consume(BlackjackRevenueJudge(dealer, players))
     }
 }

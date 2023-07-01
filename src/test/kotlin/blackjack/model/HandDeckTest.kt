@@ -19,7 +19,7 @@ class HandDeckTest : StringSpec({
         // given
         val handDeck = HandDeck()
         // when
-        handDeck + SPADE_KING
+        handDeck.add(SPADE_KING)
         // then
         handDeck.score shouldBe 10
     }
@@ -35,7 +35,7 @@ class HandDeckTest : StringSpec({
         ).forAll {
             // given
             val handDeck = HandDeck()
-            it.first.forEach(handDeck::plus)
+            it.first.forEach(handDeck::add)
             // when & then
             handDeck.score shouldBe it.second
         }
@@ -49,7 +49,7 @@ class HandDeckTest : StringSpec({
         ).forAll {
             // given
             val handDeck = HandDeck()
-            it.first.forEach(handDeck::plus)
+            it.first.forEach(handDeck::add)
             // when & then
             handDeck.score shouldBe it.second
         }
