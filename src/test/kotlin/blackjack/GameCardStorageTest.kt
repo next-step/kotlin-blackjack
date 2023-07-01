@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.utils.prepareAllPossibleUniqueCards
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -8,24 +9,16 @@ import io.kotest.matchers.shouldBe
 
 class GameCardStorageTest : FreeSpec({
     "게임에서 사용될 카드들은 조커를 제외한 52장이다. - 모든 종류, 숫자별 1장씩" {
-        val allPossibleUniqueCards = CardNumber
-            .values()
-            .flatMap { number ->
-                Suit.values().map { suit ->
-                    Card(suit, number)
-                }
-            }
-            .shuffled()
-            .toSet()
+        val cardsToPlay = prepareAllPossibleUniqueCards()
 
-        val sut = GameCardStorage(allPossibleUniqueCards)
+        val sut = GameCardStorage(cardsToPlay)
 
-        sut.currentCards shouldContainExactly allPossibleUniqueCards
+        sut.currentCards shouldContainExactly cardsToPlay
         sut.currentCards shouldHaveSize 52
     }
 
     "게임에서 사용될 카드가 충분하지 못할 경우 예외를 던진다" {
-        val insufficientCards = setOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.CLUB, CardNumber.ACE))
+        val insufficientCards = setOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.CLOVER, CardNumber.ACE))
 
         val exception = shouldThrow<IllegalArgumentException> {
             GameCardStorage(insufficientCards)

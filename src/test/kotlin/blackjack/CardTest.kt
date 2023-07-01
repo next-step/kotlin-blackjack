@@ -10,7 +10,7 @@ class CardTest : StringSpec({
         forAll(
             row(Suit.SPADE, Suit.SPADE),
             row(Suit.DIAMOND, Suit.DIAMOND),
-            row(Suit.CLUB, Suit.CLUB),
+            row(Suit.CLOVER, Suit.CLOVER),
             row(Suit.HEART, Suit.HEART),
         ) { inputSuit, expectedSuit ->
 

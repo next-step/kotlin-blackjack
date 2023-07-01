@@ -25,14 +25,14 @@ class RefereeTest : FreeSpec({
             row(
                 listOf(
                     Card(Suit.SPADE, CardNumber.ACE),
-                    Card(Suit.CLUB, CardNumber.ACE),
+                    Card(Suit.CLOVER, CardNumber.ACE),
                     Card(Suit.DIAMOND, CardNumber.NINE),
                 ), Evaluation.WIN
             ),
             row(
                 listOf(
                     Card(Suit.SPADE, CardNumber.ACE),
-                    Card(Suit.CLUB, CardNumber.ACE),
+                    Card(Suit.CLOVER, CardNumber.ACE),
                     Card(Suit.DIAMOND, CardNumber.EIGHT),
                 ), Evaluation.CONTINUE
             ),

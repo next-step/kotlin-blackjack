@@ -1,6 +1,8 @@
 package blackjack
 
-class Player {
+class Player(
+    val name: String,
+) {
 
     private val cardPocket: MutableList<Card> = mutableListOf()
 
