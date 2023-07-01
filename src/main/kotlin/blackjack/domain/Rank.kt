@@ -17,7 +17,7 @@ enum class Rank(val symbol: String, val score: Int) {
 
     companion object {
         const val ACE_MIN = 1
-        const val ACE_MAX = 10
+        const val ACE_MAX = 11
 
         fun random(): Rank {
             return values().random()
