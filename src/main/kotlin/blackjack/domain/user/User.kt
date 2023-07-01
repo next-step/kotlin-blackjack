@@ -33,14 +33,16 @@ abstract class Player(
     }
 
     fun match(player: Player): Result {
-        val compareResult = when {
-            player.isBust() -> 1
-            isBust() -> -1
-            else -> finalScore - player.finalScore
+        if (isBust()) {
+            return Result.LOSE
         }
+        if (player.isBust()) {
+            return Result.WIN
+        }
+
         return when {
-            compareResult > 0 -> Result.WIN
-            compareResult < 0 -> Result.LOSE
+            finalScore > player.finalScore -> Result.WIN
+            finalScore < player.finalScore -> Result.LOSE
             else -> Result.DRAW
         }
     }

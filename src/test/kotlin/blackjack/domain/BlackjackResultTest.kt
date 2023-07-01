@@ -46,19 +46,6 @@ class BlackjackResultTest : BehaviorSpec({
                         TEST_USER_DRAW_INTERFACE,
                     ),
                 ),
-                row(
-                    User(
-                        "초과함",
-                        Cards(
-                            listOf(
-                                Card(Suit.SPADE, CardNumber.TEN),
-                                Card(Suit.DIAMOND, CardNumber.TEN),
-                                Card(Suit.HEART, CardNumber.TEN),
-                            ),
-                        ),
-                        TEST_USER_DRAW_INTERFACE,
-                    ),
-                ),
             ),
         ) { user ->
             val users = Users(setOf(user))
@@ -67,6 +54,24 @@ class BlackjackResultTest : BehaviorSpec({
                 Then("유저가 승리했다") {
                     BlackjackResults(dealer, users).dealerResult shouldBe DealerResult(dealer, 0, 0, 1)
                 }
+            }
+        }
+
+        When("딜러와 \"21을 초과한\"유저의 결과를 가져오면") {
+            val user = User(
+                "초과함",
+                Cards(
+                    listOf(
+                        Card(Suit.SPADE, CardNumber.TEN),
+                        Card(Suit.DIAMOND, CardNumber.TEN),
+                        Card(Suit.HEART, CardNumber.TEN),
+                    ),
+                ),
+                TEST_USER_DRAW_INTERFACE,
+            )
+            val users = Users(setOf(user))
+            Then("딜러가 승리했다") {
+                BlackjackResults(dealer, users).dealerResult shouldBe DealerResult(dealer, 1, 0, 0)
             }
         }
     }
