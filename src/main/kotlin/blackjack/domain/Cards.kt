@@ -9,7 +9,7 @@ class Cards(
     private val mutableCards = cards.toMutableList()
 
     val cards: List<Card>
-        get() = mutableCards
+        get() = mutableCards.toList()
 
     fun append(card: Card) {
         mutableCards.add(card)
