@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class CardTest : FunSpec({
@@ -36,5 +37,14 @@ class CardTest : FunSpec({
 
         // then
         score shouldBe 1
+    }
+
+    test("King, Queen, Jack은 각각 10으로 계산한다.") {
+        // given
+        listOf(Card(Rank.KING), Card(Rank.JACK), Card(Rank.QUEEN))
+            .forAll {
+                // then, when
+                it.getScore() shouldBe 10
+            }
     }
 })
