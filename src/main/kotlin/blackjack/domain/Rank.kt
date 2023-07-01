@@ -5,7 +5,7 @@ sealed class Rank(val symbol: String) {
     object Queen : Rank("Q")
     object Jack : Rank("J")
     object Ace : Rank("A")
-    class Number(val number: Int = (NUMBER_MIN..NUMBER_MAX).random()) : Rank(number.toString()) {
+    data class Number(val number: Int = (NUMBER_MIN..NUMBER_MAX).random()) : Rank(number.toString()) {
         init {
             require(number in NUMBER_MIN..NUMBER_MAX) { "Number 는 1-9 사이의 숫자만 가능합니다. [입력: $number]" }
         }
