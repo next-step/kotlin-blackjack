@@ -22,7 +22,7 @@ fun printFirstDrawResult(handsDashBoard: HandsDashboard) {
 fun printCurrentDrawResult(playerHands: PlayerHands) =
     println("${playerHands.name}카드: ${parseCardsResult(playerHands.cards)}")
 
-fun printDealerGetDraw() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+fun printDealerGetDraw() = println("${DEALER_DISPLAY_NAME}는 16이하라 한장의 카드를 더 받았습니다.\n")
 
 fun printGameResult(gameResult: GameResult) {
     printGameScoreResult(gameResult)
