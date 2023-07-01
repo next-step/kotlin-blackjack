@@ -1,23 +1,26 @@
 package blackjack.domain
 
-sealed class Rank(val symbol: String) {
-    object King : Rank("K")
-    object Queen : Rank("Q")
-    object Jack : Rank("J")
-    object Ace : Rank("A")
-    data class Number(val number: Int = (NUMBER_MIN..NUMBER_MAX).random()) : Rank(number.toString()) {
-        init {
-            require(number in NUMBER_MIN..NUMBER_MAX) { "Number 는 1-9 사이의 숫자만 가능합니다. [입력: $number]" }
-        }
-    }
+enum class Rank(val symbol: String, val score: Int) {
+    ACE("A", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SECEN("7",7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    KING("K", 10),
+    QUEEN("Q", 10),
+    JACK("J", 10);
 
     companion object {
-        const val NUMBER_MIN = 1
-        const val NUMBER_MAX = 9
+        const val ACE_MIN = 1
+        const val ACE_MAX = 10
+
         fun random(): Rank {
-            return listOf(King, Queen, Jack, Ace, Number())
-                .shuffled()
-                .first()
+            return values().random()
         }
     }
 }
