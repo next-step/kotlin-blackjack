@@ -31,7 +31,7 @@ abstract class Player(
     abstract fun canDraw(): Boolean
 }
 
-open class User(
+class User(
     name: String,
     cards: Cards,
     private val userDrawInterface: UserDrawInterface,
