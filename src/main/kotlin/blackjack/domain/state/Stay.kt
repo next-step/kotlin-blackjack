@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards
 
 class Stay(
     override val cards: Cards,
-) : GamerState() {
+) : Finished() {
 
     init {
         require(cards.value.size >= Cards.INIT_CARD_SIZE) {

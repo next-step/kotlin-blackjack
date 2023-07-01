@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards
 
 class BlackJack(
     override val cards: Cards
-) : GamerState() {
+) : Finished() {
 
     init {
         require(cards.isBlackJack()) {

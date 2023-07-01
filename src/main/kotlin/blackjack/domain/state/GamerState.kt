@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class GamerState {
+sealed class GamerState {
 
     abstract val cards: Cards
 
