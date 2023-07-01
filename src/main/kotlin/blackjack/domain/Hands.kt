@@ -4,14 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 
-//data class Hands(
-//    val playerName: String,
-//    val cards: Set<Card>
-//) {
-//    companion object {
-//        fun from(participant: Participant) = Hands(playerName = participant.name(), cards = participant.cards())
-//    }
-//}
+data class HandsDashboard(
+    val dealerHands: DealerHands,
+    val playerHands: List<PlayerHands>
+)
 
 data class DealerHands(
     val cards: Set<Card>,

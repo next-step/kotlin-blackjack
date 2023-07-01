@@ -15,11 +15,11 @@ class BlackjackGame(
     var turn: Turn = turn
         private set
 
-    fun firstDraw(): Pair<DealerHands, List<PlayerHands>> {
+    fun firstDraw(): HandsDashboard {
         check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
         repeat(FIRST_DRAW_COUNT) { drawDealerAndPlayers() }
         nextTurnChange()
-        return dealerFirstDrawHand() to players.hands()
+        return HandsDashboard(dealerFirstDrawHand(), players.hands())
     }
 
     fun currentPlayerDraw(): PlayerHands {

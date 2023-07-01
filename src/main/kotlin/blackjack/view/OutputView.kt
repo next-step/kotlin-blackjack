@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.DealerGameResult
 import blackjack.domain.DealerHands
 import blackjack.domain.GameResult
+import blackjack.domain.HandsDashboard
 import blackjack.domain.PlayerGameResult
 import blackjack.domain.PlayerHands
 import blackjack.domain.card.Card
@@ -12,10 +13,10 @@ private const val CARD_DELIMITER = ", "
 
 private const val DEALER_DISPLAY_NAME = "딜러"
 
-fun printFirstDrawResult(hands: Pair<DealerHands, List<PlayerHands>>) {
-    println("${DEALER_DISPLAY_NAME}와 ${parsePlayerNames(hands.second)}에게 2장의 카드를 나누었습니다.")
-    printDealerDrawResult(hands.first)
-    hands.second.forEach { printPlayerDrawResult(it) }
+fun printFirstDrawResult(handsDashBoard: HandsDashboard) {
+    println("${DEALER_DISPLAY_NAME}와 ${parsePlayerNames(handsDashBoard.playerHands)}에게 2장의 카드를 나누었습니다.")
+    printDealerDrawResult(handsDashBoard.dealerHands)
+    handsDashBoard.playerHands.forEach { printPlayerDrawResult(it) }
 }
 
 fun printCurrentDrawResult(playerHands: PlayerHands) =
