@@ -2,6 +2,7 @@ package blackjack.domain.game
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.GameCards
+import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 
@@ -46,10 +47,8 @@ class BlackJack(
         return false
     }
 
-    fun getResult(): Results {
-        return Results(players.associateWith { player: Player ->
-            player.getRevenue(dealer)
-        })
+    fun getResult(bettings: List<BettingPlayer>): Results {
+        return Results(bettings.associate { it.player to it.getRevenue(dealer) })
     }
 
     companion object {

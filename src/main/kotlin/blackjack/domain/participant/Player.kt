@@ -1,10 +1,9 @@
 package blackjack.domain.participant
 
-import blackjack.domain.game.BlackJack
 import blackjack.domain.card.Cards
-import blackjack.domain.game.Rank
+import blackjack.domain.game.BlackJack
 
-class Player(name: String, cards: Cards = Cards(), var bettingAmount: Int = 0) : Participant(name, cards) {
+class Player(name: String, cards: Cards = Cards()) : Participant(name, cards) {
 
     private var isTurnFinished: Boolean = false
 
@@ -13,12 +12,4 @@ class Player(name: String, cards: Cards = Cards(), var bettingAmount: Int = 0) :
     }
 
     fun canProceedTurn() = !isTurnFinished && score() <= BlackJack.BLACKJACK_MAX_SCORE
-
-    fun bet(bettingAmount: Int) {
-        this.bettingAmount = bettingAmount
-    }
-
-    fun getRevenue(dealer: Dealer): Int {
-        return bettingAmount * (Rank.of(this, dealer).value).toInt()
-    }
 }

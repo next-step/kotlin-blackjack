@@ -1,12 +1,13 @@
 package blackjack.controller
 
 import blackjack.domain.game.BlackJack
+import blackjack.domain.participant.BettingPlayer
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     val game = BlackJack(InputView.getNames())
-    game.players.forEach { it.bet(InputView.getBettingAmount(it)) }
+    val bettings = game.players.map { BettingPlayer(it, InputView.getBettingAmount(it)) }
 
     game.distributeInitialCard()
     ResultView.printFirstCards(game)
@@ -24,5 +25,5 @@ fun main() {
     }
 
     ResultView.printScore(game)
-    ResultView.printResult(game, game.getResult())
+    ResultView.printResult(game, game.getResult(bettings))
 }
