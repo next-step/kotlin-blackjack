@@ -11,7 +11,7 @@
 - [x] 카드는 (1-9, K, Q, J, A) 중 하나의 rank 와 (하트, 스페이드, 클로바) 중 하나의 무늬를 가진다. - Card
 - [x] 딜러는 플레이어에게 랜덤으로 카드를 나누어준다. - Dealer
 - [x] 플레이어는 자신의 이름과 카드 리스트를 가진다. - Player
-- [ ] 카드의 숫자 계산은 카드 숫자를 기본으로 한다. - BlackJackGame
-- [ ] King, Queen, Jack은 각각 10으로 계산한다. - BlackJackGame
-- [ ] Ace는 21을 넘지 않으면서 가장 가깝도록 1 또는 11을 선택한다. - BlackJackGame
-- [ ] 각 플레이어가 가지고 있는 카드의 계산 결과를 반환한다. - BlackJackGame
+- [x] 카드의 점수 계산은 카드 숫자를 기본으로 한다. - Card
+- [x] King, Queen, Jack은 각각 10으로 계산한다. - Card
+- [ ] Ace는 21을 넘지 않으면서 가장 가깝도록 1 또는 11을 선택한다. - GameResult
+- [ ] 각 플레이어가 가지고 있는 카드의 계산 결과를 반환한다. - GameResult
