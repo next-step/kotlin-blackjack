@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class FightResult(
-    val description: String
+    val description: String,
 ) {
     WIN("승"),
     LOSE("패"),

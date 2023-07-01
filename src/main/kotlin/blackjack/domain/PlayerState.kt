@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class PlayerState(
-    val canDraw: Boolean
+    val canDraw: Boolean,
 ) {
     HIT(true),
     STAND(false),
