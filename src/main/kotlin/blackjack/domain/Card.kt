@@ -1,6 +1,6 @@
 package blackjack.domain
 
 data class Card(
-    val rank: Rank,
-    val suit: Suit
+    val rank: Rank = Rank.random(),
+    val suit: Suit = Suit.random()
 )
