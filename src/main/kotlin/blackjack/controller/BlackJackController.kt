@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Player
 import blackjack.domain.deck.RandomDeckShuffleStrategy
-import blackjack.exception.PlayerLoseException
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
@@ -37,20 +36,21 @@ class BlackJackController(
     }
 
     private fun checkPlayerIsLoseWhileAskingPlayerWantToDraw(blackJackGame: BlackJackGame, it: Player) {
-        try {
-            askPlayerWantToDrawCard(blackJackGame, it)
-        } catch (e: PlayerLoseException) {
+        if (askPlayerWantToDrawCard(blackJackGame, it) != null) {
             println()
         }
     }
 
-    private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player) {
+    private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player): Player? {
         while (continueDrawingCards(player)) {
             drawPlayer(blackJackGame, player)
-            blackJackGame.checkPlayerIsLose(player)
+            if (!blackJackGame.checkPlayerIsLose(player)) {
+                return null
+            }
         }
         resultView.printPlayerCardList(player)
         println()
+        return player
     }
 
     private fun continueDrawingCards(player: Player): Boolean {

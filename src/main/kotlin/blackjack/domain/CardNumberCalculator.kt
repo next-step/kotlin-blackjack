@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber
 
 class CardNumberCalculator() {
 
-
     fun calculateSumOfCardNumbers(cards: List<Card>): Int {
         var sum = 0
         cards.forEach {
@@ -27,5 +26,4 @@ class CardNumberCalculator() {
         }
         return CardNumber.ACE_MINIMUM
     }
-
 }
