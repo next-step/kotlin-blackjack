@@ -1,6 +1,5 @@
 package dsl
 
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -15,7 +14,6 @@ class PersonTest : StringSpec({
         person.name shouldBe inputName
         person.company shouldBe inputCompany
     }
-
 
     "name = 홍길동, skill은 soft('c'), hard('java') 순으로 주어진 경우, person이 올바르게 생성된다." {
         val inputName = "홍길동"
