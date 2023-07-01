@@ -26,11 +26,11 @@ object BlackjackView {
 
     fun printDealerFirstCard(dealer: Dealer) {
         val dealerFirstCard = dealer.getMyCards().cards[0]
-        println("${dealer.name}: ${print(dealerFirstCard)}")
+        println("${dealer.name}: ${printCard(dealerFirstCard)}")
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${print(player.getMyCards())}")
+        println("${player.name}카드: ${printCards(player.getMyCards())}")
     }
 
     fun askDraw(player: Player): Boolean {
@@ -50,12 +50,13 @@ object BlackjackView {
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${print(player.getMyCards())} - 결과: ${player.sumOfMyCards()}")
+        println("${player.name}카드: ${printCards(player.getMyCards())} - 결과: ${player.sumOfMyCards()}")
     }
 
-    private fun print(card: Card): String = "${card.rank.description}${card.suit.description}"
+    private fun printCard(card: Card): String = "${card.rank.description}${card.suit.description}"
 
-    private fun print(cards: Cards): String = cards.cards.joinToString(", ") { print(it) }
+    private fun printCards(cards: Cards): String = cards.cards.joinToString(", ") { printCard(it) }
+
     fun printGameResult(gameResult: GameResultVO) {
         println("\n## 최종 승패")
 
