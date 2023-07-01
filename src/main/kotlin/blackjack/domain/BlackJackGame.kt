@@ -8,19 +8,17 @@ class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
     private val deck = Deck(deckShuffleStrategy)
     private val ruleChecker = RuleChecker()
 
-    fun firstDraw(playerList: List<Player>, dealer: Dealer) {
-        dealer.addCards(deck.drawTwoCard())
-
-        playerList.forEach {
+    fun firstDraw(blackJackGamerList: List<BlackJackGamer>) {
+        blackJackGamerList.forEach {
             it.addCards(deck.drawTwoCard())
         }
     }
 
-    fun onePlayerDraw(player: Player) {
-        player.addCard(deck.drawCard())
+    fun oneGamerDraw(blackJackGamer: BlackJackGamer) {
+        blackJackGamer.addCard(deck.drawCard())
     }
 
-    fun checkPlayerIsLose(player: Player): Boolean {
-        return ruleChecker.checkSumOfCardNumbers(player.calculateSumOfCardNumbers())
+    fun checkBlackJackGamerIsDraw(blackJackGamer: BlackJackGamer): Boolean {
+        return ruleChecker.checkSumOfCardNumbers(blackJackGamer)
     }
 }

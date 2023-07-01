@@ -22,22 +22,25 @@ class BlackJackGameTest {
         val jason = Player("jason")
         val dealer = Dealer()
 
-        val playerList = listOf(pobi, jason)
+        val blackJackGamerList = listOf(
+            pobi,jason,dealer
+        )
+
         val pobiCards = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.J),
+            Card(shape = CardShape.DIAMOND, number = CardNumber.Q)
+        )
+        val jasonCards = listOf(
             Card(shape = CardShape.DIAMOND, number = CardNumber.K),
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN)
         )
-        val jasonCards = listOf(
+
+        val dealerCards = listOf(
             Card(shape = CardShape.DIAMOND, number = CardNumber.NINE),
             Card(shape = CardShape.DIAMOND, number = CardNumber.EIGHT)
         )
 
-        val dealerCards = listOf(
-            Card(shape = CardShape.DIAMOND, number = CardNumber.J),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.Q)
-        )
-
-        blackJackGame.firstDraw(playerList, dealer)
+        blackJackGame.firstDraw(blackJackGamerList)
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
         Assertions.assertThat(jason.getCards()).isEqualTo(jasonCards)
@@ -48,7 +51,7 @@ class BlackJackGameTest {
     fun `플레이어가 카드 뽑는것을 선택하면 카드를 1장 나눠준다`() {
         val pobi = Player("pobi")
 
-        blackJackGame.onePlayerDraw(pobi)
+        blackJackGame.oneGamerDraw(pobi)
         val pobiCards = listOf(Card(shape = CardShape.DIAMOND, number = CardNumber.J))
 
         Assertions.assertThat(pobi.getCards()).isEqualTo(pobiCards)
@@ -64,6 +67,6 @@ class BlackJackGameTest {
         )
         pobi.addCards(cards)
 
-        Assertions.assertThat(blackJackGame.checkPlayerIsLose(pobi)).isEqualTo(false)
+        Assertions.assertThat(blackJackGame.checkBlackJackGamerIsDraw(pobi)).isEqualTo(false)
     }
 }

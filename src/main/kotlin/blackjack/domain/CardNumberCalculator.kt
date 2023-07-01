@@ -28,6 +28,7 @@ class CardNumberCalculator(private val gamerType: GamerType) {
         }
         return CardNumber.ACE_MINIMUM
     }
+
     private fun proceedConditionAceNumber(): Int {
         var conditionToProceedAceNumber = RuleChecker.CONDITION_TO_WIN_BLACK_JACK
         if (gamerType == GamerType.DEALER) conditionToProceedAceNumber = RuleChecker.CONDITION_TO_DEALER_DRAW_CARD

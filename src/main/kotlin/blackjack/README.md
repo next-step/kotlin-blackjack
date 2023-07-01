@@ -38,16 +38,17 @@
     - [x] King, Queen, Jack은 각각 10으로 계산한다.
     - [x] Ace는 1 또는 11로 계산할 수 있다.
 
-
 ## Step3) 기능 요구 사항 체크리스트
 
 * Dealer, Player 공통점
+
 1. 카드를 가진다.
 2. 게임 시작시 카드를 두장 받는다.
 
 * Dealer, Player 차이점
 
-* Dealer 
+* Dealer
+
 - [ ] 딜러는 카드를 가진다.
 - [ ] 딜러는 
 

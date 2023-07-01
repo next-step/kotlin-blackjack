@@ -2,8 +2,13 @@ package blackjack.domain
 
 class RuleChecker {
 
-    fun checkSumOfCardNumbers(sum: Int): Boolean {
-        return sum <= CONDITION_TO_WIN_BLACK_JACK
+    fun checkSumOfCardNumbers(blackJackGamer: BlackJackGamer): Boolean {
+        return blackJackGamer.calculateSumOfCardNumbers() <= proceedCondition(blackJackGamer.getGamerType())
+    }
+
+    private fun proceedCondition(gamerType: GamerType): Int {
+        if (gamerType == GamerType.PLAYER) return CONDITION_TO_WIN_BLACK_JACK
+        return CONDITION_TO_DEALER_DRAW_CARD
     }
 
     companion object {

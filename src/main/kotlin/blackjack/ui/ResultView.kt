@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.BlackJackGamer
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.card.Card
@@ -13,16 +14,17 @@ class ResultView {
     }
 
     private fun printFirstDrawTitle(playerList: List<Player>) {
-        print("딜러와 ")
         playerList.forEachIndexed { index, player ->
-            print(player.name)
+            if (index == 0) print("딜러와 ")
+            if (index != 0) print(player.name)
             if (index != playerList.lastIndex) print(", ")
         }
         println("에게 2장의 나누었습니다.")
     }
 
     private fun printFirstDrawDetail(playerList: List<Player>, dealer: Dealer) {
-        println(getCardsText(dealer.getCards()))
+        printDealerCardList(dealer)
+        println()
 
         playerList.forEach {
             printPlayerName(it)
@@ -52,19 +54,31 @@ class ResultView {
         print(getCardsText(player.getCards()))
     }
 
-    fun printGameResult(playerList: List<Player>) {
+    private fun printDealerCardList(dealer: Dealer) {
+        print("딜러: ")
+        print(getCardsText(dealer.getCards()))
+    }
+
+    fun printGameResult(playerList: List<Player>, dealer: Dealer) {
+        printDealerCardList(dealer)
+        printSumOfPlayerCardNumbers(dealer)
         playerList.forEach {
             printPlayerCardList(it)
             printSumOfPlayerCardNumbers(it)
         }
     }
 
-    private fun printSumOfPlayerCardNumbers(player: Player) {
-        val sumOfCardNumbers = player.calculateSumOfCardNumbers()
+    private fun printSumOfPlayerCardNumbers(blackJackGamer: BlackJackGamer) {
+        val sumOfCardNumbers = blackJackGamer.calculateSumOfCardNumbers()
         println(" - 결과: $sumOfCardNumbers")
     }
 
     fun printNextLine() {
+        println()
+    }
+
+    fun printDealerIsDraw() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         println()
     }
 }

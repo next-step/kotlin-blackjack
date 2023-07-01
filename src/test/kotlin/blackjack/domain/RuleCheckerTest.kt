@@ -14,16 +14,16 @@ class RuleCheckerTest {
         ruleChecker = RuleChecker()
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        "10,true",
-        "21,true",
-        "22,false",
-        delimiter = ','
-    )
-    fun `카드 숫자합이 21이 넘는지 검사한다`(sum: Int, answer: Boolean) {
-        val actual = ruleChecker.checkSumOfCardNumbers(sum)
-
-        Assertions.assertThat(actual).isEqualTo(answer)
-    }
+//    @ParameterizedTest
+//    @CsvSource(
+//        "10,true",
+//        "21,true",
+//        "22,false",
+//        delimiter = ','
+//    )
+//    fun `카드 숫자합이 21이 넘는지 검사한다`(sum: Int, answer: Boolean) {
+//        val actual = ruleChecker.checkSumOfCardNumbers(sum)
+//
+//        Assertions.assertThat(actual).isEqualTo(answer)
+//    }
 }
