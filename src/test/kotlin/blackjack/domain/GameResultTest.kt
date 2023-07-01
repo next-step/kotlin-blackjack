@@ -19,4 +19,18 @@ class GameResultTest : FunSpec({
         // then
         actual[player] shouldBe 21
     }
+
+    test("Ace는 21을 넘지 않으면서 가장 가깝도록 1 또는 11을 선택한다.") {
+        // given
+        val cards = Cards(Card(Rank.ACE), Card(Rank.ACE))
+        val player = Player(PLAYER_SONG2_NAME, cards)
+        val players = listOf(player)
+        val gameResult = GameResult(players)
+
+        // when
+        val actual = gameResult.scoreMap
+
+        // then
+        actual[player] shouldBe 12
+    }
 })
