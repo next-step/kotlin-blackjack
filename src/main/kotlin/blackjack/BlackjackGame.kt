@@ -15,7 +15,7 @@ class BlackjackGame(
         val players = createPlayers()
 
         dealer.dealInitialCards(players)
-        resultView.printInitialDistribute(players)
+        resultView.printInitialDistribute(dealer, players)
         resultView.printPlayerList(players)
         players.takeTurns()
 
@@ -44,6 +44,7 @@ class BlackjackGame(
             }
         }
     }
+
     companion object {
         private const val BUST_SCORE = 22
     }
