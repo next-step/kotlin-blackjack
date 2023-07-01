@@ -23,4 +23,3 @@ fun arrangeCardsForTest(
 
     return preArrangedCard.toSet() + cardsExceptPreArrangedCard
 }
-

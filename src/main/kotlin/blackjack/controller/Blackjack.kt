@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.CardDrawCommand
 import blackjack.GameCardStorage
 import blackjack.Player
 import blackjack.view.InputView
@@ -18,8 +19,24 @@ class Blackjack(
             it.take(gameCardStorage.drawCard())
             it.take(gameCardStorage.drawCard())
         }
-
         outputView.showInitialStatus(players)
+
+        for (player in players) {
+            runExtraCardDrawSession(player, gameCardStorage)
+        }
+    }
+
+    private fun runExtraCardDrawSession(player: Player, gameCardStorage: GameCardStorage) {
+        var isResultShown = false
+        while (inputView.fetchCardDrawCommand(player) == CardDrawCommand.YES) {
+            val nextCard = gameCardStorage.drawCard()
+            player.take(nextCard)
+            outputView.showCurrentStatusOf(player)
+            isResultShown = true
+        }
+        if (isResultShown.not()) {
+            outputView.showCurrentStatusOf(player)
+        }
     }
 }
 
