@@ -8,6 +8,7 @@ import blackjack.domain.Score
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 import blackjack.dto.BlackjackGameResult
+import blackjack.view.InputView
 
 class BlackjackService {
 
@@ -23,11 +24,11 @@ class BlackjackService {
 
     fun raceBlackjack(player: Player, blackjackGame: BlackjackGame, answer: String) {
 
-        if (answer == Condition.PLAY.raceFlag.name.lowercase() && player.currentCondition() == Condition.PLAY) {
+        if (answer == InputView.go && player.currentCondition() == Condition.PLAY) {
             val card = blackjackGame.dealer.draw(ONE_MORE_CARD_COUNT).pick()
             player.hit(card)
             checkCondition(player)
-        } else if (answer == Condition.STAY.raceFlag.name.lowercase()) {
+        } else if (answer == InputView.stop) {
             player.changeCondition(Condition.STAY)
         }
     }
