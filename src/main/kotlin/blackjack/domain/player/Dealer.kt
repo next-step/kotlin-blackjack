@@ -18,7 +18,7 @@ class Dealer(
         if (gameState.isBust()) {
             return
         }
-        if (gameState.score() >= 17) {
+        if (gameState.score() >= DEALER_MAX_SCORE) {
             gameState = gameState.stay()
         }
     }
@@ -43,5 +43,6 @@ class Dealer(
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_MAX_SCORE = 17
     }
 }
