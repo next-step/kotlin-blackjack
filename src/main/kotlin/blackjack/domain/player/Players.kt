@@ -1,10 +1,19 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.GameConditionNotify
+import blackjack.domain.card.BlackCardDeck
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardType
 
 class Players(private val players: MutableList<Player>) {
 
     private val blackJackCardDeck: BlackCardDeck = CardType.getCardDeck(CardNumber.values())
 
     private val dealer = Dealer()
+
+    fun getDealer(): Dealer {
+        return dealer
+    }
 
     init {
         getPlayers().forEach {

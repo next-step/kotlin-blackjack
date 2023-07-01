@@ -1,18 +1,21 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.GameResultState
+import blackjack.domain.card.Cards
 
 class Dealer(name: String = "딜러") : Player(PlayerName(name)) {
 
-    private var resultStateCount = hashMapOf<GameResultState, Int>()
+    private val resultStateCount = hashMapOf<GameResultState, Int>()
 
     val hasGetMoreCard
-        get() = cards.size > Players.START_CARD_COUNT
+        get() = cards.hasMoreCard(Players.START_CARD_COUNT)
 
     fun shouldGetMoreCard(): Boolean {
-        return cards.getCardScore() < DEALER_SHOULD_GET_CARD_SCORE
+        return cards.hasLessScore(DEALER_SHOULD_GET_CARD_SCORE)
     }
 
     override fun getScore(): Int {
-        if (cards.getCardScore() > Cards.WIN_SCORE) {
+        if (cards.hasMoreScore(Cards.WIN_SCORE)) {
             return ZERO_SCORE
         }
         return super.getScore()

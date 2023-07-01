@@ -1,13 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.CardType
-import blackjack.domain.Cards
-import blackjack.domain.Dealer
 import blackjack.domain.GameResultState
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardType
+import blackjack.domain.card.Cards
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 object OutputView {
 
@@ -32,18 +32,16 @@ object OutputView {
     private fun getPlayerCardInformation(player: Player) = "${player.name.name}카드: ${getCardsNames(player.cards)}"
 
     fun showGameResult(players: Players) {
+        showDealerGetMoreCardState(players.getDealer())
         players.getPlayers().forEach {
-            showDealerGetMoreCardState(it)
             println("${getPlayerCardInformation(it)} - 결과: ${it.getScore()}")
         }
         showFinalResults(players)
     }
 
-    private fun showDealerGetMoreCardState(it: Player) {
-        if (it is Dealer) {
-            val dealerState = if (it.hasGetMoreCard) "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n" else "\n딜러는 17이상이라 카드를 받지 않았습니다.\n"
-            println(dealerState)
-        }
+    private fun showDealerGetMoreCardState(dealer: Dealer) {
+        val dealerState = if (dealer.hasGetMoreCard) "\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n" else "\n딜러는 17이상이라 카드를 받지 않았습니다.\n"
+        println(dealerState)
     }
 
     private fun showFinalResults(players: Players) {

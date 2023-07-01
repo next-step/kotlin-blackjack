@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.player.Players
+
 class BlackJackTable {
 
     fun startGame(players: Players, gameConditionNotify: GameConditionNotify) {

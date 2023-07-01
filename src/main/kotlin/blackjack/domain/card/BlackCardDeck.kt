@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class BlackCardDeck(private val cards: MutableSet<Card>) {
     fun hitCard(): Card {

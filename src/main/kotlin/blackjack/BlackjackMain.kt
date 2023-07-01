@@ -2,8 +2,8 @@ package blackjack
 
 import blackjack.domain.BlackJackTable
 import blackjack.domain.GameConditionNotify
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 

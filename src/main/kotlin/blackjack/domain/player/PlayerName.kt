@@ -1,3 +1,3 @@
-package blackjack.domain
+package blackjack.domain.player
 
 data class PlayerName(val name: String)

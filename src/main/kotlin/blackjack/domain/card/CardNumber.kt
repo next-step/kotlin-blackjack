@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardNumber(val score: Int) {
     CARD_TWO(2),
