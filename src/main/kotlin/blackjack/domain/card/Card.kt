@@ -1,7 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.ScoreCalculator
-
 data class Card(val suit: Suit, val cardNumber: CardNumber)
 
 class Cards(cardList: List<Card>) : Iterable<Card> {
@@ -16,10 +14,14 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
     }
 
     fun score(): Int {
-        return ScoreCalculator.calculateScore(this)
+        var sum = cardList.sumOf { it.cardNumber.score }
+        if (hasAce() && sum + ACE_BONUS_SCORE <= BLACKJACK_LIMIT) {
+            sum += ACE_BONUS_SCORE
+        }
+        return sum
     }
 
-    fun hasAce(): Boolean {
+    private fun hasAce(): Boolean {
         return cardList.any { it.cardNumber == CardNumber.ACE }
     }
 
@@ -32,7 +34,9 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
     }
 
     companion object {
-        private const val EMPTY_CARDS_ERROR_MESSAGE = "남아있는 카드가 없습니"
+        private const val EMPTY_CARDS_ERROR_MESSAGE = "남아있는 카드가 없습니다"
+        const val BLACKJACK_LIMIT = 21
+        private const val ACE_BONUS_SCORE = 10
     }
 }
 

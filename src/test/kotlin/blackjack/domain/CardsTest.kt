@@ -45,22 +45,17 @@ class CardsTest : BehaviorSpec({
         }
     }
 
-    Given("에이스가 없는 패가 있다") {
-        val cardList = listOf(Card(Suit.SPADE, CardNumber.JACK))
-        val cards = Cards(cardList)
-        When("덱에서 에이스를 찾으면") {
-            Then("없다고 나온다") {
-                cards.hasAce() shouldBe false
-            }
-        }
-    }
-
-    Given("에이스가 있는 패가 있다") {
-        val cardList = listOf(Card(Suit.SPADE, CardNumber.ACE))
-        val cards = Cards(cardList)
-        When("덱에서 에이스를 찾으면") {
-            Then("있다고 나온다") {
-                cards.hasAce() shouldBe true
+    Given("카드가 들어 있는 플레이어 패가 있다") {
+        val cards = Cards(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE), // 이때는 11
+                Card(Suit.SPADE, CardNumber.NINE),
+                Card(Suit.HEART, CardNumber.ACE), // 이때는 1
+            ),
+        )
+        When("해당덱의 점수를 구하면") {
+            Then("합이 반환된다") {
+                cards.score() shouldBe 21
             }
         }
     }

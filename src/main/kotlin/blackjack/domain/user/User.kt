@@ -1,6 +1,5 @@
 package blackjack.domain.user
 
-import blackjack.domain.ScoreCalculator
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.result.Result
@@ -26,7 +25,7 @@ abstract class Player(
     }
 
     fun isBust(): Boolean {
-        return cards.score() > ScoreCalculator.BLACKJACK_LIMIT
+        return cards.score() > Cards.BLACKJACK_LIMIT
     }
 
     abstract fun canDraw(): Boolean
