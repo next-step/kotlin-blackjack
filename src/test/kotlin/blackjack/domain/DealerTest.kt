@@ -1,12 +1,55 @@
 package blackjack.domain
 
 import blackjack.domain.enums.Condition
+import blackjack.domain.enums.MatchResult
 import blackjack.enums.Rank
 import blackjack.enums.Symbol
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class DealerTest {
+
+    private lateinit var dealer: Dealer
+
+    @BeforeEach
+    fun setup() {
+        dealer = Dealer(
+            cards = Cards(
+                listOf(
+                    Card(rank = Rank.JACK, symbol = Symbol.SPADES),
+                    Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
+                )
+            ),
+            condition = Condition.PLAY,
+            deck = Deck()
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [2, 3, 6, 7, 8])
+    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 높으면 승을 반환`(value: Int) {
+
+        val playerScore = Score(value = value)
+        dealer.determineResult(playerScore) shouldBe MatchResult.WIN
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [17, 18, 19, 20, 21])
+    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 낮다면 패를 반환`(value: Int) {
+
+        val playerScore = Score(value = value)
+        dealer.determineResult(playerScore) shouldBe MatchResult.LOSE
+    }
+
+    @Test
+    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 같다면 무승부를 반환`() {
+
+        val playerScore = Score(value = 15)
+        dealer.determineResult(playerScore) shouldBe MatchResult.DRAW
+    }
 
     @Test
     fun `딜러는 이름과 카드 및 덱을 가진다`() {

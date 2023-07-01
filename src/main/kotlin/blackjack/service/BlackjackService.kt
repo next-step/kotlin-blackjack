@@ -34,11 +34,10 @@ class BlackjackService {
 
     fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
         val result = mutableListOf<BlackjackGameResult>()
-        val dealerScore = dealer.cards.calculateScore()
         var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
 
         players.forEach { player ->
-            val resultMatch = player.determineResult(dealerScore)
+            val resultMatch = dealer.determineResult(player.cards.calculateScore())
             addGameResult(result, player.name, resultMatch)
             when (resultMatch) {
                 MatchResult.WIN -> dealerLoseCount++

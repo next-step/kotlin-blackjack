@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.enums.Condition
+import blackjack.domain.enums.MatchResult
 
 class Dealer(
     name: String = "딜러",
@@ -41,6 +42,16 @@ class Dealer(
 
     fun currentCondition(): Condition {
         return this.condition
+    }
+
+    fun determineResult(otherScore: Score): MatchResult {
+        val score = cards.calculateScore()
+
+        return when {
+            score.value > otherScore.value -> MatchResult.WIN
+            score.value < otherScore.value -> MatchResult.LOSE
+            else -> MatchResult.DRAW
+        }
     }
 
     companion object {
