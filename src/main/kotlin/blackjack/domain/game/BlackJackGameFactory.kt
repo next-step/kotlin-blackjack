@@ -1,17 +1,18 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamer.PlayerNames
+import blackjack.domain.gamer.Gamers
+import blackjack.domain.gamer.PlayerInitProperty
 import blackjack.domain.shuffle.Shuffler
 
 class BlackJackGameFactory(
     private val shuffler: Shuffler<Card>,
 ) {
 
-    fun create(playerNames: PlayerNames): BlackJackGame {
+    fun create(playerInitProperties: List<PlayerInitProperty>): BlackJackGame {
         return BlackJackGame(
             shuffler = shuffler,
-            playerNames = playerNames,
+            gamers = Gamers.create(playerInitProperties),
         )
     }
 }

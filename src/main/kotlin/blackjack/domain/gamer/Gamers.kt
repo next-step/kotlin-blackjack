@@ -34,6 +34,7 @@ class Gamers(
     fun tryHitToDealer(pickCard: () -> Card): DealerTurnExecuteResult {
         val isDistributedOneMoreCard = if (dealer.canHit()) {
             dealer.hit(pickCard())
+            dealer.stay()
             true
         } else {
             dealer.stay()
@@ -61,15 +62,15 @@ class Gamers(
     }
 
     fun match(): MatchResult {
-        return players.match(dealer)
+        return MatchResult.create(players, dealer)
     }
 
     companion object {
 
-        fun create(playerNames: PlayerNames): Gamers {
+        fun create(playerInitProperties: List<PlayerInitProperty>): Gamers {
             return Gamers(
                 dealer = Dealer(),
-                players = Players.create(playerNames)
+                players = Players.create(playerInitProperties)
             )
         }
     }

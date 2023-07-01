@@ -12,7 +12,7 @@ class BlackJackController(
 ) {
 
     fun start() {
-        val playerNames = inputView.readPlayerNames()
+        val playerNames = inputView.readPlayerInitProperties()
         val blackJackGame = blackJackGameFactory.create(playerNames)
 
         do {

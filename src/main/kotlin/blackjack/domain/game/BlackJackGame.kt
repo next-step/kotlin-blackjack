@@ -5,16 +5,14 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Cards
 import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.PlayerCards
-import blackjack.domain.gamer.PlayerNames
 import blackjack.domain.shuffle.Shuffler
 
 class BlackJackGame(
     shuffler: Shuffler<Card>,
-    playerNames: PlayerNames,
+    private val gamers: Gamers,
 ) {
 
-    private val cardDeck = CardDeck.create(shuffler)
-    private val gamers = Gamers.create(playerNames)
+    private val cardDeck = CardDeck.createAllCards(shuffler)
 
     fun currentTurn(): BlackJackGameTurn {
         return when {
@@ -40,7 +38,7 @@ class BlackJackGame(
 
     fun hitFocusedPlayer(): PlayerCards {
         requireTurn<BlackJackGameTurn.PlayerAnswer>()
-        return gamers.hitToFocusedPlayer(cardDeck.pick())
+        return gamers.hitToFocusedPlayer(cardDeck.poll())
     }
 
     fun stayFocusedPlayer() {
@@ -50,7 +48,7 @@ class BlackJackGame(
 
     fun executeDealerTurn(): DealerTurnExecuteResult {
         requireTurn<BlackJackGameTurn.Dealer>()
-        return gamers.tryHitToDealer { cardDeck.pick() }
+        return gamers.tryHitToDealer { cardDeck.poll() }
     }
 
     fun makeGameResult(): MatchResult {

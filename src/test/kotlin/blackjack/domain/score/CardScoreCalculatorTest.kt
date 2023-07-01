@@ -1,9 +1,6 @@
 package blackjack.domain.score
 
-import blackjack.domain.card.heartAce
-import blackjack.domain.card.heartJack
-import blackjack.domain.card.heartTwo
-import blackjack.domain.card.spadeAce
+import blackjack.domain.card.CardFixture
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -16,17 +13,17 @@ class CardScoreCalculatorTest : BehaviorSpec({
             forAll(
                 row(
                     listOf(
-                        heartAce(),
-                        heartTwo(),
-                        heartJack(),
+                        CardFixture.heartAce,
+                        CardFixture.heartTwo,
+                        CardFixture.heartJack,
                     ),
                     13, // A(1) + Two(2) + J(10) = 13 (A를 11로 계산하면 24로, 21 초과)
                 ),
                 row(
                     listOf(
-                        heartAce(),
-                        spadeAce(),
-                        heartJack(),
+                        CardFixture.heartAce,
+                        CardFixture.spadeAce,
+                        CardFixture.heartJack,
                     ),
                     12, // A하트(1) + A스페이드(1) + J(10) = 12 (A를 한장이라도 11로 계산하면 21 초과)
                 )
@@ -41,22 +38,22 @@ class CardScoreCalculatorTest : BehaviorSpec({
             forAll(
                 row(
                     listOf(
-                        heartAce(),
+                        CardFixture.heartAce,
                     ),
                     11, // A(11)
                 ),
                 row(
                     listOf(
-                        heartAce(),
-                        heartJack(),
+                        CardFixture.heartAce,
+                        CardFixture.heartJack,
                     ),
                     21, // A(11) + J(10) = 21
                 ),
                 row(
                     listOf(
-                        heartAce(),
-                        spadeAce(),
-                        heartTwo(),
+                        CardFixture.heartAce,
+                        CardFixture.spadeAce,
+                        CardFixture.heartTwo,
                     ),
                     14, // A(11) + A(1) + Two(2) = 14 (A 한장은 11로 계산해도 21을 초과하지 않음)
                 ),

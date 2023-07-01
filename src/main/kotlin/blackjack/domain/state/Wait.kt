@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards
 
 class Wait : GamerState() {
 
-    override val cards: Cards = Cards.empty()
+    override val cards: Cards = Cards()
 
     override fun init(initCards: Cards): GamerState {
         require(initCards.value.size == Cards.INIT_CARD_SIZE) {

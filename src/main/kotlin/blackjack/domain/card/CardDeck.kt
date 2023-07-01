@@ -4,15 +4,18 @@ import blackjack.domain.shuffle.Shuffler
 import java.util.LinkedList
 
 @JvmInline
-value class CardDeck private constructor(val cards: LinkedList<Card>) {
+value class CardDeck(private val cards: LinkedList<Card>) {
 
-    fun pick(): Card {
+    constructor(cards: List<Card>) : this(LinkedList(cards))
+
+    fun poll(): Card {
         return cards.poll()
     }
 
     companion object {
-        fun create(shuffler: Shuffler<Card>): CardDeck {
-            return CardDeck(LinkedList(shuffler.shuffled(Card.ALL_CARDS)))
+
+        fun createAllCards(shuffler: Shuffler<Card>): CardDeck {
+            return CardDeck(shuffler.shuffled(Card.ALL_CARDS))
         }
     }
 }

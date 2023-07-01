@@ -3,7 +3,7 @@ package blackjack.domain.state
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class GamerState {
+sealed class GamerState {
 
     abstract val cards: Cards
 
@@ -17,6 +17,10 @@ abstract class GamerState {
 
     fun isBust(): Boolean {
         return this is Bust
+    }
+
+    fun isBlackJack(): Boolean {
+        return this is BlackJack
     }
 
     open fun init(initCards: Cards): GamerState {
