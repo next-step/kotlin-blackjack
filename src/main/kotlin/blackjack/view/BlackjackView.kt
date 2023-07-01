@@ -58,12 +58,13 @@ object BlackjackView {
     private fun print(cards: Cards): String = cards.cards.joinToString(", ") { print(it) }
     fun printGameResult(gameResult: GameResultVO) {
         println("\n## 최종 승패")
+
+        val dealerResults = gameResult.dealerWinMap.map { (result, int) ->
+            int.toString() + result.description
+        }
+
         println(
-            "딜러: ${
-            gameResult.dealerWinMap.map { (result, int) ->
-                int.toString() + result.description
-            }.joinToString(" ")
-            }"
+            "딜러: ${dealerResults.joinToString(" ")}"
         )
 
         gameResult.playersWinMap.forEach { (player, result) ->
