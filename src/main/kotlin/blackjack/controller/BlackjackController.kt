@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.UserDrawInterface
+import blackjack.domain.user.UserDrawInterface
 import blackjack.io.InputView
 import blackjack.io.ResultView
 

@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.ScoreCalculator
 
 data class Card(val suit: Suit, val cardNumber: CardNumber)
 

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Cards
+
 object ScoreCalculator {
     const val BLACKJACK_LIMIT = 21
     private const val ACE_BONUS_SCORE = 10

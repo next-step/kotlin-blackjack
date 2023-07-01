@@ -1,6 +1,6 @@
 package blackjack.util
 
-import blackjack.domain.Card
+import blackjack.domain.card.Card
 
 interface CardSelector {
 

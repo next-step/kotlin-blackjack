@@ -1,4 +1,7 @@
-package blackjack.domain
+package blackjack.domain.result
+
+import blackjack.domain.user.Dealer
+import blackjack.domain.user.Users
 
 class BlackjackResults(dealer: Dealer, users: Users) {
     val dealerResult: DealerResult
@@ -23,13 +26,3 @@ class BlackjackResults(dealer: Dealer, users: Users) {
         }
     }
 }
-
-enum class Result {
-    WIN, DRAW, LOSE
-}
-
-data class DealerResult(val dealer: Dealer, val winCount: Int, val drawCount: Int, val loseCount: Int)
-
-data class UserResults(private val userResults: List<UserResult>) : Iterable<UserResult> by userResults
-
-data class UserResult(val user: User, val result: Result)

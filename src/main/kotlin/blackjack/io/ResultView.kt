@@ -1,17 +1,17 @@
 package blackjack.io
 
-import blackjack.domain.BlackjackResults
-import blackjack.domain.Card
-import blackjack.domain.CardNumber
-import blackjack.domain.Cards
-import blackjack.domain.Dealer
-import blackjack.domain.DealerResult
-import blackjack.domain.Player
-import blackjack.domain.Result
-import blackjack.domain.Suit
-import blackjack.domain.User
-import blackjack.domain.UserResults
-import blackjack.domain.Users
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Suit
+import blackjack.domain.result.BlackjackResults
+import blackjack.domain.result.DealerResult
+import blackjack.domain.result.Result
+import blackjack.domain.result.UserResults
+import blackjack.domain.user.Dealer
+import blackjack.domain.user.Player
+import blackjack.domain.user.User
+import blackjack.domain.user.Users
 
 object ResultView {
     private const val CARDS_INITIALIZED_FORMAT = "딜러와 %s에게 2장의 카드를 나누었습니다."

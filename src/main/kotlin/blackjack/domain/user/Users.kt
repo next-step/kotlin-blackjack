@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.user
 
 data class Users(private val userList: Set<User>) : Iterable<User> by userList {
 

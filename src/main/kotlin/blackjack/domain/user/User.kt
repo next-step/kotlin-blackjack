@@ -1,4 +1,9 @@
-package blackjack.domain
+package blackjack.domain.user
+
+import blackjack.domain.ScoreCalculator
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.result.Result
 
 fun interface UserDrawInterface {
     fun canDraw(user: User): Boolean

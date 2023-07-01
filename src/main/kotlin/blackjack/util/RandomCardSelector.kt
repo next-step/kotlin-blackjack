@@ -1,7 +1,7 @@
 package blackjack.util
 
-import blackjack.domain.Card
-import blackjack.domain.Deck
+import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
 
 class RandomCardSelector : CardSelector {
     private val deck: Deck = Deck.getShuffledDeck()
