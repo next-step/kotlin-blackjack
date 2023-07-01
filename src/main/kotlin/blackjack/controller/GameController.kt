@@ -2,8 +2,8 @@ package blackjack.controller
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.GamePlayer
 import blackjack.domain.player.Participants
-import blackjack.domain.player.PlayerImpl
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -20,9 +20,15 @@ object GameController {
     }
 
     private fun prepareGame(deck: Deck): Participants {
-        val playerImpls = InputView.getPlayerNames().map { PlayerImpl(it) }
+        val gamePlayers = InputView.getPlayerNames().map { GamePlayer(it) }
         val dealer = Dealer()
-        val participants = Participants(playerImpls, dealer)
+        val participants = Participants(gamePlayers, dealer)
+
+        // 베팅금액
+        gamePlayers.forEach { player ->
+            val amount = InputView.askBettingAmount(player.name)
+            dealer.getMoneyFromPlayer(player, amount)
+        }
 
         repeat(DEFAULT_INITIAL_DRAW) {
             participants.drawAll(deck)
@@ -38,14 +44,15 @@ object GameController {
     private fun playGame(participants: Participants, deck: Deck) {
         participants.players.forEach { playTurn(it, deck) }
         if (participants.dealer.canDraw()) {
+            OutputView.printDealerGetAdditionalCard()
             participants.dealer.drawCard(deck)
         }
     }
 
-    private fun playTurn(playerImpl: PlayerImpl, deck: Deck) {
-        while (playerImpl.canDraw() && InputView.askDrawCard(playerImpl)) {
-            playerImpl.drawCard(deck)
-            OutputView.printPlayerCard(playerImpl)
+    private fun playTurn(gamePlayer: GamePlayer, deck: Deck) {
+        while (gamePlayer.canDraw() && InputView.askDrawCard(gamePlayer)) {
+            gamePlayer.drawCard(deck)
+            OutputView.printPlayerCard(gamePlayer)
         }
     }
 
@@ -54,7 +61,7 @@ object GameController {
     }
 
     private fun showResult(participants: Participants) {
-        val result = participants.getGameResult()
-        OutputView.showWinner(result)
+        participants.finishGame()
+        OutputView.showWinner(participants.allGameMembers)
     }
 }

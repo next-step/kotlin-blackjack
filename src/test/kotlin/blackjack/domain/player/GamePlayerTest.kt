@@ -5,30 +5,30 @@ import blackjack.domain.card.CardHold
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.Money
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
-class PlayerImplTest {
+class GamePlayerTest {
     @Test
     fun `플레이어는 처음 포인트가 0이다`() {
         // given
-        val playerImpl = PlayerImpl("goofy")
+        val gamePlayer = GamePlayer("goofy")
         // when
-        playerImpl.getPoints() shouldBe 0
+        gamePlayer.getPoints() shouldBe 0
     }
 
     @Test
     fun `플레이어는 카드를 뽑을 수 있다`() {
         // given
-        val playerImpl = PlayerImpl("goofy")
+        val gamePlayer = GamePlayer("goofy")
         val deck = Deck()
         // when
-        playerImpl.drawCard(deck)
+        gamePlayer.drawCard(deck)
         // then
-        playerImpl.cardHold.getCardsTotalSize() shouldBe 1
-        playerImpl.getPoints() shouldNotBe 0
+        gamePlayer.cardHold.getCardsTotalSize() shouldBe 1
+        gamePlayer.getPoints() shouldNotBe 0
     }
 
     @Test
@@ -37,10 +37,10 @@ class PlayerImplTest {
         val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3))
-        val playerImpl = PlayerImpl("goofy", myCards)
+        val gamePlayer = GamePlayer("goofy", myCards)
 
         // when
-        val result = playerImpl.canDraw()
+        val result = gamePlayer.canDraw()
 
         // then
         result shouldBe false
@@ -53,31 +53,39 @@ class PlayerImplTest {
         val sampleCard3 = Card.createCard(CardRank.KING, CardShape.DIAMOND)
         val sampleCard4 = Card.createCard(CardRank.ACE, CardShape.HEART)
         val myCards = CardHold(mutableListOf(sampleCard, sampleCard2, sampleCard3, sampleCard4))
-        val playerImpl = PlayerImpl("goofy", myCards)
+        val gamePlayer = GamePlayer("goofy", myCards)
 
         // when
-        val result = playerImpl.getPoints()
+        val result = gamePlayer.getPoints()
 
         // then
         result shouldBe 31
     }
 
     @Test
-    fun `플레이어간에는 점수 비교를 하지 않는다`() {
-        // given player 1
-        val sampleCard = Card.createCard(CardRank.JACK, CardShape.CLOVER)
-        val sampleCard2 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val myCards = CardHold(mutableListOf(sampleCard, sampleCard2))
-        val goofyPlayer = PlayerImpl("goofy", myCards)
-
-        // given player 2
-        val sampleCard3 = Card.createCard(CardRank.QUEEN, CardShape.HEART)
-        val myCards2 = CardHold(mutableListOf(sampleCard3))
-        val zeroPlayer = PlayerImpl("zero", myCards2)
+    fun `게임 플레이어는 돈을 낼 수 있다`() {
+        // given
+        val bettingMoney = 10000
+        val player = GamePlayer("name")
 
         // when
-        assertThrows<IllegalArgumentException> {
-            zeroPlayer.compareScore(goofyPlayer)
-        }
+        val money = player.betMoney(bettingMoney)
+
+        // then
+        money.value shouldBe bettingMoney
+        player.money.value shouldBe -10000
+    }
+
+    @Test
+    fun `게임플레이어는 돈을 돌려받을 수 있다`() {
+        // given
+        val winMoney = Money(10000)
+        val player = GamePlayer("name")
+
+        // when
+        player.winMoney(winMoney)
+
+        // then
+        player.money.value shouldBe winMoney.value
     }
 }
