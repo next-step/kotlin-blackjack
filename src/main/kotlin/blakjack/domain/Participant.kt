@@ -35,6 +35,10 @@ sealed class Participant(
         return this.status == ParticipantStatus.BUST
     }
 
+    fun isNotBust(): Boolean {
+        return !isBust()
+    }
+
     private fun bustIfOver21() {
         if (isOver21) {
             bust()
