@@ -1,6 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
+import blackjack.domain.gamer.Gamers
 import blackjack.domain.gamer.PlayerInitProperty
 import blackjack.domain.shuffle.CardShuffler
 import blackjack.domain.shuffle.Shuffler
@@ -11,6 +12,6 @@ fun blackJackGame(
 ): BlackJackGame {
     return BlackJackGame(
         shuffler = shuffler,
-        playerInitProperties = playerInitProperties,
+        gamers = Gamers.create(playerInitProperties),
     )
 }
