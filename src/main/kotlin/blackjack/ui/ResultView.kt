@@ -1,39 +1,37 @@
 package blackjack.ui
 
 import blackjack.domain.BlackJackGamer
-import blackjack.domain.Dealer
+import blackjack.domain.GamerType
 import blackjack.domain.Player
 import blackjack.domain.card.Card
 
 class ResultView {
-    fun printFirstDraw(playerList: List<Player>, dealer: Dealer) {
+    fun printFirstDraw(gamerList: List<BlackJackGamer>) {
         println()
-        printFirstDrawTitle(playerList)
-        printFirstDrawDetail(playerList, dealer)
+        printFirstDrawTitle(gamerList)
+        printFirstDrawDetail(gamerList)
         println()
     }
 
-    private fun printFirstDrawTitle(playerList: List<Player>) {
-        playerList.forEachIndexed { index, player ->
-            if (index == 0) print("딜러와 ")
-            if (index != 0) print(player.name)
-            if (index != playerList.lastIndex) print(", ")
+    private fun printFirstDrawTitle(gamerList: List<BlackJackGamer>) {
+        gamerList.forEachIndexed { index, gamer ->
+            print(gamer.getName())
+            if (index == 0) print("와 ")
+            if (index != 0 && index != gamerList.lastIndex) print(", ")
         }
         println("에게 2장의 나누었습니다.")
     }
 
-    private fun printFirstDrawDetail(playerList: List<Player>, dealer: Dealer) {
-        printDealerCardList(dealer)
-        println()
-
-        playerList.forEach {
-            printPlayerName(it)
+    private fun printFirstDrawDetail(gamerList: List<BlackJackGamer>) {
+        gamerList.forEach {
+            printGamerName(it)
             println(getCardsText(it.getCards()))
         }
     }
 
-    private fun printPlayerName(player: Player) {
-        print("${player.name}카드: ")
+    private fun printGamerName(gamer: BlackJackGamer) {
+        if (gamer.getGamerType() == GamerType.PLAYER) print("${gamer.getName()}카드: ")
+        if (gamer.getGamerType() == GamerType.DEALER) print("${gamer.getName()} 카드: ")
     }
 
     private fun getCardsText(cards: List<Card>): String {
@@ -46,29 +44,22 @@ class ResultView {
     }
 
     fun printPlayersWantToDrawCard(player: Player) {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${player.getName()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
-    fun printPlayerCardList(player: Player) {
-        printPlayerName(player)
-        print(getCardsText(player.getCards()))
+    fun printGamerCardList(gamer: BlackJackGamer) {
+        printGamerName(gamer)
+        print(getCardsText(gamer.getCards()))
     }
 
-    private fun printDealerCardList(dealer: Dealer) {
-        print("딜러: ")
-        print(getCardsText(dealer.getCards()))
-    }
-
-    fun printGameResult(playerList: List<Player>, dealer: Dealer) {
-        printDealerCardList(dealer)
-        printSumOfPlayerCardNumbers(dealer)
-        playerList.forEach {
-            printPlayerCardList(it)
-            printSumOfPlayerCardNumbers(it)
+    fun printGameResult(gamerList: List<BlackJackGamer>) {
+        gamerList.forEach {
+            printGamerCardList(it)
+            printSumOfGamerCardNumbers(it)
         }
     }
 
-    private fun printSumOfPlayerCardNumbers(blackJackGamer: BlackJackGamer) {
+    private fun printSumOfGamerCardNumbers(blackJackGamer: BlackJackGamer) {
         val sumOfCardNumbers = blackJackGamer.calculateSumOfCardNumbers()
         println(" - 결과: $sumOfCardNumbers")
     }

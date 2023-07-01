@@ -18,7 +18,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름을 가진다`() {
-        Assertions.assertThat(player.name).isEqualTo("이름")
+        Assertions.assertThat(player.getName()).isEqualTo("이름")
     }
 
     @Test
@@ -57,7 +57,7 @@ class PlayerTest {
         val actual = mutableListOf<String>()
 
         playerList.forEach {
-            actual.add(it.name)
+            actual.add(it.getName())
         }
 
         Assertions.assertThat(actual).isEqualTo(playerNameList)

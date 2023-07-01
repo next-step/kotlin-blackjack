@@ -22,13 +22,12 @@ class BlackJackController(
         val gamerList = makeGamerList(playerList, dealer)
 
         firstDraw(blackJackGame, gamerList)
-        printFirstDraw(playerList, dealer)
 
         askPlayersWantToDrawCard(blackJackGame, playerList)
 
         checkDealerCards(blackJackGame, dealer)
 
-        printGameResult(playerList, dealer)
+        printGameResult(gamerList)
     }
 
     private fun makeGamerList(playerList: List<Player>, dealer: Dealer): List<BlackJackGamer> {
@@ -41,10 +40,11 @@ class BlackJackController(
 
     private fun firstDraw(blackJackGame: BlackJackGame, gamerList: List<BlackJackGamer>) {
         blackJackGame.firstDraw(gamerList)
+        printFirstDraw(gamerList)
     }
 
-    private fun printFirstDraw(playerList: List<Player>, dealer: Dealer) {
-        resultView.printFirstDraw(playerList, dealer)
+    private fun printFirstDraw(gamerList: List<BlackJackGamer>) {
+        resultView.printFirstDraw(gamerList)
     }
 
     private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
@@ -61,7 +61,7 @@ class BlackJackController(
                 return null
             }
         }
-        resultView.printPlayerCardList(player)
+        resultView.printGamerCardList(player)
         return player
     }
 
@@ -72,7 +72,7 @@ class BlackJackController(
 
     private fun drawPlayer(blackJackGame: BlackJackGame, player: Player) {
         blackJackGame.oneGamerDraw(player)
-        resultView.printPlayerCardList(player)
+        resultView.printGamerCardList(player)
         resultView.printNextLine()
     }
 
@@ -83,7 +83,7 @@ class BlackJackController(
         }
     }
 
-    private fun printGameResult(playerList: List<Player>, dealer: Dealer) {
-        resultView.printGameResult(playerList, dealer)
+    private fun printGameResult(gamerList: List<BlackJackGamer>) {
+        resultView.printGameResult(gamerList)
     }
 }

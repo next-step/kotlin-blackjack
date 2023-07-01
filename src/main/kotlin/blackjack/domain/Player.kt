@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-class Player(val name: String) : BlackJackGamer {
+class Player(private val name: String) : BlackJackGamer {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
 
@@ -24,6 +24,10 @@ class Player(val name: String) : BlackJackGamer {
 
     override fun getGamerType(): GamerType {
         return GamerType.PLAYER
+    }
+
+    override fun getName(): String {
+        return name
     }
 
     companion object {

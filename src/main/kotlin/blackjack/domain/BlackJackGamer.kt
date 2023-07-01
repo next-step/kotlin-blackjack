@@ -12,4 +12,6 @@ interface BlackJackGamer {
     fun calculateSumOfCardNumbers(): Int
 
     fun getGamerType(): GamerType
+
+    fun getName(): String
 }

@@ -23,7 +23,7 @@ class BlackJackGameTest {
         val dealer = Dealer()
 
         val blackJackGamerList = listOf(
-            pobi,jason,dealer
+            pobi, jason, dealer
         )
 
         val pobiCards = listOf(

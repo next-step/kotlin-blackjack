@@ -5,6 +5,7 @@ import blackjack.domain.card.Card
 class Dealer : BlackJackGamer {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
+    private val name = "딜러"
 
     override fun addCard(card: Card) {
         cards.add(card)
@@ -24,5 +25,9 @@ class Dealer : BlackJackGamer {
 
     override fun getGamerType(): GamerType {
         return GamerType.DEALER
+    }
+
+    override fun getName(): String {
+        return name
     }
 }
