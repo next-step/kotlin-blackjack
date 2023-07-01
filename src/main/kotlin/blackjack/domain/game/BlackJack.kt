@@ -46,12 +46,14 @@ class BlackJack(
         return false
     }
 
-    fun getResult(): Ranks {
-        return Ranks(players.associateWith { Rank.of(it.score(), dealer.score()) })
+    fun getResult(): Results {
+        return Results(players.associateWith { player: Player ->
+            player.getRevenue(dealer)
+        })
     }
 
     companion object {
-        private const val START_CARD_COUNT = 2
+        const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
         private const val DEALER_CARD_STANDARD_SCORE = 16
         private const val PLAYER_NONE_EXCEPTION = "턴을 가져갈 플레이어가 존재하지 않습니다"

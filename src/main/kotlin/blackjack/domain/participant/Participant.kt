@@ -20,6 +20,10 @@ abstract class Participant(val name: String, val cards: Cards = Cards()) {
         return cards.score()
     }
 
+    fun hasBlackJack(): Boolean {
+        return cards.isBlackJack()
+    }
+
     companion object {
         private const val NAME_EXCEPTION = "이름을 정확하게 입력해주십시오"
     }

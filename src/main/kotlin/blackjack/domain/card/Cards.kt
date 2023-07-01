@@ -16,6 +16,10 @@ value class Cards(val values: MutableList<Card> = mutableListOf()) {
         return score
     }
 
+    fun isBlackJack(): Boolean {
+        return values.size == BlackJack.START_CARD_COUNT && score() == BlackJack.BLACKJACK_MAX_SCORE
+    }
+
     companion object {
         private const val ACE_PLUS_SCORE = 10
     }

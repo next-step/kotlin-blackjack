@@ -1,11 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
-import blackjack.domain.card.Character
-import blackjack.domain.card.GameCardGenerator
-import blackjack.domain.card.GameCards
-import blackjack.domain.card.Shape
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -51,5 +45,39 @@ internal class CardsTest {
             )
         )
         cards.score() shouldBe 21
+    }
+
+    @Test
+    internal fun `카드가 2개이면서 21이면 블랙잭이다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.K),
+                Card(Shape.CLOVER, Character.A)
+            )
+        )
+        cards.isBlackJack() shouldBe true
+    }
+
+    @Test
+    internal fun `카드가 3개이면서 21이면 블랙잭이아니다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.EIGHT),
+                Card(Shape.CLOVER, Character.TWO),
+                Card(Shape.CLOVER, Character.A)
+            )
+        )
+        cards.isBlackJack() shouldBe false
+    }
+
+    @Test
+    internal fun `카드가 2개여도 21이 아니면 블랙잭이아니다`() {
+        val cards = Cards(
+            mutableListOf(
+                Card(Shape.CLOVER, Character.EIGHT),
+                Card(Shape.CLOVER, Character.TWO)
+            )
+        )
+        cards.isBlackJack() shouldBe false
     }
 }
