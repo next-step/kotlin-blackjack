@@ -116,7 +116,7 @@ object ResultView {
             CardNumber.JACK -> "J"
             CardNumber.QUEEN -> "Q"
             CardNumber.KING -> "K"
-            else -> (cardNumber.ordinal + 1).toString()
+            else -> cardNumber.score.toString()
         }
     }
 
