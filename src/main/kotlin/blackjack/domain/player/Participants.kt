@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
-import blackjack.domain.Hands
 import blackjack.domain.PlayerGameResult
+import blackjack.domain.PlayerHands
 import blackjack.domain.card.Card
 
 @JvmInline
@@ -16,14 +16,14 @@ value class Participants(
         values.forEach { it.draw(drawAction()) }
     }
 
-    fun hands(): List<Hands> = values.map { Hands.from(it) }
+    fun hands(): List<PlayerHands> = values.map { PlayerHands.from(it) }
 
     fun participantName(index: Int): String = participant(index).name()
 
-    fun participantDraw(index: Int, drawAction: () -> Card): Pair<Hands, Boolean> {
+    fun participantDraw(index: Int, drawAction: () -> Card): Pair<PlayerHands, Boolean> {
         val participant = participant(index)
         participant.draw(drawAction())
-        return Hands.from(participant) to participant.isFinished()
+        return PlayerHands.from(participant) to participant.isFinished()
     }
 
     fun participantStay(index: Int) {

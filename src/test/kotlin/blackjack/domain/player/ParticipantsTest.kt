@@ -86,7 +86,7 @@ class ParticipantsTest : FunSpec({
             val participants = Participants(listOf(Player(Name("a"))))
             val actual = participants.participantDraw(0) { SPADE_ACE }
 
-            actual.first.playerName shouldBe "a"
+            actual.first.name shouldBe "a"
             actual.first.cards shouldContain SPADE_ACE
             actual.second shouldBe false
         }
@@ -103,7 +103,7 @@ class ParticipantsTest : FunSpec({
                 )
             val actual = participants.participantDraw(0) { SPADE_QUEEN }
 
-            actual.first.playerName shouldBe "a"
+            actual.first.name shouldBe "a"
             actual.first.cards shouldContainAll setOf(SPADE_JACK, SPADE_KING, SPADE_QUEEN)
             actual.second shouldBe true
         }

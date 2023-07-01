@@ -42,9 +42,8 @@ class BlackjackGameTest : FunSpec({
 
             blackjackGame.cardDeck.size() shouldBe 46
             blackjackGame.turn shouldBe TURN_0
-            actual shouldHaveSize 3
-            actual[0].playerName shouldBe "딜러"
-            actual[0].cards shouldHaveSize 1
+            actual.second shouldHaveSize 2
+            actual.first.cards shouldHaveSize 1
         }
     }
 
@@ -72,7 +71,7 @@ class BlackjackGameTest : FunSpec({
                 )
 
             val actual = blackjackGame.currentPlayerDraw()
-            actual.playerName shouldBe "a"
+            actual.name shouldBe "a"
             actual.cards shouldContainAll listOf(SPADE_ACE, SPADE_TWO, SPADE_THREE)
         }
 

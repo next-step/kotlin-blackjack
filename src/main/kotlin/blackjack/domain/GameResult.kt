@@ -26,14 +26,12 @@ data class PlayerGameResult(
 }
 
 data class DealerGameResult(
-    val playerName: String,
     val cards: Set<Card>,
     val score: Int,
     val competitions: Map<Competition, Int>,
 ) {
     companion object {
         fun of(participant: Participant, competitions: Map<Competition, Int>) = DealerGameResult(
-            playerName = participant.name(),
             cards = participant.cards(),
             score = participant.score(),
             competitions = competitions,

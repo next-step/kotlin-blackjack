@@ -1,20 +1,25 @@
 package blackjack.view
 
 import blackjack.domain.DealerGameResult
+import blackjack.domain.DealerHands
 import blackjack.domain.GameResult
-import blackjack.domain.Hands
 import blackjack.domain.PlayerGameResult
+import blackjack.domain.PlayerHands
 import blackjack.domain.card.Card
 
 private const val PLAYER_NAME_DELIMITER = ", "
 private const val CARD_DELIMITER = ", "
 
-fun printFirstDrawResult(hands: List<Hands>) {
-    println("${parsePlayerNames(hands)}에게 2장의 카드를 나누었습니다.")
-    hands.forEach { printPlayerDrawResult(it) }
+private const val DEALER_DISPLAY_NAME = "딜러"
+
+fun printFirstDrawResult(hands: Pair<DealerHands, List<PlayerHands>>) {
+    println("${DEALER_DISPLAY_NAME}와 ${parsePlayerNames(hands.second)}에게 2장의 카드를 나누었습니다.")
+    printDealerDrawResult(hands.first)
+    hands.second.forEach { printPlayerDrawResult(it) }
 }
 
-fun printCurrentDrawResult(hands: Hands) = println("${hands.playerName}카드: ${parseCardsResult(hands.cards)}")
+fun printCurrentDrawResult(playerHands: PlayerHands) =
+    println("${playerHands.name}카드: ${parseCardsResult(playerHands.cards)}")
 
 fun printDealerGetDraw() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
 
@@ -26,17 +31,19 @@ fun printGameResult(gameResult: GameResult) {
     printCameCompetition(gameResult.playerGameResults)
 }
 
-private fun parsePlayerNames(hands: List<Hands>) = hands.joinToString(PLAYER_NAME_DELIMITER) { it.playerName }
+private fun parsePlayerNames(hands: List<PlayerHands>) = hands.joinToString(PLAYER_NAME_DELIMITER) { it.name }
 
-private fun printPlayerDrawResult(hands: Hands) = println("${hands.playerName}카드: ${parseCardsResult(hands.cards)}")
+private fun printDealerDrawResult(hands: DealerHands) = println("${DEALER_DISPLAY_NAME}카드: ${parseCardsResult(hands.cards)}")
+
+private fun printPlayerDrawResult(hands: PlayerHands) = println("${hands.name}카드: ${parseCardsResult(hands.cards)}")
 
 private fun printGameScoreResult(gameResult: GameResult) {
     printGameScoreResult(gameResult.dealerGameResult)
     printGameScoreResult(gameResult.playerGameResults)
 }
 
-private fun printGameScoreResult(dealerGameResult: DealerGameResult)
-    = printGameScoreResult(dealerGameResult.playerName, dealerGameResult.cards, dealerGameResult.score)
+private fun printGameScoreResult(dealerGameResult: DealerGameResult) =
+    printGameScoreResult(DEALER_DISPLAY_NAME, dealerGameResult.cards, dealerGameResult.score)
 
 private fun printGameScoreResult(playerGameResults: List<PlayerGameResult>)
     = playerGameResults.forEach { printGameScoreResult(it) }
@@ -49,8 +56,8 @@ private fun printGameScoreResult(playerName: String, cards: Set<Card>, score: In
 
 private fun parseCardsResult(cards: Set<Card>) = cards.joinToString(CARD_DELIMITER) { parseCardView(it) }
 
-private fun printGameCompetition(dealerGameResult: DealerGameResult)
-    = printGameCompetition(dealerGameResult.playerName, parseCompetitionView(dealerGameResult.competitions))
+private fun printGameCompetition(dealerGameResult: DealerGameResult) =
+    printGameCompetition(DEALER_DISPLAY_NAME, parseCompetitionView(dealerGameResult.competitions))
 
 private fun printCameCompetition(playerGameResults: List<PlayerGameResult>)
     = playerGameResults.forEach { printGameCompetition(it) }

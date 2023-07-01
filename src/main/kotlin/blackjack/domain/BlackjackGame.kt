@@ -15,14 +15,14 @@ class BlackjackGame(
     var turn: Turn = turn
         private set
 
-    fun firstDraw(): List<Hands> {
+    fun firstDraw(): Pair<DealerHands, List<PlayerHands>> {
         check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
         repeat(FIRST_DRAW_COUNT) { drawDealerAndPlayers() }
         nextTurnChange()
-        return listOf(dealerFirstDrawHand()) + players.hands()
+        return dealerFirstDrawHand() to players.hands()
     }
 
-    fun currentPlayerDraw(): Hands {
+    fun currentPlayerDraw(): PlayerHands {
         checkTurn()
         val participantDraw = players.participantDraw(turn.value) { cardDeck.draw() }
         if (participantDraw.second) {
@@ -70,7 +70,7 @@ class BlackjackGame(
         turn = turn.nextTurn()
     }
 
-    private fun dealerFirstDrawHand() = Hands(playerName = dealer.name(), cards = setOf(dealer.cards().first()))
+    private fun dealerFirstDrawHand() = DealerHands(cards = setOf(dealer.cards().first()))
 
     private fun checkTurn() {
         check(turn.isDealingTurn().not()) { "첫 드로우가 시작되지 않았다." }
