@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.game.BlackJack
 import blackjack.domain.card.Cards
+import blackjack.domain.game.BlackJack
+import blackjack.domain.game.Results
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
-import blackjack.domain.game.Ranks
 
 object ResultView {
 
@@ -12,9 +12,7 @@ object ResultView {
     private const val START_STRING = "에게 2장의 나누었습니다."
     private const val CARD_STRING = "카드:"
     private const val SCORE_STRING = "- 결과:"
-    private const val LOST_STRING = "패"
-    private const val WON_STRING = "승"
-    private const val RESULT_STRING = "\n## 최종 승패"
+    private const val RESULT_STRING = "\n## 최종 수익"
 
     fun printPlayerCards(player: Player) {
         println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)}")
@@ -50,15 +48,10 @@ object ResultView {
         println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)} $SCORE_STRING ${player.score()}")
     }
 
-    fun printResult(game: BlackJack, ranks: Ranks) {
+    fun printResult(game: BlackJack, results: Results) {
         println(RESULT_STRING)
-        println("${game.dealer.name}: ${getDealderResultString(ranks)}")
-        game.players.forEach { player -> ranks.values[player]?.let { rank -> println("${player.name}: ${rank.value}") } }
-    }
-
-    private fun getDealderResultString(ranks: Ranks): String {
-        val dealerResults = ranks.getDealerRankCounts()
-        return dealerResults.keys.joinToString(" ") { dealerResults[it].toString() + it.value }
+        println("${game.dealer.name}: ${results.getDealerResultAmount()}")
+        game.players.forEach { player -> results.revenues[player]?.let { revenue -> println("${player.name}: $revenue") } }
     }
 
     private fun getPrintCardString(cards: Cards) = cards.values.joinToString { it.character.value + it.shape.value }
