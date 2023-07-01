@@ -1,15 +1,13 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
-import blackjack.domain.card.Cards
 import blackjack.domain.card.Suit
 import blackjack.domain.result.BlackjackResults
 import blackjack.domain.result.DealerResult
-import blackjack.domain.user.Dealer
-import blackjack.domain.user.User
 import blackjack.domain.user.Users
+import blackjack.util.Dealer
 import blackjack.util.TEST_USER_DRAW_INTERFACE
+import blackjack.util.User
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.headers
@@ -20,12 +18,10 @@ import io.kotest.matchers.shouldBe
 class BlackjackResultTest : BehaviorSpec({
     Given("21을 초과한 딜러가 있다") {
         val dealer = Dealer(
-            Cards(
-                listOf(
-                    Card(Suit.SPADE, CardNumber.EIGHT),
-                    Card(Suit.DIAMOND, CardNumber.EIGHT),
-                    Card(Suit.HEART, CardNumber.EIGHT),
-                ),
+            listOf(
+                Suit.SPADE to CardNumber.EIGHT,
+                Suit.DIAMOND to CardNumber.EIGHT,
+                Suit.HEART to CardNumber.EIGHT,
             ),
         )
 
@@ -35,14 +31,14 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "블랙잭",
-                        Cards(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                 ),
                 row(
                     User(
                         "블랙잭_아님",
-                        Cards(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        listOf(Suit.HEART to CardNumber.JACK, Suit.SPADE to CardNumber.SEVEN),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                 ),
@@ -60,12 +56,10 @@ class BlackjackResultTest : BehaviorSpec({
         When("딜러와 \"21을 초과한\"유저의 결과를 가져오면") {
             val user = User(
                 "초과함",
-                Cards(
-                    listOf(
-                        Card(Suit.SPADE, CardNumber.TEN),
-                        Card(Suit.DIAMOND, CardNumber.TEN),
-                        Card(Suit.HEART, CardNumber.TEN),
-                    ),
+                listOf(
+                    Suit.SPADE to CardNumber.TEN,
+                    Suit.DIAMOND to CardNumber.TEN,
+                    Suit.HEART to CardNumber.TEN,
                 ),
                 TEST_USER_DRAW_INTERFACE,
             )
@@ -77,7 +71,7 @@ class BlackjackResultTest : BehaviorSpec({
     }
 
     Given("21을 초과하지 않은 딜러가 있다") {
-        val dealer = Dealer(Cards(listOf(Card(Suit.SPADE, CardNumber.EIGHT), Card(Suit.DIAMOND, CardNumber.NINE))))
+        val dealer = Dealer(listOf(Suit.SPADE to CardNumber.EIGHT, Suit.DIAMOND to CardNumber.NINE))
 
         forAll(
             table(
@@ -85,7 +79,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "블랙잭",
-                        Cards(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.JACK))),
+                        listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 0, 0, 1),
@@ -93,7 +87,7 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "딜러와_동점",
-                        Cards(listOf(Card(Suit.HEART, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SEVEN))),
+                        listOf(Suit.HEART to CardNumber.JACK, Suit.SPADE to CardNumber.SEVEN),
                         TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 0, 1, 0),
@@ -101,22 +95,18 @@ class BlackjackResultTest : BehaviorSpec({
                 row(
                     User(
                         "딜러에게_짐",
-                        Cards(listOf(Card(Suit.DIAMOND, CardNumber.JACK), Card(Suit.SPADE, CardNumber.SIX))),
-                        TEST_USER_DRAW_INTERFACE,
+                        listOf(Suit.DIAMOND to CardNumber.JACK, Suit.SPADE to CardNumber.SIX),
                     ),
                     DealerResult(dealer, 1, 0, 0),
                 ),
                 row(
                     User(
                         "초과함",
-                        Cards(
-                            listOf(
-                                Card(Suit.SPADE, CardNumber.TEN),
-                                Card(Suit.DIAMOND, CardNumber.TEN),
-                                Card(Suit.HEART, CardNumber.TEN),
-                            ),
+                        cardPairs = listOf(
+                            Suit.SPADE to CardNumber.TEN,
+                            Suit.DIAMOND to CardNumber.TEN,
+                            Suit.HEART to CardNumber.TEN,
                         ),
-                        TEST_USER_DRAW_INTERFACE,
                     ),
                     DealerResult(dealer, 1, 0, 0),
                 ),

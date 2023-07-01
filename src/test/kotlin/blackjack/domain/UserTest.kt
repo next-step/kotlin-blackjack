@@ -6,6 +6,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.card.Suit
 import blackjack.domain.user.User
 import blackjack.util.TEST_USER_DRAW_INTERFACE
+import blackjack.util.User
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -34,7 +35,7 @@ class UserTest : BehaviorSpec({
     Given("21점을 넘기지 않은 덱을 가지고 있는 유저가 있다") {
         val user = User(
             "홍길동",
-            Cards(listOf(Card(Suit.SPADE, CardNumber.ACE), Card(Suit.SPADE, CardNumber.TEN))),
+            listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.TEN),
             TEST_USER_DRAW_INTERFACE,
         )
         When("유저의 점수를 계산하면") {
@@ -47,12 +48,10 @@ class UserTest : BehaviorSpec({
     Given("21점을 넘긴 덱을 가지고 있는 유저가 있다") {
         val user = User(
             "홍길동",
-            Cards(
-                listOf(
-                    Card(Suit.SPADE, CardNumber.JACK),
-                    Card(Suit.SPADE, CardNumber.QUEEN),
-                    Card(Suit.HEART, CardNumber.KING),
-                ),
+            listOf(
+                Suit.SPADE to CardNumber.JACK,
+                Suit.SPADE to CardNumber.QUEEN,
+                Suit.HEART to CardNumber.KING,
             ),
             TEST_USER_DRAW_INTERFACE,
         )
