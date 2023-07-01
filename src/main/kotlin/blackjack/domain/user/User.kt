@@ -12,6 +12,10 @@ abstract class Player(
     val name: String,
     val cards: Cards,
 ) {
+    init {
+        require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
+    }
+
     val finalScore: Int by lazy { cards.score() }
 
     fun getCardsSize() = cards.size
@@ -29,6 +33,10 @@ abstract class Player(
     }
 
     abstract fun canDraw(): Boolean
+
+    companion object {
+        private const val EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있을 수 없습니다"
+    }
 }
 
 class User(
@@ -36,10 +44,6 @@ class User(
     cards: Cards,
     private val userDrawInterface: UserDrawInterface,
 ) : Player(name, cards) {
-
-    init {
-        require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
-    }
 
     fun match(dealer: Dealer): Result {
         val compareResult = when {
@@ -56,10 +60,6 @@ class User(
 
     override fun canDraw(): Boolean {
         return !isBust() && userDrawInterface.canDraw(this)
-    }
-
-    companion object {
-        private const val EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있을 수 없습니다"
     }
 }
 
