@@ -5,6 +5,7 @@ import blackjack.domain.card.cards
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
 import blackjack.domain.money.Money
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -133,6 +134,44 @@ class PlayerProfitResultTest : BehaviorSpec({
 
         Then("수익은 투자 금액의 -1배이다") {
             PlayerProfitResult.create(player, dealer).profit shouldBe betAmount * -1.0
+        }
+    }
+
+    Given("플레이어가 finished 일 때") {
+        val player = Player("test", betAmount).apply {
+            init(cards(CardFixture.spadeQueen, CardFixture.spadeKing))
+            stay() // finished 상태
+        }
+
+        When("딜러가 finished 상태가 아니면") {
+            val dealer = Dealer().apply {
+                init(cards(CardFixture.heartJack, CardFixture.heartQueen))
+            } // hit 상태
+
+            Then("RuntimeException 예외 처리를 한다") {
+                shouldThrow<RuntimeException> {
+                    PlayerProfitResult.create(player, dealer)
+                }
+            }
+        }
+    }
+
+    Given("딜러가 finished 일 떄") {
+        val dealer = Dealer().apply {
+            init(cards(CardFixture.heartJack, CardFixture.heartQueen))
+            stay() // finished 상태
+        }
+
+        When("플레이어가 finished 상태가 아니면") {
+            val player = Player("test", betAmount).apply {
+                init(cards(CardFixture.spadeQueen, CardFixture.spadeKing))
+            } // hit 상태
+
+            Then("RuntimeException 예외 처리를 한다") {
+                shouldThrow<RuntimeException> {
+                    PlayerProfitResult.create(player, dealer)
+                }
+            }
         }
     }
 })
