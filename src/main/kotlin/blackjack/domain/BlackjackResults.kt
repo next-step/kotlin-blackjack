@@ -28,8 +28,8 @@ enum class Result {
     WIN, DRAW, LOSE
 }
 
-data class DealerResult(val dealerInfo: Dealer, val winCount: Int, val drawCount: Int, val loseCount: Int)
+data class DealerResult(val dealer: Dealer, val winCount: Int, val drawCount: Int, val loseCount: Int)
 
 data class UserResults(private val userResults: List<UserResult>) : Iterable<UserResult> by userResults
 
-data class UserResult(val userInfo: User, val result: Result)
+data class UserResult(val user: User, val result: Result)

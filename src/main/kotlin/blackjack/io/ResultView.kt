@@ -81,14 +81,14 @@ object ResultView {
     }
 
     private fun dealerScoreResultFormatting(dealerResult: DealerResult): String {
-        val dealer = dealerResult.dealerInfo
+        val dealer = dealerResult.dealer
         return DEALER_SCORE_PRINT_FORMAT.format(cardsToString(dealer.cards), dealer.score())
     }
 
     private fun usersScoreResultFormatting(userResults: UserResults): StringBuilder {
         val stringBuilder = StringBuilder()
         for (userResult in userResults) {
-            stringBuilder.appendLine(userScoreResultFormatting(userResult.userInfo))
+            stringBuilder.appendLine(userScoreResultFormatting(userResult.user))
         }
         return stringBuilder
     }
@@ -104,7 +104,7 @@ object ResultView {
     private fun userResultsFormatting(userResults: UserResults): StringBuilder {
         val stringBuilder = StringBuilder()
         for (userResult in userResults) {
-            val user = userResult.userInfo
+            val user = userResult.user
             stringBuilder.appendLine(USER_RESULT_PRINT_FORMAT.format(user.name, blackJackResultToString(userResult.result)))
         }
         return stringBuilder
