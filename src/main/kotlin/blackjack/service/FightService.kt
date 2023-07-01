@@ -11,7 +11,7 @@ class FightService {
             PlayerState.BLACK_JACK -> dealerBlackjack(player)
             PlayerState.BUST -> dealerBust(dealer, player)
             PlayerState.HIT -> dealerHit(dealer, player)
-            else -> throw IllegalStateException()
+            else -> throw IllegalStateException(DEALER_STATUS_CAN_NOT_BE_STAND)
         }
     }
 
