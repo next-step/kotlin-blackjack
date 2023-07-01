@@ -5,14 +5,14 @@ import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
-class RefereeTest : FreeSpec({
-    "심판은 카드들이 승리, 패배 조건을 만족하는지 확인한다." {
+class CardScoreCalculatorTest : FreeSpec({
+    "카드 점수 계산기는 규칙을 적용해 사용자 카드들의 점수를 반환한다." {
         forAll(
             row(
                 listOf(
                     Card(Suit.SPADE, CardNumber.ACE),
                     Card(Suit.SPADE, CardNumber.JACK),
-                ), Evaluation.WIN
+                ), 21
             ),
             row(
                 listOf(
@@ -20,25 +20,25 @@ class RefereeTest : FreeSpec({
                     Card(Suit.SPADE, CardNumber.NINE),
                     Card(Suit.SPADE, CardNumber.TEN),
                     Card(Suit.SPADE, CardNumber.THREE),
-                ), Evaluation.LOSE
+                ), 23
             ),
             row(
                 listOf(
                     Card(Suit.SPADE, CardNumber.ACE),
                     Card(Suit.CLOVER, CardNumber.ACE),
                     Card(Suit.DIAMOND, CardNumber.NINE),
-                ), Evaluation.WIN
+                ), 21
             ),
             row(
                 listOf(
                     Card(Suit.SPADE, CardNumber.ACE),
                     Card(Suit.CLOVER, CardNumber.ACE),
                     Card(Suit.DIAMOND, CardNumber.EIGHT),
-                ), Evaluation.CONTINUE
+                ), 20
             ),
         ) { cards, expected ->
 
-            val result = Referee.evaluate(cards)
+            val result = CardScoreCalculator.calculate(cards)
 
             result shouldBe expected
         }

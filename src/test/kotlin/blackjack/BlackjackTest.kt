@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.controller.Blackjack
+import blackjack.dto.PlayerGameResult
 import blackjack.utils.arrangeCardsForTest
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -56,6 +57,27 @@ class BlackjackTest : FreeSpec({
                         Card(Suit.SPADE, CardNumber.KING),
                     ),
                 )
+
+        outputView.shownGameResult shouldContainExactly
+                listOf(
+                    PlayerGameResult(
+                        name = "민성",
+                        cards = listOf(
+                            Card(Suit.HEART, CardNumber.TWO),
+                            Card(Suit.SPADE, CardNumber.EIGHT),
+                            Card(Suit.CLOVER, CardNumber.ACE),
+                        ),
+                        score = 21
+                    ),
+                    PlayerGameResult(
+                        name = "민수",
+                        cards = listOf(
+                            Card(Suit.CLOVER, CardNumber.SEVEN),
+                            Card(Suit.SPADE, CardNumber.KING),
+                        ),
+                        score = 17
+                    )
+                )
     }
 }) {
     private class FakeInputView(
@@ -80,6 +102,7 @@ class BlackjackTest : FreeSpec({
 
     private class FakeOutputView : OutputView {
         lateinit var shownInitialStatus: Map<String, List<Card>>
+        lateinit var shownGameResult: List<PlayerGameResult>
         val shownCurrentStatuses = mutableListOf<Pair<String, List<Card>>>()
 
         override fun showInitialStatus(players: List<Player>) {
@@ -88,6 +111,10 @@ class BlackjackTest : FreeSpec({
 
         override fun showCurrentStatusOf(player: Player) {
             shownCurrentStatuses.add(player.name to player.currentCards.toList())
+        }
+
+        override fun showGameResult(playerGameResults: List<PlayerGameResult>) {
+            shownGameResult = playerGameResults
         }
     }
 }

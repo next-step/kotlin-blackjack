@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.CardDrawCommand
 import blackjack.GameCardStorage
 import blackjack.Player
+import blackjack.dto.PlayerGameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -24,6 +25,9 @@ class Blackjack(
         for (player in players) {
             runExtraCardDrawSession(player, gameCardStorage)
         }
+
+        val gameResults = players.map(PlayerGameResult::from)
+        outputView.showGameResult(gameResults)
     }
 
     private fun runExtraCardDrawSession(player: Player, gameCardStorage: GameCardStorage) {
