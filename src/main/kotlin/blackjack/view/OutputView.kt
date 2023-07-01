@@ -27,6 +27,7 @@ class OutputView {
         print("${player.name}카드: ")
         print(player.cards.values.joinToString(", ") { card ->
             card.rank.symbol + card.suit.value
-        })
+        }
+        )
     }
 }

@@ -1,8 +1,6 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldContainAnyOf
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class RandomCardGeneratorTest : FunSpec({

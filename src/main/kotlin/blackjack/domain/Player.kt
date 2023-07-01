@@ -43,20 +43,4 @@ class Player(
     companion object {
         const val DEFAULT_CARD_SIZE = 2
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Player) return false
-        val o = other as Player
-
-        return this.name == o.name && this.cards == o.cards
-    }
-
-    override fun hashCode(): Int {
-        return 31 * name.hashCode() + cards.hashCode()
-    }
-
-    override fun toString(): String {
-        return "Player(name='$name', cards=$cards)"
-    }
 }

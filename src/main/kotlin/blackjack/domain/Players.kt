@@ -6,8 +6,10 @@ data class Players(
     constructor(vararg player: Player) : this(player.toList())
 
     fun receiveCards(dealer: Dealer): Players {
-        return Players(values.map { player ->
-            player.receiveCards(dealer.dealInitialCard())
-        })
+        return Players(
+            values.map { player ->
+                player.receiveCards(dealer.dealInitialCard())
+            }
+        )
     }
 }
