@@ -3,11 +3,13 @@ package blackjack.domain
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 
-open class Participant(
+abstract class Participant(
     val name: String,
     val cards: Cards,
-    protected open val condition: Condition
+    condition: Condition
 ) {
+    var condition: Condition = condition
+        protected set
 
     open fun hit(card: Card) {
         cards.append(card)

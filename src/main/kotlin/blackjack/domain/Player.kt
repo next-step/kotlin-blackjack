@@ -5,7 +5,7 @@ import blackjack.domain.enums.Condition
 class Player(
     name: String,
     cards: Cards,
-    override var condition: Condition = Condition.PLAY
+    condition: Condition = Condition.PLAY
 ) : Participant(name, cards, condition) {
 
     fun currentCondition(): Condition {

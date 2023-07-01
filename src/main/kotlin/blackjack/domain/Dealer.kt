@@ -5,7 +5,7 @@ import blackjack.domain.enums.Condition
 class Dealer(
     name: String = "딜러",
     cards: Cards,
-    override var condition: Condition = Condition.STAY,
+    condition: Condition = Condition.STAY,
     val deck: Deck,
 ) : Participant(name, cards, condition) {
 
