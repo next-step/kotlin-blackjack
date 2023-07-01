@@ -8,20 +8,15 @@ open class Player(
     private val gameCardsSet: GameCardsSet,
 ) {
     private var myCards: Cards = Cards.empty()
-    private var state: PlayerState = PlayerState.HIT
+    var state: PlayerState = PlayerState.HIT
+        private set
 
     fun getMyCards(): Cards = myCards.copy()
 
-    fun numberOfMyCards(): Int = myCards.cards.size
-
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
-    fun getState(): PlayerState = state
-
-    fun canDraw(): Boolean = state.canDraw
-
     fun hit() {
-        check(canDraw()) { CAN_NOT_DRAW }
+        check(state.canDraw) { CAN_NOT_DRAW }
 
         val drawnCard = gameCardsSet.drawRandomCard()
         myCards = myCards.add(drawnCard)
