@@ -59,4 +59,35 @@ class CardsTest : BehaviorSpec({
             }
         }
     }
+
+    Given("21점을 넘기지 않은 Cards가 있다") {
+        val cards = Cards(
+            listOf(
+                Card(Suit.SPADE, CardNumber.JACK),
+                Card(Suit.SPADE, CardNumber.QUEEN),
+            ),
+        )
+
+        When("Cars가 버스트 상태인지 확인하면") {
+            Then("버스트 상태가 아니다") {
+                cards.isBust() shouldBe false
+            }
+        }
+    }
+
+    Given("21점을 넘긴 Cards가 있다") {
+        val cards = Cards(
+            listOf(
+                Card(Suit.SPADE, CardNumber.JACK),
+                Card(Suit.SPADE, CardNumber.QUEEN),
+                Card(Suit.HEART, CardNumber.KING),
+            ),
+        )
+
+        When("Cars가 버스트 상태인지 확인하면") {
+            Then("버스트 상태가 된다") {
+                cards.isBust() shouldBe true
+            }
+        }
+    }
 })

@@ -33,6 +33,10 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
         return cardList.iterator()
     }
 
+    fun isBust(): Boolean {
+        return score() > BLACKJACK_LIMIT
+    }
+
     companion object {
         private const val EMPTY_CARDS_ERROR_MESSAGE = "남아있는 카드가 없습니다"
         const val BLACKJACK_LIMIT = 21

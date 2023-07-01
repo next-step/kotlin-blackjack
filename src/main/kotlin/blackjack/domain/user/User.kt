@@ -25,7 +25,7 @@ abstract class Player(
     }
 
     fun isBust(): Boolean {
-        return cards.score() > Cards.BLACKJACK_LIMIT
+        return cards.isBust()
     }
 
     abstract fun canDraw(): Boolean
