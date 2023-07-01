@@ -12,5 +12,13 @@ fun main() {
     )
     game.start()
     ResultView.printInitialState(game.players)
-    game.playersCanReceiveMoreCard()
+
+    val playerReceiveMoreCard = game.playersCanReceiveMoreCard()
+        .playerReceiveMoreCard()
+}
+
+fun List<Player>.playerReceiveMoreCard(): List<Player> {
+    return filter {
+        InputView.askReceiveCard(it.name)
+    }
 }
