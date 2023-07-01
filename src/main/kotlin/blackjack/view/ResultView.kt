@@ -1,10 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.BlackJack
-import blackjack.domain.Cards
-import blackjack.domain.Dealer
-import blackjack.domain.Player
-import blackjack.domain.Ranks
+import blackjack.domain.game.BlackJack
+import blackjack.domain.card.Cards
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.game.Ranks
 
 object ResultView {
 
@@ -52,8 +52,13 @@ object ResultView {
 
     fun printResult(game: BlackJack, ranks: Ranks) {
         println(RESULT_STRING)
-        println("${game.dealer.name}: ${ranks.getDealerWonCounts()}$WON_STRING ${ranks.getDealerLostCounts()}$LOST_STRING")
+        println("${game.dealer.name}: ${getDealderResultString(ranks)}")
         game.players.forEach { player -> ranks.values[player]?.let { rank -> println("${player.name}: ${rank.value}") } }
+    }
+
+    private fun getDealderResultString(ranks: Ranks): String {
+        val dealerResults = ranks.getDealerRankCounts()
+        return dealerResults.keys.joinToString(" ") { dealerResults[it].toString() + it.value }
     }
 
     private fun getPrintCardString(cards: Cards) = cards.values.joinToString { it.character.value + it.shape.value }

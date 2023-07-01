@@ -1,5 +1,13 @@
-package blackjack.domain
+package blackjack.domain.game
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Character
+import blackjack.domain.card.Shape
+import blackjack.domain.game.BlackJack
+import blackjack.domain.game.Rank
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -150,7 +158,7 @@ internal class BlackJackTest {
         val dealer = Dealer(dealerCard)
         val game = BlackJack(listOf(player1), dealer)
 
-        game.getResult().values[player1] shouldBe PlayerRank.WON
+        game.getResult().values[player1] shouldBe Rank.WON
     }
 
     @Test
@@ -171,7 +179,7 @@ internal class BlackJackTest {
         val dealer = Dealer(dealerCard)
         val game = BlackJack(listOf(player1), dealer)
 
-        game.getResult().values[player1] shouldBe PlayerRank.LOST
+        game.getResult().values[player1] shouldBe Rank.LOST
     }
 
     @Test
@@ -193,6 +201,6 @@ internal class BlackJackTest {
         val dealer = Dealer(dealerCard)
         val game = BlackJack(listOf(player1), dealer)
 
-        game.getResult().values[player1] shouldBe PlayerRank.WON
+        game.getResult().values[player1] shouldBe Rank.WON
     }
 }

@@ -1,9 +1,16 @@
-package blackjack.domain
+package blackjack.domain.game
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Character
+import blackjack.domain.card.Shape
+import blackjack.domain.game.Rank
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class PlayerRankTest {
+internal class RankTest {
     @Test
     internal fun `플레이어가 점수가 더 높으면 플레이어는 이긴다`() {
         val playerCard = Cards(
@@ -20,7 +27,7 @@ internal class PlayerRankTest {
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.of(player1.score(), dealer.score()) shouldBe PlayerRank.WON
+        Rank.of(player1.score(), dealer.score()) shouldBe Rank.WON
     }
 
     @Test
@@ -39,6 +46,6 @@ internal class PlayerRankTest {
         )
         val player1 = Player("pobi", playerCard)
         val dealer = Dealer(dealerCard)
-        PlayerRank.of(player1.score(), dealer.score()) shouldBe PlayerRank.LOST
+        Rank.of(player1.score(), dealer.score()) shouldBe Rank.LOST
     }
 }

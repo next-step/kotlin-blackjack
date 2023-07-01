@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-data class Player(val name: String, val cards: Cards = Cards()) {
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
-    private var isTurnFinished: Boolean = false
-
+abstract class Participant(val name: String, val cards: Cards = Cards()) {
     init {
         require(name.isNotBlank()) { NAME_EXCEPTION }
     }
@@ -19,12 +19,6 @@ data class Player(val name: String, val cards: Cards = Cards()) {
     fun score(): Int {
         return cards.score()
     }
-
-    fun finishedTurn() {
-        isTurnFinished = true
-    }
-
-    fun canProceedTurn() = score() <= BlackJack.BLACKJACK_MAX_SCORE && !isTurnFinished
 
     companion object {
         private const val NAME_EXCEPTION = "이름을 정확하게 입력해주십시오"

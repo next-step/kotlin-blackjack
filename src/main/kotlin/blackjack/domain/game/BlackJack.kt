@@ -1,4 +1,9 @@
-package blackjack.domain
+package blackjack.domain.game
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.GameCards
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 
 class BlackJack(
     val players: List<Player>,
@@ -23,7 +28,7 @@ class BlackJack(
     }
 
     fun getNowPlayer(): Player {
-        return players.firstOrNull { it.canProceedTurn() } ?: throw RuntimeException(PLAYER_NONE_EXCEPTION)
+        return players.firstOrNull { it.canProceedTurn() } ?: throw IllegalStateException(PLAYER_NONE_EXCEPTION)
     }
 
     fun playGameTurn(isPlaying: Boolean) {
@@ -42,7 +47,7 @@ class BlackJack(
     }
 
     fun getResult(): Ranks {
-        return Ranks(players.associateWith { PlayerRank.of(it.score(), dealer.score()) })
+        return Ranks(players.associateWith { Rank.of(it.score(), dealer.score()) })
     }
 
     companion object {

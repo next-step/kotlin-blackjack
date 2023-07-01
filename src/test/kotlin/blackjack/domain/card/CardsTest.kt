@@ -1,5 +1,11 @@
-package blackjack.domain
+package blackjack.domain.card
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Character
+import blackjack.domain.card.GameCardGenerator
+import blackjack.domain.card.GameCards
+import blackjack.domain.card.Shape
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -7,7 +13,7 @@ internal class CardsTest {
     @Test
     internal fun `카드를 추가하면 카드가 추가된다`() {
         val cards = Cards()
-        cards.addCard(GameCards().draw())
+        cards.addCard(GameCards(GameCardGenerator.crete()).draw())
         cards.values.size shouldBe 1
     }
 
