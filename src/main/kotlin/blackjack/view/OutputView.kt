@@ -4,7 +4,8 @@ import blackjack.domain.Player
 
 object OutputView {
     fun printStart(players: List<Player>) {
-        println("${players.joinToString(", ") { it.name }}에게 2장의 카드를 나누었습니다.")
+        val playerNames = players.joinToString(", ") { it.name }
+        println("$playerNames 에게 2장의 카드를 나누었습니다.")
         for (player in players) {
             printPlayerCard(player)
         }

@@ -8,14 +8,14 @@ class PlayerState private constructor(val cards: List<Card>, val score: PlayerSc
     fun add(card: Card): PlayerState {
         return PlayerState(
             cards = this.cards + card,
-            score = score.add(card.number.cardScore)
+            score = score.plus(card.number.cardScore)
         )
     }
 
     fun add(cards: List<Card>): PlayerState {
         return PlayerState(
             cards = this.cards + cards,
-            score = score.add(cards.map { it.number.cardScore })
+            score = score.plus(cards.map { it.number.cardScore })
         )
     }
 
