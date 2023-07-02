@@ -2,7 +2,8 @@ package blackjack.domain.player
 
 class Dealer(name: String = "딜러") : BlackJackPlayer(PlayerName(name)) {
 
-    private val resultStateCount = hashMapOf<GameResultState, Int>()
+    var earnMoney = 0
+        private set
 
     val hasGetMoreCard
         get() = cards.hasMoreCard(Players.START_CARD_COUNT)
@@ -11,15 +12,8 @@ class Dealer(name: String = "딜러") : BlackJackPlayer(PlayerName(name)) {
         return cards.hasLessScore(DEALER_SHOULD_GET_CARD_SCORE)
     }
 
-    fun match(player: Player) {
-        val result = player.matchGameScore(getScore())
-
-        val count = resultStateCount[result] ?: ZERO_COUNT
-        resultStateCount[result] = count.inc()
-    }
-
-    fun getCountOfResult(state: GameResultState): Int {
-        return resultStateCount[state] ?: ZERO_COUNT
+    fun addEarnMoney(money: Int) {
+        earnMoney += money
     }
 
     companion object {

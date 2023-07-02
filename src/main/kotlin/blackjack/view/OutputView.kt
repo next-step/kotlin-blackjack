@@ -6,14 +6,12 @@ import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
 import blackjack.domain.player.BlackJackPlayer
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.GameResultState
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 object OutputView {
 
     private const val SEPERATOR = ", "
-    private const val ZERO_COUNT = 0
 
     fun showPlayerSet(players: Players) {
         val playersName = players.getPlayers().joinToString(SEPERATOR) {
@@ -46,7 +44,8 @@ object OutputView {
     }
 
     private fun showFinalResults(players: Players) {
-        println("## 최종 승패")
+        println()
+        println("## 최종 수익")
         players.getPlayers().forEach {
             showResultPlayer(it)
         }
@@ -54,35 +53,12 @@ object OutputView {
 
     private fun showResultPlayer(player: BlackJackPlayer) {
         val result = when (player) {
-            is Player -> getGameResultText(player)
-            is Dealer -> makeDealerResult(player)
+            is Player -> player.finalIncome
+            is Dealer -> player.earnMoney
             else -> return
         }
 
         println("${player.name.name}: $result")
-    }
-
-    private fun getGameResultText(player: Player) = when (player.gameResultState) {
-        GameResultState.WIN -> "승"
-        GameResultState.DRAW -> "무"
-        GameResultState.LOSE -> "패"
-    }
-
-    private fun makeDealerResult(dealer: Dealer): String {
-        val winCount = dealer.getCountOfResult(GameResultState.LOSE)
-        val drawCount = dealer.getCountOfResult(GameResultState.DRAW)
-        val loseCount = dealer.getCountOfResult(GameResultState.WIN)
-        val result = StringBuffer()
-        if (winCount > ZERO_COUNT) {
-            result.append("${winCount}승 ")
-        }
-        if (drawCount > ZERO_COUNT) {
-            result.append("${drawCount}무 ")
-        }
-        if (loseCount > ZERO_COUNT) {
-            result.append("${loseCount}패 ")
-        }
-        return result.toString()
     }
 
     private fun getCardsNames(cards: Cards): String {

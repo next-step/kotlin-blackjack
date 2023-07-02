@@ -3,26 +3,33 @@ package blackjack.domain.player
 class Player(name: PlayerName) : BlackJackPlayer(name) {
 
     var gameResultState: GameResultState = GameResultState.DRAW
-    var bettingMoney: Int = 0
-        private set
+
+    private var bettingMoney = MINIMUM_MONEY
+
+    val finalIncome: Int
         get() {
             return when (gameResultState) {
-                GameResultState.WIN -> getWinMoney(field)
-                GameResultState.DRAW -> field
-                GameResultState.LOSE -> field.unaryMinus()
+                GameResultState.WIN -> getWinMoney(bettingMoney)
+                GameResultState.DRAW -> MINIMUM_MONEY
+                GameResultState.LOSE -> bettingMoney.unaryMinus()
             }
         }
 
-    fun getWinMoney(money: Int): Int {
+    private fun getWinMoney(money: Int): Int {
         if (cards.isBlackJack()) {
-            return (money * 1.5).toInt()
+            return (money * BONUS_BLACKJACK).toInt()
         }
         return money
     }
 
-    fun matchGameScore(dealerScore: Int): GameResultState {
-        gameResultState = cards.match(dealerScore)
-        return gameResultState
+    fun matchGameScore(dealer: Dealer) {
+        gameResultState = when {
+            isBust() -> GameResultState.LOSE
+            dealer.isBust() -> GameResultState.WIN
+            isBlackJack() && dealer.isBlackJack() -> GameResultState.DRAW
+            else -> cards.match(dealer.getScore())
+        }
+        dealer.addEarnMoney(finalIncome.unaryMinus())
     }
 
     fun setBettingMoney(moneyString: String) {
@@ -39,5 +46,6 @@ class Player(name: PlayerName) : BlackJackPlayer(name) {
 
     companion object {
         const val MINIMUM_MONEY = 0
+        const val BONUS_BLACKJACK = 1.5
     }
 }

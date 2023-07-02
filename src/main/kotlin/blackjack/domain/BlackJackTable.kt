@@ -1,17 +1,29 @@
 package blackjack.domain
 
+import blackjack.domain.card.BlackCardDeck
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
-class BlackJackTable {
+class BlackJackTable(val players: MutableList<Player>, val blackJackCardDeck: BlackCardDeck) {
 
-    fun startGame(players: Players, gameConditionNotify: GameConditionNotify) {
+    fun startGame(gameConditionNotify: GameConditionNotify) {
 
-        gameConditionNotify.giveDefaultCardsToPlayerDone(players)
+        val blackJackPlayers = Players(
+            players,
+            object : CardDeck {
+                override fun getCard(): Card {
+                    return blackJackCardDeck.hitCard()
+                }
+            }
+        )
+        gameConditionNotify.giveDefaultCardsToPlayerDone(blackJackPlayers)
 
-        players.giveMoreCard(gameConditionNotify)
+        blackJackPlayers.giveMoreCard(gameConditionNotify)
 
-        players.judgeGameResult()
+        blackJackPlayers.judgeGameResult()
 
-        gameConditionNotify.finishBlackJackGame(players)
+        gameConditionNotify.finishBlackJackGame(blackJackPlayers)
     }
 }

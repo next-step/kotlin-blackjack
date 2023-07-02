@@ -19,6 +19,15 @@ abstract class BlackJackPlayer(val name: PlayerName) {
         return cards.getCardScore()
     }
 
+    fun isBust(): Boolean {
+        return cards.isBust()
+    }
+
+    fun isBlackJack(): Boolean {
+        return cards.isBlackJack()
+    }
+
+
     companion object {
         private const val ZERO_SCORE = 0
     }
