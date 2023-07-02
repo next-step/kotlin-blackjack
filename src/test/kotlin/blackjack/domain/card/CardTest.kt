@@ -1,6 +1,7 @@
 package blackjack.domain.card
 
 import blackjack.domain.card.Denomination.ACE
+import blackjack.domain.card.Denomination.FIVE
 import blackjack.domain.card.Denomination.JACK
 import blackjack.domain.card.Denomination.KING
 import blackjack.domain.card.Denomination.QUEEN
@@ -18,6 +19,7 @@ class CardTest : FunSpec({
         val SPADE_ACE = Card(SPADE, ACE)
         val SPADE_TWO = Card(SPADE, TWO)
         val SPADE_THREE = Card(SPADE, THREE)
+        val SPADE_FIVE = Card(SPADE, FIVE)
         val SPADE_JACK = Card(SPADE, JACK)
         val SPADE_QUEEN = Card(SPADE, QUEEN)
         val SPADE_KING = Card(SPADE, KING)

@@ -1,8 +1,10 @@
-package blackjack.domain.gamestate
+package blackjack.domain.gamestate.running
 
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Bust
+import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContain
@@ -52,10 +54,29 @@ class InitialHandTest : FunSpec({
         }
     }
 
+    context("isFinished") {
+        test("finished인지 확인한다.") {
+            val actual = InitialHand().isFinished()
+            actual shouldBe false
+        }
+    }
+
     context("score") {
-        test("스코어를 계산하려는 경우 예외가 발생한다.") {
+        test("스코어를 계산한다.") {
+            val actual = InitialHand(Cards.of(SPADE_ACE)).score()
+            actual shouldBe 11
+        }
+
+        test("스코어를 계산할 때 카드가 없으면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { InitialHand().score() }
-            exception.message shouldBe "턴이 종료되지 않아 점수를 반환할 수 없다."
+            exception.message shouldBe "카드가 없어 점수를 계산할 수 없다."
+        }
+    }
+
+    context("compete") {
+        test("승패를 계산하려하는 경우 예외가 발생한다") {
+            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().compete(Bust(BUST_CARDS)) }
+            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }
     }
 })

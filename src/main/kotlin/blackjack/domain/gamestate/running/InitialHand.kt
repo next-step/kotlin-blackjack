@@ -1,11 +1,12 @@
-package blackjack.domain.gamestate
+package blackjack.domain.gamestate.running
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.GameState
 
 class InitialHand(
     val cards: Cards = Cards(),
-) : GameState {
+) : Running() {
     init {
         require(cards.isInitialHand()) { "초기 핸드는 2장 이상 가질 수 없다." }
     }
@@ -24,5 +25,5 @@ class InitialHand(
 
     override fun isBust() = false
 
-    override fun score() = throw IllegalStateException("턴이 종료되지 않아 점수를 반환할 수 없다.")
+    override fun score() = cards.score()
 }

@@ -1,13 +1,27 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
-import blackjack.domain.player.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 
-data class Hands(
-    val playerName: String,
+data class HandsDashboard(
+    val dealerHands: DealerHands,
+    val playerHands: List<PlayerHands>
+)
+
+data class DealerHands(
+    val cards: Set<Card>,
+) {
+    companion object {
+        fun from(dealer: Dealer) = DealerHands(cards = dealer.cards())
+    }
+}
+
+data class PlayerHands(
+    val name: String,
     val cards: Set<Card>
 ) {
     companion object {
-        fun from(player: Player) = Hands(playerName = player.name.value, cards = player.cards())
+        fun from(participant: Participant) = PlayerHands(name = participant.name(), cards = participant.cards())
     }
 }

@@ -1,11 +1,14 @@
-package blackjack.domain.gamestate
+package blackjack.domain.gamestate.running
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.GameState
+import blackjack.domain.gamestate.finished.Bust
+import blackjack.domain.gamestate.finished.Stay
 
 class Hit(
     val cards: Cards,
-) : GameState {
+) : Running() {
     init {
         require(cards.isInitialHand().not()) { "2장 미만의 카드로 생성될 수 없다." }
         require(cards.isBust().not()) { "버스트 카드로 생성될 수 없다." }
@@ -25,5 +28,5 @@ class Hit(
 
     override fun isBust() = false
 
-    override fun score() = throw IllegalStateException("턴이 종료되지 않아 점수를 반환할 수 없다.")
+    override fun score() = cards.score()
 }
