@@ -36,9 +36,10 @@ object ResultView {
 
     fun printMatchResult(matchResult: MutableMap<String, Result>) {
         println()
-        println("## 최종 수익")
+        println("## 최종 승패")
         matchResult.forEach { (name, result) ->
-            println("$name: ${result.printResult()}")
+            val resultStr = if (name == "딜러") result.printDealerResult() else result.printPlayerResult()
+            println("$name: $resultStr")
         }
     }
 }
