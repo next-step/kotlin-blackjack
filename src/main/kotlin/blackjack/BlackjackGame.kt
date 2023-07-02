@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.dealer.Dealer
+import blackjack.game.GameEvaluator
 import blackjack.player.Player
 import blackjack.player.Status
 import blackjack.view.InputView
@@ -21,6 +22,9 @@ class BlackjackGame(
         checkDealerStatus()
         resultView.printFinalDealerStatus(dealer)
         resultView.printFinalPlayerStatus(players)
+
+        GameEvaluator.evaluate(dealer, players)
+        resultView.printMatchResult(GameEvaluator.getMatchResult)
     }
 
     private fun createPlayers(): List<Player> {
@@ -35,7 +39,7 @@ class BlackjackGame(
     }
 
     private fun takeTurn(player: Player) {
-        while (player.currentStatus == Status.HIT && player.totalValue < BUST_SCORE) {
+        while (player.currentStatus == Status.HIT && player.totalValue <= BUST_SCORE) {
             val response = inputView.readHitOrStand(player.name)
             if (response == Status.HIT) {
                 dealer.drawCard(player)
@@ -47,7 +51,7 @@ class BlackjackGame(
     }
 
     private fun checkDealerStatus() {
-        if (dealer.totalValue < DEALER_HIT_SCORE) {
+        if (dealer.totalValue <= DEALER_HIT_SCORE) {
             dealer.drawCardFromDeck()
             resultView.printDealerStatus()
         }
@@ -55,6 +59,6 @@ class BlackjackGame(
 
     companion object {
         private const val DEALER_HIT_SCORE = 16
-        const val BUST_SCORE = 22
+        const val BUST_SCORE = 21
     }
 }
