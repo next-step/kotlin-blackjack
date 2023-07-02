@@ -13,4 +13,8 @@ class User(val name: String, var cards: Cards, var isDeckComplete: Boolean = fal
     fun deckComplete() {
         isDeckComplete = true
     }
+
+    fun cardNames(): String {
+        return cards.names
+    }
 }

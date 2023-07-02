@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.BlackjackGame.Companion.BLACKJACK_VALUE
+
 data class Cards(val cards: List<Card>) {
     val value: Int
         get() {
@@ -27,6 +29,6 @@ data class Cards(val cards: List<Card>) {
     }
 
     private fun isCalculatePlusTenPossible(sum: Int): Boolean {
-        return sum + 10 <= 21
+        return sum + 10 <= BLACKJACK_VALUE
     }
 }
