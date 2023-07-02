@@ -8,7 +8,16 @@ data class Player(val name: String, val state: PlayerState) {
         return copy(state = newState)
     }
 
+    fun addCard(card: Card): Player {
+        val newState = this.state.add(card)
+        return copy(state = newState)
+    }
+
     fun canAddCard(): Boolean = state.canAddCard()
+
+    fun cards() = state.cards
+
+    fun score() = state.score
 
     companion object {
         fun init(name: String): Player {

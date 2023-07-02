@@ -10,7 +10,7 @@ object InputView {
             .filter { it.isNotEmpty() }
     }
 
-    fun askForAdditionalCard(playerName: String): Boolean {
+    fun askForAddCard(playerName: String): Boolean {
         println("${playerName}은 한장의 카드를 더 받겠습니다?(예는 y, 아니오는 n)")
         val input = readln()
         return when (input) {
