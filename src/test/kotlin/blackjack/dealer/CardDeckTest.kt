@@ -17,7 +17,7 @@ class CardDeckTest : BehaviorSpec({
                 val dealer = Dealer()
                 val players = listOf(Player("참가자"))
                 dealer.dealInitialCards(players)
-                CardDeck.size shouldBe 50
+                CardDeck.size shouldBe 48
             }
         }
     }
