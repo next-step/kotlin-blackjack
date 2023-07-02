@@ -5,6 +5,7 @@ import blackjack.domain.card.Card
 class Player(private val name: String) : BlackJackGamer {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
+    private var gameRecord: GameRecordType = GameRecordType.NONE
 
     override fun addCard(card: Card) {
         cards.add(card)
@@ -28,6 +29,15 @@ class Player(private val name: String) : BlackJackGamer {
 
     override fun getName(): String {
         return name
+    }
+
+    override fun proceedGameRecord(gameRecordType: GameRecordType) {
+        gameRecord = gameRecordType
+    }
+
+    fun getGameRecord(): GameRecordType {
+        require(gameRecord != GameRecordType.NONE) { "승패가 결정난 뒤에 조회가 가능합니다." }
+        return gameRecord
     }
 
     companion object {

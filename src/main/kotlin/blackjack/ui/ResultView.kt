@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.BlackJackGamer
+import blackjack.domain.Dealer
 import blackjack.domain.GamerType
 import blackjack.domain.Player
 import blackjack.domain.card.Card
@@ -52,11 +53,12 @@ class ResultView {
         print(getCardsText(gamer.getCards()))
     }
 
-    fun printGameResult(gamerList: List<BlackJackGamer>) {
+    fun printDrawResult(gamerList: List<BlackJackGamer>) {
         gamerList.forEach {
             printGamerCardList(it)
             printSumOfGamerCardNumbers(it)
         }
+        println()
     }
 
     private fun printSumOfGamerCardNumbers(blackJackGamer: BlackJackGamer) {
@@ -70,6 +72,28 @@ class ResultView {
 
     fun printDealerIsDraw() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println()
+    }
+
+    fun printGameResult(gamerList: List<BlackJackGamer>) {
+        println("## 최종 승패")
+        gamerList.forEach {
+            print("${it.getName()}: ")
+            printGameScore(it)
+        }
+    }
+
+    private fun printGameScore(gamer: BlackJackGamer) {
+        if (gamer is Player) println(gamer.getGameRecord().value)
+        if (gamer is Dealer) printDealerRecords(gamer)
+    }
+
+    private fun printDealerRecords(dealer: Dealer) {
+        val totalGameRecord = dealer.getTotalGameRecord()
+        totalGameRecord.forEachIndexed { index, pair ->
+            print("${pair.second}${pair.first.value}")
+            if (index != totalGameRecord.lastIndex) print(" ")
+        }
         println()
     }
 }

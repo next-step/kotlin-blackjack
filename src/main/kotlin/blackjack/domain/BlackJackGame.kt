@@ -21,4 +21,8 @@ class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
     fun checkBlackJackGamerIsDraw(blackJackGamer: BlackJackGamer): Boolean {
         return ruleChecker.checkSumOfCardNumbers(blackJackGamer)
     }
+
+    fun proceedWhoIsWinner(player: Player, dealer: Dealer) {
+        ruleChecker.proceedWhoIsWinner(player, dealer)
+    }
 }

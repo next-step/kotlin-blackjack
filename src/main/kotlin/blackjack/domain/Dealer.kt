@@ -6,6 +6,9 @@ class Dealer : BlackJackGamer {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
     private val name = "딜러"
+    private var winRecord = (GameRecordType.WIN to 0)
+    private var loseRecord = (GameRecordType.LOSE to 0)
+    private var drawRecord = (GameRecordType.DRAW to 0)
 
     override fun addCard(card: Card) {
         cards.add(card)
@@ -29,5 +32,18 @@ class Dealer : BlackJackGamer {
 
     override fun getName(): String {
         return name
+    }
+
+    fun getTotalGameRecord(): List<Pair<GameRecordType, Int>> {
+        return listOf(winRecord, loseRecord, drawRecord)
+    }
+
+    override fun proceedGameRecord(gameRecordType: GameRecordType) {
+        when (gameRecordType) {
+            GameRecordType.WIN -> winRecord = Pair(GameRecordType.WIN, winRecord.second + 1)
+            GameRecordType.LOSE -> loseRecord = Pair(GameRecordType.LOSE, loseRecord.second + 1)
+            GameRecordType.DRAW -> drawRecord = Pair(GameRecordType.DRAW, drawRecord.second + 1)
+            GameRecordType.NONE -> throw IllegalArgumentException("게임 결과는 NONE이 되면 안됩니다.")
+        }
     }
 }

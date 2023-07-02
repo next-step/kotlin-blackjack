@@ -14,4 +14,7 @@ interface BlackJackGamer {
     fun getGamerType(): GamerType
 
     fun getName(): String
+
+    fun proceedGameRecord(gameRecordType: GameRecordType)
+
 }

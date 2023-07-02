@@ -27,6 +27,10 @@ class BlackJackController(
 
         checkDealerCards(blackJackGame, dealer)
 
+        printDrawResult(gamerList)
+
+        aggregateGameResult(blackJackGame, playerList, dealer)
+
         printGameResult(gamerList)
     }
 
@@ -80,6 +84,16 @@ class BlackJackController(
         if (!blackJackGame.checkBlackJackGamerIsDraw(dealer)) {
             resultView.printDealerIsDraw()
             blackJackGame.oneGamerDraw(dealer)
+        }
+    }
+
+    private fun printDrawResult(gamerList: List<BlackJackGamer>) {
+        resultView.printDrawResult(gamerList)
+    }
+
+    private fun aggregateGameResult(blackJackGame: BlackJackGame, playerList: List<Player>, dealer: Dealer) {
+        playerList.forEach {
+            blackJackGame.proceedWhoIsWinner(it, dealer)
         }
     }
 
