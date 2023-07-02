@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.GameResultState
+import blackjack.domain.player.GameResultState
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -58,8 +58,12 @@ class Cards(private val cards: MutableSet<Card>) : MutableSet<Card> by cards {
         return getCardScore() < score
     }
 
-    fun hasMoreScore(score: Int): Boolean {
-        return getCardScore() > score
+    fun isBust(): Boolean {
+        return getCardScore() > WIN_SCORE
+    }
+
+    fun isBlackJack(): Boolean {
+        return cards.size == 2 && getCardScore() == WIN_SCORE
     }
 
     companion object {

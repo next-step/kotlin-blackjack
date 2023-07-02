@@ -21,11 +21,11 @@ class Players(private val players: MutableList<Player>) {
         }
     }
 
-    fun getPlayers(): List<Player> {
+    fun getPlayers(): List<BlackJackPlayer> {
         return listOf(dealer) + players
     }
 
-    private fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_COUNT) {
+    private fun giveCardsToPlayer(player: BlackJackPlayer, repeatTime: Int = DEFAULT_CARD_COUNT) {
         repeat(repeatTime) {
             player.addCard(blackJackCardDeck.hitCard())
         }

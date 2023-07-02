@@ -1,11 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.GameResultState
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
 import blackjack.domain.card.Cards
+import blackjack.domain.player.BlackJackPlayer
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.GameResultState
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
@@ -25,11 +26,11 @@ object OutputView {
         println()
     }
 
-    fun showPlayerCards(player: Player) {
+    fun showPlayerCards(player: BlackJackPlayer) {
         println(getPlayerCardInformation(player))
     }
 
-    private fun getPlayerCardInformation(player: Player) = "${player.name.name}카드: ${getCardsNames(player.cards)}"
+    private fun getPlayerCardInformation(player: BlackJackPlayer) = "${player.name.name}카드: ${getCardsNames(player.cards)}"
 
     fun showGameResult(players: Players) {
         showDealerGetMoreCardState(players.getDealer())
@@ -51,16 +52,20 @@ object OutputView {
         }
     }
 
-    private fun showResultPlayer(player: Player) {
-        var result = when (player.gameResultState) {
-            GameResultState.WIN -> "승"
-            GameResultState.DRAW -> "무"
-            GameResultState.LOSE -> "패"
+    private fun showResultPlayer(player: BlackJackPlayer) {
+        val result = when (player) {
+            is Player -> getGameResultText(player)
+            is Dealer -> makeDealerResult(player)
+            else -> return
         }
-        if (player is Dealer) {
-            result = makeDealerResult(player)
-        }
+
         println("${player.name.name}: $result")
+    }
+
+    private fun getGameResultText(player: Player) = when (player.gameResultState) {
+        GameResultState.WIN -> "승"
+        GameResultState.DRAW -> "무"
+        GameResultState.LOSE -> "패"
     }
 
     private fun makeDealerResult(dealer: Dealer): String {

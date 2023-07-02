@@ -10,7 +10,16 @@ object InputView {
     fun getInputPlayers(): MutableList<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val names = readln().split(SEPERATOR)
+        println()
         return names.map { Player(PlayerName(it)) }.toMutableList()
+    }
+
+    fun setBettingMoney(players: List<Player>) {
+        players.forEach {
+            println("${it.name.name}의 배팅 금액은?")
+            it.setBettingMoney(readln())
+            println()
+        }
     }
 
     fun isMoreCard(player: Player): Boolean {
