@@ -1,7 +1,5 @@
 package blackjack.domain.player
 
-import blackjack.domain.player.Gamer
-import blackjack.domain.player.Gamers
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
