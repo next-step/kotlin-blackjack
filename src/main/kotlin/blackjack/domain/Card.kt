@@ -8,4 +8,13 @@ class Card(val denomination: Denomination, val suit: Suit) {
         get() {
             return denomination.value
         }
+
+    val name: String
+        get() {
+            return "${denomination.printName}${suit.suitName}"
+        }
+
+    fun isAce(): Boolean {
+        return denomination == Denomination.ACE
+    }
 }
