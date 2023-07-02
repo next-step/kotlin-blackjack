@@ -5,7 +5,6 @@ import blackjack.domain.card.Card
 class Dealer : BlackJackGamer {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
-    private val name = "딜러"
     private var winRecord = (GameRecordType.WIN to 0)
     private var loseRecord = (GameRecordType.LOSE to 0)
     private var drawRecord = (GameRecordType.DRAW to 0)
@@ -31,7 +30,7 @@ class Dealer : BlackJackGamer {
     }
 
     override fun getName(): String {
-        return name
+        return DEALER_NAME
     }
 
     fun getTotalGameRecord(): List<Pair<GameRecordType, Int>> {
@@ -45,5 +44,9 @@ class Dealer : BlackJackGamer {
             GameRecordType.DRAW -> drawRecord = Pair(GameRecordType.DRAW, drawRecord.second + 1)
             GameRecordType.NONE -> throw IllegalArgumentException("게임 결과는 NONE이 되면 안됩니다.")
         }
+    }
+
+    companion object {
+        const val DEALER_NAME = "딜러"
     }
 }

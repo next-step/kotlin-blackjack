@@ -11,38 +11,46 @@ class RuleChecker {
         return CONDITION_TO_DEALER_DRAW_CARD
     }
 
-    fun proceedWhoIsWinner(player: Player, dealer: Dealer): Int {
+    fun proceedWhoIsWinner(player: Player, dealer: Dealer): BlackJackGamer? {
         if (dealer.calculateSumOfCardNumbers() > CONDITION_TO_WIN_BLACK_JACK) {
-            player.proceedGameRecord(GameRecordType.WIN)
-            dealer.proceedGameRecord(GameRecordType.LOSE)
-            return 0
+            return playerIsWinner(player, dealer)
         }
 
         if (player.calculateSumOfCardNumbers() > CONDITION_TO_WIN_BLACK_JACK) {
-            player.proceedGameRecord(GameRecordType.LOSE)
-            dealer.proceedGameRecord(GameRecordType.WIN)
-            return 0
+            return dealerIsWinner(player, dealer)
         }
 
         if (player.calculateSumOfCardNumbers() > dealer.calculateSumOfCardNumbers()) {
-            player.proceedGameRecord(GameRecordType.WIN)
-            dealer.proceedGameRecord(GameRecordType.LOSE)
-            return 0
+            return playerIsWinner(player, dealer)
         }
 
         if (player.calculateSumOfCardNumbers() < dealer.calculateSumOfCardNumbers()) {
-            player.proceedGameRecord(GameRecordType.LOSE)
-            dealer.proceedGameRecord(GameRecordType.WIN)
-            return 0
+            return dealerIsWinner(player, dealer)
         }
 
         if (player.calculateSumOfCardNumbers() == dealer.calculateSumOfCardNumbers()) {
-            player.proceedGameRecord(GameRecordType.DRAW)
-            dealer.proceedGameRecord(GameRecordType.DRAW)
-            return 0
+            return noOneIsWinner(player, dealer)
         }
 
-        return 0
+        return null
+    }
+
+    private fun playerIsWinner(player: Player, dealer: Dealer): BlackJackGamer {
+        player.proceedGameRecord(GameRecordType.WIN)
+        dealer.proceedGameRecord(GameRecordType.LOSE)
+        return player
+    }
+
+    private fun dealerIsWinner(player: Player, dealer: Dealer): BlackJackGamer {
+        player.proceedGameRecord(GameRecordType.LOSE)
+        dealer.proceedGameRecord(GameRecordType.WIN)
+        return dealer
+    }
+
+    private fun noOneIsWinner(player: Player, dealer: Dealer): BlackJackGamer? {
+        player.proceedGameRecord(GameRecordType.DRAW)
+        dealer.proceedGameRecord(GameRecordType.DRAW)
+        return null
     }
 
     companion object {
