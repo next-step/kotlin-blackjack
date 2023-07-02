@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardShape(val displayName: String) {
     DIAMOND("다이아몬드"),

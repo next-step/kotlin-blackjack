@@ -16,13 +16,13 @@ class DeckTest : StringSpec({
         deck.size() shouldBe 51
     }
 
-    "덱에서 카드 2 장을 랜덤으로 뽑을 수 있다." {
+    "덱에서 카드 2장을 랜덤으로 뽑을 수 있다." {
         val deck = Deck.create()
         deck.drawCards(2)
         deck.size() shouldBe 50
     }
 
-    "덱에서 카드 52 장을 랜덤으로 뽑을 수 있다." {
+    "덱에서 카드 52장을 랜덤으로 뽑을 수 있다." {
         val deck = Deck.create()
         deck.drawCards(52)
         deck.size() shouldBe 0
