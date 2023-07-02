@@ -1,5 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -17,13 +20,13 @@ class PlayerTest : BehaviorSpec({
         `when`("추가 카드로 10을 넣을 때") {
             player.addCard(Card(CardNumber.CARD_QUEEN, CardType.DIAMOND))
             then("에이스는 11로 쓰인다") {
-                player.getCardScore() shouldBe 21
+                player.getScore() shouldBe 21
             }
         }
         `when`("추가 카드로 10을 넣을 때") {
             player.addCard(Card(CardNumber.CARD_JACK, CardType.DIAMOND))
             then("에이스는 1로 쓰인다") {
-                player.getCardScore() shouldBe 21
+                player.getScore() shouldBe 21
             }
         }
     }

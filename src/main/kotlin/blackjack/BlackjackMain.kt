@@ -1,32 +1,35 @@
 package blackjack
 
 import blackjack.domain.BlackJackTable
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.GameConditionNotify
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
-import blackjack.view.ViewCallback
 
 fun main() {
+
+    val blackJackTable = BlackJackTable()
     val players = InputView.getInputPlayers()
+    val blackJackPlayers = Players(players)
 
-    BlackJackTable().startGame(
-        players,
-        object : ViewCallback {
-            override fun isMoreCard(player: Player): Boolean {
-                return InputView.isMoreCard(player)
-            }
-
-            override fun showPlayerSet(players: Players) {
+    blackJackTable.startGame(
+        blackJackPlayers,
+        object : GameConditionNotify {
+            override fun giveDefaultCardsToPlayerDone(players: Players) {
                 OutputView.showPlayerSet(players)
             }
 
-            override fun showPlayerCards(player: Player) {
+            override fun isNeedMoreCard(player: Player): Boolean {
+                return InputView.isMoreCard(player)
+            }
+
+            override fun giveCardToPlayerDone(player: Player) {
                 OutputView.showPlayerCards(player)
             }
 
-            override fun showGameResult(player: Player) {
-                OutputView.showGameResult(player)
+            override fun finishBlackJackGame(players: Players) {
+                OutputView.showGameResult(players)
             }
         }
     )

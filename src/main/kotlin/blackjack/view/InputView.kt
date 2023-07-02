@@ -1,19 +1,16 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.PlayerName
-import blackjack.domain.Players
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 
 object InputView {
 
     private const val SEPERATOR = ","
 
-    fun getInputPlayers(): Players {
+    fun getInputPlayers(): MutableList<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val names = readln().split(SEPERATOR)
-        return Players(names.map {
-            Player(PlayerName(it))
-        })
+        return names.map { Player(PlayerName(it)) }.toMutableList()
     }
 
     fun isMoreCard(player: Player): Boolean {

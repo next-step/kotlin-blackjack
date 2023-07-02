@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardType {
     SPADE,
@@ -7,11 +7,11 @@ enum class CardType {
     DIAMOND;
 
     companion object {
-        fun getCardDeck(numbers: Array<CardNumber>): Cards {
-            return Cards(
+        fun getCardDeck(numbers: Array<CardNumber>): BlackCardDeck {
+            return BlackCardDeck(
                 values().flatMap {
                     getCard(numbers, it)
-                }.shuffled().toMutableList()
+                }.shuffled().toMutableSet()
             )
         }
 

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardNumber(val score: Int) {
     CARD_TWO(2),
@@ -12,5 +12,5 @@ enum class CardNumber(val score: Int) {
     CARD_JACK(10),
     CARD_QUEEN(10),
     CARD_KING(10),
-    CARD_ACE(1);
+    CARD_ACE(1)
 }
