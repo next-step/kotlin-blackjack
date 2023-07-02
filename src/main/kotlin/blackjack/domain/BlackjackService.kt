@@ -1,30 +1,12 @@
-package blackjack.controller
+package blackjack.domain
 
-import blackjack.domain.Dealer
-import blackjack.domain.Dealer.Companion.DEALER_UNDER_NUMBER
-import blackjack.domain.GameCardsSet
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.service.GameResultService
 import blackjack.view.BlackjackView
 import blackjack.view.InputView
 
-class BlackjackController {
+class BlackjackService {
     private var wantStop = false
 
-    fun run() {
-        val dealerAndPlayers = prepareGame()
-        val dealer = dealerAndPlayers.first
-        val players = dealerAndPlayers.second
-
-        playGame(dealer, players)
-        BlackjackView.printPlayersResult(listOf(dealer).plus(players.players))
-
-        val gameResult = GameResultService().allResult(dealer, players)
-        BlackjackView.printGameResult(gameResult)
-    }
-
-    private fun prepareGame(): Pair<Dealer, Players> {
+    fun prepareGame(): Pair<Dealer, Players> {
         val gameCardsSet = GameCardsSet()
         val dealer = Dealer(gameCardsSet = gameCardsSet)
         val players = InputView.inputPlayers(gameCardsSet)
@@ -38,18 +20,14 @@ class BlackjackController {
             dealer.hit()
             players.players.forEach { player -> player.hit() }
         }
-
-        BlackjackView.printInitialTurn(dealer.name, players.players.map { it.name }, DEFAULT_INITIAL_DRAW)
-        BlackjackView.printDealerFirstCard(dealer)
-        BlackjackView.printPlayersCard(players)
     }
 
-    private fun playGame(dealer: Dealer, players: Players) {
+    fun playGame(dealer: Dealer, players: Players) {
         while (!wantStop) {
             players.players.forEach { hit(it) }
         }
 
-        if (dealer.sumOfMyCards() <= DEALER_UNDER_NUMBER) {
+        if (dealer.sumOfMyCards() <= Dealer.DEALER_UNDER_NUMBER) {
             dealer.hit()
             BlackjackView.printDealerExtraHit(dealer.name)
         }
@@ -76,10 +54,6 @@ class BlackjackController {
     }
 
     companion object {
-        private const val DEFAULT_INITIAL_DRAW: Int = 2
+        const val DEFAULT_INITIAL_DRAW: Int = 2
     }
-}
-
-fun main() {
-    BlackjackController().run()
 }

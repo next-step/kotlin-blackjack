@@ -1,11 +1,20 @@
 package blackjack.view
 
+import blackjack.domain.Card
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
+import blackjack.domain.Dealer.Companion.DEALER_UNDER_NUMBER
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.vo.GameResultVO
 
 object BlackjackView {
-    fun printInitialTurn(names: List<String>, initialDraw: Int) {
-        println("\n${names.joinToString(", ")}에게 ${initialDraw}장을 나누었습니다.")
+    fun printInitialTurn(dealerName: String, playerNames: List<String>, initialDraw: Int) {
+        println("\n${dealerName}와 ${playerNames.joinToString(", ")}에게 ${initialDraw}장을 나누었습니다.")
+    }
+
+    fun printDealerExtraHit(dealerName: String) {
+        println("\n${dealerName}는 ${DEALER_UNDER_NUMBER}이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printPlayersCard(players: Players) {
@@ -15,8 +24,13 @@ object BlackjackView {
         println()
     }
 
+    fun printDealerFirstCard(dealer: Dealer) {
+        val dealerFirstCard = dealer.getMyCards().cards[0]
+        println("${dealer.name}: ${printCard(dealerFirstCard)}")
+    }
+
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.showMyCards()}")
+        println("${player.name}카드: ${printCards(player.getMyCards())}")
     }
 
     fun askDraw(player: Player): Boolean {
@@ -28,15 +42,35 @@ object BlackjackView {
         }
     }
 
-    fun printPlayersResult(players: Players) {
+    fun printPlayersResult(players: List<Player>) {
         println()
-        players.players.forEach {
+        players.forEach {
             printPlayerResult(it)
         }
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${player.showMyCards()} - 결과: ${player.sumOfMyCards()}")
+        println("${player.name}카드: ${printCards(player.getMyCards())} - 결과: ${player.sumOfMyCards()}")
+    }
+
+    private fun printCard(card: Card): String = "${card.rank.description}${card.suit.description}"
+
+    private fun printCards(cards: Cards): String = cards.cards.joinToString(", ") { printCard(it) }
+
+    fun printGameResult(gameResult: GameResultVO) {
+        println("\n## 최종 승패")
+
+        val dealerResults = gameResult.dealerWinMap.map { (result, int) ->
+            int.toString() + result.description
+        }
+
+        println(
+            "딜러: ${dealerResults.joinToString(" ")}"
+        )
+
+        gameResult.playersWinMap.forEach { (player, result) ->
+            println("${player.name}: ${result.description}")
+        }
     }
 
     private const val YES: String = "y"

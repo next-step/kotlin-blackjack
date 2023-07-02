@@ -1,27 +1,49 @@
 package blackjack.domain
 
-import blackjack.domain.Cards.Companion.TARGET_SUM
+import blackjack.domain.Cards.Companion.BLACK_JACK_SCORE
+import blackjack.error.BlackjackErrorMessage.CAN_NOT_DRAW
 
-class Player(
+open class Player(
     val name: String,
-    private val gameCardsSet: GameCardsSet
+    private val gameCardsSet: GameCardsSet,
 ) {
     private var myCards: Cards = Cards.empty()
+    var state: PlayerState = PlayerState.HIT
+        private set
 
-    fun numberOfMyCards(): Int = myCards.cards.size
+    fun getMyCards(): Cards = myCards.copy()
 
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
-    fun showMyCards(): String = myCards.toString()
-
-    fun canDraw(): Boolean = myCards.calculateOptimalSum() <= TARGET_SUM
-
-    fun drawCard() {
-        if (!canDraw()) {
-            throw IllegalStateException("카드 숫자의 합이 21을 초과합니다.")
-        }
+    fun hit() {
+        check(state.canDraw) { CAN_NOT_DRAW }
 
         val drawnCard = gameCardsSet.drawRandomCard()
         myCards = myCards.add(drawnCard)
+        updateState()
+    }
+
+    fun stand() {
+        state = PlayerState.STAND
+    }
+
+    private fun updateState() {
+        if (state == PlayerState.STAND) {
+            return
+        }
+
+        val sumOfMyCards = sumOfMyCards()
+
+        if (sumOfMyCards == BLACK_JACK_SCORE) {
+            state = PlayerState.BLACK_JACK
+        }
+
+        if (sumOfMyCards < BLACK_JACK_SCORE) {
+            state = PlayerState.HIT
+        }
+
+        if (sumOfMyCards > BLACK_JACK_SCORE) {
+            state = PlayerState.BUST
+        }
     }
 }

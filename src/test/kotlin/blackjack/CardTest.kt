@@ -16,13 +16,4 @@ class CardTest {
         assertThat(card.numbers[0]).isEqualTo(8)
         assertThat(card.suit).isEqualTo(Suits.CLUBS)
     }
-
-    @Test
-    fun `카드 정보를 출력할 수 있다`() {
-        val rank = Ranks.EIGHT
-        val suit = Suits.CLUBS
-        val card = Card.createCard(rank, suit)
-
-        assertThat(card.toString()).isEqualTo("8클로버")
-    }
 }
