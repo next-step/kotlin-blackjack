@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardNumber
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.inspectors.forAll
