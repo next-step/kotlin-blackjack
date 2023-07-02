@@ -52,7 +52,7 @@ class BlackjackGame(
 
     private fun checkDealerStatus() {
         if (dealer.totalValue <= DEALER_HIT_SCORE) {
-            dealer.drawCardFromDeck()
+            dealer.drawCard(dealer)
             resultView.printDealerStatus()
         }
     }

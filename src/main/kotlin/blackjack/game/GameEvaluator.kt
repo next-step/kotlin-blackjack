@@ -10,6 +10,7 @@ object GameEvaluator {
     fun evaluate(dealer: Dealer, players: List<Player>) {
         if (dealer.totalValue > BlackjackGame.BUST_SCORE) {
             awardWinsToAllPlayers(players)
+            repeat(players.size) { matchResult["딜러"]!!.addLose() }
         } else {
             evaluateScores(dealer, players)
         }
@@ -18,12 +19,11 @@ object GameEvaluator {
     private fun awardWinsToAllPlayers(players: List<Player>) {
         players.forEach { player ->
             matchResult.getOrPut(player.name) { Result() }.addWin()
-            matchResult["딜러"]!!.addLose()
         }
     }
 
     private fun evaluateScores(dealer: Dealer, players: List<Player>) {
-        val dealerResult = matchResult["딜러"]!!
+        val dealerResult = matchResult[dealer.name]!!
         val dealerScore = dealer.totalValue
 
         players.forEach { player ->

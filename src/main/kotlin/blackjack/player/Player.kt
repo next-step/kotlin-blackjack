@@ -2,7 +2,7 @@ package blackjack.player
 
 import blackjack.card.Card
 
-class Player(
+open class Player(
     val name: String,
     private val hand: Hand = Hand(),
     private var status: Status = Status.HIT
