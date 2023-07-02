@@ -32,7 +32,7 @@ class DeckTest : StringSpec({
         val deck = Deck.create()
         deck.drawCards(52)
 
-        shouldThrow<IllegalArgumentException> {
+        shouldThrow<IllegalStateException> {
             deck.drawCard()
         }
     }
