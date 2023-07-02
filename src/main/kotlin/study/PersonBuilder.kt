@@ -1,7 +1,7 @@
 package study
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String? = null
     private var company: String? = null
     private var skills: Skills = Skills(emptyList(), emptyList())
     private var languages: List<Language> = emptyList()

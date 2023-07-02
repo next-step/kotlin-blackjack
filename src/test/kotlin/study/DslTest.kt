@@ -1,5 +1,6 @@
 package study
 
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -76,5 +77,13 @@ class DslTest {
             Language("korean", 5),
             Language("english", 4)
         )
+    }
+
+    @Test
+    fun noParameter() {
+        shouldNotThrowAny {
+            introduce {
+            }
+        }
     }
 }
