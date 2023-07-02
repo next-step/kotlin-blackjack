@@ -1,7 +1,6 @@
-package blackjack
+package blackjack.game
 
 import blackjack.dealer.Dealer
-import blackjack.game.GameEvaluator
 import blackjack.player.Player
 import blackjack.player.Status
 import blackjack.view.InputView
