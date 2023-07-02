@@ -6,6 +6,7 @@ import blackjack.domain.card.CardShape
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
 
@@ -61,5 +62,12 @@ class PlayerTest {
         }
 
         Assertions.assertThat(actual).isEqualTo(playerNameList)
+    }
+
+    @Test
+    fun `플레이어의 전적은 NONE인데 조회할 경우 IllegalArgumentException을 throw 한다`() {
+        val player = Player("playerName")
+
+        assertThrows<IllegalArgumentException> { player.getGameRecord() }
     }
 }
