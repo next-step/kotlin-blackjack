@@ -7,7 +7,8 @@ import io.kotest.matchers.shouldBe
 
 class UserTest : StringSpec({
     val cards = Cards(listOf(Card(Denomination.KING, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE)))
-    val user = User("Lee", cards, false)
+    val user = User("Lee", cards)
+
     "플레이어는 이름과 카드리스트, 덱 완성 여부를 갖고 있다." {
         user.name shouldBe "Lee"
         user.cards shouldBe cards
