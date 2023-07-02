@@ -8,6 +8,9 @@ class Deck {
 
     private val deck: Stack<Card> = Stack()
 
+    val cardCount: Int
+        get() = deck.size
+
     init {
         Symbol.values().forEach { symbol ->
             Rank.values().forEach { rank ->
@@ -15,7 +18,7 @@ class Deck {
             }
         }
 
-        deck.shuffled()
+        deck.shuffle()
     }
 
     fun drawCard(count: Int): Cards {
@@ -24,13 +27,9 @@ class Deck {
 
         repeat(count) {
             val card = deck.pop()
-            cards.hitCard(card)
+            cards.append(card)
         }
 
         return cards
-    }
-
-    fun currentCardCount(): Int {
-        return deck.size
     }
 }

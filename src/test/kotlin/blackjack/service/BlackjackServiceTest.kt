@@ -6,12 +6,23 @@ import org.junit.jupiter.api.Test
 class BlackjackServiceTest {
 
     @Test
-    fun `구분한 참가자명으로 플레이어를 생성하며 한명의 플레이어 당 두장의 카드를 지급 받아 생성한다 (이때 카드는 딜러에게 전달 받는다)`() {
+    fun `블랙잭 게임 초기 시작 시 플레이어 당 2장 씩 딜러도 2장 카드를 가진다`() {
         val players = listOf("test1", "test2")
         val blackjackGame = BlackjackService().initBlackjackGame(players)
-        blackjackGame.players.size shouldBe 2
-        blackjackGame.players[0].name shouldBe "test1"
-        blackjackGame.players[1].name shouldBe "test2"
-        blackjackGame.dealer.deck.currentCardCount() shouldBe 52 - 4
+
+        val player1CardCount = blackjackGame.players[0].cards.cards.size
+        val player2CardCount = blackjackGame.players[1].cards.cards.size
+        val dealerCardCount = blackjackGame.dealer.cards.cards.size
+        player1CardCount shouldBe BASIC_CARD_COUNT
+        player2CardCount shouldBe BASIC_CARD_COUNT
+        dealerCardCount shouldBe BASIC_CARD_COUNT
+
+        val expected = TOTAL_CARD_COUNT - (player1CardCount + player2CardCount + dealerCardCount)
+        blackjackGame.dealer.deck.cardCount shouldBe expected
+    }
+
+    companion object {
+        const val TOTAL_CARD_COUNT = 52
+        const val BASIC_CARD_COUNT = 2
     }
 }

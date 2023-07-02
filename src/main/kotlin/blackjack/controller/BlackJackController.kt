@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
+import blackjack.domain.Dealer
 import blackjack.domain.enums.Condition
-import blackjack.ext.replaceWhiteSpaceAndSplitByComma
 import blackjack.service.BlackjackService
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -18,9 +18,24 @@ class BlackJackController(
         val blackjackGame = initBlackjackGame()
 
         raceBlackjack(blackjackGame)
-
         resultView.printEnter()
-        resultView.printResultGame(blackjackGame.players)
+        raceDealer(blackjackGame.dealer)
+        resultView.printEnter()
+
+        resultView.printResultScore(blackjackGame.players, blackjackGame.dealer)
+        resultView.printEnter()
+
+        val result = blackjackService.resultBlackjackGame(blackjackGame.players, blackjackGame.dealer)
+        resultView.printResultGame(result)
+    }
+
+    private fun raceDealer(dealer: Dealer) {
+        do {
+            if (dealer.currentCondition() == Condition.PLAY) {
+                blackjackService.raceDealer(dealer)
+            }
+            resultView.printDealerCard(dealer)
+        } while (dealer.currentCondition() == Condition.PLAY)
     }
 
     private fun raceBlackjack(blackjackGame: BlackjackGame) {
@@ -40,10 +55,14 @@ class BlackJackController(
         val players = replaceWhiteSpaceAndSplitByComma(inputPlayers)
         val blackjackGame = blackjackService.initBlackjackGame(players)
 
-        resultView.printPlayers(players)
-        resultView.printPlayersAndCards(blackjackGame.players)
+        resultView.printPlayers(blackjackGame.players, blackjackGame.dealer)
+        resultView.printPlayersAndCards(blackjackGame.players, blackjackGame.dealer)
         resultView.printEnter()
 
         return blackjackGame
+    }
+
+    private fun replaceWhiteSpaceAndSplitByComma(target: String): List<String> {
+        return target.trim().replace("\\s".toRegex(), "").split(",")
     }
 }

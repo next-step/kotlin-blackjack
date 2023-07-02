@@ -3,13 +3,10 @@ package blackjack.domain
 import blackjack.domain.enums.Condition
 
 class Player(
-    val name: String,
-    val cards: Cards,
-    private var condition: Condition = Condition.PLAY
-) {
-    fun hit(card: Card) {
-        this.cards.hitCard(card)
-    }
+    name: String,
+    cards: Cards,
+    condition: Condition = Condition.PLAY
+) : Participant(name, cards, condition) {
 
     fun currentCondition(): Condition {
         return this.condition

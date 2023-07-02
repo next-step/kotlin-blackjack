@@ -1,50 +1,39 @@
 package blackjack.domain
 
+import blackjack.enums.Rank
+
 class Cards(
-    private val cards: List<Card>
+    cards: List<Card>
 ) {
 
-    fun hitCard(card: Card) {
-        this.cards.toMutableList().add(card)
+    private val mutableCards = cards.toMutableList()
+
+    val cards: List<Card>
+        get() = mutableCards.toList()
+
+    fun append(card: Card) {
+        mutableCards.add(card)
     }
 
-    fun getOneCard(): Card {
+    fun pick(): Card {
         return cards.first()
     }
 
-    fun extractCardsInfoAsString(): String {
-        var cardsInfo = ""
-
-        cards.forEachIndexed { index, card ->
-            cardsInfo += "${card.rank.value}${card.symbol.symbolName}"
-            if (index != cards.lastIndex) {
-                cardsInfo += ", "
-            }
-        }
-        return cardsInfo
+    fun first(): Card {
+        return this.cards.first()
     }
 
-    fun calculateCardsTotalValue(): Int {
-        var total = 0
-        cards.filter { it.rank.rank != ACE_RANK_MARK }.forEach { card ->
-            total += card.rank.value
-        }
+    fun calculateScore(): Score {
 
-        val rankACards = cards.filter { it.rank.rank == ACE_RANK_MARK }
-        if (rankACards.isNotEmpty()) {
-            rankACards.forEach { card ->
-                total += if (total > STANDARD_NUMBER) {
-                    card.rank.value
-                } else {
-                    card.rank.hiddenValue
-                }
-            }
+        var total = cards.sumOf { it.rank.value }
+
+        if (cards.any { it.rank == Rank.ACE } && total - Rank.ACE.value <= STANDARD_NUMBER) {
+            total += -Rank.ACE.value + Rank.ACE.hiddenValue
         }
-        return total
+        return Score(total)
     }
 
     companion object {
-        private const val ACE_RANK_MARK = "A"
         private const val STANDARD_NUMBER = 10
     }
 }

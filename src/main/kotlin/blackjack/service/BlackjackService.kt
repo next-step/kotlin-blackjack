@@ -4,14 +4,19 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.Score
 import blackjack.domain.enums.Condition
+import blackjack.domain.enums.MatchResult
+import blackjack.dto.BlackjackGameResult
+import blackjack.view.InputView
 
 class BlackjackService {
 
     fun initBlackjackGame(players: List<String>): BlackjackGame {
-        val dealer = Dealer(Deck())
+        val deck = Deck()
+        val dealer = Dealer(deck = deck, cards = deck.drawCard(BASIC_CARD_COUNT))
         val blackJackPlayers = players.map { player ->
-            val cards = dealer.drawCardsFromDeck(BASIC_CARD_COUNT)
+            val cards = dealer.draw(BASIC_CARD_COUNT)
             Player(name = player, cards = cards)
         }
         return BlackjackGame(blackJackPlayers, dealer)
@@ -19,26 +24,59 @@ class BlackjackService {
 
     fun raceBlackjack(player: Player, blackjackGame: BlackjackGame, answer: String) {
 
-        if (answer == Condition.PLAY.raceFlag && player.currentCondition() == Condition.PLAY) {
-            val card = blackjackGame.dealer.drawCardsFromDeck(ONE_MORE_CARD_COUNT).getOneCard()
+        if (answer == InputView.go && player.currentCondition() == Condition.PLAY) {
+            val card = blackjackGame.dealer.draw(ONE_MORE_CARD_COUNT).pick()
             player.hit(card)
             checkCondition(player)
-        } else if (answer == Condition.STAY.raceFlag) {
+        } else if (answer == InputView.stop) {
             player.changeCondition(Condition.STAY)
         }
     }
 
+    fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
+        val result = mutableListOf<BlackjackGameResult>()
+        var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
+
+        players.forEach { player ->
+            val resultMatch = dealer.determineResult(player.cards.calculateScore())
+            addGameResult(result, player.name, resultMatch)
+            when (resultMatch) {
+                MatchResult.WIN -> dealerLoseCount++
+                MatchResult.LOSE -> dealerWinCount++
+                MatchResult.DRAW -> dealerDrawCount++
+            }
+        }
+        result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
+        return result
+    }
+
+    private fun addGameResult(
+        result: MutableList<BlackjackGameResult>,
+        playerName: String,
+        resultMatch: MatchResult
+    ) {
+        when (resultMatch) {
+            MatchResult.WIN -> result.add(BlackjackGameResult(name = playerName, win = resultMatch.match))
+            MatchResult.LOSE -> result.add(BlackjackGameResult(name = playerName, lose = resultMatch.match))
+            MatchResult.DRAW -> result.add(BlackjackGameResult(name = playerName, draw = resultMatch.match))
+        }
+    }
+
+    fun raceDealer(dealer: Dealer) {
+        val card = dealer.draw(Dealer.ONE_DRAW_COUNT).pick()
+        dealer.hit(card)
+    }
+
     private fun checkCondition(player: Player) {
-        if (player.cards.calculateCardsTotalValue() == BLACK_JACK_NUMBER) {
+        if (player.cards.calculateScore().value == Score.BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BLACKJACK)
-        } else if (player.cards.calculateCardsTotalValue() > BLACK_JACK_NUMBER) {
+        } else if (player.cards.calculateScore().value > Score.BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BUST)
         }
     }
 
     companion object {
-        private const val BLACK_JACK_NUMBER = 21
-        private const val BASIC_CARD_COUNT = 2
+        const val BASIC_CARD_COUNT = 2
         private const val ONE_MORE_CARD_COUNT = 1
     }
 }
