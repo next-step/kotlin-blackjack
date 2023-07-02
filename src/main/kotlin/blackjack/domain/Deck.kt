@@ -1,13 +1,21 @@
 package blackjack.domain
 
-class Deck(private val cards: MutableList<Card>) {
+class Deck private constructor(private val cards: MutableList<Card>) {
 
-    fun drawCard(): Card = cards.removeLast()
+    fun drawCard(): Card {
+        check(cards.isNotEmpty()) { "덱이 비어있습니다." }
+        return cards.removeLast()
+    }
+
+    fun drawCards(count: Int): List<Card> {
+        require(count <= allCards.size) { "뽑으려는 카드의 수가 ${allCards.size}를 초과할 수 없습니다." }
+        return List(count) { drawCard() }
+    }
 
     fun size(): Int = cards.size
 
     companion object {
-        private val cards = createCards()
+        private val allCards = createCards()
         private fun createCards(): List<Card> {
             val cardNumbers = CardNumber.values()
             val cardShapes = CardShape.values()
@@ -19,7 +27,7 @@ class Deck(private val cards: MutableList<Card>) {
         }
 
         fun create(): Deck {
-            val shuffledCards = cards.shuffled().toMutableList()
+            val shuffledCards = allCards.shuffled().toMutableList()
             return Deck(shuffledCards)
         }
     }
