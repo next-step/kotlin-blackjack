@@ -16,7 +16,7 @@ class CardNumberCalculatorTest {
 
     @BeforeEach
     fun setUp() {
-        cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
+        cardNumberCalculator = CardNumberCalculator()
     }
 
     @Test
@@ -73,7 +73,7 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `카드의 소유자가 플레이어 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
+    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
         val ace = CardNumber.A
         val startSum = 10
 
@@ -83,31 +83,9 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `카드의 소유자가 플레이어 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
+    fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
         val ace = CardNumber.A
         val startSum = 11
-
-        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
-
-        assertThat(actual).isEqualTo(1)
-    }
-
-    @Test
-    fun `카드의 소유자가 딜러 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 16이하인 경우는 11로 계산한다`() {
-        val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
-        val ace = CardNumber.A
-        val startSum = 5
-
-        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
-
-        assertThat(actual).isEqualTo(11)
-    }
-
-    @Test
-    fun `카드의 소유자가 딜러 일 때 Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 16초과하는 경우는 1로 계산한다`() {
-        val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
-        val ace = CardNumber.A
-        val startSum = 6
 
         val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
 

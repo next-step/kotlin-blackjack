@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 
 class Player(private val name: String) : BlackJackGamer {
     private val cards = mutableListOf<Card>()
-    private val cardNumberCalculator = CardNumberCalculator(GamerType.PLAYER)
+    private val cardNumberCalculator = CardNumberCalculator()
     private var gameRecord: GameRecordType = GameRecordType.NONE
 
     override fun addCard(card: Card) {

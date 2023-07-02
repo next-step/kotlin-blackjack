@@ -25,7 +25,7 @@ class BlackJackController(
 
         askPlayersWantToDrawCard(blackJackGame, playerList)
 
-        checkDealerCards(blackJackGame, dealer)
+        checkDealerHasToDrawCard(blackJackGame, dealer)
 
         printDrawResult(gamerList)
 
@@ -54,6 +54,7 @@ class BlackJackController(
     private fun askPlayersWantToDrawCard(blackJackGame: BlackJackGame, playerList: List<Player>) {
         playerList.forEach {
             askPlayerWantToDrawCard(blackJackGame, it)
+            resultView.printNextLine()
         }
         resultView.printNextLine()
     }
@@ -80,8 +81,8 @@ class BlackJackController(
         resultView.printNextLine()
     }
 
-    private fun checkDealerCards(blackJackGame: BlackJackGame, dealer: Dealer) {
-        if (!blackJackGame.checkBlackJackGamerIsDraw(dealer)) {
+    private fun checkDealerHasToDrawCard(blackJackGame: BlackJackGame, dealer: Dealer) {
+        if (blackJackGame.checkBlackJackGamerIsDraw(dealer)) {
             resultView.printDealerIsDraw()
             blackJackGame.oneGamerDraw(dealer)
         }

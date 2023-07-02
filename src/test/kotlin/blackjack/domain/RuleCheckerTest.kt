@@ -52,7 +52,7 @@ class RuleCheckerTest {
         "THREE,FOUR,TEN,false",
         delimiter = ','
     )
-    fun `딜러 타입일 때 카드 숫자 합을 16을 기준으로 검사 한다`(
+    fun `딜러 타입일 때 카드 숫자 합을 16을 기준으로 검사 한다(딜러는 카드를 뽑을때 16을 기준으로 체크한다)`(
         firstNumber: CardNumber,
         secondNumber: CardNumber,
         thirdNumber: CardNumber,

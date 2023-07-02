@@ -4,7 +4,7 @@ import blackjack.domain.card.Card
 
 class Dealer : BlackJackGamer {
     private val cards = mutableListOf<Card>()
-    private val cardNumberCalculator = CardNumberCalculator(GamerType.DEALER)
+    private val cardNumberCalculator = CardNumberCalculator()
     private var winRecord = (GameRecordType.WIN to 0)
     private var loseRecord = (GameRecordType.LOSE to 0)
     private var drawRecord = (GameRecordType.DRAW to 0)
@@ -48,5 +48,6 @@ class Dealer : BlackJackGamer {
 
     companion object {
         const val DEALER_NAME = "딜러"
+        const val CONDITION_TO_DEALER_DRAW_CARD = 16
     }
 }
