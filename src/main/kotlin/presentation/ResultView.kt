@@ -8,8 +8,14 @@ object ResultView {
         players.print()
     }
 
-    fun printPlayerState(players: List<Player>) {
-        players.print()
+    fun printPlayerState(player: Player) {
+        player.print()
+    }
+
+    fun printResult(players: List<Player>) {
+        players.forEach {
+            it.printWithResult()
+        }
     }
 
     private fun List<Player>.names(): List<String> {
@@ -25,5 +31,9 @@ object ResultView {
 
     private fun Player.print() {
         println("$name 카드: ${cards().joinToString(", ")}")
+    }
+
+    private fun Player.printWithResult() {
+        println("$name 카드: ${cards().joinToString(", ")} - 결과: ${result()}")
     }
 }

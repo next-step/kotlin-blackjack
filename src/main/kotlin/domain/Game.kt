@@ -15,19 +15,13 @@ class Game(val players: List<Player>, private val cardDeck: CardDeck = CardDeckI
         }
     }
 
-    fun dealAdditionalCard(players: List<Player>) {
-        players.dealCard()
+    fun dealAdditionalCard(player: Player) {
+        player.dealCard()
     }
 
     private fun List<Player>.dealInitialCards() {
         forEach {
             it.dealInitialCards()
-        }
-    }
-
-    private fun List<Player>.dealCard() {
-        forEach {
-            it.dealCard()
         }
     }
 

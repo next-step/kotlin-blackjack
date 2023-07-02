@@ -15,16 +15,23 @@ fun main() {
 
     while (true) {
         val playerReceiveMoreCard = game.playersCanReceiveMoreCard()
-            .playerReceiveMoreCard()
         if (playerReceiveMoreCard.isEmpty()) break
 
-        game.dealAdditionalCard(playerReceiveMoreCard)
-        ResultView.printPlayerState(game.players)
+        playerReceiveMoreCard.receiveMoreCard(game)
+
+        ResultView.printResult(game.players)
     }
 }
 
-fun List<Player>.playerReceiveMoreCard(): List<Player> {
-    return filter {
-        InputView.askReceiveCard(it.name)
+private fun List<Player>.receiveMoreCard(game: Game) {
+    forEach {
+        it.receiveMoreCard(game)
+    }
+}
+
+private fun Player.receiveMoreCard(game: Game) {
+    if (InputView.askReceiveCard(name)) {
+        game.dealAdditionalCard(this)
+        ResultView.printPlayerState(this)
     }
 }

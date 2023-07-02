@@ -65,7 +65,9 @@ class GameTest {
             game.playersCanReceiveMoreCard()
         ).isEqualTo(players)
 
-        game.dealAdditionalCard(players)
+        players.forEach {
+            game.dealAdditionalCard(it)
+        }
 
         assertThat(
             game.playersCanReceiveMoreCard()
@@ -81,7 +83,9 @@ class GameTest {
 
         val game = Game(players)
 
-        game.dealAdditionalCard(players)
+        players.forEach {
+            game.dealAdditionalCard(it)
+        }
 
         game.players.forEach {
             assertThat(it.cards()).size().isEqualTo(1)
