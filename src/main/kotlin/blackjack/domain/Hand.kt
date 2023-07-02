@@ -1,18 +1,16 @@
 package blackjack.domain
 
-import java.lang.RuntimeException
-
 class Hand {
     val cards: MutableList<Card> = mutableListOf()
     fun add(card: Card) {
-        if (burst()) {
+        if (bust()) {
             throw RuntimeException()
         }
 
         cards.add(card)
     }
 
-    fun bestHandTotal(): Int {
+    fun total(): Int {
         if (!hasByCardNumber(CardNumber.ACE)) {
             return hardTotal()
         }
@@ -32,7 +30,7 @@ class Hand {
 
     private fun hasByCardNumber(cardNumber: CardNumber): Boolean = cards.any { it.cardNumber == cardNumber }
 
-    fun burst(): Boolean = hardTotal() > BLACKJACK
+    fun bust(): Boolean = hardTotal() > BLACKJACK
 
     companion object {
         fun create(openCards: OpenCards): Hand {

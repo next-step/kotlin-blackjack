@@ -6,6 +6,7 @@ import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class PlayerTest: BehaviorSpec({
     given("BURST 상태의 플레이어가") {
@@ -15,9 +16,9 @@ class PlayerTest: BehaviorSpec({
                 shouldThrow<RuntimeException> { player.hit(ACE_SPADE) }
             }
         }
-        `when`("burst 상태를 조회 하면") {
-            then("true를 반환 한다.") {
-                player.burst() shouldBe true
+        `when`("플레이어의 상태는") {
+            then("버스트이다.") {
+                player.status shouldBe PlayerStatus.BUST
             }
         }
     }
@@ -28,9 +29,9 @@ class PlayerTest: BehaviorSpec({
                 shouldNotThrow<RuntimeException> { player.hit(ACE_SPADE) }
             }
         }
-        `when`("burst 상태를 조회 하면") {
-            then("false를 반환 한다.") {
-                player.burst() shouldBe false
+        `when`("플레이어의 상태는") {
+            then("버스트가 아니다.") {
+                player.status shouldNotBe PlayerStatus.BUST
 
             }
         }

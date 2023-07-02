@@ -1,16 +1,15 @@
 package blackjack.domain
 
-import java.lang.RuntimeException
-
 class Dealer private constructor(val cards: ShuffledCards) {
     fun open(): OpenCards {
         return OpenCards(cards.fetch(), cards.fetch())
     }
 
     fun dealing(player: Player) {
-        if (!player.burst()) {
-            player.hit(cards.fetch())
+        if (player.status == PlayerStatus.BUST || player.status == PlayerStatus.BLACKJACK) {
+            throw RuntimeException()
         }
+        player.hit(cards.fetch())
     }
 
     fun countOfRemainCards(): Int {

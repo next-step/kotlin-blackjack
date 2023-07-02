@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
+import blackjack.domain.PlayerStatus
 
 object GameResultPrinter {
     fun print(player: Player) {
@@ -10,6 +11,13 @@ object GameResultPrinter {
             separator = ", ",
             transform = { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
         )
-        println("${playerName.value}카드: $cardMessages - 결과: ${player.bestHandTotal()}")
+
+        val result = when (player.status) {
+            PlayerStatus.BUST -> "BUST"
+            PlayerStatus.BLACKJACK -> "BLACKJACK"
+            else -> player.total()
+        }
+
+        println("${playerName.value}카드: $cardMessages - 결과: $result")
     }
 }

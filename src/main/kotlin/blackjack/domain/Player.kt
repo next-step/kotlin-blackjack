@@ -1,20 +1,34 @@
 package blackjack.domain
 
-import java.lang.RuntimeException
-
 class Player(
     val name: PlayerName,
     val hand: Hand,
 ) {
-    fun burst(): Boolean = hand.burst()
+    var status: PlayerStatus = PlayerStatus.STAY
+        private set
+
     fun hit(card: Card) {
-        if (burst()) {
-            throw RuntimeException()
-        }
         hand.add(card)
+
+        if (hand.bust()) {
+            status = PlayerStatus.BUST
+            return
+        }
+
+        if (hand.total() == BLACKJACK) {
+            status = PlayerStatus.BLACKJACK
+            return
+        }
+
+        status = PlayerStatus.HIT
     }
-    fun bestHandTotal(): Int {
-        return hand.bestHandTotal()
+
+    fun stay() {
+        status = PlayerStatus.STAY
+    }
+
+    fun total(): Int {
+        return hand.total()
     }
 
     companion object {
@@ -32,4 +46,12 @@ class PlayerName private constructor (val value: String) {
             return PlayerName(value)
         }
     }
+}
+
+enum class PlayerStatus {
+    SURRENDER,
+    STAY,
+    HIT,
+    BLACKJACK,
+    BUST
 }
