@@ -3,31 +3,65 @@ package blakjack.view
 import blakjack.domain.Card
 import blakjack.domain.CardRank
 import blakjack.domain.CardSuit
+import blakjack.domain.Cards
+import blakjack.domain.Dealer
+import blakjack.domain.Participant
 import blakjack.domain.Player
 
 object OutputView {
-    fun printInitialPlayerCards(players: List<Player>) {
+    fun printIntro(participants: List<Participant>) {
         println()
-        println("${players.joinToString { it.name }}에게 2장의 나누었습니다.")
-        players.forEach(this::printPlayerCards)
+        println("${participants.joinToString { it.name }}에게 2장의 나누었습니다.")
     }
 
-    fun printPlayerCards(player: Player) {
-        println(getPrintPlayerCards(player))
-    }
-
-    fun printPlayerCardsWithScore(players: List<Player>) {
-        players.forEach {
-            println("${getPrintPlayerCards(it)} - 결과: ${it.score}")
+    fun printCards(participant: Participant) {
+        when (participant.type) {
+            Participant.ParticipantType.PLAYER -> printPlayerCards(participant)
+            Participant.ParticipantType.DEALER -> printDealerCards(participant)
         }
     }
 
-    private fun getPrintPlayerCards(player: Player): String {
-        return "${player.name}카드: ${player.cards.values.joinToString(",") { it.korean() }}"
+    private fun printPlayerCards(participant: Participant) {
+        println(getPrintPlayerCards(participant.name, participant.cards))
+    }
+
+    private fun printDealerCards(participant: Participant) {
+        println(getPrintPlayerCards(participant.name, participant.cards.hide()))
+    }
+
+    fun printCardsWithScore(participants: List<Participant>) {
+        participants.forEach {
+            println("${getPrintPlayerCards(it.name, it.cards)} - 결과: ${it.score}")
+        }
+        println()
+    }
+
+    private fun getPrintPlayerCards(name: String, cards: Cards): String {
+        return "${name}카드: ${cards.values.joinToString(",") { it.korean() }}"
     }
 
     private fun Card.korean(): String {
         return "${CARD_RANK_KOREAN_MAP[rank]}${CARD_SUIT_KOREAN_MAP[suit]}"
+    }
+
+    fun printDealerHit() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+    }
+
+    fun printResult(dealer: Dealer, player: List<Player>) {
+        println()
+        println("## 최종 승패")
+
+        printDealerResult(dealer)
+        player.forEach { printPlayerResult(it) }
+    }
+
+    private fun printDealerResult(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.winCount}승 ${dealer.loseCount}패")
+    }
+
+    private fun printPlayerResult(player: Player) {
+        println("${player.name}: ${RESULT_KOREAN_MAP[player.result]}")
     }
 }
 
@@ -52,4 +86,9 @@ private val CARD_SUIT_KOREAN_MAP = mapOf(
     CardSuit.DIAMOND to "다이아몬드",
     CardSuit.SPADE to "스페이드",
     CardSuit.CLOVER to "클로버",
+)
+
+private val RESULT_KOREAN_MAP = mapOf(
+    Player.Result.WIN to "승",
+    Player.Result.LOSE to "패",
 )

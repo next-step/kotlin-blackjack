@@ -1,22 +1,23 @@
 package blakjack.domain
 
+import blakjack.domain.Participant.ParticipantType.PLAYER
+
 class Player(
-    val name: String,
-) {
-    var cards: Cards = Cards.empty()
+    name: String,
+) : Participant(name, PLAYER) {
+    var result: Result = Result.NONE
         private set
 
-    val score: Int
-        get() = cards.score()
-
-    val isUnderBlackjackScore: Boolean
-        get() = cards.scoreWithAceAsOne() < BLACKJACK_SCORE
-
-    fun add(card: Card) {
-        this.cards = cards.add(card)
+    override fun win(other: Participant) {
+        super.win(other)
+        result = Result.WIN
     }
 
-    fun add(cards: Cards) {
-        this.cards = cards.add(cards)
+    override fun lose() {
+        result = Result.LOSE
+    }
+
+    enum class Result {
+        WIN, LOSE, NONE
     }
 }

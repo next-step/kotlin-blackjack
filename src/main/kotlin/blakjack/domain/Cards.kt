@@ -21,6 +21,10 @@ value class Cards(val values: Set<Card>) {
         return CardsScoreCalculator.sumWithAceAsOne(this)
     }
 
+    fun hide(): Cards {
+        return Cards(values.drop(1).toSet())
+    }
+
     companion object {
         fun empty(): Cards = Cards(emptySet())
 
