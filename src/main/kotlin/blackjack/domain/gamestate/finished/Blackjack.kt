@@ -13,9 +13,7 @@ class Blackjack(
         require(cards.isBlackjack()) { "21인 카드만 블랙잭이 될 수 있다." }
     }
 
-    override fun cards(): Set<Card> {
-        TODO("Not yet implemented")
-    }
+    override fun cards(): Set<Card> = cards.values
 
     override fun isBust(): Boolean = false
 
