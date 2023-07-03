@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.enums.Condition
+import blackjack.dto.PlayerInfo
 import blackjack.service.BlackjackService
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -51,15 +52,22 @@ class BlackJackController(
     private fun initBlackjackGame(): BlackjackGame {
         val inputPlayers = inputView.inputPlayers()
         resultView.printEnter()
-
         val players = replaceWhiteSpaceAndSplitByComma(inputPlayers)
-        val blackjackGame = blackjackService.initBlackjackGame(players)
+        val playerInfo = playerInfos(players)
+
+        val blackjackGame = blackjackService.initBlackjackGame(playerInfo)
 
         resultView.printPlayers(blackjackGame.players, blackjackGame.dealer)
         resultView.printPlayersAndCards(blackjackGame.players, blackjackGame.dealer)
         resultView.printEnter()
 
         return blackjackGame
+    }
+
+    private fun playerInfos(players: List<String>) = players.map { player ->
+        val betAmount = inputView.inputBetAmount(player)
+        resultView.printEnter()
+        PlayerInfo(name = player, betAmount = betAmount.toInt())
     }
 
     private fun replaceWhiteSpaceAndSplitByComma(target: String): List<String> {

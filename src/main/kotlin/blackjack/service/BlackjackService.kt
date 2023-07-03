@@ -8,16 +8,17 @@ import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 import blackjack.dto.BlackjackGameResult
+import blackjack.dto.PlayerInfo
 import blackjack.view.InputView
 
 class BlackjackService {
 
-    fun initBlackjackGame(players: List<String>): BlackjackGame {
+    fun initBlackjackGame(players: List<PlayerInfo>): BlackjackGame {
         val deck = Deck()
         val dealer = Dealer(deck = deck, cards = deck.drawCard(BASIC_CARD_COUNT))
         val blackJackPlayers = players.map { player ->
             val cards = dealer.draw(BASIC_CARD_COUNT)
-            Player(name = player, cards = cards)
+            Player(name = player.name, cards = cards, betAmount = player.betAmount)
         }
         return BlackjackGame(blackJackPlayers, dealer)
     }
