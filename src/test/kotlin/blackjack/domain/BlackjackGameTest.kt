@@ -32,7 +32,7 @@ class BlackjackGameTest : FunSpec({
         test("현재 턴이 firstDraw 턴이 아닌데 요청한 경우 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.firstDraw() }
-            exception.message shouldBe "first draw 턴이 아닙니다."
+            exception.message shouldBe "첫번째 턴이 아닙니다."
         }
 
         test("모든 유저에게 2장의 카드를 첫 드로우하고 딜러는 1장의 카드만 보여준다.") {

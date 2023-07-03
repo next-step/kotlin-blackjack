@@ -15,7 +15,7 @@ class BlackjackGame(
         private set
 
     fun firstDraw(): HandsDashboard {
-        check(turn.isDealingTurn()) { "first draw 턴이 아닙니다." }
+        check(turn.isDealingTurn()) { "첫번째 턴이 아닙니다." }
         repeat(FIRST_DRAW_COUNT) { drawDealerAndPlayers() }
         nextTurnChange()
         return HandsDashboard(dealerFirstDrawHand(), players.hands())
