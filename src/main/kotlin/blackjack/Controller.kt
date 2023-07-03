@@ -10,8 +10,8 @@ class Controller {
     fun playBlackJackGame() {
         val game = BlackJackGame.create()
         val players = startGame(game, getPlayers())
-        val result = players.map { playGame(game, it) }
-        endGame(Players(result))
+        val result = game.play(players, ::continueGame, ::printCard)
+        endGame(result)
     }
 
     private fun getPlayers(): Players {
@@ -25,20 +25,9 @@ class Controller {
         return result
     }
 
-    private fun playGame(game: BlackJackGame, player: Player): Player {
-        var result = player
-        while (result.canDraw()) {
-            result = playRound(game, result)
-        }
-        return result
-    }
+    private fun continueGame(player: Player) = InputView.askForContinue(player.name)
 
-    private fun playRound(game: BlackJackGame, player: Player): Player {
-        if (InputView.askForContinue(player.name).not()) return player
-        return game.addCard(player).also {
-            OutputView.printPlayerCard(it)
-        }
-    }
+    private fun printCard(player: Player) = OutputView.printPlayerCard(player)
 
     private fun endGame(players: Players) {
         for (player in players.values) {

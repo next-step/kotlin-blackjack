@@ -5,9 +5,27 @@ class BlackJackGame(private val deck: Deck) {
         return players.addCards { deck.drawCards(START_CARD_COUNT) }
     }
 
-    fun addCard(player: Player): Player {
-        val card = deck.drawCard()
-        return player.addCard(card)
+    fun play(
+        players: Players,
+        continueGame: (Player) -> Boolean,
+        afterDrawCard: (Player) -> Unit
+    ): Players {
+        val result = players.map { play(it, continueGame, afterDrawCard) }
+        return Players(result)
+    }
+
+    private fun play(
+        player: Player,
+        continueGame: (Player) -> Boolean,
+        afterDrawCard: (Player) -> Unit
+    ): Player {
+        var currentPlayer = player
+        while (currentPlayer.canDraw() && continueGame(currentPlayer)) {
+            val card = deck.drawCard()
+            currentPlayer = currentPlayer.addCard(card)
+            afterDrawCard(currentPlayer)
+        }
+        return currentPlayer
     }
 
     companion object {

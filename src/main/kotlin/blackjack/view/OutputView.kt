@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 
@@ -20,7 +21,7 @@ private fun CardShape.displayName() = when (this) {
 }
 
 object OutputView {
-    fun printStart(players: List<Player>) {
+    fun printStart(players: Players) {
         val playerNames = players.joinToString(", ") { it.name }
         println("$playerNames 에게 2장의 카드를 나누었습니다.")
         for (player in players) {
