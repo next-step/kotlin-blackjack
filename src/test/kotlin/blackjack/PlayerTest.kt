@@ -26,7 +26,7 @@ class PlayerTest {
         val cards = setOf(Spade.get(Denomination.ACE), Spade.get(Denomination.JACK))
 
         cards.forEach {
-            player.dealCard(it)
+            player.hit(it)
         }
 
         assertThat(player.cards()).isEqualTo(cards)
@@ -38,7 +38,7 @@ class PlayerTest {
         val player = Player("peter")
 
         cards.forEach {
-            player.dealCard(it)
+            player.hit(it)
         }
 
         assertThat(player.canReceiveMoreCard()).isEqualTo(condition)

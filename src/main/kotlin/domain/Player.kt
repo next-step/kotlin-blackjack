@@ -6,7 +6,7 @@ import domain.card.Cards
 class Player(val name: String) {
     private val cards = Cards()
 
-    fun dealCard(card: Card) {
+    fun hit(card: Card) {
         cards.add(card)
     }
 
