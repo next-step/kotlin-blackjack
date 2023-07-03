@@ -6,7 +6,7 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.vo.GameResultVO
 
-class GameResultService {
+class BlackjackResultService {
     private val fightService = FightService()
 
     fun allResult(dealer: Dealer, players: Players): GameResultVO {
