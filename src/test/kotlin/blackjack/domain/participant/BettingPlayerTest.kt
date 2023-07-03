@@ -1,18 +1,16 @@
-package blackjack.domain.game
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Character
 import blackjack.domain.card.Shape
-import blackjack.domain.participant.BettingPlayer
-import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class ResultsTest {
+internal class BettingPlayerTest {
+
     @Test
-    internal fun `딜러의 수익은 Player들의 수익을 반대로 합친금액이다`() {
+    internal fun `딜러를 이기면 수익이 생긴다`() {
         val playerCard = Cards(
             mutableListOf(
                 Card(Shape.CLOVER, Character.EIGHT),
@@ -29,7 +27,6 @@ internal class ResultsTest {
             )
         )
         val dealer = Dealer(dealerCard)
-        val results = Results(mapOf(bettings.player to bettings.getRevenue(dealer)))
-        results.getDealerResultAmount() shouldBe -10000
+        bettings.getRevenue(dealer) shouldBe 10000
     }
 }

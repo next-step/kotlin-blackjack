@@ -14,7 +14,7 @@ enum class Rank(val value: Double) {
                 player.hasBlackJack() && dealer.hasBlackJack() -> DRAW
                 player.hasBlackJack() -> BLACKJACK
                 player.score() == dealer.score() -> DRAW
-                player.score() > BlackJack.BLACKJACK_MAX_SCORE -> WON
+                dealer.score() > BlackJack.BLACKJACK_MAX_SCORE -> WON
                 player.score() > BlackJack.BLACKJACK_MAX_SCORE -> LOST
                 player.score() > dealer.score() -> WON
                 player.score() < dealer.score() -> LOST
