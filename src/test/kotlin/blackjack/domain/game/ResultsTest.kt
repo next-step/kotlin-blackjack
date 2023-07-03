@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Character
 import blackjack.domain.card.Shape
-import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import io.kotest.matchers.shouldBe
@@ -21,7 +20,7 @@ internal class ResultsTest {
             )
         )
         val player = Player("pobi", playerCard)
-        val bettings = BettingPlayer(player, 10000)
+        player.bet(10000)
         val dealerCard = Cards(
             mutableListOf(
                 Card(Shape.CLOVER, Character.J),
@@ -29,7 +28,7 @@ internal class ResultsTest {
             )
         )
         val dealer = Dealer(dealerCard)
-        val results = Results(mapOf(bettings.player to bettings.getRevenue(dealer)))
+        val results = Results(mapOf(player to player.getRevenue(dealer)))
         results.getDealerResultAmount() shouldBe -10000
     }
 }
