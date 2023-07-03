@@ -1,16 +1,13 @@
 package blackjack.domain
 
 class BlackJackGame(private val deck: Deck) {
-    fun start(players: List<Player>): List<Player> {
-        return players.map {
-            val cards = deck.drawCards(START_CARD_COUNT)
-            it.drawCards(cards)
-        }
+    fun start(players: Players): Players {
+        return players.addCards { deck.drawCards(START_CARD_COUNT) }
     }
 
     fun addCard(player: Player): Player {
         val card = deck.drawCard()
-        return player.drawCard(card)
+        return player.addCard(card)
     }
 
     companion object {

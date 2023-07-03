@@ -5,12 +5,12 @@ import blackjack.domain.card.Card
 data class Player(val name: String, val hand: PlayerHand = PlayerHand.init) {
     fun canDraw(): Boolean = hand.canAdd()
 
-    fun drawCard(card: Card): Player {
+    fun addCard(card: Card): Player {
         val newState = this.hand.add(card)
         return copy(hand = newState)
     }
 
-    fun drawCards(cards: List<Card>): Player {
+    fun addCards(cards: List<Card>): Player {
         val newState = this.hand.add(cards)
         return copy(hand = newState)
     }
