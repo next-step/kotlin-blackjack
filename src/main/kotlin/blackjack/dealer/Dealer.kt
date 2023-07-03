@@ -4,10 +4,8 @@ import blackjack.player.Hand
 import blackjack.player.Player
 
 class Dealer(
-    name: String = "딜러",
     hand: Hand = Hand()
-) : Player(name, hand) {
-
+) : Player("딜러", hand) {
     fun dealInitialCards(players: List<Player>) {
         dealInitialCard(this)
         players.forEach {
