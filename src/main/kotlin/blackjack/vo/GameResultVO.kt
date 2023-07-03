@@ -5,5 +5,5 @@ import blackjack.domain.Player
 
 data class GameResultVO(
     val dealerWinMap: Map<FightResult, Int>,
-    val playersWinMap: Map<Player, FightResult>
+    val playersWinMap: Map<Player, FightResult>,
 )

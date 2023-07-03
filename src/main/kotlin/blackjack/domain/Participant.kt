@@ -9,6 +9,8 @@ abstract class Participant {
 
     fun getMyCards(): Cards = myCards.copy()
 
+    fun sizeOfMyCards(): Int = myCards.cards.size
+
     fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
 
     fun stand() {

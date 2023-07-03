@@ -3,7 +3,7 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.service.BlackjackResultService
+import blackjack.service.BettingService
 import blackjack.service.BlackjackService
 import blackjack.view.BlackjackResultView
 import blackjack.view.BlackjackView
@@ -11,7 +11,7 @@ import blackjack.view.InputView
 
 class BlackjackController {
     private val blackjackService = BlackjackService()
-    private val blackjackResultService = BlackjackResultService()
+    private val bettingService = BettingService()
 
     fun run() {
         val dealerAndPlayers = initializeParticipants()
@@ -24,8 +24,8 @@ class BlackjackController {
         blackjackService.playGame(dealer, players)
         BlackjackResultView.printParticipantsResult(dealer, players)
 
-        val result = blackjackResultService.allResult(dealer, players)
-        BlackjackResultView.printGameResult(result)
+        val result = bettingService.bettingResult(dealer, players)
+        BlackjackResultView.printBettingResult(result)
     }
 
     private fun initializeParticipants(): Pair<Dealer, Players> {

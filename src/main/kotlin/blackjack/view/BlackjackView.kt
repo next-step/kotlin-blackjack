@@ -6,6 +6,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.DEALER_UNDER_NUMBER
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.forEachPlayer
 import blackjack.service.BlackjackService.Companion.DEFAULT_INITIAL_DRAW
 
 object BlackjackView {
@@ -24,7 +25,7 @@ object BlackjackView {
     }
 
     private fun printPlayersCard(players: Players) {
-        players.players.forEach {
+        players.forEachPlayer {
             printPlayerCard(it)
         }
         println()

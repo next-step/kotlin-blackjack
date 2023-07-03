@@ -4,6 +4,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.FightResult
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.forEachPlayer
 import blackjack.vo.GameResultVO
 
 class BlackjackResultService {
@@ -13,7 +14,7 @@ class BlackjackResultService {
         val dealerWinMap: MutableMap<FightResult, Int> = mutableMapOf()
         val playersWinMap: MutableMap<Player, FightResult> = mutableMapOf()
 
-        players.players.forEach {
+        players.forEachPlayer {
             when (fightService.go(dealer, it)) {
                 FightResult.DRAW -> draw(it, dealerWinMap, playersWinMap)
                 FightResult.WIN -> dealerLoseAndPlayerWin(it, dealerWinMap, playersWinMap)

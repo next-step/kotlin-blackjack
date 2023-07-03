@@ -3,13 +3,15 @@ package blackjack.view
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.forEachPlayer
+import blackjack.vo.BettingResultVO
 import blackjack.vo.GameResultVO
 
 object BlackjackResultView {
     fun printParticipantsResult(dealer: Dealer, players: Players) {
         println()
         printDealerResult(dealer)
-        players.players.forEach {
+        players.forEachPlayer {
             printPlayerResult(it)
         }
     }
@@ -35,6 +37,15 @@ object BlackjackResultView {
 
         gameResult.playersWinMap.forEach { (player, result) ->
             println("${player.name}: ${result.description}")
+        }
+    }
+
+    fun printBettingResult(bettingResult: BettingResultVO) {
+        println("\n## 최종 수익")
+
+        println("딜러: ${bettingResult.dealerProfit}")
+        bettingResult.playersProfits.forEach { (player, profit) ->
+            println("${player.name}: $profit")
         }
     }
 }

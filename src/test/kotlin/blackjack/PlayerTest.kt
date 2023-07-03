@@ -22,7 +22,7 @@ class PlayerTest {
     fun `플레이어는 카드들을 가질 수 있다`() {
         player1.hit(gameCardsSet.drawRandomCard())
         val cards = player1.getMyCards()
-        assertThat(cards.cards.size).isEqualTo(1)
+        assertThat(player1.sizeOfMyCards()).isEqualTo(1)
     }
 
     @Test
