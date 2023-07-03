@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardSuit
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,5 +19,13 @@ internal class CardTest {
 
         actual.number shouldBe number
         actual.suit shouldBe suit
+    }
+
+    @DisplayName("King, Queen, Jack은 각 10으로 계산된다.")
+    @Test
+    fun jqkValueEqual10() {
+        val actual = listOf(CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING)
+
+        actual.forAll { cardNumber -> cardNumber.value shouldBe 10 }
     }
 }

@@ -14,11 +14,13 @@ internal class CardNumberTest {
         val actual = CardNumber.values()
 
         actual.size shouldBe 13
-        actual.shouldContainAll(listOf(
-            CardNumber.ACE, CardNumber.TWO, CardNumber.THREE,
-            CardNumber.FOUR, CardNumber.FIVE, CardNumber.SIX,
-            CardNumber.SEVEN, CardNumber.EIGHT, CardNumber.NINE, CardNumber.TEN,
-            CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING
-        ))
+        actual.shouldContainAll(
+            listOf(
+                CardNumber.ACE, CardNumber.TWO, CardNumber.THREE,
+                CardNumber.FOUR, CardNumber.FIVE, CardNumber.SIX,
+                CardNumber.SEVEN, CardNumber.EIGHT, CardNumber.NINE, CardNumber.TEN,
+                CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING
+            )
+        )
     }
 }
