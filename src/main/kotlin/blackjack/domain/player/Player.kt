@@ -6,7 +6,7 @@ import blackjack.domain.gamestate.running.InitialHand
 
 class Player(
     val name: Name,
-    val money: Int,
+    val money: Money,
     gameState: GameState = InitialHand(),
 ) : Participant {
     var gameState: GameState = gameState
@@ -30,12 +30,12 @@ class Player(
 
     override fun competeWith(participant: Participant): Int {
         require(participant is Dealer) { "딜러는 플레이어와만 승부할 수 있다." }
-        return this.gameState.profit(money, participant.gameState)
+        return this.gameState.profit(money.value, participant.gameState)
     }
 
     companion object {
-        fun of(name: String, money: Int) = Player(Name(name), money)
+        fun of(name: String, money: Int) = Player(Name(name), Money(money))
 
-        fun of(name: String, money: Int, gameState: GameState) = Player(Name(name), money, gameState)
+        fun of(name: String, money: Int, gameState: GameState) = Player(Name(name), Money(money), gameState)
     }
 }

@@ -73,7 +73,7 @@ class DealerTest : FunSpec({
     context("competeWith") {
         test("승부확인을 하려하는 경우 예외가 발생한다.") {
             val dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_KING)))
-            val player = Player(Name("최진영"), 10_000, Stay(Cards.of(SPADE_ACE, SPADE_KING)))
+            val player = Player(Name("최진영"), Money(10_000), Stay(Cards.of(SPADE_ACE, SPADE_KING)))
 
             val exception = shouldThrowExactly<IllegalStateException> { dealer.competeWith(player) }
             exception.message shouldBe "딜러는 승부할 수 없다."
