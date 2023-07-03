@@ -22,6 +22,7 @@ class Dealer(
     }
 
     companion object {
+        const val DEALER_NAME = "딜러"
         private const val INITIAL_CARD_COUNT = 2
     }
 }

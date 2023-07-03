@@ -38,7 +38,7 @@ object ResultView {
         println()
         println("## 최종 승패")
         matchResult.forEach { (name, result) ->
-            val resultStr = if (name == "딜러") result.printDealerResult() else result.printPlayerResult()
+            val resultStr = if (name == Dealer.DEALER_NAME) result.printDealerResult() else result.printPlayerResult()
             println("$name: $resultStr")
         }
     }
