@@ -51,7 +51,7 @@ object ResultView {
     fun printResult(game: BlackJack, results: Results) {
         println(RESULT_STRING)
         println("${game.dealer.name}: ${results.getDealerResultAmount()}")
-        game.players.forEach { player -> results.revenues[player]?.let { revenue -> println("${player.name}: $revenue") } }
+        results.revenues.forEach { (player, revenue) -> println("${player.name}: $revenue") }
     }
 
     private fun getPrintCardString(cards: Cards) = cards.values.joinToString { it.character.value + it.shape.value }
