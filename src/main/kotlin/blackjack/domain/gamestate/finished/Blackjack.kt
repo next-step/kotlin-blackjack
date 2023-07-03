@@ -17,9 +17,7 @@ class Blackjack(
         TODO("Not yet implemented")
     }
 
-    override fun isBust(): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isBust(): Boolean = false
 
     override fun score(): Int {
         TODO("Not yet implemented")
