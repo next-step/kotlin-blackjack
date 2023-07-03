@@ -10,6 +10,7 @@ class Blackjack(
 ) : Finished() {
     init {
         require(cards.isInitialHand().not()) { "2장 미만의 카드로 생성될 수 없다." }
+        require(cards.isBlackjack()) { "21인 카드만 블랙잭이 될 수 있다." }
     }
 
     override fun cards(): Set<Card> {
@@ -26,5 +27,9 @@ class Blackjack(
 
     override fun compete(gameState: GameState): Competition {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+
     }
 }

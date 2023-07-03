@@ -19,6 +19,8 @@ value class Cards(
 
     fun isBust(): Boolean = values.sumOf { it.denomination.score.min() } > BLACKJACK_SCORE
 
+    fun isBlackjack(): Boolean = score() == BLACKJACK_SCORE
+
     fun score(): Int {
         check(values.isNotEmpty()) { "카드가 없어 점수를 계산할 수 없다." }
         return calculateOptimalScore(calculateAllAvailableScore())
