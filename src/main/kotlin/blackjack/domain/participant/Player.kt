@@ -19,6 +19,6 @@ class Player(name: String, cards: Cards = Cards(), private var bettingAmount: In
     }
 
     fun getRevenue(dealer: Dealer): Int {
-        return bettingAmount * (Rank.of(this, dealer).value).toInt()
+        return Rank.of(this, dealer).calculateRevenue(bettingAmount)
     }
 }

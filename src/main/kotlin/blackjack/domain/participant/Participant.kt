@@ -2,6 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.game.BlackJack
 
 sealed class Participant(val name: String, val cards: Cards = Cards()) {
     init {
@@ -22,6 +23,10 @@ sealed class Participant(val name: String, val cards: Cards = Cards()) {
 
     fun isBlackJack(): Boolean {
         return cards.isBlackJack()
+    }
+
+    fun isBurst(): Boolean {
+        return score() > BlackJack.BLACKJACK_MAX_SCORE
     }
 
     companion object {

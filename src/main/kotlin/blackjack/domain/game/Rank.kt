@@ -8,14 +8,18 @@ enum class Rank(val value: Double) {
     LOST(-1.0),
     DRAW(1.0);
 
+    fun calculateRevenue(amount: Int): Int {
+        return (amount * value).toInt()
+    }
+
     companion object {
         fun of(player: Participant, dealer: Participant): Rank {
             return when {
                 player.isBlackJack() && dealer.isBlackJack() -> DRAW
                 player.isBlackJack() -> BLACKJACK
                 player.score() == dealer.score() -> DRAW
-                dealer.score() > BlackJack.BLACKJACK_MAX_SCORE -> WON
-                player.score() > BlackJack.BLACKJACK_MAX_SCORE -> LOST
+                dealer.isBurst() -> WON
+                player.isBurst() -> LOST
                 player.score() > dealer.score() -> WON
                 player.score() < dealer.score() -> LOST
                 else -> DRAW
