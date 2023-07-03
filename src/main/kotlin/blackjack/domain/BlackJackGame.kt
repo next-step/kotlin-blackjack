@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.user.Dealer
+import blackjack.domain.user.Player
 import blackjack.domain.user.PlayerGroup
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -12,7 +13,7 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
 
     fun play() {
         initGame()
-        drawCards()
+        drawCardsInTurn()
         printGameResult()
     }
 
@@ -27,16 +28,14 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
         }
     }
 
-    private fun drawCards() {
-        playerGroup.players.forEach { player ->
-            generateSequence {
-                player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name))
-                dealer.giveCardIfPlayerWantHit(player)
+    private fun drawCardsInTurn() = playerGroup.players.forEach(::drawCards)
 
-                player
-            }.takeWhile { !it.isDone() }
-                .forEach { resultView.printPlayerCards(it) }
+    private fun drawCards(player: Player) {
+        while (!player.isDone()) {
+            player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name))
+            dealer.giveCardIfPlayerWantHit(player)
         }
+        resultView.printPlayerCards(player)
     }
 
     private fun printGameResult() {
