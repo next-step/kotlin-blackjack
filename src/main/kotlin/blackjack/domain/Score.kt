@@ -2,10 +2,10 @@ package blackjack.domain
 
 class Score(
     val value: Int
-) : Comparable<Int> {
+) : Comparable<Score> {
 
-    override fun compareTo(other: Int): Int {
-        return value.compareTo(other)
+    override fun compareTo(other: Score): Int {
+        return value.compareTo(other.value)
     }
 
     companion object {

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
+import blackjack.domain.Score.Companion.STANDARD_CARD_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 
@@ -16,7 +18,7 @@ class Dealer(
     }
 
     private fun initCondition(score: Score) {
-        if (score.compareTo(Score.STANDARD_CARD_SCORE) == -1 || score.compareTo(Score.STANDARD_CARD_SCORE) == 0) {
+        if (score < Score(STANDARD_CARD_SCORE) || score == Score(STANDARD_CARD_SCORE)) {
             this.condition = Condition.PLAY
         }
     }
@@ -29,9 +31,9 @@ class Dealer(
     }
 
     private fun changeCondition(score: Score) {
-        if (score.compareTo(Score.STANDARD_CARD_SCORE) == 1) {
+        if (score > Score(STANDARD_CARD_SCORE)) {
             this.condition = Condition.STAY
-        } else if (score.compareTo(Score.BLACK_JACK_SCORE) == 1) {
+        } else if (score > Score(BLACK_JACK_SCORE)) {
             this.condition = Condition.BUST
         }
     }
