@@ -16,9 +16,16 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import java.lang.IllegalStateException
 
 class DealerTest : FunSpec({
+
+    context("name") {
+        test("딜러의 이름을 확인하려할 경우 예외가 발생한다.") {
+            val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_KING)))
+            val exception = shouldThrowExactly<IllegalStateException> { dealer.name() }
+            exception.message shouldBe "딜러의 이름을 확인할 수 없습니다."
+        }
+    }
 
     context("draw") {
         test("카드 draw 시 17이 넘어가면 자동으로 Stay된다.") {

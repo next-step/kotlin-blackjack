@@ -10,7 +10,7 @@ class Dealer(
     var gameState: GameState = gameState
         private set
 
-    override fun name(): String = DEALER_NAME
+    override fun name(): String = throw IllegalStateException("딜러의 이름을 확인할 수 없습니다.")
 
     override fun draw(card: Card) {
         gameState = gameState.draw(card)
@@ -38,7 +38,6 @@ class Dealer(
     override fun competeWith(participant: Participant) = throw IllegalStateException("딜러는 승부할 수 없습니다.")
 
     companion object {
-        private const val DEALER_NAME = "딜러"
         private const val DEALER_MAX_SCORE = 17
     }
 }
