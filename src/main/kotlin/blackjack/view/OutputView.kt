@@ -1,6 +1,23 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardShape
+
+private fun CardNumber.displayName() = when (this) {
+    CardNumber.ACE -> "A"
+    CardNumber.JACK -> "J"
+    CardNumber.QUEEN -> "Q"
+    CardNumber.KING -> "K"
+    else -> this.cardScore.primary.toString()
+}
+
+private fun CardShape.displayName() = when (this) {
+    CardShape.CLUB -> "클로버"
+    CardShape.DIAMOND -> "다이아"
+    CardShape.HEART -> "하트"
+    CardShape.SPADE -> "스페이드"
+}
 
 object OutputView {
     fun printStart(players: List<Player>) {
@@ -20,7 +37,7 @@ object OutputView {
     }
 
     private fun resultMessage(player: Player): String {
-        val cardsMessage = player.cards().joinToString(", ") { it.numberName() + it.shapeName() }
+        val cardsMessage = player.cards().joinToString(", ") { it.number.displayName() + it.shape.displayName() }
         return "${player.name}의 카드: $cardsMessage"
     }
 }
