@@ -12,16 +12,12 @@ data class Cards(val cards: List<Card>) {
             return sum
         }
 
-    val names: String
-        get() {
-            return cards.joinToString { card -> card.name }
-        }
-
     fun addCard(card: Card): Cards {
-        val list = mutableListOf<Card>()
-        list.addAll(cards)
-        list.add(card)
-        return Cards(list)
+        return Cards(cards.plus(card))
+    }
+
+    fun size(): Int {
+        return cards.size
     }
 
     private fun isHaveAce(): Boolean {

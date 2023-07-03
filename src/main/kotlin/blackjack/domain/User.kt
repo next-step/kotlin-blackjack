@@ -1,6 +1,14 @@
 package blackjack.domain
 
-class User(val name: String, var cards: Cards, var isDeckComplete: Boolean = false) {
+class User(
+    val name: String,
+    var cards: Cards,
+    var isDeckComplete: Boolean = false
+) {
+
+    fun cardSize(): Int {
+        return cards.size()
+    }
 
     fun addCard(card: Card) {
         cards = cards.addCard(card)
@@ -12,9 +20,5 @@ class User(val name: String, var cards: Cards, var isDeckComplete: Boolean = fal
 
     fun deckComplete() {
         isDeckComplete = true
-    }
-
-    fun cardNames(): String {
-        return cards.names
     }
 }

@@ -17,15 +17,16 @@ class GameDeck {
         deck.addAll(shuffledDeck)
     }
 
-    fun handOutCards(handOutCount: Int) : List<Card> {
+    fun handOutCards(handOutCount: Int): List<Card> {
         val handOutCards = mutableListOf<Card>()
         repeat(handOutCount) {
+            require(deck.isNotEmpty()) { "나눠 줄 카드가 존재하지 않습니다." }
             handOutCards.add(deck.poll())
         }
         return handOutCards
     }
 
-    fun handOutCard() : Card {
+    fun handOutCard(): Card {
         return deck.poll()
     }
 }

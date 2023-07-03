@@ -4,15 +4,9 @@ import blackjack.enums.Denomination
 import blackjack.enums.Suit
 
 class Card(val denomination: Denomination, val suit: Suit) {
-    val value: Int
-        get() {
-            return denomination.value
-        }
-
-    val name: String
-        get() {
-            return "${denomination.printName}${suit.suitName}"
-        }
+    val value: Int = denomination.value
+    val denominationName: String = denomination.printName
+    val suitName: String = suit.suitName
 
     fun isAce(): Boolean {
         return denomination == Denomination.ACE

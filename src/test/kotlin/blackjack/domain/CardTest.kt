@@ -13,7 +13,8 @@ class CardTest : StringSpec({
         card.value shouldBe 10
     }
 
-    "카드의 이름을 가져올 수 있다." {
-        card.name shouldBe "K스페이드"
+    "카드의 무늬 명과 이름을 가져올 수 있다." {
+        card.denominationName shouldBe "K"
+        card.suitName shouldBe "스페이드"
     }
 })

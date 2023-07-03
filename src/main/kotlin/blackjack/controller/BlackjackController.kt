@@ -14,7 +14,7 @@ import blackjack.view.printUserNames
 class BlackjackController {
     fun start() {
         val userNames = enterUserNames().trim()
-        val blackjackGame = BlackjackGame(userNames)
+        val blackjackGame = BlackjackGame.from(userNames)
         printUserNames(userNames)
         printUserCardInfos(blackjackGame.userCards())
 
@@ -26,7 +26,7 @@ class BlackjackController {
     private fun printUserCardInfos(userCards: Map<User, Cards>) {
         for (userCard in userCards) {
             val user = userCard.key
-            printUserCards(user.name, user.cardNames())
+            printUserCards(user.name, user.cards)
         }
     }
 
@@ -39,7 +39,7 @@ class BlackjackController {
         when (printCardReceiveWant(user.name)) {
             "y" -> {
                 user.addCard(blackjackGame.handOutCard())
-                printUserCards(user.name, user.cardNames())
+                printUserCards(user.name, user.cards)
             }
 
             "n" -> {
@@ -50,6 +50,7 @@ class BlackjackController {
         if (user.cardValues() >= BLACKJACK_VALUE) {
             user.deckComplete()
         }
+
         if (!user.isDeckComplete) {
             cardReceive(user, blackjackGame)
         }

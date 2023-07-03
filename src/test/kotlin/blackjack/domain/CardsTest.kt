@@ -25,10 +25,6 @@ class CardsTest : StringSpec({
         cards.cards shouldContainAll cardList
     }
 
-    "카드 리스트의 이름 리스트를 가져올 수 있다." {
-        cards.names shouldBe "K스페이드, Q다이아몬드, A하트"
-    }
-
     "카드 리스트에 ACE가 포함 되어 있을 경우 ACE를 11로 계산해도 합이 21 초과가 아니라면 A 한 장을 11로 계산한다." {
         forAll(
             row(
