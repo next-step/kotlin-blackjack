@@ -8,6 +8,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import blackjack.domain.gamestate.running.InitialHand
+import blackjack.domain.player.Money
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
@@ -57,12 +58,12 @@ class StayTest : FunSpec({
 
     context("compete") {
         test("종료되지 않은 상대와 경쟁할 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> { Stay(STAY_CARDS).profit(10_000, InitialHand()) }
+            val exception = shouldThrowExactly<IllegalArgumentException> { Stay(STAY_CARDS).profit(Money(10_000), InitialHand()) }
             exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
         }
 
         test("버스트와 승부하면 이율이 1이 반환된다.") {
-            val actual = Stay(STAY_CARDS).profit(10_000, Bust(BUST_CARDS))
+            val actual = Stay(STAY_CARDS).profit(Money(10_000), Bust(BUST_CARDS))
             actual shouldBe 10_000
         }
 
@@ -70,7 +71,7 @@ class StayTest : FunSpec({
             val source = Stay(Cards.of(SPADE_KING, SPADE_QUEEN))
             val target = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
 
-            val actual = source.profit(10_000, target)
+            val actual = source.profit(Money(10_000), target)
             actual shouldBe -10_000
         }
 
@@ -78,7 +79,7 @@ class StayTest : FunSpec({
             val source = Stay(Cards.of(SPADE_KING, SPADE_QUEEN))
             val target = Stay(Cards.of(SPADE_KING, SPADE_FIVE))
 
-            val actual = source.profit(10_000, target)
+            val actual = source.profit(Money(10_000), target)
             actual shouldBe 10_000
         }
 
@@ -86,7 +87,7 @@ class StayTest : FunSpec({
             val source = Stay(Cards.of(SPADE_KING, SPADE_QUEEN))
             val target = Stay(Cards.of(SPADE_KING, SPADE_QUEEN))
 
-            val actual = source.profit(10_000, target)
+            val actual = source.profit(Money(10_000), target)
             actual shouldBe 0
         }
     }

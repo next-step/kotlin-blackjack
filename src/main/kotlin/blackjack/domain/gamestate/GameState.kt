@@ -2,6 +2,7 @@ package blackjack.domain.gamestate
 
 import blackjack.domain.card.Card
 import blackjack.domain.gamestate.finished.Stay
+import blackjack.domain.player.Money
 
 interface GameState {
 
@@ -17,5 +18,5 @@ interface GameState {
 
     fun score(): Int
 
-    fun profit(money: Int, gameState: GameState): Int
+    fun profit(money: Money, gameState: GameState): Int
 }

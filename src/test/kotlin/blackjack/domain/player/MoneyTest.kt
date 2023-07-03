@@ -15,8 +15,8 @@ class MoneyTest : FunSpec({
 
     context("times") {
         test("값을 입력받아 곱한 돈을 반환한다.") {
-            val actual = Money(10_000) * 1.5
-            actual shouldBe Money(15_000)
+            val actual = Money(10_000).times(1.5)
+            actual shouldBe 15_000
         }
     }
 })

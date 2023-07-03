@@ -11,6 +11,7 @@ import blackjack.domain.gamestate.finished.Blackjack
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import blackjack.domain.gamestate.finished.Stay
+import blackjack.domain.player.Money
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -89,7 +90,7 @@ class HitTest : FunSpec({
     context("compete") {
         test("승패를 계산하려하는 경우 예외가 발생한다") {
             val exception = shouldThrowExactly<IllegalStateException> {
-                Hit(Cards.of(SPADE_KING, SPADE_JACK)).profit(1_000, Bust(BUST_CARDS))
+                Hit(Cards.of(SPADE_KING, SPADE_JACK)).profit(Money(1_000), Bust(BUST_CARDS))
             }
             exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }

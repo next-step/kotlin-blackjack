@@ -8,6 +8,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.running.InitialHand
+import blackjack.domain.player.Money
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
@@ -48,7 +49,7 @@ class BlackjackTest : FunSpec({
             val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
             val target = InitialHand()
 
-            val exception = shouldThrowExactly<IllegalArgumentException> { source.profit(10_000, target) }
+            val exception = shouldThrowExactly<IllegalArgumentException> { source.profit(Money(10_000), target) }
             exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
         }
 
@@ -56,7 +57,7 @@ class BlackjackTest : FunSpec({
             val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
             val target = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
 
-            val actual = source.profit(10_000, target)
+            val actual = source.profit(Money(10_000), target)
             actual shouldBe 0
         }
 
@@ -67,7 +68,7 @@ class BlackjackTest : FunSpec({
             test("다른 상태와 승부하면 이율이 1.5가 반환된다.") {
                 val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
 
-                val actual = source.profit(10_000, input)
+                val actual = source.profit(Money(10_000), input)
                 actual shouldBe 15_000
             }
         }

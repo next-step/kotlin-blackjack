@@ -2,6 +2,7 @@ package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.GameState
+import blackjack.domain.player.Money
 import java.lang.RuntimeException
 
 class Stay(
@@ -18,12 +19,12 @@ class Stay(
 
     override fun score() = cards.score()
 
-    override fun profit(money: Int, gameState: GameState): Int {
+    override fun profit(money: Money, gameState: GameState): Int {
         require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없다."}
         if (gameState is Bust) {
-            return money
+            return money.value
         }
-        return money * competeWithoutBust(gameState)
+        return money.times(competeWithoutBust(gameState))
     }
 
     private fun competeWithoutBust(gameState: GameState): Int {

@@ -3,6 +3,7 @@ package blackjack.domain.gamestate.finished
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.gamestate.GameState
+import blackjack.domain.player.Money
 
 class Blackjack(
     val cards: Cards,
@@ -18,11 +19,11 @@ class Blackjack(
 
     override fun score(): Int = cards.score()
 
-    override fun profit(money: Int, gameState: GameState): Int {
+    override fun profit(money: Money, gameState: GameState): Int {
         require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없다."}
         if (gameState is Blackjack) {
             return 0
         }
-        return money.times(1.5).toInt()
+        return money.times(1.5)
     }
 }
