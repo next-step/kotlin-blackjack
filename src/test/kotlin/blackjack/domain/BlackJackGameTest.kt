@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 private fun player(): Player {
     val playerName = TestUtils.randomString(size = 3)
-    return Player(playerName, PlayerState.init)
+    return Player(playerName, PlayerHand.init)
 }
 
 class BlackJackGameTest : StringSpec({
@@ -17,7 +17,7 @@ class BlackJackGameTest : StringSpec({
 
         val players = game.start(initPlayers)
 
-        players[0].state.cards.size shouldBe 2
-        players[1].state.cards.size shouldBe 2
+        players[0].hand.cards.size shouldBe 2
+        players[1].hand.cards.size shouldBe 2
     }
 })

@@ -26,7 +26,7 @@ class Controller {
 
     private fun playGame(game: BlackJackGame, player: Player): Player {
         var result = player
-        while (result.canAddCard()) {
+        while (result.canDraw()) {
             result = playRound(game, result)
         }
         return result

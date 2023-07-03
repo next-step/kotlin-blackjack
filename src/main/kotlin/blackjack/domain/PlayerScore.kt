@@ -7,10 +7,10 @@ value class PlayerScore(val value: Int) {
     fun plus(score: CardScore): PlayerScore {
         val primaryScoreAdded = PlayerScore(score.primary + value)
         val secondaryScoreAdded = PlayerScore(score.secondary + value)
-        return primaryScoreAdded.takeIf { it.isMaxExceeded().not() } ?: secondaryScoreAdded
+        return primaryScoreAdded.takeIf { it.isBust().not() } ?: secondaryScoreAdded
     }
 
-    private fun isMaxExceeded(): Boolean = value > MAX_VALUE
+    private fun isBust() = value > MAX_VALUE
 
     fun plus(scores: List<CardScore>): PlayerScore {
         return scores
@@ -18,7 +18,7 @@ value class PlayerScore(val value: Int) {
             .fold(this) { acc, score -> acc.plus(score) }
     }
 
-    fun isMaxOrExceeded(): Boolean = value >= MAX_VALUE
+    fun isBustOrMax() = value >= MAX_VALUE
 
     companion object {
         const val MAX_VALUE = 21

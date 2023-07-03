@@ -4,13 +4,13 @@ class BlackJackGame(private val deck: Deck) {
     fun start(players: List<Player>): List<Player> {
         return players.map {
             val cards = deck.drawCards(START_CARD_COUNT)
-            it.addCards(cards)
+            it.drawCards(cards)
         }
     }
 
     fun addCard(player: Player): Player {
         val card = deck.drawCard()
-        return player.addCard(card)
+        return player.drawCard(card)
     }
 
     companion object {
