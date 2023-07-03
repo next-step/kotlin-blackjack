@@ -37,7 +37,8 @@ class DealerTest {
                     Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
                 )
             ),
-            condition = Condition.PLAY
+            condition = Condition.PLAY,
+            betAmount = 10000
         )
 
         dealer.determineResult(player) shouldBe MatchResult.WIN
@@ -54,7 +55,8 @@ class DealerTest {
                     Card(rank = Rank.KING, symbol = Symbol.HEARTS)
                 )
             ),
-            condition = Condition.PLAY
+            condition = Condition.PLAY,
+            betAmount = 10000
         )
 
         dealer.determineResult(player) shouldBe MatchResult.LOSE
@@ -71,7 +73,8 @@ class DealerTest {
                     Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
                 )
             ),
-            condition = Condition.PLAY
+            condition = Condition.PLAY,
+            betAmount = 10000
         )
 
         dealer.determineResult(player) shouldBe MatchResult.DRAW

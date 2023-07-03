@@ -1,5 +1,6 @@
 package blackjack.service
 
+import blackjack.dto.PlayerInfo
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -7,7 +8,7 @@ class BlackjackServiceTest {
 
     @Test
     fun `블랙잭 게임 초기 시작 시 플레이어 당 2장 씩 딜러도 2장 카드를 가진다`() {
-        val players = listOf("test1", "test2")
+        val players = listOf(PlayerInfo("test1", 10000), PlayerInfo("test2", 10000))
         val blackjackGame = BlackjackService().initBlackjackGame(players)
 
         val player1CardCount = blackjackGame.players[0].cards.cards.size
