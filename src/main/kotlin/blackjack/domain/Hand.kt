@@ -1,7 +1,9 @@
 package blackjack.domain
 
 class Hand {
-    val cards: MutableList<Card> = mutableListOf()
+    private val cards: MutableList<Card> = mutableListOf()
+
+    fun getCards(): List<Card> = cards.toList()
     fun add(card: Card) {
         if (bust()) {
             throw RuntimeException()
@@ -39,5 +41,7 @@ class Hand {
             hand.add(openCards.second)
             return hand
         }
+
+        fun empty(): Hand = Hand()
     }
 }

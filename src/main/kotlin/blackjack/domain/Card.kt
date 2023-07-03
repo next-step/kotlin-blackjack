@@ -29,4 +29,4 @@ enum class CardNumber(val value: Int, val displayName: String) {
     KING(10, "K");
 }
 
-class OpenCards(val first: Card, val second: Card)
+

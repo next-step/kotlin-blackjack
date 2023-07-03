@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(
+open class Player(
     val name: PlayerName,
     val hand: Hand,
 ) {

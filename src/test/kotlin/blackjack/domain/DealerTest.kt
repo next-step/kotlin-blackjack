@@ -1,20 +1,15 @@
 package blackjack.domain
 
-import blackjack.fixture.BlackJackFixture
+import blackjack.fixture.PlayerFixture
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.matchers.be
-import io.kotest.matchers.shouldBe
 
 class DealerTest : BehaviorSpec({
     given("딜러는") {
-        val dealer = Dealer.create()
-
+        val dealer = Dealer.of(PlayerName.from("딜러"), ShuffledCardDeck())
         `when`("BURST 상태의 플레어가 딜링을 요청 하면") {
-            val beforeCountOfCard = dealer.countOfRemainCards()
-            dealer.dealing(BlackJackFixture.ofPlayer.BURST_PLAYER)
-            then("카드를 나누어 주지 않는다.") {
-                val afterCountOfCard = dealer.countOfRemainCards()
-                afterCountOfCard shouldBe beforeCountOfCard
+            then("예외가 발생 한다.") {
+                shouldThrow<RuntimeException> { dealer.dealing(PlayerFixture.bust()) }
             }
         }
     }

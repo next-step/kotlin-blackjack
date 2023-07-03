@@ -7,7 +7,7 @@ import blackjack.domain.PlayerStatus
 object GameResultPrinter {
     fun print(player: Player) {
         val playerName: PlayerName = player.name
-        val cardMessages = player.hand.cards.joinToString(
+        val cardMessages = player.hand.getCards().joinToString(
             separator = ", ",
             transform = { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
         )
