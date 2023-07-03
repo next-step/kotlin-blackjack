@@ -7,4 +7,6 @@ value class Money(
     init {
         require(value > 0) { "돈은 0원 이하가 될 수 없다." }
     }
+
+    operator fun times(scale: Double): Money = Money((value * scale).toInt())
 }

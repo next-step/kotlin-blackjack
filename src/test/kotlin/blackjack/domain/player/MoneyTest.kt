@@ -12,4 +12,11 @@ class MoneyTest : FunSpec({
             exception.message shouldBe "돈은 0원 이하가 될 수 없다."
         }
     }
+
+    context("times") {
+        test("값을 입력받아 곱한 돈을 반환한다.") {
+            val actual = Money(10_000) * 1.5
+            actual shouldBe Money(15_000)
+        }
+    }
 })
