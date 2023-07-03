@@ -6,7 +6,6 @@ import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.running.InitialHand
 import blackjack.domain.player.Money
 import io.kotest.assertions.throwables.shouldThrowExactly
@@ -14,7 +13,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalStateException
 
 class BlackjackTest : FunSpec({
 

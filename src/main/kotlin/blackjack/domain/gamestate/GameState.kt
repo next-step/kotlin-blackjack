@@ -1,7 +1,6 @@
 package blackjack.domain.gamestate
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.player.Money
 
 interface GameState {
