@@ -21,8 +21,13 @@ class Bust(
     override fun profit(money: Money, gameState: GameState): Int {
         require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없습니다."}
         if (gameState is Bust) {
-            return 0
+            return BUST_DRAW_PROFIT
         }
-        return money.times(-1)
+        return money.times(BUST_LOST_PROFIT)
+    }
+
+    companion object {
+        private const val BUST_DRAW_PROFIT = 0
+        private const val BUST_LOST_PROFIT = -1
     }
 }

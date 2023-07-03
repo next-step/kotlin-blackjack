@@ -22,8 +22,13 @@ class Blackjack(
     override fun profit(money: Money, gameState: GameState): Int {
         require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없습니다."}
         if (gameState is Blackjack) {
-            return 0
+            return BLACKJACK_DRAW_PROFIT
         }
-        return money.times(1.5)
+        return money.times(BLACKJACK_WIN_PROFIT)
+    }
+
+    companion object {
+        private const val BLACKJACK_DRAW_PROFIT = 0
+        private const val BLACKJACK_WIN_PROFIT = 1.5
     }
 }
