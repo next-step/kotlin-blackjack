@@ -1,6 +1,7 @@
 package blackjack.domain.game
 
 import blackjack.domain.card.Card
+import blackjack.domain.card.GameCardGenerator
 import blackjack.domain.card.GameCards
 import blackjack.domain.participant.BettingPlayer
 import blackjack.domain.participant.Dealer
@@ -9,7 +10,7 @@ import blackjack.domain.participant.Player
 class BlackJack(
     val players: List<Player>,
     val dealer: Dealer = Dealer(),
-    private val gameCards: GameCards = GameCards(),
+    private val gameCards: GameCards = GameCardGenerator.crete(),
 ) {
     fun distributeInitialCard() {
         dealer.addCards(drawInitCards())

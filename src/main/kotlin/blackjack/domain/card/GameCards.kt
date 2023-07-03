@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class GameCards(private val gameCards: MutableList<Card> = GameCardGenerator.crete()) {
+class GameCards(private val gameCards: MutableList<Card>) {
     fun draw(): Card {
         return gameCards.removeFirstOrNull() ?: throw IllegalStateException(GAME_CARD_EXCEPTION)
     }
