@@ -3,7 +3,7 @@ package blackjack.domain.participant
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-abstract class Participant(val name: String, val cards: Cards = Cards()) {
+sealed class Participant(val name: String, val cards: Cards = Cards()) {
     init {
         require(name.isNotBlank()) { NAME_EXCEPTION }
     }
