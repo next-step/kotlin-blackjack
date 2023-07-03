@@ -13,7 +13,7 @@ class BlackjackGame(
 ) {
     fun start() {
         val players = createPlayers()
-
+        val gameEvaluator = GameEvaluator()
         dealer.dealInitialCards(players)
         resultView.printInitialDistribute(dealer, players)
         resultView.printPlayerList(players)
@@ -22,8 +22,8 @@ class BlackjackGame(
         resultView.printFinalDealerStatus(dealer)
         resultView.printFinalPlayerStatus(players)
 
-        GameEvaluator.evaluate(dealer, players)
-        resultView.printMatchResult(GameEvaluator.getMatchResult)
+        val gameResult = gameEvaluator.evaluate(dealer, players)
+        resultView.printMatchResult(gameResult.getMatchResult)
     }
 
     private fun createPlayers(): List<Player> {

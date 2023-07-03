@@ -34,7 +34,7 @@ object ResultView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printMatchResult(matchResult: MutableMap<String, Result>) {
+    fun printMatchResult(matchResult: Map<String, Result>) {
         println()
         println("## 최종 승패")
         matchResult.forEach { (name, result) ->

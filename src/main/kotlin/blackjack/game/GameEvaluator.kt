@@ -3,25 +3,27 @@ package blackjack.game
 import blackjack.dealer.Dealer
 import blackjack.player.Player
 
-object GameEvaluator {
-    private val matchResult: MutableMap<String, Result> = mutableMapOf("딜러" to Result())
+class GameEvaluator {
+    fun evaluate(dealer: Dealer, players: List<Player>): GameResult {
+        val matchResult = mutableMapOf<String, Result>()
+        matchResult["딜러"] = Result()
 
-    fun evaluate(dealer: Dealer, players: List<Player>) {
         if (dealer.totalValue > BlackjackGame.BUST_SCORE) {
-            awardWinsToAllPlayers(players)
-            repeat(players.size) { matchResult["딜러"]!!.addLose() }
+            awardWinsToAllPlayers(players, matchResult)
         } else {
-            evaluateScores(dealer, players)
+            evaluateScores(dealer, players, matchResult)
         }
+
+        return GameResult(matchResult)
     }
 
-    private fun awardWinsToAllPlayers(players: List<Player>) {
+    private fun awardWinsToAllPlayers(players: List<Player>, matchResult: MutableMap<String, Result>) {
         players.forEach { player ->
             matchResult.getOrPut(player.name) { Result() }.addWin()
         }
     }
 
-    private fun evaluateScores(dealer: Dealer, players: List<Player>) {
+    private fun evaluateScores(dealer: Dealer, players: List<Player>, matchResult: MutableMap<String, Result>) {
         val dealerResult = matchResult[dealer.name]!!
         val dealerScore = dealer.totalValue
 
@@ -53,5 +55,4 @@ object GameEvaluator {
             }
         }
     }
-    val getMatchResult = matchResult
 }
