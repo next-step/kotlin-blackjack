@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.GameState
 import blackjack.domain.gamestate.running.InitialHand
 
@@ -36,10 +35,7 @@ class Dealer(
         return gameState.score()
     }
 
-    override fun competeWith(participant: Participant): Competition {
-        require(participant is Player) { "딜러는 플레이어와만 승부할 수 있다." }
-        return this.gameState.compete(participant.gameState)
-    }
+    override fun competeWith(participant: Participant) = throw IllegalStateException("딜러는 승부할 수 없다.")
 
     companion object {
         private const val DEALER_NAME = "딜러"

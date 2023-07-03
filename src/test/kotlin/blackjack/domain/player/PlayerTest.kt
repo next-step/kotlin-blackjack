@@ -1,9 +1,12 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.CardTest
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Blackjack
+import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.gamestate.running.InitialHand
@@ -18,7 +21,7 @@ class PlayerTest : FunSpec({
 
     context("init") {
         test("새 플레이어를 생성한다.") {
-            val actual = Player(Name("최진영"))
+            val actual = Player(Name("최진영"), 10_000)
             actual.name.value shouldBe "최진영"
             actual.gameState.shouldBeTypeOf<InitialHand>()
         }
@@ -26,15 +29,15 @@ class PlayerTest : FunSpec({
 
     context("equals") {
         test("이름이 같아도 같은 플레이어가 아니다.") {
-            val player1 = Player(Name("최진영"))
-            val player2 = Player(Name("최진영"))
+            val player1 = Player(Name("최진영"), 10_000)
+            val player2 = Player(Name("최진영"), 10_000)
             player1 shouldNotBe player2
         }
     }
 
     context("draw") {
         test("추가된 다음 게임상태로 변경된다.") {
-            val player = Player(Name("최진영"), InitialHand(Cards.of(SPADE_ACE)))
+            val player = Player(Name("최진영"), 10_000, InitialHand(Cards.of(SPADE_ACE)))
             player.draw(SPADE_TWO)
 
             player.gameState.shouldBeTypeOf<Hit>()
@@ -43,7 +46,7 @@ class PlayerTest : FunSpec({
 
     context("stay") {
         test("다음 상태를 stay로 변경한다.") {
-            val player = Player(Name("최진영"), Hit(Cards.of(SPADE_ACE, SPADE_KING)))
+            val player = Player(Name("최진영"), 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO)))
             player.stay()
 
             player.gameState.shouldBeTypeOf<Stay>()
@@ -51,12 +54,19 @@ class PlayerTest : FunSpec({
     }
 
     context("competeWith") {
-        test("승부확인을 하려하는 경우 예외가 발생한다.") {
-            val player = Player(Name("최진영"), Stay(Cards.of(SPADE_ACE, SPADE_KING)))
-            val dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_KING)))
+        test("딜러가 아닌 참가자와 승부하려고하면 예외가 발생한다.") {
+            val player = Player(Name("a"), 10_000, Stay(Cards.of(SPADE_KING, SPADE_ACE)))
+            val player2 = Player(Name("ㅠ"), 10_000, Stay(Cards.of(SPADE_KING, SPADE_ACE)))
+            val exception = shouldThrowExactly<IllegalArgumentException> { player.competeWith(player2) }
+            exception.message shouldBe "딜러는 플레이어와만 승부할 수 있다."
+        }
 
-            val exception = shouldThrowExactly<IllegalStateException> { player.competeWith(dealer) }
-            exception.message shouldBe "플레이어는 직접 승부할 수 없다."
+        test("승부를 확인한다.") {
+            val player = Player(Name("a"), 10_000, Blackjack(Cards.of(SPADE_KING, SPADE_ACE)))
+            val dealer = Dealer(gameState = Stay(Cards.of(SPADE_KING, CardTest.SPADE_JACK)))
+            val actual = player.competeWith(dealer)
+
+            actual shouldBe 15_000
         }
     }
 })

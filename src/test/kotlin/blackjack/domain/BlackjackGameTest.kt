@@ -10,7 +10,7 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Competition
+import blackjack.domain.gamestate.finished.Blackjack
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
 import blackjack.domain.player.Dealer
@@ -66,7 +66,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                     cardDeck = CardDeck(cardDeck)
                 )
 
@@ -81,7 +81,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_KING, SPADE_JACK))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_KING, SPADE_JACK))))),
                     cardDeck = CardDeck(cardDeck)
                 )
             blackjackGame.currentPlayerDraw()
@@ -142,7 +142,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                 )
             blackjackGame.passToNextTurn()
 
@@ -158,7 +158,7 @@ class BlackjackGameTest : FunSpec({
                 BlackjackGame(
                     turn = TURN_0,
                     dealer = Dealer(Hit(Cards.of(SPADE_ACE, SPADE_TWO))),
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                 )
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.dealerDraw() }
             exception.message shouldBe "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없다."
@@ -169,7 +169,7 @@ class BlackjackGameTest : FunSpec({
                 BlackjackGame(
                     turn = TURN_1,
                     dealer = Dealer(Hit(Cards.of(SPADE_ACE, SPADE_TWO))),
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_KING))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_KING))))),
                     cardDeck = CardDeck(LinkedList(listOf(SPADE_THREE)))
                 )
             blackjackGame.dealerDraw()
@@ -183,7 +183,7 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame =
                 BlackjackGame(
                     turn = TURN_0,
-                    players = Participants(listOf(Player.of("a", Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
+                    players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                 )
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.isDealerTurnEnd() }
             exception.message shouldBe "유저턴이 종료되지 않아 확인할 수 없다."
@@ -216,23 +216,25 @@ class BlackjackGameTest : FunSpec({
             val blackjackGame = BlackjackGame(
                 turn = TURN_3,
                 dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_TWO, SPADE_FIVE))),
-                players = Participants(listOf(
-                    Player.of("a", Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
-                    Player.of("b", Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
-                    Player.of("c", Stay(Cards.of(SPADE_ACE, SPADE_KING))),
-                ))
+                players = Participants(
+                    listOf(
+                        Player.of("a", 10_000, Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
+                        Player.of("b", 10_000, Stay(Cards.of(SPADE_ACE, SPADE_FIVE))),
+                        Player.of("c", 10_000, Blackjack(Cards.of(SPADE_ACE, SPADE_KING))),
+                    )
+                )
             )
             val actual = blackjackGame.gameResult()
 
-            actual.dealerGameResult.competitions shouldContainAll mapOf(Competition.WIN to 2, Competition.LOSE to 1)
-            actual.playerGameResults[0].competition shouldBe Competition.LOSE
-            actual.playerGameResults[1].competition shouldBe Competition.LOSE
-            actual.playerGameResults[2].competition shouldBe Competition.WIN
+            actual.dealerGameResult.profit shouldBe 5_000
+            actual.playerGameResults[0].profit shouldBe -10_000
+            actual.playerGameResults[1].profit shouldBe -10_000
+            actual.playerGameResults[2].profit shouldBe 15_000
         }
     }
 }) {
     companion object {
-        private val PLAYERS = Participants(listOf(Player.from("a"), Player.from("b")))
+        private val PLAYERS = Participants(listOf(Player.of("a", 10_000), Player.of("b", 10_000)))
         private val TURN_MINUS_1 = Turn(-1)
         private val TURN_0 = Turn(0)
         private val TURN_1 = Turn(1)

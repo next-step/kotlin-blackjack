@@ -25,7 +25,7 @@ class ParticipantsTest : FunSpec({
 
     context("drawAllParticipants") {
         test("모든 참여자에게 드로우한다") {
-            val participants = Participants(listOf(Player(Name("a"))))
+            val participants = Participants(listOf(Player(Name("a"), 10_000)))
             participants.drawAllParticipants { SPADE_ACE }
 
             participants.values[0].cards() shouldContain SPADE_ACE
@@ -38,6 +38,7 @@ class ParticipantsTest : FunSpec({
                 listOf(
                     Player(
                         name = Name("a"),
+                        10_000,
                         gameState = Hit(cards = Cards(setOf(SPADE_ACE, SPADE_KING)))
                     )
                 )
@@ -55,14 +56,14 @@ class ParticipantsTest : FunSpec({
             row(2),
         ) { input ->
             test("입력받은 위치가 범위를 벗어난 경우 예외가 발생한다.") {
-                val participants = Participants(listOf(Player(Name("a"))))
+                val participants = Participants(listOf(Player(Name("a"), 10_000)))
                 val exception = shouldThrowExactly<IllegalArgumentException> { participants.participantName(input) }
                 exception.message shouldBe "해당 위치의 참여자가 없습니다."
             }
         }
 
         test("해당 위치의 참여자의 이름을 반환한다.") {
-            val participants = Participants(listOf(Player(Name("a")), Player(Name("b"))))
+            val participants = Participants(listOf(Player(Name("a"), 10), Player(Name("b"), 10)))
             val actual = participants.participantName(1)
 
             actual shouldBe "b"
@@ -75,7 +76,7 @@ class ParticipantsTest : FunSpec({
             row(2),
         ) { input ->
             test("입력받은 위치가 범위를 벗어난 경우 예외가 발생한다.") {
-                val participants = Participants(listOf(Player(Name("a"))))
+                val participants = Participants(listOf(Player(Name("a"), 10_000)))
                 val exception =
                     shouldThrowExactly<IllegalArgumentException> { participants.participantDraw(input) { SPADE_ACE } }
                 exception.message shouldBe "해당 위치의 참여자가 없습니다."
@@ -83,7 +84,7 @@ class ParticipantsTest : FunSpec({
         }
 
         test("해당 위치의 참여자에게 드로우한다.") {
-            val participants = Participants(listOf(Player(Name("a"))))
+            val participants = Participants(listOf(Player(Name("a"), 10_000)))
             val actual = participants.participantDraw(0) { SPADE_ACE }
 
             actual.first.name shouldBe "a"
@@ -97,6 +98,7 @@ class ParticipantsTest : FunSpec({
                     listOf(
                         Player(
                             name = Name("a"),
+                            money = 10_000,
                             gameState = Hit(cards = Cards(setOf(SPADE_JACK, SPADE_KING)))
                         )
                     )

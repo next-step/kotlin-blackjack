@@ -1,12 +1,19 @@
 package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.CardTest.Companion.SPADE_ACE
+import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
+import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.running.Hit
+import blackjack.domain.gamestate.running.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import java.lang.IllegalStateException
 
 class BlackjackTest : FunSpec({
 
@@ -33,6 +40,36 @@ class BlackjackTest : FunSpec({
         test("blackjack은 점수가 21이다.") {
             val actual = Blackjack(Cards.of(SPADE_KING, SPADE_ACE)).score()
             actual shouldBe 21
+        }
+    }
+
+    context("profit") {
+        test("게임이 종료되지 않은 상대와 승부하면 예외가 발생한다.") {
+            val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
+            val target = InitialHand()
+
+            val exception = shouldThrowExactly<IllegalArgumentException> { source.profit(10_000, target) }
+            exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
+        }
+
+        test("blackjack과 승부하면 이율이 0이 반환된다.") {
+            val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
+            val target = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
+
+            val actual = source.profit(10_000, target)
+            actual shouldBe 0
+        }
+
+        forAll(
+            row(Stay(Cards.of(SPADE_KING, SPADE_QUEEN))),
+            row(Bust(Cards.of(SPADE_KING, SPADE_QUEEN, SPADE_JACK))),
+        ) { input ->
+            test("다른 상태와 승부하면 이율이 1.5가 반환된다.") {
+                val source = Blackjack(Cards.of(SPADE_KING, SPADE_ACE))
+
+                val actual = source.profit(10_000, input)
+                actual shouldBe 15_000
+            }
         }
     }
 })

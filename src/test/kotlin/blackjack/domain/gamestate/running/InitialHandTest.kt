@@ -75,7 +75,7 @@ class InitialHandTest : FunSpec({
 
     context("compete") {
         test("승패를 계산하려하는 경우 예외가 발생한다") {
-            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().compete(Bust(BUST_CARDS)) }
+            val exception = shouldThrowExactly<IllegalStateException> { InitialHand().profit(1_000, Bust(BUST_CARDS)) }
             exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
         }
     }

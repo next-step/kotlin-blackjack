@@ -8,9 +8,19 @@ fun inputPlayerNames(): List<String> {
         .split(PLAYER_NAME_DELIMITER)
 }
 
+fun inputPlayerBettingMoney(name: String): Int {
+    println("${name}의 배팅 금액은?")
+    return readln().toIntOrNull()?: retryInputPlayerBettingMoney(name)
+}
+
 fun requestAdditionalDraw(name: String): CommandView {
     println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     return CommandView.from(readln())?: retryInputPlayerDraw(name)
+}
+
+private fun retryInputPlayerBettingMoney(name: String): Int {
+    println("숫자만 입력하여아합니다.")
+    return inputPlayerBettingMoney(name)
 }
 
 private fun retryInputPlayerDraw(name: String): CommandView {

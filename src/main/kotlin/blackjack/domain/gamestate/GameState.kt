@@ -9,7 +9,7 @@ interface GameState {
 
     fun draw(card: Card): GameState
 
-    fun stay(): Stay
+    fun stay(): GameState
 
     fun isBust(): Boolean
 
@@ -17,5 +17,5 @@ interface GameState {
 
     fun score(): Int
 
-    fun compete(gameState: GameState): Competition
+    fun profit(money: Int, gameState: GameState): Int
 }

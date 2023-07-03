@@ -2,7 +2,6 @@ package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.GameState
 
 class Blackjack(
@@ -19,11 +18,11 @@ class Blackjack(
 
     override fun score(): Int = cards.score()
 
-    override fun compete(gameState: GameState): Competition {
-        TODO("Not yet implemented")
-    }
-
-    companion object {
-
+    override fun profit(money: Int, gameState: GameState): Int {
+        require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없다."}
+        if (gameState is Blackjack) {
+            return 0
+        }
+        return money.times(1.5).toInt()
     }
 }

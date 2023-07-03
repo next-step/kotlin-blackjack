@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamestate.Competition
 
 interface Participant {
 
@@ -17,5 +16,5 @@ interface Participant {
 
     fun score(): Int
 
-    fun competeWith(participant: Participant): Competition
+    fun competeWith(participant: Participant): Int
 }

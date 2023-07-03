@@ -12,6 +12,8 @@ value class Participants(
         require(values.isNotEmpty()) { "참여자은 최소 1명 이상이 있어야 한다." }
     }
 
+    constructor(vararg participant: Participant) : this(participant.toList())
+
     fun drawAllParticipants(drawAction: () -> Card) {
         values.forEach { it.draw(drawAction()) }
     }
@@ -33,14 +35,10 @@ value class Participants(
     fun size(): Int = values.size
 
     fun competeWith(participant: Participant): List<PlayerGameResult> =
-        values.map { PlayerGameResult.of(it, participant.competeWith(it).toOpposite()) }
+        values.map { PlayerGameResult.of(it, it.competeWith(participant)) }
 
     private fun participant(index: Int): Participant {
         require(index in values.indices) { "해당 위치의 참여자가 없습니다." }
         return values[index]
-    }
-
-    companion object {
-        fun playersFrom(playerNames: List<String>) = Participants(playerNames.map { Player.from(it) })
     }
 }

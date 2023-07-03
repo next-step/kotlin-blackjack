@@ -5,7 +5,6 @@ import blackjack.domain.card.CardTest.Companion.SPADE_JACK
 import blackjack.domain.card.CardTest.Companion.SPADE_KING
 import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Competition.LOSE
 import blackjack.domain.gamestate.running.InitialHand
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
@@ -54,15 +53,27 @@ class BustTest : FunSpec({
         }
     }
 
-    context("compete") {
+    context("profit") {
         test("종료되지 않은 상대와 경쟁할 경우 예외가 발생한다.") {
-            val exception = shouldThrowExactly<IllegalArgumentException> { Bust(BUST_CARDS).compete(InitialHand()) }
+            val exception =
+                shouldThrowExactly<IllegalArgumentException> { Bust(BUST_CARDS).profit(10_000, InitialHand()) }
             exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
         }
 
-        test("버스트는 상대가 누구든 진다.") {
-            val actual = Bust(BUST_CARDS).compete(Bust(BUST_CARDS))
-            actual shouldBe LOSE
+        test("버스트와 승부하면 이율이 0이 반환된다.") {
+            val source = Bust(BUST_CARDS)
+            val target = Bust(BUST_CARDS)
+
+            val actual = source.profit(10_000, target)
+            actual shouldBe 0
+        }
+
+        test("다른 상대와 승부하면 이율이 -1이 반환된다.") {
+            val source = Bust(BUST_CARDS)
+            val target = Stay(Cards.of(SPADE_KING, SPADE_QUEEN))
+
+            val actual = source.profit(10_000, target)
+            actual shouldBe -10_000
         }
     }
 }) {

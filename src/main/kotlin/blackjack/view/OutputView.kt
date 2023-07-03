@@ -27,7 +27,7 @@ fun printDealerGetDraw() = println("${DEALER_DISPLAY_NAME}는 16이하라 한장
 fun printGameResult(gameResult: GameResult) {
     printGameScoreResult(gameResult)
     println()
-    println("## 최종 승패")
+    println("## 최종 수익")
     printGameCompetition(gameResult.dealerGameResult)
     printCameCompetition(gameResult.playerGameResults)
 }
@@ -58,12 +58,12 @@ private fun printGameScoreResult(playerName: String, cards: Set<Card>, score: In
 private fun parseCardsResult(cards: Set<Card>) = cards.joinToString(CARD_DELIMITER) { parseCardView(it) }
 
 private fun printGameCompetition(dealerGameResult: DealerGameResult) =
-    printGameCompetition(DEALER_DISPLAY_NAME, parseCompetitionView(dealerGameResult.competitions))
+    printGameCompetition(DEALER_DISPLAY_NAME, dealerGameResult.profit)
 
 private fun printCameCompetition(playerGameResults: List<PlayerGameResult>)
     = playerGameResults.forEach { printGameCompetition(it) }
 
 private fun printGameCompetition(playerGameResult: PlayerGameResult)
-    = printGameCompetition(playerGameResult.playerName, parseCompetitionView(playerGameResult.competition))
+    = printGameCompetition(playerGameResult.playerName, playerGameResult.profit)
 
-private fun printGameCompetition(playerName: String, competition: String) = println("${playerName}: $competition")
+private fun printGameCompetition(playerName: String, profit: Int) = println("${playerName}: $profit")

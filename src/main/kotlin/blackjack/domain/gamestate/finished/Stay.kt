@@ -1,7 +1,6 @@
 package blackjack.domain.gamestate.finished
 
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.GameState
 import java.lang.RuntimeException
 
@@ -19,20 +18,19 @@ class Stay(
 
     override fun score() = cards.score()
 
-    override fun compete(gameState: GameState): Competition {
+    override fun profit(money: Int, gameState: GameState): Int {
         require(gameState.isFinished()) { "게임이 종료되지 않은 상대와 비교할 수 없다."}
-        if (gameState.isBust()) {
-            return Competition.WIN
+        if (gameState is Bust) {
+            return money
         }
-
-        return competeWithoutBust(gameState)
+        return money * competeWithoutBust(gameState)
     }
 
-    private fun competeWithoutBust(gameState: GameState): Competition {
+    private fun competeWithoutBust(gameState: GameState): Int {
         return when (score().compareTo(gameState.score())) {
-            WIN_COMPARE_VALUE -> Competition.WIN
-            LOST_COMPARE_VALUE -> Competition.LOSE
-            DRAW_COMPARE_VALUE -> Competition.DRAW
+            WIN_COMPARE_VALUE -> 1
+            LOST_COMPARE_VALUE -> -1
+            DRAW_COMPARE_VALUE -> 0
             else -> throw RuntimeException("승부 계산에 문제가 발생했습니다.")
         }
     }

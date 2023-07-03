@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.card.CardDeck
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Participants
@@ -77,14 +76,10 @@ class BlackjackGame(
         check(turn.isHigherTurn(players.size())) { "모든 드로우가 종료되었다." }
     }
 
-    private fun parseDealerCompetitions(playerGameResults: List<PlayerGameResult>): Map<Competition, Int> =
-        playerGameResults.map { it.competition.toOpposite() }
-            .groupingBy { it }
-            .eachCount()
+    private fun parseDealerCompetitions(playerGameResults: List<PlayerGameResult>): Int =
+        playerGameResults.sumOf { it.profit }.unaryMinus()
 
     companion object {
         private const val FIRST_DRAW_COUNT = 2
-
-        fun from(playerNames: List<String>) = BlackjackGame(players = Participants.playersFrom(playerNames))
     }
 }

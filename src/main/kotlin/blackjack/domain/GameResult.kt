@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.player.Participant
 
 data class GameResult(
@@ -13,14 +12,14 @@ data class PlayerGameResult(
     val playerName: String,
     val cards: Set<Card>,
     val score: Int,
-    val competition: Competition,
+    val profit: Int,
 ) {
     companion object {
-        fun of(participant: Participant, competition: Competition) = PlayerGameResult(
+        fun of(participant: Participant, profit: Int) = PlayerGameResult(
             playerName = participant.name(),
             cards = participant.cards(),
             score = participant.score(),
-            competition = competition,
+            profit = profit,
         )
     }
 }
@@ -28,13 +27,13 @@ data class PlayerGameResult(
 data class DealerGameResult(
     val cards: Set<Card>,
     val score: Int,
-    val competitions: Map<Competition, Int>,
+    val profit: Int,
 ) {
     companion object {
-        fun of(participant: Participant, competitions: Map<Competition, Int>) = DealerGameResult(
+        fun of(participant: Participant, profit: Int) = DealerGameResult(
             cards = participant.cards(),
             score = participant.score(),
-            competitions = competitions,
+            profit = profit,
         )
     }
 }
