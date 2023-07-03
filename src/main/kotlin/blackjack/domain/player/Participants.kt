@@ -9,7 +9,7 @@ value class Participants(
     val values: List<Participant>
 ) {
     init {
-        require(values.isNotEmpty()) { "참여자은 최소 1명 이상이 있어야 한다." }
+        require(values.isNotEmpty()) { "참여자은 최소 1명 이상이 있어야 합니다." }
     }
 
     constructor(vararg participant: Participant) : this(participant.toList())

@@ -11,8 +11,8 @@ class Hit(
     val cards: Cards,
 ) : Running() {
     init {
-        require(cards.isInitialHand().not()) { "2장 미만의 카드로 생성될 수 없다." }
-        require(cards.isBust().not()) { "버스트 카드로 생성될 수 없다." }
+        require(cards.isInitialHand().not()) { "2장 미만의 카드로 생성될 수 없습니다." }
+        require(cards.isBust().not()) { "버스트 카드로 생성될 수 없습니다." }
     }
 
     override fun cards() = cards.values

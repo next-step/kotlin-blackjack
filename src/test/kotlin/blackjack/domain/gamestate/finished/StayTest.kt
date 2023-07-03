@@ -18,27 +18,27 @@ class StayTest : FunSpec({
     context("init") {
         test("생성시 카드가 initialhand면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Stay(Cards()) }
-            exception.message shouldBe "2장 미만의 카드로 생성될 수 없다."
+            exception.message shouldBe "2장 미만의 카드로 생성될 수 없습니다."
         }
 
         test("생성 시 카드가 bust면 예외가 발생한다.") {
             val exception =
                 shouldThrowExactly<IllegalArgumentException> { Stay(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)) }
-            exception.message shouldBe "버스트 카드로 생성될 수 없다."
+            exception.message shouldBe "버스트 카드로 생성될 수 없습니다."
         }
     }
 
     context("draw") {
         test("카드를 드로우하려는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { Stay(STAY_CARDS).draw(SPADE_ACE) }
-            exception.message shouldBe "종료된 게임은 draw할 수 없다."
+            exception.message shouldBe "종료된 게임은 드로우할 수 없습니다."
         }
     }
 
     context("stay") {
         test("카드를 그만 받으려하는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { Stay(STAY_CARDS).stay() }
-            exception.message shouldBe "종료된 게임은 stay할 수 없다."
+            exception.message shouldBe "종료된 게임은 stay할 수 없습니다."
         }
     }
 
@@ -59,7 +59,7 @@ class StayTest : FunSpec({
     context("compete") {
         test("종료되지 않은 상대와 경쟁할 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Stay(STAY_CARDS).profit(Money(10_000), InitialHand()) }
-            exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
+            exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없습니다."
         }
 
         test("버스트와 승부하면 이율이 1이 반환된다.") {

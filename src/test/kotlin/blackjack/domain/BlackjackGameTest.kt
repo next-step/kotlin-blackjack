@@ -51,13 +51,13 @@ class BlackjackGameTest : FunSpec({
         test("턴이 유효하지 않은데 드로우하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
-            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+            exception.message shouldBe "첫 드로우가 시작되지 않았습니다."
         }
 
         test("턴이 종료되었는데 드로우하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentPlayerDraw() }
-            exception.message shouldBe "모든 드로우가 종료되었다."
+            exception.message shouldBe "모든 드로우가 종료되었습니다."
         }
 
         test("현재 플레이어를 드로우한다.") {
@@ -109,13 +109,13 @@ class BlackjackGameTest : FunSpec({
         test("턴이 유효하지 않은데 반환하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
-            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+            exception.message shouldBe "첫 드로우가 시작되지 않았습니다."
         }
 
         test("턴이 종료되었는데 반환하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
-            exception.message shouldBe "모든 드로우가 종료되었다."
+            exception.message shouldBe "모든 드로우가 종료되었습니다."
         }
 
         test("현재 턴인 유저의 이름이 반환된다.") {
@@ -129,13 +129,13 @@ class BlackjackGameTest : FunSpec({
         test("턴이 유효하지 않은데 전환하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_MINUS_1, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
-            exception.message shouldBe "첫 드로우가 시작되지 않았다."
+            exception.message shouldBe "첫 드로우가 시작되지 않았습니다."
         }
 
         test("턴이 종료되었는데 전환하려하면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_2, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.currentTurnPlayerName() }
-            exception.message shouldBe "모든 드로우가 종료되었다."
+            exception.message shouldBe "모든 드로우가 종료되었습니다."
         }
 
         test("현재 턴 유저를 stay로 변경하고 다음 턴으로 변경한다.") {
@@ -161,7 +161,7 @@ class BlackjackGameTest : FunSpec({
                     players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                 )
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.dealerDraw() }
-            exception.message shouldBe "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없다."
+            exception.message shouldBe "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없습니다."
         }
 
         test("딜러에게 드로우 한다.") {
@@ -186,7 +186,7 @@ class BlackjackGameTest : FunSpec({
                     players = Participants(listOf(Player.of("a", 10_000, Hit(Cards.of(SPADE_ACE, SPADE_TWO))))),
                 )
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.isDealerTurnEnd() }
-            exception.message shouldBe "유저턴이 종료되지 않아 확인할 수 없다."
+            exception.message shouldBe "유저턴이 종료되지 않아 확인할 수 없습니다."
         }
 
         forAll(
@@ -209,7 +209,7 @@ class BlackjackGameTest : FunSpec({
         test("게임 결과를 확인할 때 모든 턴이 종료되지 않으면 예외가 발생한다.") {
             val blackjackGame = BlackjackGame(turn = TURN_0, players = PLAYERS)
             val exception = shouldThrowExactly<IllegalStateException> { blackjackGame.gameResult() }
-            exception.message shouldBe "게임이 종료되지 않아 결과를 확인할 수 없다."
+            exception.message shouldBe "게임이 종료되지 않아 결과를 확인할 수 없습니다."
         }
 
         test("게임의 결과를 반환한다.") {

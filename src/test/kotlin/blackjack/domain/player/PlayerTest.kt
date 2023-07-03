@@ -58,7 +58,7 @@ class PlayerTest : FunSpec({
             val player = Player(Name("a"), Money(10_000), Stay(Cards.of(SPADE_KING, SPADE_ACE)))
             val player2 = Player(Name("ㅠ"), Money(10_000), Stay(Cards.of(SPADE_KING, SPADE_ACE)))
             val exception = shouldThrowExactly<IllegalArgumentException> { player.competeWith(player2) }
-            exception.message shouldBe "딜러는 플레이어와만 승부할 수 있다."
+            exception.message shouldBe "딜러는 플레이어와만 승부할 수 있습니다."
         }
 
         test("승부를 확인한다.") {

@@ -8,7 +8,7 @@ class InitialHand(
     val cards: Cards = Cards(),
 ) : Running() {
     init {
-        require(cards.isInitialHand()) { "초기 핸드는 2장 이상 가질 수 없다." }
+        require(cards.isInitialHand()) { "초기 핸드는 2장 이상 가질 수 없습니다." }
     }
 
     override fun cards() = cards.values
@@ -21,7 +21,7 @@ class InitialHand(
         return InitialHand(cards)
     }
 
-    override fun stay() = throw IllegalStateException("2장을 받기전에는 카드를 그만받을 수 없다.")
+    override fun stay() = throw IllegalStateException("2장을 받기전에는 카드를 그만받을 수 없습니다.")
 
     override fun isBust() = false
 

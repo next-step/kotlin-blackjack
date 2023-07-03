@@ -44,17 +44,17 @@ class BlackjackGame(
     }
 
     fun dealerDraw() {
-        check(isPlayerTurnEnd()) { "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없다." }
+        check(isPlayerTurnEnd()) { "딜러턴이 종료되지 않아 딜러에게 드로우할 수 없습니다." }
         dealer.draw(cardDeck.draw())
     }
 
     fun isDealerTurnEnd(): Boolean {
-        check(isPlayerTurnEnd()) { "유저턴이 종료되지 않아 확인할 수 없다." }
+        check(isPlayerTurnEnd()) { "유저턴이 종료되지 않아 확인할 수 없습니다." }
         return dealer.isFinished()
     }
 
     fun gameResult(): GameResult {
-        check(isPlayerTurnEnd() && dealer.isFinished()) { "게임이 종료되지 않아 결과를 확인할 수 없다." }
+        check(isPlayerTurnEnd() && dealer.isFinished()) { "게임이 종료되지 않아 결과를 확인할 수 없습니다." }
         val playerGameResults = players.competeWith(dealer)
         val dealerGameResult = DealerGameResult.of(dealer, parseDealerCompetitions(playerGameResults))
         return GameResult(dealerGameResult, playerGameResults)
@@ -72,8 +72,8 @@ class BlackjackGame(
     private fun dealerFirstDrawHand() = DealerHands(cards = setOf(dealer.cards().first()))
 
     private fun checkTurn() {
-        check(turn.isDealingTurn().not()) { "첫 드로우가 시작되지 않았다." }
-        check(turn.isHigherTurn(players.size())) { "모든 드로우가 종료되었다." }
+        check(turn.isDealingTurn().not()) { "첫 드로우가 시작되지 않았습니다." }
+        check(turn.isHigherTurn(players.size())) { "모든 드로우가 종료되었습니다." }
     }
 
     private fun parseDealerCompetitions(playerGameResults: List<PlayerGameResult>): Int =

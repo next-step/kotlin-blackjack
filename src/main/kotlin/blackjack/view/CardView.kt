@@ -45,7 +45,7 @@ enum class DenominationView(
 
     companion object {
         fun from(denomination: Denomination) = values().firstOrNull { it.denomination == denomination }
-            ?: throw IllegalArgumentException("뷰에서 지원하지 않는 끗수다.")
+            ?: throw IllegalArgumentException("뷰에서 지원하지 않는 끗수입니다.")
     }
 }
 
@@ -61,6 +61,6 @@ enum class SuitView(
 
     companion object {
         fun from(suit: Suit) = values().firstOrNull { it.suit == suit }
-            ?: throw IllegalArgumentException("뷰에서 지원하지 않는 문양이다.")
+            ?: throw IllegalArgumentException("뷰에서 지원하지 않는 문양입니다.")
     }
 }

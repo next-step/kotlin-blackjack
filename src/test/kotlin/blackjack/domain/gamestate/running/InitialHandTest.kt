@@ -19,7 +19,7 @@ class InitialHandTest : FunSpec({
         test("상태 생성 시 2장이상인 경우 예외가 발생한다.") {
             val exception =
                 shouldThrowExactly<IllegalArgumentException> { InitialHand(Cards.of(SPADE_ACE, SPADE_TWO)) }
-            exception.message shouldBe "초기 핸드는 2장 이상 가질 수 없다."
+            exception.message shouldBe "초기 핸드는 2장 이상 가질 수 없습니다."
         }
     }
 
@@ -44,7 +44,7 @@ class InitialHandTest : FunSpec({
     context("stay") {
         test("카드를 그만받으려하는 경우 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalStateException> { InitialHand().stay() }
-            exception.message shouldBe "2장을 받기전에는 카드를 그만받을 수 없다."
+            exception.message shouldBe "2장을 받기전에는 카드를 그만받을 수 없습니다."
         }
     }
 
@@ -78,7 +78,7 @@ class InitialHandTest : FunSpec({
         test("승패를 계산하려하는 경우 예외가 발생한다") {
             val exception =
                 shouldThrowExactly<IllegalStateException> { InitialHand().profit(Money(1_000), Bust(BUST_CARDS)) }
-            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
+            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없습니다."
         }
     }
 })

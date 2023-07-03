@@ -50,7 +50,7 @@ class DealerTest : FunSpec({
         test("딜러가 stay하는 경우 예외가 발생한다.") {
             val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
             val exception = shouldThrowExactly<IllegalStateException> { dealer.stay() }
-            exception.message shouldBe "딜러는 직접 stay할 수 없다."
+            exception.message shouldBe "딜러는 직접 stay할 수 없습니다."
         }
     }
 
@@ -66,7 +66,7 @@ class DealerTest : FunSpec({
         test("턴이 종료되기 전에 점수 조회시 예외가 발생한다.") {
             val dealer = Dealer(gameState = InitialHand())
             val exception = shouldThrowExactly<IllegalStateException> { dealer.score() }
-            exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없다"
+            exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없습니다."
         }
     }
 
@@ -76,7 +76,7 @@ class DealerTest : FunSpec({
             val player = Player(Name("최진영"), Money(10_000), Stay(Cards.of(SPADE_ACE, SPADE_KING)))
 
             val exception = shouldThrowExactly<IllegalStateException> { dealer.competeWith(player) }
-            exception.message shouldBe "딜러는 승부할 수 없다."
+            exception.message shouldBe "딜러는 승부할 수 없습니다."
         }
     }
 })

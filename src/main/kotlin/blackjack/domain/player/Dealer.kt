@@ -22,7 +22,7 @@ class Dealer(
         }
     }
 
-    override fun stay() = throw IllegalStateException("딜러는 직접 stay할 수 없다.")
+    override fun stay() = throw IllegalStateException("딜러는 직접 stay할 수 없습니다.")
 
     override fun isFinished(): Boolean = gameState.isFinished()
 
@@ -31,11 +31,11 @@ class Dealer(
     }
 
     override fun score(): Int {
-        check(gameState.isFinished()) { "턴이 종료되기 전에는 점수를 조회할 수 없다" }
+        check(gameState.isFinished()) { "턴이 종료되기 전에는 점수를 조회할 수 없습니다." }
         return gameState.score()
     }
 
-    override fun competeWith(participant: Participant) = throw IllegalStateException("딜러는 승부할 수 없다.")
+    override fun competeWith(participant: Participant) = throw IllegalStateException("딜러는 승부할 수 없습니다.")
 
     companion object {
         private const val DEALER_NAME = "딜러"

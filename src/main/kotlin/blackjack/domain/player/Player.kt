@@ -29,7 +29,7 @@ class Player(
     override fun score(): Int = gameState.score()
 
     override fun competeWith(participant: Participant): Int {
-        require(participant is Dealer) { "딜러는 플레이어와만 승부할 수 있다." }
+        require(participant is Dealer) { "딜러는 플레이어와만 승부할 수 있습니다." }
         return this.gameState.profit(money, participant.gameState)
     }
 

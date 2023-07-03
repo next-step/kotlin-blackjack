@@ -19,7 +19,7 @@ class ParticipantsTest : FunSpec({
     context("init") {
         test("참여자가 0명인 채로 생성될 수 없다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Participants(listOf()) }
-            exception.message shouldBe "참여자은 최소 1명 이상이 있어야 한다."
+            exception.message shouldBe "참여자은 최소 1명 이상이 있어야 합니다."
         }
     }
 

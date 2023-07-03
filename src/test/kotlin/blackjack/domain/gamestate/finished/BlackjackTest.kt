@@ -21,12 +21,12 @@ class BlackjackTest : FunSpec({
     context("init") {
         test("생성 시 카드가 initialhand면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Blackjack(Cards()) }
-            exception.message shouldBe "2장 미만의 카드로 생성될 수 없다."
+            exception.message shouldBe "2장 미만의 카드로 생성될 수 없습니다."
         }
 
         test("생성 시 카드 점수가 21이 아니면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Blackjack(Cards.of(SPADE_KING, SPADE_TWO)) }
-            exception.message shouldBe "21인 카드만 블랙잭이 될 수 있다."
+            exception.message shouldBe "21인 카드만 블랙잭이 될 수 있습니다."
         }
     }
 
@@ -50,7 +50,7 @@ class BlackjackTest : FunSpec({
             val target = InitialHand()
 
             val exception = shouldThrowExactly<IllegalArgumentException> { source.profit(Money(10_000), target) }
-            exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없다."
+            exception.message shouldBe "게임이 종료되지 않은 상대와 비교할 수 없습니다."
         }
 
         test("blackjack과 승부하면 이율이 0이 반환된다.") {
