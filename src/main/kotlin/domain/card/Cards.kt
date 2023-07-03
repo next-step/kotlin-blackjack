@@ -22,15 +22,15 @@ class Cards {
             sumWithoutAce + it
         }
 
-        if (sumOfAllCases.contains(MAX_NUMBER)) {
-            return MAX_NUMBER
+        if (sumOfAllCases.contains(BLACKJACK_POINT)) {
+            return BLACKJACK_POINT
         }
 
         return sumOfAllCases.min()
     }
 
     fun canReceiveMoreCard(): Boolean {
-        return result().lessThanMaxNumber()
+        return result() < BLACKJACK_POINT
     }
 
     private fun doesNotHaveAce(): Boolean {
@@ -60,11 +60,7 @@ class Cards {
         }
     }
 
-    private fun Int.lessThanMaxNumber(): Boolean {
-        return this < MAX_NUMBER
-    }
-
     companion object {
-        private const val MAX_NUMBER = 21
+        private const val BLACKJACK_POINT = 21
     }
 }
