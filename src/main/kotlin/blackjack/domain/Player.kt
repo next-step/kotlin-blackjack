@@ -19,4 +19,8 @@ class Player(
     fun changeCondition(condition: Condition) {
         this.condition = condition
     }
+
+    fun loseAllBets() {
+        this.betAmount = 0
+    }
 }

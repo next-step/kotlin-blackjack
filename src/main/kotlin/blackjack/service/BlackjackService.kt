@@ -73,6 +73,7 @@ class BlackjackService {
             player.changeCondition(Condition.BLACKJACK)
         } else if (player.cards.calculateScore() > BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BUST)
+            player.loseAllBets()
         }
     }
 
