@@ -9,7 +9,7 @@ class Dealer(
 ) : Player(name, hand) {
 
     fun dealInitialCards(players: List<Player>) {
-        repeat(INITIAL_CARD_COUNT) { drawCard(this) }
+        dealInitialCard(this)
         players.forEach {
             dealInitialCard(it)
         }
