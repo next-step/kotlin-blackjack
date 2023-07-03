@@ -30,7 +30,7 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
     private fun drawCards() {
         playerGroup.players.forEach { player ->
             generateSequence {
-                player.chooseHitOrStay(inputView.getPlayerHitStatus(player.name))
+                player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name))
                 dealer.giveCardIfPlayerWantHit(player)
 
                 player

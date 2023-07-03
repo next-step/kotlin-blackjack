@@ -17,7 +17,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer()
         val player = Player("testUser")
 
-        player.chooseHitOrStay(Player.WANT_HIT)
+        player.chooseHitOrStay(true)
         dealer.giveCardIfPlayerWantHit(player)
 
         player.getCards().size shouldBe 1
@@ -27,7 +27,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer()
         val player = Player("testUser")
 
-        player.chooseHitOrStay(Player.WANT_STAY)
+        player.chooseHitOrStay(false)
         dealer.giveCardIfPlayerWantHit(player)
 
         player.getCards().size shouldBe 0

@@ -19,12 +19,12 @@ open class Player(val name: String) {
         cards.add(card)
     }
 
-    fun chooseHitOrStay(answer: String) {
-        if (answer == WANT_STAY) {
-            status = FixedEndStatus.STAY
+    fun chooseHitOrStay(isPlayerWantHit: Boolean) {
+        if (isPlayerWantHit) {
+            status = PlayingStatus.HIT
             return
         }
-        status = PlayingStatus.HIT
+        status = FixedEndStatus.STAY
     }
 
     fun updateStatus() {
@@ -61,7 +61,5 @@ open class Player(val name: String) {
     companion object {
         private const val BLACK_JACK_POINT = 21
         private const val ACE_BONUS_POINT = 9
-        const val WANT_STAY = "n"
-        const val WANT_HIT = "y"
     }
 }
