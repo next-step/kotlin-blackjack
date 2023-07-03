@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-data class Player(val name: String, val state: PlayerState) {
+data class Player(val name: String, val state: PlayerState = PlayerState.init) {
     fun canAddCard(): Boolean = state.canAddCard()
 
     fun addCard(card: Card): Player {
@@ -18,10 +18,4 @@ data class Player(val name: String, val state: PlayerState) {
     fun cards() = state.cards
 
     fun score() = state.score
-
-    companion object {
-        fun init(name: String): Player {
-            return Player(name, PlayerState.init)
-        }
-    }
 }

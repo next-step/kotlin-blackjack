@@ -15,7 +15,7 @@ class Controller {
 
     private fun getPlayers(): List<Player> {
         val playerNames = InputView.getPlayerNames()
-        return playerNames.map { Player.init(it) }
+        return playerNames.map { Player(it) }
     }
 
     private fun startGame(game: BlackJackGame, players: List<Player>): List<Player> {
