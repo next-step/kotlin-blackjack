@@ -19,40 +19,43 @@ class GameEvaluator {
 
     private fun awardWinsToAllPlayers(players: List<Player>, matchResult: MutableMap<String, Result>) {
         players.forEach { player ->
-            matchResult.getOrPut(player.name) { Result() }.addWin()
+            val result = matchResult.getOrPut(player.name) { Result() }
+            matchResult[player.name] = result.addWin()
         }
     }
 
     private fun evaluateScores(dealer: Dealer, players: List<Player>, matchResult: MutableMap<String, Result>) {
-        val dealerResult = matchResult[dealer.name]!!
+        var dealerResult = matchResult[dealer.name]!!
         val dealerScore = dealer.totalValue
 
         players.forEach { player ->
-            val playerResult = matchResult.getOrPut(player.name) { Result() }
+            var playerResult = matchResult.getOrPut(player.name) { Result() }
             val playerScore = player.totalValue
 
             when {
                 playerScore > BlackjackGame.BUST_SCORE -> {
-                    playerResult.addLose()
-                    dealerResult.addWin()
+                    playerResult = playerResult.addLose()
+                    dealerResult = dealerResult.addWin()
                 }
                 dealerScore > BlackjackGame.BUST_SCORE -> {
-                    playerResult.addWin()
-                    dealerResult.addLose()
+                    playerResult = playerResult.addWin()
+                    dealerResult = dealerResult.addLose()
                 }
                 playerScore > dealerScore -> {
-                    playerResult.addWin()
-                    dealerResult.addLose()
+                    playerResult = playerResult.addWin()
+                    dealerResult = dealerResult.addLose()
                 }
                 playerScore == dealerScore -> {
-                    playerResult.addDraw()
-                    dealerResult.addDraw()
+                    playerResult = playerResult.addDraw()
+                    dealerResult = dealerResult.addDraw()
                 }
                 else -> {
-                    playerResult.addLose()
-                    dealerResult.addWin()
+                    playerResult = playerResult.addLose()
+                    dealerResult = dealerResult.addWin()
                 }
             }
+            matchResult[player.name] = playerResult
         }
+        matchResult[dealer.name] = dealerResult
     }
 }
