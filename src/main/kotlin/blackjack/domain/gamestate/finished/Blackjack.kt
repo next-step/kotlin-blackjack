@@ -17,9 +17,7 @@ class Blackjack(
 
     override fun isBust(): Boolean = false
 
-    override fun score(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun score(): Int = cards.score()
 
     override fun compete(gameState: GameState): Competition {
         TODO("Not yet implemented")

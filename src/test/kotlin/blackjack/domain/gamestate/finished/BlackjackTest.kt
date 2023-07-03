@@ -28,4 +28,11 @@ class BlackjackTest : FunSpec({
             actual shouldBe false
         }
     }
+
+    context("score") {
+        test("blackjack은 점수가 21이다.") {
+            val actual = Blackjack(Cards.of(SPADE_KING, SPADE_ACE)).score()
+            actual shouldBe 21
+        }
+    }
 })
