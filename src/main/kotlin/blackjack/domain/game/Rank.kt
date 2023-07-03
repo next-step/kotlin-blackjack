@@ -11,8 +11,8 @@ enum class Rank(val value: Double) {
     companion object {
         fun of(player: Participant, dealer: Participant): Rank {
             return when {
-                player.hasBlackJack() && dealer.hasBlackJack() -> DRAW
-                player.hasBlackJack() -> BLACKJACK
+                player.isBlackJack() && dealer.isBlackJack() -> DRAW
+                player.isBlackJack() -> BLACKJACK
                 player.score() == dealer.score() -> DRAW
                 dealer.score() > BlackJack.BLACKJACK_MAX_SCORE -> WON
                 player.score() > BlackJack.BLACKJACK_MAX_SCORE -> LOST

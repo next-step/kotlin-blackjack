@@ -20,7 +20,7 @@ abstract class Participant(val name: String, val cards: Cards = Cards()) {
         return cards.score()
     }
 
-    fun hasBlackJack(): Boolean {
+    fun isBlackJack(): Boolean {
         return cards.isBlackJack()
     }
 
