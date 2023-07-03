@@ -8,8 +8,12 @@ class Score(
         return value.compareTo(other.value)
     }
 
+    fun plus(other: Int): Int {
+        return this.value + other
+    }
+
     companion object {
-        const val BLACK_JACK_SCORE = 21
-        const val STANDARD_CARD_SCORE = 16
+        val BLACK_JACK_SCORE: Score = Score(21)
+        val STANDARD_CARD_SCORE: Score = Score(16)
     }
 }

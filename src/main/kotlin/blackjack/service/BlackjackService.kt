@@ -4,7 +4,7 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
-import blackjack.domain.Score
+import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 import blackjack.dto.BlackjackGameResult
@@ -68,9 +68,9 @@ class BlackjackService {
     }
 
     private fun checkCondition(player: Player) {
-        if (player.cards.calculateScore().value == Score.BLACK_JACK_SCORE) {
+        if (player.cards.calculateScore() == BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BLACKJACK)
-        } else if (player.cards.calculateScore().value > Score.BLACK_JACK_SCORE) {
+        } else if (player.cards.calculateScore() > BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BUST)
         }
     }
