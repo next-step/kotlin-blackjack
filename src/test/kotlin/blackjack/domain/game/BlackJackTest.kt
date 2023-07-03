@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Character
 import blackjack.domain.card.Shape
+import blackjack.domain.card.TestCards
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import io.kotest.matchers.shouldBe
@@ -22,13 +23,7 @@ internal class BlackJackTest {
 
     @Test
     internal fun `플레이어가 21점이 초과하지않으면 턴은 계속된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.EIGHT),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.A)
-            )
-        )
+        val cards = TestCards.getTwentyPointCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
 
@@ -38,44 +33,27 @@ internal class BlackJackTest {
 
     @Test
     internal fun `플레이어가 21점을 초과하면 더이상 카드를 뽑을 수 없어 턴이 종료된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.NINE),
-                Card(Shape.CLOVER, Character.FIVE),
-                Card(Shape.CLOVER, Character.TEN)
-            )
-        )
+        val cards = TestCards.getBurstCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
 
-        player.score() shouldBe 24
+        player.score() shouldBe 22
         game.isEnd() shouldBe true
     }
 
     @Test
-    internal fun `플레이어가 y를 대답하면 턴은 계속된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO)
-            )
-        )
+    internal fun `플레이어가 y를 대답하면 카드의 갯수가 늘어난다`() {
+        val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
+        player.cards.values.size shouldBe 2
         game.playGameTurn(true)
-        game.isEnd() shouldBe false
+        player.cards.values.size shouldBe 3
     }
 
     @Test
     internal fun `플레이어가 n를 대답하면 턴이 종료된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO)
-            )
-        )
+        val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
         game.playGameTurn(false)
@@ -84,13 +62,7 @@ internal class BlackJackTest {
 
     @Test
     internal fun `이전 플레이어가 끝나면 게임차례는 넘어간다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.TWO)
-            )
-        )
+        val cards = TestCards.getSixteenPointCards()
         val player1 = Player("pobi", cards)
         val player2 = Player("ryan", cards)
         val game = BlackJack(listOf(player1, player2))
@@ -103,12 +75,7 @@ internal class BlackJackTest {
 
     @Test
     internal fun `딜러는 점수 16점 이하면 카드 한장을 더 받는다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.J),
-                Card(Shape.CLOVER, Character.SIX),
-            )
-        )
+        val cards = TestCards.getSixteenPointCards()
         val player1 = Player("pobi", cards)
         val dealer = Dealer(cards)
         val game = BlackJack(listOf(player1), dealer)
@@ -122,12 +89,7 @@ internal class BlackJackTest {
 
     @Test
     internal fun `딜러는 점수 16점 초과면 카드 한장을 더 받지않는다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.J),
-                Card(Shape.CLOVER, Character.SEVEN),
-            )
-        )
+        val cards = TestCards.getSeventeenPointCards()
         val player1 = Player("pobi", cards)
         val dealer = Dealer(cards)
         val game = BlackJack(listOf(player1), dealer)

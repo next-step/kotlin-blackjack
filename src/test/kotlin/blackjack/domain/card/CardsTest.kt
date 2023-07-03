@@ -13,13 +13,7 @@ internal class CardsTest {
 
     @Test
     internal fun `가지고 있는 카드의 점수가 합산되어 계산된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.EIGHT),
-                Card(Shape.CLOVER, Character.NINE),
-                Card(Shape.CLOVER, Character.FIVE)
-            )
-        )
+        val cards = TestCards.getBurstCards()
         cards.score() shouldBe 22
     }
 

@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Character
 import blackjack.domain.card.Shape
+import blackjack.domain.card.TestCards
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -23,27 +24,15 @@ internal class PlayerTest {
 
     @Test
     internal fun `플레이어의 점수가 계산된다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.EIGHT),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.A)
-            )
-        )
+        val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
 
-        player.score() shouldBe 21
+        player.score() shouldBe 16
     }
 
     @Test
     internal fun `플레이어는 21점이 넘으면 더이상 게임을 진행할 수 없다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.EIGHT),
-                Card(Shape.CLOVER, Character.FOUR),
-                Card(Shape.CLOVER, Character.TEN)
-            )
-        )
+        val cards = TestCards.getBurstCards()
         val player = Player("pobi", cards)
 
         player.score() shouldBe 22
@@ -52,13 +41,7 @@ internal class PlayerTest {
 
     @Test
     internal fun `플레이어는 턴을 끝내면 더이상 게임을 진행할 수 없다`() {
-        val cards = Cards(
-            mutableListOf(
-                Card(Shape.CLOVER, Character.EIGHT),
-                Card(Shape.CLOVER, Character.TWO),
-                Card(Shape.CLOVER, Character.A)
-            )
-        )
+        val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
         player.finishedTurn()
         player.canProceedTurn() shouldBe false
