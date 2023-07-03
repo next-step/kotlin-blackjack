@@ -7,8 +7,6 @@ import blackjack.enums.Symbol
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 
 class DealerTest {
 
@@ -28,27 +26,55 @@ class DealerTest {
         )
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [2, 3, 6, 7, 8])
-    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 높으면 승을 반환`(value: Int) {
+    @Test
+    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 높으면 승을 반환`() {
 
-        val playerScore = Score(value = value)
-        dealer.determineResult(playerScore) shouldBe MatchResult.WIN
+        val player = Player(
+            name = "",
+            cards = Cards(
+                cards = listOf(
+                    Card(rank = Rank.SIX, symbol = Symbol.SPADES),
+                    Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
+                )
+            ),
+            condition = Condition.PLAY
+        )
+
+        dealer.determineResult(player) shouldBe MatchResult.WIN
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = [17, 18, 19, 20, 21])
-    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 낮다면 패를 반환`(value: Int) {
+    @Test
+    fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 낮다면 패를 반환`() {
 
-        val playerScore = Score(value = value)
-        dealer.determineResult(playerScore) shouldBe MatchResult.LOSE
+        val player = Player(
+            name = "",
+            cards = Cards(
+                cards = listOf(
+                    Card(rank = Rank.SIX, symbol = Symbol.SPADES),
+                    Card(rank = Rank.KING, symbol = Symbol.HEARTS)
+                )
+            ),
+            condition = Condition.PLAY
+        )
+
+        dealer.determineResult(player) shouldBe MatchResult.LOSE
     }
 
     @Test
     fun `딜러의 카드 점수의 합과 플레이어의 카드 점수의 합을 비교해 같다면 무승부를 반환`() {
 
-        val playerScore = Score(value = 15)
-        dealer.determineResult(playerScore) shouldBe MatchResult.DRAW
+        val player = Player(
+            name = "",
+            cards = Cards(
+                cards = listOf(
+                    Card(rank = Rank.KING, symbol = Symbol.SPADES),
+                    Card(rank = Rank.FIVE, symbol = Symbol.HEARTS)
+                )
+            ),
+            condition = Condition.PLAY
+        )
+
+        dealer.determineResult(player) shouldBe MatchResult.DRAW
     }
 
     @Test

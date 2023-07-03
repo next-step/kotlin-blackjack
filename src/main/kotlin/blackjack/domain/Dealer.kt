@@ -46,12 +46,13 @@ class Dealer(
         return this.condition
     }
 
-    fun determineResult(otherScore: Score): MatchResult {
+    fun determineResult(other: Player): MatchResult {
         val score = cards.calculateScore()
+        val otherScore = other.cards.calculateScore()
 
         return when {
-            score.value > otherScore.value -> MatchResult.WIN
-            score.value < otherScore.value -> MatchResult.LOSE
+            score > otherScore -> MatchResult.WIN
+            score < otherScore -> MatchResult.LOSE
             else -> MatchResult.DRAW
         }
     }

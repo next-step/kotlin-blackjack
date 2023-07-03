@@ -38,7 +38,7 @@ class BlackjackService {
         var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
 
         players.forEach { player ->
-            val resultMatch = dealer.determineResult(player.cards.calculateScore())
+            val resultMatch = dealer.determineResult(player)
             addGameResult(result, player.name, resultMatch)
             when (resultMatch) {
                 MatchResult.WIN -> dealerLoseCount++
