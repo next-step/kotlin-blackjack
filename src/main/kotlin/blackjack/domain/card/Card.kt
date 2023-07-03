@@ -1,5 +1,37 @@
 package blackjack.domain.card
 
+class Cards {
+    private val _cards: MutableList<Card> = mutableListOf()
+    fun toList() = _cards.toList()
+
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
+    fun getMinAndMaxPoint(): PointResult {
+        val minPoint = _cards.sumOf { card -> card.number.value }
+        val maxPoint = minPoint + if (hasAce()) ACE_BONUS_POINT else 0
+
+        return PointResult(minPoint, maxPoint)
+    }
+
+    fun getOptimizedPoint(): Int {
+        val pointResult = getMinAndMaxPoint()
+
+        return if (pointResult.min >= BLACK_JACK_POINT) pointResult.min
+        else pointResult.max
+    }
+
+    private fun hasAce(): Boolean = _cards.any { card -> card.number == CardNumber.A && card.pattern == CardPattern.Spade }
+
+    data class PointResult(val min: Int, val max: Int)
+
+    companion object {
+        private const val BLACK_JACK_POINT = 21
+        private const val ACE_BONUS_POINT = 9
+    }
+}
+
 data class Card(val pattern: CardPattern, val number: CardNumber) {
     override fun toString(): String {
         return "${number.displayName}${pattern.displayName}"

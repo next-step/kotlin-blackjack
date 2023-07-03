@@ -10,7 +10,7 @@ class DealerTest : StringSpec({
 
         dealer.giveCardTo(player, 3)
 
-        player.getCards().size shouldBe 3
+        player.cards.toList().size shouldBe 3
     }
 
     "dealer의 giveCardIfPlayerWantHit()가 player의 status가 hit인 경우, card를 1장 전달한다" {
@@ -20,7 +20,7 @@ class DealerTest : StringSpec({
         player.chooseHitOrStay(true)
         dealer.giveCardIfPlayerWantHit(player)
 
-        player.getCards().size shouldBe 1
+        player.cards.toList().size shouldBe 1
     }
 
     "dealer의 giveCardIfPlayerWantHit()가 player의 status가 stay인 경우, card를 전달하지 않는다" {
@@ -30,6 +30,6 @@ class DealerTest : StringSpec({
         player.chooseHitOrStay(false)
         dealer.giveCardIfPlayerWantHit(player)
 
-        player.getCards().size shouldBe 0
+        player.cards.toList().size shouldBe 0
     }
 })
