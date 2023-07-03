@@ -1,10 +1,14 @@
 package baclkjack.domain.play
 
+import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
+import baclkjack.domain.play.GameState.Companion.ofGameState
 
-class Player(val name: String) {
+open class Player(val name: String) {
 
     private val cards: Cards = Cards()
+
+    var draw: ((String) -> Boolean)? = null
 
     fun start(deck: Deck) {
         repeat(FIRST_DRAW) {
@@ -20,9 +24,15 @@ class Player(val name: String) {
 
     fun blackJack(): Boolean = cards.isBlackJack()
 
-    fun result(): Int = cards.score()
+    fun score(): Int = cards.score()
 
-    fun cards() = cards.cards
+    fun cards(): List<Card> = cards.cards
+
+    fun finish(): Boolean = burst() || blackJack()
+
+    open fun isDraw(): Boolean = draw?.invoke(name) == true
+
+    fun result(player: Player): GameState = ofGameState(player)
 
     companion object {
         const val FIRST_DRAW = 2

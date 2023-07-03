@@ -1,29 +1,37 @@
 package baclkjack.domain
 
 import baclkjack.domain.card.Deck
+import baclkjack.domain.play.Dealer
 import baclkjack.domain.play.Player
 
 class BlackJackGame(players: List<String>, private val deck: Deck = Deck.createDeck()) {
 
     val players = players.map { Player(it) }
+    val dealer = Dealer()
 
     fun start() {
+        dealer.start(deck)
         players.forEach {
             it.start(deck)
         }
     }
 
-    fun play(isDraw: (String) -> Boolean, out: (Player) -> Unit) {
+    fun play(draw: (String) -> Boolean, out: (Player) -> Unit) {
         players.forEach {
-            playerDraw(it, isDraw, out)
+            it.draw = draw
+            playerDraw(it, out)
         }
     }
 
-    private fun playerDraw(player: Player, isDraw: (String) -> Boolean, out: (Player) -> Unit) {
-        while (isDraw(player.name)) {
+    fun dealerPlay(out: (Player) -> Unit) {
+        playerDraw(dealer, out)
+    }
+
+    private fun playerDraw(player: Player, out: (Player) -> Unit) {
+        while (player.isDraw()) {
             player.hit(deck)
             out(player)
-            if (player.burst() || player.blackJack()) {
+            if (player.finish()) {
                 break
             }
         }
