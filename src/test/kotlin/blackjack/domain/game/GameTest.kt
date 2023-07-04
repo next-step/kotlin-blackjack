@@ -17,8 +17,8 @@ class GameTest : StringSpec({
         val john = gamers.gamers[0]
         val jane = gamers.gamers[1]
 
-        game.dealCardToPlayer(john)
-        game.dealCardToPlayer(jane)
+        game.drawCardToPlayer(john)
+        game.drawCardToPlayer(jane)
 
         john.deck.getCards() shouldHaveSize 3
         jane.deck.getCards() shouldHaveSize 3

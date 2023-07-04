@@ -14,11 +14,11 @@ class Game(
 
     private fun initialize() {
         repeat(INIT_CARD_COUNT) {
-            gamers.dealCards(cards)
+            gamers.drawCards(cards)
         }
     }
 
-    fun dealCardToPlayer(gamer: Gamer) {
+    fun drawCardToPlayer(gamer: Gamer) {
         val foundGamer = gamers.findGamer(gamer.name)
         foundGamer.addCardToDeck(cards.next())
     }

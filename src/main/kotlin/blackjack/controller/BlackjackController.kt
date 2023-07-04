@@ -14,7 +14,7 @@ class BlackjackController {
         val gamers = inputGameParticipant()
         val game = playGame(gamers)
 
-        dealPlay(game)
+        drawPlay(game)
         getResult(game)
     }
 
@@ -36,16 +36,15 @@ class BlackjackController {
         return game
     }
 
-    private fun dealPlay(game: Game) {
+    private fun drawPlay(game: Game) {
         for (gamer in game.gamers.gamers) {
-            dealCardToGamer(gamer, game)
-            OutputView.printCardsGamerHas(gamer)
+            drawCardToGamer(gamer, game)
         }
     }
 
-    private fun dealCardToGamer(gamer: Gamer, game: Game) {
-        while (InputView.getYesOrNo(gamer)) {
-            game.dealCardToPlayer(gamer)
+    private fun drawCardToGamer(gamer: Gamer, game: Game) {
+        while (gamer.isDrawable() && InputView.getYesOrNo(gamer)) {
+            game.drawCardToPlayer(gamer)
             OutputView.printCardsGamerHas(gamer)
         }
     }

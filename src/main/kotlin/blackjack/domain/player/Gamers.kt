@@ -18,7 +18,7 @@ data class Gamers(
         require(gamers.size == gamers.distinct().count())
     }
 
-    fun dealCards(cards: Cards) {
+    fun drawCards(cards: Cards) {
         for (gamer in gamers) {
             gamer.addCardToDeck(cards.next())
         }
