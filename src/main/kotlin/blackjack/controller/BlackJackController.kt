@@ -1,10 +1,10 @@
 package blackjack.controller
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.BlackJackGamer
-import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.deck.RandomDeckShuffleStrategy
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 

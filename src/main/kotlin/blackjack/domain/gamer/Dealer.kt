@@ -1,29 +1,9 @@
-package blackjack.domain
+package blackjack.domain.gamer
 
-import blackjack.domain.card.Card
-
-class Dealer : BlackJackGamer {
-    private val cards = mutableListOf<Card>()
-    private val cardNumberCalculator = CardNumberCalculator()
+class Dealer : AbstractBlackJackGamer() {
     private var winRecord = (GameRecordType.WIN to 0)
     private var loseRecord = (GameRecordType.LOSE to 0)
     private var drawRecord = (GameRecordType.DRAW to 0)
-
-    override fun addCard(card: Card) {
-        cards.add(card)
-    }
-
-    override fun addCards(drawCards: List<Card>) {
-        cards.addAll(drawCards)
-    }
-
-    override fun getCards(): List<Card> {
-        return cards.toList()
-    }
-
-    override fun calculateSumOfCardNumbers(): Int {
-        return cardNumberCalculator.calculateSumOfCardNumbers(cards)
-    }
 
     override fun getGamerType(): GamerType {
         return GamerType.DEALER

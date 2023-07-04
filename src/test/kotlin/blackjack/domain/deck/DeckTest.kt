@@ -1,7 +1,7 @@
-package blackjack.domain
+package blackjack.domain.deck
 
+import blackjack.domain.NotRandomDeckShuffleStrategy
 import blackjack.domain.card.Card
-import blackjack.domain.deck.Deck
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

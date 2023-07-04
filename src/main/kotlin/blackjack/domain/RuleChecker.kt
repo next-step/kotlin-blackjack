@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.gamer.*
+
 class RuleChecker {
 
     fun checkSumOfCardNumbers(blackJackGamer: BlackJackGamer): Boolean {

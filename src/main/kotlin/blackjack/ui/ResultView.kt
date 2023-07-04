@@ -1,10 +1,10 @@
 package blackjack.ui
 
-import blackjack.domain.BlackJackGamer
-import blackjack.domain.Dealer
-import blackjack.domain.GamerType
-import blackjack.domain.Player
 import blackjack.domain.card.Card
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.GamerType
+import blackjack.domain.gamer.Player
 
 class ResultView {
     fun printFirstDraw(gamerList: List<BlackJackGamer>) {
@@ -77,7 +77,7 @@ class ResultView {
     }
 
     fun printDealerIsDraw() {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("딜러는 ${Dealer.CONDITION_TO_DEALER_DRAW_CARD}이하라 한장의 카드를 더 받았습니다.")
         println()
     }
 

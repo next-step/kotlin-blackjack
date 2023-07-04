@@ -2,6 +2,9 @@ package blackjack.domain
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckShuffleStarategy
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Player
 
 class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
 
