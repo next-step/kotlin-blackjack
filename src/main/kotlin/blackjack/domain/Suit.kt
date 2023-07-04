@@ -1,11 +1,12 @@
 package blackjack.domain
 
 enum class Suit(
-    val value: String
+    val displayName: String
 ) {
     SPADE("스페이드"),
     HEART("하트"),
-    CLUB("클로버");
+    CLUB("클로버"),
+    DIA("다이아");
 
     companion object {
         fun random(): Suit {
