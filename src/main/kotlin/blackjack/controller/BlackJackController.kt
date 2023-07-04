@@ -59,15 +59,12 @@ class BlackJackController(
         resultView.printNextLine()
     }
 
-    private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player): Player? {
+    private fun askPlayerWantToDrawCard(blackJackGame: BlackJackGame, player: Player) {
         while (continueDrawingCards(player)) {
             drawPlayer(blackJackGame, player)
-            if (!blackJackGame.checkBlackJackGamerIsDraw(player)) {
-                return null
-            }
+            if (!blackJackGame.checkBlackJackGamerIsDraw(player)) return
         }
         resultView.printGamerCardList(player)
-        return player
     }
 
     private fun continueDrawingCards(player: Player): Boolean {
