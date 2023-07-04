@@ -4,10 +4,9 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 
-class PersonTest : StringSpec({
-    "person 생성 테스트" {
-        val person = introduce {
-            name("홍길동")
+class DslBuilderTest : StringSpec({
+    "person을 생성한다." {
+        val person = introduce("홍길동") {
             company("홍길동 회사")
             skills {
                 soft("A passion for problem solving")
