@@ -28,10 +28,15 @@ class DenominationTest : StringSpec({
     }
 
     "Ace는 누적 점수에 따라 1 또는 11로 계산할 수 있다." {
-        val accumulatedScore1 = 5
-        val accumulatedScore2 = 15
-
-        ACE.getScore(accumulatedScore1) shouldBe 11
-        ACE.getScore(accumulatedScore2) shouldBe 1
+        forAll(
+            row(5, 11),
+            row(15, 1),
+            row(11, 1),
+            row(21, 1),
+            row(10, 11),
+            row(20, 1)
+        ) { score, expected ->
+            ACE.getScore(score) shouldBe expected
+        }
     }
 })
