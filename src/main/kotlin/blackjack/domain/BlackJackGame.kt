@@ -47,13 +47,21 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
         while (dealer.drawCardBySelfIfPointUnder(DEALER_DRAW_THRESHOLD_POINT)) {
             resultView.printDealerDrawCardAlert(DEALER_DRAW_THRESHOLD_POINT)
         }
+        dealer.judgeGameResult(playerGroup)
     }
 
 
     private fun printGameResult() {
+        resultView.printResult(dealer)
         playerGroup.players.forEach {
             player ->
             resultView.printResult(player)
+        }
+
+        resultView.printFinalResult(dealer)
+        playerGroup.players.forEach {
+                player ->
+            resultView.printFinalResult(player)
         }
     }
 

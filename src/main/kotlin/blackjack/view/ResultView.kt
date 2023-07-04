@@ -8,5 +8,7 @@ interface ResultView {
 
     fun printResult(players: Player)
 
+    fun printFinalResult(players: Player)
+
     fun printDealerDrawCardAlert(dealerDrawThresholdPoint: Int)
 }

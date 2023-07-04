@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
 
 class ConsoleResultView : ResultView {
@@ -9,6 +10,23 @@ class ConsoleResultView : ResultView {
 
     override fun printResult(player: Player) {
         println("${player.name} ${player.cards.toList()} 결과: ${player.cards.getOptimizedPoint()}")
+    }
+
+    override fun printFinalResult(player: Player) {
+        val finalResult = player.getFinalResult()
+
+        if (player is Dealer) {
+            println("${player.name}: ${finalResult.winCount} 승 ${finalResult.loseCount} 패")
+            return
+        }
+
+        val resultString = when {
+            finalResult.winCount == 1 -> "승"
+            finalResult.loseCount == 1 -> "패"
+            else -> "무"
+        }
+
+        println("${player.name}: $resultString")
     }
 
     override fun printDealerDrawCardAlert(dealerDrawThresholdPoint: Int) {

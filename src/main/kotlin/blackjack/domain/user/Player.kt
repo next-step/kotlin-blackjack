@@ -1,11 +1,7 @@
 package blackjack.domain.user
 
 import blackjack.domain.card.Cards
-import blackjack.domain.status.ConditionalEndStatus
-import blackjack.domain.status.EndStatus
-import blackjack.domain.status.FixedEndStatus
-import blackjack.domain.status.PlayingStatus
-import blackjack.domain.status.Status
+import blackjack.domain.status.*
 
 open class Player(val name: String, val cards: Cards = Cards()) {
     private var status: Status = PlayingStatus.READY
@@ -27,6 +23,23 @@ open class Player(val name: String, val cards: Cards = Cards()) {
             ?: PlayingStatus.READY
     }
 
+    fun updateResultStatus(resultStatus: ResultStatus) {
+        status = resultStatus
+    }
+
+    open fun getFinalResult(): FinalResult {
+        val resultStatus = status as ResultStatus
+        val winCount = if(resultStatus.isPlayerWin) 1 else 0
+        val loseCount = if(resultStatus.isDealerWin) 1 else 0
+        return FinalResult(winCount, loseCount)
+    }
+
+    data class FinalResult(val winCount: Int, val loseCount: Int)
+
+
     fun isDone(): Boolean = status is EndStatus
+    fun isBurst(): Boolean = status == ConditionalEndStatus.BURST
     fun wantHit(): Boolean = status == PlayingStatus.HIT
+
+
 }
