@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.gamer
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
@@ -6,6 +6,7 @@ import blackjack.domain.card.CardShape
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
 
@@ -18,7 +19,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름을 가진다`() {
-        Assertions.assertThat(player.name).isEqualTo("이름")
+        Assertions.assertThat(player.getName()).isEqualTo("이름")
     }
 
     @Test
@@ -57,9 +58,16 @@ class PlayerTest {
         val actual = mutableListOf<String>()
 
         playerList.forEach {
-            actual.add(it.name)
+            actual.add(it.getName())
         }
 
         Assertions.assertThat(actual).isEqualTo(playerNameList)
+    }
+
+    @Test
+    fun `플레이어의 전적이 결정되기전에 조회할 경우 IllegalArgumentException을 throw 한다`() {
+        val player = Player("playerName")
+
+        assertThrows<IllegalArgumentException> { player.getGameRecord() }
     }
 }

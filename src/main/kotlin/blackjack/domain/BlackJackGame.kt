@@ -2,26 +2,30 @@ package blackjack.domain
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckShuffleStarategy
-import blackjack.exception.PlayerLoseException
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.Player
 
 class BlackJackGame(deckShuffleStrategy: DeckShuffleStarategy) {
 
     private val deck = Deck(deckShuffleStrategy)
     private val ruleChecker = RuleChecker()
 
-    fun firstDraw(playerList: List<Player>) {
-        playerList.forEach {
+    fun firstDraw(blackJackGamerList: List<BlackJackGamer>) {
+        blackJackGamerList.forEach {
             it.addCards(deck.drawTwoCard())
         }
     }
 
-    fun onePlayerDraw(player: Player) {
-        player.addCard(deck.drawCard())
+    fun oneGamerDraw(blackJackGamer: BlackJackGamer) {
+        blackJackGamer.addCard(deck.drawCard())
     }
 
-    fun checkPlayerIsLose(player: Player) {
-        if (!ruleChecker.checkSumOfCardNumbers(player.calculateSumOfCardNumbers())) {
-            throw PlayerLoseException("${player.name}의 카드가 ${RuleChecker.CONDITION_TO_WIN_BLACK_JACK}을 넘었습니다.")
-        }
+    fun checkBlackJackGamerIsDraw(blackJackGamer: BlackJackGamer): Boolean {
+        return ruleChecker.checkSumOfCardNumbers(blackJackGamer)
+    }
+
+    fun proceedWhoIsWinner(player: Player, dealer: Dealer) {
+        ruleChecker.proceedWhoIsWinner(player, dealer)
     }
 }
