@@ -3,9 +3,9 @@ package blackjack.domain
 data class Cards(
     val values: List<Card> = emptyList()
 ) {
-    constructor(vararg card: Card) : this(values = card.map { it }.toList())
+    constructor(vararg card: Card) : this(values = card.toList())
 
-    fun sumOfScoreWithAceAsOne(): Int {
-        return values.sumOf { it.getScore() }
+    val sumOfScoreWithAceAsOne: Int by lazy {
+        values.sumOf { it.getScore() }
     }
 }
