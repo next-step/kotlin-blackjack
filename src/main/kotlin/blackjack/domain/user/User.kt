@@ -12,20 +12,19 @@ abstract class Player(
     val name: String,
     val cards: Cards,
 ) {
+    var score: Int
+        private set
+
     init {
         require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
+        score = cards.score()
     }
-
-    val finalScore: Int by lazy { cards.score() }
 
     fun getCardsSize() = cards.size
 
     fun addCard(card: Card) {
         cards.addCard(card)
-    }
-
-    fun score(): Int {
-        return cards.score()
+        score = cards.score()
     }
 
     fun isBust(): Boolean {
@@ -41,8 +40,8 @@ abstract class Player(
         }
 
         return when {
-            finalScore > player.finalScore -> Result.WIN
-            finalScore < player.finalScore -> Result.LOSE
+            score > player.score -> Result.WIN
+            score < player.score -> Result.LOSE
             else -> Result.DRAW
         }
     }
@@ -68,7 +67,7 @@ class User(
 class Dealer(cards: Cards) : Player(DEALER_NAME, cards) {
 
     override fun canDraw(): Boolean {
-        return score() <= DEALER_HIT_THRESHOLD
+        return score <= DEALER_HIT_THRESHOLD
     }
 
     companion object {

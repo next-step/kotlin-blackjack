@@ -82,7 +82,7 @@ object ResultView {
 
     private fun dealerScoreResultFormatting(dealerResult: DealerResult): String {
         val dealer = dealerResult.dealer
-        return DEALER_SCORE_PRINT_FORMAT.format(cardsToString(dealer.cards), dealer.score())
+        return DEALER_SCORE_PRINT_FORMAT.format(cardsToString(dealer.cards), dealer.score)
     }
 
     private fun usersScoreResultFormatting(userResults: UserResults): StringBuilder {
@@ -94,7 +94,7 @@ object ResultView {
     }
 
     private fun userScoreResultFormatting(user: User): String {
-        return USER_SCORE_PRINT_FORMAT.format(user.name, cardsToString(user.cards), user.score())
+        return USER_SCORE_PRINT_FORMAT.format(user.name, cardsToString(user.cards), user.score)
     }
 
     private fun dealerResultFormatting(dealerResult: DealerResult): String {
