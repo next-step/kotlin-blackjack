@@ -1,19 +1,11 @@
 package blackjack.domain.card
 
 object CardFactory {
-    val defaultCards = initCards().shuffled()
+    val defaultCards = Suit.values()
+        .flatMap { suit ->
+            createCards(suit)
+        }.shuffled()
 
-    private fun initCards(): List<Card> {
-        val cards = mutableListOf<Card>()
-        for (suit in Suit.values()) {
-            createCards(cards, suit)
-        }
-        return cards
-    }
-
-    private fun createCards(cards: MutableList<Card>, suit: Suit) {
-        for (denomination in Denomination.values()) {
-            cards.add(Card(denomination, suit))
-        }
-    }
+    private fun createCards(suit: Suit) =
+        Denomination.values().map { denomination -> Card(denomination, suit) }
 }
