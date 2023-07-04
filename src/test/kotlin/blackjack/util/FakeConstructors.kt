@@ -17,9 +17,10 @@ fun User(
     name: String = "홍길동",
     cardPairs: List<Pair<Suit, CardNumber>>,
     drawInterface: UserDrawInterface = TEST_USER_DRAW_INTERFACE,
+    betMoney: Int = 10000,
 ): User {
     val cards = cardPairToCard(cardPairs)
-    return User(name, cards, drawInterface)
+    return User(name, cards, drawInterface, betMoney)
 }
 
 fun cardPairToCard(cardPairs: List<Pair<Suit, CardNumber>>): Cards {

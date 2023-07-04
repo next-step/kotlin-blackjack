@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Cards
 import blackjack.domain.result.BlackjackResults
 import blackjack.domain.user.Dealer
+import blackjack.domain.user.GetUserBetMoneyInterface
 import blackjack.domain.user.Player
 import blackjack.domain.user.User
 import blackjack.domain.user.UserDrawInterface
@@ -13,14 +14,22 @@ import blackjack.util.RandomCardSelector
 
 class BlackjackGame(
     userNames: UserNames,
-    private val cardSelector: CardSelector = RandomCardSelector(),
     userDrawInterface: UserDrawInterface,
+    getUserBetMoneyInterface: GetUserBetMoneyInterface,
+    private val cardSelector: CardSelector = RandomCardSelector(),
 ) {
     val dealer = Dealer(getInitCards())
     val users: Users
 
     init {
-        val userList = userNames.map { name -> User(name, getInitCards(), userDrawInterface) }.toSet()
+        val userList = userNames.map { name ->
+            User(
+                name,
+                getInitCards(),
+                userDrawInterface,
+                getUserBetMoneyInterface.getBetMoney(name),
+            )
+        }.toSet()
         users = Users(userList)
     }
 

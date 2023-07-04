@@ -10,7 +10,7 @@ class BlackjackController {
     fun start() {
         val userNames = InputView.getUsers()
         val userDrawInterface = UserDrawInterface { user -> InputView.checkHit(user.name) }
-        val blackjackGame = BlackjackGame(userNames, userDrawInterface = userDrawInterface)
+        val blackjackGame = BlackjackGame(userNames, userDrawInterface, InputView::getBetMoney)
         ResultView.printCards(blackjackGame.dealer, blackjackGame.users)
 
         blackjackGame.dealUsers(ResultView::printPlayerCards)

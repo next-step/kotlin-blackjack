@@ -50,7 +50,7 @@ object ResultView {
     private fun getUsersCardsString(users: Users): StringBuilder {
         val stringBuilder = StringBuilder()
         for (user in users) {
-            stringBuilder.appendLine(printPlayerCards(user))
+            stringBuilder.appendLine(getPlayerCardsString(user))
         }
         return stringBuilder
     }
