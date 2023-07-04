@@ -80,27 +80,6 @@ class ParticipantSpec : DescribeSpec({
         }
     }
 
-    describe("참가자 점수 > 블랙잭(21) 여부 검증") {
-        withData(
-            nameFn = { (cards, result) -> "카드 목록에 카드 ${cards.size}장(${cards.values.joinToString(",")})이 있을 때 블랙잭 이하는 ${result}이다." },
-            ts = listOf(
-                cards() to false,
-                cards(heart2, heart3) to false,
-                cards(heartAce, heartKing) to false,
-                cards(heartAce, heartKing, spadeAce) to false,
-                cards(heartAce, heart9, spadeAce) to false,
-                cards(heartAce, heart10, heart2) to false,
-                cards(heartAce, heart10, heart2, heart9) to true,
-                cards(heartAce, heart10, heart2, heart9, spade10) to true,
-            )
-        ) { (cards, result) ->
-            val player = Player("홍길동")
-            player.add(cards)
-
-            player.isOver21 shouldBe result
-        }
-    }
-
     describe("BUST 상태 검증") {
         context("점수가 21점 이하면") {
             val player = Player("홍길동")
