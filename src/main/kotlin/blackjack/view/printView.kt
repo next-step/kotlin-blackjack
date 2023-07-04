@@ -17,8 +17,8 @@ fun printUserCards(userName: String, cards: Cards) {
     println("${userName}카드: ${cardsNames(cards.cards)}")
 }
 
-fun printResults(user: User) {
-    println("${user.name}카드: ${cardsNames(user.cards.cards)} - 결과: ${user.cardValues()}")
+fun printResults(name: String, cards: List<Card>, cardValues: Int) {
+    println("${name}카드: ${cardsNames(cards)} - 결과: $cardValues")
 }
 
 private fun cardsNames(cards: List<Card>): String {

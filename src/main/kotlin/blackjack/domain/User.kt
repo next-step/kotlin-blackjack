@@ -7,7 +7,7 @@ class User(
 ) {
 
     fun cardSize(): Int {
-        return cards.size()
+        return cards.size
     }
 
     fun addCard(card: Card) {
@@ -15,7 +15,7 @@ class User(
     }
 
     fun cardValues(): Int {
-        return cards.value
+        return cards.value()
     }
 
     fun deckComplete() {

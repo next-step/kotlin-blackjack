@@ -4,11 +4,10 @@ class BlackjackGame(
     userList: List<User>,
     private val gameDeck: GameDeck = GameDeck()
 ) {
-    private val users: Users
+    private val users: Users = Users(userList)
 
     init {
         userList.forEach { require(it.cardSize() == GAME_START_CARD_COUNT) }
-        users = Users(userList)
     }
 
     fun userCards(): Map<User, Cards> {
@@ -16,7 +15,7 @@ class BlackjackGame(
     }
 
     fun cardReceivePossibleUsers(): List<User> {
-        return users.users.filter { user -> !user.isDeckComplete }
+        return users.cardReceivePossibleUsers()
     }
 
     fun handOutCard(): Card {

@@ -42,9 +42,7 @@ class BlackjackController {
                 printUserCards(user.name, user.cards)
             }
 
-            "n" -> {
-                user.deckComplete()
-            }
+            "n" -> user.deckComplete()
         }
 
         if (user.cardValues() >= BLACKJACK_VALUE) {
@@ -59,7 +57,8 @@ class BlackjackController {
     private fun printGameResults(blackjackGame: BlackjackGame) {
         printLine()
         for (userCard in blackjackGame.userCards()) {
-            printResults(userCard.key)
+            val user = userCard.key
+            printResults(user.name, user.cards.cards, user.cardValues())
         }
     }
 }

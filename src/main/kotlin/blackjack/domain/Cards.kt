@@ -3,21 +3,21 @@ package blackjack.domain
 import blackjack.domain.BlackjackGame.Companion.BLACKJACK_VALUE
 
 data class Cards(val cards: List<Card>) {
-    val value: Int
+    val size: Int
         get() {
-            val sum = cards.sumOf(Card::value)
-            if (isHaveAce() && isCalculatePlusTenPossible(sum)) {
-                return sum + 10
-            }
-            return sum
+            return cards.size
         }
+
+    fun value(): Int {
+        val sum = cards.sumOf(Card::value)
+        if (isHaveAce() && isCalculatePlusTenPossible(sum)) {
+            return sum + 10
+        }
+        return sum
+    }
 
     fun addCard(card: Card): Cards {
         return Cards(cards.plus(card))
-    }
-
-    fun size(): Int {
-        return cards.size
     }
 
     private fun isHaveAce(): Boolean {
