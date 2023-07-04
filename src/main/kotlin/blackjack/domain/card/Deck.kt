@@ -3,21 +3,17 @@ package blackjack.domain.card
 data class Deck(
     private val cards: MutableList<Card> = mutableListOf()
 ) {
-    fun add(card: Card) = cards.add(card)
+    fun add(card: Card) {
+        val score = sumScore(cards + card)
+        validateScore(score)
+        cards.add(card)
+    }
 
-    fun contains(card: Card) = cards.contains(card)
-
-    fun getCards() = cards.toList()
-
-    fun getScore(): Int {
-        val deckForCalculate = cards.toMutableList().sortedByDescending { it.getScore() }
-
+    private fun sumScore(cards: List<Card>): Int {
         var score = 0
-        for (card in deckForCalculate) {
+        for (card in cards) {
             score += card.getScore(score)
-            validateScore(score)
         }
-
         return score
     }
 
@@ -26,4 +22,10 @@ data class Deck(
             "카드 숫자 합이 21을 초과할 수 없습니다."
         }
     }
+
+    fun getScore() = sumScore(cards.toMutableList().sortedByDescending { it.getScore() })
+
+    fun contains(card: Card) = cards.contains(card)
+
+    fun getCards() = cards.toList()
 }

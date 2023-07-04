@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -27,5 +28,22 @@ class DeckTest : StringSpec({
         val score = deck.getScore()
 
         score shouldBe 16
+    }
+
+    "deck의 점수가 21점이 초과하면 새로운 카드를 추가할 수 없다." {
+        val deck = Deck()
+        val card1 = Card(Denomination.ACE, Suit.SPADES)
+        val card2 = Card(Denomination.KING, Suit.SPADES)
+
+        deck.add(card1)
+        deck.add(card2)
+
+        val score = deck.getScore()
+        score shouldBe 21
+
+        val extraCard = Card(Denomination.ACE, Suit.SPADES)
+        shouldThrow<IllegalArgumentException> {
+            deck.add(extraCard)
+        }
     }
 })
