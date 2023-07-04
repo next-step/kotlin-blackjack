@@ -12,12 +12,12 @@ enum class FixedEndStatus(val desc: String) : EndStatus {
 
 enum class ConditionalEndStatus(val desc: String) : EndStatus {
     BURST("카드 점수 합이 21점이 초과된 경우") {
-        override fun isMatch(pointResult: Cards.PointResult) = pointResult.min > BLACK_JACK_POINT
+        override fun isMatch(resultPoint: Int) = resultPoint > BLACK_JACK_POINT
     },
     BLACK_JACK("카드 점수 합이 21인 경우") {
-        override fun isMatch(pointResult: Cards.PointResult) = pointResult.min == BLACK_JACK_POINT || pointResult.max == BLACK_JACK_POINT
+        override fun isMatch(resultPoint: Int) = resultPoint == BLACK_JACK_POINT
     };
-    abstract fun isMatch(pointResult: Cards.PointResult): Boolean
+    abstract fun isMatch(resultPoint: Int): Boolean
 
     companion object {
         private const val BLACK_JACK_POINT = 21
