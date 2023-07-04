@@ -13,7 +13,7 @@ class CardNumberCalculator() {
         return sum
     }
 
-    fun calculateCardNumber(cardNumber: CardNumber, sum: Int): Int {
+    private fun calculateCardNumber(cardNumber: CardNumber, sum: Int): Int {
         if (CardNumber.isAce(cardNumber)) {
             return proceedAceNumber(sum)
         }

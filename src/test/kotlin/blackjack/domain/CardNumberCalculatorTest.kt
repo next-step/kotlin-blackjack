@@ -20,23 +20,16 @@ class CardNumberCalculatorTest {
     }
 
     @Test
-    fun `1부터 10까지의 카드 리스트 숫자의 합을 계산한다`() {
+    fun `플레이어가 가진 카드 리스트의 숫자합을 계산한다`() {
         var cardList = listOf(
             Card(shape = CardShape.DIAMOND, number = CardNumber.TEN),
             Card(shape = CardShape.SPADE, number = CardNumber.NINE),
-            Card(shape = CardShape.CLOVER, number = CardNumber.EIGHT),
-            Card(shape = CardShape.HEART, number = CardNumber.SEVEN),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.SIX),
-            Card(shape = CardShape.SPADE, number = CardNumber.FIVE),
-            Card(shape = CardShape.CLOVER, number = CardNumber.FOUR),
-            Card(shape = CardShape.HEART, number = CardNumber.THREE),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
-            Card(shape = CardShape.DIAMOND, number = CardNumber.A)
+            Card(shape = CardShape.CLOVER, number = CardNumber.EIGHT)
         )
 
         val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
-        assertThat(actual).isEqualTo(55)
+        assertThat(actual).isEqualTo(27)
     }
 
     @Test
@@ -53,21 +46,10 @@ class CardNumberCalculatorTest {
     }
 
     @ParameterizedTest
-    @EnumSource(CardNumber::class)
+    @EnumSource(CardNumber::class, mode = EnumSource.Mode.EXCLUDE, names = ["A"])
     fun `카드의 숫자 계산은 카드 숫자를 기본으로 한다`(cardNumber: CardNumber) {
-        val startSum = 11
-
-        val actual = cardNumberCalculator.calculateCardNumber(cardNumber, startSum)
-
-        assertThat(actual).isEqualTo(cardNumber.value)
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = ["K", "Q", "J"])
-    fun `King, Queen, Jack은 각각 10으로 계산한다`(cardNumber: CardNumber) {
-        val startSum = 0
-
-        val actual = cardNumberCalculator.calculateCardNumber(cardNumber, startSum)
+        val cardList = listOf(Card(shape = CardShape.DIAMOND, cardNumber))
+        val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
         assertThat(actual).isEqualTo(cardNumber.value)
     }
@@ -75,20 +57,21 @@ class CardNumberCalculatorTest {
     @Test
     fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21이하인 경우는 11로 계산한다`() {
         val ace = CardNumber.A
-        val startSum = 10
-
-        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
+        val cardList = listOf(Card(shape = CardShape.DIAMOND, ace))
+        val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
         assertThat(actual).isEqualTo(11)
     }
 
     @Test
     fun `Ace는 1 또는 11로 계산할 수 있다 - Ace를 더해서 21초과하는 경우는 1로 계산한다`() {
-        val ace = CardNumber.A
-        val startSum = 11
+        val cardList = listOf(
+            Card(shape = CardShape.DIAMOND, CardNumber.TEN),
+            Card(shape = CardShape.DIAMOND, CardNumber.TWO),
+            Card(shape = CardShape.DIAMOND, CardNumber.A)
+            )
+        val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
-        val actual = cardNumberCalculator.calculateCardNumber(ace, startSum)
-
-        assertThat(actual).isEqualTo(1)
+        assertThat(actual).isEqualTo(13)
     }
 }
