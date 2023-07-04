@@ -19,6 +19,18 @@ class PlayerSpec : DescribeSpec({
         }
     }
 
+    describe("플레이어 베팅 금액 설정 검증") {
+        val player = Player("홍길동")
+
+        context("베팅 금액 1000원을 설정하면") {
+            player.bet(Money(1000))
+
+            it("플레이어의 베팅 금액은 1000원이다.") {
+                player.money shouldBe Money(1000)
+            }
+        }
+    }
+
     describe("결과(win, lose) 검증") {
         val playerA = Player("A")
         val playerB = Player("B")

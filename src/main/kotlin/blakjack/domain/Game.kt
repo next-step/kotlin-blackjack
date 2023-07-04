@@ -13,6 +13,10 @@ class Game(
         dealer.add(dealer.drawTwoCards())
     }
 
+    fun bet(player: Player, money: Money) {
+        player.bet(money)
+    }
+
     fun hit(player: Player) {
         player.hit(dealer.drawOneCard())
     }
