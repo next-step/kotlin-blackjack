@@ -37,10 +37,15 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
         return score() > BLACKJACK_LIMIT
     }
 
+    fun isBlackjack(): Boolean {
+        return cardList.size == INITIAL_CARDS_SIZE && score() == BLACKJACK_LIMIT
+    }
+
     companion object {
         private const val EMPTY_CARDS_ERROR_MESSAGE = "남아있는 카드가 없습니다"
         const val BLACKJACK_LIMIT = 21
         private const val ACE_BONUS_SCORE = 10
+        const val INITIAL_CARDS_SIZE = 2
     }
 }
 

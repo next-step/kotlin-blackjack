@@ -34,7 +34,7 @@ class BlackjackGame(
     }
 
     private fun getInitCards(): Cards {
-        val cardList = List(INITIAL_CARDS_SIZE) {
+        val cardList = List(Cards.INITIAL_CARDS_SIZE) {
             cardSelector.drawCard()
         }
 
@@ -52,7 +52,7 @@ class BlackjackGame(
     }
 
     private fun playerHit(player: Player, afterHit: (Player) -> Unit) {
-        while (player.canDraw()) {
+        while (player.isHit()) {
             addCardTo(player)
             afterHit(player)
         }
@@ -64,9 +64,5 @@ class BlackjackGame(
 
     fun getGameResult(): BlackjackResults {
         return BlackjackResults(dealer, users)
-    }
-
-    companion object {
-        private const val INITIAL_CARDS_SIZE = 2
     }
 }

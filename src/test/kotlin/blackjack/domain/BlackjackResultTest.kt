@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.result.BlackjackResults
@@ -21,9 +22,9 @@ class BlackjackResultTest : BehaviorSpec({
             listOf(
                 Suit.SPADE to CardNumber.EIGHT,
                 Suit.DIAMOND to CardNumber.EIGHT,
-                Suit.HEART to CardNumber.EIGHT,
             ),
         )
+        dealer.addCard(Card(Suit.HEART, CardNumber.EIGHT))
 
         forAll(
             table(
@@ -59,10 +60,10 @@ class BlackjackResultTest : BehaviorSpec({
                 listOf(
                     Suit.SPADE to CardNumber.TEN,
                     Suit.DIAMOND to CardNumber.TEN,
-                    Suit.HEART to CardNumber.TEN,
                 ),
                 TEST_USER_DRAW_INTERFACE,
             )
+            user.addCard(Card(Suit.HEART, CardNumber.TEN))
             val users = Users(setOf(user))
             Then("딜러가 승리했다") {
                 BlackjackResults(dealer, users).dealerResult shouldBe DealerResult(dealer, 1, 0, 0)
@@ -72,6 +73,7 @@ class BlackjackResultTest : BehaviorSpec({
 
     Given("21을 초과하지 않은 딜러가 있다") {
         val dealer = Dealer(listOf(Suit.SPADE to CardNumber.EIGHT, Suit.DIAMOND to CardNumber.NINE))
+        dealer.isHit() shouldBe false
 
         forAll(
             table(
@@ -105,9 +107,8 @@ class BlackjackResultTest : BehaviorSpec({
                         cardPairs = listOf(
                             Suit.SPADE to CardNumber.TEN,
                             Suit.DIAMOND to CardNumber.TEN,
-                            Suit.HEART to CardNumber.TEN,
                         ),
-                    ),
+                    ).apply { addCard(Card(Suit.HEART, CardNumber.TEN)) },
                     DealerResult(dealer, 1, 0, 0),
                 ),
             ),
