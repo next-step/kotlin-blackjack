@@ -1,6 +1,7 @@
 package blackjack.player
 
 import blackjack.card.CardNumber
+import blackjack.game.BlackjackGame
 
 object ScoreCalculator {
 
@@ -20,7 +21,7 @@ object ScoreCalculator {
         var adjustedValue = totalValue
         var remainingAces = numberOfAces
 
-        while (adjustedValue > 21 && remainingAces > 0) {
+        while (adjustedValue > BlackjackGame.BLACK_JACK_SCORE && remainingAces > 0) {
             adjustedValue -= 10
             remainingAces--
         }

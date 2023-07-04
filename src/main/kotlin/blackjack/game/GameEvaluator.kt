@@ -6,7 +6,7 @@ import blackjack.player.Player
 class GameEvaluator {
     fun evaluate(dealer: Dealer, players: List<Player>): GameResult {
         val matchResult = mutableMapOf<String, Result>()
-        matchResult["딜러"] = Result()
+        matchResult[Dealer.DEALER_NAME] = Result()
 
         if (dealer.totalValue > BlackjackGame.BLACK_JACK_SCORE) {
             awardWinsToAllPlayers(players, matchResult)
