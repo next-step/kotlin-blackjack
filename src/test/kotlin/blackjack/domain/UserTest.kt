@@ -90,7 +90,7 @@ class UserTest : BehaviorSpec({
         val userDrawInterface = UserDrawInterface { false }
         val user = User(
             name,
-            listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.TEN),
+            listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.NINE),
             userDrawInterface,
         )
         user.isHit() shouldBe false

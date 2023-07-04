@@ -23,12 +23,7 @@ class BlackjackGame(
 
     init {
         val userList = userNames.map { name ->
-            User(
-                name,
-                getInitCards(),
-                userDrawInterface,
-                getUserBetMoneyInterface.getBetMoney(name),
-            )
+            User(name, getInitCards(), userDrawInterface, getUserBetMoneyInterface.getBetMoney(name))
         }.toSet()
         users = Users(userList)
     }
