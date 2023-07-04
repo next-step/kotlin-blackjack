@@ -1,5 +1,5 @@
 package blackjack.domain
 
-interface CardGenerator {
+fun interface CardGenerator {
     fun generate(): Card
 }
