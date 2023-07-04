@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Player
 
-class OutputView {
+object OutputView {
 
     fun printDefaultReceivedCards(players: List<Player>) {
         println("\n${players.joinToString(", ") { it.name }} 에게 2장의 카드를 나누었습니다.")
@@ -25,9 +25,10 @@ class OutputView {
 
     private fun printPlayerCards(player: Player) {
         print("${player.name}카드: ")
-        print(player.cards.values.joinToString(", ") { card ->
-            card.rank.symbol + card.suit.value
-        }
+        print(
+            player.cards.values.joinToString(", ") { card ->
+                card.rank.symbol + card.suit.displayName
+            }
         )
     }
 }
