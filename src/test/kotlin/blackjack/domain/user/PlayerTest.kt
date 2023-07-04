@@ -92,10 +92,9 @@ class PlayerTest : StringSpec({
         player.isDone() shouldBe true
     }
 
-    "Player가 ACE와 A, TEN을 갖고 있을때 getPoint()를 호출하는 경우, ACE를 10으로 간주해 21을 반환한다" {
+    "Player가 ACE와 A, TEN을 갖고 있을때 getPoint()를 호출하는 경우, ACE를 11으로 간주해 21을 반환한다" {
         val player = Player("testUser")
         player.cards.addCard(Card(CardPattern.Spade, CardNumber.A))
-        player.cards.addCard(Card(CardPattern.Club, CardNumber.A))
         player.cards.addCard(Card(CardPattern.Club, CardNumber.TEN))
 
         player.cards.getOptimizedPoint() shouldBe 21

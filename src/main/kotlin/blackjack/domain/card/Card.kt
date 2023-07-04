@@ -48,6 +48,10 @@ class Cards {
         else pointResult.max
     }
 
+    fun getOptimizedDiff(): Int {
+        return BLACK_JACK_POINT - getOptimizedPoint()
+    }
+
     private fun getMinAndMaxPoint(): ResultPoint {
         val minPoint = _cards.sumOf { card -> card.number.value }
         val maxPoint = minPoint + if (hasAce()) ACE_BONUS_POINT else 0
@@ -60,7 +64,7 @@ class Cards {
     data class ResultPoint(val min: Int, val max: Int)
 
     companion object {
-        private const val BLACK_JACK_POINT = 21
-        private const val ACE_BONUS_POINT = 9
+        const val BLACK_JACK_POINT = 21
+        private const val ACE_BONUS_POINT = 10
     }
 }
