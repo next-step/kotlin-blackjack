@@ -65,7 +65,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어의 전적은 NONE인데 조회할 경우 IllegalArgumentException을 throw 한다`() {
+    fun `플레이어의 전적이 결정되기전에 조회할 경우 IllegalArgumentException을 throw 한다`() {
         val player = Player("playerName")
 
         assertThrows<IllegalArgumentException> { player.getGameRecord() }

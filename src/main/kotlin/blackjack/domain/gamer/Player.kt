@@ -1,7 +1,7 @@
 package blackjack.domain.gamer
 
 class Player(private val name: String) : AbstractBlackJackGamer() {
-    private var gameRecord: GameRecordType = GameRecordType.NONE
+    private lateinit var gameRecord: GameRecordType
 
     override fun getGamerType(): GamerType {
         return GamerType.PLAYER
@@ -16,7 +16,7 @@ class Player(private val name: String) : AbstractBlackJackGamer() {
     }
 
     fun getGameRecord(): GameRecordType {
-        require(gameRecord != GameRecordType.NONE) { "승패가 결정난 뒤에 조회가 가능합니다." }
+        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 조회가 가능합니다." }
         return gameRecord
     }
 
