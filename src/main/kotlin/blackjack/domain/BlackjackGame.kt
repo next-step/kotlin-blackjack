@@ -1,10 +1,18 @@
 package blackjack.domain
 
+import blackjack.domain.result.DealerResult
+import blackjack.domain.users.Dealer
+import blackjack.domain.users.Player
+import blackjack.domain.users.User
+import blackjack.domain.users.Users
+import blackjack.model.UserCards
+
 class BlackjackGame(
-    userList: List<User>,
+    dealer: Dealer,
+    userList: List<Player>,
     private val gameDeck: GameDeck = GameDeck()
 ) {
-    private val users: Users = Users(userList)
+    val users: Users = Users(userList, dealer)
 
     init {
         userList.forEach { require(it.cardSize() == GAME_START_CARD_COUNT) }
@@ -14,12 +22,24 @@ class BlackjackGame(
         return users.userCards
     }
 
-    fun cardReceivePossibleUsers(): List<User> {
+    fun cardReceivePossibleUsers(): List<Player> {
         return users.cardReceivePossibleUsers()
     }
 
     fun handOutCard(): Card {
         return gameDeck.handOutCard()
+    }
+
+    fun playerCards(): Map<Player, Cards> {
+        return users.playerCards()
+    }
+
+    fun dealerCardValue(): Int {
+        return users.dealerCardValue()
+    }
+
+    fun updateDealerResult(dealerResult: DealerResult) {
+        users.dealer.dealerResult = dealerResult
     }
 
     companion object {
@@ -32,10 +52,11 @@ class BlackjackGame(
             val users = userNames
                 .split(USER_NAME_SPLIT_SYMBOL)
                 .map {
-                    User(it, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)))
+                    Player(UserCards(it, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT))))
                 }
+            val dealer = Dealer(UserCards("딜러", Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT))))
 
-            return BlackjackGame(users, gameDeck)
+            return BlackjackGame(dealer, users, gameDeck)
         }
     }
 }
