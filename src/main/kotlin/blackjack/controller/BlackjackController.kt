@@ -51,9 +51,6 @@ class BlackjackController {
     }
 
     private fun getResult(game: Game) {
-        println()
-        for (gamer in game.gamers.gamers) {
-            OutputView.printGameResult(gamer)
-        }
+        OutputView.printGameResult(game)
     }
 }

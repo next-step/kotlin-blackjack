@@ -29,8 +29,11 @@ object OutputView {
         println(message)
     }
 
-    fun printGameResult(gamer: Gamer) {
-        val deck = gamer.deck.getCards().joinToString(", ")
-        println("${gamer.name}카드: $deck - 결과: ${gamer.deck.getScore()}")
+    fun printGameResult(game: Game) {
+        println()
+        for (gamer in game.gamers.gamers) {
+            val deck = gamer.deck.getCards().joinToString(", ")
+            println("${gamer.name}카드: $deck - 결과: ${gamer.deck.getScore()}")
+        }
     }
 }
