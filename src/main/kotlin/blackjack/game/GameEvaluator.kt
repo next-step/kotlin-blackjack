@@ -8,7 +8,7 @@ class GameEvaluator {
         val matchResult = mutableMapOf<String, Result>()
         matchResult["딜러"] = Result()
 
-        if (dealer.totalValue > BlackjackGame.BUST_SCORE) {
+        if (dealer.totalValue > BlackjackGame.BLACK_JACK_SCORE) {
             awardWinsToAllPlayers(players, matchResult)
         } else {
             evaluateScores(dealer, players, matchResult)
@@ -33,11 +33,11 @@ class GameEvaluator {
             val playerScore = player.totalValue
 
             when {
-                playerScore > BlackjackGame.BUST_SCORE -> {
+                playerScore > BlackjackGame.BLACK_JACK_SCORE -> {
                     playerResult = playerResult.addLose()
                     dealerResult = dealerResult.addWin()
                 }
-                dealerScore > BlackjackGame.BUST_SCORE -> {
+                dealerScore > BlackjackGame.BLACK_JACK_SCORE -> {
                     playerResult = playerResult.addWin()
                     dealerResult = dealerResult.addLose()
                 }
