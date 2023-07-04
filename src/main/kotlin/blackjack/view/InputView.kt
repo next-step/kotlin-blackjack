@@ -9,6 +9,12 @@ object InputView {
         return players
     }
 
+    fun readBettingMoney(playerName: String): Int {
+        println("$playerName 의 배팅 금액은?")
+        val bettingMoney = readLine()?.toIntOrNull() ?: throw IllegalArgumentException("입력이 잘못되었습니다.")
+        return bettingMoney
+    }
+
     fun readHitOrStand(playerName: String): Status {
         println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val response = readLine() ?: throw IllegalArgumentException("입력이 잘못되었습니다.")

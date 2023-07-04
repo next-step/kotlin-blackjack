@@ -28,7 +28,9 @@ class BlackjackGame(
 
     private fun createPlayers(): List<Player> {
         val playerNames = inputView.readPlayers()
-        return playerNames.map { Player(it) }
+        val bettingMoney = playerNames.map { inputView.readBettingMoney(it) }
+        val playerBettingMoney = playerNames.zip(bettingMoney)
+        return playerBettingMoney.map { Player(it.first, it.second) }
     }
 
     private fun List<Player>.takeTurns() {

@@ -10,7 +10,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("게임을 시작할 때") {
         When("참가자가 생성되면") {
-            val player = Player("참가자")
+            val player = Player("참가자", 10000)
             Then("참가자는 이름을 가진다.") {
                 player.name shouldBe "참가자"
             }
@@ -19,6 +19,9 @@ class PlayerTest : BehaviorSpec({
             }
             Then("참가자의 초기 상태는 WANT이다.") {
                 player.currentStatus shouldBe Status.HIT
+            }
+            Then("입력한 금액만큼 베팅 머니를 가진다.") {
+                player.bettingMoney shouldBe 10000
             }
         }
         When("카드를 두 장 받으면") {

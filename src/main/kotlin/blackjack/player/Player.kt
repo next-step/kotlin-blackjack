@@ -4,6 +4,7 @@ import blackjack.card.Card
 
 open class Player(
     val name: String,
+    val bettingMoney: Int = 0,
     private val hand: Hand = Hand(),
     private var status: Status = Status.HIT
 ) {
