@@ -24,15 +24,21 @@ class ResultView {
     }
 
     private fun printFirstDrawDetail(gamerList: List<BlackJackGamer>) {
-        gamerList.forEach {
-            printGamerName(it)
-            println(getCardsText(it.getCards()))
+        gamerList.forEachIndexed { index, gamer ->
+            printGamerName(gamer)
+            if (index == 0) println(getDealerFlutteringCards(gamer.getCards()))
+            if (index != 0) println(getCardsText(gamer.getCards()))
         }
     }
 
     private fun printGamerName(gamer: BlackJackGamer) {
         if (gamer.getGamerType() == GamerType.PLAYER) print("${gamer.getName()}카드: ")
         if (gamer.getGamerType() == GamerType.DEALER) print("${gamer.getName()} 카드: ")
+    }
+
+    private fun getDealerFlutteringCards(cards: List<Card>): String {
+        val (shape, number) = cards[0]
+        return "${number.value}${shape.value}"
     }
 
     private fun getCardsText(cards: List<Card>): String {
