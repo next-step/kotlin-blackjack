@@ -28,8 +28,8 @@ class GameEvaluatorTest : BehaviorSpec({
                 val dealerResult = gameResult.getResultForPlayer(dealer.name)
                 val player1Result = gameResult.getResultForPlayer(player1.name)
 
-                dealerResult!!.printDealerResult() shouldBe "0승 0무 1패"
-                player1Result!!.printPlayerResult() shouldBe "승"
+                dealerResult!!.formatDealerResult() shouldBe "0승 0무 1패"
+                player1Result!!.formatPlayerResult() shouldBe "승"
             }
         }
 
@@ -67,8 +67,8 @@ class GameEvaluatorTest : BehaviorSpec({
                 val dealerResult = gameResult.getResultForPlayer(dealer.name)
                 val player1Result = gameResult.getResultForPlayer(player1.name)
 
-                dealerResult!!.printDealerResult() shouldBe expectedDealerResult
-                player1Result!!.printPlayerResult() shouldBe expectedPlayerResult
+                dealerResult!!.formatDealerResult() shouldBe expectedDealerResult
+                player1Result!!.formatPlayerResult() shouldBe expectedPlayerResult
             }
         }
     }
