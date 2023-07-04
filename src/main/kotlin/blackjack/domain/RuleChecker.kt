@@ -1,6 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.gamer.*
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.GameRecordType
+import blackjack.domain.gamer.GamerType
+import blackjack.domain.gamer.Player
 
 class RuleChecker {
 
@@ -13,34 +17,36 @@ class RuleChecker {
         return Dealer.CONDITION_TO_DEALER_DRAW_CARD
     }
 
-    fun proceedWhoIsWinner(player: Player, dealer: Dealer): BlackJackGamer? {
+    fun proceedWhoIsWinner(player: Player, dealer: Dealer) {
         if (dealer.calculateSumOfCardNumbers() > CONDITION_TO_WIN_BLACK_JACK) {
-            return playerIsWinner(player, dealer)
+            playerIsWinner(player, dealer)
+            return
         }
 
         if (player.calculateSumOfCardNumbers() > CONDITION_TO_WIN_BLACK_JACK) {
-            return dealerIsWinner(player, dealer)
+            dealerIsWinner(player, dealer)
+            return
         }
 
         if (player.calculateSumOfCardNumbers() > dealer.calculateSumOfCardNumbers()) {
-            return playerIsWinner(player, dealer)
+            playerIsWinner(player, dealer)
+            return
         }
 
         if (player.calculateSumOfCardNumbers() < dealer.calculateSumOfCardNumbers()) {
-            return dealerIsWinner(player, dealer)
+            dealerIsWinner(player, dealer)
+            return
         }
 
         if (player.calculateSumOfCardNumbers() == dealer.calculateSumOfCardNumbers()) {
-            return noOneIsWinner(player, dealer)
+            noOneIsWinner(player, dealer)
+            return
         }
-
-        return null
     }
 
-    private fun playerIsWinner(player: Player, dealer: Dealer): BlackJackGamer {
+    private fun playerIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.WIN)
         dealer.proceedGameRecord(GameRecordType.LOSE)
-        return player
     }
 
     private fun dealerIsWinner(player: Player, dealer: Dealer): BlackJackGamer {
