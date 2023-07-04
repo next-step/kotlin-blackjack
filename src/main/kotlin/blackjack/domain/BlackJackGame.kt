@@ -13,7 +13,8 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
 
     fun play() {
         initGame()
-        drawCardsInTurn()
+        drawCardsForEachPlayer()
+        drawCardsForDealer()
         printGameResult()
     }
 
@@ -26,22 +27,37 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
             dealer.giveCardTo(player, 2)
             resultView.printPlayerCards(player)
         }
+
+        dealer.giveCardTo(dealer, 2)
+        resultView.printPlayerCards(dealer)
     }
 
-    private fun drawCardsInTurn() = playerGroup.players.forEach(::drawCards)
+    private fun drawCardsForEachPlayer() = playerGroup.players.forEach(::drawCards)
 
     private fun drawCards(player: Player) {
-        while (!player.isDone()) {
+        generateSequence {
             player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name))
             dealer.giveCardIfPlayerWantHit(player)
-        }
-        resultView.printPlayerCards(player)
+            player
+        }.takeWhile { !it.isDone() }
+            .forEach { resultView.printPlayerCards(it) }
     }
+
+    private fun drawCardsForDealer() {
+        while (dealer.drawCardBySelfIfPointUnder(DEALER_DRAW_THRESHOLD_POINT)) {
+            resultView.printDealerDrawCardAlert(DEALER_DRAW_THRESHOLD_POINT)
+        }
+    }
+
 
     private fun printGameResult() {
         playerGroup.players.forEach {
             player ->
             resultView.printResult(player)
         }
+    }
+
+    companion object {
+        private const val DEALER_DRAW_THRESHOLD_POINT = 16
     }
 }
