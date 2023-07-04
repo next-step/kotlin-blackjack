@@ -19,7 +19,7 @@ class CardTest : FunSpec({
 
     test("카드의 점수 계산은 카드 숫자를 기본으로 한다.") {
         // given
-        val card = Card(Rank.TWO)
+        val card = Card(Rank.TWO, Suit.CLUB)
         val expected = 2
 
         // when
@@ -31,7 +31,7 @@ class CardTest : FunSpec({
 
     test("Ace 의 점수는 기본 1점이다.") {
         // given
-        val card = Card(Rank.ACE)
+        val card = Card(Rank.ACE, Suit.HEART)
         val expected = 1
 
         // when
@@ -44,7 +44,7 @@ class CardTest : FunSpec({
     test("King, Queen, Jack은 각각 10으로 계산한다.") {
         // given
         val expected = 10
-        listOf(Card(Rank.KING), Card(Rank.JACK), Card(Rank.QUEEN))
+        listOf(Card(Rank.KING, Suit.SPADE), Card(Rank.JACK, Suit.SPADE), Card(Rank.QUEEN, Suit.SPADE))
             .forAll {
                 // then, when
                 it.getScore() shouldBe expected
