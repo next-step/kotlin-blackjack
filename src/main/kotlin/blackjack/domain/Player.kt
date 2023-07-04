@@ -25,7 +25,7 @@ class Player(
     }
 
     fun calculateScore(): Int {
-        var score = cards.sumOfScoreWithAceAsOne()
+        var score = cards.sumOfScoreWithAceAsOne
 
         repeat(getNumberOfAce()) {
             if (isValidBlackjackScoreWithAceAsEleven(score)) {
@@ -36,7 +36,7 @@ class Player(
         return score
     }
 
-    private fun isValidBlackjackScoreWithAceAsEleven(score: Int) = score + ACE_MAX - ACE_MIN <= MAX_SCORE
+    private fun isValidBlackjackScoreWithAceAsEleven(score: Int) = score + ACE_MAX - ACE_MIN <= BLACK_JACK
 
     private fun getNumberOfAce() = cards.values.count { it.rank == Rank.ACE }
 

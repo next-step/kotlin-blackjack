@@ -1,7 +1,5 @@
 package blackjack.domain
 
-const val MAX_SCORE = 21
-
 class GameResult(
     private val players: Players
 ) {
