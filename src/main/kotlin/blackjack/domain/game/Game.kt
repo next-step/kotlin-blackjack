@@ -25,6 +25,5 @@ class Game(
 
     companion object {
         const val INIT_CARD_COUNT = 2
-        const val WINNING_NUMBER = 21
     }
 }

@@ -1,7 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.game.Game
-
 data class Deck(
     private val cards: MutableList<Card> = mutableListOf()
 ) {
@@ -24,7 +22,7 @@ data class Deck(
     }
 
     private fun validateScore(score: Int) {
-        require(score <= Game.WINNING_NUMBER) {
+        require(score <= Denomination.WINNING_NUMBER) {
             "카드 숫자 합이 21을 초과할 수 없습니다."
         }
     }

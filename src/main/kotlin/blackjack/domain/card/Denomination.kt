@@ -1,7 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.game.Game.Companion.WINNING_NUMBER
-
 enum class Denomination(
     val title: String,
     private val score: Int
@@ -39,5 +37,6 @@ enum class Denomination(
 
     companion object {
         const val ACE_EXCEPTION_NUMBER = 10
+        const val WINNING_NUMBER = 21
     }
 }
