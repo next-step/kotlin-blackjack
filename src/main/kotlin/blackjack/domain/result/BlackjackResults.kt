@@ -1,31 +1,34 @@
 package blackjack.domain.result
 
 import blackjack.domain.user.Dealer
+import blackjack.domain.user.User
 import blackjack.domain.user.Users
 
 class BlackjackResults(dealer: Dealer, users: Users) {
-    val dealerResult: DealerResult
-    val userResults: UserResults
+    val dealerResult: PlayerResult
+    val userResults: PlayerResults
 
     init {
-        val userResultsList = mutableListOf<UserResult>()
+        val playerResultsList = mutableListOf<PlayerResult>()
+        var dealerProfit = 0
         for (user in users) {
-            userResultsList.add(UserResult(user, user.match(dealer)))
+            val userProfit = getUserProfit(user, user.match(dealer))
+            dealerProfit -= userProfit
+            playerResultsList.add(PlayerResult(user, userProfit))
         }
-        userResults = UserResults(userResultsList)
-        dealerResult = getDealerResult(dealer, userResults)
+        userResults = PlayerResults(playerResultsList)
+        dealerResult = PlayerResult(dealer, dealerProfit)
     }
 
     companion object {
 
-        private fun getDealerResult(dealer: Dealer, userResults: UserResults): DealerResult {
-            val userResultsCountBy: Map<Result, Int> = userResults.groupingBy { it.result }.eachCount()
-            return DealerResult(
-                dealer,
-                userResultsCountBy.getOrDefault(Result.LOSE, 0),
-                userResultsCountBy.getOrDefault(Result.DRAW, 0),
-                userResultsCountBy.getOrDefault(Result.WIN, 0),
-            )
+        private fun getUserProfit(user: User, matchResult: MatchResult): Int {
+            return when (matchResult) {
+                MatchResult.BLACKJACK_WIN -> (user.betMoney * 1.5).toInt()
+                MatchResult.WIN -> user.betMoney
+                MatchResult.DRAW -> 0
+                MatchResult.LOSE -> -user.betMoney
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package blackjack.domain.user
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.result.Result
+import blackjack.domain.result.MatchResult
 
 fun interface UserDrawInterface {
     fun canDraw(user: User): Boolean
@@ -58,27 +58,40 @@ abstract class Player(
         return status == PlayerStatus.BUST
     }
 
-    fun match(player: Player): Result {
+    fun match(player: Player): MatchResult {
         if (isBust()) {
-            return Result.LOSE
+            return MatchResult.LOSE
         }
         if (player.isBust()) {
-            return Result.WIN
+            return MatchResult.WIN
         }
 
         return when {
-            score > player.score -> Result.WIN
-            score < player.score -> Result.LOSE
-            else -> Result.DRAW
+            player.isBlackjack() -> getBlackJackMatchResult()
+            isBlackjack() -> MatchResult.BLACKJACK_WIN
+            score > player.score -> MatchResult.WIN
+            score < player.score -> MatchResult.LOSE
+            else -> MatchResult.DRAW
+        }
+    }
+
+    private fun getBlackJackMatchResult(): MatchResult {
+        return when {
+            isBlackjack() -> MatchResult.DRAW
+            else -> MatchResult.LOSE
         }
     }
 
     fun isHit(): Boolean {
         val isHit = checkHit()
-        if (!isHit && !isBust()) { // 버스트가 아닌데 카드를 뽑지 않는다는건 스탠드다
+        if (!isHit && !isBust() && !isBlackjack()) { // 버스트와 블랙잭이 아닌데 카드를 뽑지 않는다는건 스탠드다
             status = PlayerStatus.STAND
         }
         return isHit
+    }
+
+    private fun isBlackjack(): Boolean {
+        return status == PlayerStatus.BLACKJACK
     }
 
     protected abstract fun checkHit(): Boolean
@@ -93,7 +106,7 @@ class User(
     name: String,
     cards: Cards,
     private val userDrawInterface: UserDrawInterface,
-    private val betMoney: Int,
+    val betMoney: Int,
 ) : Player(name, cards) {
 
     init {

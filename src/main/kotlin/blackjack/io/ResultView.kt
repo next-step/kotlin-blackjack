@@ -5,12 +5,10 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Cards
 import blackjack.domain.card.Suit
 import blackjack.domain.result.BlackjackResults
-import blackjack.domain.result.DealerResult
-import blackjack.domain.result.Result
-import blackjack.domain.result.UserResults
+import blackjack.domain.result.PlayerResult
+import blackjack.domain.result.PlayerResults
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
-import blackjack.domain.user.User
 import blackjack.domain.user.Users
 
 object ResultView {
@@ -21,12 +19,10 @@ object ResultView {
 
     private const val DEALER_HIT_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
 
-    private const val DEALER_SCORE_PRINT_FORMAT = "딜러 카드: %s - 결과: %s"
-    private const val USER_SCORE_PRINT_FORMAT = "%s카드: %s - 결과: %s"
+    private const val PLAYER_SCORE_PRINT_FORMAT = "%s 카드: %s - 결과: %s"
 
-    private const val RESULT_MESSAGE = "## 최종 승패"
-    private const val DEALER_RESULT_PRINT_FORMAT = "딜러: %d승 %d무 %d패"
-    private const val USER_RESULT_PRINT_FORMAT = "%s: %s"
+    private const val RESULT_MESSAGE = "## 최종 수익"
+    private const val PLAYER_RESULT_PRINT_FORMAT = "%s: %d"
 
     fun printCards(dealer: Dealer, users: Users) {
         val message = buildString {
@@ -70,44 +66,39 @@ object ResultView {
     fun printResults(blackJackResults: BlackjackResults) {
         val message = buildString {
             appendLine()
-            appendLine(dealerScoreResultFormatting(blackJackResults.dealerResult))
-            appendLine(usersScoreResultFormatting(blackJackResults.userResults))
+            appendLine(playerScoreResultFormatting(blackJackResults.dealerResult.player))
+            appendLine(playersScoreResultFormatting(blackJackResults.userResults))
             appendLine(RESULT_MESSAGE)
-            appendLine(dealerResultFormatting(blackJackResults.dealerResult))
-            append(userResultsFormatting(blackJackResults.userResults))
+            appendLine(playerResultFormatting(blackJackResults.dealerResult))
+            append(playerResultsFormatting(blackJackResults.userResults))
         }
 
         print(message)
     }
 
-    private fun dealerScoreResultFormatting(dealerResult: DealerResult): String {
-        val dealer = dealerResult.dealer
-        return DEALER_SCORE_PRINT_FORMAT.format(cardsToString(dealer.cards), dealer.score)
-    }
-
-    private fun usersScoreResultFormatting(userResults: UserResults): StringBuilder {
+    private fun playersScoreResultFormatting(playerResults: PlayerResults): StringBuilder {
         val stringBuilder = StringBuilder()
-        for (userResult in userResults) {
-            stringBuilder.appendLine(userScoreResultFormatting(userResult.user))
+        for (playerResult in playerResults) {
+            stringBuilder.appendLine(playerScoreResultFormatting(playerResult.player))
         }
         return stringBuilder
     }
 
-    private fun userScoreResultFormatting(user: User): String {
-        return USER_SCORE_PRINT_FORMAT.format(user.name, cardsToString(user.cards), user.score)
+    private fun playerScoreResultFormatting(player: Player): String {
+        return PLAYER_SCORE_PRINT_FORMAT.format(player.name, cardsToString(player.cards), player.score)
     }
 
-    private fun dealerResultFormatting(dealerResult: DealerResult): String {
-        return DEALER_RESULT_PRINT_FORMAT.format(dealerResult.winCount, dealerResult.drawCount, dealerResult.loseCount)
-    }
-
-    private fun userResultsFormatting(userResults: UserResults): StringBuilder {
+    private fun playerResultsFormatting(playerResults: PlayerResults): StringBuilder {
         val stringBuilder = StringBuilder()
-        for (userResult in userResults) {
-            val user = userResult.user
-            stringBuilder.appendLine(USER_RESULT_PRINT_FORMAT.format(user.name, blackJackResultToString(userResult.result)))
+        for (playerResult in playerResults) {
+            stringBuilder.appendLine(playerResultFormatting(playerResult))
         }
         return stringBuilder
+    }
+
+    private fun playerResultFormatting(playerResult: PlayerResult): String {
+        val player = playerResult.player
+        return PLAYER_RESULT_PRINT_FORMAT.format(player.name, playerResult.profit)
     }
 
     private fun cardNumberToString(cardNumber: CardNumber): String {
@@ -135,13 +126,5 @@ object ResultView {
 
     private fun cardsToString(cards: Cards): String {
         return cards.joinToString(", ", transform = ::cardToString)
-    }
-
-    private fun blackJackResultToString(blackjackResult: Result): String {
-        return when (blackjackResult) {
-            Result.WIN -> "승"
-            Result.DRAW -> "무"
-            Result.LOSE -> "패"
-        }
     }
 }
