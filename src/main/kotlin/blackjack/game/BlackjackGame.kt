@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.game
 
 import blackjack.dealer.Dealer
 import blackjack.player.Player
@@ -13,13 +13,17 @@ class BlackjackGame(
 ) {
     fun start() {
         val players = createPlayers()
-
+        val gameEvaluator = GameEvaluator()
         dealer.dealInitialCards(players)
-        resultView.printInitialDistribute(players)
+        resultView.printInitialDistribute(dealer, players)
         resultView.printPlayerList(players)
         players.takeTurns()
-
+        checkDealerStatus()
+        resultView.printFinalDealerStatus(dealer)
         resultView.printFinalPlayerStatus(players)
+
+        val gameResult = gameEvaluator.evaluate(dealer, players)
+        resultView.printMatchResult(gameResult.getMatchResult)
     }
 
     private fun createPlayers(): List<Player> {
@@ -34,7 +38,7 @@ class BlackjackGame(
     }
 
     private fun takeTurn(player: Player) {
-        while (player.currentStatus == Status.HIT && player.totalValue < 21) {
+        while (player.currentStatus == Status.HIT && player.totalValue <= BUST_SCORE) {
             val response = inputView.readHitOrStand(player.name)
             if (response == Status.HIT) {
                 dealer.drawCard(player)
@@ -43,5 +47,17 @@ class BlackjackGame(
                 player.updateStatus(Status.STAND)
             }
         }
+    }
+
+    private fun checkDealerStatus() {
+        if (dealer.totalValue <= DEALER_HIT_SCORE) {
+            dealer.drawCard(dealer)
+            resultView.printDealerStatus()
+        }
+    }
+
+    companion object {
+        private const val DEALER_HIT_SCORE = 16
+        const val BUST_SCORE = 21
     }
 }
