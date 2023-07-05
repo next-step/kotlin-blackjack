@@ -2,7 +2,9 @@ package blackjack.domain
 
 import blackjack.error.BlackjackErrorMessage.CAN_NOT_DRAW
 
-abstract class Participant {
+abstract class Participant(
+    private val name: String,
+) {
     private var cards: Cards = Cards.empty()
     var state: ParticipantState = ParticipantState.HIT
         protected set

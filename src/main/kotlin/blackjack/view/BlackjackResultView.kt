@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.Cards
 import blackjack.domain.Dealer
+import blackjack.domain.Participant
 import blackjack.domain.Players
 import blackjack.vo.GameProfitResult
 import blackjack.vo.GameResult
@@ -9,14 +9,15 @@ import blackjack.vo.GameResult
 object BlackjackResultView {
     fun printParticipantsResult(dealer: Dealer, players: Players) {
         println()
-        printParticipantResult(dealer.name, dealer.getCards(), dealer.sumOfCards())
+        printParticipantResult(dealer)
         players.forEach {
-            printParticipantResult(it.name, it.getCards(), it.sumOfCards())
+            printParticipantResult(it)
         }
     }
 
-    private fun printParticipantResult(name: String, cards: Cards, sumOfCards: Int) {
-        println("$name: ${BlackjackView.printCards(cards)} - 결과: $sumOfCards")
+    private fun printParticipantResult(participant: Participant) {
+        val cards = BlackjackView.printCards(participant.getCards())
+        println("$participant.name: $cards - 결과: $participant.sumOfCards")
     }
 
     fun printGameResult(gameResult: GameResult) {
