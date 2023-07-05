@@ -145,7 +145,6 @@ class DealerSpec : DescribeSpec({
 
         context("딜러와 플레이어가 비긴 경우") {
             val dealer = Dealer()
-            val player = Player("홍길동").also { it.bet(Money(1000)) }
 
             dealer.draw()
 

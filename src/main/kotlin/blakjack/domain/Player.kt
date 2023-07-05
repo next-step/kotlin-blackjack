@@ -23,28 +23,30 @@ class Player(
         result = Result.LOSE
     }
 
+    override fun blackjack() {
+        super.blackjack()
+        result = Result.BLACKJACK
+    }
+
     override fun profit(): Money {
-        return when {
-            isBlackjack() -> bettingMoney * (1.5)
-            isDraw() -> Money.ZERO
-            isLose() -> bettingMoney.negate()
-            else -> bettingMoney
-        }
+        return result.profit(bettingMoney)
     }
 
     fun bet(money: Money) {
         this.bettingMoney = money
     }
 
-    private fun isDraw(): Boolean {
-        return result == Result.DRAW
-    }
+    enum class Result(
+        val profitRate: Double
+    ) {
+        BLACKJACK(1.5),
+        WIN(1.0),
+        LOSE(-1.0),
+        DRAW(0.0),
+        ;
 
-    private fun isLose(): Boolean {
-        return result == Result.LOSE
-    }
-
-    enum class Result {
-        WIN, LOSE, DRAW
+        fun profit(money: Money): Money {
+            return money * profitRate
+        }
     }
 }

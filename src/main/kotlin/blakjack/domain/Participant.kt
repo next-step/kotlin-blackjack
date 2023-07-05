@@ -43,10 +43,6 @@ sealed class Participant(
         return !isBust()
     }
 
-    fun isBlackjack(): Boolean {
-        return this.status == Status.BLACKJACK
-    }
-
     fun isHit(): Boolean {
         return this.status == Status.HIT
     }
@@ -67,15 +63,15 @@ sealed class Participant(
         }
     }
 
-    fun bust() {
+    private fun bust() {
         this.status = Status.BUST
     }
 
-    fun blackjack() {
+    open fun blackjack() {
         this.status = Status.BLACKJACK
     }
 
-    fun hit() {
+    private fun hit() {
         this.status = Status.HIT
     }
 

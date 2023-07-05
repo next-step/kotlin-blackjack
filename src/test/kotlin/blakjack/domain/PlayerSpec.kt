@@ -61,12 +61,12 @@ class PlayerSpec : DescribeSpec({
             }
         }
 
-        context("플레이어가 딜러와 블랙잭으로 비긴 경우") {
-            val dealer = Dealer().also { it.add(cards(heartAce, heart10)) }
+        context("플레이어 비긴 경우") {
             val player = Player("홍길동").also { it.add(cards(heartAce, heart10)) }
 
             context("베팅 금액이 1000원이면") {
                 player.bet(Money(1000))
+                player.draw()
 
                 it("수익 금액은 0원이다.") {
                     player.profit() shouldBe Money(0)
