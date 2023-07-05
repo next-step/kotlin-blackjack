@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.GameMoney
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
@@ -10,7 +11,7 @@ class PlayerTest : BehaviorSpec({
 
     given("플레이어 생성") {
         val name = "pobi"
-        val player = Player(PlayerName(name))
+        val player = Player(PlayerName(name), GameMoney(10000))
         player.addCard(Card(CardNumber.CARD_ACE, CardType.DIAMOND))
         `when`("이름을 ${name}라고 설정") {
             then("이름은 ${name}이다") {
