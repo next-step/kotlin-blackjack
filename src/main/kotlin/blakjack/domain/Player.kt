@@ -7,12 +7,16 @@ class Player(
 ) : Participant(name, PLAYER) {
     var bettingMoney: Money = Money.ZERO
         private set
-    var result: Result = Result.NONE
+    var result: Result = Result.DRAW
         private set
 
     override fun win(other: Participant) {
         super.win(other)
         result = Result.WIN
+    }
+
+    override fun draw() {
+        result = Result.DRAW
     }
 
     override fun lose() {
@@ -22,6 +26,7 @@ class Player(
     override fun profit(): Money {
         return when {
             isBlackjack() -> bettingMoney * (1.5)
+            isDraw() -> Money.ZERO
             isLose() -> bettingMoney.negate()
             else -> bettingMoney
         }
@@ -31,11 +36,15 @@ class Player(
         this.bettingMoney = money
     }
 
-    fun isLose(): Boolean {
+    private fun isDraw(): Boolean {
+        return result == Result.DRAW
+    }
+
+    private fun isLose(): Boolean {
         return result == Result.LOSE
     }
 
     enum class Result {
-        WIN, LOSE, NONE
+        WIN, LOSE, DRAW
     }
 }

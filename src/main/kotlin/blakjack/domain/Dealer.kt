@@ -8,6 +8,8 @@ class Dealer(
 ) : Participant(name, DEALER) {
     var winCount = 0
         private set
+    var drawCount = 0
+        private set
     var loseCount = 0
         private set
 
@@ -30,6 +32,10 @@ class Dealer(
     override fun win(other: Participant) {
         super.win(other)
         winCount++
+    }
+
+    override fun draw() {
+        drawCount++
     }
 
     override fun lose() {

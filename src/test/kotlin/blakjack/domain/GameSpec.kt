@@ -11,6 +11,7 @@ import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class GameSpec : DescribeSpec({
     describe("게임 생성 검증") {
@@ -141,6 +142,18 @@ class GameSpec : DescribeSpec({
                 losePlayer.result shouldBe Player.Result.LOSE
                 dealer.winCount shouldBe 1
                 dealer.loseCount shouldBe 1
+            }
+
+            it("딜러와 점수가 같은 플레이어는 무승부다.") {
+                val playerA = Player("A").also { it.add(cards(heart10, heart9)) }
+                val playerB = Player("B").also { it.add(cards(heart10, heartKing)) }
+                val game = Game(dealer = dealer, players = listOf(playerA, playerB))
+
+                game.result()
+
+                playerA.result shouldBe Player.Result.DRAW
+                playerB.result shouldNotBe Player.Result.DRAW
+                dealer.drawCount shouldBe 1
             }
         }
     }

@@ -57,6 +57,12 @@ class Game(
     }
 
     private fun resultIfDealerIsNotBust(player: Player) {
+        if (player.isDraw(dealer)) {
+            player.draw()
+            dealer.draw()
+            return
+        }
+
         if (player.isBust() || !player.isWin(dealer)) {
             dealer.win(player)
             return

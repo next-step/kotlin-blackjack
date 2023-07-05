@@ -16,6 +16,8 @@ sealed class Participant(
         other.lose()
     }
 
+    abstract fun draw()
+
     abstract fun lose()
 
     abstract fun profit(): Money
@@ -83,6 +85,10 @@ sealed class Participant(
 
     fun isWin(other: Participant): Boolean {
         return this.score > other.score
+    }
+
+    fun isDraw(other: Participant): Boolean {
+        return this.score == other.score
     }
 
     enum class ParticipantType {
