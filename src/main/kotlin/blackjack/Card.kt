@@ -5,7 +5,7 @@ package blackjack
  *
  * 13개로 구성된 랭크와 4개로 구성된 무늬를 가지며 각 카드에 따른 점수를 가집니다
  */
-data class Card(
+data class Card private constructor(
     val rank: CardRank,
     val suit: CardSuit,
 ) {
@@ -16,11 +16,21 @@ data class Card(
     }
 
     companion object {
-        val CARD_SET = CardRank.values().flatMap { cardRank ->
+        fun of(rank: CardRank, suit: CardSuit): Card {
+            return CARD_CACHE[makeCardKey(rank, suit)] ?: throw IllegalArgumentException(
+                "Can not find a Card with rank : $rank, suit : $suit"
+            )
+        }
+
+        private val CARD_CACHE: Map<String, Card> = CardRank.values().flatMap { cardRank ->
             CardSuit.values().map { cardSuit ->
                 Card(cardRank, cardSuit)
             }
-        }.toSet()
+        }.associateBy { makeCardKey(it.rank, it.suit) }
+
+        val CARD_SET: Set<Card> = CARD_CACHE.values.toSet()
+
+        private fun makeCardKey(rank: CardRank, suit: CardSuit) = "${rank.name}:${suit.name}"
     }
 }
 
