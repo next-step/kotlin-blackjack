@@ -26,7 +26,6 @@ class GameTest : StringSpec({
         jane.deck.getCards() shouldHaveSize 3
     }
 
-
     "딜러에게 카드를 한 장 추가할 수 있다." {
         val cards = Cards(CardFactory.defaultCards)
         val dealer = Dealer()
