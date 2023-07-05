@@ -29,7 +29,7 @@ class FightService {
             return FightResult.LOSE
         }
 
-        if (player.sumOfMyCards() == dealer.sumOfMyCards()) {
+        if (player.sumOfCards() == dealer.sumOfCards()) {
             return FightResult.DRAW
         }
 
@@ -41,11 +41,11 @@ class FightService {
             return FightResult.LOSE
         }
 
-        if (player.sumOfMyCards() == dealer.sumOfMyCards()) {
+        if (player.sumOfCards() == dealer.sumOfCards()) {
             return FightResult.DRAW
         }
 
-        if (player.sumOfMyCards() > dealer.sumOfMyCards()) {
+        if (player.sumOfCards() > dealer.sumOfCards()) {
             return FightResult.WIN
         }
 

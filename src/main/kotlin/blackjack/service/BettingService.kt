@@ -22,11 +22,11 @@ class BettingService {
         when {
             player.state == PlayerState.BUST -> dealerGetMoney(player)
             dealer.state == PlayerState.BUST -> playerGetBettingMoney(player)
-            player.state == PlayerState.STAND && player.sumOfMyCards() < dealer.sumOfMyCards() -> dealerGetMoney(player)
-            player.state == PlayerState.BLACK_JACK && player.sizeOfMyCards() == 2 &&
-                dealer.state == PlayerState.BLACK_JACK && dealer.sizeOfMyCards() == 2
+            player.state == PlayerState.STAND && player.sumOfCards() < dealer.sumOfCards() -> dealerGetMoney(player)
+            player.state == PlayerState.BLACK_JACK && player.sizeOfCards() == 2 &&
+                dealer.state == PlayerState.BLACK_JACK && dealer.sizeOfCards() == 2
             -> playerGetBettingMoney(player)
-            player.state == PlayerState.BLACK_JACK && player.sizeOfMyCards() == 2 -> playerGetWinningMoney(player)
+            player.state == PlayerState.BLACK_JACK && player.sizeOfCards() == 2 -> playerGetWinningMoney(player)
             else -> playerGetBettingMoney(player)
         }
     }

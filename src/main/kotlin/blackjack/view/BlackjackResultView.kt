@@ -16,11 +16,11 @@ object BlackjackResultView {
     }
 
     private fun printDealerResult(dealer: Dealer) {
-        println("${dealer.name}: ${BlackjackView.printCards(dealer.getMyCards())} - 결과: ${dealer.sumOfMyCards()}")
+        println("${dealer.name}: ${BlackjackView.printCards(dealer.getCards())} - 결과: ${dealer.sumOfCards()}")
     }
 
     private fun printPlayerResult(player: Player) {
-        println("${player.name}카드: ${BlackjackView.printCards(player.getMyCards())} - 결과: ${player.sumOfMyCards()}")
+        println("${player.name}카드: ${BlackjackView.printCards(player.getCards())} - 결과: ${player.sumOfCards()}")
     }
 
     fun printGameResult(gameResult: GameResultVO) {

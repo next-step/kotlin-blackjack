@@ -6,7 +6,8 @@ enum class PlayerState(
     HIT(true),
     STAND(false),
     BUST(false),
-    BLACK_JACK(false);
+    BLACK_JACK(false),
+    ;
 
     companion object {
         fun of(participant: Participant): PlayerState {
@@ -14,7 +15,7 @@ enum class PlayerState(
                 return STAND
             }
 
-            val sum = participant.sumOfMyCards()
+            val sum = participant.sumOfCards()
 
             if (sum == Cards.BLACK_JACK_SCORE) {
                 return BLACK_JACK

@@ -27,7 +27,7 @@ class BlackjackService {
     }
 
     private fun dealerExtraHit(dealer: Dealer) {
-        if (dealer.sumOfMyCards() <= Dealer.DEALER_UNDER_NUMBER) {
+        if (dealer.sumOfCards() <= Dealer.DEALER_UNDER_NUMBER) {
             dealer.hit(drawCard())
             BlackjackView.printDealerExtraHit(dealer.name)
         }

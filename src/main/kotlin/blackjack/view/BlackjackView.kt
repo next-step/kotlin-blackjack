@@ -31,12 +31,12 @@ object BlackjackView {
     }
 
     private fun printDealerFirstCard(dealer: Dealer) {
-        val dealerFirstCard = dealer.getMyCards().cards[0]
+        val dealerFirstCard = dealer.getCards().cards[0]
         println("${dealer.name}: ${printCard(dealerFirstCard)}")
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${printCards(player.getMyCards())}")
+        println("${player.name}카드: ${printCards(player.getCards())}")
     }
 
     fun askDraw(player: Player): Boolean {

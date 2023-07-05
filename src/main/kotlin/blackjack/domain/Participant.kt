@@ -3,15 +3,15 @@ package blackjack.domain
 import blackjack.error.BlackjackErrorMessage.CAN_NOT_DRAW
 
 abstract class Participant {
-    private var myCards: Cards = Cards.empty()
+    private var cards: Cards = Cards.empty()
     var state: PlayerState = PlayerState.HIT
         protected set
 
-    fun getMyCards(): Cards = myCards.copy()
+    fun getCards(): Cards = cards.copy()
 
-    fun sizeOfMyCards(): Int = myCards.cards.size
+    fun sizeOfCards(): Int = cards.cards.size
 
-    fun sumOfMyCards(): Int = myCards.calculateOptimalSum()
+    fun sumOfCards(): Int = cards.calculateOptimalSum()
 
     fun stand() {
         state = PlayerState.STAND
@@ -19,7 +19,7 @@ abstract class Participant {
 
     fun hit(card: Card) {
         check(state.canDraw) { CAN_NOT_DRAW }
-        myCards = myCards.add(card)
+        cards = cards.add(card)
         state = PlayerState.of(this)
     }
 }
