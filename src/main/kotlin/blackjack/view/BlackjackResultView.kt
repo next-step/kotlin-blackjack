@@ -3,8 +3,8 @@ package blackjack.view
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.vo.BettingResultVO
-import blackjack.vo.GameResultVO
+import blackjack.vo.GameProfitResult
+import blackjack.vo.GameResult
 
 object BlackjackResultView {
     fun printParticipantsResult(dealer: Dealer, players: Players) {
@@ -23,7 +23,7 @@ object BlackjackResultView {
         println("${player.name}카드: ${BlackjackView.printCards(player.getCards())} - 결과: ${player.sumOfCards()}")
     }
 
-    fun printGameResult(gameResult: GameResultVO) {
+    fun printGameResult(gameResult: GameResult) {
         println("\n## 최종 승패")
 
         val dealerResults = gameResult.dealerWinMap.map { (result, int) ->
@@ -39,7 +39,7 @@ object BlackjackResultView {
         }
     }
 
-    fun printBettingResult(bettingResult: BettingResultVO) {
+    fun printBettingResult(bettingResult: GameProfitResult) {
         println("\n## 최종 수익")
 
         println("딜러: ${bettingResult.dealerProfit}")

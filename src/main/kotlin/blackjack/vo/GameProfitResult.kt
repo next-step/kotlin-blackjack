@@ -2,7 +2,7 @@ package blackjack.vo
 
 import blackjack.domain.Player
 
-data class BettingResultVO(
+data class GameProfitResult(
     val dealerProfit: Int,
     val playersProfits: Map<Player, Int>,
 )

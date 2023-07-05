@@ -4,18 +4,18 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.PlayerState
 import blackjack.domain.Players
-import blackjack.vo.BettingResultVO
+import blackjack.vo.GameProfitResult
 
 class BettingService {
     private var dealerMoney = 0
     private var playersMoneys = mutableMapOf<Player, Int>()
 
-    fun bettingResult(dealer: Dealer, players: Players): BettingResultVO {
+    fun bettingResult(dealer: Dealer, players: Players): GameProfitResult {
         players.forEach {
             bettingResult(dealer, it)
         }
 
-        return BettingResultVO(dealerMoney, playersMoneys)
+        return GameProfitResult(dealerMoney, playersMoneys)
     }
 
     private fun bettingResult(dealer: Dealer, player: Player) {

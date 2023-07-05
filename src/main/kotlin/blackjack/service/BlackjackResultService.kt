@@ -4,12 +4,12 @@ import blackjack.domain.Dealer
 import blackjack.domain.FightResult
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.vo.GameResultVO
+import blackjack.vo.GameResult
 
 class BlackjackResultService {
     private val fightService = FightService()
 
-    fun allResult(dealer: Dealer, players: Players): GameResultVO {
+    fun allResult(dealer: Dealer, players: Players): GameResult {
         val dealerWinMap: MutableMap<FightResult, Int> = mutableMapOf()
         val playersWinMap: MutableMap<Player, FightResult> = mutableMapOf()
 
@@ -21,7 +21,7 @@ class BlackjackResultService {
             }
         }
 
-        return GameResultVO(dealerWinMap, playersWinMap)
+        return GameResult(dealerWinMap, playersWinMap)
     }
 
     private fun draw(
