@@ -1,6 +1,6 @@
 package step2.domain
 
-data class CardCurrentScore(
+data class CurrentScore(
     var minScore: Int = 0,
     var maxScore: Int = 0
 ) {
@@ -11,6 +11,10 @@ data class CardCurrentScore(
 
     fun isBurst(): Boolean {
         return minScore > BURST_SCORE && maxScore > BURST_SCORE
+    }
+
+    fun getResultScore(): Int {
+        return if (maxScore > BURST_SCORE) minScore else maxScore
     }
 
     companion object {

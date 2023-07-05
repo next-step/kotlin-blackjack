@@ -4,14 +4,24 @@ data class Player(
     val name: String
 ) {
 
-    val cards: Cards = Cards()
+    private val currentScore: CurrentScore = CurrentScore()
+
+    private val cards: Cards = Cards()
 
     fun draw(count: Int) {
         cards.draw(count)
+        currentScore.calculateScore(cards.cards)
     }
 
     fun isBurst(): Boolean {
-        val currentScore = cards.calculateScore()
         return currentScore.isBurst()
+    }
+
+    fun getResultScore(): Int {
+        return currentScore.getResultScore()
+    }
+
+    fun getJoiningCardNames(delimiter: String): String {
+        return cards.cards.joinToString(delimiter) { it.display() }
     }
 }

@@ -10,7 +10,7 @@ class BlackjackController {
     fun execute() {
         val players = start()
         play(players)
-
+        result(players)
     }
 
     private fun start(): Players {
@@ -31,6 +31,13 @@ class BlackjackController {
                 player.draw(DRAW_CARD_COUNT)
                 OutputView.printPlayersCards(player)
             }
+        }
+    }
+
+    private fun result(players: Players) {
+        players.players.forEach { player ->
+            player.getResultScore()
+            OutputView.printResult(player)
         }
     }
 

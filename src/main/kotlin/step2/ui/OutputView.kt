@@ -15,6 +15,10 @@ object OutputView {
     }
 
     fun printPlayersCards(player: Player) {
-        println("${player.name}카드: ${player.cards.cards.map { it.display() }.joinToString(",")}")
+        println("${player.name}카드: ${player.getJoiningCardNames(",")}")
+    }
+
+    fun printResult(player: Player) {
+        println("${player.name}카드: ${player.getJoiningCardNames(",")} - 결과: ${player.getResultScore()}")
     }
 }
