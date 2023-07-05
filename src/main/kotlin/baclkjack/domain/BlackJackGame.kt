@@ -3,10 +3,11 @@ package baclkjack.domain
 import baclkjack.domain.card.Deck
 import baclkjack.domain.play.Dealer
 import baclkjack.domain.play.Player
+import baclkjack.domain.play.User
 
-class BlackJackGame(players: List<String>, private val deck: Deck = Deck.createDeck()) {
+class BlackJackGame(playersName: List<String>, private val deck: Deck = Deck.createDeck()) {
 
-    val players = players.map { Player(it) }
+    val players = playersName.map { Player(it) }
     val dealer = Dealer()
 
     fun start() {
@@ -16,18 +17,18 @@ class BlackJackGame(players: List<String>, private val deck: Deck = Deck.createD
         }
     }
 
-    fun play(draw: (String) -> Boolean, out: (Player) -> Unit) {
+    fun play(draw: (String) -> Boolean, out: (User) -> Unit) {
         players.forEach {
             it.draw = draw
             playerDraw(it, out)
         }
     }
 
-    fun dealerPlay(out: (Player) -> Unit) {
+    fun dealerPlay(out: (User) -> Unit) {
         playerDraw(dealer, out)
     }
 
-    private fun playerDraw(player: Player, out: (Player) -> Unit) {
+    private fun playerDraw(player: User, out: (User) -> Unit) {
         while (player.isDraw()) {
             player.hit(deck)
             out(player)

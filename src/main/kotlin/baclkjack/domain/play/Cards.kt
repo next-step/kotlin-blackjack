@@ -10,18 +10,19 @@ class Cards {
     }
 
     fun score(): Int {
-
-        val sum = _cards.map { it.number }.sumOf { it.value }
-        return _cards.filter { it.number.isAce() }.fold(sum) { acc, _ ->
-            if (acc > WIN_NUMBER) {
-                acc - ACE_VALUE
-            } else {
-                acc
-            }
+        val score = _cards.map { it.number }.sumOf { it.value }
+        if (isSoft() && isNotBurst(score + ACE_VALUE)) {
+            return score + ACE_VALUE
         }
+        return score
     }
 
+    private fun isSoft(): Boolean = _cards.any { it.number.isAce() }
+
+    private fun isNotBurst(score: Int) = score <= WIN_NUMBER
+
     fun isBurst(): Boolean = score() > WIN_NUMBER
+
     fun isBlackJack(): Boolean = score() == WIN_NUMBER
 
     companion object {

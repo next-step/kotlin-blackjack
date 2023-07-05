@@ -21,10 +21,10 @@ class PlayerTest : StringSpec({
     "내 카드가 21 인경우 blackjack" {
         val player = Player("a")
         val deck = Deck(
-            cards = mutableListOf<Card>().apply {
-                add(Card(Suit.HEART, Number.ACE))
-                add(Card(Suit.HEART, Number.KING))
-            }
+            cards = mutableListOf(
+                Card(Suit.HEART, Number.ACE),
+                Card(Suit.HEART, Number.KING)
+            )
         )
         player.start(deck)
         player.blackJack().shouldBeTrue()
@@ -80,7 +80,7 @@ class PlayerTest : StringSpec({
         player.result(dealer) shouldBe GameState.DRAW
     }
 
-    "딜러가 21 내카드가 22 인 result " {
+    "딜러가 21 내카드가 20 인 result " {
         val dealer = Dealer()
         val player = Player("a")
         val deck = Deck(

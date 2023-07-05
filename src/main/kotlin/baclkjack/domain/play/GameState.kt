@@ -6,12 +6,12 @@ enum class GameState {
     LOSE;
 
     companion object {
-        fun Player.ofGameState(dealer: Player): GameState {
+        fun User.ofGameState(player: User): GameState {
             return when {
                 this.burst() -> LOSE
-                dealer.burst() -> WIN
-                this.score() > dealer.score() -> WIN
-                this.score() < dealer.score() -> LOSE
+                player.burst() -> WIN
+                this.score() > player.score() -> WIN
+                this.score() < player.score() -> LOSE
                 else -> DRAW
             }
         }

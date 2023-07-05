@@ -4,35 +4,34 @@ import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
 import baclkjack.domain.play.GameState.Companion.ofGameState
 
-open class Player(val name: String) {
+class Player(override val name: String) : User {
 
     private val cards: Cards = Cards()
 
     var draw: ((String) -> Boolean)? = null
 
-    fun start(deck: Deck) {
+    override fun start(deck: Deck) {
         repeat(FIRST_DRAW) {
             cards.add(deck.draw())
         }
     }
 
-    fun hit(deck: Deck) {
+    override fun hit(deck: Deck) {
         cards.add(deck.draw())
     }
 
-    fun burst(): Boolean = cards.isBurst()
+    override fun burst(): Boolean = cards.isBurst()
 
-    fun blackJack(): Boolean = cards.isBlackJack()
+    override fun blackJack(): Boolean = cards.isBlackJack()
 
-    fun score(): Int = cards.score()
+    override fun score(): Int = cards.score()
 
-    fun cards(): List<Card> = cards.cards
+    override fun cards(): List<Card> = cards.cards
 
-    fun finish(): Boolean = burst() || blackJack()
+    override fun finish(): Boolean = burst() || blackJack()
 
-    open fun isDraw(): Boolean = draw?.invoke(name) == true
-
-    fun result(player: Player): GameState = ofGameState(player)
+    override fun isDraw(): Boolean = draw?.invoke(name) == true
+    fun result(player: User): GameState = ofGameState(player)
 
     companion object {
         const val FIRST_DRAW = 2
