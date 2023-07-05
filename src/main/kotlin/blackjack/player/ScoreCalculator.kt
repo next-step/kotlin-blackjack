@@ -22,10 +22,11 @@ object ScoreCalculator {
         var remainingAces = numberOfAces
 
         while (adjustedValue > BlackjackGame.BLACK_JACK_SCORE && remainingAces > 0) {
-            adjustedValue -= 10
+            adjustedValue -= ACE_EXTRA_NUMBER
             remainingAces--
         }
 
         return adjustedValue
     }
+    private const val ACE_EXTRA_NUMBER = 10
 }
