@@ -36,9 +36,9 @@ object ResultView {
 
     fun printMatchResult(matchResult: Map<String, Result>) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
         matchResult.forEach { (name, result) ->
-            val resultStr = if (name == Dealer.DEALER_NAME) result.formatDealerResult() else result.formatPlayerResult()
+            val resultStr = result.formattedEarnings
             println("$name: $resultStr")
         }
     }
