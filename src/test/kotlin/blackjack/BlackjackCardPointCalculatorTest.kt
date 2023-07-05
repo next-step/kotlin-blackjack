@@ -39,5 +39,20 @@ class BlackjackCardPointCalculatorTest {
             )
         )
         pointSum4 shouldBe 12
+
+        val pointSum5 = BlackjackCardPointCalculator.calculate(
+            cards = listOf(
+                Card.of(CardRank.JACK, CardSuit.HEART),
+                Card.of(CardRank.QUEEN, CardSuit.SPADE),
+                Card.of(CardRank.KING, CardSuit.SPADE),
+                Card.of(CardRank.ACE, CardSuit.SPADE),
+            )
+        )
+        pointSum5 shouldBe 31
+
+        val pointSum6 = BlackjackCardPointCalculator.calculate(
+            cards = listOf()
+        )
+        pointSum6 shouldBe 0
     }
 }
