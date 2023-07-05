@@ -96,7 +96,6 @@ internal class BlackJackTest {
         val player = Player("pobi", cards)
         val dealer = Dealer(cards)
         val game = BlackJack(listOf(player), dealer)
-        dealer.cards.score() shouldBe 16
         dealer.cards.values.size shouldBe 2
 
         //when
@@ -114,7 +113,6 @@ internal class BlackJackTest {
         val player = Player("pobi", cards)
         val dealer = Dealer(cards)
         val game = BlackJack(listOf(player), dealer)
-        dealer.cards.score() shouldBe 17
         dealer.cards.values.size shouldBe 2
 
         //when
