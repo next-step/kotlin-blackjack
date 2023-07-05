@@ -30,4 +30,6 @@
   - 랜덤은 Dealer가 가져가도록 변
 - [x] NO Test : 각 Player가 받은 카드를 쉼표로 분리하여 화면에 출력한다.
   - view라서 테스트 미구현
+- [x] Test 4 : Player별 점수를 계산할 수 있다.
+  - card의 리스트를 감싼 Cards 객체에게 점수 계산을 위임
 

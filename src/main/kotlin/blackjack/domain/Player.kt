@@ -1,12 +1,17 @@
 package blackjack.domain
 
-import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 data class Player(
     val name: String,
-    var cards: List<Card> = emptyList()
+    val cards: Cards = Cards()
 ) {
+
     override fun toString(): String {
         return name
+    }
+
+    fun getScore(): Int {
+        return cards.getScore()
     }
 }

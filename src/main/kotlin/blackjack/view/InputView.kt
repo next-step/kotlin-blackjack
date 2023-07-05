@@ -12,6 +12,15 @@ object InputView {
         return names
     }
 
+    fun inputAdditionalCard(): String {
+        var answer = readln()
+        while (answer != "y" && answer != "n") {
+            println("잘못된 답변입니다. 다시 입력해 주세요.")
+            answer = readln()
+        }
+        return answer
+    }
+
     private fun readNames(): List<String> {
         return readlnOrNull()?.split(",") ?: emptyList()
     }

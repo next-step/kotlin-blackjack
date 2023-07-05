@@ -4,31 +4,30 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardDeck
 import kotlin.random.Random
 
-class Dealer {
+class Dealer(
+    private val cardDeck: CardDeck
+) {
 
     /**
      * 플레이어들에게 2장씩 카드를 분배함
      */
-    fun dealOutCards(cardDeck: CardDeck, players: Players) {
+    fun dealOutCards(players: Players) {
         repeat(DEAL_OUT_CARD_AMOUNT){
-            dealOutCard(cardDeck, players)
+            players.players.forEach{ dealOutCard(it) }
         }
     }
 
     /**
      * 플레이어들에게 1장씩 카드를 분배함
      */
-    private fun dealOutCard(cardDeck: CardDeck, players: Players) {
-        players.players.forEach {
-            val peekedCard = peekCard(cardDeck)
-            it.cards += peekedCard
-        }
+    fun dealOutCard(player: Player) {
+        player.cards.addCard(peekCard())
     }
 
     /**
      * 카드덱에서 랜덤한 카드를 1장 꺼냄
      */
-    private fun peekCard(cardDeck: CardDeck): Card {
+    private fun peekCard(): Card {
         val random = Random.Default
         val randomIndex = random.nextInt(cardDeck.cards.size)
         return cardDeck.peekCard(randomIndex)

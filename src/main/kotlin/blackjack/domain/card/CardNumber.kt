@@ -16,4 +16,8 @@ enum class CardNumber(
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
+
+    companion object {
+        const val ACE_ADDITIONAL_SCORE = 10
+    }
 }

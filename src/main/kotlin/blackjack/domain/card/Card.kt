@@ -7,4 +7,8 @@ data class Card(
     override fun toString(): String {
         return number.displayName + symbol.symbolName
     }
+
+    fun isAce(): Boolean {
+        return number == CardNumber.ACE
+    }
 }
