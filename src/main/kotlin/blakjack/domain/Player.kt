@@ -5,7 +5,7 @@ import blakjack.domain.Participant.ParticipantType.PLAYER
 class Player(
     name: String,
 ) : Participant(name, PLAYER) {
-    var money: Money = Money(0)
+    var bettingMoney: Money = Money.ZERO
         private set
     var result: Result = Result.NONE
         private set
@@ -19,8 +19,15 @@ class Player(
         result = Result.LOSE
     }
 
+    override fun profit(): Money {
+        return when {
+            isBlackjack() -> bettingMoney * (1.5)
+            else -> bettingMoney
+        }
+    }
+
     fun bet(money: Money) {
-        this.money = money
+        this.bettingMoney = money
     }
 
     enum class Result {

@@ -2,6 +2,9 @@ package blakjack.domain
 
 import blakjack.domain.Player.Result.LOSE
 import blakjack.domain.Player.Result.WIN
+import blakjack.domain.extension.cards
+import blakjack.domain.extension.heart10
+import blakjack.domain.extension.heartAce
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -26,7 +29,22 @@ class PlayerSpec : DescribeSpec({
             player.bet(Money(1000))
 
             it("플레이어의 베팅 금액은 1000원이다.") {
-                player.money shouldBe Money(1000)
+                player.bettingMoney shouldBe Money(1000)
+            }
+        }
+    }
+
+    describe("플레이어 수익 검증 (블랙잭)") {
+        context("플레이어가 블랙잭으로 이긴 경우") {
+            val player = Player("홍길동")
+            player.add(cards(heartAce, heart10))
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+
+                it("수익 금액은 1500원이다.") {
+                    player.profit() shouldBe Money(1500)
+                }
             }
         }
     }

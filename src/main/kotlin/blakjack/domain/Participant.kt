@@ -18,6 +18,8 @@ sealed class Participant(
 
     protected abstract fun lose()
 
+    abstract fun profit(): Money
+
     open fun hit(card: Card) {
         this.cards = cards.add(card)
         hit()

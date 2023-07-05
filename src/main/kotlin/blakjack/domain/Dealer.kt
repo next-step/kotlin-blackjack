@@ -36,6 +36,11 @@ class Dealer(
         loseCount++
     }
 
+    override fun profit(): Money {
+        // TODO
+        return Money.ZERO
+    }
+
     companion object {
         const val SEVENTEEN = 17
     }
