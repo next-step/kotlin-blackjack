@@ -6,7 +6,8 @@ enum class Rank(val value: Double) {
     BLACKJACK(1.5),
     WON(1.0),
     LOST(-1.0),
-    DRAW(1.0);
+    DRAW(1.0),
+    ;
 
     fun calculateRevenue(amount: Int): Int {
         return (amount * value).toInt()
