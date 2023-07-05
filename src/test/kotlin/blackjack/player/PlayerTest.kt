@@ -26,12 +26,15 @@ class PlayerTest : BehaviorSpec({
         }
         When("카드를 두 장 받으면") {
             val player = Player("참가자")
-            val card1 = Card(CardNumber.JACK, CardSuit.CLUB)
-            val card2 = Card(CardNumber.TEN, CardSuit.CLUB)
+            val card1 = Card(CardNumber.ACE, CardSuit.CLUB)
+            val card2 = Card(CardNumber.QUEEN, CardSuit.CLUB)
             player.addCard(card1)
             player.addCard(card2)
             Then("참가자는 손패에 카드를 두 장 추가한다.") {
                 player.handSize shouldBe 2
+            }
+            And("참가자가 가진 카드의 합이 21일 경우, 블랙잭이다.") {
+                player.isBlackjack shouldBe true
             }
         }
     }
