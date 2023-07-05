@@ -22,12 +22,17 @@ class Player(
     override fun profit(): Money {
         return when {
             isBlackjack() -> bettingMoney * (1.5)
+            isLose() -> bettingMoney.negate()
             else -> bettingMoney
         }
     }
 
     fun bet(money: Money) {
         this.bettingMoney = money
+    }
+
+    fun isLose(): Boolean {
+        return result == Result.LOSE
     }
 
     enum class Result {

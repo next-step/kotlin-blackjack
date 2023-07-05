@@ -16,7 +16,7 @@ sealed class Participant(
         other.lose()
     }
 
-    protected abstract fun lose()
+    abstract fun lose()
 
     abstract fun profit(): Money
 
