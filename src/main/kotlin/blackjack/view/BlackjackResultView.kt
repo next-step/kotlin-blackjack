@@ -17,7 +17,7 @@ object BlackjackResultView {
 
     private fun printParticipantResult(participant: Participant) {
         val cards = BlackjackView.printCards(participant.getCards())
-        println("$participant.name: $cards - 결과: $participant.sumOfCards")
+        println("${participant.name}: $cards - 결과: ${participant.sumOfCards()}")
     }
 
     fun printGameResult(gameResult: GameResult) {
