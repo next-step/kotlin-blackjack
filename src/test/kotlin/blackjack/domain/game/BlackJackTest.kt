@@ -9,10 +9,16 @@ import org.junit.jupiter.api.Test
 internal class BlackJackTest {
     @Test
     internal fun `게임이 시작되면 플레이어에게 두장의 카드가 주어진다`() {
+
+        //given
         val player = Player("pobi")
         player.cards.values.size shouldBe 0
+
+        //when
         val blackJack = BlackJack(listOf(player))
         blackJack.distributeInitialCard()
+
+        //then
         player.cards.values.size shouldBe 2
         blackJack.dealer.cards.values.size shouldBe 2
     }
@@ -39,60 +45,82 @@ internal class BlackJackTest {
 
     @Test
     internal fun `플레이어가 y를 대답하면 카드의 갯수가 늘어난다`() {
+        //given
         val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
         player.cards.values.size shouldBe 2
+
+        //when
         game.playGameTurn(true)
+
+        //then
         player.cards.values.size shouldBe 3
     }
 
     @Test
     internal fun `플레이어가 n를 대답하면 턴이 종료된다`() {
+        //given
         val cards = TestCards.getSixteenPointCards()
         val player = Player("pobi", cards)
         val game = BlackJack(listOf(player))
+
+        //when
         game.playGameTurn(false)
+
+        //then
         game.isEnd() shouldBe true
     }
 
     @Test
     internal fun `이전 플레이어가 끝나면 게임차례는 넘어간다`() {
+        //given
         val cards = TestCards.getSixteenPointCards()
         val player1 = Player("pobi", cards)
         val player2 = Player("ryan", cards)
         val game = BlackJack(listOf(player1, player2))
-
         game.getNowPlayer() shouldBe player1
+
+        //wen
         game.playGameTurn(false)
+
+        //then
         game.getNowPlayer() shouldBe player2
         game.isEnd() shouldBe false
     }
 
     @Test
     internal fun `딜러는 점수 16점 이하면 카드 한장을 더 받는다`() {
+        //given
         val cards = TestCards.getSixteenPointCards()
-        val player1 = Player("pobi", cards)
+        val player = Player("pobi", cards)
         val dealer = Dealer(cards)
-        val game = BlackJack(listOf(player1), dealer)
-
+        val game = BlackJack(listOf(player), dealer)
         dealer.cards.score() shouldBe 16
         dealer.cards.values.size shouldBe 2
+
+        //when
         game.shouldDealerDrawCard() shouldBe true
         game.distributeCardForDealer()
+
+        //then
         dealer.cards.values.size shouldBe 3
     }
 
     @Test
     internal fun `딜러는 점수 16점 초과면 카드 한장을 더 받지않는다`() {
+        //given
         val cards = TestCards.getSeventeenPointCards()
-        val player1 = Player("pobi", cards)
+        val player = Player("pobi", cards)
         val dealer = Dealer(cards)
-        val game = BlackJack(listOf(player1), dealer)
-
+        val game = BlackJack(listOf(player), dealer)
         dealer.cards.score() shouldBe 17
         dealer.cards.values.size shouldBe 2
+
+        //when
         game.shouldDealerDrawCard() shouldBe false
+
+        //then
         dealer.cards.values.size shouldBe 2
     }
 }

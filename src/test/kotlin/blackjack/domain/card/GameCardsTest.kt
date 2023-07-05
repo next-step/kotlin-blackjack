@@ -16,10 +16,12 @@ internal class GameCardsTest {
     @Test
     internal fun `생성한 게임 카드 리스트 부터 순차적으로 나온다`() {
         val gameCards = GameCards(mutableListOf(Card(Shape.DIAMOND, Character.SIX), Card(Shape.CLOVER, Character.J)))
+
         val card1 = gameCards.draw()
+        val card2 = gameCards.draw()
+
         card1.shape shouldBe Shape.DIAMOND
         card1.character shouldBe Character.SIX
-        val card2 = gameCards.draw()
         card2.shape shouldBe Shape.CLOVER
         card2.character shouldBe Character.J
     }
