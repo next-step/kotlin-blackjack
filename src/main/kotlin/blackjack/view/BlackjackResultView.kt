@@ -3,7 +3,6 @@ package blackjack.view
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.forEachPlayer
 import blackjack.vo.BettingResultVO
 import blackjack.vo.GameResultVO
 
@@ -11,7 +10,7 @@ object BlackjackResultView {
     fun printParticipantsResult(dealer: Dealer, players: Players) {
         println()
         printDealerResult(dealer)
-        players.forEachPlayer {
+        players.forEach {
             printPlayerResult(it)
         }
     }

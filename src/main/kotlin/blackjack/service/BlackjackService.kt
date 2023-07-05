@@ -5,7 +5,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.GameCardsSet
 import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.domain.forEachPlayer
 import blackjack.view.BlackjackView
 
 class BlackjackService {
@@ -15,13 +14,13 @@ class BlackjackService {
     fun initialTurn(dealer: Dealer, players: Players) {
         repeat(DEFAULT_INITIAL_DRAW) {
             dealer.hit(drawCard())
-            players.forEachPlayer { player -> player.hit(drawCard()) }
+            players.forEach { player -> player.hit(drawCard()) }
         }
     }
 
     fun playGame(dealer: Dealer, players: Players) {
         while (!wantStop) {
-            players.forEachPlayer { hit(it) }
+            players.forEach { hit(it) }
         }
 
         dealerExtraHit(dealer)
