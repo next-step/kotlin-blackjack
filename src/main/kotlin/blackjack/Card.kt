@@ -16,7 +16,7 @@ data class Card private constructor(
     }
 
     companion object {
-        fun of(rank: CardRank, suit: CardSuit): Card {
+        fun of(rank: CardRank, suit: CardSuit = CardSuit.SPADE): Card {
             return CARD_CACHE[makeCardKey(rank, suit)] ?: throw IllegalArgumentException(
                 "Can not find a Card with rank : $rank, suit : $suit"
             )
