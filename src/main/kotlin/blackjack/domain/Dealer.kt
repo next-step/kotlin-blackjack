@@ -6,4 +6,8 @@ class Dealer {
     fun draw(): Card {
         return cardDeck.draw()
     }
+
+    fun deal(player: Player) {
+        player.addCard(draw())
+    }
 }

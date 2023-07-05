@@ -5,5 +5,6 @@ class Player {
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun addCard(cards: List<Card>): Boolean = _cards.addAll(cards)
+    fun addCards(cards: List<Card>): Boolean = _cards.addAll(cards)
+    fun addCard(card: Card): Boolean = _cards.add(card)
 }

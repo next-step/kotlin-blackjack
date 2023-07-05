@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.Dealer
+import blackjack.domain.Player
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
@@ -39,5 +40,16 @@ internal class DealerTest {
         val afterDraw = dealer.cardDeck.size()
 
         afterDraw shouldBe beforeDraw - 1
+    }
+
+    @DisplayName("딜러는 플레이어에게 카드를 줄 수 있다.")
+    @Test
+    fun deal() {
+        val player = Player()
+        dealer.deal(player)
+
+        val actual = player.cards
+
+        actual.size shouldBe 1
     }
 }
