@@ -28,10 +28,8 @@ internal class GameCardsTest {
 
     @Test
     internal fun `생성한 게임 카드 리스트이상으로 카드를 뽑으면 에러가 발생한다`() {
-        val gameCards = GameCards(mutableListOf(Card(Shape.DIAMOND, Character.SIX), Card(Shape.CLOVER, Character.J)))
+        val gameCards = GameCards(mutableListOf())
         shouldThrow<IllegalStateException> {
-            gameCards.draw()
-            gameCards.draw()
             gameCards.draw()
         }
     }
