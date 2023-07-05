@@ -42,7 +42,11 @@ class BettingService {
     }
 
     private fun playerGetWinningMoney(player: Player) {
-        dealerMoney -= (player.bettingMoney * 1.5).toInt()
-        playersMoneys[player] = (player.bettingMoney * 1.5).toInt()
+        dealerMoney -= (player.bettingMoney * WINNING_PRIZE_MULTIPLIER).toInt()
+        playersMoneys[player] = (player.bettingMoney * WINNING_PRIZE_MULTIPLIER).toInt()
+    }
+
+    companion object {
+        private const val WINNING_PRIZE_MULTIPLIER: Double = 1.5
     }
 }
