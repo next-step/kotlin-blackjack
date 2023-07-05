@@ -1,8 +1,8 @@
 package blackjack
 
 import blackjack.domain.GameCardsSet
+import blackjack.domain.ParticipantState
 import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,7 +28,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 상태를 확인할 수 있다`() {
         player1.hit(gameCardsSet.drawRandomCard())
-        assertThat(player1.state).isEqualTo(PlayerState.HIT)
+        assertThat(player1.state).isEqualTo(ParticipantState.HIT)
     }
 
     @Test

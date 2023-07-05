@@ -2,22 +2,22 @@ package blackjack.service
 
 import blackjack.domain.Dealer
 import blackjack.domain.FightResult
+import blackjack.domain.ParticipantState
 import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import blackjack.error.BlackjackErrorMessage.DEALER_STATUS_CAN_NOT_BE_STAND
 
 class FightService {
     fun go(dealer: Dealer, player: Player): FightResult {
         return when (dealer.state) {
-            PlayerState.BLACK_JACK -> dealerBlackjack(player)
-            PlayerState.BUST -> dealerBust(dealer, player)
-            PlayerState.HIT -> dealerHit(dealer, player)
+            ParticipantState.BLACK_JACK -> dealerBlackjack(player)
+            ParticipantState.BUST -> dealerBust(dealer, player)
+            ParticipantState.HIT -> dealerHit(dealer, player)
             else -> throw IllegalStateException(DEALER_STATUS_CAN_NOT_BE_STAND)
         }
     }
 
     private fun dealerBlackjack(player: Player): FightResult {
-        if (player.state == PlayerState.BLACK_JACK) {
+        if (player.state == ParticipantState.BLACK_JACK) {
             return FightResult.DRAW
         }
 
@@ -25,7 +25,7 @@ class FightService {
     }
 
     private fun dealerBust(dealer: Dealer, player: Player): FightResult {
-        if (player.state == PlayerState.BUST) {
+        if (player.state == ParticipantState.BUST) {
             return FightResult.LOSE
         }
 
@@ -37,7 +37,7 @@ class FightService {
     }
 
     private fun dealerHit(dealer: Dealer, player: Player): FightResult {
-        if (player.state == PlayerState.BUST) {
+        if (player.state == ParticipantState.BUST) {
             return FightResult.LOSE
         }
 

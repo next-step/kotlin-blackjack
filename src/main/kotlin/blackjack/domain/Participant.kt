@@ -4,7 +4,7 @@ import blackjack.error.BlackjackErrorMessage.CAN_NOT_DRAW
 
 abstract class Participant {
     private var cards: Cards = Cards.empty()
-    var state: PlayerState = PlayerState.HIT
+    var state: ParticipantState = ParticipantState.HIT
         protected set
 
     fun getCards(): Cards = cards.copy()
@@ -14,12 +14,12 @@ abstract class Participant {
     fun sumOfCards(): Int = cards.calculateOptimalSum()
 
     fun stand() {
-        state = PlayerState.STAND
+        state = ParticipantState.STAND
     }
 
     fun hit(card: Card) {
         check(state.canDraw) { CAN_NOT_DRAW }
         cards = cards.add(card)
-        state = PlayerState.of(this)
+        state = ParticipantState.of(this)
     }
 }

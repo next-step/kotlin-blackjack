@@ -1,8 +1,8 @@
 package blackjack.service
 
 import blackjack.domain.Dealer
+import blackjack.domain.ParticipantState
 import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import blackjack.domain.Players
 import blackjack.vo.GameProfitResult
 
@@ -20,13 +20,13 @@ class BettingService {
 
     private fun bettingResult(dealer: Dealer, player: Player) {
         when {
-            player.state == PlayerState.BUST -> dealerGetMoney(player)
-            dealer.state == PlayerState.BUST -> playerGetBettingMoney(player)
-            player.state == PlayerState.STAND && player.sumOfCards() < dealer.sumOfCards() -> dealerGetMoney(player)
-            player.state == PlayerState.BLACK_JACK && player.sizeOfCards() == 2 &&
-                dealer.state == PlayerState.BLACK_JACK && dealer.sizeOfCards() == 2
+            player.state == ParticipantState.BUST -> dealerGetMoney(player)
+            dealer.state == ParticipantState.BUST -> playerGetBettingMoney(player)
+            player.state == ParticipantState.STAND && player.sumOfCards() < dealer.sumOfCards() -> dealerGetMoney(player)
+            player.state == ParticipantState.BLACK_JACK && player.sizeOfCards() == 2 &&
+                dealer.state == ParticipantState.BLACK_JACK && dealer.sizeOfCards() == 2
             -> playerGetBettingMoney(player)
-            player.state == PlayerState.BLACK_JACK && player.sizeOfCards() == 2 -> playerGetWinningMoney(player)
+            player.state == ParticipantState.BLACK_JACK && player.sizeOfCards() == 2 -> playerGetWinningMoney(player)
             else -> playerGetBettingMoney(player)
         }
     }

@@ -3,8 +3,8 @@ package blackjack
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.GameCardsSet
+import blackjack.domain.ParticipantState
 import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import blackjack.domain.Players
 import blackjack.domain.Ranks
 import blackjack.domain.Suits
@@ -43,7 +43,7 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.BUST)
+            assertThat(player.state).isEqualTo(ParticipantState.BUST)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(-5000)
         })
     }
@@ -63,7 +63,7 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.STAND)
+            assertThat(player.state).isEqualTo(ParticipantState.STAND)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(-5000)
             assertThat(bettingResult.dealerProfit).isEqualTo(5000)
         })
@@ -83,7 +83,7 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.BLACK_JACK)
+            assertThat(player.state).isEqualTo(ParticipantState.BLACK_JACK)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(7500)
             assertThat(bettingResult.dealerProfit).isEqualTo(-7500)
         })
@@ -103,8 +103,8 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.BLACK_JACK)
-            assertThat(dealer.state).isEqualTo(PlayerState.BLACK_JACK)
+            assertThat(player.state).isEqualTo(ParticipantState.BLACK_JACK)
+            assertThat(dealer.state).isEqualTo(ParticipantState.BLACK_JACK)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(5000)
             assertThat(bettingResult.dealerProfit).isEqualTo(-5000)
         })
@@ -131,7 +131,7 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player, player2)))
         assertAll({
-            assertThat(dealer.state).isEqualTo(PlayerState.BUST)
+            assertThat(dealer.state).isEqualTo(ParticipantState.BUST)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(5000)
             assertThat(bettingResult.playersProfits[player2]).isEqualTo(1000)
             assertThat(bettingResult.dealerProfit).isEqualTo(-6000)
@@ -153,7 +153,7 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.BLACK_JACK)
+            assertThat(player.state).isEqualTo(ParticipantState.BLACK_JACK)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(5000)
             assertThat(bettingResult.dealerProfit).isEqualTo(-5000)
         })
@@ -175,8 +175,8 @@ class BettingServiceTest {
 
         val bettingResult = bettingService.bettingResult(dealer, Players(listOf(player)))
         assertAll({
-            assertThat(player.state).isEqualTo(PlayerState.BLACK_JACK)
-            assertThat(dealer.state).isEqualTo(PlayerState.BLACK_JACK)
+            assertThat(player.state).isEqualTo(ParticipantState.BLACK_JACK)
+            assertThat(dealer.state).isEqualTo(ParticipantState.BLACK_JACK)
             assertThat(bettingResult.playersProfits[player]).isEqualTo(5000)
             assertThat(bettingResult.dealerProfit).isEqualTo(-5000)
         })

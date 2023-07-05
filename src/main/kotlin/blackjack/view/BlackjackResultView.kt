@@ -26,10 +26,7 @@ object BlackjackResultView {
             int.toString() + result.description
         }
 
-        println(
-            "딜러: ${dealerResults.joinToString(" ")}",
-        )
-
+        println("딜러: ${dealerResults.joinToString(" ")}")
         gameResult.playersWinMap.forEach { (player, result) ->
             println("${player.name}: ${result.description}")
         }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class PlayerState(
+enum class ParticipantState(
     val canDraw: Boolean,
 ) {
     HIT(true),
@@ -10,7 +10,7 @@ enum class PlayerState(
     ;
 
     companion object {
-        fun of(participant: Participant): PlayerState {
+        fun of(participant: Participant): ParticipantState {
             if (participant.state == STAND) {
                 return STAND
             }
