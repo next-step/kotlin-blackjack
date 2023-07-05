@@ -1,0 +1,20 @@
+package blackjack
+
+import blackjack.domain.CardDeck
+import blackjack.domain.CardNumber
+import blackjack.domain.CardSuit
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+
+internal class CardDeckTest {
+
+    @DisplayName("카드 뭉치의 카드 개수는 13 * 4인 52장이다.")
+    @Test
+    fun cardDeckSize() {
+        val actual = CardDeck().size()
+        val expect = CardSuit.values().size * CardNumber.values().size
+
+        actual shouldBe expect
+    }
+}

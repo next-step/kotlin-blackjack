@@ -15,7 +15,7 @@ internal class CardTest {
     fun numberAndSuit() {
         val number = CardNumber.ACE
         val suit = CardSuit.DIAMOND
-        val actual = Card(number, suit)
+        val actual = Card.of(suit, number)
 
         actual.number shouldBe number
         actual.suit shouldBe suit
