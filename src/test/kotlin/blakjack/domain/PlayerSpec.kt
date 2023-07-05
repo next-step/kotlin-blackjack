@@ -35,6 +35,19 @@ class PlayerSpec : DescribeSpec({
     }
 
     describe("플레이어 수익 검증") {
+        context("플레이어가 이긴 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.win(dealer) }
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+
+                it("수익 금액은 1000원이다.") {
+                    player.profit() shouldBe Money(1000)
+                }
+            }
+        }
+
         context("플레이어가 블랙잭으로 이긴 경우") {
             val player = Player("홍길동")
             player.add(cards(heartAce, heart10))
