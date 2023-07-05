@@ -1,8 +1,8 @@
 package blackjack.domain.player
 
+import blackjack.domain.GameMoney
 import blackjack.domain.card.BlackCardDeck
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
 import io.kotest.core.spec.style.StringSpec
@@ -21,14 +21,11 @@ class PlayersTest : StringSpec({
         val players = Players(
             mutableListOf(
                 Player(
-                    PlayerName("pobi")
+                    PlayerName("pobi"),
+                    GameMoney(10000)
                 )
             ),
-            object : CardDeck {
-                override fun getCard(): Card {
-                    return cardSet.hitCard()
-                }
-            }
+            cardSet
         )
         players.getPlayers().forEach {
             it.cards.isBlackJack() shouldBe true
@@ -49,22 +46,18 @@ class PlayersTest : StringSpec({
                 Card(CardNumber.CARD_QUEEN, CardType.HEART)
             )
         )
+        val bettingMoney = 10000
         val players = Players(
             mutableListOf(
                 Player(
-                    PlayerName("pobi")
+                    PlayerName("pobi"),
+                    GameMoney(bettingMoney)
                 )
             ),
-            object : CardDeck {
-                override fun getCard(): Card {
-                    return cardSet.hitCard()
-                }
-            }
+            cardSet
         )
-        val bettingMoney = "10000"
         players.getPlayers().forEach {
             if (it is Player) {
-                it.setBettingMoney(bettingMoney)
                 it.cards.isBlackJack() shouldBe true
             }
         }
@@ -72,7 +65,7 @@ class PlayersTest : StringSpec({
         players.getPlayers().forEach {
             if (it is Player) {
                 it.gameResultState shouldBe GameResultState.WIN
-                it.finalIncome shouldBe (bettingMoney.toInt() * 1.5)
+                it.finalIncome shouldBe (bettingMoney * 1.5)
             }
         }
     }

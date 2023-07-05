@@ -29,7 +29,6 @@ class BlackJackTableTest {
                 cardDeck = makeCardDeck()
                 notify = playerNotify
                 joinPlayers {
-                    setBettingMoney()
                 }
             }
         }
@@ -55,7 +54,6 @@ class BlackJackTableTest {
                 cardDeck = makeCardDeck()
                 notify = playerNotify
                 joinPlayers {
-                    setBettingMoney()
                 }
             }
             blackJackTable.startGame(

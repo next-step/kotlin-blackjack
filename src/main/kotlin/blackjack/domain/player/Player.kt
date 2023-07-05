@@ -1,21 +1,22 @@
 package blackjack.domain.player
 
-class Player(name: PlayerName) : BlackJackPlayer(name) {
+import blackjack.domain.GameMoney
+
+class Player(name: PlayerName, private val bettingMoney: GameMoney) : BlackJackPlayer(name) {
 
     var gameResultState: GameResultState = GameResultState.DRAW
-
-    private var bettingMoney = MINIMUM_MONEY
 
     val finalIncome: Int
         get() {
             return when (gameResultState) {
                 GameResultState.WIN -> getWinMoney(bettingMoney)
                 GameResultState.DRAW -> MINIMUM_MONEY
-                GameResultState.LOSE -> bettingMoney.unaryMinus()
+                GameResultState.LOSE -> bettingMoney.money.unaryMinus()
             }
         }
 
-    private fun getWinMoney(money: Int): Int {
+    private fun getWinMoney(gameMoney: GameMoney): Int {
+        val money = gameMoney.money
         if (cards.isBlackJack()) {
             return (money * BONUS_BLACKJACK).toInt()
         }
@@ -30,18 +31,6 @@ class Player(name: PlayerName) : BlackJackPlayer(name) {
             else -> cards.match(dealer.getScore())
         }
         dealer.addEarnMoney(finalIncome.unaryMinus())
-    }
-
-    fun setBettingMoney(moneyString: String) {
-        val money = moneyString.toIntOrNull()
-        require(money != null) {
-            "베팅 금액은 숫자이어야함"
-        }
-
-        require(money > MINIMUM_MONEY) {
-            "베팅 금액은 0보다 커야함"
-        }
-        bettingMoney = money
     }
 
     companion object {

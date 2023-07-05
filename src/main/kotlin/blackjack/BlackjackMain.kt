@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.BlackJackTable
-import blackjack.domain.BlackJackTableBuilder
 import blackjack.domain.GameConditionNotify
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNotify
@@ -11,23 +10,11 @@ import blackjack.view.OutputView
 
 fun main() {
 
-    val playerNotify = object : PlayerNotify {
-        override fun inputPlayer(): MutableList<Player> {
+    val blackJackTable = BlackJackTable.of(object : PlayerNotify {
+        override fun generatePlayers(): List<Player> {
             return InputView.getInputPlayers()
         }
-
-        override fun inputBettingMoney(players: MutableList<Player>) {
-            InputView.setBettingMoney(players)
-        }
-    }
-
-    val blackJackTable = blackjackTable {
-        cardDeck = makeCardDeck()
-        notify = playerNotify
-        joinPlayers {
-            setBettingMoney()
-        }
-    }
+    })
 
     blackJackTable.startGame(object : GameConditionNotify {
         override fun giveDefaultCardsToPlayerDone(players: Players) {
@@ -35,7 +22,7 @@ fun main() {
         }
 
         override fun isNeedMoreCard(player: Player): Boolean {
-            return InputView.isMoreCard(player)
+            return InputView.inputIsMoreCard(player)
         }
 
         override fun giveCardToPlayerDone(player: Player) {
@@ -46,8 +33,4 @@ fun main() {
             OutputView.showGameResult(players)
         }
     })
-}
-
-fun blackjackTable(block: BlackJackTableBuilder.() -> Unit): BlackJackTable {
-    return BlackJackTableBuilder().apply(block).build()
 }

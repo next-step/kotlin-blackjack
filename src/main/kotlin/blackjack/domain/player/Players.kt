@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.GameConditionNotify
-import blackjack.domain.card.CardDeck
+import blackjack.domain.card.BlackCardDeck
 
-class Players(private val players: MutableList<Player>, private val deck: CardDeck) {
+class Players(private val players: List<Player>, private val deck: BlackCardDeck) {
 
     private val dealer = Dealer()
 
@@ -23,13 +23,13 @@ class Players(private val players: MutableList<Player>, private val deck: CardDe
 
     private fun giveCardsToPlayer(player: BlackJackPlayer, repeatTime: Int = DEFAULT_CARD_COUNT) {
         repeat(repeatTime) {
-            player.addCard(deck.getCard())
+            player.addCard(deck.hitCard())
         }
     }
 
     fun giveMoreCard(gameConditionNotify: GameConditionNotify) {
         if (dealer.shouldGetMoreCard()) {
-            dealer.addCard(deck.getCard())
+            dealer.addCard(deck.hitCard())
         }
 
         players.forEach {
