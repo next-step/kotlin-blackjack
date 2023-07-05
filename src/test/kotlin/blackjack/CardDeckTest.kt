@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.CardDeck
-import blackjack.domain.CardNumber
+import blackjack.domain.CardRank
 import blackjack.domain.CardSuit
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
@@ -13,7 +13,7 @@ internal class CardDeckTest {
     @Test
     fun cardDeckSize() {
         val actual = CardDeck().size()
-        val expect = CardSuit.values().size * CardNumber.values().size
+        val expect = CardSuit.values().size * CardRank.values().size
 
         actual shouldBe expect
     }

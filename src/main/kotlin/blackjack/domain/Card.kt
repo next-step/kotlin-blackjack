@@ -2,14 +2,14 @@ package blackjack.domain
 
 class Card private constructor (
     val suit: CardSuit,
-    val number: CardNumber
+    val rank: CardRank
 ) {
     companion object {
         private const val INVALID_CARD_ERROR = "존재하지 않는 카드입니다."
         val allCards =
             CardSuit.values().flatMap { suit ->
-                CardNumber.values().map { number ->
-                    Card(suit, number)
+                CardRank.values().map { rank ->
+                    Card(suit, rank)
                 }
             }
 
@@ -17,9 +17,9 @@ class Card private constructor (
 //        private val map =
 //            allCards
 //                .groupBy { it.suit }
-//                .mapValues { it.value.associateBy { card -> card.number } }
+//                .mapValues { it.value.associateBy { card -> card.rank } }
 
-        fun of(suit: CardSuit, number: CardNumber): Card =
-            allCards.find { it.suit == suit && it.number == number } ?: throw IllegalArgumentException(INVALID_CARD_ERROR)
+        fun of(suit: CardSuit, rank: CardRank): Card =
+            allCards.find { it.suit == suit && it.rank == rank } ?: throw IllegalArgumentException(INVALID_CARD_ERROR)
     }
 }

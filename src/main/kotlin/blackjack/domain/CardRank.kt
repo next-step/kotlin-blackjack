@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumber(val value: Int) {
+enum class CardRank(val value: Int) {
     ACE(1),
     TWO(2),
     THREE(3),
