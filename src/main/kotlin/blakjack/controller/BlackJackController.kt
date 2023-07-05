@@ -27,6 +27,7 @@ class BlackJackController {
         game.result()
         OutputView.printCardsWithScore(participants)
         OutputView.printResult(dealer, players)
+        OutputView.printProfit(dealer, players)
     }
 
     private fun printIntro(participants: List<Participant>) {

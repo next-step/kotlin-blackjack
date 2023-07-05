@@ -56,12 +56,24 @@ object OutputView {
         player.forEach { printPlayerResult(it) }
     }
 
+    fun printProfit(dealer: Dealer, player: List<Player>) {
+        println()
+        println("## 최종 수익")
+
+        printDealerResult(dealer)
+        player.forEach { printPlayerProfit(it) }
+    }
+
     private fun printDealerResult(dealer: Dealer) {
         println("${dealer.name}: ${dealer.winCount}승 ${dealer.loseCount}패")
     }
 
     private fun printPlayerResult(player: Player) {
         println("${player.name}: ${RESULT_KOREAN_MAP[player.result]}")
+    }
+
+    private fun printPlayerProfit(player: Player) {
+        println("${player.name}: ${player.profit().value}")
     }
 }
 
