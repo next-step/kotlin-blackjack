@@ -13,12 +13,12 @@ sealed class Participant(
         get() = cards.score()
 
     open fun win(other: Participant) {
-        other.lose()
+        other.lose(this)
     }
 
     abstract fun draw()
 
-    abstract fun lose()
+    abstract fun lose(other: Participant)
 
     abstract fun profit(): Money
 

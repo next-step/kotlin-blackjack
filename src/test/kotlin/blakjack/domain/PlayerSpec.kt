@@ -75,7 +75,8 @@ class PlayerSpec : DescribeSpec({
         }
 
         context("플레이어가 게임에서 진 경우") {
-            val player = Player("홍길동").also { it.lose() }
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.lose(dealer) }
 
             context("베팅 금액이 1000원이면") {
                 player.bet(Money(1000))

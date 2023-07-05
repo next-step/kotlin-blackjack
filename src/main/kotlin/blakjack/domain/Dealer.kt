@@ -13,6 +13,8 @@ class Dealer(
     var loseCount = 0
         private set
 
+    private var profit = Money.ZERO
+
     val isScoreToStand: Boolean
         get() = this.score >= SEVENTEEN
 
@@ -32,19 +34,20 @@ class Dealer(
     override fun win(other: Participant) {
         super.win(other)
         winCount++
+        profit += (other as Player).bettingMoney
     }
 
     override fun draw() {
         drawCount++
     }
 
-    override fun lose() {
+    override fun lose(other: Participant) {
         loseCount++
+        profit -= (other as Player).bettingMoney
     }
 
     override fun profit(): Money {
-        // TODO
-        return Money.ZERO
+        return profit
     }
 
     companion object {

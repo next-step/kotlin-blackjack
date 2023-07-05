@@ -19,7 +19,7 @@ class Player(
         result = Result.DRAW
     }
 
-    override fun lose() {
+    override fun lose(other: Participant) {
         result = Result.LOSE
     }
 

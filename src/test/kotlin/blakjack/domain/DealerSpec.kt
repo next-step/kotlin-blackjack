@@ -130,4 +130,39 @@ class DealerSpec : DescribeSpec({
             }
         }
     }
+
+    describe("수익 검증") {
+        context("딜러가 플레이어를 이기 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.bet(Money(1000)) }
+
+            dealer.win(player)
+
+            it("플레이어의 베팅 금액은 딜러의 수익에 추가된다.") {
+                dealer.profit() shouldBe Money(1000)
+            }
+        }
+
+        context("딜러와 플레이어가 비긴 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.bet(Money(1000)) }
+
+            dealer.draw()
+
+            it("플레이어의 베팅 금액은 딜러의 수익에 추가되지 않는다. (딜러의 수익은 변하지 않는다.)") {
+                dealer.profit() shouldBe Money(0)
+            }
+        }
+
+        context("딜러가 플레이어에게 진 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.bet(Money(1000)) }
+
+            dealer.lose(player)
+
+            it("플레이어의 베팅 금액만큼 딜러의 수익이 차감된다.") {
+                dealer.profit() shouldBe Money(-1000)
+            }
+        }
+    }
 })
