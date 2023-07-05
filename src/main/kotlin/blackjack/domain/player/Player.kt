@@ -13,4 +13,8 @@ abstract class Player(
         }
         deck.add(card)
     }
+
+    fun getDeckScore() = deck.getScore()
+
+    abstract fun isDrawable(): Boolean
 }
