@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
+import blackjack.domain.player.OpenCards
 import blackjack.fixture.DIAMOND_KING
 import blackjack.fixture.HEART_KING
 import blackjack.fixture.HEART_SEVEN
@@ -9,7 +10,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class HandTest : BehaviorSpec({
-    given("BURST 상태의 Hand에 대해") {
+    given("버스트 상태의 Hand에 대해") {
         val openCards = OpenCards(HEART_KING, DIAMOND_KING)
         val hand = Hand.create(openCards)
         hand.add(HEART_SEVEN)

@@ -1,9 +1,9 @@
 package blackjack.fixture
 
-import blackjack.domain.Card
+import blackjack.domain.card.Card
 
-import blackjack.domain.Dealer
-import blackjack.domain.PlayerName
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.PlayerName
 
 
 object DealerFixture {

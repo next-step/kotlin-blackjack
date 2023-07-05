@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.PlayerName
+import blackjack.domain.player.PlayerName
 
 object BlackJackPlayerNameReader {
 

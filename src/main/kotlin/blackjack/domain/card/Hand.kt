@@ -1,9 +1,12 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.player.OpenCards
 
 class Hand {
     private val cards: MutableList<Card> = mutableListOf()
 
     fun getCards(): List<Card> = cards.toList()
+    fun first(): Card = cards.firstOrNull() ?: throw IllegalStateException()
     fun add(card: Card) {
         if (bust()) {
             throw RuntimeException()
@@ -21,6 +24,8 @@ class Hand {
             .filter { it <= BLACKJACK }
             .max()
     }
+
+    fun blackjack(): Boolean = softTotal() == BLACKJACK && cards.size == 2
 
     private fun hardTotal(): Int {
         return cards.sumOf { it.cardNumber.value }

@@ -1,19 +1,6 @@
-package blackjack.domain
-
-const val ACE_SOFT = 10
-const val BLACKJACK = 21
-
-data class Card(val cardSuit: CardSuit, val cardNumber: CardNumber)
-
-enum class CardSuit(val displayName: String) {
-    HEART("하트"),
-    SPADE("스페이드"),
-    DIAMOND("다이아몬드"),
-    CLUB("클로버")
-}
+package blackjack.domain.card
 
 enum class CardNumber(val value: Int, val displayName: String) {
-
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -28,5 +15,3 @@ enum class CardNumber(val value: Int, val displayName: String) {
     QUEEN(10, "Q"),
     KING(10, "K");
 }
-
-

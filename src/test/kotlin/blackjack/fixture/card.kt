@@ -1,9 +1,9 @@
 package blackjack.fixture
 
-import blackjack.domain.Card
-import blackjack.domain.CardDeck
-import blackjack.domain.CardNumber
-import blackjack.domain.CardSuit
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardSuit
 
 val HEART_KING = Card(CardSuit.HEART, CardNumber.KING)
 val HEART_EIGHT = Card(CardSuit.HEART, CardNumber.EIGHT)

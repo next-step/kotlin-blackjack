@@ -1,12 +1,16 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Hand
 
 open class Player(
     val name: PlayerName,
     val hand: Hand,
 ) {
-    var status: PlayerStatus = PlayerStatus.STAY
+    var status: PlayerStatus = PlayerStatus.INIT
         private set
 
+    fun isFinished(): Boolean = status in setOf(PlayerStatus.BUST, PlayerStatus.BUST, PlayerStatus.STAY)
     fun hit(card: Card) {
         hand.add(card)
 
@@ -15,7 +19,7 @@ open class Player(
             return
         }
 
-        if (hand.total() == BLACKJACK) {
+        if (hand.blackjack()) {
             status = PlayerStatus.BLACKJACK
             return
         }
@@ -38,20 +42,6 @@ open class Player(
     }
 }
 
-class PlayerName private constructor (val value: String) {
-    companion object {
-        const val MAX_NAME_SIZE = 10
-        fun from(value: String): PlayerName {
-            require(value.length <= MAX_NAME_SIZE) { println("이름은 최대 ${MAX_NAME_SIZE} 글자 입니다.") }
-            return PlayerName(value)
-        }
-    }
-}
 
-enum class PlayerStatus {
-    SURRENDER,
-    STAY,
-    HIT,
-    BLACKJACK,
-    BUST
-}
+
+

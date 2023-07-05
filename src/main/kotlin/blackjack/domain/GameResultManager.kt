@@ -1,10 +1,15 @@
 package blackjack.domain
 
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerStatus
+
 object GameResultManager {
     fun calculate(dealer: Dealer, players: List<Player>): GameResult {
 
         val playerResults: List<PlayerResult> = players.map {
-            if (it.total() < dealer.total() || it.status == PlayerStatus.BUST) PlayerResult(it, Result.LOSE)
+            if (dealer.status == PlayerStatus.BUST) PlayerResult(it, Result.WIN)
+            else if (it.total() < dealer.total() || it.status == PlayerStatus.BUST) PlayerResult(it, Result.LOSE)
             else if (it.total() > dealer.total()) PlayerResult(it, Result.WIN)
             else PlayerResult(it, Result.DRAW)
         }

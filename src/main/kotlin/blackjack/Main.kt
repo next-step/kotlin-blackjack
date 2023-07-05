@@ -1,16 +1,17 @@
 package blackjack
 
-import blackjack.domain.Dealer
+import blackjack.domain.Decision
 import blackjack.domain.GameResultManager
-import blackjack.domain.Player
-import blackjack.domain.PlayerName
-import blackjack.domain.Round
-import blackjack.domain.RoundStatus
-import blackjack.domain.ShuffledCardDeck
+import blackjack.domain.HitDecision
+import blackjack.domain.card.ShuffledCardDeck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 import blackjack.ui.BlackJackPlayerNameReader
+import blackjack.ui.DealerMessagePrinter
+import blackjack.ui.DecisionReader
 import blackjack.ui.GameResultPrinter
 import blackjack.ui.HandPrinter
-import blackjack.ui.RoundAnswer
 import blackjack.ui.RoundMessagePrinter
 
 fun main() {
@@ -18,44 +19,32 @@ fun main() {
     val dealer = Dealer.of(PlayerName.from("딜러"), ShuffledCardDeck())
     dealer.openSelf()
 
-    //
     val playerNames: List<PlayerName> = BlackJackPlayerNameReader.read()
     val players: List<Player> = playerNames.map { Player.of(it, dealer.open()) }
 
     RoundMessagePrinter.open(playerNames)
-    HandPrinter.printFirstCard(dealer.name, dealer.hand)
+    DealerMessagePrinter.hand(dealer)
     players.forEach { HandPrinter.printAll(it.name, it.hand) }
 
-    players
-        .map { Round(dealer, it) }
-        .forEach { round ->
-            val playerName: PlayerName = round.player.name
-            while(round.status != RoundStatus.FINISH) {
-                val answer = RoundMessagePrinter.hitOrStay(playerName)
-                if (answer == RoundAnswer.y) {
-                    round.next()
-                    HandPrinter.printAll(playerName, round.player.hand)
-                } else {
-                    round.stop()
-                }
+    players.forEach { player ->
+        val playerName: PlayerName = player.name
+        while (!player.isFinished()) {
+            val decision: Decision = DecisionReader.read(playerName)
+            decision.process(dealer, player)
+            if (decision is HitDecision) {
+                HandPrinter.printAll(playerName, player.hand)
             }
         }
-
-    // 딜러 16 이하 시 힛
-    if (dealer.total() <= 16) {
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        dealer.dealing(dealer)
     }
 
-    GameResultPrinter.print(dealer)
-    players.forEach { GameResultPrinter.print(it) }
-
-    val (dealerResult, playerResults) = GameResultManager.calculate(dealer, players)
-
-    println("## 최종 승패")
-    println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
-    playerResults.forEach {
-        println("${it.player.name.value}: ${it.result.displayName}")
+    if (dealer.shouldHit()) {
+        DealerMessagePrinter.shouldHit()
+        dealer.hitSelf()
     }
 
+    GameResultPrinter.ofPlayer(dealer)
+    players.forEach { GameResultPrinter.ofPlayer(it) }
+
+    val gameResult = GameResultManager.calculate(dealer, players)
+    GameResultPrinter.summary(gameResult)
 }

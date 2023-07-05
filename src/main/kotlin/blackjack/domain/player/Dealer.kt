@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardDeck
+import blackjack.domain.card.Hand
 
 class Dealer private constructor(
     val cardDeck: CardDeck,
@@ -10,22 +14,23 @@ class Dealer private constructor(
         hand.add(openCards.first)
         hand.add(openCards.second)
     }
-    fun open(): OpenCards {
-        return OpenCards(cardDeck.fetch(), cardDeck.fetch())
-    }
+    fun open(): OpenCards = OpenCards(cardDeck.fetch(), cardDeck.fetch())
 
     fun dealing(player: Player) {
-        if (player.status == PlayerStatus.BUST || player.status == PlayerStatus.BLACKJACK) {
+        if (player.isFinished()) {
             throw RuntimeException()
         }
         player.hit(cardDeck.fetch())
     }
 
-    fun countOfRemainCards(): Int {
-        return cardDeck.countOfCards()
-    }
+    fun hitSelf() = hit(cardDeck.fetch())
+
+    fun shouldHit(): Boolean = total() <= SHOULD_HIT_SCORE
+
+    fun firstOpenCard(): Card = hand.first()
 
     companion object {
+        const val SHOULD_HIT_SCORE = 16
         fun of(name: PlayerName, cardDeck: CardDeck): Dealer {
             return Dealer(cardDeck, name, Hand.empty())
         }
