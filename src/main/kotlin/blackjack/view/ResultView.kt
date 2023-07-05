@@ -15,7 +15,7 @@ object ResultView {
     private const val RESULT_STRING = "\n## 최종 수익"
 
     fun printPlayerCards(player: Player) {
-        println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)}")
+        println("${player.name}$CARD_STRING ${getPrintCardString(player.state.cards)}")
     }
 
     fun printAddDealerCard() {
@@ -23,7 +23,7 @@ object ResultView {
     }
 
     private fun printDealerInitCards(dealer: Dealer) {
-        val firstCard = dealer.cards.values.first()
+        val firstCard = dealer.state.cards.values.first()
         println("${dealer.name}$CARD_STRING ${firstCard.character.value + firstCard.shape.value}")
     }
 
@@ -41,11 +41,11 @@ object ResultView {
     }
 
     private fun printDealerScore(dealer: Dealer) {
-        println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.cards)} $SCORE_STRING ${dealer.score()}")
+        println("${dealer.name}$CARD_STRING ${getPrintCardString(dealer.state.cards)} $SCORE_STRING ${dealer.state.score()}")
     }
 
     private fun printPlayerScore(player: Player) {
-        println("${player.name}$CARD_STRING ${getPrintCardString(player.cards)} $SCORE_STRING ${player.score()}")
+        println("${player.name}$CARD_STRING ${getPrintCardString(player.state.cards)} $SCORE_STRING ${player.state.score()}")
     }
 
     fun printResult(game: BlackJack, results: Results) {

@@ -1,32 +1,21 @@
 package blackjack.domain.participant
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
-import blackjack.domain.game.BlackJack
 
-sealed class Participant(val name: String, val cards: Cards = Cards()) {
+sealed class Participant(val name: String, val state: State) {
+
+    abstract val continueDrawing: Boolean
+
     init {
         require(name.isNotBlank()) { NAME_EXCEPTION }
     }
 
-    fun addCard(card: Card) {
-        cards.addCard(card)
+    fun drawInitCards(cards: List<Card>) {
+        cards.forEach { state + it }
     }
 
-    fun addCards(cards: List<Card>) {
-        cards.map { addCard(it) }
-    }
-
-    fun score(): Int {
-        return cards.score()
-    }
-
-    fun isBlackJack(): Boolean {
-        return cards.isBlackJack()
-    }
-
-    fun isBurst(): Boolean {
-        return score() > BlackJack.BLACKJACK_MAX_SCORE
+    fun drawCard(card: Card) {
+        state + card
     }
 
     companion object {

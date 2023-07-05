@@ -1,24 +1,26 @@
 package blackjack.domain.participant
 
-import blackjack.domain.card.Cards
 import blackjack.domain.game.BlackJack
-import blackjack.domain.game.Rank
 
-class Player(name: String, cards: Cards = Cards(), private var bettingAmount: Int = 0) : Participant(name, cards) {
+class Player(
+    name: String,
+    state: State = State(),
+    private var bettingAmount: Int = 0
+) : Participant(name, state) {
 
-    private var isTurnFinished: Boolean = false
+    override var continueDrawing: Boolean = false
 
     fun finishedTurn() {
-        isTurnFinished = true
+        continueDrawing = true
     }
 
-    fun canProceedTurn() = !isTurnFinished && score() <= BlackJack.BLACKJACK_MAX_SCORE
+    fun canProceedTurn() = !continueDrawing && state.score() <= BlackJack.BLACKJACK_MAX_SCORE
 
     fun bet(amount: Int) {
         this.bettingAmount = amount
     }
 
     fun getRevenue(dealer: Dealer): Int {
-        return Rank.of(this, dealer).calculateRevenue(bettingAmount)
+        return state.getRank(dealer.state) * bettingAmount
     }
 }

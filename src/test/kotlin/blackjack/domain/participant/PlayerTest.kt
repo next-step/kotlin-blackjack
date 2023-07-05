@@ -17,29 +17,21 @@ internal class PlayerTest {
             Player("")
         }
     }
-
-    @Test
-    internal fun `플레이어의 점수가 계산된다`() {
-        val cards = TestCards.getSixteenPointCards()
-        val player = Player("pobi", cards)
-
-        player.score() shouldBe 16
-    }
-
     @Test
     internal fun `플레이어는 21점이 넘으면 더이상 게임을 진행할 수 없다`() {
         val cards = TestCards.getBurstCards()
-        val player = Player("pobi", cards)
+        val player = Player("pobi", State(cards))
 
-        player.score() shouldBe 22
         player.canProceedTurn() shouldBe false
     }
 
     @Test
     internal fun `플레이어는 턴을 끝내면 더이상 게임을 진행할 수 없다`() {
         val cards = TestCards.getSixteenPointCards()
-        val player = Player("pobi", cards)
+        val player = Player("pobi", State(cards))
+
         player.finishedTurn()
+
         player.canProceedTurn() shouldBe false
     }
 }

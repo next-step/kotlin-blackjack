@@ -18,7 +18,7 @@ fun main() {
         ResultView.printPlayerCards(player)
     }
 
-    if (game.shouldDealerDrawCard()) {
+    if (game.dealer.continueDrawing) {
         game.distributeCardForDealer()
         ResultView.printAddDealerCard()
     }

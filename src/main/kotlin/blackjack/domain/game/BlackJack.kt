@@ -12,8 +12,8 @@ class BlackJack(
     private val gameCards: GameCards = GameCardGenerator.crete(),
 ) {
     fun distributeInitialCard() {
-        dealer.addCards(drawInitCards())
-        players.forEach { player -> player.addCards(drawInitCards()) }
+        dealer.drawInitCards(drawInitCards())
+        players.forEach { player -> player.drawInitCards(drawInitCards()) }
     }
 
     private fun drawInitCards(): List<Card> {
@@ -21,7 +21,7 @@ class BlackJack(
     }
 
     fun distributeCardForDealer() {
-        dealer.addCard(gameCards.draw())
+        dealer.drawCard(gameCards.draw())
     }
 
     fun isEnd(): Boolean {
@@ -35,16 +35,9 @@ class BlackJack(
     fun playGameTurn(isPlaying: Boolean) {
         val nowPlayer = getNowPlayer()
         when (isPlaying) {
-            true -> nowPlayer.addCard(gameCards.draw())
+            true -> nowPlayer.drawCard(gameCards.draw())
             false -> nowPlayer.finishedTurn()
         }
-    }
-
-    fun shouldDealerDrawCard(): Boolean {
-        if (dealer.score() <= DEALER_CARD_STANDARD_SCORE) {
-            return true
-        }
-        return false
     }
 
     fun getResult(): Results {
@@ -54,7 +47,6 @@ class BlackJack(
     companion object {
         const val START_CARD_COUNT = 2
         const val BLACKJACK_MAX_SCORE = 21
-        private const val DEALER_CARD_STANDARD_SCORE = 16
         private const val PLAYER_NONE_EXCEPTION = "턴을 가져갈 플레이어가 존재하지 않습니다"
     }
 }
