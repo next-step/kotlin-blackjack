@@ -11,6 +11,7 @@ object OutputView {
         players.players.forEach {
             printPlayersCards(it)
         }
+        println()
     }
 
     fun printPlayersCards(player: Player) {

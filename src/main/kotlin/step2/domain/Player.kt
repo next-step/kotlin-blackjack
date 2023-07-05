@@ -9,4 +9,9 @@ data class Player(
     fun draw(count: Int) {
         cards.draw(count)
     }
+
+    fun isBurst(): Boolean {
+        val currentScore = cards.calculateScore()
+        return currentScore.isBurst()
+    }
 }
