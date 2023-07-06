@@ -18,7 +18,7 @@ class Players(private val players: List<Player>) {
 
     private fun hitFor(player: Player, game: Game) {
         if (!InputView.askReceiveCard(player.name)) return
-        game.dealAdditionalCard(player)
+        game.hit(player)
         ResultView.printPlayerState(player)
     }
 }

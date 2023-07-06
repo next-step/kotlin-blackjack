@@ -6,7 +6,7 @@ import domain.card.ShuffledCardDeck
 class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledCardDeck.createNew()) {
 
     fun start() {
-        players.dealInitialCards()
+        players.hitInitialCards()
     }
 
     fun playersCanReceiveMoreCard(): List<Player> {
@@ -15,23 +15,19 @@ class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledC
         }
     }
 
-    fun dealAdditionalCard(player: Player) {
-        player.dealCard()
+    fun hit(player: Player) {
+        player.hit(cardDeck.pop())
     }
 
-    private fun List<Player>.dealInitialCards() {
+    private fun List<Player>.hitInitialCards() {
         forEach {
-            it.dealInitialCards()
+            it.hitInitialCards()
         }
     }
 
-    private fun Player.dealInitialCards() {
+    private fun Player.hitInitialCards() {
         repeat(2) {
-            this.dealCard()
+            hit(cardDeck.pop())
         }
-    }
-
-    private fun Player.dealCard() {
-        hit(cardDeck.pop())
     }
 }

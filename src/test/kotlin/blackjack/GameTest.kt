@@ -62,7 +62,7 @@ class GameTest {
         ).isEqualTo(players)
 
         players.forEach {
-            game.dealAdditionalCard(it)
+            game.hit(it)
         }
 
         assertThat(
@@ -80,7 +80,7 @@ class GameTest {
         val game = Game(players)
 
         players.forEach {
-            game.dealAdditionalCard(it)
+            game.hit(it)
         }
 
         game.players.forEach {
