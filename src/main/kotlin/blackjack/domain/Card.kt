@@ -1,3 +1,3 @@
 package blackjack.domain
 
-class Card(val suit: Suit, val number: Int)
+class Card(val suit: Suit, val denomination: Denomination)

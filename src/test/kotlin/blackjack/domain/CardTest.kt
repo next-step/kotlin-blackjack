@@ -12,8 +12,8 @@ class CardTest : FunSpec({
     context("카드의 종류는 총 13가지이다.") {
         val deck = Deck()
         val cards = deck.cards
-        val numbers = cards.map { it.number }
-        numbers.distinct().size shouldBe 13
-        numbers.containsAll((1..13).toList()) shouldBe true
+        val denominations = cards.map { it.denomination }
+        denominations.distinct().size shouldBe 13
+        denominations.containsAll(Denomination.values().toList()) shouldBe true
     }
 })
