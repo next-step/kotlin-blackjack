@@ -17,7 +17,7 @@ fun main() {
         val playerReceiveMoreCard = Players(game.playersCanReceiveMoreCard())
         if (playerReceiveMoreCard.noMorePlayer()) break
 
-        playerReceiveMoreCard.dealMoreCard(game)
+        playerReceiveMoreCard.hit(game)
 
         ResultView.printResult(game.players)
     }
