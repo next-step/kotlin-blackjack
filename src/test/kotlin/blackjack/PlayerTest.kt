@@ -2,6 +2,7 @@ package blackjack
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -44,5 +45,12 @@ internal class PlayerTest {
         sut.canHit shouldBe true
         sut.stay()
         sut.canHit shouldBe false
+    }
+
+    @Test
+    internal fun `플레이어가 히트할 수 없을때 카드를 받으면 예외가 발생한다`() {
+        val sut = Player("A")
+        sut.stay()
+        assertThrows<IllegalStateException> { sut.receive(Card.of(CardRank.ACE)) }
     }
 }
