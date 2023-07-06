@@ -27,7 +27,7 @@ class CardTest {
         "KING,10",
     )
     fun `카드의 숫자는 심볼에 의해 정해진다`(symbol: Symbol, value: Int) {
-        val card = Card(Type.CLOVER, symbol)
+        val card = Card(Type.CLUBS, symbol)
 
         card.value shouldBe value
     }
@@ -38,16 +38,16 @@ class CardTest {
         "11,12"
     )
     fun `ACE는 1 또는 11로 계산될 수 있다`(base: Int, sum: Int) {
-        val card = Card(Type.CLOVER, Symbol.ACE)
+        val card = Card(Type.CLUBS, Symbol.ACE)
 
         base + card shouldBe sum
     }
 
     @Test
     fun `King, Queen, Jack은 10으로 계산한다`() {
-        val king = Card(Type.CLOVER, Symbol.KING)
-        val queen = Card(Type.CLOVER, Symbol.QUEEN)
-        val jack = Card(Type.CLOVER, Symbol.JACK)
+        val king = Card(Type.CLUBS, Symbol.KING)
+        val queen = Card(Type.CLUBS, Symbol.QUEEN)
+        val jack = Card(Type.CLUBS, Symbol.JACK)
 
         king.value shouldBe 10
         queen.value shouldBe 10
@@ -56,16 +56,16 @@ class CardTest {
 
     @Test
     fun `Card + Card 는 카드 숫자 값의 합을 반환한다`() {
-        val three = Card(Type.CLOVER, Symbol.THREE)
-        val king = Card(Type.CLOVER, Symbol.KING)
+        val three = Card(Type.CLUBS, Symbol.THREE)
+        val king = Card(Type.CLUBS, Symbol.KING)
 
         three + king shouldBe 13
     }
 
     @Test
     fun `Card + Int 는 카드 숫자 값의 합을 반환한다`() {
-        val three = Card(Type.SPADE, Symbol.THREE)
-        val king = Card(Type.CLOVER, Symbol.KING)
+        val three = Card(Type.SPADES, Symbol.THREE)
+        val king = Card(Type.CLUBS, Symbol.KING)
 
         three + 10 shouldBe 13
         3 + king shouldBe 13
