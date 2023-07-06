@@ -2,7 +2,7 @@ package domain.card
 
 import java.util.Stack
 
-class CardDeckImpl : CardDeck {
+class ShuffledCardDeck : CardDeck {
     private val cards = Stack<Card>()
 
     init {

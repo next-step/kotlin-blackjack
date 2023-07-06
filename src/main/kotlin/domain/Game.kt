@@ -1,9 +1,9 @@
 package domain
 
 import domain.card.CardDeck
-import domain.card.CardDeckImpl
+import domain.card.ShuffledCardDeck
 
-class Game(val players: List<Player>, private val cardDeck: CardDeck = CardDeckImpl()) {
+class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledCardDeck()) {
 
     fun start() {
         players.dealInitialCards()

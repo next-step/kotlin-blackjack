@@ -1,16 +1,16 @@
 package blackjack
 
 import domain.card.Card
-import domain.card.CardDeckImpl
 import domain.card.CardType
 import domain.card.Denomination
+import domain.card.ShuffledCardDeck
 import io.kotest.assertions.throwables.shouldThrow
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import java.util.EmptyStackException
 
-class CardDeckTest {
+class ShuffledCardDeckTest {
     @Test
     fun `카드 덱 생성 테스트`() {
         val spades = Denomination.values().map { Card.spade(it) }.toMutableList()
@@ -18,7 +18,7 @@ class CardDeckTest {
         val diamonds = Denomination.values().map { Card.diamond(it) }.toMutableList()
         val clovers = Denomination.values().map { Card.clover(it) }.toMutableList()
 
-        val cardDeck = CardDeckImpl()
+        val cardDeck = ShuffledCardDeck()
 
         repeat(Denomination.values().size * CardType.values().size) {
             val poppedCard = cardDeck.pop()
