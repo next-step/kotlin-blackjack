@@ -17,11 +17,14 @@ class BlackJackController(
     fun play() {
 
         val blackjackGame = initBlackjackGame()
+        val blackjackFlag = blackjackService.checkAllPlayersBlackjack(blackjackGame)
 
-        raceBlackjack(blackjackGame)
-        resultView.printEnter()
-        raceDealer(blackjackGame.dealer)
-        resultView.printEnter()
+        if(!blackjackFlag) {
+            raceBlackjack(blackjackGame)
+            resultView.printEnter()
+            raceDealer(blackjackGame.dealer)
+            resultView.printEnter()
+        }
 
         resultView.printResultScore(blackjackGame.players, blackjackGame.dealer)
         resultView.printEnter()
@@ -67,7 +70,7 @@ class BlackJackController(
     private fun playerInfos(players: List<String>) = players.map { player ->
         val betAmount = inputView.inputBetAmount(player)
         resultView.printEnter()
-        PlayerInfo(name = player, betAmount = betAmount.toInt())
+        PlayerInfo(name = player, betAmount = betAmount.toDouble())
     }
 
     private fun replaceWhiteSpaceAndSplitByComma(target: String): List<String> {

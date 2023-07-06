@@ -16,10 +16,12 @@ class BlackjackService {
     fun initBlackjackGame(players: List<PlayerInfo>): BlackjackGame {
         val deck = Deck()
         val dealer = Dealer(deck = deck, cards = deck.drawCard(BASIC_CARD_COUNT))
+        dealer.checkBlackjack()
         val blackJackPlayers = players.map { player ->
             val cards = dealer.draw(BASIC_CARD_COUNT)
             Player(name = player.name, cards = cards, betAmount = player.betAmount)
         }
+        blackJackPlayers.forEach { it.checkBlackjack() }
         return BlackjackGame(blackJackPlayers, dealer)
     }
 
@@ -49,6 +51,24 @@ class BlackjackService {
         }
         result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
         return result
+    }
+
+    fun checkAllPlayersBlackjack(blackjackGame: BlackjackGame): Boolean {
+        var blackjackFlag = false
+        val blackjackPlayers = blackjackGame.players.filter { it.condition == Condition.BLACKJACK }
+
+        if(blackjackPlayers.isNotEmpty()) {
+            when(blackjackGame.dealer.condition) {
+                Condition.BLACKJACK -> {
+                    blackjackGame.players.filter { it.condition != Condition.BLACKJACK }.forEach { player -> player.loseAllBets() }
+                }
+                else -> {
+                    blackjackPlayers.forEach { player -> player.blackjack() }
+                }
+            }
+            blackjackFlag = true
+        }
+        return blackjackFlag
     }
 
     private fun addGameResult(

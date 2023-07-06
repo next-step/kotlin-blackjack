@@ -38,7 +38,7 @@ class DealerTest {
                 )
             ),
             condition = Condition.PLAY,
-            betAmount = 10000
+            betAmount = 10000.0
         )
 
         dealer.determineResult(player) shouldBe MatchResult.WIN
@@ -56,7 +56,7 @@ class DealerTest {
                 )
             ),
             condition = Condition.PLAY,
-            betAmount = 10000
+            betAmount = 10000.0
         )
 
         dealer.determineResult(player) shouldBe MatchResult.LOSE
@@ -74,7 +74,7 @@ class DealerTest {
                 )
             ),
             condition = Condition.PLAY,
-            betAmount = 10000
+            betAmount = 10000.0
         )
 
         dealer.determineResult(player) shouldBe MatchResult.DRAW
