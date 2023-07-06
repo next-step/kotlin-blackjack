@@ -1,6 +1,11 @@
 package blackjack.service
 
-import blackjack.domain.*
+import blackjack.domain.BlackjackGame
+import blackjack.domain.Card
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
+import blackjack.domain.Deck
+import blackjack.domain.Player
 import blackjack.dto.PlayerInfo
 import blackjack.enums.Rank
 import blackjack.enums.Symbol
@@ -61,12 +66,15 @@ class BlackjackServiceTest {
         player2.checkBlackjack()
 
         val blackjackGame = BlackjackGame(
-            players = listOf(player1, player2), dealer = Dealer(
+            players = listOf(player1, player2),
+            dealer = Dealer(
                 name = "",
-                cards = Cards(cards = listOf(
-                    Card(rank = Rank.SIX, symbol = Symbol.SPADES),
-                    Card(rank = Rank.TWO, symbol = Symbol.SPADES)
-                )),
+                cards = Cards(
+                    cards = listOf(
+                        Card(rank = Rank.SIX, symbol = Symbol.SPADES),
+                        Card(rank = Rank.TWO, symbol = Symbol.SPADES)
+                    )
+                ),
                 deck = Deck()
             )
         )
@@ -82,12 +90,15 @@ class BlackjackServiceTest {
         player2.checkBlackjack()
 
         val blackjackGame = BlackjackGame(
-            players = listOf(player1, player2), dealer = Dealer(
+            players = listOf(player1, player2),
+            dealer = Dealer(
                 name = "",
-                cards = Cards(cards = listOf(
-                    Card(rank = Rank.ACE, symbol = Symbol.HEARTS),
-                    Card(rank = Rank.KING, symbol = Symbol.DIAMONDS)
-                )),
+                cards = Cards(
+                    cards = listOf(
+                        Card(rank = Rank.ACE, symbol = Symbol.HEARTS),
+                        Card(rank = Rank.KING, symbol = Symbol.DIAMONDS)
+                    )
+                ),
                 deck = Deck()
             )
         )

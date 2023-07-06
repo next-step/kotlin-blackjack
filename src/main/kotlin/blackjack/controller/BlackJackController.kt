@@ -19,7 +19,7 @@ class BlackJackController(
         val blackjackGame = initBlackjackGame()
         val blackjackFlag = blackjackService.checkAllPlayersBlackjack(blackjackGame)
 
-        if(!blackjackFlag) {
+        if (!blackjackFlag) {
             raceBlackjack(blackjackGame)
             resultView.printEnter()
             raceDealer(blackjackGame.dealer)
