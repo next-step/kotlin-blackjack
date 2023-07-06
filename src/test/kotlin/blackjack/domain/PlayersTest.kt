@@ -20,5 +20,4 @@ class PlayersTest : StringSpec({
         result.values[0].hand.cards shouldBe cards
         result.values[1].hand.cards shouldBe cards
     }
-
 })

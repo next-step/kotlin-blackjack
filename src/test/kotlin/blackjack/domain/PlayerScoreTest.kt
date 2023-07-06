@@ -5,58 +5,38 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class PlayerScoreTest : BehaviorSpec({
-    given("점수가 10점일 때") {
+    given("주어진 점수에") {
         val playerScore = PlayerScore(10)
 
-        `when`("(primary=11, secondary=10)를 더한 결과는") {
+        `when`("primary 점수를 더했을 때 합이 21이하면") {
             val result = playerScore.plus(CardScore(11, 10))
 
-            then("21이다.") {
+            then("primary 점수를 더한다.") {
                 result shouldBe PlayerScore(21)
             }
         }
 
-        `when`("(primary=13, secondary=12)를 더한 결과는") {
-            val result = playerScore.plus(CardScore(13, 12))
+        `when`("primary 점수를 더했을 때 합이 21보다 크면") {
+            val result = playerScore.plus(CardScore(12, 11))
 
-            then("22이다.") {
-                result shouldBe PlayerScore(22)
-            }
-        }
-
-        `when`("(primary=11, secondary=10), (primary=11, secondary=10)를 더한 결과는") {
-            val cardScores = List(2) { CardScore(11, 10) }
-            val result = playerScore.plus(cardScores)
-
-            then("31이다.") {
-                result shouldBe PlayerScore(31)
-            }
-        }
-
-        `when`("(primary=6, secondary=6), (primary=5, secondary=5)를 더한 결과는") {
-            val cardScores = listOf(CardScore(6, 6), CardScore(5, 5))
-            val result = playerScore.plus(cardScores)
-
-            then("21이다.") {
+            then("secondary 점수를 더한다.") {
                 result shouldBe PlayerScore(21)
             }
         }
 
-        `when`("(primary=11, secondary=10), (primary=5, secondary=5)를 더한 결과는") {
-            val cardScores = listOf(CardScore(11, 10), CardScore(5, 5))
-            val result = playerScore.plus(cardScores)
+        `when`("primary == secondary인 점수와 primary !== secondary인 점수를 더하면") {
+            val result = playerScore.plus(listOf(CardScore(3, 1), CardScore(12, 12)))
 
-            then("25이다.") {
-                result shouldBe PlayerScore(25)
+            then("primary == secondary 점수가 먼저 더해진다.") {
+                result shouldBe PlayerScore(23)
             }
         }
 
-        `when`("(primary=11, secondary=10), (primary=11, secondary=10),  (primary=5, secondary=5), (primary=3, secondary=3)를 더한 결과는") {
-            val cardScores = listOf(CardScore(11, 10), CardScore(11, 10), CardScore(5, 5), CardScore(3, 3))
-            val result = playerScore.plus(cardScores)
+        `when`("primary !== secondary인 점수와 primary !== secondary인 점수를 더하면") {
+            val result = playerScore.plus(listOf(CardScore(11, 1), CardScore(5, 2)))
 
-            then("38이다.") {
-                result shouldBe PlayerScore(38)
+            then("앞에 있는 점수가 먼저 더해진다.") {
+                result shouldBe PlayerScore(23)
             }
         }
     }

@@ -12,7 +12,7 @@ class BlackJackGameTest : BehaviorSpec({
         val deck = Deck.create()
         val game = BlackJackGame(deck)
 
-        `when`("start") {
+        `when`("게임을 시작하면") {
             val initPlayers = Players.of(List(2) { TestUtils.randomString(size = 2) })
             val result = game.start(initPlayers)
 

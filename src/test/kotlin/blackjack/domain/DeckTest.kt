@@ -10,38 +10,27 @@ class DeckTest : StringSpec({
         deck.size() shouldBe 52
     }
 
-    "덱에서 카드 한 장을 랜덤으로 뽑을 수 있다." {
-        val deck = Deck.create()
-        deck.drawCard()
-        deck.size() shouldBe 51
-    }
-
-    "덱에서 카드 2장을 랜덤으로 뽑을 수 있다." {
-        val deck = Deck.create()
-        deck.drawCards(2)
-        deck.size() shouldBe 50
-    }
-
-    "덱에서 카드 52장을 랜덤으로 뽑을 수 있다." {
+    "덱에서 52장 이하의 카드를 랜덤으로 뽑을 수 있다." {
         val deck = Deck.create()
         deck.drawCards(52)
         deck.size() shouldBe 0
     }
 
-    "비어있는 덱에서 카드를 뽑으려고 시도하면 예외가 발생한다." {
+
+    "덱에서 카드를 52장보다 많이 뽑으면 예외가 발생한다." {
+        val deck = Deck.create()
+
+        shouldThrow<IllegalArgumentException> {
+            deck.drawCards(53)
+        }
+    }
+
+    "비어있는 덱에서 카드를 뽑으면 예외가 발생한다." {
         val deck = Deck.create()
         deck.drawCards(52)
 
         shouldThrow<IllegalStateException> {
             deck.drawCard()
-        }
-    }
-
-    "덱에서 카드 53장의 카드를 뽑으려고 시도하면 예외가 발생한다." {
-        val deck = Deck.create()
-
-        shouldThrow<IllegalArgumentException> {
-            deck.drawCards(53)
         }
     }
 })

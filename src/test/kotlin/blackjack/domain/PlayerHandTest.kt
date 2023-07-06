@@ -6,79 +6,55 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class PlayerHandTest : BehaviorSpec({
-    given("카드가 TEN, THREE가 있을 때") {
+    given("카드의 총합이 21보다 작은 경우") {
         val playerHand = PlayerHand.init
             .add(
                 listOf(
                     FakeGenerator.card(CardNumber.TEN),
-                    FakeGenerator.card(CardNumber.THREE)
+                    FakeGenerator.card(CardNumber.TEN)
                 )
             )
 
         `when`("ACE를 추가하면") {
             val result = playerHand.add(FakeGenerator.card(CardNumber.ACE))
 
-            then("점수는 14이다.") {
-                result.score shouldBe PlayerScore(14)
-            }
-        }
-
-        `when`("FOUR을 추가하면") {
-            val result = playerHand.add(FakeGenerator.card(CardNumber.FOUR))
-
-            then("점수는 17이다.") {
-                result.score shouldBe PlayerScore(17)
+            then("ACE는 1로 계산된다.") {
+                result.score shouldBe PlayerScore(21)
             }
         }
     }
 
-    given("카드가 TWO, THREE가 있을 때") {
+    given("카드의 총합이 21이상인 경우") {
         val playerHand = PlayerHand.init
             .add(
                 listOf(
-                    FakeGenerator.card(CardNumber.TWO),
-                    FakeGenerator.card(CardNumber.THREE)
+                    FakeGenerator.card(CardNumber.TEN),
+                    FakeGenerator.card(CardNumber.NINE),
+                    FakeGenerator.card(CardNumber.TWO)
                 )
             )
 
         `when`("ACE를 추가하면") {
             val result = playerHand.add(FakeGenerator.card(CardNumber.ACE))
 
-            then("점수는 16이다.") {
-                result.score shouldBe PlayerScore(16)
+            then("ACE는 11로 계산된다.") {
+                result.score shouldBe PlayerScore(22)
             }
         }
     }
 
-    given("카드가 ACE가 있을 때") {
+    given("ACE가 있을 때") {
         val playerHand = PlayerHand.init
             .add(FakeGenerator.card(CardNumber.ACE))
 
-        `when`("ACE를 추가하면") {
-            val result = playerHand.add(FakeGenerator.card(CardNumber.ACE))
-
-            then("점수는 12이다.") {
-                result.score shouldBe PlayerScore(12)
-            }
-        }
-
-        `when`("TEN, TEN을 추가하면") {
+        `when`("추가되는 카드합과 상관없이") {
             val result = playerHand.add(
                 List(2) { FakeGenerator.card(CardNumber.TEN) }
             )
 
-            then("점수는 31이다.") {
+            then("ACE는 11로 계산된다.") {
                 result.score shouldBe PlayerScore(31)
             }
         }
-    }
-
-    given("카드가 ACE, TEN이 있을 때") {
-        val playerHand = PlayerHand.init
-            .add(
-                listOf(
-                    FakeGenerator.card(CardNumber.ACE), FakeGenerator.card(CardNumber.TEN)
-                )
-            )
     }
 })
