@@ -3,9 +3,18 @@ package blackjack.domain
 import blackjack.domain.player.Player
 
 @JvmInline
-value class GameMoney(val money: Int) {
+value class GameMoney(val money: Int = ZERO) {
+
+    fun minusMoney(): GameMoney {
+        return GameMoney(money.unaryMinus())
+    }
+
+    operator fun plus(minusMoney: GameMoney): GameMoney {
+        return GameMoney(money + minusMoney.money)
+    }
+
     companion object {
-        fun of(moneyString: String) : GameMoney {
+        fun of(moneyString: String): GameMoney {
             val money = moneyString.toIntOrNull()
 
             require(money != null) {
@@ -17,6 +26,6 @@ value class GameMoney(val money: Int) {
             }
             return GameMoney(money)
         }
+        const val ZERO = 0
     }
-
 }

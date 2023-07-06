@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.GameConditionNotify
+import blackjack.domain.GameMoney
 import blackjack.domain.card.BlackCardDeck
 
 class Players(private val players: List<Player>, private val deck: BlackCardDeck) {
@@ -53,13 +54,17 @@ class Players(private val players: List<Player>, private val deck: BlackCardDeck
     }
 
     fun judgeGameResult() {
+        var dealerIncome = GameMoney()
         players.forEach {
             it.matchGameScore(dealer)
+            dealerIncome += it.finalIncome.minusMoney()
         }
+        dealer.earnMoney = dealerIncome
     }
 
     companion object {
         private const val DEFAULT_CARD_COUNT = 1
         const val START_CARD_COUNT = 2
+        const val MONEY_ZERO = 0
     }
 }

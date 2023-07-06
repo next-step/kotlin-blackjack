@@ -6,14 +6,14 @@ class Player(name: PlayerName, private val bettingMoney: GameMoney) : BlackJackP
 
     var gameResultState: GameResultState = GameResultState.DRAW
 
-    val finalIncome: Int
-        get() {
-            return when (gameResultState) {
+    val finalIncome: GameMoney
+        get() = GameMoney(
+            when (gameResultState) {
                 GameResultState.WIN -> getWinMoney(bettingMoney)
                 GameResultState.DRAW -> MINIMUM_MONEY
                 GameResultState.LOSE -> bettingMoney.money.unaryMinus()
             }
-        }
+        )
 
     private fun getWinMoney(gameMoney: GameMoney): Int {
         val money = gameMoney.money
@@ -30,7 +30,6 @@ class Player(name: PlayerName, private val bettingMoney: GameMoney) : BlackJackP
             isBlackJack() && dealer.isBlackJack() -> GameResultState.DRAW
             else -> cards.match(dealer.getScore())
         }
-        dealer.addEarnMoney(finalIncome.unaryMinus())
     }
 
     companion object {

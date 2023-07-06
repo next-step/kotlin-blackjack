@@ -58,7 +58,7 @@ object OutputView {
             else -> return
         }
 
-        println("${player.name.name}: $result")
+        println("${player.name.name}: ${result.money}")
     }
 
     private fun getCardsNames(cards: Cards): String {

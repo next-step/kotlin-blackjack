@@ -65,7 +65,7 @@ class PlayersTest : StringSpec({
         players.getPlayers().forEach {
             if (it is Player) {
                 it.gameResultState shouldBe GameResultState.WIN
-                it.finalIncome shouldBe (bettingMoney * 1.5)
+                it.finalIncome.money shouldBe (bettingMoney * 1.5)
             }
         }
     }
