@@ -3,8 +3,6 @@ package blackjack
 import domain.Player
 import domain.card.Card
 import domain.card.Denomination
-import domain.card.Diamond
-import domain.card.Spade
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -23,7 +21,7 @@ class PlayerTest {
     @Test
     fun `플레이어에게 카드 나눠주기`() {
         val player = Player("peter")
-        val cards = setOf(Spade.get(Denomination.ACE), Spade.get(Denomination.JACK))
+        val cards = setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.JACK))
 
         cards.forEach {
             player.hit(it)
@@ -49,20 +47,21 @@ class PlayerTest {
         fun `카드 더 받을 수 있는지 확인 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    setOf(Spade.get(Denomination.TWO), Spade.get(Denomination.THREE)), true
+                    setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE)), true
                 ),
                 Arguments.of(
-                    setOf(Spade.get(Denomination.ACE), Diamond.get(Denomination.ACE)), true
+                    setOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE)), true
                 ),
                 Arguments.of(
-                    setOf(Spade.get(Denomination.ACE), Spade.get(Denomination.KING)), false
+                    setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING)), false
                 ),
                 Arguments.of(
-                    setOf(Spade.get(Denomination.ACE), Spade.get(Denomination.NINE), Diamond.get(Denomination.ACE)),
+                    setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.NINE), Card.diamond(Denomination.ACE)),
                     false
                 ),
                 Arguments.of(
-                    setOf(Spade.get(Denomination.TWO), Spade.get(Denomination.TEN), Spade.get(Denomination.KING)), false
+                    setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.TEN), Card.spade(Denomination.KING)),
+                    false
                 ),
             )
         }

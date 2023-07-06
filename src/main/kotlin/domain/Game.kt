@@ -32,9 +32,6 @@ class Game(val players: List<Player>, private val cardDeck: CardDeck = CardDeckI
     }
 
     private fun Player.dealCard() {
-        cardDeck.pop()
-            ?.let { card ->
-                hit(card)
-            }
+        hit(cardDeck.pop())
     }
 }

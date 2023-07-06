@@ -1,31 +1,32 @@
 package blackjack
 
+import domain.card.Card
 import domain.card.CardDeckImpl
-import domain.card.Clover
+import domain.card.CardType
 import domain.card.Denomination
-import domain.card.Diamond
-import domain.card.Heart
-import domain.card.Spade
+import io.kotest.assertions.throwables.shouldThrow
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.jupiter.api.Test
+import java.util.EmptyStackException
 
 class CardDeckTest {
     @Test
     fun `카드 덱 생성 테스트`() {
-        val spades = Spade.createDeck().toMutableList()
-        val hearts = Heart.createDeck().toMutableList()
-        val diamonds = Diamond.createDeck().toMutableList()
-        val clovers = Clover.createDeck().toMutableList()
+        val spades = Denomination.values().map { Card.spade(it) }.toMutableList()
+        val hearts = Denomination.values().map { Card.heart(it) }.toMutableList()
+        val diamonds = Denomination.values().map { Card.diamond(it) }.toMutableList()
+        val clovers = Denomination.values().map { Card.clover(it) }.toMutableList()
 
         val cardDeck = CardDeckImpl()
 
-        for (i in 0 until Denomination.values().size * 4) {
-            when (val poppedCard = cardDeck.pop()) {
-                is Spade -> spades.remove(poppedCard)
-                is Heart -> hearts.remove(poppedCard)
-                is Diamond -> diamonds.remove(poppedCard)
-                is Clover -> clovers.remove(poppedCard)
+        repeat(Denomination.values().size * CardType.values().size) {
+            val poppedCard = cardDeck.pop()
+            when (poppedCard.cardType) {
+                CardType.SPADE -> spades.remove(poppedCard)
+                CardType.HEART -> hearts.remove(poppedCard)
+                CardType.DIAMOND -> diamonds.remove(poppedCard)
+                CardType.CLOVER -> clovers.remove(poppedCard)
                 else -> fail("Invalid card type")
             }
         }
@@ -34,6 +35,8 @@ class CardDeckTest {
         assertThat(hearts).isEmpty()
         assertThat(diamonds).isEmpty()
         assertThat(clovers).isEmpty()
-        assertThat(cardDeck.pop()).isNull()
+        shouldThrow<EmptyStackException> {
+            cardDeck.pop()
+        }
     }
 }
