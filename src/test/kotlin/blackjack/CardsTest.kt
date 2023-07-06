@@ -12,13 +12,8 @@ import java.util.stream.Stream
 class CardsTest {
     @ParameterizedTest
     @MethodSource("카드 더 받을 수 있는지 확인 테스트 데이터")
-    fun `갖고있는 카드에서 결과 계산 테스트`(cards: Set<Card>, result: Int) {
-        with(Cards()) {
-            cards.forEach {
-                add(it)
-            }
-            assertThat(result()).isEqualTo(result)
-        }
+    fun `갖고있는 카드에서 결과 계산 테스트`(cards: MutableList<Card>, result: Int) {
+        assertThat(Cards(cards).result()).isEqualTo(result)
     }
 
     companion object {
@@ -28,16 +23,20 @@ class CardsTest {
                 Arguments.of(
                     setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE)), 5
                 ),
+
                 Arguments.of(
                     setOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE)), 2
                 ),
+
                 Arguments.of(
                     setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING)), 21
                 ),
+
                 Arguments.of(
                     setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.NINE), Card.diamond(Denomination.ACE)),
                     21
                 ),
+
                 Arguments.of(
                     setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.TEN), Card.spade(Denomination.KING)), 22
                 ),
