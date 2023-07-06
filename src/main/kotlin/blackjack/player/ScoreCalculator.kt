@@ -21,7 +21,7 @@ object ScoreCalculator {
         var adjustedValue = totalValue
         var remainingAces = numberOfAces
 
-        while (adjustedValue > BlackjackGame.BLACK_JACK_SCORE && remainingAces > 0) {
+        while (adjustedValue > BlackjackGame.BLACKJACK_SCORE && remainingAces > 0) {
             adjustedValue -= ACE_EXTRA_NUMBER
             remainingAces--
         }

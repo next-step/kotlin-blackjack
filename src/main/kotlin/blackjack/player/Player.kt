@@ -17,7 +17,7 @@ open class Player(
         status = newStatus
     }
 
-    fun updateMoney(money: Int) {
+    fun increaseBettingMoney(money: Int) {
         bettingMoney += money
     }
     val currentStatus: Status
@@ -30,10 +30,10 @@ open class Player(
         get() = hand.displayCards
 
     val isBlackjack: Boolean
-        get() = handSize == BLACKJACK_CARD_COUNT && totalValue == BlackjackGame.BLACK_JACK_SCORE
+        get() = handSize == BLACKJACK_CARD_COUNT && totalValue == BlackjackGame.BLACKJACK_SCORE
 
     val isBust: Boolean
-        get() = totalValue > BlackjackGame.BLACK_JACK_SCORE
+        get() = totalValue > BlackjackGame.BLACKJACK_SCORE
 
     val totalValue: Int
         get() = ScoreCalculator.calculateScore(hand)

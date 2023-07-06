@@ -9,7 +9,7 @@ class GameEvaluator {
         matchResult[Dealer.DEALER_NAME] = Result()
         if (dealer.isBust) {
             players.map { matchResult[it.name] = Result(it.bettingMoney) }
-            dealer.updateMoney(0)
+            dealer.increaseBettingMoney(0)
         } else {
             evaluateScores(dealer, players, matchResult)
         }
