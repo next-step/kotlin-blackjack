@@ -10,5 +10,17 @@ fun main() {
     println()
     blackjackController.printInitialCards(players)
 
-    blackjackController.drawMoreCard(players)
+    var playerIterator = players.iterator()
+    var currentPlayer = playerIterator.next()
+    val isPlaying = true
+    while (isPlaying) {
+        if (blackjackController.drawMoreCard(currentPlayer)) {
+            continue
+        }
+        if (playerIterator.hasNext()) {
+            currentPlayer = playerIterator.next()
+            continue
+        }
+        playerIterator = players.iterator()
+    }
 }
