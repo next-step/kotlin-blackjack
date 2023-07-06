@@ -23,4 +23,14 @@ class BlackjackController {
             println("${it.name}카드: ${it.cards.joinToString(", ")}")
         }
     }
+
+    fun drawMoreCard(players: List<Player>) {
+        players.forEach {
+            println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            if (InputView.drawMoreCard()) {
+                it.addCard(deck.drawCard())
+                println("${it.name}카드: ${it.cards.joinToString(", ")}")
+            }
+        }
+    }
 }

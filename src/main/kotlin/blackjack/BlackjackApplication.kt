@@ -9,4 +9,6 @@ fun main() {
     blackjackController.drawInitialCards(players)
     println()
     blackjackController.printInitialCards(players)
+
+    blackjackController.drawMoreCard(players)
 }

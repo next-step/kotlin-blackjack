@@ -6,4 +6,12 @@ object InputView {
         return readln()
             .split(",")
     }
+
+    fun drawMoreCard(): Boolean {
+        val input = readln()
+        if (input == "y") {
+            return true
+        }
+        return false
+    }
 }
