@@ -1,8 +1,10 @@
 package blackjack
 
-import blackjack.view.InputView
+import blackjack.controller.BlackjackController
 
 fun main() {
-    val players = InputView.players()
-    println(players)
+    val blackjackController = BlackjackController()
+    val players = blackjackController.inputPlayers()
+
+    blackjackController.drawInitialCards(players)
 }
