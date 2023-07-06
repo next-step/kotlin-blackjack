@@ -1,30 +1,15 @@
-package study
+package dsltest.domain
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-/**
- * introduce {
- *   name("박재성")
- *   company("우아한형제들")
- *   skills {
- *     soft("A passion for problem solving")
- *     soft("Good communication skills")
- *     hard("Kotlin")
- *   }
- *   languages {
- *     "Korean" level 5
- *     "English" level 3
- *   }
- * }
- */
 class DslTest {
     @ValueSource(strings = ["홍길동", "최환"])
     @ParameterizedTest
     fun introduce(value: String) {
-        val person: Person = introduce {
+        val person = introduce {
             name(value)
         }
         person.name shouldBe value
@@ -36,24 +21,21 @@ class DslTest {
         val person = introduce {
             name("홍길동")
             company("활빈당")
+            skills {
+                soft("하하")
+                soft("쉬움")
+                hard("어려움")
+            }
+            languages {
+                "korean" level 3
+            }
         }
         person.name shouldBe "홍길동"
         person.company shouldBe "활빈당"
-    }
-}
-
-fun introduce(block: Person.() -> Unit): Person {
-    return Person().apply(block)
-}
-
-class Person {
-    lateinit var name: String
-    var company: String? = null
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
+        person.skills[0].description shouldBe "하하"
+        person.skills[1].description shouldBe "쉬움"
+        person.skills[2].description shouldBe "어려움"
+        person.languages[0].name shouldBe "korean"
+        person.languages[0].level shouldBe 3
     }
 }
