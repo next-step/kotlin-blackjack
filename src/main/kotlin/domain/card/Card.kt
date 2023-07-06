@@ -7,6 +7,10 @@ class Card private constructor(val denomination: Denomination, val cardType: Car
     val numbers: Set<Int>
         get() = denomination.numbers
 
+    override fun toString(): String {
+        return "${denomination.text}${cardType.text}"
+    }
+
     companion object {
         private val spades = ConcurrentHashMap<Denomination, Card>()
         private val hearts = ConcurrentHashMap<Denomination, Card>()
