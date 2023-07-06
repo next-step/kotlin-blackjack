@@ -1,41 +1,43 @@
-package blackjack.domain
+package blackjack.service
 
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.GameCardsSet
+import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.view.BlackjackView
-import blackjack.view.InputView
 
 class BlackjackService {
+    private val gameCardsSet = GameCardsSet()
     private var wantStop = false
 
-    fun prepareGame(): Pair<Dealer, Players> {
-        val gameCardsSet = GameCardsSet()
-        val dealer = Dealer(gameCardsSet = gameCardsSet)
-        val players = InputView.inputPlayers(gameCardsSet)
-
-        initialTurn(dealer, players)
-        return Pair(dealer, players)
-    }
-
-    private fun initialTurn(dealer: Dealer, players: Players) {
+    fun initialTurn(dealer: Dealer, players: Players) {
         repeat(DEFAULT_INITIAL_DRAW) {
-            dealer.hit()
-            players.players.forEach { player -> player.hit() }
+            dealer.hit(drawCard())
+            players.forEach { player -> player.hit(drawCard()) }
         }
     }
 
     fun playGame(dealer: Dealer, players: Players) {
         while (!wantStop) {
-            players.players.forEach { hit(it) }
+            players.forEach { hit(it) }
         }
 
-        if (dealer.sumOfMyCards() <= Dealer.DEALER_UNDER_NUMBER) {
-            dealer.hit()
+        dealerExtraHit(dealer)
+    }
+
+    private fun dealerExtraHit(dealer: Dealer) {
+        if (dealer.sumOfCards() <= Dealer.DEALER_UNDER_NUMBER) {
+            dealer.hit(drawCard())
             BlackjackView.printDealerExtraHit(dealer.name)
         }
     }
 
+    private fun drawCard(): Card = gameCardsSet.drawRandomCard()
+
     private fun hit(player: Player) {
         while (goNext(player)) {
-            player.hit()
+            player.hit(drawCard())
             BlackjackView.printPlayerCard(player)
         }
         wantStop = true

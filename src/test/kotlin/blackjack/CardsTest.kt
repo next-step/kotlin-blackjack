@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 class CardsTest {
     @Test
     fun `카드들의 합을 계산할 수 있다`() {
-        val tenOfClubs = Card.createCard(Ranks.TEN, Suits.CLUBS)
-        val jackOfHearts = Card.createCard(Ranks.JACK, Suits.HEARTS)
+        val tenOfClubs = Card.of(Ranks.TEN, Suits.CLUBS)
+        val jackOfHearts = Card.of(Ranks.JACK, Suits.HEARTS)
         val cards = Cards.empty()
             .add(tenOfClubs)
             .add(jackOfHearts)
@@ -21,15 +21,15 @@ class CardsTest {
 
     @Test
     fun `Ace는 1 또는 11로 계산된다`() {
-        val aceOfClubs = Card.createCard(Ranks.ACE, Suits.CLUBS)
-        val tenOfHearts = Card.createCard(Ranks.TEN, Suits.HEARTS)
+        val aceOfClubs = Card.of(Ranks.ACE, Suits.CLUBS)
+        val tenOfHearts = Card.of(Ranks.TEN, Suits.HEARTS)
         val cards = Cards.empty()
             .add(aceOfClubs)
             .add(tenOfHearts)
 
         assertThat(cards.calculateOptimalSum()).isEqualTo(21)
 
-        val twoOfHearts = Card.createCard(Ranks.TWO, Suits.HEARTS)
+        val twoOfHearts = Card.of(Ranks.TWO, Suits.HEARTS)
         val cards2 = Cards.empty()
             .add(aceOfClubs)
             .add(twoOfHearts)

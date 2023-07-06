@@ -11,7 +11,7 @@ class Card private constructor(
     companion object {
         val ALL_CARDS = createAllCards()
 
-        fun createCard(rank: Ranks, suit: Suits): Card {
+        fun of(rank: Ranks, suit: Suits): Card {
             return ALL_CARDS[Pair(rank, suit)] ?: throw IllegalArgumentException(NOT_EXIST_CARD)
         }
 
