@@ -17,4 +17,11 @@ class DeckTest : FunSpec({
         clubs.size shouldBe 13
         diamonds.size shouldBe 13
     }
+
+    context("덱에서 카드를 뽑을 수 있다.") {
+        val deck = Deck()
+        val card = deck.drawCard()
+        deck.cards.size shouldBe 51
+        deck.cards.contains(card) shouldBe false
+    }
 })
