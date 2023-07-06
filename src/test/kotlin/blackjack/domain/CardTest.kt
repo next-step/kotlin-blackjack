@@ -1,5 +1,8 @@
-package blackjack
+package blackjack.domain
 
+import blackjack.domain.Card
+import blackjack.domain.CardRank
+import blackjack.domain.CardSuit
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe

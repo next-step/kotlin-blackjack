@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 /**
  * ### 트럼프 카드를 표현하는 클래스 입니다

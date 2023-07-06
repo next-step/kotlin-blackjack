@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 /**
  * ### 플레이어가 소지한 카드를 표현하는 객체 입니다.

@@ -1,5 +1,7 @@
-package blackjack
+package blackjack.domain
 
+import blackjack.domain.Card
+import blackjack.domain.CardSet
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -13,7 +15,7 @@ internal class CardSetTest {
     @Test
     internal fun `카드세트에서 카드를 한장씩 뽑을 수 있다`() {
         val sut = CardSet()
-        val card : Card = sut.pop()
+        val card: Card = sut.pop()
         println(card)
         sut.size shouldBe 51
     }

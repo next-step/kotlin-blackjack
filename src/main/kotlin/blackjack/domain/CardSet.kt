@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import java.util.LinkedList
 
@@ -16,7 +16,7 @@ class CardSet(
             shuffle()
         }
 
-    val size : Int
+    val size: Int
         get() = _cards.size
 
     fun pop(): Card {
