@@ -6,9 +6,9 @@ import presentation.InputView
 import presentation.ResultView
 
 class Players(private val players: List<Player>) {
-    fun receiveMoreCard(game: Game) {
-        players.forEach {
-            it.receiveMoreCard(game)
+    fun dealMoreCard(game: Game) {
+        players.forEach { player ->
+            dealMoreCardFor(player, game)
         }
     }
 
@@ -16,10 +16,9 @@ class Players(private val players: List<Player>) {
         return players.isEmpty()
     }
 
-    private fun Player.receiveMoreCard(game: Game) {
-        if (InputView.askReceiveCard(name)) {
-            game.dealAdditionalCard(this)
-            ResultView.printPlayerState(this)
-        }
+    private fun dealMoreCardFor(player: Player, game: Game) {
+        if (!InputView.askReceiveCard(player.name)) return
+        game.dealAdditionalCard(player)
+        ResultView.printPlayerState(player)
     }
 }
