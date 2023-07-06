@@ -10,15 +10,13 @@ value class PlayerScore(val value: Int) {
         return primaryScoreAdded.takeIf { it.isBust().not() } ?: secondaryScoreAdded
     }
 
-    private fun isBust() = value > MAX_VALUE
+    fun isBust() = value > MAX_VALUE
 
     fun plus(scores: List<CardScore>): PlayerScore {
         return scores
             .sortedByDescending { it.isPrimaryEqualToSecondary() }
             .fold(this) { acc, score -> acc.plus(score) }
     }
-
-    fun isBustOrMax() = value >= MAX_VALUE
 
     companion object {
         const val MAX_VALUE = 21

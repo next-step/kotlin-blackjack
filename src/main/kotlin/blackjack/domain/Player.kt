@@ -2,17 +2,17 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-data class Player(val name: String, val hand: PlayerHand = PlayerHand.init) {
-    fun canDraw(): Boolean = hand.canAdd()
+class Player(val name: String, val hand: PlayerHand = PlayerHand.init) {
+    fun canDraw(): Boolean = hand.isBust().not()
 
     fun addCard(card: Card): Player {
         val newState = this.hand.add(card)
-        return copy(hand = newState)
+        return Player(name = name, hand = newState)
     }
 
     fun addCards(cards: List<Card>): Player {
         val newState = this.hand.add(cards)
-        return copy(hand = newState)
+        return Player(name = name, hand = newState)
     }
 
     fun cards() = hand.cards

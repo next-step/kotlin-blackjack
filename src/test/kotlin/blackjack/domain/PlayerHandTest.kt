@@ -30,14 +30,6 @@ class PlayerHandTest : BehaviorSpec({
                 result.score shouldBe PlayerScore(17)
             }
         }
-
-        `when`("canAddCard()를 호출하면") {
-            val result = playerHand.canAdd()
-
-            then("true이다.") {
-                result shouldBe true
-            }
-        }
     }
 
     given("카드가 TWO, THREE가 있을 때") {
@@ -54,14 +46,6 @@ class PlayerHandTest : BehaviorSpec({
 
             then("점수는 16이다.") {
                 result.score shouldBe PlayerScore(16)
-            }
-        }
-
-        `when`("canAddCard()를 호출하면") {
-            val result = playerHand.canAdd()
-
-            then("true이다.") {
-                result shouldBe true
             }
         }
     }
@@ -87,14 +71,6 @@ class PlayerHandTest : BehaviorSpec({
                 result.score shouldBe PlayerScore(31)
             }
         }
-
-        `when`("canAddCard()를 호출하면") {
-            val result = playerHand.canAdd()
-
-            then("true이다.") {
-                result shouldBe true
-            }
-        }
     }
 
     given("카드가 ACE, TEN이 있을 때") {
@@ -104,13 +80,5 @@ class PlayerHandTest : BehaviorSpec({
                     FakeGenerator.card(CardNumber.ACE), FakeGenerator.card(CardNumber.TEN)
                 )
             )
-
-        `when`("canAddCard()를 호출하면") {
-            val result = playerHand.canAdd()
-
-            then("false이다.") {
-                result shouldBe false
-            }
-        }
     }
 })
