@@ -1,18 +1,21 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import java.lang.RuntimeException
+import blackjack.domain.player.OpenCards
 
 class Hand {
-    val cards: MutableList<Card> = mutableListOf()
+    private val cards: MutableList<Card> = mutableListOf()
+
+    fun getCards(): List<Card> = cards.toList()
+    fun first(): Card = cards.firstOrNull() ?: throw IllegalStateException()
     fun add(card: Card) {
-        if (burst()) {
+        if (bust()) {
             throw RuntimeException()
         }
 
         cards.add(card)
     }
 
-    fun bestHandTotal(): Int {
+    fun total(): Int {
         if (!hasByCardNumber(CardNumber.ACE)) {
             return hardTotal()
         }
@@ -21,6 +24,8 @@ class Hand {
             .filter { it <= BLACKJACK }
             .max()
     }
+
+    fun blackjack(): Boolean = softTotal() == BLACKJACK && cards.size == 2
 
     private fun hardTotal(): Int {
         return cards.sumOf { it.cardNumber.value }
@@ -32,7 +37,7 @@ class Hand {
 
     private fun hasByCardNumber(cardNumber: CardNumber): Boolean = cards.any { it.cardNumber == cardNumber }
 
-    fun burst(): Boolean = hardTotal() > BLACKJACK
+    fun bust(): Boolean = hardTotal() > BLACKJACK
 
     companion object {
         fun create(openCards: OpenCards): Hand {
@@ -41,5 +46,7 @@ class Hand {
             hand.add(openCards.second)
             return hand
         }
+
+        fun empty(): Hand = Hand()
     }
 }

@@ -1,20 +1,30 @@
 package blackjack.fixture
 
-import blackjack.domain.OpenCards
-import blackjack.domain.Player
-import blackjack.domain.PlayerName
+import blackjack.domain.card.Card
+import blackjack.domain.player.OpenCards
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 
-class BlackJackFixture {
-    companion object ofPlayer {
-        val BURST_PLAYER: Player
-        val NOT_BURST_PLAYER_17: Player
-        init {
-            BURST_PLAYER = Player.of(PlayerName.from("burst"), OpenCards(KING_HEART, KING_DIAMOND))
-            BURST_PLAYER.hit(SEVEN_HEART)
+object PlayerFixture {
 
-            NOT_BURST_PLAYER_17 = Player.of(PlayerName.from("not_burst"), OpenCards(KING_HEART, SEVEN_HEART))
+    fun of(vararg cards: Card): Player {
+        require(cards.size >= 2)
+
+        val openCards = OpenCards(cards[0], cards[1])
+        val player = Player.of(PlayerName.from("default"), openCards)
+
+        if (cards.size > 2) {
+            val afterOpenCards = cards.toList().subList(2, cards.size)
+            afterOpenCards.forEach { player.hit(it) }
         }
+
+        return player
     }
+
+    fun bust(): Player {
+        return of(HEART_KING, DIAMOND_KING, HEART_SEVEN)
+    }
+
 }
 
 
