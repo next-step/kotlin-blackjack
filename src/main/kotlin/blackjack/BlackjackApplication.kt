@@ -7,4 +7,6 @@ fun main() {
     val players = blackjackController.inputPlayers()
 
     blackjackController.drawInitialCards(players)
+    println()
+    blackjackController.printInitialCards(players)
 }

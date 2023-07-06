@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class CardTest : FunSpec({
@@ -15,5 +16,14 @@ class CardTest : FunSpec({
         val denominations = cards.map { it.denomination }
         denominations.distinct().size shouldBe 13
         denominations.containsAll(Denomination.values().toList()) shouldBe true
+    }
+
+    context("카드를 문자열로 표현하면 숫자와 무늬가 표시된다.") {
+        withData(
+            Card(Suit.SPADE, Denomination.ACE) to "A스페이드",
+            Card(Suit.HEART, Denomination.TWO) to "2하트",
+        ) { (card, expected) ->
+            card.toString() shouldBe expected
+        }
     }
 })

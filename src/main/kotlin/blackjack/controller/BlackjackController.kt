@@ -16,4 +16,11 @@ class BlackjackController {
             it.addCard(deck.drawCard())
         }
     }
+
+    fun printInitialCards(players: List<Player>) {
+        println("${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
+        players.forEach {
+            println("${it.name}카드: ${it.cards.joinToString(", ")}")
+        }
+    }
 }
