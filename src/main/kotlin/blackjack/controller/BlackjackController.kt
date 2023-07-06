@@ -25,6 +25,9 @@ class BlackjackController {
     }
 
     fun drawMoreCard(player: Player): Boolean {
+        if (!player.canDrawMoreCard()) {
+            return false
+        }
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         if (InputView.drawMoreCard()) {
             player.addCard(deck.drawCard())
@@ -32,5 +35,11 @@ class BlackjackController {
             return true
         }
         return false
+    }
+
+    fun printResult(players: List<Player>) {
+        players.forEach {
+            println("${it.name}카드: ${it.cards.joinToString(", ")} - 결과: ${it.calculateScore()}")
+        }
     }
 }

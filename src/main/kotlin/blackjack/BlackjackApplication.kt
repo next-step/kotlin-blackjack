@@ -9,6 +9,7 @@ fun main() {
     blackjackController.drawInitialCards(players)
     println()
     blackjackController.printInitialCards(players)
+    println()
 
     var playerIterator = players.iterator()
     var currentPlayer = playerIterator.next()
@@ -17,10 +18,16 @@ fun main() {
         if (blackjackController.drawMoreCard(currentPlayer)) {
             continue
         }
+        // 다음 플레이어가 있으면 다음 플레이어로 턴을 넘긴다
         if (playerIterator.hasNext()) {
             currentPlayer = playerIterator.next()
             continue
         }
-        playerIterator = players.iterator()
+        // 다음 플레이어가 없으면 게임을 종료한다
+        break
     }
+    println()
+
+    // 결과를 출력한다.
+    blackjackController.printResult(players)
 }
