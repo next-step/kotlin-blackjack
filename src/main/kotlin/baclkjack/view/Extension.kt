@@ -1,8 +1,8 @@
 package baclkjack.view
 
-import baclkjack.domain.card.Card
 import baclkjack.domain.card.Number
 import baclkjack.domain.card.Suit
+import baclkjack.domain.play.Cards
 import baclkjack.domain.play.GameState
 
 fun Suit.toName(): String = when (this) {
@@ -20,7 +20,7 @@ fun Number.toName(): String = when (this) {
     else -> this.value.toString()
 }
 
-fun List<Card>.toCards(): String = this.map { "${it.number.toName()}${it.suit.toName()}" }.joinToString { it }
+fun Cards.toCards(): String = cards.map { "${it.number.toName()}${it.suit.toName()}" }.joinToString { it }
 
 fun GameState.toResult(): String = when (this) {
     GameState.WIN -> "승"

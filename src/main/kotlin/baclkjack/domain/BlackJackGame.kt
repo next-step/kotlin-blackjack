@@ -1,6 +1,7 @@
 package baclkjack.domain
 
 import baclkjack.domain.card.Deck
+import baclkjack.domain.play.CardDrawListener
 import baclkjack.domain.play.Dealer
 import baclkjack.domain.play.Player
 import baclkjack.domain.play.User
@@ -17,22 +18,22 @@ class BlackJackGame(playersName: List<String>, private val deck: Deck = Deck.cre
         }
     }
 
-    fun play(draw: (String) -> Boolean, out: (User) -> Unit) {
+    fun play(cardDrawListener: CardDrawListener, out: (User) -> Unit) {
         players.forEach {
-            it.draw = draw
-            playerDraw(it, out)
+            it.cardDrawListener = cardDrawListener
+            playGame(it, out)
         }
     }
 
     fun dealerPlay(out: (User) -> Unit) {
-        playerDraw(dealer, out)
+        playGame(dealer, out)
     }
 
-    private fun playerDraw(player: User, out: (User) -> Unit) {
-        while (player.isDraw()) {
-            player.hit(deck)
-            out(player)
-            if (player.finish()) {
+    private fun playGame(user: User, out: (User) -> Unit) {
+        while (user.isDraw()) {
+            user.hit(deck)
+            out(user)
+            if (user.burst() || user.blackJack()) {
                 break
             }
         }

@@ -1,10 +1,13 @@
 package baclkjack.domain.play
 
-import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
 
 interface User {
+
     val name: String
+
+    val cards: Cards
+
     fun start(deck: Deck)
 
     fun hit(deck: Deck)
@@ -15,9 +18,10 @@ interface User {
 
     fun score(): Int
 
-    fun cards(): List<Card>
-
-    fun finish(): Boolean
-
     fun isDraw(): Boolean
+
+}
+
+interface CardDrawListener {
+    fun isDraw(name: String): Boolean
 }

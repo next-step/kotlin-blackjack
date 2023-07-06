@@ -1,6 +1,7 @@
 package baclkjack.controller
 
 import baclkjack.domain.BlackJackGame
+import baclkjack.domain.play.CardDrawListener
 import baclkjack.view.InputView
 import baclkjack.view.ResultView
 import baclkjack.view.toCards
@@ -18,31 +19,29 @@ class BlackJackController(
         resultView.showHit(backJackGame.dealer.name, players.joinToString())
         backJackGame.start()
         backJackGame.dealer.also {
-            resultView.showPlayerCard(it.name, it.cards().toCards())
+            resultView.showPlayerCard(it.name, it.cards.toCards())
         }
         backJackGame.players.forEach {
-            resultView.showPlayerCard(it.name, it.cards().toCards())
+            resultView.showPlayerCard(it.name, it.cards.toCards())
         }
 
-        backJackGame.play(
-            draw = {
-                inputView.inputCardDraw(it) == IS_DRAW
-            },
-            out = {
-                val cards = it.cards().toCards()
-                resultView.showPlayerCard(it.name, cards)
+        backJackGame.play(object : CardDrawListener {
+            override fun isDraw(name: String): Boolean {
+                return inputView.inputCardDraw(name) == IS_DRAW
             }
-        )
+        }) {
+            resultView.showPlayerCard(it.name, it.cards.toCards())
+        }
 
         backJackGame.dealerPlay {
             resultView.showDealerCard(it.name)
         }
 
         backJackGame.dealer.also {
-            resultView.showPlayerResult(it.name, it.cards().toCards(), it.score())
+            resultView.showPlayerResult(it.name, it.cards.toCards(), it.score())
         }
         backJackGame.players.forEach {
-            resultView.showPlayerResult(it.name, it.cards().toCards(), it.score())
+            resultView.showPlayerResult(it.name, it.cards.toCards(), it.score())
         }
 
         resultView.showFinal()
