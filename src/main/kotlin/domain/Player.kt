@@ -19,6 +19,6 @@ class Player(val name: String) {
     }
 
     fun canReceiveMoreCard(): Boolean {
-        return cards.canReceiveMoreCard()
+        return result() < Cards.BLACKJACK_POINT
     }
 }

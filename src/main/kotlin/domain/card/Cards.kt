@@ -29,10 +29,6 @@ class Cards {
         return sumOfAllCases.min()
     }
 
-    fun canReceiveMoreCard(): Boolean {
-        return result() < BLACKJACK_POINT
-    }
-
     private fun doesNotHaveAce(): Boolean {
         return numberOfAce() == 0
     }
@@ -61,6 +57,6 @@ class Cards {
     }
 
     companion object {
-        private const val BLACKJACK_POINT = 21
+        const val BLACKJACK_POINT = 21
     }
 }
