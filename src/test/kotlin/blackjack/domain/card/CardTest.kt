@@ -1,23 +1,8 @@
-package blackjack.card
+package blackjack.domain.card
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-
-enum class Pattern {
-    CLOVER, DIAMOND, HEART, SPADE,
-}
-
-data class Card(private val value: String, val pattern: Pattern) {
-
-    fun getValue(): Int {
-        if (value == "A") return 1
-        if (value in listOf("K", "Q", "J")) return 10
-        return value.toInt()
-    }
-
-    infix operator fun plus(other: Card): Int = this.getValue() + other.getValue()
-}
 
 class CardTest : StringSpec({
     "카드는 숫자 1~ 9를 가질수 있다." {
