@@ -41,4 +41,15 @@ internal class CardTest {
         val actual = card1 === card2
         actual shouldBe true
     }
+
+    @DisplayName("print메서드는 CardRank.forOutput + CardSuit.forOutput을 반환한다.")
+    @Test
+    fun print() {
+        val suit = CardSuit.values().random()
+        val rank = CardRank.values().random()
+        val card = Card.of(suit, rank)
+
+        val actual = card.print()
+        actual shouldBe "${rank.forOutput}${suit.forOutput}"
+    }
 }

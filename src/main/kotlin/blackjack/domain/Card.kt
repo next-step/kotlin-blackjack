@@ -4,6 +4,8 @@ class Card private constructor (
     val suit: CardSuit,
     val rank: CardRank
 ) {
+    fun print(): String = rank.forOutput + suit.forOutput
+
     companion object {
         private const val INVALID_CARD_ERROR = "존재하지 않는 카드입니다."
         val allCards =
