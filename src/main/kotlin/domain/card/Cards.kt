@@ -1,6 +1,8 @@
 package domain.card
 
-class Cards(private val cards: MutableList<Card> = mutableListOf()) {
+class Cards(cards: List<Card> = emptyList()) {
+
+    private val cards: MutableList<Card> = cards.toMutableList()
 
     fun add(card: Card) {
         cards.add(card)
