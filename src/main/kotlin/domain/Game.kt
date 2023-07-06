@@ -3,7 +3,7 @@ package domain
 import domain.card.CardDeck
 import domain.card.ShuffledCardDeck
 
-class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledCardDeck()) {
+class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledCardDeck.createNew()) {
 
     fun start() {
         players.dealInitialCards()

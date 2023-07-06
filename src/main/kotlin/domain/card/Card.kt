@@ -40,5 +40,29 @@ class Card private constructor(val denomination: Denomination, val cardType: Car
                 Card(denomination, CardType.CLOVER)
             }
         }
+
+        fun createSpades(): List<Card> {
+            return Denomination.values().map {
+                spade(it)
+            }
+        }
+
+        fun createHearts(): List<Card> {
+            return Denomination.values().map {
+                heart(it)
+            }
+        }
+
+        fun createDiamonds(): List<Card> {
+            return Denomination.values().map {
+                diamond(it)
+            }
+        }
+
+        fun createClovers(): List<Card> {
+            return Denomination.values().map {
+                clover(it)
+            }
+        }
     }
 }

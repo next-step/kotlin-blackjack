@@ -18,7 +18,7 @@ class ShuffledCardDeckTest {
         val diamonds = Denomination.values().map { Card.diamond(it) }.toMutableList()
         val clovers = Denomination.values().map { Card.clover(it) }.toMutableList()
 
-        val cardDeck = ShuffledCardDeck()
+        val cardDeck = ShuffledCardDeck.createNew()
 
         repeat(Denomination.values().size * CardType.values().size) {
             val poppedCard = cardDeck.pop()
