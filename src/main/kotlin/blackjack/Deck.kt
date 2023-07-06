@@ -9,11 +9,14 @@ class Deck(cards: List<Card> = listOf()) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 
-    val size : Int
+    val size: Int
         get() = _cards.size
 
-    val point : Int
+    val point: Int
         get() = BlackjackCardPointCalculator.calculate(_cards)
+
+    val cards: List<Card>
+        get() = _cards.toList()
 
     fun add(card: Card) {
         _cards.add(card)
