@@ -7,20 +7,20 @@ class BlackJackGame(private val deck: Deck) {
 
     fun play(
         players: Players,
-        continueGame: (Player) -> Boolean,
+        isHit: (Player) -> Boolean,
         afterDrawCard: (Player) -> Unit
     ): Players {
-        val result = players.map { play(it, continueGame, afterDrawCard) }
+        val result = players.map { play(it, isHit, afterDrawCard) }
         return Players(result)
     }
 
     private fun play(
         player: Player,
-        continueGame: (Player) -> Boolean,
+        isHit: (Player) -> Boolean,
         afterDrawCard: (Player) -> Unit
     ): Player {
         var currentPlayer = player
-        while (currentPlayer.canDraw() && continueGame(currentPlayer)) {
+        while (currentPlayer.canHit() && isHit(currentPlayer)) {
             val card = deck.drawCard()
             currentPlayer = currentPlayer.addCard(card)
             afterDrawCard(currentPlayer)

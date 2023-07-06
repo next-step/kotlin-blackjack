@@ -10,7 +10,7 @@ class Controller {
     fun playBlackJackGame() {
         val game = BlackJackGame.create()
         val players = startGame(game, getPlayers())
-        val result = game.play(players, ::continueGame, ::printCard)
+        val result = game.play(players, ::isHit, ::printCard)
         endGame(result)
     }
 
@@ -25,7 +25,7 @@ class Controller {
         return result
     }
 
-    private fun continueGame(player: Player) = InputView.askForContinue(player.name)
+    private fun isHit(player: Player) = InputView.isHit(player.name)
 
     private fun printCard(player: Player) = OutputView.printPlayerCard(player)
 

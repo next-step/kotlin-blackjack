@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.card.Card
 
 class Player(val name: String, val hand: PlayerHand = PlayerHand.init) {
-    fun canDraw(): Boolean = hand.isBust().not()
+    fun canHit(): Boolean = hand.isBust().not()
 
     fun addCard(card: Card): Player {
         val newState = this.hand.add(card)

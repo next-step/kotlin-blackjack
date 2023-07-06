@@ -10,10 +10,9 @@ object InputView {
             .filter { it.isNotEmpty() }
     }
 
-    fun askForContinue(playerName: String): Boolean {
+    fun isHit(playerName: String): Boolean {
         println("${playerName}은 한장의 카드를 더 받겠습니다?(예는 y, 아니오는 n)")
-        val input = readln()
-        return when (input) {
+        return when (readln()) {
             "y" -> true
             "n" -> false
             else -> throw IllegalArgumentException("y나 n 중에 하나만 입력하세요.")
