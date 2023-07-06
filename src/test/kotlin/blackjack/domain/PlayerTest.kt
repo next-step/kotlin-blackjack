@@ -26,4 +26,11 @@ class PlayerTest : FunSpec({
         player.addCard(Card(Suit.SPADE, Denomination.TWO))
         player.canDrawMoreCard() shouldBe false
     }
+
+    context("ACE를 11로 계산해서 21점이 되면 카드를 더 뽑을 수 없다.") {
+        val player = Player("june")
+        player.addCard(Card(Suit.SPADE, Denomination.ACE))
+        player.addCard(Card(Suit.SPADE, Denomination.TEN))
+        player.canDrawMoreCard() shouldBe false
+    }
 })
