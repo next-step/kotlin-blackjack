@@ -7,6 +7,7 @@ import blackjack.domain.Player
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
+import blackjack.dto.BlackjackGameMoneyResult
 import blackjack.dto.BlackjackGameResult
 import blackjack.dto.PlayerInfo
 import blackjack.view.InputView
@@ -36,6 +37,19 @@ class BlackjackService {
         }
     }
 
+    fun resultBlackjackGameMoney(players: List<Player>, dealer: Dealer): List<BlackjackGameMoneyResult> {
+        val result = mutableListOf<BlackjackGameMoneyResult>()
+
+        players.forEach { player ->
+            when (dealer.determineResult(player)) {
+                MatchResult.WIN -> result.add(BlackjackGameMoneyResult(player.name, -player.betAmount))
+                MatchResult.LOSE -> result.add(BlackjackGameMoneyResult(player.name, player.betAmount))
+                MatchResult.DRAW -> result.add(BlackjackGameMoneyResult(player.name, 0.0))
+            }
+        }
+        return result
+    }
+
     fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
         val result = mutableListOf<BlackjackGameResult>()
         var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
@@ -57,14 +71,10 @@ class BlackjackService {
         var blackjackFlag = false
         val blackjackPlayers = blackjackGame.players.filter { it.condition == Condition.BLACKJACK }
 
-        if(blackjackPlayers.isNotEmpty()) {
-            when(blackjackGame.dealer.condition) {
-                Condition.BLACKJACK -> {
-                    blackjackGame.players.filter { it.condition != Condition.BLACKJACK }.forEach { player -> player.loseAllBets() }
-                }
-                else -> {
-                    blackjackPlayers.forEach { player -> player.blackjack() }
-                }
+        if (blackjackPlayers.isNotEmpty()) {
+            blackjackGame.players.filter { it.condition != Condition.BLACKJACK }.forEach { player -> player.loseAllBets() }
+            if (blackjackGame.dealer.condition != Condition.BLACKJACK) {
+                blackjackPlayers.forEach { player -> player.blackjack() }
             }
             blackjackFlag = true
         }

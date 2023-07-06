@@ -5,6 +5,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Score
 import blackjack.domain.Score.Companion.STANDARD_CARD_SCORE
+import blackjack.dto.BlackjackGameMoneyResult
 import blackjack.dto.BlackjackGameResult
 import blackjack.service.BlackjackService
 
@@ -45,6 +46,13 @@ object ResultView {
             println("${dealer.name}는 ${STANDARD_CARD_SCORE.plus(1)}이상이라 카드를 더 받지 않습니다.")
         } else if (dealer.cards.calculateScore() < STANDARD_CARD_SCORE) {
             println("${dealer.name}는 ${Score.STANDARD_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
+        }
+    }
+
+    fun printResultMoneyGame(result: List<BlackjackGameMoneyResult>) {
+        println("## 최종 수익")
+        result.forEach {
+            println("${it.name}: ${it.money}")
         }
     }
 
