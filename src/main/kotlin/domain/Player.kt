@@ -3,15 +3,10 @@ package domain
 import domain.card.Card
 import domain.card.Cards
 
-class Player(val name: String) {
-    private val cards = Cards()
+class Player(val name: String, val cards: Cards = Cards()) {
 
     fun hit(card: Card) {
         cards.add(card)
-    }
-
-    fun cards(): Set<Card> {
-        return cards.current()
     }
 
     fun result(): Int {

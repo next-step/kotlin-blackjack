@@ -30,10 +30,10 @@ object ResultView {
     }
 
     private fun Player.print() {
-        println("$name 카드: ${cards().joinToString(", ")}")
+        println("$name 카드: ${cards.current().joinToString(", ")}")
     }
 
     private fun Player.printWithResult() {
-        println("$name 카드: ${cards().joinToString(", ")} - 결과: ${result()}")
+        println("$name 카드: ${cards.current().joinToString(", ")} - 결과: ${result()}")
     }
 }

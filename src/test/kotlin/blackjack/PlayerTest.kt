@@ -27,7 +27,7 @@ class PlayerTest {
             player.hit(it)
         }
 
-        assertThat(player.cards()).isEqualTo(cards)
+        assertThat(player.cards.current()).isEqualTo(cards)
     }
 
     @ParameterizedTest

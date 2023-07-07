@@ -25,7 +25,7 @@ class GameTest {
         with(Game(players)) {
             start()
             players.forEach {
-                assertThat(it.cards()).size().isEqualTo(2)
+                assertThat(it.cards.current()).size().isEqualTo(2)
             }
         }
     }
@@ -84,7 +84,7 @@ class GameTest {
         }
 
         game.players.forEach {
-            assertThat(it.cards()).size().isEqualTo(1)
+            assertThat(it.cards.current()).size().isEqualTo(1)
         }
     }
 
