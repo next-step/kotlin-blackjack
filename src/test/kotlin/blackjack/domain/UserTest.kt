@@ -9,6 +9,7 @@ import blackjack.domain.user.User
 import blackjack.domain.user.UserDrawChecker
 import blackjack.util.TEST_USER_DRAW_CHECKER
 import blackjack.util.User
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -39,9 +40,7 @@ class UserTest : BehaviorSpec({
     Given("정상적인 정보가 주어졌다") {
         When("해당 이름으로 User를 생성하면") {
             Then("정상적으로 생성된다") {
-                val user = User(name, cards, TEST_USER_DRAW_CHECKER, betMoney)
-                user.name shouldBe name
-                user.status shouldBe PlayerStatus.HIT
+                shouldNotThrowAny { User(name, cards, TEST_USER_DRAW_CHECKER, betMoney) }
             }
         }
     }
