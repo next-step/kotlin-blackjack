@@ -2,6 +2,7 @@ package blackjack
 
 import domain.Player
 import domain.card.Card
+import domain.card.Cards
 import domain.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,12 +33,8 @@ class PlayerTest {
 
     @ParameterizedTest
     @MethodSource("카드 더 받을 수 있는지 확인 테스트 데이터")
-    fun `카드 더 받을 수 있는지 확인 테스트`(cards: Set<Card>, condition: Boolean) {
-        val player = Player("peter")
-
-        cards.forEach {
-            player.hit(it)
-        }
+    fun `카드 더 받을 수 있는지 확인 테스트`(cards: Cards, condition: Boolean) {
+        val player = Player("peter", cards)
 
         assertThat(player.canReceiveMoreCard()).isEqualTo(condition)
     }
@@ -47,20 +44,41 @@ class PlayerTest {
         fun `카드 더 받을 수 있는지 확인 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE)), true
+                    Cards(
+                        listOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE))
+                    ),
+                    true
                 ),
                 Arguments.of(
-                    setOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE)), true
+                    Cards(
+                        listOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE))
+                    ),
+                    true
                 ),
                 Arguments.of(
-                    setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING)), false
-                ),
-                Arguments.of(
-                    setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.NINE), Card.diamond(Denomination.ACE)),
+                    Cards(
+                        listOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING))
+                    ),
                     false
                 ),
                 Arguments.of(
-                    setOf(Card.spade(Denomination.TWO), Card.spade(Denomination.TEN), Card.spade(Denomination.KING)),
+                    Cards(
+                        listOf(
+                            Card.spade(Denomination.ACE),
+                            Card.spade(Denomination.NINE),
+                            Card.diamond(Denomination.ACE)
+                        )
+                    ),
+                    false
+                ),
+                Arguments.of(
+                    Cards(
+                        listOf(
+                            Card.spade(Denomination.TWO),
+                            Card.spade(Denomination.TEN),
+                            Card.spade(Denomination.KING)
+                        )
+                    ),
                     false
                 ),
             )
