@@ -6,56 +6,41 @@ import blackjack.player.Player
 class GameEvaluator {
     fun evaluate(dealer: Dealer, players: List<Player>): GameResult {
         val matchResult = mutableMapOf<String, Result>()
-        matchResult["딜러"] = Result()
-
-        if (dealer.totalValue > BlackjackGame.BUST_SCORE) {
-            awardWinsToAllPlayers(players, matchResult)
+        matchResult[Dealer.DEALER_NAME] = Result()
+        if (dealer.isBust) {
+            players.map { matchResult[it.name] = Result(it.bettingMoney) }
+            dealer.increaseBettingMoney(0)
         } else {
             evaluateScores(dealer, players, matchResult)
         }
-
         return GameResult(matchResult)
     }
-
-    private fun awardWinsToAllPlayers(players: List<Player>, matchResult: MutableMap<String, Result>) {
-        players.forEach { player ->
-            val result = matchResult.getOrPut(player.name) { Result() }
-            matchResult[player.name] = result.addWin()
-        }
-    }
-
     private fun evaluateScores(dealer: Dealer, players: List<Player>, matchResult: MutableMap<String, Result>) {
-        var dealerResult = matchResult[dealer.name]!!
-        val dealerScore = dealer.totalValue
+        var dealerEarnings = dealer.bettingMoney
 
         players.forEach { player ->
-            var playerResult = matchResult.getOrPut(player.name) { Result() }
-            val playerScore = player.totalValue
-
-            when {
-                playerScore > BlackjackGame.BUST_SCORE -> {
-                    playerResult = playerResult.addLose()
-                    dealerResult = dealerResult.addWin()
+            val playerFinalEarnings: Int = when {
+                player.isBlackjack && dealer.isBlackjack -> player.bettingMoney
+                player.isBlackjack -> {
+                    dealerEarnings -= (player.bettingMoney * 1.5).toInt()
+                    player.bettingMoney + (player.bettingMoney * 0.5).toInt()
                 }
-                dealerScore > BlackjackGame.BUST_SCORE -> {
-                    playerResult = playerResult.addWin()
-                    dealerResult = dealerResult.addLose()
+                player.isBust -> {
+                    dealerEarnings += player.bettingMoney
+                    -player.bettingMoney
                 }
-                playerScore > dealerScore -> {
-                    playerResult = playerResult.addWin()
-                    dealerResult = dealerResult.addLose()
+                player.totalValue > dealer.totalValue -> {
+                    dealerEarnings -= player.bettingMoney
+                    player.bettingMoney
                 }
-                playerScore == dealerScore -> {
-                    playerResult = playerResult.addDraw()
-                    dealerResult = dealerResult.addDraw()
+                player.totalValue < dealer.totalValue -> {
+                    dealerEarnings += player.bettingMoney
+                    -player.bettingMoney
                 }
-                else -> {
-                    playerResult = playerResult.addLose()
-                    dealerResult = dealerResult.addWin()
-                }
+                else -> player.bettingMoney
             }
-            matchResult[player.name] = playerResult
+            matchResult[player.name] = Result(playerFinalEarnings)
         }
-        matchResult[dealer.name] = dealerResult
+        matchResult[dealer.name] = Result(dealerEarnings)
     }
 }

@@ -10,7 +10,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("게임을 시작할 때") {
         When("참가자가 생성되면") {
-            val player = Player("참가자")
+            val player = Player("참가자", 10000)
             Then("참가자는 이름을 가진다.") {
                 player.name shouldBe "참가자"
             }
@@ -20,15 +20,21 @@ class PlayerTest : BehaviorSpec({
             Then("참가자의 초기 상태는 WANT이다.") {
                 player.currentStatus shouldBe Status.HIT
             }
+            Then("입력한 금액만큼 베팅 머니를 가진다.") {
+                player.bettingMoney shouldBe 10000
+            }
         }
         When("카드를 두 장 받으면") {
             val player = Player("참가자")
-            val card1 = Card(CardNumber.JACK, CardSuit.CLUB)
-            val card2 = Card(CardNumber.TEN, CardSuit.CLUB)
+            val card1 = Card(CardNumber.ACE, CardSuit.CLUB)
+            val card2 = Card(CardNumber.QUEEN, CardSuit.CLUB)
             player.addCard(card1)
             player.addCard(card2)
             Then("참가자는 손패에 카드를 두 장 추가한다.") {
                 player.handSize shouldBe 2
+            }
+            And("참가자가 가진 카드의 합이 21일 경우, 블랙잭이다.") {
+                player.isBlackjack shouldBe true
             }
         }
     }

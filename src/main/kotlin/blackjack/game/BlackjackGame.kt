@@ -28,7 +28,9 @@ class BlackjackGame(
 
     private fun createPlayers(): List<Player> {
         val playerNames = inputView.readPlayers()
-        return playerNames.map { Player(it) }
+        val bettingMoney = playerNames.map { inputView.readBettingMoney(it) }
+        val playerBettingMoney = playerNames.zip(bettingMoney)
+        return playerBettingMoney.map { Player(it.first, it.second) }
     }
 
     private fun List<Player>.takeTurns() {
@@ -38,7 +40,7 @@ class BlackjackGame(
     }
 
     private fun takeTurn(player: Player) {
-        while (player.currentStatus == Status.HIT && player.totalValue <= BUST_SCORE) {
+        while (player.currentStatus == Status.HIT && player.totalValue <= BLACKJACK_SCORE) {
             val response = inputView.readHitOrStand(player.name)
             if (response == Status.HIT) {
                 dealer.drawCard(player)
@@ -58,6 +60,6 @@ class BlackjackGame(
 
     companion object {
         private const val DEALER_HIT_SCORE = 16
-        const val BUST_SCORE = 21
+        const val BLACKJACK_SCORE = 21
     }
 }

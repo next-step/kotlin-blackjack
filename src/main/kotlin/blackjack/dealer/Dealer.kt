@@ -5,7 +5,7 @@ import blackjack.player.Player
 
 class Dealer(
     hand: Hand = Hand()
-) : Player("딜러", hand) {
+) : Player(DEALER_NAME, hand = hand) {
     fun dealInitialCards(players: List<Player>) {
         dealInitialCard(this)
         players.forEach {
