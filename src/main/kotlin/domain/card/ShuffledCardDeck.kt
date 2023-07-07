@@ -6,10 +6,7 @@ class ShuffledCardDeck(cards: List<Card>) : CardDeck {
     private val cards = Stack<Card>()
 
     init {
-        cards.shuffled()
-            .forEach {
-                this.cards.push(it)
-            }
+        this.cards.addAll(cards.shuffled())
     }
 
     override fun pop(): Card {
