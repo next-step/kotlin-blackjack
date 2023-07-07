@@ -4,8 +4,6 @@ import domain.Game
 import domain.Player
 import domain.card.Card
 import domain.card.CardDeck
-import domain.card.CardType
-import domain.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -44,10 +42,10 @@ class GameTest {
                 var popCount = 0
 
                 val kings: List<Card> = listOf(
-                    Card.of(Denomination.KING, CardType.SPADE),
-                    Card.of(Denomination.KING, CardType.DIAMOND),
-                    Card.of(Denomination.KING, CardType.HEART),
-                    Card.of(Denomination.KING, CardType.CLOVER),
+                    spadeKing,
+                    diamondKing,
+                    heartKing,
+                    cloverKing,
                 )
 
                 override fun pop(): Card {

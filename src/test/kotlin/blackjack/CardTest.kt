@@ -1,7 +1,6 @@
 package blackjack
 
 import domain.card.Card
-import domain.card.CardType
 import domain.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -21,43 +20,43 @@ class CardTest {
         fun `카드 숫자 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    Card.of(Denomination.ACE, CardType.SPADE), Denomination.ACE.numbers
+                    spadeAce, Denomination.ACE.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.TWO, CardType.SPADE), Denomination.TWO.numbers
+                    spadeTwo, Denomination.TWO.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.THREE, CardType.SPADE), Denomination.THREE.numbers
+                    spadeThree, Denomination.THREE.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.FOUR, CardType.SPADE), Denomination.FOUR.numbers
+                    spadeFour, Denomination.FOUR.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.FIVE, CardType.SPADE), Denomination.FIVE.numbers
+                    spadeFive, Denomination.FIVE.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.SIX, CardType.SPADE), Denomination.SIX.numbers
+                    spadeSix, Denomination.SIX.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.SEVEN, CardType.SPADE), Denomination.SEVEN.numbers
+                    spadeSeven, Denomination.SEVEN.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.EIGHT, CardType.SPADE), Denomination.EIGHT.numbers
+                    spadeEight, Denomination.EIGHT.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.NINE, CardType.SPADE), Denomination.NINE.numbers
+                    spadeNine, Denomination.NINE.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.TEN, CardType.SPADE), Denomination.TEN.numbers
+                    spadeTen, Denomination.TEN.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.KING, CardType.SPADE), Denomination.KING.numbers
+                    spadeKing, Denomination.KING.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.QUEEN, CardType.SPADE), Denomination.QUEEN.numbers
+                    spadeQueen, Denomination.QUEEN.numbers
                 ),
                 Arguments.of(
-                    Card.of(Denomination.JACK, CardType.SPADE), Denomination.JACK.numbers
+                    spadeJack, Denomination.JACK.numbers
                 ),
             )
         }
