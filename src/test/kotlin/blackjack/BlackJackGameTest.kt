@@ -7,21 +7,29 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackGameTest : StringSpec({
 
-    "a,b,c를 Player 와 딜러 BlackJackGame 생성한다" {
+    "Player([a, 1000],[b, 2000], [c, 3000]) 와 딜러 BlackJackGame 생성한다" {
         val game = BlackJackGame(
             mutableListOf<String>().apply {
                 add("a")
                 add("b")
                 add("c")
+            },
+
+            mutableListOf<Int>().apply {
+                add(1_000)
+                add(2_000)
+                add(3_000)
             }
         )
 
         assertSoftly(game.players) {
-            game.players[0].name shouldBe "a"
-            game.players[1].name shouldBe "b"
-            game.players[2].name shouldBe "c"
-
-            game.dealer.name shouldBe "딜러"
+            it[0].name shouldBe "a"
+            it[0].money.value shouldBe 1_000
+            it[1].name shouldBe "b"
+            it[1].money.value shouldBe 2_000
+            it[2].name shouldBe "c"
+            it[2].money.value shouldBe 3_000
         }
+        game.dealer.name shouldBe "딜러"
     }
 })

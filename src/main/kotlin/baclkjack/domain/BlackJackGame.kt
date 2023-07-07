@@ -1,14 +1,13 @@
 package baclkjack.domain
 
 import baclkjack.domain.card.Deck
-import baclkjack.domain.play.CardDrawListener
-import baclkjack.domain.play.Dealer
-import baclkjack.domain.play.Player
-import baclkjack.domain.play.User
+import baclkjack.domain.play.*
 
-class BlackJackGame(playersName: List<String>, private val deck: Deck = Deck.createDeck()) {
+class BlackJackGame(playersName: List<String>, betting: List<Int>, private val deck: Deck = Deck.createDeck()) {
 
-    val players = playersName.map { Player(it) }
+    val players = playersName.mapIndexed { index, s ->
+        Player(name = s, money = Money(betting[index]))
+    }
     val dealer = Dealer()
 
     fun start() {
@@ -33,7 +32,7 @@ class BlackJackGame(playersName: List<String>, private val deck: Deck = Deck.cre
         while (user.isDraw()) {
             user.hit(deck)
             out(user)
-            if (user.burst() || user.blackJack()) {
+            if (user.burst() || user.winNumber()) {
                 break
             }
         }
