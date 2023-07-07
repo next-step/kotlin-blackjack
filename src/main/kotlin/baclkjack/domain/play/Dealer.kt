@@ -5,7 +5,6 @@ class Dealer(private val player: Player = Player("딜러")) : User by player {
     override fun isDraw(): Boolean = score() <= DEFAULT_SCORE
 
     fun result(players: List<Player>): Int = players.sumOf {
-        println(" ${it.result(this)} ")
         it.result(this)
     } * DEALER_EARNING_RATE
 
