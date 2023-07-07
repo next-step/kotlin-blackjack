@@ -1,7 +1,7 @@
 package baclkjack.domain.card
 
 enum class Number(val value: Int) {
-    ACE(11),
+    ACE(1),
     TWO(2),
     THREE(3),
     FOUR(4),

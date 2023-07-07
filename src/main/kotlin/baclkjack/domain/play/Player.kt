@@ -2,29 +2,42 @@ package baclkjack.domain.play
 
 import baclkjack.domain.card.Deck
 
-class Player(val name: String) {
+class Player(override val name: String, override val cards: Cards = Cards()) : User {
 
-    private val cards: Cards = Cards()
+    var cardDrawListener: CardDrawListener? = null
 
-    fun start(deck: Deck) {
+    override fun start(deck: Deck) {
         repeat(FIRST_DRAW) {
             cards.add(deck.draw())
         }
     }
 
-    fun hit(deck: Deck) {
+    override fun hit(deck: Deck) {
         cards.add(deck.draw())
     }
 
-    fun burst(): Boolean = cards.isBurst()
+    override fun burst(): Boolean = cards.isBurst()
 
-    fun blackJack(): Boolean = cards.isBlackJack()
+    override fun blackJack(): Boolean = cards.isBlackJack()
 
-    fun result(): Int = cards.score()
+    override fun score(): Int = cards.score()
 
-    fun cards() = cards.cards
+    override fun isDraw(): Boolean = cardDrawListener?.isDraw(name) == true
+
+    fun result(user: User): GameState = ofGameState(user)
+
+    fun ofGameState(user: User): GameState {
+        return when {
+            this.burst() -> GameState.LOSE
+            user.burst() -> GameState.WIN
+            this.score() > user.score() -> GameState.WIN
+            this.score() < user.score() -> GameState.LOSE
+            else -> GameState.DRAW
+        }
+    }
 
     companion object {
         const val FIRST_DRAW = 2
     }
 }
+
