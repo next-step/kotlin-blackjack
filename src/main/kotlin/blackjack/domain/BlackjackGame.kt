@@ -31,11 +31,7 @@ class BlackjackGame(
     }
 
     private fun getInitCards(): Cards {
-        val cardList = List(Cards.INITIAL_CARDS_SIZE) {
-            cardSelector.drawCard()
-        }
-
-        return Cards(cardList)
+        return Cards.getInitCards { cardSelector.drawCard() }
     }
 
     fun dealUsers(afterHit: (Player) -> Unit) {
