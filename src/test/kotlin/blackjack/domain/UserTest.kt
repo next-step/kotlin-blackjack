@@ -151,4 +151,114 @@ class UserTest : BehaviorSpec({
             }
         }
     }
+
+    Given("A유저가 B유저에게 지는 상황이 주어졌다") {
+        val userA = User(
+            "A",
+            listOf(
+                Suit.SPADE to CardNumber.FIVE,
+                Suit.DIAMOND to CardNumber.FIVE,
+            ),
+        )
+        val userB = User(
+            "B",
+            listOf(
+                Suit.SPADE to CardNumber.SIX,
+                Suit.DIAMOND to CardNumber.SIX,
+            ),
+        )
+        When("A 수익을 확인하면") {
+            Then("자신의 배팅금액을 잃었다") {
+                userA.getUserProfit(userB) shouldBe -userA.betMoney
+            }
+        }
+    }
+
+    Given("A유저가 B유저와 비기는 상황이다") {
+        val userA = User(
+            "A",
+            listOf(
+                Suit.SPADE to CardNumber.FIVE,
+                Suit.DIAMOND to CardNumber.FIVE,
+            ),
+        )
+        val userB = User(
+            "B",
+            listOf(
+                Suit.HEART to CardNumber.FIVE,
+                Suit.CLOVER to CardNumber.FIVE,
+            ),
+        )
+        When("A 수익을 확인하면") {
+            Then("수익이 없다") {
+                userA.getUserProfit(userB) shouldBe 0
+            }
+        }
+    }
+
+    Given("A유저가 B유저에게 이기는 상황이 주어졌다") {
+        val userA = User(
+            "A",
+            listOf(
+                Suit.SPADE to CardNumber.SIX,
+                Suit.DIAMOND to CardNumber.SIX,
+            ),
+        )
+        val userB = User(
+            "B",
+            listOf(
+                Suit.HEART to CardNumber.FIVE,
+                Suit.CLOVER to CardNumber.FIVE,
+            ),
+        )
+        When("A 수익을 확인하면") {
+            Then("배팅금액만큼 벌었다") {
+                userA.getUserProfit(userB) shouldBe userA.betMoney
+            }
+        }
+    }
+
+    Given("A유저가 B유저에게 블랙잭으로 이기는 상황이 주어졌다") {
+        val userA = User(
+            "A",
+            listOf(
+                Suit.SPADE to CardNumber.ACE,
+                Suit.DIAMOND to CardNumber.TEN,
+            ),
+        )
+        val userB = User(
+            "B",
+            listOf(
+                Suit.HEART to CardNumber.FIVE,
+                Suit.CLOVER to CardNumber.FIVE,
+            ),
+        )
+        When("A 수익을 확인하면") {
+            Then("배팅금액의 1.5배를 벌었다") {
+                userA.getUserProfit(userB) shouldBe (userA.betMoney * 1.5).toInt()
+            }
+        }
+    }
+
+    Given("A유저가 B유저와 블랙잭으로 비기는 상황이 주어졌다") {
+        val userA = User(
+            "A",
+            listOf(
+                Suit.SPADE to CardNumber.ACE,
+                Suit.DIAMOND to CardNumber.TEN,
+            ),
+        )
+        val userB = User(
+            "B",
+            listOf(
+                Suit.HEART to CardNumber.ACE,
+                Suit.CLOVER to CardNumber.TEN,
+            ),
+        )
+        When("A 수익을 확인하면") {
+            Then("수익이 없다") {
+                userA.getUserProfit(userB) shouldBe 0
+            }
+        }
+    }
 })

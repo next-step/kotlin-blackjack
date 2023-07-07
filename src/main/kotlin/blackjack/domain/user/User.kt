@@ -1,6 +1,7 @@
 package blackjack.domain.user
 
 import blackjack.domain.card.Cards
+import blackjack.domain.result.MatchResult
 
 fun interface UserDrawChecker {
     fun canDraw(user: User): Boolean
@@ -23,6 +24,15 @@ class User(
 
     override fun checkHit(): Boolean {
         return !isBust() && userDrawChecker.canDraw(this)
+    }
+
+    fun getUserProfit(otherPlayer: Player): Int {
+        return when (match(otherPlayer)) {
+            MatchResult.BLACKJACK_WIN -> (betMoney * 1.5).toInt()
+            MatchResult.WIN -> betMoney
+            MatchResult.DRAW -> 0
+            MatchResult.LOSE -> -betMoney
+        }
     }
 
     companion object {
