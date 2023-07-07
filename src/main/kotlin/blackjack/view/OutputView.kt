@@ -1,9 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
 
 private fun CardNumber.displayName() = when (this) {
     CardNumber.ACE -> "A"
@@ -21,24 +22,28 @@ private fun CardShape.displayName() = when (this) {
 }
 
 object OutputView {
-    fun printStart(players: Players) {
-        val playerNames = players.joinToString(", ") { it.name }
+    fun printStart(participants: List<Participant>) {
+        val playerNames = participants.joinToString(", ") { it.name }
         println("$playerNames 에게 2장의 카드를 나누었습니다.")
-        for (player in players) {
-            printPlayerCard(player)
+        for (participant in participants) {
+            printCards(participant.name, participant.cards())
         }
     }
 
-    fun printPlayerCard(player: Player) {
-        println(resultMessage(player))
+    fun printCards(name: String, cards: List<Card>) {
+        println(resultMessage(name, cards))
     }
 
-    fun printPlayerResult(player: Player) {
-        println("${resultMessage(player)}- 결과: ${player.score().value}")
+    fun printDealerHit(dealer: Dealer) {
+        println("${dealer.name}은 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    private fun resultMessage(player: Player): String {
-        val cardsMessage = player.cards().joinToString(", ") { it.number.displayName() + it.shape.displayName() }
-        return "${player.name}의 카드: $cardsMessage"
+    fun printPlayerResult(participant: Participant) {
+        println("${resultMessage(participant.name, participant.cards())}- 결과: ${participant.score().value}")
+    }
+
+    private fun resultMessage(name: String, cards: List<Card>): String {
+        val cardsMessage = cards.joinToString(", ") { it.number.displayName() + it.shape.displayName() }
+        return "${name}의 카드: $cardsMessage"
     }
 }

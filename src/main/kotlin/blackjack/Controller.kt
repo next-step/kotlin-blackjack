@@ -1,17 +1,18 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class Controller {
     fun playBlackJackGame() {
-        val game = BlackJackGame.create()
-        val players = startGame(game, getPlayers())
-        val result = game.play(players, ::isHit, ::printCard)
-        endGame(result)
+        val players = getPlayers()
+        val game = BlackJackGame(players = players)
+        startGame(game)
+        playGame(game)
+        endGame(game.getParticipants())
     }
 
     private fun getPlayers(): Players {
@@ -19,19 +20,22 @@ class Controller {
         return Players.of(playerNames)
     }
 
-    private fun startGame(game: BlackJackGame, players: Players): Players {
-        val result = game.start(players)
-        OutputView.printStart(result)
-        return result
+    private fun startGame(game: BlackJackGame) {
+        game.start()
+        OutputView.printStart(game.getParticipants())
     }
 
-    private fun isHit(player: Player) = InputView.isHit(player.name)
+    private fun playGame(game: BlackJackGame) {
+        game.playerPlay(
+            isHit = { InputView.isHit(it.name) },
+            afterDrawCard = { name, cards -> OutputView.printCards(name, cards) }
+        )
+        game.dealerPlay { name, cards -> OutputView.printCards(name, cards) }
+    }
 
-    private fun printCard(player: Player) = OutputView.printPlayerCard(player)
-
-    private fun endGame(players: Players) {
-        for (player in players.values) {
-            OutputView.printPlayerResult(player)
+    private fun endGame(participants: List<Participant>) {
+        for (participant in participants) {
+            OutputView.printPlayerResult(participant)
         }
     }
 }

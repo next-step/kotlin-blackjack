@@ -16,7 +16,6 @@ class DeckTest : StringSpec({
         deck.size() shouldBe 0
     }
 
-
     "덱에서 카드를 52장보다 많이 뽑으면 예외가 발생한다." {
         val deck = Deck.create()
 

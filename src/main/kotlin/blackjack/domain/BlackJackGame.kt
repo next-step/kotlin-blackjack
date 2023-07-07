@@ -1,36 +1,51 @@
 package blackjack.domain
 
-class BlackJackGame(private val deck: Deck) {
-    fun start(players: Players): Players {
-        return players.addCards { deck.drawCards(START_CARD_COUNT) }
-    }
+import blackjack.domain.card.Card
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
 
-    fun play(
-        players: Players,
-        isHit: (Player) -> Boolean,
-        afterDrawCard: (Player) -> Unit
-    ): Players {
-        val result = players.map { play(it, isHit, afterDrawCard) }
-        return Players(result)
-    }
-
-    private fun play(
-        player: Player,
-        isHit: (Player) -> Boolean,
-        afterDrawCard: (Player) -> Unit
-    ): Player {
-        var currentPlayer = player
-        while (currentPlayer.canHit() && isHit(currentPlayer)) {
-            val card = deck.drawCard()
-            currentPlayer = currentPlayer.addCard(card)
-            afterDrawCard(currentPlayer)
+class BlackJackGame(
+    private val deck: Deck = Deck.create(),
+    private val dealer: Dealer = Dealer(),
+    private val players: Players,
+) {
+    fun start() {
+        dealer.start { deck.drawCard() }
+        for (player in players) {
+            player.start { deck.drawCard() }
         }
-        return currentPlayer
     }
 
-    companion object {
-        private const val START_CARD_COUNT = 2
+    fun playerPlay(
+        isHit: (Player) -> Boolean,
+        afterDrawCard: (name: String, List<Card>) -> Unit
+    ) {
+        for (player in players) {
+            val drawCard: () -> Card = {
+                deck.drawCard().also { card ->
+                    afterDrawCard(player.name, player.cards() + card)
+                }
+            }
+            player.play(isHit = { isHit(player) }, drawCard = drawCard)
+        }
+    }
 
-        fun create() = BlackJackGame(Deck.create())
+    fun dealerPlay(
+        afterDrawCard: (name: String, List<Card>) -> Unit
+    ) {
+        val drawCard: () -> Card =
+            {
+                deck.drawCard().also { card ->
+                    afterDrawCard(dealer.name, dealer.cards() + card)
+                }
+            }
+        dealer.play(drawCard)
+    }
+
+    fun getParticipants(): List<Participant> {
+        return players + dealer
     }
 }
+
