@@ -30,7 +30,7 @@ class Controller {
             isHit = { InputView.isHit(it.name) },
             afterDrawCard = { name, cards -> OutputView.printCards(name, cards) }
         )
-        game.dealerPlay { name, cards -> OutputView.printCards(name, cards) }
+        game.dealerPlay { OutputView.printDealerHit(it) }
     }
 
     private fun endGame(participants: List<Participant>) {

@@ -31,7 +31,6 @@ class DealerTest : StringSpec({
         dealer.cards().size shouldBe 2
     }
 
-
     "카드를 최대 3장까지 가질 수 있다." {
         val dealer = Dealer()
         dealer.start { FakeGenerator.card(CardNumber.TWO) }

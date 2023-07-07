@@ -33,12 +33,12 @@ class BlackJackGame(
     }
 
     fun dealerPlay(
-        afterDrawCard: (name: String, List<Card>) -> Unit
+        afterDrawCard: (Dealer) -> Unit
     ) {
         val drawCard: () -> Card =
             {
-                deck.drawCard().also { card ->
-                    afterDrawCard(dealer.name, dealer.cards() + card)
+                deck.drawCard().also {
+                    afterDrawCard(dealer)
                 }
             }
         dealer.play(drawCard)
