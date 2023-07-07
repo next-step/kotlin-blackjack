@@ -6,7 +6,7 @@ import blackjack.domain.card.Suit
 import blackjack.domain.result.BlackjackResults
 import blackjack.domain.result.PlayerResult
 import blackjack.domain.result.PlayerResults
-import blackjack.domain.user.UserDrawInterface
+import blackjack.domain.user.UserDrawChecker
 import blackjack.domain.user.Users
 import blackjack.util.Dealer
 import blackjack.util.User
@@ -18,7 +18,7 @@ import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
 class BlackjackResultTest : BehaviorSpec({
-    val userDrawInterface = UserDrawInterface { false }
+    val userDrawChecker = UserDrawChecker { false }
 
     Given("21을 초과한 딜러가 있다") {
         val dealer = Dealer(
@@ -36,14 +36,14 @@ class BlackjackResultTest : BehaviorSpec({
                     User(
                         "블랙잭",
                         listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
-                        userDrawInterface,
+                        userDrawChecker,
                     ),
                 ),
                 row(
                     User(
                         "블랙잭_아님",
                         listOf(Suit.HEART to CardNumber.JACK, Suit.SPADE to CardNumber.SEVEN),
-                        userDrawInterface,
+                        userDrawChecker,
                     ),
                 ),
             ),
@@ -72,7 +72,7 @@ class BlackjackResultTest : BehaviorSpec({
                     Suit.SPADE to CardNumber.TEN,
                     Suit.DIAMOND to CardNumber.TEN,
                 ),
-                userDrawInterface,
+                userDrawChecker,
             )
             user.addCard(Card(Suit.HEART, CardNumber.TEN))
             user.isHit() shouldBe false
@@ -102,7 +102,7 @@ class BlackjackResultTest : BehaviorSpec({
                     User(
                         "블랙잭",
                         listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
-                        userDrawInterface,
+                        userDrawChecker,
                         userBetMoney,
                     ),
                     PlayerResult(dealer, (userBetMoney * -1.5).toInt()),
@@ -111,7 +111,7 @@ class BlackjackResultTest : BehaviorSpec({
                     User(
                         "딜러에게_짐",
                         listOf(Suit.DIAMOND to CardNumber.JACK, Suit.SPADE to CardNumber.SIX),
-                        userDrawInterface,
+                        userDrawChecker,
                     ),
                     PlayerResult(dealer, userBetMoney),
                 ),
@@ -122,7 +122,7 @@ class BlackjackResultTest : BehaviorSpec({
                             Suit.SPADE to CardNumber.TEN,
                             Suit.DIAMOND to CardNumber.TEN,
                         ),
-                        userDrawInterface,
+                        userDrawChecker,
                     ).apply { addCard(Card(Suit.HEART, CardNumber.TEN)) },
                     PlayerResult(dealer, userBetMoney),
                 ),
@@ -151,7 +151,7 @@ class BlackjackResultTest : BehaviorSpec({
                     User(
                         "블랙잭",
                         listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
-                        userDrawInterface,
+                        userDrawChecker,
                         userBetMoney,
                     ),
                     PlayerResult(dealer, 0),
@@ -164,7 +164,7 @@ class BlackjackResultTest : BehaviorSpec({
                             Suit.SPADE to CardNumber.SEVEN,
                             Suit.SPADE to CardNumber.FOUR,
                         ),
-                        userDrawInterface,
+                        userDrawChecker,
                     ),
                     PlayerResult(dealer, userBetMoney),
                 ),
@@ -172,7 +172,7 @@ class BlackjackResultTest : BehaviorSpec({
                     User(
                         "딜러에게_짐",
                         listOf(Suit.DIAMOND to CardNumber.JACK, Suit.SPADE to CardNumber.SIX),
-                        userDrawInterface,
+                        userDrawChecker,
                     ),
                     PlayerResult(dealer, userBetMoney),
                 ),
@@ -183,7 +183,7 @@ class BlackjackResultTest : BehaviorSpec({
                             Suit.SPADE to CardNumber.TEN,
                             Suit.DIAMOND to CardNumber.TEN,
                         ),
-                        userDrawInterface,
+                        userDrawChecker,
                     ).apply { addCard(Card(Suit.HEART, CardNumber.TEN)) },
                     PlayerResult(dealer, userBetMoney),
                 ),

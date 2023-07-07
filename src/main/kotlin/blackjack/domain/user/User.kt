@@ -2,18 +2,18 @@ package blackjack.domain.user
 
 import blackjack.domain.card.Cards
 
-fun interface UserDrawInterface {
+fun interface UserDrawChecker {
     fun canDraw(user: User): Boolean
 }
 
-fun interface GetUserBetMoneyInterface {
+fun interface UserBetMoneyGetter {
     fun getBetMoney(userName: String): Int
 }
 
 class User(
     name: String,
     cards: Cards,
-    private val userDrawInterface: UserDrawInterface,
+    private val userDrawChecker: UserDrawChecker,
     val betMoney: Int,
 ) : Player(name, cards) {
 
@@ -22,7 +22,7 @@ class User(
     }
 
     override fun checkHit(): Boolean {
-        return !isBust() && userDrawInterface.canDraw(this)
+        return !isBust() && userDrawChecker.canDraw(this)
     }
 
     companion object {

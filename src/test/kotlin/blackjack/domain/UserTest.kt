@@ -6,8 +6,8 @@ import blackjack.domain.card.Cards
 import blackjack.domain.card.Suit
 import blackjack.domain.user.PlayerStatus
 import blackjack.domain.user.User
-import blackjack.domain.user.UserDrawInterface
-import blackjack.util.TEST_USER_DRAW_INTERFACE
+import blackjack.domain.user.UserDrawChecker
+import blackjack.util.TEST_USER_DRAW_CHECKER
 import blackjack.util.User
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -23,7 +23,7 @@ class UserTest : BehaviorSpec({
         val emptyName = "  "
         When("해당 이름으로 User를 생성하면") {
             Then("에러가 던져진다.") {
-                shouldThrow<IllegalArgumentException> { User(emptyName, cards, TEST_USER_DRAW_INTERFACE, betMoney) }
+                shouldThrow<IllegalArgumentException> { User(emptyName, cards, TEST_USER_DRAW_CHECKER, betMoney) }
             }
         }
     }
@@ -31,7 +31,7 @@ class UserTest : BehaviorSpec({
     Given("배팅금액이 0원 이하로 주어졌다") {
         When("해당 금액으로 User를 생성하면") {
             Then("에러가 던져진다.") {
-                shouldThrow<IllegalArgumentException> { User(name, cards, TEST_USER_DRAW_INTERFACE, 0) }
+                shouldThrow<IllegalArgumentException> { User(name, cards, TEST_USER_DRAW_CHECKER, 0) }
             }
         }
     }
@@ -39,7 +39,7 @@ class UserTest : BehaviorSpec({
     Given("정상적인 정보가 주어졌다") {
         When("해당 이름으로 User를 생성하면") {
             Then("정상적으로 생성된다") {
-                val user = User(name, cards, TEST_USER_DRAW_INTERFACE, betMoney)
+                val user = User(name, cards, TEST_USER_DRAW_CHECKER, betMoney)
                 user.name shouldBe name
                 user.status shouldBe PlayerStatus.HIT
             }
@@ -47,8 +47,8 @@ class UserTest : BehaviorSpec({
     }
 
     Given("Hit상태의 유저가 있다") {
-        val userDrawInterface = UserDrawInterface { false }
-        val user = User(name, cards, userDrawInterface, betMoney)
+        val userDrawChecker = UserDrawChecker { false }
+        val user = User(name, cards, userDrawChecker, betMoney)
         user.status shouldBe PlayerStatus.HIT
         When("Stand를 하면") {
             user.isHit() shouldBe false
@@ -62,7 +62,7 @@ class UserTest : BehaviorSpec({
         val user = User(
             name,
             listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.TEN),
-            TEST_USER_DRAW_INTERFACE,
+            TEST_USER_DRAW_CHECKER,
         )
         When("유저의 점수를 계산하면") {
             Then("버스트 상태가 아니다") {
@@ -75,7 +75,7 @@ class UserTest : BehaviorSpec({
         val user = User(
             name,
             listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.TEN),
-            TEST_USER_DRAW_INTERFACE,
+            TEST_USER_DRAW_CHECKER,
         )
         user.status shouldBe PlayerStatus.BLACKJACK
         When("해당 유저가 카드를 한장 더 받으면") {
@@ -87,11 +87,11 @@ class UserTest : BehaviorSpec({
     }
 
     Given("Stand상태의 유저가 있다") {
-        val userDrawInterface = UserDrawInterface { false }
+        val userDrawChecker = UserDrawChecker { false }
         val user = User(
             name,
             listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.NINE),
-            userDrawInterface,
+            userDrawChecker,
         )
         user.isHit() shouldBe false
         user.status shouldBe PlayerStatus.STAND
@@ -106,7 +106,7 @@ class UserTest : BehaviorSpec({
         val user = User(
             name,
             listOf(Suit.SPADE to CardNumber.TWO, Suit.SPADE to CardNumber.TEN),
-            TEST_USER_DRAW_INTERFACE,
+            TEST_USER_DRAW_CHECKER,
         )
         user.addCard(Card(Suit.HEART, CardNumber.KING))
         user.status shouldBe PlayerStatus.BUST
@@ -124,7 +124,7 @@ class UserTest : BehaviorSpec({
                 Suit.SPADE to CardNumber.JACK,
                 Suit.SPADE to CardNumber.QUEEN,
             ),
-            TEST_USER_DRAW_INTERFACE,
+            TEST_USER_DRAW_CHECKER,
         )
         user.isBust() shouldBe false
         When("해당 유저가 카드를 한장 더 받으면") {
@@ -142,7 +142,7 @@ class UserTest : BehaviorSpec({
                 Suit.SPADE to CardNumber.FIVE,
                 Suit.DIAMOND to CardNumber.FIVE,
             ),
-            TEST_USER_DRAW_INTERFACE,
+            TEST_USER_DRAW_CHECKER,
         )
         When("카드를 한장더 받아서 21점이 되어도") {
             user.addCard(Card(Suit.SPADE, CardNumber.ACE))
