@@ -8,7 +8,6 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
-import blackjack.domain.gamestate.Competition
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.Stay
 import blackjack.domain.gamestate.running.Hit
@@ -17,9 +16,16 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
-import java.lang.IllegalStateException
 
 class DealerTest : FunSpec({
+
+    context("name") {
+        test("딜러의 이름을 확인하려할 경우 예외가 발생한다.") {
+            val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_KING)))
+            val exception = shouldThrowExactly<IllegalStateException> { dealer.name() }
+            exception.message shouldBe "딜러의 이름을 확인할 수 없습니다."
+        }
+    }
 
     context("draw") {
         test("카드 draw 시 17이 넘어가면 자동으로 Stay된다.") {
@@ -51,7 +57,7 @@ class DealerTest : FunSpec({
         test("딜러가 stay하는 경우 예외가 발생한다.") {
             val dealer = Dealer(gameState = Hit(Cards.of(SPADE_TWO, SPADE_THREE)))
             val exception = shouldThrowExactly<IllegalStateException> { dealer.stay() }
-            exception.message shouldBe "딜러는 직접 stay할 수 없다."
+            exception.message shouldBe "딜러는 직접 stay할 수 없습니다."
         }
     }
 
@@ -67,24 +73,17 @@ class DealerTest : FunSpec({
         test("턴이 종료되기 전에 점수 조회시 예외가 발생한다.") {
             val dealer = Dealer(gameState = InitialHand())
             val exception = shouldThrowExactly<IllegalStateException> { dealer.score() }
-            exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없다"
+            exception.message shouldBe "턴이 종료되기 전에는 점수를 조회할 수 없습니다."
         }
     }
 
     context("competeWith") {
-        test("플레이어가 아닌 참가자와 승부하려고하면 예외가 발생한다.") {
-            val dealer = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
-            val dealer2 = Dealer(gameState = Bust(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)))
-            val exception = shouldThrowExactly<IllegalArgumentException> { dealer.competeWith(dealer2) }
-            exception.message shouldBe "딜러는 플레이어와만 승부할 수 있다."
-        }
+        test("승부확인을 하려하는 경우 예외가 발생한다.") {
+            val dealer = Dealer(Stay(Cards.of(SPADE_ACE, SPADE_KING)))
+            val player = Player(Name("최진영"), Money(10_000), Stay(Cards.of(SPADE_ACE, SPADE_KING)))
 
-        test("승부를 확인한다.") {
-            val dealer = Dealer(gameState = Stay(Cards.of(SPADE_KING, SPADE_JACK)))
-            val player = Player(Name("a"), Stay(Cards.of(SPADE_KING, SPADE_ACE)))
-            val actual = dealer.competeWith(player)
-
-            actual shouldBe Competition.LOSE
+            val exception = shouldThrowExactly<IllegalStateException> { dealer.competeWith(player) }
+            exception.message shouldBe "딜러는 승부할 수 없습니다."
         }
     }
 })

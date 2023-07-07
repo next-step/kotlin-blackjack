@@ -7,9 +7,11 @@ import blackjack.domain.card.CardTest.Companion.SPADE_QUEEN
 import blackjack.domain.card.CardTest.Companion.SPADE_THREE
 import blackjack.domain.card.CardTest.Companion.SPADE_TWO
 import blackjack.domain.card.Cards
+import blackjack.domain.gamestate.finished.Blackjack
 import blackjack.domain.gamestate.finished.Bust
 import blackjack.domain.gamestate.finished.BustTest.Companion.BUST_CARDS
 import blackjack.domain.gamestate.finished.Stay
+import blackjack.domain.player.Money
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContainAll
@@ -22,13 +24,13 @@ class HitTest : FunSpec({
     context("init") {
         test("생성시 카드가 initialhand면 예외가 발생한다.") {
             val exception = shouldThrowExactly<IllegalArgumentException> { Hit(Cards()) }
-            exception.message shouldBe "2장 미만의 카드로 생성될 수 없다."
+            exception.message shouldBe "2장 미만의 카드로 생성될 수 없습니다."
         }
 
         test("생성 시 카드가 bust면 예외가 발생한다.") {
             val exception =
                 shouldThrowExactly<IllegalArgumentException> { Hit(Cards.of(SPADE_KING, SPADE_JACK, SPADE_QUEEN)) }
-            exception.message shouldBe "버스트 카드로 생성될 수 없다."
+            exception.message shouldBe "버스트 카드로 생성될 수 없습니다."
         }
     }
 
@@ -53,6 +55,11 @@ class HitTest : FunSpec({
     }
 
     context("stay") {
+        test("카드가 블랙잭점수라면 blackjack상태로 변경한다.") {
+            val actual = Hit(Cards.of(SPADE_ACE, SPADE_KING)).stay()
+            actual.shouldBeTypeOf<Blackjack>()
+        }
+
         test("stay 상태로 변경한다.") {
             val actual = Hit(Cards.of(SPADE_ACE, SPADE_TWO)).stay()
             actual.shouldBeTypeOf<Stay>()
@@ -83,9 +90,9 @@ class HitTest : FunSpec({
     context("compete") {
         test("승패를 계산하려하는 경우 예외가 발생한다") {
             val exception = shouldThrowExactly<IllegalStateException> {
-                Hit(Cards.of(SPADE_KING, SPADE_JACK)).compete(Bust(BUST_CARDS))
+                Hit(Cards.of(SPADE_KING, SPADE_JACK)).profit(Money(1_000), Bust(BUST_CARDS))
             }
-            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없다."
+            exception.message shouldBe "턴이 종료되지 않아 승부를 가릴 수 없습니다."
         }
     }
 })
