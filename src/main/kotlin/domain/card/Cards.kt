@@ -43,9 +43,9 @@ class Cards(cards: List<Card> = emptyList()) {
     }
 
     private fun numberOfAce(): Int {
-        return cards.filter {
+        return cards.count {
             it.denomination == Denomination.ACE
-        }.size
+        }
     }
 
     private fun sumOfAceCases(): List<Int> {
