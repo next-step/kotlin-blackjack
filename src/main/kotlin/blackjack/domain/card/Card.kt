@@ -13,11 +13,15 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
     val size: Int
         get() = cardList.size
 
+    var score: Int = calculateScore()
+        private set
+
     fun addCard(card: Card) {
         cardList.add(card)
+        score = calculateScore()
     }
 
-    fun score(): Int {
+    private fun calculateScore(): Int {
         var sum = cardList.sumOf { it.cardNumber.score }
         if (hasAce() && sum + ACE_BONUS_SCORE <= BLACKJACK_LIMIT) {
             sum += ACE_BONUS_SCORE
@@ -38,11 +42,11 @@ class Cards(cardList: List<Card>) : Iterable<Card> {
     }
 
     fun isBust(): Boolean {
-        return score() > BLACKJACK_LIMIT
+        return score > BLACKJACK_LIMIT
     }
 
     fun isBlackjack(): Boolean {
-        return cardList.size == INITIAL_CARDS_SIZE && score() == BLACKJACK_LIMIT
+        return cardList.size == INITIAL_CARDS_SIZE && score == BLACKJACK_LIMIT
     }
 
     companion object {

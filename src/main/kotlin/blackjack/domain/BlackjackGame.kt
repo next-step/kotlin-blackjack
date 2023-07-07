@@ -45,7 +45,7 @@ class BlackjackGame(
     }
 
     private fun playerHit(player: Player, afterHit: (Player) -> Unit) {
-        while (player.isHit()) {
+        while (player.checkDraw()) {
             addCardTo(player)
             afterHit(player)
         }

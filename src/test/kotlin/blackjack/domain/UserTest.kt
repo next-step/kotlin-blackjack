@@ -50,7 +50,7 @@ class UserTest : BehaviorSpec({
         val user = User(name, cards, userDrawChecker, betMoney)
         user.status shouldBe PlayerStatus.HIT
         When("Stand를 하면") {
-            user.isHit() shouldBe false
+            user.checkDraw() shouldBe false
             Then("Stand상태가 된다") {
                 user.status shouldBe PlayerStatus.STAND
             }
@@ -92,7 +92,7 @@ class UserTest : BehaviorSpec({
             listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.NINE),
             userDrawChecker,
         )
-        user.isHit() shouldBe false
+        user.checkDraw() shouldBe false
         user.status shouldBe PlayerStatus.STAND
         When("해당 유저에게 카드를 한장더 주면") {
             Then("에러가 던져진다") {

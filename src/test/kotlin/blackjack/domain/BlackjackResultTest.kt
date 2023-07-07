@@ -29,39 +29,41 @@ class BlackjackResultTest : BehaviorSpec({
         )
         dealer.addCard(Card(Suit.HEART, CardNumber.EIGHT))
 
-        forAll(
-            table(
-                headers("유저"),
-                row(
-                    User(
-                        "블랙잭",
-                        listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
-                        userDrawChecker,
-                    ),
-                ),
-                row(
-                    User(
-                        "블랙잭_아님",
-                        listOf(Suit.HEART to CardNumber.JACK, Suit.SPADE to CardNumber.SEVEN),
-                        userDrawChecker,
-                    ),
-                ),
-            ),
-        ) { user ->
-            user.isHit() shouldBe false
+        When("딜러와 \"블랙잭\"유저의 결과를 가져오면") {
+            val user = User(
+                "블랙잭",
+                listOf(Suit.SPADE to CardNumber.ACE, Suit.SPADE to CardNumber.JACK),
+                userDrawChecker,
+            )
             val users = Users(setOf(user))
-
-            When("딜러와 \"${user.name}\"유저의 결과를 가져오면") {
-                Then("유저가 승리했다") {
-                    BlackjackResults(dealer, users).userResults shouldBe PlayerResults(
-                        listOf(
-                            PlayerResult(
-                                user,
-                                user.betMoney,
-                            ),
+            Then("유저가 블랙잭으로 승리했다") {
+                BlackjackResults(dealer, users).userResults shouldBe PlayerResults(
+                    listOf(
+                        PlayerResult(
+                            user,
+                            (user.betMoney * 1.5).toInt(),
                         ),
-                    )
-                }
+                    ),
+                )
+            }
+        }
+
+        When("딜러와 \"블랙잭아님\"유저의 결과를 가져오면") {
+            val user = User(
+                "블랙잭아님",
+                listOf(Suit.HEART to CardNumber.JACK, Suit.SPADE to CardNumber.SEVEN),
+                userDrawChecker,
+            )
+            val users = Users(setOf(user))
+            Then("유저가 승리했다") {
+                BlackjackResults(dealer, users).userResults shouldBe PlayerResults(
+                    listOf(
+                        PlayerResult(
+                            user,
+                            user.betMoney,
+                        ),
+                    ),
+                )
             }
         }
 
@@ -75,7 +77,7 @@ class BlackjackResultTest : BehaviorSpec({
                 userDrawChecker,
             )
             user.addCard(Card(Suit.HEART, CardNumber.TEN))
-            user.isHit() shouldBe false
+            user.checkDraw() shouldBe false
             val users = Users(setOf(user))
             Then("딜러가 승리했다") {
                 BlackjackResults(dealer, users).userResults shouldBe PlayerResults(
@@ -92,7 +94,7 @@ class BlackjackResultTest : BehaviorSpec({
 
     Given("21을 초과하지 않은 딜러가 있다") {
         val dealer = Dealer(listOf(Suit.SPADE to CardNumber.EIGHT, Suit.DIAMOND to CardNumber.NINE))
-        dealer.isHit() shouldBe false
+        dealer.checkDraw() shouldBe false
         val userBetMoney = 10000
 
         forAll(
@@ -128,7 +130,7 @@ class BlackjackResultTest : BehaviorSpec({
                 ),
             ),
         ) { user, dealerResult ->
-            user.isHit() shouldBe false
+            user.checkDraw() shouldBe false
             val users = Users(setOf(user))
 
             When("딜러와 \"${user.name}\"유저의 결과를 가져오면") {
@@ -141,7 +143,7 @@ class BlackjackResultTest : BehaviorSpec({
 
     Given("블랙잭인 딜러가 있다") {
         val dealer = Dealer(listOf(Suit.DIAMOND to CardNumber.ACE, Suit.DIAMOND to CardNumber.JACK))
-        dealer.isHit() shouldBe false
+        dealer.checkDraw() shouldBe false
         val userBetMoney = 10000
 
         forAll(
@@ -189,7 +191,7 @@ class BlackjackResultTest : BehaviorSpec({
                 ),
             ),
         ) { user, dealerResult ->
-            user.isHit() shouldBe false
+            user.checkDraw() shouldBe false
             val users = Users(setOf(user))
 
             When("딜러와 \"${user.name}\"유저의 결과를 가져오면") {

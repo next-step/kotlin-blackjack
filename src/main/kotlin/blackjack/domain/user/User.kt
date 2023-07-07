@@ -4,7 +4,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.result.MatchResult
 
 fun interface UserDrawChecker {
-    fun canDraw(user: User): Boolean
+    fun checkDraw(user: User): Boolean
 }
 
 fun interface UserBetMoneyGetter {
@@ -23,7 +23,7 @@ class User(
     }
 
     override fun checkHit(): Boolean {
-        return !isBust() && userDrawChecker.canDraw(this)
+        return !isBust() && userDrawChecker.checkDraw(this)
     }
 
     fun getUserProfit(otherPlayer: Player): Int {

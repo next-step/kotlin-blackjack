@@ -40,7 +40,7 @@ class CardsTest : BehaviorSpec({
         val cards = Cards(cardList)
         When("점수를 계산하면") {
             Then("점수가 정상적으로 반환된다") {
-                cards.score() shouldBe 21
+                cards.score shouldBe 21
             }
         }
     }
@@ -55,7 +55,7 @@ class CardsTest : BehaviorSpec({
         )
         When("해당덱의 점수를 구하면") {
             Then("합이 반환된다") {
-                cards.score() shouldBe 21
+                cards.score shouldBe 21
             }
         }
     }
