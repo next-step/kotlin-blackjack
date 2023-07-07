@@ -1,6 +1,6 @@
 package blackjack.domain.gamer
 
-class Player(private val name: String) : AbstractBlackJackGamer() {
+class Player(private val name: String) : BlackJackGamer() {
     private lateinit var gameRecord: GameRecordType
 
     override fun getGamerType(): GamerType {

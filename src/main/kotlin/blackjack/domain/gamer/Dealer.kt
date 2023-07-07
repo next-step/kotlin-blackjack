@@ -1,6 +1,6 @@
 package blackjack.domain.gamer
 
-class Dealer : AbstractBlackJackGamer() {
+class Dealer : BlackJackGamer() {
     private var winRecord = (GameRecordType.WIN to 0)
     private var loseRecord = (GameRecordType.LOSE to 0)
     private var drawRecord = (GameRecordType.DRAW to 0)
@@ -22,7 +22,6 @@ class Dealer : AbstractBlackJackGamer() {
             GameRecordType.WIN -> winRecord = Pair(GameRecordType.WIN, winRecord.second + 1)
             GameRecordType.LOSE -> loseRecord = Pair(GameRecordType.LOSE, loseRecord.second + 1)
             GameRecordType.DRAW -> drawRecord = Pair(GameRecordType.DRAW, drawRecord.second + 1)
-            GameRecordType.NONE -> throw IllegalArgumentException("게임 결과는 NONE이 되면 안됩니다.")
         }
     }
 
