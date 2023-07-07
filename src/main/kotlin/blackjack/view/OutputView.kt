@@ -5,21 +5,7 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
-
-private fun CardNumber.displayName() = when (this) {
-    CardNumber.ACE -> "A"
-    CardNumber.JACK -> "J"
-    CardNumber.QUEEN -> "Q"
-    CardNumber.KING -> "K"
-    else -> this.cardScore.primary.toString()
-}
-
-private fun CardShape.displayName() = when (this) {
-    CardShape.CLUB -> "클로버"
-    CardShape.DIAMOND -> "다이아"
-    CardShape.HEART -> "하트"
-    CardShape.SPADE -> "스페이드"
-}
+import blackjack.domain.result.Result
 
 object OutputView {
     fun printStart(participants: List<Participant>) {
@@ -46,4 +32,34 @@ object OutputView {
         val cardsMessage = cards.joinToString(", ") { it.number.displayName() + it.shape.displayName() }
         return "${name}의 카드: $cardsMessage"
     }
+
+    fun printResult(name: String, result: Result) {
+        println("$name: ${result.displayName()}")
+    }
+
+    fun printResult(name: String, results: Map<Result, Int>) {
+        val message = results.map { (result, count) -> count.toString() + result.displayName() }.joinToString(" ")
+        println("$name: $message")
+    }
+}
+
+private fun CardNumber.displayName() = when (this) {
+    CardNumber.ACE -> "A"
+    CardNumber.JACK -> "J"
+    CardNumber.QUEEN -> "Q"
+    CardNumber.KING -> "K"
+    else -> this.cardScore.primary.toString()
+}
+
+private fun CardShape.displayName() = when (this) {
+    CardShape.CLUB -> "클로버"
+    CardShape.DIAMOND -> "다이아"
+    CardShape.HEART -> "하트"
+    CardShape.SPADE -> "스페이드"
+}
+
+private fun Result.displayName() = when (this) {
+    Result.WIN -> "승"
+    Result.DRAW -> "무"
+    Result.LOSE -> "패"
 }

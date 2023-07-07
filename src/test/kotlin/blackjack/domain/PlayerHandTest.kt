@@ -7,13 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayerHandTest : BehaviorSpec({
     given("카드의 총합이 21보다 작은 경우") {
-        val playerHand = PlayerHand.init
-            .add(
-                listOf(
-                    FakeGenerator.card(CardNumber.TEN),
-                    FakeGenerator.card(CardNumber.TEN)
-                )
-            )
+        val playerHand = FakeGenerator.playerHandOf20()
 
         `when`("ACE를 추가하면") {
             val result = playerHand.add(FakeGenerator.card(CardNumber.ACE))
@@ -25,14 +19,7 @@ class PlayerHandTest : BehaviorSpec({
     }
 
     given("카드의 총합이 21이상인 경우") {
-        val playerHand = PlayerHand.init
-            .add(
-                listOf(
-                    FakeGenerator.card(CardNumber.TEN),
-                    FakeGenerator.card(CardNumber.NINE),
-                    FakeGenerator.card(CardNumber.TWO)
-                )
-            )
+        val playerHand = FakeGenerator.playerHandOf21()
 
         `when`("ACE를 추가하면") {
             val result = playerHand.add(FakeGenerator.card(CardNumber.ACE))

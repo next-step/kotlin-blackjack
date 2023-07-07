@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.PlayerHand
 import blackjack.domain.card.CardNumber
 import blackjack.test.FakeGenerator
 import io.kotest.core.spec.style.StringSpec
@@ -14,8 +15,10 @@ class DealerTest : StringSpec({
     }
 
     "가지고 있는 카드 2장의 점수가 16이하면 1장을 추가로 받는다" {
-        val dealer = Dealer()
-        dealer.start { FakeGenerator.card(CardNumber.EIGHT) }
+        val hand = PlayerHand.init.add(
+            FakeGenerator.cards(CardNumber.TEN, CardNumber.SIX)
+        )
+        val dealer = Dealer(hand)
 
         dealer.play { FakeGenerator.card() }
 
@@ -23,8 +26,10 @@ class DealerTest : StringSpec({
     }
 
     "가지고 있는 카드 2장의 점수가 17이상이면 카드를 받지 않는다." {
-        val dealer = Dealer()
-        dealer.start { FakeGenerator.card(CardNumber.NINE) }
+        val hand = PlayerHand.init.add(
+            FakeGenerator.cards(CardNumber.TEN, CardNumber.SEVEN)
+        )
+        val dealer = Dealer(hand)
 
         dealer.play { FakeGenerator.card() }
 
@@ -32,8 +37,10 @@ class DealerTest : StringSpec({
     }
 
     "카드를 최대 3장까지 가질 수 있다." {
-        val dealer = Dealer()
-        dealer.start { FakeGenerator.card(CardNumber.TWO) }
+        val hand = PlayerHand.init.add(
+            FakeGenerator.cards(CardNumber.TWO, CardNumber.TWO)
+        )
+        val dealer = Dealer(hand)
 
         dealer.play { FakeGenerator.card(CardNumber.TWO) }
 

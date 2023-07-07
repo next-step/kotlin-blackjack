@@ -5,6 +5,7 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
+import blackjack.domain.result.GameResultGenerator
 
 class BlackJackGame(
     private val deck: Deck = Deck.create(),
@@ -47,5 +48,8 @@ class BlackJackGame(
     fun getParticipants(): List<Participant> {
         return players + dealer
     }
-}
 
+    fun getGameResult(): GameResultGenerator {
+        return GameResultGenerator(dealer, players)
+    }
+}
