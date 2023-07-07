@@ -1,25 +1,29 @@
 package blackjack.domain.users
 
+import blackjack.domain.BlackjackGame
+import blackjack.domain.Card
+import blackjack.domain.Cards
 import blackjack.domain.result.PlayerResult
-import blackjack.model.UserCards
+import blackjack.view.printUserCards
 
 class Player(
-    override val userCards: UserCards,
-    private var playerResult: PlayerResult = PlayerResult()
-) : User {
+    name: String,
+    cards: Cards,
+    private var isDeckComplete: Boolean = false
+) : User(name, cards) {
     fun deckComplete() {
-        playerResult.deckComplete()
+        isDeckComplete = true
     }
 
-    fun isDeckComplete(): Boolean {
-        return playerResult.isDeckComplete()
+    fun isDeckInComplete(): Boolean {
+        return !isDeckComplete
     }
 
-    fun win() {
-        playerResult.win()
-    }
+    fun userCardReceive(card: Card) {
+        plusCard(card)
 
-    fun isWin(): Boolean {
-        return playerResult.isWin
+        if (cards.value() >= BlackjackGame.BLACKJACK_VALUE) {
+            deckComplete()
+        }
     }
 }

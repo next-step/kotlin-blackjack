@@ -16,7 +16,7 @@ data class Cards(val cards: List<Card>) {
         return sum
     }
 
-    fun addCard(card: Card): Cards {
+    fun plusCard(card: Card): Cards {
         return Cards(cards.plus(card))
     }
 

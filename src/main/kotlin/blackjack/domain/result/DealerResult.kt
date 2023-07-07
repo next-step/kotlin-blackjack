@@ -1,13 +1,11 @@
 package blackjack.domain.result
 
-import blackjack.model.DealerResultModel
-
-data class DealerResult(val dealerResultModel: DealerResultModel = DealerResultModel()) {
-    fun winCount(): Int {
-        return dealerResultModel.winCount
+data class DealerResult(val winCount: Int = 0, val loseCount: Int = 0) {
+    fun dealerWin(): DealerResult {
+        return copy(winCount = winCount + 1)
     }
 
-    fun loseCount(): Int {
-        return dealerResultModel.loseCount
+    fun dealerLose(): DealerResult {
+        return copy(loseCount = loseCount + 1)
     }
 }

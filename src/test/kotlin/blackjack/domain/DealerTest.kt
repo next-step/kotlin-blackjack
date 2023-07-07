@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.users.Dealer
 import blackjack.enums.Denomination
 import blackjack.enums.Suit
-import blackjack.model.UserCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.blocking.forAll
 import io.kotest.data.row
@@ -16,7 +15,7 @@ class DealerTest : StringSpec({
             row(Cards(listOf(Card(Denomination.TWO, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE))), true),
             row(Cards(listOf(Card(Denomination.ACE, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE))), false),
         ) { cards, receivePossible ->
-            val dealer = Dealer(UserCards(name, cards))
+            val dealer = Dealer(name, cards)
             dealer.cardReceivePossible() shouldBe receivePossible
         }
     }

@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.BlackjackGame.Companion.GAME_START_CARD_COUNT
 import blackjack.domain.Card
 import blackjack.domain.Cards
-import blackjack.domain.users.Users
+import blackjack.domain.result.GameResults
 
 fun printLine() {
     println()
@@ -21,12 +21,14 @@ fun printResults(name: String, cards: List<Card>, cardValues: Int) {
     println("${name}카드: ${cardsNames(cards)} - 결과: $cardValues")
 }
 
-fun printBlackjackResult(users: Users) {
+fun printBlackjackResult(blackjackResult: GameResults) {
+    val dealerResult = blackjackResult.dealerResult
+
     println("## 최종 승패")
-    println("딜러: ${users.dealerWinCount()}승 ${users.dealerLoseCount()}패")
-    for (player in users.players) {
-        val result = resultWinOrLoseString(player.isWin())
-        println("${player.name()}: $result")
+    println("딜러: ${dealerResult.winCount}승 ${dealerResult.loseCount}패")
+    for (playerResult in blackjackResult.playerResults) {
+        val result = resultWinOrLoseString(playerResult.isWin)
+        println("${playerResult.name}: $result")
     }
 }
 

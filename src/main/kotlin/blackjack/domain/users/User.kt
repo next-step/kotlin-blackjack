@@ -2,32 +2,25 @@ package blackjack.domain.users
 
 import blackjack.domain.Card
 import blackjack.domain.Cards
-import blackjack.model.UserCards
 
-interface User {
-    val userCards: UserCards
-
-    fun name(): String {
-        return userCards.name
-    }
-
-    fun cards(): Cards {
-        return userCards.cards
-    }
+abstract class User(
+    val name: String,
+    var cards: Cards
+) {
 
     fun cardList(): List<Card> {
-        return userCards.cards.cards
+        return cards.cards
     }
 
     fun cardSize(): Int {
-        return userCards.cards.size
+        return cards.size
     }
 
-    fun addCard(card: Card) {
-        userCards.cards = userCards.cards.addCard(card)
+    fun plusCard(card: Card) {
+        cards = cards.plusCard(card)
     }
 
     fun cardValues(): Int {
-        return userCards.cards.value()
+        return cards.value()
     }
 }
