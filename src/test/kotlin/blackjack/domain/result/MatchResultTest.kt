@@ -1,6 +1,6 @@
 package blackjack.domain.result
 
-import blackjack.domain.PlayerHand
+import blackjack.domain.Hand
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.test.FakeGenerator
@@ -8,15 +8,15 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class MatchResultTest : BehaviorSpec({
-    val hand20 = FakeGenerator.playerHandOf20()
-    val hand21 = FakeGenerator.playerHandOf21()
-    val hand22 = FakeGenerator.playerHandOf22()
+    val hand20 = FakeGenerator.handOf20()
+    val hand21 = FakeGenerator.handOf21()
+    val hand22 = FakeGenerator.handOf22()
 
     given("딜러의 점수가 21보다 클때") {
         val dealer = Dealer(hand22)
 
         `when`("플레이어의 점수와 상관없이") {
-            val player = Player("p1", PlayerHand.init)
+            val player = Player("p1", Hand.init)
             val matchResult = MatchResult(player, dealer)
 
             then("플레이어가 이긴다.") {

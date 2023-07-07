@@ -1,11 +1,11 @@
 package blackjack.domain.participant
 
-import blackjack.domain.PlayerHand
+import blackjack.domain.Hand
 import blackjack.domain.card.Card
 
 class Player(
     name: String,
-    hand: PlayerHand = PlayerHand.init
+    hand: Hand = Hand.init
 ) : Participant(name, hand) {
     fun start(drawCard: () -> Card) {
         val cards = List(START_CARD_COUNT) { drawCard() }

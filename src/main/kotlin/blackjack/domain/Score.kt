@@ -3,16 +3,16 @@ package blackjack.domain
 import blackjack.domain.card.CardScore
 
 @JvmInline
-value class PlayerScore(val value: Int) {
-    fun plus(score: CardScore): PlayerScore {
-        val primaryScoreAdded = PlayerScore(score.primary + value)
-        val secondaryScoreAdded = PlayerScore(score.secondary + value)
+value class Score(val value: Int) {
+    fun plus(score: CardScore): Score {
+        val primaryScoreAdded = Score(score.primary + value)
+        val secondaryScoreAdded = Score(score.secondary + value)
         return primaryScoreAdded.takeIf { it.isBust().not() } ?: secondaryScoreAdded
     }
 
     fun isBust() = value > MAX_VALUE
 
-    fun plus(scores: List<CardScore>): PlayerScore {
+    fun plus(scores: List<CardScore>): Score {
         return scores
             .sortedByDescending { it.isPrimaryEqualToSecondary() }
             .fold(this) { acc, score -> acc.plus(score) }
@@ -20,6 +20,6 @@ value class PlayerScore(val value: Int) {
 
     companion object {
         const val MAX_VALUE = 21
-        val ZERO = PlayerScore(0)
+        val ZERO = Score(0)
     }
 }

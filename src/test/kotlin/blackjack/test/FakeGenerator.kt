@@ -1,6 +1,6 @@
 package blackjack.test
 
-import blackjack.domain.PlayerHand
+import blackjack.domain.Hand
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
@@ -33,15 +33,15 @@ object FakeGenerator {
         return listOf(card(CardNumber.TEN), card(CardNumber.TEN))
     }
 
-    fun playerHandOf22(): PlayerHand {
-        return PlayerHand.init.add(cardsOfScore22())
+    fun handOf22(): Hand {
+        return Hand.init.add(cardsOfScore22())
     }
 
-    fun playerHandOf21(): PlayerHand {
-        return PlayerHand.init.add(cardsOfScore21())
+    fun handOf21(): Hand {
+        return Hand.init.add(cardsOfScore21())
     }
 
-    fun playerHandOf20(): PlayerHand {
-        return PlayerHand.init.add(cardsOfScore20())
+    fun handOf20(): Hand {
+        return Hand.init.add(cardsOfScore20())
     }
 }

@@ -23,7 +23,7 @@ class PlayerTest : StringSpec({
     }
 
     "가지고 있는 카드의 점수가 21이하면 카드를 뽑을 수 있다.." {
-        val hand = FakeGenerator.playerHandOf21()
+        val hand = FakeGenerator.handOf21()
         val player = Player("p1", hand)
 
         player.play(isHit = { true }, drawCard = { FakeGenerator.card(CardNumber.THREE) })
