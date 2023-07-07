@@ -5,7 +5,8 @@ import blackjack.domain.result.BlackjackResults
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
 import blackjack.domain.user.User
-import blackjack.domain.user.UserDrawInterface
+import blackjack.domain.user.UserBetMoneyGetter
+import blackjack.domain.user.UserDrawChecker
 import blackjack.domain.user.UserNames
 import blackjack.domain.user.Users
 import blackjack.util.CardSelector
@@ -13,23 +14,24 @@ import blackjack.util.RandomCardSelector
 
 class BlackjackGame(
     userNames: UserNames,
+    userDrawChecker: UserDrawChecker,
+    userBetMoneyGetter: UserBetMoneyGetter,
     private val cardSelector: CardSelector = RandomCardSelector(),
-    userDrawInterface: UserDrawInterface,
 ) {
     val dealer = Dealer(getInitCards())
     val users: Users
 
     init {
-        val userList = userNames.map { name -> User(name, getInitCards(), userDrawInterface) }.toSet()
+        val userList = userNames.map { name ->
+            val initCards = getInitCards()
+            val betMoney = userBetMoneyGetter.getBetMoney(name)
+            User(name, initCards, userDrawChecker, betMoney)
+        }.toSet()
         users = Users(userList)
     }
 
     private fun getInitCards(): Cards {
-        val cardList = List(INITIAL_CARDS_SIZE) {
-            cardSelector.drawCard()
-        }
-
-        return Cards(cardList)
+        return Cards.getInitCards { cardSelector.drawCard() }
     }
 
     fun dealUsers(afterHit: (Player) -> Unit) {
@@ -43,7 +45,7 @@ class BlackjackGame(
     }
 
     private fun playerHit(player: Player, afterHit: (Player) -> Unit) {
-        while (player.canDraw()) {
+        while (player.checkDraw()) {
             addCardTo(player)
             afterHit(player)
         }
@@ -55,9 +57,5 @@ class BlackjackGame(
 
     fun getGameResult(): BlackjackResults {
         return BlackjackResults(dealer, users)
-    }
-
-    companion object {
-        private const val INITIAL_CARDS_SIZE = 2
     }
 }

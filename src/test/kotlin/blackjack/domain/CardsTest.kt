@@ -40,12 +40,12 @@ class CardsTest : BehaviorSpec({
         val cards = Cards(cardList)
         When("점수를 계산하면") {
             Then("점수가 정상적으로 반환된다") {
-                cards.score() shouldBe 21
+                cards.score shouldBe 21
             }
         }
     }
 
-    Given("카드가 들어 있는 플레이어 패가 있다") {
+    Given("Ace카드가 2번 들어 있는 플레이어 패가 있다") {
         val cards = Cards(
             listOf(
                 Card(Suit.SPADE, CardNumber.ACE), // 이때는 11
@@ -55,7 +55,32 @@ class CardsTest : BehaviorSpec({
         )
         When("해당덱의 점수를 구하면") {
             Then("합이 반환된다") {
-                cards.score() shouldBe 21
+                cards.score shouldBe 21
+            }
+        }
+    }
+
+    Given("블랙잭에 해당하는 패가 있다") {
+        val cardList = listOf(Card(Suit.SPADE, CardNumber.JACK), Card(Suit.SPADE, CardNumber.ACE))
+        val cards = Cards(cardList)
+        When("해당 패의 블랙잭 여부를 확인하면") {
+            Then("블랙잭이 반환된다") {
+                cards.isBlackjack() shouldBe true
+            }
+        }
+    }
+
+    Given("3장의 카드의 합이 21이 되는 패가 있다") {
+        val cards = Cards(
+            listOf(
+                Card(Suit.SPADE, CardNumber.ACE), // 이때는 11
+                Card(Suit.SPADE, CardNumber.NINE),
+                Card(Suit.HEART, CardNumber.ACE), // 이때는 1
+            ),
+        )
+        When("해당 패의 블랙잭 여부를 확인하면") {
+            Then("블랙잭이 아님이 반환된다") {
+                cards.isBlackjack() shouldBe false
             }
         }
     }

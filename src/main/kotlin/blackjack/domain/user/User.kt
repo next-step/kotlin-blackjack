@@ -1,78 +1,41 @@
 package blackjack.domain.user
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.result.Result
+import blackjack.domain.result.MatchResult
 
-fun interface UserDrawInterface {
-    fun canDraw(user: User): Boolean
+fun interface UserDrawChecker {
+    fun checkDraw(user: User): Boolean
 }
 
-abstract class Player(
-    val name: String,
-    val cards: Cards,
-) {
-    init {
-        require(name.isNotBlank()) { EMPTY_NAME_ERROR_MESSAGE }
-    }
-
-    val finalScore: Int by lazy { cards.score() }
-
-    fun getCardsSize() = cards.size
-
-    fun addCard(card: Card) {
-        cards.addCard(card)
-    }
-
-    fun score(): Int {
-        return cards.score()
-    }
-
-    fun isBust(): Boolean {
-        return cards.isBust()
-    }
-
-    fun match(player: Player): Result {
-        if (isBust()) {
-            return Result.LOSE
-        }
-        if (player.isBust()) {
-            return Result.WIN
-        }
-
-        return when {
-            finalScore > player.finalScore -> Result.WIN
-            finalScore < player.finalScore -> Result.LOSE
-            else -> Result.DRAW
-        }
-    }
-
-    abstract fun canDraw(): Boolean
-
-    companion object {
-        private const val EMPTY_NAME_ERROR_MESSAGE = "이름이 비어있을 수 없습니다"
-    }
+fun interface UserBetMoneyGetter {
+    fun getBetMoney(userName: String): Int
 }
 
 class User(
     name: String,
     cards: Cards,
-    private val userDrawInterface: UserDrawInterface,
+    private val userDrawChecker: UserDrawChecker,
+    val betMoney: Int,
 ) : Player(name, cards) {
 
-    override fun canDraw(): Boolean {
-        return !isBust() && userDrawInterface.canDraw(this)
+    init {
+        require(betMoney > 0) { INVALID_BET_MONEY_ERROR_MESSAGE }
     }
-}
 
-class Dealer(cards: Cards) : Player(DEALER_NAME, cards) {
+    override fun checkHit(): Boolean {
+        return !isBust() && userDrawChecker.checkDraw(this)
+    }
 
-    override fun canDraw(): Boolean {
-        return score() <= DEALER_HIT_THRESHOLD
+    fun getUserProfit(otherPlayer: Player): Int {
+        return when (match(otherPlayer)) {
+            MatchResult.BLACKJACK_WIN -> (betMoney * 1.5).toInt()
+            MatchResult.WIN -> betMoney
+            MatchResult.DRAW -> 0
+            MatchResult.LOSE -> -betMoney
+        }
     }
 
     companion object {
-        private const val DEALER_NAME = "딜러"
-        private const val DEALER_HIT_THRESHOLD = 16
+        private const val INVALID_BET_MONEY_ERROR_MESSAGE = "배팅 금액은 0보다 커야합니다"
     }
 }

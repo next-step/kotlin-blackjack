@@ -9,6 +9,8 @@ object InputView {
     private const val INVALID_INPUT_ERROR_MESSAGE = "올바르지 않은 입력입니다."
     private const val DUPLICATE_USER_ERROR_MESSAGE = "중복된 유저가 존재합니다"
 
+    private const val BET_MONEY_INPUT_MESSAGE_FORMAT = "%s의 배팅 금액은?"
+
     private const val DELIMITER = ","
 
     fun getUsers(): UserNames {
@@ -26,5 +28,10 @@ object InputView {
             "n", "N" -> false
             else -> throw throw IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE)
         }
+    }
+
+    fun getBetMoney(userName: String): Int {
+        println(BET_MONEY_INPUT_MESSAGE_FORMAT.format(userName))
+        return requireNotNull(readlnOrNull()?.toIntOrNull()) { INVALID_INPUT_ERROR_MESSAGE }
     }
 }

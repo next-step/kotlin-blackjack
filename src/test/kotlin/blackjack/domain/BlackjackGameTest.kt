@@ -5,7 +5,8 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.user.UserNames
 import blackjack.util.FixedCardsSelector
-import blackjack.util.TEST_USER_DRAW_INTERFACE
+import blackjack.util.FixedUserBetMoneyGetter
+import blackjack.util.TEST_USER_DRAW_CHECKER
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -19,7 +20,7 @@ class BlackjackGameTest : BehaviorSpec({
             Card(Suit.CLOVER, CardNumber.ACE),
         )
         val userNames = UserNames(setOf("홍길동"))
-        val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
+        val game = BlackjackGame(userNames, TEST_USER_DRAW_CHECKER, FixedUserBetMoneyGetter(), cardSelector)
 
         When("게임 시작시 유저의 패를 확인하면") {
             Then("2장을 가지고 있다") {
@@ -46,7 +47,7 @@ class BlackjackGameTest : BehaviorSpec({
             Card(Suit.CLOVER, CardNumber.EIGHT), // 유저의 카드
             Card(Suit.CLOVER, CardNumber.NINE),
         )
-        val game = BlackjackGame(userNames, cardSelector, TEST_USER_DRAW_INTERFACE)
+        val game = BlackjackGame(userNames, TEST_USER_DRAW_CHECKER, FixedUserBetMoneyGetter(), cardSelector)
         When("딜러가 딜을 하면") {
             game.dealDealer()
             Then("딜러는 카드를 한장더 뽑는다") {

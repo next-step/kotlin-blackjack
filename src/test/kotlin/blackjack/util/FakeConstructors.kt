@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards
 import blackjack.domain.card.Suit
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.User
-import blackjack.domain.user.UserDrawInterface
+import blackjack.domain.user.UserDrawChecker
 
 fun Dealer(cardPairs: List<Pair<Suit, CardNumber>>): Dealer {
     val cards = cardPairToCard(cardPairs)
@@ -16,10 +16,11 @@ fun Dealer(cardPairs: List<Pair<Suit, CardNumber>>): Dealer {
 fun User(
     name: String = "홍길동",
     cardPairs: List<Pair<Suit, CardNumber>>,
-    drawInterface: UserDrawInterface = TEST_USER_DRAW_INTERFACE,
+    drawInterface: UserDrawChecker = TEST_USER_DRAW_CHECKER,
+    betMoney: Int = 10000,
 ): User {
     val cards = cardPairToCard(cardPairs)
-    return User(name, cards, drawInterface)
+    return User(name, cards, drawInterface, betMoney)
 }
 
 fun cardPairToCard(cardPairs: List<Pair<Suit, CardNumber>>): Cards {
