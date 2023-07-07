@@ -1,6 +1,7 @@
 package blackjack
 
 import domain.card.Card
+import domain.card.CardType
 import domain.card.Cards
 import domain.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
@@ -21,24 +22,32 @@ class CardsTest {
         fun `카드 더 받을 수 있는지 확인 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    listOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE)), 5
+                    listOf(Card.of(Denomination.TWO, CardType.SPADE), Card.of(Denomination.THREE, CardType.SPADE)), 5
                 ),
 
                 Arguments.of(
-                    listOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE)), 2
+                    listOf(Card.of(Denomination.ACE, CardType.SPADE), Card.of(Denomination.ACE, CardType.DIAMOND)), 2
                 ),
 
                 Arguments.of(
-                    listOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING)), 21
+                    listOf(Card.of(Denomination.ACE, CardType.SPADE), Card.of(Denomination.KING, CardType.SPADE)), 21
                 ),
 
                 Arguments.of(
-                    listOf(Card.spade(Denomination.ACE), Card.spade(Denomination.NINE), Card.diamond(Denomination.ACE)),
+                    listOf(
+                        Card.of(Denomination.ACE, CardType.SPADE),
+                        Card.of(Denomination.NINE, CardType.SPADE),
+                        Card.of(Denomination.ACE, CardType.DIAMOND)
+                    ),
                     21
                 ),
 
                 Arguments.of(
-                    listOf(Card.spade(Denomination.TWO), Card.spade(Denomination.TEN), Card.spade(Denomination.KING)),
+                    listOf(
+                        Card.of(Denomination.TWO, CardType.SPADE),
+                        Card.of(Denomination.TEN, CardType.SPADE),
+                        Card.of(Denomination.KING, CardType.SPADE)
+                    ),
                     22
                 ),
             )

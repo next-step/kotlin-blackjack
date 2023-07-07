@@ -59,5 +59,9 @@ class Cards(cards: List<Card> = emptyList()) {
 
     companion object {
         const val BLACKJACK_POINT = 21
+
+        fun all(): Cards {
+            return Cards(Card.all())
+        }
     }
 }

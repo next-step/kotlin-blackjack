@@ -13,10 +13,10 @@ import java.util.EmptyStackException
 class ShuffledCardDeckTest {
     @Test
     fun `카드 덱 생성 테스트`() {
-        val spades = Denomination.values().map { Card.spade(it) }.toMutableList()
-        val hearts = Denomination.values().map { Card.heart(it) }.toMutableList()
-        val diamonds = Denomination.values().map { Card.diamond(it) }.toMutableList()
-        val clovers = Denomination.values().map { Card.clover(it) }.toMutableList()
+        val spades = Denomination.values().map { Card.of(it, CardType.SPADE) }.toMutableList()
+        val hearts = Denomination.values().map { Card.of(it, CardType.HEART) }.toMutableList()
+        val diamonds = Denomination.values().map { Card.of(it, CardType.DIAMOND) }.toMutableList()
+        val clovers = Denomination.values().map { Card.of(it, CardType.CLOVER) }.toMutableList()
 
         val cardDeck = ShuffledCardDeck.createNew()
 

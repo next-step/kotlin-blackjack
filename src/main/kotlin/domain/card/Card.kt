@@ -1,7 +1,5 @@
 package domain.card
 
-import java.util.concurrent.ConcurrentHashMap
-
 class Card private constructor(val denomination: Denomination, val cardType: CardType) {
 
     val numbers: Set<Int>
@@ -12,57 +10,25 @@ class Card private constructor(val denomination: Denomination, val cardType: Car
     }
 
     companion object {
-        private val spades = ConcurrentHashMap<Denomination, Card>()
-        private val hearts = ConcurrentHashMap<Denomination, Card>()
-        private val diamonds = ConcurrentHashMap<Denomination, Card>()
-        private val clovers = ConcurrentHashMap<Denomination, Card>()
+        private val availableCards: Map<Pair<Denomination, CardType>, Card> =
+            combinationOfDenominationAndCardType().associateWith {
+                Card(it.first, it.second)
+            }
 
-        fun spade(denomination: Denomination): Card {
-            return spades.getOrPut(denomination) {
-                Card(denomination, CardType.SPADE)
+        private fun combinationOfDenominationAndCardType(): List<Pair<Denomination, CardType>> {
+            return Denomination.values().flatMap { denomination ->
+                CardType.values().map { cardType ->
+                    denomination to cardType
+                }
             }
         }
 
-        fun heart(denomination: Denomination): Card {
-            return hearts.getOrPut(denomination) {
-                Card(denomination, CardType.HEART)
-            }
+        fun of(denomination: Denomination, cardType: CardType): Card {
+            return availableCards[denomination to cardType] ?: throw IllegalArgumentException()
         }
 
-        fun diamond(denomination: Denomination): Card {
-            return diamonds.getOrPut(denomination) {
-                Card(denomination, CardType.DIAMOND)
-            }
-        }
-
-        fun clover(denomination: Denomination): Card {
-            return clovers.getOrPut(denomination) {
-                Card(denomination, CardType.CLOVER)
-            }
-        }
-
-        fun createSpades(): List<Card> {
-            return Denomination.values().map {
-                spade(it)
-            }
-        }
-
-        fun createHearts(): List<Card> {
-            return Denomination.values().map {
-                heart(it)
-            }
-        }
-
-        fun createDiamonds(): List<Card> {
-            return Denomination.values().map {
-                diamond(it)
-            }
-        }
-
-        fun createClovers(): List<Card> {
-            return Denomination.values().map {
-                clover(it)
-            }
+        fun all(): List<Card> {
+            return availableCards.values.toList()
         }
     }
 }

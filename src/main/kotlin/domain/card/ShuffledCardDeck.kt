@@ -2,11 +2,11 @@ package domain.card
 
 import java.util.Stack
 
-class ShuffledCardDeck(cards: List<Card>) : CardDeck {
+class ShuffledCardDeck(cards: Cards) : CardDeck {
     private val cards = Stack<Card>()
 
     init {
-        this.cards.addAll(cards.shuffled())
+        this.cards.addAll(cards.current().shuffled())
     }
 
     override fun pop(): Card {
@@ -15,7 +15,7 @@ class ShuffledCardDeck(cards: List<Card>) : CardDeck {
 
     companion object {
         fun createNew(): ShuffledCardDeck {
-            return ShuffledCardDeck(CardDeck.createNewDeck())
+            return ShuffledCardDeck(Cards.all())
         }
     }
 }

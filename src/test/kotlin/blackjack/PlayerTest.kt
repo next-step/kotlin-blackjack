@@ -2,6 +2,7 @@ package blackjack
 
 import domain.Player
 import domain.card.Card
+import domain.card.CardType
 import domain.card.Cards
 import domain.card.Denomination
 import org.assertj.core.api.Assertions.assertThat
@@ -22,7 +23,7 @@ class PlayerTest {
     @Test
     fun `플레이어에게 카드 나눠주기`() {
         val player = Player("peter")
-        val cards = setOf(Card.spade(Denomination.ACE), Card.spade(Denomination.JACK))
+        val cards = setOf(Card.of(Denomination.ACE, CardType.SPADE), Card.of(Denomination.JACK, CardType.SPADE))
 
         cards.forEach {
             player.hit(it)
@@ -45,28 +46,28 @@ class PlayerTest {
             return Stream.of(
                 Arguments.of(
                     Cards(
-                        listOf(Card.spade(Denomination.TWO), Card.spade(Denomination.THREE))
+                        listOf(Card.of(Denomination.TWO, CardType.SPADE), Card.of(Denomination.THREE, CardType.SPADE))
                     ),
                     true
                 ),
                 Arguments.of(
                     Cards(
-                        listOf(Card.spade(Denomination.ACE), Card.diamond(Denomination.ACE))
+                        listOf(Card.of(Denomination.ACE, CardType.SPADE), Card.of(Denomination.ACE, CardType.DIAMOND))
                     ),
                     true
                 ),
                 Arguments.of(
                     Cards(
-                        listOf(Card.spade(Denomination.ACE), Card.spade(Denomination.KING))
+                        listOf(Card.of(Denomination.ACE, CardType.SPADE), Card.of(Denomination.KING, CardType.SPADE))
                     ),
                     false
                 ),
                 Arguments.of(
                     Cards(
                         listOf(
-                            Card.spade(Denomination.ACE),
-                            Card.spade(Denomination.NINE),
-                            Card.diamond(Denomination.ACE)
+                            Card.of(Denomination.ACE, CardType.SPADE),
+                            Card.of(Denomination.NINE, CardType.SPADE),
+                            Card.of(Denomination.ACE, CardType.DIAMOND)
                         )
                     ),
                     false
@@ -74,9 +75,9 @@ class PlayerTest {
                 Arguments.of(
                     Cards(
                         listOf(
-                            Card.spade(Denomination.TWO),
-                            Card.spade(Denomination.TEN),
-                            Card.spade(Denomination.KING)
+                            Card.of(Denomination.TWO, CardType.SPADE),
+                            Card.of(Denomination.TEN, CardType.SPADE),
+                            Card.of(Denomination.KING, CardType.SPADE)
                         )
                     ),
                     false
