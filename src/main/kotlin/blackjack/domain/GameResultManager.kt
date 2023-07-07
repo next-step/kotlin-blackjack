@@ -1,34 +1,37 @@
 package blackjack.domain
 
-import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerStatus
+import blackjack.domain.player.Status
 
 object GameResultManager {
-    fun calculate(dealer: Dealer, players: List<Player>): GameResult {
+    fun calculate(dealer: Dealer, players: List<Player>): GameResultSummary {
 
-        val playerResults: List<PlayerResult> = players.map {
-            if (dealer.status == PlayerStatus.BUST) PlayerResult(it, Result.WIN)
-            else if (it.total() < dealer.total() || it.status == PlayerStatus.BUST) PlayerResult(it, Result.LOSE)
-            else if (it.total() > dealer.total()) PlayerResult(it, Result.WIN)
-            else PlayerResult(it, Result.DRAW)
+        val playerResults: List<PlayerResult> = players.map { player ->
+            PlayerResult(player, (profitRatio(dealer, player) * player.money.value).toInt())
         }
 
-        return GameResult(
-            DealerResult(
-                playerResults.count { it.result == Result.LOSE },
-                playerResults.count { it.result == Result.DRAW },
-                playerResults.count { it.result == Result.WIN }
-            ),
-            playerResults)
+        return GameResultSummary(playerResults)
+    }
+
+    private fun profitRatio(dealer: Dealer, player: Player): Double {
+
+        if (player.status == Status.BLACKJACK) {
+            return if(dealer.blackjack()) 1.0 else 1.5
+        }
+
+        if (player.status == Status.BUST) {
+            return -1.0
+        }
+
+        if (dealer.bust()) {
+            return 1.0
+        }
+
+        return if(dealer.total() < player.total()) 1.0 else -1.0
     }
 }
 
-data class GameResult(val dealerResult: DealerResult, val playerResults: List<PlayerResult>)
-data class DealerResult(val win: Int, val draw: Int, val lose: Int)
-data class PlayerResult(val player: Player, val result: Result)
-enum class Result(val displayName: String) {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
+data class GameResultSummary(val playerResults: List<PlayerResult>) {
+    fun dealerProfit(): Int = playerResults.sumOf { it.profit } * -1
 }
+data class PlayerResult(val player: Player, val profit: Int)

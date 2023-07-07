@@ -15,6 +15,13 @@ val DIAMOND_KING = Card(CardSuit.DIAMOND, CardNumber.KING)
 
 val SPADE_ACE = Card(CardSuit.SPADE, CardNumber.ACE)
 
+class EmptyCardDeck private constructor(val cards: MutableList<Card>) : CardDeck {
+    constructor(): this(mutableListOf())
+    override fun fetch(): Card = throw RuntimeException()
+
+    override fun countOfCards(): Int = 0
+}
+
 class CustomCardDeck(val cards: MutableList<Card>) : CardDeck {
     override fun fetch(): Card = cards.removeFirst()
 
