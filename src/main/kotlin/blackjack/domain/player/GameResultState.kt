@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.player
 
 enum class GameResultState {
     WIN,

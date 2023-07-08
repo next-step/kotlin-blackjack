@@ -1,17 +1,31 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardType
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerNotify
 import blackjack.domain.player.Players
 
-class BlackJackTable {
+class BlackJackTable private constructor(private val players: List<Player>) {
 
-    fun startGame(players: Players, gameConditionNotify: GameConditionNotify) {
+    fun startGame(gameConditionNotify: GameConditionNotify) {
 
-        gameConditionNotify.giveDefaultCardsToPlayerDone(players)
+        val cardDeck = CardType.getCardDeck(CardNumber.values())
+        val blackJackPlayers = Players(players, cardDeck)
 
-        players.giveMoreCard(gameConditionNotify)
+        gameConditionNotify.giveDefaultCardsToPlayerDone(blackJackPlayers)
 
-        players.judgeGameResult()
+        blackJackPlayers.giveMoreCard(gameConditionNotify)
 
-        gameConditionNotify.finishBlackJackGame(players)
+        blackJackPlayers.judgeGameResult()
+
+        gameConditionNotify.finishBlackJackGame(blackJackPlayers)
+    }
+
+    companion object {
+        fun of(playerNotify: PlayerNotify): BlackJackTable {
+            val players = playerNotify.generatePlayers()
+            return BlackJackTable(players)
+        }
     }
 }

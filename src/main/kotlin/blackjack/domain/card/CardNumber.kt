@@ -9,6 +9,7 @@ enum class CardNumber(val score: Int) {
     CARD_SEVEN(7),
     CARD_EIGHT(8),
     CARD_NINE(9),
+    CARD_TEN(10),
     CARD_JACK(10),
     CARD_QUEEN(10),
     CARD_KING(10),

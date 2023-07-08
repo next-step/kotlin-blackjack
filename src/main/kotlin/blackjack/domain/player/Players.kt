@@ -1,13 +1,10 @@
 package blackjack.domain.player
 
 import blackjack.domain.GameConditionNotify
+import blackjack.domain.GameMoney
 import blackjack.domain.card.BlackCardDeck
-import blackjack.domain.card.CardNumber
-import blackjack.domain.card.CardType
 
-class Players(private val players: MutableList<Player>) {
-
-    private val blackJackCardDeck: BlackCardDeck = CardType.getCardDeck(CardNumber.values())
+class Players(private val players: List<Player>, private val deck: BlackCardDeck) {
 
     private val dealer = Dealer()
 
@@ -21,19 +18,19 @@ class Players(private val players: MutableList<Player>) {
         }
     }
 
-    fun getPlayers(): List<Player> {
+    fun getPlayers(): List<BlackJackPlayer> {
         return listOf(dealer) + players
     }
 
-    private fun giveCardsToPlayer(player: Player, repeatTime: Int = DEFAULT_CARD_COUNT) {
+    private fun giveCardsToPlayer(player: BlackJackPlayer, repeatTime: Int = DEFAULT_CARD_COUNT) {
         repeat(repeatTime) {
-            player.addCard(blackJackCardDeck.hitCard())
+            player.addCard(deck.hitCard())
         }
     }
 
     fun giveMoreCard(gameConditionNotify: GameConditionNotify) {
         if (dealer.shouldGetMoreCard()) {
-            dealer.addCard(blackJackCardDeck.hitCard())
+            dealer.addCard(deck.hitCard())
         }
 
         players.forEach {
@@ -57,13 +54,17 @@ class Players(private val players: MutableList<Player>) {
     }
 
     fun judgeGameResult() {
+        var dealerIncome = GameMoney()
         players.forEach {
-            dealer.match(it)
+            it.matchGameScore(dealer)
+            dealerIncome += it.finalIncome.minusMoney()
         }
+        dealer.earnMoney = dealerIncome
     }
 
     companion object {
         private const val DEFAULT_CARD_COUNT = 1
         const val START_CARD_COUNT = 2
+        const val MONEY_ZERO = 0
     }
 }

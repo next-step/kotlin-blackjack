@@ -1,27 +1,39 @@
 package blackjack.domain.player
 
-import blackjack.domain.GameResultState
-import blackjack.domain.card.Card
-import blackjack.domain.card.Cards
+import blackjack.domain.GameMoney
 
-open class Player(open val name: PlayerName) {
+class Player(name: PlayerName, private val bettingMoney: GameMoney) : BlackJackPlayer(name) {
 
     var gameResultState: GameResultState = GameResultState.DRAW
 
-    val cards: Cards = Cards(mutableSetOf())
+    val finalIncome: GameMoney
+        get() = GameMoney(
+            when (gameResultState) {
+                GameResultState.WIN -> getWinMoney(bettingMoney)
+                GameResultState.DRAW -> MINIMUM_MONEY
+                GameResultState.LOSE -> bettingMoney.money.unaryMinus()
+            }
+        )
 
-    fun addCard(card: Card?) {
-        if (card != null) {
-            cards.addCard(card)
+    private fun getWinMoney(gameMoney: GameMoney): Int {
+        val money = gameMoney.money
+        if (cards.isBlackJack()) {
+            return (money * BONUS_BLACKJACK).toInt()
+        }
+        return money
+    }
+
+    fun matchGameScore(dealer: Dealer) {
+        gameResultState = when {
+            isBust() -> GameResultState.LOSE
+            dealer.isBust() -> GameResultState.WIN
+            isBlackJack() && dealer.isBlackJack() -> GameResultState.DRAW
+            else -> cards.match(dealer.getScore())
         }
     }
 
-    open fun getScore(): Int {
-        return cards.getCardScore()
-    }
-
-    fun matchGameScore(dealerScore: Int): GameResultState {
-        gameResultState = cards.match(dealerScore)
-        return gameResultState
+    companion object {
+        const val MINIMUM_MONEY = 0
+        const val BONUS_BLACKJACK = 1.5
     }
 }
