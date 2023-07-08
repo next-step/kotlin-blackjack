@@ -1,12 +1,34 @@
 package blackjack.domain
 
-class GameResult(
-    private val players: Players
-) {
-    val scoreMap: Map<Player, Int>
-        get() = generateScoreMap()
 
-    private fun generateScoreMap(): Map<Player, Int> {
-        return players.values.associateWith { it.calculateScore() }
+enum class GameResult {
+    WIN,
+    LOSS,
+    DRAW;
+
+    private fun opposite(): GameResult {
+        return when {
+            this == WIN -> LOSS
+            this == LOSS -> WIN
+            else -> DRAW
+        }
+    }
+
+    companion object {
+        fun resultOfDealer(players: Players, dealer: Dealer): List<GameResult> {
+            return players.gameResults(dealer)
+                .map { it.opposite() }
+        }
+
+        fun resultOfPlayer(player: Player, dealer: Dealer): GameResult {
+            val playerScore = player.score
+            val dealerScore = dealer.score
+            return when {
+                dealerScore > BLACK_JACK -> LOSS
+                dealerScore > playerScore -> LOSS
+                dealerScore < playerScore -> WIN
+                else -> DRAW
+            }
+        }
     }
 }
