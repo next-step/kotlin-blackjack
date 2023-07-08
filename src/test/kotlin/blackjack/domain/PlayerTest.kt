@@ -23,7 +23,7 @@ class PlayerTest : FunSpec({
     test("현재 가지고 있는 카드의 점수를 반환할 수 있다.") {
         // given
         val cards = Cards(Card(Rank.QUEEN, Suit.HEART))
-        val player = Player(DEALER_NAME,cards)
+        val player = Player(DEALER_NAME, cards)
         val expected = 10
 
         // when, then

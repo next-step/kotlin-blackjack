@@ -78,7 +78,8 @@ object OutputView {
         print(cardsToString)
     }
 
-    private fun cardsToString(cards: Cards) = cards.values.joinToString(", ") { card ->
-        card.rank.symbol + card.suit.displayName
-    }
+    private fun cardsToString(cards: Cards): String = cards.values
+        .joinToString(", ") { card ->
+            card.rank.symbol + card.suit.displayName
+        }
 }
