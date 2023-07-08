@@ -264,4 +264,35 @@ class RuleCheckerTest {
         Assertions.assertThat(player.money).isEqualTo(-bettingMoney)
         Assertions.assertThat(dealer.money).isEqualTo(bettingMoney)
     }
+
+    @Test
+    fun `플레이어가 블랙잭이 아니고 이기면 베팅한 금액을 가져가고 딜러는 베팅한 금액만큼 잃는다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.THREE),
+                Card(CardShape.CLOVER, CardNumber.TEN)
+            )
+        )
+
+        val bettingMoney = 10000
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        player.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TEN),
+            )
+        )
+
+        // when
+        ruleChecker.proceedWhoIsWinner(player, dealer)
+
+        // then
+        Assertions.assertThat(player.money).isEqualTo(bettingMoney)
+        Assertions.assertThat(dealer.money).isEqualTo(-bettingMoney)
+    }
 }
