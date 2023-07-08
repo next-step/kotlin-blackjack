@@ -1,9 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.BlackjackCardPointCalculator
-import blackjack.domain.Card
-import blackjack.domain.Deck
-
 /**
  * ### 블랙잭을 플레이하는 사람을 표현하는 객체 입니다.
  */
