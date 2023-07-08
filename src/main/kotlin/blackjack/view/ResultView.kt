@@ -4,7 +4,7 @@ import blackjack.domain.Player
 
 object ResultView {
     fun playerAndCards(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString(", ")}")
+        println("${player.name}카드: ${player.cards.cards.joinToString(", ")}")
     }
 
     fun initialCards(players: List<Player>) {
@@ -16,7 +16,7 @@ object ResultView {
 
     fun result(players: List<Player>) {
         players.forEach {
-            println("${it.name}카드: ${it.cards.joinToString(", ")} - 결과: ${it.calculateScore()}")
+            println("${it.name}카드: ${it.cards.cards.joinToString(", ")} - 결과: ${it.cards.calculateScore()}")
         }
     }
 }

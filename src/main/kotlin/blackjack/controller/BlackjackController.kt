@@ -23,7 +23,7 @@ class BlackjackController {
     }
 
     fun drawMoreCard(player: Player): Boolean {
-        if (!player.canDrawMoreCard()) {
+        if (!player.cards.canDrawMoreCard()) {
             return false
         }
         if (InputView.drawMoreCard(player.name)) {
