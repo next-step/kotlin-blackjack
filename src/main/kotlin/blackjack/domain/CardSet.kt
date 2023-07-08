@@ -10,11 +10,7 @@ import java.util.LinkedList
 class CardSet(
     cards: Set<Card> = Card.CARD_SET
 ) {
-    private val _cards: LinkedList<Card> = LinkedList<Card>()
-        .apply {
-            addAll(cards)
-            shuffle()
-        }
+    private val _cards: LinkedList<Card> = LinkedList(cards).apply { shuffle() }
 
     val size: Int
         get() = _cards.size
