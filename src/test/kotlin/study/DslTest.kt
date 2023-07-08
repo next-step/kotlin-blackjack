@@ -26,9 +26,7 @@ class DslTest : FunSpec({
             "김준호",
             "홍길동",
         ) { name ->
-            val person = introduce {
-                name(name)
-            }
+            val person = introduce(name) {}
             person.name shouldBe name
             person.company.shouldBeNull()
         }
@@ -40,8 +38,7 @@ class DslTest : FunSpec({
             "네이버",
             "구글",
         ) { company ->
-            val person = introduce {
-                name("김준호")
+            val person = introduce("김준호") {
                 company(company)
             }
 
@@ -51,8 +48,7 @@ class DslTest : FunSpec({
     }
 
     context("DSL로 스킬을 넣을수 있다") {
-        val person = introduce {
-            name("김준호")
+        val person = introduce("김준호") {
             company("카카오")
             skills {
                 soft("A passion for problem solving")
@@ -75,8 +71,7 @@ class DslTest : FunSpec({
     }
 
     context("DSL로 언어를 넣을수 있다") {
-        val person = introduce {
-            name("김준호")
+        val person = introduce("김준호") {
             company("카카오")
             skills {
                 soft("A passion for problem solving")
