@@ -37,7 +37,8 @@ class Player private constructor(name: String, private val bettingMoney: Int) : 
     }
 
     fun drawMoney() {
-        money = bettingMoney
+        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
+        money += bettingMoney
     }
 
     companion object {
