@@ -1,14 +1,17 @@
 package blackjack
 
+import domain.card.Card
+import domain.card.CardDeck
 import domain.card.Cards
-import domain.player.Player
-import domain.player.PlayerState
+import domain.gamer.player.Player
+import domain.gamer.player.PlayerState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
+import java.util.Stack
 import java.util.stream.Stream
 
 class PlayerTest {
@@ -22,10 +25,15 @@ class PlayerTest {
     fun `플레이어에게 카드 나눠주기`() {
         val player = Player("peter")
         val cards = setOf(spadeAce, spadeJack)
-
-        cards.forEach {
-            player.hit(it)
+        val cardDeck = object : CardDeck {
+            val cardStack = Stack<Card>().apply { addAll(cards) }
+            override fun pop(): Card {
+                return cardStack.pop()
+            }
         }
+
+        player.hit(cardDeck)
+        player.hit(cardDeck)
 
         assertThat(player.cards.current()).isEqualTo(cards)
     }

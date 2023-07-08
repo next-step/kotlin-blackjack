@@ -2,29 +2,32 @@ package domain.turn
 
 import domain.Result
 import domain.card.CardDeck
-import domain.dealer.Dealer
-import domain.player.Players
+import domain.gamer.Gamers
+import domain.gamer.dealer.Dealer
+import domain.gamer.player.Players
 
 object FinalTurn : Turn {
 
     override fun proceed(
-        dealer: Dealer,
-        players: Players,
+        gamers: Gamers,
         cardDeck: CardDeck,
         changeState: (Turn) -> Unit
     ) = Unit
 
-    fun result(dealer: Dealer, allPlayers: Players): Result {
+    fun result(gamers: Gamers): Result {
+        val dealer = gamers.dealer
+        val players = gamers.players
+
         if (dealer.isBust) {
             return Result(
-                winners = allPlayers,
+                winners = players,
                 losers = Players(emptyList())
             )
         }
 
         return Result(
-            winners = winners(dealer, allPlayers),
-            losers = losers(dealer, allPlayers),
+            winners = winners(dealer, players),
+            losers = losers(dealer, players),
         )
     }
 

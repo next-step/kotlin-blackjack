@@ -1,8 +1,9 @@
 package controller
 
-import domain.dealer.Dealer
-import domain.player.Player
-import domain.player.Players
+import domain.gamer.Gamers
+import domain.gamer.dealer.Dealer
+import domain.gamer.player.Player
+import domain.gamer.player.Players
 import domain.turn.Game
 import domain.turn.InitialTurn
 import presentation.InputView
@@ -13,7 +14,7 @@ fun main() {
     val players = Players(playerNames.map { Player(it) })
     val dealer = Dealer()
 
-    val game = Game(InitialTurn, dealer, players)
+    val game = Game(InitialTurn, Gamers.of(dealer, players))
     game.proceed()
     ResultView.printInitialState(dealer, players.list)
     dealer.addOnHitCallback {
@@ -21,12 +22,7 @@ fun main() {
     }
 
     while (true) {
-        game.playersCanTakeNextTurn().list.filterNot {
-            InputView.askReceiveCard(it.name)
-        }.forEach {
-            it.stay()
-        }
-
+        askUntilNeedToHit(game)
         game.proceed()
 
         if (game.isFinish) {
@@ -38,4 +34,17 @@ fun main() {
 
         ResultView.printResult(dealer, players.list)
     }
+}
+
+private fun askUntilNeedToHit(game: Game) {
+    while (true) {
+        val gamer = game.gamerToHit() ?: break
+        if (gamer !is Player) break
+        if (!askPlayerWantToStay(gamer)) break
+        gamer.stay()
+    }
+}
+
+private fun askPlayerWantToStay(player: Player): Boolean {
+    return !InputView.askReceiveCard(player.name)
 }

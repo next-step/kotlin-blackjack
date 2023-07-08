@@ -1,11 +1,12 @@
 package blackjack
 
 import domain.card.Cards
-import domain.dealer.Dealer
-import domain.dealer.DealerState
-import domain.player.Player
-import domain.player.PlayerState
-import domain.player.Players
+import domain.gamer.Gamers
+import domain.gamer.dealer.Dealer
+import domain.gamer.dealer.DealerState
+import domain.gamer.player.Player
+import domain.gamer.player.PlayerState
+import domain.gamer.player.Players
 import domain.turn.FinalTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -16,10 +17,12 @@ class FinalTurnTest {
         val players = playersWithTwoPlayer
 
         val result = FinalTurn.result(
-            Dealer(
-                DealerState(Cards(listOf(spadeTen, spadeKing, spadeJack))),
-            ),
-            players,
+            Gamers.of(
+                Dealer(
+                    DealerState(Cards(listOf(spadeTen, spadeKing, spadeJack))),
+                ),
+                players,
+            )
         )
 
         assertThat(result.numOfLoser).isEqualTo(0)
@@ -31,10 +34,12 @@ class FinalTurnTest {
         val players = playersWithTwoPlayer
 
         val result = FinalTurn.result(
-            Dealer(
-                DealerState(Cards(listOf(spadeTen, spadeAce))),
-            ),
-            players,
+            Gamers.of(
+                Dealer(
+                    DealerState(Cards(listOf(spadeTen, spadeAce))),
+                ),
+                players,
+            )
         )
 
         assertThat(result.numOfLoser).isEqualTo(players.list.size)
@@ -48,10 +53,12 @@ class FinalTurnTest {
         val players = Players(listOf(winner, loser))
 
         val result = FinalTurn.result(
-            Dealer(
-                DealerState(Cards(listOf(spadeTen, spadeSeven))),
-            ),
-            players,
+            Gamers.of(
+                Dealer(
+                    DealerState(Cards(listOf(spadeTen, spadeSeven))),
+                ),
+                players,
+            )
         )
 
         assertThat(result.winners.list).isEqualTo(listOf(winner))

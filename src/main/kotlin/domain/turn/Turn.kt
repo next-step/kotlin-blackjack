@@ -1,13 +1,11 @@
 package domain.turn
 
 import domain.card.CardDeck
-import domain.dealer.Dealer
-import domain.player.Players
+import domain.gamer.Gamers
 
 interface Turn {
     fun proceed(
-        dealer: Dealer,
-        players: Players,
+        gamers: Gamers,
         cardDeck: CardDeck,
         changeState: (Turn) -> Unit
     )

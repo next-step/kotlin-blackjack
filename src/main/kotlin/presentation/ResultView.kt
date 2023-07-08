@@ -1,8 +1,9 @@
 package presentation
 
 import domain.Result
-import domain.dealer.Dealer
-import domain.player.Player
+import domain.gamer.Gamer
+import domain.gamer.dealer.Dealer
+import domain.gamer.player.Player
 
 object ResultView {
     fun printInitialState(dealer: Dealer, players: List<Player>) {
@@ -55,11 +56,7 @@ object ResultView {
         println("딜러 카드: ${cards.current().first()}")
     }
 
-    private fun Player.printWithResult() {
+    private fun Gamer.printWithResult() {
         println("$name 카드: ${cards.current().joinToString(", ")} - 결과: $result")
-    }
-
-    private fun Dealer.printWithResult() {
-        println("딜러 카드: ${cards.current().joinToString(", ")} - 결과: $result")
     }
 }

@@ -1,20 +1,16 @@
 package domain.turn
 
 import domain.card.CardDeck
-import domain.dealer.Dealer
-import domain.player.Players
+import domain.gamer.Gamers
 
 object InitialTurn : Turn {
     override fun proceed(
-        dealer: Dealer,
-        players: Players,
+        gamers: Gamers,
         cardDeck: CardDeck,
         changeState: (Turn) -> Unit
     ) {
-        players.hit(cardDeck)
-        dealer.hit(cardDeck)
-        players.hit(cardDeck)
-        dealer.hit(cardDeck)
+        gamers.hit(cardDeck)
+        gamers.hit(cardDeck)
         changeState(IntermediateTurn)
     }
 }

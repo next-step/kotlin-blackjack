@@ -1,4 +1,4 @@
-package domain.dealer
+package domain.gamer.dealer
 
 import domain.card.Card
 import domain.card.Cards
@@ -6,28 +6,18 @@ import domain.card.Cards
 sealed interface DealerState {
     val cards: Cards
 
-    val canReceiveMoreCard: Boolean
-
     class Hit(override val cards: Cards) : DealerState {
         fun hit(card: Card): DealerState {
             cards.add(card)
             return DealerState(cards)
         }
-
-        override val canReceiveMoreCard: Boolean = cards.result() <= Dealer.DEALER_MAX_POINT
     }
 
-    class Bust(override val cards: Cards) : DealerState {
-        override val canReceiveMoreCard: Boolean = false
-    }
+    class Bust(override val cards: Cards) : DealerState
 
-    class Stay(override val cards: Cards) : DealerState {
-        override val canReceiveMoreCard: Boolean = false
-    }
+    class Stay(override val cards: Cards) : DealerState
 
-    class BlackJack(override val cards: Cards) : DealerState {
-        override val canReceiveMoreCard: Boolean = false
-    }
+    class BlackJack(override val cards: Cards) : DealerState
 }
 
 fun DealerState(cards: Cards): DealerState {

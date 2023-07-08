@@ -3,13 +3,12 @@ package domain.turn
 import domain.Result
 import domain.card.CardDeck
 import domain.card.ShuffledCardDeck
-import domain.dealer.Dealer
-import domain.player.Players
+import domain.gamer.Gamer
+import domain.gamer.Gamers
 
 class Game(
     initialTurn: Turn,
-    val dealer: Dealer,
-    val players: Players,
+    val gamers: Gamers,
     private val cardDeck: CardDeck = ShuffledCardDeck.createNew()
 ) {
     private var turn = initialTurn
@@ -20,16 +19,16 @@ class Game(
     val result: Result?
         get() {
             val capturedTurn = turn
-            if (capturedTurn is FinalTurn) return capturedTurn.result(dealer, players)
+            if (capturedTurn is FinalTurn) return capturedTurn.result(gamers)
             return null
         }
 
     fun proceed() {
-        turn.proceed(dealer, players, cardDeck, ::changeState)
+        turn.proceed(gamers, cardDeck, ::changeState)
     }
 
-    fun playersCanTakeNextTurn(): Players {
-        return players.playersCanReceiveMoreCard()
+    fun gamerToHit(): Gamer? {
+        return gamers.gamerToHit()
     }
 
     private fun changeState(turn: Turn) {

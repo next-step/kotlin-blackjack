@@ -1,6 +1,6 @@
 package domain
 
-import domain.player.Players
+import domain.gamer.player.Players
 
 data class Result(
     val winners: Players,
