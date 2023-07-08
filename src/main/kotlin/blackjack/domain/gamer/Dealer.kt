@@ -1,16 +1,12 @@
 package blackjack.domain.gamer
 
-class Dealer : BlackJackGamer() {
+class Dealer : BlackJackGamer(name = "딜러") {
     private var winRecord = (GameRecordType.WIN to 0)
     private var loseRecord = (GameRecordType.LOSE to 0)
     private var drawRecord = (GameRecordType.DRAW to 0)
 
     override fun getGamerType(): GamerType {
         return GamerType.DEALER
-    }
-
-    override fun getName(): String {
-        return DEALER_NAME
     }
 
     fun getTotalGameRecord(): List<Pair<GameRecordType, Int>> {

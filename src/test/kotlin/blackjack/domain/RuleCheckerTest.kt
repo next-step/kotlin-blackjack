@@ -5,7 +5,6 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.GameRecordType
-import blackjack.domain.gamer.Player
 import blackjack.dto.GeneratePlayerRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
