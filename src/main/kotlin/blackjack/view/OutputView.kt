@@ -1,9 +1,47 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
+import blackjack.domain.result.Result
+
+object OutputView {
+    fun printStart(participants: List<Participant>) {
+        val playerNames = participants.joinToString(", ") { it.name }
+        println("$playerNames 에게 2장의 카드를 나누었습니다.")
+        for (participant in participants) {
+            printCards(participant.name, participant.cards())
+        }
+    }
+
+    fun printCards(name: String, cards: List<Card>) {
+        println(resultMessage(name, cards))
+    }
+
+    fun printDealerHit(dealer: Dealer) {
+        println("${dealer.name}은 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printPlayerResult(participant: Participant) {
+        println("${resultMessage(participant.name, participant.cards())}- 결과: ${participant.score().value}")
+    }
+
+    private fun resultMessage(name: String, cards: List<Card>): String {
+        val cardsMessage = cards.joinToString(", ") { it.number.displayName() + it.shape.displayName() }
+        return "${name}의 카드: $cardsMessage"
+    }
+
+    fun printResult(name: String, result: Result) {
+        println("$name: ${result.displayName()}")
+    }
+
+    fun printResult(name: String, results: Map<Result, Int>) {
+        val message = results.map { (result, count) -> count.toString() + result.displayName() }.joinToString(" ")
+        println("$name: $message")
+    }
+}
 
 private fun CardNumber.displayName() = when (this) {
     CardNumber.ACE -> "A"
@@ -20,25 +58,8 @@ private fun CardShape.displayName() = when (this) {
     CardShape.SPADE -> "스페이드"
 }
 
-object OutputView {
-    fun printStart(players: Players) {
-        val playerNames = players.joinToString(", ") { it.name }
-        println("$playerNames 에게 2장의 카드를 나누었습니다.")
-        for (player in players) {
-            printPlayerCard(player)
-        }
-    }
-
-    fun printPlayerCard(player: Player) {
-        println(resultMessage(player))
-    }
-
-    fun printPlayerResult(player: Player) {
-        println("${resultMessage(player)}- 결과: ${player.score().value}")
-    }
-
-    private fun resultMessage(player: Player): String {
-        val cardsMessage = player.cards().joinToString(", ") { it.number.displayName() + it.shape.displayName() }
-        return "${player.name}의 카드: $cardsMessage"
-    }
+private fun Result.displayName() = when (this) {
+    Result.WIN -> "승"
+    Result.DRAW -> "무"
+    Result.LOSE -> "패"
 }
