@@ -1,14 +1,17 @@
 package blackjack.domain
 
 class Cards(vararg cards: Card) {
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
+
+    val cards: List<Card>
+        get() = _cards.toList()
 
     init {
-        this.cards.addAll(cards)
+        _cards.addAll(cards)
     }
 
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun canDrawMoreCard(): Boolean {
