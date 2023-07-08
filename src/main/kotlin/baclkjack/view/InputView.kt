@@ -15,4 +15,9 @@ object InputView {
         }
         return yn
     }
+
+    fun inputBetting(player: String): Int {
+        println("${player}의 배팅 금액은? ")
+        return readln().toInt()
+    }
 }

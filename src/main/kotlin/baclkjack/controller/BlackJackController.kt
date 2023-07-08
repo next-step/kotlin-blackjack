@@ -2,10 +2,12 @@ package baclkjack.controller
 
 import baclkjack.domain.BlackJackGame
 import baclkjack.domain.play.CardDrawListener
+import baclkjack.domain.play.Money
+import baclkjack.domain.play.Player
+import baclkjack.domain.play.toPlayers
 import baclkjack.view.InputView
 import baclkjack.view.ResultView
 import baclkjack.view.toCards
-import baclkjack.view.toResult
 
 class BlackJackController(
     private val inputView: InputView = InputView,
@@ -13,7 +15,13 @@ class BlackJackController(
 ) {
 
     fun play() {
-        val players = inputView.inputPlayer()
+        val playerNames = inputView.inputPlayer()
+
+        val players = playerNames.map {
+            val value = inputView.inputBetting(it)
+            Player(name = it, money = Money(value))
+        }.toPlayers()
+
         val backJackGame = BlackJackGame(players)
 
         resultView.showHit(backJackGame.dealer.name, players.joinToString())
@@ -46,11 +54,11 @@ class BlackJackController(
 
         resultView.showFinal()
         backJackGame.dealer.also {
-            resultView.showWinner(it.name, it.result(backJackGame.players).toResult())
+            resultView.showWinner(it.name, it.result(backJackGame.players).toString())
         }
 
         backJackGame.players.forEach {
-            resultView.showWinner(it.name, it.result(backJackGame.dealer).toResult())
+            resultView.showWinner(it.name, it.result(backJackGame.dealer).toString())
         }
     }
 

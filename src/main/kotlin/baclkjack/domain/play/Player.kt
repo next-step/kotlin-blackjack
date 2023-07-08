@@ -1,43 +1,28 @@
 package baclkjack.domain.play
 
-import baclkjack.domain.card.Deck
+import baclkjack.domain.card.Cards
 
-class Player(override val name: String, override val cards: Cards = Cards()) : User {
+class Player(
+    override val name: String,
+    override val cards: Cards = Cards(),
+    val money: Money
+) : User {
 
     var cardDrawListener: CardDrawListener? = null
 
-    override fun start(deck: Deck) {
-        repeat(FIRST_DRAW) {
-            cards.add(deck.draw())
-        }
-    }
-
-    override fun hit(deck: Deck) {
-        cards.add(deck.draw())
-    }
-
-    override fun burst(): Boolean = cards.isBurst()
-
-    override fun blackJack(): Boolean = cards.isBlackJack()
-
-    override fun score(): Int = cards.score()
-
     override fun isDraw(): Boolean = cardDrawListener?.isDraw(name) == true
 
-    fun result(user: User): GameState = ofGameState(user)
+    fun result(user: User): Int = (ofGameState(user).earningsRate * money.value).toInt()
 
-    fun ofGameState(user: User): GameState {
+    fun ofGameState(user: User): GameResult {
         return when {
-            this.burst() -> GameState.LOSE
-            user.burst() -> GameState.WIN
-            this.score() > user.score() -> GameState.WIN
-            this.score() < user.score() -> GameState.LOSE
-            else -> GameState.DRAW
+            this.score() > user.score() && this.blackJack() -> GameResult.BLACKJACK
+            this.blackJack() && user.blackJack() -> GameResult.WIN
+            user.burst() -> GameResult.WIN
+            this.burst() -> GameResult.LOSE
+            this.score() > user.score() -> GameResult.WIN
+            this.score() < user.score() -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
     }
-
-    companion object {
-        const val FIRST_DRAW = 2
-    }
 }
-

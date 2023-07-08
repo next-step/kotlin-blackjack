@@ -1,5 +1,6 @@
 package baclkjack.domain.play
 
+import baclkjack.domain.card.Cards
 import baclkjack.domain.card.Deck
 
 interface User {
@@ -8,18 +9,25 @@ interface User {
 
     val cards: Cards
 
-    fun start(deck: Deck)
+    fun start(deck: Deck) {
+        repeat(Cards.FIRST_DRAW) {
+            cards.add(deck.draw())
+        }
+    }
 
-    fun hit(deck: Deck)
+    fun hit(deck: Deck) {
+        cards.add(deck.draw())
+    }
 
-    fun burst(): Boolean
+    fun burst(): Boolean = cards.isBurst
 
-    fun blackJack(): Boolean
+    fun blackJack(): Boolean = cards.isBlackJack
 
-    fun score(): Int
+    fun winNumber(): Boolean = cards.isWinningNumber
+
+    fun score(): Int = cards.score()
 
     fun isDraw(): Boolean
-
 }
 
 interface CardDrawListener {

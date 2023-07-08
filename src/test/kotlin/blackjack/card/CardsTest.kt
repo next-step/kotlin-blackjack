@@ -1,9 +1,9 @@
-package blackjack
+package blackjack.card
 
 import baclkjack.domain.card.Card
+import baclkjack.domain.card.Cards
 import baclkjack.domain.card.Number
 import baclkjack.domain.card.Suit
-import baclkjack.domain.play.Cards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
