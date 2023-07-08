@@ -26,7 +26,8 @@ class GameResultTest : FunSpec({
         val player =
             Player(name = PLAYER_SONG2_NAME, cards = Cards(Card(Rank.ACE, Suit.SPADE), Card(Rank.KING, Suit.CLUB)))
         val dealer = Dealer(
-            name = DEALER_NAME, cards = Cards(
+            name = DEALER_NAME,
+            cards = Cards(
                 Card(Rank.KING, Suit.SPADE),
                 Card(Rank.KING, Suit.HEART),
                 Card(Rank.QUEEN, Suit.HEART)

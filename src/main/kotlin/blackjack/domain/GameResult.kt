@@ -1,6 +1,5 @@
 package blackjack.domain
 
-
 enum class GameResult {
     WIN,
     LOSS,

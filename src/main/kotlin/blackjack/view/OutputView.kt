@@ -1,12 +1,16 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
+import blackjack.domain.GameResult
+import blackjack.domain.Player
+import blackjack.domain.Players
 
 object OutputView {
 
     fun printDefaultReceivedCards(players: List<Player>) {
         val playersToString = players.joinToString(", ") { it.name }
-        println("\n${playersToString} 에게 2장의 카드를 나누었습니다.")
+        println("\n$playersToString 에게 2장의 카드를 나누었습니다.")
         players.forEach { player -> printlnPlayerCards(player) }
         println()
     }

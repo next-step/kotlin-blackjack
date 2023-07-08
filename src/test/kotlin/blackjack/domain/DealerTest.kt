@@ -19,13 +19,14 @@ class DealerTest : FunSpec({
         actual shouldBe card
     }
 
-    test("딜러는 기본으로 카드 2장을 받을 수 있다.") {
+    test("딜러는 카드를 받을 수 있다.") {
         // given
         val dealer = Dealer()
         val expectedSize = 2
+        val cards = listOf(Card(Rank.THREE, Suit.SPADE), Card(Rank.QUEEN, Suit.CLUB))
 
         // when
-        dealer.receiveDefaultCards()
+        dealer.receiveCards(cards)
 
         // then
         dealer.cards.values shouldHaveSize expectedSize
