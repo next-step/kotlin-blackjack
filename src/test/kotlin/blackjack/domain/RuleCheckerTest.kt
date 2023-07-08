@@ -359,4 +359,35 @@ class RuleCheckerTest {
         Assertions.assertThat(player.money).isEqualTo(bettingMoney)
         Assertions.assertThat(dealer.money).isEqualTo(-bettingMoney)
     }
+
+    @Test
+    fun `딜러와 플레이어가 비기는 경우 플레이어는 베팅한 금액을 돌려받는다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TEN)
+            )
+        )
+
+        val bettingMoney = 10000
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        player.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TEN)
+            )
+        )
+
+        // when
+        ruleChecker.proceedWhoIsWinner(player, dealer)
+
+        // then
+        Assertions.assertThat(player.money).isEqualTo(bettingMoney)
+        Assertions.assertThat(dealer.money).isEqualTo(0)
+    }
 }

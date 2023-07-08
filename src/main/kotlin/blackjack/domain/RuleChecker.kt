@@ -69,6 +69,7 @@ class RuleChecker {
     private fun noOneIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.DRAW)
         dealer.proceedGameRecord(GameRecordType.DRAW)
+        player.drawMoney()
     }
 
     companion object {

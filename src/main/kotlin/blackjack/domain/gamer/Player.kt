@@ -36,6 +36,10 @@ class Player private constructor(name: String, private val bettingMoney: Int) : 
         return bettingMoney
     }
 
+    fun drawMoney() {
+        money = bettingMoney
+    }
+
     companion object {
         fun generatePlayer(generatePlayerRequest: GeneratePlayerRequest): Player {
             return Player(generatePlayerRequest.playerName, generatePlayerRequest.bettingMoney)
