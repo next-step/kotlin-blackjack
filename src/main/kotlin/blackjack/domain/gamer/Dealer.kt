@@ -2,7 +2,7 @@ package blackjack.domain.gamer
 
 import blackjack.domain.gamer.GameRecordType.*
 
-class Dealer : BlackJackGamer(name = DEALER_NAME, 0) {
+class Dealer : BlackJackGamer(name = DEALER_NAME) {
     private var winRecord = (WIN to 0)
     private var loseRecord = (LOSE to 0)
     private var drawRecord = (DRAW to 0)

@@ -47,14 +47,21 @@ class RuleChecker {
     private fun playerIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.WIN)
         dealer.proceedGameRecord(GameRecordType.LOSE)
+
         if (player.calculateSumOfCardNumbers() == CONDITION_TO_WIN_BLACK_JACK) {
-            player.blackJackMoney()
+            val blackJackPlayerWinMoney = player.blackJackMoney()
+            dealer.loseMoney(blackJackPlayerWinMoney)
+            return
         }
+
+        val playerWinMoney = player.winMoney()
+        dealer.loseMoney(playerWinMoney)
     }
 
     private fun dealerIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.LOSE)
         dealer.proceedGameRecord(GameRecordType.WIN)
+
         val playerLoseMoney = player.loseMoney()
         dealer.winMoney(playerLoseMoney)
     }

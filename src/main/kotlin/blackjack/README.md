@@ -65,24 +65,28 @@
 
 * Player
 
-
 - [x] 플레이어의 전적은 NONE인데 조회할 경우 IllegalArgumentException을 throw 한다.
 
 ## Step4) 기능 요구 사항 체크리스트
 
 * BlackJackGamer
 
-- [ ] BlackJackGamer는 money를 가진다. - (딜러와 플레이어 공통)
+- [x] BlackJackGamer는 money를 가진다. - (딜러와 플레이어 공통)
 
 
 * GeneratePlayerRequest
 
 - [x] 베팅 금액이 0 이하가 되면 IllegalArgumentException을 throw 한다.
 
+* Player
+
+- [ ] 게임에서 패배했을때, 돈을 잃는다.
+- [ ] 게임에서 승리하면 베팅한 금액을 받는다.
+- [ ] 블랙잭으로 승리하면 베팅한 금액의 1.5배를 받는다.
+
 * Dealer
 
-- [ ] 카드 숫자의 합이 21이 넘으면 플레이어들이 베팅 금액을 받는다.
-
+- [ ]
 
 * RuleChecker
 
