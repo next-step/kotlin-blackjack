@@ -1,24 +1,35 @@
 package controller
 
 import domain.Game
-import domain.Player
+import domain.player.Player
+import domain.player.Players
 import presentation.InputView
 import presentation.ResultView
 
 fun main() {
-    val game = Game(
-        InputView.getPlayerNames()
-            .map { Player(it) }
-    )
-    game.start()
-    ResultView.printInitialState(game.players)
+    val playerNames = InputView.getPlayerNames()
+    val players = Players(playerNames.map { Player(it) })
 
+    val game = Game()
+    game.start(players)
+
+    ResultView.printInitialState(players.list)
+
+    var remainPlayers = game.playersCanReceiveMoreCard(players)
     while (true) {
-        val playerReceiveMoreCard = Players(game.playersCanReceiveMoreCard())
-        if (playerReceiveMoreCard.noMorePlayer()) break
+        val playersCanReceiveMoreCard = game.playersCanReceiveMoreCard(remainPlayers)
+        if (playersCanReceiveMoreCard.noMorePlayer()) break
 
-        playerReceiveMoreCard.hit(game)
+        remainPlayers = playersCanReceiveMoreCard.list.filter {
+            InputView.askReceiveCard(it.name)
+        }.let {
+            Players(it)
+        }
 
-        ResultView.printResult(game.players)
+        game.hit(remainPlayers) { player ->
+            ResultView.printPlayerState(player)
+        }
+
+        ResultView.printResult(players.list)
     }
 }

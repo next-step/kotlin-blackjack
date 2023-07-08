@@ -2,23 +2,21 @@ package domain
 
 import domain.card.CardDeck
 import domain.card.ShuffledCardDeck
+import domain.player.Player
+import domain.player.Players
 
-class Game(val players: List<Player>, private val cardDeck: CardDeck = ShuffledCardDeck.createNew()) {
+class Game(private val cardDeck: CardDeck = ShuffledCardDeck.createNew()) {
 
-    fun start() {
-        players.forEach {
-            it.hit(cardDeck.pop())
-            it.hit(cardDeck.pop())
-        }
+    fun start(players: Players) {
+        players.hit(cardDeck)
+        players.hit(cardDeck)
     }
 
-    fun playersCanReceiveMoreCard(): List<Player> {
-        return players.filter {
-            it.canReceiveMoreCard()
-        }
+    fun playersCanReceiveMoreCard(players: Players): Players {
+        return players.playersCanReceiveMoreCard()
     }
 
-    fun hit(player: Player) {
-        player.hit(cardDeck.pop())
+    fun hit(players: Players, afterHit: ((Player) -> Unit)? = null) {
+        players.hit(cardDeck, afterHit)
     }
 }

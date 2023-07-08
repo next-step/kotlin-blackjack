@@ -1,9 +1,10 @@
 package blackjack
 
 import domain.Game
-import domain.Player
 import domain.card.Card
 import domain.card.CardDeck
+import domain.player.Player
+import domain.player.Players
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,16 +15,10 @@ import java.util.stream.Stream
 class GameTest {
     @ParameterizedTest
     @MethodSource("게임 초기화 테스트 데이터")
-    fun `게임 시작 시 플레이어 초기화 테스트`(players: List<Player>) {
-        assertThat(Game(players).players).isEqualTo(players)
-    }
-
-    @ParameterizedTest
-    @MethodSource("게임 초기화 테스트 데이터")
-    fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: List<Player>) {
-        with(Game(players)) {
-            start()
-            players.forEach {
+    fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: Players) {
+        with(Game()) {
+            start(players)
+            players.list.forEach {
                 assertThat(it.cards.current()).size().isEqualTo(2)
             }
         }
@@ -31,12 +26,13 @@ class GameTest {
 
     @Test
     fun `카드 더 받을 수 있는 플레이어 목록 구하기 테스트`() {
-        val players = listOf(
-            Player("peter"),
+        val players = Players(
+            listOf(
+                Player("peter"),
+            )
         )
 
         val game = Game(
-            players,
             object : CardDeck {
 
                 var popCount = 0
@@ -54,35 +50,33 @@ class GameTest {
             }
         )
 
-        game.start()
+        game.start(players)
 
         assertThat(
-            game.playersCanReceiveMoreCard()
+            game.playersCanReceiveMoreCard(players)
         ).isEqualTo(players)
 
-        players.forEach {
-            game.hit(it)
-        }
+        game.hit(players)
 
         assertThat(
-            game.playersCanReceiveMoreCard()
-        ).isEqualTo(emptyList<Player>())
+            game.playersCanReceiveMoreCard(players)
+        ).isEqualTo(Players(emptyList()))
     }
 
     @Test
     fun `카드 추가 지급 테스트`() {
-        val players = listOf(
-            Player("peter"),
-            Player("승현"),
+        val players = Players(
+            listOf(
+                Player("peter"),
+                Player("승현"),
+            )
         )
 
-        val game = Game(players)
+        val game = Game()
 
-        players.forEach {
-            game.hit(it)
-        }
+        game.hit(players)
 
-        game.players.forEach {
+        players.list.forEach {
             assertThat(it.cards.current()).size().isEqualTo(1)
         }
     }
@@ -92,14 +86,18 @@ class GameTest {
         fun `게임 초기화 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    listOf(
-                        Player("peter")
+                    Players(
+                        listOf(
+                            Player("peter")
+                        )
                     )
                 ),
                 Arguments.of(
-                    listOf(
-                        Player("peter"),
-                        Player("승현"),
+                    Players(
+                        listOf(
+                            Player("peter"),
+                            Player("승현"),
+                        )
                     )
                 ),
             )

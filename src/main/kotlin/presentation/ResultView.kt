@@ -1,6 +1,6 @@
 package presentation
 
-import domain.Player
+import domain.player.Player
 
 object ResultView {
     fun printInitialState(players: List<Player>) {

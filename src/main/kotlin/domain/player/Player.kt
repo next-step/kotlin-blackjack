@@ -1,12 +1,13 @@
-package domain
+package domain.player
 
 import domain.card.Card
 import domain.card.Cards
 
 class Player(val name: String, val cards: Cards = Cards()) {
 
-    fun hit(card: Card) {
+    fun hit(card: Card, afterHit: ((Player) -> Unit)? = null) {
         cards.add(card)
+        afterHit?.invoke(this)
     }
 
     fun result(): Int {
