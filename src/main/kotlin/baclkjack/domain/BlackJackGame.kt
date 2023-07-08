@@ -3,11 +3,8 @@ package baclkjack.domain
 import baclkjack.domain.card.Deck
 import baclkjack.domain.play.*
 
-class BlackJackGame(playersName: List<String>, betting: List<Int>, private val deck: Deck = Deck.createDeck()) {
+class BlackJackGame(val players: Players, private val deck: Deck = Deck.createDeck()) {
 
-    val players = playersName.mapIndexed { index, s ->
-        Player(name = s, money = Money(betting[index]))
-    }
     val dealer = Dealer()
 
     fun start() {

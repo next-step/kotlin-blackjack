@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.play
 
 import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
@@ -15,12 +15,12 @@ import io.kotest.matchers.shouldBe
 class PlayerTest : StringSpec({
 
     "a Player 를 생성한다" {
-        val player = Player("a")
+        val player = Player(name = "a", money = Money(1_000))
         player.name shouldBe "a"
     }
 
     "내 카드가 22 이상이 경우  burst" {
-        val player = Player("a")
+        val player = Player(name = "a", money = Money(1_000))
         val deck = Deck(
             cards = mutableListOf<Card>().apply {
                 add(Card(Suit.HEART, Number.KING))
@@ -36,7 +36,7 @@ class PlayerTest : StringSpec({
 
     "딜러가 17 내 카드가 21 인경우 blackjack 수익은 1500" {
         val dealer = Dealer()
-        val player = Player("a", Money(1_000))
+        val player = Player(name = "a", money = Money(1_000))
         val deck = Deck(
             cards = mutableListOf(
                 Card(Suit.HEART, Number.KING),
@@ -56,7 +56,7 @@ class PlayerTest : StringSpec({
 
     "딜러가 17 내카드가 18 인 result WIN 수익은 1000" {
         val dealer = Dealer()
-        val player = Player("a", Money(1_000))
+        val player = Player(name = "a", money = Money(1_000))
         val deck = Deck(
             cards = mutableListOf<Card>().apply {
                 add(Card(Suit.HEART, Number.KING))
@@ -74,7 +74,7 @@ class PlayerTest : StringSpec({
 
     "딜러가 18 내카드가 18 인 result DRAW 수익은 0" {
         val dealer = Dealer()
-        val player = Player("a", Money(1_000))
+        val player = Player(name = "a", money = Money(1_000))
         val deck = Deck(
             cards = mutableListOf<Card>().apply {
                 add(Card(Suit.HEART, Number.KING))
@@ -92,7 +92,7 @@ class PlayerTest : StringSpec({
 
     "딜러가 21 내카드가 20 인 result LOST, 수익은 -1000" {
         val dealer = Dealer()
-        val player = Player("a", Money(1_000))
+        val player = Player(name = "a", money = Money(1_000))
         val deck = Deck(
             cards = mutableListOf<Card>().apply {
                 add(Card(Suit.HEART, Number.ACE))

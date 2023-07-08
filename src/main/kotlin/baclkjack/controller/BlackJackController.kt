@@ -1,7 +1,7 @@
 package baclkjack.controller
 
 import baclkjack.domain.BlackJackGame
-import baclkjack.domain.play.CardDrawListener
+import baclkjack.domain.play.*
 import baclkjack.view.InputView
 import baclkjack.view.ResultView
 import baclkjack.view.toCards
@@ -12,12 +12,14 @@ class BlackJackController(
 ) {
 
     fun play() {
-        val players = inputView.inputPlayer()
-        val playerBatting = players.map {
-            inputView.inputBetting(it)
-        }
+        val playerNames = inputView.inputPlayer()
 
-        val backJackGame = BlackJackGame(players, playerBatting)
+        val players = playerNames.map {
+            val value = inputView.inputBetting(it)
+            Player(name = it, money = Money(value))
+        }.toPlayers()
+
+        val backJackGame = BlackJackGame(players)
 
         resultView.showHit(backJackGame.dealer.name, players.joinToString())
         backJackGame.start()

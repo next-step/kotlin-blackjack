@@ -1,33 +1,14 @@
 package baclkjack.domain.play
 
 import baclkjack.domain.card.Cards
-import baclkjack.domain.card.Deck
 
 class Player(
     override val name: String,
-    override val money: Money = Money(0),
-    override val cards: Cards = Cards()
+    override val cards: Cards = Cards(),
+    val money: Money
 ) : User {
 
     var cardDrawListener: CardDrawListener? = null
-
-    override fun start(deck: Deck) {
-        repeat(Cards.FIRST_DRAW) {
-            cards.add(deck.draw())
-        }
-    }
-
-    override fun hit(deck: Deck) {
-        cards.add(deck.draw())
-    }
-
-    override fun burst(): Boolean = cards.isBurst
-
-    override fun blackJack(): Boolean = cards.isBlackJack
-
-    override fun winNumber(): Boolean = cards.isWinningNumber
-
-    override fun score(): Int = cards.score()
 
     override fun isDraw(): Boolean = cardDrawListener?.isDraw(name) == true
 

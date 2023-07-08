@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.play
 
 import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
@@ -32,9 +32,9 @@ class DealerTest : StringSpec({
 
     "Dealer 카드가 20,  Player([a, 1000],[b, 2000], [c, 3000]) 카드가 19,20,21 이면 LOSE, DRAW, BLACKJACK 딜러의 수익은 -3500 이다  " {
         val dealer = Dealer()
-        val playerA = Player("a", Money(1_000))
-        val playerB = Player("b", Money(2_000))
-        val playerC = Player("c", Money(3_000))
+        val playerA = Player(name = "a", money = Money(1_000))
+        val playerB = Player(name = "b", money = Money(2_000))
+        val playerC = Player(name = "c", money = Money(3_000))
         val deck = Deck(
             cards = mutableListOf<Card>().apply {
                 add(Card(Suit.HEART, Number.KING))

@@ -1,6 +1,8 @@
 package baclkjack.domain.play
 
-class Dealer(private val player: Player = Player("딜러")) : User by player {
+import baclkjack.domain.card.Cards
+
+class Dealer(override val name: String = "딜러", override val cards: Cards = Cards()) : User{
 
     override fun isDraw(): Boolean = score() <= DEFAULT_SCORE
 

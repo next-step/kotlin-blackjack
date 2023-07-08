@@ -9,19 +9,23 @@ interface User {
 
     val cards: Cards
 
-    val money: Money
+    fun start(deck: Deck) {
+        repeat(Cards.FIRST_DRAW) {
+            cards.add(deck.draw())
+        }
+    }
 
-    fun start(deck: Deck)
+    fun hit(deck: Deck) {
+        cards.add(deck.draw())
+    }
 
-    fun hit(deck: Deck)
+    fun burst(): Boolean = cards.isBurst
 
-    fun burst(): Boolean
+    fun blackJack(): Boolean = cards.isBlackJack
 
-    fun winNumber(): Boolean
+    fun winNumber(): Boolean = cards.isWinningNumber
 
-    fun blackJack(): Boolean
-
-    fun score(): Int
+    fun score(): Int = cards.score()
 
     fun isDraw(): Boolean
 }

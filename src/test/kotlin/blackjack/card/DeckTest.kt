@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 import baclkjack.domain.card.Card
 import baclkjack.domain.card.Deck
